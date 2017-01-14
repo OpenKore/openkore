@@ -20,6 +20,8 @@ sub new {
 	$self->{scalar_variables} = {};
 	$self->{array_variables} = {};
 	$self->{accessed_array_variables} = {};
+	$self->{hash_variables} = {};
+	$self->{accessed_hash_variables} = {};
 	$self->{parameters} = {};
 	$self->{running_status} = 0;
 	$self->set_parameters( $parameters );
@@ -174,6 +176,12 @@ sub define_var_types {
 		
 	} elsif ($variable->{type} eq 'accessed_array') {
 		push ( @{ $self->{accessed_array_variables}{$variable->{real_name}}[$variable->{index}] }, $cond_index );
+		
+	} elsif ($variable->{type} eq 'hash') {
+		push ( @{ $self->{hash_variables}{$variable->{real_name}}}, $cond_index );
+		
+	} elsif ($variable->{type} eq 'accessed_hash') {
+		push ( @{ $self->{accessed_hash_variables}{$variable->{real_name}}[$variable->{key}] }, $cond_index );
 	}
 }
 
@@ -190,6 +198,16 @@ sub get_array_variables {
 sub get_accessed_array_variables {
 	my ($self) = @_;
 	return $self->{accessed_array_variables};
+}
+
+sub get_hash_variables {
+	my ($self) = @_;
+	return $self->{hash_variables};
+}
+
+sub get_accessed_hash_variables {
+	my ($self) = @_;
+	return $self->{accessed_hash_variables};
 }
 
 sub has_event_type_condition {

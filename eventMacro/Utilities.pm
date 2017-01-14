@@ -442,6 +442,14 @@ sub find_variable {
 	if (my $accessed_array = find_accessed_array_variable($text)) {
 		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, index => $accessed_array->{index} });
 	}
+	
+	if (my $hash = find_hash_variable($text)) {
+		return ({ display_name => $hash->{display_name}, type => 'hash', real_name => $hash->{real_name} });
+	}
+	
+	if (my $accessed_hash = find_accessed_hash_variable($text)) {
+		return ({ display_name => $accessed_hash->{display_name}, type => 'accessed_hash', real_name => $accessed_hash->{real_name}, key => $accessed_hash->{key} });
+	}
 }
 
 sub find_scalar_variable {
@@ -474,7 +482,31 @@ sub find_accessed_array_variable {
 		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
 			my $name = $1;
 			my $index = $2;
-			return ({display_name => ('$'.$name), real_name => $name, index => $index});
+			return ({display_name => ('$'.$name.'['.$index.']'), real_name => $name, index => $index});
+		}
+	}
+}
+
+sub find_hash_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($hash_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\%//;
+		return ({display_name => ('%'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_accessed_hash_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($accessed_hash_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\$//;
+		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\{([a-zA-Z\d]+)\}/) {
+			my $name = $1;
+			my $key = $2;
+			return ({display_name => ('$'.$name.'{'.$key.'}'), real_name => $name, key => $key});
 		}
 	}
 }

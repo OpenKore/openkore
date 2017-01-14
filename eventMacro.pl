@@ -362,6 +362,20 @@ sub commandHandler {
 			} continue {
 				$counter++;
 			}
+			
+			$counter = 1;
+			message( center( " Hashes ", 25, '-' ) . "\n", 'list' );
+			foreach my $hash_name (keys %{$eventMacro->{Hash_Variable_List_Hash}}) {
+				message $counter." - '%".$hash_name."'\n", "menu";
+				my $hash = $eventMacro->{Hash_Variable_List_Hash}{$hash_name};
+				foreach my $key (keys %{$hash}) {
+					my $value = $eventMacro->{Hash_Variable_List_Hash}{$hash_name}{$key};
+					$value = 'undef' unless (defined $value);
+					message "     '\$".$hash_name."{".$key."}' = '".$value."'\n", "menu";
+				}
+			} continue {
+				$counter++;
+			}
 		
 		} else {
 			if (my $var = find_variable($params[0])) {
@@ -392,10 +406,35 @@ sub commandHandler {
 						foreach my $index (0..$#{$eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}}) {
 							my $value = $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}[$index];
 							$value = 'undef' unless (defined $value);
+							message "[eventMacro] '\$".$var->{real_name}."[".$index."]' = '".$value."'\n", "menu";
 						}
 						
 					} else {
 						message "[eventMacro] Array variable '".$var->{display_name}."' doesn't exist\n";
+					}
+					
+				} elsif ($var->{type} eq 'accessed_hash') {
+					if (exists $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}) {
+						my $var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
+						$var_value = 'undef' unless (defined $var_value);
+						message "'[eventMacro] '".$var->{display_name}."' = '".$var_value."'\n", "menu";
+						
+					} else {
+						message "[eventMacro] Hash variable '".$var->{display_name}."' doesn't exist\n";
+					}
+					
+				} elsif ($var->{type} eq 'hash') {
+					if (exists $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}) {
+						message "[eventMacro] '".$var->{display_name}."'\n";
+						my $hash = $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}};
+						foreach my $key (keys %{$hash}) {
+							my $value = $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}{$key};
+							$value = 'undef' unless (defined $value);
+							message "[eventMacro] '\$".$var->{real_name}."{".$key."}' = '".$value."'\n", "menu";
+						}
+						
+					} else {
+						message "[eventMacro] Hash variable '".$var->{display_name}."' doesn't exist\n";
 					}
 				}
 				
@@ -410,6 +449,8 @@ sub commandHandler {
 			message "usage: eventMacro var_set [variable name] [variable value]\n", "list";
 			
 		} else {
+			use Data::Dumper;
+			Log::warning "[test]-- ".Dumper($eventMacro)."\n";
 			if (my $var = find_variable($params[0])) {
 				if ($var->{real_name} =~ /^\./) {
 					error "[eventMacro] System variables cannot be set by hand (The ones starting with a dot '.')\n";
@@ -433,10 +474,40 @@ sub commandHandler {
 						message "[eventMacro] '".$params[1]."' is not a valid array value syntax. Correct syntax:\n".
 						        "\@array_name (member1,member2,member3).\n";
 					}
+					
+				} elsif ($var->{type} eq 'accessed_hash') {
+					message "[eventMacro] Setting the value of hash variable '".$var->{display_name}."' to '".$params[1]."'.\n";
+					$eventMacro->set_hash_var($var->{real_name}, $var->{key}, $params[1]);
+					
+				} elsif ($var->{type} eq 'hash') {
+					my $value = join('', @params[1..$#params]);
+					if ($value =~ /^\((.*)\)$/i) {
+						message "[eventMacro] Setting the value of hash variable '".$var->{display_name}."' to '".$value."'.\n";
+						my @members = split(/\s*,\s*/, $1);
+						my %hash;
+						foreach my $hash_member (@members) {
+							my ($key, $value) = split(/\s*=>\s*/, $hash_member);
+							if ($hash_member =~ /(.+)\s*=>\s*(.+)/) {
+								my $key = $1;
+								my $value = $2;
+								$hash{$key} = $value;
+							} else {
+								message "[eventMacro] '".$params[1]."' is not a valid hash key/value pair syntax. Correct syntax:\n".
+									"key1 => value1\n";
+								return;
+							}
+						}
+						$eventMacro->set_full_hash($var->{real_name}, \%hash);
+						
+					} else {
+						message "[eventMacro] '".$params[1]."' is not a valid hash value syntax. Correct syntax:\n".
+						        "\%hash_name (key1 => value1, key2 => value2).\n";
+					}
 				}
 			} else {
 				message "[eventMacro] '".$params[0]."' is not a valid variable name syntax\n";
 			}
+			Log::warning "[test]-- ".Dumper($eventMacro)."\n";
 		}
 		
 		
