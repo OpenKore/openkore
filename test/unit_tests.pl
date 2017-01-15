@@ -28,6 +28,8 @@ use Test::More qw(no_plan);
 use Misc;
 
 my @tests = qw(
+	GlobalVarRegexTest
+	FindVarTest
     Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest

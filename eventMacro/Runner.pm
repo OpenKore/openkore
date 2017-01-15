@@ -983,10 +983,10 @@ sub next {
 			$self->error("Could not define variable type");
 			return;
 		}
+		my $display_name = quotemeta($var->{display_name});
+		$line =~ s/^$display_name\s*//;
 		
 		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
-			my $display_name = "\\".$var->{display_name};
-			$line =~ s/^$display_name\s*//;
 			
 			if ($line =~ /^=\s*(.*)/i) {
 				my $val = $self->parse_command($1);
@@ -1014,8 +1014,6 @@ sub next {
 			}
 		
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
-			my $display_name = $var->{display_name};
-			$line =~ s/^$display_name\s*//;
 			
 			if ($line =~ /^=\s*(.*)/i) {
 				my $value = $1;
@@ -1560,7 +1558,7 @@ sub substitue_variables {
 	foreach my $variable (@variables) {
 		my $var = find_variable($variable);
 		
-		my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') ? ("\\".$var->{display_name}) : ($var->{display_name}));
+		my $regex_name = quotemeta($var->{display_name});
 		if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 			my $before_var = $1;
 			my $after_var = $2;

@@ -9,7 +9,7 @@ our @EXPORT = qw($eventMacro @perl_name $general_variable_qr $scalar_variable_qr
 our $eventMacro;
 our @perl_name;
 
-our $general_variable_qr = qr/(?:\$|\@|\%)\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\]|\{[a-zA-Z\d]\})?/;
+our $general_variable_qr = qr/(?:\$|\@|\%)\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\]|\{[a-zA-Z\d]+\})?/;
 
 our $scalar_variable_qr = qr/\$\.?[a-zA-Z][a-zA-Z\d]*/;
 
