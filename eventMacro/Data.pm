@@ -9,15 +9,17 @@ our @EXPORT = qw($eventMacro @perl_name $general_variable_qr $scalar_variable_qr
 our $eventMacro;
 our @perl_name;
 
-our $general_variable_qr = qr/(?:\$|\@|\%)\.?[a-zA-Z][a-zA-Z\d]*(?:\[\d+\]|\{[a-zA-Z\d]+\})?/;
+my $valid_var_characters = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
-our $scalar_variable_qr = qr/\$\.?[a-zA-Z][a-zA-Z\d]*/;
+our $general_variable_qr = qr/(?:\$$valid_var_characters(?:\[\d+\]|\{[a-zA-Z\d]+\})?|\@$valid_var_characters|\%$valid_var_characters)/;
 
-our $array_variable_qr = qr/\@\.?[a-zA-Z][a-zA-Z\d]*/;
-our $accessed_array_variable_qr = qr/\$\.?[a-zA-Z][a-zA-Z\d]*\[\d+\]/;
+our $scalar_variable_qr = qr/\$$valid_var_characters/;
 
-our $hash_variable_qr = qr/\%\.?[a-zA-Z][a-zA-Z\d]*/;
-our $accessed_hash_variable_qr = qr/\$\.?[a-zA-Z][a-zA-Z\d]*\{[a-zA-Z\d]+\}/;
+our $array_variable_qr = qr/\@$valid_var_characters/;
+our $accessed_array_variable_qr = qr/\$$valid_var_characters\[\d+\]/;
+
+our $hash_variable_qr = qr/\%$valid_var_characters/;
+our $accessed_hash_variable_qr = qr/\$$valid_var_characters\{[a-zA-Z\d]+\}/;
 
 our $macro_keywords_character = '&';
 

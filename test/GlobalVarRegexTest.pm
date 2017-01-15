@@ -56,6 +56,49 @@ sub start {
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok ($var =~ /^$accessed_hash_variable_qr$/);
 	};
+	
+	subtest 'bug test' => sub {
+		my $var = '%bar{hey}';
+		ok !($var =~ /^$general_variable_qr$/);
+		ok !($var =~ /^$scalar_variable_qr$/);
+		ok !($var =~ /^$array_variable_qr$/);
+		ok !($var =~ /^$accessed_array_variable_qr$/);
+		ok !($var =~ /^$hash_variable_qr$/);
+		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		
+		$var = '%bar[10]';
+		ok !($var =~ /^$general_variable_qr$/);
+		ok !($var =~ /^$scalar_variable_qr$/);
+		ok !($var =~ /^$array_variable_qr$/);
+		ok !($var =~ /^$accessed_array_variable_qr$/);
+		ok !($var =~ /^$hash_variable_qr$/);
+		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		
+		$var = '@bar[10]';
+		ok !($var =~ /^$general_variable_qr$/);
+		ok !($var =~ /^$scalar_variable_qr$/);
+		ok !($var =~ /^$array_variable_qr$/);
+		ok !($var =~ /^$accessed_array_variable_qr$/);
+		ok !($var =~ /^$hash_variable_qr$/);
+		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		
+		$var = '@bar{foo}';
+		ok !($var =~ /^$general_variable_qr$/);
+		ok !($var =~ /^$scalar_variable_qr$/);
+		ok !($var =~ /^$array_variable_qr$/);
+		ok !($var =~ /^$accessed_array_variable_qr$/);
+		ok !($var =~ /^$hash_variable_qr$/);
+		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		
+		$var = '$bar[foo]';
+		ok !($var =~ /^$general_variable_qr$/);
+		ok !($var =~ /^$scalar_variable_qr$/);
+		ok !($var =~ /^$array_variable_qr$/);
+		ok !($var =~ /^$accessed_array_variable_qr$/);
+		ok !($var =~ /^$hash_variable_qr$/);
+		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		
+	};
 }
 
 1;
