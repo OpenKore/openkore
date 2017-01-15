@@ -1030,8 +1030,7 @@ sub next {
 					} else {
 						my %hash;
 						foreach my $hash_member (@members) {
-							my ($key, $value) = split(/\s*=>\s*/, $hash_member);
-							if ($hash_member =~ /(.+)\s*=>\s*(.+)/) {
+							if ($hash_member =~ /(.*\S)\s*=>\s*(\S.*)/) {
 								my $key = $1;
 								my $value = $2;
 								$hash{$key} = $value;

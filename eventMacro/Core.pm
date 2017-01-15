@@ -693,14 +693,14 @@ sub get_hash_keys {
 	my ($self, $variable_name) = @_;
 	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
 	my @keys = keys %hash;
-	return @keys;
+	return \@keys;
 }
 
 sub get_hash_values {
 	my ($self, $variable_name) = @_;
 	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
 	my @values = values %hash;
-	return @values;
+	return \@values;
 }
 
 sub exists_hash {

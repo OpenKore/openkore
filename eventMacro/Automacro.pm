@@ -181,7 +181,7 @@ sub define_var_types {
 		push ( @{ $self->{hash_variables}{$variable->{real_name}}}, $cond_index );
 		
 	} elsif ($variable->{type} eq 'accessed_hash') {
-		push ( @{ $self->{accessed_hash_variables}{$variable->{real_name}}[$variable->{key}] }, $cond_index );
+		push ( @{ $self->{accessed_hash_variables}{$variable->{real_name}}{$variable->{key}} }, $cond_index );
 	}
 }
 
