@@ -976,14 +976,43 @@ sub next {
 	if ($self->{current_line} =~ /^($general_variable_qr)/i) {
 		my $line = $self->{current_line};
 		
-		my $var = find_variable($1);
-		if (defined $self->error) {
-			return;
-		} elsif (!defined $var) {
-			$self->error("Could not define variable type");
-			return;
+		my $var;
+		my $display_name;
+		
+		if ($line =~ /^\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+			my $name = $1;
+			my $open_bracket = (defined $2 ? '[' : '{');
+			my $close_bracket = (defined $2 ? ']' : '}');
+			my $key_index = (defined $2 ? $2 : $3);
+			my $parsed_key_index = $self->parse_command($key_index);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $parsed_key_index) {
+				$self->error("Could not parse key or index code");
+				return;
+			}
+			
+			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
+			
+			$var = find_variable($real_name);
+			if (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			
+			$display_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+			
+		} else {
+			$var = find_variable($1);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			$display_name = quotemeta($var->{display_name});
 		}
-		my $display_name = quotemeta($var->{display_name});
+		
 		$line =~ s/^$display_name\s*//;
 		
 		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
@@ -999,14 +1028,14 @@ sub next {
 					return;
 					
 				} else {
-					$eventMacro->set_var($var->{type}, $var->{real_name}, 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef), ($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)) );
+					$eventMacro->set_var($var->{type}, $var->{real_name}, ($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
 				}
 				
 			} elsif ($line =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
 				
 				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
-				$eventMacro->set_var($var->{type}, $var->{real_name}, 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef), ($old_value + $change));
+				$eventMacro->set_var($var->{type}, $var->{real_name}, ($old_value + $change), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
 				
 			} else {
 				$self->error("unrecognized assignment");
@@ -1549,40 +1578,78 @@ sub parse_perl_subs {
 sub substitue_variables {
 	my ($self, $received) = @_;
 	
-	my $original = $received;
+	my $remaining = $received;
 	
-	# $scalars/$array[index]/$hash[key] entries
-	my @variables = $received =~ /(?:^|(?<=[^\\]))($general_variable_qr)/g;
-	my $remaining = $original;
-	foreach my $variable (@variables) {
-		my $var = find_variable($variable);
-		
-		my $regex_name = quotemeta($var->{display_name});
-		if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
-			my $before_var = $1;
-			my $after_var = $2;
-			my $var_value;
-			if ($var->{type} eq 'scalar') {
-				$var_value = $eventMacro->get_scalar_var($var->{real_name});
-				
-			} elsif ($var->{type} eq 'accessed_array') {
-				$var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
-				
-			} elsif ($var->{type} eq 'array') {
-				$var_value = $eventMacro->get_array_size($var->{real_name});
-				
-			} elsif ($var->{type} eq 'accessed_hash') {
-				$var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
-				
-			} elsif ($var->{type} eq 'hash') {
-				$var_value = $eventMacro->get_hash_size($var->{real_name});
+	use Data::Dumper;
+	
+	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
+		#accessed arrays and hashes
+		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+			my $name = $1;
+			my $open_bracket = (defined $2 ? '[' : '{');
+			my $close_bracket = (defined $2 ? ']' : '}');
+			my $key_index = (defined $2 ? $2 : $3);
+			my $parsed_key_index = $self->parse_command($key_index);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $parsed_key_index) {
+				$self->error("Could not parse key or index code");
+				return;
 			}
 			
-			$remaining = $before_var.$var_value.$after_var;
+			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
 			
-		} else {
-			$self->error("Could not find detected variable in code");
-			return;
+			my $var = find_variable($real_name);
+			if (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			
+			my $regex_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+			
+			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+				my $before_var = $1;
+				my $after_var = $2;
+				my $var_value;
+				if ($var->{type} eq 'accessed_array') {
+					$var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
+				} elsif ($var->{type} eq 'accessed_hash') {
+					$var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
+				}
+				
+				$remaining = $before_var.$var_value.$after_var;
+				
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+			next VAR;
+			
+		} elsif ($remaining =~ /(?:^|(?<=[^\\]))($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/) {
+			my $var = find_variable($1);
+			
+			my $regex_name = quotemeta($var->{display_name});
+			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+				my $before_var = $1;
+				my $after_var = $2;
+				my $var_value;
+				if ($var->{type} eq 'scalar') {
+					$var_value = $eventMacro->get_scalar_var($var->{real_name});
+					
+				} elsif ($var->{type} eq 'array') {
+					$var_value = $eventMacro->get_array_size($var->{real_name});
+					
+				} elsif ($var->{type} eq 'hash') {
+					$var_value = $eventMacro->get_hash_size($var->{real_name});
+				}
+				
+				$remaining = $before_var.$var_value.$after_var;
+				
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+			next VAR;
 		}
 	}
 
