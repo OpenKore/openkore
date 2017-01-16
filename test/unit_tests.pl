@@ -31,7 +31,7 @@ my @tests = qw(
 	GlobalVarRegexTest
 	FindVarTest
 	CoreVarFunctionsTest
-    Validator::NumericComparisonTest
+	Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest
 );
