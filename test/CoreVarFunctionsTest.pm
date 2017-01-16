@@ -255,6 +255,171 @@ sub start {
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($removed, 'Shield');
 	};
+	
+	subtest 'hash' => sub {
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {});
+		
+		is ($eventMacro->get_hash_size('hash1'), 0);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		$eventMacro->set_full_hash('hash1', {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef});
+		is ($eventMacro->get_hash_size('hash1'), 5);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Poring'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Poring'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Poring'), 10);
+		
+		is ($eventMacro->exists_hash('hash1', 'Drops'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Drops'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Drops'), 25);
+		
+		is ($eventMacro->exists_hash('hash1', 'Magmaring'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Magmaring'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Magmaring'), 100);
+		
+		is ($eventMacro->exists_hash('hash1', 'Poporing'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Poporing'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Poporing'));
+		
+		is ($eventMacro->exists_hash('hash1', 'Angeling'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Angeling'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Angeling'));
+		
+		is ($eventMacro->exists_hash('hash1', 'Deviling'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Deviling'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Deviling'));
+		
+		is ($eventMacro->exists_hash('hash1', 'ArchAngeling'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'ArchAngeling'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Deviling'));
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef}});
+		
+		
+		$eventMacro->set_full_hash('hash2', {'Staff' => 2000, 'Shield' => undef, 'Card' => 7000});
+		is ($eventMacro->get_hash_size('hash1'), 5);
+		is ($eventMacro->get_hash_size('hash2'), 3);
+		
+		is ($eventMacro->exists_hash('hash2', 'Staff'), 1);
+		is ($eventMacro->is_hash_var_defined('hash2', 'Staff'), 1);
+		is ($eventMacro->get_hash_var('hash2', 'Staff'), 2000);
+		
+		is ($eventMacro->exists_hash('hash2', 'Shield'), 1);
+		is ($eventMacro->is_hash_var_defined('hash2', 'Shield'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash2', 'Shield'));
+		
+		is ($eventMacro->exists_hash('hash2', 'Card'), 1);
+		is ($eventMacro->is_hash_var_defined('hash2', 'Card'), 1);
+		is ($eventMacro->get_hash_var('hash2', 'Card'), 7000);
+		
+		is ($eventMacro->exists_hash('hash2', 'Weapon'), 0);
+		is ($eventMacro->is_hash_var_defined('hash2', 'Weapon'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash2', 'Weapon'));
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef}, 'hash2' => {'Staff' => 2000, 'Shield' => undef, 'Card' => 7000}});
+		
+		
+		my @keys1 = @{$eventMacro->get_hash_keys('hash1')};
+		my @real_keys1 = keys %{$eventMacro->{Hash_Variable_List_Hash}{'hash1'}};
+		is_deeply(\@keys1, \@real_keys1);
+		
+		my @values1 = @{$eventMacro->get_hash_values('hash1')};
+		my @real_values1 = values %{$eventMacro->{Hash_Variable_List_Hash}{'hash1'}};
+		is_deeply(\@values1, \@real_values1);
+		
+		my @keys2 = @{$eventMacro->get_hash_keys('hash2')};
+		my @real_keys2 = keys %{$eventMacro->{Hash_Variable_List_Hash}{'hash2'}};
+		is_deeply(\@keys2, \@real_keys2);
+		
+		my @values2 = @{$eventMacro->get_hash_values('hash2')};
+		my @real_values2 = values %{$eventMacro->{Hash_Variable_List_Hash}{'hash2'}};
+		is_deeply(\@values2, \@real_values2);
+		
+		
+		$eventMacro->clear_hash('hash1');
+		is ($eventMacro->get_hash_size('hash1'), 0);
+		is ($eventMacro->get_hash_size('hash2'), 3);
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash2' => {'Staff' => 2000, 'Shield' => undef, 'Card' => 7000}});
+		
+		$eventMacro->clear_hash('hash2');
+		is ($eventMacro->get_hash_size('hash1'), 0);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {});
+		
+
+		$eventMacro->set_hash_var('hash1', 'Quest1', 10);
+		is ($eventMacro->get_hash_size('hash1'), 1);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest1'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest1'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Quest1'), 10);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest2'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest2'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest2'));
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Quest1' => 10}});
+		
+		
+		
+		$eventMacro->set_hash_var('hash1', 'Quest2', 'undef');
+		is ($eventMacro->get_hash_size('hash1'), 2);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest1'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest1'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Quest1'), 10);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest2'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest2'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest2'));
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Quest1' => 10, 'Quest2' => undef}});
+		
+		$eventMacro->set_hash_var('hash1', 'Quest2', 15);
+		is ($eventMacro->get_hash_size('hash1'), 2);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest1'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest1'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Quest1'), 10);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest2'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest2'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Quest2'), 15);
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Quest1' => 10, 'Quest2' => 15}});
+		
+		$eventMacro->delete_key('hash1', 'Quest1');
+		is ($eventMacro->get_hash_size('hash1'), 1);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest1'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest1'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest1'));
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest2'), 1);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest2'), 1);
+		is ($eventMacro->get_hash_var('hash1', 'Quest2'), 15);
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Quest2' => 15}});
+		
+		$eventMacro->delete_key('hash1', 'Quest2');
+		is ($eventMacro->get_hash_size('hash1'), 0);
+		is ($eventMacro->get_hash_size('hash2'), 0);
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest1'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest1'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest1'));
+		
+		is ($eventMacro->exists_hash('hash1', 'Quest2'), 0);
+		is ($eventMacro->is_hash_var_defined('hash1', 'Quest2'), 0);
+		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest2'));
+		
+		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {}});
+	};
 }
 
 1;
