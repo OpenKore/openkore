@@ -1834,24 +1834,40 @@ sub parse_command {
 
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
-	my $var = find_variable($inside_brackets);
-	if (defined $self->error) {
-		return;
-	} elsif (!defined $var) {
-		$self->error("Could not define variable type in hash manage");
-		return;
-	} elsif ($var->{type} ne 'accessed_hash') {
-		$self->error("Bad exists syntax, variable not a hash name/key pair");
-		return;
-	}
 	
-	if ($keyword eq 'exists') {
-		return ($eventMacro->exists_hash($var->{real_name}, $var->{key}));
+	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+?)\}/) {
+		my $name = $1;
+		my $parsed = $self->parse_command($2);
+		if (defined $self->error) {
+			return;
+		} elsif (!defined $parsed) {
+			$self->error("Could not parse key or index code");
+			return;
+		}
+			
+		my $real_name = ('$'.$name.'{'.$parsed.'}');
 		
-	} elsif ($keyword eq 'delete') {
-		my $result = $eventMacro->delete_key($var->{real_name}, $var->{key});
-		$result = '' unless (defined $result);
-		return $result;
+		my $var = find_variable($real_name);
+		if (!defined $var) {
+			$self->error("Could not define variable type");
+			return;
+		} elsif ($var->{type} ne 'accessed_hash') {
+			$self->error("Bad exists syntax, variable not a hash name/key pair");
+			return;
+		}
+		
+		if ($keyword eq 'exists') {
+			return ($eventMacro->exists_hash($var->{real_name}, $var->{key}));
+			
+		} elsif ($keyword eq 'delete') {
+			my $result = $eventMacro->delete_key($var->{real_name}, $var->{key});
+			$result = '' unless (defined $result);
+			return $result;
+		}
+		
+	} else {
+		$self->error("Functions 'exists' and 'delete' must have a hash and a hash key as argument");
+		return;
 	}
 }
 
@@ -1874,7 +1890,7 @@ sub manage_array {
 		return;
 	}
 	
-	my $parsed = $self->substitue_variables($args[1]);
+	my $parsed = $self->parse_command($args[1]);
 	
 	my $result;
 	
