@@ -1841,7 +1841,7 @@ sub manage_hash {
 		if (defined $self->error) {
 			return;
 		} elsif (!defined $parsed) {
-			$self->error("Could not parse key or index code");
+			$self->error("Could not parse key of hash in function '".$keyword."'");
 			return;
 		}
 			
@@ -1849,7 +1849,7 @@ sub manage_hash {
 		
 		my $var = find_variable($real_name);
 		if (!defined $var) {
-			$self->error("Could not define variable type");
+			$self->error("Could not define variable in function '".$keyword."'");
 			return;
 		} elsif ($var->{type} ne 'accessed_hash') {
 			$self->error("Bad exists syntax, variable not a hash name/key pair");
@@ -1866,7 +1866,7 @@ sub manage_hash {
 		}
 		
 	} else {
-		$self->error("Functions 'exists' and 'delete' must have a hash and a hash key as argument");
+		$self->error("Function '".$keyword."' must have a hash and a hash key as argument");
 		return;
 	}
 }

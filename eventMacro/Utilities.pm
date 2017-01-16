@@ -450,6 +450,8 @@ sub find_variable {
 	if (my $accessed_hash = find_accessed_hash_variable($text)) {
 		return ({ display_name => $accessed_hash->{display_name}, type => 'accessed_hash', real_name => $accessed_hash->{real_name}, key => $accessed_hash->{key} });
 	}
+	
+	return undef;
 }
 
 sub find_scalar_variable {
