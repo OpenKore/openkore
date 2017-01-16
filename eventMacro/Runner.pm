@@ -1071,7 +1071,7 @@ sub next {
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
 					
-				} elsif ($var->{type} eq 'array' && $value =~ /^(keys|values)\s+($hash_variable_qr)$/) {
+				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
 					my $var2 = find_variable($2);
 					if (defined $self->error) {

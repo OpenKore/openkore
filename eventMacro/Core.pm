@@ -351,7 +351,7 @@ sub create_callbacks {
 				my $cond_indexes = $array->[$array_index];
 				next unless (defined $cond_indexes);
 				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Accessed_Array_Variables}{$var}[$array_index]{$automacro_index}{$condition_index} = 1;
+					$self->{Event_Related_Accessed_Array_Variables}{$var}{$array_index}{$automacro_index}{$condition_index} = 1;
 				}
 			}
 		}
@@ -762,27 +762,21 @@ sub is_hash_var_defined {
 
 sub check_necessity_and_callback {
 	my ($self, $variable_type, $variable_name, $value, $complement) = @_;
-	
-	my $event_hash;
+
 	if ($variable_type eq 'scalar') {
 		return unless (exists $self->{'Event_Related_Scalar_Variables'}{$variable_name});
-		$event_hash = $self->{'Event_Related_Scalar_Variables'}{$variable_name};
 		
 	} elsif ($variable_type eq 'array') {
 		return unless (exists $self->{'Event_Related_Array_Variables'}{$variable_name});
-		$event_hash = $self->{'Event_Related_Array_Variables'}{$variable_name};
 		
 	} elsif ($variable_type eq 'accessed_array') {
-		return unless (exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name} && defined $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}[$complement]);
-		$event_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}[$complement];
+		return unless (exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name} && exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}{$complement});
 		
 	} elsif ($variable_type eq 'hash') {
 		return unless (exists $self->{'Event_Related_Hash_Variables'}{$variable_name});
-		$event_hash = $self->{'Event_Related_Hash_Variables'}{$variable_name};
 		
 	} elsif ($variable_type eq 'accessed_hash') {
 		return unless (exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name} && exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name}{$complement});
-		$event_hash = $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name}{$complement};
 	}
 	$self->manage_event_callbacks('variable', $variable_name, $value, $variable_type, $complement);
 }
@@ -870,7 +864,7 @@ sub manage_event_callbacks {
 			$callback_name = '@'.$callback_name;
 			
 		} elsif ($sub_type eq 'accessed_array') {
-			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$complement];
+			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}{$complement};
 			$callback_name = '$'.$callback_name.'['.$complement.']';
 			$debug_message .= ", array index: '".$complement."'";
 			
