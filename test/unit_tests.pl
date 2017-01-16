@@ -30,6 +30,7 @@ use Misc;
 my @tests = qw(
 	GlobalVarRegexTest
 	FindVarTest
+	CoreVarFunctionsTest
     Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest

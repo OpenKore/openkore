@@ -492,7 +492,7 @@ sub set_scalar_var {
 
 sub is_scalar_var_defined {
 	my ($self, $variable_name) = @_;
-	return ((defined $self->{Scalar_Variable_List_Hash}{$variable_name}) ? 1 : 0);
+	return ((exists $self->{Scalar_Variable_List_Hash}{$variable_name} && defined $self->{Scalar_Variable_List_Hash}{$variable_name}) ? 1 : 0);
 }
 #########
 
