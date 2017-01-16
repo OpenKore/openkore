@@ -246,8 +246,56 @@ sub start {
 		ok !$v->validate( 10001, 50000 );
 	};
 	
-	subtest 'no max value var' => sub {
-		my $v = eventMacro::Validator::NumericComparison->new( '> $bar' );
+	subtest 'no max value scalar var' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '> $scalar' );
+		ok $v->parsed;
+		ok ($v->{min_is_var});
+		ok (!$v->{min_is_pct});
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		is ($v->{var_name_min}, $v->{var_name_max});
+		is ($v->{min_is_var}, $v->{max_is_var});
+		is ($v->{min_is_pct}, $v->{max_is_pct});
+	};
+	
+	subtest 'no max value array var' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '> @array' );
+		ok $v->parsed;
+		ok ($v->{min_is_var});
+		ok (!$v->{min_is_pct});
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		is ($v->{var_name_min}, $v->{var_name_max});
+		is ($v->{min_is_var}, $v->{max_is_var});
+		is ($v->{min_is_pct}, $v->{max_is_pct});
+	};
+	
+	subtest 'no max value acessed array var' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '> $array[5]' );
+		ok $v->parsed;
+		ok ($v->{min_is_var});
+		ok (!$v->{min_is_pct});
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		is ($v->{var_name_min}, $v->{var_name_max});
+		is ($v->{min_is_var}, $v->{max_is_var});
+		is ($v->{min_is_pct}, $v->{max_is_pct});
+	};
+	
+	subtest 'no max value hash var' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '> %hash' );
+		ok $v->parsed;
+		ok ($v->{min_is_var});
+		ok (!$v->{min_is_pct});
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		is ($v->{var_name_min}, $v->{var_name_max});
+		is ($v->{min_is_var}, $v->{max_is_var});
+		is ($v->{min_is_pct}, $v->{max_is_pct});
+	};
+	
+	subtest 'no max value accessed hash var' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '> $hash{mykey}' );
 		ok $v->parsed;
 		ok ($v->{min_is_var});
 		ok (!$v->{min_is_pct});
@@ -314,7 +362,7 @@ sub start {
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
 
-		$v = eventMacro::Validator::NumericComparison->new( '$foo .. $bar' );
+		$v = eventMacro::Validator::NumericComparison->new( '@foo .. %bar' );
 		ok $v->parsed;
 
 		ok (!defined $v->{min});
@@ -322,11 +370,11 @@ sub start {
 		ok ($v->{min_is_var});
 		ok ($v->{max_is_var});
 		
-		is ($v->{var_name_min}, '$foo');
-		is ($v->{var_name_max}, '$bar');
+		is ($v->{var_name_min}, '@foo');
+		is ($v->{var_name_max}, '%bar');
 		
-		$v->update_vars( '$foo', 10 );
-		$v->update_vars( '$bar', 20 );
+		$v->update_vars( '@foo', 10 );
+		$v->update_vars( '%bar', 20 );
 		
 		is ($v->{min}, 10);
 		is ($v->{max}, 20);
@@ -336,25 +384,25 @@ sub start {
 		ok $v->validate( 20 );
 		ok !$v->validate( 21 );
 		
-		$v = eventMacro::Validator::NumericComparison->new( '10..$bar' );
+		$v = eventMacro::Validator::NumericComparison->new( '10..$bar[5]' );
 		ok $v->parsed;
 		
-		$v->update_vars( '$bar', 9 );
+		$v->update_vars( '$bar[5]', 9 );
 		ok !$v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( '$bar', 10 );
+		$v->update_vars( '$bar[5]', 10 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( '$bar', 11 );
+		$v->update_vars( '$bar[5]', 11 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 11 );
 		
-		$v->update_vars( '$bar', 100 );
+		$v->update_vars( '$bar[5]', 100 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 50 );
@@ -362,25 +410,25 @@ sub start {
 		ok $v->validate( 100 );
 		ok !$v->validate( 101 );
 		
-		$v = eventMacro::Validator::NumericComparison->new( '$foo..20' );
+		$v = eventMacro::Validator::NumericComparison->new( '$foo{hey}..20' );
 		ok $v->parsed;
 		
-		$v->update_vars( '$foo', 30 );
+		$v->update_vars( '$foo{hey}', 30 );
 		ok !$v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
 		
-		$v->update_vars( '$foo', 10 );
+		$v->update_vars( '$foo{hey}', 10 );
 		ok !$v->validate( 9 );
 		ok $v->validate( 10 );
 		ok $v->validate( 11 );
 		
-		$v->update_vars( '$foo', 20 );
+		$v->update_vars( '$foo{hey}', 20 );
 		ok !$v->validate( 19 );
 		ok $v->validate( 20 );
 		ok !$v->validate( 21 );
 		
-		$v->update_vars( '$foo', 5 );
+		$v->update_vars( '$foo{hey}', 5 );
 		ok !$v->validate( 4 );
 		ok $v->validate( 5 );
 		ok $v->validate( 10 );

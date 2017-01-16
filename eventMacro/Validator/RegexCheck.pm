@@ -51,7 +51,7 @@ sub parse {
 		foreach my $var (@{$self->{var}}) {
 			foreach (1..$self->{var_count_list}{$var->{display_name}}) {
 				my $var_name = $var->{display_name};
-				my $regex_name = (($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array') ? ("\\".$var_name) : ($var_name));
+				my $regex_name = quotemeta($var_name);
 				my ($before_var);
 				if ($remaining_regex =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 					$before_var = $1;

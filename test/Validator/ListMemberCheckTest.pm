@@ -68,15 +68,15 @@ sub start {
 		ok !$v->validate( 'Drops' );
 		ok !$v->validate( 'poring' );
 
-		$v = eventMacro::Validator::ListMemberCheck->new( '$foo' );
+		$v = eventMacro::Validator::ListMemberCheck->new( '$foo{map}' );
 		ok $v->parsed;
 		is_deeply($v->{list}, [undef]);
-		is_deeply($v->{var_to_member_index}, {'$foo' => [0]});
+		is_deeply($v->{var_to_member_index}, {'$foo{map}' => [0]});
 		
 		ok !$v->validate( 'geffen' );
 		ok !$v->validate( 'prt_fild10' );
 		
-		$v->update_vars( '$foo', 'prt_fild10' );
+		$v->update_vars( '$foo{map}', 'prt_fild10' );
 		is_deeply($v->{list}, ['prt_fild10']);
 		
 		ok !$v->validate( 'geffen' );
@@ -84,10 +84,10 @@ sub start {
 	};
 	
 	subtest 'multiple variable members' => sub {
-		my $v = eventMacro::Validator::ListMemberCheck->new( '$foo, $bar, $foobar' );
+		my $v = eventMacro::Validator::ListMemberCheck->new( '$foo, $bar[5], $foobar{mob}' );
 		ok $v->parsed;
 		is_deeply($v->{list}, [undef, undef, undef]);
-		is_deeply($v->{var_to_member_index}, {'$foo' => [0], '$bar' => [1],'$foobar' => [2]});
+		is_deeply($v->{var_to_member_index}, {'$foo' => [0], '$bar[5]' => [1],'$foobar{mob}' => [2]});
 		
 		ok !$v->validate( 'Poring' );
 		ok !$v->validate( 'Drops' );
@@ -103,7 +103,7 @@ sub start {
 		ok !$v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
 		
-		$v->update_vars( '$foobar', 'poring' );
+		$v->update_vars( '$foobar{mob}', 'poring' );
 		is_deeply($v->{list}, ['Poring', undef, 'poring']);
 		
 		ok $v->validate( 'Poring' );
@@ -111,7 +111,7 @@ sub start {
 		ok $v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
 		
-		$v->update_vars( '$bar', 'Drops' );
+		$v->update_vars( '$bar[5]', 'Drops' );
 		is_deeply($v->{list}, ['Poring', 'Drops', 'poring']);
 		
 		ok $v->validate( 'Poring' );

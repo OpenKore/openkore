@@ -100,7 +100,7 @@ sub between {
 }
 
 sub _get_code_regex {
-	return '(?:<|<=|=|==|!=|!|>=|>|)\s*(?:-?\d+(?:\.\d+)?%?|\$\.?[a-zA-Z][a-zA-Z\d]*)(?:\s*\.\.\s*(?:-?\d+(?:\.\d+)?%?|\$\.?[a-zA-Z][a-zA-Z\d]*))?';
+	return '(?:<|<=|=|==|!=|!|>=|>|)\s*(?:$number_qr%?|$general_variable_qr)(?:\s*\.\.\s*(?:$number_qr%?|$general_variable_qr))?';
 }
 
 1;

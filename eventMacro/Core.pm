@@ -39,6 +39,8 @@ sub new {
 	$self->{Event_Related_Scalar_Variables} = {};
 	$self->{Event_Related_Array_Variables} = {};
 	$self->{Event_Related_Accessed_Array_Variables} = {};
+	$self->{Event_Related_Hash_Variables} = {};
+	$self->{Event_Related_Accessed_Hash_Variables} = {};
 	
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = {};
@@ -48,6 +50,7 @@ sub new {
 	
 	$self->{Scalar_Variable_List_Hash} = {};
 	$self->{Array_Variable_List_Hash} = {};
+	$self->{Hash_Variable_List_Hash} = {};
 	
 	$self->{number_of_triggered_automacros} = 0;
 	
@@ -57,6 +60,7 @@ sub new {
 	$self->{automacro_index_to_queue_index} = {};
 	
 	$self->set_arrays_size_to_zero();
+	$self->set_hashes_size_to_zero();
 	
 	if ($char && $net && $net->getState() == Network::IN_GAME) {
 		$self->check_all_conditions();
@@ -342,12 +346,32 @@ sub create_callbacks {
 		
 		# Accessed arrays
 		foreach my $var ( keys %{ $automacro->get_accessed_array_variables } ) {
-			my $array_indexes = $automacro->{accessed_array_variables}->{$var};
-			foreach my $array_index (0..$#{$array_indexes}) {
-				my $cond_indexes = $array_indexes->[$array_index];
+			my $array = $automacro->{accessed_array_variables}->{$var};
+			foreach my $array_index (0..$#{$array}) {
+				my $cond_indexes = $array->[$array_index];
 				next unless (defined $cond_indexes);
 				foreach my $condition_index (@{$cond_indexes}) {
 					$self->{Event_Related_Accessed_Array_Variables}{$var}[$array_index]{$automacro_index}{$condition_index} = 1;
+				}
+			}
+		}
+		
+		# Hashes
+		foreach my $var ( keys %{ $automacro->get_hash_variables } ) {
+			my $conditions_indexes = $automacro->{hash_variables}->{$var};
+			foreach my $condition_index (@{$conditions_indexes}) {
+				$self->{Event_Related_Hash_Variables}{$var}{$automacro_index}{$condition_index} = 1;
+			}
+		}
+		
+		# Accessed hashes
+		foreach my $var ( keys %{ $automacro->get_accessed_hash_variables } ) {
+			my $hash = $automacro->{accessed_hash_variables}->{$var};
+			foreach my $hash_key (keys %{$hash}) {
+				my $cond_indexes = $hash->{$hash_key};
+				next unless (defined $cond_indexes);
+				foreach my $condition_index (@{$cond_indexes}) {
+					$self->{Event_Related_Accessed_Hash_Variables}{$var}{$hash_key}{$automacro_index}{$condition_index} = 1;
 				}
 			}
 		}
@@ -364,6 +388,13 @@ sub set_arrays_size_to_zero {
 	my ($self) = @_;
 	foreach my $array_name (keys %{$self->{Event_Related_Array_Variables}}) {
 		$self->array_size_change($array_name);
+	}
+}
+
+sub set_hashes_size_to_zero {
+	my ($self) = @_;
+	foreach my $hash_name (keys %{$self->{Event_Related_Hash_Variables}}) {
+		$self->hash_size_change($hash_name);
 	}
 }
 
@@ -385,6 +416,60 @@ sub check_all_conditions {
 	}
 }
 
+# Generic variable functions
+sub get_var {
+	my ($self, $type, $variable_name, $complement) = @_;
+	
+	if ($type eq 'scalar') {
+		return ($self->get_scalar_var($variable_name));
+		
+	} elsif ($type eq 'accessed_array') {
+		return ($self->get_array_var($variable_name, $complement));
+		
+	} elsif ($type eq 'accessed_hash') {
+		return ($self->get_hash_var($variable_name, $complement));
+		
+	} else {
+		error "[eventMacro] You can't call get_var with a variable type other than 'scalar', 'accessed_array' or 'accessed_hash'.\n";
+		return undef;
+	}
+}
+
+sub set_var {
+	my ($self, $type, $variable_name, $variable_value, $check_callbacks, $complement) = @_;
+	
+	if ($type eq 'scalar') {
+		return ($self->set_scalar_var($variable_name, $variable_value, $check_callbacks));
+		
+	} elsif ($type eq 'accessed_array') {
+		return ($self->set_array_var($variable_name, $complement, $variable_value, $check_callbacks));
+		
+	} elsif ($type eq 'accessed_hash') {
+		return ($self->set_hash_var($variable_name, $complement, $variable_value, $check_callbacks));
+		
+	} else {
+		error "[eventMacro] You can't call set_var with a variable type other than 'scalar', 'accessed_array' or 'accessed_hash'.\n";
+		return undef;
+	}
+}
+
+sub defined_var {
+	my ($self, $type, $variable_name, $complement) = @_;
+	
+	if ($type eq 'scalar') {
+		return ($self->is_scalar_var_defined($variable_name));
+		
+	} elsif ($type eq 'accessed_array') {
+		return ($self->is_array_var_defined($variable_name, $complement));
+		
+	} elsif ($type eq 'accessed_hash') {
+		return ($self->is_hash_var_defined($variable_name, $complement));
+		
+	} else {
+		error "[eventMacro] You can't call defined_var with a variable type other than 'scalar', 'accessed_array' or 'accessed_hash'.\n";
+		return undef;
+	}
+}
 
 # Scalars
 sub get_scalar_var {
@@ -565,6 +650,116 @@ sub is_array_var_defined {
 }
 #######
 
+# Hahes
+sub set_full_hash {
+	my ($self, $variable_name, $hash) = @_;
+	
+	my %old_hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
+	
+	debug "[eventMacro] Setting hash '%".$variable_name."'\n", "eventMacro";
+	foreach my $member_key (keys %{$hash}) {
+		my $member = $hash->{$member_key};
+		$self->{Hash_Variable_List_Hash}{$variable_name}{$member_key} = $member;
+		$self->check_necessity_and_callback('accessed_hash', $variable_name, $member, $member_key);
+	}
+	if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
+	
+		foreach my $old_member_key (keys %old_hash) {
+			if (!exists $self->{Hash_Variable_List_Hash}{$variable_name}{$old_member_key}) {
+				$self->check_necessity_and_callback('accessed_hash', $variable_name, undef, $old_member_key);
+			}
+		}
+		
+	}
+	$self->hash_size_change($variable_name) if ((scalar keys %old_hash) != (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}));
+}
+
+sub clear_hash {
+	my ($self, $variable_name) = @_;
+	if (exists $self->{Hash_Variable_List_Hash}{$variable_name}) {
+		debug "[eventMacro] Clearing hash '%".$variable_name."'\n", "eventMacro";
+		my %old_hash = %{$self->{Hash_Variable_List_Hash}{$variable_name}};
+		delete $self->{Hash_Variable_List_Hash}{$variable_name};
+		if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
+			foreach my $old_member_key (keys %old_hash) {
+				$self->check_necessity_and_callback('accessed_hash', $variable_name, undef, $old_member_key);
+			}
+		}
+		$self->hash_size_change($variable_name);
+	}
+}
+
+sub get_hash_keys {
+	my ($self, $variable_name) = @_;
+	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
+	my @keys = keys %hash;
+	return \@keys;
+}
+
+sub get_hash_values {
+	my ($self, $variable_name) = @_;
+	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
+	my @values = values %hash;
+	return \@values;
+}
+
+sub exists_hash {
+	my ($self, $variable_name, $key) = @_;
+	if (exists $self->{Hash_Variable_List_Hash}{$variable_name} && exists $self->{Hash_Variable_List_Hash}{$variable_name}{$key}) {
+		return 1;
+	}
+	return 0;
+}
+
+sub delete_key {
+	my ($self, $variable_name, $key) = @_;
+	if (exists $self->{Hash_Variable_List_Hash}{$variable_name} && exists $self->{Hash_Variable_List_Hash}{$variable_name}{$key}) {
+		my $deleted = delete $self->{Hash_Variable_List_Hash}{$variable_name}{$key};
+		return $deleted;
+	}
+}
+
+sub get_hash_var {
+	my ($self, $variable_name, $key) = @_;
+	return $self->{Hash_Variable_List_Hash}{$variable_name}{$key} if (exists $self->{Hash_Variable_List_Hash}{$variable_name} && exists $self->{Hash_Variable_List_Hash}{$variable_name}{$key});
+	return undef;
+}
+
+sub set_hash_var {
+	my ($self, $variable_name, $key, $variable_value, $check_callbacks) = @_;
+	if ($variable_value eq 'undef') {
+		undef $variable_value;
+		$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = undef;
+	} else {
+		$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = $variable_value;
+	}
+	return if (defined $check_callbacks && $check_callbacks == 0);
+	$self->check_necessity_and_callback('accessed_hash', $variable_name, $variable_value, $key);
+	$self->hash_size_change($variable_name);
+}
+
+sub hash_size_change {
+	my ($self, $variable_name) = @_;
+	my $size = ((exists $self->{Hash_Variable_List_Hash}{$variable_name}) ? (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}) : 0);
+	debug "[eventMacro] Size of hash '%".$variable_name."' change to '".$size."'\n", "eventMacro";
+	
+	$self->check_necessity_and_callback('hash', $variable_name, $size);
+}
+
+sub get_hash_size {
+	my ($self, $variable_name) = @_;
+	if (exists $self->{Hash_Variable_List_Hash}{$variable_name}) {
+		return (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}});
+	}
+	return 0;
+}
+
+sub is_hash_var_defined {
+	my ($self, $variable_name, $key) = @_;
+	return ((exists $self->{Hash_Variable_List_Hash}{$variable_name} && exists $self->{Hash_Variable_List_Hash}{$variable_name}{$key} && defined $self->{Hash_Variable_List_Hash}{$variable_name}{$key}) ? 1 : 0);
+}
+########
+
 sub check_necessity_and_callback {
 	my ($self, $variable_type, $variable_name, $value, $complement) = @_;
 	
@@ -580,6 +775,14 @@ sub check_necessity_and_callback {
 	} elsif ($variable_type eq 'accessed_array') {
 		return unless (exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name} && defined $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}[$complement]);
 		$event_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}[$complement];
+		
+	} elsif ($variable_type eq 'hash') {
+		return unless (exists $self->{'Event_Related_Hash_Variables'}{$variable_name});
+		$event_hash = $self->{'Event_Related_Hash_Variables'}{$variable_name};
+		
+	} elsif ($variable_type eq 'accessed_hash') {
+		return unless (exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name} && exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name}{$complement});
+		$event_hash = $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name}{$complement};
 	}
 	$self->manage_event_callbacks('variable', $variable_name, $value, $variable_type, $complement);
 }
@@ -668,8 +871,17 @@ sub manage_event_callbacks {
 			
 		} elsif ($sub_type eq 'accessed_array') {
 			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}[$complement];
-			$callback_name = '$'.$callback_name."[".$complement."]";
+			$callback_name = '$'.$callback_name.'['.$complement.']';
 			$debug_message .= ", array index: '".$complement."'";
+			
+		} elsif ($sub_type eq 'hash') {
+			$check_list_hash = $self->{'Event_Related_Hash_Variables'}{$callback_name};
+			$callback_name = '%'.$callback_name;
+			
+		} elsif ($sub_type eq 'accessed_hash') {
+			$check_list_hash = $self->{'Event_Related_Accessed_Hash_Variables'}{$callback_name}{$complement};
+			$callback_name = '$'.$callback_name.'{'.$complement.'}';
+			$debug_message .= ", hash key: '".$complement."'";
 		}
 	} else {
 		$check_list_hash = $self->{'Event_Related_Hooks'}{$callback_name};
