@@ -19,23 +19,23 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'087B' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0802' => ['item_take', 'a4', [qw(ID)]],
-		'095B' => ['item_drop', 'v2', [qw(index amount)]],
-		'0893' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0922' => ['storage_item_remove', 'v V', [qw(index amount)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'02C4' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
-		'086E' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
-		'0867' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'096A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'087E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0952' => ['storage_password'],
+		'087D' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'08A1' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0939' => ['character_move','a3', [qw(coords)]],
+		'086D' => ['sync', 'V', [qw(time)]],
+		'0962' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0945' => ['item_take', 'a4', [qw(ID)]],
+		'0892' => ['item_drop', 'v2', [qw(index amount)]],
+		'0966' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'089B' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0436' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0934' => ['actor_info_request', 'a4', [qw(ID)]],
+		'091B' => ['actor_name_request', 'a4', [qw(ID)]],
+		'08AC' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0362' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0891' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0920' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'094E' => ['storage_password'],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -48,7 +48,7 @@ sub new {
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(56370083, 657588397, 500198140);
+	$self->cryptKeys(677317540, 2078100023, 1590852363);
 
 	return $self;
 }
