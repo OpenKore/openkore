@@ -979,7 +979,7 @@ sub next {
 		my $var;
 		my $display_name;
 		
-		if ($line =~ /^\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+		if ($line =~ /^\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})(?!(?:\}|\]))/) {
 			my $name = $1;
 			my $open_bracket = (defined $2 ? '[' : '{');
 			my $close_bracket = (defined $2 ? ']' : '}');
@@ -1580,14 +1580,14 @@ sub substitue_variables {
 	
 	my $remaining = $received;
 	
-	use Data::Dumper;
-	
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
+	
 		#accessed arrays and hashes
-		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})(?!(?:\}|\]))/) {
 			my $name = $1;
 			my $open_bracket = (defined $2 ? '[' : '{');
 			my $close_bracket = (defined $2 ? ']' : '}');
+			
 			my $key_index = (defined $2 ? $2 : $3);
 			my $parsed_key_index = $self->parse_command($key_index);
 			if (defined $self->error) {
@@ -1835,7 +1835,7 @@ sub parse_command {
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
 	
-	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+?)\}/) {
+	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+?)\}(?!(?:\}|\]))/) {
 		my $name = $1;
 		my $parsed = $self->parse_command($2);
 		if (defined $self->error) {
