@@ -9,10 +9,6 @@ use Test::More;
 use eventMacro::Data;
 use eventMacro::Core;
 
-#$eventMacro->{Scalar_Variable_List_Hash} = {};
-#$eventMacro->{Array_Variable_List_Hash} = {};
-#$eventMacro->{Hash_Variable_List_Hash} = {};
-
 sub start {
 	my $eventMacro = eventMacro::Core->new( "$RealBin/empty.txt" );
 	

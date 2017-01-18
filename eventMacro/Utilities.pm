@@ -27,58 +27,67 @@ sub between {
 }
 
 sub cmpr {
-	my ($a, $cond, $b) = @_;
-	unless (defined $a && defined $cond && defined $b) {
+	my ($first, $cond, $second) = @_;
+	
+	if (!defined $first || !defined $cond || !defined $second) {
 		# this produces a warning but that's what we want
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n", "eventMacro";
-		return 0
-	}
-
-	if ($a =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-		my ($a1, $a2) = ($1, $2);
-		if ($b =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return (between($a1, $b, $a2))?0:1}
-			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($a1, $b, $a2)
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n", "eventMacro";
+		
+	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($first1, $first2) = ($1, $2);
+		if ($second =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {
+				return ((between($first1, $second, $first2)) ? 0 : 1);
+				
+			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return between($first1, $second, $first2);
+				
+			} else {
+				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($b) <-- maybe should be numeric?\n", "eventMacro";
-		return 0
-	}
-
-	if ($b =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-		my ($b1, $b2) = ($1, $2);
-		if ($a =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return (between($b1, $a, $b2))?0:1}
-			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($b1, $a, $b2)
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
+		
+	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($second1, $second2) = ($1, $2);
+		if ($first =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {
+				return ((between($second1, $first, $second2)) ? 0 : 1);
+				
+			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return between($second1, $first, $second2);
+				
+			} else {
+				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($a) <-- maybe should be numeric?\n", "eventMacro";
-		return 0
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
+		
+	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
+		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
+		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
+		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
+		return ($first > $second  ? 1 : 0) if ($cond eq ">");
+		return ($first < $second  ? 1 : 0) if ($cond eq "<");
+		return ($first != $second ? 1 : 0) if ($cond eq "!=");
+		
+	} elsif (($cond eq "=" || $cond eq "==")) {
+		return ($first eq $second ? 1 : 0);
+		
+	} elsif ($cond eq "!=" && $first ne $second) {
+		return ($first ne $second ? 1 : 0);
+		
+	} elsif ($cond eq "~") {
+		$first = lc($first);
+		foreach my $member (split(/\s*,\s*/, $second)) {
+			return 1 if ($first eq lc($member));
+		}
+		
+	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
+		return match($first, $second, 1);
 	}
 
-	if ($a =~ /^-?[\d.]+$/ && $b =~ /^-?[\d.]+$/) {
-		if (($cond eq "=" || $cond eq "==") && $a == $b) {return 1}
-		if ($cond eq ">=" && $a >= $b) {return 1}
-		if ($cond eq "<=" && $a <= $b) {return 1}
-		if ($cond eq ">"  && $a > $b)  {return 1}
-		if ($cond eq "<"  && $a < $b)  {return 1}
-		if ($cond eq "!=" && $a != $b) {return 1}
-		return 0
-	}
-
-	if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
-	if ($cond eq "!=" && $a ne $b) {return 1}
-	if ($cond eq "~") {
-		$a = lc($a);
-		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
-	}
-	if ($cond eq "=~" && $b =~ /^\/.*?\/\w?\s*$/) {
-		return match($a, $b, 1)
-	}
-
-	return 0
+	return 0;
 }
 
 sub q4rx {

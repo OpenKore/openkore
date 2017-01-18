@@ -34,6 +34,8 @@ my @tests = qw(
 	Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest
+	LoadConditionsTest
+	RunnerStatementTest
 );
 @tests = @ARGV if @ARGV;
 
