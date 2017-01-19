@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index);
 
 use Utils;
 use Globals;
@@ -520,6 +520,26 @@ sub find_accessed_hash_variable {
 			return ({display_name => ('$'.$name.'{'.$key.'}'), real_name => $name, key => $key});
 		}
 	}
+}
+
+sub get_key_or_index {
+	my ($open_char, $close_char, $code) = @_;
+	my $counter = 0;
+	my $key_index;
+	my @characters = split('',$code);
+	foreach my $current (@characters) {
+		if ($current eq $open_char) {
+			$counter++;
+		} elsif ($current eq $close_char) {
+			if ($counter == 0) {
+				last;
+			} else {
+				$counter--;
+			}
+		}
+		$key_index .= $current;
+	}
+	return $key_index;
 }
 
 1;

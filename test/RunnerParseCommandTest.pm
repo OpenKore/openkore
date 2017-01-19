@@ -122,6 +122,8 @@ sub start {
 		
 		is ($eventMacro->{Macro_Runner}->parse_command( '$array4[$array3[$array4[$array3[$array4[$array3[$array4[$array3[$array4[$array3[$array4[$array3[$scalar1]]]]]]]]]]]]' ), 'end');
 		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'olha que legal esse [{{$hash3{$hash3{$scalar4}}}}]' ), 'olha que legal esse [{{Magmaring}}]');
+		
 	};
 }
 
