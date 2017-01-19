@@ -492,7 +492,7 @@ sub set_scalar_var {
 
 sub is_scalar_var_defined {
 	my ($self, $variable_name) = @_;
-	return ((defined $self->{Scalar_Variable_List_Hash}{$variable_name}) ? 1 : 0);
+	return ((exists $self->{Scalar_Variable_List_Hash}{$variable_name} && defined $self->{Scalar_Variable_List_Hash}{$variable_name}) ? 1 : 0);
 }
 #########
 
@@ -691,15 +691,13 @@ sub clear_hash {
 
 sub get_hash_keys {
 	my ($self, $variable_name) = @_;
-	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
-	my @keys = keys %hash;
+	my @keys = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ([]));
 	return \@keys;
 }
 
 sub get_hash_values {
 	my ($self, $variable_name) = @_;
-	my %hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
-	my @values = values %hash;
+	my @values = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (values %{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ([]));
 	return \@values;
 }
 

@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -979,11 +979,12 @@ sub next {
 		my $var;
 		my $display_name;
 		
-		if ($line =~ /^\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+		if ($line =~ /^\$($valid_var_characters)(\[|\{)(.+)$/) {
 			my $name = $1;
-			my $open_bracket = (defined $2 ? '[' : '{');
-			my $close_bracket = (defined $2 ? ']' : '}');
-			my $key_index = (defined $2 ? $2 : $3);
+			my $open_bracket = $2;
+			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
+			my $rest = $3;
+			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
 			my $parsed_key_index = $self->parse_command($key_index);
 			if (defined $self->error) {
 				return;
@@ -1580,15 +1581,18 @@ sub substitue_variables {
 	
 	my $remaining = $received;
 	
-	use Data::Dumper;
-	
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
+	
 		#accessed arrays and hashes
-		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(?:\[(.+?)\]|\{(.+?)\})/) {
+		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
 			my $name = $1;
-			my $open_bracket = (defined $2 ? '[' : '{');
-			my $close_bracket = (defined $2 ? ']' : '}');
-			my $key_index = (defined $2 ? $2 : $3);
+			my $open_bracket = $2;
+			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
+			my $rest = $3;
+			
+			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
+			
+			
 			my $parsed_key_index = $self->parse_command($key_index);
 			if (defined $self->error) {
 				return;
@@ -1834,18 +1838,20 @@ sub parse_command {
 
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
-	
-	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+?)\}/) {
+
+	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+)$/) {
 		my $name = $1;
-		my $parsed = $self->parse_command($2);
+		my $rest = $2;
+		my $key_index = get_key_or_index('{', '}', $rest);
+		my $parsed_key_index = $self->parse_command($key_index);
 		if (defined $self->error) {
 			return;
-		} elsif (!defined $parsed) {
-			$self->error("Could not parse key of hash in function '".$keyword."'");
+		} elsif (!defined $parsed_key_index) {
+			$self->error("Could not parse key or index code");
 			return;
 		}
-			
-		my $real_name = ('$'.$name.'{'.$parsed.'}');
+		
+		my $real_name = ('$'.$name.'{'.$parsed_key_index.'}');
 		
 		my $var = find_variable($real_name);
 		if (!defined $var) {
@@ -1874,7 +1880,7 @@ sub manage_hash {
 sub manage_array {
 	my ($self, $keyword, $inside_brackets) = @_;
 	
-	my @args = split(/\s*,\s*/, $inside_brackets);
+	my @args = split(/\s*,\s*/, $inside_brackets, 2);
 	my ($var);
 	
 	if ($args[0] =~ /^($array_variable_qr)/i) {

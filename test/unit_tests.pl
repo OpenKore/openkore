@@ -30,9 +30,13 @@ use Misc;
 my @tests = qw(
 	GlobalVarRegexTest
 	FindVarTest
-    Validator::NumericComparisonTest
+	CoreVarFunctionsTest
+	Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest
+	LoadConditionsTest
+	RunnerParseCommandTest
+	RunnerStatementTest
 );
 @tests = @ARGV if @ARGV;
 
