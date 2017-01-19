@@ -3,6 +3,7 @@ package eventMacro::Validator::RegexCheck;
 use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub parse {
 	my ( $self, $regex_code ) = @_;
@@ -11,21 +12,29 @@ sub parse {
 		$self->{original_regex} = $1;
 		$self->{case_insensitive} = !!$2;
 		
-		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))\$($variable_qr)/g;
+		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))($general_variable_qr)/g;
 		
 		$self->{defined_var_list} = {};
+		$self->{var_count_list} = {};
 		
-		foreach my $var (@variables) {
-			next if (exists $self->{defined_var_list}{$var});
+		foreach my $variable (@variables) {
+			my $var = find_variable($variable);
+			if (!defined $var) {
+				$self->{error} = "\$general_variable_qr found a variable but Utilities::find_variable didn't, please contact a developer";
+				$self->{parsed} = 0;
+				return;
+			}
+			my $var_name = $var->{display_name};
+			$self->{var_count_list}{$var_name}++;
+			next if (exists $self->{defined_var_list}{$var_name});
 			if ($var =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				$self->{parsed} = 0;
 				return;
 			}
-			$self->{defined_var_list}{$var} = 0;
+			$self->{defined_var_list}{$var_name} = 0;
 			push(@{$self->{var}}, $var);
 		}
-		
 		
 		$self->{regex_parts} = [];
 		$self->{var_to_regex_part_index} = {};
@@ -39,26 +48,29 @@ sub parse {
 		
 		my $part_index = 0;
 		my $remaining_regex = $self->{original_regex};
-		foreach my $var_index (0..$#{$self->{var}}) {
-			my $var = $self->{var}->[$var_index];
-			my ($before_var);
-			if ($remaining_regex =~ /^(.*?)\$$var(.*?)$/) {
-				$before_var = $1;
-				$remaining_regex = $2;
-			} else {
-				$self->{error} = "Could not find detected variable in regex";
-				$self->{parsed} = 0;
-				return;
-			}
-			
-			if ($before_var ne '') {
-				push (@{$self->{regex_parts}}, $before_var);
+		foreach my $var (@{$self->{var}}) {
+			foreach (1..$self->{var_count_list}{$var->{display_name}}) {
+				my $var_name = $var->{display_name};
+				my $regex_name = quotemeta($var_name);
+				my ($before_var);
+				if ($remaining_regex =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+					$before_var = $1;
+					$remaining_regex = $2;
+				} else {
+					$self->{error} = "Could not find detected variable in regex";
+					$self->{parsed} = 0;
+					return;
+				}
+				
+				if ($before_var ne '') {
+					push (@{$self->{regex_parts}}, $before_var);
+					$part_index++;
+				}
+				
+				push (@{$self->{var_to_regex_part_index}{$var_name}}, $part_index);
+				push (@{$self->{regex_parts}}, undef);
 				$part_index++;
 			}
-			
-			push (@{$self->{var_to_regex_part_index}{$var}}, $part_index);
-			push (@{$self->{regex_parts}}, undef);
-			$part_index++;
 		}
 		if ($remaining_regex ne '') {
 			push (@{$self->{regex_parts}}, $remaining_regex);

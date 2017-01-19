@@ -28,9 +28,15 @@ use Test::More qw(no_plan);
 use Misc;
 
 my @tests = qw(
-    Validator::NumericComparisonTest
+	GlobalVarRegexTest
+	FindVarTest
+	CoreVarFunctionsTest
+	Validator::NumericComparisonTest
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest
+	LoadConditionsTest
+	RunnerParseCommandTest
+	RunnerStatementTest
 );
 @tests = @ARGV if @ARGV;
 

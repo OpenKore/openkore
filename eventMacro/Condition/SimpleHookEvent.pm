@@ -5,12 +5,13 @@ use strict;
 use base 'eventMacro::Condition';
 
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	foreach my $member (split(/\s*,\s*/, $condition_code)) {
-		if ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
+		if (find_variable($member)) {
 			$self->{error} = "In this condition no variables are accepted";
 			return 0;
 		}

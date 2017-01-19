@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index);
 
 use Utils;
 use Globals;
@@ -27,58 +27,67 @@ sub between {
 }
 
 sub cmpr {
-	my ($a, $cond, $b) = @_;
-	unless (defined $a && defined $cond && defined $b) {
+	my ($first, $cond, $second) = @_;
+	
+	if (!defined $first || !defined $cond || !defined $second) {
 		# this produces a warning but that's what we want
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n", "eventMacro";
-		return 0
-	}
-
-	if ($a =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-		my ($a1, $a2) = ($1, $2);
-		if ($b =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return (between($a1, $b, $a2))?0:1}
-			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($a1, $b, $a2)
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n", "eventMacro";
+		
+	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($first1, $first2) = ($1, $2);
+		if ($second =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {
+				return ((between($first1, $second, $first2)) ? 0 : 1);
+				
+			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return between($first1, $second, $first2);
+				
+			} else {
+				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($b) <-- maybe should be numeric?\n", "eventMacro";
-		return 0
-	}
-
-	if ($b =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-		my ($b1, $b2) = ($1, $2);
-		if ($a =~ /^-?[\d.]+$/) {
-			if ($cond eq "!=") {return (between($b1, $a, $b2))?0:1}
-			if ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($b1, $a, $b2)
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
+		
+	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($second1, $second2) = ($1, $2);
+		if ($first =~ /^-?[\d.]+$/) {
+			if ($cond eq "!=") {
+				return ((between($second1, $first, $second2)) ? 0 : 1);
+				
+			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
+				return between($second1, $first, $second2);
+				
+			} else {
+				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($a) ($cond) ($b)\n--> ($a) <-- maybe should be numeric?\n", "eventMacro";
-		return 0
+		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
+		
+	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
+		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
+		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
+		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
+		return ($first > $second  ? 1 : 0) if ($cond eq ">");
+		return ($first < $second  ? 1 : 0) if ($cond eq "<");
+		return ($first != $second ? 1 : 0) if ($cond eq "!=");
+		
+	} elsif (($cond eq "=" || $cond eq "==")) {
+		return ($first eq $second ? 1 : 0);
+		
+	} elsif ($cond eq "!=" && $first ne $second) {
+		return ($first ne $second ? 1 : 0);
+		
+	} elsif ($cond eq "~") {
+		$first = lc($first);
+		foreach my $member (split(/\s*,\s*/, $second)) {
+			return 1 if ($first eq lc($member));
+		}
+		
+	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
+		return match($first, $second, 1);
 	}
 
-	if ($a =~ /^-?[\d.]+$/ && $b =~ /^-?[\d.]+$/) {
-		if (($cond eq "=" || $cond eq "==") && $a == $b) {return 1}
-		if ($cond eq ">=" && $a >= $b) {return 1}
-		if ($cond eq "<=" && $a <= $b) {return 1}
-		if ($cond eq ">"  && $a > $b)  {return 1}
-		if ($cond eq "<"  && $a < $b)  {return 1}
-		if ($cond eq "!=" && $a != $b) {return 1}
-		return 0
-	}
-
-	if (($cond eq "=" || $cond eq "==") && $a eq $b) {return 1}
-	if ($cond eq "!=" && $a ne $b) {return 1}
-	if ($cond eq "~") {
-		$a = lc($a);
-		foreach my $e (split(/,/, $b)) {return 1 if $a eq lc($e)}
-	}
-	if ($cond eq "=~" && $b =~ /^\/.*?\/\w?\s*$/) {
-		return match($a, $b, 1)
-	}
-
-	return 0
+	return 0;
 }
 
 sub q4rx {
@@ -112,7 +121,7 @@ sub match {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
 			if (!defined $cmpr) {
 				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_var(".lastMatch$idx",${$idx})}
+				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 				use strict;
 			}
 			return 1
@@ -141,7 +150,7 @@ sub getWord {
 	if ($wordno =~ /^\$/) {
 		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
 		return "" unless defined $val;
-		if ($eventMacro->exists_var($val) && $eventMacro->get_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_var($val)}
+		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
 		else {return ""}
 	
 	}
@@ -182,28 +191,28 @@ sub getConfig {
 sub refreshGlobal {
 	my $var = $_[0];
 
-	$eventMacro->set_var(".time", time, 0);
-	$eventMacro->set_var(".datetime", scalar localtime, 0);
+	$eventMacro->set_scalar_var(".time", time, 0);
+	$eventMacro->set_scalar_var(".datetime", scalar localtime, 0);
 	my ($sec, $min, $hour) = localtime;
-	$eventMacro->set_var(".second", $sec, 0);
-	$eventMacro->set_var(".minute", $min, 0);
-	$eventMacro->set_var(".hour", $hour, 0);
+	$eventMacro->set_scalar_var(".second", $sec, 0);
+	$eventMacro->set_scalar_var(".minute", $min, 0);
+	$eventMacro->set_scalar_var(".hour", $hour, 0);
 	
 	return unless $net && $net->getState == Network::IN_GAME;
 	
-	$eventMacro->set_var(".map", (defined $field)?$field->baseName:"undef", 0);
+	$eventMacro->set_scalar_var(".map", (defined $field)?$field->baseName:"undef", 0);
 	my $pos = calcPosition($char); 
-	$eventMacro->set_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
+	$eventMacro->set_scalar_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
 	
-	$eventMacro->set_var(".hp", $char->{hp}, 0);
-	$eventMacro->set_var(".sp", $char->{sp}, 0);
-	$eventMacro->set_var(".lvl", $char->{lv}, 0);
-	$eventMacro->set_var(".joblvl", $char->{lv_job}, 0);
-	$eventMacro->set_var(".spirits", ($char->{spirits} or 0), 0);
-	$eventMacro->set_var(".zeny", $char->{zeny}, 0);
-	$eventMacro->set_var(".weight", $char->{weight}, 0);
-	$eventMacro->set_var(".maxweight", $char->{weight_max}, 0);
-	$eventMacro->set_var('.status', (join ',',
+	$eventMacro->set_scalar_var(".hp", $char->{hp}, 0);
+	$eventMacro->set_scalar_var(".sp", $char->{sp}, 0);
+	$eventMacro->set_scalar_var(".lvl", $char->{lv}, 0);
+	$eventMacro->set_scalar_var(".joblvl", $char->{lv_job}, 0);
+	$eventMacro->set_scalar_var(".spirits", ($char->{spirits} or 0), 0);
+	$eventMacro->set_scalar_var(".zeny", $char->{zeny}, 0);
+	$eventMacro->set_scalar_var(".weight", $char->{weight}, 0);
+	$eventMacro->set_scalar_var(".maxweight", $char->{weight_max}, 0);
+	$eventMacro->set_scalar_var('.status', (join ',',
 		('muted')x!!$char->{muted},
 		('dead')x!!$char->{dead},
 		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
@@ -426,6 +435,111 @@ sub sameParty {
 sub getRandomRange {
 	my ($low, $high) = split(/,\s*/, $_[0]);
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
+}
+
+sub find_variable {
+	my ($text) = @_;
+	
+	if (my $scalar = find_scalar_variable($text)) {
+		return ({ display_name => $scalar->{display_name}, type => 'scalar', real_name => $scalar->{real_name} });
+	}
+	
+	if (my $array = find_array_variable($text)) {
+		return ({ display_name => $array->{display_name}, type => 'array', real_name => $array->{real_name} });
+	}
+	
+	if (my $accessed_array = find_accessed_array_variable($text)) {
+		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, index => $accessed_array->{index} });
+	}
+	
+	if (my $hash = find_hash_variable($text)) {
+		return ({ display_name => $hash->{display_name}, type => 'hash', real_name => $hash->{real_name} });
+	}
+	
+	if (my $accessed_hash = find_accessed_hash_variable($text)) {
+		return ({ display_name => $accessed_hash->{display_name}, type => 'accessed_hash', real_name => $accessed_hash->{real_name}, key => $accessed_hash->{key} });
+	}
+	
+	return undef;
+}
+
+sub find_scalar_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($scalar_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\$//;
+		return ({display_name => ('$'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_array_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($array_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\@//;
+		return ({display_name => ('@'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_accessed_array_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($accessed_array_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\$//;
+		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
+			my $name = $1;
+			my $index = $2;
+			return ({display_name => ('$'.$name.'['.$index.']'), real_name => $name, index => $index});
+		}
+	}
+}
+
+sub find_hash_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($hash_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\%//;
+		return ({display_name => ('%'.$name), real_name => $name});
+	} else {
+		return;
+	}
+}
+
+sub find_accessed_hash_variable {
+	my ($text) = @_;
+	if ($text =~ /(?:^|(?<=[^\\]))($accessed_hash_variable_qr)$/) {
+		my $name = $1;
+		$name =~ s/^\$//;
+		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\{([a-zA-Z\d]+)\}/) {
+			my $name = $1;
+			my $key = $2;
+			return ({display_name => ('$'.$name.'{'.$key.'}'), real_name => $name, key => $key});
+		}
+	}
+}
+
+sub get_key_or_index {
+	my ($open_char, $close_char, $code) = @_;
+	my $counter = 0;
+	my $key_index;
+	my @characters = split('',$code);
+	foreach my $current (@characters) {
+		if ($current eq $open_char) {
+			$counter++;
+		} elsif ($current eq $close_char) {
+			if ($counter == 0) {
+				last;
+			} else {
+				$counter--;
+			}
+		}
+		$key_index .= $current;
+	}
+	return $key_index;
 }
 
 1;

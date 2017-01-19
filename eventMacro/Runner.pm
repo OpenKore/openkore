@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -972,40 +972,150 @@ sub next {
 	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
 		
 	##########################################
-	# set variable: $variable = value
-	if ($self->{current_line} =~ /^\$[a-z]/i) {
-		my ($var, $val);
-		if (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)/i) {
-			my $pval = $self->parse_command($val);
-			return if (defined $self->error);
-			if (defined $pval) {
-				if ($pval =~ /^\s*(?:undef|unset)\s*$/i && $eventMacro->exists_var($var)) {
-					$eventMacro->set_var($var, 'undef');
-				} else {
-					$eventMacro->set_var($var, $pval);
-				}
-			} else {
-				$self->error("$val failed");
+	# set variable: variable = value
+	if ($self->{current_line} =~ /^($general_variable_qr)/i) {
+		my $line = $self->{current_line};
+		
+		my $var;
+		my $display_name;
+		
+		if ($line =~ /^\$($valid_var_characters)(\[|\{)(.+)$/) {
+			my $name = $1;
+			my $open_bracket = $2;
+			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
+			my $rest = $3;
+			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
+			my $parsed_key_index = $self->parse_command($key_index);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $parsed_key_index) {
+				$self->error("Could not parse key or index code");
+				return;
 			}
-		} elsif (($var, $val) = $self->{current_line} =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
-			if ($val eq '++') {
-				if ($eventMacro->is_var_defined($var)) {
-					$eventMacro->set_var($var, ($eventMacro->get_var($var)+1));
-				} else {
-					$eventMacro->set_var($var, 1);
-				}
-			} else {
-				if ($eventMacro->is_var_defined($var)) {
-					$eventMacro->set_var($var, ($eventMacro->get_var($var)-1));
-				} else {
-					$eventMacro->set_var($var, -1);
-				}
+			
+			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
+			
+			$var = find_variable($real_name);
+			if (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
 			}
+			
+			$display_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+			
 		} else {
-			$self->error("unrecognized assignment");
+			$var = find_variable($1);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			$display_name = quotemeta($var->{display_name});
+		}
+		
+		$line =~ s/^$display_name\s*//;
+		
+		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
+			
+			if ($line =~ /^=\s*(.*)/i) {
+				my $val = $self->parse_command($1);
+				
+				if (defined $self->error) {
+					return;
+					
+				} elsif (!defined $val) {
+					$self->error("$val failed");
+					return;
+					
+				} else {
+					$eventMacro->set_var($var->{type}, $var->{real_name}, ($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
+				}
+				
+			} elsif ($line =~ /^([+-]{2})$/i) {
+				my $change = (($1 eq '++') ? (1) : (-1));
+				
+				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
+				$eventMacro->set_var($var->{type}, $var->{real_name}, ($old_value + $change), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
+				
+			} else {
+				$self->error("unrecognized assignment");
+				return;
+			}
+		
+		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
+			
+			if ($line =~ /^=\s*(.*)/i) {
+				my $value = $1;
+				
+				if ($value =~ /(?:undef|unset)/) {
+					$eventMacro->clear_array($var->{real_name});
+				
+				} elsif ($value =~ /^\((.*)\)$/) {
+					my @members = split(/\s*,\s*/, $1);
+					
+					if ($var->{type} eq 'array') {
+						$eventMacro->set_full_array($var->{real_name}, \@members);
+						
+					} else {
+						my %hash;
+						foreach my $hash_member (@members) {
+							if ($hash_member =~ /(.*\S)\s*=>\s*(\S.*)/) {
+								my $key = $1;
+								my $value = $2;
+								$hash{$key} = $value;
+							} else {
+								$self->error("Bad syntax in hash key definition");
+								return;
+							}
+						}
+						$eventMacro->set_full_hash($var->{real_name}, \%hash);
+					}
+					
+				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
+					my $type = $1;
+					my $var2 = find_variable($2);
+					if (defined $self->error) {
+						return;
+					} elsif (!defined $var2) {
+						$self->error("Could not define variable type in keys/values array setting");
+						return;
+					}
+					
+					my @new_array;
+					if ($type eq 'keys') {
+						@new_array = @{$eventMacro->get_hash_keys($var2->{real_name})};
+						
+					} elsif ($type eq 'values') {
+						@new_array = @{$eventMacro->get_hash_values($var2->{real_name})};
+					}
+					
+					$eventMacro->set_full_array($var->{real_name}, \@new_array);
+				}
+				
+			} else {
+				$self->error("unrecognized assignment");
+				return;
+			}
 		}
 		$self->next_line;
 		$self->timeout(0);
+	
+	##########################################
+	# manage array: push|unshift|shift|pop(@array[,new_member])
+	} elsif ($self->{current_line} =~ /^$macro_keywords_character(push|unshift|pop|shift)/i) {
+		$self->parse_command($self->{current_line});
+		return if (defined $self->error);
+		$self->timeout(0);
+		$self->next_line;
+	
+	##########################################
+	# manage hash: delete($hash{new_member})
+	} elsif ($self->{current_line} =~ /^$macro_keywords_character(delete)/i) {
+		$self->parse_command($self->{current_line});
+		return if (defined $self->error);
+		$self->timeout(0);
+		$self->next_line;
 		
 	##########################################
 	# returns command: do whatever
@@ -1101,16 +1211,7 @@ sub parse_do {
 	}
 	
 	if ($parsed_command =~ /^eventMacro\s+/) {
-		my ($arg) = $parsed_command =~ /^eventMacro\s+(.*)/;
-		if ($arg =~ /^reset/) {
-			$self->error("use macro command 'release' instead of 'eventMacro reset'");
-		} elsif ($arg eq 'pause' || $arg eq 'unpause') {
-			$self->error("do not use 'eventMacro pause' or 'eventMacro unpause' inside macros");
-		} elsif ($arg eq 'stop') {
-			$self->error("use macro command 'stop' instead of 'eventMacro stop'");
-		} elsif ($arg !~ /^(?:list|status|automacro\s+.*|variables_value)$/) {
-			$self->error("use macro command 'call ".$arg."' instead of 'eventMacro ".$arg."'");
-		}
+		$self->error("Do not use command 'eventMacro' inside macros");
 	} elsif ($parsed_command =~ /^ai\s+clear$/) {
 		$self->error("do not use 'ai clear' inside macros");
 	}
@@ -1277,13 +1378,6 @@ sub parse_call {
 	
 	$self->timeout($self->macro_delay);
 	$self->next_line;
-	
-	
-	#my @new_params = substr($cparms, 2) =~ /"[^"]+"|\S+/g;
-	#foreach my $p (1..@new_params) {
-	#	$eventMacro->set_var(".param".$p,$new_params[$p-1]);
-	#	$eventMacro->set_var(".param".$p,substr($eventMacro->get_var(".param".$p), 1, -1)) if ($eventMacro->get_var(".param".$p) =~ /^".*"$/);
-	#}
 }
 
 
@@ -1430,11 +1524,11 @@ sub extracted {
 sub refined_macroKeywords {
 	# To make sure if there is really no more @special keywords
 
-	my @pair = $_[0] =~ /\@($macroKeywords)\s*\(\s*(.*)\s*\)/i;
+	my @pair = $_[0] =~ /$macro_keywords_character($macroKeywords)\s*\(\s*(.*)\s*\)/i;
 	return $_[0] unless @pair;
 
 	$pair[1] = parse_command($pair[1]);
-	my $new = "@".$pair[0]."(".$pair[1].")";
+	my $new = $macro_keywords_character.$pair[0]."(".$pair[1].")";
 	return $new;
 }
 
@@ -1444,7 +1538,7 @@ sub bracket {
 	my ($text, $dbg) = @_;
 	my @brkt; my $i = 0;
 
-	while ($text =~ /(\@)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
+	while ($text =~ /($macro_keywords_character)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
 		my ($first, $second, $third) = ($1, $2, $3);
 		unless (defined $first && defined $second && !bracket($third, 1)) {
 			message "Bracket Detected: $text <-- HERE\n", "menu" if ($dbg);
@@ -1483,16 +1577,92 @@ sub parse_perl_subs {
 
 # substitute variables
 sub substitue_variables {
-	my ($received) = @_;
+	my ($self, $received) = @_;
 	
-	# variables
-	$received =~ s/(?:^|(?<=[^\\]))\$(\.?[a-z][a-z\d]*)/$eventMacro->get_var($1)/gei;
+	my $remaining = $received;
+	
+	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
+	
+		#accessed arrays and hashes
+		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
+			my $name = $1;
+			my $open_bracket = $2;
+			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
+			my $rest = $3;
+			
+			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
+			
+			
+			my $parsed_key_index = $self->parse_command($key_index);
+			if (defined $self->error) {
+				return;
+			} elsif (!defined $parsed_key_index) {
+				$self->error("Could not parse key or index code");
+				return;
+			}
+			
+			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
+			
+			my $var = find_variable($real_name);
+			if (!defined $var) {
+				$self->error("Could not define variable type");
+				return;
+			}
+			
+			my $regex_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+			
+			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+				my $before_var = $1;
+				my $after_var = $2;
+				my $var_value;
+				if ($var->{type} eq 'accessed_array') {
+					$var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
+				} elsif ($var->{type} eq 'accessed_hash') {
+					$var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
+				}
+				
+				$remaining = $before_var.$var_value.$after_var;
+				
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+			next VAR;
+			
+		} elsif ($remaining =~ /(?:^|(?<=[^\\]))($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/) {
+			my $var = find_variable($1);
+			
+			my $regex_name = quotemeta($var->{display_name});
+			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+				my $before_var = $1;
+				my $after_var = $2;
+				my $var_value;
+				if ($var->{type} eq 'scalar') {
+					$var_value = $eventMacro->get_scalar_var($var->{real_name});
+					
+				} elsif ($var->{type} eq 'array') {
+					$var_value = $eventMacro->get_array_size($var->{real_name});
+					
+				} elsif ($var->{type} eq 'hash') {
+					$var_value = $eventMacro->get_hash_size($var->{real_name});
+				}
+				
+				$remaining = $before_var.$var_value.$after_var;
+				
+			} else {
+				$self->error("Could not find detected variable in code");
+				return;
+			}
+			next VAR;
+		}
+	}
 
-	return $received;
+	return $remaining;
 }
 
 sub parse_keywords {
-	my @full = $_[0] =~ /@($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my ($command) = @_;
+	my @full = $command =~ /$macro_keywords_character($macroKeywords)s*((s*(.*?)s*).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
 	return unless $bracketed;
@@ -1500,11 +1670,11 @@ sub parse_keywords {
 
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $_[0] =~ /\@(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
+		return $command =~ /$macro_keywords_character(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
 	} elsif ($pair[0] eq 'random') {
-		return $_[0] =~ /\@(random)\s*\(\s*(".*?")\s*\)/
+		return $command =~ /$macro_keywords_character(random)\s*\(\s*(".*?")\s*\)/
 	}
-	while ($pair[1] =~ /\@($macroKeywords)\s*\(/) {
+	while ($pair[1] =~ /$macro_keywords_character($macroKeywords)\s*\(/) {
 		@pair = parse_keywords ($pair[1])
 	}
 	return @pair
@@ -1522,9 +1692,12 @@ sub parse_command {
 	
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
+		
 		# first parse _then_ substitute. slower but safer
-		$parsed = substitue_variables($inside_brackets) unless ($keyword eq 'nick');
-		my $randomized = 0;
+		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift' && $keyword ne 'exists' && $keyword ne 'delete') {
+			$parsed = $self->substitue_variables($inside_brackets);
+		}
+		my $only_replace_once = 0;
 
 		if ($keyword eq 'npc') {
 			$result = getnpcID($parsed);
@@ -1572,10 +1745,12 @@ sub parse_command {
 			$result = getVendAmount($parsed, \@::venderItemList);
 			
 		} elsif ($keyword eq 'random') {
-			$result = getRandom($parsed); $randomized = 1;
+			$result = getRandom($parsed);
+			$only_replace_once = 1;
 			
 		} elsif ($keyword eq 'rand') {
-			$result = getRandomRange($parsed); $randomized = 1;
+			$result = getRandomRange($parsed);
+			$only_replace_once = 1;
 			
 		} elsif ($keyword eq 'invamount') {
 			$result = getInventoryAmount($parsed);
@@ -1605,8 +1780,18 @@ sub parse_command {
 			$result = getListLenght($parsed);
 			
 		} elsif ($keyword eq 'nick') {
-			$parsed = substitue_variables($inside_brackets);
+			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
+		
+		} elsif ($keyword eq 'push' || $keyword eq 'unshift' || $keyword eq 'pop' || $keyword eq 'shift') {
+			$result = $self->manage_array($keyword, $inside_brackets);
+			return if (defined $self->error);
+			$only_replace_once = 1;
+			
+		} elsif ($keyword eq 'exists' || $keyword eq 'delete') {
+			$result = $self->manage_hash($keyword, $inside_brackets);
+			return if (defined $self->error);
+			$only_replace_once = 1;
 		}
 		
 		return unless defined $result;
@@ -1614,10 +1799,10 @@ sub parse_command {
 		
 		$inside_brackets = q4rx($inside_brackets);
 		
-		unless ($randomized) {
-			$command =~ s/\@$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
+		unless ($only_replace_once) {
+			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
 		} else {
-			$command =~ s/\@$keyword\s*\(\s*$inside_brackets\s*\)/$result/
+			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/
 		}
 	}
 	
@@ -1635,7 +1820,7 @@ sub parse_command {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$parsed = substitue_variables($val);
+			$parsed = $self->substitue_variables($val);
 			my $sub1 = "main::".$sub."(".$parsed.")";
 			$result = eval($sub1);
 			if ($@) {
@@ -1647,8 +1832,108 @@ sub parse_command {
 		}
 	}
 
-	$command = substitue_variables($command);
+	$command = $self->substitue_variables($command);
 	return $command;
+}
+
+sub manage_hash {
+	my ($self, $keyword, $inside_brackets) = @_;
+
+	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+)$/) {
+		my $name = $1;
+		my $rest = $2;
+		my $key_index = get_key_or_index('{', '}', $rest);
+		my $parsed_key_index = $self->parse_command($key_index);
+		if (defined $self->error) {
+			return;
+		} elsif (!defined $parsed_key_index) {
+			$self->error("Could not parse key or index code");
+			return;
+		}
+		
+		my $real_name = ('$'.$name.'{'.$parsed_key_index.'}');
+		
+		my $var = find_variable($real_name);
+		if (!defined $var) {
+			$self->error("Could not define variable in function '".$keyword."'");
+			return;
+		} elsif ($var->{type} ne 'accessed_hash') {
+			$self->error("Bad exists syntax, variable not a hash name/key pair");
+			return;
+		}
+		
+		if ($keyword eq 'exists') {
+			return ($eventMacro->exists_hash($var->{real_name}, $var->{key}));
+			
+		} elsif ($keyword eq 'delete') {
+			my $result = $eventMacro->delete_key($var->{real_name}, $var->{key});
+			$result = '' unless (defined $result);
+			return $result;
+		}
+		
+	} else {
+		$self->error("Function '".$keyword."' must have a hash and a hash key as argument");
+		return;
+	}
+}
+
+sub manage_array {
+	my ($self, $keyword, $inside_brackets) = @_;
+	
+	my @args = split(/\s*,\s*/, $inside_brackets, 2);
+	my ($var);
+	
+	if ($args[0] =~ /^($array_variable_qr)/i) {
+		$var = find_variable($1);
+		if (defined $self->error) {
+			return;
+		} elsif (!defined $var) {
+			$self->error("Could not define variable type in array manage");
+			return;
+		}
+	} else {
+		$self->error("'$args[0]' is not a valid array name");
+		return;
+	}
+	
+	my $parsed = $self->parse_command($args[1]);
+	
+	my $result;
+	
+	if ($keyword eq 'push') {
+		if (@args != 2) {
+			$self->error("push sintax must be 'push(\@var_name, new_member)'");
+			return;
+		}
+		$result = $eventMacro->push_array($var->{real_name}, $parsed);
+			
+	} elsif ($keyword eq 'unshift') {
+		if (@args != 2) {
+			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
+			return;
+		}
+		$result = $eventMacro->unshift_array($var->{real_name}, $parsed);
+		
+	} elsif ($keyword eq 'pop') {
+		if (@args != 1) {
+			$self->error("pop sintax must be 'pop(\@var_name)'");
+			return;
+		}
+		$result = $eventMacro->pop_array($var->{real_name});
+			
+	} elsif ($keyword eq 'shift') {
+		if (@args != 1) {
+			$self->error("shift sintax must be 'shift(\@var_name)'");
+			return;
+		}
+		$result = $eventMacro->shift_array($var->{real_name});
+	} else {
+		$self->error("Unknown array keyword used '".$keyword."'");
+		return;
+	}
+	
+	$result = '' unless (defined $result);
+	return $result;
 }
 
 1;
