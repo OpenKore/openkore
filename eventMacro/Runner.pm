@@ -976,34 +976,25 @@ sub next {
 	if ($self->{current_line} =~ /^($general_variable_qr)/i) {
 		my $line = $self->{current_line};
 		
+		my $variable;
+		my $value;
+		if ($line =~ /^(\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)\s*([+-]{2}|=\s*(.*))/) {
+			$variable = $1;
+			$value = $2;
+		} else {
+			$self->error("Could separate variable from value");
+			return;
+		}
+		
 		my $var;
 		my $display_name;
 		
-		if ($line =~ /^\$($valid_var_characters)(\[|\{)(.+)$/) {
-			my $name = $1;
-			my $open_bracket = $2;
-			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
-			my $rest = $3;
-			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
-			my $parsed_key_index = $self->parse_command($key_index);
-			if (defined $self->error) {
-				return;
-			} elsif (!defined $parsed_key_index) {
-				$self->error("Could not parse key or index code");
-				return;
-			}
-			
-			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
-			
-			$var = find_variable($real_name);
-			if (!defined $var) {
-				$self->error("Could not define variable type");
-				return;
-			}
-			
-			$display_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+		if (my $var_hash = $self->find_and_defined_key_index($variable)) {
+			return if (defined $self->error);
+			$var = $var_hash->{var};
 			
 		} else {
+			return if (defined $self->error);
 			$var = find_variable($1);
 			if (defined $self->error) {
 				return;
@@ -1011,14 +1002,11 @@ sub next {
 				$self->error("Could not define variable type");
 				return;
 			}
-			$display_name = quotemeta($var->{display_name});
 		}
-		
-		$line =~ s/^$display_name\s*//;
 		
 		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
 			
-			if ($line =~ /^=\s*(.*)/i) {
+			if ($value =~ /^=\s*(.*)/i) {
 				my $val = $self->parse_command($1);
 				
 				if (defined $self->error) {
@@ -1032,7 +1020,7 @@ sub next {
 					$eventMacro->set_var($var->{type}, $var->{real_name}, ($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
 				}
 				
-			} elsif ($line =~ /^([+-]{2})$/i) {
+			} elsif ($value =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
 				
 				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
@@ -1045,7 +1033,7 @@ sub next {
 		
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
 			
-			if ($line =~ /^=\s*(.*)/i) {
+			if ($value =~ /^=\s*(.*)/i) {
 				my $value = $1;
 				
 				if ($value =~ /(?:undef|unset)/) {
@@ -1575,6 +1563,64 @@ sub parse_perl_subs {
 	return @pair
 }
 
+#Returns 0 if no key of index was found, otherwise return an array of the format:
+# @array = (parsed_var_name, original_var_name, var);
+sub find_and_defined_key_index {
+	my ($self, $text) = @_;
+	
+	if ($text =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
+		my $name = $1;
+		my $open_bracket = $2;
+		
+		# 0 for array / 1 for hash
+		my $array_or_hash = ($open_bracket eq '[' ? 0 : 1);
+		my $close_bracket = ($array_or_hash ? '}' : ']');
+		
+		my $rest = $3;
+			
+		my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
+		if (!defined $key_index) {
+			$self->error("Could not define key of hash or index of array");
+			return;
+			
+		} elsif ($key_index eq '') {
+			$self->error("Empty key of hash or index of array");
+			return;
+		}
+			
+		my $parsed_key_index = $self->parse_command($key_index);
+		if (defined $self->error) {
+			return;
+		} elsif (!defined $parsed_key_index) {
+			$self->error("Could not parse key or index code");
+			return;
+				
+		} elsif ($parsed_key_index eq '') {
+			$self->error("Empty key of hash or index of array after parsing");
+			return;
+			
+		} elsif ($array_or_hash && $parsed_key_index !~ /[a-zA-Z\d]+/) {
+			$self->error("Invalid syntax in key of hash (only use letters and numbers)");
+			return;
+			
+		} elsif (!$array_or_hash && $parsed_key_index !~ /\d+/) {
+			$self->error("Invalid syntax in index of array (only use numbers)");
+			return;
+		}
+			
+		my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
+			
+		my $original_name = ('$'.$name.$open_bracket.$key_index.$close_bracket);
+		
+		my $var = find_variable($real_name);
+		if (!defined $var) {
+			$self->error("Could not define variable type");
+			return;
+		}
+		return {real_name => $real_name, original_name => $original_name, var => $var};
+	}
+}
+
 # substitute variables
 sub substitue_variables {
 	my ($self, $received) = @_;
@@ -1584,32 +1630,10 @@ sub substitue_variables {
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
 	
 		#accessed arrays and hashes
-		if ($remaining =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
-			my $name = $1;
-			my $open_bracket = $2;
-			my $close_bracket = ($open_bracket eq '[' ? ']' : '}');
-			my $rest = $3;
-			
-			my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
-			
-			
-			my $parsed_key_index = $self->parse_command($key_index);
-			if (defined $self->error) {
-				return;
-			} elsif (!defined $parsed_key_index) {
-				$self->error("Could not parse key or index code");
-				return;
-			}
-			
-			my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
-			
-			my $var = find_variable($real_name);
-			if (!defined $var) {
-				$self->error("Could not define variable type");
-				return;
-			}
-			
-			my $regex_name = quotemeta('$'.$name.$open_bracket.$key_index.$close_bracket);
+		if (my $var_hash = $self->find_and_defined_key_index($remaining)) {
+			return if (defined $self->error);
+			my $var = $var_hash->{var};
+			my $regex_name = quotemeta($var_hash->{original_name});
 			
 			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 				my $before_var = $1;
@@ -1620,6 +1644,7 @@ sub substitue_variables {
 				} elsif ($var->{type} eq 'accessed_hash') {
 					$var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
 				}
+				$var_value = '' unless (defined $var_value);
 				
 				$remaining = $before_var.$var_value.$after_var;
 				
@@ -1630,6 +1655,7 @@ sub substitue_variables {
 			next VAR;
 			
 		} elsif ($remaining =~ /(?:^|(?<=[^\\]))($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/) {
+			return if (defined $self->error);
 			my $var = find_variable($1);
 			
 			my $regex_name = quotemeta($var->{display_name});
@@ -1646,6 +1672,7 @@ sub substitue_variables {
 				} elsif ($var->{type} eq 'hash') {
 					$var_value = $eventMacro->get_hash_size($var->{real_name});
 				}
+				$var_value = '' unless (defined $var_value);
 				
 				$remaining = $before_var.$var_value.$after_var;
 				
@@ -1694,7 +1721,7 @@ sub parse_command {
 		$result = "_%_";
 		
 		# first parse _then_ substitute. slower but safer
-		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift' && $keyword ne 'exists' && $keyword ne 'delete') {
+		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift' && $keyword ne 'exists' && $keyword ne 'delete' && $keyword ne 'defined') {
 			$parsed = $self->substitue_variables($inside_brackets);
 		}
 		my $only_replace_once = 0;
@@ -1792,6 +1819,11 @@ sub parse_command {
 			$result = $self->manage_hash($keyword, $inside_brackets);
 			return if (defined $self->error);
 			$only_replace_once = 1;
+		
+		} elsif ($keyword eq 'defined') {
+			$result = $self->parse_defined($inside_brackets);
+			return if (defined $self->error);
+			$only_replace_once = 1;
 		}
 		
 		return unless defined $result;
@@ -1836,28 +1868,38 @@ sub parse_command {
 	return $command;
 }
 
+sub parse_defined {
+	my ($self, $inside_brackets) = @_;
+	
+	my $var;
+	if (my $var_hash = $self->find_and_defined_key_index($inside_brackets)) {
+		return if (defined $self->error);
+		$var = $var_hash->{var};
+		
+	} else {
+		return if (defined $self->error);
+		$var = find_variable($inside_brackets);
+	}
+	
+	if (!defined $var) {
+		$self->error("Could not define variable type");
+		return;
+	
+	} elsif ($var->{type} ne 'accessed_hash' && $var->{type} ne 'accessed_array' && $var->{type} ne 'scalar') {
+		$self->error("defined function can only be used on scalars, hashes with keys or arrays with indexes, you trie to use it in a ".$var->{type});
+		return;
+	}
+	
+	return ($eventMacro->defined_var($var->{type}, $var->{real_name}));
+}
+
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
-
-	if ($inside_brackets =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)\{(.+)$/) {
-		my $name = $1;
-		my $rest = $2;
-		my $key_index = get_key_or_index('{', '}', $rest);
-		my $parsed_key_index = $self->parse_command($key_index);
-		if (defined $self->error) {
-			return;
-		} elsif (!defined $parsed_key_index) {
-			$self->error("Could not parse key or index code");
-			return;
-		}
-		
-		my $real_name = ('$'.$name.'{'.$parsed_key_index.'}');
-		
-		my $var = find_variable($real_name);
-		if (!defined $var) {
-			$self->error("Could not define variable in function '".$keyword."'");
-			return;
-		} elsif ($var->{type} ne 'accessed_hash') {
+	
+	if (my $var_hash = $self->find_and_defined_key_index($inside_brackets)) {
+		return if (defined $self->error);
+		my $var = $var_hash->{var};
+		if ($var->{type} ne 'accessed_hash') {
 			$self->error("Bad exists syntax, variable not a hash name/key pair");
 			return;
 		}
@@ -1872,6 +1914,7 @@ sub manage_hash {
 		}
 		
 	} else {
+		return if (defined $self->error);
 		$self->error("Function '".$keyword."' must have a hash and a hash key as argument");
 		return;
 	}

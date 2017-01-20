@@ -525,21 +525,21 @@ sub find_accessed_hash_variable {
 sub get_key_or_index {
 	my ($open_char, $close_char, $code) = @_;
 	my $counter = 0;
-	my $key_index;
+	my $key_index = '';
 	my @characters = split('',$code);
 	foreach my $current (@characters) {
 		if ($current eq $open_char) {
 			$counter++;
 		} elsif ($current eq $close_char) {
 			if ($counter == 0) {
-				last;
+				return $key_index;
 			} else {
 				$counter--;
 			}
 		}
 		$key_index .= $current;
 	}
-	return $key_index;
+	return undef;
 }
 
 1;
