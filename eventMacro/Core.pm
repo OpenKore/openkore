@@ -480,12 +480,14 @@ sub get_scalar_var {
 
 sub set_scalar_var {
 	my ($self, $variable_name, $variable_value, $check_callbacks) = @_;
+	
 	if ($variable_value eq 'undef') {
 		undef $variable_value;
-		$self->{Scalar_Variable_List_Hash}{$variable_name} = undef;
+		delete $self->{Scalar_Variable_List_Hash}{$variable_name};
 	} else {
 		$self->{Scalar_Variable_List_Hash}{$variable_name} = $variable_value;
 	}
+	
 	return if (defined $check_callbacks && $check_callbacks == 0);
 	$self->check_necessity_and_callback('scalar', $variable_name, $variable_value);
 }
@@ -506,9 +508,12 @@ sub set_full_array {
 	
 	debug "[eventMacro] Setting array '@".$variable_name."'\n", "eventMacro";
 	foreach my $member_index (0..$new_last_index) {
-		my $member = $list->[$member_index];
-		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member;
-		$self->check_necessity_and_callback('accessed_array', $variable_name, $member, $member_index);
+		my $member_value = $list->[$member_index];
+		if ($member_value eq 'undef') {
+			undef $member_value;
+		}
+		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member_value;
+		$self->check_necessity_and_callback('accessed_array', $variable_name, $member_value, $member_index);
 	}
 	if ($new_last_index < $old_last_index) {
 		splice(@{$self->{Array_Variable_List_Hash}{$variable_name}}, ($new_last_index+1));
@@ -539,6 +544,10 @@ sub clear_array {
 sub push_array {
 	my ($self, $variable_name, $new_member) = @_;
 	
+	if ($new_member eq 'undef') {
+		undef $new_member;
+	}
+	
 	push(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	
@@ -552,6 +561,10 @@ sub push_array {
 
 sub unshift_array {
 	my ($self, $variable_name, $new_member) = @_;
+	
+	if ($new_member eq 'undef') {
+		undef $new_member;
+	}
 	
 	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
@@ -611,7 +624,7 @@ sub shift_array {
 
 sub get_array_var {
 	my ($self, $variable_name, $index) = @_;
-	return $self->{Array_Variable_List_Hash}{$variable_name}[$index] if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
+	return ($self->{Array_Variable_List_Hash}{$variable_name}[$index]) if (exists $self->{Array_Variable_List_Hash}{$variable_name} && defined $self->{Array_Variable_List_Hash}{$variable_name}[$index]);
 	return undef;
 }
 
@@ -658,18 +671,20 @@ sub set_full_hash {
 	
 	debug "[eventMacro] Setting hash '%".$variable_name."'\n", "eventMacro";
 	foreach my $member_key (keys %{$hash}) {
-		my $member = $hash->{$member_key};
-		$self->{Hash_Variable_List_Hash}{$variable_name}{$member_key} = $member;
-		$self->check_necessity_and_callback('accessed_hash', $variable_name, $member, $member_key);
+		my $member_value = $hash->{$member_key};
+		if ($member_value eq 'undef') {
+			undef $member_value;
+		}
+		$self->{Hash_Variable_List_Hash}{$variable_name}{$member_key} = $member_value;
+		$self->check_necessity_and_callback('accessed_hash', $variable_name, $member_value, $member_key);
 	}
-	if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
 	
+	if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
 		foreach my $old_member_key (keys %old_hash) {
 			if (!exists $self->{Hash_Variable_List_Hash}{$variable_name}{$old_member_key}) {
 				$self->check_necessity_and_callback('accessed_hash', $variable_name, undef, $old_member_key);
 			}
 		}
-		
 	}
 	$self->hash_size_change($variable_name) if ((scalar keys %old_hash) != (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}));
 }
@@ -725,12 +740,13 @@ sub get_hash_var {
 
 sub set_hash_var {
 	my ($self, $variable_name, $key, $variable_value, $check_callbacks) = @_;
+	
 	if ($variable_value eq 'undef') {
 		undef $variable_value;
-		$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = undef;
-	} else {
-		$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = $variable_value;
 	}
+	
+	$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = $variable_value;
+	
 	return if (defined $check_callbacks && $check_callbacks == 0);
 	$self->check_necessity_and_callback('accessed_hash', $variable_name, $variable_value, $key);
 	$self->hash_size_change($variable_name);

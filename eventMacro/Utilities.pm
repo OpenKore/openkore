@@ -449,7 +449,7 @@ sub find_variable {
 	}
 	
 	if (my $accessed_array = find_accessed_array_variable($text)) {
-		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, index => $accessed_array->{index} });
+		return ({ display_name => $accessed_array->{display_name}, type => 'accessed_array', real_name => $accessed_array->{real_name}, complement => $accessed_array->{complement} });
 	}
 	
 	if (my $hash = find_hash_variable($text)) {
@@ -457,7 +457,7 @@ sub find_variable {
 	}
 	
 	if (my $accessed_hash = find_accessed_hash_variable($text)) {
-		return ({ display_name => $accessed_hash->{display_name}, type => 'accessed_hash', real_name => $accessed_hash->{real_name}, key => $accessed_hash->{key} });
+		return ({ display_name => $accessed_hash->{display_name}, type => 'accessed_hash', real_name => $accessed_hash->{real_name}, complement => $accessed_hash->{complement} });
 	}
 	
 	return undef;
@@ -493,7 +493,7 @@ sub find_accessed_array_variable {
 		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\[(\d+)\]/) {
 			my $name = $1;
 			my $index = $2;
-			return ({display_name => ('$'.$name.'['.$index.']'), real_name => $name, index => $index});
+			return ({display_name => ('$'.$name.'['.$index.']'), real_name => $name, complement => $index});
 		}
 	}
 }
@@ -517,7 +517,7 @@ sub find_accessed_hash_variable {
 		if ($name =~ /(\.?[a-zA-Z][a-zA-Z\d]*)\{([a-zA-Z\d]+)\}/) {
 			my $name = $1;
 			my $key = $2;
-			return ({display_name => ('$'.$name.'{'.$key.'}'), real_name => $name, key => $key});
+			return ({display_name => ('$'.$name.'{'.$key.'}'), real_name => $name, complement => $key});
 		}
 	}
 }
@@ -525,21 +525,21 @@ sub find_accessed_hash_variable {
 sub get_key_or_index {
 	my ($open_char, $close_char, $code) = @_;
 	my $counter = 0;
-	my $key_index;
+	my $key_index = '';
 	my @characters = split('',$code);
 	foreach my $current (@characters) {
 		if ($current eq $open_char) {
 			$counter++;
 		} elsif ($current eq $close_char) {
 			if ($counter == 0) {
-				last;
+				return $key_index;
 			} else {
 				$counter--;
 			}
 		}
 		$key_index .= $current;
 	}
-	return $key_index;
+	return undef;
 }
 
 1;

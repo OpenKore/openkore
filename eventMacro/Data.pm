@@ -78,7 +78,8 @@ our $macroKeywords =
 	"unshift"      . "|" .
 	"shift"        . "|" .
 	"exists"       . "|" .
-	"delete"
+	"delete"       . "|" .
+	"defined"
 ;
 
 1;
