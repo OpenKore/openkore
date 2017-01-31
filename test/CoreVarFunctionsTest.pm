@@ -61,7 +61,7 @@ sub start {
 		ok (!defined $eventMacro->get_scalar_var('scalar2'));
 		is ($eventMacro->is_scalar_var_defined('scalar2'), 0);
 		
-		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar1' => 73, 'scalar2' => undef});
+		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar1' => 73});
 		
 		$eventMacro->set_scalar_var('scalar1', 'undef');
 		ok (!defined $eventMacro->get_scalar_var('scalar1'));
@@ -70,7 +70,7 @@ sub start {
 		ok (!defined $eventMacro->get_scalar_var('scalar2'));
 		is ($eventMacro->is_scalar_var_defined('scalar2'), 0);
 		
-		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar1' => undef, 'scalar2' => undef});
+		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {});
 		
 		$eventMacro->set_scalar_var('scalar2', 5);
 		ok (!defined $eventMacro->get_scalar_var('scalar1'));
@@ -80,7 +80,7 @@ sub start {
 		is ($eventMacro->is_scalar_var_defined('scalar2'), 1);
 		is ($eventMacro->get_scalar_var('scalar2'), 5);
 		
-		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar1' => undef, 'scalar2' => 5});
+		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar2' => 5});
 	};
 	
 	subtest 'array' => sub {
@@ -89,7 +89,7 @@ sub start {
 		is ($eventMacro->get_array_size('array1'), 0);
 		is ($eventMacro->get_array_size('array2'), 0);
 		
-		$eventMacro->set_full_array('array1', ['Poring', '15', undef, 'Drops', 'Magmaring']);
+		$eventMacro->set_full_array('array1', ['Poring', '15', 'undef', 'Drops', 'Magmaring']);
 		is ($eventMacro->get_array_size('array1'), 5);
 		is ($eventMacro->get_array_size('array2'), 0);
 		
@@ -113,7 +113,7 @@ sub start {
 		
 		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Poring', '15', undef, 'Drops', 'Magmaring']});
 		
-		$eventMacro->set_full_array('array2', ['Angeling', 'Deviling', 'Archangeling', undef, 'Mastering', undef, 'King Poring']);
+		$eventMacro->set_full_array('array2', ['Angeling', 'Deviling', 'Archangeling', 'undef', 'Mastering', 'undef', 'King Poring']);
 		is ($eventMacro->get_array_size('array1'), 5);
 		is ($eventMacro->get_array_size('array2'), 7);
 		
@@ -207,49 +207,67 @@ sub start {
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($eventMacro->get_array_size('array1'), $new_size);
 		
-		$new_size = $eventMacro->push_array('array1', 'Weapon');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Card', 10, 'Equip', 'Weapon'], 'array2' => [undef, undef, 'Drop']});
+		$new_size = $eventMacro->push_array('array1', 'undef');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Card', 10, 'Equip', undef], 'array2' => [undef, undef, 'Drop']});
 		is ($eventMacro->get_array_size('array1'), 4);
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($eventMacro->get_array_size('array1'), $new_size);
 		
-		$new_size = $eventMacro->unshift_array('array1', 'Shield');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Shield', 'Card', 10, 'Equip', 'Weapon'], 'array2' => [undef, undef, 'Drop']});
+		$new_size = $eventMacro->push_array('array1', 'Weapon');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Card', 10, 'Equip', undef, 'Weapon'], 'array2' => [undef, undef, 'Drop']});
 		is ($eventMacro->get_array_size('array1'), 5);
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($eventMacro->get_array_size('array1'), $new_size);
 		
-		$new_size = $eventMacro->unshift_array('array1', 'Staff');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', 'Shield', 'Card', 10, 'Equip', 'Weapon'], 'array2' => [undef, undef, 'Drop']});
+		$new_size = $eventMacro->unshift_array('array1', 'Shield');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Shield', 'Card', 10, 'Equip', undef, 'Weapon'], 'array2' => [undef, undef, 'Drop']});
 		is ($eventMacro->get_array_size('array1'), 6);
+		is ($eventMacro->get_array_size('array2'), 3);
+		is ($eventMacro->get_array_size('array1'), $new_size);
+		
+		$new_size = $eventMacro->unshift_array('array1', 'undef');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => [undef, 'Shield', 'Card', 10, 'Equip', undef, 'Weapon'], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 7);
+		is ($eventMacro->get_array_size('array2'), 3);
+		is ($eventMacro->get_array_size('array1'), $new_size);
+		
+		$new_size = $eventMacro->unshift_array('array1', 'Staff');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', undef, 'Shield', 'Card', 10, 'Equip', undef, 'Weapon'], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 8);
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($eventMacro->get_array_size('array1'), $new_size);
 		
 		my $removed;
 		
 		$removed = $eventMacro->pop_array('array1');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', 'Shield', 'Card', 10, 'Equip'], 'array2' => [undef, undef, 'Drop']});
-		is ($eventMacro->get_array_size('array1'), 5);
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', undef, 'Shield', 'Card', 10, 'Equip', undef], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 7);
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($removed, 'Weapon');
 		
 		$removed = $eventMacro->pop_array('array1');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', 'Shield', 'Card', 10], 'array2' => [undef, undef, 'Drop']});
-		is ($eventMacro->get_array_size('array1'), 4);
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', undef, 'Shield', 'Card', 10, 'Equip'], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 6);
+		is ($eventMacro->get_array_size('array2'), 3);
+		ok (!defined $removed);
+		
+		$removed = $eventMacro->pop_array('array1');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Staff', undef, 'Shield', 'Card', 10], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 5);
 		is ($eventMacro->get_array_size('array2'), 3);
 		is ($removed, 'Equip');
+		
+		$removed = $eventMacro->shift_array('array1');
+		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => [undef, 'Shield', 'Card', 10], 'array2' => [undef, undef, 'Drop']});
+		is ($eventMacro->get_array_size('array1'), 4);
+		is ($eventMacro->get_array_size('array2'), 3);
+		is ($removed, 'Staff');
 		
 		$removed = $eventMacro->shift_array('array1');
 		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Shield', 'Card', 10], 'array2' => [undef, undef, 'Drop']});
 		is ($eventMacro->get_array_size('array1'), 3);
 		is ($eventMacro->get_array_size('array2'), 3);
-		is ($removed, 'Staff');
-		
-		$removed = $eventMacro->shift_array('array1');
-		is_deeply($eventMacro->{Array_Variable_List_Hash}, {'array1' => ['Card', 10], 'array2' => [undef, undef, 'Drop']});
-		is ($eventMacro->get_array_size('array1'), 2);
-		is ($eventMacro->get_array_size('array2'), 3);
-		is ($removed, 'Shield');
+		ok (!defined $removed);
 	};
 	
 	subtest 'hash' => sub {
@@ -258,7 +276,7 @@ sub start {
 		is ($eventMacro->get_hash_size('hash1'), 0);
 		is ($eventMacro->get_hash_size('hash2'), 0);
 		
-		$eventMacro->set_full_hash('hash1', {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef});
+		$eventMacro->set_full_hash('hash1', {'Poring' => 10, 'Drops' => 25, 'Poporing' => 'undef', 'Magmaring' => 100, 'Angeling' => 'undef'});
 		is ($eventMacro->get_hash_size('hash1'), 5);
 		is ($eventMacro->get_hash_size('hash2'), 0);
 		
@@ -293,7 +311,7 @@ sub start {
 		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef}});
 		
 		
-		$eventMacro->set_full_hash('hash2', {'Staff' => 2000, 'Shield' => undef, 'Card' => 7000});
+		$eventMacro->set_full_hash('hash2', {'Staff' => 2000, 'Shield' => 'undef', 'Card' => 7000});
 		is ($eventMacro->get_hash_size('hash1'), 5);
 		is ($eventMacro->get_hash_size('hash2'), 3);
 		

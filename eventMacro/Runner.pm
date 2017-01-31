@@ -989,7 +989,7 @@ sub next {
 		my $var;
 		my $display_name;
 		
-		if (my $var_hash = $self->find_and_defined_key_index($variable)) {
+		if (my $var_hash = $self->find_and_define_key_index($variable)) {
 			return if (defined $self->error);
 			$var = $var_hash->{var};
 			
@@ -1563,9 +1563,9 @@ sub parse_perl_subs {
 	return @pair
 }
 
-#Returns 0 if no key of index was found, otherwise return an array of the format:
-# @array = (parsed_var_name, original_var_name, var);
-sub find_and_defined_key_index {
+# Returns 0 if no key of index was found, otherwise return a hash of the format:
+# %hash = (real_name => parsed_var_name, original_name => original_var_name, var => var)
+sub find_and_define_key_index {
 	my ($self, $text) = @_;
 	
 	if ($text =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
@@ -1630,7 +1630,7 @@ sub substitue_variables {
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
 	
 		#accessed arrays and hashes
-		if (my $var_hash = $self->find_and_defined_key_index($remaining)) {
+		if (my $var_hash = $self->find_and_define_key_index($remaining)) {
 			return if (defined $self->error);
 			my $var = $var_hash->{var};
 			my $regex_name = quotemeta($var_hash->{original_name});
@@ -1872,7 +1872,7 @@ sub parse_defined {
 	my ($self, $inside_brackets) = @_;
 	
 	my $var;
-	if (my $var_hash = $self->find_and_defined_key_index($inside_brackets)) {
+	if (my $var_hash = $self->find_and_define_key_index($inside_brackets)) {
 		return if (defined $self->error);
 		$var = $var_hash->{var};
 		
@@ -1896,7 +1896,7 @@ sub parse_defined {
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
 	
-	if (my $var_hash = $self->find_and_defined_key_index($inside_brackets)) {
+	if (my $var_hash = $self->find_and_define_key_index($inside_brackets)) {
 		return if (defined $self->error);
 		my $var = $var_hash->{var};
 		if ($var->{type} ne 'accessed_hash') {
