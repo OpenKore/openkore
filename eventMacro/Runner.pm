@@ -1005,6 +1005,8 @@ sub next {
 		}
 		
 		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
+		
+			my $complement = (exists $var->{complement} ? $var->{complement} : undef);
 			
 			if ($value =~ /^=\s*(.*)/i) {
 				my $val = $self->parse_command($1);
@@ -1017,14 +1019,26 @@ sub next {
 					return;
 					
 				} else {
-					$eventMacro->set_var($var->{type}, $var->{real_name}, ($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
+					$eventMacro->set_var(
+						$var->{type}, 
+						$var->{real_name}, 
+						($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)),
+						1,
+						$complement
+					);
 				}
 				
 			} elsif ($value =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
 				
-				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
-				$eventMacro->set_var($var->{type}, $var->{real_name}, ($old_value + $change), 1, (exists $var->{index} ? $var->{index} : exists $var->{key} ? $var->{key} : undef));
+				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
+				$eventMacro->set_var(
+					$var->{type}, 
+					$var->{real_name}, 
+					($old_value + $change), 
+					1, 
+					$complement
+				);
 				
 			} else {
 				$self->error("unrecognized assignment");
@@ -1638,12 +1652,7 @@ sub substitue_variables {
 			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 				my $before_var = $1;
 				my $after_var = $2;
-				my $var_value;
-				if ($var->{type} eq 'accessed_array') {
-					$var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
-				} elsif ($var->{type} eq 'accessed_hash') {
-					$var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
-				}
+				my $var_value = $eventMacro->get_var($var->{type}, $var->{real_name}, $var->{complement});
 				$var_value = '' unless (defined $var_value);
 				
 				$remaining = $before_var.$var_value.$after_var;
@@ -1890,7 +1899,9 @@ sub parse_defined {
 		return;
 	}
 	
-	return ($eventMacro->defined_var($var->{type}, $var->{real_name}));
+	my $complement = (exists $var->{complement} ? $var->{complement} : undef);
+	
+	return ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement));
 }
 
 sub manage_hash {
@@ -1905,10 +1916,10 @@ sub manage_hash {
 		}
 		
 		if ($keyword eq 'exists') {
-			return ($eventMacro->exists_hash($var->{real_name}, $var->{key}));
+			return ($eventMacro->exists_hash($var->{real_name}, $var->{complement}));
 			
 		} elsif ($keyword eq 'delete') {
-			my $result = $eventMacro->delete_key($var->{real_name}, $var->{key});
+			my $result = $eventMacro->delete_key($var->{real_name}, $var->{complement});
 			$result = '' unless (defined $result);
 			return $result;
 		}

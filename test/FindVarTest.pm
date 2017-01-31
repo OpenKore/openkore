@@ -14,8 +14,7 @@ sub start {
 		ok (exists $var->{display_name});
 		ok (exists $var->{real_name});
 		ok (exists $var->{type});
-		ok (!exists $var->{index});
-		ok (!exists $var->{key});
+		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'scalar');
 		is_deeply($var, {display_name => '$foo', type => 'scalar', real_name => 'foo'});
 	};
@@ -26,8 +25,7 @@ sub start {
 		ok (exists $var->{display_name});
 		ok (exists $var->{real_name});
 		ok (exists $var->{type});
-		ok (!exists $var->{index});
-		ok (!exists $var->{key});
+		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'array');
 		is_deeply($var, {display_name => '@bar', type => 'array', real_name => 'bar'});
 	};
@@ -38,10 +36,9 @@ sub start {
 		ok (exists $var->{display_name});
 		ok (exists $var->{real_name});
 		ok (exists $var->{type});
-		ok (exists $var->{index});
-		ok (!exists $var->{key});
+		ok (exists $var->{complement});
 		ok ($var->{type} eq 'accessed_array');
-		is_deeply($var, {display_name => '$foobar[10]', type => 'accessed_array', real_name => 'foobar', index => 10});
+		is_deeply($var, {display_name => '$foobar[10]', type => 'accessed_array', real_name => 'foobar', complement => 10});
 	};
 	
 	subtest 'hash' => sub {
@@ -50,8 +47,7 @@ sub start {
 		ok (exists $var->{display_name});
 		ok (exists $var->{real_name});
 		ok (exists $var->{type});
-		ok (!exists $var->{index});
-		ok (!exists $var->{key});
+		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'hash');
 		is_deeply($var, {display_name => '%barfoo', type => 'hash', real_name => 'barfoo'});
 	};
@@ -62,10 +58,9 @@ sub start {
 		ok (exists $var->{display_name});
 		ok (exists $var->{real_name});
 		ok (exists $var->{type});
-		ok (!exists $var->{index});
-		ok (exists $var->{key});
+		ok (exists $var->{complement});
 		ok ($var->{type} eq 'accessed_hash');
-		is_deeply($var, {display_name => '$baz{qux}', type => 'accessed_hash', real_name => 'baz', key => 'qux'});
+		is_deeply($var, {display_name => '$baz{qux}', type => 'accessed_hash', real_name => 'baz', complement => 'qux'});
 	};
 }
 
