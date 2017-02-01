@@ -453,8 +453,8 @@ sub manage_nested_automacro_var {
 		
 		if (exists $variable->{complement}) {
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{defined} = 0;
+			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]) unless ($nest_index == 0);
 			if (!exists $variable->{complement_is_var}) {
-				push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]);
 				$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}}{$variable->{complement}} = 1;
 			}
 
@@ -503,8 +503,10 @@ sub change_sub_callback {
 	
 	my @calls;
 	if (defined $complement) {
+		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value} = $value;
 		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};
 	} else {
+		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value} = $value;
 		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
 	}
 	
@@ -521,13 +523,16 @@ sub activated_sub_callback {
 	my @calls;
 	if (defined $complement) {
 		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{defined} = 1;
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};
+		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value} = $value;
+		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};#Tem que copiar o call_to pro Dynamic_Variable_Sub_Callbacks
 	} else {
 		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{defined} = 1;
+		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value} = $value;
 		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
 	}
 	
 	foreach my $call (@calls) {
+		$self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}}{complement_defined} = 1;
 		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value} = 1;
 	}
 }
@@ -539,13 +544,16 @@ sub deactivated_sub_callback {
 	my @calls;
 	if (defined $complement) {
 		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{defined} = 0;
+		delete $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value};
 		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};
 	} else {
 		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{defined} = 0;
+		delete $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value};
 		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
 	}
 	
 	foreach my $call (@calls) {
+		delete $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}}{complement_defined};
 		delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value};
 		unless (scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}}) {
 			delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}};
