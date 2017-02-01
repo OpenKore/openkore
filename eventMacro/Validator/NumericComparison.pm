@@ -9,7 +9,7 @@ my $number_qr = qr/-?\d+(?:\.\d+)?/;
 
 sub parse {
 	my ( $self, $str ) = @_;
-	$self->{parsed} = $str =~ /^\s*(<|<=|=|==|!=|!|>=|>|)\s*($number_qr%?|$general_variable_qr)(?:\s*\.\.\s*($number_qr%?|$general_variable_qr))?\s*$/o;
+	$self->{parsed} = $str =~ /^\s*(<|<=|=|==|!=|!|>=|>|)\s*($number_qr%?|$general_wider_variable_qr)(?:\s*\.\.\s*($number_qr%?|$general_wider_variable_qr))?\s*$/o;
 	if (!$self->{parsed}) {
 		$self->{error} = "There were found no numeric comparison in the condition code";
 		return;

@@ -4,7 +4,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw($eventMacro @perl_name $valid_var_characters $general_variable_qr $scalar_variable_qr $array_variable_qr $accessed_array_variable_qr $hash_variable_qr $accessed_hash_variable_qr $macro_keywords_character %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
+our @EXPORT = qw($eventMacro @perl_name $valid_var_characters $general_variable_qr $general_wider_variable_qr $scalar_variable_qr $array_variable_qr $accessed_array_variable_qr $hash_variable_qr $accessed_hash_variable_qr $macro_keywords_character %parameters $macroKeywords CHECKING_AUTOMACROS PAUSED_BY_EXCLUSIVE_MACRO PAUSE_FORCED_BY_USER CHECKING_FORCED_BY_USER STATE_TYPE EVENT_TYPE);
 
 our $eventMacro;
 our @perl_name;
@@ -12,6 +12,8 @@ our @perl_name;
 our $valid_var_characters = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
 
 our $general_variable_qr = qr/(?:\$$valid_var_characters(?:\[\d+\]|\{[a-zA-Z\d]+\})?|\@$valid_var_characters|\%$valid_var_characters)/;
+
+our $general_wider_variable_qr = qr/(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)/;
 
 our $scalar_variable_qr = qr/\$$valid_var_characters/;
 

@@ -22,3 +22,38 @@ macro testmacro2 {
 	log This also works
 	log hehe 2
 }
+
+automacro test3 {
+	BaseLevel $scalar1
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test4 {
+	BaseLevel $array1[1]
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test5 {
+	BaseLevel $hash2{key5}
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test6 {
+	BaseLevel $NestArray1[$NestHash1{$NestHash2{$NestArray2[5]}}]
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test7 {
+	BaseLevel $NestArray3[$NestedScalar1]
+	JobLevel 20
+	priority 0
+	call testmacro2
+}

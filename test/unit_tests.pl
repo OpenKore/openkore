@@ -35,6 +35,7 @@ my @tests = qw(
 	Validator::ListMemberCheckTest
 	Validator::RegexCheckTest
 	LoadConditionsTest
+	DynamicAutoVarsTest
 	RunnerParseCommandTest
 	RunnerStatementTest
 );
