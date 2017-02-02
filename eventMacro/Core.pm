@@ -527,25 +527,14 @@ sub change_sub_callback {
 	my ($self, $variable_type, $variable_name, $before_value, $value, $complement, $nest_complement) = @_;
 	Log::warning "[test] change_sub_callback\n";
 	
-	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
+	my $new_nest;
 	if (defined $complement) {
-		$var_hash = $var_hash->{$complement};
+		$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+	} else {
+		$new_nest = '$'.$variable_name;
 	}
-	
-	my $calls = $var_hash->{call_to};
-	$var_hash->{value} = $value;
-	
-	foreach my $call (@{$calls}) {
-		delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value}{$call->{sub_callback_index}};
-		unless (scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value}}) {
-			delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value};
-		}
-		
-		my $sub_callback_index = ((scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}}) + 1);
-		
-		$call->{sub_callback_index} = $sub_callback_index;
-		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}{$sub_callback_index} = $call->{complement};
-	}
+	$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement, $nest_complement);
+	$self->activated_sub_callback($variable_type, $variable_name, $value, $complement, $nest_complement);
 }
 
 #TODO 3 : Adicionar em hash original de callback se for last nest
