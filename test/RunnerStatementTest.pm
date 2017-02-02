@@ -12,7 +12,7 @@ use eventMacro::Runner;
 use eventMacro::Utilities qw(find_variable);
 
 sub start {
-	$eventMacro = eventMacro::Core->new( "$RealBin/LoadConditionsTest.txt" );
+	$eventMacro = eventMacro::Core->new( "$RealBin/textfiles/LoadConditionsTest.txt" );
 	
 	$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			'testmacro1',
