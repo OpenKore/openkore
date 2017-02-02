@@ -474,94 +474,164 @@ sub sub_callback_variable_event {
 	Log::warning "[test] sub_callback_variable_event\n";
 	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type});
 	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name});
+	
+	Log::warning "[test2] variable_type is '".$variable_type."'\n";
+	Log::warning "[test2] variable_name is '".$variable_name."'\n";
+	Log::warning "[test2] complement is '".$complement."'\n";
+	Log::warning "[test2] before_value is '".$before_value."'\n";
+	Log::warning "[test2] value is '".$value."'\n";
+	
 	my $dynamic_complements;
 	if (defined $complement) {
 		return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement});
+		
+		foreach my $sub_complement (values %{$self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement}}) {
+			$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$sub_complement};
+			my $pre_defined = $dynamic_complements->{defined};
+			Log::warning "[test2] pre_defined is '".$pre_defined."'\n";
+			if (defined $value) {
+				if ($pre_defined) {
+					$self->change_sub_callback($variable_type, $variable_name, $before_value, $value, $complement, $sub_complement);
+				} else {
+					$self->activated_sub_callback($variable_type, $variable_name, $value, $complement, $sub_complement);
+				}
+			} else {
+				if ($pre_defined) {
+					$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement, $sub_complement);
+				}
+			}
+		}
+		
+		return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement});
 		$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement};
+		
 	} else {
 		$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
-	}
-	
-	my $pre_defined = $dynamic_complements->{defined};
-	
-	if (defined $value) {
-		if ($pre_defined) {
-			$self->change_sub_callback($variable_type, $variable_name, $before_value, $value, $complement);
+		my $pre_defined = $dynamic_complements->{defined};
+		Log::warning "[test2] pre_defined is '".$pre_defined."'\n";
+		if (defined $value) {
+			if ($pre_defined) {
+				$self->change_sub_callback($variable_type, $variable_name, $before_value, $value);
+			} else {
+				$self->activated_sub_callback($variable_type, $variable_name, $value);
+			}
 		} else {
-			$self->activated_sub_callback($variable_type, $variable_name, $value, $complement);
-		}
-	} else {
-		if ($pre_defined) {
-			$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement);
+			if ($pre_defined) {
+				$self->deactivated_sub_callback($variable_type, $variable_name, $before_value);
+			}
 		}
 	}
 }
 
 sub change_sub_callback {
-	my ($self, $variable_type, $variable_name, $before_value, $value, $complement) = @_;
+	my ($self, $variable_type, $variable_name, $before_value, $value, $complement, $nest_complement) = @_;
 	Log::warning "[test] change_sub_callback\n";
 	
-	my @calls;
+	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value} = $value;
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};
-	} else {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value} = $value;
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
+		$var_hash = $var_hash->{$complement};
 	}
 	
-	foreach my $call (@calls) {
-		delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value};
-		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value} = 1;
+	my $calls = $var_hash->{call_to};
+	$var_hash->{value} = $value;
+	
+	foreach my $call (@{$calls}) {
+		delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value}{$call->{sub_callback_index}};
+		unless (scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value}}) {
+			delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value};
+		}
+		
+		my $sub_callback_index = ((scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}}) + 1);
+		
+		$call->{sub_callback_index} = $sub_callback_index;
+		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}{$sub_callback_index} = $call->{complement};
 	}
 }
+
+#TODO 1 : Adicionar verificação de definição de níveis superiores de nest
+#TODO 2 : Adicionar undefinição de níveis superiores de nest ao desativar
+#TODO 3 : Adicionar em hash original de callback se for last nest
 
 sub activated_sub_callback {
-	my ($self, $variable_type, $variable_name, $value, $complement) = @_;
+	my ($self, $variable_type, $variable_name, $value, $complement, $nest_complement) = @_;
 	Log::warning "[test] activated_sub_callback\n";
 	
-	my @calls;
+	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{defined} = 1;
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value} = $value;
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};#Tem que copiar o call_to pro Dynamic_Variable_Sub_Callbacks
-	} else {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{defined} = 1;
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value} = $value;
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
+		$var_hash = $var_hash->{$nest_complement};
 	}
 	
-	foreach my $call (@calls) {
-		$self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}}{complement_defined} = 1;
-		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value} = 1;
+	$var_hash->{defined} = 1;
+	$var_hash->{value} = $value;
+	my $calls = $var_hash->{call_to};
+	
+	foreach my $call (@{$calls}) {
+		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
+		$call_complements->{complement_defined} = 1;
+		
+		my $sub_callback_index = ((scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}}) + 1);
+		$call->{sub_callback_index} = $sub_callback_index;
+		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}{$sub_callback_index} = $call->{complement};
 	}
 }
 
+use Data::Dumper;
+
 sub deactivated_sub_callback {
-	my ($self, $variable_type, $variable_name, $before_value, $complement) = @_;
-	Log::warning "[test] deactivated_sub_callback\n";
+	my ($self, $variable_type, $variable_name, $before_value, $complement, $nest_complement) = @_;
 	
-	my @calls;
+	Log::warning "[test] deactivated_sub_callback\n";
+	Log::warning "[test] variable_type is '".$variable_type."'\n";
+	Log::warning "[test] variable_name is '".$variable_name."'\n";
+	Log::warning "[test] before_value is '".$before_value."'\n";
+	Log::warning "[test] complement is '".$complement."'\n";
+	Log::warning "[test] nest_complement is '".$nest_complement."'\n";
+	
+	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{defined} = 0;
-		delete $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}{value};
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$complement}->{call_to}};
-	} else {
-		$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{defined} = 0;
-		delete $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{value};
-		@calls = @{$self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}->{call_to}};
+		$var_hash = $var_hash->{$nest_complement};
 	}
 	
-	foreach my $call (@calls) {
-		delete $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}}{complement_defined};
-		delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$before_value};
-		unless (scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}}) {
-			delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}};
-			unless (scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}}) {
-				delete $self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}};
+	$var_hash->{defined} = 0;
+	delete $var_hash->{value};
+	my $calls = $var_hash->{call_to};
+	
+	foreach my $call (@{$calls}) {
+		my $subcall_index = delete $call->{sub_callback_index};
+		
+		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
+		delete $call_complements->{complement_defined};
+		
+		my $sub_callbacks = $self->{Dynamic_Variable_Sub_Callbacks};
+		
+		delete $sub_callbacks->{$call->{type}}{$call->{name}}{$before_value}{$subcall_index};
+		unless (scalar keys %{$sub_callbacks->{$call->{type}}{$call->{name}}{$before_value}}) {
+			delete $sub_callbacks->{$call->{type}}{$call->{name}}{$before_value};
+			unless (scalar keys %{$sub_callbacks->{$call->{type}}{$call->{name}}}) {
+				delete $sub_callbacks->{$call->{type}}{$call->{name}};
+				unless (scalar keys %{$sub_callbacks->{$call->{type}}}) {
+					delete $sub_callbacks->{$call->{type}};
+				}
 			}
 		}
+		
+		if ($call_complements->{defined}) {
+			my $new_nest;
+			if (defined $complement) {
+				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+			} else {
+				$new_nest = '$'.$variable_name;
+			}
+			Log::warning "[test] Sub call was defined\n";
+			Log::warning "[test] Undefining '".$call->{name}."' with nest '".$new_nest."'\n";
+			$self->deactivated_sub_callback($call->{type}, $call->{name}, $call_complements->{value}, $before_value, $new_nest);
+		}
 	}
+}
+
+sub add_nest_to_var {
+	my ($self, $variable_type, $variable_name, $to_be_nested) = @_;
+	my $nested = '$'.$variable_name.($variable_type eq 'accessed_array' ? '[' : '{').$to_be_nested.($variable_type eq 'accessed_array' ? ']' : '}');
 }
 
 sub set_arrays_size_to_zero {
