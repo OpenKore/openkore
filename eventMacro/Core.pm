@@ -548,8 +548,6 @@ sub change_sub_callback {
 	}
 }
 
-#TODO 1 : Adicionar verificação de definição de níveis superiores de nest
-#TODO 2 : Adicionar undefinição de níveis superiores de nest ao desativar
 #TODO 3 : Adicionar em hash original de callback se for last nest
 
 sub activated_sub_callback {
@@ -572,6 +570,19 @@ sub activated_sub_callback {
 		my $sub_callback_index = ((scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}}) + 1);
 		$call->{sub_callback_index} = $sub_callback_index;
 		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}{$sub_callback_index} = $call->{complement};
+		
+		if ($self->defined_var($call->{type}, $call->{name}, $value)) {
+			my $new_value = $self->get_var($call->{type}, $call->{name}, $value);
+			my $new_nest;
+			if (defined $complement) {
+				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+			} else {
+				$new_nest = '$'.$variable_name;
+			}
+			Log::warning "[test] Next in nest line is defined\n";
+			Log::warning "[test] Defining '".$call->{name}."' with nest '".$new_nest."'\n";
+			$self->activated_sub_callback($call->{type}, $call->{name}, $new_value, $value, $new_nest);
+		}
 	}
 }
 
@@ -581,11 +592,6 @@ sub deactivated_sub_callback {
 	my ($self, $variable_type, $variable_name, $before_value, $complement, $nest_complement) = @_;
 	
 	Log::warning "[test] deactivated_sub_callback\n";
-	Log::warning "[test] variable_type is '".$variable_type."'\n";
-	Log::warning "[test] variable_name is '".$variable_name."'\n";
-	Log::warning "[test] before_value is '".$before_value."'\n";
-	Log::warning "[test] complement is '".$complement."'\n";
-	Log::warning "[test] nest_complement is '".$nest_complement."'\n";
 	
 	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
