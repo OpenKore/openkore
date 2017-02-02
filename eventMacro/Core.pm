@@ -416,19 +416,18 @@ sub create_callbacks {
 		}
 		
 	}
-
-	my $event_sub = sub {
-		my $self = shift;
+	
+	my $event_sub = sub { 
 		my $name = shift;
 		my $args = shift;
-		my $check_list_hash = $self->{'Event_Related_Hooks'}{$name};
-		$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+		my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+		$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
 	};
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 	}
 }
-							
+
 sub manage_nested_automacro_var {
 	my ($self, $array, $automacro_index, $cond_indexes) = @_;
 	Log::warning "[test] Dumper nested '".Dumper($array)."'\n";
@@ -813,7 +812,7 @@ sub set_full_array {
 	}
 	if ($new_last_index < $old_last_index) {
 		splice(@{$self->{Array_Variable_List_Hash}{$variable_name}}, ($new_last_index+1));
-		if (exists $self->{Event_Related_Static_Variables}{array}{$variable_name}) {
+		if (exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}) {
 			foreach my $old_member_index (($new_last_index+1)..$old_last_index) {
 				my $old_member = $old_array[$old_member_index];
 				$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, undef, $old_member_index);
@@ -829,7 +828,7 @@ sub clear_array {
 		debug "[eventMacro] Clearing array '@".$variable_name."'\n", "eventMacro";
 		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		delete $self->{Array_Variable_List_Hash}{$variable_name};
-		if (exists $self->{Event_Related_Static_Variables}{array}{$variable_name}) {
+		if (exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}) {
 			foreach my $old_member_index (0..$#old_array) {
 				my $old_member = $old_array[$old_member_index];
 				$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, undef, $old_member_index);
@@ -984,7 +983,7 @@ sub set_full_hash {
 		$self->manage_variables_callbacks('accessed_hash', $variable_name, $old_member, $member_value, $member_key);
 	}
 	
-	if (exists $self->{Event_Related_Static_Variables}{hash}{$variable_name}) {
+	if (exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}) {
 		foreach my $old_member_key (keys %old_hash) {
 			if (!exists $self->{Hash_Variable_List_Hash}{$variable_name}{$old_member_key}) {
 				my $old_member = $old_hash{$old_member_key};
@@ -1001,7 +1000,7 @@ sub clear_hash {
 		debug "[eventMacro] Clearing hash '%".$variable_name."'\n", "eventMacro";
 		my %old_hash = %{$self->{Hash_Variable_List_Hash}{$variable_name}};
 		delete $self->{Hash_Variable_List_Hash}{$variable_name};
-		if (exists $self->{Event_Related_Static_Variables}{hash}{$variable_name}) {
+		if (exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}) {
 			foreach my $old_member_key (keys %old_hash) {
 				my $old_member = $old_hash{$old_member_key};
 				$self->manage_variables_callbacks('accessed_hash', $variable_name, $old_member, undef, $old_member_key);
@@ -1113,6 +1112,7 @@ sub manage_variables_callbacks {
 		return unless (exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}{$complement});
 		$check_list_hash = $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}{$complement};
 	}
+	
 	$self->manage_event_callbacks('variable', $variable_name, $value, $check_list_hash, $variable_type, $complement);
 }
 
@@ -1312,12 +1312,11 @@ sub manage_dynamic_hook_add_and_delete {
 		$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 		
 		unless (exists $self->{Hook_Handles}{$hook_name}) {
-			my $event_sub = sub {
-				my $self = shift;
+			my $event_sub = sub { 
 				my $name = shift;
 				my $args = shift;
-				my $check_list_hash = $self->{'Event_Related_Hooks'}{$name};
-				$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+				my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+				$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
 			};
 			$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 		}
