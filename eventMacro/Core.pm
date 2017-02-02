@@ -408,9 +408,41 @@ sub create_callbacks {
 			my $hash = $automacro->{accessed_hash_variables}->{$var};
 			foreach my $hash_complement (keys %{$hash}) {
 				my $cond_indexes = $hash->{$hash_complement};
+				
+				Log::warning "[test] complement is '".$hash_complement."'\n";
+				Log::warning "[test] Dumper conds '".Dumper($cond_indexes)."'\n";
+				
 				next unless (defined $cond_indexes);
-				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Static_Variables}{accessed_hash}{$var}{$hash_complement}{$automacro_index}{$condition_index} = 1;
+				
+				if ($hash_complement =~ /^[a-zA-Z\d]+$/) {
+					Log::warning "[test] complement is a key\n";
+					foreach my $condition_index (@{$cond_indexes}) {
+						$self->{Event_Related_Static_Variables}{accessed_hash}{$var}{$hash_complement}{$automacro_index}{$condition_index} = 1;
+					}
+					
+				} elsif (my $complement_var = find_variable($hash_complement)) {
+					Log::warning "[test] complement is nested\n";
+					my @nested_array;
+					push(@nested_array, {type => 'accessed_hash', name => $var, complement => $hash_complement});
+					
+					while ($complement_var) {
+						if (exists $complement_var->{complement}) {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}, complement => $complement_var->{complement}});
+							$complement_var = find_variable($complement_var->{complement});
+						} else {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}});
+							last;
+						}
+					}
+					
+					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
+					
+				} else {
+					Log::warning "[test] complement is fucked\n";
+					error "[eventMacro] '".$hash_complement."' is not a valid hash key in hash '".$var."'. Ignoring automacro '".$automacro->get_name()."'.\n";
+					next AUTO;
 				}
 			}
 		}
@@ -430,7 +462,6 @@ sub create_callbacks {
 
 sub manage_nested_automacro_var {
 	my ($self, $array, $automacro_index, $cond_indexes) = @_;
-	Log::warning "[test] Dumper nested '".Dumper($array)."'\n";
 	
 	foreach my $nest_index (0..$#{$array}) {
 		my $variable = $array->[$nest_index];
@@ -460,9 +491,6 @@ sub manage_nested_automacro_var {
 			$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}} = 1;
 		}
 	}
-	Log::warning "[test] Dumper dynamic complements '".Dumper($self->{Dynamic_Variable_Complements})."'\n";
-	Log::warning "[test] Dumper dynamic sub call '".Dumper($self->{Dynamic_Variable_Sub_Callbacks})."'\n";
-	Log::warning "[test] Dumper dynamic true call '".Dumper($self->{Event_Related_Dynamic_Variables})."'\n";
 }
 
 sub sub_callback_variable_event {
@@ -476,10 +504,6 @@ sub sub_callback_variable_event {
 	Log::warning "[test2] complement is '".$complement."'\n";
 	Log::warning "[test2] before_value is '".$before_value."'\n";
 	Log::warning "[test2] value is '".$value."'\n";
-	
-	Log::warning "[test] before Dumper dynamic complements '".Dumper($self->{Dynamic_Variable_Complements})."'\n";
-	Log::warning "[test] before Dumper dynamic sub call '".Dumper($self->{Dynamic_Variable_Sub_Callbacks})."'\n";
-	Log::warning "[test] before Dumper dynamic true call '".Dumper($self->{Event_Related_Dynamic_Variables})."'\n";
 	
 	my $dynamic_complements;
 	if (defined $complement) {
@@ -518,10 +542,6 @@ sub sub_callback_variable_event {
 			}
 		}
 	}
-	
-	Log::warning "[test] after Dumper dynamic complements '".Dumper($self->{Dynamic_Variable_Complements})."'\n";
-	Log::warning "[test] after Dumper dynamic sub call '".Dumper($self->{Dynamic_Variable_Sub_Callbacks})."'\n";
-	Log::warning "[test] after Dumper dynamic true call '".Dumper($self->{Event_Related_Dynamic_Variables})."'\n";
 }
 
 sub change_sub_callback {
@@ -564,6 +584,13 @@ sub activated_sub_callback {
 	}
 	
 	foreach my $call (@{$calls}) {
+		
+		if ($call->{type} eq 'accessed_array') {
+			next if ($value !~ /^\d+$/);
+		} elsif ($call->{type} eq 'accessed_hash') {
+			next if ($value !~ /^[a-zA-Z\d]+$/);
+		}
+		
 		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
 		$call_complements->{complement_defined} = 1;
 		

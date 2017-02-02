@@ -4,7 +4,14 @@ macro testmacro1 {
 }
 
 automacro auto1 {
-	BaseLevel $NestArray4[$NestArray3[$NestedScalar1]]
+	BaseLevel $NestArray1[$NestedScalar1]
+	JobLevel 20
+	priority 0
+	call testmacro1
+}
+
+automacro auto2 {
+	BaseLevel $NestHash1{$NestedScalar1}
 	JobLevel 20
 	priority 0
 	call testmacro1
