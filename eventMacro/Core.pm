@@ -359,25 +359,17 @@ sub create_callbacks {
 			
 			my $array = $automacro->{accessed_array_variables}->{$var};
 			
-			Log::warning "[test] var is '".$var."'\n";
-			Log::warning "[test] Dumper array '".Dumper($array)."'\n";
-			
 			foreach my $array_complement (keys %{$array}) {
 				my $cond_indexes = $array->{$array_complement};
-				
-				Log::warning "[test] complement is '".$array_complement."'\n";
-				Log::warning "[test] Dumper conds '".Dumper($cond_indexes)."'\n";
 				
 				next unless (defined $cond_indexes);
 				
 				if ($array_complement =~ /^\d+$/) {
-					Log::warning "[test] complement is numeric\n";
 					foreach my $condition_index (@{$cond_indexes}) {
 						$self->{Event_Related_Static_Variables}{accessed_array}{$var}{$array_complement}{$automacro_index}{$condition_index} = 1;
 					}
 					
 				} elsif (my $complement_var = find_variable($array_complement)) {
-					Log::warning "[test] complement is nested\n";
 					my @nested_array;
 					push(@nested_array, {type => 'accessed_array', name => $var, complement => $array_complement});
 					
@@ -396,7 +388,6 @@ sub create_callbacks {
 					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
 					
 				} else {
-					Log::warning "[test] complement is fucked\n";
 					error "[eventMacro] '".$array_complement."' is not a valid array index in array '".$var."'. Ignoring automacro '".$automacro->get_name()."'.\n";
 					next AUTO;
 				}
@@ -409,19 +400,14 @@ sub create_callbacks {
 			foreach my $hash_complement (keys %{$hash}) {
 				my $cond_indexes = $hash->{$hash_complement};
 				
-				Log::warning "[test] complement is '".$hash_complement."'\n";
-				Log::warning "[test] Dumper conds '".Dumper($cond_indexes)."'\n";
-				
 				next unless (defined $cond_indexes);
 				
 				if ($hash_complement =~ /^[a-zA-Z\d]+$/) {
-					Log::warning "[test] complement is a key\n";
 					foreach my $condition_index (@{$cond_indexes}) {
 						$self->{Event_Related_Static_Variables}{accessed_hash}{$var}{$hash_complement}{$automacro_index}{$condition_index} = 1;
 					}
 					
 				} elsif (my $complement_var = find_variable($hash_complement)) {
-					Log::warning "[test] complement is nested\n";
 					my @nested_array;
 					push(@nested_array, {type => 'accessed_hash', name => $var, complement => $hash_complement});
 					
@@ -440,7 +426,6 @@ sub create_callbacks {
 					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
 					
 				} else {
-					Log::warning "[test] complement is fucked\n";
 					error "[eventMacro] '".$hash_complement."' is not a valid hash key in hash '".$var."'. Ignoring automacro '".$automacro->get_name()."'.\n";
 					next AUTO;
 				}
@@ -495,15 +480,8 @@ sub manage_nested_automacro_var {
 
 sub sub_callback_variable_event {
 	my ($self, $variable_type, $variable_name, $before_value, $value, $complement) = @_;
-	Log::warning "[test] sub_callback_variable_event\n";
 	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type});
 	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name});
-	
-	Log::warning "[test2] variable_type is '".$variable_type."'\n";
-	Log::warning "[test2] variable_name is '".$variable_name."'\n";
-	Log::warning "[test2] complement is '".$complement."'\n";
-	Log::warning "[test2] before_value is '".$before_value."'\n";
-	Log::warning "[test2] value is '".$value."'\n";
 	
 	my $dynamic_complements;
 	if (defined $complement) {
@@ -512,7 +490,6 @@ sub sub_callback_variable_event {
 		foreach my $sub_complement (values %{$self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement}}) {
 			$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$sub_complement};
 			my $pre_defined = $dynamic_complements->{defined};
-			Log::warning "[test2] pre_defined is '".$pre_defined."'\n";
 			if (defined $value) {
 				if ($pre_defined) {
 					$self->change_sub_callback($variable_type, $variable_name, $before_value, $value, $complement, $sub_complement);
@@ -529,7 +506,6 @@ sub sub_callback_variable_event {
 	} else {
 		$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 		my $pre_defined = $dynamic_complements->{defined};
-		Log::warning "[test2] pre_defined is '".$pre_defined."'\n";
 		if (defined $value) {
 			if ($pre_defined) {
 				$self->change_sub_callback($variable_type, $variable_name, $before_value, $value);
@@ -546,7 +522,6 @@ sub sub_callback_variable_event {
 
 sub change_sub_callback {
 	my ($self, $variable_type, $variable_name, $before_value, $value, $complement, $nest_complement) = @_;
-	Log::warning "[test] change_sub_callback\n";
 	
 	my $new_nest;
 	if (defined $complement) {
@@ -560,7 +535,6 @@ sub change_sub_callback {
 
 sub activated_sub_callback {
 	my ($self, $variable_type, $variable_name, $value, $complement, $nest_complement) = @_;
-	Log::warning "[test] activated_sub_callback\n";
 	
 	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
@@ -606,8 +580,6 @@ sub activated_sub_callback {
 			} else {
 				$new_nest = '$'.$variable_name;
 			}
-			Log::warning "[test] Next in nest line is defined\n";
-			Log::warning "[test] Defining '".$call->{name}."' with nest '".$new_nest."'\n";
 			$self->activated_sub_callback($call->{type}, $call->{name}, $new_value, $value, $new_nest);
 		}
 	}
@@ -617,8 +589,6 @@ use Data::Dumper;
 
 sub deactivated_sub_callback {
 	my ($self, $variable_type, $variable_name, $before_value, $complement, $nest_complement) = @_;
-	
-	Log::warning "[test] deactivated_sub_callback\n";
 	
 	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
 	if (defined $complement) {
@@ -678,8 +648,6 @@ sub deactivated_sub_callback {
 			} else {
 				$new_nest = '$'.$variable_name;
 			}
-			Log::warning "[test] Sub call was defined\n";
-			Log::warning "[test] Undefining '".$call->{name}."' with nest '".$new_nest."'\n";
 			$self->deactivated_sub_callback($call->{type}, $call->{name}, $call_complements->{value}, $before_value, $new_nest);
 		}
 	}
