@@ -13,11 +13,11 @@ use eventMacro::FileParser;
 use eventMacro::Utilities qw(find_variable);
 
 sub start {
-	my $parsed = parseMacroFile( "$RealBin/LoadConditionsTest.txt", 0 );
+	my $parsed = parseMacroFile( "$RealBin/DynamicAutoVarsTest.txt", 0 );
 	
 	ok ($parsed);
 	
-	$eventMacro = eventMacro::Core->new( "$RealBin/LoadConditionsTest.txt" );
+	$eventMacro = eventMacro::Core->new( "$RealBin/DynamicAutoVarsTest.txt" );
 	
 	ok (defined $eventMacro);
 	use Data::Dumper;
