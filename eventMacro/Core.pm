@@ -25,6 +25,7 @@ sub new {
 	
 	$self->{Dynamic_Variable_Complements} = {};
 	$self->{Dynamic_Variable_Sub_Callbacks} = {};
+	$self->{Dynamic_Variable_True_Callbacks} = {};
 	
 	$self->{Macro_List} = new eventMacro::Lists;
 	$self->create_macro_list($parse_result->{macros});
@@ -312,8 +313,6 @@ sub define_automacro_check_state {
 	}
 }
 
-use Data::Dumper;
-
 sub create_callbacks {
 	my ($self) = @_;
 	
@@ -397,7 +396,7 @@ sub create_callbacks {
 						}
 					}
 					
-					$self->manage_nested_automacro_var(\@nested_array);
+					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
 					
 				} else {
 					Log::warning "[test] complement is fucked\n";
@@ -426,47 +425,42 @@ sub create_callbacks {
 		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 	}
 }
-
-#$self->{Dynamic_Variable_Callbacks}
-#$self->{Dynamic_Variable_Sub_Callbacks}
-#$self->{Dynamic_Variable_Complements}
-
-#$nested_array[-1]{complement_is_var} = 1;
-#push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}, complement => $complement_var->{complement}});
 							
 sub manage_nested_automacro_var {
-	my ($self, $array) = @_;
+	my ($self, $array, $automacro_index, $cond_indexes) = @_;
 	Log::warning "[test] Dumper nested '".Dumper($array)."'\n";
 	
 	foreach my $nest_index (0..$#{$array}) {
 		my $variable = $array->[$nest_index];
 		
-		if ($nest_index == 0) {
-			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 1;
-		} else {
-			if (exists $variable->{complement}) {
-				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 0;
-			} else {
-				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{last_nested} = 0;
-			}
-		}
-		
 		if (exists $variable->{complement}) {
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{defined} = 0;
-			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]) unless ($nest_index == 0);
+			
+			if ($nest_index == 0) {
+				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 1;
+				foreach my $condition_index (@{$cond_indexes}) {
+					$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{auto_indexes}{$automacro_index}{$condition_index} = 1;
+				}
+			} else {
+				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 0;
+				push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]);
+			}
+			
 			if (!exists $variable->{complement_is_var}) {
 				$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}}{$variable->{complement}} = 1;
 			}
 
 		} else {
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{last_nested} = 0;
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{defined} = 0;
 			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{call_to}}, $array->[$nest_index-1]);
 			
 			$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}} = 1;
 		}
 	}
-	Log::warning "[test] Dumper dynamic comp '".Dumper($self->{Dynamic_Variable_Complements})."'\n";
-	Log::warning "[test] Dumper dynamic sub '".Dumper($self->{Dynamic_Variable_Sub_Callbacks})."'\n";
+	Log::warning "[test] Dumper dynamic complements '".Dumper($self->{Dynamic_Variable_Complements})."'\n";
+	Log::warning "[test] Dumper dynamic sub call '".Dumper($self->{Dynamic_Variable_Sub_Callbacks})."'\n";
+	Log::warning "[test] Dumper dynamic true call '".Dumper($self->{Dynamic_Variable_True_Callbacks})."'\n";
 }
 
 sub sub_callback_variable_event {
@@ -552,6 +546,17 @@ sub activated_sub_callback {
 	$var_hash->{value} = $value;
 	my $calls = $var_hash->{call_to};
 	
+	if ($var_hash->{last_nested}) {
+		my @auto_indexes = keys %{$var_hash->{auto_indexes}};
+		foreach my $automacro_index (@auto_indexes) {
+			my @cond_indexes = keys %{$var_hash->{auto_indexes}{$automacro_index}};
+			foreach my $condition_index (@cond_indexes) {
+				$self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement}{$automacro_index}{$condition_index} = 1;
+			}
+		}
+		return;
+	}
+	
 	foreach my $call (@{$calls}) {
 		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
 		$call_complements->{complement_defined} = 1;
@@ -590,6 +595,26 @@ sub deactivated_sub_callback {
 	$var_hash->{defined} = 0;
 	delete $var_hash->{value};
 	my $calls = $var_hash->{call_to};
+	
+	if ($var_hash->{last_nested}) {
+		my @auto_indexes = keys %{$var_hash->{auto_indexes}};
+		foreach my $automacro_index (@auto_indexes) {
+			my @cond_indexes = keys %{$var_hash->{auto_indexes}{$automacro_index}};
+			foreach my $condition_index (@cond_indexes) {
+				delete $self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement}{$automacro_index}{$condition_index};
+			}
+			unless (scalar keys %{$self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement}{$automacro_index}}) {
+				delete $self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement}{$automacro_index};
+			}
+		}
+		unless (scalar keys %{$self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement}}) {
+			delete $self->{Dynamic_Variable_True_Callbacks}{$variable_name}{$complement};
+			unless (scalar keys %{$self->{Dynamic_Variable_True_Callbacks}{$variable_name}}) {
+				delete $self->{Dynamic_Variable_True_Callbacks}{$variable_name};
+			}
+		}
+		return;
+	}
 	
 	foreach my $call (@{$calls}) {
 		my $subcall_index = delete $call->{sub_callback_index};
@@ -1272,7 +1297,7 @@ sub manage_dynamic_hook_add_and_delete {
 	
 	} else {
 		if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delte hook '".$hook_name."' from callbacks but it isn't in it.\n";
+			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
 			return;
 		}
 		
