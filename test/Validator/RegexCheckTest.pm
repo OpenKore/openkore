@@ -299,6 +299,142 @@ sub start {
 		ok $v->validate( 'drops' );
 		ok !$v->validate( 'marin' );
 	};
+	
+	subtest 'simple nested variable with text' => sub {
+		my $v = eventMacro::Validator::RegexCheck->new( '/$foo{$bar}/' );
+		ok $v->parsed;
+		ok (!defined $v->{regex});
+		is ($v->{original_regex}, '$foo{$bar}');
+		ok (!$v->{case_insensitive});
+		is_deeply ($v->{defined_var_list}, {'$foo{$bar}' => 0});
+		is ($v->{undefined_vars}, 1);
+		
+		ok !$v->validate( 'Poring' );
+		ok !$v->validate( 'Drops' );
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'poporing' );
+		ok !$v->validate( 'Poporing' );
+		ok !$v->validate( 'Marin' );
+		ok !$v->validate( 'Magmaring' );
+		
+		$v->update_vars( '$foo{$bar}', 'oring' );
+		ok (defined $v->{regex});
+		is ($v->{regex}, 'oring');
+		is_deeply ($v->{defined_var_list}, {'$foo{$bar}' => 1});
+		is ($v->{undefined_vars}, 0);
+		
+		ok $v->validate( 'Poring' );
+		ok !$v->validate( 'Drops' );
+		ok $v->validate( 'poring' );
+		ok $v->validate( 'poporing' );
+		ok $v->validate( 'Poporing' );
+		ok !$v->validate( 'Marin' );
+		ok !$v->validate( 'Magmaring' );
+	};
+	
+	subtest 'repeated nested var' => sub {
+		my $v = eventMacro::Validator::RegexCheck->new( '/$foo[$baz{$quz{mob}}] is $foo[$baz{$quz{mob}}], also $foo[$baz{$quz{mob}}] is big/i' );
+		ok $v->parsed;
+		ok (!defined $v->{regex});
+		is ($v->{original_regex}, '$foo[$baz{$quz{mob}}] is $foo[$baz{$quz{mob}}], also $foo[$baz{$quz{mob}}] is big');
+		ok ($v->{case_insensitive});
+		is_deeply ($v->{defined_var_list}, {'$foo[$baz{$quz{mob}}]' => 0});
+		is ($v->{undefined_vars}, 1);
+		ok !$v->validate( '1 is 1, also 1 is big' );
+		ok !$v->validate( '5 is 5, also 5 is big' );
+		ok !$v->validate( '6 is 6, also 6 is big' );
+		ok !$v->validate( 'he is he, also he is big' );
+		
+		$v->update_vars( '$foo[$baz{$quz{mob}}]', '5' );
+		ok (defined $v->{regex});
+		is_deeply ($v->{defined_var_list}, {'$foo[$baz{$quz{mob}}]' => 1});
+		is ($v->{undefined_vars}, 0);
+		
+		ok !$v->validate( '1 is 1, also 1 is big' );
+		ok $v->validate( '5 is 5, also 5 is big' );
+		ok !$v->validate( '6 is 6, also 6 is big' );
+		ok !$v->validate( 'he is he, also he is big' );
+		
+		$v->update_vars( '$foo[$baz{$quz{mob}}]', '6' );
+		ok (defined $v->{regex});
+		is_deeply ($v->{defined_var_list}, {'$foo[$baz{$quz{mob}}]' => 1});
+		is ($v->{undefined_vars}, 0);
+		
+		ok !$v->validate( '1 is 1, also 1 is big' );
+		ok !$v->validate( '5 is 5, also 5 is big' );
+		ok $v->validate( '6 is 6, also 6 is big' );
+		ok !$v->validate( 'he is he, also he is big' );
+		
+		$v->update_vars( '$foo[$baz{$quz{mob}}]', 'he' );
+		ok (defined $v->{regex});
+		is_deeply ($v->{defined_var_list}, {'$foo[$baz{$quz{mob}}]' => 1});
+		is ($v->{undefined_vars}, 0);
+		
+		ok !$v->validate( '1 is 1, also 1 is big' );
+		ok !$v->validate( '5 is 5, also 5 is big' );
+		ok !$v->validate( '6 is 6, also 6 is big' );
+		ok $v->validate( 'he is he, also he is big' );
+	};
+	
+	subtest 'multiple nested variable with regex code' => sub {
+		my $v = eventMacro::Validator::RegexCheck->new( '/$foo[$bar[$baz[$quz]]]$bar[$scalar]$foobar{$baz}/i' );
+		ok $v->parsed;
+		ok (!defined $v->{regex});
+		is ($v->{original_regex}, '$foo[$bar[$baz[$quz]]]$bar[$scalar]$foobar{$baz}');
+		ok ($v->{case_insensitive});
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 0, '$bar[$scalar]' => 0, '$foobar{$baz}' => 0});
+		is ($v->{undefined_vars}, 3);
+		
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'poporing' );
+		ok !$v->validate( 'drops' );
+		ok !$v->validate( 'marin' );
+		
+		$v->update_vars( '$foo[$bar[$baz[$quz]]]', '(oring' );
+		ok (!defined $v->{regex});
+		is ($v->{undefined_vars}, 2);
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 1, '$bar[$scalar]' => 0, '$foobar{$baz}' => 0});
+		
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'poporing' );
+		ok !$v->validate( 'drops' );
+		ok !$v->validate( 'marin' );
+		
+		$v->update_vars( '$bar[$scalar]', '|arin|' );
+		ok (!defined $v->{regex});
+		is ($v->{undefined_vars}, 1);
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 1, '$bar[$scalar]' => 1, '$foobar{$baz}' => 0});
+		
+		$v->update_vars( '$foobar{$baz}', 'rops)' );
+		ok (defined $v->{regex});
+		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 1, '$bar[$scalar]' => 1, '$foobar{$baz}' => 1});
+		
+		ok $v->validate( 'poring' );
+		ok $v->validate( 'poporing' );
+		ok $v->validate( 'drops' );
+		ok $v->validate( 'marin' );
+		
+		$v->update_vars( '$foo[$bar[$baz[$quz]]]', '(magma' );
+		ok (defined $v->{regex});
+		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 1, '$bar[$scalar]' => 1, '$foobar{$baz}' => 1});
+		
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'poporing' );
+		ok $v->validate( 'drops' );
+		ok $v->validate( 'marin' );
+		
+		$v->update_vars( '$bar[$scalar]', '|oring|' );
+		ok (defined $v->{regex});
+		is ($v->{undefined_vars}, 0);
+		is_deeply ($v->{defined_var_list}, {'$foo[$bar[$baz[$quz]]]' => 1, '$bar[$scalar]' => 1, '$foobar{$baz}' => 1});
+		
+		ok $v->validate( 'poring' );
+		ok $v->validate( 'poporing' );
+		ok $v->validate( 'drops' );
+		ok !$v->validate( 'marin' );
+	};
 }
 
 1;

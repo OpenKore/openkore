@@ -500,6 +500,7 @@ sub find_accessed_variable {
 		my $name = $1;
 		my $open_bracket = $2;
 		my $complement = $3;
+		return if (!defined $complement || $complement eq '');
 		my $close_bracket = $4;
 		
 		my $type = ($open_bracket eq '[' ? 'accessed_array' : 'accessed_hash');
@@ -507,6 +508,13 @@ sub find_accessed_variable {
 		
 		if ($open_to_close_bracket_pair{$open_bracket} ne $close_bracket) {
 			return;
+		}
+		
+		if ($type eq 'accessed_array') {
+			return if ($complement !~ /^\d+$/ && !find_variable($complement));
+			
+		} elsif ($type eq 'accessed_hash') {
+			return if ($complement !~ /^[a-zA-Z\d]+$/ && !find_variable($complement));
 		}
 		
 		my $original_name = ('$'.$name.$open_bracket.$complement.$close_bracket);

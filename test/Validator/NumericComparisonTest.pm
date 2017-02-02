@@ -521,6 +521,78 @@ sub start {
 		ok $v->validate( 40, 200 );
 		ok !$v->validate( 40.1, 200 );
 	};
+	
+	subtest 'nested vars' => sub {
+		my $v = eventMacro::Validator::NumericComparison->new( '< $hash{$scalar}' );
+		ok $v->parsed;
+
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		ok ($v->{min_is_var});
+		ok ($v->{max_is_var});
+		is ($v->{var_name_min}, '$hash{$scalar}');
+		
+		$v->update_vars( '$hash{$scalar}', 10 );
+		
+		is ($v->{min}, 10);
+		is ($v->{max}, 10);
+		
+		ok $v->validate( 9 );
+		ok !$v->validate( 10 );
+		ok !$v->validate( 11 );
+		$v->update_vars( '$hash{$scalar}', 11 );
+		ok $v->validate( 9 );
+		ok $v->validate( 10 );
+		ok !$v->validate( 11 );
+
+		$v = eventMacro::Validator::NumericComparison->new( '$array[$scalar2] .. $hash1{$hash2{$hash3{key}}}' );
+		ok $v->parsed;
+
+		ok (!defined $v->{min});
+		ok (!defined $v->{max});
+		ok ($v->{min_is_var});
+		ok ($v->{max_is_var});
+		
+		is ($v->{var_name_min}, '$array[$scalar2]');
+		is ($v->{var_name_max}, '$hash1{$hash2{$hash3{key}}}');
+		
+		$v->update_vars( '$array[$scalar2]', 10 );
+		$v->update_vars( '$hash1{$hash2{$hash3{key}}}', 20 );
+		
+		is ($v->{min}, 10);
+		is ($v->{max}, 20);
+		
+		ok !$v->validate( 9 );
+		ok $v->validate( 10 );
+		ok $v->validate( 20 );
+		ok !$v->validate( 21 );
+		
+		$v = eventMacro::Validator::NumericComparison->new( '10..$array[$hash{hey}]' );
+		ok $v->parsed;
+		
+		$v->update_vars( '$array[$hash{hey}]', 9 );
+		ok !$v->validate( 9 );
+		ok !$v->validate( 10 );
+		ok !$v->validate( 11 );
+		
+		$v->update_vars( '$array[$hash{hey}]', 10 );
+		ok !$v->validate( 9 );
+		ok $v->validate( 10 );
+		ok !$v->validate( 11 );
+		
+		$v->update_vars( '$array[$hash{hey}]', 11 );
+		ok !$v->validate( 9 );
+		ok $v->validate( 10 );
+		ok $v->validate( 11 );
+		
+		$v->update_vars( '$array[$hash{hey}]', 100 );
+		ok !$v->validate( 9 );
+		ok $v->validate( 10 );
+		ok $v->validate( 50 );
+		ok $v->validate( 99 );
+		ok $v->validate( 100 );
+		ok !$v->validate( 101 );
+	};
 }
 
 1;
