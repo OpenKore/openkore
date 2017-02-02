@@ -604,18 +604,21 @@ sub deactivated_sub_callback {
 		foreach my $automacro_index (@auto_indexes) {
 			my @cond_indexes = keys %{$var_hash->{auto_indexes}{$automacro_index}};
 			foreach my $condition_index (@cond_indexes) {
-				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$automacro_index}{$condition_index};
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index}{$condition_index};
 			}
-			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$automacro_index}}) {
-				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$automacro_index};
+			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index}}) {
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index};
 			}
 		}
-		unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}}) {
-			delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement};
-			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}}) {
-				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name};
-				unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}}) {
-					delete $self->{Event_Related_Dynamic_Variables}{$variable_type};
+		unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}}) {
+			delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement};
+			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}}) {
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement};
+				unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}}) {
+					delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name};
+					unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}}) {
+						delete $self->{Event_Related_Dynamic_Variables}{$variable_type};
+					}
 				}
 			}
 		}
