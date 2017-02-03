@@ -2228,7 +2228,12 @@ sub npc_talk {
 	unless (AI::is("NPC")) {
 		my $nameID = unpack 'V', $args->{ID};
 		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		AI::queue("NPC", new Task::TalkNPC(type => 'autotalk', nameID => $nameID));
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
 	}
 
 	$talk{ID} = $args->{ID};

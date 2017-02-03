@@ -94,21 +94,6 @@ sub new {
 	$self->{error_code} = undef;
 	$self->{error_message} = undef;
 	
-	my @holder = ($self);
-	Scalar::Util::weaken($holder[0]);
-	
-	push @{$self->{hookHandles}}, Plugins::addHooks(
-		['npc_talk',                  \&handle_npc_talk, \@holder],
-		['packet/npc_talk_continue',  \&handle_npc_talk, \@holder],
-		['npc_talk_done',             \&handle_npc_talk, \@holder],
-		['npc_talk_responses',        \&handle_npc_talk, \@holder],
-		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
-		['packet/npc_talk_text',      \&handle_npc_talk, \@holder],
-		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
-		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
-		['packet/npc_sell_list',      \&handle_npc_talk, \@holder]
-	);
-	
 	return $self;
 }
 
@@ -142,10 +127,17 @@ sub handle_npc_talk {
 	$self->{wait_for_answer} = 0;
 }
 
+sub delHooks {
+	my ($self) = @_;
+
+	Plugins::delHooks($_) for @{$self->{hookHandles}};
+	delete $self->{hookHandles};
+}
+
 sub DESTROY {
 	my ($self) = @_;
 	debug "$self->{target}: Task::TalkNPC::DESTROY was called\n", "ai_npcTalk";
-	Plugins::delHooks($_) for @{$self->{hookHandles}};
+	$self->delHooks;
 	$self->SUPER::DESTROY;
 }
 
@@ -155,6 +147,30 @@ sub activate {
 	$self->SUPER::activate(); # Do not forget to call this!
 	$self->{time} = time;
 	$self->{stage} = NOT_STARTED;
+
+	my @holder = ($self);
+	Scalar::Util::weaken($holder[0]);
+
+	push @{$self->{hookHandles}}, Plugins::addHooks(
+		['npc_talk',                  \&handle_npc_talk, \@holder],
+		['packet/npc_talk_continue',  \&handle_npc_talk, \@holder],
+		['npc_talk_done',             \&handle_npc_talk, \@holder],
+		['npc_talk_responses',        \&handle_npc_talk, \@holder],
+		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
+		['packet/npc_talk_text',      \&handle_npc_talk, \@holder],
+		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
+		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
+		['packet/npc_sell_list',      \&handle_npc_talk, \@holder]
+	);
+}
+
+# Overrided method.
+sub stop {
+	my ($self) = @_;
+
+	$self->delHooks;
+
+	$self->SUPER::stop;
 }
 
 sub find_and_set_target {
@@ -615,6 +631,7 @@ sub manage_wrong_sequence {
 
 sub conversation_end {
 	my ($self) = @_;
+	$self->delHooks;
 	$self->setDone();
 	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
 }
