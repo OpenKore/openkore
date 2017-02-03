@@ -8,7 +8,8 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
+	getStorageAmountbyID getCartAmountbyID);
 
 use Utils;
 use Globals;
@@ -339,7 +340,7 @@ sub getInventoryAmount {
 
 # get amount of an item in inventory by its ID
 sub getInventoryAmountbyID {
-	my $ID = lc($_[0]);
+	my $ID = $_[0];
 	return -1 unless ($char->inventory->isReady);
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
@@ -357,6 +358,19 @@ sub getCartAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->cart->getItems}) {
 		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+  	}
+	return $amount
+}
+
+# get amount of an item in cart by its ID
+sub getCartAmountbyID {
+	my $ID = $_[0];
+	return -1 unless ($char->cart->isReady());
+	my $amount = 0;
+	foreach my $item (@{$char->cart->getItems}) {
+		if ($item->{nameID} == $ID) {
+			$amount += $item->{amount};
+		}
   	}
 	return $amount
 }
@@ -380,6 +394,20 @@ sub getStorageAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+  	}
+	return $amount
+}
+
+# get amount of an item in storage by its ID
+# returns -1 if the storage is closed
+sub getStorageAmountbyID {
+	my $ID = $_[0];
+	return -1 unless ($char->storage->wasOpenedThisSession());
+	my $amount = 0;
+	foreach my $item (@{$char->storage->getItems}) {
+		if ($item->{nameID} == $ID) {
+			$amount += $item->{amount};
+		}
   	}
 	return $amount
 }
