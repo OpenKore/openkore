@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index);
+	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID);
 
 use Utils;
 use Globals;
@@ -333,6 +333,19 @@ sub getInventoryAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
 		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+	}
+	return $amount
+}
+
+# get amount of an item in inventory by its ID
+sub getInventoryAmountbyID {
+	my $ID = lc($_[0]);
+	return -1 unless ($char->inventory->isReady);
+	my $amount = 0;
+	foreach my $item (@{$char->inventory->getItems}) {
+		if ($item->{nameID} == $ID) {
+			$amount += $item->{amount};
+		}
 	}
 	return $amount
 }
