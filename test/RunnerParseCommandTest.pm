@@ -12,7 +12,7 @@ use eventMacro::Runner;
 use eventMacro::Utilities qw(find_variable);
 
 sub start {
-	$eventMacro = eventMacro::Core->new( "$RealBin/LoadConditionsTest.txt" );
+	$eventMacro = eventMacro::Core->new( "$RealBin/textfiles/LoadConditionsTest.txt" );
 	
 	$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			'testmacro1',
@@ -44,12 +44,12 @@ sub start {
 	};
 	
 	subtest 'array' => sub {
-		$eventMacro->set_full_array('array1', ['Angeling', 'Deviling', 'Archangeling', undef, 'Mastering', undef, 'King Poring']);
+		$eventMacro->set_full_array('array1', ['Angeling', 'Deviling', 'Archangeling', 'undef', 'Mastering', 'undef', 'King Poring']);
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array1' ), '7');
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array1 > $scalar1' ), '7 > 10');
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array1 - 5' ), '7 - 5');
 		
-		$eventMacro->set_full_array('array2', ['Poring', undef, 'Drops', 'Magmaring']);
+		$eventMacro->set_full_array('array2', ['Poring', 'undef', 'Drops', 'Magmaring']);
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array2' ), '4');
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array1 + @array2' ), '7 + 4');
 		
@@ -70,12 +70,12 @@ sub start {
 	};
 	
 	subtest 'hash' => sub {
-		$eventMacro->set_full_hash('hash1', {'Poring' => 10, 'Drops' => 25, 'Poporing' => undef, 'Magmaring' => 100, 'Angeling' => undef});
+		$eventMacro->set_full_hash('hash1', {'Poring' => 10, 'Drops' => 25, 'Poporing' => 'undef', 'Magmaring' => 100, 'Angeling' => 'undef'});
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash1' ), '5');
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash1 > $scalar1 == @array2' ), '5 > 10 == 2');
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash1 + %hash1 * %hash1' ), '5 + 5 * 5');
 		
-		$eventMacro->set_full_hash('hash2', {'Staff' => 2000, 'Shield' => undef, 'Card' => 7000});
+		$eventMacro->set_full_hash('hash2', {'Staff' => 2000, 'Shield' => 'undef', 'Card' => 7000});
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash2' ), '3');
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash2 / %hash2' ), '3 / 3');
 		is ($eventMacro->{Macro_Runner}->parse_command( '%hash2 + %hash1' ), '3 + 5');
@@ -125,6 +125,66 @@ sub start {
 		is ($eventMacro->{Macro_Runner}->parse_command( 'olha que legal esse [{{$hash3{$hash3{$scalar4}}}}]' ), 'olha que legal esse [{{Magmaring}}]');
 		
 	};
+	
+	subtest 'defined' => sub {
+		$eventMacro->set_scalar_var('scalar1', 'undef');
+		$eventMacro->set_scalar_var('scalar2', 15);
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $scalar1' ), 'the value is ');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $scalar2' ), 'the value is 15');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($scalar1)' ), 0);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($scalar2)' ), 1);
+		
+		$eventMacro->set_scalar_var('scalar1', 8);
+		$eventMacro->set_scalar_var('scalar2', 'undef');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $scalar1' ), 'the value is 8');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $scalar2' ), 'the value is ');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($scalar1)' ), 1);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($scalar2)' ), 0);
+		
+		$eventMacro->clear_array('array1');
+		
+		$eventMacro->set_array_var('array1', 0, 'undef');
+		$eventMacro->set_array_var('array1', 1, 27);
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $array1[0]' ), 'the value is ');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $array1[1]' ), 'the value is 27');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($array1[0])' ), 0);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($array1[1])' ), 1);
+		
+		$eventMacro->set_array_var('array1', 0, 35);
+		$eventMacro->set_array_var('array1', 1, 'undef');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $array1[0]' ), 'the value is 35');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $array1[1]' ), 'the value is ');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($array1[0])' ), 1);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($array1[1])' ), 0);
+		
+		$eventMacro->clear_hash('hash1');
+		
+		$eventMacro->set_hash_var('hash1', 'key1', 'undef');
+		$eventMacro->set_hash_var('hash1', 'key2', 12);
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $hash1{key1}' ), 'the value is ');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $hash1{key2}' ), 'the value is 12');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key1})' ), 0);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key2})' ), 1);
+		
+		$eventMacro->set_hash_var('hash1', 'key1', 21);
+		$eventMacro->set_hash_var('hash1', 'key2', 'undef');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $hash1{key1}' ), 'the value is 21');
+		is ($eventMacro->{Macro_Runner}->parse_command( 'the value is $hash1{key2}' ), 'the value is ');
+		
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key1})' ), 1);
+		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key2})' ), 0);
+	}
 }
 
 1;

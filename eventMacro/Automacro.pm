@@ -175,13 +175,13 @@ sub define_var_types {
 		push ( @{ $self->{array_variables}{$variable->{real_name}}}, $cond_index );
 		
 	} elsif ($variable->{type} eq 'accessed_array') {
-		push ( @{ $self->{accessed_array_variables}{$variable->{real_name}}[$variable->{index}] }, $cond_index );
+		push ( @{ $self->{accessed_array_variables}{$variable->{real_name}}{$variable->{complement}} }, $cond_index );
 		
 	} elsif ($variable->{type} eq 'hash') {
 		push ( @{ $self->{hash_variables}{$variable->{real_name}}}, $cond_index );
 		
 	} elsif ($variable->{type} eq 'accessed_hash') {
-		push ( @{ $self->{accessed_hash_variables}{$variable->{real_name}}{$variable->{key}} }, $cond_index );
+		push ( @{ $self->{accessed_hash_variables}{$variable->{real_name}}{$variable->{complement}} }, $cond_index );
 	}
 }
 

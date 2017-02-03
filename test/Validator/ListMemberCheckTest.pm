@@ -119,6 +119,43 @@ sub start {
 		ok $v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
 	};
+	
+	subtest 'multiple nested variable members' => sub {
+		my $v = eventMacro::Validator::ListMemberCheck->new( '$foo{$buz}, $bar[$hash{mob}], $baz{$bar[$foo]}' );
+		ok $v->parsed;
+		is_deeply($v->{list}, [undef, undef, undef]);
+		is_deeply($v->{var_to_member_index}, {'$foo{$buz}' => [0], '$bar[$hash{mob}]' => [1],'$baz{$bar[$foo]}' => [2]});
+		
+		ok !$v->validate( 'Poring' );
+		ok !$v->validate( 'Drops' );
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'Marin' );
+		
+		
+		$v->update_vars( '$foo{$buz}', 'Poring' );
+		is_deeply($v->{list}, ['Poring', undef, undef]);
+		
+		ok $v->validate( 'Poring' );
+		ok !$v->validate( 'Drops' );
+		ok !$v->validate( 'poring' );
+		ok !$v->validate( 'Marin' );
+		
+		$v->update_vars( '$baz{$bar[$foo]}', 'poring' );
+		is_deeply($v->{list}, ['Poring', undef, 'poring']);
+		
+		ok $v->validate( 'Poring' );
+		ok !$v->validate( 'Drops' );
+		ok $v->validate( 'poring' );
+		ok !$v->validate( 'Marin' );
+		
+		$v->update_vars( '$bar[$hash{mob}]', 'Drops' );
+		is_deeply($v->{list}, ['Poring', 'Drops', 'poring']);
+		
+		ok $v->validate( 'Poring' );
+		ok $v->validate( 'Drops' );
+		ok $v->validate( 'poring' );
+		ok !$v->validate( 'Marin' );
+	};
 }
 
 1;

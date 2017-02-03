@@ -391,7 +391,7 @@ sub commandHandler {
 					
 				} elsif ($var->{type} eq 'accessed_array') {
 					if (exists $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}}) {
-						my $var_value = $eventMacro->get_array_var($var->{real_name}, $var->{index});
+						my $var_value = $eventMacro->get_array_var($var->{real_name}, $var->{complement});
 						$var_value = 'undef' unless (defined $var_value);
 						message "'[eventMacro] '".$var->{display_name}."' = '".$var_value."'\n", "menu";
 						
@@ -415,7 +415,7 @@ sub commandHandler {
 					
 				} elsif ($var->{type} eq 'accessed_hash') {
 					if (exists $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}) {
-						my $var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{key});
+						my $var_value = $eventMacro->get_hash_var($var->{real_name}, $var->{complement});
 						$var_value = 'undef' unless (defined $var_value);
 						message "'[eventMacro] '".$var->{display_name}."' = '".$var_value."'\n", "menu";
 						
@@ -459,7 +459,7 @@ sub commandHandler {
 					
 				} elsif ($var->{type} eq 'accessed_array') {
 					message "[eventMacro] Setting the value of array variable '".$var->{display_name}."' to '".$params[1]."'.\n";
-					$eventMacro->set_array_var($var->{real_name}, $var->{index}, $params[1]);
+					$eventMacro->set_array_var($var->{real_name}, $var->{complement}, $params[1]);
 					
 				} elsif ($var->{type} eq 'array') {
 					my $value = join('', @params[1..$#params]);
@@ -475,7 +475,7 @@ sub commandHandler {
 					
 				} elsif ($var->{type} eq 'accessed_hash') {
 					message "[eventMacro] Setting the value of hash variable '".$var->{display_name}."' to '".$params[1]."'.\n";
-					$eventMacro->set_hash_var($var->{real_name}, $var->{key}, $params[1]);
+					$eventMacro->set_hash_var($var->{real_name}, $var->{complement}, $params[1]);
 					
 				} elsif ($var->{type} eq 'hash') {
 					my $value = join('', @params[1..$#params]);
