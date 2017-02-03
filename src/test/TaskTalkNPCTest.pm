@@ -21,6 +21,8 @@ our @taskHooks = qw(
 sub start {
 	note "### Starting " . __PACKAGE__;
 	testBasicUsage();
+	testSetTargetMethod();
+	testHandleNPCTalkMethod();
 }
 
 sub testBasicUsage {
@@ -37,6 +39,23 @@ sub testBasicUsage {
 	for (@taskHooks) {
 		ok(!Plugins::hasHook($_), "There should be no hooks after the task was stopped");
 	}
+}
+
+sub testSetTargetMethod {
+	note "Testing setTarget() method API...";
+	my $task = Task::TalkNPC->new;
+	can_ok($task, 'setTarget', "Task should have setTarget() method") or return;
+	my $actor = Actor::Unknown->new("\0\0\0\0");
+	$task->setTarget($actor);
+	is($task->{target}, $actor);
+}
+
+sub testHandleNPCTalkMethod {
+	note "Testing onNPCTalk() method API...";
+	my $task = Task::TalkNPC->new;
+	can_ok($task, 'handleNPCTalk', "Task should have handleNPCTalk() method") or return;
+	my $actor = Actor::Unknown->new("\0\0\0\0");
+	$task->handleNPCTalk($actor);
 }
 
 1;

@@ -97,7 +97,7 @@ sub new {
 	return $self;
 }
 
-sub handle_npc_talk {
+sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
 	if ($hook_name eq 'npc_talk_done') {
@@ -152,15 +152,15 @@ sub activate {
 	Scalar::Util::weaken($holder[0]);
 
 	push @{$self->{hookHandles}}, Plugins::addHooks(
-		['npc_talk',                  \&handle_npc_talk, \@holder],
-		['packet/npc_talk_continue',  \&handle_npc_talk, \@holder],
-		['npc_talk_done',             \&handle_npc_talk, \@holder],
-		['npc_talk_responses',        \&handle_npc_talk, \@holder],
-		['packet/npc_talk_number',    \&handle_npc_talk, \@holder],
-		['packet/npc_talk_text',      \&handle_npc_talk, \@holder],
-		['packet/npc_store_begin',    \&handle_npc_talk, \@holder],
-		['packet/npc_store_info',     \&handle_npc_talk, \@holder],
-		['packet/npc_sell_list',      \&handle_npc_talk, \@holder]
+		['npc_talk',                  \&handleNPCTalk, \@holder],
+		['packet/npc_talk_continue',  \&handleNPCTalk, \@holder],
+		['npc_talk_done',             \&handleNPCTalk, \@holder],
+		['npc_talk_responses',        \&handleNPCTalk, \@holder],
+		['packet/npc_talk_number',    \&handleNPCTalk, \@holder],
+		['packet/npc_talk_text',      \&handleNPCTalk, \@holder],
+		['packet/npc_store_begin',    \&handleNPCTalk, \@holder],
+		['packet/npc_store_info',     \&handleNPCTalk, \@holder],
+		['packet/npc_sell_list',      \&handleNPCTalk, \@holder]
 	);
 }
 
@@ -173,9 +173,8 @@ sub stop {
 	$self->SUPER::stop;
 }
 
-sub find_and_set_target {
-	my ($self) = @_;
-	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
+sub setTarget {
+	my ($self, $target) = @_;
 
 	if ($target) {
 		debug "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
@@ -188,13 +187,34 @@ sub find_and_set_target {
 		# TODO: way to override this, globally and in arguments for task
 
 		$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
-		$target = undef;
+		return;
 	}
-	
-	if ($target) {
-		$self->{target} = $target;
-		$self->{ID} = $target->{ID};
+
+	$self->{target} = $target;
+	$self->{ID} = $target->{ID};
+
+	# FIXME: We probably need to look at the target->pos_to (if defined),
+	# not at self, as coordinates can be omitted.
+	if (defined $self->{x} && defined $self->{y}) {
 		lookAtPosition($self);
+	}
+
+	return 1;
+}
+
+sub find_and_set_target {
+	my ($self) = @_;
+	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
+
+	unless ($target) {
+		# It's an Actor::NPC mostly because sendTalk() is defined in that package.
+		# We can actually define sendTalk() at base Actor package instead
+		# and use Actor::Unknown here.
+		$target = Actor::NPC->new;
+	}
+
+	if ($target) {
+		return unless $self->setTarget($target);
 	} elsif (exists $talk{nameID} && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {#check if this is really necessary
 		$self->{ID} = $talk{ID};
 		$self->{target} = Actor::NPC->new;
