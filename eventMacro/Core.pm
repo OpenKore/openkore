@@ -14,6 +14,7 @@ use eventMacro::FileParser;
 use eventMacro::Macro;
 use eventMacro::Runner;
 use eventMacro::Condition;
+use eventMacro::Utilities qw(find_variable get_key_or_index);
 
 sub new {
 	my ($class, $file) = @_;
@@ -36,14 +37,15 @@ sub new {
 	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
 	$self->set_automacro_checking_status();
 	
-	$self->{Event_Related_Scalar_Variables} = {};
-	$self->{Event_Related_Array_Variables} = {};
-	$self->{Event_Related_Accessed_Array_Variables} = {};
-	$self->{Event_Related_Hash_Variables} = {};
-	$self->{Event_Related_Accessed_Hash_Variables} = {};
-	
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = {};
+	
+	$self->{Event_Related_Static_Variables} = {};
+	
+	$self->{Dynamic_Variable_Complements} = {};
+	$self->{Dynamic_Variable_Sub_Callbacks} = {};
+	$self->{Event_Related_Dynamic_Variables} = {};
+	
 	$self->create_callbacks();
 	
 	$self->{Macro_Runner} = undef;
@@ -313,7 +315,7 @@ sub create_callbacks {
 	
 	debug "[eventMacro] create_callback called\n", "eventMacro", 2;
 	
-	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+	AUTO: foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 	
 		debug "[eventMacro] Creating callback for automacro '".$automacro->get_name()."'\n", "eventMacro", 2;
 		
@@ -332,7 +334,7 @@ sub create_callbacks {
 		foreach my $var ( keys %{ $automacro->get_scalar_variables } ) {
 			my $conditions_indexes = $automacro->{scalar_variables}->{$var};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Scalar_Variables}{$var}{$automacro_index}{$condition_index} = 1;
+				$self->{Event_Related_Static_Variables}{scalar}{$var}{$automacro_index}{$condition_index} = 1;
 			}
 		}
 		
@@ -340,19 +342,7 @@ sub create_callbacks {
 		foreach my $var ( keys %{ $automacro->get_array_variables } ) {
 			my $conditions_indexes = $automacro->{array_variables}->{$var};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Array_Variables}{$var}{$automacro_index}{$condition_index} = 1;
-			}
-		}
-		
-		# Accessed arrays
-		foreach my $var ( keys %{ $automacro->get_accessed_array_variables } ) {
-			my $array = $automacro->{accessed_array_variables}->{$var};
-			foreach my $array_index (0..$#{$array}) {
-				my $cond_indexes = $array->[$array_index];
-				next unless (defined $cond_indexes);
-				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Accessed_Array_Variables}{$var}{$array_index}{$automacro_index}{$condition_index} = 1;
-				}
+				$self->{Event_Related_Static_Variables}{array}{$var}{$automacro_index}{$condition_index} = 1;
 			}
 		}
 		
@@ -360,40 +350,327 @@ sub create_callbacks {
 		foreach my $var ( keys %{ $automacro->get_hash_variables } ) {
 			my $conditions_indexes = $automacro->{hash_variables}->{$var};
 			foreach my $condition_index (@{$conditions_indexes}) {
-				$self->{Event_Related_Hash_Variables}{$var}{$automacro_index}{$condition_index} = 1;
+				$self->{Event_Related_Static_Variables}{hash}{$var}{$automacro_index}{$condition_index} = 1;
+			}
+		}
+		
+		# Accessed arrays
+		foreach my $var ( keys %{ $automacro->get_accessed_array_variables } ) {
+			
+			my $array = $automacro->{accessed_array_variables}->{$var};
+			
+			foreach my $array_complement (keys %{$array}) {
+				my $cond_indexes = $array->{$array_complement};
+				
+				next unless (defined $cond_indexes);
+				
+				if ($array_complement =~ /^\d+$/) {
+					foreach my $condition_index (@{$cond_indexes}) {
+						$self->{Event_Related_Static_Variables}{accessed_array}{$var}{$array_complement}{$automacro_index}{$condition_index} = 1;
+					}
+					
+				} elsif (my $complement_var = find_variable($array_complement)) {
+					my @nested_array;
+					push(@nested_array, {type => 'accessed_array', name => $var, complement => $array_complement});
+					
+					while ($complement_var) {
+						if (exists $complement_var->{complement}) {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}, complement => $complement_var->{complement}});
+							$complement_var = find_variable($complement_var->{complement});
+						} else {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}});
+							last;
+						}
+					}
+					
+					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
+					
+				} else {
+					error "[eventMacro] '".$array_complement."' is not a valid array index in array '".$var."'. Ignoring automacro '".$automacro->get_name()."'.\n";
+					next AUTO;
+				}
 			}
 		}
 		
 		# Accessed hashes
 		foreach my $var ( keys %{ $automacro->get_accessed_hash_variables } ) {
 			my $hash = $automacro->{accessed_hash_variables}->{$var};
-			foreach my $hash_key (keys %{$hash}) {
-				my $cond_indexes = $hash->{$hash_key};
+			foreach my $hash_complement (keys %{$hash}) {
+				my $cond_indexes = $hash->{$hash_complement};
+				
 				next unless (defined $cond_indexes);
-				foreach my $condition_index (@{$cond_indexes}) {
-					$self->{Event_Related_Accessed_Hash_Variables}{$var}{$hash_key}{$automacro_index}{$condition_index} = 1;
+				
+				if ($hash_complement =~ /^[a-zA-Z\d]+$/) {
+					foreach my $condition_index (@{$cond_indexes}) {
+						$self->{Event_Related_Static_Variables}{accessed_hash}{$var}{$hash_complement}{$automacro_index}{$condition_index} = 1;
+					}
+					
+				} elsif (my $complement_var = find_variable($hash_complement)) {
+					my @nested_array;
+					push(@nested_array, {type => 'accessed_hash', name => $var, complement => $hash_complement});
+					
+					while ($complement_var) {
+						if (exists $complement_var->{complement}) {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}, complement => $complement_var->{complement}});
+							$complement_var = find_variable($complement_var->{complement});
+						} else {
+							$nested_array[-1]{complement_is_var} = 1;
+							push(@nested_array, {type => $complement_var->{type}, name => $complement_var->{real_name}});
+							last;
+						}
+					}
+					
+					$self->manage_nested_automacro_var(\@nested_array, $automacro_index, $cond_indexes);
+					
+				} else {
+					error "[eventMacro] '".$hash_complement."' is not a valid hash key in hash '".$var."'. Ignoring automacro '".$automacro->get_name()."'.\n";
+					next AUTO;
 				}
 			}
 		}
 		
 	}
 	
-	my $event_sub = sub { $self->manage_event_callbacks('hook', shift, shift); };
+	my $event_sub = sub { 
+		my $name = shift;
+		my $args = shift;
+		my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+		$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
+	};
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 	}
 }
 
+sub manage_nested_automacro_var {
+	my ($self, $array, $automacro_index, $cond_indexes) = @_;
+	
+	foreach my $nest_index (0..$#{$array}) {
+		my $variable = $array->[$nest_index];
+		
+		if (exists $variable->{complement}) {
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{defined} = 0;
+			
+			if ($nest_index == 0) {
+				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 1;
+				foreach my $condition_index (@{$cond_indexes}) {
+					$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{auto_indexes}{$automacro_index}{$condition_index} = 1;
+				}
+			} else {
+				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 0;
+				push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]);
+			}
+			
+			if (!exists $variable->{complement_is_var}) {
+				$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}}{$variable->{complement}} = 1;
+			}
+
+		} else {
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{last_nested} = 0;
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{defined} = 0;
+			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{call_to}}, $array->[$nest_index-1]);
+			
+			$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}} = 1;
+		}
+	}
+}
+
+sub sub_callback_variable_event {
+	my ($self, $variable_type, $variable_name, $before_value, $value, $complement) = @_;
+	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type});
+	return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name});
+	
+	my $dynamic_complements;
+	if (defined $complement) {
+		return unless (exists $self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement});
+		
+		foreach my $sub_complement (values %{$self->{Dynamic_Variable_Sub_Callbacks}{$variable_type}{$variable_name}{$complement}}) {
+			$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name}{$sub_complement};
+			my $pre_defined = $dynamic_complements->{defined};
+			if (defined $value) {
+				if ($pre_defined) {
+					$self->change_sub_callback($variable_type, $variable_name, $before_value, $value, $complement, $sub_complement);
+				} else {
+					$self->activated_sub_callback($variable_type, $variable_name, $value, $complement, $sub_complement);
+				}
+			} else {
+				if ($pre_defined) {
+					$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement, $sub_complement);
+				}
+			}
+		}
+		
+	} else {
+		$dynamic_complements = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
+		my $pre_defined = $dynamic_complements->{defined};
+		if (defined $value) {
+			if ($pre_defined) {
+				$self->change_sub_callback($variable_type, $variable_name, $before_value, $value);
+			} else {
+				$self->activated_sub_callback($variable_type, $variable_name, $value);
+			}
+		} else {
+			if ($pre_defined) {
+				$self->deactivated_sub_callback($variable_type, $variable_name, $before_value);
+			}
+		}
+	}
+}
+
+sub change_sub_callback {
+	my ($self, $variable_type, $variable_name, $before_value, $value, $complement, $nest_complement) = @_;
+	
+	my $new_nest;
+	if (defined $complement) {
+		$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+	} else {
+		$new_nest = '$'.$variable_name;
+	}
+	$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement, $nest_complement);
+	$self->activated_sub_callback($variable_type, $variable_name, $value, $complement, $nest_complement);
+}
+
+sub activated_sub_callback {
+	my ($self, $variable_type, $variable_name, $value, $complement, $nest_complement) = @_;
+	
+	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
+	if (defined $complement) {
+		$var_hash = $var_hash->{$nest_complement};
+	}
+	
+	$var_hash->{defined} = 1;
+	$var_hash->{value} = $value;
+	my $calls = $var_hash->{call_to};
+	
+	if ($var_hash->{last_nested}) {
+		my @auto_indexes = keys %{$var_hash->{auto_indexes}};
+		foreach my $automacro_index (@auto_indexes) {
+			my @cond_indexes = keys %{$var_hash->{auto_indexes}{$automacro_index}};
+			foreach my $condition_index (@cond_indexes) {
+				$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index}{$condition_index} = 1;
+			}
+		}
+		$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}, $variable_type, $nest_complement);
+		return;
+	}
+	
+	foreach my $call (@{$calls}) {
+		
+		if ($call->{type} eq 'accessed_array') {
+			next if ($value !~ /^\d+$/);
+		} elsif ($call->{type} eq 'accessed_hash') {
+			next if ($value !~ /^[a-zA-Z\d]+$/);
+		}
+		
+		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
+		$call_complements->{complement_defined} = 1;
+		
+		my $sub_callback_index = ((scalar keys %{$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}}) + 1);
+		$call->{sub_callback_index} = $sub_callback_index;
+		$self->{Dynamic_Variable_Sub_Callbacks}{$call->{type}}{$call->{name}}{$value}{$sub_callback_index} = $call->{complement};
+		
+		if ($self->defined_var($call->{type}, $call->{name}, $value)) {
+			my $new_value = $self->get_var($call->{type}, $call->{name}, $value);
+			my $new_nest;
+			if (defined $complement) {
+				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+			} else {
+				$new_nest = '$'.$variable_name;
+			}
+			$self->activated_sub_callback($call->{type}, $call->{name}, $new_value, $value, $new_nest);
+		}
+	}
+}
+
+use Data::Dumper;
+
+sub deactivated_sub_callback {
+	my ($self, $variable_type, $variable_name, $before_value, $complement, $nest_complement) = @_;
+	
+	my $var_hash = $self->{Dynamic_Variable_Complements}{$variable_type}{$variable_name};
+	if (defined $complement) {
+		$var_hash = $var_hash->{$nest_complement};
+	}
+	
+	$var_hash->{defined} = 0;
+	delete $var_hash->{value};
+	my $calls = $var_hash->{call_to};
+	
+	if ($var_hash->{last_nested}) {
+		my @auto_indexes = keys %{$var_hash->{auto_indexes}};
+		foreach my $automacro_index (@auto_indexes) {
+			my @cond_indexes = keys %{$var_hash->{auto_indexes}{$automacro_index}};
+			foreach my $condition_index (@cond_indexes) {
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index}{$condition_index};
+			}
+			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index}}) {
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}{$automacro_index};
+			}
+		}
+		unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement}}) {
+			delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$nest_complement};
+			unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}}) {
+				delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement};
+				unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}}) {
+					delete $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name};
+					unless (scalar keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}}) {
+						delete $self->{Event_Related_Dynamic_Variables}{$variable_type};
+					}
+				}
+			}
+		}
+		return;
+	}
+	
+	foreach my $call (@{$calls}) {
+		my $subcall_index = delete $call->{sub_callback_index};
+		
+		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
+		delete $call_complements->{complement_defined};
+		
+		my $sub_callbacks = $self->{Dynamic_Variable_Sub_Callbacks};
+		
+		delete $sub_callbacks->{$call->{type}}{$call->{name}}{$before_value}{$subcall_index};
+		unless (scalar keys %{$sub_callbacks->{$call->{type}}{$call->{name}}{$before_value}}) {
+			delete $sub_callbacks->{$call->{type}}{$call->{name}}{$before_value};
+			unless (scalar keys %{$sub_callbacks->{$call->{type}}{$call->{name}}}) {
+				delete $sub_callbacks->{$call->{type}}{$call->{name}};
+				unless (scalar keys %{$sub_callbacks->{$call->{type}}}) {
+					delete $sub_callbacks->{$call->{type}};
+				}
+			}
+		}
+		
+		if ($call_complements->{defined}) {
+			my $new_nest;
+			if (defined $complement) {
+				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
+			} else {
+				$new_nest = '$'.$variable_name;
+			}
+			$self->deactivated_sub_callback($call->{type}, $call->{name}, $call_complements->{value}, $before_value, $new_nest);
+		}
+	}
+}
+
+sub add_nest_to_var {
+	my ($self, $variable_type, $variable_name, $to_be_nested) = @_;
+	my $nested = '$'.$variable_name.($variable_type eq 'accessed_array' ? '[' : '{').$to_be_nested.($variable_type eq 'accessed_array' ? ']' : '}');
+}
+
 sub set_arrays_size_to_zero {
 	my ($self) = @_;
-	foreach my $array_name (keys %{$self->{Event_Related_Array_Variables}}) {
+	foreach my $array_name (keys %{$self->{Event_Related_Static_Variables}{array}}) {
 		$self->array_size_change($array_name);
 	}
 }
 
 sub set_hashes_size_to_zero {
 	my ($self) = @_;
-	foreach my $hash_name (keys %{$self->{Event_Related_Hash_Variables}}) {
+	foreach my $hash_name (keys %{$self->{Event_Related_Static_Variables}{hash}}) {
 		$self->hash_size_change($hash_name);
 	}
 }
@@ -481,6 +758,8 @@ sub get_scalar_var {
 sub set_scalar_var {
 	my ($self, $variable_name, $variable_value, $check_callbacks) = @_;
 	
+	my $before_value = $self->get_scalar_var($variable_name);
+	
 	if ($variable_value eq 'undef') {
 		undef $variable_value;
 		delete $self->{Scalar_Variable_List_Hash}{$variable_name};
@@ -489,7 +768,7 @@ sub set_scalar_var {
 	}
 	
 	return if (defined $check_callbacks && $check_callbacks == 0);
-	$self->check_necessity_and_callback('scalar', $variable_name, $variable_value);
+	$self->manage_variables_callbacks('scalar', $variable_name, $before_value, $variable_value);
 }
 
 sub is_scalar_var_defined {
@@ -513,17 +792,19 @@ sub set_full_array {
 			undef $member_value;
 		}
 		$self->{Array_Variable_List_Hash}{$variable_name}[$member_index] = $member_value;
-		$self->check_necessity_and_callback('accessed_array', $variable_name, $member_value, $member_index);
+		my $old_member = $old_array[$member_index];
+		$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, $member_value, $member_index);
 	}
 	if ($new_last_index < $old_last_index) {
 		splice(@{$self->{Array_Variable_List_Hash}{$variable_name}}, ($new_last_index+1));
-		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name}) {
+		if ((exists $self->{Event_Related_Static_Variables}{accessed_array} && exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_array} && exists $self->{Event_Related_Dynamic_Variables}{accessed_array}{$variable_name})) {
 			foreach my $old_member_index (($new_last_index+1)..$old_last_index) {
-				$self->check_necessity_and_callback('accessed_array', $variable_name, undef, $old_member_index);
+				my $old_member = $old_array[$old_member_index];
+				$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, undef, $old_member_index);
 			}
 		}
 	}
-	$self->array_size_change($variable_name) if ($new_last_index != $old_last_index);
+	$self->array_size_change($variable_name, $old_last_index) if ($new_last_index != $old_last_index);
 }
 
 sub clear_array {
@@ -532,12 +813,13 @@ sub clear_array {
 		debug "[eventMacro] Clearing array '@".$variable_name."'\n", "eventMacro";
 		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		delete $self->{Array_Variable_List_Hash}{$variable_name};
-		if (exists $self->{Event_Related_Accessed_Array_Variables}{$variable_name}) {
+		if ((exists $self->{Event_Related_Static_Variables}{accessed_array} && exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_array} && exists $self->{Event_Related_Dynamic_Variables}{accessed_array}{$variable_name})) {
 			foreach my $old_member_index (0..$#old_array) {
-				$self->check_necessity_and_callback('accessed_array', $variable_name, undef, $old_member_index);
+				my $old_member = $old_array[$old_member_index];
+				$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, undef, $old_member_index);
 			}
 		}
-		$self->array_size_change($variable_name);
+		$self->array_size_change($variable_name, $#old_array);
 	}
 }
 
@@ -553,8 +835,8 @@ sub push_array {
 	
 	debug "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n", "eventMacro";
 	
-	$self->check_necessity_and_callback('accessed_array', $variable_name, $new_member, $index);
-	$self->array_size_change($variable_name);
+	$self->manage_variables_callbacks('accessed_array', $variable_name, undef, $new_member, $index);
+	$self->array_size_change($variable_name, ($index - 1));
 	
 	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
 }
@@ -574,9 +856,10 @@ sub unshift_array {
 	
 	foreach my $member_index (0..$index) {
 		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
-		$self->check_necessity_and_callback('accessed_array', $variable_name, $member, $member_index);
+		my $old_member = $old_array[$member_index];
+		$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, $member, $member_index);
 	}
-	$self->array_size_change($variable_name);
+	$self->array_size_change($variable_name, ($index - 1));
 	
 	return (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}});
 }
@@ -593,8 +876,8 @@ sub pop_array {
 	debug "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n", "eventMacro";
 	
 	
-	$self->check_necessity_and_callback('accessed_array', $variable_name, undef, $index);
-	$self->array_size_change($variable_name);
+	$self->manage_variables_callbacks('accessed_array', $variable_name, $poped, undef, $index);
+	$self->array_size_change($variable_name, $index);
 	
 	return $poped;
 }
@@ -613,11 +896,12 @@ sub shift_array {
 	
 	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
 		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
-		$self->check_necessity_and_callback('accessed_array', $variable_name, $member, $member_index);
+		my $old_member = $old_array[$member_index];
+		$self->manage_variables_callbacks('accessed_array', $variable_name, $old_member, $member, $member_index);
 	}
 	
-	$self->check_necessity_and_callback('accessed_array', $variable_name, undef, $index);
-	$self->array_size_change($variable_name);
+	$self->manage_variables_callbacks('accessed_array', $variable_name, $shifted, undef, $index);
+	$self->array_size_change($variable_name, $index);
 	
 	return $shifted;
 }
@@ -630,6 +914,10 @@ sub get_array_var {
 
 sub set_array_var {
 	my ($self, $variable_name, $index, $variable_value, $check_callbacks) = @_;
+	
+	my $before_value = $self->get_array_var($variable_name, $index);
+	my $before_size = $self->get_array_size($variable_name);
+	
 	if ($variable_value eq 'undef') {
 		undef $variable_value;
 		$self->{Array_Variable_List_Hash}{$variable_name}[$index] = undef;
@@ -637,16 +925,16 @@ sub set_array_var {
 		$self->{Array_Variable_List_Hash}{$variable_name}[$index] = $variable_value;
 	}
 	return if (defined $check_callbacks && $check_callbacks == 0);
-	$self->check_necessity_and_callback('accessed_array', $variable_name, $variable_value, $index);
-	$self->array_size_change($variable_name);
+	$self->manage_variables_callbacks('accessed_array', $variable_name, $before_value, $variable_value, $index);
+	$self->array_size_change($variable_name, $before_size);
 }
 
 sub array_size_change {
-	my ($self, $variable_name) = @_;
+	my ($self, $variable_name, $before_size) = @_;
 	my $size = ((exists $self->{Array_Variable_List_Hash}{$variable_name}) ? (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}}) : 0);
-	debug "[eventMacro] Size of array '@".$variable_name."' change to '".$size."'\n", "eventMacro";
+	debug "[eventMacro] Size of array '@".$variable_name."' change from '".$before_size."' to '".$size."'\n", "eventMacro";
 	
-	$self->check_necessity_and_callback('array', $variable_name, $size);
+	$self->manage_variables_callbacks('array', $variable_name, $before_size, $size);
 }
 
 sub get_array_size {
@@ -676,17 +964,19 @@ sub set_full_hash {
 			undef $member_value;
 		}
 		$self->{Hash_Variable_List_Hash}{$variable_name}{$member_key} = $member_value;
-		$self->check_necessity_and_callback('accessed_hash', $variable_name, $member_value, $member_key);
+		my $old_member = $old_hash{$member_key};
+		$self->manage_variables_callbacks('accessed_hash', $variable_name, $old_member, $member_value, $member_key);
 	}
 	
-	if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
+	if ((exists $self->{Event_Related_Static_Variables}{accessed_hash} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_hash} && exists $self->{Event_Related_Dynamic_Variables}{accessed_hash}{$variable_name})) {
 		foreach my $old_member_key (keys %old_hash) {
 			if (!exists $self->{Hash_Variable_List_Hash}{$variable_name}{$old_member_key}) {
-				$self->check_necessity_and_callback('accessed_hash', $variable_name, undef, $old_member_key);
+				my $old_member = $old_hash{$old_member_key};
+				$self->manage_variables_callbacks('accessed_hash', $variable_name, $old_member, undef, $old_member_key);
 			}
 		}
 	}
-	$self->hash_size_change($variable_name) if ((scalar keys %old_hash) != (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}));
+	$self->hash_size_change($variable_name, (scalar keys %old_hash)) if ((scalar keys %old_hash) != (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}));
 }
 
 sub clear_hash {
@@ -695,12 +985,13 @@ sub clear_hash {
 		debug "[eventMacro] Clearing hash '%".$variable_name."'\n", "eventMacro";
 		my %old_hash = %{$self->{Hash_Variable_List_Hash}{$variable_name}};
 		delete $self->{Hash_Variable_List_Hash}{$variable_name};
-		if (exists $self->{Event_Related_Accessed_Hash_Variables}{$variable_name}) {
+		if ((exists $self->{Event_Related_Static_Variables}{accessed_hash} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_hash} && exists $self->{Event_Related_Dynamic_Variables}{accessed_hash}{$variable_name})) {
 			foreach my $old_member_key (keys %old_hash) {
-				$self->check_necessity_and_callback('accessed_hash', $variable_name, undef, $old_member_key);
+				my $old_member = $old_hash{$old_member_key};
+				$self->manage_variables_callbacks('accessed_hash', $variable_name, $old_member, undef, $old_member_key);
 			}
 		}
-		$self->hash_size_change($variable_name);
+		$self->hash_size_change($variable_name, (scalar keys %old_hash));
 	}
 }
 
@@ -727,7 +1018,10 @@ sub exists_hash {
 sub delete_key {
 	my ($self, $variable_name, $key) = @_;
 	if (exists $self->{Hash_Variable_List_Hash}{$variable_name} && exists $self->{Hash_Variable_List_Hash}{$variable_name}{$key}) {
+		my $old_size = (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}});
 		my $deleted = delete $self->{Hash_Variable_List_Hash}{$variable_name}{$key};
+		$self->manage_variables_callbacks('accessed_hash', $variable_name, $deleted, undef, $key);
+		$self->hash_size_change($variable_name, $old_size);
 		return $deleted;
 	}
 }
@@ -741,6 +1035,9 @@ sub get_hash_var {
 sub set_hash_var {
 	my ($self, $variable_name, $key, $variable_value, $check_callbacks) = @_;
 	
+	my $before_value = $self->get_hash_var($variable_name, $key);
+	my $before_size = $self->get_hash_size($variable_name);
+	
 	if ($variable_value eq 'undef') {
 		undef $variable_value;
 	}
@@ -748,16 +1045,16 @@ sub set_hash_var {
 	$self->{Hash_Variable_List_Hash}{$variable_name}{$key} = $variable_value;
 	
 	return if (defined $check_callbacks && $check_callbacks == 0);
-	$self->check_necessity_and_callback('accessed_hash', $variable_name, $variable_value, $key);
-	$self->hash_size_change($variable_name);
+	$self->manage_variables_callbacks('accessed_hash', $variable_name, $before_value, $variable_value, $key);
+	$self->hash_size_change($variable_name, $before_size);
 }
 
 sub hash_size_change {
-	my ($self, $variable_name) = @_;
+	my ($self, $variable_name, $old_size) = @_;
 	my $size = ((exists $self->{Hash_Variable_List_Hash}{$variable_name}) ? (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}) : 0);
-	debug "[eventMacro] Size of hash '%".$variable_name."' change to '".$size."'\n", "eventMacro";
+	debug "[eventMacro] Size of hash '%".$variable_name."' change from '".$old_size."' to '".$size."'\n", "eventMacro";
 	
-	$self->check_necessity_and_callback('hash', $variable_name, $size);
+	$self->manage_variables_callbacks('hash', $variable_name, $old_size, $size);
 }
 
 sub get_hash_size {
@@ -774,25 +1071,51 @@ sub is_hash_var_defined {
 }
 ########
 
-sub check_necessity_and_callback {
-	my ($self, $variable_type, $variable_name, $value, $complement) = @_;
-
+sub manage_variables_callbacks {
+	my ($self, $variable_type, $variable_name, $before_value, $value, $complement) = @_;
+	
+	$self->sub_callback_variable_event($variable_type, $variable_name, $before_value, $value, $complement);
+	
 	if ($variable_type eq 'scalar') {
-		return unless (exists $self->{'Event_Related_Scalar_Variables'}{$variable_name});
+	
+		if (exists $self->{Event_Related_Static_Variables}{scalar} && exists $self->{Event_Related_Static_Variables}{scalar}{$variable_name}) {
+			$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Static_Variables}{scalar}{$variable_name}, $variable_type, $complement);
+		}
 		
 	} elsif ($variable_type eq 'array') {
-		return unless (exists $self->{'Event_Related_Array_Variables'}{$variable_name});
-		
-	} elsif ($variable_type eq 'accessed_array') {
-		return unless (exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name} && exists $self->{'Event_Related_Accessed_Array_Variables'}{$variable_name}{$complement});
+	
+		if (exists $self->{Event_Related_Static_Variables}{array} && exists $self->{Event_Related_Static_Variables}{array}{$variable_name}) {
+			$self->manage_event_callbacks('variable', $variable_name, $value, $$self->{Event_Related_Static_Variables}{array}{$variable_name}, $variable_type, $complement);
+		}
 		
 	} elsif ($variable_type eq 'hash') {
-		return unless (exists $self->{'Event_Related_Hash_Variables'}{$variable_name});
+	
+		if (exists $self->{Event_Related_Static_Variables}{hash} && exists $self->{Event_Related_Static_Variables}{hash}{$variable_name}) {
+			$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Static_Variables}{hash}{$variable_name}, $variable_type, $complement);
+		}
+		
+	} elsif ($variable_type eq 'accessed_array') {
+	
+		if (exists $self->{Event_Related_Static_Variables}{accessed_array} && exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name} && exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}{$complement}) {
+			$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}{$complement}, $variable_type, $complement);
+		}
+		if (exists $self->{Event_Related_Dynamic_Variables}{accessed_array} && exists $self->{Event_Related_Dynamic_Variables}{accessed_array}{$variable_name} && exists $self->{Event_Related_Dynamic_Variables}{accessed_array}{$variable_name}{$complement}) {
+			foreach my $sub_complement (keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}}) {
+				$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$sub_complement}, $variable_type, $sub_complement);
+			}
+		}
 		
 	} elsif ($variable_type eq 'accessed_hash') {
-		return unless (exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name} && exists $self->{'Event_Related_Accessed_Hash_Variables'}{$variable_name}{$complement});
+	
+		if (exists $self->{Event_Related_Static_Variables}{accessed_hash} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}{$complement}) {
+			$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}{$complement}, $variable_type, $complement);
+		}
+		if (exists $self->{Event_Related_Dynamic_Variables}{accessed_hash} && exists $self->{Event_Related_Dynamic_Variables}{accessed_hash}{$variable_name} && exists $self->{Event_Related_Dynamic_Variables}{accessed_hash}{$variable_name}{$complement}) {
+			foreach my $sub_complement (keys %{$self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}}) {
+				$self->manage_event_callbacks('variable', $variable_name, $value, $self->{Event_Related_Dynamic_Variables}{$variable_type}{$variable_name}{$complement}{$sub_complement}, $variable_type, $sub_complement);
+			}
+		}
 	}
-	$self->manage_event_callbacks('variable', $variable_name, $value, $variable_type, $complement);
 }
 
 sub add_to_triggered_prioritized_automacros_index_list {
@@ -859,10 +1182,11 @@ sub manage_event_callbacks {
 	my $callback_type = shift;
 	my $callback_name = shift;
 	my $callback_args = shift;
+	my $check_list_hash = shift;
 	
 	my $debug_message = "[eventMacro] Callback Happenned, type: '".$callback_type."'";
 	
-	my $check_list_hash;
+	$debug_message .= ", name: '".$callback_name."'";
 	
 	if ($callback_type eq 'variable') {
 		my $sub_type = shift;
@@ -870,34 +1194,26 @@ sub manage_event_callbacks {
 		$debug_message .= ", variable type: '".$sub_type."'";
 		
 		if ($sub_type eq 'scalar') {
-			$check_list_hash = $self->{'Event_Related_Scalar_Variables'}{$callback_name};
 			$callback_name = '$'.$callback_name;
 			
 		} elsif ($sub_type eq 'array') {
-			$check_list_hash = $self->{'Event_Related_Array_Variables'}{$callback_name};
 			$callback_name = '@'.$callback_name;
 			
 		} elsif ($sub_type eq 'accessed_array') {
-			$check_list_hash = $self->{'Event_Related_Accessed_Array_Variables'}{$callback_name}{$complement};
 			$callback_name = '$'.$callback_name.'['.$complement.']';
 			$debug_message .= ", array index: '".$complement."'";
 			
 		} elsif ($sub_type eq 'hash') {
-			$check_list_hash = $self->{'Event_Related_Hash_Variables'}{$callback_name};
 			$callback_name = '%'.$callback_name;
 			
 		} elsif ($sub_type eq 'accessed_hash') {
-			$check_list_hash = $self->{'Event_Related_Accessed_Hash_Variables'}{$callback_name}{$complement};
 			$callback_name = '$'.$callback_name.'{'.$complement.'}';
 			$debug_message .= ", hash key: '".$complement."'";
 		}
-	} else {
-		$check_list_hash = $self->{'Event_Related_Hooks'}{$callback_name};
+		$debug_message .= ", variable value: '".$callback_args."'";
 	}
 	
-	$debug_message .= ", name: '".$callback_name."'\n";
-	
-	debug $debug_message, "eventMacro", 2;
+	debug $debug_message."\n", "eventMacro", 2;
 	
 	my ($event_type_automacro_call_index, $event_type_automacro_call_priority);
 	
@@ -999,13 +1315,18 @@ sub manage_dynamic_hook_add_and_delete {
 		$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 		
 		unless (exists $self->{Hook_Handles}{$hook_name}) {
-			my $event_sub = sub { $self->manage_event_callbacks('hook', shift, shift); };
+			my $event_sub = sub { 
+				my $name = shift;
+				my $args = shift;
+				my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+				$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
+			};
 			$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 		}
 	
 	} else {
 		if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delte hook '".$hook_name."' from callbacks but it isn't in it.\n";
+			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
 			return;
 		}
 		

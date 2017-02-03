@@ -1586,9 +1586,8 @@ sub find_and_define_key_index {
 		my $name = $1;
 		my $open_bracket = $2;
 		
-		# 0 for array / 1 for hash
-		my $array_or_hash = ($open_bracket eq '[' ? 0 : 1);
-		my $close_bracket = ($array_or_hash ? '}' : ']');
+		my $type = ($open_bracket eq '[' ? 'array' : 'hash');
+		my $close_bracket = (($type eq 'hash') ? '}' : ']');
 		
 		my $rest = $3;
 			
@@ -1613,11 +1612,11 @@ sub find_and_define_key_index {
 			$self->error("Empty key of hash or index of array after parsing");
 			return;
 			
-		} elsif ($array_or_hash && $parsed_key_index !~ /[a-zA-Z\d]+/) {
+		} elsif ($type eq 'hash' && $parsed_key_index !~ /[a-zA-Z\d]+/) {
 			$self->error("Invalid syntax in key of hash (only use letters and numbers)");
 			return;
 			
-		} elsif (!$array_or_hash && $parsed_key_index !~ /\d+/) {
+		} elsif ($type eq 'array' && $parsed_key_index !~ /\d+/) {
 			$self->error("Invalid syntax in index of array (only use numbers)");
 			return;
 		}

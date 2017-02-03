@@ -3,7 +3,30 @@ package eventMacro::Validator::RegexCheck;
 use strict;
 use base 'eventMacro::Validator';
 use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Utilities qw(find_variable get_key_or_index);
+
+sub get_accessed_var {
+	my ($self, $text) = @_;
+	
+	if ($text =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
+		my $name = $1;
+		my $open_bracket = $2;
+		
+		my $type = ($open_bracket eq '[' ? 'array' : 'hash');
+		my $close_bracket = (($type eq 'hash') ? '}' : ']');
+		
+		my $rest = $3;
+			
+		my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
+		if (!defined $key_index || $key_index eq '') {
+			return;
+		}
+			
+		my $original_name = ('$'.$name.$open_bracket.$key_index.$close_bracket);
+		
+		return $original_name;
+	}
+}
 
 sub parse {
 	my ( $self, $regex_code ) = @_;
@@ -12,7 +35,48 @@ sub parse {
 		$self->{original_regex} = $1;
 		$self->{case_insensitive} = !!$2;
 		
-		my @variables = $self->{original_regex} =~ /(?:^|(?<=[^\\]))($general_variable_qr)/g;
+		my @variables;
+		
+		my $remaining = $self->{original_regex};
+	
+		VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
+		
+			#accessed arrays and hashes
+			if (my $name = $self->get_accessed_var($remaining)) {
+				my $regex_name = quotemeta($name);
+				push (@variables, $name);
+				
+				if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+					my $before_var = $1;
+					my $after_var = $2;
+					
+					$remaining = $before_var.$after_var;
+					
+				} else {
+					$self->{error} = "Could not find detected variable in code";
+					$self->{parsed} = 0;
+					return;
+				}
+				next VAR;
+				
+			} elsif ($remaining =~ /(?:^|(?<=[^\\]))($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/) {
+				my $var = find_variable($1);
+				push (@variables, $var->{display_name});
+				my $regex_name = quotemeta($var->{display_name});
+				if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
+					my $before_var = $1;
+					my $after_var = $2;
+					
+					$remaining = $before_var.$after_var;
+					
+				} else {
+					$self->{error} = "Could not find detected variable in code";
+					$self->{parsed} = 0;
+					return;
+				}
+				next VAR;
+			}
+		}
 		
 		$self->{defined_var_list} = {};
 		$self->{var_count_list} = {};

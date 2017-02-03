@@ -1,0 +1,16 @@
+macro macro1 {
+	log This works
+	log hehe
+}
+
+automacro auto1 {
+	BaseLevel $NestArray1[$NestedScalar1]
+	priority 0
+	call macro1
+}
+
+automacro auto2 {
+	BaseLevel $NestArray2[$NestedScalar1]
+	priority 0
+	call macro1
+}

@@ -22,3 +22,24 @@ macro testmacro2 {
 	log This also works
 	log hehe 2
 }
+
+automacro test3 {
+	BaseLevel $scalar1
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test4 {
+	BaseLevel $array1[1]
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test5 {
+	BaseLevel $hash2{key5}
+	JobLevel 20
+	priority 0
+	call testmacro2
+}

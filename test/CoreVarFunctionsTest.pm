@@ -10,7 +10,7 @@ use eventMacro::Data;
 use eventMacro::Core;
 
 sub start {
-	my $eventMacro = eventMacro::Core->new( "$RealBin/empty.txt" );
+	my $eventMacro = eventMacro::Core->new( "$RealBin/textfiles/empty.txt" );
 	
 	subtest 'scalar' => sub {
 		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {});
