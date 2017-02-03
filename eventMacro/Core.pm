@@ -438,7 +438,7 @@ sub create_callbacks {
 		my $name = shift;
 		my $args = shift;
 		my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-		$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
+		$self->manage_event_callbacks('hook', $name, $args, $check_list_hash); 
 	};
 	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
 		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
@@ -1300,7 +1300,7 @@ sub manage_dynamic_hook_add_and_delete {
 				my $name = shift;
 				my $args = shift;
 				my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-				$self->manage_event_callbacks('hook', shift, shift, $check_list_hash); 
+				$self->manage_event_callbacks('hook', $name, $args, $check_list_hash); 
 			};
 			$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
 		}
