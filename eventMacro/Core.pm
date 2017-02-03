@@ -453,6 +453,7 @@ sub manage_nested_automacro_var {
 		
 		if (exists $variable->{complement}) {
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{defined} = 0;
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{full_nest} = '$'.$variable->{name}.($variable->{type} eq 'accessed_array' ? '[' : '{').$variable->{complement}.($variable->{type} eq 'accessed_array' ? ']' : '}');
 			
 			if ($nest_index == 0) {
 				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 1;
@@ -461,7 +462,8 @@ sub manage_nested_automacro_var {
 				}
 			} else {
 				$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{last_nested} = 0;
-				push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, $array->[$nest_index-1]);
+				my $next_var = $array->[$nest_index-1];
+				push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{$variable->{complement}}{call_to}}, {type => $next_var->{type}, name => $next_var->{name}, complement => $next_var->{complement}});
 			}
 			
 			if (!exists $variable->{complement_is_var}) {
@@ -471,7 +473,9 @@ sub manage_nested_automacro_var {
 		} else {
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{last_nested} = 0;
 			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{defined} = 0;
-			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{call_to}}, $array->[$nest_index-1]);
+			$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{full_nest} = '$'.$variable->{name};
+			my $next_var = $array->[$nest_index-1];
+			push(@{$self->{Dynamic_Variable_Complements}{$variable->{type}}{$variable->{name}}{call_to}}, {type => $next_var->{type}, name => $next_var->{name}, complement => $next_var->{complement}});
 			
 			$self->{Dynamic_Variable_Sub_Callbacks}{$variable->{type}}{$variable->{name}} = 1;
 		}
@@ -523,12 +527,6 @@ sub sub_callback_variable_event {
 sub change_sub_callback {
 	my ($self, $variable_type, $variable_name, $before_value, $value, $complement, $nest_complement) = @_;
 	
-	my $new_nest;
-	if (defined $complement) {
-		$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
-	} else {
-		$new_nest = '$'.$variable_name;
-	}
 	$self->deactivated_sub_callback($variable_type, $variable_name, $before_value, $complement, $nest_complement);
 	$self->activated_sub_callback($variable_type, $variable_name, $value, $complement, $nest_complement);
 }
@@ -574,13 +572,7 @@ sub activated_sub_callback {
 		
 		if ($self->defined_var($call->{type}, $call->{name}, $value)) {
 			my $new_value = $self->get_var($call->{type}, $call->{name}, $value);
-			my $new_nest;
-			if (defined $complement) {
-				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
-			} else {
-				$new_nest = '$'.$variable_name;
-			}
-			$self->activated_sub_callback($call->{type}, $call->{name}, $new_value, $value, $new_nest);
+			$self->activated_sub_callback($call->{type}, $call->{name}, $new_value, $value, $var_hash->{full_nest});
 		}
 	}
 }
@@ -645,20 +637,9 @@ sub deactivated_sub_callback {
 		}
 		
 		if ($call_complements->{defined}) {
-			my $new_nest;
-			if (defined $complement) {
-				$new_nest = $self->add_nest_to_var($variable_type, $variable_name, $nest_complement);
-			} else {
-				$new_nest = '$'.$variable_name;
-			}
-			$self->deactivated_sub_callback($call->{type}, $call->{name}, $call_complements->{value}, $before_value, $new_nest);
+			$self->deactivated_sub_callback($call->{type}, $call->{name}, $call_complements->{value}, $before_value, $var_hash->{full_nest});
 		}
 	}
-}
-
-sub add_nest_to_var {
-	my ($self, $variable_type, $variable_name, $to_be_nested) = @_;
-	my $nested = '$'.$variable_name.($variable_type eq 'accessed_array' ? '[' : '{').$to_be_nested.($variable_type eq 'accessed_array' ? ']' : '}');
 }
 
 sub set_arrays_size_to_zero {
