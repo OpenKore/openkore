@@ -39,15 +39,15 @@ sub _parse_syntax {
 			return 0;
 		}
 		
-		if ($quest_id =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
-			if ($var =~ /^\./) {
+		if (my $var = find_variable($quest_id)) {
+			if ($var->{display_name} =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			} else {
-				push ( @{ $self->{var_to_member_index_quest_id}{$var} }, $member_index );
+				push ( @{ $self->{var_to_member_index_quest_id}{$var->{display_name}} }, $member_index );
 				$self->{members_array}->[$member_index]{quest_id} = undef;
-				$var_exists_hash->{$var} = undef;
+				push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 			
 		} elsif ($quest_id =~ /^\d+$/) {
@@ -58,15 +58,15 @@ sub _parse_syntax {
 			return 0;
 		}
 		
-		if ($mob_id =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
-			if ($var =~ /^\./) {
+		if (my $var = find_variable($mob_id)) {
+			if ($var->{display_name} =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			} else {
-				push ( @{ $self->{var_to_member_index_mob_id}{$var} }, $member_index );
+				push ( @{ $self->{var_to_member_index_mob_id}{$var->{display_name}} }, $member_index );
 				$self->{members_array}->[$member_index]{mob_id} = undef;
-				$var_exists_hash->{$var} = undef;
+				push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 			
 		} elsif ($mob_id =~ /^\d+$/) {
@@ -76,10 +76,6 @@ sub _parse_syntax {
 			$self->{error} = "List member '".$member."' has an invalid mob ID '".$mob_id."'";
 			return 0;
 		}
-	}
-	
-	foreach my $var (keys %{$var_exists_hash}) {
-		push ( @{ $self->{variables} }, $var );
 	}
 	
 	return 1;

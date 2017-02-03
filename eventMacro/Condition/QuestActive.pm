@@ -29,15 +29,15 @@ sub _parse_syntax {
 	foreach my $member_index (0..$#members) {
 		my $member = $members[$member_index];
 		
-		if ($member =~ /(?:^|(?<=[^\\]))\$($variable_qr)$/) {
-			my $var = $1;
-			if ($var =~ /^\./) {
+		if (my $var = find_variable($member)) {
+			if ($var->{display_name} =~ /^\./) {
 				$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
 				return 0;
 			} else {
-				push ( @{ $self->{var_to_member_index}{$var} }, $member_index );
+				push ( @{ $self->{var_to_member_index}{$var->{display_name}} }, $member_index );
 				$self->{members_array}->[$member_index] = undef;
-				$var_exists_hash->{$var} = undef;
+				push(@{$self->{variables}}, $var) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 			
 		} elsif ($member =~ /^\d+$/) {
@@ -48,10 +48,6 @@ sub _parse_syntax {
 			return 0;
 		}
 		
-	}
-	
-	foreach my $var (keys %{$var_exists_hash}) {
-		push ( @{ $self->{variables} }, $var );
 	}
 	
 	return 1;
