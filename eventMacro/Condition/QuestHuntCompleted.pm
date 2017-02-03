@@ -4,6 +4,7 @@ use strict;
 use Globals;
 use Utils;
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 use base 'eventMacro::Condition';
 
@@ -107,37 +108,22 @@ sub check_quests {
 	$self->{fulfilled_mob_id} = undef;
 	$self->{fulfilled_member_index} = undef;
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
-	
-		my $counter = 0;
-		Log::warning "[test] number ".$counter++."\n";
-		
 		my $quest_ID = $self->{members_array}->[$member_index]{quest_id};
 		my $mob_ID = $self->{members_array}->[$member_index]{mob_id};
+		
 		next unless (defined $quest_ID);
-		Log::warning "[test] number ".$counter++."\n";
 		next unless (defined $mob_ID);
-		Log::warning "[test] number ".$counter++."\n";
 		next unless (exists $questList->{$quest_ID});
-		Log::warning "[test] number ".$counter++."\n";
 		my $quest = $questList->{$quest_ID};
 		
-		Log::warning "[test] dump ".(Data::Dumper::Dumper($quest))."\n";
-		
 		next unless (exists $quest->{active});
-		Log::warning "[test] number ".$counter++."\n";
 		next unless ($quest->{active});
-		Log::warning "[test] number ".$counter++."\n";
 		
 		next unless (exists $quest->{missions});
-		Log::warning "[test] number ".$counter++."\n";
 		next unless (exists $quest->{missions}->{$mob_ID});
-		Log::warning "[test] number ".$counter++."\n";
 		next unless (exists $quest->{missions}->{$mob_ID}->{count});
-		Log::warning "[test] number ".$counter++."\n";
 		next unless (exists $quest->{missions}->{$mob_ID}->{goal});
-		Log::warning "[test] number ".$counter++."\n";
 		next unless ($quest->{missions}->{$mob_ID}->{count} == $quest->{missions}->{$mob_ID}->{goal});
-		Log::warning "[test] number ".$counter++."\n";
 		
 		$self->{fulfilled_quest_id} = $quest_ID;
 		$self->{fulfilled_mob_id} = $mob_ID;

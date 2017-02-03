@@ -4,6 +4,7 @@ use strict;
 use Globals;
 use Utils;
 use eventMacro::Data;
+use eventMacro::Utilities qw(find_variable);
 
 use base 'eventMacro::Condition';
 
