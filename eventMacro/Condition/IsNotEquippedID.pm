@@ -9,7 +9,7 @@ use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item','packet/map_property3','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];
+	['packet_mapChange','equipped_item','unequipped_item','inventory_ready'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -176,6 +176,7 @@ sub check_slot {
 	}
 }
 
+use Data::Dumper;
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
@@ -188,32 +189,17 @@ sub validate_condition {
 			$self->check_slot($args->{slot}, $args->{item});
 			
 		} elsif ($callback_name eq 'unequipped_item') {
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot});
+			return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot} && $self->{fulfilled_slot} ne $args->{slot});
 			return $self->SUPER::validate_condition unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
-			$self->{fulfilled_slot} = $args->{slot};
 			$self->{is_fulfilled_empty} = 1;
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
-			$self->{is_on_stand_by} = 1;
 			$self->{fulfilled_slot} = undef;
+			$self->{is_on_stand_by} = 1;
 			
-		} elsif ($callback_name eq 'packet/map_property3') {
-			if ($self->{is_on_stand_by} == 1) {
-				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-				$self->{is_on_stand_by} = 0;
-			}
-			
-		} elsif ($callback_name eq 'packet/inventory_items_stackable') {
-			if (exists $self->{slot_name_to_member_to_check_array}{arrow}) {
-				$self->{is_on_stand_by} = 0;
-				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-			}
-		} elsif ($callback_name eq 'packet/inventory_items_nonstackable') {
-			if (scalar keys %{$self->{slot_name_to_member_to_check_array}} > 1 || !exists $self->{slot_name_to_member_to_check_array}{arrow}) {
-				$self->{is_on_stand_by} = 0;
-				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-			}
-			
+		} elsif ($callback_name eq 'inventory_ready') {
+			$self->{is_on_stand_by} = 0;
+			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 		}
 	
 	} elsif ($callback_type eq 'variable') {

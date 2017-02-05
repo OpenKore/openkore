@@ -9,7 +9,7 @@ use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item','packet/inventory_items_stackable','packet/inventory_items_nonstackable'];
+	['packet_mapChange','equipped_item','unequipped_item','inventory_ready'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -188,16 +188,11 @@ sub validate_condition {
 			$self->{fulfilled_slot} = undef;
 			$self->{fulfilled_item} = undef;
 			$self->{fulfilled_member_index} = undef;
+			$self->{is_on_stand_by} = 1;
 			
-		} elsif ($callback_name eq 'packet/inventory_items_stackable') {
-			if (exists $self->{slot_name_to_member_to_check_array}{arrow}) {
-				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-			}
-		} elsif ($callback_name eq 'packet/inventory_items_nonstackable') {
-			if (scalar keys %{$self->{slot_name_to_member_to_check_array}} > 1 || !exists $self->{slot_name_to_member_to_check_array}{arrow}) {
-				$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-			}
-			
+		} elsif ($callback_name eq 'inventory_ready') {
+			$self->{is_on_stand_by} = 0;
+			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 		}
 	
 	} elsif ($callback_type eq 'variable') {
