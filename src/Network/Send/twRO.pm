@@ -131,9 +131,8 @@ sub sendCharCreate {
 	my ($self, $slot, $name, $hair_style, $hair_color, $jobID, $sex) = @_; 
 	$hair_color ||= 1; 
 	$hair_style ||= 0; 
-	$jobID = 0; #Novice
+	$jobID ||= 0:
 	
-	#0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
 	#0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 	my $msg = pack('C2 a24 C v2 v v C', 0x39, 0x0A,  
 		stringToBytes($name), $slot, $hair_color, $hair_style, $jobID, 0, $sex); 
