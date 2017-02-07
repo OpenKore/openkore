@@ -1299,7 +1299,7 @@ sub parse_pause {
 		return if (defined $self->error);
 		if (!defined $parsed_pause_command) {
 			$self->error("pause value could not be defined");
-		} elsif ($parsed_pause_command !~ /^\d+$/) {
+		} elsif ($parsed_pause_command !~ /^\d+(?:\.\d+)?$/) {
 			$self->error("pause value '$parsed_pause_command' must be numeric");
 		} else {
 			$self->timeout($parsed_pause_command);
