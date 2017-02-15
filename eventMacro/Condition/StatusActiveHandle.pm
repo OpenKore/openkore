@@ -90,6 +90,8 @@ sub validate_condition {
 				$self->check_statuses;
 			}
 		}
+	} elsif ($callback_type eq 'recheck') {
+		$self->check_statuses;
 	}
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_handle} ? 1 : 0) );
