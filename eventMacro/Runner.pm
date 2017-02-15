@@ -1691,6 +1691,9 @@ sub substitue_variables {
 			next VAR;
 		}
 	}
+	
+	#Remove backslashes
+	$remaining =~ s/\\($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/$1/g;
 
 	return $remaining;
 }
