@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 
+use Cwd;
 use Encode;
 use File::Copy;
 use Getopt::Long;
@@ -70,7 +71,7 @@ if ( $opt->{check_files} ) {
     }
 }
 
-my $recent_patches = [ ( reverse @$patches )[ 0 .. 20 ] ];
+my $recent_patches = [ ( reverse @$patches )[ 0 .. 40 ] ];
 
 my $downloaded = 0;
 foreach ( reverse @$recent_patches ) {
@@ -110,6 +111,22 @@ foreach ( reverse @$recent_patches ) {
     YAML::Syck::DumpFile( "$file.yml", $files );
 }
 
+# Extract file lists from each rgz.
+foreach ( reverse @$recent_patches ) {
+	my $file = "$opt->{download_dir}/$_";
+
+	next if $file !~ /\.rgz$/o;
+	next if !-f $file;
+	next if -f "$file.yml";
+
+	# Extract file list.
+	my $data = backticks( 'rgz.pl', '-l', $file );
+	my @lines = split /\n/, $data;
+
+	my $files = { map { /^f\s+(\d+)\s+(.*)$/o ? ( $2 => $1 ) : () } @lines };
+	YAML::Syck::DumpFile( "$file.yml", $files );
+}
+
 # Merge the gpf file lists together to find the latest version of each file.
 my $latest = {};
 foreach my $p ( reverse @$patches ) {
@@ -127,18 +144,84 @@ my $extracted = eval { YAML::Syck::LoadFile( "$opt->{download_dir}/extracted_fil
 my $extract_dir = "$opt->{download_dir}/extracted_files";
 mkdir $extract_dir if !-d $extract_dir;
 foreach ( sort keys %$latest ) {
-    next if !/\.(txt|lua)$/;
+    next if !/\.(txt|lua|lub)$/;
 
     my ( $base ) = m{([^/\\]+)$};
     next if $extracted->{$_} && $latest->{$_} eq $extracted->{$_} && -f "$extract_dir/$base";
 
-    system 'grf_extract', "$opt->{download_dir}/$latest->{$_}", $_ => "$extract_dir/$base";
+	if ( $latest->{$_} =~ /\.g[pr]f$/ ) {
+		system 'grf_extract', "$opt->{download_dir}/$latest->{$_}", $_ => "$extract_dir/$base";
+	} elsif ( $latest->{$_} =~ /\.rgz$/ ) {
+		system 'rgz.pl', '-x', "$opt->{download_dir}/$latest->{$_}", $_ => "$extract_dir/$base";
+	}
 
     # GRF files typically have a screwed up mix of UCS-2 and UTF-8. Fix them.
-    fix_unicode_file( "$extract_dir/$base" );
+    fix_unicode_file( "$extract_dir/$base" ) if $base =~ /txt$/;
 
     $extracted->{$_} = $latest->{$_};
 }
+
+# New clients use iteminfo.lub instead of idnum2*.txt files. If we have an iteminfo.lub file, extract it.
+convert_iteminfo_lub();
+
+# The way we do this is by wrapping the lub in a piece of lua code which loads the lub, then writes out the data structures the lub sets up.
+# We use https://github.com/ROClientSide/Translation/tree/master/Dev/Tools/SeperateItemInfo to extract the files.
+sub convert_iteminfo_lub {
+	return if !-f "$extract_dir/iteminfo.lub";
+
+	my $separator_url  = 'https://github.com/ROClientSide/Translation/blob/master/Dev/Tools/SeperateItemInfo/SeperateItemInfo.lua?raw=true';
+	my $separator_data = $ua->get( $separator_url );
+	if ( $separator_data && $separator_data->is_success && $separator_data->content ) {
+		open FP, '>', "$extract_dir/SeparateItemInfo.lua";
+		print FP $separator_data->content;
+		close FP;
+	}
+
+	return if !-f "$extract_dir/SeparateItemInfo.lua";
+
+	# SeparateItemInfo.lua requires:
+	#   1. Must be run with a 32-bit lua.
+	#   2. iteminfo.lub must be named "itemInfo.lub" (case sensitive!).
+	#   3. Must be run in the same directory as itemInfo.lub.
+	my $cwd = Cwd::cwd;
+
+	return if !chdir $extract_dir;
+	rename 'iteminfo.lub' => 'itemInfo.lub';
+	system 'lua32', 'SeparateItemInfo.lua';
+	rename 'itemInfo.lub' => 'iteminfo.lub';
+	chdir $cwd;
+
+	# Move all of the files from $extract_dir/idnum into $extract_dir, and delete the now-empty directory.
+	opendir DIR, "$extract_dir/idnum";
+	rename "$extract_dir/idnum/$_" => "$extract_dir/$_" foreach grep { -f "$extract_dir/idnum/$_" } readdir DIR;
+	closedir DIR;
+	rmdir "$extract_dir/idnum";
+
+	# Replace all spaces with underscores in the item name table.
+	local $/;
+	open FP, '<', "$extract_dir/idnum2itemdisplaynametable.txt";
+	my $txt = <FP>;
+	close FP;
+	$txt =~ s/ /_/gos;
+	open FP, '>', "$extract_dir/idnum2itemdisplaynametable.txt";
+	print FP $txt;
+	close FP;
+
+	# Fix unicode characters.
+	fix_unicode_file( "$extract_dir/idnum2itemdisplaynametable.txt" );
+	fix_unicode_file( "$extract_dir/idnum2itemdesctable.txt" );
+
+	# Remove unnecessary zero-slot entries from itemslotcounttable.txt.
+	local $/;
+	open FP, '<', "$extract_dir/itemslotcounttable.txt";
+	my $txt = <FP>;
+	close FP;
+	$txt =~ s/^(\d+)#0#\n//gmos;
+	open FP, '>', "$extract_dir/itemslotcounttable.txt";
+	print FP $txt;
+	close FP;
+}
+
 # The hat effect data source file is only in the kRO grf file. Grab a copy from github.
 my $hat_url = 'https://raw.githubusercontent.com/ROClientSide/kRO-RAW-Mains/master/data/luafiles514/lua%20files/hateffectinfo/hateffectinfo.lua';
 my $hat_data = $ua->get( $hat_url );
@@ -207,6 +290,7 @@ sub patch_allowed {
 }
 
 sub patch_list {
+#   [ grep {$_} map { m{^(?://)?(\d+)\s+([^/\s]+)$} && $2 } split /[\r\n]+/, $ua->get( $opt->{list_url} )->content ];
     [ grep {$_} map { m{^(\d+)\s+([^/\s]+)$} && $2 } split /[\r\n]+/, $ua->get( $opt->{list_url} )->content ];
 }
 
@@ -290,6 +374,17 @@ sub fix_unicode {
     my $ucs2_hangul = qr/
           [\xAC-\xD7][\x00-\xFF]    # 2-byte
     /x;
+    my $cp949 = qr/
+           \xA1\xA6   # Horizontal Ellipsis
+          |\xA1\xAE   # Single Turned Comma Quotation Mark
+          |\xA1\xAF   # Single Comma Quotation Mark
+          |\xA3\xC7   # Fullwidth Capital G
+          |\xA5\xB0   # Roman Numeral One
+          |\xA5\xB1   # Roman Numeral Two
+          |\xA5\xB2   # Roman Numeral Three
+          |\xA5\xB3   # Roman Numeral Four
+          |\xA5\xB4   # Roman Numeral Five
+    /x;
     my $cp1252 = qr/
           #[\xA0\B0\xBA\xC0-\xD6\xD9-\xDD\xE0-\xF6\xF9-\xFF] # commonly used diacriticals, this overlaps with Hangul (U+AC00 to U+D7A3)
           [\x80-\xFF]
@@ -323,6 +418,13 @@ sub fix_unicode {
                 $out .= Encode::encode( 'utf8', Encode::decode( 'UTF-8', "$1" ) . Encode::decode( 'UTF-16BE', "$2" ) );
             }
             $_ = $out;
+        }
+
+        # Windows Code Page 949 mode: Convert CP-949 until we run out of it.
+        # CP-949 is huge. Only a few characters are mapped.
+        # CP-949: ftp://ftp.unicode.org/Public/MAPPINGS/VENDORS/MICSFT/WindowsBestFit/bestfit949.txt
+        if ( /^$utf8*(?!$utf8)$cp949/os ) {
+            while ( s/(^$utf8*)(?!$utf8)($cp949+)/Encode::encode( 'utf8', Encode::decode( 'UTF-8', "$1" ) . Encode::decode( 'cp949', "$2" ) )/eos ) { }
         }
 
         # Windows Code Page 1252 mode: Convert CP-1252 until we run out of it.
@@ -394,4 +496,3 @@ sub usage {
     }
     exit;
 }
-
