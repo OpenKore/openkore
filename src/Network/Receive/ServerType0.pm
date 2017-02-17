@@ -540,6 +540,8 @@ sub new {
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
+		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
+		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
