@@ -1477,14 +1477,14 @@ sub character_creation_successful {
 		$char->{$_} = $args->{$_} if (exists $args->{$_});
 	}
 	$char->{name} = bytesToString($args->{name});
-	$char->{jobID} = 0;
+	$char->{jobID} = defined $args->{job_id} ? $args->{job_id} : 0;
 	$char->{headgear}{low} = 0;
 	$char->{headgear}{top} = 0;
 	$char->{headgear}{mid} = 0;
 	$char->{nameID} = unpack("V", $accountID);
 	#$char->{lv} = 1;
 	#$char->{lv_job} = 1;
-	$char->{sex} = $accountSex2;
+	$char->{sex} = defined $args->{sex} ? $args->{sex} : $accountSex2;
 	$chars[$char->{slot}] = $char;
 
 

@@ -47,6 +47,8 @@ sub new {
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{char_create_version} = 0x0A39;
+
 	$self->{sell_mode} = 0;
 	
 	return $self;
@@ -72,6 +74,18 @@ sub reconstruct_char_delete2_accept {
 	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
 	$args->{length} = 8 + length($args->{code});
 	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
+}
+
+sub sendCharCreate {
+	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
+
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+	$job_id     ||= 0;    # novice
+	$sex        ||= 0;    # female
+
+	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
+	$self->sendToServer( $msg );
 }
 
 #sub sendCharDelete {
