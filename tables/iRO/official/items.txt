@@ -3508,6 +3508,7 @@
 5905#Lyrica_Hat#
 5906#Oni_Horns#
 5907#Sea_Captain_Hat#
+5912#Costume_Servant_Devilring#
 5916#Exorcist_Glasses#
 5933#Crow_Tengu_Mask#
 5948#Loki_Assassin_Mask#
@@ -5639,6 +5640,7 @@
 12790#Name_Change_Coupon#
 12796#Red_Booster#
 12801#Eddga_Scroll#
+12806#Scaraba_Scroll#
 12812#Snow_Flip#
 12813#Peony_Mommy#
 12814#Slapping_Herb#
@@ -7948,6 +7950,7 @@
 19585#c_Feather_Beret#
 19587#Costume:_King_Poring_Hat#
 19589#Costume:_Fallen_Angel#
+19597#Costume_Magic_Eyes#
 19598#Costume:_Wondering_Wolf_Helm#
 19600#Costume:_Drooping_Kiehl_Doll#
 19601#Costume:_Drooping_Aliot_Doll#
@@ -8275,6 +8278,7 @@
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
 20219#(null)#
+20222#Costume:_Blue_Christmas_Cheer#
 20227#Costume_Puppy_Hat#
 20230#Costume_Bankruptcy_Mask#
 20231#Costume_Snowman_Hat#
@@ -8379,6 +8383,7 @@
 20397#Jakk#
 20398#Costume_Niffleheim_Bunny_Hat#
 20405#Costume:_Eremes_Scarf#
+20407#Costume_Red_Subject_Aura#
 20430#Costume_Loyal_Servant_of_Morocc#
 20434#Costume:_Drooping_Gunslinger#
 20450#Costume_Gram_Peony#

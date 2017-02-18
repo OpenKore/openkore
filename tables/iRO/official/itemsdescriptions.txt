@@ -10133,11 +10133,10 @@ Weapon Level: 3
 Required Level: 1
 Required Jobs: High Priest, High Wizard, Scholar, Arch Bishop, Warlock, Sorcerer
 ^FFFFFF_^000000
-INT + 4
-MATK + 145
-^FFFFFF_^000000
-Bypass 10% of MDEF of Normal and Boss targets when performing a magical attack.
-Bypass an additional 1% of MDEF of Normal and Boss targets when performing a magical attack per upgrade level of the item.
+Int + 4
+Matk + 145
+Bypass 10% of Mdef of Normal, Boss targets when performing a magical attack.
+Bypass an additional 1% of Mdef of Normal, Boss targets when performing a magical attack per upgrade level of the item.
 #
 1667#
 ^FF0000Character Bound^000000
@@ -10297,7 +10296,7 @@ Required Level : ^777777100^000000
 Job : ^777777Novice, Mage, Acolyte, and Soul Linker^000000
 #
 1672#
-^808080A magic staff that protects its user from the attacks of evil men. It is very popular for children and young women.^000000
+^808080A magic staff that protects its user from the attacks of evil men. It's very popular for children and young women.^000000
 ^FFFFFF_^000000
 Type: Weapon
 Class: One-Handed Staff
@@ -10306,12 +10305,12 @@ Property: Neutral
 Weight: 50
 Weapon Level: 4
 Required Level: 36
-Required Jobs: Acolyte, Priest, High Priest, Arch Bishop
+Required Jobs: Acolyte, Priest, Monk, High Priest, Champion, Arch Bishop, Sura
 ^FFFFFF_^000000
-INT + 2
-MATK + 120
-Reduces damage taken from Demi-Human race attackers by 5%.
-Reduces damage taken from Demi-Human race attackers by an additional 1% per upgrade level of the item past the upgrade level of 6.
+Int + 2
+Matk + 120
+Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Demi-Human race enemies by an additional 1% per upgrade level of the item past the upgrade level of 6.
 Adds a chance of casting ^0000FFLevel 1 Heal^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
 #
 1676#
@@ -34578,15 +34577,21 @@ Jobs : ^777777All^000000
 placeholder
 #
 5531#
-A baby dragon who has been trained to help its master.
-^ff0000This item can be traded, stored, and put into a cart^000000
-Slot : ^7777771^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level  : ^7777771^000000
-Jobs : ^777777All^000000
+^808080A baby dragon who has been trained to help its master.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 3
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical and magical damage on Dragon race targets by 10%.
+Increases the experience given from Dragon race monsters by 5%.
+^FFFFFF_^000000
+^FF0000The following effects are active during the month of May.^000000
+Increases the experience given from Dragon race monsters by an additional 50%.
 #
 5532#
 Hold this knife in your mouth to look like an authentic fierce pirate. Arrrrr!!!
@@ -37129,6 +37134,14 @@ Weight : ^77777720^000000
 Required Lv. : ^777777100^000000
 Job : ^777777Mechanic only^000000
 #
+5912#
+Imitated by Loyal servant Devilring. Always be on standby to serve his master.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Jobs: All^000000
+#
 5916#
 ^808080Custom made sunglasses to use during exorcisms. You can see if it's a human or not.^000000
 ^FFFFFF_^000000
@@ -37207,11 +37220,13 @@ Class: Headgear
 Position: Lower
 Defense: 3
 Weight: 10
-Required Level: 1
+Required Level: 70
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-MDEF + 3
-Increases the recovery rate of ^008080Condensed Red Potion^000000, ^008080Condensed White Potion^000000 and ^008080Condensed Yellow Potion^000000 consumables by 150%.
+Mdef + 3
+Increases the recovery rate of ^008080Condensed Red Potion^000000 consumable by 150%.
+Increases the recovery rate of ^008080Condensed White Potion^000000 consumable by 150%.
+Increases the recovery rate of ^008080Condensed Yellow Potion^000000 consumable by 150%.
 #
 6000#
 A dark ash imbued with mysterious magical power and darkness.
@@ -49796,6 +49811,13 @@ Weight : ^7777770^000000
 #
 12801#
 #
+12806#
+^808080A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: General
+Weight: 2
+#
 12812#
 A Snow White Leaf that is cold to the touch. Caution : This really is colder than snow.
 Cures effect of ^000088Ignition, bleeding, Deep sleep, Sleep^000000.
@@ -59954,23 +59976,28 @@ Weight: 80
 Required Level: 90
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-MATK + 10
-MDEF + 5
-Reduces damage taken from Demi-Human race attackers by 1%.
-^FFFFFF_^000000
+Matk + 10
+Mdef + 5
+Reduces damage taken from Demi-Human race enemies by 1%.
 If upgrade level is +7 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
-^FFFFFF_^000000
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 If upgrade level is +8 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
-^FFFFFF_^000000
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 If upgrade level is +9 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 This item is indestructible in battle.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Kardui Robe^000000
+^008080Laphine Staff^000000
+Matk + 3 per upgrade level of ^008080Laphine Staff^000000.
+If upgrade level is +7 or higher,
+Additional Matk + 5 per upgrade level of ^008080Laphine Staff^000000.
+If upgrade level is +8 or higher,
+Additional Matk + 7 per upgrade level of ^008080Laphine Staff^000000.
+^800080Set Bonus^000000
 ^008080Angeling Card^000000
+^008080Kardui Robe^000000
 If upgrade level is +9 or higher,
 Immune to ^800000Frozen^000000.
 #
@@ -65884,12 +65911,17 @@ Type: Equipment
 Class: Headgear
 Position: Lower
 Defense: 0
-Weight: 0
-Required Level: 1
+Weight: 20
+Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases the SP cost of skills by 15%.
 The users casting cannot be interrupted outside of WoE.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Heart Wing Hairband^000000
+^008080Love Piece^000000
+Reduces the fixed casting time of skills by 10%.
 #
 18565#
 This is an exact replica of the hat worn by O'Riley the Leprechaun.
@@ -67754,7 +67786,7 @@ Required Level : ^77777710^000000
 Job : ^777777All jobs^000000
 #
 18787#
-^808080No one knows what this mask is made of, only that it was once owned by an ice hockey goal tender.^000000
+^808080An ice hockey goal tenders mask. When others see you wearing this mask they feel scared.^000000
 ^FFFFFF_^000000
 Type: Equipment
 Class: Headgear
@@ -67764,7 +67796,7 @@ Weight: 20
 Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-Increases physical and magical damage on Demi-Human race targets by 8%.
+Increases physical damage on Demi-Human race targets by 8%.
 #
 18791#
 ^FF0000Can be obtained from Poring Festival or Item Mall.^000000
@@ -69375,13 +69407,16 @@ Thief Classes^000000
 Type: Equipment
 Class: Headgear
 Position: Upper
-Defense: 3
-Weight: 10
-Required Level: 1
+Defense: 0
+Weight: 100
+Required Level: 10
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases physical and magical damage on Dragon race targets by 10%.
 Increases the experience given from Dragon race monsters by 5%.
+^FFFFFF_^000000
+^FF0000The following effects are active during the month of May.^000000
+Increases the experience given from Dragon race monsters by an additional 50%.
 #
 19011#
 A box that contains 1 Classic Earring 2 Week Rental
@@ -70173,7 +70208,7 @@ Required Jobs: All Jobs
 ^FFFFFF_^000000
 Str + 5
 Int + 5
-Reduces the variable casting time of ^0000FFCart Cannon^000000 by 0.1 seconds.
+Reduces the variable casting time of ^0000FFCart Cannon^000000 by 1 second.
 Increases the damage of ^0000FFCart Cannon^000000 by 10%.
 Increases the damage of ^0000FFCart Tornado^000000 by 5%.
 Reduces the SP cost of ^0000FFCart Cannon^000000 by 30.
@@ -71254,6 +71289,14 @@ Class : ^777777Costume ^000000 Def : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required LV : ^7777771^000000
 Job : ^777777All^000000
+#
+19597#
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+All^000000
 #
 19598#
 Can feel a high dignity of the Northern Wolf Tribe.
@@ -74066,6 +74109,14 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+20222#
+A double-pommed Blue Christmas Cap
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Job: All^000000
+#
 20227#
 ^ff0000Cannot trade with other accounts.^000000
 Puppy Hat.
@@ -75173,6 +75224,14 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20407#
+Unknown aura that wrapped your body.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: All^000000
+#
 20430#
 A costume that imitating the protection aura of Devil Morocc.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
@@ -75813,61 +75872,54 @@ Reduces damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost 
 20799#
 ^808080A towel empowered with the four great elements.^000000
 ^FFFFFF_^000000
-Type: Weapon
-Attack: 0
-Property: N/A
+Type: Equipment
+Class: Garment
+Defense: 13
 Weight: 40
-Weapon Level: 0
 Required Level: 100
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases long-ranged damage on targets by 2%.
-^FFFFFF_^000000
-If upgrade level is +7 or higher/lower,
+If upgrade level is +7 or higher,
 Reduces the SP cost of ^0000FFArrow Storm^000000 by 20.
 Reduces the SP cost of ^0000FFSevere Rainstorm^000000 by 60.
-^FFFFFF_^000000
-If upgrade level is +8 or higher/lower,
+If upgrade level is +8 or higher,
 Increases long-ranged damage on targets by an additional 2%.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
+If upgrade level is +9 or higher,
 Increases long-ranged damage on targets by an additional 3%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Burning Bow^000000
 ^008080Fire Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Burning Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Earth Bow^000000
 ^008080Stone Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Earth Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Frozen Bow^000000
 ^008080Crystal Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Frozen Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Gust Bow^000000
 ^008080Arrow of Wind^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Gust Bow^000000 is refined to +10 or higher,
-ASPD + 1
+Attack Speed + 1
 #
 20802#
 ^808080A bag that resembles the homunculus, Amistr.^000000
@@ -79822,18 +79874,14 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 28902#
-A rag doll that Piamette is using for both attack and defense?
-It looks so real and alive!
-ATK +5%, MATK +5%.
-Reflect 10% of close physical attack damage.
-10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.
-Refined to +7, increase ATK +5 and MATK +5.
-Refined to +9, increase ATK +15 and MATK +15
-Refined to +12, Skill casting can not be interrupted and CRI +10.
-Class : ^777777Shield^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+^808080A rag doll that Piamette is using for both attack and defense?\r\nIt looks so real and alive!\r\nATK +5%, MATK +5%.\r\nReflect 10% of close physical attack damage.\r\n10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.\r\nRefined to +7, increase ATK +5 and MATK +5.\r\nRefined to +9, increase ATK +15 and MATK +15\r\nRefined to +12, Skill casting can not be interrupted and CRI +10.\r\nClass : ^777777Shield^000000 Defense : ^7777770^000000\r\nWeight : ^77777710^000000\r\nRequired Level : ^7777771^000000\r\nJobs : ^777777All Jobs^000000\r\n^000000
+^FF00001^000000
+^FFFFFF_^000000
+Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28910#
 ^808080A shield woven from magical thread that specializes in protecting the user from long ranged attacks.^000000
