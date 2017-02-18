@@ -912,7 +912,7 @@
 1695#Fine_Foxtail_Replica#
 1696#Elaborate_Foxtail_Replica#
 1697#Elaborate_Yellow_Foxtail_Replica#
-1699#P.FoxtailⅠ#
+1699#Paradise_Foxtail_I#
 1701#Bow#
 1702#Bow#
 1703#Bow#
@@ -1189,13 +1189,16 @@
 2181#Hervor#
 2182#Hervor_Alvitr#
 2183#Advanced_Angelic_Guard#
+2184#Bunker_Shield#
 2185#Magic_Reflector#
 2186#Revised_Encyclopedia#
 2187#Gray_Shield#
 2188#Svalinn#
 2189#Mad_Bunny#
 2190#Ancient_Shield_Of_Aeon#
+2191#Solomon's_Key#
 2192#Rose_of_Eden#
+2195#Lian_Shield#
 2196#White_Gold_Shield#
 2199#Ahura_Mazdah#
 2201#Sunglasses#
@@ -3505,6 +3508,8 @@
 5905#Lyrica_Hat#
 5906#Oni_Horns#
 5907#Sea_Captain_Hat#
+5912#Costume_Servant_Devilring#
+5916#Exorcist_Glasses#
 5933#Crow_Tengu_Mask#
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
@@ -5047,7 +5052,7 @@
 11597#Metalbug#
 11598#Bitter_Cacao_Bean#
 11601#Delicious_Anchovy#
-11602#Catnip_Fruit#
+11602#Nepeta_Cataria#
 11605#Cookies_Bat#
 11607#Sweet_Crepe#
 11701#(null)#
@@ -5635,6 +5640,7 @@
 12790#Name_Change_Coupon#
 12796#Red_Booster#
 12801#Eddga_Scroll#
+12806#Scaraba_Scroll#
 12812#Snow_Flip#
 12813#Peony_Mommy#
 12814#Slapping_Herb#
@@ -6730,6 +6736,7 @@
 14624#Blue_Scroll#
 14625#Buddah_Scroll#
 14626#Indigo_Scroll#
+14645#Beelzebub_Wing#
 14649#Golden_Egg_Scroll#
 14664#Bi_Hwang_Scroll#
 14665#Scroll_of_Love#
@@ -6796,6 +6803,7 @@
 15066#Engraved_Armor#
 15067#Rune_Suit#
 15068#Advanced_Angelic_Protection#
+15071#Valkyrian_Robe#
 15072#Nectar_Suit#
 15073#Anti-magic_Suit#
 15074#Geffen_Magic_Robe#
@@ -6813,6 +6821,7 @@
 15101#Harden_Breastplate#
 15103#Kirin_Armor#
 15105#Kaftan#
+15106#Engineer_Mail#
 15110#Supplement_Part_Str#
 15111#Upgrade_Part_-_Plate#
 15113#Exorcist_Mail#
@@ -6825,6 +6834,7 @@
 15126#Doram_Suit#
 15129#Luxurious_Doram_Suit#
 15138#Egir_Armour#
+15140#Natural_Clothes#
 15150#White_Shirt#
 15151#White_Eco_Shirt#
 15156#Elegant_Doram_Suit#
@@ -7259,6 +7269,7 @@
 17274#DEX_Biscuit_Stick_Box#
 17275#LUK_Biscuit_Stick_Box#
 17280#New_Year_Egg#
+17289#Beelzebub_Wing_Box#
 17291#Girls_Selection_Egg#
 17292#Shadow_Box#
 17293#Physical_Shadow_Package#
@@ -7317,7 +7328,7 @@
 17375#Zaha_Doll_Hat_Box#
 17376#Winter_Wonder_Time_Lucky_Crate#
 17377#Santa's_Wardrobe_Box#
-17378#Homers_Shield_Shadow_Box#
+17378#Paws_N_Claws_Starter_Pack#
 17379#Dragoon_Shield_Shadow_Box#
 17380#Satanic_Shield_Shadow_Box#
 17381#Flameguard_Shield_Shadow_Box#
@@ -7389,6 +7400,7 @@
 17762#Fluffy_Costume_Egg#
 17768#Overseas_Care_Package#
 17772#Overseas_Care_Package_II#
+17778#Overseas_Care_Package_III#
 17779#Love_Garden_Costume_Box#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
@@ -7749,6 +7761,7 @@
 18930#Gorilla_Model_Hat#
 18931#Lion_Model_Hat#
 18932#Rhino_Model_Hat#
+18937#Memory_of_Lovers#
 18944#Deviruchi_Balloon#
 18945#Super_Cute_Doll_Hat#
 18946#Very_Cute_Doll_Hat#
@@ -7809,6 +7822,7 @@
 19038#12th_Anniversary_Crown#
 19039#12th_Anniversary_ElvenEars#
 19048#Elemental_Tights#
+19079#Celestial_Woman's_Flower#
 19083#Mask_of_Hero#
 19084#Parfaille_Vigilante_Hat#
 19101#Classic_Omni_Clothing_Dye_Coupon_Box#
@@ -7824,6 +7838,7 @@
 19111#Classic_Dungeon_Teleport_1_10_Box#
 19112#Tengu_Scroll#
 19114#Sting_Silk_Ribbon#
+19125#Cylinder_Hairband#
 19201#Classic_Battle_Manual_10_Box#
 19202#Classic_Bubble_Gum_10_Box#
 19203#Classic_Rune_Butterfly_Wing_10_Box#
@@ -7935,6 +7950,7 @@
 19585#c_Feather_Beret#
 19587#Costume:_King_Poring_Hat#
 19589#Costume:_Fallen_Angel#
+19597#Costume_Magic_Eyes#
 19598#Costume:_Wondering_Wolf_Helm#
 19600#Costume:_Drooping_Kiehl_Doll#
 19601#Costume:_Drooping_Aliot_Doll#
@@ -8262,6 +8278,7 @@
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
 20219#(null)#
+20222#Costume:_Blue_Christmas_Cheer#
 20227#Costume_Puppy_Hat#
 20230#Costume_Bankruptcy_Mask#
 20231#Costume_Snowman_Hat#
@@ -8366,6 +8383,7 @@
 20397#Jakk#
 20398#Costume_Niffleheim_Bunny_Hat#
 20405#Costume:_Eremes_Scarf#
+20407#Costume_Red_Subject_Aura#
 20430#Costume_Loyal_Servant_of_Morocc#
 20434#Costume:_Drooping_Gunslinger#
 20450#Costume_Gram_Peony#
@@ -8390,6 +8408,7 @@
 20718#Giant_Faceworm_Snake_Skin#
 20721#Cloak_Of_Gray#
 20725#Ribbon_Piamat#
+20728#Water_Dragon_Coat#
 20732#Supplement_Part_Con#
 20733#Upgrade_Part_-_Engine#
 20734#Manteau_Of_Leafwind#
@@ -8400,12 +8419,15 @@
 20746#Costume:_Rudra's_Grace#
 20747#Manteau_Great_Nature#
 20752#Golden_Wing#
+20753#Lian_Robe#
 20756#Egir_Manteau#
 20757#placeholder#
 20758#placeholder#
 20761#Costume_Happiness_Wings#
 20762#Costume_GreatDevil_Wing#
 20763#Costume_Amistr_Bag#
+20778#Red_Lotus_Stole#
+20783#Hero_Cape#
 20788#Doram_Manteau#
 20789#Luxurious_Doram_Manteau#
 20790#Elegant_Doram_Manteau#
@@ -8448,6 +8470,7 @@
 22035#Hero_Nependess_Shoes#
 22036#Hero_Silverleather_Boots#
 22037#Hero_Ungoliant_Boots#
+22042#Talaria_Shoes#
 22043#Supplement_Part_Agi#
 22044#Upgrade_Part_-_Booster#
 22046#Airship‘s_Boots#
@@ -8455,13 +8478,17 @@
 22052#Gravekeeper_Shoes#
 22058#Dragon_Trainer_Shoes#
 22059#Egir_Shoes#
+22060#Hunter_Shoes#
 22061#Lumiere_Shoes#
 22067#Witch_Shoes#
+22069#Lian_Shoes#
 22076#Wooden_Slippers#
 22077#Red_Eco_Boots#
 22083#Doram_Shoes#
 22084#Luxurious_Doram_Shoes#
 22085#Elegant_Doram_Shoes#
+22103#Excelion_Leg#
+22104#Pororoca_Shoes#
 22507#Old_Scroll#
 22508#Eden_Group_Mark#
 22511#Fenrir's_Power_Scroll#
@@ -8559,6 +8586,9 @@
 23261#Chewy_Macaron#
 23265#Sprint_Bundle_A#
 23266#Etran_Bundle_A#
+23293#Bison_Bundle_A#
+23294#Pororoca_Shoes_Bundle_A#
+23295#Lian_Bundle_B#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -8685,8 +8715,8 @@
 25290#Sweets_Festival_Coin#
 25291#Product_Chocolate#
 25292#Stolen_Cocoa_Beans#
-26100#P.FoxtailⅡ#
-26101#P.FoxtailⅢ#
+26100#Paradise_Foxtail_II#
+26101#Paradise_Foxtail_III#
 27012#Kick_Step_Card#
 27013#Kick_And_Kick_Card#
 27014#Green_Cenere_Card#
@@ -8709,6 +8739,7 @@
 28200#End_of_Horizon#
 28201#Southern_Cross#
 28202#Southern_Cross#
+28305#Vesper_Core_04#
 28310#Sarah's_Left_Earring#
 28311#Sarah's_Right_Earring#
 28319#Cauda_Daemonica#
@@ -8716,10 +8747,11 @@
 28326#Broken_Chip_01#
 28327#Broken_Chip_02#
 28332#Jewerly_Ring#
+28359#Vesper_Gear_04#
 28374#Foxtail_Ring#
 28380#Fresh_Grass_Necklace#
 28381#Cute_Grass_Necklace#
-28382#Charm_Grass_Necklace#
+28382#Charming_Grass_Necklace#
 28386#Fallen_Monk_Rosary#
 28394#Spirit_King's_Ring#
 28410#Sapphire_Wrist#

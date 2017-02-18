@@ -10133,11 +10133,10 @@ Weapon Level: 3
 Required Level: 1
 Required Jobs: High Priest, High Wizard, Scholar, Arch Bishop, Warlock, Sorcerer
 ^FFFFFF_^000000
-INT + 4
-MATK + 145
-^FFFFFF_^000000
-Bypass 10% of MDEF of Normal and Boss targets when performing a magical attack.
-Bypass an additional 1% of MDEF of Normal and Boss targets when performing a magical attack per upgrade level of the item.
+Int + 4
+Matk + 145
+Bypass 10% of Mdef of Normal, Boss targets when performing a magical attack.
+Bypass an additional 1% of Mdef of Normal, Boss targets when performing a magical attack per upgrade level of the item.
 #
 1667#
 ^FF0000Character Bound^000000
@@ -10297,7 +10296,7 @@ Required Level : ^777777100^000000
 Job : ^777777Novice, Mage, Acolyte, and Soul Linker^000000
 #
 1672#
-^808080A magic staff that protects its user from the attacks of evil men. It is very popular for children and young women.^000000
+^808080A magic staff that protects its user from the attacks of evil men. It's very popular for children and young women.^000000
 ^FFFFFF_^000000
 Type: Weapon
 Class: One-Handed Staff
@@ -10306,12 +10305,12 @@ Property: Neutral
 Weight: 50
 Weapon Level: 4
 Required Level: 36
-Required Jobs: Acolyte, Priest, High Priest, Arch Bishop
+Required Jobs: Acolyte, Priest, Monk, High Priest, Champion, Arch Bishop, Sura
 ^FFFFFF_^000000
-INT + 2
-MATK + 120
-Reduces damage taken from Demi-Human race attackers by 5%.
-Reduces damage taken from Demi-Human race attackers by an additional 1% per upgrade level of the item past the upgrade level of 6.
+Int + 2
+Matk + 120
+Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Demi-Human race enemies by an additional 1% per upgrade level of the item past the upgrade level of 6.
 Adds a chance of casting ^0000FFLevel 1 Heal^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
 #
 1676#
@@ -10416,193 +10415,278 @@ If the user's base level is 70 or higher,
 For every 10 base levels, MATK + 5.
 #
 1681#
-A sprouting foxtail staff that is
-said to be owned by every Doram.
-Fresh sprouts are about to shoot up from this staff.
-Not refinable.
-Line: ^777777One-handed Staff^000000 ATK: ^77777730^000000
-Weight : ^7777770^000000
-Weapon lvl : ^7777771^000000
-Required lvl : ^7777771^000000
-Equip: ^777777Doram^000000
+^808080A sprouting foxtail staff that is said to be owned by every Doram. Fresh sprouts are about to shoot up from this staff.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 30
+Property: Neutral
+Weight: 0
+Weapon Level: 1
+Required Level: 1
+Required Jobs: Doram
+^FFFFFF_^000000
+This item cannot be upgraded.
 #
 1683#
-A fluffy and softly-shaped foxtail staff that is satisfying to look at.
-MATK + 70, MSP + 50.
-Class : ^777777One-handed Staff^000000 ATK: ^77777750^000000
-Weight : ^77777720^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777712^000000
-Equip: ^777777Doram^000000
+^808080A fluffy and softly-shaped foxtail staff that is satisfying to look at.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 50
+Property: Neutral
+Weight: 20
+Weapon Level: 2
+Required Level: 12
+Required Jobs: Doram
+^FFFFFF_^000000
+Max SP + 50
+MATK + 70
 #
 1684#
-A very long and stylish foxtail staff that grabs everyone’s attention.
-Ranged physical ATK +5%, MHP + 200.
-Line: ^777777One-handed Staff^000000 ATK: ^77777750^000000
-Weight : ^77777720^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777712^000000
-Equip: ^777777Doram^000000
+^808080A very long and stylish foxtail staff that grabs everyone's attention.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 50
+Property: Neutral
+Weight: 20
+Weapon Level: 2
+Required Level: 12
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 200
+Increases long-ranged damage on targets by 5%.
 #
 1685#
-A rare foxtail staff that has a dragonfly sitting on it.
-You shake the staff, but the dragonfly doesn’t fly away...?
-MATK + 100, INT + 1,
-MHP + 100, MSP + 150.
-Line: ^777777One-handed Staff^000000 ATK: ^77777770^000000
-Weight : ^77777730^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777720^000000
-Equip: ^777777Doram^000000
+^808080A rare foxtail staff that has a dragonfly sitting on it. You shake the staff, but the dragonfly doesn't fly away...?^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 70
+Property: Neutral
+Weight: 30
+Weapon Level: 2
+Required Level: 20
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1
+Max HP + 100
+Max SP + 150
+MATK + 100
 #
 1686#
-A very big foxtail staff that barely fits in one hand. It’s quite hefty too.
-Ranged physical ATK +8%, DEX +1.
-MHP + 200, MSP + 100.
-Line: ^777777One-handed Staff^000000 ATK: ^77777770^000000
-Weight : ^77777730^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777720^000000
-Equip: ^777777Doram^000000
+^808080A very big foxtail staff that barely fits in one hand. It's quite hefty too.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 70
+Property: Neutral
+Weight: 30
+Weapon Level: 2
+Required Level: 20
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 1
+Max HP + 200
+Max SP + 100
+Increases long-ranged damage on targets by 8%.
 #
 1687#
-A cute staff that looks like a foxtail.
-It is perfect for beginners to use.
-MHP + 100, MATK + 15.
-Line: ^777777One-handed Staff^000000 ATK: ^77777740^000000
-Weight : ^77777710^000000
-Weapon lvl : ^7777771^000000
-Required lvl : ^7777773^000000
-Equip: ^777777Doram^000000
+^808080A cute staff that looks like a foxtail. It's perfect for beginners to use.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 40
+Property: Neutral
+Weight: 10
+Weapon Level: 1
+Required Level: 3
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 100
+MATK + 15
 #
 1690#
-This foxtail was infused with magic after a dragonfly came to sit on it, fixing the insect firmly on the foxtail.
-MATK + 180. MSP + 50.
-MATK +10, MSP +10 for every 3 refine levels.
-Line: ^777777One-handed Staff^000000 ATK: ^77777780^000000
-Weight : ^77777740^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777760^000000
-Equip: ^777777Doram^000000
+^808080This foxtail was infused with magic after a dragonfly came to sit on it, fixing the insect firmly on the foxtail.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 80
+Property: Neutral
+Weight: 40
+Weapon Level: 2
+Required Level: 60
+Required Jobs: Doram
+^FFFFFF_^000000
+Max SP + 50
+Additional Max SP + 10 per 3 upgrade levels of the item.
+MATK + 180
+Additional MATK + 10 per 3 upgrade levels of the item.
 #
 1691#
-This foxtail has become completely one with the dragonfly.
-MATK + 240. MSP + 100.
-MATK +2%, MSP +1% for every 3 refine levels.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777100^000000
-Weight : ^77777750^000000
-Weapon lvl : ^7777773^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080This foxtail has become completely one with the dragonfly.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 100
+Property: Neutral
+Weight: 50
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Max SP + 100
+Max SP + 1% per 3 upgrade levels of the item.
+MATK + 240
+MATK + 2% per 3 upgrade levels of the item.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK and MATK by 40%.
+Increases the base weapon ATK and MATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1692#
-The dragonfly and the foxtail give off mysterious magical synergy in this staff.
-MATK + 260. MSP + 100.
-MATK +2%, MSP +1% for every 2 refine levels.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777120^000000
-Weight : ^77777760^000000
-Weapon lvl : ^7777773^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080The dragonfly and the foxtail give off mysterious magical synergy in this staff.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 120
+Property: Neutral
+Weight: 60
+Weapon Level: 3
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+Max SP + 100
+Max SP + 1% per 2 upgrade levels of the item.
+MATK + 260
+MATK + 2% per 2 upgrade levels of the item.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK and MATK by 40%.
+Increases the base weapon ATK and MATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1693#
-A yellow, well-ripen foxtail that has a dragonfly sitting on it.
-MATK +280 & MATK +3% for every 2 refine levels.
-When using [Fresh Shrimp], there is a chance to auto cast [Arclouse Dash] Lv. 1 on self, and [Arclouse Dash] is already learned, casts at the current skill level.
-When using [Silvervine Stem Spear], there is a chance to auto cast [Fresh Shrimp] Lv. 1 on self, and [Fresh Shrimp] is already learned, casts at the current skill level.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777140^000000
-Weight : ^77777770^000000
-Weapon lvl : ^777777 4 ^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A yellow, well-ripened foxtail that has a dragonfly sitting on it.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 140
+Property: Neutral
+Weight: 70
+Weapon Level: 4
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+MATK + 280
+MATK + 3% per 2 upgrade levels of the item.
+Adds a chance of casting ^0000FFLevel 1 Arclouse Dash^000000 on the user when using ^0000FFFresh Shrimp^000000, if a higher level of this skill is known, it will be cast instead.
+Adds a chance of casting ^0000FFLevel 1 Fresh Shrimp^000000 on the user when using ^0000FFSilvervine Stem Spear^000000, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK and MATK by 40%.
+Increases the base weapon ATK and MATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1694#
-A plastic foxtail-shaped replica.
-Ranged physical ATK +8%, MHP +100.
-DEX +2, MSP +10 for every 3 refine levels.
-Line: ^777777One-handed Staff^000000 ATK: ^777777150^000000
-Weight : ^77777730^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777760^000000
-Equip: ^777777Doram^000000
+^808080A plastic foxtail-shaped replica.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 150
+Property: Neutral
+Weight: 30
+Weapon Level: 2
+Required Level: 60
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 2 per 3 upgrade levels of the item.
+Max HP + 100
+Max SP + 10 per 3 upgrade levels of the item.
+Increases long-ranged damage on targets by 8%.
 #
 1695#
-A finely crafted foxtail-shaped replica.
-Ranged physical ATK +8%, MHP +200.
-DEX +3, MSP +15 for every 3 refine levels.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777195^000000
-Weight : ^77777730^000000
-Weapon lvl : ^7777773^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A finely crafted foxtail-shaped replica.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 195
+Property: Neutral
+Weight: 30
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 3 per 3 upgrade levels of the item.
+Max HP + 200
+Max SP + 15 per 3 upgrade levels of the item.
+Increases long-ranged damage on targets by 8%.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK by 40%.
+Increases the base weapon ATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1696#
-An elaborately crafted foxtail-shaped replica.
-Ranged physical ATK +8%, MHP +5%.
-DEX +3, MSP +15 for every 2 refine levels.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777240^000000
-Weight : ^77777730^000000
-Weapon lvl : ^7777773^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080An elaborately crafted foxtail-shaped replica.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 240
+Property: Neutral
+Weight: 30
+Weapon Level: 3
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 3 per 2 upgrade levels of the item.
+Max HP + 5%
+Max SP + 15 per 2 upgrade levels of the item.
+Increases long-ranged damage on targets by 8%.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK by 40%.
+Increases the base weapon ATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1697#
-An elaborately crafted yellow foxtail-shaped replica.
-Ranged physical ATK +9%, MHP +7%.
-Ranged physical ATK +1%, MSP +20 for every 2 refine levels.
-When using [Picky Peck], there is a chance to auto cast [Fresh Shrimp] Lv. 1 on self, and [Fresh Shrimp] is already learned, casts at the current skill level.
-
-- Doram Weapon-only Options -
-At refine Lv. +7, the weapon’s base ATK & MATK increase by 40%.
-For every additional refine level from +7, the weapon’s base ATK & MATK increase by further 20%.
-(up to refine Lv. +10)
-
-Line: ^777777One-handed Staff^000000 ATK: ^777777270^000000
-Weight : ^77777730^000000
-Weapon lvl : ^777777 4 ^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080An elaborately crafted yellow foxtail-shaped replica.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 270
+Property: Neutral
+Weight: 30
+Weapon Level: 4
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 7%
+Max SP + 20 per 2 upgrade levels of the item.
+Increases long-ranged damage on targets by 9%.
+Increases long-ranged damage on targets by 1% per 2 upgrade levels of the item.
+Adds a chance of casting ^0000FFLevel 1 Fresh Shrimp^000000 on the user when using ^0000FFPicky Peck^000000, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +7 or higher,
+Increases the base weapon ATK by 40%.
+Increases the base weapon ATK by an additional 20% per upgrade level of the item past the upgrade level of 7 to a maximum upgrade level of 10.
 #
 1699#
-A foxtail crafted by the Paradise Group. A basic item for novice summoners.
-DEX+ 3, INT + 3 , MATK + 135.
-Ranged ATK +5%.
-Not refinable.
-Line: ^777777One-handed Staff^000000 ATK: ^777777120^000000
-Weight : ^7777770^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777726^000000
-Equip: ^777777Doram^000000
+^808080A foxtail crafted by the Paradise Group. A basic item for novice summoners.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 120
+Property: Neutral
+Weight: 0
+Weapon Level: 2
+Required Level: 26
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 3
+DEX + 3
+MATK + 135
+Increases long-ranged damage on targets by 5%.
+This item cannot be upgraded.
 #
 1701#
 ^808080A common bow.^000000
@@ -14522,6 +14606,20 @@ Weight : ^77777740^000000
 Required Level : ^77777799^000000
 Job : ^777777Novice^000000
 #
+2184#
+^808080A shield equipped with a huge iron skewer which can be triggered by using gunpowder. You will become sluggish because it's so heavy. It used to belong to a playboy called the Blue Knight.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shield
+Defense: 90
+Weight: 350
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Atk + 4%
+Additional Atk + 1% per upgrade level of the item past the upgrade level of 4.
+Aspd - 5%
+#
 2185#
 This anti-magic shield effectively reflects magic.
 MDEF +10.
@@ -14591,6 +14689,26 @@ Weight : ^77777720^000000
 Required Level : ^777777130^000000
 Job : ^7777773rd Job Classes Only^000000
 #
+2191#
+^808080A grimoire containing the records of King Solomon's secrets. It is so thick that you can even use it as a shield.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shield
+Defense: 2
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+^FFFFFF_^000000
+INT + 2
+MATK + 5
+If the users base Int is 120 or higher,
+MATK + 25
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Ring of the Ancient Wise King^000000
+^008080Solomon's Key^000000
+Reduces the SP cost of skills by 5%.
+#
 2192#
 ^808080A shield made with heavens roses.^000000
 ^FFFFFF_^000000
@@ -14607,6 +14725,30 @@ Increases the recovery rate of ^0000FFColuseo Heal^000000, ^0000FFHeal^000000, ^
 ^008080Angelic Ring^000000
 ^008080Rose of Eden^000000
 Increases the recovery rate of ^0000FFColuseo Heal^000000, ^0000FFHeal^000000, ^0000FFHigh Heal^000000, ^0000FFPotion Pitcher^000000 and ^0000FFSanctuary^000000 by an additional 10%.
+#
+2195#
+^808080A shield with mystical powers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shield
+Defense: 50
+Weight: 130
+Required Level: 65
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Reduces damage taken from Neutral property enemies by 5%.
+Increases damage taken from Formless race enemies by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Lian Robe^000000
+^008080Lian Shield^000000
+Increases physical and magical damage on Neutral property targets by 1% per upgrade level of ^008080Lian Shield^000000.
+Reduces damage taken from Formless race enemies by 1% per upgrade level of ^008080Lian Robe^000000.
+^800080Set Bonus^000000
+^008080Lian Shield^000000
+^008080Lian Shoes^000000
+Reduces damage taken from Neutral property enemies by 5%.
+Reduces damage taken from Neutral property enemies by an additional 1% per upgrade level of ^008080Lian Shield^000000.
 #
 2196#
 ^808080A solid platinum coated shield with a surface that can reflect magic extremely well.^000000
@@ -28150,107 +28292,126 @@ Compound on : ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4659#
+Type: Miscellaneous
+Class: Card
+Compounds On: Armor
+Weight: 1
+^FFFFFF_^000000
 LUK + 2
-MHP + 50
-Line: ^777777Card^000000
-Equip: ^777777Armor^000000
-Weight : ^7777771^000000
+Max HP + 50
 #
 4660#
-Physical & magical damage received from Small and Medium-sized monsters -5%
-Line: ^777777Card^000000
-Equip: ^777777Shield^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Shield
+Weight: 1
+^FFFFFF_^000000
+Reduces damage taken from Small, Medium size attackers by 5%.
 #
 4661#
-Physical & magical damage received from Medium and Large-sized monsters -20%
-Physical & magical damage received from Small-sized monsters +15%
-Line: ^777777Card^000000
-Equip: ^777777Shield^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Shield
+Weight: 1
+^FFFFFF_^000000
+Reduces damage taken from Medium, Large size attackers by 20%.
+Increases damage taken from Small size attackers by 15%.
 #
 4662#
-ATK + 25, MATK + 25
-Skill delay -10%
-MHP + 1000
-Ranged physical damage +5%
-Critical damage +10%
-
-For every 10 Base STR, ATK -5
-For every 10 Base AGI, Skill delay +2%
-For every 10 Base VIT, MHP -200
-For every 10 Base INT, MATK -5
-For every 10 Base DEX, Ranged physical damage -1%
-For every 10 Base LUK, Critical damage -2%
-Item options don’t fall below 0.
-Line: ^777777Card^000000
-Equip: ^777777Clothes^000000
-Weight : ^7777771^000000
+^FF0000The reductions applied will not fall below zero.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Garment
+Weight: 1
+^FFFFFF_^000000
+Max HP + 1000
+Max HP - 200 for every 10 base VIT.
+ATK + 25
+ATK - 5 for every 10 base STR.
+MATK + 25
+MATK - 5 for every 10 base INT.
+ASPD + 10%
+ASPD - 2% for every 10 base AGI.
+Increases long-ranged damage on targets by 5%.
+Reduces long-ranged damage on targets by 1% for every 10 base DEX.
+Increases critical damage on targets by 10%.
+Reduces critical damage on targets by 2% for every 10 base LUK.
 #
 4663#
-MSP + 5
-Line: ^777777Card^000000
-Equip: ^777777Shoes^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Shoes
+Weight: 1
+^FFFFFF_^000000
+Max SP + 5
 #
 4664#
+Type: Miscellaneous
+Class: Card
+Compounds On: Armor
+Weight: 1
+^FFFFFF_^000000
 LUK + 1
-MHP + 100
-Line: ^777777Card^000000
-Equip: ^777777Armor^000000
-Weight : ^7777771^000000
+Max HP + 100
 #
 4665#
+Type: Miscellaneous
+Class: Card
+Compounds On: Weapon
+Weight: 1
+^FFFFFF_^000000
 ATK + 5
-Line: ^777777Card^000000
-Equip: ^777777Weapon^000000
-Weight : ^7777771^000000
-Line: ^777777Card^000000
-Equip: ^777777Weapon^000000
-Weight : ^7777771^000000
 #
 4666#
-MSP + 10
-MHP + 300
-Line: ^777777Card^000000
-Equip: ^777777Armor^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Armor
+Weight: 1
+^FFFFFF_^000000
+Max HP + 300
+Max SP + 10
 #
 4667#
-MSP + 30
-Line: ^777777Card^000000
-Equip: ^777777Shoes^000000
-Weight : ^7777771^000000
-Line: ^777777Card^000000
-Equip: ^777777Shoes^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Shoes
+Weight: 1
+^FFFFFF_^000000
+Max SP + 30
 #
 4668#
+Type: Miscellaneous
+Class: Card
+Compounds On: Headgear
+Weight: 1
+^FFFFFF_^000000
 VIT + 1
 INT + 1
-Line: ^777777Card^000000
-Equip : ^777777Helmet^000000
-Weight : ^7777771^000000
 #
 4669#
-MATK to Wind monsters +3%
-If refine level is +7 or higher,
-MATK to Wind monsters +5%
-If refine level is +9 or higher,
-MATK to Wind monsters +7%
-Line: ^777777Card^000000
-Equip: ^777777Weapon^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Weapon
+Weight: 1
+^FFFFFF_^000000
+Increases the damage of Wind property magical attacks on targets by 3%.
+If upgrade level is +7 or higher,
+Increases the damage of Wind property magical attacks on targets by an additional 5%.
+If upgrade level is +9 or higher,
+Increases the damage of Wind property magical attacks on targets by an additional 7%.
 #
 4670#
-MATK to Fire monsters +3%
-If refine level is +7 or higher,
-MATK to Fire monsters +5%
-If refine level is +9 or higher,
-MATK to Fire monsters +7%
-Line: ^777777Card^000000
-Equip: ^777777Weapon^000000
-Weight : ^7777771^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Weapon
+Weight: 1
+^FFFFFF_^000000
+Increases the damage of Fire property magical attacks on targets by 3%.
+If upgrade level is +7 or higher,
+Increases the damage of Fire property magical attacks on targets by an additional 5%.
+If upgrade level is +9 or higher,
+Increases the damage of Fire property magical attacks on targets by an additional 7%.
 #
 4697#
 MSP -300.
@@ -34416,15 +34577,21 @@ Jobs : ^777777All^000000
 placeholder
 #
 5531#
-A baby dragon who has been trained to help its master.
-^ff0000This item can be traded, stored, and put into a cart^000000
-Slot : ^7777771^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level  : ^7777771^000000
-Jobs : ^777777All^000000
+^808080A baby dragon who has been trained to help its master.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 3
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical and magical damage on Dragon race targets by 10%.
+Increases the experience given from Dragon race monsters by 5%.
+^FFFFFF_^000000
+^FF0000The following effects are active during the month of May.^000000
+Increases the experience given from Dragon race monsters by an additional 50%.
 #
 5532#
 Hold this knife in your mouth to look like an authentic fierce pirate. Arrrrr!!!
@@ -36967,6 +37134,28 @@ Weight : ^77777720^000000
 Required Lv. : ^777777100^000000
 Job : ^777777Mechanic only^000000
 #
+5912#
+Imitated by Loyal servant Devilring. Always be on standby to serve his master.
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Jobs: All^000000
+#
+5916#
+^808080Custom made sunglasses to use during exorcisms. You can see if it's a human or not.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Middle
+Defense: 1
+Weight: 20
+Required Level: 10
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical and magical damage on Demon race targets by 5%.
+Reduces damage taken from Demon race enemies by 5%.
+#
 5933#
 ^808080The mask carries the grudge of its previous owner.^000000
 ^FFFFFF_^000000
@@ -37031,11 +37220,13 @@ Class: Headgear
 Position: Lower
 Defense: 3
 Weight: 10
-Required Level: 1
+Required Level: 70
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-MDEF + 3
-Increases the recovery rate of ^008080Condensed Red Potion^000000, ^008080Condensed White Potion^000000 and ^008080Condensed Yellow Potion^000000 consumables by 150%.
+Mdef + 3
+Increases the recovery rate of ^008080Condensed Red Potion^000000 consumable by 150%.
+Increases the recovery rate of ^008080Condensed White Potion^000000 consumable by 150%.
+Increases the recovery rate of ^008080Condensed Yellow Potion^000000 consumable by 150%.
 #
 6000#
 A dark ash imbued with mysterious magical power and darkness.
@@ -45879,12 +46070,22 @@ A raw cacao bean. This tastes rather bitter.
 Weight : ^7777770^000000
 #
 11601#
-A salt-water fish of the family Engraulidae. This small fish has a dark blue back and a silvery white belly, and the catches off the coast of Lasagna are considered to be the best. It recovers a small amount of HP.
-Weight : ^7777772^000000
+^808080A salt-water fish of the family Engraulidae. This small fish has a dark blue back and a silvery white belly, and the catches off the coast of Lasagna are considered to be the best.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 2
+^FFFFFF_^000000
+Restores ^00800030^000000 to ^00800046^000000 HP.
 #
 11602#
-A fruit smaller than a Silvervine Fruit. Recovers a small amount of HP. Also consumed when using some of the Doram skills.
-Weight : ^7777770.1^000000
+^808080A very small fruit, even smaller than a silvervine.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 0.1
+^FFFFFF_^000000
+Restores ^00800036^000000 to ^00800040^000000 HP.
 #
 11605#
 ^808080A sweet chocolate is found inside this cripy butter scented cookie. Take caution as it might fly away.^000000
@@ -49609,6 +49810,13 @@ Weight : ^7777770^000000
 12796#
 #
 12801#
+#
+12806#
+^808080A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: General
+Weight: 2
 #
 12812#
 A Snow White Leaf that is cold to the touch. Caution : This really is colder than snow.
@@ -58691,6 +58899,17 @@ Weight : ^7777771^000000
 #
 14626#
 #
+14645#
+^808080Pulled from the demon fly himself. They grew back. The wings will slowly fade away over time.^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+^FF0000This item will not be consumed on use.^000000
+^FFFFFF_^000000
+Type: Consumable
+Weight: 0
+^FFFFFF_^000000
+Casts ^0000FFLevel 1 Instant Teleport^000000.
+#
 14649#
 #
 14664#
@@ -59248,6 +59467,24 @@ Weight : ^77777760^000000
 Required Level : ^77777799^000000
 Job : ^777777Novice class^000000
 #
+15071#
+^808080A robe that is worn by Odin's battle maidens. Also worn at Einherjar's reception.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 55
+Property: Neutral
+Weight: 280
+Required Level: 1
+Required Jobs: Lord Knight, Master Smith, Assassin Cross, High Priest, High Wizard, Sniper, Paladin, Biochemist, Stalker, Champion, Scholar, Minstrel, Gypsy, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer
+^FFFFFF_^000000
+All Stats + 1
+This item is indestructible in battle.
+If used by Swordman, Merchant and Thief Classes,
+Increases resistance to ^800000Stun^000000 by 50%.
+If used by Acolyte, Mage and Archer Classes,
+Increases resistance to ^800000Silence^000000 by 50%.
+#
 15072#
 ^808080The dye used in the suit has been mixed with the nectar of eternal youth.^000000
 ^FFFFFF_^000000
@@ -59441,6 +59678,20 @@ Weight : ^77777740^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+15106#
+^808080Armor used by engineers specialized in battlefield technology.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 30
+Property: N/A
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical and magical damage on Formless race targets by 3%.
+Increases physical and magical damage on Formless race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
+#
 15110#
 ^808080This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.^000000
 ^FFFFFF_^000000
@@ -59580,28 +59831,54 @@ Required Job: All classes
 When using magic attacks has a small chance of increasing mATK by 8*the refine level of the robe for a short period of time.
 #
 15126#
-Light outfit favored by the tidy Doram.
-MHP + 500, MSP + 100.
-DEX +1, INT +1 for every 3 refine levels.
-When Doram Suit, Doram Shoes, and Doram Manteau are equipped together,
-MHP +2000 and casting doesn’t get interrupted.
-Fixed casting -15%. (Decreases further according to the total refining levels of the suit, shoes, and manteau)
-Line: ^777777Armor^000000 DEF: ^77777780^000000
-Weight : ^77777770^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080Light outfit favored by the tidy Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 80
+Property: Neutral
+Weight: 70
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1 per 3 upgrade levels of the item.
+DEX + 1 per 3 upgrade levels of the item.
+Max HP + 500
+Max SP + 100
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+Max HP + 2000
+Reduces the fixed casting time of skills by 0.15 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 15129#
-Luxurious light outfit favored by the tidy Doram.
-MHP + 10%, MSP + 10%.
-DEX +1, INT +1 for every 2 refine levels.
-When Luxurious Doram Suit, Luxurious Doram Shoes, and Luxurious Doram Manteau are equipped together,
-MHP +3000 and casting doesn’t get interrupted.
-Fixed casting -20%. (Decreases further according to the total refining levels of the suit, shoes, and manteau)
-Line: ^777777Armor^000000 DEF: ^777777100^000000
-Weight : ^77777780^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080Luxurious light outfit favored by the tidy Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 100
+Property: Neutral
+Weight: 80
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1 per 2 upgrade levels of the item.
+DEX + 1 per 2 upgrade levels of the item.
+Max HP + 10%
+Max SP + 10%
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 3000
+Reduces the fixed casting time of skills by 0.2 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 15138#
 Egir, the God of Sea's Armor. It has a shape of a beautiful mermaid and seems to enable wearer swim in the water.
@@ -59615,35 +59892,78 @@ Weight : ^777777160^000000
 Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
+15140#
+^808080Natural clothes for the natural adventurer.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 30
+Property: N/A
+Weight: 120
+Required Level: 70
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Formless race enemies by 5%.
+Reduces damage taken from Formless race enemies by an additional 1% per upgrade level of the item.
+#
 15150#
-A clean and bright white shirt.
-Just for how long was it washed that it’s this white?
-MHP + 70, FLEE + 5.
-Line: ^777777Armor^000000 DEF: ^77777725^000000
-Weight : ^7777775^000000
-Required lvl : ^7777776^000000
-Equip: ^777777Doram^000000
+^808080A clean and bright white shirt.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 25
+Property: Neutral
+Weight: 5
+Required Level: 6
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 70
+FLEE + 5
 #
 15151#
-An environmentally friendly shirt that feels like your body and mind are cleansed the moment you wear it. Put all rubbish in the bin, please.
-MHP + 150, FLEE + 10.
-Line: ^777777Armor^000000 DEF: ^77777740^000000
-Weight : ^77777710^000000
-Required lvl : ^77777715^000000
-Equip: ^777777Doram^000000
+^808080An environmentally friendly shirt that feels like your body and mind are cleansed the moment you wear it. Please put all your rubbish in the bin.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 40
+Property: Neutral
+Weight: 10
+Required Level: 15
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 150
+FLEE + 10
 #
 15156#
-Elegant light outfit favored by the tidy Doram.
-MHP + 15%, MSP + 15%.
-DEX +1, INT +1 for every refine level.
-If refine level is +9 or higher, SP consumption -5%.
-When Elegant Doram Suit, Elegant Doram Shoes, and Elegant Doram Manteau are equipped together,
-MHP +4000 and casting doesn’t get interrupted.
-Fixed casting -25%. (Decreases further according to the total refining levels of the suit, shoes, and manteau)
-Line: ^777777Armor^000000 DEF: ^777777120^000000
-Weight: ^77777790^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080Elegant light outfit favored by the tidy Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 120
+Property: Neutral
+Weight: 90
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1 per upgrade level of the item.
+DEX + 1 per upgrade level of the item.
+Max HP + 15%
+Max SP + 15%
+If upgrade level is +9 or higher,
+Reducesthe SP cost of skills by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 4000
+Reduces the fixed casting time of skills by 0.25 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 15169#
 ^808080A magical robe worn by the king of the Laphine tribe.^000000
@@ -59656,23 +59976,28 @@ Weight: 80
 Required Level: 90
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-MATK + 10
-MDEF + 5
-Reduces damage taken from Demi-Human race attackers by 1%.
-^FFFFFF_^000000
+Matk + 10
+Mdef + 5
+Reduces damage taken from Demi-Human race enemies by 1%.
 If upgrade level is +7 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
-^FFFFFF_^000000
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 If upgrade level is +8 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
-^FFFFFF_^000000
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 If upgrade level is +9 or higher,
-Reduces damage taken from Demi-Human race attackers by an additional 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
 This item is indestructible in battle.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Kardui Robe^000000
+^008080Laphine Staff^000000
+Matk + 3 per upgrade level of ^008080Laphine Staff^000000.
+If upgrade level is +7 or higher,
+Additional Matk + 5 per upgrade level of ^008080Laphine Staff^000000.
+If upgrade level is +8 or higher,
+Additional Matk + 7 per upgrade level of ^008080Laphine Staff^000000.
+^800080Set Bonus^000000
 ^008080Angeling Card^000000
+^008080Kardui Robe^000000
 If upgrade level is +9 or higher,
 Immune to ^800000Frozen^000000.
 #
@@ -63428,6 +63753,18 @@ Weight : ^7777771^000000
 #
 17280#
 #
+17289#
+^808080A box that contains a Beelzebub Wing. An un-consumable version of a fly wing which fades over time.^000000
+^FF0000Account Bound^000000
+^FF0000The item will last 7 days once obtained from the box.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+When opened it gives the following:
+1 Beelzebub Wing
+#
 17291#
 #
 17292#
@@ -64072,6 +64409,27 @@ Job : ^777777All^000000
 Weight : ^7777771^000000
 #
 17378#
+^808080The Paws and Claws Starter Pack contains the following consumable items to maximize your hunting efficiency. ^000000
+^FFFFFF_^000000
+Type: Consumable
+Weight: 0
+^FFFFFF_^000000
+Contains:
+10x HE Battle Manuals,
+10x HE Bubble Gum,
+20x Increase Agility 10 Scrolls,
+20x Blessing 10 Scrolls,
+10x Token of Siegfried,
+10x Insurance,
+5x Kafra Cards,
+20x Greed Scrolls,
+10x Dungeon Teleport Scrolls,
+5x Rachel Town Butterfly Wing,
+5x Schwartzwalt Town Butterfly Wing,
+5x Rune-Midgard Town Butterfly Wing, and
+12x Small Life Potions.
+Cannot be dropped or placed in Cart.
+Weight : ^7777771^000000
 #
 17379#
 #
@@ -64919,6 +65277,53 @@ A box that contains an Etran's Undershirt and Pantie.
 Sprint Bundle A
 A box that contains a Sprint Glove, Sprint Mail, Sprint Shoes and Sprint Ring.
 #
+17778#
+^808080A care package from jRO.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+When opened gives one of the following at random,
+Kirin Armor
+Mask of Heroes
+Handkerchief in Mouth
+Goal Tender Mask
+Rose Bundle A
+Bison Horn
+Talaria Shoes
+Exorcist Shoes
+Melee Vesper Gear 4
+Solomon Key
+Pororocoa Shoes Bundle A
+Magic Vesper Gear
+Ice Pick [1]
+Cylinder Hair Band
+Celestial Woman's Flower
+Light of Cute
+Hero Cape
+Red Lotus Stole
+Piercing Staff
+30 Enriched Elunium
+Lian Bundle B
+30 Enriched Oridecon
+Water Dragon Coast
+8 HE Bubble Gum
+Excelion Leg
+Bunker Shield
+Natural Cloth
+8 HE Battle Manuals
+Valkyrie Robe
+Quadrille
+Brocca
+Engineer Mail
+Wing of Beezlebub Box
+Hunter Boots
+8 Job Battle Manuals
+Kardui Bundle A
+Memory of Lover
+
+#
 17779#
 ^ff0000You cannot trade this item with other users.^000000
 When Opened Gives you one of the following items
@@ -65506,12 +65911,17 @@ Type: Equipment
 Class: Headgear
 Position: Lower
 Defense: 0
-Weight: 0
-Required Level: 1
+Weight: 20
+Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases the SP cost of skills by 15%.
 The users casting cannot be interrupted outside of WoE.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Heart Wing Hairband^000000
+^008080Love Piece^000000
+Reduces the fixed casting time of skills by 10%.
 #
 18565#
 This is an exact replica of the hat worn by O'Riley the Leprechaun.
@@ -65882,11 +66292,18 @@ Required lvl : ^77777745^000000
 Available Job : ^777777Every Job^000000
 #
 18609#
-A blinkers that was enchanted by a dark magic.
-Never be blinded. Tolerance against Stun effect+2%.
-Class : ^777777Headgear^000000    Defense : ^7777770^000000
-Location : ^777777Middle^000000    Weight : ^77777710^000000
-Job : ^777777Every Job except Novice^000000
+^808080A blinder enchanted with dark magic.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs except Novice, Super Novice
+^FFFFFF_^000000
+Immune to ^800000Blind^000000.
+Increases resistance to ^800000Stun^000000 by 2%.
 #
 18611#
 Dark-colored plastic framed glasses, great for looking retro and intelligent! Int +1, Mdef +2.
@@ -67369,7 +67786,7 @@ Required Level : ^77777710^000000
 Job : ^777777All jobs^000000
 #
 18787#
-^808080No one knows what this mask is made of, only that it was once owned by an ice hockey goal tender.^000000
+^808080An ice hockey goal tenders mask. When others see you wearing this mask they feel scared.^000000
 ^FFFFFF_^000000
 Type: Equipment
 Class: Headgear
@@ -67379,7 +67796,7 @@ Weight: 20
 Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-Increases physical and magical damage on Demi-Human race targets by 8%.
+Increases physical damage on Demi-Human race targets by 8%.
 #
 18791#
 ^FF0000Can be obtained from Poring Festival or Item Mall.^000000
@@ -68580,6 +68997,31 @@ Creates a chance of casting Level 5 Lord of Vermilion when you receive Physical 
 Additional VIT +1 per upgrade level at +11 and above.
 Weight : ^77777730^000000
 #
+18937#
+^808080A component left by a robotic doll which mourned the death of its owner. It's filled with their memories of love.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 2%
+Mdef + 7
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 04^000000
+Dex + 8
+Hit + 10
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Gear 04^000000
+Dex + 1 for every 20 base levels.
+Reduces the variable casting time of skills by 5%.
+#
 18944#
 A balloon made afte a small and shy devil.
 All State + 1.
@@ -68965,13 +69407,16 @@ Thief Classes^000000
 Type: Equipment
 Class: Headgear
 Position: Upper
-Defense: 3
-Weight: 10
-Required Level: 1
+Defense: 0
+Weight: 100
+Required Level: 10
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases physical and magical damage on Dragon race targets by 10%.
 Increases the experience given from Dragon race monsters by 5%.
+^FFFFFF_^000000
+^FF0000The following effects are active during the month of May.^000000
+Increases the experience given from Dragon race monsters by an additional 50%.
 #
 19011#
 A box that contains 1 Classic Earring 2 Week Rental
@@ -69476,6 +69921,25 @@ If ^008080Gust Bow^000000 is refined to +10 or higher,
 ASPD + 1
 
 #
+19079#
+^808080A flower picked up by the hands of a celestial being.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 5
+Weight: 30
+Required Level: 20
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Mdef + 5
+Restores 100 HP to the user when a Undead race monster is killed by a short-ranged attack.
+Restores 5 SP to the user when a Undead race monster is killed by a short-ranged attack.
+If upgrade level is +5 or higher,
+Reduces damage taken from Undead race enemies by 5%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Undead race enemies by an additional 5%.
+#
 19083#
 ^808080The mask owned by the hero of an unknown clan which brings health and well being to the user.^000000
 ^FFFFFF_^000000
@@ -69492,13 +69956,19 @@ MDEF + 10
 Reflects 1% of the received short-ranged damage back to the attacker.
 #
 19084#
-A hat you receive when you become a member of the Parfaille Vigilante. It sports the vigilante chief Peperocino’s tail-shaped tassel.
-LUK +1,
-When dealing physical or magical attack, there is a chance to cast Blessing Lv. 3 on self.
-Line : ^777777Helmet^000000 Defense : ^7777772^000000
-Position : ^777777Top ^000000weight : ^77777710^000000
-Required lvl : ^77777720^000000
-Equip: ^777777Doram^000000
+^808080A hat you receive when you become a member of the Parfaille Vigilante. It sports the vigilante chief Peperocino's tail-shaped tassel.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 2
+Weight: 10
+Required Level: 20
+Required Jobs: Doram
+^FFFFFF_^000000
+LUK + 1
+Adds a chance of casting ^0000FFLevel 3 Blessing^000000 on the user when performing a physical or magical attack.
 #
 19101#
 A box that contains 1 Classic Omni Clothing Dye Coupon
@@ -69724,6 +70194,31 @@ Reduces damage taken from Small, Medium and Large size attackers an additional b
 ^008080Sting Silk Ribbon^000000
 ^008080Sting Card^000000
 Reduces damage taken from Small, Medium and Large size attackers an additional by 10%.
+#
+19125#
+^808080Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 12
+Weight: 30
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Str + 5
+Int + 5
+Reduces the variable casting time of ^0000FFCart Cannon^000000 by 1 second.
+Increases the damage of ^0000FFCart Cannon^000000 by 10%.
+Increases the damage of ^0000FFCart Tornado^000000 by 5%.
+Reduces the SP cost of ^0000FFCart Cannon^000000 by 30.
+Reduces the SP cost of ^0000FFCart Tornado^000000 by 5.
+If upgrade level is +5 or higher,
+Increases the damage of ^0000FFCart Cannon^000000 by an additional 20%.
+Increases the damage of ^0000FFCart Tornado^000000 by an additional 10%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFCart Cannon^000000 by an additional 30%.
+Increases the damage of ^0000FFCart Tornado^000000 by an additional 20%.
 #
 19201#
 A box that contains 10 Classic Battle Manual
@@ -70794,6 +71289,14 @@ Class : ^777777Costume ^000000 Def : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required LV : ^7777771^000000
 Job : ^777777All^000000
+#
+19597#
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+All^000000
 #
 19598#
 Can feel a high dignity of the Northern Wolf Tribe.
@@ -73606,6 +74109,14 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+20222#
+A double-pommed Blue Christmas Cap
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^77777710^000000
+Job: All^000000
+#
 20227#
 ^ff0000Cannot trade with other accounts.^000000
 Puppy Hat.
@@ -74713,6 +75224,14 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20407#
+Unknown aura that wrapped your body.
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: All^000000
+#
 20430#
 A costume that imitating the protection aura of Devil Morocc.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
@@ -74948,6 +75467,22 @@ Weight : ^77777710^000000
 Required LV : ^77777730^000000
 Job : ^777777All jobs^000000
 #
+20728#
+^808080A coat containing the powers of a water dragon.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 0
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 5%
+Increases the damage of Water property magical attacks on targets by 2%.
+If upgrade level is +7 or higher,
+Increases the damage of Water property magical attacks on targets by an additional 3%.
+Reduces the damage of Wind property magical attacks on targets by 10%.
+#
 20732#
 ^808080This mechanical device heals wounds and rejuvenates your body.^000000
 ^FFFFFF_^000000
@@ -75093,6 +75628,30 @@ Weight : ^77777710^000000
 Required LV : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+20753#
+^808080A garment with mystical powers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 20
+Weight: 70
+Required Level: 65
+^FFFFFF_^000000
+Reduces damage taken from Neutral property enemies by 5%.
+Increases damage taken from Formless race enemies by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Lian Robe^000000
+^008080Lian Shield^000000
+Increases physical and magical damage on Neutral property targets by 1% per upgrade level of ^008080Lian Shield^000000.
+Reduces damage taken from Formless race enemies by 1% per upgrade level of ^008080Lian Robe^000000.
+^800080Set Bonus^000000
+^008080Lian Robe^000000
+^008080Lian Shoes^000000
+Max HP + 1% per upgrade level of ^008080Lian Robe^000000.
+Max SP + 1% per upgrade level of ^008080Lian Robe^000000.
+Increases physical and magical damage on Formless race targets by 5%.
+#
 20756#
 Egir, the God of Sea's Helm. It is said to protect wearer with sacred power of the Sea.
 Indestructible
@@ -75157,32 +75716,122 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+20778#
+^808080A reddish cloak invented by a guild of magicians to extend the wearer's magical power.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 8
+Weight: 70
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max SP + 10%
+Reduces the SP cost of skills by 1%.
+Reduces the SP cost of skills by an additional 2% per 3 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 20 SP to the user when a monster is killed by a short-ranged attack.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Red Lotus Stole^000000
+^008080Undead Knight F Card^000000
+Drains 20 SP from the user when a monster is killed by a short-ranged attack.
+#
+20783#
+^808080A cape wore by a kid who's dream is to become a hero. Despite it's look, the robe has outstanding protection abilities.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 0
+Weight: 10
+Required Level: 10
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Flee + 1
+Additional Flee + 1 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attacks by 1%.
+Reduces damage taken from Neutral property attacks by an additional 1% per 3 upgrade levels of the item.
+If upgrade level is +10 or higher,
+Additional Flee + 20
+Reduces damage taken from Neutral property attacks by an additional 20%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Deviling Card^000000
+^008080Hero Cape^000000
+Increases damage taken from Neutral property attacks by 50%.
+#
 20788#
-A manteau embroidered in a pattern favored by the Doram.
-Flee +5, Neutral resistance +2%.
-Perfect Dodge +1 for every 3 refine levels.
-Line: ^777777Clothes^000000 DEF: ^77777720^000000
-Weight : ^77777730^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A manteau embroidered in a pattern favored by the Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 20
+Weight: 30
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+FLEE + 5
+Perfect DODGE + 1 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attackers by 2%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+Max HP + 2000
+Reduces the fixed casting time of skills by 0.15 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 20789#
-A manteau embroidered in a luxurious pattern favored by the Doram.
-Flee +7, Neutral resistance +3%.
-Perfect Dodge +1, LUK +1 for every 3 refine levels.
-Line: ^777777Clothes^000000 DEF: ^77777725^000000
-Weight : ^77777740^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080A manteau embroidered in a luxurious pattern favored by the Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 25
+Weight: 40
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+LUK + 1 per 3 upgrade levels of the item.
+FLEE + 7
+Perfect DODGE + 1 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attackers by 3%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 3000
+Reduces the fixed casting time of skills by 0.2 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 20790#
-A manteau embroidered in an elegant pattern favored by the Doram.
-Flee +10, Neutral resistance +5%.
-Perfect Dodge +1, INT +1, DEX +1, LUK +1 for every 2 refine levels.
-Line: ^777777Clothes^000000 DEF: ^77777730^000000
-Weight : ^77777750^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A manteau embroidered in an elegant pattern favored by the Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 30
+Weight: 50
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1 per 2 upgrade levels of the item.
+DEX + 1 per 2 upgrade levels of the item.
+LUK + 1 per 2 upgrade levels of the item.
+FLEE + 10
+Perfect DODGE + 1 per 2 upgrade levels of the item.
+Reduces damage taken from Neutral property attackers by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 4000
+Reduces the fixed casting time of skills by 0.25 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 20797#
 ^808080This undershirt belonged to the ancient Laphine, Etran.^000000
@@ -75223,61 +75872,54 @@ Reduces damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost 
 20799#
 ^808080A towel empowered with the four great elements.^000000
 ^FFFFFF_^000000
-Type: Weapon
-Attack: 0
-Property: N/A
+Type: Equipment
+Class: Garment
+Defense: 13
 Weight: 40
-Weapon Level: 0
 Required Level: 100
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Increases long-ranged damage on targets by 2%.
-^FFFFFF_^000000
-If upgrade level is +7 or higher/lower,
+If upgrade level is +7 or higher,
 Reduces the SP cost of ^0000FFArrow Storm^000000 by 20.
 Reduces the SP cost of ^0000FFSevere Rainstorm^000000 by 60.
-^FFFFFF_^000000
-If upgrade level is +8 or higher/lower,
+If upgrade level is +8 or higher,
 Increases long-ranged damage on targets by an additional 2%.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
+If upgrade level is +9 or higher,
 Increases long-ranged damage on targets by an additional 3%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Burning Bow^000000
 ^008080Fire Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Burning Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Earth Bow^000000
 ^008080Stone Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Earth Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Frozen Bow^000000
 ^008080Crystal Arrow^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Frozen Bow^000000 is refined to +10 or higher,
-ASPD + 1
-^FFFFFF_^000000
+Attack Speed + 1
 ^800080Set Bonus^000000
-^008080Elemental Tights^000000
+^008080Elemental Towel^000000
 ^008080Gust Bow^000000
 ^008080Arrow of Wind^000000
-Increases the damage of ^0000FFArrow Storm^000000 and ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
-^FFFFFF_^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel^000000.
 If ^008080Gust Bow^000000 is refined to +10 or higher,
-ASPD + 1
+Attack Speed + 1
 #
 20802#
 ^808080A bag that resembles the homunculus, Amistr.^000000
@@ -75776,6 +76418,19 @@ Weight: ^77777730^000000
 Required Level: ^777777160^000000
 Equip To: ^777777All Classes^000000
 #
+22042#
+^808080The legendary shoes Hermes gave to Perseus when he went to fight Medusa.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 15
+Weight: 30
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Agi + 2
+Aspd + 1
+#
 22043#
 ^808080Mechanical boots that keep you light on your feet. They are much lighter than they look.^000000
 ^FFFFFF_^000000
@@ -75877,6 +76532,19 @@ Weight : ^77777730^000000
 Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
+22060#
+^808080These shoes were worn by a man who made a living out of hunting animals. These shoes contains the man's many years of experience.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 10
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases the experience given from Brute race monsters by 5%.
+Increases the experience given from Brute race monsters by an additional 1% per upgrade level of the item.
+#
 22061#
 Holy spiritual shoes.
 MDefense +3.
@@ -75894,52 +76562,187 @@ Class : ^777777Shoes^000000    Defense : ^77777710^000000
 Weight : ^77777740^000000
 Job : ^777777All except for Novice^000000
 #
+22069#
+^808080A pair of shoes with mystical powers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 12
+Weight: 25
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 1% per upgrade level of the item.
+Max SP + 1% per upgrade level of the item.
+Mdef + 3
+Reduces damage taken from Neutral property attacks by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Lian Robe^000000
+^008080Lian Shoes^000000
+Max HP + 1% per upgrade level of ^008080Lian Robe^000000.
+Max SP + 1% per upgrade level of ^008080Lian Robe^000000.
+Increases physical and magical damage on Formless race enemies by 5%.
+^800080Set Bonus^000000
+^008080Lian Shield^000000
+^008080Lian Shoes^000000
+Reduces damage taken from Neutral property enemies by 5%.
+Reduces damage taken from Neutral property enemies by an additional 1% per upgrade level of ^008080Lian Shield^000000.
+#
 22076#
-A pair of slippers fashioned from hardwood. It might not be a good idea to wear them for long.
-Recovers 2 HP every 10 seconds.
-Line: ^777777Shoes^000000 DEF: ^77777710^000000
-Weight : ^7777775^000000
-Required lvl : ^7777779^000000
-Equip: ^777777Doram^000000
+^808080A pair of slippers fashioned from hardwood. It might not be a good idea to wear them for long.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 10
+Weight: 5
+Required Level: 9
+Required Jobs: Doram
+^FFFFFF_^000000
+Restores 2 HP to the user every 10 seconds.
 #
 22077#
-An environmentally friendly shoes. It's better take off the shoes often for refreshing due to no good ventilation. If you don't, you will see what's going to happen.
-Recovers 4 HP every 10 seconds,
-Recovers 1 SP every 10 seconds,
-CRI + 5.
-Class : ^777777Shoes^000000 DEF : ^77777720^000000
-Weight : ^77777710^000000
-Required lvl : ^77777718^000000
-Equip: ^777777Doram^000000
+^808080An environmentally friendly shoes. It is better take off the shoes often for refreshing due to no good ventilation. If you don't, you will see what is going to happen.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 20
+Weight: 10
+Required Level: 18
+Required Jobs: Doram
+^FFFFFF_^000000
+CRIT + 5
+Restores 4 HP to the user every 10 seconds.
+Restores 1 SP to the user every 10 seconds.
 #
 22083#
-A pair of shoes designed to fit the Doram’s small feet.
-MHP + 100, MSP + 50.
-HP Recovery +10%, SP Recovery +10% for every 3 refine levels.
-Line: ^777777Shoes^000000 DEF: ^77777725^000000
-Weight : ^77777750^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A pair of shoes designed to fit the small feet of a Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 25
+Weight: 50
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 100
+Max SP + 50
+HP Recovery + 10% per 3 upgrade levels of the item.
+SP Recovery + 10% per 3 upgrade levels of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+Max HP + 2000
+Reduces the fixed casting time of skills by 0.15 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 22084#
-A pair of shoes designed to fit the Doram’s small feet.
-MHP + 300, MSP + 100.
-HP Recovery +20%, SP Recovery +20% for every 3 refine levels.
-Line: ^777777Shoes^000000 DEF: ^77777730^000000
-Weight : ^77777760^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080A pair of luxurious shoes designed to fit the small feet of a Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 30
+Weight: 60
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 300
+Max SP + 100
+HP Recovery + 20% per 3 upgrade levels of the item.
+SP Recovery + 20% per 3 upgrade levels of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 3000
+Reduces the fixed casting time of skills by 0.2 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
 #
 22085#
-A pair of shoes designed to fit the Doram’s small feet.
-MHP + 10%, MSP + 5%.
-MHP +100, MSP +20 for every 2 refine levels.
-If refine level is +9 or higher,
-using [Leap] consumes 5 less SP.
-Line: ^777777Shoes^000000 DEF: ^77777735^000000
-Weight : ^77777770^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A pair of elegant shoes designed to fit the small feet of a Doram.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 35
+Weight: 70
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+Max HP + 10%
+Max HP + 100 per 2 upgrade levels of the item.
+Max SP + 5%
+Max SP + 20 per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Reduces the SP cost of ^0000FFLeap^000000 by 5.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+Max HP + 4000
+Reduces the fixed casting time of skills by 0.25 seconds.
+Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+The users casting cannot be interrupted outside of WoE.
+#
+22103#
+^808080A leg made from lost technology found in the research building ruins.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 13
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 5%
+Max SP + 5%
+If the users base level is 130 or higher,
+Additional Max HP + 4%
+Additional Max HP + 3% per 3 upgrade levels of the item.
+Additional Max SP + 4%
+Additional Max SP + 3% per 3 upgrade levels of the item.
+#
+22104#
+^808080They say that these shoes can control tsunamis.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 15
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 3%
+Max SP + 3%
+Matk + 2%
+Mdef + 15
+Increases the damage of Water property magical attacks on targets by 2%.
+Enables ^0000FFLevel 5 Deluge^000000.
+If upgrade level is +5 or higher,
+Additional Max HP + 7%
+Additional Max SP + 7%
+Additional Matk + 3%
+Increases the damage of Water property magical attacks on targets by an additional 3%.
+If upgrade level is +7 or higher,
+Additional Max HP + 10%
+Additional Max SP + 10%
+Additional Matk + 5%
+Increases the damage of Water property magical attacks on targets by an additional 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080La'cryma Stick^000000
+^008080Pororoca Shoes^000000
+Increases the damage of Water property magical attacks on targets by 4% per upgrade level of ^008080La'cryma Stick^000000.
+Bypass 5% of Mdef of Normal, Boss targets when performing a magical attack per level of ^0000FFFrost Nova^000000 known.
+Increases the damage of ^0000FFWater Ball^000000 by 30% per level of ^0000FFWater Ball^000000 known.
+Increases the damage of ^0000FFWater Ball^000000 by an additional 20% per upgrade level of ^008080La'cryma Stick^000000.
 #
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
@@ -76576,16 +77379,22 @@ Blacksmith's Blessing (Save it for later!)
 Weight : ^7777771^000000
 #
 22984#
-A favorite drink of the Doram.
-One of the popular menu at Pub Oven.
-Recovers 10 MHP every 10 sec for 3 minutes.
-Weight : ^7777771^000000
+^808080A favorite drink of the Doram.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores 10 HP every 10 seconds for 3 minutes.
 #
 22985#
-Marvelous grass that grows on the head of Basilisks.
-It is said that the grass can neutralize Basilisk venom. It tastes slightly spicy and is used as a food ingredient.
-Recovers 5 MSP every 10 sec for 3 minutes.
-Weight : ^7777771^000000
+^808080Marvelous grass that grows on the head of Basilisks. It is said that the grass can neutralize Basilisk venom. It tastes slightly spicy and is used as a food ingredient.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Recovery
+Weight: 1
+^FFFFFF_^000000
+Restores 5 SP every 10 seconds for 3 minutes.
 #
 23164#
 A potion created and distributed by 13th anniversary NPC Granpa Boxter.
@@ -76679,6 +77488,27 @@ Weight: 0
 ^FFFFFF_^000000
 Type: Consumable
 Class: Item Producer
+Weight: 0
+#
+23293#
+^808080A box that contains a Bison Horn and Buffalo Horn.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 0
+#
+23294#
+^808080A box that contains a Pororoca Shoes and La'cryma Stick.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 0
+#
+23295#
+^808080A box that contains a Lian Shield, Lian Robe and Lian Shoes.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
 Weight: 0
 #
 24012#
@@ -77996,34 +78826,52 @@ MATK + 1%
 ^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 #
 25043#
-A flute made with thorny vines growing near the Ravioli Forest. It’s not used as an instrument because of its high-pitched and unstable sound, but is used secretly for a special purpose.
-Weight : ^7777770^000000
+^808080A flute made with thorny vines growing near the Ravioli Forest. It is not used as an instrument because of its high-pitched and unstable sound, but is used secretly for a special purpose.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25044#
-Hard, well-dried thorny vines.
-The thorns are hardened too, so be careful not to hurt yourself!
-Weight : ^7777771^000000
+^808080Hard, well-dried thorny vines. The thorns are hardened too, so be careful not to hurt yourself!^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 1
 #
 25045#
-A piece of luxurious and soft cloth.
-It is used for making the Parfaille Vigilante’s symbolic bow tie.
-Weight : ^7777770^000000
+^808080A piece of luxurious and soft cloth. It is used for making the Parfaille Vigilantes symbolic bow tie.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25046#
-Boarding pass for the Con-Quilina, a ship that sails between Lasagna and the new continent. As the pass is issued only to the Doram who are trained well enough to explore the new world, it is also regarded as a graduation certificate of sorts.
-Weight : ^7777770^000000
+^808080Boarding pass for the Con-Quilina, a ship that sails between Lasagna and the new continent. As the pass is issued only to the Doram who are trained well enough to explore the new world, it's also regarded as a graduation certificate of sorts.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25047#
-A rare shellfish caught only in small amounts off the coast of Lasagna. It has a bittersweet smell, and cleaning and maturing the shellfish turn it into Kahluna, the main ingredient of Kahluna Milk.
-Weight : ^7777770^000000
+^808080A rare shellfish caught only in small amounts off the coast of Lasagna. It has a bittersweet smell, and cleaning and maturing the shellfish turn it into Kahluna, the main ingredient of Kahluna Milk. ^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25048#
-A hearty lunchbox meticulously packed with various food that give strength when eaten.
-Weight : ^7777770^000000
+^808080A hearty lunchbox meticulously packed with various food that gives strength when eaten.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25049#
-A hard, clam-shaped stone that can be obtained from Basilisks.
-Weight : ^7777770^000000
+^808080A hard, clam-shaped stone that can be obtained from Basilisks.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
 #
 25132#
 The most important decoration item for Halloween
@@ -78037,11 +78885,11 @@ Type: Miscellaneous
 Weight: 0
 #
 25142#
-An equipment exchange token used by Doram adventurers. This token is useful in various ways for acquiring better adventure equipment.
-
-^ffffff<NAVI>^4D4DFF[Doram Chara Family]^000000<INFO>lasagna,135,247,0,200,0,0</INFO></NAVI>^000000
-
-Weight : ^7777770^000000
+^808080An equipment exchange token used by Doram adventurers. This token is useful in various ways for acquiring better adventure equipment.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+^FFFFFF_^000000
 #
 25245#
 ^808080There are small bones that seem to belong to a small animal. Among the bones, there is a necklace with a red bell.^000000
@@ -78102,26 +78950,42 @@ Weight: 0
 Weapon Level: 0
 #
 26100#
-A foxtail crafted by the Paradise Group for experienced users.
-DEX + 4, INT + 4, MATK + 165
-Ranged ATK +6%.
-Not refinable.
-Line: ^777777One-handed Staff^000000 ATK: ^777777135^000000
-Weight : ^7777770^000000
-Weapon lvl : ^7777772^000000
-Required lvl : ^77777740^000000
-Equip: ^777777Doram^000000
+^808080A foxtail crafted by the Paradise Group. A basic item for experienced summoners.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 135
+Property: Neutral
+Weight: 0
+Weapon Level: 2
+Required Level: 40
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 4
+DEX + 4
+MATK + 165
+Increases long-ranged damage on targets by 6%.
+This item cannot be upgraded.
 #
 26101#
-A foxtail crafted by the Paradise Group for advanced users.
-DEX + 5, INT + 5, MATK + 195.
-Ranged ATK +7%.
-Not refinable.
-Line: ^777777One-handed Staff^000000 ATK: ^777777150^000000
-Weight : ^7777770^000000
-Weapon lvl : ^7777773^000000
-Required lvl : ^77777760^000000
-Equip: ^777777Doram^000000
+^808080A foxtail crafted by the Paradise Group. A basic item for advanced summoners.^000000
+^FF0000Character Bound^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 150
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 60
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 5
+DEX + 5
+MATK + 195
+Increases long-ranged damage on targets by 7%.
+This item cannot be upgraded.
 #
 27012#
 MHP + 8%.
@@ -78338,6 +79202,26 @@ Required Job: Rebellion
 A 10% chance of casting ^0000FFLevel 1 Cross Slash^000000 on the target when dealing physical attacks.
 A 3% chance of inflicting ^800000Curse^000000 status on the target when dealing physical attacks.
 #
+28305#
+^808080An object which seems to be a part of the Vesper. Possesses a mysterious power that enables its owner to be more dexterous and accurate.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 1
+Required Jobs: Lord Knight, Master Smith, Assassin Cross, High Priest, High Wizard, Sniper, Paladin, Biochemist, Stalker, Champion, Scholar, Minstrel, Gypsy, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer
+^FFFFFF_^000000
+DEX + 3
+MDEF + 3
+HIT + 10
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 04^000000
+DEX + 8
+HIT + 10
+#
 28310#
 ^808080Sarah's left earring. It might help you to use Sarah's power if worn.^000000
 ^FFFFFF_^000000
@@ -78443,41 +79327,168 @@ Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+28359#
+^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Mdef + 3
+Hit +10
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Gear 04^000000
+Dex + 1 for every 20 base levels.
+Reduces the variable casting time of skills by 5%.
+#
 28374#
-A small and cute, foxtail-shaped ring.
-But you can feel a great power rocking inside it.
-EXP from hunting monsters +5%
-Each time PC’s base level increases by 5,
-ATK + 2, MATK + 2, MHP + 10, MSP + 5,
-Options don’t apply when the PC’s base level is 51 or higher.
-Line: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight : ^77777710^000000
-Required lvl : ^7777771^000000
-Equip : ^777777All jobs^000000
+^808080A small and cute foxtail-shaped ring. But you can feel a great power emanating from inside it.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+If the users base level is 50 or lower,
+Max HP + 10 for every 5 base levels.
+Max SP + 5 for every 5 base levels.
+ATK + 2 for every 5 base levels.
+MATK + 2 for every 5 base levels.
+Increases the experience given from monsters by 5%.
 #
 28380#
-A fresh necklace woven with clover flowers.
-Perfect Dodge +5. Reduces cooldown of Scar of Tarou by 5 seconds.
-Line: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A fresh necklace woven with clover flowers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Perfect DODGE + 5
+Reduces the cooldown of ^0000FFScar of Tarou^000000 by 5 seconds.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Basic Bunny Charm^000000
+Max HP + 20%
+Max SP + 3%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 100%.
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Fair Bunny Charm^000000
+Max HP + 25%
+Max SP + 6%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 150%.
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Advanced Bunny Charm^000000
+Max HP + 30%
+Max SP + 9%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 200%.
 #
 28381#
-A charming necklace woven with clover flowers.
-Heal effectiveness +5%. Reduces cooldown of Tuna Party by 7 seconds.
-Line: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight : ^7777771^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charming necklace woven with clover flowers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Increases the recovery rate of recovery skills by 5%.
+Reduces the cooldown of ^0000FFTuna Party^000000 by 7 seconds.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Basic Saurel Charm^000000
+Max HP + 15%
+Max SP + 5%
+Enables ^0000FFLevel 5 Heal^000000.
+Increases the recovery rate of recovery skills by 10%.
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Fair Saurel Charm^000000
+Max HP + 20%
+Max SP + 10%
+Enables ^0000FFLevel 7 Heal^000000.
+Increases the recovery rate of recovery skills by 20%.
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Advanced Saurel Charm^000000
+Max HP + 25%
+Max SP + 15%
+Enables ^0000FFLevel 9 Heal^000000.
+Increases the recovery rate of recovery skills by 30%.
 #
 28382#
-A wild necklace woven with clover flowers.
-MDEF +5. Reduces variable cast time of Catnip Meteor by 1 second.
-Line: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A wild necklace woven with clover flowers.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+MDEF + 5
+Reduces the variable casting time of ^0000FFCatnip Meteor^000000 by 1 second.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Basic Leaf Charm^000000
+Max HP + 10%
+Max SP + 10%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 100%.
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Fair Leaf Charm^000000
+Max HP + 15%
+Max SP + 15%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 150%.
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Advanced Leaf Charm^000000
+Max HP + 20%
+Max SP + 20%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 200%.
 #
 28386#
 ^808080The beads of the rosary turned black during the endless fight with the monstrous monkey.^000000
@@ -78551,125 +79562,255 @@ Increases the damage of ^0000FFArrow Vulcan^000000, ^0000FFMelody Strike^000000 
 Increases the damage of ^0000FFMetallic Sound^000000 by 2% and Variable Casting Time - 1% of ^0000FFMetallic Sound^000000 for every 5 base levels.
 #
 28413#
-A charm that looks just like a real saurel.
-VIT + 1.
-When equipped together with Cute Grass Necklace, Doram Manteau, Doram Shoes, and Doram Suit,
-MHP +15%, MSP +5%, Heal effectiveness +10%, can use Heal Lv. 5.
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charm that looks just like a real saurel.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+VIT + 1
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Basic Saurel Charm^000000
+Max HP + 15%
+Max SP + 5%
+Enables ^0000FFLevel 5 Heal^000000.
+Increases the recovery rate of recovery skills by 10%.
 #
 28414#
-A charm that looks just like a real saurel.
-VIT + 2.
-When equipped together with Cute Grass Necklace, Luxurious Doram Manteau, Luxurious Doram Shoes, and Luxurious Doram Suit,
-MHP +20%, MSP +10%, Heal effectiveness +20%, can use Heal Lv. 7.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080A charm that looks just like a real saurel.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+VIT + 2
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Fair Saurel Charm^000000
+Max HP + 20%
+Max SP + 10%
+Enables ^0000FFLevel 7 Heal^000000.
+Increases the recovery rate of recovery skills by 20%.
 #
 28415#
-A charm that looks just like a real saurel.
-VIT + 3.
-When equipped together with Cute Grass Necklace, Elegant Doram Manteau, Elegant Doram Shoes, and Elegant Doram Suit,
-MHP +25%, MSP +15%, Heal effectiveness +30%, can use Heal Lv. 9.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A charm that looks just like a real saurel.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+VIT + 3
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Cute Grass Necklace^000000
+^008080Advanced Saurel Charm^000000
+Max HP + 25%
+Max SP + 15%
+Enables ^0000FFLevel 9 Heal^000000.
+Increases the recovery rate of recovery skills by 30%.
 #
 28416#
-A charm in the shape of a Silvervine Leaf.
-INT + 1.
-When equipped together with Charm Grass Necklace, Doram Manteau, Doram Shoes, and Doram Suit,
-MHP +10%, MSP +10%, Catnip Meteor damage +100%.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charm in the shape of a silvervine leaf.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 1
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Basic Leaf Charm^000000
+Max HP + 10%
+Max SP + 10%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 100%.
 #
 28417#
-A charm in the shape of a Silvervine Leaf.
-INT + 2.
-When equipped together with Charm Grass Necklace, Luxurious Doram Manteau, Luxurious Doram Shoes, and Luxurious Doram Suit,
-MHP +15%, MSP +15%, Catnip Meteor damage +150%.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080A charm in the shape of a silvervine leaf.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 140
+^FFFFFF_^000000
+INT + 2
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Fair Leaf Charm^000000
+Max HP + 15%
+Max SP + 15%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 150%.
 #
 28418#
-A charm in the shape of a Silvervine Leaf.
-INT + 3.
-When equipped together with Charm Grass Necklace, Elegant Doram Manteau, Elegant Doram Shoes, and Elegant Doram Suit,
-MHP +20%, MSP +20%, Catnip Meteor damage +200%.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A charm in the shape of a silvervine leaf.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+INT + 3
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Charming Grass Necklace^000000
+^008080Advanced Leaf Charm^000000
+Max HP + 20%
+Max SP + 20%
+Increases the damage of ^0000FFCatnip Meteor^000000 by 200%.
 #
 28419#
-A cute, bunny-shaped charm.
-DEX + 1.
-When equipped together with Fresh Grass Necklace, Doram Manteau, Doram Shoes, and Doram Suit,
-MHP +20%, MSP +3%, Lunatic Carrot Battering damage +100%.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A cute, bunny-shaped charm.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 1
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Doram Suit^000000
+^008080Doram Manteau^000000
+^008080Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Basic Bunny Charm^000000
+Max HP + 20%
+Max SP + 3%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 100%.
 #
 28420#
-A cute, bunny-shaped charm.
-DEX + 2.
-When equipped together with Fresh Grass Necklace, Luxurious Doram Manteau, Luxurious Doram Shoes, and Luxurious Doram Suit,
-MHP +25%, MSP +6%, Lunatic Carrot Battering damage +150%.
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777140^000000
-Equip: ^777777Doram^000000
+^808080A cute, bunny-shaped charm.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 140
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 2
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Luxurious Doram Suit^000000
+^008080Luxurious Doram Manteau^000000
+^008080Luxurious Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Fair Bunny Charm^000000
+Max HP + 25%
+Max SP + 6%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 150%.
 #
 28421#
-A cute, bunny-shaped charm.
-DEX + 3.
-When equipped together with Fresh Grass Necklace, Elegant Doram Manteau, Elegant Doram Shoes, and Elegant Doram Suit,
-MHP +30%, MSP +9%, Lunatic Carrot Battering damage +200%.
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777175^000000
-Equip: ^777777Doram^000000
+^808080A cute, bunny-shaped charm.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 175
+Required Jobs: Doram
+^FFFFFF_^000000
+DEX + 3
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
+^008080Fresh Grass Necklace^000000
+^008080Advanced Bunny Charm^000000
+Max HP + 30%
+Max SP + 9%
+Increases the damage of ^0000FFLunatic Carrot Battering^000000 by 200%.
 #
 28422#
-Variable cast time of Silvervine Stem Spear -50%.
-Silvervine Stem Spear damage increases according to INT and skill level.
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charm made from a branch taken from a shiny tree.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Reduces the variable casting time of ^0000FFSilvervine Stem Spear^000000 by 50%.
+Increases the damage of ^0000FFSilvervine Stem Spear^000000 by 1% per level of ^0000FFSilvervine Stem Spear^000000 known for every 6 base INT.
 #
 28423#
-Reduces cooldown of Tuna Party by 5 seconds.
-If the PC receives physical melee damage, there is a chance to auto cast Tuna Party Lv. 1 on self. (If the skill is already learned, casts at the current skill level)
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charm that resembles a tuna. It looks fresh!^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Reduces the cooldown of ^0000FFTuna Party^000000 by 5 seconds.
+Adds a chance of casting ^0000FFLevel 1 Tuna Party^000000 on the user when receiving a short-ranged attack, if a higher level of this skill is known, it will be cast instead.
 #
 28424#
-Variable cast time of Picky Peck -50%.
-Picky Peck damage increases according to DEX and skill level.
-
-Line: ^777777Accessory^000000 DEF: ^7777771^000000
-Weight : ^77777710^000000
-Required lvl : ^777777100^000000
-Equip: ^777777Doram^000000
+^808080A charm that resembles a fat earthworm.^000000
+^FF0000Account Bound^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 100
+Required Jobs: Doram
+^FFFFFF_^000000
+Reduces the variable casting time of ^0000FFPicky Peck^000000 by 50%.
+Increases the damage of ^0000FFPicky Peck^000000 by 1% per level of ^0000FFPicky Peck^000000 known for every 6 base DEX.
 #
 28600#
 #
@@ -78733,18 +79874,14 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 28902#
-A rag doll that Piamette is using for both attack and defense?
-It looks so real and alive!
-ATK +5%, MATK +5%.
-Reflect 10% of close physical attack damage.
-10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.
-Refined to +7, increase ATK +5 and MATK +5.
-Refined to +9, increase ATK +15 and MATK +15
-Refined to +12, Skill casting can not be interrupted and CRI +10.
-Class : ^777777Shield^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+^808080A rag doll that Piamette is using for both attack and defense?\r\nIt looks so real and alive!\r\nATK +5%, MATK +5%.\r\nReflect 10% of close physical attack damage.\r\n10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.\r\nRefined to +7, increase ATK +5 and MATK +5.\r\nRefined to +9, increase ATK +15 and MATK +15\r\nRefined to +12, Skill casting can not be interrupted and CRI +10.\r\nClass : ^777777Shield^000000 Defense : ^7777770^000000\r\nWeight : ^77777710^000000\r\nRequired Level : ^7777771^000000\r\nJobs : ^777777All Jobs^000000\r\n^000000
+^FF00001^000000
+^FFFFFF_^000000
+Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28910#
 ^808080A shield woven from magical thread that specializes in protecting the user from long ranged attacks.^000000
