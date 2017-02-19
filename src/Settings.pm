@@ -80,7 +80,7 @@ our $VERSION = 'what-will-become-2.1';
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . getRevisionString() . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -568,6 +568,33 @@ sub loadFiles {
     }
 
     Plugins::callHook('postloadfiles', {files => $files});
+}
+
+##
+# str Settings::getRevisionString()
+#
+# Return OpenKore's revision as a string to be displayed to the user.
+sub getRevisionString {
+	my @revisions;
+
+    # The best and most accurate version is the git commit sha, if available.
+	my $git = getGitRevision();
+	if ( $git ) {
+		push @revisions, "git:$git";
+	}
+
+    # "Download ZIP" on github sets the file creation times to (around) the
+    # last time a commit was uploaded to github. This can help make a good
+    # guess about what version is in use.
+	my $time = ( stat( __FILE__ ) )[10] || ( stat( _ ) )[9];
+	if ( $time ) {
+		my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $time );
+		push @revisions, sprintf 'ctime:%04d_%02d_%02d', $year + 1900, $month + 1, $day;
+	}
+
+	push @revisions, '?' if !@revisions;
+
+	join ' ', @revisions;
 }
 
 ##
