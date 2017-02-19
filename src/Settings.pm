@@ -598,29 +598,6 @@ sub getRevisionString {
 }
 
 ##
-# int Settings::getSVNRevision()
-#
-# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
-sub getSVNRevision {
-	my $f;
-	if (open($f, "<", "$RealBin/.svn/entries")) {
-		my $revision;
-		eval {
-			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
-			die unless <$f> eq "\n";	# Empty string for current directory.
-			die unless <$f> eq "dir\n";	# We expect a directory entry.
-			$revision = <$f>;
-			$revision =~ s/[\r\n]//g;
-			undef $revision unless $revision =~ /^\d+$/;
-		};
-		close($f);
-		return $revision;
-	} else {
-		return;
-	}
-}
-
-##
 # int Settings::getGitRevision()
 #
 # Return OpenKore's Git revision number, or undef if that information cannot be retrieved.
