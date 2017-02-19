@@ -116,8 +116,8 @@ sub new {
 
 	$self->{time_start} = time;
 
-	$self->{revision} = Settings::getSVNRevision;
-	$self->{revision} = " (r$self->{revision})" if defined $self->{revision};
+	$self->{revision} = Settings::getGitRevision;
+	$self->{revision} = " ($self->{revision})" if defined $self->{revision};
 
 	$self->{loading} = {
 		current => 0,
