@@ -26,25 +26,39 @@ use lib "$RealBin/../..";
 use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
 use Poseidon::Config;
-use Poseidon::RagnarokServer;
+use Poseidon::RagnaServerHolder;
 use Poseidon::QueryServer;
+use Poseidon::ConnectServer;
 
 use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
 use constant SLEEP_TIME => 0.01;
 
-our ($roServer, $queryServer);
 
-sub initialize 
-{
+our ($roServer, $queryServer, $connectServer);
+my $time = 0;
+my $timeout = 1;
+
+sub initialize {
 	# Loading Configuration
 	Poseidon::Config::parse_config_file ("poseidon.txt", \%config);
-
-	# Starting Poseidon
-	print "Starting Poseidon 2.1 (26 Sep 2012)...\n";
-	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
-	print "Ragnarok Online Server Ready At : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
-	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
+	
+	my $number_of_clients = $config{number_of_clients};
+	
+	my $ragna_ip = $config{ragnarokserver_ip};
+	my $first_ragna_port = $config{ragnarokserver_first_port};
+	$roServer = Poseidon::RagnaServerHolder->new($number_of_clients, $ragna_ip, $first_ragna_port);
+	print "Ragnarok Online Server Ready\n";
+	
+	my $query_ip = $config{queryserver_ip};
+	my $query_port = $config{queryserver_port};
+	$queryServer = Poseidon::QueryServer->new($query_port, $query_ip, $roServer);
 	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
+	
+	my $connect_port = $config{connectserver_port};
+	my $connect_ip = $config{connectserver_ip};
+	$connectServer = new Poseidon::ConnectServer($connect_port, $connect_ip, $roServer, $queryServer);
+	print "Connect Server Ready At : " . $connectServer->getHost() . ":" . $connectServer->getPort() . "\n";
+	
 	print ">>> Poseidon 2.1 initialized <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . "\n";
 	print "for further instructions.\n";
@@ -53,8 +67,9 @@ sub initialize
 sub __start {
 	initialize();
 	while (1) {
-		$roServer->iterate();
-		$queryServer->iterate();
+		$connectServer->iterate;
+		$roServer->iterate;
+		$queryServer->iterate;
 		sleep SLEEP_TIME;
 	}
 }

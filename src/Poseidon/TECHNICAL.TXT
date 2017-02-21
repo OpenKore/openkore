@@ -41,5 +41,5 @@ server.
 
 Client files
 ------------
-The Poseidon::Client module provides a simple interface for OpenKore to
+The Poseidon::QueryClient module provides a simple interface for OpenKore to
 communicate with the Poseidon server.

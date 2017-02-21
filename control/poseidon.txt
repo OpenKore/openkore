@@ -1,14 +1,22 @@
+# Number of Clients
+# Here you'll define how many ports will be opened starting with
+# ragnarokserver_first_port for ragnarok online clients to connect.
+number_of_clients=1
+
+connectserver_port=24390
+connectserver_ip=127.0.0.1
+
 # Ragnarok Server
 # Here you'll define the IP Address and the Port where Poseidon
 # will keep waiting for your ragnarok online client to connect.
 ragnarokserver_ip=127.0.0.1
-ragnarokserver_port=6900
+ragnarokserver_first_port=6900
 
 # Query Server
 # Here you'll define the IP Address and the Port where Poseidon
 # will keep waiting for open kore to connect and send the GG/HS queries.
 queryserver_ip=127.0.0.1
-queryserver_port=24390
+queryserver_port=24391
 
 # Server Type
 # Here you have to specify your current server type in order

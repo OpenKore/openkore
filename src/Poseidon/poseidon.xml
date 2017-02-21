@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+
+<clientinfo>
+	<servicetype>brazil</servicetype>
+	<servertype>primary</servertype>
+	<extendedslot></extendedslot>
+	<connection>
+		<display>Poseidon [6900]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6900</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6901]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6901</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6902]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6902</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6903]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6903</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6904]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6904</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6905]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6905</port>
+		<version>1</version>
+	</connection>
+	<connection>
+		<display>Poseidon [6906]</display>
+		<desc>None</desc>
+		<address>127.0.0.1</address>
+		<port>6906</port>
+		<version>1</version>
+	</connection>
+</clientinfo>
