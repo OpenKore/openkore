@@ -762,7 +762,6 @@ sub mainLoop_initialized {
 		} elsif (!defined $poseidon_query_port) {
 			my $result = $poseidon_connect->getResult();
 			if (defined($result)) {
-				Log::warning "Received Poseidon Response.\n";
 				
 				if ($result->{client} == -1) {
 					Log::warning "Received Denied Poseidon result for connection request.\n";
@@ -775,9 +774,6 @@ sub mainLoop_initialized {
 					$poseidon_query_port = $result->{port};
 				}
 				
-			} else {
-				Log::warning "Waiting for response from poseidon.\n";
-				return;
 			}
 			
 		} elsif ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2')) {

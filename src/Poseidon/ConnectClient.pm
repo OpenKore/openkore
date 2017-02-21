@@ -35,7 +35,7 @@ sub askForConnection {
 	if (!$socket) {
 		error "Your server uses gameguard, please use poseidon.\n";
 		offlineMode();
-		return;
+		return -1;
 	}
 
 	my %args;
