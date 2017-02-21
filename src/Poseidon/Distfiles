@@ -1,7 +1,11 @@
-Client.pm
+QueryClient.pm
+ConnectClient.pm
+ConnectServer.pm
+RagnaServerHolder.pm
 Config.pm
 EmbedServer.pm
 poseidon.pl
+generate_xml.pl
 QueryServer.pm
 RagnarokServer.pm
 servertypes.txt
