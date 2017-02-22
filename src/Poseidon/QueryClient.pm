@@ -16,7 +16,7 @@ package Poseidon::QueryClient;
 
 use strict;
 use IO::Socket::INET;
-use Globals qw(%config $poseidon_query_port);
+use Globals qw(%config $poseidon_query_port $poseidon_query_ip);
 use Log qw(error debug);
 use Bus::MessageParser;
 use Bus::Messages qw(serialize);
@@ -124,7 +124,15 @@ sub getResult {
 			return undef;
 		} else {
 			$self->{socket} = undef;
-			return $args->{packet};
+			my %return;
+			$return{packet} = $args->{packet};
+			if (exists $args->{error}) {
+				$return{error} = $args->{error};
+				error "The Poseidon server was not able to answer our query and sent a error message.\n";
+				error "Poseidon error message: '".$args->{error}."'.\n;";
+				offlineMode();
+			}
+			return \%return;
 		}
 	} else {
 		# We haven't gotten a full message yet.
@@ -139,8 +147,9 @@ sub getResult {
 sub getInstance {
 	if (!$instance) {
 		$instance = Poseidon::QueryClient->_new(
-			$config{poseidonServer} || 'localhost',
-			$poseidon_query_port || DEFAULT_POSEIDON_SERVER_PORT);
+			$poseidon_query_ip   || 'localhost',
+			$poseidon_query_port || DEFAULT_POSEIDON_SERVER_PORT
+		);
 	}
 	return $instance;
 }

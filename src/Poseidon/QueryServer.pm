@@ -18,6 +18,7 @@ use Bus::Messages qw(serialize);
 use Poseidon::RagnarokServer;
 use Poseidon::RagnaServerHolder;
 use base qw(Base::Server);
+use Time::HiRes qw(time);
 use Plugins;
 
 my $CLASS = "Poseidon::QueryServer";
@@ -70,24 +71,31 @@ sub process {
 
 	print "[PoseidonServer]-> Received query from bot client [Name: " . $args->{username} . "] [port: " . $self->getPort . "] [Time: " . time . "]\n";
 	
+	my %request = (
+		client => $client,
+		username => $args->{username}
+	);
+	Scalar::Util::weaken($request{client});
+	
 	my $rag_client_index = $self->{"$CLASS server"}->find_bounded_client($args->{username});
+	
 	if ($rag_client_index == -1) {
-		print "[PoseidonServer]-> This username doesn`t have a ragnarok client bounded to it \n";
+		$request{error} = "[PoseidonServer]-> This username doesn't have a ragnarok client bounded to it";
+		
 	} else {
 		my $rag_client = $self->{"$CLASS server"}->{clients_servers}[$rag_client_index];
+		
 		if (!$rag_client) {
-			print "[PoseidonServer]-> Ragnarok client of this username has disconnected \n";
+			$request{error} = "[PoseidonServer]-> Ragnarok client of this username has disconnected";
+			
 		} elsif (!$rag_client->{client}->{connectedToMap}) {
-			print "[PoseidonServer]-> Ragnarok client of this username is not connected to the map server \n";
+			$request{error} = "[PoseidonServer]-> Ragnarok client of this username is not connected to the map server";
+			
 		} else {
 			print "[PoseidonServer]-> This username uses the ragnrok client of index ".$rag_client_index." with port ".$rag_client->getPort()."\n";
-			my %request = (
-				packet => $args->{packet},
-				client => $client,
-				rag_client => $rag_client,
-				username => $args->{username},
-				qstate => 'received'
-			);
+			$request{packet} = $args->{packet};
+			$request{rag_client} = $rag_client;
+			$request{state} = 'received_from_server';
 
 			# perform client authentication here
 			Plugins::callHook('Poseidon/server_authenticate', {
@@ -97,11 +105,14 @@ sub process {
 			# note: the authentication plugin must set auth_failed to true if it doesn't
 			# want the Poseidon server to respond to the query
 			return if ($args->{auth_failed});
-
-			Scalar::Util::weaken($request{client});
-			push @{$self->{"$CLASS queue"}}, \%request;
 		}
 	}
+	
+	if (exists $request{error}) {
+		print $request{error}."\n";
+		$request{state} = 'failed';
+	}
+	push @{$self->{"$CLASS queue"}}, \%request;
 }
 
 ##################################################
@@ -140,24 +151,56 @@ sub iterate {
 	$queue = $self->{"$CLASS queue"};
 	
 	return unless (@{$queue} > 0);
-	my $request = $queue->[0];
+	
+	my $queue_last = $#{$queue};
+	my $current = 0;
+	while ($current <= $queue_last) {
+		my $request = $queue->[$current];
 
-	if ($request->{rag_client}->getState() eq 'requested') {
-		# Send the response to the client.
-		if ($request->{client}) {
+		# received response packet from client, send success to openkore
+		if ($request->{state} eq 'requested_to_client' && $request->{rag_client}->getState() eq 'requested') {
 			my ($data, %args);
-
 			$args{packet} = $request->{rag_client}->readResponse();
 			$data = serialize("Poseidon Reply", \%args);
 			$request->{client}->send($data);
 			$request->{client}->close();
-			print "[PoseidonServer]-> Sent result to client [Name: " . $request->{username} . "] [Time: " . time . "]\n";
-		}
-		shift @{$queue};
+			
+			my $elapsed = (time - $request->{request_time});
+			$request->{rag_client}->addQueryTime($elapsed);
+			my $query_count = $request->{rag_client}->getQueryCount;
+			my $everage = $request->{rag_client}->getEverageQueryTime;
+			
+			print "[PoseidonServer]-> Sent success result to client [Name: " . $request->{username} . "] [Time: " . time . "]\n";
+			print "[PoseidonServer]-> Reply of number ".$query_count." took ".$elapsed." seconds, everage client reply time is ".$everage." seconds\n";
+			
+			splice(@{$queue}, $current, 1);
+			$queue_last = $#{$queue};
 
-	} elsif ($request->{rag_client}->getState() eq 'ready') {
-		print "[PoseidonServer]-> Querying Ragnarok Online client [Name: " . $request->{username} . "] [Time: " . time . "]...\n";
-		$request->{rag_client}->query($request->{packet});
+		# send request to client
+		} elsif ($request->{state} eq 'received_from_server' && $request->{rag_client}->getState() eq 'ready') {
+			print "[PoseidonServer]-> Querying Ragnarok Online client [Name: " . $request->{username} . "] [Time: " . time . "]...\n";
+			$request->{rag_client}->query($request->{packet});
+			$request->{state} = 'requested_to_client';
+			$request->{request_time} = time;
+			
+			$current++;
+		
+		# send fail notice to openkore
+		} elsif ($request->{state} eq 'failed') {
+			my ($data, %args);
+			$args{error} = $request->{error};
+			$args{packet} = -1;
+			$data = serialize("Poseidon Reply", \%args);
+			$request->{client}->send($data);
+			$request->{client}->close();
+			print "[PoseidonServer]-> Sent failed result to client [Name: " . $request->{username} . "] [Time: " . time . "]\n";
+			
+			splice(@{$queue}, $current, 1);
+			$queue_last = $#{$queue};
+			
+		} else {
+			$current++;
+		}
 	}
 }
 

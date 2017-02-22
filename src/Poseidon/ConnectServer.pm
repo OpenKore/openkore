@@ -55,7 +55,8 @@ sub process {
 		client => $client,
 		username => $args->{username},
 		client_index => $index,
-		query_server_port => $self->{"queryServer"}->getPort()
+		query_server_port => $self->{"queryServer"}->getPort(),
+		query_server_host => $self->{"queryServer"}->getHost()
 	);
 
 	Scalar::Util::weaken($request{client});
@@ -125,6 +126,7 @@ sub iterate {
 		my ($data, %args);
 		$args{client_index} = $request->{client_index};
 		$args{query_server_port} = $request->{query_server_port};
+		$args{query_server_host} = $request->{query_server_host};
 		$data = serialize("Poseidon Reply", \%args);
 		$request->{client}->send($data);
 		$request->{client}->close();

@@ -3,6 +3,9 @@
 # ragnarokserver_first_port for ragnarok online clients to connect.
 number_of_clients=1
 
+# Connect Server
+# Here you'll define the IP Address and the Port where Poseidon
+# will keep waiting for open kore to connect and send the connect request.
 connectserver_port=24390
 connectserver_ip=127.0.0.1
 

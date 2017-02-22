@@ -67,6 +67,9 @@ sub new {
 
 	$self->{challengeNum} = 0;
 	
+	$self->{query_count} = 0;
+	$self->{sum_query_time} = 0;
+	
 	$self->{boundUsername} = undef;
 
 	$self->{response} = undef;
@@ -204,10 +207,27 @@ sub query {
 	if ($self->{client}{connectedToMap}) {
 		$self->{client}->send($packet);
 		$self->{state} = 'requesting';
+		$self->{query_count}++;
 		return;
 	}
 	
 	print "[RagnarokServer]-> Error: no Ragnarok Online client connected.\n";
+}
+
+sub addQueryTime {
+	my ($self, $time) = @_;
+	$self->{sum_query_time} += $time;
+}
+
+sub getQueryCount {
+	my ($self) = @_;
+	return $self->{query_count};
+}
+
+sub getEverageQueryTime {
+	my ($self) = @_;
+	my $everage = ($self->{sum_query_time} / $self->{query_count});
+	return $everage;
 }
 
 ##

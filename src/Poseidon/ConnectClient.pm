@@ -76,7 +76,7 @@ sub getResult {
 			return undef;
 		} else {
 			$self->{socket} = undef;
-			return ({client => $args->{client_index}, port => $args->{query_server_port}});
+			return ({client => $args->{client_index}, port => $args->{query_server_port}, ip => $args->{query_server_host}});
 		}
 	} else {
 		# We haven't gotten a full message yet.

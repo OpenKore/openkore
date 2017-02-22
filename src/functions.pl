@@ -770,7 +770,8 @@ sub mainLoop_initialized {
 					return;
 					
 				} else {
-					Log::warning "Received Sucessful Poseidon result for connection request [Client: " . $result->{client} . "]  [Port: " . $result->{port} . "].\n";
+					Log::warning "Received Sucessful Poseidon result for connection request [Client: " . $result->{client} . "] [Port: " . $result->{port} . "] [Ip: " . $result->{ip} . "].\n";
+					$poseidon_query_ip = $result->{ip};
 					$poseidon_query_port = $result->{port};
 				}
 				
@@ -780,9 +781,10 @@ sub mainLoop_initialized {
 			my $result = Poseidon::QueryClient::getInstance()->getResult();
 			if (defined($result)) {
 				debug "Received Poseidon result.\n", "poseidon";
-				Log::warning "[gameguard request] Reveived result from poseidon [ Time: ".time." ]\n";
-				#$messageSender->encryptMessageID(\$result, unpack("v", $result));
-				$messageSender->sendToServer($result);
+				unless (exists $result->{error}) {
+					Log::warning "[gameguard request] Received successful result from poseidon [ Time: ".time." ]\n";
+					$messageSender->sendToServer($result->{packet});
+				}
 			}
 		}
 	}
