@@ -26,6 +26,7 @@ sub _parse_syntax {
 	$self->{var_to_member_index_item_id} = {};
 	$self->{var_to_member_index_slot_name} = {};
 	$self->{members_array} = [];
+	$self->{is_on_stand_by} = 1;
 	
 	my $var_exists_hash = {};
 	
@@ -176,7 +177,6 @@ sub check_slot {
 	}
 }
 
-use Data::Dumper;
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	

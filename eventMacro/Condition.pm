@@ -58,11 +58,6 @@ sub get_name {
 	return $self->{name};
 }
 
-sub is_unique_condition {
-	my ($self) = @_;
-	return $self->{is_Unique_Condition};
-}
-
 sub validate_condition {
 	my ( $self, $result ) = @_;
 	return (defined $result ? $result : 0) if ($self->condition_type == EVENT_TYPE);
@@ -111,8 +106,17 @@ sub _parse_syntax {
 
 # Default: State type
 sub condition_type {
-	my ($self) = @_;
 	STATE_TYPE;
+}
+
+# Default: false
+sub is_unique_condition {
+	0;
+}
+
+# Default: true
+sub usable {
+	1;
 }
 
 1;
