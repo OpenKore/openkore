@@ -14760,7 +14760,7 @@ Weight: 180
 Required Level: 100
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-Adds a chance of casting ^0000FFLevel 1 Magic Mirror^000000 on the user when receiving a magical attack that lasts for 2 seconds.
+Adds a 15% chance of casting ^0000FFLevel 6 Magic Mirror^000000 on the user when receiving a magical attack that lasts for 2 seconds.
 #
 2199#
 '^339999The Shield of all Shields^000000
@@ -22529,31 +22529,21 @@ Compound on: ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4039#
-Increase resistance to
-^880000Silence^000000 status by 20%.
-^ffffff_^000000
-^6A5ACDRogue Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Stainer Card^000000
-^3CB371Wickebine Tres Card^000000
+Type: Miscellaneous
+Class: Card
+Compounds On: Headgear
+Weight: 1
+^FFFFFF_^000000
+Increases resistance to [Silence] status by 20%. Def+1?
+^FFFFFF_^000000
+Set bonus with Wanderer Card, Shinobi Card, Wild Rose Card, Wickebine Tres Card:
 Str +6
 Agi +4
-Backstab Damage +10%
-A chance of auto casting
-level 5 Strip Armor
-if level 5 Strip Armor is
-learned.
-Rogue Class Bonus:
--20% SP Consumption
-Disables the Auto-Snatch
-ability of the
-Wanderer Card.
-^ffffff_^000000
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Increases the damage inflicted with [Back Stab] by 10%.
+If the user has learned [Divest Armor] Lv 5, adds a 5% chance of using it on the target when doing a physical attack.
+If used by a Rogue job type:
+Reduces the SP cost of skills by 20%.
+Removes the chance of using [Snatch].
 #
 4040#
 Enable use of
@@ -28395,11 +28385,11 @@ Class: Card
 Compounds On: Weapon
 Weight: 1
 ^FFFFFF_^000000
-Increases the damage of Wind property magical attacks on targets by 3%.
+Increases magical damage on Wind property targets by 3%.
 If upgrade level is +7 or higher,
-Increases the damage of Wind property magical attacks on targets by an additional 5%.
+Increases magical damage on Wind property targets by an additional 5%.
 If upgrade level is +9 or higher,
-Increases the damage of Wind property magical attacks on targets by an additional 7%.
+Increases magical damage on Wind property targets by an additional 7%.
 #
 4670#
 Type: Miscellaneous
@@ -28407,11 +28397,11 @@ Class: Card
 Compounds On: Weapon
 Weight: 1
 ^FFFFFF_^000000
-Increases the damage of Fire property magical attacks on targets by 3%.
+Increases magical damage on Fire property targets by 3%.
 If upgrade level is +7 or higher,
-Increases the damage of Fire property magical attacks on targets by an additional 5%.
+Increases magical damage on Fire property targets by an additional 5%.
 If upgrade level is +9 or higher,
-Increases the damage of Fire property magical attacks on targets by an additional 7%.
+Increases magical damage on Fire property targets by an additional 7%.
 #
 4697#
 MSP -300.
@@ -59841,8 +59831,8 @@ Weight: 70
 Required Level: 100
 Required Jobs: Doram
 ^FFFFFF_^000000
-INT + 1 per 3 upgrade levels of the item.
-DEX + 1 per 3 upgrade levels of the item.
+Int + 1 per 3 upgrade levels of the item.
+Dex + 1 per 3 upgrade levels of the item.
 Max HP + 500
 Max SP + 100
 ^FFFFFF_^000000
@@ -59851,8 +59841,8 @@ Max SP + 100
 ^008080Doram Manteau^000000
 ^008080Doram Shoes^000000
 Max HP + 2000
-Reduces the fixed casting time of skills by 0.15 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 15%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 15129#
@@ -59866,8 +59856,8 @@ Weight: 80
 Required Level: 140
 Required Jobs: Doram
 ^FFFFFF_^000000
-INT + 1 per 2 upgrade levels of the item.
-DEX + 1 per 2 upgrade levels of the item.
+Int + 1 per 2 upgrade levels of the item.
+Dex + 1 per 2 upgrade levels of the item.
 Max HP + 10%
 Max SP + 10%
 ^FFFFFF_^000000
@@ -59876,8 +59866,8 @@ Max SP + 10%
 ^008080Luxurious Doram Manteau^000000
 ^008080Luxurious Doram Shoes^000000
 Max HP + 3000
-Reduces the fixed casting time of skills by 0.2 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 20%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Luxurious Doram Suit^000000, ^008080Luxurious Doram Manteau^000000, ^008080Luxurious Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 15138#
@@ -59949,20 +59939,20 @@ Weight: 90
 Required Level: 175
 Required Jobs: Doram
 ^FFFFFF_^000000
-INT + 1 per upgrade level of the item.
-DEX + 1 per upgrade level of the item.
+Int + 1 per upgrade level of the item.
+Dex + 1 per upgrade level of the item.
 Max HP + 15%
 Max SP + 15%
 If upgrade level is +9 or higher,
-Reducesthe SP cost of skills by 5%.
+Reduces the SP cost of skills by 5%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Luxurious Doram Suit^000000
-^008080Luxurious Doram Manteau^000000
-^008080Luxurious Doram Shoes^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
 Max HP + 4000
-Reduces the fixed casting time of skills by 0.25 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 25%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 15169#
@@ -70208,7 +70198,7 @@ Required Jobs: All Jobs
 ^FFFFFF_^000000
 Str + 5
 Int + 5
-Reduces the variable casting time of ^0000FFCart Cannon^000000 by 1 second.
+Reduces the variable casting time of ^0000FFCart Cannon^000000 by 100%.
 Increases the damage of ^0000FFCart Cannon^000000 by 10%.
 Increases the damage of ^0000FFCart Tornado^000000 by 5%.
 Reduces the SP cost of ^0000FFCart Cannon^000000 by 30.
@@ -75770,17 +75760,17 @@ Weight: 30
 Required Level: 100
 Required Jobs: Doram
 ^FFFFFF_^000000
-FLEE + 5
-Perfect DODGE + 1 per 3 upgrade levels of the item.
-Reduces damage taken from Neutral property attackers by 2%.
+Flee + 5
+Perfect Dodge + 1 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attacks by 2%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Doram Suit^000000
 ^008080Doram Manteau^000000
 ^008080Doram Shoes^000000
 Max HP + 2000
-Reduces the fixed casting time of skills by 0.15 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 15%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 20789#
@@ -75793,18 +75783,18 @@ Weight: 40
 Required Level: 140
 Required Jobs: Doram
 ^FFFFFF_^000000
-LUK + 1 per 3 upgrade levels of the item.
-FLEE + 7
-Perfect DODGE + 1 per 3 upgrade levels of the item.
-Reduces damage taken from Neutral property attackers by 3%.
+Luk + 1 per 3 upgrade levels of the item.
+Flee + 7
+Perfect Dodge + 1 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attacks by 3%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Luxurious Doram Suit^000000
 ^008080Luxurious Doram Manteau^000000
 ^008080Luxurious Doram Shoes^000000
 Max HP + 3000
-Reduces the fixed casting time of skills by 0.2 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 20%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Luxurious Doram Suit^000000, ^008080Luxurious Doram Manteau^000000, ^008080Luxurious Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 20790#
@@ -75817,20 +75807,20 @@ Weight: 50
 Required Level: 175
 Required Jobs: Doram
 ^FFFFFF_^000000
-INT + 1 per 2 upgrade levels of the item.
-DEX + 1 per 2 upgrade levels of the item.
-LUK + 1 per 2 upgrade levels of the item.
-FLEE + 10
-Perfect DODGE + 1 per 2 upgrade levels of the item.
-Reduces damage taken from Neutral property attackers by 5%.
+Int + 1 per 2 upgrade levels of the item.
+Dex + 1 per 2 upgrade levels of the item.
+Luk + 1 per 2 upgrade levels of the item.
+Flee + 10
+Perfect Dodge + 1 per 2 upgrade levels of the item.
+Reduces damage taken from Neutral property attacks by 5%.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Luxurious Doram Suit^000000
-^008080Luxurious Doram Manteau^000000
-^008080Luxurious Doram Shoes^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
 Max HP + 4000
-Reduces the fixed casting time of skills by 0.25 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 25%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 20797#
@@ -76628,8 +76618,8 @@ Required Level: 100
 Required Jobs: Doram
 ^FFFFFF_^000000
 Max HP + 100
-Max SP + 50
 HP Recovery + 10% per 3 upgrade levels of the item.
+Max SP + 50
 SP Recovery + 10% per 3 upgrade levels of the item.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
@@ -76637,8 +76627,8 @@ SP Recovery + 10% per 3 upgrade levels of the item.
 ^008080Doram Manteau^000000
 ^008080Doram Shoes^000000
 Max HP + 2000
-Reduces the fixed casting time of skills by 0.15 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 15%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 22084#
@@ -76652,8 +76642,8 @@ Required Level: 140
 Required Jobs: Doram
 ^FFFFFF_^000000
 Max HP + 300
-Max SP + 100
 HP Recovery + 20% per 3 upgrade levels of the item.
+Max SP + 100
 SP Recovery + 20% per 3 upgrade levels of the item.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
@@ -76661,8 +76651,8 @@ SP Recovery + 20% per 3 upgrade levels of the item.
 ^008080Luxurious Doram Manteau^000000
 ^008080Luxurious Doram Shoes^000000
 Max HP + 3000
-Reduces the fixed casting time of skills by 0.2 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 20%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Luxurious Doram Suit^000000, ^008080Luxurious Doram Manteau^000000, ^008080Luxurious Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 22085#
@@ -76683,12 +76673,12 @@ If upgrade level is +9 or higher,
 Reduces the SP cost of ^0000FFLeap^000000 by 5.
 ^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Luxurious Doram Suit^000000
-^008080Luxurious Doram Manteau^000000
-^008080Luxurious Doram Shoes^000000
+^008080Elegant Doram Suit^000000
+^008080Elegant Doram Manteau^000000
+^008080Elegant Doram Shoes^000000
 Max HP + 4000
-Reduces the fixed casting time of skills by 0.25 seconds.
-Reduces the fixed casting time of skills by an additional 0.01 seconds per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
+Reduces the fixed casting time of skills by 25%.
+Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
 22103#
@@ -79508,7 +79498,7 @@ Increases the damage of ^0000FFSky Blow^000000 by 2% for every 30 base levels.
 Reduces the SP cost of ^0000FFZen^000000 by 5.
 #
 28394#
-^808080This ring contains the power of the one and only Spirit King.^000000
+^808080This ring contains the power of the Spirit King.^000000
 ^FFFFFF_^000000
 Type: Equipment
 Class: Accessory
@@ -79517,14 +79507,16 @@ Weight: 20
 Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-VIT + 5
-Variable Casting Time - 1.5 seconds of ^0000FFVaretyr Spear^000000.
-Variable Casting Time - 50% of ^0000FFWarmer^000000.
-Skill Usage Delay - 5%
-Reduces the cooldown of ^0000FFEarth Grave^000000 and ^0000FFDiamond Dust^000000 by 2 seconds.
+Vit + 5
+Reduces the variable casting time of ^0000FFVaretyr Spear^000000 by 1.5 seconds.
+Reduces the variable casting time of ^0000FFWarmer^000000 by 50%.
+Reduces the skill usage delay of skills by 5%.
+Reduces the cooldown of ^0000FFDiamond Dust^000000 by 2 seconds.
+Reduces the cooldown of ^0000FFEarth Grave^000000 by 2 seconds.
 Reduces the cooldown of ^0000FFVaretyr Spear^000000 by 0.5 seconds.
 Reduces the cooldown of ^0000FFWarmer^000000 by 15 seconds.
-Increases the damage of ^0000FFEarth Grave^000000 and ^0000FFDiamond Dust^000000 by 1% for every 8 base levels.
+Increases the damage of ^0000FFDiamond Dust^000000 by 1% for every 8 base levels.
+Increases the damage of ^0000FFEarth Grave^000000 by 1% for every 8 base levels.
 #
 28410#
 ^808080A sapphire bracelet which was designed with the collective knowledge of the geneticist community.^000000
@@ -79537,11 +79529,14 @@ Weight: 50
 Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-INT + 5
-DEX + 5
-LUK + 5
-Additional INT + 1, DEX + 1, LUK + 1, MATK + 20 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
-Variable Casting Time - 1% of ^0000FFAcid Bomb^000000 for every 4 base levels.
+Int + 5
+Additional Int + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
+Dex + 5
+Additional Dex + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
+Luk + 5
+Additional Luk + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
+Matk + 20 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
+Reduces the variable casting time of ^0000FFAcid Bomb^000000 by 4% for every 4 base levels.
 Increases the damage of ^0000FFSpore Explosion^000000 by 5% for every 20 base levels.
 #
 28411#
@@ -79551,15 +79546,21 @@ Type: Equipment
 Class: Accessory
 Defense: 3
 Weight: 50
-Required Level: 1
+Required Level: 50
 Required Jobs: All Jobs
 ^FFFFFF_^000000
-AGI + 5
-INT + 5
-DEX + 5
-Additional AGI + 1, INT + 1, DEX + 1, MATK + 20 per 2 levels of ^0000FFVoice Lessons^000000 known.
-Increases the damage of ^0000FFArrow Vulcan^000000, ^0000FFMelody Strike^000000 and ^0000FFSlinging Arrow^000000 by 1% for every base level.
-Increases the damage of ^0000FFMetallic Sound^000000 by 2% and Variable Casting Time - 1% of ^0000FFMetallic Sound^000000 for every 5 base levels.
+Agi + 5
+Additional Agi + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
+Int + 5
+Additional Int + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
+Dex + 5
+Additional Dex + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
+Matk + 20 per 2 levels of ^0000FFVoice Lessons^000000 known.
+Reduces the variable casting time of ^0000FFMetallic Sound^000000 by 1% for every 5 base levels.
+Increases the damage of ^0000FFArrow Vulcan^000000 by 1% for every base level.
+Increases the damage of ^0000FFMelody Strike^000000 by 1% for every base level.
+Increases the damage of ^0000FFMetallic Sound^000000 by 2% for every 5 base levels.
+Increases the damage of ^0000FFSlinging Arrow^000000 by 1% for every base level.
 #
 28413#
 ^808080A charm that looks just like a real saurel.^000000
@@ -79874,14 +79875,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 28902#
-^808080A rag doll that Piamette is using for both attack and defense?\r\nIt looks so real and alive!\r\nATK +5%, MATK +5%.\r\nReflect 10% of close physical attack damage.\r\n10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.\r\nRefined to +7, increase ATK +5 and MATK +5.\r\nRefined to +9, increase ATK +15 and MATK +15\r\nRefined to +12, Skill casting can not be interrupted and CRI +10.\r\nClass : ^777777Shield^000000 Defense : ^7777770^000000\r\nWeight : ^77777710^000000\r\nRequired Level : ^7777771^000000\r\nJobs : ^777777All Jobs^000000\r\n^000000
-^FF00001^000000
+^808080A rag doll that Piamette uses for both offense and defense. It looks so real and alive!^000000
 ^FFFFFF_^000000
-Type: Weapon
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
+Type: Equipment
+Class: Shield
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Atk + 5%
+Matk + 5%
+Reflects 10% of the received short-ranged damage back to the attacker.
+Adds a 10% chance of casting ^0000FFLevel 8 Magic Mirror^000000 on the user when receiving a magical attack that lasts for 2 seconds.
+If upgrade level is +7 or higher,
+Atk + 5
+Matk + 5
+If upgrade level is +9 or higher,
+Additional Atk + 15
+Additional Matk + 15
+If upgrade level is +12 or higher,
+Crit + 10
+The users casting cannot be interrupted outside of WoE.
 #
 28910#
 ^808080A shield woven from magical thread that specializes in protecting the user from long ranged attacks.^000000
