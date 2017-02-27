@@ -313,6 +313,8 @@ our %jobs_lut = (
 	4191 => 'Super Baby',           # expanded
 	4211 => 'Kagerou',
 	4212 => 'Oboro',
+	4215 => 'Rebellion',
+	4218 => 'Summoner',
 
 	# Homunculus
 	6001 => 'Lif',
