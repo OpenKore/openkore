@@ -86,7 +86,11 @@ debug "KEY: $key, VALUE: $value\n";
 		if ($inf_hash{$key}) {
 debug "$type '$inf_hash{$key}' ID: $key is found in file '$file2'.\n";
 		$found = 1;
-		$key = $inf_hash{$key}
+			if ($cmd eq 'iconf' && $itemSlotCount_lut{$key}) {
+				$key = $inf_hash{$key}." [".$itemSlotCount_lut{$key}."]";
+			} else {
+				$key = $inf_hash{$key};
+			}
 		} else {
 ## Search name by $key
 			foreach my $name (values %inf_hash) {
