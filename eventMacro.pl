@@ -38,6 +38,7 @@ my $chooks = Commands::register(
 
 my $file_handle;
 my $file;
+my $parseAndHook_called;
 
 sub Unload {
 	message "[eventMacro] Plugin unloading\n", "system";
@@ -63,7 +64,12 @@ sub checkConfig {
 sub onstart3 {
 	debug "[eventMacro] Loading start\n", "eventMacro", 2;
 	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
+	$parseAndHook_called = 0;
 	Settings::loadByHandle($file_handle);
+	if (!$parseAndHook_called) {
+		warning "[eventMacro] No control/eventMacros.txt file was found. Plugin disabled.\n";
+		Commands::run('plugin unload eventMacro');
+	}
 }
 
 sub onConfigModify {
@@ -77,6 +83,7 @@ sub onConfigModify {
 
 sub parseAndHook {
 	my $file = shift;
+	$parseAndHook_called++;
 	debug "[eventMacro] Starting to parse file '$file'\n", "eventMacro", 2;
 	if (defined $eventMacro) {
 		debug "[eventMacro] Plugin global variable '\$eventMacro' is already defined, this must be a file reload. Unloading all current config.\n", "eventMacro", 2;
