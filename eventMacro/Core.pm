@@ -261,6 +261,12 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			}
 			
+			unless ($condition_object->usable) {
+				error "[eventMacro] Condition '".$condition->{'key'}."' is not a usable type of condition, it exists to be a base for other conditions.\n";
+				warning "[eventMacro] Ignoring automacro '$name' (used non usable condition)\n";
+				next AUTOMACRO;
+			}
+			
 			if ($condition_object->condition_type == EVENT_TYPE) {
 				if ($has_event_type_condition) {
 					error "[eventMacro] Conditions '".$condition->{'key'}."' and '".$event_type_condition_name."' are of the event type and can only be used once per automacro.\n";

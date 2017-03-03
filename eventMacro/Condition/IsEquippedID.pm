@@ -26,6 +26,7 @@ sub _parse_syntax {
 	$self->{var_to_member_index_item_id} = {};
 	$self->{var_to_member_index_slot_name} = {};
 	$self->{members_array} = [];
+	$self->{is_on_stand_by} = 1;
 	
 	my $var_exists_hash = {};
 	
@@ -199,9 +200,10 @@ sub validate_condition {
 		$self->update_vars($callback_name, $args);
 		
 	} elsif ($callback_type eq 'recheck') {
+		$self->{is_on_stand_by} = 0;
 		$self->check_all_equips($self->{slot_name_to_member_to_check_array});
-		
 	}
+	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_slot} ? 1 : 0) );
 }
 
