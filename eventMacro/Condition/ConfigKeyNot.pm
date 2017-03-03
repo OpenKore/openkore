@@ -17,7 +17,8 @@ sub _parse_syntax {
 	
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
-	$self->{fulfilled_value} = undef;
+	$self->{fulfilled_key_value} = undef;
+	$self->{fulfilled_wanted_value} = undef;
 	$self->{config_keys_member} = {};
 	$self->{var_name_to_member_index_key} = {};
 	$self->{var_name_to_member_index_value} = {};
@@ -143,7 +144,8 @@ sub validate_condition {
 			
 			$self->{fulfilled_key} = undef;
 			$self->{fulfilled_member_index} = undef;
-			$self->{fulfilled_value} = undef;
+			$self->{fulfilled_key_value} = undef;
+			$self->{fulfilled_wanted_value} = undef;
 			foreach my $key (keys %{$self->{config_keys_member}}) {
 				my $config_key_value;
 				if ($key eq $args->{key}) {
@@ -155,7 +157,8 @@ sub validate_condition {
 					next unless ($member->{value} ne $config_key_value);
 					$self->{fulfilled_key} = $key;
 					$self->{fulfilled_member_index} = $member->{index};
-					$self->{fulfilled_value} = $member->{value};
+					$self->{fulfilled_key_value} = $config_key_value;
+					$self->{fulfilled_wanted_value} = $member->{value};
 					last;
 				}
 				last if (defined $self->{fulfilled_key});
@@ -177,14 +180,16 @@ sub check_keys {
 	my ($self) = @_;
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
-	$self->{fulfilled_value} = undef;
+	$self->{fulfilled_key_value} = undef;
+	$self->{fulfilled_wanted_value} = undef;
 	foreach my $key (keys %{$self->{config_keys_member}}) {
 		my $config_key_value = (!exists $config{$key} ? 'none' : (!defined $config{$key} ? 'none' : $config{$key}));
 		foreach my $member (@{$self->{config_keys_member}{$key}}) {
 			next unless ($member->{value} ne $config_key_value);
 			$self->{fulfilled_key} = $key;
 			$self->{fulfilled_member_index} = $member->{index};
-			$self->{fulfilled_value} = $member->{value};
+			$self->{fulfilled_key_value} = $config_key_value;
+			$self->{fulfilled_wanted_value} = $member->{value};
 			last;
 		}
 		last if (defined $self->{fulfilled_key});
@@ -196,7 +201,8 @@ sub get_new_variable_list {
 	my $new_variables;
 			
 	$new_variables->{".".$self->{name}."LastKey"} = $self->{fulfilled_key};
-	$new_variables->{".".$self->{name}."LastValue"} = $self->{fulfilled_value};
+	$new_variables->{".".$self->{name}."LastKeyValue"} = $self->{fulfilled_key_value};
+	$new_variables->{".".$self->{name}."LastWantedValue"} = $self->{fulfilled_wanted_value};
 	$new_variables->{".".$self->{name}."LastMemberIndex"} = $self->{fulfilled_member_index};
 	
 	return $new_variables;
