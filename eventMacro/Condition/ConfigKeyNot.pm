@@ -1,4 +1,4 @@
-package eventMacro::Condition::ConfigKey;
+package eventMacro::Condition::ConfigKeyNot;
 
 use strict;
 
@@ -152,7 +152,7 @@ sub validate_condition {
 					$config_key_value = (!exists $config{$key} ? 'none' : (!defined $config{$key} ? 'none' : $config{$key}));
 				}
 				foreach my $member (@{$self->{config_keys_member}{$key}}) {
-					next unless ($member->{value} eq $config_key_value);
+					next unless ($member->{value} ne $config_key_value);
 					$self->{fulfilled_key} = $key;
 					$self->{fulfilled_member_index} = $member->{index};
 					$self->{fulfilled_value} = $member->{value};
@@ -181,7 +181,7 @@ sub check_keys {
 	foreach my $key (keys %{$self->{config_keys_member}}) {
 		my $config_key_value = (!exists $config{$key} ? 'none' : (!defined $config{$key} ? 'none' : $config{$key}));
 		foreach my $member (@{$self->{config_keys_member}{$key}}) {
-			next unless ($member->{value} eq $config_key_value);
+			next unless ($member->{value} ne $config_key_value);
 			$self->{fulfilled_key} = $key;
 			$self->{fulfilled_member_index} = $member->{index};
 			$self->{fulfilled_value} = $member->{value};
