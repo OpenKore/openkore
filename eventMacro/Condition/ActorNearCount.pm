@@ -17,6 +17,8 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{is_on_stand_by} = 1;
+	$self->{change} = 0;
+	$self->{fulfilled_size} = undef;
 	
 	$self->SUPER::_parse_syntax($condition_code);
 }
@@ -34,10 +36,27 @@ sub validate_condition {
 		} elsif ($callback_name eq 'packet/map_property3') {
 			$self->{is_on_stand_by} = 0;
 		}
+	} elsif ($callback_type eq 'recheck') {
+		$self->{is_on_stand_by} = 0;
 	}
 	
 	return $self->SUPER::validate_condition(0) if ($self->{is_on_stand_by} == 1);
-	return $self->SUPER::validate_condition( $self->validator_check );
+	
+	if ($self->validator_check) {
+		$self->{fulfilled_size} = $self->_get_val;
+		return $self->SUPER::validate_condition(1);
+	} else {
+		return $self->SUPER::validate_condition(0);
+	}
+}
+
+sub get_new_variable_list {
+	my ($self) = @_;
+	my $new_variables;
+	
+	$new_variables->{".".$self->{name}."Last"} = $self->{fulfilled_size};
+	
+	return $new_variables;
 }
 
 sub usable {
