@@ -29314,12 +29314,6 @@ Absorb 1% of damage dealt to enemy into HP with 1% chance.
 4993#
 Absorb 1% of damage dealt to enemy into SP with 1% chance.
 #
-4998#
-GM_Aegis_Card
-#
-4999#
-GM_Valor_Card
-#
 5001#
 A strange device that
 was invented by an old
@@ -65330,6 +65324,25 @@ Costume White Rose Princess
 
 Weight : ^7777771^000000
 #
+17786#
+^808080^000000
+^FFFFFF_^000000
+Type: Costume
+Weight: 0
+^FFFFFF_^000000
+An elegantly decorated egg containing one of the following costumes
+Costume Side Cap
+Costume Fallen Angel's Blessing
+Costume Eye of the Hawk
+Costume Engineer Cap
+Costume Black Cat
+Costume War Princess Ribbon
+Costume Mono Gothic Bonnet
+Costume Red Cat Ears Cape
+Costume Angel's Black Mini Silk Hat
+Costume Rosary's Necklace
+
+#
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
 Class : ^777777Cannonball^000000
@@ -80332,6 +80345,96 @@ Class : ^777777Costume^000000 Defense :^7777770^000000
 Location :^777777UpperMiddleLower ^000000Weight : ^7777770^000000
 Required Level :^7777771^000000
 Jobs : ^777777All Jobs^000000
+#
+31181#
+^808080The necklace of the Holy Rosary, who received powers from the apostle of God. It's filled with mystical powers. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31182#
+^808080A cool looking military cap from an unknown era. Rumor has it that there is a matching suit somewhere. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31183#
+^808080The wings dropped by a fallen angel who once ruled the celestial world. A strong hatred seethes from it when worn around other angels. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31184#
+^808080Increase your concentration skills by wearing this patch. Since you can't see very well while wearing this patch, the rest of your senses will improve. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31185#
+^808080An old cap worn by an engineer. You can see the master engineer's eye through the hole of the worn-out cap. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31186#
+^808080This black cat took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31187#
+^808080A huge ribbon styled in the gothic fashion. It's so bold, you feel braver just wearing it.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31188#
+^808080A luxuriously decorated bonnet fashioned after the gothic style, including delicate frills, black and white checkered inner cloth, and elegant purple flower.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31189#
+^808080A cute red hood with fluffy cat ears attached. An essential piece for any gothic lolita ensemble. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31190#
+^808080Mini silk hat with angel wings attached, perfect for the gothic lolita look. ^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 31195#
 ^808080Sweet chocolate decorated cutey hat. This is not for eating~! 7% extra EXP gain from monster during Event Period(1st Feb 2017~28th Feb 2017). Class : ^777777Costume^000000 Defense : ^7777770^000000 Location : ^777777Upper ^000000Weight : ^7777770^000000 Required Level : ^7777771^000000 Jobs : ^777777All Jobs^000000 ^000000
