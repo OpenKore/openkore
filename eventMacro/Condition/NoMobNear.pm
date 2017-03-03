@@ -16,6 +16,7 @@ sub _hooks {
 }
 
 sub get_size {
+	my ( $self ) = @_;
 	return ($monstersList->size + $self->{change});
 }
 

@@ -16,6 +16,7 @@ sub _hooks {
 }
 
 sub _get_val {
+	my ( $self ) = @_;
 	return ($portalsList->size + $self->{change});
 }
 
