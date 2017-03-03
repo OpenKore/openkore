@@ -102,7 +102,7 @@ sub parseAndHook {
 sub commandHandler {
 	### no parameter given
 	if (!defined $_[1]) {
-		message "usage: eventMacro [MACRO|list|status|stop|pause|resume|reset] [automacro]\n", "list";
+		message "usage: eventMacro [MACRO|auto|list|status|check|stop|pause|unpause|var_get|var_set|enable|disable] [extras]\n", "list";
 		message 
 			"eventMacro MACRO: Run macro MACRO\n".
 			"eventMacro auto AUTOMACRO: Get info on an automacro and it's conditions\n".
