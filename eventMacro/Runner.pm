@@ -982,7 +982,7 @@ sub next {
 			$variable = $1;
 			$value = $2;
 		} else {
-			$self->error("Could separate variable from value");
+			$self->error("Could not separate variable name from value");
 			return;
 		}
 		
