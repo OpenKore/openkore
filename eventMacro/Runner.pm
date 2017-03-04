@@ -1639,6 +1639,7 @@ sub substitue_variables {
 	my ($self, $received) = @_;
 	
 	my $remaining = $received;
+	my $substituted;
 	
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
 	
@@ -1682,7 +1683,8 @@ sub substitue_variables {
 				}
 				$var_value = '' unless (defined $var_value);
 				
-				$remaining = $before_var.$var_value.$after_var;
+				$substituted = $substituted . $before_var . $var_value;
+				$remaining = $after_var;
 				
 			} else {
 				$self->error("Could not find detected variable in code");
@@ -1692,10 +1694,12 @@ sub substitue_variables {
 		}
 	}
 	
+	$substituted .= $remaining;
+	
 	#Remove backslashes
-	$remaining =~ s/\\($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/$1/g;
+	$substituted =~ s/\\($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/$1/g;
 
-	return $remaining;
+	return $substituted;
 }
 
 sub parse_keywords {
