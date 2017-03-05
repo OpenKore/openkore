@@ -2419,6 +2419,8 @@ sub storage_closed {
 sub storage_items_stackable {
 	my ($self, $args) = @_;
 
+	$char->storage->clear;
+
 	$self->_items_list({
 		class => 'Actor::Item',
 		hook => 'packet_storage',
