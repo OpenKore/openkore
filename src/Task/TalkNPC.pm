@@ -93,6 +93,7 @@ sub new {
 	$self->{wait_for_answer} = 0;
 	$self->{error_code} = undef;
 	$self->{error_message} = undef;
+	$self->{map_change} = 0;
 	
 	return $self;
 }
@@ -101,6 +102,10 @@ sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
 	if ($hook_name eq 'npc_talk_done') {
+		if ($self->{stage} != TALKING_TO_NPC || !$self->{target} || $self->{target}->{ID} != $args->{ID}) {
+			debug "We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
+			return;
+		}
 		$self->{stage} = AFTER_NPC_CLOSE;
 		message TF("%s: Done talking\n", $self->{target}), "npc";
 	
@@ -132,6 +137,9 @@ sub delHooks {
 
 	Plugins::delHooks($_) for @{$self->{hookHandles}};
 	delete $self->{hookHandles};
+	
+	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
+	delete $self->{mapChangedHook};
 }
 
 sub DESTROY {
@@ -162,6 +170,14 @@ sub activate {
 		['packet/npc_store_info',     \&handleNPCTalk, \@holder],
 		['packet/npc_sell_list',      \&handleNPCTalk, \@holder]
 	);
+	
+	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
+}
+ 
+sub mapChanged {
+	my (undef, undef, $holder) = @_;
+	my $self = $holder->[0];
+	$self->{map_change} = 1;
 }
 
 # Overrided method.
@@ -269,6 +285,35 @@ sub iterate {
 			}
 		}
 
+	} elsif ($self->{map_change}) {
+		
+		#A conversation started right after mapchange (eg. payon guards)
+		if (%talk) {
+			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
+			# TODO: maybe better create a new task and pass remaining steps to it
+			debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
+			$self->{map_change} = 0;
+			$self->find_and_set_target;
+			$self->{stage} = TALKING_TO_NPC;
+			$self->{time} = time;
+			
+		#If there's no conversation clear this task
+		} else {
+			if ($self->{stage} == TALKING_TO_NPC) {
+				debug "Ending Task::TalkNPC due to mapchange, conversation interrupted and finished.\n";
+				
+			} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
+				debug "Ending Task::TalkNPC due to mapchange, talk cancel won't be sent.\n";
+				
+			} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
+				debug "Ending Task::TalkNPC due to mapchange, ending task before timeout.\n";
+				
+			} elsif ($self->{stage} == NOT_STARTED) {
+				debug "Ending Task::TalkNPC due to mapchange, ending task before conversation started.\n";
+			}
+			$self->conversation_end;
+		}
+	
 	# This is where things may bug in npcs which have no chat (private healers)
 	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
