@@ -2225,7 +2225,7 @@ sub npc_talk {
 	my ($self, $args) = @_;
 	
 	#Auto-create Task::TalkNPC if not active
-	unless (AI::is("NPC")) {
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
 		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
 		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);

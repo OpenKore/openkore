@@ -646,7 +646,6 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	
 	undef %talk;
-	AI::clear("NPC");
 	
 	$ai_v{temp} = {};
 	undef @venderItemList;
