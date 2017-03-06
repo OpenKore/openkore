@@ -29,7 +29,7 @@ sub _parse_syntax {
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 
-	$self->{lastMap} = $field->baseName;
+	$self->{lastMap} = $field ? $field->baseName : '';
 	$self->{lastLockMap} ||= '';
 
 	if ( $callback_type eq 'hook' && $callback_name eq 'configModify' && $args->{key} eq 'lockMap' ) {
