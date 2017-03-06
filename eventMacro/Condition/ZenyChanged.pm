@@ -1,4 +1,4 @@
-package eventMacro::Condition::ZennyChanged;
+package eventMacro::Condition::ZenyChanged;
 
 use strict;
 use Utils;
@@ -28,7 +28,7 @@ sub get_new_variable_list {
 	my $new_variables;
 	
 	$new_variables->{".".$self->{name}."Last"."Change"} = $self->{change};
-	$new_variables->{".".$self->{name}."Last"."ZennyAfter"} = $self->{zeny};
+	$new_variables->{".".$self->{name}."Last"."ZenyAfter"} = $self->{zeny};
 	
 	return $new_variables;
 }

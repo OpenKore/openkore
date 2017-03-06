@@ -1,4 +1,4 @@
-package eventMacro::Condition::Zenny;
+package eventMacro::Condition::Zeny;
 
 use strict;
 
