@@ -42,15 +42,11 @@ sub parseMacroFile {
 	my $inBlock = 0;
 	my $macroCountOpenBlock = 0;
 	my ($macro_subs, @perl_lines);
-	open my $fp, "<:utf8", $file or return 0;
-	while (<$fp>) {
-		$. == 1 && 
-		s/^\x{FEFF}//;          # utf bom
-		s/(.*)[\s\t]+#.*$/$1/;	# remove last comments
-		s/^\s*#.*$//;		    # remove comments
-		s/^\s*//;               # remove leading whitespaces
-		s/\s*[\r\n]?$//g;    	# remove trailing whitespaces and eol
-		s/  +/ /g;		        # trim down spaces - very cool for user's string data?
+	my $reader = Utils::TextReader->new( $file, { debug => 1 } );
+	while ( $_ = $reader->readLine ) {
+		s/\s+#.*$//os;      # remove last comments
+		s/^\s+|\s+$//gos;   # trim leading and trailing whitespace
+		s/  +/ /g;          # trim down spaces - very cool for user's string data?
 		next unless ($_);
 
 		if (!%block && /{$/) {
@@ -176,29 +172,8 @@ sub parseMacroFile {
 			warning "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
 			next
 		}
-
-		if ($key eq "!include") {
-			my $f = $value;
-			if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
-				if ($file =~ /[\/\\]/) {
-					$f = $file;
-					$f =~ s/(.*)[\/\\].*/$1/;
-					$f = File::Spec->catfile($f, $value)
-				} else {
-					$f = $value
-				}
-			}
-			if (-f $f) {
-				my $ret = parseMacroFile($f, 1);
-				return $ret unless $ret
-			} else {
-				error "$file: Include file not found: $f\n";
-				return 0
-			}
-		}
 	}
 	
-	close $fp;
 	return 0 if %block;
 	return {macros => \%macro, automacros => \%automacro};
 }
