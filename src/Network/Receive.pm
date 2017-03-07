@@ -2251,6 +2251,12 @@ sub quest_all_mission {
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
 			$mission->{mobName} = bytesToString($mobName);
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+				
+			});
 			debug "- $mobID $count $mobName\n", "info";
 		}
 	}
@@ -2277,6 +2283,11 @@ sub quest_add {
 		$mission->{mobID} = $mobID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
+		Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+		});
 		debug "- $mobID $count $mobName\n", "info";
 	}
 }
@@ -2315,13 +2326,21 @@ sub reconstruct_quest_update_mission_hunt_v2 {
 
 # 02B5
 sub quest_update_mission_hunt {
-   my ($self, $args) = @_;
-   my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
-   my $quest = \%{$questList->{$questID}};
-   my $mission = \%{$quest->{missions}->{$mobID}};
-   $mission->{goal} = $goal;
-   $mission->{count} = $count;
-   debug "- $questID $mobID $count $goal\n", "info";
+	my ($self, $args) = @_;
+	my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
+	debug "- $questID $mobID $count $goal\n", "info";
+	if ($questID) {
+		my $quest = \%{$questList->{$questID}};
+		my $mission = \%{$quest->{missions}->{$mobID}};
+		$mission->{goal} = $goal;
+		$mission->{count} = $count;
+		Plugins::callHook('quest_mission_updated', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count,
+				goal => $goal
+		});
+	}
 }
 
 # 02B7
