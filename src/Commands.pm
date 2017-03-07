@@ -4988,6 +4988,8 @@ sub cmdTalk {
 		} elsif ($type eq "cont") {
 			$current_step = 'c';
 
+		} elsif ($type eq "no") {
+			$current_step = 'n';
 		}
 			
 		if (defined $current_step) {

@@ -580,9 +580,15 @@ sub iterate {
 			$self->conversation_end;
 
 		} else {
-			$self->manage_wrong_sequence(T("According to the given NPC instructions, a npc conversation code " .
-				"should be used (".$step."), but it doesn't exist."));
-			return;
+			if ( $step =~ /^n$/i ) {
+				#Here for backwards compatibility
+				shift @{$self->{steps}};
+				
+			} else {
+				$self->manage_wrong_sequence(T("According to the given NPC instructions, a npc conversation code " .
+					"should be used (".$step."), but it doesn't exist."));
+				return;
+			}
 		}
 		
 		$self->{wait_for_answer} = 1;
@@ -644,8 +650,14 @@ sub iterate {
 				
 				# Too many steps
 				} else {
-					# TODO: maybe just warn about remaining steps and do not set error flag?
-					$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
+					if ( scalar @{$self->{steps}} == 1 && $self->{steps}[0] =~ /^n$/i ) {
+						#Here for backwards compatibility
+						$self->conversation_end;
+						
+					} else {
+						# TODO: maybe just warn about remaining steps and do not set error flag?
+						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
+					}
 				}
 			
 			# We still have steps but we also still have a defined %talk
@@ -796,7 +808,7 @@ sub addSteps {
 
 sub validateStep {
 	my ($self, $step) = @_;
-	return 1 if ($step =~ /^(?:c|w\d+|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
+	return 1 if ($step =~ /^(?:c|w\d+|n|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
 	$self->setError(WRONG_SYNTAX_IN_STEPS, TF("Invalid NPC conversation code: %s.", $step));
 	return 0;
 }
