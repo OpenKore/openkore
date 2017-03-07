@@ -2743,8 +2743,6 @@
 4991#Kafra_Blossom_Card#
 4992#HP_Absorption_1#
 4993#SP_Absorption_1#
-4998#GM_Aegis_Card#
-4999#GM_Valor_Card#
 5001#Headset#
 5002#Jewel_Crown#
 5003#Joker_Jester#
@@ -7402,6 +7400,7 @@
 17772#Overseas_Care_Package_II#
 17778#Overseas_Care_Package_III#
 17779#Love_Garden_Costume_Box#
+17786#Gothic_Costume_Egg#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8838,4 +8837,14 @@
 31167#Costume_Happy_Droopy_Lunatic_Ears_(Black)#
 31168#Costume_Mouton_Life_(Blue)#
 31172#Costume_Los_Pollos_Locos#
+31181#Costume_Rosary's_Necklace#
+31182#Costume_Side_Cap#
+31183#Costume_Fallen_Angel's_Blessing#
+31184#Costume_Eye_of_the_Hawk#
+31185#Costume_Engineer_Cap#
+31186#Costume_Black_Cat#
+31187#Costume_War_Princess_Ribbon#
+31188#Costume_Mono_Gothic_Bonnet#
+31189#Costume_Red_Cat_Ears_Cape#
+31190#Costume_Angel's_Black_Mini_Silk_Hat#
 31195#Costume_Mini_Chocolate_Hat#
