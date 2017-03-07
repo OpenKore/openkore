@@ -236,6 +236,7 @@ sub received_characters_unpackString {
 		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
 		# change $hairstyle
 		return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $_ == 147;
+		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $_ == 145;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $_ == 144;
 		# change slot feature
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $_ == 140;
@@ -2367,6 +2368,51 @@ sub quest_active {
 	$questList->{$args->{questID}}->{active} = $args->{active};
 }
 
+# 02C1
+sub parse_npc_chat {
+	my ($self, $args) = @_;
+
+	$args->{actor} = Actor::get($args->{ID});
+}
+
+sub npc_chat {
+	my ($self, $args) = @_;
+
+	# like public_chat, but also has color
+
+	my $actor = $args->{actor};
+	my $message = $args->{message}; # needs bytesToString or not?
+	my $position = sprintf("[%s %d, %d]",
+		$field ? $field->baseName : T("Unknown field,"),
+		@{$char->{pos_to}}{qw(x y)});
+	my $dist;
+
+	if ($message =~ / : /) {
+		((my $name), $message) = split / : /, $message, 2;
+		$dist = 'unknown';
+		unless ($actor->isa('Actor::Unknown')) {
+			$dist = distance($char->{pos_to}, $actor->{pos_to});
+			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+		}
+		if ($actor->{name} eq $name) {
+			$name = "$actor";
+		} else {
+			$name = sprintf "%s (%s)", $name, $actor->{binID};
+		}
+		$message = "$name: $message";
+
+		$position .= sprintf(" [%d, %d] [dist=%s] (%d)",
+			@{$actor->{pos_to}}{qw(x y)},
+			$dist, $actor->{nameID});
+		$dist = "[dist=$dist] ";
+	}
+
+	chatLog("npc", "$position $message\n") if ($config{logChat});
+	message TF("%s%s\n", $dist, $message), "npcchat";
+
+	# TODO hook
+}
+
 sub forge_list {
 	my ($self, $args) = @_;
 
@@ -2389,8 +2435,7 @@ sub storage_opened {
 
 sub storage_closed {
 	$char->storage->close();
-	message T("Storage closed.\n"), "storage";
-	Plugins::callHook('packet_storage_close');
+	message T("Storage closed.\n"), "storage";;
 
 	# Storage log
 	writeStorageLog(0);
@@ -2404,6 +2449,8 @@ sub storage_closed {
 
 sub storage_items_stackable {
 	my ($self, $args) = @_;
+
+	$char->storage->clear;
 
 	$self->_items_list({
 		class => 'Actor::Item',

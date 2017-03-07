@@ -22,14 +22,18 @@ sub isReady {
 	return $self->{exists};
 }
 
-#TODO: Add a hook call here to be used in places where we need to know exaclty when cart info was received.
 sub info {
 	my ($self, $args) = @_;
 	$self->{items} = $args->{items};
 	$self->{items_max} = $args->{items_max};
 	$self->{weight} = int($args->{weight} / 10);
 	$self->{weight_max} = int($args->{weight_max} / 10);
-	$self->{exists} = 1;
+	if (!$self->{exists}) {
+		$self->{exists} = 1;
+		Plugins::callHook('cart_ready');
+	} else {
+		Plugins::callHook('cart_info_updated');
+	}
 }
 
 sub onMapChange {

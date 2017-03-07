@@ -108,7 +108,7 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
-charBlockSize 144
+charBlockSize 145
 charDeleteDateType 1
 
 [International - iRO: Sakray]
@@ -123,7 +123,7 @@ paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 addTableFolders iRO
-charBlockSize 144
+charBlockSize 145
 
 #Pre-renewal
 [International - iRO: Loki Classic]

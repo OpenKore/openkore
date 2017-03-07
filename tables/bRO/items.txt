@@ -7292,5 +7292,116 @@
 20361#Rabo de Cavalo Castanho#
 20362#Rabo de Cavalo Azul#
 20363#Rabo de Cavalo Branco#
-20344#Balão Feliz#
+20344#Balões de Festa#
+//*****************************************************
+//------------Aplicar em 2016-10-18--------------------
+//*****************************************************
+20342#Maria-Chiquinha Preta#
+20364#Maria-Chiquinha Loira#
+20365#Maria-Chiquinha Verde#
+20366#Maria-Chiquinha Roxa#
+20367#Maria-Chiquinha Vermelha#
+20368#Maria-Chiquinha Castanha#
+20369#Maria-Chiquinha Azul#
+20370#Maria-Chiquinha Branca#
+//*****************************************************
+//------------Aplicar em 2016-10-25--------------------
+//*****************************************************
+9101#Gaiola Portátil do Zumbichano#
+10040#Coleira Vermelha com Sino#
+20397#Máscara de Jakk#
+25245#Pequena Pilha de Ossos#
+25133#Ramo Branco Seco#
+11605#Biscoito de Morcego#
+11550#Bolo de Abóbora#
+25132#Decoração de Abóbora#
+20430#Crânios Etéreos de Morroc#
+20130#Cartola Sussurrante#
+20174#Chapéu de Bruxa Laranja#
+20172#Miniabóbora Elegante#
+20175#Fone de Ouvido de Diabolik#
+20167#Fone de Ouvido de Deviruchi#
+20168#Lenço de Caveira#
+31088#Chapéu de Bicho Papão#
+//*****************************************************
+//------------Aplicar em 2016-11-01--------------------
+//*****************************************************
+19787#Olhos de Valquíria#
+20195#Gato Rabugento#
+19840#Elmo Solar Dourado#
+//*****************************************************
+//------------Aplicar em 2016-11-08--------------------
+//*****************************************************
+20262#Orelhas de Raposa#
+20266#Zíper Secreto#
+20443#Elmo de Unicórnio#
+//*****************************************************
+//------------Aplicar em 2016-11-17--------------------
+//*****************************************************
+28319#Cauda Demoníaca#
+18125#Arco Demoníaco#
+13449#Espada Demoníaca#
+1676#Cajado Demoníaco#
+//*****************************************************
+//------------Aplicar em 2016-11-30--------------------
+//*****************************************************
+20011#Elmo Primarino#
+20012#Chapéu Deciduai#
+20010#Orelhas Solares#
+20435#Pingente Lunar#
+20269#Orelhas Incinerantes#
+//*****************************************************
+//------------Aplicar em 2016-12-06--------------------
+//*****************************************************
+31158#Chapéu de Esquilo#
+31159#Chapéu de Jormungand#
+5914#Aura Esplêndida#
+13997#Bolinhos de Carne [500]#
+19139#Orbes Arcanos#
+//*****************************************************
+//------------Aplicar em 2016-12-13--------------------
+//*****************************************************
+20099#Esplêndido Brilhante#
+20032#Turbante do Oráculo#
+19865#Coroa de Bufão#
+//*****************************************************
+//------------Aplicar em 2016-12-20--------------------
+//*****************************************************
+31132#Guirlanda Natalina#
+25251#Suco de Uva Fermentado#
+25252#Ramo de Azevinho#
+25253#Caixa de Açúcar#
+25254#Lenha#
+23202#Quentão#
+6606#Cupom de Decoração de Carrinho#
+19697#Gorro de Natal do Rudolph#
+//*****************************************************
+//------------Aplicar em 2017-01-03--------------------
+//*****************************************************
+31057#Cachecol Preto do Eremes#
+31089#Fúria dos Shuras#
+20108#Óculos Julieta de Quartzo Rubi#
+//*****************************************************
+//------------Aplicar em 2017-01-11--------------------
+//*****************************************************
+20171#Chapéu Torta Holandesa#
+20197#Boina de Amistr#
+20113#Chapéu do Oráculo#
+20109#Chapéu Jolly Roger#
+//*****************************************************
+//------------Aplicar em 2017-01-17--------------------
+//*****************************************************
+20112#Chapéu de Praia Azul#
+19602#Chapéu Invisível#
+19603#Óculos Invisíveis#
+19604#Máscara Invisível#
+12786#Cupom de Troca de Slot#
+//*****************************************************
+//------------Aplicar em 2017-01-24--------------------
+//*****************************************************
+2935#Luvas de Corrida#
+19929#Laço Clássico#
+19922#Chapéu Arcebispal#
+1837#Garra de Ferro#
+19020#Tiara Arcana#
 //file end

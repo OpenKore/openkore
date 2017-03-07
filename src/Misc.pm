@@ -1261,7 +1261,13 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ($messageSender->{char_create_version}) {
+			if ( $messageSender->{char_create_version} == 0x0A39 ) {
+				$message
+					= T( "Please enter the desired properties for your characters, in this form:\n" )
+					. T( "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n" )
+					. T( "Job should be one of 'novice' or 'summoner' (default is 'novice').\n" )
+					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
+			} elsif ($messageSender->{char_create_version}) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
 					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
 			} else {
@@ -1535,7 +1541,20 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ($messageSender->{char_create_version}) {
+	if ( $messageSender->{char_create_version} == 0x0A39 ) {
+		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
+		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
+
+		if ( grep { !/^(novice|summoner|male|female|m|f)$/io } @_ ) {
+			$interface->errorDialog( T( 'Unknown job or sex.' ), 0 );
+			return 0;
+		}
+
+		my $job_id = scalar( grep {/^summoner$/io} @_ ) ? 4218 : 0;
+		my $sex    = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
+
+		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $job_id, $sex );
+	} elsif ($messageSender->{char_create_version}) {
 		my ($hair_style, $hair_color) = @_;
 
 		$messageSender->sendCharCreate($slot, $name,
@@ -1809,7 +1828,7 @@ sub inventoryItemRemoved {
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('inventory_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
+	Plugins::callHook('inventory_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
@@ -1828,7 +1847,7 @@ sub storageItemRemoved {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('storage_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
+	Plugins::callHook('storage_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
@@ -1847,7 +1866,7 @@ sub cartItemRemoved {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('cart_item_removed', {index => $item->{invIndex}, amount => $amount, remaining => $item->{amount}});
+	Plugins::callHook('cart_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 # Resolve the name of a card
