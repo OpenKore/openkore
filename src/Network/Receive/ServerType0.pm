@@ -413,7 +413,7 @@ sub new {
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys'],
-		'02C1' => ['npc_chat', 'v V2 a24', [qw(len accountID color msg)]],
+		'02C1' => ['npc_chat', 'x2 a4 a4 Z*', [qw(ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
@@ -540,6 +540,8 @@ sub new {
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
+		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
+		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -557,6 +559,11 @@ sub new {
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
+		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
+		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
@@ -1275,11 +1282,8 @@ sub arrow_none {
 sub arrowcraft_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -1332,10 +1336,7 @@ sub card_merge_list {
 
 	# You just requested a list of possible items to merge a card into
 	# The RO client does this when you double click a card
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 	my ($len) = unpack("x2 v", $msg);
 
 	my $index;
@@ -1365,10 +1366,7 @@ sub card_merge_status {
 			$card->{name}, $item->{name}), "success";
 
 		# Remove one of the card
-		$card->{amount} -= 1;
-		if ($card->{amount} <= 0) {
-			$char->inventory->remove($card);
-		}
+		inventoryItemRemoved($card->{invIndex}, 1);
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
@@ -1393,86 +1391,6 @@ sub card_merge_status {
 
 	undef @cardMergeItemsID;
 	undef $cardMergeIndex;
-}
-
-sub cart_info {
-	my ($self, $args) = @_;
-
-	$cart{items} = $args->{items};
-	$cart{items_max} = $args->{items_max};
-	$cart{weight} = int($args->{weight} / 10);
-	$cart{weight_max} = int($args->{weight_max} / 10);
-	$cart{exists} = 1;
-	debug "[cart_info] received.\n", "parseMsg";
-}
-
-sub cart_add_failed {
-	my ($self, $args) = @_;
-
-	my $reason;
-	if ($args->{fail} == 0) {
-		$reason = T('overweight');
-	} elsif ($args->{fail} == 1) {
-		$reason = T('too many items');
-	} else {
-		$reason = TF("Unknown code %s",$args->{fail});
-	}
-	error TF("Can't Add Cart Item (%s)\n", $reason);
-}
-
-sub cart_items_nonstackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		# TODO: different classes for inventory/cart/storage items
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Non-Stackable Cart Item',
-		items => [$self->parse_items_nonstackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_items_stackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_cart',
-		debug_str => 'Stackable Cart Item',
-		items => [$self->parse_items_stackable($args)],
-		getter => sub { $cart{inventory}[$_[0]{index}] },
-		adder => sub { $cart{inventory}[$_[0]{index}] = $_[0] },
-	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
-}
-
-sub cart_item_added {
-	my ($self, $args) = @_;
-
-	my $item = $cart{inventory}[$args->{index}] ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $args->{amount};
-	} else {
-		$item->{index} = $args->{index};
-		$item->{nameID} = $args->{nameID};
-		$item->{amount} = $args->{amount};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{type} = $args->{type} if (exists $args->{type});
-		$item->{name} = itemName($item);
-	}
-	message TF("Cart Item Added: %s (%d) x %s\n", $item->{name}, $args->{index}, $args->{amount});
-	$itemChange{$item->{name}} += $args->{amount};
-	$args->{item} = $item;
 }
 
 sub cash_dealer {
@@ -1523,21 +1441,6 @@ sub combo_delay {
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
 }
 
-sub cart_item_removed {
-	my ($self, $args) = @_;
-
-	my ($index, $amount) = @{$args}{qw(index amount)};
-
-	my $item = $cart{inventory}[$index];
-	$item->{amount} -= $amount;
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $index, $amount);
-	$itemChange{$item->{name}} -= $amount;
-	if ($item->{amount} <= 0) {
-		$cart{'inventory'}[$index] = undef;
-	}
-	$args->{item} = $item;
-}
-
 sub change_to_constate25 {
 	$net->setState(2.5);
 	undef $accountID;
@@ -1574,14 +1477,14 @@ sub character_creation_successful {
 		$char->{$_} = $args->{$_} if (exists $args->{$_});
 	}
 	$char->{name} = bytesToString($args->{name});
-	$char->{jobID} = 0;
+	$char->{jobID} = defined $args->{job_id} ? $args->{job_id} : 0;
 	$char->{headgear}{low} = 0;
 	$char->{headgear}{top} = 0;
 	$char->{headgear}{mid} = 0;
 	$char->{nameID} = unpack("V", $accountID);
 	#$char->{lv} = 1;
 	#$char->{lv_job} = 1;
-	$char->{sex} = $accountSex2;
+	$char->{sex} = defined $args->{sex} ? $args->{sex} : $accountSex2;
 	$chars[$char->{slot}] = $char;
 
 
@@ -1598,9 +1501,7 @@ sub character_creation_successful {
 sub chat_users {
 	my ($self, $args) = @_;
 
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	my $ID = substr($args->{RAW_MSG},4,4);
 	$currentChatRoom = $ID;
@@ -1662,17 +1563,15 @@ sub deal_add_you {
 	return unless $args->{index} > 0;
 
 	my $item = $char->inventory->getByServerIndex($args->{index});
+	$args->{item} = $item;
 	# FIXME: quickly add two items => lastItemAmount is lost => inventory corruption; see also Misc::dealAddItem
 	# FIXME: what will be in case of two items with the same nameID?
 	# TODO: no info about items is stored
+	$currentDeal{you_items}++;
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
-	$item->{amount} -= $currentDeal{lastItemAmount};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
-	$currentDeal{you_items}++;
-	$args->{item} = $item;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
+	inventoryItemRemoved($item->{invIndex}, $currentDeal{lastItemAmount});
 }
 
 sub equip_item {
@@ -1690,6 +1589,7 @@ sub equip_item {
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
 					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+					Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 				}
 			}
 		}
@@ -1736,7 +1636,7 @@ sub mercenary_init {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
@@ -1758,7 +1658,7 @@ sub homunculus_property {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
@@ -1821,11 +1721,8 @@ sub gameguard_request {
 
 sub guild_member_setting_list {
 	my ($self, $args) = @_;
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-	$msg = substr($msg, 0, 4).$newmsg;
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i += 16) {
 		$gtIndex = unpack("V1", substr($msg, $i, 4));
@@ -1899,11 +1796,9 @@ sub guild_expulsionlist {
 sub guild_members_list {
 	my ($self, $args) = @_;
 
-	my ($newmsg, $jobID);
+	my ($jobID);
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
-	$msg = substr($msg, 0, 4) . $newmsg;
 
 	my $c = 0;
 	delete $guild{member};
@@ -1964,11 +1859,8 @@ sub guild_notice {
 sub identify_list {
 	my ($self, $args) = @_;
 
-	my $newmsg;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$self->decrypt(\$newmsg, substr($msg, 4));
-	$msg = substr($msg, 0, 4).$newmsg;
 
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -2015,6 +1907,7 @@ sub inventory_item_added {
 			} elsif ($args->{switch} eq '02D4') {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
+			$item->{options} = $args->{options};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
@@ -2084,9 +1977,6 @@ sub inventory_items_nonstackable {
 			}
 		}
 	});
-
-	$ai_v{'inventory_time'} = time + 1;
-	$ai_v{'cart_time'} = time + 1;
 }
 
 sub item_skill {
@@ -2206,7 +2096,6 @@ sub map_changed {
 		delete $char->{permitSkill};
 		delete $char->{encoreSkill};
 	}
-	$cart{exists} = 0;
 	undef %guild;
 
 	Plugins::callHook('Network::Receive::map_changed', {
@@ -2325,11 +2214,6 @@ sub npc_image {
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
-	if (length($args->{RAW_MSG}) > 4) {
-		my $newmsg;
-		$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
-	}
 	
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
@@ -2366,9 +2250,7 @@ sub npc_store_begin {
 
 sub npc_store_info {
 	my ($self, $args) = @_;
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
-	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	my $msg = $args->{RAW_MSG};
 	undef @storeList;
 	my $storeList = 0;
 	undef $talk{'buyOrSell'};
@@ -2407,18 +2289,6 @@ sub npc_talk {
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
 	my $msg = bytesToString ($args->{msg});
-
-=pod
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-
-	my $msg = substr($args->{RAW_MSG}, 0, 8) . $newmsg;
-	my $ID = substr($msg, 4, 4);
-	my $talkMsg = unpack("Z*", substr($msg, 8));
-	$talk{ID} = $ID;
-	$talk{nameID} = unpack("V1", $ID);
-	$talk{msg} = bytesToString($talkMsg);
-=cut
 
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
@@ -2505,9 +2375,7 @@ sub npc_talk_responses {
 	# 00b7: word len, long ID, string str
 	# A list of selections appeared on the NPC message dialog.
 	# Each item is divided with ':'
-	my $newmsg;
-	$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	my $ID = substr($msg, 4, 4);
 	$talk{ID} = $ID;
@@ -2567,10 +2435,7 @@ sub party_allow_invite {
 
 sub party_chat {
 	my ($self, $args) = @_;
-	my $msg;
-
-	$self->decrypt(\$msg, $args->{message});
-	$msg = bytesToString($msg);
+	my $msg = $args->{message};
 
 	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
@@ -2870,9 +2735,7 @@ sub party_users_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
-	my $msg;
-	$self->decrypt(\$msg, substr($args->{RAW_MSG}, 28));
-	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
+	my $msg = $args->{RAW_MSG};
 	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
@@ -3041,7 +2904,6 @@ sub public_chat {
 
 sub private_message {
 	my ($self, $args) = @_;
-	my ($newmsg, $msg); # Type: Bytes
 
 	return unless changeToInGameState();
 
@@ -3461,11 +3323,12 @@ sub map_property {
 		1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
 
 		if ($args->{info_table}) {
-			my @info_table = unpack 'C*', $args->{info_table};
-			$char->setStatus(@$_) for map {[
-				defined $mapPropertyInfoHandle{$_} ? $mapPropertyInfoHandle{$_} : "UNKNOWN_MAPPROPERTY_INFO_$_",
-				$info_table[$_],
-			]} 0 .. @info_table-1;
+			my $info_table = unpack('V1',$args->{info_table});
+			for (my $i = 0; $i < 16; $i++) {
+				if ($info_table&(1<<$i)) {
+					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
+				}
+			}
 		}
 	}
 	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
@@ -3982,10 +3845,7 @@ sub skills_list {
 
 	return unless changeToInGameState;
 
-	my ($msg, $newmsg);
-	$msg = $args->{RAW_MSG};
-	$self->decrypt(\$newmsg, substr $msg, 4);
-	$msg = substr ($msg, 0, 4) . $newmsg;
+	my $msg = $args->{RAW_MSG};
 
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
@@ -4438,65 +4298,6 @@ sub stat_info2 {
 	}
 }
 
-sub storage_closed {
-	message T("Storage closed.\n"), "storage";
-	delete $ai_v{temp}{storage_opened};
-	delete $storage{opened};
-	Plugins::callHook('packet_storage_close');
-
-	# Storage log
-	writeStorageLog(0);
-
-	if ($char->{dcOnEmptyItems} ne "") {
-		message TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems});
-		chatLog("k", TF("Disconnecting on empty %s!\n", $char->{dcOnEmptyItems}));
-		quit();
-	}
-}
-
-sub storage_item_added {
-	my ($self, $args) = @_;
-
-	my $index = $args->{index};
-	my $amount = $args->{amount};
-
-	my $item = $storage{$index} ||= Actor::Item->new;
-	if ($item->{amount}) {
-		$item->{amount} += $amount;
-	} else {
-		binAdd(\@storageID, $index);
-		$item->{nameID} = $args->{nameID};
-		$item->{index} = $index;
-		$item->{amount} = $amount;
-		$item->{type} = $args->{type};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{name} = itemName($item);
-		$item->{binID} = binFind(\@storageID, $index);
-	}
-	message TF("Storage Item Added: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
-	$itemChange{$item->{name}} += $amount;
-	$args->{item} = $item;
-}
-
-sub storage_item_removed {
-	my ($self, $args) = @_;
-
-	my ($index, $amount) = @{$args}{qw(index amount)};
-
-	my $item = $storage{$index};
-	$item->{amount} -= $amount;
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
-	$itemChange{$item->{name}} -= $amount;
-	$args->{item} = $item;
-	if ($item->{amount} <= 0) {
-		delete $storage{$index};
-		binRemove(\@storageID, $index);
-	}
-}
-
 sub character_equip {
 	my ($self, $args) = @_;
 
@@ -4524,56 +4325,6 @@ sub character_equip {
 	$msg .= "%-${w}s : %s\n", $equipTypes_lut{$_->{equipped}}, $_->{name} foreach sort { $a->{sort} <=> $b->{sort} } @items;
 	$msg .= "-------------------------------\n";
 	message($msg, "list");
-}
-
-sub storage_items_nonstackable {
-	my ($self, $args) = @_;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_storage',
-		debug_str => 'Non-Stackable Storage Item',
-		items => [$self->parse_items_nonstackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
-	});
-
-	$storageTitle = $args->{title} ? $args->{title} : undef;
-}
-
-sub storage_items_stackable {
-	my ($self, $args) = @_;
-
-	undef %storage;
-	undef @storageID;
-
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_storage',
-		debug_str => 'Stackable Storage Item',
-		items => [$self->parse_items_stackable($args)],
-		adder => sub { $_[0]{binID} = binAdd(\@storageID, $_[0]{index}); $storage{$_[0]{index}} = $_[0] },
-		callback => sub {
-			my ($local_item) = @_;
-
-			$local_item->{amount} = $local_item->{amount} & ~0x80000000;
-		},
-	});
-
-	$storageTitle = $args->{title} ? $args->{title} : undef;
-}
-
-sub storage_opened {
-	my ($self, $args) = @_;
-	$storage{items} = $args->{items};
-	$storage{items_max} = $args->{items_max};
-
-	$ai_v{temp}{storage_opened} = 1;
-	if (!$storage{opened}) {
-		$storage{opened} = 1;
-		$storage{openedThisSession} = 1;
-		message defined $storageTitle ? TF("Storage '%s' opened.\n", $storageTitle) : T("Storage opened.\n"), "storage";
-		Plugins::callHook('packet_storage_open');
-	}
 }
 
 sub storage_password_request {
@@ -4785,6 +4536,7 @@ sub unequip_item {
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
 				delete $char->{equipment}{$equipSlot_lut{$_}};
+				Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 			}
 		}
 	}
@@ -4826,11 +4578,8 @@ sub use_item {
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	if ($item) {
-		$item->{amount} -= $args->{amount};
 		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
-		}
+		inventoryItemRemoved($item->{invIndex}, $args->{amount});
 	}
 }
 
@@ -6058,9 +5807,7 @@ sub buying_store_item_delete {
 	my $item = $char->inventory->getByServerIndex($args->{index});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
-	#	buyingstoreitemdelete($item->{invIndex}, $args->{amount});
 		inventoryItemRemoved($item->{invIndex}, $args->{amount});
-	#	Plugins::callHook('buying_store_item_delete', {index => $item->{invIndex}});
 	}
 	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
 }
@@ -6151,6 +5898,7 @@ sub skill_delete {
 	return if !$skill;
 	return if !$char->{skills}->{ $skill->getHandle };
 
+	message TF( "Lost skill: %s\n", $skill->getName ), 'skill';
 	delete $char->{skills}->{ $skill->getHandle };
 	binRemove( \@skillsID, $skill->getHandle );
 }

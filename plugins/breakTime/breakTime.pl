@@ -11,7 +11,7 @@ my $hooks = Plugins::addHooks(
 	['mainLoop_pre', \&mainLoop_pre],
 );
 
-Plugins::register('breakTime', 'config.autoBreakTime', sub { Plugins::delHooks($hooks) });
+Plugins::register('breakTime', 'Automatically disconnect and reconnect at certain times of the day', sub { Plugins::delHooks($hooks) });
 
 *AI::CoreLogic::processAutoBreakTime = sub {}; # for pre-2.1
 

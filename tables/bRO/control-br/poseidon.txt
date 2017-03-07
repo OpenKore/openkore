@@ -21,7 +21,7 @@ queryserver_port=24390
 # para o poseidon funcionar correctamente!
 # O tipo de servidor disponível agora é apenas: Default, bRO_.* (check servertypes.txt).
 # Você deve modificar esta linha se estiver tendo problema com a lista de personagens
-server_type=bRO_2012-09-19a
+server_type=bRO_2016-11-08a
 
 # Tamanho de Bloco Char
 # Aqui você pode especificar o CharBlockSize desejado no seu cliente.

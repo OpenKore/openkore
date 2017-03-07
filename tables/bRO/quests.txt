@@ -1,4 +1,4 @@
-// ÇÏÄ¡¿ø
+﻿// ÇÏÄ¡¿ø
 1000#Transcendental#SG_FEEL#QUE_NOIMAGE#
 Você pode se tornar um herói com o Livro de Ymir. Encontre o Hall da Valquíria e se torne um novo herói. #
 #
@@ -11283,3 +11283,160 @@ Converse com Rayan Moore#
 7566#Viagem Dimensional#SG_FEEL#QUE_NOIMAGE#
 O Dispositivo da Fissura Dimensional foi criado especialmente para entrar na fenda dimensional entre o tempo e espaço.#
 #
+
+//2015
+
+11446#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você foi acordado pelas vozes sussurrantes de fantasmas. Você se encontra em Niflheim, a cidade dos mortos. Vamos ouvir o que os fantasmas tem a dizer.#
+Fale com Hororong#
+
+11447#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Eles disseram que o Jakk da praça pode saber de algo. Vamos perguntar para o Jakk da praça.#
+Fale com Jakk#
+
+11448#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você ouviu sobre o lugar onde Jakk costumava ficar. Vamos voltar para Hooroorong.#
+Fale com Hooroorong#
+
+11449#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar do campo e da masmorra, capture dez Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Limpos e Secos para Hororong. Eles são pegos ao capturar os Jakks.#
+Envie Jakk para Niflheim#
+
+11450#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você trouxe Jakk para Niflheim. De acordo com os fantasmas, ramos de Jakk nascem se ele ficar no mundo dos vivos por um longo período. Deixe-o descansar.#
+Descanso de Jakk#
+
+11451#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar do campo e da masmorra, capture dez Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Limpos e Secos para Hororong. Eles são pegos ao capturar os Jakks..#
+Envie Jack para Niflheim#
+
+//2016 Halloween
+
+11484#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+É difícil de entender, mas parece que você precisa pegar Ramo Limpo e Seco e voltar até Jakk.#
+Obtido um Ramo Limpo e Seco#
+
+11485#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gatinho assustado fugiu quando Jakk foi capturado. Pergunte a  Harorong, quem estava com Jakk.#
+Fale com Harorong#
+
+11486#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Nibble na entrada pode ter visto o bichano. Fale com Nibble na entrada oeste de Niflheim.#
+Nibble no oeste de Niflheim#
+
+11487#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Um pequeno, e branco objeto foi avistado na entrada pouco tempo atrás. Eles não tem certeza se era um gato. Vamos perguntar para alguém fora da entrada.#
+Fale com Jakk#
+
+11488#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o gato de Jakk sumiu. Vamos falar com o Jakk que está tentando encontrar o gato.#
+Fale com Jakk#
+
+11489#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gato de Jakk foi para Midgard através de uma raiz da Yggdrasil. Ele provavelmente foi por Umbala. Vamos investigar.#
+Investigação na entrada Norte de Umbala#
+
+11490#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O pesquisador disse que ele explicou para o gatinho como chegar até Morroc. Vamos investigar perto da entrada Norte de Morroc.#
+Investigação na entrada Norte de Morroc#
+
+11491#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O mercador disse que ele contou a alguém como chegar até Alberta. Vamos investigar perto da entrada Norte de Alberta.#
+Investigação na entrada de Alberta #
+
+11492#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Se você for até o porto, você encontrará muitos gatos que querem roubar seus peixes. Vamos investigar perto do porto.#
+Invesgitação no porto de Alberta#
+
+11493#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Você achou um gato branco, mas não parece ser o gato de Jakk. O monte de areia é suspeito. Vamos investigar.#
+Investigação no Monte de Areia#
+
+11494#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+No monte de areia, você encontrou ossos que parecem vir de um animal pequeno. Você também encontrou uma coleira vermelha com um sino. Vamos voltar até Jakk.#
+Fale com Jakk em Niflheim#
+
+// -- 2016 Christmas
+1300#No rastro dos ingredientes#SG_FEEL#QUE_NOIMAGE#
+A equipe de Voluntários Mão Amiga está tentando preparar um  quentão para os vizinhos, mas a entrega de ingredientes está atrasada. Para ajudar Ballery, visite as pessoas e descubra o que aconteceu.#
+Encontre os entregadores dos ingredientes#
+
+1301#No rastro dos ingredientes-Geffen#SG_FEEL#QUE_NOIMAGE#
+Em Geffen, encontre o Sr. Kantina e pergunte sobre a doação de Suco de Uva Fermentado.#
+Encontre Kantina#
+
+1302#No rastro dos ingredientes-Morocc#SG_FEEL#QUE_NOIMAGE#
+Em Morocc, encontre o Sr. Brutaqual e pergunte sobre a doação de Laranjas e Maçãs.#
+Encontre Brutaqual#
+
+1303#No rastro dos ingredientes-Alberta#SG_FEEL#QUE_NOIMAGE#
+Em Alberta, encontre com a Sra. Curundu e pergunte sobre a doação de Canela e Noz-Moscada.#
+Encontre Curundu#
+
+1304#No rastro dos ingredientes-Aldebaran#SG_FEEL#QUE_NOIMAGE#
+Em Aldebaran, encontre com Askar e pergunte sobre a doação de Açúcar.#
+Encontre Askar#
+
+1305#No rastro dos ingredientes-Payon#SG_FEEL#QUE_NOIMAGE#
+Em Payon, encontre Vinpa e pergunte sobre a doação de Maçãs.#
+Encontre Vinpa#
+
+1306#Pedido da Kantina#SG_FEEL#QUE_NOIMAGE#
+Kantina disse que os Orcs Noéis roubaram todo o Suco de Uva Fermentado. Ajude Kantina e recuperar 6 Sucos de Uva Fermentado.#
+Colete 6 Sucos de Uva Fermentado#
+
+1307#Pedido de Curundu#SG_FEEL#QUE_NOIMAGE#
+Os Poring Noéis estão comendo todos os produtos. Livre-se dos Poring Noéis enquanto espera pela entrega da carga.#
+Cace 3 Poring Noéis#
+
+1308#Pedido de Askar#SG_FEEL#QUE_NOIMAGE#
+A entrega da doação está atrasada. Vamos coletar uma caixa de açúcar e entregar a Ballery.#
+Entregue a Caixa de Açúcar a Ballery#
+
+1309#Espalhe o Amor com a Mão Amiga#SG_FEEL#QUE_NOIMAGE#
+A Mão Amiga está tentando compartilhar Quentão em suas filiais. Colete um pouco de lenha para ajudar a Mão Amiga a cozinhar o Quentão, e entregue-o em suas filiais.#
+Espalhe o Amor na área solicitada#
+
+1310#Espalhe o Amor em Izlude#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Izlude e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Izlude#
+
+1311#Espalhe o Amor em Geffen#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Geffen e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Geffen#
+
+1312#Espalhe o Amor em Payon#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Payon e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Payon#
+
+1313#Espalhe o Amor em Morroc#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Morroc e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Morroc#
+
+1314#Espalhe o Amor em Alberta#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Alberta e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Alberta#
+
+1315#Espalhe o Amor em Aldebaran#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Aldebaran e entregue 1 Quentão e 3 Lenhas.#
+Entregue o produto para o membro da filial de Aldebaran#
+
+1316#Espalhe o Amor em Prontera#SG_FEEL#QUE_NOIMAGE#
+Encontre o membro da filial de Prontera e entregue 1 Quentão e 3 Lenhas.#
+ntregue o produto para o membro da filial de Prontera#
+
+1317#O Quentão Acabou Hoje#SG_FEEL#QUE_NOIMAGE#
+O quentão acabou. Volte após às 4 AM quando o quentão estará pronto de novo.#
+Visite Ballery após 4 AM#
+
+1318#O Pedido de Elena#SG_FEEL#QUE_NOIMAGE#
+Elena pediu para que você ajudasse sua irmã a todo custo. Para saber o que está acontecendo, encontre Ballery em frente da Catedral de Prontera.#
+Encontre Ballery em frente à Catedral de Prontera#
+
+1319#A Memória do Ramo de Azevinho#SG_FEEL#QUE_NOIMAGE#
+Ballery lhe deu Ramo de Azevinho para agradecer pela ajuda. Talvez se decorado, ele possa se tornar uma linda guirlanda. Encontre Brechen e peça que ela decore o ramo. Ela pode ser encontrada em Izlude.#
+Izlude¿¡¼­ Brechen#
+
+1320#Fazendo uma Guirlanda de Natal#SG_FEEL#QUE_NOIMAGE#
+Brechen disse que você precisa coletar 10 Ramos de Azevinho para fazer uma Guirlanda de Natal.#
+Colete 10 Ramos de Azevinho#

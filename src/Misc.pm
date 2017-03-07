@@ -85,8 +85,7 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID
-	buyingstoreitemdelete/,
+	itemNameToID/,
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -195,8 +194,6 @@ our @EXPORT = (
 	checkSelfCondition
 	checkPlayerCondition
 	checkMonsterCondition
-	findCartItemInit
-	findCartItem
 	makeShop
 	openShop
 	closeShop
@@ -1264,7 +1261,13 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ($messageSender->{char_create_version}) {
+			if ( $messageSender->{char_create_version} == 0x0A39 ) {
+				$message
+					= T( "Please enter the desired properties for your characters, in this form:\n" )
+					. T( "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n" )
+					. T( "Job should be one of 'novice' or 'summoner' (default is 'novice').\n" )
+					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
+			} elsif ($messageSender->{char_create_version}) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
 					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
 			} else {
@@ -1538,7 +1541,20 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ($messageSender->{char_create_version}) {
+	if ( $messageSender->{char_create_version} == 0x0A39 ) {
+		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
+		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
+
+		if ( grep { !/^(novice|summoner|male|female|m|f)$/io } @_ ) {
+			$interface->errorDialog( T( 'Unknown job or sex.' ), 0 );
+			return 0;
+		}
+
+		my $job_id = scalar( grep {/^summoner$/io} @_ ) ? 4218 : 0;
+		my $sex    = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
+
+		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $job_id, $sex );
+	} elsif ($messageSender->{char_create_version}) {
 		my ($hair_style, $hair_color) = @_;
 
 		$messageSender->sendCharCreate($slot, $name,
@@ -1812,6 +1828,45 @@ sub inventoryItemRemoved {
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('inventory_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+}
+
+##
+# storageItemRemoved($invIndex, $amount)
+#
+# Removes $amount of $invIndex from $char->{storage}.
+# Also prints a message saying the item was removed
+sub storageItemRemoved {
+	my ($invIndex, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->storage->get($invIndex);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->storage->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('storage_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+}
+
+##
+# cartItemRemoved($invIndex, $amount)
+#
+# Removes $amount of $invIndex from $char->{cart}.
+# Also prints a message saying the item was removed
+sub cartItemRemoved {
+	my ($invIndex, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->cart->get($invIndex);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->cart->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('cart_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 # Resolve the name of a card
@@ -1898,6 +1953,17 @@ sub itemName {
 		$suffix = join(':', map {
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
+	}
+
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	foreach ( @options ) {
+		if ( $_->{type} == 175 ) {
+			# Neutral element.
+		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
+			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
+		} else {
+			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		}
 	}
 
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
@@ -3200,11 +3266,9 @@ sub writeStorageLog {
 
 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
-		for (my $i = 0; $i < @storageID; $i++) {
-			next if (!$storageID[$i]);
-			my $item = $storage{$storageID[$i]};
+		foreach my $item (@{$char->storage->getItems()}) {
 
-			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -3212,7 +3276,7 @@ sub writeStorageLog {
 			print $f "$display\n";
 		}
 		# Translation Comment: Storage Capacity
-		print $f TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max});
+		print $f TF("\nCapacity: %d/%d\n", $char->storage->items, $char->storage->items_max);
 		print $f "-------------------------------\n";
 		close $f;
 
@@ -4022,6 +4086,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inInventory"}) {
+		return 0 if (!$char->inventory->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
@@ -4031,12 +4096,12 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inCart"}) {
+		return 0 if (!$char->cart->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
 			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
- 			my $item = $cart{inventory}[$iX];
-			return 0 if !inRange(!defined $iX ? 0 : $item->{amount}, $count);
+			my $item = $char->cart->getByName($item);
+			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
 
@@ -4319,45 +4384,6 @@ sub checkMonsterCondition {
 }
 
 ##
-# findCartItemInit()
-#
-# Resets all "found" flags in the cart to 0.
-sub findCartItemInit {
-	for (@{$cart{inventory}}) {
-		next unless $_ && %{$_};
-		undef $_->{found};
-	}
-}
-
-##
-# findCartItem($name [, $found [, $nounid]])
-#
-# Returns the integer index into $cart{inventory} for the cart item matching
-# the given name, or undef.
-#
-# If an item is found, the "found" value for that item is set to 1. Items
-# cannot be found again until you reset the "found" flags using
-# findCartItemInit(), if $found is true.
-#
-# Unidentified items will not be returned if $nounid is true.
-sub findCartItem {
-	my ($name, $found, $nounid) = @_;
-
-	$name = lc($name);
-	my $index = 0;
-	for (@{$cart{inventory}}) {
-		if (lc($_->{name}) eq $name &&
-		    !($found && $_->{found}) &&
-			!($nounid && !$_->{identified})) {
-			$_->{found} = 1;
-			return $index;
-		}
-		$index++;
-	}
-	return undef;
-}
-
-##
 # makeShop()
 #
 # Returns an array of items to sell. The array can be no larger than the
@@ -4393,19 +4419,24 @@ sub makeShop {
 	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
 
 	# Iterate through items to be sold
-	findCartItemInit();
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
+	my %used_items;
 	for my $sale (@{$shop{items}}) {
-		my $index = findCartItem($sale->{name}, 1, 1);
-		next unless defined($index);
+		my $cart_item;
+		for my $item (@{$char->cart->getItems}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{invIndex}};
+			$cart_item = $used_items{$item->{invIndex}} = $item;
+			last;
+		}
+		next unless ($cart_item);
 
 		# Found item to vend
-		my $cart_item = $cart{inventory}[$index];
 		my $amount = $cart_item->{amount};
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $index;
+		$item{index} = $cart_item->{index};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
@@ -4496,19 +4527,6 @@ sub parseReload {
 sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
 }
-
-sub buyingstoreitemdelete {
-	my ($invIndex, $amount) = @_;
-
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
-	}
-	$item->{amount} -= $amount;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
-	$itemChange{$item->{name}} -= $amount;
-}
-
 
 # There are 2 types of clients that receive deletion timestamp 'deleteDate'
 # 0: As when char can be deleted

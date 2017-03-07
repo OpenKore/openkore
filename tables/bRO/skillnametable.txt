@@ -725,7 +725,7 @@ HLIF_AVOID#Bater em Retirada#
 LG_OVERBRAND#Lança do Destino#
 ALL_ODINS_RECALL#Chamado de Odin#
 AM_CALLHOMUN#Criar Homunculus#
-SR_RIDEINLIGHTNING#Cavalgar Relâmpago#
+SR_RIDEINLIGHTNING#Tempestade Espiritual#
 SR_HOWLINGOFLION#Rugido do Leão#
 SR_TIGERCANNON#Garra de Tigre#
 AM_REST#Vaporizar#
@@ -1059,4 +1059,28 @@ KG_KAGEMUSYA#Contrato das Sombras#
 OB_ZANGETSU#Distorção Crescente#
 OB_OBOROGENSOU#Ilusão do Luar#
 OB_AKAITSUKI#Luar Sinistro#
-MC_CARTDECORATE#Customização de Carrinho#
+ECLAGE_RECALL#Para Eclage#
+ECL_SNOWFLIP#Gardênia#
+ECL_PEONYMAMY#Peônia#
+ECL_SADAGUI#Erva-Mate#
+ECL_SEQUOIADUST#Pó de Yggdrasil#
+ALL_RAY_OF_PROTECTION#Ray of Protection#
+MER_INVINCIBLEOFF2#Mind Blaster#
+GC_DARKCROW#Garra Sombria#
+RA_UNLIMIT#Ilimitar#
+LG_KINGS_GRACE#Graça Real#
+RK_DRAGONBREATH_WATER#Sopro de Gelo#
+NC_MAGMA_ERUPTION#Erupção de Magma#
+WM_FRIGG_SONG#Canção de Frigga#
+SO_ELEMENTAL_SHIELD#Escudo Elemental#
+SR_FLASHCOMBO#Combo Rápido#
+SC_ESCAPE#Escapar#
+AB_OFFERTORIUM#Offertorium#
+WL_TELEKINESIS_INTENSE#Telecinesia#
+ALL_FULL_THROTTLE#Maximizar Poder#
+GN_ILLUSIONDOPING#Alucinógeno#
+GM_ITEM_ATKMAX#Physical item attack Max#
+GM_ITEM_ATKMIN#Max Physical item attack rate#
+GM_ITEM_MATKMAX#Minimize Physical item attack rate#
+GM_ITEM_MATKMIN#Minimize Magic item attack rate#
+MC_CARTDECORATE#Decorar Carrinho#

@@ -53,7 +53,7 @@ sub homunculus_property {
 	}
 	$slave->{name} = bytesToString($args->{name});
 
-	Network::Receive::kRO::Sakexe_0::slave_calcproperty_handler($slave, $args);
+	Network::Receive::slave_calcproperty_handler($slave, $args);
 	Network::Receive::kRO::Sakexe_0::homunculus_state_handler($slave, $args);
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
