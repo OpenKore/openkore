@@ -8,7 +8,7 @@ use Utils;
 use Misc;
 use Log qw(message error warning);
 use Network;
-use JSON::Tiny;
+use JSON::Tiny qw(from_json to_json);
  
 #########
 # startup
