@@ -5898,6 +5898,7 @@ sub skill_delete {
 	return if !$skill;
 	return if !$char->{skills}->{ $skill->getHandle };
 
+	message TF( "Lost skill: %s\n", $skill->getName ), 'skill';
 	delete $char->{skills}->{ $skill->getHandle };
 	binRemove( \@skillsID, $skill->getHandle );
 }
