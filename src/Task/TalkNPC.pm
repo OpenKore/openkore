@@ -222,13 +222,6 @@ sub find_and_set_target {
 	my ($self) = @_;
 	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
 
-	unless ($target) {
-		# It's an Actor::NPC mostly because sendTalk() is defined in that package.
-		# We can actually define sendTalk() at base Actor package instead
-		# and use Actor::Unknown here.
-		$target = Actor::NPC->new;
-	}
-
 	if ($target) {
 		return unless $self->setTarget($target);
 	} elsif (exists $talk{nameID} && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {#check if this is really necessary
@@ -794,6 +787,15 @@ sub findTarget {
 sub noMoreSteps {
 	my ($self) = @_;
 	return (@{$self->{steps}} ? 0 : 1);
+}
+
+sub waitingForSteps {
+	my ($self) = @_;
+	return 0 unless ($self->{stage} == TALKING_TO_NPC);
+	return 0 unless ($self->noMoreSteps);
+	return 0 if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont});
+	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, 1.5));
+	return 1;
 }
 
 sub addSteps {

@@ -49,7 +49,7 @@ sub ai_isIdle {
 		}
 	}
 	return 1 if (AI::is('macro', 'deal'));
-	return 1 if (AI::is('NPC') && $char->args->noMoreSteps && $char->args->{stage} == Task::TalkNPC::TALKING_TO_NPC);
+	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
 	return 0;
 }
 
