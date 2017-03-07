@@ -1357,7 +1357,7 @@ sub checkFollowMode {
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
-	return 1 if (!$config{attackAuto});
+	return 1 if (!$config{attackAuto}||$config{attackAuto_steal});
 	my $ID = $_[0];
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);

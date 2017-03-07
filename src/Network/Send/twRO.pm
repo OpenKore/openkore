@@ -48,6 +48,8 @@ sub new {
 		buy_bulk_vender 0801
 		char_create 0970
 		send_equip 0998
+		actor_status_active 0983
+		actor_status_active 0984
 	); 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers; 
 	

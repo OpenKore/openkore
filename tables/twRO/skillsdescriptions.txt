@@ -1,4 +1,4 @@
-﻿NV_BASIC# 
+NV_BASIC#
 基本技能(Basic Skill)
 MAX Lv : 9
 可以使用基本介面之相關技能。
@@ -23,7 +23,7 @@ MAX Lv : 9
 [Level 9] : 轉職 
 可以轉職成第一職業。
 #
-SM_SWORD# 
+SM_SWORD#
 單手劍使用熟練度(Sword Mastery)
 MAX Lv : 10
 系列 : 被動
@@ -39,7 +39,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +36
 [Level 10] : 攻擊力 +40
 #
-SM_TWOHAND# 
+SM_TWOHAND#
 雙手劍使用熟練度(Two handed sword Mastery)
 MAX Lv : 10
 習得條件 : 單手劍使用熟練度 1
@@ -56,7 +56,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +36
 [Level 10] : 攻擊力 +40
 #
-SM_RECOVERY# 
+SM_RECOVERY#
 快速恢復(Increase recuperative power)
 MAX Lv : 10
 系列 : 被動
@@ -72,7 +72,7 @@ MAX Lv : 10
 [Level 9] : 每10秒HP 恢復值 + 45
 [Level 10] : 每10秒HP 恢復值 + 50
 #
-SM_BASH# 
+SM_BASH#
 狂擊(Bash)
 MAX Lv : 10
 系列 : 攻擊
@@ -89,7 +89,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 370%
 [Level 10] : 攻擊力 400%
 #
-SM_PROVOKE# 
+SM_PROVOKE#
 挑釁(Provoke)
 MAX Lv : 10
 系列 : 輔助
@@ -106,7 +106,7 @@ MAX Lv : 10
 [Level 9] : 敵人攻擊力 +29%，敵人防禦力 -50%
 [Level 10] : 敵人攻擊力 +32%，敵人防禦力 -55%
 #
-SM_MAGNUM# 
+SM_MAGNUM#
 怒爆(Magnum Break)
 MAX Lv : 10
 習得條件 : 狂擊 5
@@ -124,7 +124,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 280%
 [Level 10] : 攻擊力 300%
 #
-SM_ENDURE# 
+SM_ENDURE#
 霸體(Endure)
 MAX Lv : 10
 習得條件 : 挑釁 5
@@ -142,7 +142,7 @@ MAX Lv : 10
 [Level 9] : 持續時間 34秒, MDEF +9
 [Level 10] : 持續時間 37秒, MDEF +10
 #
-MG_SRECOVERY# 
+MG_SRECOVERY#
 禪心 (Increase spiritual power)
 MAX Lv : 10
 系列 : 被動
@@ -158,20 +158,20 @@ MAX Lv : 10
 [Level 9] : 每10秒SP 恢復值 +27
 [Level 10] : 每10秒SP 恢復值 +30
 #
-MG_SIGHT# 
+MG_SIGHT#
 火狩(Sight)
 MAX Lv : 1
 系列 : 輔助(火屬性)
 內容 : 可找出藏匿的敵人。
 #
-MG_NAPALMBEAT# 
+MG_NAPALMBEAT#
 心靈爆破(Napalm beat)
 MAX Lv : 10
 系列 : 攻擊(念力)
 對象 : 敵人
 內容 : 可用念力直接攻擊敵人。
 #
-MG_SAFETYWALL# 
+MG_SAFETYWALL#
 暗之障壁(Safety wall)
 MAX Lv : 10
 2習得條件 : 心靈爆破 7, 聖靈召喚 5
@@ -180,7 +180,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 在指定位置上形成可以阻擋敵人有限次數攻擊且擁有耐久度的防禦壁，防禦壁的耐久度消失或過了持續時間時就會消失，防禦壁只可阻擋近距離的物理攻擊，詠唱需要 藍色魔力礦石1個
 #
-MG_SOULSTRIKE# 
+MG_SOULSTRIKE#
 聖靈召喚(Soul Strike)
 MAX Lv : 10
 習得條件 : 心靈爆破 4
@@ -188,14 +188,14 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 可召喚聖靈進行攻擊。對不死系怪物特別有效。
 #
-MG_COLDBOLT# 
+MG_COLDBOLT#
 冰箭術(Coldbolt)
 MAX Lv : 10
 系列 : 攻擊(水屬性)
 對象 : 敵人
 內容 : 可從天空落下冰箭攻擊敵人。每個冰箭擁有魔法攻擊力(Matk)一樣的力量。
 #
-MG_FROSTDIVER# 
+MG_FROSTDIVER#
 冰凍術(Frost diver)
 MAX Lv : 10
 習得條件 : 冰箭術 5
@@ -203,14 +203,14 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 可使敵人凍結，令敵人在一定時間內動彈不得。
 #
-MG_STONECURSE# 
+MG_STONECURSE#
 石化術(Stone curse)
 MAX Lv : 10
 系列 : 詛咒(土屬性)
 對象 : 敵人
 內容 : 可石化敵人。需使用一顆 紅色魔力礦石 做為催化劑。
 #
-MG_FIREBALL# 
+MG_FIREBALL#
 火球術(Fireball)
 MAX Lv : 10
 習得條件 : 火箭術 4
@@ -219,7 +219,7 @@ MAX Lv : 10
 內容 : 用火球攻擊敵人。對相鄰的魔物進行攻擊對中心魔物的3/4的傷害度。
 技能5以上會減少施展延遲及施展後延遲。
 #
-MG_FIREWALL# 
+MG_FIREWALL#
 火焰之壁(Firewall)
 MAX Lv : 10
 習得條件 : 火狩 1, 火球術 5
@@ -227,21 +227,21 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可建立火牆以防禦敵人的攻擊。
 #
-MG_FIREBOLT# 
+MG_FIREBOLT#
 火箭術(Firebolt)
 MAX Lv : 10
 系列 : 攻擊(火屬性)
 對象 : 敵人
 內容 : 可從天空落下火箭攻擊敵人。每個火箭擁有魔法攻擊力(Matk)一樣的力量。
 #
-MG_LIGHTNINGBOLT# 
+MG_LIGHTNINGBOLT#
 雷擊術(Lightning bolt)
 MAX Lv : 10
 系列 : 攻擊(風屬性)
 對象 : 敵人
 內容 : 可從天空落下雷箭攻擊敵人。
 #
-MG_THUNDERSTORM# 
+MG_THUNDERSTORM#
 雷爆術(Thunder storm)
 MAX Lv : 10
 習得條件 : 雷擊術 4
@@ -249,7 +249,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可從天空落下雷電攻擊敵人。
 #
-AL_DP# 
+AL_DP#
 天使之護(Divine Protection)
 MAX Lv : 10
 14習得條件 : 治療術 1
@@ -266,7 +266,7 @@ MAX Lv : 10
 [Level 9] : 防禦力 +27
 [Level 10] : 防禦力 +30
 #
-AL_DEMONBANE# 
+AL_DEMONBANE#
 天使之擊(Demonbane)
 MAX Lv : 10
 習得條件 : 天使之護 3
@@ -283,13 +283,13 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-AL_RUWACH# 
+AL_RUWACH#
 光獵(Ruwach)
 MAX Lv : 1
 系列 : 輔助
 內容 : 可藉助聖靈的力量攻擊出藏匿的敵人。
 #
-AL_PNEUMA# 
+AL_PNEUMA#
 光之障壁( (Pneuma)
 MAX Lv : 1
 習得條件 :  傳送之陣 4
@@ -297,7 +297,7 @@ MAX Lv : 1
 對象 : 地面
 內容 : 可在特定的時間與指定的位置造出防護之壁，阻擋敵人的遠距離攻擊。
 #
-AL_TELEPORT# 
+AL_TELEPORT#
 瞬間移動(Teleportation)
 MAX Lv : 2
 習得條件 : 光獵 1
@@ -306,7 +306,7 @@ MAX Lv : 2
 [Level 1] : 可移動至附近地區未知的地方去。
 [Level 2] : 可瞬間移動到儲存點。
 #
-AL_WARP# 
+AL_WARP#
 傳送之陣(Warp portal)
 MAX Lv : 4
 習得條件 : 瞬間移動 2
@@ -319,7 +319,7 @@ MAX Lv : 4
 [Level 4] :  可以使用3個記憶位置
 [記憶位置] : 打上/memo 可記憶位置。
 #
-AL_HEAL# 
+AL_HEAL#
 治癒術(Heal)
 MAX Lv : 10
 14習得條件 : 信任 5,天使之擊 5
@@ -327,7 +327,7 @@ MAX Lv : 10
 對象 : 玩家
 內容 : 可恢復指定的玩家體力。根據技能LV，提高基本恢復量外。將會隨著施展此技能的玩家之LV和 INT越高則恢復量越高。
 #
-AL_INCAGI# 
+AL_INCAGI#
 加速術(Increase agility)
 MAX Lv : 10
 習得條件 : 治癒術 3
@@ -335,7 +335,7 @@ MAX Lv : 10
 對象 : 玩家
 內容 : 在特定的時間內，可增加玩家的敏捷。使用時，消耗少量HP。
 #
-AL_DECAGI# 
+AL_DECAGI#
 緩速術(Decrease agility)
 MAX Lv : 10
 習得條件 : 加速術 1
@@ -343,13 +343,13 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 一定時間內，可減少敵人的敏捷。
 #
-AL_HOLYWATER# 
-天使之淚 (Aqua Benedicta)
+AL_HOLYWATER#
+天使之?(Aqua Benedicta)
 MAX Lv : 1
 系列 : 恢復
 內容 : 可在空瓶中製作出聖水來攻擊敵人。需在充滿水的地方才可施展這項技能。
 #
-AL_CRUCIS# 
+AL_CRUCIS#
 天使之光(Signum Crucis)
 MAX Lv : 10
 習得條件 : 天使之擊 3
@@ -357,14 +357,14 @@ MAX Lv : 10
 範圍 : 整個畫面
 內容 : 畫十字符號降低周邊不死系和黑暗系怪物的防禦力。
 #
-AL_ANGELUS# 
+AL_ANGELUS#
 天使之障壁(Angelus)
 MAX Lv : 10
 習得條件 : 天使之護 3
 系列 : 輔助
 內容 : 可增加玩家本身或組隊成員的防禦力。
 #
-AL_BLESSING# 
+AL_BLESSING#
 天使之賜福(Blessing)
 MAX Lv : 10
 習得條件 : 天使之護 5
@@ -372,7 +372,7 @@ MAX Lv : 10
 對象 : 玩家
 內容 : 可暫時提高靈巧與智慧以及力量。把詛咒或石化狀態的玩家恢復到正常狀態。
 #
-AL_CURE# 
+AL_CURE#
 治療術(Cure)
 MAX Lv : 1
 4習得條件 : 治癒術 2
@@ -381,7 +381,7 @@ MAX Lv : 1
 對象 : 玩家
 內容 : 可解除所有詛咒。若將此項技能施展在不死系怪物身上，則會使牠們陷入混亂的狀態。
 #
-MC_INCCARRY# 
+MC_INCCARRY#
 負重量上升(Enlarge Weight limit)
 MAX Lv : 10
 系列 : 被動
@@ -397,7 +397,7 @@ MAX Lv : 10
 [Level 9] : 最大載重量 +1800
 [Level 10] : 最大載重量 +2000
 #
-MC_DISCOUNT# 
+MC_DISCOUNT#
 低價買進 (Discount)
 MAX Lv : 10
 習得條件 : 負重量上升 3
@@ -414,7 +414,7 @@ MAX Lv : 10
 [Level 9] : 折扣率 23%
 [Level 10] : 折扣率24%
 #
-MC_OVERCHARGE# 
+MC_OVERCHARGE#
 高價賣出(Overcharge)
 MAX Lv : 10
 習得條件 : 低價買進 3
@@ -431,7 +431,7 @@ MAX Lv : 10
 [Level 9] : 提高率 23%
 [Level 10] : 提高率 24%
 #
-MC_PUSHCART# 
+MC_PUSHCART#
 手推車使用(Pushcart)
 MAX Lv : 10
 習得條件 : 負重量上升 5
@@ -440,13 +440,13 @@ MAX Lv : 10
 在卡普拉服務中心租借手推車,  按Alt-W鍵可開啟手推車視窗 即可使用。
 手推車上的道具無法直接使用。
 #
-MC_IDENTIFY# 
+MC_IDENTIFY#
 物品鑑定(Identify)
 MAX Lv : 1
 系列 : 輔助
 內容 : 可鑑定道具並找出道具的隱藏特性。
 #
-MC_VENDING# 
+MC_VENDING#
 露天商店(Vending)
 MAX Lv : 10
 習得條件 : 手推車使用 3
@@ -454,7 +454,7 @@ MAX Lv : 10
 內容 : 使用此項技能玩家可以隨時隨地販賣各種道具。
 販賣的物品數量會隨著等級的增加而增多。
 #
-MC_MAMMONITE# 
+MC_MAMMONITE#
 金錢攻擊(Mammonite)
 MAX Lv : 10
 系列 : 攻擊
@@ -471,7 +471,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 550%， 消耗金額 900Z
 [Level 10] : 攻擊力 600%， 消耗金額 1000Z
 #
-AC_OWL# 
+AC_OWL#
 鶚梟之眼(Owl's Eye)
 MAX Lv : 10
 系列 : 被動
@@ -487,11 +487,10 @@ MAX Lv : 10
 [Level 9] : 熟練度 +9
 [Level 10] : 熟練度 +10
 #
-AC_VULTURE# 
+AC_VULTURE#
 蒼鷹之眼(Vulture's Eye)
 MAX Lv : 10
-3習得條件 : 鶚梟之眼 3
-                23習得條件 : 鶚梟之眼 3
+習得條件 : 鶚梟之眼 3
 系列 : 被動
 內容 : 可擴大射擊範圍, 可增加命中率。
 [Level 1] : 弓箭射擊範圍 +1
@@ -505,14 +504,14 @@ MAX Lv : 10
 [Level 9] : 弓箭射擊範圍 +9
 [Level 10] : 弓箭射擊範圍 +10
 #
-AC_CONCENTRATION# 
+AC_CONCENTRATION#
 心神凝聚(Attention concentrate)
 MAX Lv : 10
 習得條件 : 蒼鷹之眼 1
 系列 : 輔助
 內容 : 可暫時增加熟練度及敏捷度，並可找出近距離內藏匿的敵人。
 #
-AC_DOUBLE# 
+AC_DOUBLE#
 二連矢(Double strafing)
 MAX Lv : 10
 17習得條件 : 蒼鷹之眼 10
@@ -520,7 +519,7 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 可在同時間連續射出兩箭。造成敵人 2次的傷害。
 #
-AC_SHOWER# 
+AC_SHOWER#
 箭雨(Arrow shower)
 MAX Lv : 10
 習得條件 : 二連矢 5
@@ -528,47 +527,47 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 射出好多的弓箭攻擊相鄰的敵人。
 #
-TF_DOUBLE# 
+TF_DOUBLE#
 二刀連擊(Double attack)
 MAX Lv : 10
 系列 : 被動
 內容 : 使用短劍類武器時，一定的機率造成連續攻擊，等級提昇可提高使用短劍時連擊機率。使用拳刃系列武器時，對左手傷害力會有影響。
 #
-TF_MISS# 
+TF_MISS#
 殘影(Increase dodge)
 MAX Lv : 10
 系列 : 被動
 內容 : 可提高閃躲率。
 #
-TF_STEAL# 
+TF_STEAL#
 偷竊(Steal)
 MAX Lv : 10
 系列 : 輔助
 對象 : 敵人
 內容 : 可偷取敵人的道具。
 #
-TF_HIDING# 
+TF_HIDING#
 隱匿(Hiding)
 MAX Lv : 10
 習得條件 : 偷竊 5
 系列 : 輔助
 內容 : 可躲藏在地下以閃避敵人的攻擊。
 #
-TF_POISON# 
+TF_POISON#
 施毒(Envenom)
 MAX Lv : 10
 系列 : 攻擊(毒)
 對象 : 敵人
 內容 : 可用施毒的技能傷害敵人。有一定幾率使敵人中毒。
 #
-TF_DETOXIFY# 
+TF_DETOXIFY#
 解毒(Detoxify)
 MAX Lv : 1
 習得條件 : 施毒 3
 系列 : 輔助(毒)
 內容 : 可替玩家解毒。
 #
-ALL_RESURRECTION# 
+ALL_RESURRECTION#
 復活術 (Resurrection)
 MAX Lv : 4
 習得條件 : 禪心 4, 痊癒術 1
@@ -580,7 +579,7 @@ MAX Lv : 4
 [Level 3] : HP恢復50% 
 [Level 4] : HP恢復80% 
 #
-KN_SPEARMASTERY# 
+KN_SPEARMASTERY#
 長矛使用熟練度(Spear Mastery)
 MAX Lv : 10
 系列 : 被動
@@ -596,7 +595,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +36
 [Level 10] : 攻擊力 +40
 #
-KN_PIERCE# 
+KN_PIERCE#
 連刺攻擊(Pierce)
 MAX Lv : 10
 習得條件 : 長矛使用熟練度 1
@@ -607,7 +606,7 @@ MAX Lv : 10
 [中型] : 2次 攻擊
 [大型] : 3次 攻擊
 #
-KN_BRANDISHSPEAR# 
+KN_BRANDISHSPEAR#
 騎乘攻擊(Brandish Spear)
 MAX Lv : 10
 習得條件 : 騎乘術 1, 長矛刺擊 3
@@ -615,7 +614,7 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 可藉助大嘴鳥的力量用力揮舞長矛需要有長矛與大嘴鳥。
 #
-KN_SPEARSTAB# 
+KN_SPEARSTAB#
 長矛刺擊(Spear Stab)
 MAX Lv : 10
 習得條件 : 連刺攻擊 5
@@ -623,7 +622,7 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 可利用長矛將敵人掃到遠處去，且同時攻擊一整列敵人們， 必須裝備長矛。
 #
-KN_SPEARBOOMERANG# 
+KN_SPEARBOOMERANG#
 投擲長矛攻擊(Spear Boomerang)
 MAX Lv : 5
 習得條件 : 連刺攻擊 3
@@ -631,7 +630,7 @@ MAX Lv : 5
 對象 : 敵人 
 內容 : 可投擲長矛攻擊遠處的敵人。必須裝備長矛。
 #
-KN_TWOHANDQUICKEN# 
+KN_TWOHANDQUICKEN#
 雙手劍攻擊速度增加(Two Hand Quicken)
 MAX Lv : 10
 習得條件 : 雙手劍使用熟練度 1
@@ -648,7 +647,7 @@ MAX Lv : 10
 [Level 9] : 持續時間 4分30秒
 [Level 10] : 持續時間 5分
 #
-KN_AUTOCOUNTER# 
+KN_AUTOCOUNTER#
 反擊(Auto Counter)
 MAX Lv : 5
 習得條件 : 雙手劍使用熟練度 1
@@ -656,7 +655,7 @@ MAX Lv : 5
 對象 : 敵人 
 內容 : 防禦接近的敵人的攻擊後，可自動反擊。反擊攻擊必會成為必殺攻擊。
 #
-KN_BOWLINGBASH# 
+KN_BOWLINGBASH#
 怪物攻擊(Bowling Bash)
 MAX Lv : 10
 習得條件 :  狂擊10, 怒爆 3, 雙手劍使用熟練度 5, 雙手劍攻擊速度增加 10, 反擊 5
@@ -664,21 +663,21 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 使敵人與敵人互相撞擊，一次可攻擊多數的敵人。
 #
-KN_RIDING# 
+KN_RIDING#
 騎乘術 (Riding)
 MAX Lv : 1
 習得條件 : 霸體 1
 系列 : 被動
 內容 : 可以騎乘受過訓練的大嘴鳥。
 #
-KN_CAVALIERMASTERY# 
+KN_CAVALIERMASTERY#
 騎兵修練(Cavalier Mastery)
 MAX Lv : 5
 習得條件 : 騎乘術 1
 系列 : 被動
 內容 : 可以增加騎乘大嘴鳥時的攻擊速度。修練完成時，攻擊速度將會恢復為一般狀態。
 #
-PR_MACEMASTERY# 
+PR_MACEMASTERY#
 鈍器使用熟練度(Mace Mastery)
 MAX Lv : 10
 系列 : 被動
@@ -694,7 +693,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-PR_IMPOSITIO# 
+PR_IMPOSITIO#
 神威祈福 (Impositio Manus)
 MAX Lv : 5
 系列 : 祝福系列
@@ -706,7 +705,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 +20
 [Level 5] : 攻擊力 +25
 #
-PR_SUFFRAGIUM# 
+PR_SUFFRAGIUM#
 犧牲祈福(Suffragium)
 MAX Lv : 3
 習得條件 : 神威祈福 2
@@ -717,7 +716,7 @@ MAX Lv : 3
 [Level 2] : 縮短30%詠唱時間， 持續20秒
 [Level 3] : 縮短45%詠唱時間， 持續10秒
 #
-PR_ASPERSIO# 
+PR_ASPERSIO#
 聖水祈福 (Aspersio)
 MAX Lv : 5
 習得條件 : 天使之淚 1, 神威祈福 3
@@ -730,15 +729,15 @@ MAX Lv : 5
 [Level 4] : 持續時間 2分30秒
 [Level 5] : 持續時間 3分
 #
-PR_BENEDICTIO# 
+PR_BENEDICTIO#
 聖之祈福 (Benedictio Sanctissimi Sacramenti)
-MAX Lv : 5
+MAX Lv : 1
 習得條件 : 聖水祈福 5, 幸運之頌歌 3
 系列 : 祝福系列
 對象 : 地面
 內容: 聖體朝拜的彌撒儀式。 賦予指定區域上所在玩家之鎧甲賦予聖屬性。 另需要兩位同隊伍聖職者將聖水置放於地面。
 #
-PR_SANCTUARY# 
+PR_SANCTUARY#
 光耀之堂 (Sanctuary)
 MAX Lv : 10
 習得條件 : 治癒術 1
@@ -746,21 +745,21 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可在指定區域上施法使其擁有神聖的力量。玩家進入此地則可使體力恢復，不死系與惡魔系魔物進入此區域將會受到傷害，需藍色魔力礦石。
 #
-PR_SLOWPOISON# 
+PR_SLOWPOISON#
 緩毒術 (Slow Poison)
 MAX Lv : 4
 系列 : 輔助系列
 對象 : 玩家
 內容 : 可使中毒玩家毒性暫時減緩發作。
 #
-PR_STRECOVERY# 
+PR_STRECOVERY#
 痊癒術 (Recovery)
 MAX Lv : 1
 系列 : 輔助系列
 對象 : 玩家
 內容 : 使用此項技能可恢復不死與凍冰以及石化等異常狀態。 用在不死系怪物身上則可以使牠們陷入黑暗。
 #
-PR_KYRIE# 
+PR_KYRIE#
 霸邪之陣 (Kyrie Eleison)
 MAX Lv : 10
 習得條件 : 天使之障壁 2
@@ -776,20 +775,20 @@ MAX Lv : 10
 [Level 9] : MAXHP 28%的防禦保護膜, 9次防禦
 [Level 10] : MAXHP 30%的防禦保護膜, 10次防禦
 #
-PR_MAGNIFICAT# 
+PR_MAGNIFICAT#
 聖母之頌歌(Magnificat)
 MAX Lv : 5
 系列 : 讚頌系列
 內容 : 使同在一個隊伍的成員和施展者的SP恢復速度增快兩倍。
 #
-PR_GLORIA# 
+PR_GLORIA#
 幸運之頌歌 (Gloria)
 MAX Lv : 5
 習得條件 : 霸邪之陣4、聖母之頌歌3
 系列 : 讚頌系列
 內容 : 使同在一個隊伍的成員把LUK指定時間內增加 30。
 #
-PR_LEXDIVINA# 
+PR_LEXDIVINA#
 沉默之術(Lex Divina)
 MAX Lv : 10
 習得條件 : 光獵 1
@@ -797,7 +796,7 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 可使敵人在一定的時間內無法詠唱咒語。
 #
-PR_TURNUNDEAD# 
+PR_TURNUNDEAD#
 轉生術 (Turn Undead)
 MAX Lv : 10
 習得條件 : 復活術 1, 沉默之術 3
@@ -805,7 +804,7 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 有一定機率一次消滅不死係怪物，失敗時也會造成一定損傷。
 #
-PR_LEXAETERNA# 
+PR_LEXAETERNA#
 天使之怒 (Lex Aeterna)
 MAX Lv : 1
 習得條件 : 沉默之術 5
@@ -813,7 +812,7 @@ MAX Lv : 1
 對象 : 敵人 
 內容 : 可使敵人在受到下一次攻擊時造成傷害值加倍。不能使用在冰凍和石化狀態的敵人身上。
 #
-PR_MAGNUS# 
+PR_MAGNUS#
 十字驅魔攻擊 (Magnus Exorcismus)
 MAX Lv : 10
 習得條件 :  轉生術 3, 天使之怒 1, 暗之障壁 1
@@ -821,7 +820,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可在地面上繪製巨大十字架，惡魔系與不死屬性怪物進入此區域會遭受嚴重的傷害。 需以 藍色魔力礦石作為催化劑。
 #
-WZ_FIREPILLAR# 
+WZ_FIREPILLAR#
 火柱攻擊 (Fire Pillar)
 MAX Lv : 10
 習得條件 : 火焰之壁 1
@@ -829,20 +828,20 @@ MAX Lv : 10
 對象 : 地面
 內容 : 在指定的位置內形成火柱，藉以攻擊敵人。
 #
-WZ_SIGHTRASHER# 
+WZ_SIGHTRASHER#
 火之獵殺 (Sightrasher)
 MAX Lv : 10
 習得條件 : 火狩 1, 雷擊術 1
 系列 : 攻擊(火屬性)
 內容 : 使用火狩狀態下散發火球攻擊周邊的敵人。
 #
-WZ_FIREIVY# 
+WZ_FIREIVY#
 火焰藤蔓 (Fire Ivy)
 系列 : 攻擊(火屬性)
 對象 : 地面
 內容 : 可呼喚來去自如的火焰藤蔓攻擊敵人。
 #
-WZ_METEOR# 
+WZ_METEOR#
 隕石術 (Meteor Storm)
 MAX Lv : 10
 習得條件 : 雷爆術 1, 火之獵殺 2
@@ -850,7 +849,7 @@ MAX Lv : 10
 對象 : 地面 
 內容 : 於指定範圍可落下隕石攻擊敵人。
 #
-WZ_JUPITEL# 
+WZ_JUPITEL#
 雷鳴術(Jupitel Thunder)
 MAX Lv : 10
 習得條件 : 心靈爆破 1, 雷擊術 1
@@ -858,7 +857,7 @@ MAX Lv : 10
 對象 : 敵人 
 內容 : 屬於電擊系列的魔法，將會給予敵人嚴重的傷害。
 #
-WZ_VERMILION# 
+WZ_VERMILION#
 怒雷強擊 (Lord of Vermilion)
 MAX Lv : 10
 習得條件 : 雷爆術 1, 雷鳴術 5
@@ -866,7 +865,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可指定範圍之強力電擊系列魔法。 等級越高攻擊力越高，但等級越高的施展速度會越快。
 #
-WZ_WATERBALL# 
+WZ_WATERBALL#
 水球術(Waterball)
 MAX Lv : 5
 習得條件 : 冰箭術 1, 雷擊術 1
@@ -874,7 +873,7 @@ MAX Lv : 5
 對象 : 敵人 
 內容 : 可利用水來攻擊敵人。需要在站在水面上才可使用。
 #
-WZ_ICEWALL# 
+WZ_ICEWALL#
 冰刃之牆(Icewall)
 MAX Lv : 10
 習得條件 : 石化術 1, 冰凍術 1
@@ -882,7 +881,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可使地面結冰成為敵人前進的障礙物，藉以防禦敵人。
 #
-WZ_FROSTNOVA# 
+WZ_FROSTNOVA#
 霜凍之術 (Frost Nova)
 MAX Lv : 10
 習得條件 : 冰凍術 1, 冰刃之牆 1
@@ -890,7 +889,7 @@ MAX Lv : 10
 對象 : 本身
 內容 : 可使鄰近本身群結霜的冷凍技能。
 #
-WZ_STORMGUST# 
+WZ_STORMGUST#
 暴風雪 (Storm Gust)
 MAX Lv : 10
 習得條件 : 冰凍術 1, 雷鳴術 3
@@ -898,7 +897,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可在特定的位置製造暴風雪，藉此攻擊敵人。
 #
-WZ_EARTHSPIKE# 
+WZ_EARTHSPIKE#
 地震術 (Earth Spike)
 MAX Lv : 5
 9習得條件 : 石化術 1
@@ -907,7 +906,7 @@ MAX Lv : 5
 對象 : 敵人 
 內容 : 可使某特定敵人所立足的地面突然隆起，達到攻擊的功效。
 #
-WZ_HEAVENDRIVE# 
+WZ_HEAVENDRIVE#
 崩裂術 (Heaven's Drive)
 MAX Lv : 5
 9習得條件 :  地震術 3
@@ -916,7 +915,7 @@ MAX Lv : 5
 對象 : 地面
 內容 : 可使指定範圍內的地面突然矗立起，藉以攻擊敵人。
 #
-WZ_QUAGMIRE# 
+WZ_QUAGMIRE#
 泥沼術 (Quagmire)
 MAX Lv : 5
 習得條件 : 崩裂術 1
@@ -925,110 +924,110 @@ MAX Lv : 5
 內容 : 可在某指定地面區域形成泥潭，不管是敵人或玩家們進入此區域，移動速度以及敏捷度與熟練度都會減半。
 AGI及 DEX最多只能減少50. 玩家只會受到一半的影響。
 #
-WZ_ESTIMATION# 
+WZ_ESTIMATION#
 怪物情報(Monster Property)
 MAX Lv : 1
 系列 : 輔助
 對象 : 怪物
 內容 : 可將某特定怪物相關的情報給同一隊伍的隊員看。
 #
-BS_IRON# 
+BS_IRON#
 鐵製造(Iron Tempering)
 MAX Lv : 5
 系列 : 被動
-內容 : 可製造鐵。等級越高則製造時的成功率 也越高。
+內容 : 可製造鐵。等級越高則製造時的成必v 也越高。
 #
-BS_STEEL# 
+BS_STEEL#
 鋼製造(Steel Tempering)
 MAX Lv : 5
 習得條件 : 鐵製造 1
 系列 : 被動
-內容 : 可製造鋼鐵。等級越高則製造時的成功率 也越高。
+內容 : 可製造鋼鐵。等級越高則製造時的成必v 也越高。
 #
-BS_ENCHANTEDSTONE# 
+BS_ENCHANTEDSTONE#
 屬性石製造(Enchanted Stone Craft)
 MAX Lv : 5
 習得條件 : 鋼製造 1
 系列 : 被動
-內容 : 可製造4種屬性的屬性石。等級越高則製造時的成功率 也越高。
+內容 : 可製造4種屬性的屬性石。等級越高則製造時的成必v 也越高。
 #
-BS_ORIDEOCON# 
+BS_ORIDEOCON#
 神之金屬研究(Research Orideocon)
 MAX Lv : 5
 習得條件 : 屬性石製造 1
 系列 : 被動
-內容 : 可以使用神之金屬冶鍊等級三的武器。等級越高則冶鍊時的成功率 也
+內容 : 可以使用神之金屬冶鍊等級三的武器。等級越高則冶鍊時的成必v 也
 越高。
 #
-BS_DAGGER# 
+BS_DAGGER#
 短劍製作(Smith Dagger)
 MAX Lv : 3
 系列 : 被動
-內容 : 可製作短劍系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作短劍系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_SWORD# 
+BS_SWORD#
 單手劍製作(Smith Sword)
 MAX Lv : 3
 習得條件 : 短劍製作 1
 系列 : 被動
-內容 : 可製作單手劍系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作單手劍系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_TWOHANDSWORD# 
+BS_TWOHANDSWORD#
 雙手劍製作(Smith Two-handed Sword)
 MAX Lv : 3
 習得條件 : 劍製作 1
 系列 : 被動
-內容 : 可製作雙手劍系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作雙手劍系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_AXE# 
+BS_AXE#
 斧頭製作(Smith Axe)
 MAX Lv : 3
 習得條件 :劍製作 2
 系列 : 被動
-內容 : 可製作斧頭系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作斧頭系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_MACE# 
+BS_MACE#
 鈍器製作(Smith Mace)
 MAX Lv : 3
 習得條件 : 拳套製作 1
 系列 : 被動
-內容 : 可製作鈍器系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作鈍器系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_KNUCKLE# 
+BS_KNUCKLE#
 拳套製作(Smith Brass Knuckle)
 MAX Lv : 3
 習得條件 : 短劍製作 1
 系列 : 被動
-內容 : 可製作拳套系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作拳套系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_SPEAR# 
+BS_SPEAR#
 長矛製作(Smith Spear)
 MAX Lv : 3
 習得條件 : 短劍製作 2
 系列 : 被動
-內容 : 可製作長矛系列的武器。等級越高則製作時的成功率 也越高。
+內容 : 可製作長矛系列的武器。等級越高則製作時的成必v 也越高。
 #
-BS_HILTBINDING# 
+BS_HILTBINDING#
 武器保有 (Hilt Biding)
 MAX Lv : 1
 系列 : 被動
 內容 : 力量增加1，攻擊力增加4，使用速度激發，凶砍，無視體型攻擊時持續時間增加 10%。
 #
-BS_FINDINGORE# 
+BS_FINDINGORE#
 尋找礦石(Finding Ore)
 MAX Lv : 1
 習得條件 : 武器保有1,  鋼製造 1
 系列 : 被動
 內容 : 有一定幾率，可找出怪物身上所擁有的礦石。
 #
-BS_WEAPONRESEARCH# 
+BS_WEAPONRESEARCH#
 武器研究(Weaponry Research)
 MAX Lv : 10
 習得條件 : 武器保有 1
 系列 : 被動
 內容 : 可提高對於武器的了解度，對於使用及修練上也有相當大的幫助。
 #
-BS_REPAIRWEAPON# 
+BS_REPAIRWEAPON#
 武器修理(Repair Weapon)
 MAX Lv : 1
 習得條件 : 武器研究 1
@@ -1036,7 +1035,7 @@ MAX Lv : 1
 對象 : 武器道具
 內容 : 可修理受損的武器。
 #
-BS_SKINTEMPER# 
+BS_SKINTEMPER#
 強化火屬性 (Skin Tempering)
 MAX Lv : 5
 系列 : 被動
@@ -1047,28 +1046,28 @@ MAX Lv : 5
 [Level 4] : 火屬性抵抗力 +20%,無屬性抵抗力4%
 [Level 5] : 火屬性抵抗力 +25%,無屬性抵抗力5%
 #
-BS_HAMMERFALL# 
+BS_HAMMERFALL#
 大地之擊 (Hammerfall)
 MAX Lv : 5
 系列 : 輔助
 對象 : 地面
 內容 : 可以在指定的區域敲擊地面造成震動，令周圍的敵人呈現昏迷的狀態。
 #
-BS_ADRENALINE# 
+BS_ADRENALINE#
 速度激發 (Adrenaline Rush)
 MAX Lv : 5
 習得條件 : 大地之擊 2
 系列 : 輔助
 內容 : 可在一定的時間內使斧和鈍器系列的武器攻擊速度增加為兩倍。
 #
-BS_WEAPONPERFECT# 
+BS_WEAPONPERFECT#
 無視體型攻擊 (Weapon Perfection)
 MAX Lv : 5
 習得條件 : 速度激發 2, 武器研究 2
 系列 : 輔助
 內容 : 可在一定的時間內以100%的力量攻擊任何體型的怪物。
 #
-BS_OVERTHRUST# 
+BS_OVERTHRUST#
 凶砍 (Over Thrust)
 系列 : 輔助
 MAX Lv : 5
@@ -1080,14 +1079,14 @@ MAX Lv : 5
 [Level 4] : 攻擊力上升20%， 武器受損率 +0.1%
 [Level 5] : 攻擊力上升25%， 武器受損率 +0.1%
 #
-BS_MAXIMIZE# 
+BS_MAXIMIZE#
 極限攻擊 (Maximize Power)
 MAX Lv : 5
 習得條件 : 無視體型攻擊 3, 凶砍 2
 系列 : 輔助
 內容 : 可使武器發揮最大的功效。使用時會持續消耗SP。若欲解除此狀態則必須再使用此項技能。
 #
-HT_SKIDTRAP# 
+RAP#
 滑動陷阱(Skid Trap)
 MAX Lv : 5
 系列 : 陷阱(隱匿)
@@ -1099,19 +1098,19 @@ MAX Lv : 5
 [Level 4] : 移動距離 9， 動作時間 120秒
 [Level 5] : 移動距離 10， 動作時間 60秒
 #
-HT_LANDMINE# 
+HT_LANDMINE#
 地雷陷阱 (Land Mine)
 MAX Lv : 5
 系列 : 陷阱(隱匿)
 對象 : 地面
 內容 : 可設置當敵人踩到後會觸發攻擊的陷阱。需要1個 陷阱。
-[Level 1] : 攻擊力 50%， 動作時間200秒
-[Level 2] : 攻擊力 75%， 動作時間160秒
-[Level 3] : 攻擊力 100%， 動作時間120秒
-[Level 4] : 攻擊力 125%， 動作時間80秒
-[Level 5] : 攻擊力 150%， 動作時間40秒
+[Level 1] : 攻擊力 50%， 動作時間 65秒
+[Level 2] : 攻擊力 75%， 動作時間 50秒
+[Level 3] : 攻擊力 100%， 動作時間 35秒
+[Level 4] : 攻擊力 125%， 動作時間 20秒
+[Level 5] : 攻擊力 150%， 動作時間 5秒
 #
-HT_ANKLESNARE# 
+HT_ANKLESNARE#
 定位陷阱 (Anklesnare)
 MAX Lv : 5
 習得條件 : 滑動陷阱 1
@@ -1119,7 +1118,7 @@ MAX Lv : 5
 對象 : 地面
 內容 : 可設置當敵人踩到後會有一段時間無法動彈的陷阱。 需要1個 陷阱。使敵人固定的時間與受固定的對象之 AGI有關。
 #
-HT_SHOCKWAVE# 
+HT_SHOCKWAVE#
 魔耗陷阱 (Shockwave Trap)
 MAX Lv : 5
 習得條件 : 定位陷阱 1
@@ -1132,7 +1131,7 @@ MAX Lv : 5
 [Level 4] : 消耗SP 65%， 動作時間 80秒
 [Level 5] : 消耗SP 80%， 動作時間 40秒
 #
-HT_SANDMAN# 
+HT_SANDMAN#
 睡魔陷阱 (Sandman)
 MAX Lv : 5
 習得條件 : 強光陷阱 1
@@ -1145,7 +1144,7 @@ MAX Lv : 5
 [Level 4] : 動作時間 60秒
 [Level 5] : 動作時間 30秒
 #
-HT_FLASHER# 
+HT_FLASHER#
 強光陷阱 (Flasher)
 MAX Lv : 5
 習得條件 : 滑動陷阱 1
@@ -1158,7 +1157,7 @@ MAX Lv : 5
 [Level 4] : 動作時間 60秒
 [Level 5] : 動作時間 30秒
 #
-HT_FREEZINGTRAP# 
+HT_FREEZINGTRAP#
 霜凍陷阱 (Freezing Trap)
 MAX Lv : 5
 習得條件 : 強光陷阱 1
@@ -1171,20 +1170,20 @@ MAX Lv : 5
 [Level 4] : 動作時間 60秒
 [Level 5] : 動作時間 30秒
 #
-HT_BLASTMINE# 
+HT_BLASTMINE#
 定時爆炸陷阱 (Blast Mine)
 MAX Lv : 5
 習得條件 : 睡魔陷阱 1, 地雷陷阱 1, 霜凍陷阱 1
 系列 : 陷阱(可見)
 對象 : 地面
 內容 : 可設置在動作時間過後自動引爆的陷阱，藉以攻擊敵人。 需要1個陷阱。
-[Level 1] : 動作時間25秒
-[Level 2] : 動作時間20秒
-[Level 3] : 動作時間15秒
-[Level 4] : 動作時間10秒
-[Level 5] : 動作時間5秒
+[Level 1] : 動作時間 10秒
+[Level 2] : 動作時間 8秒
+[Level 3] : 動作時間 6秒
+[Level 4] : 動作時間 4秒
+[Level 5] : 動作時間 2秒
 #
-HT_CLAYMORETRAP# 
+HT_CLAYMORETRAP#
 爆散陷阱 (Claymore Trap)
 MAX Lv : 5
 習得條件 : 定時爆炸陷阱 1, 魔耗陷阱 1
@@ -1197,7 +1196,7 @@ MAX Lv : 5
 [Level 4] : 動作時間 80秒
 [Level 5] : 動作時間 100秒
 #
-HT_REMOVETRAP# 
+HT_REMOVETRAP#
 陷阱移除(Remove Trap)
 MAX Lv : 1
 11習得條件 : 地雷陷阱 1
@@ -1206,7 +1205,7 @@ MAX Lv : 1
 對象 : 設置在地面上的陷井
 內容 : 可以移除設置在地面上的陷阱。同時，解除後可拾回陷阱 道具。
 #
-HT_TALKIEBOX# 
+HT_TALKIEBOX#
 陷阱探查(Talkie Box)
 MAX Lv : 1
 習得條件 : 陷阱移除 1, 魔耗陷阱 1
@@ -1214,7 +1213,7 @@ MAX Lv : 1
 對象 : 地面
 內容 : 不論敵人或我方踩到陷阱的瞬間都會出現原本已經設定好的訊息視窗。動作時間600秒。 需要1個陷阱。
 #
-HT_BEASTBANE# 
+HT_BEASTBANE#
 動物殺手 (Beastbane)
 MAX Lv : 10
 系列 : 被動
@@ -1230,14 +1229,14 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +36
 [Level 10] : 攻擊力 +40
 #
-HT_FALCON# 
+HT_FALCON#
 馴鷹術 (Falconry Mastery)
 MAX Lv : 1
 習得條件 : 動物殺手 1
 系列 : 被動
 內容 : 可以向獵人工會借打獵用的獵鷹。
 #
-HT_STEELCROW# 
+HT_STEELCROW#
 鋼製喙 (Steel Crow)
 MAX Lv : 10
 習得條件 : 閃電衝擊 5
@@ -1254,7 +1253,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +54
 [Level 10] : 攻擊力 +60
 #
-HT_BLITZBEAT# 
+HT_BLITZBEAT#
 閃電衝擊(Blitz Beat)
 MAX Lv : 5
 習得條件 : 馴鷹術 1
@@ -1262,7 +1261,7 @@ MAX Lv : 5
 對象 : 敵人
 內容 : 可利用獵鷹攻擊某特定的敵人。箭攻擊時，會發生獵鷹自動攻擊敵人的幾率。增加攻擊設程距離：3 + （蒼鷹之眼）
 #
-HT_DETECTING# 
+HT_DETECTING#
 獵鷹尋敵 (Detecting)
 MAX Lv : 4
 習得條件 : 心神凝聚 1, 馴鷹術 1
@@ -1270,7 +1269,7 @@ MAX Lv : 4
 對象 : 地面
 內容 : 可利用獵鷹將隱匿在遠處的敵人找出來。
 #
-HT_SPRINGTRAP# 
+HT_SPRINGTRAP#
 爆破陷阱(Spring Trap)
 MAX Lv : 5
 習得條件 : 陷阱移除 1,  馴鷹術 
@@ -1278,7 +1277,7 @@ MAX Lv : 5
 對象 : 設置在地面上的陷阱
 內容 : 此陷阱受到一定攻擊傷害時就會發動爆炸但一定時間內也會爆炸。000000
 #
-AS_RIGHT# 
+AS_RIGHT#
 右手修練(Right hand Mastery)
 MAX Lv : 5
 系列 : 被動
@@ -1289,7 +1288,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 90%
 [Level 5] : 攻擊力 100%
 #
-AS_LEFT# 
+AS_LEFT#
 左手修練(Left hand Mastery)
 MAX Lv : 5
 系列 : 被動
@@ -1300,7 +1299,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 70%
 [Level 5] : 攻擊力 80%
 #
-AS_KATAR# 
+AS_KATAR#
 拳刃修練(Katar Mastery)
 MAX Lv : 10
 系列 : 被動
@@ -1316,14 +1315,14 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-AS_CLOAKING# 
+AS_CLOAKING#
 偽裝(Cloaking)
 MAX Lv : 10
 習得條件 : 隱匿 2
 系列 : 輔助
 內容 : 靠近牆壁可以快速的移動，沒有靠近牆壁的話移動速度變慢，偽裝技能 1, 2 等級時
 #
-AS_SONICBLOW# 
+AS_SONICBLOW#
 音速投擲(Sonic_Blow)
 MAX Lv : 10
 習得條件 : 拳刃修練 4
@@ -1331,7 +1330,7 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 可使用拳刃快速攻擊在近距離內的敵人。施展時，有一定機率使對方陷入昏迷狀態。
 #
-AS_GRIMTOOTH# 
+AS_GRIMTOOTH#
 無影之牙(Grimtooth)
 MAX Lv : 5
 習得條件 : 偽裝 2, 音速投擲 5
@@ -1339,7 +1338,7 @@ MAX Lv : 5
 對象 : 敵人
 內容 : 可在隱匿的狀態攻擊敵人。此技能無法用來攻擊在遠距離的敵人。
 #
-AS_ENCHANTPOISON# 
+AS_ENCHANTPOISON#
 塗毒(Enchant Poison)
 MAX Lv : 10
 習得條件 : 施毒 1
@@ -1347,7 +1346,7 @@ MAX Lv : 10
 對象 : 玩家(只能隊伍)
 內容 : 可賦予指定玩家的武器具有毒性。將毒塗抹於武器上，當武器攻擊敵人時，有一定的機率使敵人中毒。
 #
-AS_POISONREACT# 
+AS_POISONREACT#
 毒性反彈 (Poison React)
 MAX Lv : 10
 習得條件 : 塗毒 3
@@ -1355,7 +1354,7 @@ MAX Lv : 10
 對象 : 玩家
 內容 : 當某特定玩家受到毒屬性的攻擊時，可以將毒反作用到施毒者身上，此項技能只能使用一次。假如因一般攻擊而得到傷害力時，可給受傷害力的對象使用施毒技能。
 #
-AS_VENOMDUST# 
+AS_VENOMDUST#
 病毒散播(Venom Dust)
 MAX Lv : 10
 習得條件 : 塗毒 5
@@ -1363,7 +1362,7 @@ MAX Lv : 10
 對象 : 地面
 內容 : 可在指定的範圍內散撥病毒。需以紅色魔力礦石作為催化劑。
 #
-AS_SPLASHER# 
+AS_SPLASHER#
 毒性感染(Venom Splasher)
 MAX Lv : 10
 習得條件 : 毒性反彈 5, 病毒散播 5
@@ -1371,111 +1370,111 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 使用1個紅色魔力礦石，給予敵人一定時間以後爆炸的毒，爆炸時對周圍的敵人也給予傷害力，讓毒擴散出去。
 #
-NV_FIRSTAID# 
+NV_FIRSTAID#
 緊急治療(First Aid)
 習得條件 : 進階學習機能
 系列 : 恢復
 內容 : 會消耗 SP 3來恢復HP 5
 #
-NV_TRICKDEAD# 
+NV_TRICKDEAD#
 裝死
 習得條件 : 進階學習機能, 初學者專用
 系列: 補助
 內容 : 裝死之後，可逃脫危機狀態，若再用一次的話，會恢復到正常狀態。在躲藏途中被敵人攻擊時， 裝死狀態會被解除。
 #
-SM_MOVINGRECOVERY# 
+SM_MOVINGRECOVERY#
 移動時恢復HP
 習得條件 : 進階學習機能
 系列 : 被動
 內容 : 在移動時，HP 會自動恢復。而當站立不動時會提昇到25% 的恢復率，並不會因為擁有其它HP恢復力技能，而增加其恢復值。
 #
-SM_FATALBLOW# 
+SM_FATALBLOW#
 攻擊弱點
 習得條件 : 進階學習機能
 系列 : 被動
 內容 : 等級6 以上用狂擊時，有一定機率，讓對方昏迷，隨著狂擊的等級及角色等級越高，擊昏機率就會越高。
 #
-SM_AUTOBERSERK# 
+SM_AUTOBERSERK#
 狂暴狀態(Auto_Berserk)
 習得條件 : 進階學習機能     
 系列 : 主動技能
 內容 : 快要死亡時(HP 在25% 以下) 會變成狂暴狀態，此狀態是如同挑釁等級 10 一樣的狀態，此狀態還沒有解除時, 當遭受到可解除挑釁技能時，將會自動解除
 #
-AC_MAKINGARROW# 
+AC_MAKINGARROW#
 製作箭(Making Arrow)
 習得條件 : 進階學習機能
 系列 : 補助
 對象 : 物品
 內容 : 把特有物品，換成箭矢。所換取的箭矢，因物品種類和量的不同，所換取的結果也不同。
 #
-AC_CHARGEARROW# 
+AC_CHARGEARROW#
 衝鋒箭(Charge Arrow)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵人
 內容 : 拉弓時間較久，但能發射較強的箭矢，當對方中箭時，會退後 4格
 #
-TF_SPRINKLESAND# 
+TF_SPRINKLESAND#
 噴砂
 習得條件 : 進階學習機能
 系列 : 攻擊(地)
 對象 : 敵人
 內容 : 對敵人做噴砂之攻擊，攻擊力是一般攻擊力的130%倍，有一定的機率，讓敵人變成黑暗或昏迷的狀態。
 #
-TF_BACKSLIDING# 
+TF_BACKSLIDING#
 後退迴避(Back_Sliding)
 習得條件 : 進階學習機能
 系列 : 補助
 內容 : 向後方如滑動般的移動，當敵人給予攻擊時，可以安全的迴避
 #
-TF_PICKSTONE# 
+TF_PICKSTONE#
 撿石頭 
 習得條件 : 進階學習機能
 系列 : 補助
 對象 : 地面
 內容 : 從地面上撿起石頭
 #
-TF_THROWSTONE# 
+TF_THROWSTONE#
 投擲石頭 
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵人
 內容 : 投擲石頭。無視防禦力，給予敵人50的傷害力，使用時會消耗掉一顆石頭，有一定的機率，讓敵人變成昏迷或黑暗狀態.
 #
-MC_CARTREVOLUTION# 
+MC_CARTREVOLUTION#
 手推車攻擊(Cart_Revolution)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵人
 內容 : 用手推車去砸傷敵人，讓敵人連續受到傷害，傷害力是一般攻擊力的150%倍，手推車的重量越重，攻擊力也會增加。
 #
-MC_CHANGECART# 
+MC_CHANGECART#
 改裝手推車(Change_Cart)
 習得條件 : 進階學習機能
 系列 : 補助
 內容 : 依自己等級變化，可更換手推車，有5種樣式，可提供選擇
 #
-MC_LOUD# 
+MC_LOUD#
 大聲吶喊
 習得條件 : 進階學習機能
 系列: 補助
 對象 : 自己
 內容 : 大聲吶喊！以增加力量。有5分鐘的時間，讓自己的STR值增加4點。
 #
-AL_HOLYLIGHT# 
+AL_HOLYLIGHT#
 神聖之光(Holy Light)
 習得條件 : 進階學習機能
 系列 : 攻擊(聖)
 對象 : 敵人
 內容 : 用神聖的光攻擊敵人。
 #
-MG_ENERGYCOAT# 
+MG_ENERGYCOAT#
 能量外套(Energy Coat)
 習得條件 : 進階學習機能
 系列 : 補助
 內容 : 用精神上的能量，圍繞在身體，可降低敵人給予的傷害力。SP量越多，受到的傷害就越少，每次受到攻擊時，會消耗掉很多SP。
 #
-RG_SNATCHER# 
+RG_SNATCHER#
 強奪(Snatcher)
 MAX Lv : 10
 習得條件 : 偷竊 1
@@ -1483,15 +1482,15 @@ MAX Lv : 10
 對象 : 自己
 內容 : 可做一般攻擊並且又可以偷竊敵人的物品， 偷竊的機率以技能偷竊等級的不同而受影響.
 #
-RG_STEALCOIN# 
+RG_STEALCOIN#
 偷錢(Steal Coin)
 MAX Lv : 10
 習得條件 : 強奪 4
 系列 : 輔助
 對象 : 敵人(玩家不可)
-內容 : 從魔物身上偷竊金幣，成功的從魔物身上偷竊金幣之後，不能再對相同的魔物進行偷竊 ，以技能等級的不同成功率 和偷竊量也有所增加.
+內容 : 從魔物身上偷竊金幣，成左滷q魔物身上偷竊金幣之後，不能再對相同的魔物進行偷竊 ，以技能等級的不同成必v 和偷竊量也有所增加.
 #
-RG_BACKSTAP# 
+RG_BACKSTAP#
 背刺(Back Stap)
 MAX Lv : 10
 習得條件 : 偷錢 4
@@ -1500,7 +1499,7 @@ MAX Lv : 10
 內容 : 只有在對方背對自己時可以使用，100%命中。使受到攻擊的對像會向後看，使用弓施展背刺時，傷害值減半並根據等級增加暈眩機率
 在隱藏狀態時也可以使用, 但是一旦使用的話會解除隱藏狀態。
 #
-RG_TUNNELDRIVE# 
+RG_TUNNELDRIVE#
 潛遁(Tunnel Drive)
 MAX Lv : 5
 習得條件 : 隱匿 1
@@ -1508,7 +1507,7 @@ MAX Lv : 5
 對象 : 自己
 內容 : 在隱匿的狀態時可以移動，在隱匿的狀態移動時，比普通的時候速度較慢.
 #
-RG_RAID# 
+RG_RAID#
 潛擊(Raid)
 MAX Lv : 5
 習得條件 : 潛遁 2, 背刺 2
@@ -1516,51 +1515,51 @@ MAX Lv : 5
 範圍 : 自己周圍 9 格
 內容 : 只可在隱身狀態下使用，使用時給予範圍內的敵人傷害的同時陷入昏迷或黑暗的機率，被命中的對像在一定次數內每次受到物理攻擊時都會增加20%傷害值的狀態，但BOSS怪物會再增加10%的傷害，使用時會解除隱身狀態
 #
-RG_STRIPWEAPON# 
+RG_STRIPWEAPON#
 卸除武器(Strip Weapon)
 MAX Lv : 5
 習得條件 : 卸除鎧甲 5
 系列 : 輔助
 對象 : 敵人
 內容 : 把對方所裝備的武器卸裝，在PVP模式時，對玩家使用此技能時武器會被卸裝， 玩家會陷入一定的時間內不能裝備武器，對魔物使用時武器不會被卸裝，可是有一定的時間內 ATK會減少25%.
-卸除武器技能等級和施展者的DEX較高時， 成功機率也會高.
+卸除武器技能等級和施展者的DEX較高時， 成札鰷v也會高.
 #
-RG_STRIPSHIELD# 
+RG_STRIPSHIELD#
 卸除盾牌(Strip Shield)
 MAX Lv : 5
 習得條件 : 卸除頭盔 5
 系列 : 輔助
 對象 : 敵人
 內容 : 把對方所裝備的盾牌卸裝，在PVP模式時，對玩家使用此技能時盾牌會被卸裝， 玩家會陷入一定的時間內不能裝備盾牌，對魔物使用時盾牌不會被卸裝，可是有一定的時間內DEF會減少15%.
-卸除盾牌技能等級和施展者的DEX較高時， 成功機率也會高.
+卸除盾牌技能等級和施展者的DEX較高時， 成札鰷v也會高.
 #
-RG_STRIPARMOR# 
+RG_STRIPARMOR#
 卸除鎧甲(Strip Armor)
 MAX Lv : 5
 習得條件 : 卸除盾牌 5
 系列 : 輔助
 對象 : 敵人
 內容 : 把對方所裝備的鎧甲卸裝，在PVP模式時，對玩家使用此技能時鎧甲會被卸裝， 玩家會陷入一定的時間內不能裝備鎧甲，對魔物使用時鎧甲不會被卸裝，可是有一定的時間內DEF會減少40%.
-卸除鎧甲技能等級和施展者的DEX較高時， 成功機率也會高.
+卸除鎧甲技能等級和施展者的DEX較高時， 成札鰷v也會高.
 #
-RG_STRIPHELM# 
+RG_STRIPHELM#
 卸除頭盔(Strip Helm)
 MAX Lv : 5
 習得條件 : 偷錢 2
 系列 : 輔助
 對象 : 敵人
 內容 : 把對方所裝備的頭盔卸裝，在PVP模式時，對玩家使用此技能時頭盔會被卸裝，玩家會陷入一定的時間內不能裝備頭盔，對魔物使用時頭盔不會被卸裝，可是有一定的時間內DEF會減少40%.
-卸除頭盔技能等級和施展者的DEX較高時， 成功機率也會高.
+卸除頭盔技能等級和施展者的DEX較高時， 成札鰷v也會高.
 #
-RG_INTIMIDATE# 
+RG_INTIMIDATE#
 脅持(Intimidate)
 MAX Lv : 5
 習得條件 : 潛擊 5, 背刺 4
 系列 : 攻擊
 對象 : 敵人
-內容 : 攻擊對方時，也同時和對方在地圖上，被傳送到隨機的一點，Boss級魔物不屬於此範圍，當施展者等級越高時，或者對象的等級越低時，成功機率也會高.
+內容 : 攻擊對方時，也同時和對方在地圖上，被傳送到隨機的一點，Boss級魔物不屬於此範圍，當施展者等級越高時，或者對象的等級越低時，成札鰷v也會高.
 #
-RG_GRAFFITI# 
+RG_GRAFFITI#
 塗鴉(Graffiti)
 MAX Lv : 1
 習得條件 : 旗幟塗鴉 5
@@ -1569,7 +1568,7 @@ MAX Lv : 1
 內容 : 選擇周圍的範圍內，所輸入的塗鴉會呈現在地面上，塗鴉的內容玩家可輸入20字左右.
 第一次設定的塗鴉還沒消失時，不能再劃第二道塗鴉，使用時會消耗掉一個 超大型毛筆一隻. (未開放)
 #
-RG_FLAGGRAFFITI# 
+RG_FLAGGRAFFITI#
 旗幟塗鴉(Flag Graffiti)
 MAX Lv : 5
 習得條件 : 清洗 1
@@ -1578,7 +1577,7 @@ MAX Lv : 5
 內容 : 用在工會的旗幟上， 工會旗幟上的圖案，被指定的塗鴉當中會隨機的呈現出一個圖案.
 技能等級增加的同時塗鴉種類也會增加，使用時會消耗掉一個  小型毛筆一隻. (未開放)
 #
-RG_CLEANER# 
+RG_CLEANER#
 清洗(Cleaner)
 MAX Lv : 1
 習得條件 : 流氓天國
@@ -1586,14 +1585,14 @@ MAX Lv : 1
 對象 : 旗幟
 內容 : 把塗鴉過的旗幟塗鴉，恢復成正常狀態. 使用時會消耗掉濕抹布.  一個  . (未開放)
 #
-RG_GANGSTER# 
+RG_GANGSTER#
 流氓天國(GangSter Paradise)
 MAX Lv : 1
 習得條件 : 卸除盾牌 3
 系列 : 被動
 內容 : 當坐下時離自己很近的範圍內，有其它流氓也坐在旁邊時， 自己和那位流氓不會被魔物們攻擊，Boss級魔物不屬於此範圍.
 #
-RG_COMPULSION# 
+RG_COMPULSION#
 強制減價(Compulsion Discount)
 MAX Lv : 5
 習得條件 : 流氓天國 1
@@ -1605,14 +1604,14 @@ MAX Lv : 5
 [Level 4] : 折扣率 21%
 [Level 5] : 折扣率 25%
 #
-RG_PLAGIARISM# 
+RG_PLAGIARISM#
 抄襲(Plagiarism)
 MAX Lv : 10
 習得條件 : 脅持 5
 系列 : 被動
 內容 : 自己會記住最後一個會被命中的技能而且可以使用，當技能等級越高時，能記住的技能等級也會越高.
 #
-AM_AXEMASTERY# 
+AM_AXEMASTERY#
 斧頭和單手劍使用熟練度(Axe Mastery)
 MAX Lv : 10
 系列 : 被動
@@ -1628,20 +1627,20 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-AM_LEARNINGPOTION# 
+AM_LEARNINGPOTION#
 知識藥水(Learning Potion)
 MAX Lv : 10
 系列 : 被動
 內容 : 使用藥水時讓藥效會更好，對製作藥水時有所幫助.
 #
-AM_PHARMACY# 
+AM_PHARMACY#
 配藥(Pharmacy)
 MAX Lv : 10
 習得條件 : 知識藥水 5
 系列 : 輔助
 內容 : 可製作藥水或是藥品，為了使用這技能時要消耗掉藥缽 1個 ，要製作這藥水時需要這藥水的製作說明書做參考
 #
-AM_DEMONSTRATION# 
+AM_DEMONSTRATION#
 火煙瓶投擲(Demonstration)
 MAX Lv : 5
 習得條件 : 配藥 4
@@ -1649,7 +1648,7 @@ MAX Lv : 5
 對象 : 地面
 內容 : 投擲火煙瓶在對方地面上，有一定的時間內給予傷害力，被火煙瓶投擲引起的火擊中也不會延燒起來，有一定的機率讓對方的武器受損壞，使用時會消耗掉火煙瓶  1個
 #
-AM_ACIDTERROR# 
+AM_ACIDTERROR#
 強酸攻擊(Acid Terror)
 MAX Lv : 5
 習得條件 : 配藥 5
@@ -1657,7 +1656,7 @@ MAX Lv : 5
 對象 : 敵人
 內容 : 丟出鹽酸使敵人受傷害，讓敵人受傷的同時也讓敵人得到出血，讓鎧甲有損壞的機率，使用此技能時要消耗掉鹽酸瓶1個技能等級增加時，讓鎧甲損壞或是讓出血的機率提高。
 #
-AM_POTIONPITCHER# 
+AM_POTIONPITCHER#
 藥水投擲(Potion Pitcher)
 MAX Lv : 5
 習得條件 : 配藥 3
@@ -1670,7 +1669,7 @@ MAX Lv : 5
 [Level 4] : 可使用白色藥水 
 [Level 5] : 可使用藍色藥水 
 #
-AM_CANNIBALIZE# 
+AM_CANNIBALIZE#
 生物調撥(Bio Cannibalize)
 MAX Lv : 5
 習得條件 : 配藥 6
@@ -1679,7 +1678,7 @@ MAX Lv : 5
 內容 : 在地面上可攻擊施展者敵人的魔物，可召喚出植物系魔物，被召喚出來的魔物在一定時間後就會消失，魔物的MHP以技能等級的不同而有所不同，使用此技能時要消耗掉噬人植物瓶1個.
 因技能等級的不同，可召喚出不同的魔物，召喚出某一個種類的魔物後，就不能召喚出不同種類的魔物，當技能等級越低時，可以召喚出更多數量的魔物，但當技能等級到5的時候，只能召喚出一隻魔物.
 #
-AM_SPHEREMINE# 
+AM_SPHEREMINE#
 氣泡蟲召喚(Sphere Mine)
 MAX Lv : 5
 習得條件 : 配藥 2
@@ -1687,7 +1686,7 @@ MAX Lv : 5
 對象 : 地面
 內容 : 可在地面上召喚出氣泡蟲，召喚出來的氣泡蟲若受到攻擊時無條件的施展 自爆技能，使用時需要消耗掉刺錘瓶   1個.
 #
-AM_CP_WEAPON# 
+AM_CP_WEAPON#
 化學武器保護(Chemical Protection Weapon)
 MAX Lv : 5
 習得條件 : 化學鎧甲保護 3
@@ -1696,7 +1695,7 @@ MAX Lv : 5
 內容 : 把對象的武器在一定的時間內，變成不會受到損壞的狀態，使用時會消耗掉護貝藥  1個.
 技能等級增加時，持續時間越長.
 #
-AM_CP_SHIELD# 
+AM_CP_SHIELD#
 化學盾牌保護(Chemical Protection Shield)
 MAX Lv : 5
 習得條件 : 化學頭盔保護 3
@@ -1705,7 +1704,7 @@ MAX Lv : 5
 內容 : 把對象的盾牌在一定的時間內，變成不會受到損壞的狀態，使用時會消耗掉護貝藥   1個.
 技能等級增加時，持續時間越長.
 #
-AM_CP_ARMOR# 
+AM_CP_ARMOR#
 化學鎧甲保護(Chemical Protection Armor)
 MAX Lv : 5
 習得條件 : 化學盾牌保護 3
@@ -1714,7 +1713,7 @@ MAX Lv : 5
 內容 : 把對象的鎧甲在一定的時間內，變成不會受到損壞的狀態，使用時會消耗掉護貝藥   1個.
 技能等級增加時，持續時間越長.
 #
-AM_CP_HELM# 
+AM_CP_HELM#
 化學頭盔保護(Chemical Protection Helm)
 MAX Lv : 5
 習得條件 : 配藥 2
@@ -1723,34 +1722,34 @@ MAX Lv : 5
 內容 : 把對象的頭盔在一定的時間內，變成不會受到損壞的狀態，使用時會消耗掉護貝藥   1個.
 技能等級增加時，持續時間越長.
 #
-AM_BIOETHICS# 
+AM_BIOETHICS#
 生命倫理(Bioethics)
 習得條件 : 進階學習機能
 系列 : 被動
 內容 : 沒有任何效能，只是為了誕生生命體，在技能樹狀圖上開始而已，可是對負責重要生命的人來說，生命倫理再怎麼強調也不為過的.
 #
-AM_BIOTECHNOLOGY# 
+AM_BIOTECHNOLOGY#
 生命工學研究(Biotechnology)
 系列 : 被動
 內容 : 學習有關生命創作的基礎理論，當創作被造物使用時提高機率， 增加自己的生命體的MHP值.
 #
-AM_CREATECREATURE# 
+AM_CREATECREATURE#
 生命體(Create Creature)
 系列 : 輔助
-內容 : 利用生命的起源製作出新的生命物品艾普理歐 ，因技能等級的不同基本成功率 會上升.
+內容 : 利用生命的起源製作出新的生命物品艾普理歐 ，因技能等級的不同基本成必v 會上升.
 #
-AM_CULTIVATION# 
+AM_CULTIVATION#
 培養(Cultivation)
 系列 : 輔助
-內容 : 培養艾普理歐製作出生命體，有一定的機率會成功或失敗， 以技能等級的不同基本成功率 會上升， 
-現在你所飼養的生命體存在的話，就不能使用，假如成功的製作出生命體時，自動的會變成自己所飼養的生命體.
+內容 : 培養艾普理歐製作出生命體，有一定的機率會成巧峊２恁A 以技能等級的不同基本成必v 會上升， 
+現在你所飼養的生命體存在的話，就不能使用，假如成左獄s作出生命體時，自動的會變成自己所飼養的生命體.
 #
-AM_FLAMECONTROL# 
+AM_FLAMECONTROL#
 火焰控制(Flame Control)
 系列 : 被動
 內容 : 利用火爐來控制火，使用培養時會提高機率，把有此技能玩家的火屬性，增加他的抵抗力.
 #
-AM_CALLHOMUN# 
+AM_CALLHOMUN#
 生命體召喚(Call Homunculus)
 MAX Lv : 1
 習得條件 : 安息 1
@@ -1758,7 +1757,7 @@ MAX Lv : 1
 內容 : 把自己飼養的生命體召喚出來或是創作生命體，要把生命體召喚之前，之前必須有創作過生命體才行，
 並且要把生命體在[安息]技能睡眠狀態才行，要創作生命體需要'艾普理歐' 物品才行
 #
-AM_REST# 
+AM_REST#
 安息(Rest)
 MAX Lv : 1
 習得條件 : 生命倫理 1
@@ -1766,7 +1765,7 @@ MAX Lv : 1
 內容 : 把自己所飼養的生命體，引導到安息，把自己現在所飼養的生命體做充滿的休息，
 不過要在生命體的 HP在 MAXHP的 80% 以上時才可以使用，以後用 [生命體召喚] 技能可重新召喚出
 #
-AM_DRILLMASTER# 
+AM_DRILLMASTER#
 攻擊力訓練(Drillmaster)
 系列 : 被動
 內容 : 把自己的生命體攻擊力增加.
@@ -1781,13 +1780,13 @@ AM_DRILLMASTER#
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-AM_HEALHOMUN# 
+AM_HEALHOMUN#
 治癒生命體(Heal Homunculus)
 系列 : 輔助
 對象 : 治癒生命體
 內容 : 把分類為生命體生物的HP給予恢復，恢復量和服事的技能 治癒術一模一樣.
 #
-AM_RESURRECTHOMUN# 
+AM_RESURRECTHOMUN#
 復活生命體(Resurrection Homunculus)
 MAX Lv : 5
 習得條件 : 生命體召喚 1
@@ -1795,13 +1794,13 @@ MAX Lv : 5
 對象 : 生命體
 內容 : 把不能戰鬥的生命體，讓他復活.
 #
-CR_TRUST# 
+CR_TRUST#
 信任(Faith)
 MAX Lv : 10
 系列 : 被動
 內容 : 增加最大 HP，對聖屬性攻擊增加抵抗力.
 #
-CR_AUTOGUARD# 
+CR_AUTOGUARD#
 自動防禦(Auto Guard)
 MAX Lv : 10
 系列 : 輔助
@@ -1809,7 +1808,7 @@ MAX Lv : 10
 此技能必須裝備盾牌才能使用，當盾牌裝備卸下時，此技能的效能也會消失，若當自動防禦狀態時再使用自動防禦的話，效能會消失.
 自動防禦時會有 0.3秒的防禦時間，技能等級越增加時防禦時間越縮短
 #
-CR_SHIELDCHARGE# 
+CR_SHIELDCHARGE#
 盾擊(Shield Charge)
 MAX Lv : 5
 習得條件 : 自動防禦 5
@@ -1818,7 +1817,7 @@ MAX Lv : 5
 內容 : 用盾牌攻打敵人，被攻擊的敵人會退後到一定的空格，並有一定的機率會昏迷.
 一定要裝備盾牌才能使用.
 #
-CR_SHIELDBOOMERANG# 
+CR_SHIELDBOOMERANG#
 迴旋盾擊(Shield Boomerang)
 MAX Lv : 5
 習得條件 : 盾擊 3
@@ -1827,7 +1826,7 @@ MAX Lv : 5
 內容 : 投擲盾牌，對敵人做出遠距離傷害攻擊.
 因盾牌的重量越重，或著盾牌的精煉度越高，給予敵人的傷害力也越大，一定要裝備盾牌才能使用.
 #
-CR_REFLECTSHIELD# 
+CR_REFLECTSHIELD#
 反射盾(Reflect Shield)
 MAX Lv : 10
 習得條件 : 迴旋盾擊 3
@@ -1835,7 +1834,7 @@ MAX Lv : 10
 內容 : 在一定的時間內，在近距離攻擊我的敵人，反回給他們一定的自動傷害力.
 該攻擊僅限於敵人的近距離物理攻擊，這技能必須裝備盾牌才能使用.
 #
-CR_HOLYCROSS# 
+CR_HOLYCROSS#
 聖十字攻擊(Holy Cross)
 MAX Lv : 10
 習得條件 : 信任 7
@@ -1843,7 +1842,7 @@ MAX Lv : 10
 對象 : 敵人
 內容 : 以神聖十字進行2連擊，被攻擊的敵人以一定的機率陷入黑暗，在裝備雙手槍的狀態下使用時攻擊力會增加
 #
-CR_GRANDCROSS# 
+CR_GRANDCROSS#
 聖十字審判(Grand Cross)
 MAX Lv : 10
 習得條件 : 信任 10, 聖十字攻擊 6
@@ -1852,7 +1851,7 @@ MAX Lv : 10
 內容 : 以自己為中心有一個大的十字架模型，來執行神的審判，施展者剩下20% HP消耗時，額外的得到一些傷害力.
 施展時間內就算受到攻擊，該次施法也不會被取消，還有受到聖十字審判的，不死系魔物和惡魔系魔物，都會陷入黑暗狀態. (boss級魔物除外).
 #
-CR_DEVOTION# 
+CR_DEVOTION#
 犧牲(Devotion)
 MAX Lv : 5
 習得條件 : 聖十字審判 4, 反射盾 5
@@ -1862,7 +1861,7 @@ MAX Lv : 5
 若離開一定的範圍或地圖移動死亡等，有距離時此效能就無效.
 和自己一樣的職業，對十字軍不能使用.
 #
-CR_PROVIDENCE# 
+CR_PROVIDENCE#
 神祐之光(Providence)
 MAX Lv : 5
 習得條件 : 天使之護 5, 治癒術 5
@@ -1870,7 +1869,7 @@ MAX Lv : 5
 對象 : 我軍
 內容 : 降下神的佑護，增加對惡魔型攻擊的抵抗力，和聖屬性攻擊的抵抗力.
 #
-CR_DEFENDER# 
+CR_DEFENDER#
 光之盾(Defender)
 MAX Lv : 5
 習得條件 : 迴旋盾擊 1
@@ -1878,7 +1877,7 @@ MAX Lv : 5
 內容 : 使用時對遠距離物理攻擊，減少傷害力，傷害力減少量依據技能等級有所不同，施法時可以感覺到移動速度和攻擊速度變慢.
 已在使用光之盾狀態下，若再使用光之盾時這狀態會消除，一定裝備盾牌時才能使用.
 #
-CR_SPEARQUICKEN# 
+CR_SPEARQUICKEN#
 長矛加速術(Spear Quicken)
 MAX Lv : 10
 習得條件 : 長矛使用熟練度 10
@@ -1886,7 +1885,7 @@ MAX Lv : 10
 內容 : 增加使用長矛時的攻擊速度，越是使用高等技能的長矛加速術時攻擊速度會越快且持續時間會增加，必殺攻擊力率和迴避率也會上升.
 裝備槍才可使用，解除裝備後技能的效用會消失.
 #
-MO_IRONHAND# 
+MO_IRONHAND#
 鐵沙掌(鐵沙掌)
 MAX Lv : 10
 習得條件 : 天使之擊, 天使之護 10
@@ -1903,21 +1902,21 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-MO_SPIRITSRECOVERY# 
+MO_SPIRITSRECOVERY#
 運氣調息(運氣調息)
 MAX Lv : 5
 習得條件 : 真劍百破道 2
 系列 : 被動
 內容 : 坐下時每10秒就恢復額外的HP和SP，重量在50%以上時，每20秒就恢復額外的HP和SP.
 #
-MO_CALLSPIRITS# 
+MO_CALLSPIRITS#
 畜氣(畜氣)
 MAX Lv : 5
 習得條件 : 鐵沙掌 2)
 系列 : 輔助
 內容 : 把氣聚集起來成為具體化，具體化的氣會跟隨著施展者而行，當你使用技能時會影響到你，所聚集的氣球體每1個，會增加攻擊力3。
 #
-MO_ABSORBSPIRITS# 
+MO_ABSORBSPIRITS#
 吸氣(吸氣)
 MAX Lv : 1
 習得條件 : 畜氣 5
@@ -1925,15 +1924,15 @@ MAX Lv : 1
 內容 : 做成球體的東西可攜帶，便吸收氣可恢復SP，對每1個氣球體可恢復一定量的SP， 在PVP模式和公會大戰時，也可以把其它武道家的氣球體吸收。
 對魔物使用時，有20%的機率依照魔物的等級可偷取SP，這技能不能使用於Boss級魔物和監護人。
 #
-MO_TRIPLEATTACK# 
+MO_TRIPLEATTACK#
 六合拳(六合拳)
 MAX Lv : 10
 習得條件 : 移花接木 5
 系列 : 被動
 內容 : 攻擊中有一定的機率擊出3連擊，假如學習到‘連環全身掌’的話, 3連擊攻擊發動後會有一定的時間延遲.
-	
+\t
 #
-MO_BODYRELOCATION# 
+MO_BODYRELOCATION#
 弓身彈影(弓身彈影)
 MAX Lv : 1
 習得條件 : 運氣調息 2, 阿修羅霸凰券 3, 金剛不壞 3
@@ -1942,14 +1941,14 @@ MAX Lv : 1
 內容 : 使用時往被選擇的地方做瞬間移動，現在的位置和被選擇的位置被阻擋時，若不是在一條直線上的移動時，此技能就會失敗.
 消耗掉1個氣球體的技能，可是在爆气的狀態下不會消耗氣球體
 #
-MO_DODGE# 
+MO_DODGE#
 移花接木(移花接木)
 MAX Lv : 10
 習得條件 : 鐵沙掌 5, 畜氣 5
 系列 : 被動
 內容 : 迴避敵人的攻擊，迴避率會上升.
 #
-MO_INVESTIGATE# 
+MO_INVESTIGATE#
 浸透勁(浸透勁)
 MAX Lv : 5
 習得條件 : 畜氣 5
@@ -1958,7 +1957,7 @@ MAX Lv : 5
 內容 : 運用氣給予敵人體內打擊，當敵人的DEF越高時則給予較高的傷害力，DEF低的敵人反而給予較低的傷害力
 消耗掉1個氣球體的技能.
 #
-MO_FINGEROFFENSIVE# 
+MO_FINGEROFFENSIVE#
 彈指神通(彈指神通)
 MAX Lv : 5
 習得條件 : 浸透勁 3
@@ -1967,7 +1966,7 @@ MAX Lv : 5
 內容 : 可對敵人發出氣彈的遠距離攻擊，技能等級上升時可用氣球體，一次可按自己的技能等級高低做出所須的攻擊.
 要有氣球體才能使用此技能.
 #
-MO_STEELBODY# 
+MO_STEELBODY#
 金剛不壞(金剛不壞)
 MAX Lv : 5
 習得條件 : 猛龍誇強 3
@@ -1975,7 +1974,7 @@ MAX Lv : 5
 內容 : 在持續時間中，施展者的 DEF , MDEF 被固定為較高的數值，在持續時間中不能用任何技能，移動速度和攻擊速度會減低
 要消耗掉5個氣球.
 #
-MO_BLADESTOP# 
+MO_BLADESTOP#
 真劍百破道(真劍百破道)
 MAX Lv : 5
 習得條件 : 移花接木 5
@@ -1989,7 +1988,7 @@ MAX Lv : 5
 [Level 5] : 持續時間60秒，可使用阿修羅霸凰拳
 要使用阿修羅霸凰拳時，要在爆氣狀態下才能使用，氣球體要4個以上才行.
 #
-MO_EXPLOSIONSPIRITS# 
+MO_EXPLOSIONSPIRITS#
 爆氣(爆氣)
 MAX Lv : 5
 習得條件 : 吸氣 1
@@ -1997,7 +1996,7 @@ MAX Lv : 5
 內容 : 氣爆使一定時間內必殺攻擊率提高，在氣爆狀態下SP自然恢復速度減少50%
 要消耗掉5個氣球體.
 #
-MO_EXTREMITYFIST# 
+MO_EXTREMITYFIST#
 阿修羅霸凰拳(阿修羅霸凰拳)
 MAX Lv : 5
 習得條件 : 爆氣 3, 彈指神通 3
@@ -2006,7 +2005,7 @@ MAX Lv : 5
 內容 : 只能在爆氣狀態時才能使用的技能，根據自己所剩的SP量多寡，給予對方極大的傷害力把SP會全部耗盡，使用完阿修羅霸凰拳氣爆炸狀態會解除.
 使用後 5分鐘之內 SP不會自動恢復，消耗5個氣球體.
 #
-MO_CHAINCOMBO# 
+MO_CHAINCOMBO#
 連環全身掌(連環全身掌)
 MAX Lv : 5
 習得條件 : 六合拳 5
@@ -2014,7 +2013,7 @@ MAX Lv : 5
 對象 : 敵人
 內容 : 啟動六合拳後在延遲時間內才能使用，類似音速投擲一樣讓對方迴轉給予4連擊，習得猛龍誇強後，4連擊後為了施展猛龍誇強有一定的時間延遲.
 #
-MO_COMBOFINISH# 
+MO_COMBOFINISH#
 猛龍誇強(猛龍誇強)
 MAX Lv : 5
 習得條件 : 連環全身掌 3
@@ -2023,7 +2022,7 @@ MAX Lv : 5
 內容 : 啟動連環全身掌後在延遲時間內才能使用，給對象極大的傷害力會往後退移，習得阿修羅霸凰拳在可使用的狀態時，使用後再施展阿修羅霸凰拳時，會有一定的時間延遲.
 猛龍誇強施展後，想要用阿修羅霸凰拳時要在爆氣狀態，氣球體要 4個以上，要消耗掉氣球體1個的技能.
 #
-SA_ADVANCEDBOOK# 
+SA_ADVANCEDBOOK#
 進化之書(Advanced Book)
 MAX Lv : 10
 系列 : 被動
@@ -2039,14 +2038,14 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27，攻擊速度 4.5% 增加
 [Level 10] : 攻擊力 +30，攻擊速度 5% 增加
 #
-SA_CASTCANCEL# 
+SA_CASTCANCEL#
 取消施法(Cast Cancel)
 MAX Lv : 5
 習得條件 : 進化之書 2
 系列 : 輔助
 內容 : 只有在魔法施展時可以使用，取消正在施展中的魔法，立刻可以行動，魔法被取消時，施展中SP依舊被消耗，但隨著等級的不同，SP消耗量也有減少.
 #
-SA_MAGICROD# 
+SA_MAGICROD#
 魔法懲罰(Magic Rod)
 MAX Lv : 5
 習得條件 : 進化之書 4
@@ -2054,7 +2053,7 @@ MAX Lv : 5
 內容 : 對自己鎖定的魔法攻擊施展時所受的傷害，在一定的時間內使用時，不會受到傷害，可以吸收該魔法攻擊的SP傷害力.
 假如對象使用念咒拆除時，這時候施展者用魔法懲罰來吸收，讓對象的 SP會減少 20%.
 #
-SA_SPELLBREAKER# 
+SA_SPELLBREAKER#
 念咒拆除(Spell Breaker)
 MAX Lv : 5
 習得條件 : 魔法懲罰 1
@@ -2064,14 +2063,14 @@ MAX Lv : 5
 同時把敵人的 HP減掉2%，當技能等級 5時，可以吸收減去HP的一半。
 對Boss級魔物和監護人，減少 HP效果不會起任何作用，詠唱時間中斷效果對Boss級魔物有 1/10的機率可以使用。
 #
-SA_FREECAST# 
+SA_FREECAST#
 自由施法(Free Cast)
 MAX Lv : 10
 習得條件 : 取消施法 1
 系列 : 被動
 內容 : 在魔法施展中可同時進行攻擊與移動，移動速度與攻擊速度隨等級不同而有所不同.
 #
-SA_AUTOSPELL# 
+SA_AUTOSPELL#
 自動念咒(Auto Spell)
 MAX Lv : 10
 習得條件 : 自由施法 4
@@ -2090,7 +2089,7 @@ MAX Lv : 10
 [Level 10] : 冰凍術 技能等級1
 啟動的技能等級，是在能選擇的技能等級以下的數值 會隨機的被選擇.
 #
-SA_FLAMELAUNCHER# 
+SA_FLAMELAUNCHER#
 火焰屬性附加(Flame Launcher)
 MAX Lv : 5
 習得條件 : 火箭術 1, 進化之書 5
@@ -2099,7 +2098,7 @@ MAX Lv : 5
 內容 : 讓對象的武器會在一定的時間內被賦予火屬性，技能等級不同則有失敗機率也有不同， 失敗時則該武器會破損.
 需消耗觸媒 火靈礦石 1個.
 #
-SA_FROSTWEAPON# 
+SA_FROSTWEAPON#
 水屬性附加(Frost Weapon)
 MAX Lv : 5
 習得條件 : 冰箭術 1, 進化之書 5
@@ -2108,7 +2107,7 @@ MAX Lv : 5
 內容 : 讓對象的武器會在一定的時間內被賦予水屬性，技能等級不同則失敗機率也有不同，失敗時則該武器會破損.
 需消耗觸媒 水靈礦石 1個.
 #
-SA_LIGHTNINGLOADER# 
+SA_LIGHTNINGLOADER#
 風屬性附加(Lightning Loader)
 MAX Lv : 5
 習得條件 : 雷擊術 1, 進化之書 5
@@ -2117,7 +2116,7 @@ MAX Lv : 5
 內容 : 讓對象的武器會在一定的時間內被賦予風屬性，技能等級不同則失敗機率也有不同，失敗時則該武器會破損.
 需消耗觸媒 風靈礦石 1個.
 #
-SA_SEISMICWEAPON# 
+SA_SEISMICWEAPON#
 地屬性附加(Seismic Weapon)
 MAX Lv : 5
 習得條件 : 石化術 1, 進化之書 5
@@ -2126,14 +2125,14 @@ MAX Lv : 5
 內容 : 讓對象的武器會在一定的時間內被賦予地屬性，技能等級不同則失敗機率也有不同，失敗時則該武器會破損.
 需消耗觸媒 地靈礦石 1個.
 #
-SA_DRAGONOLOGY# 
+SA_DRAGONOLOGY#
 龍知識(Dragonology)
 MAX Lv : 5
 習得條件 : 進化之書 9
 系列 : 被動
 內容 : 透過對龍族的研究，提高對龍族的防禦力與攻擊力。技能等級增加時，INT最大增加到 3
 #
-SA_VOLCANO# 
+SA_VOLCANO#
 火元素領域(Volcano)
 MAX Lv : 5
 習得條件 : 火焰屬性附加 2
@@ -2142,16 +2141,16 @@ MAX Lv : 5
 內容 : 施展對象的範圍內，能增加所有的火屬性攻擊力，ATK也會上升，另外在施展對象範圍上方不可使用冰刃之牆不能和賢者的其它地面技能重複使用。
 使用時需消耗觸媒黃色魔力礦石持續時間內用火元素領域、水元素領域、風元素領域技能繁複施展時，黃色魔力礦石不會被消耗。
 #
-SA_DELUGE# 
+SA_DELUGE#
 水元素領域(Deluge)
 MAX Lv : 5
 習得條件 : 水屬性附加 2
 系列 : 輔助
 對象 : 地面
-內容 : 施展對象的範圍內，能增加所有的水屬性攻擊力，MaxHp也會上升，在施展對象的範圍之上，只能夠在水上使用的魔法(水球術 , 天使之淚)可以無限制地使用。同一個地點不能重複施放兩次，也不能跟其它的地面魔法重複。
+內容 : 施展對象的範圍內，能增加所有的水屬性攻擊力，MaxHp也會上升，在施展對象的範圍之上，只能夠在水上使用的魔法(水球術 , 天使之?可以無限制地使用。同一個地點不能重複施放兩次，也不能跟其它的地面魔法重複。
 使用時需消耗觸媒黃色魔力礦石持續時間內用火元素領域、水元素領域、風元素領域技能繁複施展時，黃色魔力礦石不會被消耗。
 #
-SA_VIOLENTGALE# 
+SA_VIOLENTGALE#
 風元素領域(Violent Gale)
 MAX Lv : 5
 習得條件 : 風屬性附加 2
@@ -2160,7 +2159,7 @@ MAX Lv : 5
 內容 : 施展對象的範圍內，能增加所有的風屬性攻擊力，迴避率也會增加.另外在施展對象的範圍上方 火燄之壁的時間增加1.5倍，不能和賢者的其它地面技能重複使用。
 使用時需消耗觸媒黃色魔力礦石持續時間內用火元素領域、水元素領域、風元素領域技能繁複施展時，黃色魔力礦石不會被消耗。
 #
-SA_LANDPROTECTOR# 
+SA_LANDPROTECTOR#
 地元素領域(Land Protector)
 MAX Lv : 5
 習得條件 : 火元素領域 3, 水元素領域 3, 風元素領域 3
@@ -2169,7 +2168,7 @@ MAX Lv : 5
 內容 : 在對象區域內的地面上無法設置任何魔法，使用魔法時該地區地面上有其它魔法時，這地面的魔法會被消除，不能和賢者的其它地面技能重複使用.
 使用時需消耗觸媒 黃色魔力礦石 1個，藍色魔力礦石1個。
 #
-SA_DISPELL# 
+SA_DISPELL#
 魔法效果解除(Dispell)
 MAX Lv : 5
 習得條件 : 念咒拆除 3
@@ -2178,7 +2177,7 @@ MAX Lv : 5
 內容 : 有一定的機率，來解除附加在對方身上的魔法.
 使用時需消耗觸媒 黃色魔力礦石1個.
 #
-SA_ABRACADABRA# 
+SA_ABRACADABRA#
 隨機技能(Abracadabra)
 MAX Lv : 10
 習得條件 : 自動念咒 5, 魔法效果解除 1, 地元素領域 1
@@ -2186,113 +2185,112 @@ MAX Lv : 10
 對象 : ?
 內容 : 使用時效能會隨機決定，技能等級不同隨機發動的技能量也會增加.
 使用時需消耗觸媒黃色魔力礦石 2個.
-不管有沒有忽視黃色魔力礦石的效果, 至少會消耗一個黃色魔力礦石.
 #
-SA_MONOCELL# 
+SA_MONOCELL#
 變換成波利
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 把對象在一定的時間內變換成波利魔物.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_CLASSCHANGE# 
+SA_CLASSCHANGE#
 變換成Boss級魔物
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 把對象在一定的時間內變換成Boss級魔物.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_SUMMONMONSTER# 
+SA_SUMMONMONSTER#
 召喚魔物
 種類 : 主動技能
 對象 : 自動使用
-效能 : 和枯樹枝有同樣的效能
+效能 : 和狡薵K有同樣的效能
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_REVERSEORCISH# 
+SA_REVERSEORCISH#
 變成獸人面孔
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 在一定的時間內，對象的面孔會變成‘獸人’的面孔.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_DEATH# 
+SA_DEATH#
 死身
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 讓對象瞬間死亡，瞬間死亡的對象不會給予經驗值和物品.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_FORTUNE# 
+SA_FORTUNE#
 宿命
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 會得到對象Lv * 100 的金幣.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_TAMINGMONSTER# 
+SA_TAMINGMONSTER#
 認養寵物
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 對象是能認養的魔物時，會把這魔物認養.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_QUESTION# 
+SA_QUESTION#
 問號
 種類 : 主動技能
 對象 : 敵人 1人
 效能 : 對象會顯示‘ ? ’的表情符號，然後不會發生任何事情.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_GRAVITY# 
+SA_GRAVITY#
 GRAVITY
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 在對象的頭上方會出現表情符號 ，表情符號是(株) GRAVITY的圖案.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_LEVELUP# 
+SA_LEVELUP#
 升級
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 角色會升級.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_INSTANTDEATH# 
+SA_INSTANTDEATH#
 當場死亡
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 直接變成不能戰鬥狀態， 經驗值損失等 ， 所有的東西實際上都變成不能戰鬥。
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_FULLRECOVERY# 
+SA_FULLRECOVERY#
 完全恢復
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 把對象的 HP和 SP還有所有的狀態異常，恢復到正常狀態.
 其他 : 只能在隨機技能時，所開放的技能
 #
-SA_COMA# 
+SA_COMA#
 頻死之術
 種類 : 主動技能
 對象 : 對自己自動使用
 效能 : 把對象的 HP和 SP 無條件變成 1.
 其他 : 只能在隨機技能時，所開放的技能。
 #
-BD_ADAPTATION# 
+BD_ADAPTATION#
 臨機應變  (Adaptation To Circumstances)
 MAX Lv : 1
 系列 : 輔助
 內容 : 施展中的舞蹈或歌曲在中間停止， 這時候不能再唱安可.
 #
-BD_ENCORE# 
+BD_ENCORE#
 安可(Encore)
 MAX Lv : 1
 習得條件 : 臨機應變 1
 系列 : 輔助
 內容 : 自己最後一次所施展的舞蹈或歌曲再施展一次，只需要消耗掉平常的1/2SP量，,就可以使用此技能.
 #
-BD_LULLABY# 
+BD_LULLABY#
 搖籃曲(Lullaby)
 MAX Lv : 1
 習得條件 : 吹口哨(哼唱之音) 10
@@ -2300,7 +2298,7 @@ MAX Lv : 1
 範圍 : 自己周圍9格
 內容 : 在持續的時間中讓範圍內的敵人，有一定的機率陷入睡眠，對boss級魔物無效.
 #
-BD_RICHMANKIM# 
+BD_RICHMANKIM#
 經驗值倍增(Mr. Kim A Rich Man)
 MAX Lv : 5
 習得條件 : 不死神齊格弗里德 3
@@ -2308,7 +2306,7 @@ MAX Lv : 5
 範圍 : 自己周圍9格
 內容 : 範圍內當對方死亡時，所得到的經驗值會增加，技能等級越增加時會得到更多的經驗值.
 #
-BD_ETERNALCHAOS# 
+BD_ETERNALCHAOS#
 永遠的混沌(Eternal Chaos)
 MAX Lv : 1
 習得條件 : 洛奇的悲鳴 1
@@ -2316,7 +2314,7 @@ MAX Lv : 1
 範圍 : 自己周圍9格
 內容 : 把範圍內所有敵人(角色，魔物)的DEF，會無條件變成0.
 #
-BD_DRUMBATTLEFIELD# 
+BD_DRUMBATTLEFIELD#
 戰鼓震天(The Sound Of a Drum On the Battlefield)
 MAX Lv : 5
 習得條件 : 伊登的蘋果(為您服務) 10
@@ -2324,7 +2322,7 @@ MAX Lv : 5
 範圍 : 自己周圍9格
 內容 : 把範圍內組隊員們的ATK和DEF提升.
 #
-BD_RINGNIBELUNGEN# 
+BD_RINGNIBELUNGEN#
 尼貝隆根之戒指(The Ring of Nibelungen)
 MAX Lv : 5
 習得條件 : 戰鼓震天 3
@@ -2332,7 +2330,7 @@ MAX Lv : 5
 範圍 : 自己周圍9格
 內容 : 範圍內組隊員們所使用的武器威力變更強.
 #
-BD_ROKISWEIL# 
+BD_ROKISWEIL#
 洛奇的悲鳴(Roki's Weil)
 MAX Lv : 1
 習得條件 : 刺客的黃昏(勿忘我) 10
@@ -2340,7 +2338,7 @@ MAX Lv : 1
 範圍 : 自己周圍9格
 內容 : 在範圍內所有的生物，無法使用技能和魔法， boss級魔物不屬於此範圍.
 #
-BD_INTOABYSS# 
+BD_INTOABYSS#
 觸媒之所(Into The Abyss)
 MAX Lv : 1
 習得條件 : 搖籃曲 1
@@ -2348,23 +2346,21 @@ MAX Lv : 1
 範圍 : 自己周圍9格
 內容 : 在範圍內組隊員們使用時，不需要消耗觸媒(魔力礦石)就可以使用技能.
 #
-BD_SIEGFRIED# 
+BD_SIEGFRIED#
 不死神齊格弗里德(Invulnerable Siegfried)
 MAX Lv : 5
 習得條件 : 布萊奇之詩(女神之吻) 10
 系列 : 合奏技能
 範圍 : 自己周圍9格
-內容 : 範圍內的組隊員們，除了無屬性之外所有屬性攻擊的抵抗力都被固定。同時對異常狀態有抵抗率。
-[Level 1] : 屬性攻擊的抵抗力60% 固定/異常狀態的抵抗力10%
-[Level 2] : 屬性攻擊的抵抗力65% 固定/異常狀態的抵抗力20%
-[Level 3] : 屬性攻擊的抵抗力70% 固定/異常狀態的抵抗力30%
-[Level 4] : 屬性攻擊的抵抗力75% 固定/異常狀態的抵抗力40%
-[Level 5] : 屬性攻擊的抵抗力80% 固定/異常狀態的抵抗力50%
+內容 : 範圍內的組隊員們，所有屬性攻擊的抵抗力都被固定。同時對所有異常狀態都有 50%的抵抗率。
+[Level 1] : 所有屬性抵抗力固定60% 
+[Level 2] : 所有屬性抵抗力固定65% 
+[Level 3] : 所有屬性抵抗力固定70% 
+[Level 4] : 所有屬性抵抗力固定75% 
+[Level 5] : 所有屬性抵抗力固定80% 
 #
-BD_RAGNAROK# 
-仙境傳說
-#
-BA_MUSICALLESSON# 
+BD_RAGNAROK#"仙境傳說"#
+BA_MUSICALLESSON#
 操控樂器(Musical Lesson)
 MAX Lv : 10
 系列 : 被動
@@ -2380,7 +2376,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-BA_MUSICALSTRIKE# 
+BA_MUSICALSTRIKE#
 樂器攻擊(Musical Strike)
 MAX Lv : 5
 習得條件 : 操控樂器 3
@@ -2389,7 +2385,7 @@ MAX Lv : 5
 內容 : 使用樂器可以發射強力的箭矢，這技能在音樂技能演奏中也可以使用.
 只能在樂器系列武器裝備時才能使用，另外攻擊屬性受到所裝備的箭矢屬性而受影響.
 #
-BA_DISSONANCE# 
+BA_DISSONANCE#
 不諧和音(Dissonance)
 MAX Lv : 5
 習得條件 : 臨機應變 1, 操控樂器 1
@@ -2397,7 +2393,7 @@ MAX Lv : 5
 範圍 : 自己周圍7格
 內容 : 把範圍內的敵人，在一定的時間內給予固定的傷害力.
 #
-BA_FROSTJOKE# 
+BA_FROSTJOKE#
 冷笑話(Frost Joker)
 MAX Lv : 5
 習得條件 : 安可 1
@@ -2405,7 +2401,7 @@ MAX Lv : 5
 範圍 : 一個畫面全部
 內容 : 在畫面內所有的敵人都得到冰凍，以技能等級越高時得到冰凍的機率也越高，屬於舞孃的組隊員們有較低的機率會得到冰凍.
 #
-BA_WHISTLE# 
+BA_WHISTLE#
 吹口哨(A Whistle)
 MAX Lv : 10
 習得條件 : 不諧和音 3
@@ -2413,7 +2409,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內玩家的迴避率和完全迴避率上升.
 #
-BA_ASSASSINCROSS# 
+BA_ASSASSINCROSS#
 刺客的黃昏(Assassin Cross of Sunset)
 MAX Lv : 10
 習得條件 : 不諧和音 3
@@ -2421,7 +2417,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內玩家的攻擊速度提升，對使用中的雙手劍攻擊速度增加或速度激發時，在遠距離攻擊的玩家是無效的.
 #
-BA_POEMBRAGI# 
+BA_POEMBRAGI#
 布萊奇之詩(A Poem of Bragi)
 MAX Lv : 10
 習得條件 : 不諧和音 3
@@ -2429,7 +2425,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內的玩家，魔法施展時間和把魔法施展後的延遲時間減少.
 #
-BA_APPLEIDUN# 
+BA_APPLEIDUN#
 伊登的蘋果(The Apple of Idun)
 MAX Lv : 10
 習得條件 : 不諧和音 3
@@ -2437,7 +2433,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內的我軍增加最大的HP，每過一段時間會恢復一定的HP.
 #
-DC_DANCINGLESSON# 
+DC_DANCINGLESSON#
 練習舞蹈(Dancing Lesson)
 MAX Lv : 10
 系列 : 被動
@@ -2453,7 +2449,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-DC_THROWARROW# 
+DC_THROWARROW#
 纏箭投擲(Throw Arrow)
 MAX Lv : 5
 習得條件 : 練習舞蹈 3
@@ -2462,7 +2458,7 @@ MAX Lv : 5
 內容 : 利用鞭子把箭矢纏住然後再投擲，這技能可在音樂技能演奏中可以使用.
 只有裝備鞭子系列武器時才能使用，另外攻擊屬性受到所裝備的箭矢屬性而受影響.
 #
-DC_UGLYDANCE# 
+DC_UGLYDANCE#
 醜陋之舞(Ugly Dance)
 MAX Lv : 5
 習得條件 : 臨機應變 1, 練習舞蹈 1
@@ -2470,7 +2466,7 @@ MAX Lv : 5
 範圍 : 自己周圍7格
 內容 : 對範圍內的敵人，在一定的時間內給予固定的SP傷害力.
 #
-DC_SCREAM# 
+DC_SCREAM#
 驚聲尖叫(Scream)
 MAX Lv : 5
 習得條件 : 安可 1
@@ -2478,7 +2474,7 @@ MAX Lv : 5
 範圍 : 一個畫面全部
 內容 : 在畫面內所有的敵人都陷入昏迷，技能等級增加時昏迷機率也越高，屬於舞孃的組隊員們有較低的機率會得到昏迷.
 #
-DC_HUMMING# 
+DC_HUMMING#
 哼唱之音(Humming)
 MAX Lv : 10
 習得條件 : 醜陋之舞 3
@@ -2486,7 +2482,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內玩家的命中率上升.
 #
-DC_DONTFORGETME# 
+DC_DONTFORGETME#
 勿忘我(Please Don't Forget Me)
 MAX Lv : 10
 習得條件 : 醜陋之舞 3
@@ -2494,7 +2490,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內的敵人移動速度和攻擊速度減慢. 而之前所施展的增加移動速度和攻擊速度的技能會被取消.
 #
-DC_FORTUNEKISS# 
+DC_FORTUNEKISS#
 女神之吻(Fortune's kiss)
 MAX Lv : 10
 習得條件 : 醜陋之舞 3
@@ -2502,7 +2498,7 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內的玩家必殺攻擊率提高.
 #
-DC_SERVICEFORYOU# 
+DC_SERVICEFORYOU#
 為您服務(Service For you)
 MAX Lv : 10
 習得條件 : 醜陋之舞 3
@@ -2510,27 +2506,27 @@ MAX Lv : 10
 範圍 : 自己周圍7格
 內容 : 把範圍內的我軍，增加最大的SP，使用此技能時會減少SP的消耗量.
 #
-WE_MALE# 
+WE_MALE#
 只呵護妳 (I'll save you.)
 只能用在，為自己的戀人所使用的技能
 犧牲自己的HP，來貼補戀人的HP
 會使用掉全體HP的10%，當HP在10%以下時，此技能不能使用
 #
-WE_FEMALE# 
+WE_FEMALE#
 只為你犧牲 (I'll sacrifice myself for you)
 只能用在，為自己的戀人所使用的技能
 使用自己的SP，來提升戀人的SP
 會使用掉全體SP的10%，當SP在10%以下時，此技能不能使用
 #
-WE_CALLPARTNER# 
+WE_CALLPARTNER#
 想念你 (I'm missing you)
 在某些地區(攻城戰地圖) ，有可能不能使用此技能
 #
-ITM_TOMAHAWK# 
+ITM_TOMAHAWK#
 投擲風靈之斧
 內容 : 投擲斧頭攻擊遠距離的敵人
 #
-LK_AURABLADE# 
+LK_AURABLADE#
 靈氣劍(Aura Blade)
 MAX Lv : 5
 習得條件 : 狂擊 5, 怒爆 5, 雙手劍使用熟練度 5
@@ -2543,25 +2539,25 @@ MAX Lv : 5
 [Level 4] : 追加傷害力 +80
 [Level 5] : 追加傷害力 +100
 #
-LK_PARRYING# 
+LK_PARRYING#
 雙劍挌擋(Parrying)
 MAX Lv : 10
 習得條件 : 挑釁 5, 雙手劍使用熟練度 10, 雙手劍攻擊速度增加 3
 系列 : 輔助
-內容 : 用劍將敵人的攻擊做防禦，如果成功的做到防禦時，不會受到傷害力，不過會取消一次攻擊。
+內容 : 用劍將敵人的攻擊做防禦，如果成左滌筐鴩噶m時，不會受到傷害力，不過會取消一次攻擊。
 裝備雙手劍時才能使用
-[Level 1] : 防禦成功率  +23%
-[Level 2] : 防禦成功率  +26%
-[Level 3] : 防禦成功率  +29%
-[Level 4] : 防禦成功率  +32%
-[Level 5] : 防禦成功率  +35%
-[Level 6] : 防禦成功率  +38%
-[Level 7] : 防禦成功率  +41%
-[Level 8] : 防禦成功率  +44%
-[Level 9] : 防禦成功率  +47%
-[Level 10] : 防禦成功率  +50%
+[Level 1] : 防禦成必v  +23%
+[Level 2] : 防禦成必v  +26%
+[Level 3] : 防禦成必v  +29%
+[Level 4] : 防禦成必v  +32%
+[Level 5] : 防禦成必v  +35%
+[Level 6] : 防禦成必v  +38%
+[Level 7] : 防禦成必v  +41%
+[Level 8] : 防禦成必v  +44%
+[Level 9] : 防禦成必v  +47%
+[Level 10] : 防禦成必v  +50%
 #
-LK_CONCENTRATION# 
+LK_CONCENTRATION#
  
 集中攻擊  (Concentration)
 MAX Lv : 5
@@ -2574,7 +2570,7 @@ MAX Lv : 5
 [Level 4] : 命中率 +40, 攻擊力 +20%, 防禦力 -20%
 [Level 5] : 命中率 +50, 攻擊力 +25%, 防禦力 -25%
 #
-LK_TENSIONRELAX# 
+LK_TENSIONRELAX#
 極速回復  (Tension Relax)
 MAX Lv : 1
 習得條件 : 挑釁 5, 快速回復 5, 霸體 3
@@ -2582,7 +2578,7 @@ MAX Lv : 1
 內容 : 緩和肌肉的緊張，將HP的回復速度提高。
 站起來時或是被攻擊時，或是裝載裝備，或是使用物品的行為時，技能效果會停止。 
 #
-LK_BERSERK# 
+LK_BERSERK#
 狂怒之槍(Berserk)
 MAX Lv : 1
 習得條件 : 騎士領主 Job Lv50 以上
@@ -2591,7 +2587,7 @@ MAX Lv : 1
 無法使用物品，也無法以治癒術技能來治療，此狀態下隨著時間流失HP也會慢慢的減少。
 使用後在 5分鐘內 HP和 SP不會自然恢復。
 #
-HP_ASSUMPTIO# 
+HP_ASSUMPTIO#
 聖母之祈福(Assumptio)
 MAX Lv : 5
 習得條件 : 天使之障壁 1, 禪心 3, 神威祈福 3
@@ -2604,7 +2600,7 @@ MAX Lv : 5
 [Level 4] : 持續時間 80秒
 [Level 5] : 持續時間 100秒
 #
-HP_BASILICA# 
+HP_BASILICA#
 神聖殿堂(Basilica)
 MAX Lv : 5
 習得條件 : 幸運之頌歌 2, SP 禪心 1, 霸邪之陣 3
@@ -2618,7 +2614,7 @@ MAX Lv : 5
 [Level 4] : 持續時間 35秒
 [Level 5] : 持續時間 40秒
 #
-HP_MEDITATIO# 
+HP_MEDITATIO#
 冥想
 MAX Lv : 10
 習得條件 : 禪心 5, 沉默之術 5,  撒水祈福 3
@@ -2635,7 +2631,7 @@ MAX Lv : 10
 [Level 9] : MAXSP +9%, SP 回復力增加27% 
 [Level 10] : MAXSP +10%, SP 回復力增加30% 
 #
-HW_SOULDRAIN# 
+HW_SOULDRAIN#
 吸魂術(Soul Drain)
 MAX Lv : 10
 習得條件 : 禪心 5,  聖靈召喚 7
@@ -2652,14 +2648,14 @@ MAX Lv : 10
 [Level 9] : MAXSP +18%
 [Level 10] : MAXSP +20%
 #
-HW_MAGICCRASHER# 
+HW_MAGICCRASHER#
 魔擊術(Magic Crasher)
 MAX Lv : 1
 習得條件 : 禪心 1
 系列 : 攻擊
 內容 : 用魔法力攻擊(Matk)對1個敵人施展無屬性物理攻擊，因敵人的DEF而會減少傷害力。
 #
-HW_MAGICPOWER# 
+HW_MAGICPOWER#
 魔力增幅(Magic Power)
 MAX Lv : 10
 系列 : 輔助
@@ -2675,7 +2671,7 @@ MAX Lv : 10
 [Level 9] : MATK +45%
 [Level 10] : MATK +50%
 #
-PA_PRESSURE# 
+PA_PRESSURE#
 神之威壓(Pressure)
 MAX Lv : 5
 習得條件 : 霸體 5, 信任 5, 盾擊 2
@@ -2688,7 +2684,7 @@ MAX Lv : 5
 [Level 4] : 傷害力 1700
 [Level 5] : 傷害力 2000
 #
-PA_SACRIFICE# 
+PA_SACRIFICE#
 捨命攻擊(Sacrifice)
 MAX Lv : 5
 習得條件 : 霸體 1, 犧牲 3
@@ -2701,7 +2697,7 @@ MAX Lv : 5
 [Level 4] : 傷害力 1.3倍
 [Level 5] : 傷害力 1.4倍
 #
-PA_GOSPEL# 
+PA_GOSPEL#
 聖音(Gospel)
 MAX Lv : 10
 習得條件 : 信任 8, 天使之護 3, 天使之擊 5
@@ -2710,7 +2706,7 @@ MAX Lv : 10
 內容 : 唱頌讚神之福音歌曲給敵人10種負面的效果中，只給一種效果，給我軍10種正面的效果中，也只給一種效果。
 施展聖音技能中得到沉默的話，聖音技能就會被取消
 #
-CH_PALMSTRIKE# 
+CH_PALMSTRIKE#
 猛虎硬爬山
 MAX Lv : 5
 習得條件 : 鐵沙掌 7, 畜汽 5
@@ -2723,7 +2719,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 +600%
 [Level 5] : 攻擊力 +700%
 #
-CH_TIGERFIST# 
+CH_TIGERFIST#
 伏虎拳
 MAX Lv : 5
 習得條件 : 鐵沙掌 5, 六和拳 5, 猛龍誇強 3
@@ -2736,7 +2732,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 +440%, 停止機率 50%
 [Level 5] : 攻擊力 +540%, 停止機率 60%
 #
-CH_CHAINCRUSH# 
+CH_CHAINCRUSH#
 氣絕崩擊
 MAX Lv : 10
 習得條件 : 鐵沙掌 5, 畜汽 5, 伏虎拳 2
@@ -2755,7 +2751,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +1300%
 [Level 10] : 攻擊力 +1400%
 #
-PF_HPCONVERSION# 
+PF_HPCONVERSION#
 HP轉換(Health Conversion)
 MAX Lv : 5
 習得條件 : 禪心 1, 魔法懲罰 1
@@ -2767,27 +2763,27 @@ MAX Lv : 5
 [Level 4] :  SP會增加減少數值的 40% 
 [Level 5] :  SP會增加減少數值的 50% 
 #
-PF_SOULCHANGE# 
+PF_SOULCHANGE#
 心神互換(Soul Change)
 MAX Lv : 1
 習得條件 : 魔法懲罰 3, 念咒拆除 2
 系列 : 輔助
 內容 : 將自己和對方的SP互換，交換後的SP各獲得50%，此交換不可獲得超過MAXSP的SP
 #
-PF_SOULBURN# 
+PF_SOULBURN#
 精神耗弱術(Soul Burn)
 MAX Lv : 5
 習得條件 : 取消施法 5, 魔法懲罰 3, 魔法效果解除 3
 系列 : 攻擊
 內容 : 把對象的 SP依據機率可改為0。使用技能等級5的精神耗弱術時，同時剩下的 SP以2倍給予敵人的傷害力。
 失敗時，此效果會使用在自己身上，目前此技能只能在 PvP或攻城戰使用。使用精神耗弱術後，重新在使用精神耗弱術時，需要 15秒的再使用等待時間。
-[Level 1] : 成功率  40%
-[Level 2] : 成功率  50%
-[Level 3] : 成功率  60%
-[Level 4] : 成功率  70%
-[Level 5] : 成功率  70%
+[Level 1] : 成必v  40%
+[Level 2] : 成必v  50%
+[Level 3] : 成必v  60%
+[Level 4] : 成必v  70%
+[Level 5] : 成必v  70%
 #
-ASC_KATAR# 
+ASC_KATAR#
 高階拳刃修練(Advanced Katar Reserch)
 MAX Lv : 5
 習得條件 : 二刀連擊 5, 拳刃-修練 7
@@ -2799,7 +2795,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 +18%
 [Level 5] : 攻擊力 +20%
 #
-ASC_EDP# 
+ASC_EDP#
 致命塗毒 (Enchant Deadly Poison)
 MAX Lv : 5
 習得條件 : 毒液製作 1
@@ -2809,7 +2805,7 @@ MAX Lv : 5
 被此武器攻擊的敵人會有一定機率中毒， HP會迅速的減少。
 給Boss級魔物增加的傷害力，可替代成給予毒技能使用前的傷害力。
 #
-ASC_BREAKER# 
+ASC_BREAKER#
 心靈震波
 MAX Lv : 10
 習得條件 : 二刀連擊  5, 施毒 5, 偽裝 3, 塗毒 6
@@ -2817,7 +2813,7 @@ MAX Lv : 10
 內容 : 給予敵人1人的物理性防禦力和魔法防禦力，分一半計算給予傷害力。
 心靈震波的攻擊力隨著玩家的ATK及INT而增加。
 #
-SN_SIGHT# 
+SN_SIGHT#
 狙殺瞄準(True Sight)
 MAX Lv : 10
 習得條件 : 鶚梟之眼 10 , 蒼鷹之眼 10, 心神凝聚 10, 馴鷹術 1
@@ -2834,7 +2830,7 @@ MAX Lv : 10
 [Level 9] : 命中率 +27%, 傷害力 +18%, 必殺攻擊率+9
 [Level 10] : 命中率 +30%, 傷害力 +20%, 必殺攻擊率+10
 #
-SN_FALCONASSAULT# 
+SN_FALCONASSAULT#
 獵鷹突擊(Falcon Assault)
 MAX Lv : 5
 習得條件 : 蒼鷹之眼 5, 馴鷹術 1, 閃電衝擊 5, 鋼製喙 3
@@ -2846,7 +2842,7 @@ MAX Lv : 5
 [Level 4] : 傷害力 +80%
 [Level 5] : 傷害力 +100%
 #
-SN_SHARPSHOOTING# 
+SN_SHARPSHOOTING#
 銳利射擊(Sharpshooting)
 MAX Lv : 5
 習得條件 :  二連矢 5, 心神凝聚 10
@@ -2859,7 +2855,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 +300%
 [Level 5] : 攻擊力 +350%
 #
-SN_WINDWALK# 
+SN_WINDWALK#
 風之步(Wind Walk)
 MAX Lv : 10
 習得條件 : 心神凝聚 9
@@ -2868,7 +2864,7 @@ MAX Lv : 10
 敏捷性增加或有其它移動速度增加效果時，移動速度增加的效果無法適用。
 中了泥沼地或其它減緩移動速度的效果時，移動速度增加的效果會取消。
 #
-WS_MELTDOWN# 
+WS_MELTDOWN#
 野蠻凶砍(Meltdown)
 MAX Lv : 10
 習得條件 : 強化火屬性 3, 武器保有 1, 武器研究 5, 凶砍 3
@@ -2886,23 +2882,17 @@ MAX Lv : 10
 [Level 9] : 持續時間 55秒
 [Level 10] : 持續時間 60秒
 #
-WS_CREATECOIN# 
-金錢鑄造
-#
-WS_CREATENUGGET# 
-金屬塊製造
-#
-WS_CARTBOOST# 
+WS_CREATECOIN#"金錢鑄造"#
+WS_CREATENUGGET#"金屬塊製造"#
+WS_CARTBOOST#
 手推車加速(Cart Boost)
 MAX Lv : 1
 習得條件 : 手推車使用 5, 武器保有 1, 手推車攻擊, 改裝手推車 
 系列 : 輔助
 內容 : 手推車加速狀態下，裝備手推車的速度會增加。利用這技能可以不受敏捷降低或是其他的使速度減低的效果。
 #
-WS_SYSTEMCREATE# 
-攻擊塔製作
-#
-ST_CHASEWALK# 
+WS_SYSTEMCREATE#"攻擊塔製作"#
+ST_CHASEWALK#
 暗影追蹤(Chase Walk)
 MAX Lv : 5
 習得條件 : 隱匿 5, 潛遁 3
@@ -2917,7 +2907,7 @@ MAX Lv : 5
 [Level 4] : 移動速度 85%，每10 秒消耗 SP 18，10 秒後 STR+8
 [Level 5] : 移動速度 90%，每10 秒消耗 SP 20，10 秒後 STR+16
 #
-ST_REJECTSWORD# 
+ST_REJECTSWORD#
 霸王魂(Reject Sword)
 MAX Lv : 5
 習得條件 : 卸除武器 1
@@ -2931,13 +2921,10 @@ MAX Lv : 5
 [Level 4] : 反射機率 60%
 [Level 5] : 反射機率 75%
 #
-ST_STEALBACKPACK# 
-#
-CR_ALCHEMY# 
-#
-CR_SYNTHESISPOTION# 
-#
-CG_ARROWVULCAN# 
+ST_STEALBACKPACK##
+CR_ALCHEMY##
+CR_SYNTHESISPOTION##
+CG_ARROWVULCAN#
 奧義箭亂舞(Arrow Vulcan)
 MAX Lv : 10
 習得條件 : 二連矢 5, 箭雨 5, 樂器攻擊(纏箭投擲) 1
@@ -2954,7 +2941,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 1100%
 [Level 10] : 攻擊力 1200%
 #
-CG_MOONLIT# 
+CG_MOONLIT#
 落花伴著月光下的水車小屋(Moonlit)
 MAX Lv : 5
 習得條件 : 心神凝聚 5, 操控樂器(練習舞蹈) 7
@@ -2967,7 +2954,7 @@ MAX Lv : 5
 [Level 4] : 持續時間 35秒
 [Level 5] : 持續時間 40秒
 #
-CG_MARIONETTE# 
+CG_MARIONETTE#
 傀儡師的把戲(Marionette Control)
 MAX Lv : 1
 習得條件 : 心神凝聚 10, 操控樂器(練習舞蹈) 5
@@ -2976,7 +2963,7 @@ MAX Lv : 1
 得到status點數的玩家，他的能力值各人物屬性欄不能超過99。
 施展者和該玩家的距離超過7格的話，會強制被解除。
 #
-LK_SPIRALPIERCE# 
+LK_SPIRALPIERCE#
 螺旋擊刺 (Spiral Pierce)
 MAX Lv : 5
 習得條件 : 長矛使用熟練度 5, 連刺攻擊 5, 騎乘術 1, 長矛刺擊 5
@@ -2985,7 +2972,7 @@ MAX Lv : 5
 武器的重量越重傷害力會增加，使1個敵人在1秒鐘無法移動。
 技能等級越高時受到的傷害力會越大，施展時間及施展後的延遲時間也會增加。
 #
-LK_HEADCRUSH# 
+LK_HEADCRUSH#
 傷害增壓 (Head Crush)
 MAX Lv : 5
 習得條件 : 長矛使用熟練度 9, 騎乘術 1
@@ -2997,7 +2984,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 260%
 [Level 5] : 攻擊力 300%
 #
-LK_JOINTBEAT# 
+LK_JOINTBEAT#
 巧打 (Joint Beat)
 MAX Lv : 10
 習得條件 : 長矛使用熟練度 9, 騎乘術 1, 騎兵修練 3, 傷害增壓 3
@@ -3015,7 +3002,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 140%
 [Level 10] : 攻擊力 150%
 #
-HW_NAPALMVULCAN# 
+HW_NAPALMVULCAN#
 念力連擊(Napalm Vulcan)
 MAX Lv : 5
 習得條件 : 心靈爆破 5
@@ -3024,27 +3011,27 @@ MAX Lv : 5
 內容 : 利用念力給予落單的1位敵人連續攻擊，同時以較低的機率給予敵人詛咒攻擊。
 技能等級越高連擊次數越多。
 #
-CH_SOULCOLLECT# 
+CH_SOULCOLLECT#
 狂蓄氣
 MAX Lv : 1
 習得條件 :  爆氣 5
 系列 : 輔助
 內容 : 冒著蓄氣所需要的所有能力危險來集氣的技能，一次可以集5個氣。施展時間是蓄氣的兩倍。
 #
-PF_MINDBREAKER# 
+PF_MINDBREAKER#
 精神撼動 (Mind Breaker)
 MAX Lv : 5
 習得條件 : 禪心 3, 精神耗弱術 2
 系列 : 輔助
 內容 : 攻擊敵人的精神來引起自我崩潰，減低敵人的魔法防禦力來增加魔法攻擊力。
-機能等級越高時，成功率 會越高。
+機能等級越高時，成必v 會越高。
 [Level 1] : 敵人 MATK 20% 增加, MDEF 減少 12% 
 [Level 2] : 敵人 MATK 40% 增加, MDEF減少 24% 
 [Level 3] : 敵人 MATK 60% 增加, MDEF減少 36% 
 [Level 4] : 敵人 MATK 80% 增加, MDEF減少 48% 
 [Level 5] : 敵人 MATK 100% 增加, MDEF減少 60% 
 #
-PF_MEMORIZE# 
+PF_MEMORIZE#
 速讀術 (Memorize)
 MAX Lv : 1
 習得條件 : 進化之書 5,  自由施法 5, 自動念咒 1
@@ -3053,7 +3040,7 @@ MAX Lv : 1
 沒有使用時會持續維持，玩家死掉的話效果會取消。
 速讀術的技能施展時間不會受到DEX的影響，需要 5秒
 #
-PF_FOGWALL# 
+PF_FOGWALL#
 薄霧牆 (Wall of Fog)
 MAX Lv : 1
 習得條件 : 風元素領域 2, 水元素領域 2
@@ -3062,7 +3049,7 @@ MAX Lv : 1
 對範圍內的玩家施展遠距離攻擊或魔法時，會減少傷害力及錯失的機率會增加。
 只能對一般區域的魔物使用，在 PvP區域也可以對玩家使用。
 #
-PF_SPIDERWEB# 
+PF_SPIDERWEB#
 易燃之網 (Spider Web)
 MAX Lv : 1
 習得條件 : 龍知識 4
@@ -3071,7 +3058,7 @@ MAX Lv : 1
 會持續8秒鐘，被困在蜘蛛網的魔物一般來說迴避率會掉落一半，被綁在蜘蛛網的狀態時，得到火屬性的攻擊時，傷害力會得到兩倍同時在 蜘蛛網上被解脫。
 最多同時只能發射2個。
 #
-ASC_METEORASSAULT# 
+ASC_METEORASSAULT#
 黑暗瞬間 (Meteor Assult)
 MAX Lv : 10
 習得條件 : 拳刃-修練 5, 右手-修練 3, 音速投擲 5, 心靈震波 1
@@ -3088,32 +3075,32 @@ MAX Lv : 10
 [Level 9] : 攻擊力 400%
 [Level 10] : 攻擊力 440%
 #
-ASC_CDP# 
+ASC_CDP#
 毒液製作 (Create Deadly Poison)
 MAX Lv : 1
 習得條件 : 施毒 10, 解毒 1, 塗毒 5
 系列 : 輔助
 內容 : 利用一些物品製作致命的毒獲得毒藥瓶1個。
 材料如下: 毒牙, 仙人掌刺, 蜂針, 毒魔菇芽孢, 卡勒波迪藥水, 菠色克藥水, 空瓶各1個。
-因DEX及 LUK而成功率 會增加，失敗時MAXHP減少25%。
+因DEX及 LUK而成必v 會增加，失敗時MAXHP減少25%。
 十字刺客服用時會中毒，並會有攻速增加的效果，其它玩家服用時會當場致死。
 #
-WE_BABY# 
+WE_BABY#
 爸媽我愛您(Mom Dad I love you)
 系列 : 輔助
 內容 : 受到小孩子愛護的父母們，在死亡的2分鐘時經驗值不會掉落， SP是消耗自己 MAX SP的 10%
 #
-WE_CALLPARENT# 
+WE_CALLPARENT#
 爸媽我想念您(Mom Dad I want to see you)
 系列 : 輔助
 內容 : 可以召喚父母
 #
-WE_CALLBABY# 
+WE_CALLBABY#
 寶貝請來這裡(Baby come here)
 系列 : 輔助
 內容 : 可以召喚小孩
 #
-TK_RUN# 
+TK_RUN#
 跑步
 MAX Lv : 10
 系列 : 移動及被動
@@ -3131,7 +3118,7 @@ MAX Lv : 10
  [Lv 9] 施法時間 0秒，消耗SP 20
 [Lv 10] 施法時間 0秒，消耗SP 10
 #
-TK_READYSTORM# 
+TK_READYSTORM#
 迴旋準備
 MAX Lv : 1
 習得條件 : 迴旋踢 1系列 : 準備
@@ -3139,7 +3126,7 @@ MAX Lv : 1
 悟靈士不能使用
 [Lv 1] 施法時間 0秒，消耗SP 1
 #
-TK_STORMKICK# 
+TK_STORMKICK#
 迴旋踢
 MAX Lv : 7
 系列 : 攻擊
@@ -3153,16 +3140,16 @@ MAX Lv : 7
 [Lv 6] 消耗SP 4，280%
 [Lv 7] 消耗SP 2，300%
 #
-TK_READYDOWN# 
+TK_READYDOWN#
 砸踢準備
 MAX Lv : 1
-習得條件 : 砸踢 1
+?葑o條件 : 砸踢 1
 系列 : 準備
 內容 : 用攻擊打中敵人時，有15%的機率做砸踢準備的姿態
 悟靈士不能使用
 [Lv 1] 施法時間 0秒，消耗SP 1
 #
-TK_DOWNKICK# 
+TK_DOWNKICK#
 砸踢
 MAX Lv : 7
 系列 : 攻擊
@@ -3176,7 +3163,7 @@ MAX Lv : 7
 [Lv 6] 消耗SP 4，280%
 [Lv 7] 消耗SP 2，300%
 #
-TK_READYTURN# 
+TK_READYTURN#
 踢準備
 MAX Lv : 1
 習得條件 : 轉身踢 1
@@ -3185,7 +3172,7 @@ MAX Lv : 1
 悟靈士不能使用
 [Lv 1] 施法時間 0秒，消耗SP 1
 #
-TK_TURNKICK# 
+TK_TURNKICK#
 轉身踢
 MAX Lv : 7
 系列 : 攻擊
@@ -3199,7 +3186,7 @@ MAX Lv : 7
 [Lv 6] 消耗SP 4，370%
 [Lv 7] 消耗SP 2，400%
 #
-TK_READYCOUNTER# 
+TK_READYCOUNTER#
 還擊準備
 MAX Lv : 1
 習得條件 : 還擊踢 1
@@ -3208,7 +3195,7 @@ MAX Lv : 1
 悟靈士不能使用
 [Lv 1] : 施法時間 0秒，消耗SP 1
 #
-TK_COUNTER# 
+TK_COUNTER#
 還擊踢
 MAX Lv : 7
 系列 : 攻擊
@@ -3222,7 +3209,7 @@ MAX Lv : 7
 [Lv 6] 消耗SP 4，370%
 [Lv 7] 消耗SP 2，400%
 #
-TK_DODGE# 
+TK_DODGE#
 落法
 MAX Lv : 1
 習得條件 : 飛腳踢 7
@@ -3231,7 +3218,7 @@ MAX Lv : 1
 當爆發力狀態時，對遠距離攻擊和以外的攻擊也有所反應
 [Lv 1] 施法時間 0秒，消耗SP 1
 #
-TK_JUMPKICK# 
+TK_JUMPKICK#
 飛腳踢
 MAX Lv : 7
 系列 : 攻擊
@@ -3250,7 +3237,7 @@ MAX Lv : 7
 [Lv 6] 消耗SP 20，90%
 [Lv 7] 消耗SP 10，100%
 #
-TK_HPTIME# 
+TK_HPTIME#
 平安的休息
 MAX Lv : 10
 系列 : 被動
@@ -3267,7 +3254,7 @@ MAX Lv : 10
  [Lv 9] HP恢復量 : 270
 [Lv 10] HP恢復量 : 300
 #
-TK_SPTIME# 
+TK_SPTIME#
 快樂的休息
 MAX Lv : 10
 系列 : 被動
@@ -3289,7 +3276,7 @@ SP會消耗10，以較底的機率會消耗掉地震術的咒文書，
  [Lv 9] SP恢復量 : 27
 [Lv 10] SP恢復量 : 30
 #
-TK_POWER# 
+TK_POWER#
 加油
 MAX Lv : 5
 系列 : 被動
@@ -3302,7 +3289,7 @@ MAX Lv : 5
 [Lv 4] 對單人給予 8%
 [Lv 5] 對單人給予 10%
 #
-TK_SEVENWIND# 
+TK_SEVENWIND#
 溫暖的風
 MAX Lv : 7
 習得條件 : 平安的休息 5, 快樂的休息 5, 加油 5
@@ -3316,7 +3303,7 @@ MAX Lv : 7
 [Lv 6] 暗 (消耗SP:50)
 [Lv 7] 聖 (消耗SP:50)
 #
-TK_HIGHJUMP# 
+TK_HIGHJUMP#
 跳高
 MAX Lv : 5
 系列 : 移動
@@ -3330,7 +3317,7 @@ MAX Lv : 5
 [Lv 4] 施法時間 2秒，移動空格數 8
 [Lv 5] 施法時間 1秒，移動空格數 10
 #
-SG_FEEL# 
+SG_FEEL#
 太陽和月亮和星星的感覺
 MAX Lv : 3
 系列 : 登入
@@ -3341,7 +3328,7 @@ MAX Lv : 3
 [Lv 2] 會登入在月亮的場所
 [Lv 3] 會登入在星星的場所
 #
-SG_SUN_WARM# 
+SG_SUN_WARM#
 太陽的溫暖
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的感覺 1
@@ -3354,7 +3341,7 @@ MAX Lv : 3
 [Lv 2] 持續時間 20秒，消耗SP 20
 [Lv 3] 持續時間 60秒，消耗SP 20
 #
-SG_MOON_WARM# 
+SG_MOON_WARM#
 月亮的溫暖
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的感覺 2
@@ -3367,7 +3354,7 @@ MAX Lv : 3
 [Lv 2] 持續時間 20秒，消耗SP 20
 [Lv 3] 持續時間 60秒，消耗SP 20
 #
-SG_STAR_WARM# 
+SG_STAR_WARM#
 星星的溫暖
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的感覺 3
@@ -3380,7 +3367,7 @@ MAX Lv : 3
 [Lv 2] 持續時間 20秒，消耗SP 10
 [Lv 3] 持續時間 60秒，消耗SP 10
 #
-SG_SUN_COMFORT# 
+SG_SUN_COMFORT#
 太陽的平安感
 MAX Lv : 4
 習得條件 : 太陽和月亮和星星的感覺 1
@@ -3393,7 +3380,7 @@ MAX Lv : 4
 [Lv 3] 消耗SP 50，持續時間 240秒
 [Lv 4] 消耗SP 40，持續時間 320秒
 #
-SG_MOON_COMFORT# 
+SG_MOON_COMFORT#
 月亮的平安感
 MAX Lv : 4
 習得條件 : 太陽和月亮和星星的感覺 2
@@ -3405,7 +3392,7 @@ MAX Lv : 4
 [Lv 3] 消耗SP 50，持續時間 240秒
 [Lv 4] 消耗SP 40，持續時間 320秒
 #
-SG_STAR_COMFORT# 
+SG_STAR_COMFORT#
 星星的平安感
 MAX Lv : 4
 習得條件 : 太陽和月亮和星星的感覺 3
@@ -3417,7 +3404,7 @@ MAX Lv : 4
 [Lv 3] 消耗SP 50，持續時間 240秒
 [Lv 4] 消耗SP 40，持續時間 320秒
 #
-SG_HATE# 
+SG_HATE#
 太陽和月亮和星星的憎惡
 MAX Lv : 3
 系列 : 登入
@@ -3428,7 +3415,7 @@ MAX Lv : 3
 [Lv 3] 會被登入為星星的憎惡 (只能指定MAX HP 20000以上的大型魔物)
 可以把特定的職業登入為憎惡，這時候尺寸和 HP不列入考慮都可登入 
 #
-SG_SUN_ANGER# 
+SG_SUN_ANGER#
 太陽的憤怒
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的憎惡 1
@@ -3436,7 +3423,7 @@ MAX Lv : 3
 內容 : 當攻擊太陽的魔物時，攻擊力會上升
 受角色的等級，技能等級，Luk，Dex 所影響
 #
-SG_MOON_ANGER# 
+SG_MOON_ANGER#
 月亮的憤怒
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的憎惡 2
@@ -3444,7 +3431,7 @@ MAX Lv : 3
 內容 : 當攻擊月亮的魔物時，攻擊力會上升
 受角色的等級，技能等級，Luk，Dex 所影響
 #
-SG_STAR_ANGER# 
+SG_STAR_ANGER#
 星星的憤怒
 MAX Lv : 3
 習得條件 : 太陽和月亮和星星的憎惡 3
@@ -3452,7 +3439,7 @@ MAX Lv : 3
 內容 : 當攻擊星星的魔物時，攻擊力會上升
 受角色的等級，技能等級，Luk，Dex ，Str所影響
 #
-SG_SUN_BLESS# 
+SG_SUN_BLESS#
 太陽的祝福
 MAX Lv : 5
 習得條件 : 太陽和月亮和星星的感覺 1, 太陽和月亮和星星的憎惡 1
@@ -3464,7 +3451,7 @@ MAX Lv : 5
 [Lv 4] 經驗值上升量 40%
 [Lv 5] 經驗值上升量 50%
 #
-SG_MOON_BLESS# 
+SG_MOON_BLESS#
 月亮的祝福
 MAX Lv : 5
 習得條件 : 太陽和月亮和星星的感覺 2, 太陽和月亮和星星的憎惡 2
@@ -3476,7 +3463,7 @@ MAX Lv : 5
 [Lv 4] 經驗值上升量 40%
 [Lv 5] 經驗值上升量 50%
 #
-SG_STAR_BLESS# 
+SG_STAR_BLESS#
 星星的祝福
 MAX Lv : 5
 習得條件 : 太陽和月亮和星星的感覺 3, 太陽和月亮和星星的憎惡 3
@@ -3488,7 +3475,7 @@ MAX Lv : 5
 [Lv 4] 經驗值上升量 80%
 [Lv 5] 經驗值上升量 100%
 #
-SG_DEVIL# 
+SG_DEVIL#
 太陽和月亮和星星的惡魔
 MAX Lv : 10
 習得條件 : Job Lv 50
@@ -3507,7 +3494,7 @@ MAX Lv : 10
  [Lv 9] 攻擊速度 27% 提升
 [Lv 10] 攻擊速度 30% 提升
 #
-SG_FRIEND# 
+SG_FRIEND#
 太陽和月亮和星星的朋友
 MAX Lv : 3
 系列 : 被動
@@ -3517,7 +3504,7 @@ MAX Lv : 3
 [Lv 2] 上升 150%
 [Lv 3] 上升 200%
 #
-SG_KNOWLEDGE# 
+SG_KNOWLEDGE#
 太陽和月亮和星星的知識
 MAX Lv : 10
 系列 : 被動
@@ -3535,7 +3522,7 @@ MAX Lv : 10
  [Lv 9] 攜帶量增加 90%
 [Lv 10] 攜帶量增加 100%
 #
-SG_FUSION# 
+SG_FUSION#
 太陽和月亮和星星的融合
 習得條件 : 太陽和月亮和星星的知識 9, 靈魂狀態
 系列 : 覺醒
@@ -3544,7 +3531,7 @@ SG_FUSION#
 當攻擊人時會減少 8%，當 HP不到 20%做攻擊時會當場死亡
 於覺醒情況下無法自然恢復，且所有恢復效果只有原先效果的 1/4。
 #
-SL_ALCHEMIST# 
+SL_ALCHEMIST#
 鍊金術師的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3558,14 +3545,14 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-AM_BERSERKPITCHER# 
+AM_BERSERKPITCHER#
 菠色克投擲
 習得條件 : 靈魂狀態
 系列 : 輔助
 內容 : 對等級85以上所有職業強制服用菠色克藥水，
 每當使用這技能時會消耗掉 2個菠色克藥水，因菠色克投擲使得攻速提升狀態持續時間是，使用一般菠色克藥水使得一半
 #
-SL_MONK# 
+SL_MONK#
 武道家的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3577,7 +3564,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_STAR# 
+SL_STAR#
 拳聖的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3590,7 +3577,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_SAGE# 
+SL_SAGE#
 賢者的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3603,7 +3590,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_CRUSADER# 
+SL_CRUSADER#
 十字軍的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3614,7 +3601,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_SUPERNOVICE# 
+SL_SUPERNOVICE#
 超級初學者的靈魂
 MAX Lv : 5
 習得條件 : 拳聖的靈魂 1
@@ -3630,7 +3617,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_KNIGHT# 
+SL_KNIGHT#
 騎士的靈魂
 MAX Lv : 5
 習得條件 : 十字軍的靈魂 1
@@ -3644,7 +3631,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_WIZARD# 
+SL_WIZARD#
 巫師的靈魂
 MAX Lv : 5
 習得條件 : 賢者的靈魂 1
@@ -3658,7 +3645,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_PRIEST# 
+SL_PRIEST#
 祭司 的靈魂
 MAX Lv : 5
 習得條件 : 武道家的靈魂 1
@@ -3670,7 +3657,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_BARDDANCER# 
+SL_BARDDANCER#
 吟遊詩人和舞孃的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3686,7 +3673,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_ROGUE# 
+SL_ROGUE#
 流氓的靈魂
 MAX Lv : 5
 習得條件 : 刺客的靈魂 1
@@ -3699,7 +3686,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_ASSASIN# 
+SL_ASSASIN#
 刺客的靈魂
 MAX Lv : 5
 系列 : 輔助
@@ -3711,7 +3698,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_BLACKSMITH# 
+SL_BLACKSMITH#
 鐵匠的靈魂
 MAX Lv : 5
 習得條件 : 鍊金術師的靈魂 1
@@ -3726,7 +3713,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-BS_ADRENALINE2# 
+BS_ADRENALINE2#
 所有速度激發
 習得條件 : 速度激發 5, 靈魂狀態
 系列 : 輔助
@@ -3734,7 +3721,7 @@ BS_ADRENALINE2#
 持續時間是 150秒，消耗SP是 64，在所有速度激發狀態下，對雙手劍攻擊速度增加、
 速度激發、單手劍攻擊速度增加、太陽和月亮和星星的惡魔、星星的平安感、長矛加速術、 和刺客的黃昏攻速不會被重覆的
 #
-SL_HUNTER# 
+SL_HUNTER#
 獵人的靈魂
 MAX Lv : 5
 習得條件 : 吟遊詩人與舞孃的靈魂 1
@@ -3748,7 +3735,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_SOULLINKER# 
+SL_SOULLINKER#
 悟靈士的靈魂
 MAX Lv : 5
 習得條件 : 拳聖的靈魂 1
@@ -3762,7 +3749,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-SL_KAIZEL# 
+SL_KAIZEL#
 凱易哲
 MAX Lv : 7
 習得條件 : 祭司的靈魂 1
@@ -3778,7 +3765,7 @@ MAX Lv : 7
 [Lv 6] 施法時間 2.5秒，消耗SP 70，復活時恢復 HP60%
 [Lv 7] 施法時間 2.5秒，消耗SP 60，復活時恢復HP70%
 #
-SL_KAAHI# 
+SL_KAAHI#
 凱阿希
 MAX Lv : 7
 習得條件 : 祭司的靈魂 1, 武道家的靈魂 1, 十字軍的靈魂 1
@@ -3789,7 +3776,7 @@ MAX Lv : 7
 每恢復時 SP消耗量 : 5 ~ 35
 每恢復時HP恢復量 : 200 ~ 1400
 #
-SL_KAUPE# 
+SL_KAUPE#
 凱誣僕
 MAX Lv : 3
 習得條件 : 刺客的靈魂 1, 流氓的靈魂 1
@@ -3800,7 +3787,7 @@ MAX Lv : 3
 [Lv 2] 迴避機率 66% (消耗SP30)
 [Lv 3] 迴避機率 100% (消耗SP40)
 #
-SL_KAITE# 
+SL_KAITE#
 凱易特
 MAX Lv : 7
 習得條件 : 巫師的靈魂 1, 賢者的靈魂 1
@@ -3819,7 +3806,7 @@ MAX Lv : 7
 [Lv 6] 施法時間 3.5秒，反射可能的回數 2次，持續時間 6分
 [Lv 7] 施法時間 3秒，反射可能的回數 2次，持續時間 10分
 #
-SL_KAINA# 
+SL_KAINA#
 凱易娜
 MAX Lv : 7
 習得條件 : 快樂的休息 1
@@ -3835,7 +3822,7 @@ MAX Lv : 7
 [Lv 6] 快樂的休息效能 +90%，MAX SP +180
 [Lv 7] 快樂的休息效能 +100%，MAX SP +210
 #
-SL_STIN# 
+SL_STIN#
 艾斯提
 MAX Lv : 7
 習得條件 : 巫師的靈魂 1
@@ -3853,7 +3840,7 @@ MAX Lv : 7
 [Lv 6] 傷害力 60% (消耗SP 28)
 [Lv 7] 傷害力 70% (消耗SP 30)
 #
-SL_STUN# 
+SL_STUN#
 艾斯敦
 MAX Lv : 7
 習得條件 : 巫師的靈魂 1
@@ -3871,7 +3858,7 @@ MAX Lv : 7
 [Lv 6] 傷害力 30% (消耗SP 28)
 [Lv 7] 傷害力 35% (消耗SP 30)
 #
-SL_SMA# 
+SL_SMA#
 艾斯麻
 MAX Lv : 10
 習得條件 : 艾斯提 7, 艾斯敦 7
@@ -3891,7 +3878,7 @@ MAX Lv : 10
 [Lv 9] 9發 (消耗SP 72)
 [Lv 10] 10發 (消耗SP 80)
 #
-SL_SWOO# 
+SL_SWOO#
 艾斯誣
 MAX Lv : 7
 習得條件 : 祭司的靈魂 1
@@ -3908,7 +3895,7 @@ MAX Lv : 7
 [Lv 6] 持續時間 6秒 (消耗SP 25)
 [Lv 7] 持續時間 7秒 (消耗SP 15)
 #
-SL_SKE# 
+SL_SKE#
 艾斯克
 MAX Lv : 3
 習得條件 : 騎士的靈魂 1
@@ -3920,7 +3907,7 @@ MAX Lv : 3
 [Lv 2] 施法時間 2秒，持續時間 20秒 (消耗SP 30)
 [Lv 3] 施法時間 1秒，持續時間 30秒 (消耗SP 15)
 #
-SL_SKA# 
+SL_SKA#
 艾斯卡
 MAX Lv : 3
 習得條件 : 武道家的靈魂 1
@@ -3931,28 +3918,28 @@ MAX Lv : 3
 [Lv 2] 施法時間 2秒，持續時間 20秒 (消耗SP 80)
 [Lv 3] 施法時間 1秒，持續時間 30秒 (消耗SP 60)
 #
-ST_PRESERVE# 
+ST_PRESERVE#
 自由保護(Preserve)
 MAX Lv : 1
 習得條件 : 抄襲 10
 系列 : 輔助
 內容 : 10分鐘之內被技能打到時，並不會盜取那技能
 #
-ST_FULLSTRIP# 
+ST_FULLSTRIP#
 所有卸除(Full Strip)
 MAX Lv : 5
 習得條件 : 卸除武器 5
 系列 : 輔助
 對象 : 敵
 內容 : 同時使用四種種類的卸除技能，有相同的效果
-自己的DEX比對方的DEX高時，成功率 會上升
-[Level 1] : 成功率  7%
-[Level 2] : 成功率  9%
-[Level 3] : 成功率  11%
-[Level 4] : 成功率  13%
-[Level 5] : 成功率  15%
+自己的DEX比對方的DEX高時，成必v 會上升
+[Level 1] : 成必v  7%
+[Level 2] : 成必v  9%
+[Level 3] : 成必v  11%
+[Level 4] : 成必v  13%
+[Level 5] : 成必v  15%
 #
-WS_WEAPONREFINE# 
+WS_WEAPONREFINE#
 武器精練(Weapon Refine)
 MAX Lv : 10
 習得條件 : 武器研究 10
@@ -3960,10 +3947,10 @@ MAX Lv : 10
 內容 : 把武器類精練
 和製作不一樣的是，不受 DEX，LUK的影響
 只受角色的職業等級影響
-職業等級50時，類似有聖耀之盾精練的成功率 
-職業等級60時，比聖耀之盾上升有5%的成功率 
-職業等級70時，比聖耀之盾上升有10%的成功率 
-聖耀之盾成功率 是 50%的話， + 10%就變成 60%了
+職業等級50時，類似有聖耀之盾精練的成必v 
+職業等級60時，比聖耀之盾上升有5%的成必v 
+職業等級70時，比聖耀之盾上升有10%的成必v 
+聖耀之盾成必v 是 50%的話， + 10%就變成 60%了
 武器等級1武器精練時，需要強化武器金屬-級數一
 武器等級2武器精練時，需要強化武器金屬-級數二
 武器等級3，4武器精練時，需要神之金屬
@@ -3978,7 +3965,7 @@ MAX Lv : 10
 [Level 9] : 武器類可精練之+9為止
 [Level 10] : 武器類可精練之+10為止
 #
-CR_SLIMPITCHER# 
+CR_SLIMPITCHER#
 纖細藥水投擲(Slim Pitcher)
 MAX Lv : 10
 習得條件 : 藥水投擲 5
@@ -3994,7 +3981,7 @@ MAX Lv : 10
 [Level 8] : 纖細藥水的效果 180% [黃色]
 [Level 9] : 纖細藥水的效果 190% [黃色]
 #
-CR_FULLPROTECTION# 
+CR_FULLPROTECTION#
 所有化學武器保護(Full Chemical Protection)
 MAX Lv : 5
 習得條件 : (化學武器保護,化學盾牌保護,化學鎧甲保護,化學頭盔保護) 5
@@ -4007,7 +3994,7 @@ MAX Lv : 5
 [Level 4] : 持續時間 480秒
 [Level 5] : 持續時間 600秒
 #
-PA_SHIELDCHAIN# 
+PA_SHIELDCHAIN#
 連續盾擊(Shield Chain)
 MAX Lv : 5
 習得條件 :  迴旋盾擊 5
@@ -4020,7 +4007,7 @@ MAX Lv : 5
 [Lv 4] : 傷害力增加率 120%，命中率 +20
 [Lv 5] : 傷害力增加率 150%，命中率 +20
 #
-HP_MANARECHARGE# 
+HP_MANARECHARGE#
 魔力減免(Mana Recharge)
 MAX Lv : 5
 習得條件 : 權杖使用熟練度 10, 天使之擊 10
@@ -4031,7 +4018,7 @@ MAX Lv : 5
 [Lv 4] :  16% 
 [Lv 5] :  20% 
 #
-PF_DOUBLECASTING# 
+PF_DOUBLECASTING#
 雙倍投擲(Double Casting)
 MAX Lv : 5
 習得條件 : 自動念咒 1
@@ -4043,7 +4030,7 @@ MAX Lv : 5
 [Lv 4] : 機率 70%，持續時間 90秒
 [Lv 5] : 機率 80%，持續時間 90秒
 #
-HW_GANBANTEIN# 
+HW_GANBANTEIN#
 咖般塔音(Ganbantein)
 MAX Lv : 1
 習得條件 :  怪物情報 1, 冰刃之牆 1
@@ -4053,7 +4040,7 @@ MAX Lv : 1
 這魔法不受限制於，魔力礦石消耗及物品魔法的影響，
 存在延遲時間5秒
 #
-HW_GRAVITATION# 
+HW_GRAVITATION#
 重力原野(Gravitation Field)
 MAX Lv : 5
 習得條件 : 泥沼地 1, 魔擊術 1, 魔力增幅 10
@@ -4068,7 +4055,7 @@ MAX Lv : 5
 [Lv 4] : 每秒的傷害力  900，速度減少 20%，持續時間 8秒
 [Lv 5] : 每秒的傷害力 1000，速度減少 25%，持續時間 9秒
 #
-WS_CARTTERMINATION# 
+WS_CARTTERMINATION#
 手推車終結技(Cart Termination)
 MAX Lv : 10
 習得條件 : 金錢攻擊 10, 大地之擊 5, 手推車加速 1
@@ -4086,7 +4073,7 @@ MAX Lv : 10
  [Lv 9] : 金幣消耗量 1400z，昏眩機率 45%
 [Lv 10] : 金幣消耗量 1500z，昏眩機率 50%
 #
-WS_OVERTHRUSTMAX# 
+WS_OVERTHRUSTMAX#
 凶砍最大值(Overthrust Max)
 MAX Lv : 5
 習得條件 : 凶砍最大值 5
@@ -4099,7 +4086,7 @@ MAX Lv : 5
 [Lv 4] : 攻擊力 80% 上升，金幣消耗量 4500z
 [Lv 5] : 攻擊力 100% 上升，金幣消耗量 5000z
 #
-CG_LONGINGFREEDOM# 
+CG_LONGINGFREEDOM#
 不要拘束我(Longing for Freedom)
 MAX Lv : 5
 習得條件 : 傀儡師的把戲 1, 不諧和音(醜陋之舞) 3, 操控樂器(練習舞蹈) 10
@@ -4114,7 +4101,7 @@ MAX Lv : 5
 [Lv 4] : 攻擊速度和移動速度變成平時的 90%
 [Lv 5] : 攻擊速度和移動速度變成平時的 100%
 #
-CG_HERMODE# 
+CG_HERMODE#
 海羅默德的手杖
 MAX Lv : 5
 習得條件 : 心神凝聚 10, 操控樂器(練習舞蹈) 10
@@ -4129,19 +4116,19 @@ MAX Lv : 5
 [Lv 4] : 持續時間 25秒
 [Lv 5] : 持續時間 30秒
 #
-CG_TAROTCARD# 
+CG_TAROTCARD#
 命運的塔羅牌(Tarot Card of Fate)
 MAX Lv : 5
 習得條件 : 心神凝聚 10, 操控樂器(練習舞蹈) 3
-內容 : 對敵1人使用，成功時從14種卡片中選一個效果賦予給敵人，
-成功機率以技能等級所決定，存在延遲時間 3秒
-[Lv 1] : 成功機率  8%
-[Lv 2] : 成功機率 16%
-[Lv 3] : 成功機率 24%
-[Lv 4] : 成功機率 32%
-[Lv 5] : 成功機率 40%
+內容 : 對敵1人使用，成幼伀q14種卡片中選一個效果賦予給敵人，
+成札鰷v以技能等級所決定，存在延遲時間 3秒
+[Lv 1] : 成札鰷v  8%
+[Lv 2] : 成札鰷v 16%
+[Lv 3] : 成札鰷v 24%
+[Lv 4] : 成札鰷v 32%
+[Lv 5] : 成札鰷v 40%
 #
-CR_ACIDDEMONSTRATION# 
+CR_ACIDDEMONSTRATION#
 強酸火煙瓶投擲(Acid Demonstration)
 MAX Lv : 10
 習得條件 : 火煙瓶投擲 5, 強酸攻擊 5
@@ -4160,16 +4147,16 @@ MAX Lv : 10
  [Lv 9] 武器+鎧甲損傷機率 9%
 [Lv 10] 武器+鎧甲損傷機率 10%
 #
-CR_CULTIVATION# 
+CR_CULTIVATION#
 植物栽培(Plant Cultivation)
 MAX Lv : 2
 內容 : 使用香菇芽孢和植物梗，來召喚出香菇和草葉，
-出現的香菇和草葉種類是隨機的，有 50%的成功機率,
+出現的香菇和草葉種類是隨機的，有 50%的成札鰷v,
 攻城時不能使用
 [Lv 1] : 香菇栽培 (需要香菇芽孢)
 [Lv 2] : 草葉栽培 (需要植物梗)
 #
-TK_MISSION# 
+TK_MISSION#
 太拳任務
 MAX Lv : 1
 習得條件 : 加油 5
@@ -4183,7 +4170,7 @@ MAX Lv : 1
 例如 : 迴旋踢 -> 轉身踢 -> 砸踢 
 還有等級90以上的跆拳榜首，MAX HP和 MAX SP 會增加到 3倍，可以使用所有跆拳少年的技能.
 #
-SL_HIGH# 
+SL_HIGH#
 一轉上等職業的靈魂
 MAX Lv : 5
 習得條件 : 超級初學者的靈魂 5
@@ -4197,7 +4184,7 @@ MAX Lv : 5
 [Lv 4] 消耗SP 160，持續時間 300秒
 [Lv 5] 消耗SP 60，持續時間 350秒
 #
-KN_ONEHAND# 
+KN_ONEHAND#
 單手劍攻擊速度增加
 習得條件 : 雙手劍攻擊速度增加 10, 靈魂狀態
 系列 : 輔助
@@ -4205,7 +4192,7 @@ KN_ONEHAND#
 當單手劍裝備解除時該技能的效能會消失掉，在使用時因反射的關係攻速藥水狀態會被解除，
 使用後飲用攻速藥水是可行的
 #
-AM_TWILIGHT1# 
+AM_TWILIGHT1#
 寬廣配藥
 習得條件 : 配藥 10, 靈魂狀態
 系列 : 輔助
@@ -4214,7 +4201,7 @@ AM_TWILIGHT1#
 製作機率和配藥統一，不受Dex的影響需要施法時間3秒
 當不能攜帶白色藥水200個重量的時候，會有製作完全失敗的可能性敬請小心
 #
-AM_TWILIGHT2# 
+AM_TWILIGHT2#
 寬廣配藥
 習得條件 : 配藥 10, 靈魂狀態
 系列 : 輔助
@@ -4224,7 +4211,7 @@ AM_TWILIGHT2#
 製作機率和配藥統一，不受Dex的影響需要施法時間3秒
 有關排行榜點數也正常的提升
 #
-AM_TWILIGHT3# 
+AM_TWILIGHT3#
 寬廣配藥
 習得條件 : 配藥 10, 靈魂狀態
 系列 : 輔助
@@ -4233,7 +4220,7 @@ AM_TWILIGHT3#
 要有酒精100個和鹽酸瓶50個能製作的材料和，
 透明之布50個 + 空瓶50個時，才能使用技能
 #
-HT_POWER# 
+HT_POWER#
 動物猛擊(Beast Strafing)
 習得條件 : 二連矢 10, 靈魂狀態
 系列 : 攻擊
@@ -4242,28 +4229,28 @@ HT_POWER#
 加上使用二連矢反動的力量，
 所使用的二連矢，威力受STR很大的影響
 #
-GS_GLITTERING# 
+GS_GLITTERING#
 裝滿硬幣(Filp the Coin)
 MAX Lv : 5
 系列 : 輔助
 內容 : 彈起硬幣後出現正面時，會獲得徘徊在自己附近的一枚金黃色硬幣，反之會失去一枚。
 最多可收集10枚，技能等級越高時出現正面的機率會越大，使用本技能時會消耗1個金幣
 #
-GS_FLING# 
+GS_FLING#
 投擲硬幣(Fling)
 MAX Lv : 1
 習得條件 : 裝滿硬幣 1
 系列 : 攻擊
 內容 : 使用硬幣攻擊的同時降低敵人的防禦力，施展的同時最多會消耗5枚硬幣，硬幣消耗的越多降低防禦力的效果就越大
 #
-GS_TRIPLEACTION# 
+GS_TRIPLEACTION#
 三連攻擊(Triple Action)
 MAX Lv : 1
 習得條件 : 連鎖衝擊 10, 裝滿硬幣 1
 系列 : 攻擊
 內容 : 消耗1枚硬幣施以3連發的攻擊
 #
-GS_BULLSEYE# 
+GS_BULLSEYE#
 公牛之眼(Bulls Eye)
 MAX Lv : 1
 習得條件 : 百步穿楊 10, 裝滿硬幣 5
@@ -4271,42 +4258,42 @@ MAX Lv : 1
 內容 : 對人類系或動物系的1個敵人，施以猛烈的攻擊，會消耗1枚硬幣，並造成500%的傷害力，有0.1%的機率施展頻死，
 對Boss級魔物不會產生頻死效果
 #
-GS_MADNESSCANCEL# 
+GS_MADNESSCANCEL#
 瘋狂凱斯樂(Madness Canceler)
 MAX Lv : 1
 習得條件 : 格林狂熱 10, 裝滿硬幣 4
 系列 : 輔助
 內容 : 消耗4枚硬幣來施展技能時，ATK +100、攻擊速度+20%，但變成不可移動的狀態，經過15秒後就會解除，不能和終極閃躲同時使用
 #
-GS_ADJUSTMENT# 
+GS_ADJUSTMENT#
 終極閃躲(Adjustment)
 MAX Lv : 1
 習得條件 : 拋戈卸甲 5, 裝滿硬幣 4
 系列 : 輔助
 內容 : 消耗2枚硬幣來施展技能時，在30秒的時間內會有命中率 -30、迴避率 +30的效果，並可減少受遠距離物理攻擊20%的傷害力，不能和瘋狂凱斯樂同時使用
 #
-GS_INCREASING# 
+GS_INCREASING#
 命中率遞增(Increasing Accuracy)
 MAX Lv : 1
 習得條件 : 瞄準之眼 10, 裝滿硬幣 2
 系列 : 輔助
 內容 : 會消耗4枚硬幣，在1分鐘內會有命中率到+20、 DEX +4、AGI +4的效果
 #
-GS_MAGICALBULLET# 
+GS_MAGICALBULLET#
 魔術彈(Magicial Bullet)
 MAX Lv : 1
 習得條件 : 裝滿硬幣 1
 系列 : 輔助
 內容 : 只會消耗1枚硬幣，但不會消耗彈藥卻能擊出魔法般的子彈，魔術子彈的傷害力是依據ATK和MATK加乘計算的，及具有念屬性
 #
-GS_CRACKER# 
+GS_CRACKER#
 轟然巨響(Cracker)
 MAX Lv : 1
 習得條件 : 裝滿硬幣 1
 系列 : 輔助
 內容 : 槍械開火後使其驚嚇陷入昏眩狀態，會消耗1枚硬幣，位置越近時昏眩機率就越高
 #
-GS_SINGLEACTION# 
+GS_SINGLEACTION#
 單槍射擊(Single Action)
 MAX Lv : 10
 系列 : 被動
@@ -4322,7 +4309,7 @@ MAX Lv : 10
 [Level 9] : 命中率 +18，攻擊速度 + 5%
 [Level 10] : 命中率 +20，攻擊速度 + 5%
 #
-GS_SNAKEEYE# 
+GS_SNAKEEYE#
 瞄準之眼(Snake Eye)
 MAX Lv : 10
 系列 : 被動
@@ -4338,14 +4325,14 @@ MAX Lv : 10
 [Level 9] : 命中率 +9，射程距離 +9
 [Level 10] : 命中率 +10，射程距離 +10
 #
-GS_CHAINACTION# 
+GS_CHAINACTION#
 連鎖衝擊(Chain Action)
 MAX Lv : 10
 習得條件 : 單槍射擊 1
 系列 : 被動
 內容 : 每次開火時有一定的機率會射出兩顆子彈，技能等級越高時射出兩顆子彈的機率就越大
 #
-GS_TRACKING# 
+GS_TRACKING#
 百步穿楊(Tracking)
 MAX Lv : 10
 習得條件 : 單槍射擊 5
@@ -4363,17 +4350,17 @@ MAX Lv : 10
 [Level 9] : 攻擊力 110%，施法時間 2.8秒
 [Level 10] : 攻擊力 1200%，施法時間 3秒
 #
-GS_DISARM# 
+GS_DISARM#
 拋戈卸甲(Disarm)
 MAX Lv : 5
 習得條件 : 百步穿楊 7
 系列 : 攻擊
 內容 : 以射程距離 7格之攻擊，瞄準敵人的手後攻擊使其武器掉落的技能
-向魔物使用時，會有ATK -25%的效果，技能等級越高時成功的機率會越高
+向魔物使用時，會有ATK -25%的效果，技能等級越高時成左瑣鰷v會越高
 唯有裝備手槍和來福槍時才能使用
 本技能對Boss級魔物無效
 #
-GS_PIERCINGSHOT# 
+GS_PIERCINGSHOT#
 霹靂彈(Piercing Shot)
 MAX Lv : 5
 習得條件 : 百步穿楊 5
@@ -4386,7 +4373,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 180%(270%)，流血機率 12%
 [Level 5] : 攻擊力 200%(300%)，流血機率 15%
 #
-GS_RAPIDSHOWER# 
+GS_RAPIDSHOWER#
 五連擊(Rapid Shower)
 MAX Lv : 10
 習得條件 : 連鎖衝擊
@@ -4404,7 +4391,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 950%
 [Level 10] : 攻擊力 1000%
 #
-GS_DESPERADO# 
+GS_DESPERADO#
 亡命之徒(Desperado)
 MAX Lv : 10
 習得條件 : 五連擊 5
@@ -4422,7 +4409,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 500%
 [Level 10] : 攻擊力 550%
 #
-GS_GATLINGFEVER# 
+GS_GATLINGFEVER#
 格林狂熱(Gatling Fever)
 MAX Lv : 10
 習得條件 : 五連擊 7, 亡命之徒 5
@@ -4439,7 +4426,7 @@ MAX Lv : 10
 [Level 9] : 傷害力 +110，攻擊速度 +18%，迴避率 -45，持續時間 150秒
 [Level 10] : 傷害力 +120，攻擊速度 +20%，迴避率 -50，持續時間 165秒
 #
-GS_DUST# 
+GS_DUST#
 彈片四射(Dust)
 MAX Lv : 10
 習得條件 : 單槍射擊 5
@@ -4457,7 +4444,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 550%
 [Level 10] : 攻擊力 600%
 #
-GS_FULLBUSTER# 
+GS_FULLBUSTER#
 全面破壞(Full Buster)
 MAX Lv : 10
 習得條件 : 彈片四射 3
@@ -4475,7 +4462,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 1200%，消耗子彈數 10發
 [Level 10] : 攻擊力 1300%，消耗子彈數 10發
 #
-GS_SPREADATTACK# 
+GS_SPREADATTACK#
 火力全開(Spread Attack)
 MAX Lv : 10
 習得條件 : 全面破壞 5
@@ -4493,7 +4480,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 260%，範圍 7*7格
 [Level 10] : 攻擊力 280%，範圍 9*9格
 #
-GS_GROUNDDRIFT# 
+GS_GROUNDDRIFT#
 四面埋伏(Ground Drift)
 MAX Lv : 10
 習得條件 : 全面破壞 5, 火力全開 7
@@ -4511,7 +4498,7 @@ MAX Lv : 10
 [Level 9] : 傷害力 +450，持續時間 27秒
 [Level 10] : 傷害力 +500，持續時間 30秒
 #
-NJ_TOBIDOUGU# 
+NJ_TOBIDOUGU#
 飛刀 修練
 MAX Lv : 10
 系列 : 被動
@@ -4527,7 +4514,7 @@ MAX Lv : 10
 [Level 9] : 攻擊力 +27
 [Level 10] : 攻擊力 +30
 #
-NJ_SYURIKEN# 
+NJ_SYURIKEN#
 投擲 飛鏢
 MAX Lv : 10
 習得條件 : 飛刀 修練 1
@@ -4545,7 +4532,7 @@ MAX Lv : 10
 [Level 9] : 傷害力 +36
 [Level 10] : 傷害力 +40
 #
-NJ_KUNAI# 
+NJ_KUNAI#
 投擲 飛刀
 MAX Lv : 5
 習得條件 : 投擲 飛鏢 5
@@ -4553,7 +4540,7 @@ MAX Lv : 5
 內容 : 要裝置飛刀後才能使用的技能
 投擲飛刀後給予3次打擊，會隨著飛刀而有不同的效果
 #
-NJ_HUUMA# 
+NJ_HUUMA#
 投擲 風魔飛鏢
 MAX Lv : 5
 習得條件 : 飛刀 修練 5, 投擲 飛刀 5
@@ -4566,7 +4553,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 750%
 [Level 5] : 攻擊力 900%
 #
-NJ_ZENYNAGE# 
+NJ_ZENYNAGE#
 投擲 金錢
 MAX Lv : 10
 習得條件 : 飛刀 修練 10, 投擲 風魔飛鏢 5
@@ -4584,7 +4571,7 @@ MAX Lv : 10
 [Level 9] : 消耗金幣 4500~9000zeny
 [Level 10] : 消耗金幣 5000~10000zeny
 #
-NJ_TATAMIGAESHI# 
+NJ_TATAMIGAESHI#
 榻榻米 攻擊
 MAX Lv : 5
 系列 : 攻擊
@@ -4595,7 +4582,7 @@ MAX Lv : 5
 [Level 4] : 攻擊範圍 3格，攻擊力 140%
 [Level 5] : 攻擊範圍 3格，攻擊力 150%
 #
-NJ_KASUMIKIRI# 
+NJ_KASUMIKIRI#
 霧裡砍劈
 MAX Lv : 10
 習得條件 : 影子跳躍 1
@@ -4612,19 +4599,19 @@ MAX Lv : 10
 [Level 9] : 攻擊力 190%
 [Level 10] : 攻擊力 200%
 #
-NJ_SHADOWJUMP# 
+NJ_SHADOWJUMP#
 影子跳躍
 習得條件 : 榻榻米 攻擊 1
 MAX Lv : 5
 系列 : 輔助
 內容 : 在'隱匿' 狀態下會移動至指定的格子上，即使是在死胡同裡只要能攻擊的地方都可以移動過去的
-[Level 1] : 移動距離 6格
-[Level 2] : 移動距離 7格
-[Level 3] : 移動距離 8格
-[Level 4] : 移動距離 9格
-[Level 5] : 移動距離 10格
+[Level 1] : 移動距離 5格
+[Level 2] : 移動距離 6格
+[Level 3] : 移動距離 7格
+[Level 4] : 移動距離 8格
+[Level 5] : 移動距離 9格
 #
-NJ_KIRIKAGE# 
+NJ_KIRIKAGE#
 隱身攻擊
 MAX Lv : 5
 習得條件 : 霧裡砍劈 5
@@ -4637,7 +4624,7 @@ MAX Lv : 5
 [Level 4] : 攻擊力 400%，必殺攻擊力 +45%
 [Level 5] : 攻擊力 500%，必殺攻擊力 +50%
 #
-NJ_UTSUSEMI# 
+NJ_UTSUSEMI#
 金蟬脫殼
 MAX Lv : 5
 習得條件 : 影子跳躍 5
@@ -4650,7 +4637,7 @@ MAX Lv : 5
 [Level 4] : 持續時間 50秒，次數 2次
 [Level 5] : 持續時間 60秒，次數 3次
 #
-NJ_BUNSINJYUTSU# 
+NJ_BUNSINJYUTSU#
 幻影分身
 MAX Lv : 10
 習得條件 :  隱身攻擊 3, 念 1, 金蟬脫殼 4
@@ -4669,7 +4656,7 @@ MAX Lv : 10
 [Level 9] : 迴避 次數 5次，持續時間 220秒
 [Level 10] : 迴避 次數 5次，持續時間 240秒
 #
-NJ_NINPOU# 
+NJ_NINPOU#
 忍術 修練
 MAX Lv : 10
 系列 : 被動
@@ -4685,14 +4672,14 @@ MAX Lv : 10
 [Level 9] : 每10秒 SP +27
 [Level 10] : 每10秒 SP +30
 #
-NJ_KOUENKA# 
+NJ_KOUENKA#
 火炎花
 MAX Lv : 10
 習得條件 : 忍術 修練 1
 系列 : 攻擊(火)
 內容 : 射出去火花般的花葉，對鎖定目標的敵人進行火屬性攻擊，會依技能等級的程度給予敵人打擊，每1次打擊時會有MATK 90%的攻擊力
 #
-NJ_KAENSIN# 
+NJ_KAENSIN#
 火炎陣
 MAX Lv : 10
 習得條件 : 火炎花 5
@@ -4710,7 +4697,7 @@ MAX Lv : 10
 [Level 9] : 9次 打擊
 [Level 10] : 9次 打擊
 #
-NJ_BAKUENRYU# 
+NJ_BAKUENRYU#
 爆炎龍
 MAX Lv : 5
 習得條件 : 忍術 修練 10, 火炎陣 7
@@ -4722,20 +4709,20 @@ MAX Lv : 5
 [Level 4] : MATK +750%
 [Level 5] : MATK +900%
 #
-NJ_HYOUSENSOU# 
+NJ_HYOUSENSOU#
 冰閃槍
 MAX Lv : 10
 習得條件 : 忍術 修練 1
 系列 : 攻擊(冰)
 內容 : 在地面上形成冰槍後進行攻擊，技能等級愈高時打擊次數也會增加，從1技能有3次打擊，以此類推10技能最多可攻擊12次，每1次 的攻擊就會有MATK 70%的攻擊力
 #
-NJ_SUITON# 
+NJ_SUITON#
 水鈍
 MAX Lv : 10
 習得條件 : 冰閃槍 5
 系列 : 輔助(冰)
 內容 : 在地面上形成水坑，進入此範圍內的敵人移動速度會降低一半，會減少AGI的數值
-在效果範圍內能使用水球術和天使之淚技能，向範圍內的敵人使用冰閃槍時傷害力會增加，會消耗掉冰閃石1個
+在效果範圍內能使用水球術和天使之異獊遄A向範圍內的敵人使用冰閃槍時傷害力會增加，會消耗掉冰閃石1個
 施展者和其它忍者在此範圍內移動速度與AGI是不會降低
 [Level 1] : 有效範圍: 3*3格， 持續時間: 15秒
 [Level 2] : 有效範圍: 3*3格， 持續時間: 20秒， AGI - 3
@@ -4748,7 +4735,7 @@ MAX Lv : 10
 [Level 9] : 有效範圍: 7*7格， 持續時間: 55秒， AGI - 8
 [Level 10] : 有效範圍: 9*9格， 持續時間: 60秒， AGI - 8
 #
-NJ_HYOUSYOURAKU# 
+NJ_HYOUSYOURAKU#
 冰晶落
 MAX Lv : 5
 習得條件 : 忍術 修練 10, 水鈍 7
@@ -4760,7 +4747,7 @@ MAX Lv : 5
 [Level 4] : MATK +300%，結冰機率 50%
 [Level 5] : MATK +350%，結冰機率 60%
 #
-NJ_HUUJIN# 
+NJ_HUUJIN#
 風刃
 MAX Lv : 10
 習得條件 : 忍術 修練 1
@@ -4777,7 +4764,7 @@ MAX Lv : 10
 [Level 9] : 5次 打擊
 [Level 10] : 6次 打擊
 #
-NJ_RAIGEKISAI# 
+NJ_RAIGEKISAI#
 雷擊碎
 MAX Lv : 5
 習得條件 : 風刃 5
@@ -4789,7 +4776,7 @@ MAX Lv : 5
 [Level 4] : MATK +320%，有效範圍 7*7格
 [Level 5] : MATK +360%，有效範圍 9*9格
 #
-NJ_KAMAITACHI# 
+NJ_KAMAITACHI#
 朔風 
 MAX Lv : 5
 習得條件 : 忍術 修練 10, 雷擊碎 5
@@ -4802,7 +4789,7 @@ MAX Lv : 5
 [Level 4] : MATK +500%，射程距離 8格
 [Level 5] : MATK +600%，射程距離 9格
 #
-NJ_NEN# 
+NJ_NEN#
 念
 MAX Lv : 5
 習得條件 : 忍術 修練 5
@@ -4815,7 +4802,7 @@ MAX Lv : 5
 [Level 4] : STR，INT +4，持續時間 75秒
 [Level 5] : STR，INT +5，持續時間 90秒
 #
-NJ_ISSEN# 
+NJ_ISSEN#
 一閃擊
 MAX Lv : 10
 習得條件 : 飛刀 修練 7, 隱身攻擊 5, 念 1
@@ -4823,259 +4810,133 @@ MAX Lv : 10
 內容 : 消耗自己剩餘的HP施以致命一擊的嚴重傷害力，剩餘的HP愈高時造成的傷害力就愈高，施展技能後自己的HP會變1
 技能施展後自己的HP會變成1%，若是在施展幻影分身技能時，會依據剩餘分身數量多寡增加打擊數和傷害值
 #
-MB_FIGHTING# 
-#
-MB_NEUTRAL# 
-#
-MB_TAIMING_PUTI# 
-#
-MB_WHITEPOTION# 
-#
-MB_MENTAL# 
-#
-MB_CARDPITCHER# 
-#
-MB_PETPITCHER# 
-#
-MB_BODYSTUDY# 
-#
-MB_BODYALTER# 
-#
-MB_PETMEMORY# 
-#
-MB_M_TELEPORT# 
-#
-MB_B_GAIN# 
-#
-MB_M_GAIN# 
-#
-MB_MISSION# 
-#
-MB_MUNAKKNOWLEDGE# 
-#
-MB_MUNAKBALL# 
-#
-MB_SCROLL# 
-#
-MB_B_GATHERING# 
-#
-MB_M_GATHERING# 
-#
-MB_B_EXCLUDE# 
-#
-MB_B_DRIFT# 
-#
-MB_B_WALLRUSH# 
-#
-MB_M_WALLRUSH# 
-#
-MB_B_WALLSHIFT# 
-#
-MB_M_WALLCRASH# 
-#
-MB_M_REINCARNATION# 
-#
-MB_B_EQUIP# 
-#
-SL_DEATHKNIGHT# 
-#
-SL_COLLECTOR# 
-#
-SL_NINJA# 
-#
-SL_GUNNER# 
-#
-AM_TWILIGHT4# 
-#
-DE_BERSERKAIZER# 
-#
-DA_DARKPOWER# 
-#
-DE_PASSIVE# 
-#
-DE_PATTACK# 
-#
-DE_PSPEED# 
-#
-DE_PDEFENSE# 
-#
-DE_PCRITICAL# 
-#
-DE_PHP# 
-#
-DE_PSP# 
-#
-DE_RESET# 
-#
-DE_RANKING# 
-#
-DE_PTRIPLE# 
-#
-DE_ENERGY# 
-#
-DE_NIGHTMARE# 
-#
-DE_SLASH# 
-#
-DE_COIL# 
-#
-DE_WAVE# 
-#
-DE_REBIRTH# 
-#
-DE_AURA# 
-#
-DE_FREEZER# 
-#
-DE_CHANGEATTACK# 
-#
-DE_PUNISH# 
-#
-DE_POISON# 
-#
-DE_INSTANT# 
-#
-DE_WARNING# 
-#
-DE_RANKEDKNIFE# 
-#
-DE_RANKEDGRADIUS# 
-#
-DE_GAUGE# 
-#
-DE_GTIME# 
-#
-DE_GPAIN# 
-#
-DE_GSKILL# 
-#
-DE_GKILL# 
-#
-DE_ACCEL# 
-#
-DE_BLOCKDOUBLE# 
-#
-DE_BLOCKMELEE# 
-#
-DE_BLOCKFAR# 
-#
-DE_FRONTATTACK# 
-#
-DE_DANGERATTACK# 
-#
-DE_TWINATTACK# 
-#
-DE_WINDATTACK# 
-#
-DE_WATERATTACK# 
-#
-DA_ENERGY# 
-#
-DA_CLOUD# 
-#
-DA_FIRSTSLOT# 
-#
-DA_HEADDEF# 
-#
-DA_SPACE# 
-#
-DA_TRANSFORM# 
-#
-DA_EXPLOSION# 
-#
-DA_REWARD# 
-#
-DA_CRUSH# 
-#
-DA_ITEMREBUILD# 
-#
-DA_ILLUSION# 
-#
-DA_NUETRALIZE# 
-#
-DA_RUNNER# 
-#
-DA_TRANSFER# 
-#
-DA_WALL# 
-#
-DA_REVENGE# 
-#
-DA_EARPLUG# 
-#
-DA_CONTRACT# 
-#
-DA_BLACK# 
-#
-DA_DREAM# 
-#
-DA_MAGICCART# 
-#
-DA_COPY# 
-#
-DA_CRYSTAL# 
-#
-DA_EXP# 
-#
-DA_CARTSWING# 
-#
-DA_REBUILD# 
-#
-DA_JOBCHANGE# 
-#
-DA_EDARKNESS# 
-#
-DA_EGUARDIAN# 
-#
-DA_TIMEOUT# 
-#
-ALL_TIMEIN# 
-#
-DA_ZENYRANK# 
-#
-DA_ACCESSORYMIX# 
-#
-NPC_EARTHQUAKE# 
-#
-NPC_DRAGONFEAR# 
-#
-NPC_PULSESTRIKE# 
-#
-NPC_HELLJUDGEMENT# 
-#
-NPC_WIDESILENCE# 
-#
-NPC_WIDEFREEZE# 
-#
-NPC_WIDEBLEEDING# 
-#
-NPC_WIDESTONE# 
-#
-NPC_WIDECONFUSE# 
-#
-NPC_WIDESLEEP# 
-#
-NPC_EVILLAND# 
-#
-NPC_MAGICMIRROR# 
-#
-NPC_SLOWCAST# 
-#
-NPC_CRITICALWOUND# 
-#
-NPC_STONESKIN# 
-#
-NPC_ANTIMAGIC# 
-#
-NPC_WIDECURSE# 
-#
-NPC_WIDESTUN# 
-#
-NPC_VAMPIRE_GIFT# 
-#
-NPC_WIDESOULDRAIN# 
-#
-ALL_INCCARRY# 
+MB_FIGHTING##
+MB_NEUTRAL##
+MB_TAIMING_PUTI##
+MB_WHITEPOTION##
+MB_MENTAL##
+MB_CARDPITCHER##
+MB_PETPITCHER##
+MB_BODYSTUDY##
+MB_BODYALTER##
+MB_PETMEMORY##
+MB_M_TELEPORT##
+MB_B_GAIN##
+MB_M_GAIN##
+MB_MISSION##
+MB_MUNAKKNOWLEDGE##
+MB_MUNAKBALL##
+MB_SCROLL##
+MB_B_GATHERING##
+MB_M_GATHERING##
+MB_B_EXCLUDE##
+MB_B_DRIFT##
+MB_B_WALLRUSH##
+MB_M_WALLRUSH##
+MB_B_WALLSHIFT##
+MB_M_WALLCRASH##
+MB_M_REINCARNATION##
+MB_B_EQUIP##
+SL_DEATHKNIGHT##
+SL_COLLECTOR##
+SL_NINJA##
+SL_GUNNER##
+AM_TWILIGHT4##
+DE_BERSERKAIZER##
+DA_DARKPOWER##
+DE_PASSIVE##
+DE_PATTACK##
+DE_PSPEED##
+DE_PDEFENSE##
+DE_PCRITICAL##
+DE_PHP##
+DE_PSP##
+DE_RESET##
+DE_RANKING##
+DE_PTRIPLE##
+DE_ENERGY##
+DE_NIGHTMARE##
+DE_SLASH##
+DE_COIL##
+DE_WAVE##
+DE_REBIRTH##
+DE_AURA##
+DE_FREEZER##
+DE_CHANGEATTACK##
+DE_PUNISH##
+DE_POISON##
+DE_INSTANT##
+DE_WARNING##
+DE_RANKEDKNIFE##
+DE_RANKEDGRADIUS##
+DE_GAUGE##
+DE_GTIME##
+DE_GPAIN##
+DE_GSKILL##
+DE_GKILL##
+DE_ACCEL##
+DE_BLOCKDOUBLE##
+DE_BLOCKMELEE##
+DE_BLOCKFAR##
+DE_FRONTATTACK##
+DE_DANGERATTACK##
+DE_TWINATTACK##
+DE_WINDATTACK##
+DE_WATERATTACK##
+DA_ENERGY##
+DA_CLOUD##
+DA_FIRSTSLOT##
+DA_HEADDEF##
+DA_SPACE##
+DA_TRANSFORM##
+DA_EXPLOSION##
+DA_REWARD##
+DA_CRUSH##
+DA_ITEMREBUILD##
+DA_ILLUSION##
+DA_NUETRALIZE##
+DA_RUNNER##
+DA_TRANSFER##
+DA_WALL##
+DA_REVENGE##
+DA_EARPLUG##
+DA_CONTRACT##
+DA_BLACK##
+DA_DREAM##
+DA_MAGICCART##
+DA_COPY##
+DA_CRYSTAL##
+DA_EXP##
+DA_CARTSWING##
+DA_REBUILD##
+DA_JOBCHANGE##
+DA_EDARKNESS##
+DA_EGUARDIAN##
+DA_TIMEOUT##
+ALL_TIMEIN##
+DA_ZENYRANK##
+DA_ACCESSORYMIX##
+NPC_EARTHQUAKE##
+NPC_DRAGONFEAR##
+NPC_PULSESTRIKE##
+NPC_HELLJUDGEMENT##
+NPC_WIDESILENCE##
+NPC_WIDEFREEZE##
+NPC_WIDEBLEEDING##
+NPC_WIDESTONE##
+NPC_WIDECONFUSE##
+NPC_WIDESLEEP##
+NPC_EVILLAND##
+NPC_MAGICMIRROR##
+NPC_SLOWCAST##
+NPC_CRITICALWOUND##
+NPC_STONESKIN##
+NPC_ANTIMAGIC##
+NPC_WIDECURSE##
+NPC_WIDESTUN##
+NPC_VAMPIRE_GIFT##
+NPC_WIDESOULDRAIN##
+ALL_INCCARRY#
 負重量上升R
 系列 : 被動
 內容 : 可提高道具負重限制。
@@ -5090,56 +4951,49 @@ ALL_INCCARRY#
 [Level 9] : 最大載重量 +1800
 [Level 10] : 最大載重量 +2000
 #
-NPC_HELLPOWER# 
-#
-NPC_ALLHEAL# 
-#
-GM_SANDMAN# 
+NPC_HELLPOWER##
+NPC_ALLHEAL##
+GM_SANDMAN#
 搖籃曲 (LULLABY)
 系列 : 輔助
 內容 : 唱出無法不入眠的搖籃曲，在一定時間內使對方進入無法醒來的睡眠狀態
 #
-ALL_CATCRY# 
+ALL_CATCRY#
 怪獸的咆哮
 內容 : 為了驅趕老鼠而發出貓叫聲
 #
-ALL_PARTYFLEE# 
+ALL_PARTYFLEE#
 吹吧! 花風!!
 內容 : 花
 #
-ALL_ANGEL_PROTECT# 
-感謝您!
-#
-ALL_DREAM_SUMMERNIGHT# 
+ALL_ANGEL_PROTECT#"感謝您!"#
+ALL_DREAM_SUMMERNIGHT#
 一個夏夜之夢
 內容 : 使用後宛如在某個夏夜有做夢的感覺
 #
-ALL_REVERSEORCISH# 
-#
-ALL_WEWISH# 
-#
-ALL_BUYING_STORE# 
+ALL_REVERSEORCISH##
+ALL_WEWISH##
+ALL_BUYING_STORE#
 開設採購商店 (BUYING STORE)
 系列：輔助
 內容：在你站的位置上開設可以購買各種物品的簡易商店 。會消耗採購商店執照 1個。
 #
-
-ALL_GUARDIAN_RECALL# 
+ALL_GUARDIAN_RECALL#
 Guardian Recall
 MAX LV : 1
-系列 : 輔助(  )
+系列 : ^輔助(  )
 #
-ALL_ODINS_POWER# 
+ALL_ODINS_POWER#
 Odins Power
 #
-KN_CHARGEATK# 
+KN_CHARGEATK#
 衝鋒攻擊(Charge Attack)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 對遠距離的敵人瞬間靠過去，給予攻擊.距離越遠的話攻擊力會越高，但相對的施法時間變久
 #
-CR_SHRINK# 
+CR_SHRINK#
 退縮(Shrink)
 習得條件 : 進階學習機能
 系列 : 輔助
@@ -5147,13 +5001,13 @@ CR_SHRINK#
 在持續的時間內再重新使用退縮技能時，該技能的效果會被解除 
 當自動防禦技能1等級時是 5%，技能等級每 5%增加後到達10技能時，會有 50%的機率把敵人退移
 #
-AS_SONICACCEL# 
+AS_SONICACCEL#
 超音速投擲(Sonic Acceleration)
 習得條件 : 進階學習機能
 系列 : 被動
 內容 : 使音速投擲技能命中率上升 50% ，攻擊力會增加10% 
 #
-AS_VENOMKNIFE# 
+AS_VENOMKNIFE#
 毒刃(Venom Knife)
 習得條件 : 進階學習機能
 系列 : 攻擊
@@ -5161,7 +5015,7 @@ AS_VENOMKNIFE#
 內容 : 只有在裝備'毒刃'的時候，才能使用的技能 
 當使用技能時，會消耗掉1個'毒刃'來攻擊在遠距離的敵人，被攻擊到的敵人有較高的機率會中毒
 #
-RG_CLOSECONFINE# 
+RG_CLOSECONFINE#
 緊密的約束(Close Confine)
 習得條件 : 進階學習機能
 系列 : 攻擊
@@ -5169,7 +5023,7 @@ RG_CLOSECONFINE#
 內容 : 在15秒中抓住攻擊的對象1人讓他變成不能移動的狀態，相對的技能施展者同時的也會變成不能移動的狀態，
 抓住對方的同時會得到迴避率 +10的紅利，假如倆人之間有一個人死亡或是使用瞬間移動造成距離遠離時，這狀態馬上被解除
 #
-WZ_SIGHTBLASTER# 
+WZ_SIGHTBLASTER#
 火狩芽(Sight Blaster)
 習得條件 : 進階學習機能
 系列 : 攻擊
@@ -5178,7 +5032,7 @@ WZ_SIGHTBLASTER#
 當敵人要靠近技能施展者時，給予魔法攻擊力般的傷害而退移，再給他1次傷害力的話就會消除，
 攻城時不會有退移的效果
 #
-SA_CREATECON# 
+SA_CREATECON#
 肯貝特 製作(Create Converter)
 習得條件 : 進階學習機能
 系列 : 輔助
@@ -5188,14 +5042,14 @@ SA_CREATECON#
 風屬性 肯貝特 : 彩色昆蟲外殼 3個 + 大捲軸 1個
 水屬性 肯貝特 : 蝸牛殼 3個 + 大捲軸 1個
 #
-SA_ELEMENTWATER# 
+SA_ELEMENTWATER#
 水屬性 元素更換(Elemental Change Water)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 把對象魔物的屬性更換為水屬性
 #
-HT_PHANTASMIC# 
+HT_PHANTASMIC#
 幻影箭(Phantasmic Arrow)
 習得條件 : 進階學習機能
 系列 : 攻擊
@@ -5203,14 +5057,14 @@ HT_PHANTASMIC#
 內容 : 在沒有裝備箭矢時，可射出虛像的箭矢的技能 
 擁有150%的攻擊力，命中時讓敵人後退3格
 #
-BA_PANGVOICE# 
+BA_PANGVOICE#
 陣痛之聲(Pang Voice)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 對敵對象1人，施展怪聲吼叫 使牠得到混亂，對Boss級魔物無效 
 #
-DC_WINKCHARM# 
+DC_WINKCHARM#
 眨眼之誘(Wink of Charm)
 習得條件 : 進階學習機能
 系列 : 輔助
@@ -5219,13 +5073,13 @@ DC_WINKCHARM#
 當玩家的等級比魔物的等級更高時所中的機率會更高，若對其它玩家施展時有較低的機率中混亂，
 只能對人形系、天使系、惡魔系魔物們能施展，對Boss級魔物無效
 #
-BS_UNFAIRLYTRICK# 
+BS_UNFAIRLYTRICK#
 詭計的商術(Unfairly Trick)
 習得條件 : 進階學習機能
 系列 : 被動
 內容 : 金錢攻擊的金幣，消耗量只減少 10%
 #
-BS_GREED# 
+BS_GREED#
 貪婪(Greed)
 習得條件 : 進階學習機能
 系列 : 輔助
@@ -5233,7 +5087,7 @@ BS_GREED#
 內容 : 使用這技能時，從玩家到2空格之內的所有物品，會放進到裝備欄裡 
 在村落不能使用的
 #
-PR_REDEMPTIO# 
+PR_REDEMPTIO#
 捨身取義(Redemptio)
 習得條件 : 進階學習機能
 系列 : 輔助
@@ -5242,14 +5096,14 @@ PR_REDEMPTIO#
 一次能救活更多的組隊員的話，當使用這技能死掉時所少掉的經驗值損失越底 
 使用時經驗值 1%以下時，不會被啟動的
 #
-MO_KITRANSLATION# 
+MO_KITRANSLATION#
 振氣注入
 習得條件 : 進階學習機能
 系列 : 輔助
 對象 : 組隊1人
 內容 : 把自己所有的氣球體能交給組隊員，當每一次振氣注入時 對方會傳達到 1個氣球體
 #
-MO_BALKYOUNG# 
+MO_BALKYOUNG#
 發勁
 習得條件 : 進階學習機能
 系列 : 攻擊
@@ -5257,28 +5111,28 @@ MO_BALKYOUNG#
 內容 : 在手掌上集中氣來攻擊，給予敵人傷害也把周圍的敵人轟掉，
 被命中的敵人受300%的傷害力，在周圍的魔物被退移2格有2秒鐘得到昏眩，使用這技能時HP會銷耗少量HP.
 #
-SA_ELEMENTGROUND# 
+SA_ELEMENTGROUND#
 地屬性 元素更換(Elemental Change Ground)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 把對象魔物的屬性更換為地屬性
 #
-SA_ELEMENTFIRE# 
+SA_ELEMENTFIRE#
 火屬性 元素更換(Elemental Change Fire)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 把對象魔物的屬性更換為火屬性
 #
-SA_ELEMENTWIND# 
+SA_ELEMENTWIND#
 風屬性 元素更換(Elemental Change Wind)
 習得條件 : 進階學習機能
 系列 : 攻擊
 對象 : 敵
 內容 : 把對象魔物的屬性更換為風屬性
 #
-RK_ENCHANTBLADE# 
+RK_ENCHANTBLADE#
 魔力劍(EnchantBlade)
 MAXLv:5
 習得條件:盧恩精熟2
@@ -5291,7 +5145,7 @@ MAXLv:5
 [Level4]:魔法攻擊力+180增加
 [Level5]:魔法攻擊力+200增加
 #
-RK_SONICWAVE# 
+RK_SONICWAVE#
 音速衝擊波(SonicWave)
 MAXLv:5
 習得條件:魔力劍3
@@ -5303,7 +5157,7 @@ MAXLv:5
 [Level4]:攻擊力900%
 [Level5]:攻擊力1000%
 #
-RK_DEATHBOUND# 
+RK_DEATHBOUND#
 死亡反彈(DeathBound)
 MAXLv:10
 習得條件:反擊1,魔力劍2
@@ -5320,7 +5174,7 @@ MAXLv:10
 [Level9]:損害增幅1400%
 [Level10]:損害增幅1500%
 #
-RK_HUNDREDSPEAR# 
+RK_HUNDREDSPEAR#
 百矛穿刺(HundredSpear)
 MAXLv:10
 習得條件:幻象突刺3
@@ -5337,7 +5191,7 @@ MAXLv:10
 [Level9]:攻擊力960%/投擲長矛攻擊發動機率37%
 [Level10]:攻擊力1000%/投擲長矛攻擊發動機率40%
 #
-RK_WINDCUTTER# 
+RK_WINDCUTTER#
 風壓飛刃(WindCutter)
 MAXLv:5
 習得條件:魔力劍5
@@ -5349,7 +5203,7 @@ MAXLv:5
 [Level4]:攻擊力300%/恐怖發生機率11%
 [Level5]:攻擊力350%/恐怖發生機率13%
 #
-RK_IGNITIONBREAK# 
+RK_IGNITIONBREAK#
 致命爆裂(IgnitionBreak)
 MAXLv:5
 習得條件:音速衝擊波2,風壓飛刃3,死亡反彈5
@@ -5361,33 +5215,33 @@ MAXLv:5
 [Level4]:攻擊力1000%-900%-500%
 [Level5]:攻擊力1200%-1100%-600%
 #
-RK_DRAGONTRAINING# 
+RK_DRAGONTRAINING#
 龍駕馭(DragonTraning)
 MAXLv:5
 習得條件:騎兵修練1
 系列:被動
 內容:騎乘龍時攻擊速度會上升，可持有的重量也會提高，會對龍之氣息的損害有影響。騎乘龍的狀態下若以視窗模式攻擊時，關於目標大小會經常套用100%的損害、攻擊力也會稍微上升。
 #
-RK_DRAGONBREATH# 
+RK_DRAGONBREATH#
 龍之氣息(DragonBreath)
 MAXLv:10
 習得條件:龍駕馭2
 系列:範圍損害
 內容:向龍使出烈火連擊，跟地獄的熱氣般熾熱的龍之氣息，被攻擊到的敵人隨時都身處於烈焰之中並持續受到傷害。龍所呼出的氣息威力會隨著操控者的狀態所左右。
 #
-RK_DRAGONHOWLING# 
+RK_DRAGONHOWLING#
 龍之咆哮(DragonHowling)
 MAXLv:5
 習得條件:龍駕馭2
 系列:debuff
 內容:讓龍發出嚎叫，使附近的所有生命體都飽受恐怖之感。
-[Level1]:效果範圍施展者半徑3格/成功機率56%
-[Level2]:效果範圍施展者半徑4格/成功機率62%
-[Level3]:效果範圍施展者半徑5格/成功機率68%
-[Level4]:效果範圍施展者半徑6格/成功機率74%
-[Level5]:效果範圍施展者半徑7格/成功機率80%
+[Level1]:效果範圍施展者半徑3格/成札鰷v56%
+[Level2]:效果範圍施展者半徑4格/成札鰷v62%
+[Level3]:效果範圍施展者半徑5格/成札鰷v68%
+[Level4]:效果範圍施展者半徑6格/成札鰷v74%
+[Level5]:效果範圍施展者半徑7格/成札鰷v80%
 #
-RK_RUNEMASTERY# 
+RK_RUNEMASTERY#
 盧恩精熟(RuneMastery)
 MAXLv:10
 系列:被動
@@ -5401,27 +5255,18 @@ MAXLv:10
 [Level7]:萊德赫盧恩石-材料:光粒1,紅色魔力礦石1
 [Level8]:那特席茲盧恩石-材料:光粒1,破裂的鎧甲一角1,老舊魔法圖1
 [Level9]:貝爾卡諾盧恩石-材料:無顱武士的鎧甲一角1
-[Level10]:增加盧恩石製作成功機率
+[Level10]:增加盧恩石製作成札鰷v
 #
-RK_MILLENNIUMSHIELD# 
-#
-RK_CRUSHSTRIKE# 
-#
-RK_REFRESH# 
-#
-RK_GIANTGROWTH# 
-#
-RK_STONEHARDSKIN# 
-#
-RK_VITALITYACTIVATION# 
-#
-RK_STORMBLAST# 
-#
-RK_FIGHTINGSPIRIT# 
-#
-RK_ABUNDANCE# 
-#
-RK_PHANTOMTHRUST# 
+RK_MILLENNIUMSHIELD##
+RK_CRUSHSTRIKE##
+RK_REFRESH##
+RK_GIANTGROWTH##
+RK_STONEHARDSKIN##
+RK_VITALITYACTIVATION##
+RK_STORMBLAST##
+RK_FIGHTINGSPIRIT##
+RK_ABUNDANCE##
+RK_PHANTOMTHRUST#
 幻象突刺(PhantomThrust)
 MAXLv:5
 習得條件:騎乘攻擊2
@@ -5434,7 +5279,7 @@ MAXLv:5
 [Level4]:射程距離8格/攻擊力200%
 [Level5]:射程距離9格/攻擊力250%
 #
-GC_VENOMIMPRESS# 
+GC_VENOMIMPRESS#
 毒耐性弱化(VENOMIMPRESS/毒耐性弱化)
 MAXLv:5
 習得條件:塗毒3
@@ -5446,7 +5291,7 @@ MAXLv:5
 [Level4]:毒耐性弱化-40%
 [Level5]:毒耐性弱化-50%
 #
-GC_CROSSIMPACT# 
+GC_CROSSIMPACT#
 十字斬(CROSSIMPACT/十字斬)
 MAXLv:5
 習得條件:音速投擲10
@@ -5458,7 +5303,7 @@ MAXLv:5
 [Level4]:損害1350%
 [Level5]:損害1400%
 #
-GC_DARKILLUSION# 
+GC_DARKILLUSION#
 黑色幻影(DARKILLUSION/黑色幻影)
 MAXLv:5
 習得條件:十字斬3
@@ -5470,12 +5315,12 @@ MAXLv:5
 [Level4]:損害100%/最大射程距離6格
 [Level5]:損害100%/最大射程距離7格
 #
-GC_RESEARCHNEWPOISON# 
+GC_RESEARCHNEWPOISON#
 新毒研究(RESEARCHNEWPOISON)
 MAXLv:10
 習得條件:十字斬首者技能基本
 系列:被動
-內容:學習製作新毒素的方法，依照技能等級可製作的毒和製作數量也會增加，製造成功機率也會上升。每上升1級技能，'毒液'的持續時間就會增加3秒。基本上必須持有藥缽和製毒工具組，以及每個毒素的必須材料。
+內容:學習製作新毒素的方法，依照技能等級可製作的毒和製作數量也會增加，製造成札鰷v也會上升。每上升1級技能，'毒液'的持續時間就會增加3秒。基本上必須持有藥缽和製毒工具組，以及每個毒素的必須材料。
 [Level1]:製造機率35%/麻痺之毒-材料:牛蛙之皮20,大王黛粉毒葉1
 [Level2]:製造機率40%/熱病之毒-材料:虎蜥皮20,毒馬櫻丹1
 [Level3]:製造機率45%/污染之毒-材料:亡者指甲25,蛇足毒草1
@@ -5487,21 +5332,21 @@ MAXLv:10
 [Level9]:製造機率75%/失憶之毒-材料:人魚之心10,迷幻藥1
 [Level10]:製造機率80%/-
 #
-GC_CREATENEWPOISON# 
+GC_CREATENEWPOISON#
 新毒製作(CREATENEWPOISON)
 MAXLv:1
 習得條件:新毒研究1
 系列:主動
 內容:製作新的毒素，依照新毒研究技能和持有的毒素材料會顯示可製作的清單。
 #
-GC_ANTIDOTE# 
+GC_ANTIDOTE#
 解毒劑(ANTIDOTE/解毒)
 MAXLv:1
 習得條件:新毒研究5
 系列:主動/解毒
 內容:持有解毒劑，就可以解除自己以及1名對象身上的十字斬首者技能之新毒素。
 #
-GC_POISONINGWEAPON# 
+GC_POISONINGWEAPON#
 劇毒武器(POISONINGWEAPON/劇毒武器)
 MAXLv:5
 習得條件:新毒製作1
@@ -5513,7 +5358,7 @@ MAXLv:5
 [Level4]:中毒機率10%/持續時間240秒
 [Level5]:中毒機率12%/持續時間300秒
 #
-GC_WEAPONBLOCKING# 
+GC_WEAPONBLOCKING#
 武器抵禦(WEAPONBLOCKING/武器抵禦)
 MAXLv:5
 習得條件:左手-修練5
@@ -5525,26 +5370,26 @@ MAXLv:5
 [Level4]:防禦機率18%/持續時間180秒
 [Level5]:防禦機率20%/持續時間180秒
 #
-GC_COUNTERSLASH# 
+GC_COUNTERSLASH#
 反擊斬(COUNTERSLASH/反擊斬)
 MAXLv:5
 習得條件:武器抵禦1
 系列:主動/buff
-內容:在武器抵禦狀態下如成功防禦對方的攻擊，便可用反擊斬進行反擊，讓自己附近3x3格的所有目標都受到損害。本損害會受到施展者AGI的影響而更加提高。
+內容:在武器抵禦狀態下如成巨噶m對方的攻擊，便可用反擊斬進行反擊，讓自己附近3x3格的所有目標都受到損害。本損害會受到施展者AGI的影響而更加提高。
 [Level1]:攻擊力400%
 [Level2]:攻擊力500%
 [Level3]:攻擊力600%
 [Level4]:攻擊力700%
 [Level5]:攻擊力800%
 #
-GC_WEAPONCRUSH# 
+GC_WEAPONCRUSH#
 卸除武裝(WEAPONCRUSH/暫時卸除武裝)
 MAXLv:5
 習得條件:武器抵禦1
 系列:主動/debuff
-內容:在武器抵禦狀態下如成功防禦對方的攻擊，便可用卸除武裝進行反擊，強制移除攻擊對方的武器。技能等級越高，持續時間及成功機率就越高。
+內容:在武器抵禦狀態下如成巨噶m對方的攻擊，便可用卸除武裝進行反擊，強制移除攻擊對方的武器。技能等級越高，持續時間及成札鰷v就越高。
 #
-GC_VENOMPRESSURE# 
+GC_VENOMPRESSURE#
 劇毒強制賦予(VENOMPRESSURE/劇毒強制賦予)
 MAXLv:5
 習得條件:武器抵禦1,劇毒武器3
@@ -5556,7 +5401,7 @@ MAXLv:5
 [Level4]:中毒機率90%/命中率補正+26
 [Level5]:中毒機率95%/命中率補正+30
 #
-GC_POISONSMOKE# 
+GC_POISONSMOKE#
 毒霧(POISONSMOKE/毒霧)
 MAXLv:5
 習得條件:劇毒強制賦予5,劇毒武器5
@@ -5568,7 +5413,7 @@ MAXLv:5
 [Level4]:持續時間12秒
 [Level5]:持續時間14秒
 #
-GC_CLOAKINGEXCEED# 
+GC_CLOAKINGEXCEED#
 偽裝強化(CLOAKINGEXCEED/偽裝強化)
 MAXLv:5
 習得條件:偽裝3
@@ -5580,14 +5425,14 @@ MAXLv:5
 [Level4]:每秒消耗SP6/移動速度130%/承受損害2次
 [Level5]:每秒消耗SP5/移動速度140%/承受損害3次
 #
-GC_PHANTOMMENACE# 
+GC_PHANTOMMENACE#
 惡靈威脅(PHANTOMMENACE/惡靈威脅)
 MAXLv:1
 習得條件:黑色幻影5,偽裝強化5
 系列:主動/獵鷹尋敵
 內容:十字斬首者如影子般移動，把7x7格範圍內隱藏的所有敵人都給予300%的損害。解除被打到的所有對象的隱藏狀態。
 #
-GC_HALLUCINATIONWALK# 
+GC_HALLUCINATIONWALK#
 幻影步(HALLUCINATIONWALK/幻影步)
 MAXLv:5
 習得條件:惡靈威脅1
@@ -5599,7 +5444,7 @@ MAXLv:5
 [Level4]:迴避率上升+200/無視魔法損害機率40%
 [Level5]:迴避率上升+250/無視魔法損害機率50%
 #
-GC_ROLLINGCUTTER# 
+GC_ROLLINGCUTTER#
 迴旋刀刃(ROLLINGCUTTER/迴旋刀刃)
 MAXLv:5
 習得條件:音速投擲10
@@ -5611,7 +5456,7 @@ MAXLv:5
 [Level4]:攻擊力180%
 [Level5]:攻擊力200%
 #
-GC_CROSSRIPPERSLASHER# 
+GC_CROSSRIPPERSLASHER#
 迴旋十字斬(CROSSRIPPERSLASHER/迴旋十字斬)
 MAXLv:5
 習得條件:迴旋刀刃1
@@ -5623,7 +5468,7 @@ MAXLv:5
 [Level4]:攻擊力320%
 [Level5]:攻擊力360%
 #
-AB_JUDEX# 
+AB_JUDEX#
 審判(JUDEX/審判)
 MAXLv:5
 習得條件:轉生術1
@@ -5635,14 +5480,14 @@ MAXLv:5
 [Level4]:魔法攻擊力360%
 [Level5]:魔法攻擊力400%
 #
-AB_ANCILLA# 
+AB_ANCILLA#
 安希拉(ANCILLA/安希拉)
 MAXLv:1
 習得條件:慈悲術3
 系列:安希拉生成
 內容:生成名叫安希拉的魔力石。
 #
-AB_ADORAMUS# 
+AB_ADORAMUS#
 謳歌(ADORAMUS/謳歌)
 MAXLv:10
 習得條件:審判5,安希拉1,十字驅魔攻擊1
@@ -5659,7 +5504,7 @@ MAXLv:10
 [Level9]:魔法攻擊力1400%
 [Level10]:魔法攻擊力1500%
 #
-AB_CLEMENTIA# 
+AB_CLEMENTIA#
 慈悲術(CREMENTIA/慈悲術)
 MAXLv:3
 習得條件:天使之賜福1
@@ -5669,7 +5514,7 @@ MAXLv:3
 [Level2]:效果範圍施展者附近7格/持續時間180秒
 [Level3]:效果範圍施展者附近15格/持續時間240秒
 #
-AB_CANTO# 
+AB_CANTO#
 純白百合花(CANTOCANDIDUS/純白百合花)
 MAXLv:3
 習得條件:加速術1
@@ -5679,7 +5524,7 @@ MAXLv:3
 [Level2]:效果範圍施展者附近7格/持續時間180秒
 [Level3]:效果範圍施展者附近15格/持續時間240秒
 #
-AB_CHEAL# 
+AB_CHEAL#
 燦爛聖光(COLUCEOHEAL/燦爛聖光)
 MAXLv:3
 習得條件:治癒術1
@@ -5689,7 +5534,7 @@ MAXLv:3
 [Level2]:效果範圍施展者附近7格
 [Level3]:效果範圍施展者附近15格
 #
-AB_EPICLESIS# 
+AB_EPICLESIS#
 聖靈降臨祈禱(EPICLESIS/聖靈降臨祈禱)
 MAXLv:5
 習得條件:安希拉1,高階治癒術1
@@ -5701,7 +5546,7 @@ MAXLv:5
 [Level4]:MHP增加量20%每秒HP恢復4%/SP恢復3%
 [Level5]:MHP增加量25%每秒HP恢復5%/SP恢復4%
 #
-AB_PRAEFATIO# 
+AB_PRAEFATIO#
 感恩歌(PRAEFATIO/感恩歌)
 MAXLv:10
 習得條件:霸邪之陣1
@@ -5718,46 +5563,46 @@ MAXLv:10
 [Level9]:防禦次數15
 [Level10]:防禦次數16
 #
-AB_ORATIO# 
+AB_ORATIO#
 祈禱文(ORATIO/祈禱文)
 MAXLv:10
 習得條件:感恩歌5
 系列:debuff
 內容:減少畫面內所有目標的聖屬性耐性。
-[Level1]:成功機率45%/聖屬性耐性2%減少
-[Level2]:成功機率50%/聖屬性耐性4%減少
-[Level3]:成功機率55%/聖屬性耐性6%減少
-[Level4]:成功機率60%/聖屬性耐性8%減少
-[Level5]:成功機率65%/聖屬性耐性10%減少
-[Level6]:成功機率70%/聖屬性耐性12%減少
-[Level7]:成功機率75%/聖屬性耐性14%減少
-[Level8]:成功機率80%/聖屬性耐性16%減少
-[Level9]:成功機率85%/聖屬性耐性18%減少
-[Level10]:成功機率90%/聖屬性耐性20%減少
+[Level1]:成札鰷v45%/聖屬性耐性2%減少
+[Level2]:成札鰷v50%/聖屬性耐性4%減少
+[Level3]:成札鰷v55%/聖屬性耐性6%減少
+[Level4]:成札鰷v60%/聖屬性耐性8%減少
+[Level5]:成札鰷v65%/聖屬性耐性10%減少
+[Level6]:成札鰷v70%/聖屬性耐性12%減少
+[Level7]:成札鰷v75%/聖屬性耐性14%減少
+[Level8]:成札鰷v80%/聖屬性耐性16%減少
+[Level9]:成札鰷v85%/聖屬性耐性18%減少
+[Level10]:成札鰷v90%/聖屬性耐性20%減少
 #
-AB_LAUDAAGNUS# 
+AB_LAUDAAGNUS#
 羔羊歌頌(LAUDAAGNUS/羔羊歌頌)
 MAXLv:4
 習得條件:痊癒術1
 系列:治療
 內容:治療所有隊員的冰凍、石化、黑暗狀態。
-[Level1]:成功機率35%
-[Level2]:成功機率40%
-[Level3]:成功機率45%
-[Level4]:成功機率50%
+[Level1]:成札鰷v35%
+[Level2]:成札鰷v40%
+[Level3]:成札鰷v45%
+[Level4]:成札鰷v50%
 #
-AB_LAUDARAMUS# 
+AB_LAUDARAMUS#
 折枝讚頌(LAUDARAMUS/折枝讚頌)
 MAXLv:4
 習得條件:羔羊歌頌2
 系列:治療
 內容:治療全體隊員的沉默、睡眠、暈眩狀態。
-[Level1]:成功機率35%
-[Level2]:成功機率40%
-[Level3]:成功機率45%
-[Level4]:成功機率50%
+[Level1]:成札鰷v35%
+[Level2]:成札鰷v40%
+[Level3]:成札鰷v45%
+[Level4]:成札鰷v50%
 #
-AB_EUCHARISTICA# 
+AB_EUCHARISTICA#
 感恩祈禱(EUCHARISTICA/感恩祈禱)
 MAXLv:10
 習得條件:聖靈降臨祈禱1,贖罪1
@@ -5774,14 +5619,14 @@ MAXLv:10
 [Level9]:攻擊力9%增加/損害9%減少
 [Level10]:攻擊力10%增加/損害10%減少
 #
-AB_RENOVATIO# 
+AB_RENOVATIO#
 淨化(RENOVATIO/淨化)
 MAXLv:1
 習得條件:燦爛聖光3
 系列:恢復
 內容:每5秒恢復3%的HP，使用在不死怪物上時，依照施展者的等級給予一定的損害。
 #
-AB_HIGHNESSHEAL# 
+AB_HIGHNESSHEAL#
 高階治癒術(HIGHNESSHEAL/高階治癒術)
 MAXLv:5
 習得條件:淨化1
@@ -5793,19 +5638,19 @@ MAXLv:5
 [Level4]:恢復量2.9倍
 [Level5]:恢復量3.2倍
 #
-AB_CLEARANCE# 
+AB_CLEARANCE#
 解除(CLEARANCE/解除)
 MAXLv:5
 習得條件:折枝讚頌2
 系列:特殊
 內容:解除隊員和怪物身上的所有buff、debuff以及狀態異常。
-[Level1]:成功機率40%
-[Level2]:成功機率50%
-[Level3]:成功機率60%
-[Level4]:成功機率70%
-[Level5]:成功機率80%
+[Level1]:成札鰷v40%
+[Level2]:成札鰷v50%
+[Level3]:成札鰷v60%
+[Level4]:成札鰷v70%
+[Level5]:成札鰷v80%
 #
-AB_EXPIATIO# 
+AB_EXPIATIO#
 贖罪(EXPIATIO/贖罪)
 MAXLv:5
 習得條件:祈禱文5二道聖光5
@@ -5817,7 +5662,7 @@ MAXLv:5
 [Level4]:防禦無視20%/持續時間240秒
 [Level5]:防禦無視25%/持續時間270秒
 #
-AB_DUPLELIGHT# 
+AB_DUPLELIGHT#
 二道聖光(DUPLELIGHT/二道聖光)
 MAXLv:10
 習得條件:撒水祈福1
@@ -5834,11 +5679,9 @@ MAXLv:10
 [Level9]:物理攻擊力+190%魔法攻擊力+380%/持續時間330秒
 [Level10]:物理攻擊力+200%魔法攻擊力+400%/持續時間360秒
 #
-AB_DUPLELIGHT_MELEE# 
-#
-AB_DUPLELIGHT_MAGIC# 
-#
-AB_SILENTIUM# 
+AB_DUPLELIGHT_MELEE##
+AB_DUPLELIGHT_MAGIC##
+AB_SILENTIUM#
 靜寂(SILENTIUM/靜寂)
 MAXLv:5
 習得條件:解除1
@@ -5850,19 +5693,19 @@ MAXLv:5
 [Level4]:效果範圍15x15
 [Level5]:效果範圍17x17
 #
-WL_WHITEIMPRISON# 
+WL_WHITEIMPRISON#
 白色監獄(WHITEIMPRISON/白色監獄)
 MAXLV5
 習得條件:靈魂爆炸3
 系列:狀態異常
-內容:讓1名目標透明並置入一層輕薄的玻璃膜，讓目標無法動彈。此狀態下不會受到連續性損害以外的任何損害，施展者自己也可以使用。但，持續時間結束之後HP會損失2000。對玩家來說成功機率會下滑20%，對BOSS怪物則不通用。
-[Level1]:技能成功機率50%
-[Level2]:技能成功機率60%
-[Level3]:技能成功機率70%
-[Level4]:技能成功機率80%
-[Level5]:技能成功機率90%
+內容:讓1名目標透明並置入一層輕薄的玻璃膜，讓目標無法動彈。此狀態下不會受到連續性損害以外的任何損害，施展者自己也可以使用。但，持續時間結束之後HP會損失2000。對玩家來說成札鰷v會下滑20%，對BOSS怪物則不通用。
+[Level1]:技能成札鰷v50%
+[Level2]:技能成札鰷v60%
+[Level3]:技能成札鰷v70%
+[Level4]:技能成札鰷v80%
+[Level5]:技能成札鰷v90%
 #
-WL_SOULEXPANSION# 
+WL_SOULEXPANSION#
 靈魂爆炸(SOULEXPANSION/靈魂爆炸)
 MAXLV5
 習得條件:吸星大法1
@@ -5874,19 +5717,19 @@ MAXLV5
 [Level4]:念屬性魔法損害800%
 [Level5]:念屬性魔法損害900%
 #
-WL_FROSTMISTY# 
+WL_FROSTMISTY#
 寒冰濃霧(FROSTMISTY/寒冰濃霧)
 MAXLV5
 習得條件:召喚水球1
 系列:debuff
 內容:在整個畫面上散發冰冷的霧氣，和損害同時給予範圍內的所有對象發動狀態異常:[結冰]的效果，被結冰效果的對象期防禦力、移動速度及攻擊速度都會降低，詠唱時間則會增加。
-[Level1]:結冰成功機率30%/水屬性魔法損害300%
-[Level2]:結冰成功機率40%/水屬性魔法損害400%
-[Level3]:結冰成功機率50%/水屬性魔法損害500%
-[Level4]:結冰成功機率60%/水屬性魔法損害600%
-[Level5]:結冰成功機率70%/水屬性魔法損害700%
+[Level1]:結冰成札鰷v30%/水屬性魔法損害300%
+[Level2]:結冰成札鰷v40%/水屬性魔法損害400%
+[Level3]:結冰成札鰷v50%/水屬性魔法損害500%
+[Level4]:結冰成札鰷v60%/水屬性魔法損害600%
+[Level5]:結冰成札鰷v70%/水屬性魔法損害700%
 #
-WL_JACKFROST# 
+WL_JACKFROST#
 凍僵術(JACKFROST/凍僵術)
 MAXLV5
 習得條件:寒冰濃霧2
@@ -5898,7 +5741,7 @@ MAXLV5
 [Level4]:水屬性魔法損害2200%
 [Level5]:水屬性魔法損害2500%
 #
-WL_MARSHOFABYSS# 
+WL_MARSHOFABYSS#
 深淵沼地(MARSHOFABYSS/深淵沼地)
 MAXLV5
 習得條件:泥沼地1
@@ -5910,7 +5753,7 @@ MAXLV5
 [Level4]:AGI/DEX減少-24%/移動速度40%減少
 [Level5]:AGI/DEX減少-30%/移動速度50%減少
 #
-WL_RECOGNIZEDSPELL# 
+WL_RECOGNIZEDSPELL#
 魔法省悟(RECOGNIZEDSPELL/魔法省悟)
 MAXLV5
 習得條件:釋放2,魔力凍結1,白色監獄1
@@ -5922,19 +5765,19 @@ MAXLV5
 [Level4]:持續時間50秒
 [Level5]:持續時間60秒
 #
-WL_SIENNAEXECRATE# 
+WL_SIENNAEXECRATE#
 石化詛咒(SIENNAEXECRATE/石化詛咒)
 MAXLV5
 習得條件:召喚石塊1
 系列:狀態異常
 內容:讓1名目標和其附近範圍的所有目標都處於狀態異常:[石化]的詛咒。紅色魔力礦石會消耗2個。
-[Level1]:成功機率50%/3x3格範圍
-[Level2]:成功機率55%/5x5格範圍
-[Level3]:成功機率60%/5x5格範圍
-[Level4]:成功機率65%/7x7格範圍
-[Level5]:成功機率70%/7x7格範圍
+[Level1]:成札鰷v50%/3x3格範圍
+[Level2]:成札鰷v55%/5x5格範圍
+[Level3]:成札鰷v60%/5x5格範圍
+[Level4]:成札鰷v65%/7x7格範圍
+[Level5]:成札鰷v70%/7x7格範圍
 #
-WL_RADIUS# 
+WL_RADIUS#
 半徑擴大(RADIUS/半徑)
 MAXLV3
 習得條件:咒術士基本技能
@@ -5944,7 +5787,7 @@ MAXLV3
 [Level2]:射程距離+2格增加/固定詠唱速度15%減少
 [Level3]:射程距離+3格增加/固定詠唱速度20%減少
 #
-WL_STASIS# 
+WL_STASIS#
 魔力凍結(STASIS/魔力凍結)
 MAXLV5
 習得條件:吸星大法1
@@ -5956,19 +5799,19 @@ MAXLV5
 [Level4]:持續時間25秒/25x25格範圍
 [Level5]:持續時間30秒/27x27格範圍
 #
-WL_DRAINLIFE# 
+WL_DRAINLIFE#
 吸星大法(DRAINLIFE/吸星大法)
 MAXLV5
 習得條件:半徑擴大1
 系列:損害/恢復
 內容:讓1名目標受到魔法損害，部分損害由HP吸收。
-[Level1]:無屬性魔法損害600%/吸收損害的10%/吸收成功機率75%
-[Level2]:無屬性魔法損害700%/吸收損害的15%/吸收成功機率80%
-[Level3]:無屬性魔法損害800%/吸收損害的20%/吸收成功機率85%
-[Level4]:無屬性魔法損害900%/吸收損害的25%/吸收成功機率90%
-[Level5]:無屬性魔法損害1000%/吸收損害的30%/吸收成功機率95%
+[Level1]:無屬性魔法損害600%/吸收損害的10%/吸收成札鰷v75%
+[Level2]:無屬性魔法損害700%/吸收損害的15%/吸收成札鰷v80%
+[Level3]:無屬性魔法損害800%/吸收損害的20%/吸收成札鰷v85%
+[Level4]:無屬性魔法損害900%/吸收損害的25%/吸收成札鰷v90%
+[Level5]:無屬性魔法損害1000%/吸收損害的30%/吸收成札鰷v95%
 #
-WL_CRIMSONROCK# 
+WL_CRIMSONROCK#
 碧血隕石(CRIMSONROCK/碧血隕石)
 MAXLV5
 習得條件:召喚火焰球1
@@ -5980,7 +5823,7 @@ MAXLV5
 [Level4]:火屬性魔法損害2500%
 [Level5]:火屬性魔法損害2800%
 #
-WL_HELLINFERNO# 
+WL_HELLINFERNO#
 地獄火焰(HELLINFERNO/地獄火焰)
 MAXLV5
 習得條件:碧血隕石2
@@ -5992,7 +5835,7 @@ MAXLV5
 [Level4]:火屬性魔法損害480%
 [Level5]:火屬性魔法損害540%
 #
-WL_COMET# 
+WL_COMET#
 毀滅慧星(COMET/毀滅慧星)
 MAXLV5
 習得條件:地獄火焰3
@@ -6004,7 +5847,7 @@ MAXLV5
 [Level4]:無屬性魔法損害1600%~4500%
 [Level5]:無屬性魔法損害1800%~5000%
 #
-WL_CHAINLIGHTNING# 
+WL_CHAINLIGHTNING#
 連鎖電擊(CHAINLIGHTNING/連鎖電擊)
 MAXLV5
 習得條件:召喚雷電球1
@@ -6016,7 +5859,7 @@ MAXLV5
 [Level4]:風屬性魔法損害800%/8連鎖
 [Level5]:風屬性魔法損害900%/9連鎖
 #
-WL_EARTHSTRAIN# 
+WL_EARTHSTRAIN#
 地牛翻身(EARTHSTRAIN/地牛翻身)
 MAXLV5
 習得條件:石化詛咒2
@@ -6028,7 +5871,7 @@ MAXLV5
 [Level4]:持續性魔法損害2400%/發生卸除武器,頭盔36%
 [Level5]:持續性魔法損害2500%/發生卸除武器,頭盔50%
 #
-WL_TETRAVORTEX# 
+WL_TETRAVORTEX#
 屬性漩渦(TETRAVORTEX/4屬性漩渦)
 MAXLV5
 習得條件:凍僵術5,連鎖電擊5,地牛翻身5,地獄火焰5
@@ -6040,7 +5883,7 @@ MAXLV5
 [Level4]:4屬性魔法損害2500%x4次/著火,結冰,暈眩,出血中隨機發生
 [Level5]:4屬性魔法損害3000%x4次/著火,結冰,暈眩,出血中隨機發生
 #
-WL_SUMMONFB# 
+WL_SUMMONFB#
 召喚火焰球(SUMMONFIREBALL/召喚火焰球)
 MAXLV5
 習得條件:隕石術1
@@ -6052,7 +5895,7 @@ MAXLV5
 [Level4]:火屬性魔法250%損害/持續時間60秒
 [Level5]:火屬性魔法300%損害/持續時間70秒
 #
-WL_SUMMONBL# 
+WL_SUMMONBL#
 召喚雷電球(SUMMONBALLLIGHTNING/召喚雷電球)
 MAXLV5
 習得條件:怒雷強擊1
@@ -6064,7 +5907,7 @@ MAXLV5
 [Level4]:風屬性魔法250%損害/持續時間60秒
 [Level5]:風屬性魔法300%損害/持續時間70秒
 #
-WL_SUMMONWB# 
+WL_SUMMONWB#
 召喚水球(SUMMONWATERBALL/召喚水球)
 MAXLV5
 習得條件:暴風雪1
@@ -6076,7 +5919,7 @@ MAXLV5
 [Level4]:水屬性魔法250%損害/持續時間60秒
 [Level5]:水屬性魔法300%損害/持續時間70秒
 #
-WL_SUMMONSTONE# 
+WL_SUMMONSTONE#
 召喚石塊(SUMMONSTONE/召喚石塊)
 MAXLV5
 習得條件:崩裂術1
@@ -6088,7 +5931,7 @@ MAXLV5
 [Level4]:持續性魔法250%損害/持續時間60秒
 [Level5]:持續性魔法300%損害/持續時間70秒
 #
-WL_RELEASE# 
+WL_RELEASE#
 釋放(RELEASE/釋放)
 MAXLV2
 習得條件:咒術士基本技能
@@ -6097,21 +5940,21 @@ MAXLV2
 [Level1]:向1名目標被召喚的魔法球體中釋放一個。
 [Level2]:向1名目標被召喚的魔法球體中釋放全部。
 #
-WL_READING_SB# 
-閱讀魔法書(READINGSPELLBOOK/閱讀魔法書)
+WL_READING_SB#
+嬝空]法書(READINGSPELLBOOK/嬝空]法書)
 MAXLV1
 習得條件:咒術士基本技能
 系列:主動/特殊
-內容:咒術士是透過閱讀魔法書來保存自己所學習的魔法，保存的魔法可以透過釋放來解除。如果閱讀的魔法書是自己沒學過的魔法，則無法保存該魔法。
+內容:咒術士是透過嬝空]法書來保存自己所學習的魔法，保存的魔法可以透過釋放來解除。如果嬝牧瘍]法書是自己沒學過的魔法，則無法保存該魔法。
 #
-WL_FREEZE_SP# 
+WL_FREEZE_SP#
 魔法保存(FREEZINGSPELL/魔法保存)
 MAXLV5
 習得條件:咒術士基本技能
 系列:被動
-內容:要用閱讀魔法書的方式保存魔法，必須熟知魔法保存的基本。技能等級越高，可以保存的魔法數量或種類也會增多。在保存魔法的期間，會依照所保存的魔法數量或種類持續消耗SP。
+內容:要用嬝空]法書的方式保存魔法，必須熟知魔法保存的基本。技能等級越高，可以保存的魔法數量或種類也會增多。在保存魔法的期間，會依照所保存的魔法數量或種類持續消耗SP。
 #
-RA_ARROWSTORM# 
+RA_ARROWSTORM#
 箭雨風暴(ARROWSTORM/箭雨風暴)
 MAXLv:10
 習得條件:瞄準標靶5
@@ -6128,7 +5971,7 @@ MAXLv:10
 [Level9]:攻擊力650%
 [Level10]:攻擊力700%
 #
-RA_FEARBREEZE# 
+RA_FEARBREEZE#
 微風恐懼(FEARBREEZE/微風恐懼)
 MAXLv:5
 習得條件:偽裝戰術1,箭雨風暴5
@@ -6140,7 +5983,7 @@ MAXLv:5
 [Level4]:攻擊次數+1~+3/發動機率9%/持續時間150秒
 [Level5]:攻擊次數+1~+4/發動機率10%/持續時間180秒
 #
-RA_RANGERMAIN# 
+RA_RANGERMAIN#
 遊俠主意(RANGERMAIN/(遊俠主意)
 MAXLv:10
 習得條件:遊俠基本技能
@@ -6157,7 +6000,7 @@ MAXLv:10
 [Level9]:攻擊力/耐性+45
 [Level10]:攻擊力/耐性+50
 #
-RA_AIMEDBOLT# 
+RA_AIMEDBOLT#
 瞄準標靶(AIMEDBOLT/瞄準標靶)
 MAXLv:10
 習得條件:定位陷阱5
@@ -6174,14 +6017,14 @@ MAXLv:10
 [Level9]:攻擊力380%x???次
 [Level10]:攻擊力400%x???次
 #
-RA_DETONATOR# 
+RA_DETONATOR#
 雷管(DETONATOR/雷管)
 MAXLv:1
 習得條件:榴霰彈3
 系列:主動/特殊
 內容:<即時>發動安裝在地面上的陷阱，發動範圍是以指定的陷阱為中心7x7格。可能會發動到獵人的陷阱，但，其他人設置的陷阱則無效果。
 #
-RA_ELECTRICSHOCKER# 
+RA_ELECTRICSHOCKER#
 電擊陷阱(ELECTRICSHORKER/電擊陷阱)
 MAXLv:5
 習得條件:魔耗陷阱5
@@ -6193,7 +6036,7 @@ MAXLv:5
 [Level4]:每秒減少SP4%/持續時間20秒
 [Level5]:每秒減少SP5%/持續時間20秒
 #
-RA_CLUSTERBOMB# 
+RA_CLUSTERBOMB#
 榴霰彈(CLUSTERBOMB/榴霰彈)
 MAXLv:5
 習得條件:陷阱研究3
@@ -6205,28 +6048,28 @@ MAXLv:5
 [Level4]:損害400%+陷阱增加損害/持續時間15秒
 [Level5]:損害500%+陷阱增加損害/持續時間15秒
 #
-RA_WUGMASTERY# 
+RA_WUGMASTERY#
 召狼術(WUGMASTERY/召狼術)
 MAXLv:1
 習得條件:遊俠基本技能
 系列:主動/特殊
 內容:遊俠使用狼笛呼叫[野狼]，召喚野狼時[狼笛]是必備物品。若再次使用技能，野狼會自動跑回主人所在之處。
 #
-RA_WUGRIDER# 
+RA_WUGRIDER#
 騎狼術(WUGRIDER/騎狼術)
 MAXLv:3
 習得條件:召狼術1
 系列:主動/特殊
 內容:遊俠騎乘自己召喚的[野狼]，技能等級越高，野狼的移動會越快。在騎乘野狼的狀態下無法射箭，無法使用除了野狼專用技能以外的其他技能。
 #
-RA_WUGDASH# 
+RA_WUGDASH#
 疾狼術(WUGDASH/疾狼術)
 MAXLv:1
 習得條件:騎狼術1
 系列:主動/特殊
 內容:只有在騎乘野狼的狀態下可使用，野狼會立即在直線上快速行走，再次使用時本技能時就會停住。當全方有敵人或牆壁時會撞上去然後停止。如果是處於狼突擊的狀態下，就會帶給被撞到的敵人損害。
 #
-RA_WUGSTRIKE# 
+RA_WUGSTRIKE#
 狼突擊(WUGSTRIKE/狼突擊)
 MAXLv:5
 習得條件:狼牙1
@@ -6238,7 +6081,7 @@ MAXLv:5
 [Level4]:損害480%
 [Level5]:損害600%
 #
-RA_WUGBITE# 
+RA_WUGBITE#
 狼咬(WUGBITE/狼咬)
 MAXLv:5
 習得條件:狼突擊1
@@ -6250,7 +6093,7 @@ MAXLv:5
 [Level4]:損害300%/持續時間10秒+隨著狼牙技能增加
 [Level5]:損害350%/持續時間10秒+隨著狼牙技能增加
 #
-RA_TOOTHOFWUG# 
+RA_TOOTHOFWUG#
 狼牙(TOOTHOFWUG/狼牙)
 MAXLv:10
 習得條件:召狼術1
@@ -6267,7 +6110,7 @@ MAXLv:10
 [Level9]:攻擊力+54
 [Level10]:攻擊力+60
 #
-RA_SENSITIVEKEEN# 
+RA_SENSITIVEKEEN#
 敏銳嗅覺(SENSITIVEKEEN/敏銳嗅覺)
 MAXLv:5
 習得條件:狼牙3
@@ -6279,7 +6122,7 @@ MAXLv:5
 [Level4]:效果範圍13x13/損害300%/狼咬連結機率32%
 [Level5]:效果範圍15x15/損害350%/狼咬連結機率40%
 #
-RA_CAMOUFLAGE# 
+RA_CAMOUFLAGE#
 偽裝戰術(CAMOUFLAGE/偽裝戰術)
 MAXLv:5
 習得條件:遊俠主意1
@@ -6291,7 +6134,7 @@ MAXLv:5
 [Level4]:每秒消耗SP3/可緩慢移動
 [Level5]:每秒消耗SP2/可緩慢移動
 #
-RA_RESEARCHTRAP# 
+RA_RESEARCHTRAP#
 陷阱研究(RESEARCHTRAP/陷阱研究)
 MAXLv:5
 習得條件:爆散陷阱1,陷阱移除1
@@ -6303,59 +6146,59 @@ MAXLv:5
 [Level4]:增加損害+160/INT+4/MSP+280/射程距離+2
 [Level5]:增加損害+200/INT+5/MSP+300/射程距離+3
 #
-RA_MAGENTATRAP# 
+RA_MAGENTATRAP#
 紫紅陷阱(MAGENTATRAP/紫紅陷阱)
 MAXLv:1
 習得條件:陷阱研究1
 系列:主動/陷阱
-內容:在陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性接會永久地變成火屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個火靈碎片和1個<特殊合金陷阱>。可以安裝在目標下方，最多只能安裝1個。
+內容:在陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性接會永久地變成火屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個火靈礦石和1個<特殊合金陷阱>。可以安裝在目標下方，最多只能安裝1個。
 #
-RA_COBALTTRAP# 
+RA_COBALTTRAP#
 深藍陷阱(COBALTTPAP/深藍陷阱)
 MAXLv:1
 習得條件:陷阱研究1
 系列:主動/陷阱
-內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性會永久地變成水屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個水靈碎片和1個<特殊合金陷阱>。可以安裝在目標下方，最多只能安裝1個。
+內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性會永久地變成水屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個水靈礦石和1個<特殊合金陷阱>。可以安裝在目標下方，最多只能安裝1個。
 #
-RA_MAIZETRAP# 
+RA_MAIZETRAP#
 淺黃陷阱(MAIZETRAP/淺黃陷阱)
 MAXLv:1
 習得條件:陷阱研究1
 系列:主動/陷阱
-內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性會永久地變成地屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個地靈碎片和1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
+內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格的所有目標屬性會永久地變成地屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個地靈礦石和1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
 #
-RA_VERDURETRAP# 
+RA_VERDURETRAP#
 青翠陷阱(VERDURETRAP/青翠陷阱)
 MAXLv:1
 習得條件:陷阱研究1
 系列:主動/陷阱
-內容:陷阱安裝的附近3x3格內如有目標接近，目標及附近5x5格的所有目標都會永久變成風屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個風靈碎片和1個<特殊合金陷阱>。可安裝在目標腳下，最多可安裝1個以上。
+內容:陷阱安裝的附近3x3格內如有目標接近，目標及附近5x5格的所有目標都會永久變成風屬性。不適用於BOSS型怪物和玩家，陷阱安裝時會消耗1個風靈礦石和1個<特殊合金陷阱>。可安裝在目標腳下，最多可安裝1個以上。
 #
-RA_FIRINGTRAP# 
+RA_FIRINGTRAP#
 燃燒陷阱(FIRINGTRAP/燃燒陷阱)
 MAXLv:5
 習得條件:雷管1
 系列:主動/陷阱
-內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格內會同時受到損害和處於狀態異常:[著火]效果。技能等級越高，成功機率越高。技能使用時會消耗1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
-[Level1]:成功機率50%
-[Level2]:成功機率60%
-[Level3]:成功機率70%
-[Level4]:成功機率80%
-[Level5]:成功機率90%
+內容:陷阱安裝的附近3x3格內如有目標接近，目標及其附近5x5格內會同時受到損害和處於狀態異常:[著火]效果。技能等級越高，成札鰷v越高。技能使用時會消耗1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
+[Level1]:成札鰷v50%
+[Level2]:成札鰷v60%
+[Level3]:成札鰷v70%
+[Level4]:成札鰷v80%
+[Level5]:成札鰷v90%
 #
-RA_ICEBOUNDTRAP# 
+RA_ICEBOUNDTRAP#
 冰封陷阱(ICEBOUNDTRAP/冰封陷阱)
 MAXLv:5
 習得條件:雷管1
 系列:主動/陷阱
-內容:陷阱安裝的附近3x3如有目標接近，目標及其附近5x5內會連同損害一起處於狀態異常:[結冰]效果。技能等級越高成功機率就越大。使用技能時，會消耗1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
-[Level1]:成功機率50%
-[Level2]:成功機率60%
-[Level3]:成功機率70%
-[Level4]:成功機率80%
-[Level5]:成功機率90%
+內容:陷阱安裝的附近3x3如有目標接近，目標及其附近5x5內會連同損害一起處於狀態異常:[結冰]效果。技能等級越高成札鰷v就越大。使用技能時，會消耗1個<特殊合金陷阱>。可安裝在目標腳下，最多只能安裝1個。
+[Level1]:成札鰷v50%
+[Level2]:成札鰷v60%
+[Level3]:成札鰷v70%
+[Level4]:成札鰷v80%
+[Level5]:成札鰷v90%
 #
-NC_MADOLICENCE# 
+NC_MADOLICENCE#
 魔導機甲執照
 MAXLv:5
 習得條件:機械工匠基本
@@ -6367,7 +6210,7 @@ MAXLv:5
 [Level4]:騎乘魔導機甲時攻擊力+60/移動速度10%減少
 [Level5]:騎乘魔導機甲時攻擊力+75/移動速度無減少
 #
-NC_BOOSTKNUCKLE# 
+NC_BOOSTKNUCKLE#
 噴射飛拳
 MAXLv:5
 習得條件:魔導機甲執照1
@@ -6379,7 +6222,7 @@ MAXLv:5
 [Level4]:攻擊力600%
 [Level5]:攻擊力700%
 #
-NC_PILEBUNKER# 
+NC_PILEBUNKER#
 衝擊椎
 MAXLv:3
 習得條件:噴射飛拳2
@@ -6389,7 +6232,7 @@ MAXLv:3
 [Level2]:攻擊力500%/防禦魔法消滅機率35%
 [Level3]:攻擊力600%/防禦魔法消滅機率50%
 #
-NC_VULCANARM# 
+NC_VULCANARM#
 火神砲
 MAXLv:3
 習得條件:噴射飛拳2
@@ -6399,7 +6242,7 @@ MAXLv:3
 [Level2]:攻擊力140%
 [Level3]:攻擊力210%
 #
-NC_FLAMELAUNCHER# 
+NC_FLAMELAUNCHER#
 火焰屬性附加
 MAXLv:3
 習得條件:火神砲1
@@ -6409,7 +6252,7 @@ MAXLv:3
 [Level2]:火屬性攻擊力900%/著火發生機率70%
 [Level3]:火屬性攻擊力1200%/著火發生機率80%
 #
-NC_COLDSLOWER# 
+NC_COLDSLOWER#
 液體冷卻彈
 MAXLv:3
 習得條件:火神砲3
@@ -6419,7 +6262,7 @@ MAXLv:3
 [Level2]:水屬性攻擊力900%/效果範圍7x7格
 [Level3]:水屬性攻擊力1200%/效果範圍9x9格
 #
-NC_ARMSCANNON# 
+NC_ARMSCANNON#
 加農砲
 MAXLv:3
 習得條件:火焰屬性附加2/液體冷卻彈2
@@ -6429,7 +6272,7 @@ MAXLv:3
 [Level2]:攻擊力1200%/1000%/800%效果範圍5x5格
 [Level3]:攻擊力1500%/1400%/1100%效果範圍3x3格
 #
-NC_ACCELERATION# 
+NC_ACCELERATION#
 魔導機甲加速
 MAXLv:3
 習得條件:魔導機甲執照1
@@ -6439,7 +6282,7 @@ MAXLv:3
 [Level2]:持續時間60秒
 [Level3]:持續時間90秒
 #
-NC_HOVERING# 
+NC_HOVERING#
 懸停
 MAXLv:1
 習得條件:魔導機甲加速1
@@ -6447,21 +6290,21 @@ MAXLv:1
 內容:從地面上稍微抬起魔導機甲，不受到陷阱以及部分地面目標的魔法效果。必須裝備魔導機甲專用裝備<懸停助推器>，技能使用時會消耗1個魔導戰甲燃料。
 [Level1]:持續時間30秒
 #
-NC_F_SIDESLIDE# 
+NC_F_SIDESLIDE#
 大步前進
 MAXLv:1
 習得條件:懸停1
 系列:主動/移動
 內容:使用本技能時會快速往前方移動7格移動，技能使用時會消耗1個魔導戰甲燃料。
 #
-NC_B_SIDESLIDE# 
+NC_B_SIDESLIDE#
 大步後退
 MAXLv:1
 習得條件:懸停1
 系列:主動/移動
 內容:使用本技能時，會快速向後方移動7格。技能使用時會消耗1個魔導戰甲燃料。
 #
-NC_MAINFRAME# 
+NC_MAINFRAME#
 主體改造
 MAXLv:4
 習得條件:魔導機甲執照4
@@ -6472,7 +6315,7 @@ MAXLv:4
 [Level3]:防禦力+11/過熱限度+36
 [Level4]:防禦力+15/過熱限度+54
 #
-NC_SELFDESTRUCTION# 
+NC_SELFDESTRUCTION#
 自我摧毀
 MAXLv:3
 習得條件:主體改造2
@@ -6482,7 +6325,7 @@ MAXLv:3
 [Level2]:效果範圍7x7格
 [Level3]:效果範圍9x9格
 #
-NC_SHAPESHIFT# 
+NC_SHAPESHIFT#
 形態轉換
 MAXLv:4
 習得條件:主體改造2
@@ -6493,21 +6336,21 @@ MAXLv:4
 [Level3]:變換為風屬性/消耗風靈原石1
 [Level4]:變換為水屬性/消耗水靈原石1
 #
-NC_EMERGENCYCOOL# 
+NC_EMERGENCYCOOL#
 緊急冷卻
 MAXLv:1
 習得條件:自我摧毀2
 系列:主動/buff
 內容:讓處於過熱狀態的魔導戰甲急速冷卻，必須持有或裝備魔導機甲專用裝備<冷卻器>，技能使用時會消耗2個魔導戰甲燃料。
 #
-NC_INFRAREDSCAN# 
+NC_INFRAREDSCAN#
 紅外線掃瞄
 MAXLv:1
 習得條件:形態轉換2
 系列:主動/獵鷹尋敵/debuff
 內容:用紅外線偵測自己附近15x15格，找出隱藏的敵人。並且以50%的機率讓效果範圍內的所有目標減少30%迴避率。
 #
-NC_ANALYZE# 
+NC_ANALYZE#
 解析
 MAXLv:3
 習得條件:紅外線掃瞄1
@@ -6517,7 +6360,7 @@ MAXLv:3
 [Level2]:物理/魔法防禦力28%減少
 [Level3]:物理/魔法防禦力42%減少
 #
-NC_MAGNETICFIELD# 
+NC_MAGNETICFIELD#
 磁場
 MAXLv:3
 習得條件:緊急冷卻1
@@ -6527,7 +6370,7 @@ MAXLv:3
 [Level2]:效果範圍5x5格/每秒約減少20的SP效果
 [Level3]:效果範圍7x7格/每秒約減少23的SP效果
 #
-NC_NEUTRALBARRIER# 
+NC_NEUTRALBARRIER#
 中性防護罩
 MAXLv:3
 習得條件:磁場2
@@ -6537,7 +6380,7 @@ MAXLv:3
 [Level2]:效果範圍3x3格/物理/魔法防禦力20%增加/持續時間45秒
 [Level3]:效果範圍3x3格/物理/魔法防禦力25%增加/持續時間60秒
 #
-NC_STEALTHFIELD# 
+NC_STEALTHFIELD#
 隱形力場
 MAXLv:3
 習得條件:解析3/中性防護罩2
@@ -6547,7 +6390,7 @@ MAXLv:3
 [Level2]:效果範圍3x3格/持續時間20秒
 [Level3]:效果範圍3x3格/持續時間25秒
 #
-NC_REPAIR# 
+NC_REPAIR#
 修復
 MAXLv:5
 習得條件:魔導機甲執照2
@@ -6559,12 +6402,12 @@ MAXLv:5
 [Level4]:MHP15%恢復
 [Level5]:MHP18%恢復
 #
-NC_TRAININGAXE# 
+NC_TRAININGAXE#
 斧頭鍛鍊
 MAXLv:10
 習得條件:機械工匠基本
 系列:被動
-內容:裝備斧頭時提高攻擊力及命中率，還會獲得少許鈍器補正值。
+內容:裝備斧頭時提高攻擊力及命中率，還會獲得少雀w器補正值。
 [Level1]:攻擊力+5/命中率+3
 [Level2]:攻擊力+10/命中率+6
 [Level3]:攻擊力+15/命中率+9
@@ -6576,7 +6419,7 @@ MAXLv:10
 [Level9]:攻擊力+45/命中率+27
 [Level10]:攻擊力+50/命中率+30
 #
-NC_RESEARCHFE# 
+NC_RESEARCHFE#
 火焰與大地的研究
 MAXLv:5
 習得條件:機械工匠基本
@@ -6588,7 +6431,7 @@ MAXLv:5
 [Level4]:耐性+40/攻擊力+40
 [Level5]:耐性+50/攻擊力+50
 #
-NC_AXEBOOMERANG# 
+NC_AXEBOOMERANG#
 迴旋斧
 MAXLv:5
 習得條件:斧頭鍛鍊1
@@ -6600,19 +6443,19 @@ MAXLv:5
 [Level4]:攻擊力320%+斧頭重量/射程距離7格
 [Level5]:攻擊力360%+斧頭重量/射程距離8格
 #
-NC_POWERSWING# 
+NC_POWERSWING#
 揮斧重擊
 MAXLv:5
 習得條件:迴旋斧3
 系列:主動/損害
-內容:向1名敵人使盡全力揮舞武器，讓對方受到損害的同時也產生暈眩效果。如果在裝備斧頭的狀態下使用技能，會以少許的機率發動迴旋斧。受施展者的STR及DEX的影響，攻擊力上升。
+內容:向1名敵人使盡全力揮舞武器，讓對方受到損害的同時也產生暈眩效果。如果在裝備斧頭的狀態下使用技能，會以少釭瑣鰷v發動迴旋斧。受施展者的STR及DEX的影響，攻擊力上升。
 [Level1]:攻擊力200%
 [Level2]:攻擊力220%
 [Level3]:攻擊力240%
 [Level4]:攻擊力260%
 [Level5]:攻擊力280%
 #
-NC_AXETORNADO# 
+NC_AXETORNADO#
 戰斧颶風
 MAXLv:5
 習得條件:斧頭鍛鍊1
@@ -6624,7 +6467,7 @@ MAXLv:5
 [Level4]:攻擊力600%
 [Level5]:攻擊力700%
 #
-NC_SILVERSNIPER# 
+NC_SILVERSNIPER#
 FAW銀光狙擊手-銀光狙擊手
 MAXLv:5
 習得條件:火焰與大地的研究2
@@ -6636,7 +6479,7 @@ MAXLv:5
 [Level4]:攻擊力+300/持續時間25秒
 [Level5]:攻擊力+400/持續時間30秒
 #
-NC_MAGICDECOY# 
+NC_MAGICDECOY#
 FAW魔法傀儡-魔法傀儡
 MAXLv:5
 習得條件:FAW銀光狙擊手2
@@ -6648,14 +6491,14 @@ MAXLv:5
 [Level4]:魔法攻擊力450/持續時間25秒
 [Level5]:魔法攻擊力500/持續時間30秒
 #
-NC_DISJOINT# 
+NC_DISJOINT#
 FAW解體
 MAXLv:1
 習得條件:FAW銀光狙擊手1
 系列:主動/FAW解體
 內容:解除安裝好的FAW，也可以解除其他玩家的FAW。
 #
-SC_FATALMENACE# 
+SC_FATALMENACE#
 致命威脅
 MAXLv:5
 習得條件:脅持5
@@ -6667,14 +6510,14 @@ MAXLv:5
 [Level4]:攻擊力500%/命中率-15
 [Level5]:攻擊力600%/命中率-10
 #
-SC_REPRODUCE# 
+SC_REPRODUCE#
 繁殖
 MAXLv:10
 習得條件:抄襲5
 系列:主動綁定/buff
 內容:使用本技能時，效果持續期間可以學習以自己為目標所用過的技能。若再次使用技能，效果會消失且學習的技能會固定。可學習的技能只有1個，依照繁殖技能等級會決定自己可學習的技能。
 #
-SC_AUTOSHADOWSPELL# 
+SC_AUTOSHADOWSPELL#
 自動魅影念咒
 MAXLv:10
 習得條件:繁殖5
@@ -6691,7 +6534,7 @@ MAXLv:10
 [Level9]:發動機率14%/發動等級5/持續時間220秒
 [Level10]:發動機率12%/發動等級5/持續時間240秒
 #
-SC_SHADOWFORM# 
+SC_SHADOWFORM#
 魅影形態
 MAXLv:5
 習得條件:潛遁3
@@ -6704,7 +6547,7 @@ MAXLv:5
 [Level4]:損害次數8次/每秒SP消耗7/持續時間60秒
 [Level5]:損害次數9次/每秒SP消耗6/持續時間70秒
 #
-SC_TRIANGLESHOT# 
+SC_TRIANGLESHOT#
 三角射擊
 MAXLv:10
 習得條件:二連矢7
@@ -6721,19 +6564,19 @@ MAXLv:10
 [Level9]:攻擊力540%/射程距離11格/以10%機率發動倒退
 [Level10]:攻擊力570%/射程距離11格/以11%機率發動倒退
 #
-SC_BODYPAINT# 
+SC_BODYPAINT#
 [人體彩繪]
 MAXLv:5
 習得條件:魅影追蹤者基本
 系列:主動/debuff/獵鷹尋敵
 內容:在自己的附近噴灑顏料，找出隱藏的敵人的同時，被此顏料弄到的所有目標都會處於黑暗以及攻擊速度減少25%。
-[Level1]:黑暗發生率5%/攻速減少成功率 5%/持續時間5秒
-[Level2]:黑暗發生率7%/攻速減少成功率 10%/持續時間7秒
-[Level3]:黑暗發生率9%/攻速減少成功率 15%/持續時間9秒
-[Level4]:黑暗發生率11%/攻速減少成功率 20%/持續時間11秒
-[Level5]:黑暗發生率13%/攻速減少成功率 25%/持續時間13秒
+[Level1]:黑暗發生率5%/攻速減少成必v 5%/持續時間5秒
+[Level2]:黑暗發生率7%/攻速減少成必v 10%/持續時間7秒
+[Level3]:黑暗發生率9%/攻速減少成必v 15%/持續時間9秒
+[Level4]:黑暗發生率11%/攻速減少成必v 20%/持續時間11秒
+[Level5]:黑暗發生率13%/攻速減少成必v 25%/持續時間13秒
 #
-SC_INVISIBILITY# 
+SC_INVISIBILITY#
 透明術(透明化)
 MAXLv:5
 習得條件:自動魅影念咒7/致命感染5/面具:不幸3
@@ -6745,7 +6588,7 @@ MAXLv:5
 [Level4]:必殺攻擊力+80%/攻速減少10%/每秒消耗SP6%
 [Level5]:必殺攻擊力+100%/攻速減少0%/每秒消耗SP5%
 #
-SC_DEADLYINFECT# 
+SC_DEADLYINFECT#
 致命感染
 MAXLv:5
 習得條件:魅影形態3/自動魅影念咒5
@@ -6757,79 +6600,79 @@ MAXLv:5
 [Level4]:持續時間25秒
 [Level5]:持續時間30秒
 #
-SC_ENERVATION# 
+SC_ENERVATION#
 面具:無力
 MAXLv:3
 習得條件:人體彩繪1
 系列:主動/debuff
-內容:處於本效果的目標攻擊力會減少，會全數遺失持有的氣球體。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成功率 會有變化。
+內容:處於本效果的目標攻擊力會減少，會全數遺失持有的氣球體。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成必v 會有變化。
 [Level1]:攻擊力30%減少/持續時間10秒
 [Level2]:攻擊力40%減少/持續時間15秒
 [Level3]:攻擊力50%減少/持續時間20秒
 #
-SC_GROOMY# 
+SC_GROOMY#
 面具:憂鬱(面具:憂鬱)
 MAXLv:3
 習得條件:人體彩繪1
 系列:主動/debuff
-內容:處於本效果的目標，攻擊速度和移動速度都會減少，騎乘或是攜有的動物和寵物、生命體召喚等都會離開。使用技能時需要美容筆，並消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成功率 會因此變化。
+內容:處於本效果的目標，攻擊速度和移動速度都會減少，騎乘或是攜有的動物和寵物、生命體召喚等都會離開。使用技能時需要美容筆，並消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成必v 會因此變化。
 [Level1]:攻擊速度30%減少/命中率20%減少/持續時間10秒
 [Level2]:攻擊速度40%減少/命中率40%減少/持續時間15秒
 [Level3]:攻擊速度50%減少/命中率60%減少/持續時間20秒
 #
-SC_IGNORANCE# 
+SC_IGNORANCE#
 面具:無知(面具:無知)
 MAXLv:3
 習得條件:人體彩繪1
 系列:主動/debuff
-內容:處於本效果的目標會損失一定的SP，施展者則會恢復其一半的SP。如果目標是怪物，會恢復怪物等級的SP。並且在持續時間內，處於效果的目標無法使用魔法或技能。使用技能時需要美容筆，並消耗1個人體顏料。依據施展者和對象的等級和屬性能力，成功率 會有所變化。
+內容:處於本效果的目標會損失一定的SP，施展者則會恢復其一半的SP。如果目標是怪物，會恢復怪物等級的SP。並且在持續時間內，處於效果的目標無法使用魔法或技能。使用技能時需要美容筆，並消耗1個人體顏料。依據施展者和對象的等級和屬性能力，成必v 會有所變化。
 [Level1]:損失SP100/持續時間10秒
 [Level2]:損失SP200/持續時間15秒
 [Level3]:損失SP300/持續時間20秒
 #
-SC_LAZINESS# 
+SC_LAZINESS#
 面具:懶散(面具:懶散)
 MAXLv:3
 習得條件:面具:無力1/憂鬱1/無知1
 系列:主動/debuff
-內容:處於本效果的目標，其移動速度及詠唱速度會變慢，迴避率會減少。該目標在使用技能時會追加消耗[懶散技能等級x10]的SP，使用技能時需要美容筆跟消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成功率 會有所變化。
+內容:處於本效果的目標，其移動速度及詠唱速度會變慢，迴避率會減少。該目標在使用技能時會追加消耗[懶散技能等級x10]的SP，使用技能時需要美容筆跟消耗1個人體顏料。依照施展者和目標的等級和屬性能力，成必v 會有所變化。
 [Level1]:迴避率10%減少/詠唱速度20%變慢/持續時間10秒
 [Level2]:迴避率20%減少/詠唱速度30%變慢/持續時間15秒
 [Level3]:迴避率30%減少/詠唱速度40%變慢/持續時間20秒
 #
-SC_UNLUCKY# 
+SC_UNLUCKY#
 面具:不幸(面具:不幸)
 MAXLv:3
 習得條件:面具:懶散1/衰弱1
 系列:主動/debuff
-內容:處於本效果的目標會減少必殺攻擊力及完全迴避能力，另外每次使用技能時會消耗一定量的金幣。當這不幸的效果附加在目標身上時，該目標會處於毒素、黑暗、沉默的其中一種異常狀態。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標等級和屬性能力，成功率 會有所改變。
+內容:處於本效果的目標會減少必殺攻擊力及完全迴避能力，另外每次使用技能時會消耗一定量的金幣。當這不幸的效果附加在目標身上時，該目標會處於毒素、黑暗、沉默的其中一種異常狀態。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標等級和屬性能力，成必v 會有所改變。
 [Level1]:必殺攻擊力減少10/完全迴避減少10/持續時間10秒
 [Level2]:必殺攻擊力減少20/完全迴避減少20/持續時間15秒
 [Level3]:必殺攻擊力減少30/完全迴避減少30/持續時間20秒
 #
-SC_WEAKNESS# 
+SC_WEAKNESS#
 面具:衰弱(面具:衰弱)
 MAXLv:3
 習得條件:面具:無力1/憂鬱1/無知1
 系列:主動/debuff
-內容:處於本效果的目標會減少最大HP，並且暫時解除裝備的武器和盾牌。效果持續時間內，該目標無法裝備武器和盾牌。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標等級和屬性能力，成功率 會有所改變。
+內容:處於本效果的目標會減少最大HP，並且暫時解除裝備的武器和盾牌。效果持續時間內，該目標無法裝備武器和盾牌。使用技能時需要美容筆，消耗1個人體顏料。依照施展者和目標等級和屬性能力，成必v 會有所改變。
 [Level1]:MHP10%減少/持續時間10秒
 [Level2]:MHP20%減少/持續時間15秒
 [Level3]:MHP30%減少/持續時間20秒
 #
-SC_STRIPACCESSARY# 
+SC_STRIPACCESSARY#
 卸除配件
 MAXLv:5
 習得條件:卸除武器1
 系列:主動/debuff
 內容:強制解除其他玩家裝備的2個飾品，已解除的飾品在效果持續時間內無法再次裝備。使用在怪物身上時，在一定時間內Int,Dex,Luk會減少20%。
-[Level1]:成功率 14%/持續時間60秒
-[Level2]:成功率 16%/持續時間60秒
-[Level3]:成功率 18%/持續時間60秒
-[Level4]:成功率 20%/持續時間60秒
-[Level5]:成功率 22%/持續時間60秒
+[Level1]:成必v 14%/持續時間60秒
+[Level2]:成必v 16%/持續時間60秒
+[Level3]:成必v 18%/持續時間60秒
+[Level4]:成必v 20%/持續時間60秒
+[Level5]:成必v 22%/持續時間60秒
 #
-SC_MANHOLE# 
+SC_MANHOLE#
 人孔
 MAXLv:3
 習得條件:旗幟塗鴉1
@@ -6839,7 +6682,7 @@ MAXLv:3
 [Level2]:持續時間10秒
 [Level3]:持續時間15秒
 #
-SC_DIMENSIONDOOR# 
+SC_DIMENSIONDOOR#
 異次元之門(異次元之門)
 MAXLv:3
 習得條件:人孔1
@@ -6849,7 +6692,7 @@ MAXLv:3
 [Level2]:持續時間8秒
 [Level3]:持續時間12秒
 #
-SC_CHAOSPANIC# 
+SC_CHAOSPANIC#
 混沌恐慌
 MAXLv:3
 習得條件:人孔1
@@ -6859,7 +6702,7 @@ MAXLv:3
 [Level2]:持續時間10秒
 [Level3]:持續時間15秒
 #
-SC_MAELSTROM# 
+SC_MAELSTROM#
 漩渦(漩渦)
 MAXLv:3
 習得條件:混沌恐慌3/面具:不幸3
@@ -6869,7 +6712,7 @@ MAXLv:3
 [Level2]:持續時間14秒
 [Level3]:持續時間21秒
 #
-SC_BLOODYLUST# 
+SC_BLOODYLUST#
 血腥欲望
 MAXLv:3
 習得條件:異次元之門3
@@ -6879,7 +6722,7 @@ MAXLv:3
 [Level2]:持續時間14秒
 [Level3]:持續時間21秒
 #
-SC_FEINTBOMB# 
+SC_FEINTBOMB#
 虛擊炸彈
 MAXLv:3
 習得條件:異次元之門3
@@ -6889,7 +6732,7 @@ MAXLv:3
 [Level2]:攻擊力400%
 [Level3]:攻擊力500%
 #
-LG_CANNONSPEAR# 
+LG_CANNONSPEAR#
 加農砲攻擊
 MAXLv:5
 習得條件:精準攻擊1
@@ -6901,7 +6744,7 @@ MAXLv:5
 [Level4]:攻擊力300%
 [Level5]:攻擊力350%
 #
-LG_BANISHINGPOINT# 
+LG_BANISHINGPOINT#
 放逐攻擊
 MAXLv:10
 習得條件:長矛加速術1
@@ -6918,17 +6761,17 @@ MAXLv:10
 [Level9]:攻擊力370%
 [Level10]:攻擊力400%
 #
-LG_TRAMPLE# 
+LG_TRAMPLE#
 摧殘
 MAXLv:3
 習得條件:皇家禁衛隊基本
 系列:主動/特殊
 內容:踐踏，陷入陷阱或自己附近5x5格有陷阱時，摧毀該陷阱。但是如果是爆炸類陷阱時，陷阱會立即發動。
-[Level1]:成功率 50%
-[Level2]:成功率 75%
-[Level3]:成功率 100%
+[Level1]:成必v 50%
+[Level2]:成必v 75%
+[Level3]:成必v 100%
 #
-LG_SHIELDPRESS# 
+LG_SHIELDPRESS#
 重壓盾擊
 MAXLv:5
 習得條件:盾擊3
@@ -6940,7 +6783,7 @@ MAXLv:5
 [Level4]:暈眩機率85%
 [Level5]:暈眩機率90%
 #
-LG_REFLECTDAMAGE# 
+LG_REFLECTDAMAGE#
 反射傷害
 MAXLv:5
 習得條件:反射盾5
@@ -6952,7 +6795,7 @@ MAXLv:5
 [Level4]:反射損害的35%/持續時間300秒
 [Level5]:反射損害的40%/持續時間300秒
 #
-LG_PINPOINTATTACK# 
+LG_PINPOINTATTACK#
 精準攻擊
 MAXLv:5
 習得條件:放逐攻擊5
@@ -6964,7 +6807,7 @@ MAXLv:5
 [Level4]:攻擊力400%/盔甲破壞
 [Level5]:攻擊力500%/武器破壞
 #
-LG_FORCEOFVANGUARD# 
+LG_FORCEOFVANGUARD#
 先鋒部隊
 MAXLv:5
 習得條件:皇家禁衛隊基本
@@ -6976,14 +6819,14 @@ MAXLv:5
 [Level4]:受到損害時16%機率/最大憤怒還擊13個
 [Level5]:受到損害時18%機率/最大憤怒還擊15個
 #
-LG_RAGEBURST# 
+LG_RAGEBURST#
 憤怒突擊
 MAXLv:1
 習得條件:先鋒部隊1
 系列:主動/損害
 內容:利用先鋒部隊將聚集的憤怒還擊全部發射出去，讓1名對象受到巨大損害。氣球體數量越多損害越大。
 #
-LG_SHIELDSPELL# 
+LG_SHIELDSPELL#
 盾咒
 MAXLv:3
 習得條件:重壓盾擊3/大地毀滅2
@@ -6993,7 +6836,7 @@ MAXLv:3
 [Level2]:隨著盾牌魔法防禦度發動魔法
 [Level3]:隨著盾牌提煉度發動魔法
 #
-LG_EXEEDBREAK# 
+LG_EXEEDBREAK#
 強化衝擊
 MAXLv:5
 習得條件:放逐攻擊3
@@ -7005,7 +6848,7 @@ MAXLv:5
 [Level4]:攻擊力600%/移動速度減少20%
 [Level5]:攻擊力750%/移動速度減少10%
 #
-LG_OVERBRAND# 
+LG_OVERBRAND#
 支配烙印
 MAXLv:5
 習得條件:半月斬3/精準攻擊1
@@ -7017,38 +6860,38 @@ MAXLv:5
 [Level4]:穿刺攻擊力400%/揮舞攻擊力400%
 [Level5]:穿刺攻擊力500%/揮舞攻擊力500%
 #
-LG_PRESTIGE# 
+LG_PRESTIGE#
 威信
 MAXLv:5
 習得條件:摧殘3
 系列:主動/自己buff
-內容:特權，暫時具有魔法迴避率，提高防禦力。施展者的屬性會對魔法迴避率產生影響，光之盾技能等級也會對防禦力上升有影響。魔法迴避如成功，會完全不受到魔法損害。
+內容:特權，暫時具有魔法迴避率，提高防禦力。施展者的屬性會對魔法迴避率產生影響，光之盾技能等級也會對防禦力上升有影響。魔法迴避如成央A會完全不受到魔法損害。
 [Level1]:持續時間30秒
 [Level2]:持續時間45秒
 [Level3]:持續時間60秒
 [Level4]:持續時間75秒
 [Level5]:持續時間90秒
 #
-LG_BANDING# 
+LG_BANDING#
 聚集
 MAXLv:5
 習得條件:精準攻擊3/憤怒突擊1
 系列:主動/自己buff
 內容:連合，隊員中相同的皇家禁衛隊各自使用聚集，並在一定距離內，攻擊力和防禦力都會上升並共有HP。技能持續時間內會持續消耗SP，技能若再次使用即解除。隊員人數越多效果越大。
 #
-LG_MOONSLASHER# 
+LG_MOONSLASHER#
 半月斬
 MAXLv:5
 習得條件:長矛加速術1
 系列:主動/損害
 內容:以自己為中心，讓半徑3格內的所有對象在受到損害的同時也處於坐著的狀態。如對象是怪物時，會於1~3秒內變成僵硬狀態。損害會受到支配烙印技能等級的影響。
-[Level1]:攻擊力50%/成功率 40%
-[Level2]:攻擊力100%/成功率 48%
-[Level3]:攻擊力150%/成功率 56%
-[Level4]:攻擊力200%/成功率 64%
-[Level5]:攻擊力250%/成功率 72%
+[Level1]:攻擊力50%/成必v 40%
+[Level2]:攻擊力100%/成必v 48%
+[Level3]:攻擊力150%/成必v 56%
+[Level4]:攻擊力200%/成必v 64%
+[Level5]:攻擊力250%/成必v 72%
 #
-LG_RAYOFGENESIS# 
+LG_RAYOFGENESIS#
 創世之光
 MAXLv:5
 習得條件:聖十字審判5
@@ -7060,7 +6903,7 @@ MAXLv:5
 [Level4]:消耗攻擊力物理700%魔法400%/HP20%
 [Level5]:消耗攻擊力物理800%魔法500%/HP25%
 #
-LG_PIETY# 
+LG_PIETY#
 虔誠
 MAXLv:5
 習得條件:信任10
@@ -7072,7 +6915,7 @@ MAXLv:5
 [Level4]:持續時間120秒
 [Level5]:持續時間140秒
 #
-LG_EARTHDRIVE# 
+LG_EARTHDRIVE#
 大地毀滅
 MAXLv:5
 習得條件:反射損害3
@@ -7084,7 +6927,7 @@ MAXLv:5
 [Level4]:攻擊力500%/效果持續時間12秒
 [Level5]:攻擊力600%/效果持續時間15秒
 #
-LG_HESPERUSLIT# 
+LG_HESPERUSLIT#
 黃昏星之光
 MAXLv:5
 習得條件:威信3/聚集3
@@ -7096,7 +6939,7 @@ MAXLv:5
 [Level4]:攻擊力160%
 [Level5]:攻擊力200%
 #
-LG_INSPIRATION# 
+LG_INSPIRATION#
 靈感
 MAXLv:5
 習得條件:盾咒3/創世之光1/虔誠5
@@ -7108,7 +6951,7 @@ MAXLv:5
 [Level4]:持續時間75秒
 [Level5]:持續時間90秒
 #
-SR_DRAGONCOMBO# 
+SR_DRAGONCOMBO#
 雙龍腳(雙龍腳)
 MAXLv:10
 習得條件:六合拳5
@@ -7125,7 +6968,7 @@ MAXLv:10
 [Level9]:攻擊力360%/暈眩機率10%
 [Level10]:攻擊力380%/暈眩機率11%
 #
-SR_SKYNETBLOW# 
+SR_SKYNETBLOW#
 天羅地網(天羅地網)
 MAXLv:5
 習得條件:雙龍腳3
@@ -7137,7 +6980,7 @@ MAXLv:5
 [Level4]:攻擊力350%
 [Level5]:攻擊力400%
 #
-SR_EARTHSHAKER# 
+SR_EARTHSHAKER#
 地雷震(地雷震)
 MAXLv:5
 習得條件:雙龍腳1/咒縛陣1
@@ -7149,7 +6992,7 @@ MAXLv:5
 [Level4]:攻擊力250%/750% 4x4格
 [Level5]:攻擊力300%/900% 5x5格
 #
-SR_FALLENEMPIRE# 
+SR_FALLENEMPIRE#
 大纏崩墜(大纏崩墜)
 MAXLv:5
 習得條件:雙龍腳1
@@ -7161,7 +7004,7 @@ MAXLv:5
 [Level4]:攻擊力700%/僵硬時間2秒
 [Level5]:攻擊力850%/僵硬時間2.5秒
 #
-SR_TIGERCANNON# 
+SR_TIGERCANNON#
 虎砲
 MAXLv:10
 習得條件:大纏崩墜3
@@ -7178,14 +7021,14 @@ MAXLv:10
 [Level9]:消耗自己HP18%/SP消耗9%
 [Level10]:消耗自己HP20%/SP消耗10%
 #
-SR_RAMPAGEBLASTER# 
+SR_RAMPAGEBLASTER#
 爆氣散彈(爆氣散彈)
 MAXLv:5
 習得條件:地雷震2
 系列:主動/損害
 內容:消耗所有的氣球體，讓自己附近範圍7x7格內的所有敵人都受到損害。氣球體數量越多所造成的損害越大，在爆氣狀態下使用損害會更大。
 #
-SR_CRESCENTELBOW# 
+SR_CRESCENTELBOW#
 破碎柱(破碎柱)
 MAXLv:5
 習得條件:天羅地網5
@@ -7197,7 +7040,7 @@ MAXLv:5
 [Level4]:發動機率33%
 [Level5]:發動機率36%
 #
-SR_CURSEDCIRCLE# 
+SR_CURSEDCIRCLE#
 咒縛陣
 MAXLv:5
 習得條件:真劍百破道2/點穴-默2/運氣調息2
@@ -7209,7 +7052,7 @@ MAXLv:5
 [Level4]:持續時間8秒
 [Level5]:持續時間9秒
 #
-SR_LIGHTNINGWALK# 
+SR_LIGHTNINGWALK#
 閃電步(閃電步)
 MAXLv:5
 習得條件:旋風腿1
@@ -7221,7 +7064,7 @@ MAXLv:5
 [Level4]:HP消耗2%/每秒SP消耗2/發動機率45%
 [Level5]:HP消耗1%/每秒SP消耗1/發動機率50%
 #
-SR_KNUCKLEARROW# 
+SR_KNUCKLEARROW#
 修羅身彈(修羅身彈)
 MAXLv:5
 習得條件:閃電步3/爆氣散彈3
@@ -7233,14 +7076,14 @@ MAXLv:5
 [Level4]:攻擊力500%/倒退損害600%+增加
 [Level5]:攻擊力600%/倒退損害750%+增加
 #
-SR_WINDMILL# 
+SR_WINDMILL#
 旋風腿(旋風腿)
 MAXLv:1
 習得條件:咒縛陣1
 系列:主動/損害
 內容:轉踢腿部讓5x5格附近的所有敵人，受到損害的同時也強制處於/坐著狀態。若對方是怪物時，則會在1-4秒內處於暈眩狀態。本技能不適用於BOSS怪物。
 #
-SR_RAISINGDRAGON# 
+SR_RAISINGDRAGON#
 潛龍昇天(潛龍昇天)
 MAXLv:10
 習得條件:爆氣散彈3/點穴-救3
@@ -7257,28 +7100,28 @@ MAXLv:10
 [Level9]:最大氣球體14/MHP,MSP增加11%/持續時間150秒
 [Level10]:最大氣球體15/MHP,MSP增加12%/持續時間165秒
 #
-SR_ASSIMILATEPOWER# 
+SR_ASSIMILATEPOWER#
 吸氣攻(吸氣攻)
 MAXLv:1
 習得條件:吸氣1,全氣注入1
 系列:主動/特殊
 內容:吸收自己和附近5x5格內的所有氣球體並恢復SP。
 #
-SR_POWERVELOCITY# 
+SR_POWERVELOCITY#
 全氣注入(全氣注入)
 MAXLv:1
 習得條件:蓄氣5
 系列:主動/特殊
 內容:把自己持有的氣球體全部都給1個目標。
 #
-SR_GATEOFHELL# 
+SR_GATEOFHELL#
 羅剎破凰擊(羅剎破凰擊)
 MAXLv:10
 習得條件:潛龍昇天5/虎砲5
 系列:主動/損害
-內容:只能在爆氣狀態下使用，向敵人瞬間使出無數的連打攻擊。氣球體數量越多，施展者的HP越少，損害越大。使用技能時會消耗MSP30%和所有的氣球體。可以在大纏崩墜之後連結使用，連結使用時消耗的SP會減少10%，攻擊力增加少許。
+內容:只能在爆氣狀態下使用，向敵人瞬間使出無數的連打攻擊。氣球體數量越多，施展者的HP越少，損害越大。使用技能時會消耗MSP30%和所有的氣球體。可以在大纏崩墜之後連結使用，連結使用時消耗的SP會減少10%，攻擊力增加少部C
 #
-SR_GENTLETOUCH_QUIET# 
+SR_GENTLETOUCH_QUIET#
 點穴-默(點穴-默)
 MAXLv:5
 習得條件:全氣注入1
@@ -7290,14 +7133,14 @@ MAXLv:5
 [Level4]:射程距離2格/攻擊力400%
 [Level5]:射程距離2格/攻擊力500%
 #
-SR_GENTLETOUCH_CURE# 
+SR_GENTLETOUCH_CURE#
 點穴-快(點穴-快)
 MAXLv:5
 習得條件:全氣注入1
 系列:主動/恢復及buff
-內容:使用點穴恢復自己和1名對象的HP，治療部分的狀態異常。技能等級越高，成功機率也越高。可用本技能治療的技能有石化/冰凍/暈眩/毒/沉默/黑暗/幻覺/著火/結冰等，也可以治療部分十字斬首者技能的毒。另外，本技能也可以在當自己處於石化、冰凍、暈眩狀態時使用，使用技能時消耗1個氣球體。
+內容:使用點穴恢復自己和1名對象的HP，治療部分的狀態異常。技能等級越高，成札鰷v也越高。可用本技能治療的技能有石化/冰凍/暈眩/毒/沉默/黑暗/幻覺/著火/結冰等，也可以治療部分十字斬首者技能的毒。另外，本技能也可以在當自己處於石化、冰凍、暈眩狀態時使用，使用技能時消耗1個氣球體。
 #
-SR_GENTLETOUCH_ENERGYGAIN# 
+SR_GENTLETOUCH_ENERGYGAIN#
 點穴-救(點穴-救)
 MAXLv:5
 習得條件:點穴-默3
@@ -7309,7 +7152,7 @@ MAXLv:5
 [Level4]:HP消耗4%/30%機率生成/持續時間240秒
 [Level5]:HP消耗5%/35%機率生成/持續時間300秒
 #
-SR_GENTLETOUCH_CHANGE# 
+SR_GENTLETOUCH_CHANGE#
 點穴-半(點穴-半)
 MAXLv:5
 習得條件:點穴-快4
@@ -7321,20 +7164,20 @@ MAXLv:5
 [Level4]:HP消耗4%/持續時間240秒
 [Level5]:HP消耗5%/持續時間300秒
 #
-SR_GENTLETOUCH_REVITALIZE# 
+SR_GENTLETOUCH_REVITALIZE#
 點穴-活(點穴-活)
 MAXLv:5
 習得條件:點穴-半5
 系列:主動/自己buff
 內容:使用點穴提高自己和1名對象的VIT及MHP，加快HP自然恢復速度，另外也提高物理防禦力。在本效果裡若移動或攻擊也可以恢復HP，使用技能時消耗2個氣球體。本技能無法和[點穴-救]及[點穴-半]一起使用。
-[Level1]:MHP增加2%/HP自然恢復速度增加80%
-[Level2]:MHP增加4%/HP自然恢復速度增加110%
-[Level3]:MHP增加6%/HP自然恢復速度增加140%
-[Level4]:MHP增加8%/HP自然恢復速度增加170%
-[Level5]:MHP增加10%/HP自然恢復速度增加200%
+[Level1]:MHP增加6%/HP自然恢復速度增加100%
+[Level2]:MHP增加12%/HP自然恢復速度增加140%
+[Level3]:MHP增加18%/HP自然恢復速度增加180%
+[Level4]:MHP增加24%/HP自然恢復速度增加220%
+[Level5]:MHP30%增加/HP自然恢復速度增加260%
 #
-WA_SWING_DANCE# 
-[[搖擺舞]]
+WA_SWING_DANCE#
+搖擺\舞
 MAXLv:5
 習得條件:沉睡搖籃曲1
 系列:主動/buff
@@ -7344,7 +7187,7 @@ MAXLv:5
 [Level4]：增加移動速度以及攻速4%/持續時間60秒
 [Level5]：增加移動速度以及攻速5%/持續時間60秒
 #
-WA_SYMPHONY_OF_LOVER# 
+WA_SYMPHONY_OF_LOVER#
 戀人交響樂
 MAXLv:5
 習得條件:沉睡搖籃曲1
@@ -7356,7 +7199,7 @@ MAXLv:5
 [Level4]：魔法防禦力增加48%/持續時間60秒
 [Level5]：魔法防禦力增加60%/持續時間60秒
 #
-WA_MOONLIT_SERENADE# 
+WA_MOONLIT_SERENADE#
 月光小夜曲
 MAXLv:5
 習得條件:沉睡搖籃曲1
@@ -7368,7 +7211,7 @@ MAXLv:5
 [Level4]：魔法攻擊力增加20%/持續時間60秒
 [Level5]：魔法攻擊力增加25%/持續時間60秒
 #
-MI_RUSH_WINDMILL# 
+MI_RUSH_WINDMILL#
 朝風車突擊
 MAXLv:5
 習得條件:沉睡搖籃曲1
@@ -7380,7 +7223,7 @@ MAXLv:5
 [Level4]:物理攻擊力增加40%/持續時間60秒
 [Level5]:物理攻擊力增加50%/持續時間60秒
 #
-MI_ECHOSONG# 
+MI_ECHOSONG#
 回音之歌
 MAXLv:5
 習得條件:沉睡搖籃曲1
@@ -7392,7 +7235,7 @@ MAXLv:5
 [Level4]:物理防禦力增加40%/持續時間60秒
 [Level5]:物理防禦力增加50%/持續時間60秒
 #
-MI_HARMONIZE# 
+MI_HARMONIZE#
 和聲演奏
 MAXLv:5
 習得條件:沉睡搖籃曲1
@@ -7404,7 +7247,7 @@ MAXLv:5
 [Level4]:把所有的素質加重值變成11
 [Level5]:把所有的素質加重值變成13
 #
-WM_LESSON# 
+WM_LESSON#
 課程
 MAXLv:10
 習得條件:浪姬舞者和宮廷樂師基本技能
@@ -7421,7 +7264,7 @@ MAXLv:10
 [Level9]:MSP+270/可使用2轉演奏技能中3轉歌曲
 [Level10]:MSP+300/可使用2轉演奏技能中3轉歌曲
 #
-WM_METALICSOUND# 
+WM_METALICSOUND#
 重金屬音樂
 MAXLv:5
 習得條件:支配動力1
@@ -7433,7 +7276,7 @@ MAXLv:5
 [Level4]:攻擊力650%+依照課程技能等級的加重值
 [Level5]:攻擊力700%+依照課程技能等級的加重值
 #
-WM_REVERBERATION# 
+WM_REVERBERATION#
 殘響
 MAXLv:5
 習得條件:不諧和音或是醜陋之舞5
@@ -7445,14 +7288,14 @@ MAXLv:5
 [Level4]:攻擊力700%+魔法攻擊力500%
 [Level5]:攻擊力800%+魔法攻擊力600%
 #
-WM_DOMINION_IMPULSE# 
+WM_DOMINION_IMPULSE#
 支配動力
 MAXLv:1
 習得條件:殘響1
 系列:主動/特殊
 內容:直接發動套用在11x11範圍內的地面上的殘響，也可以發動其他玩家製作的殘響。
 #
-WM_SEVERE_RAINSTORM# 
+WM_SEVERE_RAINSTORM#
 大暴雨
 MAXLv:5
 習得條件:纏箭投擲或是樂器攻擊5
@@ -7464,7 +7307,7 @@ MAXLv:5
 [Level4]:攻擊力250%0.每3秒1次打擊/持續時間2.7秒
 [Level5]:攻擊力300%0.每3秒1次打擊/持續時間3秒
 #
-WM_POEMOFNETHERWORLD# 
+WM_POEMOFNETHERWORLD#
 絕望之歌
 MAXLv:5
 習得條件:課程1
@@ -7476,43 +7319,43 @@ MAXLv:5
 [Level4]:效果持續時間14秒/音波持續時間15秒
 [Level5]:效果持續時間16秒/音波持續時間17秒
 #
-WM_VOICEOFSIREN# 
+WM_VOICEOFSIREN#
 塞壬之音
 MAXLv:5
 習得條件:絕望之歌3
 系列:主動/debuff
 內容:讓自己附近11x11格內的所有目標被效果迷住，然後往自己這邊靠近。如果用在怪物身上，則無法對施展者發動攻擊，如果用在玩家身上，持續時間內無法把施展者當作攻擊目標。(施展者除外)被賦予效果的目標會顯示心型圖案。隨著效果對象的等級，效果時間也會減少。如果對方被攻擊，效果即立即解除。
-[Level1]:成功率 30%/效果持續時間15秒
-[Level2]:成功率 40%/效果持續時間18秒
-[Level3]:成功率 50%/效果持續時間21秒
-[Level4]:成功率 60%/效果持續時間24秒
-[Level5]:成功率 70%/效果持續時間27秒
+[Level1]:成必v 30%/效果持續時間15秒
+[Level2]:成必v 40%/效果持續時間18秒
+[Level3]:成必v 50%/效果持續時間21秒
+[Level4]:成必v 60%/效果持續時間24秒
+[Level5]:成必v 70%/效果持續時間27秒
 #
-WM_DEADHILLHERE# 
+WM_DEADHILLHERE#
 死亡峽谷
 MAXLv:5
 習得條件:循環的大自然之音3
 系列:主動/恢復
-內容:讓1名死亡的玩家復活，死亡的玩家在死亡狀態下會因為剩餘的SP變成HP而復活。死亡時若SP為0，則會以1復活。技能施展時會消耗1個[傷心淚水]。
-[Level1]:成功率 90%/消耗復活對象的SP100%
-[Level2]:成功率 92%/消耗復活對象的SP80%
-[Level3]:成功率 94%/消耗復活對象的SP60%
-[Level4]:成功率 96%/消耗復活對象的SP40%
-[Level5]:成功率 98%/消耗復活對象的SP20%
+內容:讓1名死亡的玩家復活，死亡的玩家在死亡狀態下會因為剩餘的SP變成HP而復活。死亡時若SP為0，則會以1復活。技能施展時會消耗1個[傷心略瀯。
+[Level1]:成必v 90%/消耗復活對象的SP100%
+[Level2]:成必v 92%/消耗復活對象的SP80%
+[Level3]:成必v 94%/消耗復活對象的SP60%
+[Level4]:成必v 96%/消耗復活對象的SP40%
+[Level5]:成必v 98%/消耗復活對象的SP20%
 #
-WM_LULLABY_DEEPSLEEP# 
+WM_LULLABY_DEEPSLEEP#
 沉睡搖籃曲
 MAXLv:5
 習得條件:課程1
 系列:主動/debuff
 內容:讓指定範圍內的所有目標都處於'沉睡'狀態，沉睡狀態下的目標無法移動、攻擊以及使用物品和技能，連對話都無法進行。如果被攻擊，狀態隨即解除，沉睡狀態下受到的損害會比平常多1.5倍。沉睡狀態中的目標每2秒會恢復1%的HP/SP。
-[Level1]:成功率 90%/效果範圍11x11
-[Level2]:成功率 92%/效果範圍13x13
-[Level3]:成功率 94%/效果範圍15x15
-[Level4]:成功率 96%/效果範圍19x19
-[Level5]:成功率 98%/效果範圍21x21
+[Level1]:成必v 90%/效果範圍11x11
+[Level2]:成必v 92%/效果範圍13x13
+[Level3]:成必v 94%/效果範圍15x15
+[Level4]:成必v 96%/效果範圍19x19
+[Level5]:成必v 98%/效果範圍21x21
 #
-WM_SIRCLEOFNATURE# 
+WM_SIRCLEOFNATURE#
 循環的大自然之音
 MAXLv:5
 習得條件:課程1
@@ -7524,7 +7367,7 @@ MAXLv:5
 [Level4]:效果持續時間25秒/每秒SP16消耗/每秒HP240恢復
 [Level5]:效果持續時間30秒/每秒SP20消耗/每秒HP360恢復
 #
-WM_RANDOMIZESPELL# 
+WM_RANDOMIZESPELL#
 不確定要素的語言
 MAXLv:5
 習得條件:絕望之歌1
@@ -7536,7 +7379,7 @@ MAXLv:5
 [Level4]:隨機發動一個技能等級8的魔法
 [Level5]:隨機發動一個技能等級9的魔法
 #
-WM_GLOOMYDAY# 
+WM_GLOOMYDAY#
 羞怯一天的憂鬱
 MAXLv:5
 習得條件:不確定要素的語言1
@@ -7548,7 +7391,7 @@ MAXLv:5
 [Level4]:迴避-25/攻速-12%
 [Level5]:迴避-30/攻速-15%
 #
-WM_GREAT_ECHO# 
+WM_GREAT_ECHO#
 巨大共鳴
 MAXLv:5
 習得條件:重金屬音樂1
@@ -7560,10 +7403,10 @@ MAXLv:5
 [Level4]:效果範圍9x9/攻擊力1300%
 [Level5]:效果範圍9x9/攻擊力1400%
 #
-WM_SONG_OF_MANA# 
+WM_SONG_OF_MANA#
 魔力之歌
 MAXLv:5
-習得條件:搖擺舞(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
+習得條件:搖罈R(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
 系列:主動/buff/合唱
 內容:唱出有助於魔力循環的歌曲，每5秒各恢復自己和隊員的SP10。隊員中浪姬舞者、宮廷樂師越多，恢復量也會增加。
 [Level1]:持續時間30秒
@@ -7572,10 +7415,10 @@ MAXLv:5
 [Level4]:持續時間120秒
 [Level5]:持續時間150秒
 #
-WM_DANCE_WITH_WUG# 
+WM_DANCE_WITH_WUG#
 與狼共舞
 MAXLv:5
-習得條件:搖擺舞(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
+習得條件:搖罈R(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
 系列:主動/buff/合唱
 內容:透過開心又快速的節拍歌曲，稍微增加自己和隊員的攻擊速度，並減少固定詠唱時間。施展者的隊員中，浪姬舞者和宮廷樂師的數量越多效果越大。
 [Level1]:持續時間30秒
@@ -7584,19 +7427,19 @@ MAXLv:5
 [Level4]:持續時間120秒
 [Level5]:持續時間150秒
 #
-WM_SOUND_OF_DESTRUCTION# 
+WM_SOUND_OF_DESTRUCTION#
 毀滅之聲
 MAXLv:5
 習得條件:狂歡週末夜3,消沈旋律3
 系列:主動/特殊/合唱
-內容:解除1名目標和其附近對象的所有歌曲、合唱效果，成功機率會隨著對象的Dex及等級和毀滅之聲等級，目標的Int、所唱的歌曲、合唱技能等級而有所不同。施展者的隊員中，浪姬舞者和宮廷樂師的人數越多成功率 越高。
+內容:解除1名目標和其附近對象的所有歌曲、合唱效果，成札鰷v會隨著對象的Dex及等級和毀滅之聲等級，目標的Int、所唱的歌曲、合唱技能等級而有所不同。施展者的隊員中，浪姬舞者和宮廷樂師的人數越多成必v 越高。
 [Level1]:目標1名及其附近5x5
 [Level2]:目標1名及其附近5x5
 [Level3]:目標1名及其附近7x7
 [Level4]:目標1名及其附近7x7
 [Level5]:目標1名及其附近9x9
 #
-WM_SATURDAY_NIGHT_FEVER# 
+WM_SATURDAY_NIGHT_FEVER#
 狂歡週末夜
 MAXLv:5
 習得條件:與狼共舞1
@@ -7608,10 +7451,10 @@ MAXLv:5
 [Level4]:每3秒HP,消耗SP5%/攻擊力+400/防禦力-50%/迴避率-80%
 [Level5]:每3秒HP,消耗SP6%/攻擊力+500/防禦力-60%/迴避率-90%
 #
-WM_LERADS_DEW# 
+WM_LERADS_DEW#
 雷拉多露水
 MAXLv:5
-習得條件:搖擺舞(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
+習得條件:搖罈R(和聲演奏),戀人交響樂(朝風車突擊),月光小夜曲(回音之歌)1
 系列:主動/buff/合唱
 內容:暫時提高包括自己在內的附近隊員的MHP，但若是處於狂暴狀態的角色，則不會也任何效果。隊員中浪姬舞者和宮廷樂師人數越多，就會提高越多的MHP。
 [Level1]:MHP5%增加/持續時間20秒
@@ -7620,7 +7463,7 @@ MAXLv:5
 [Level4]:MHP20%增加/持續時間50秒
 [Level5]:MHP25%增加/持續時間60秒
 #
-WM_MELODYOFSINK# 
+WM_MELODYOFSINK#
 消沈旋律
 MAXLv:5
 習得條件:魔力之歌1
@@ -7632,7 +7475,7 @@ MAXLv:5
 [Level4]:魔法攻擊力20%增加/物理攻擊力20%減少/持續時間50秒
 [Level5]:魔法攻擊力25%增加/物理攻擊力25%減少/持續時間60秒
 #
-WM_BEYOND_OF_WARCRY# 
+WM_BEYOND_OF_WARCRY#
 戰嚎的彼端
 MAXLv:5
 習得條件:雷拉多露水1
@@ -7644,7 +7487,7 @@ MAXLv:5
 [Level4]:物理攻擊力20%增加/魔法攻擊力20%減少/持續時間50秒
 [Level5]:物理攻擊力25%增加/魔法攻擊力25%減少/持續時間60秒
 #
-WM_UNLIMITED_HUMMING_VOICE# 
+WM_UNLIMITED_HUMMING_VOICE#
 無限哼唱聲
 MAXLv:5
 習得條件:毀滅之聲1,戰嚎的彼端1
@@ -7656,7 +7499,7 @@ MAXLv:5
 [Level4]:持續時間50秒
 [Level5]:持續時間60秒
 #
-SO_FIREWALK# 
+SO_FIREWALK#
 火焰步
 MAXLv:5
 習得條件:火山爆發1
@@ -7668,7 +7511,7 @@ MAXLv:5
 [Level4]:持續時間18秒/最大生成14個
 [Level5]:持續時間20秒/最大生成16個
 #
-SO_ELECTRICWALK# 
+SO_ELECTRICWALK#
 電流步
 MAXLv:5
 習得條件:風元素領域1
@@ -7680,7 +7523,7 @@ MAXLv:5
 [Level4]:持續時間18秒/最大生成14個
 [Level5]:持續時間20秒/最大生成16個
 #
-SO_SPELLFIST# 
+SO_SPELLFIST#
 魔力拳
 MAXLv:5
 習得條件:自動念咒4
@@ -7692,7 +7535,7 @@ MAXLv:5
 [Level4]:持續時間35秒/最大5次打擊
 [Level5]:持續時間40秒/最大6次打擊
 #
-SO_EARTHGRAVE# 
+SO_EARTHGRAVE#
 大地墳場
 MAXLv:5
 習得條件:地震術5
@@ -7704,7 +7547,7 @@ MAXLv:5
 [Level4]:範圍9x9格
 [Level5]:範圍9x9格
 #
-SO_DIAMONDDUST# 
+SO_DIAMONDDUST#
 鑽石星塵
 MAXLv:5
 習得條件:水元素領域3
@@ -7716,14 +7559,14 @@ MAXLv:5
 [Level4]:範圍9x9格
 [Level5]:範圍9x9格
 #
-SO_POISON_BUSTER# 
+SO_POISON_BUSTER#
 劇毒猛擊
 MAXLv:5
 習得條件:雲殺2
 系列:主動/損害
 內容:將中毒對象體內的毒氣活性化，使其受到更大的損害。受到損害的對象的毒狀態會被解除，對毒屬性的怪物則不會發動效果。
 #
-SO_PSYCHIC_WAVE# 
+SO_PSYCHIC_WAVE#
 超自然波
 MAXLv:5
 習得條件:魔法效果解除2
@@ -7735,7 +7578,7 @@ MAXLv:5
 [Level4]:範圍9x9格/打擊次數6次
 [Level5]:範圍11x11格/打擊次數7次
 #
-SO_CLOUD_KILL# 
+SO_CLOUD_KILL#
 雲殺
 MAXLv:5
 習得條件:崩裂術5
@@ -7747,14 +7590,14 @@ MAXLv:5
 [Level4]:持續時間14秒
 [Level5]:持續時間16秒
 #
-SO_STRIKING# 
+SO_STRIKING#
 打擊強化
 MAXLv:5
 習得條件:火焰屬性附加1/水屬性附加1/風屬性附加1/地屬性附加1
 系列:主動/buff
 內容:提升自己以及隊伍成員的武器攻擊力及必殺攻擊力。受到打擊強化效果的對象每秒會消耗一定量的SP。效果會依照施放者所習得的屬性附加技能(火焰屬性附加/水屬性附加/風屬性附加/地屬性附加)等級而增加效果。持續時間為60秒。
 #
-SO_WARMER# 
+SO_WARMER#
 加熱術
 MAXLv:5
 習得條件:火元素領域1/風元素領域1
@@ -7766,7 +7609,7 @@ MAXLv:5
 [Level4]:持續時間25秒
 [Level5]:持續時間30秒
 #
-SO_VACUUM_EXTREME# 
+SO_VACUUM_EXTREME#
 極限空虛
 MAXLv:5
 習得條件:地元素領域2
@@ -7778,7 +7621,7 @@ MAXLv:5
 [Level4]:持續時間8秒
 [Level5]:持續時間9秒
 #
-SO_VARETYR_SPEAR# 
+SO_VARETYR_SPEAR#
 聖槍刺擊
 MAXLv:5
 習得條件:地屬性附加1/風元素領域4
@@ -7790,7 +7633,7 @@ MAXLv:5
 [Level4]:目標及附近5x5格
 [Level5]:目標及附近7x7格
 #
-SO_ARRULLO# 
+SO_ARRULLO#
 搖籃曲
 MAXLv:5
 習得條件:加熱術2
@@ -7802,7 +7645,7 @@ MAXLv:5
 [Level4]:目標及附近5x5格
 [Level5]:目標及附近7x7格
 #
-SO_SUMMON_AGNI# 
+SO_SUMMON_AGNI#
 召喚火精靈阿格尼
 MAX Lv : 3
 習得條件：精靈控制 1/加熱術3  
@@ -7811,9 +7654,8 @@ MAX Lv : 3
 [Level 1] :  持續時間600秒/每10秒消耗5的SP 
 [Level 2] :  持續時間900秒/每10秒消耗8的SP 
 [Level 3] :  持續時間1200秒/每10秒消耗11的SP 
-
 #
-SO_SUMMON_AQUA# 
+SO_SUMMON_AQUA#
 召喚水精靈阿庫亞
 MAX Lv : 3
 習得條件：精靈控制 1/鑽石星塵 3  
@@ -7822,9 +7664,8 @@ MAX Lv : 3
 [Level 1] :  持續時間600秒/每10秒消耗5的SP 
 [Level 2] :  持續時間900秒/每10秒消耗8的SP 
 [Level 3] :  持續時間1200秒/每10秒消耗11的SP 
-
 #
-SO_SUMMON_VENTUS# 
+SO_SUMMON_VENTUS#
 召喚風精靈梵圖斯
 MAX Lv : 3
 習得條件：精靈控制 1/閃電之槍 3  
@@ -7833,9 +7674,8 @@ MAX Lv : 3
 [Level 1] :  持續時間600秒/每10秒消耗5的SP 
 [Level 2] :  持續時間900秒/每10秒消耗8的SP 
 [Level 3] :  持續時間1200秒/每10秒消耗11的SP 
-
 #
-SO_SUMMON_TERA# 
+SO_SUMMON_TERA#
 召喚地精靈泰拉
 MAX Lv : 3
 習得條件：精靈控制 1/岩槍 3  
@@ -7844,10 +7684,8 @@ MAX Lv : 3
 [Level 1] :  持續時間600秒/每10秒消耗5的SP 
 [Level 2] :  持續時間900秒/每10秒消耗8的SP 
 [Level 3] :  持續時間1200秒/每10秒消耗11的SP 
-
 #
-SO_EL_CONTROL#			
-{			
+SO_EL_CONTROL#
 精靈控制
 MAX Lv : 4
 習得條件：4 元素分析 1 
@@ -7856,25 +7694,23 @@ MAX Lv : 4
 [Level 1] :  使精靈切換到被動模式  
 [Level 2] :  使精靈切換到防禦模式 
 [Level 3] :  使精靈切換到攻擊模式 
-
 #
-SO_EL_ACTION# 
+SO_EL_ACTION#
 精靈激發
 MAX Lv : 1
 習得條件：精靈控制 3 
 系列：  主動  
 內容： 讓召喚的精靈立即發動一個攻擊技能。 
 #
-SO_EL_ANALYSIS# 
+SO_EL_ANALYSIS#
 元素分析
 習得條件：火屬性附加 1/水屬性附加 1/風屬性附加 1/地屬性附加 1 
 系列：  主動  
 內容： 對召喚精靈時所需的屬性原石進行分解或反過來將礦石合成為原石。 
 [Level 1] :  將屬性原石分解為屬性礦石( 將1個火靈原石、風靈原石、水靈原石或地靈原石放到分析窗中可以分解為火靈礦石、風靈礦石、水靈礦石、地靈礦石。分解得到的個數隨機決定。  
 [Level 2] :  用屬性礦石合成屬性原石( 將10個火靈礦石、風靈礦石、水靈礦石或地靈礦石放到分析窗中，可以合成1個火靈原石、風靈原石、水靈原石或地靈原石)合成失敗時，無法獲得任何東西。 
-
 #
-SO_EL_SYMPATHY# 
+SO_EL_SYMPATHY#
 精靈交流
 MAX Lv : 5
 習得條件：精靈控制 3  
@@ -7885,18 +7721,15 @@ MAX Lv : 5
 [Level 3] :  精靈HP增加1500，SP增加150/攻擊力增加75/召喚時SP減少20%  
 [Level 4] :  精靈HP增加2000，SP增加200/攻擊力增加100/召喚時SP減少25%  
 [Level 5] :  精靈HP增加2500，SP增加250/攻擊力增加125/召喚時SP減少30%  
-
-}
- 		
-SO_EL_CURE#			
+#
+SO_EL_CURE#
 精靈治癒
 MAX Lv : 1
 習得條件：精靈交流 1 
 系列：  主動/恢復 
 內容： 消耗施展者自身的部分HP和SP，恢復精靈的HP和SP。 
-
 #
-SO_FIRE_INSIGNIA# 
+SO_FIRE_INSIGNIA#
 火之紋章
 MAX Lv : 3
 習得條件：召喚火精靈阿格尼 3 
@@ -7905,9 +7738,8 @@ MAX Lv : 3
 [Level 1] :  火精靈阿格尼的攻擊力增加20%。每3秒的HP和SP恢復量增加2倍。 
 [Level 2] :  攻擊力增加50。武器屬性變為火屬性。物理攻擊力增加10%。 
 [Level 3] :  魔法攻擊力增加50。部分火屬性魔法的攻擊力增加25%。 
-
 #
-SO_WATER_INSIGNIA# 
+SO_WATER_INSIGNIA#
 水之紋章
 MAX Lv : 3
 習得條件：召喚水精靈阿庫亞 3 
@@ -7916,9 +7748,8 @@ MAX Lv : 3
 [Level 1] :  水精靈阿庫亞的攻擊力增加20%。每3秒的HP和SP恢復量增加2倍。 
 [Level 2] :  治癒恢復效果增加10%。武器屬性變為水屬性。物理攻擊力增加10%。 
 [Level 3] :  部分水屬性魔法的可變動詠唱時間減少30%。部分水屬性魔法的攻擊力增加25%。 
-
 #
-SO_WIND_INSIGNIA# 
+SO_WIND_INSIGNIA#
 風之紋章
 MAX Lv : 3
 習得條件：召喚風精靈梵圖斯 3 
@@ -7927,9 +7758,8 @@ MAX Lv : 3
 [Level 1] :  風精靈梵圖斯的攻擊力增加20%。每3秒的HP和SP恢復量增加2倍。 
 [Level 2] :  攻擊速度略微增加。武器屬性變為風屬性。物理攻擊力增加10%。 
 [Level 3] :  部分風屬性魔法技能的延遲時間減少50%。部分風屬性魔法的攻擊力增加25%。 
-
 #
-SO_EARTH_INSIGNIA# 
+SO_EARTH_INSIGNIA#
 地之紋章
 MAX Lv : 3
 習得條件：召喚地精靈泰拉 3 
@@ -7938,9 +7768,8 @@ MAX Lv : 3
 [Level 1] :  地精靈泰拉的攻擊力增加20%。每3秒的HP和SP恢復量增加2倍。 
 [Level 2] :  MHP增加500，DEF增加50。武器屬性變為地屬性。物理攻擊力增加10%。 
 [Level 3] :  MSP增加50，MDEF增加50。部分地屬性魔法的攻擊力增加25%。 
-
 #
-GN_TRAINING_SWORD# 
+GN_TRAINING_SWORD#
 單手劍使用熟練度
 MAXLv:5
 習得條件:基因學者基本
@@ -7952,7 +7781,7 @@ MAXLv:5
 [Level4]:攻擊力+40/命中率+12
 [Level5]:攻擊力+50/命中率+15
 #
-GN_REMODELING_CART# 
+GN_REMODELING_CART#
 手推車改良
 MAXLv:5
 習得條件:基因學者基本
@@ -7964,7 +7793,7 @@ MAXLv:5
 [Level4]:乘載量+2000/手推車技能命中率+16
 [Level5]:乘載量+2500/手推車技能命中率+20
 #
-GN_CART_TORNADO# 
+GN_CART_TORNADO#
 手推車龍捲風
 MAXLv:5
 習得條件:手推車改良1
@@ -7976,7 +7805,7 @@ MAXLv:5
 [Level4]:攻擊力300%+依照手推車改良技能等級
 [Level5]:攻擊力350%+依照手推車改良技能等級
 #
-GN_CARTCANNON# 
+GN_CARTCANNON#
 手推車加農砲
 MAXLv:5
 習得條件:手推車改良2
@@ -7988,7 +7817,7 @@ MAXLv:5
 [Level4]:攻擊力550%+依照手推車改良技能等級
 [Level5]:攻擊力600%+依照手推車改良技能等級
 #
-GN_CARTBOOST# 
+GN_CARTBOOST#
 手推車加速
 MAXLv:5
 習得條件:手推車改良3
@@ -8000,31 +7829,31 @@ MAXLv:5
 [Level4]:移動速度75%增加/攻擊力40增加
 [Level5]:移動速度100%增加/攻擊力50增加
 #
-GN_THORNS_TRAP# 
+GN_THORNS_TRAP#
 荊棘陷阱
 MAXLv:5
 習得條件:專門配藥2
 系列:特殊/損害
-內容:在地面1格安裝荊棘陷阱，綁住敵人的腳。對象被綁住的同時，會因為荊棘的關係而受到少許損害。如對處於荊棘陷阱的對象使出火屬性攻擊，荊棘會因為火燒而馬上解開。技能使用時會消耗一個[荊棘種子]。
+內容:在地面1格安裝荊棘陷阱，綁住敵人的腳。對象被綁住的同時，會因為荊棘的關係而受到少雪l害。如對處於荊棘陷阱的對象使出火屬性攻擊，荊棘會因為火燒而馬上解開。技能使用時會消耗一個[荊棘種子]。
 [Level1]:持續時間10秒
 [Level2]:持續時間12秒
 [Level3]:持續時間14秒
 [Level4]:持續時間16秒
 [Level5]:持續時間18秒
 #
-GN_BLOOD_SUCKER# 
+GN_BLOOD_SUCKER#
 吸血植物(吸血植物)
 MAXLv:5
 習得條件:專門配藥3
 系列:特殊/損害
-內容:在1名對象上置入會吸取生命能量的吸血植物，在給予損害的同時，施展者的HP會恢復少許。最多可使用3個吸血植物，和目標距離12格以上時，會失去對吸血植物的控制力，技能效果會消失。技能使用時會消耗一個[吸血腫子]。
+內容:在1名對象上置入會吸取生命能量的吸血植物，在給予損害的同時，施展者的HP會恢復少部C最多可使用3個吸血植物，和目標距離12格以上時，會失去對吸血植物的控制力，技能效果會消失。技能使用時會消耗一個[吸血腫子]。
 [Level1]:持續時間20秒
 [Level2]:持續時間22秒
 [Level3]:持續時間24秒
 [Level4]:持續時間26秒
 [Level5]:持續時間28秒
 #
-GN_SPORE_EXPLOSION# 
+GN_SPORE_EXPLOSION#
 爆炸孢子
 MAXLv:5
 習得條件:專門配藥4
@@ -8036,7 +7865,7 @@ MAXLv:5
 [Level4]:效果範圍9x9格/3秒後爆炸
 [Level5]:效果範圍11x11格/4秒後爆炸
 #
-GN_WALLOFTHORN# 
+GN_WALLOFTHORN#
 荊棘之壁
 MAXLv:5
 習得條件:荊棘陷阱3
@@ -8048,7 +7877,7 @@ MAXLv:5
 [Level4]:持續時間13秒
 [Level5]:持續時間14秒
 #
-GN_CRAZYWEED# 
+GN_CRAZYWEED#
 瘋狂野草
 MAXLv:10
 習得條件:荊棘之壁3
@@ -8065,7 +7894,7 @@ MAXLv:10
 [Level9]:攻擊力1400%/7個
 [Level10]:攻擊力1500%/8個
 #
-GN_DEMONIC_FIRE# 
+GN_DEMONIC_FIRE#
 惡魔火焰
 MAXLv:5
 習得條件:爆炸孢子3
@@ -8077,7 +7906,7 @@ MAXLv:5
 [Level4]:火屬性魔法損害190%/持續時間16秒/著火機率20%
 [Level5]:火屬性魔法損害210%/持續時間18秒/著火機率24%
 #
-GN_FIRE_EXPANSION# 
+GN_FIRE_EXPANSION#
 火焰擴散
 MAXLv:5
 習得條件:惡魔火焰3
@@ -8086,10 +7915,10 @@ MAXLv:5
 [Level1]:消耗油瓶/惡魔火焰損害增加50%/持續時間增加10秒
 [Level2]:消耗炸藥粉/依照施展者INT增加惡魔火焰損害/消滅惡魔火焰
 [Level3]:消耗煙幕粉/惡魔火焰會變成煙幕彈/遠距離及近距離損害減少效果/迴避率上升
-[Level4]:消耗催淚瓦斯/惡魔火焰變成催淚瓦斯/持續減少HP及命中率及迴避率
+[Level4]:消耗催畦侅?惡魔火焰變成催畦侅?持續減少HP及命中率及迴避率
 [Level5]:消耗鹽酸瓶/惡魔火焰變成強酸火煙瓶投擲/用施展者學到的最高等級發動
 #
-GN_HELLS_PLANT# 
+GN_HELLS_PLANT#
 地獄植物(地獄植物)
 MAXLv:5
 習得條件:吸血植物3
@@ -8101,54 +7930,54 @@ MAXLv:5
 [Level4]:最大召喚數量5隻/出血25%/暈眩60%
 [Level5]:最大召喚數量6隻/出血30%/暈眩70%
 #
-GN_MANDRAGORA# 
+GN_MANDRAGORA#
 曼陀羅魔花的尖叫
 MAXLv:5
 習得條件:地獄植物3
 系列:主動/特殊/損害
 內容:把叫著怪聲的曼陀羅拔出花盆，讓附近所有對象的INT和SP都下滑。並增加所有技能的固定詠唱。根據對象的VIT和LUK，附加在效果上的機率會減少一些。
-[Level1]:INT4減少/SP30%下滑/成功機率45%
-[Level2]:INT8減少/SP35%下滑/成功機率55%
-[Level3]:INT12減少/SP40%下滑/成功機率65%
-[Level4]:INT16減少/SP45%下滑/成功機率75%
-[Level5]:INT20減少/SP50%下滑/成功機率85%
+[Level1]:INT4減少/SP30%下滑/成札鰷v45%
+[Level2]:INT8減少/SP35%下滑/成札鰷v55%
+[Level3]:INT12減少/SP40%下滑/成札鰷v65%
+[Level4]:INT16減少/SP45%下滑/成札鰷v75%
+[Level5]:INT20減少/SP50%下滑/成札鰷v85%
 #
-GN_SLINGITEM# 
+GN_SLINGITEM#
 道具投擲
 MAXLv:1
 習得條件:素材變化1
 系列:主動
 內容:分類為'投擲用'的水果炸彈或扔擲物品的技能，射程距離11格。
 #
-GN_CHANGEMATERIAL# 
+GN_CHANGEMATERIAL#
 素材變化
 MAXLv:1
 習得條件:基因學者基本
 系列:主動
 內容:組合持有的多元物品，可做出其他物品。不過也不是可做出任何物品，如果沒有計算正確的物品名稱和正確的數量，是不會做出成果的。關於組和物品的相關情報，可以在世界各地獲得。
 #
-GN_MIX_COOKING# 
+GN_MIX_COOKING#
 調配料理
 MAXLv:2
 習得條件:專門配藥1
 系列:主動
 內容:混合各種料理材料，做出比原本更好吃、效能更好的優秀料理。用調配料理2技能可一次做出10個料理。製作料理時會需要該料理的食譜(料理書)。
 #
-GN_MAKEBOMB# 
+GN_MAKEBOMB#
 炸彈製作書
 MAXLv:2
 習得條件:調配料理1
 系列:主動
 內容:利用水果製作炸彈，用炸彈製作2技能可一次做出10個炸彈。為了製作炸彈，會需要炸彈製作說明書。
 #
-GN_S_PHARMACY# 
+GN_S_PHARMACY#
 專門配藥
 MAXLv:10
 習得條件:基因學者基本
 系列:主動
 內容:基因學者可製作出更多元的藥水，技能等級越高，可一次製作出來的藥水數量也會越多。為了製作各種藥水，會需要藥水製作說明書。
 #
-AB_SECRAMENT# 
+AB_SECRAMENT#
 聖典(SECRAMENT/聖事;聖事)
 MAXLv:5
 習得條件:聖靈降臨祈禱1/贖罪1
@@ -8160,7 +7989,7 @@ MAXLv:5
 [Level4]:固定詠唱減少40%/持續時間150秒
 [Level5]:固定詠唱減少50%/持續時間180秒
 #
-SR_HOWLINGOFLION# 
+SR_HOWLINGOFLION#
 獅子吼(獅子吼)
 MAXLv:5
 習得條件:吸氣攻1/雷光彈3
@@ -8172,7 +8001,7 @@ MAXLv:5
 [Level4]:範圍半徑6格/攻擊力720%/恐怖發生機率25%
 [Level5]:範圍半徑7格/攻擊力900%/恐怖發生機率30%
 #
-SR_RIDEINLIGHTNING# 
+SR_RIDEINLIGHTNING#
 雷光彈(雷光彈)
 MAXLv:5
 習得條件:彈指神通3
@@ -8184,11 +8013,9 @@ MAXLv:5
 [Level4]:範圍7x7/消耗氣球體7個
 [Level5]:範圍9x9/消耗氣球體15個
 #
-ALL_ODINS_RECALL# 
-#
-RETURN_TO_ELDICASTES# 
-#
-HLIF_HEAL# 
+ALL_ODINS_RECALL##
+RETURN_TO_ELDICASTES##
+HLIF_HEAL#
 治癒之手(Touch of Heal)
 MAX Lv : 5
 內容 : 可恢復玩家的HP，和服事的治癒術技能，效能是一樣的，使用時會消耗1個紅色纖細藥水，
@@ -8199,7 +8026,7 @@ MAX Lv : 5
  [Lv 4] 消耗 SP : 22
  [Lv 5] 消耗 SP : 25
 #
-HLIF_AVOID# 
+HLIF_AVOID#
 輕捷移動(Emergency Avoid)
 MAX Lv : 5
 內容 : 讓玩家和生命體的
@@ -8210,7 +8037,7 @@ MAX Lv : 5
  [Lv 4] 速度增加 : 40%，持續時間 25秒
  [Lv 5] 速度增加 : 50%，持續時間 20秒
 #
-HLIF_BRAIN# 
+HLIF_BRAIN#
 腦手術(Brain Surgery)
 MAX Lv : 5
 系列 : 被動
@@ -8223,7 +8050,7 @@ MAX Lv : 5
  [Lv 4] SP增加量 : 4%，SP恢復量上升 12%，治癒之手 增加量 8%
  [Lv 5] SP增加量 : 5%，SP恢復量上升 15%，治癒之手 增加量 10%
 #
-HLIF_CHANGE# 
+HLIF_CHANGE#
 智力變換(Mental Change)
 MAX Lv : 3
 內容 : 最多5分鐘內讓生命體的，MSP和 MHP 量交換，換完之後所有的HP都是滿狀態，用MATK數值做一般攻擊，
@@ -8232,18 +8059,18 @@ MAX Lv : 3
  [Lv 2] 持續時間 : 3分，後延遲時間 : 15分
  [Lv 3] 持續時間 : 5分，後延遲時間 : 20分
 #
-HAMI_CASTLE# 
+HAMI_CASTLE#
 位置互換(Castling)
 MAX Lv : 5
 內容 : 瞬間讓玩家和生命體的位置互換，
 攻擊玩家的魔物 改為攻擊生命體
- [Lv 1] 成功機率 : 20%
- [Lv 2] 成功機率 : 40%
- [Lv 3] 成功機率 : 60%
- [Lv 4] 成功機率 : 80%
- [Lv 5] 成功機率 : 100%
+ [Lv 1] 成札鰷v : 20%
+ [Lv 2] 成札鰷v : 40%
+ [Lv 3] 成札鰷v : 60%
+ [Lv 4] 成札鰷v : 80%
+ [Lv 5] 成札鰷v : 100%
 #
-HAMI_DEFENCE# 
+HAMI_DEFENCE#
 防禦力(Deffence)
 MAX Lv : 5
 內容 : 讓玩家和生命體的防禦力，瞬間的增加
@@ -8253,7 +8080,7 @@ MAX Lv : 5
  [Lv 4] DEF增加 : 8，持續時間 : 25秒
  [Lv 5] DEF增加 : 10，持續時間 : 20秒
 #
-HAMI_SKIN# 
+HAMI_SKIN#
 活命之膚(Adamantium Skin)
 MAX Lv : 5
 系列 : 被動
@@ -8265,7 +8092,7 @@ MAX Lv : 5
  [Lv 4] MHP增加 : 8%，恢復力增加 : 20%，DEF增加 : 16
  [Lv 5] MHP增加 : 10%，恢復力增加 : 25%，DEF增加 : 20
 #
-HAMI_BLOODLUST# 
+HAMI_BLOODLUST#
 血的貪求(Blood Lust)
 MAX Lv : 3
 內容 : 最多5分鐘讓生命體的，攻擊力最多增加到1.5倍，
@@ -8275,7 +8102,7 @@ MAX Lv : 3
  [Lv 2] 持續時間 : 3分，傷害力增加率 : 140%，恢復機率: 6%，後延遲時間: 10分
  [Lv 3] 持續時間 : 5分，傷害力增加率 : 150%，恢復機率: 9%，後延遲時間: 15分
 #
-HFLI_MOON# 
+HFLI_MOON#
 月光(Moonlight)
 MAX Lv : 5
 內容 : 對指定的近距離攻擊目標，
@@ -8286,7 +8113,7 @@ MAX Lv : 5
  [Lv 4] 連繫攻擊次數:2，傷害力增加率 : 550%
  [Lv 5] 連繫攻擊次數:3，傷害力增加率 : 660%
 #
-HFLI_FLEET# 
+HFLI_FLEET#
 橫越速度(Fleet Move)
 MAX Lv : 5
 內容 : 把生命體麗芙的攻擊速度和攻擊力，臨時性的飛躍提升
@@ -8296,7 +8123,7 @@ MAX Lv : 5
  [Lv 4] 攻擊速度增加量:12，傷害力增加率 : 125%，持續時間: 45秒，後延遲時間 : 90秒
  [Lv 5] 攻擊速度增加量:15，傷害力增加率 : 130%，持續時間: 40秒，後延遲時間 : 120秒
 #
-HFLI_SPEED# 
+HFLI_SPEED#
 緊急迴避(Overed Speed)
 MAX Lv : 5
 內容 : 讓生命體的迴避率，臨時性的達到最高點，讓它飛躍提升
@@ -8306,7 +8133,7 @@ MAX Lv : 5
  [Lv 4] 迴避率增加 : 50，持續時間 : 45秒，後延遲時間 : 90秒
  [Lv 5] 迴避率增加 : 60，持續時間 : 40秒，後延遲時間 : 120秒
 #
-HFLI_SBR44# 
+HFLI_SBR44#
 S.B.R.44
 MAX Lv : 3
 內容 : 把生命體現在所累積的親密度犧牲掉，把較大的傷害力給予敵人
@@ -8314,7 +8141,7 @@ MAX Lv : 3
  [Lv 2] 親密度 x 150%
  [Lv 3] 親密度 x 200%
 #
-HVAN_CAPRICE# 
+HVAN_CAPRICE#
 善變(Caprice)
 MAX Lv : 5
 內容 : 隨機的啟動元素箭類的技能，該效能在還沒有使用前時，是不可預知的，
@@ -8325,7 +8152,7 @@ MAX Lv : 5
  [Lv 4] 啟動4等級的元素箭類攻擊
  [Lv 5] 啟動5等級的元素箭類攻擊
 #
-HVAN_CHAOTIC# 
+HVAN_CHAOTIC#
 混亂的祈福(Chaotic Venediction)
 MAX Lv : 5
 內容 : 敵人，生命體，主人，
@@ -8336,7 +8163,7 @@ MAX Lv : 5
  [Lv 4] 使用治癒術Lv : 1~4，敵人 : 36%，生命體本身 : 60%，玩家 : 4%
  [Lv 5] 使用治癒術Lv : 1~5，敵人 : 33%，生命體本身 : 34%，玩家 : 33%
 #
-HVAN_INSTRUCT# 
+HVAN_INSTRUCT#
 變更指示(Change Instruction)
 MAX Lv : 5
 系列 : 被動
@@ -8347,7 +8174,7 @@ MAX Lv : 5
  [Lv 4] INT 增加值 : 4，STR 增加值 : 4
  [Lv 5] INT 增加值 : 5，STR 增加值 : 4
 #
-HVAN_EXPLOSION# 
+HVAN_EXPLOSION#
 生物爆炸(Bio Explosion)
 MAX Lv : 3
 內容 : 依據生命體MHP比例的傷害力，把生命體周圍最大 9x9空格給予傷害力，生命體本身會自爆，是不理會防禦力的傷害力，自爆時親密度會變為1
@@ -8355,7 +8182,7 @@ MAX Lv : 3
  [Lv 2] 傷害力 : MHP * 1.5倍
  [Lv 3] 傷害力 : MHP * 2倍
 #
-MS_BASH# 
+MS_BASH#
 狂擊(Bash)
 系列 : 攻擊
 對象 : 敵人
@@ -8371,7 +8198,7 @@ MS_BASH#
 [Level 9] : 攻擊力 370%
 [Level 10] : 攻擊力 400%
 #
-MS_MAGNUM# 
+MS_MAGNUM#
 怒爆(Magnum Break)
 系列 : 攻擊(火屬性)
 內容 : 以自己為中心並向周圍所有敵人造成傷害後往外推的 火屬性  擴散攻擊。
@@ -8387,17 +8214,17 @@ MS_MAGNUM#
 [Level 9] : 攻擊力 280%
 [Level 10] : 攻擊力 300%
 #
-MS_BOWLINGBASH# 
+MS_BOWLINGBASH#
 怪物互擊 (Bowling Bash)
 系列 : 攻擊
 對象 : 敵人 
 內容 : 可使敵人與敵人間互相撞擊後，進行一網打盡的攻擊。
 #
-MS_PARRYING# 
+MS_PARRYING#
  
 雙劍挌擋  (Parrying)
 系列 : 輔助
-內容 : 將敵人的攻擊以劍阻擋，若能成功的阻擋時，雖不會受到傷害，但會取消一次攻擊。
+內容 : 將敵人的攻擊以劍阻擋，若能成左漯蛃氶A雖不會受到傷害，但會取消一次攻擊。
 [Level 1] : 阻擋機率 +23%
 [Level 2] : 阻擋機率 +26%
 [Level 3] : 阻擋機率 +29%
@@ -8409,31 +8236,31 @@ MS_PARRYING#
 [Level 9] : 阻擋機率 +47%
 [Level 10] : 阻擋機率 +50%
 #
-MS_REFLECTSHIELD# 
+MS_REFLECTSHIELD#
 反射盾  (Reflect Shield)
 系列 : 輔助
 內容 : 在一定的時間內對我近距離攻擊的敵人，也會自動反震給敵人一定的傷害力。
 #
-MS_BERSERK# 
+MS_BERSERK#
 狂怒之槍 (Berserk)
 系列 : 輔助
 內容 : 被激怒後雖HP、移動速度和攻擊力會增加，但迴避率會降低且其它所有動作都會無效。.
 不能使用物品、不能用治癒術治療自己，在此狀態下HP會依時間過去而逐漸遞減。
 使用後，有5分鐘時間是 HP和 SP不會自動恢復。
 #
-MA_DOUBLE# 
+MA_DOUBLE#
 二連矢(Double strafing)
 系列 : 攻擊
 對象 : 敵人
 內容 : 對鎖定的敵人連續射出兩箭，造成敵人 2倍的傷害。
 #
-MA_SHOWER# 
+MA_SHOWER#
 箭雨 (Arrow shower)
 系列 : 攻擊
 對象 : 敵人
 內容 : 同時發射多發箭後，對鎖定的敵人和周圍的敵人可同時進行攻擊。
 #
-MA_SKIDTRAP# 
+RAP#
 滑動陷阱(Skid Trap)
 系列 : 陷阱(隱匿)
 對象 : 地面
@@ -8444,7 +8271,7 @@ MA_SKIDTRAP#
 [Level 4] : 移動距離 9，動作時間 120秒
 [Level 5] : 移動距離 10，動作時間 60秒
 #
-MA_LANDMINE# 
+MA_LANDMINE#
 地雷陷阱 (Land Mine)
 系列 : 陷阱(隱匿)
 對象 : 地面
@@ -8455,7 +8282,7 @@ MA_LANDMINE#
 [Level 4] : 攻擊力 125%，動作時間 20秒
 [Level 5] : 攻擊力 150%，動作時間 5秒
 #
-MA_SANDMAN# 
+MA_SANDMAN#
 睡魔陷阱(Sandman)
 系列 : 陷阱(隱匿)
 對象 : 地面
@@ -8466,7 +8293,7 @@ MA_SANDMAN#
 [Level 4] : 動作時間 60秒
 [Level 5] : 動作時間 30秒
 #
-MA_FREEZINGTRAP# 
+MA_FREEZINGTRAP#
 霜凍陷阱(Freezing Trap)
 系列 : 陷阱(隱匿)
 對象 : 地面
@@ -8477,19 +8304,19 @@ MA_FREEZINGTRAP#
 [Level 4] : 動作時間 60秒
 [Level 5] : 動作時間 30秒
 #
-MA_REMOVETRAP# 
+MA_REMOVETRAP#
 陷阱移除(Remove Trap)
 系列 : 輔助
 對象 : 設置在地面上的陷井
 內容 : 可以移除設置在地面上的陷阱
 #
-MA_CHARGEARROW# 
+MA_CHARGEARROW#
 衝鋒箭  (Charge Arrow)
 系列 : 攻擊
 對象 : 敵人
 內容 : 拉弓時間較久，但能發射更強的箭矢，當對方中箭時，會退後 4格。
 #
-MA_SHARPSHOOTING# 
+MA_SHARPSHOOTING#
 銳利射擊 (Sharpshooting)
 系列 : 攻擊
 內容 : 鎖定目標後發出強烈的一擊
@@ -8501,7 +8328,7 @@ MA_SHARPSHOOTING#
 [Level 4] : 攻擊力 +300%
 [Level 5] : 攻擊力 +350%
 #
-ML_PIERCE# 
+ML_PIERCE#
 連刺攻擊 (Pierce)
 系列 : 攻擊
 對象 : 敵人 
@@ -8515,45 +8342,45 @@ ML_BRANDISHSPEAR
 對象 : 敵人 
 內容 : 藉助大嘴鳥的力量來大力揮舞長矛， 需要有長矛 與大嘴鳥。
 #
-ML_BRANDISH# 
+ML_BRANDISH#
 騎乘攻擊(Brandish Spear)
 騎乘攻擊 (Brandish Spear)
 系列 : 攻擊
 對象 : 敵人 
 內容 : 藉助大嘴鳥的力量來大力揮舞長矛， 需要有長矛 與大嘴鳥。
 #
-ML_SPIRALPIERCE# 
+ML_SPIRALPIERCE#
 螺旋擊刺  (Spiral Pierce)
 系列 : 攻擊
 內容 : 當揮出長矛時會以螺旋形式進行攻擊，不但可強化貫通力，並具有更高的破壞力及殺傷力等效果，是屬於多重連擊方式。
 武器之重量越重時傷害會越增加，並能讓敵人1人有1秒鐘時間無法動彈
 雖技能等級越高時稍害會越增加，但施法時間和吟唱時間同樣會增加。
 #
-ML_DEFENDER# 
+ML_DEFENDER#
 光之盾 (Defender)
 系列 : 輔助
 內容 : 使用時可降低被遠距離物理攻擊所遭受的傷害力，傷害力的減少量依技能等級而不同，施法時移動速度和攻擊速度會變慢。
 正在使用光之盾狀態下，若再次使用光之盾時狀況就會解除。
 #
-ML_AUTOGUARD# 
+ML_AUTOGUARD#
 自動防禦 (Auto Guard)
 系列 : 輔助
 內容 : 在技能持續的時間內，有一定的機率對自己的遠距離和近距離物理攻擊做防禦.，
 自動防禦啟動後，施法者會有0.3秒鐘無法移動，技能等級越高時無法移動時間越短 
 #
-ML_DEVOTION# 
+ML_DEVOTION#
 犧牲 (Devotion)
 系列 : 輔助
 對象 : 召喚者
 內容 : 該召喚者所承受的傷害力，轉由傭兵全部承受，只是召喚者的等級與傭兵的等級不能相差10級以上，若脫離一定範圍或地圖移動、死亡等，有一段距離時就會失效。
 #
-MER_MAGNIFICAT# 
+MER_MAGNIFICAT#
 聖母之頌歌
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 使對方的SP恢復速度加快2倍
 #
-MER_QUICKEN# 
+MER_QUICKEN#
 加速武器(Weapon Quicken)
 系列 : 輔助
 內容 : 一定時間內使用雙手劍的攻擊速度會增加，解除雙手劍裝備後技能的效果會消失
@@ -8568,12 +8395,12 @@ MER_QUICKEN#
 [Level 9] : 持續時間 4分 30秒
 [Level 10] : 持續時間 5分
 #
-MER_SIGHT# 
+MER_SIGHT#
 火狩(Sight)
 系列 : 輔助(火屬性)
 內容 : 可找出周圍藏匿的敵人。 
 #
-MER_CRASH# 
+MER_CRASH#
 撞擊(Crash)
 系列 : 攻擊
 對象 : 敵人
@@ -8584,43 +8411,43 @@ MER_CRASH#
 [Level 4] : 攻擊力 140%，昏迷機率 24%
 [Level 5] : 攻擊力 150%，昏迷機率 30%
 #
-MER_REGAIN# 
+MER_REGAIN#
 恢復(Regain)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到昏迷和睡眠狀態下恢復。
 #
-MER_TENDER# 
+MER_TENDER#
 補給(Tender)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到冰凍和石化狀態下恢復。
 #
-MER_BENEDICTION# 
+MER_BENEDICTION#
 祝福 (Benediction)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到詛咒和黑暗狀態下恢復。
 #
-MER_RECUPERATE# 
+MER_RECUPERATE#
 復原(Recuperate)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到沉默和中毒狀態下恢復。
 #
-MER_MENTALCURE# 
+MER_MENTALCURE#
 精神_治癒(Mental Cure)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到混亂和幻覺狀態下恢復。
 #
-MER_COMPRESS# 
+MER_COMPRESS#
 壓制(Compress)
 系列 : 輔助
 對象 : 玩家，傭兵
 內容 : 可從被對方遭到出血狀態下恢復。
 #
-MER_PROVOKE# 
+MER_PROVOKE#
 挑釁(Provoke)
 系列 : 輔助
 對象 : 敵人
@@ -8636,35 +8463,35 @@ MER_PROVOKE#
 [Level 9] : 敵人攻擊力 +29%，敵人防禦力 -50%
 [Level 10] : 敵人攻擊力 +32%，敵人防禦力 -55%
 #
-MER_AUTOBERSERK# 
+MER_AUTOBERSERK#
 狂暴狀態  (Auto Berserk)
 系列 : 被動
 內容 : 快要死亡時(HP 25% 以下) 就會變成憤怒狀態，此憤怒狀態如同挑釁等級 10 技能一樣，只要此狀態沒有解除就會持續，需要受到可解除挑釁技能時才會解除。
 #
-MER_DECAGI# 
+MER_DECAGI#
 緩速術 (Decrease agility)
 系列 : 輔助
 對象 : 敵人
 內容 : 在一定時間內，可降低敵人的移動及攻擊速度。 
 #
-MER_SCAPEGOAT# 
+MER_SCAPEGOAT#
 替罪羔羊(Scapegoat)
 系列 : 輔助
 內容 : 傭兵會把自己所剩之 HP都給召喚者後死亡，剩餘的HP則會消失
 #
-MER_LEXDIVINA# 
+MER_LEXDIVINA#
 沉默之術(Lex Divina)
 系列 : 驅魔系列
 對象 : 敵人 
 內容 : 在指定的時間內可使敵人變成沉默狀態。
 #
-MER_ESTIMATION# 
+MER_ESTIMATION#
 怪物情報 (Monster Property)
 系列 : 輔助
 對象 : 怪物
 內容 : 可將某特定怪物的相關情報給自己和同隊伍的隊員看。
 #
-MER_KYRIE# 
+MER_KYRIE#
 霸邪之陣(Kyrie Eleison)
 系列 : 讚頌系
 內容 : 可以指定1名玩家設置防護欄，持續2分鐘，以技能等級來決定防護欄能夠阻擋攻擊的次數，但被神聖之光攻擊時就會立即解除防護欄
@@ -8679,37 +8506,37 @@ MER_KYRIE#
 [Level 9] : MAXHP 28%的防護欄, 可防禦9次
 [Level 10] : MAXHP 30%的防護欄, 可防禦10次
 #
-MER_BLESSING# 
+MER_BLESSING#
 天使之賜福(Blessing)
 系列 : 輔助
 對象 : 玩家
 內容 : 對指定玩家的DEX, INT, STR可臨時增加,受詛咒或在石化狀態的玩家使用後可恢復異常狀態
 #
-MER_INCAGI# 
+MER_INCAGI#
 加速術(Increase agility)
 系列 : 輔助
 對象 : 玩家
 內容 : 在一定時間內可增加所指定玩家的移動和攻擊速度,使用時會消耗少量的HP
 #
-GD_APPROVAL# 
+GD_APPROVAL#
 正式工會認證
 系列 : 被動
 對象 : 所有工會組合員全部
 內容 : 從盧恩-米德加爾茲王國那裡, 正式得到工會的認證. 得到正式工會認證的工會組合員們，攻擊秘密基地時可以破壞華麗金屬.
 #
-GD_KAFRACONTRACT# 
+GD_KAFRACONTRACT#
 和卡普拉訂契約
 系列 : 被動
 對象 : 工會
 內容 : 和在艾爾帕蘭的卡普拉本店訂契約，和卡普拉訂契約的話，在秘密基地裡可以雇用，工會專用的卡普拉職員.
 #
-GD_GUARDRESEARCH# 
+GD_GUARDRESEARCH#
 研究監護人
 系列 : 被動
 對象 : 工會
 內容 : 對監護人做技術上的研究，透過這研究可以設置監護人，來保護秘密基地.
 #
-GD_GUARDUP# 
+GD_GUARDUP#
 監護人魔物強化(Build up the Guardian)
 系列 : 被動
 內容 : 把形成的監護人魔物強化
@@ -8719,7 +8546,7 @@ GD_GUARDUP#
 內容 : 把形成的監護人魔物強化.
 每當技能等級增加時，監護人魔物的攻擊力和攻擊速度會增加
 #
-GD_EXTENSION# 
+GD_EXTENSION#
 擴充組合體制
 系列 : 被動
 對象 : 工會
@@ -8735,40 +8562,39 @@ GD_EXTENSION#
 [Level 9] : +36人
 [Level 10] : +40人
 #
-GD_GLORYGUILD# 
-#
-GD_LEADERSHIP# 
+GD_GLORYGUILD##
+GD_LEADERSHIP#
 偉大的指導力(Great Leadership)
 系列 : 被動
 對象 : 在5格範圍內的公會員
 內容 : 以公會長為中心 5X5格範圍內，把所有公會員的 STR獲得最大+5的加重值
 #
-GD_GLORYWOUNDS# 
+GD_GLORYWOUNDS#
 光榮的傷口(Wounds of Glory)
 系列 : 被動
 對象 : 在5格範圍內的公會員
 內容 : 以公會長為中心 5X5格範圍內，把所有公會員的 VIT獲得最大+5的加重值
 #
-GD_SOULCOLD# 
+GD_SOULCOLD#
 冷漠之心(Soul of Cold)
 系列 : 被動
 對象 : 在5格範圍內的公會員
 內容 : 以公會長為中心 5X5格範圍內，把所有公會員的 AGI獲得最大+5的加重值
 #
-GD_HAWKEYES# 
+GD_HAWKEYES#
 尖銳的視線(Sharp Hawk Eyes)
 系列 : 被動
 對象 : 在5格範圍內的公會員
 內容 : 以公會長為中心 5X5格範圍內，把所有公會員的 DEX獲得最大+5的加重值
 #
-GD_BATTLEORDER# 
+GD_BATTLEORDER#
 下達戰鬥命令(Battle Orders)
 系列 : 輔助
 對象 : 在視線範圍內所有的公會員
 內容 : 該技能是在攻城戰模式裡，可使用的技能
 只有公會長才能使用，在視線內所有公會員的 STR，INT， DEX可上升到5，可擁有 1分鐘的持續時間，使用後會有5分鐘不能使用公會技能的
 #
-GD_REGENERATION# 
+GD_REGENERATION#
 復興公會員體力(Regeneration)
 系列 : 輔助
 對象 : 在視線範圍內所有的公會員
@@ -8778,29 +8604,28 @@ GD_REGENERATION#
 [Level 2] : HP/SP 恢復速度 2倍
 [Level 3] : HP/SP 恢復速度3倍
 #
-GD_RESTORE# 
+GD_RESTORE#
 恢復公會員體力(Restore)
 系列 : 輔助
 對象 : 在視線範圍內所有的公會員
 內容 : 該技能是在攻城戰模式裡，可使用的技能
 只有公會長才能使用，在視線內所有公會員的 HP/SP可讓MAXHP可恢復到90%，使用後會有5分鐘不能使用公會技能的
 #
-GD_EMERGENCYCALL# 
+GD_EMERGENCYCALL#
 緊急呼叫(Emergency Call)
 系列 : 輔助
 對象 : 所有公會員
 內容 : 該技能是在攻城戰模式裡，可使用的技能
 只有公會長才能使用，把公會員全部集中在公會長旁邊，使用後會有5分鐘不能使用公會技能的
 #
-GD_DEVELOPMENT# 
+GD_DEVELOPMENT#
 永久的發展(Emsolute Develop)
 系列 : 被動
 內容 : 發展度增加時，有50%的機率追加 +1的，形成發展的可能形
 換句話說，一次可以形成1或是2的發展的可行性
 #
-GD_ITEMEMERGENCYCALL# 
-#
-MH_SUMMON_LEGION# 
+GD_ITEMEMERGENCYCALL##
+MH_SUMMON_LEGION#
 召喚蟲團 (Summon Legion)
 MAX Lv : 5
 內容 :  召喚蟲團後攻擊一個目標，
@@ -8811,7 +8636,7 @@ MAX Lv : 5
  [Lv 4]  召喚魯修拉黃蜂 / 持續時間 50秒 
  [Lv 5]  召喚魯修拉黃蜂 / 持續時間 60秒 
 #
-MH_NEEDLE_OF_PARALYZE# 
+MH_NEEDLE_OF_PARALYZE#
 麻痺針 (Needle Of Paralyze
 MAX Lv : 5
 內容 : 利用劇烈的麻痺毒與毒屬性傷害
@@ -8824,7 +8649,7 @@ MAX Lv : 5
  [Lv 4] 物理攻擊力 1100% / 麻痺機率 60% 
  [Lv 5] 物理攻擊力 1200% / 麻痺機率 65% 
 #
-MH_POISON_MIST# 
+MH_POISON_MIST#
 劇毒粉 (Poison Mist)
 MAX Lv : 5
 內容 : 在地面一定範圍內灑毒粉，向進入該範圍內的所有目標
@@ -8835,7 +8660,7 @@ MAX Lv : 5
  [Lv 4] 黑暗機 50 % / 持續時間 18秒 
  [Lv 5] 黑暗機 60% / 持續時間 20秒 
 #
-MH_PAIN_KILLER# 
+MH_PAIN_KILLER#
 鎮痛劑(Pain Killer)
 MAX Lv : 5
 內容 : 向目標一個注入小劑量麻痺毒, 當遭受傷害時，
@@ -8846,7 +8671,7 @@ MAX Lv : 5
  [Lv 4] 持續時間 50秒 
  [Lv 5] 持續時間 60秒 
 #
-MH_LIGHT_OF_REGENE# 
+MH_LIGHT_OF_REGENE#
 重生之光(Light Of Regene)
 MAX Lv : 5
 內容 : 生命體向主人施以重生之光, 於持續時間內主人
@@ -8859,7 +8684,7 @@ MAX Lv : 5
  [Lv 4] 持續時間 540秒 
  [Lv 5] 持續時間 600秒 
 #
-MH_OVERED_BOOST# 
+MH_OVERED_BOOST#
 瞬間增壓(Overed Boost)
 MAX Lv : 5
 內容 : 暫時可固定生命體及其主人的迴避率和攻急速度, 
@@ -8872,7 +8697,7 @@ MAX Lv : 5
  [Lv 4] 迴避 460 / 攻速 187 
  [Lv 5] 迴避 500 / 攻速 189 
 #
-MH_ERASER_CUTTER# 
+MH_ERASER_CUTTER#
 音速刀刃(Eraser Cutter)
 MAX Lv : 5
 內容 : 產生音速的刀刃，給予遠距離的敵一個數次打擊。
@@ -8883,7 +8708,7 @@ MAX Lv : 5
  [Lv 4] 攻擊力 1200% / 無屬性魔法傷害 
  [Lv 5] 攻擊力 1000% / 風屬性魔法傷害 
 #
-MH_XENO_SLASHER# 
+MH_XENO_SLASHER#
 血腥魔刀 (Overed Boost)
 MAX Lv : 5
 內容 : 以廣域範圍使用音速刀刃。
@@ -8895,7 +8720,7 @@ MAX Lv : 5
  [Lv 4] 攻擊力 900% / 無屬性魔法傷害 / 7 x 7 格 
  [Lv 5] 攻擊力 700% / 風屬性魔法傷害 / 9 x 9 格 
 #
-MH_SILENT_BREEZE# 
+MH_SILENT_BREEZE#
 沉默微風(Silent Breeze)
 MAX Lv : 5
 內容 : 沉默的風。恢復一個目標一定的HP，但會馬上陷入
@@ -8907,7 +8732,7 @@ MAX Lv : 5
  [Lv 4] 持續時間 18秒 
  [Lv 5] 持續時間 21秒 
 #
-MH_STAHL_HORN# 
+MH_STAHL_HORN#
 鋼鐵之角(STAHL HORN)
 MAX Lv : 5
 內容 : 攻擊一個目標，給予傷害的同時
@@ -8918,12 +8743,12 @@ MAX Lv : 5
  [Lv 4] 攻擊力 900% / 射程距離 8 格 / 暈眩機率 32% 
  [Lv 5] 攻擊力 1000% / 射程距離 9 格 / 暈眩機率 36% 
 #
-MH_GOLDENE_FERSE# 
+MH_GOLDENE_FERSE#
 黃金腳跟(Goldene Ferse)
 MAX Lv : 5
 內容 : 提升生命體的迴避率與攻擊速度，普通攻擊時一定機率
-  在效果持續時間內使用「鋼鐵之角」時，會以聖屬性攻擊發動。
-在效果持續時間內使用「鋼鐵之角」時，會以聖屬性攻擊發動。, 
+在效果持續時間內使用「鋼鐵之角」時，會以聖屬性攻擊發動。
+在效果持續時間內使用「鋼鐵之角」時，會以聖屬性攻擊發動。
 此技能無法與「攻擊準備」一起使用。
  [Lv 1] 迴避率 + 20  / 攻速 +10% / 以4%的機率發動聖屬性攻擊 / 持續時間 30秒 
  [Lv 2] 迴避率 + 30  / 攻速 +14% / 以6%的機率發動聖屬性攻擊 / 持續時間 45秒 
@@ -8931,7 +8756,7 @@ MAX Lv : 5
  [Lv 4] 迴避率 + 50  / 攻速 +22% / 以10%的機率發動聖屬性攻擊 / 持續時間 75秒 
  [Lv 5] 迴避率 + 60  / 攻速 +26% / 以12%的機率發動聖屬性攻擊 / 持續時間 90秒 
 #
-MH_STEINWAND# 
+MH_STEINWAND#
 岩壁 (Stein Wand)
 MAX Lv : 5
 內容 : 生命體本身與主人腳下立即施展「暗之障壁」。
@@ -8941,7 +8766,7 @@ MAX Lv : 5
  [Lv 4] 持續時間 75秒 
  [Lv 5] 持續時間 90秒 
 #
-MH_HEILIGE_STANGE# 
+MH_HEILIGE_STANGE#
 聖刺 (Heilige Stange)
 MAX Lv : 5
 內容 : 對目標一個及其周圍全部敵人造成聖屬性魔法傷害。
@@ -8951,10 +8776,10 @@ MAX Lv : 5
  [Lv 4] 攻擊力 1500% / 聖屬性魔法傷害 / 3 x 3 格 
  [Lv 5] 攻擊力 1750% / 聖屬性魔法傷害 / 5 x 5 格 
 #
-MH_ANGRIFFS_MODUS# 
+MH_ANGRIFFS_MODUS#
 攻擊準備 (Angriffs_Modus)
 MAX Lv : 5
-內容 :  一定時間內生命體本身的攻擊速度上升；但防禦力及迴避率, 
+內容 :  一定時間內生命體本身的攻擊速度上升；但防禦力及迴避率
 大幅下降；此技能無法與「黃金腳跟」一起使用。
  [Lv 1] 攻擊力 +70  / 防禦力 -50  / 迴避 -60 / 持續時間 30秒 
  [Lv 2] 攻擊力 +90  / 防禦力 -70 / 迴避 -80 / 持續時間 45秒 
@@ -8962,24 +8787,24 @@ MAX Lv : 5
  [Lv 4] 攻擊力 +130 / 防禦力 -110 / 迴避 -120 / 持續時間 75秒 
  [Lv 5] 攻擊力 +150 / 防禦力 -130 / 迴避 -140 / 持續時間 90秒 
 #
-MH_STYLE_CHANGE# 
+MH_STYLE_CHANGE#
 轉換型態 (Style Change)
 MAX Lv : 1
-內容 :  把生命體的型態從戰士轉換為格鬥士；或從格鬥士轉換為戰士；, 
+內容 :  把生命體的型態從戰士轉換為格鬥士；或從格鬥士轉換為戰士；
 在戰士狀態下攻擊或遭受傷害時，有機率聚集氣球體。
 #
-MH_SONIC_CRAW# 
+MH_SONIC_CRAW#
 音速利爪 (Sonic_Claw)
 MAX Lv : 5
-內容 :  只能在戰士狀態下使用，對目標一個進行高速的利爪攻擊。, 
-攻擊次數依氣球體數的多寡來決定，沒有氣球體時，技能不會發動。
+內容 :  只能在戰士狀態下使用，對目標一個進行高速的利爪攻擊。
+攻擊次數依氣球體數的多寡來決?w，沒有氣球體時，技能不會發動。
  [Lv 1] 攻擊力 40%  
  [Lv 2] 攻擊力 80%  
  [Lv 3] 攻擊力 120% 
  [Lv 4] 攻擊力 160% 
  [Lv 5] 攻擊力 200% 
 #
-MH_SILVERVEIN_RUSH# 
+MH_SILVERVEIN_RUSH#
 銀脈衝擊 (Silvervein Rush)
 MAX Lv : 5
 內容 :  只能在戰士狀態下使用，音速利爪施展後只能以連接技能來發動。
@@ -8991,11 +8816,11 @@ MAX Lv : 5
  [Lv 4] 攻擊力 600% / 暈眩機率 40% 
  [Lv 5] 攻擊力 750% / 暈眩機率 45% 
 #
-MH_MIDNIGHT_FRENZY# 
+MH_MIDNIGHT_FRENZY#
 午夜狂暴(Midnight Frenzy)
 MAX Lv : 5
-內容 : 只能在戰士型態下使用；以及使用銀脈衝擊後只能以連接技能來發動。, 
-使用技能時消耗 2 個氣球體；給予目標傷害的同時，有機率, 
+內容 : 只能在戰士型態下使用；以及使用銀脈衝擊後只能以連接技能來發動。
+使用技能時消耗 2 個氣球體；給予目標傷害的同時，有機率
 使目標陷入恐懼狀態。目標陷入恐懼狀態的機率視氣球體的個數增加；
 使用技能後，可以連接[音速利爪]。
  [Lv 1] 攻擊力 300% 
@@ -9004,7 +8829,7 @@ MAX Lv : 5
  [Lv 4] 攻擊力 1200% 
  [Lv 5] 攻擊力 1500% 
 #
-MH_TINDER_BREAKER# 
+MH_TINDER_BREAKER#
 粉碎骨折(Tinder Breaker)
 MAX Lv : 5
 內容 : 這是一個接近目標後，抓住目標並折斷其關節的技能。使用技能後，目標和
@@ -9016,7 +8841,7 @@ MAX Lv : 5
  [Lv 4] 攻擊力 400% 
  [Lv 5] 攻擊力 500% 
 #
-MH_CBC# 
+MH_CBC#
 連續突破組合(Continual Break Combo)
 MAX Lv : 5
 內容 : 只能在火種破壞者粉碎骨折施展後以連接技能的形式使用，使用技能時消耗1個氣球體。
@@ -9029,10 +8854,10 @@ MAX Lv : 5
  [Lv 4] 基本傷害 1600 
  [Lv 5] 基本傷害 2000 
 #
-MH_EQC# 
+MH_EQC#
 永恆快速組合 (Eternal Quick Combo)
 MAX Lv : 5
-內容 : 只能在連續突破組合施展後以連接技能的型態使用。使用技能時消耗 2個氣球體。,  
+內容 : 只能在連續突破組合施展後以連接技能的型態使用。使用技能時消耗 2個氣球體。
 造成傷害的同時，目標會 100% 陷入暈眩狀態，並減少MHP、攻擊力和防禦力。
 使用技能後，生命體可以脫離目標及自由移動，迴避也會恢復正常。
 此技能對BOSS怪無效。
@@ -9042,7 +8867,7 @@ MAX Lv : 5
  [Lv 4] MHP -8 % / 攻擊力, 防禦力 -20 % 
  [Lv 5] MHP -10 % / 攻擊力, 防禦力 -25 % 
 #
-MH_MAGMA_FLOW# 
+MH_MAGMA_FLOW#
 岩漿流動 (Magma Flow)
 MAX Lv : 5
 內容 : 每當生命體受到傷害時，有機率噴出岩漿，
@@ -9053,7 +8878,7 @@ MAX Lv : 5
  [Lv 4] 攻擊力 400% /  範圍 5 x 5  / 發動機率 12 % 
  [Lv 5] 攻擊力 500% /  範圍 5 x 5  / 發動機率 15 %
 #
-MH_GRANITIC_ARMOR# 
+MH_GRANITIC_ARMOR#
 花崗岩鎧甲(Granitic Armor)
 MAX Lv : 5
 內容 : 用花崗岩構成的堅硬鎧甲；可暫時提升生命體和主人的
@@ -9065,7 +8890,7 @@ MAX Lv : 5
  [Lv 4] 傷害 -8% / HP -24% 
  [Lv 5] 傷害 -10% / HP -30%
 #
-MH_LAVA_SLIDE# 
+MH_LAVA_SLIDE#
 熔岩滑動(Lava Slide)
 MAX Lv : 5
 內容 : 在地面揮灑熔岩造成範圍內的全部敵人傷害，效果範圍內的
@@ -9076,7 +8901,7 @@ MAX Lv : 5
  [Lv 4] 著火機率 40% 
  [Lv 5] 著火機率 50% 
 #
-MH_PYROCLASTIC# 
+MH_PYROCLASTIC#
 火山塵暴(Pyroclastic)
 MAX Lv : 5
 內容 : 生命體的攻擊與主人所持武器的屬性暫時轉為火屬性，
@@ -9089,7 +8914,7 @@ MAX Lv : 5
  [Lv 4] 持續時間 150秒
  [Lv 5] 持續時間 180秒
 #
-MH_VOLCANIC_ASH# 
+MH_VOLCANIC_ASH#
 火山灰 (Volcanic Ash)
 MAX Lv : 5
 內容 : 在地面灑上火山灰，在這範圍內的所有目標會陷入火山灰效果，
@@ -9103,15 +8928,13 @@ MAX Lv : 5
  [Lv 4] 效果持續時間 32秒 
  [Lv 5] 效果持續時間 40秒 
 #
-
-
-MC_CHANGECART# 
+MC_CHANGECART#
 改裝手推車 (Change Cart)
 習得條件 : 完成任務
 系列 : 輔助
 內容 : 依自己等級變化，可更換手推車，等級愈高選擇愈多。
-}
-        [SKID.LK_SPIRALPIERCE# 
+#
+LK_SPIRALPIERCE#
 螺旋擊刺 (Spiral Pierce)
 MAX Lv : 5
 習得條件 : 長矛使用熟練度 5、連刺攻擊 5、騎乘術 1、長矛刺擊 5
@@ -9120,8 +8943,7 @@ MAX Lv : 5
 武器越重傷害越大，使1個敵人在1秒鐘無法動彈。
 技能等級越高傷害越大，但詠唱時間及施展後的延遲時間也會增加。
 #
-
-NC_PILEBUNKER# 
+NC_PILEBUNKER#
 衝擊椎
 MAX Lv : 3
 習得條件 : 噴射飛拳 2 
@@ -9131,16 +8953,13 @@ MAX Lv : 3
 [Level 2] :  Buff解除機率 55%
 [Level 3] :  Buff解除機率 70%
 #
-
-RETURN_TO_ELDICASTES# 
+RETURN_TO_ELDICASTES#
 返回艾爾迪卡斯特(RETURN TO ELDICASTES)
 MAX LV : 1
 系列 : 輔助(返城)
 內容 : 可返回邪派的首都艾爾迪卡斯特，使用後有5分鐘的冷卻時間。
 #
-
-
-KO_YAMIKUMO# 
+KO_YAMIKUMO#
 暗雲
 MAX Lv : 1
 習得條件 : 隱身攻擊 5 
@@ -9148,7 +8967,6 @@ MAX Lv : 1
 當SP消耗到0或再次使用技能時就會解除，在暗雲狀態下
 會持續消耗SP。
 #
-
 KO_RIGHT#
 右手修練
 MAX Lv : 5  (被動)
@@ -9160,7 +8978,6 @@ MAX Lv : 5  (被動)
 [LV 4]  攻擊力 110% 
 [LV 5]  攻擊力 120% 
 #
-
 KO_LEFT#
 左手修練
 MAX Lv : 5 (被動)
@@ -9171,12 +8988,11 @@ MAX Lv : 5 (被動)
 [LV 4]  攻擊力 90% 
 [LV 5]  攻擊力 100% 
 #
-
-KO_JYUMONJIKIRI# 
-幽冥十字斬 
-MAX Lv : 5, 
+KO_JYUMONJIKIRI#
+幽冥十字斬
+MAX Lv : 5
 習得條件 : 暗雲 1 
-內容 : 日影忍者 & 月影忍者的合擊技能，被打到的對象3秒內處於<十字創傷>狀態。, 
+內容 : 日影忍者 & 月影忍者的合擊技能，被打到的對象3秒內處於<十字創傷>狀態。
 當對象處於十字創傷狀態下再用幽冥十字斬攻擊時，傷害力會更大。
 施展者的 BaseLV 越高時傷害增加幅度就越大。
 [LV 1]  攻擊力 150% / 射程距離 3 格 
@@ -9185,7 +9001,6 @@ MAX Lv : 5,
 [LV 4]  攻擊力 600% / 射程距離 6 格 
 [LV 5]  攻擊力 750% / 射程距離 7 格 
 #
-
 KO_SETSUDAN#
 靈魂阻隔
 MAX Lv : 5
@@ -9198,7 +9013,6 @@ MAX Lv : 5
 [LV 4]  攻擊力 400% 
 [LV 5]  攻擊力 500% 
 #
-
 KO_BAKURETSU#
 爆炸飛刀
 MAX Lv : 5 
@@ -9211,7 +9025,6 @@ MAX Lv : 5
 [LV 4]  射程距離 10 格 / 效果範圍 3 x 3 格 
 [LV 5]  射程距離 11 格 / 效果範圍 3 x 3 格 
 #
-
 KO_HAPPOKUNAI#
 八方飛刀
 MAX Lv : 5 
@@ -9224,10 +9037,9 @@ MAX Lv : 5
 [LV 4]  範圍 9 x 9 格 
 [LV 5]  範圍 11 x 11 格 
 #
-
 KO_MUCHANAGE#
 投擲魔幣
-MAX Lv : 10 , 
+MAX Lv : 10 
 習得條件 : 投擲三角釘 3 
 內容 :  忍者技能[投擲硬幣]的強化版，最多可投擲100,000 Zeny，使一定範圍內的全部敵人造成不理會防禦的隨機擴散傷害，BOSS怪傷害減半。
 [LV 1]  10,000 zeny 消耗 / 5,000 ~ 10,000 隨機傷害 
@@ -9241,9 +9053,8 @@ MAX Lv : 10 ,
 [LV 9]  90,000 zeny 消耗 / 45,000 ~ 90,000 隨機傷害 
 [LV 10]  100,000 zeny 消耗 / 50,000 ~ 100,000 隨機傷害 
 #
-
-KO_HUUMARANKA# 
-風魔飛鏢之飛舞 
+KO_HUUMARANKA#
+風魔飛鏢之飛舞
 MAX Lv : 5 
 習得條件 : 投擲風魔飛鏢 5 
 內容 : 投擲風魔飛鏢讓 7 x 7 格範圍內的全部敵人造成傷害，
@@ -9254,8 +9065,7 @@ MAX Lv : 5
 [LV 4]  攻擊力 600 % / 射程距離 12 格  
 [LV 5]  攻擊力 750 % / 射程距離 13 格  
 #
-
-KO_MAKIBISHI# 
+KO_MAKIBISHI#
 投擲三角釘
 MAX Lv : 5 
 習得條件 : 投擲金錢 1 
@@ -9267,8 +9077,7 @@ MAX Lv : 5
 [LV 4]  三角釘消耗量 6 個  
 [LV 5]  三角釘消耗量 7 個  
 #
-
-KO_MEIKYOUSISUI# 
+KO_MEIKYOUSISUI#
 明鏡止水
 MAX Lv : 5 
 習得條件 : 忍術修練 10 
@@ -9280,21 +9089,19 @@ MAX Lv : 5
 [LV 4]  每秒恢復 HP 8 %  / SP 4 %  
 [LV 5]  每秒恢復 HP 10 % / SP 5 %  
 #
-
 KO_ZANZOU#
 幻術–殘影
 MAX Lv : 5 
 習得條件 : 金蟬脫殼 1 
 內容 : 使用幻術來產生自己的分身，該分身有一定的HP，當HP變0時分身就消失。
-施展者的 MSP量越高時分身會有額外的 HP。 
+施展者的 MSP量越高時分身會有額外的 HP。
 [LV 1]  分身 HP 6000  
 [LV 2]  分身 HP 9000   
 [LV 3]  分身 HP 12000   
 [LV 4]  分身 HP 15000   
 [LV 5]  分身 HP 18000   
 #
-
-KO_KYOUGAKU# 
+KO_KYOUGAKU#
 幻術–驚恐
 MAX Lv : 5 
 習得條件 : 幻術–迷惑 2 
@@ -9307,8 +9114,7 @@ MAX Lv : 5
 [LV 4]  全部素質減少 8 ~ 12 
 [LV 5]  全部素質減少 10 ~ 15 
 #
-
-KO_JYUSATSU# 
+KO_JYUSATSU#
 幻術–咒死
 MAX Lv : 5 
 習得條件 : 幻術–驚恐 3 
@@ -9316,65 +9122,55 @@ MAX Lv : 5
 另外有叫低機率施以[頻死之術]，但只限於和自己相同或較低等級的
 對象有效，隊怪物則無效。
 #
-
 KO_GENWAKU#
 幻術–迷惑
-MAX Lv : 5 , 
+MAX Lv : 5 
 習得條件 : 金蟬脫殼 1 
-內容 : 互換目標對象和自己的位置，施展者和對象有機率陷入[混亂]的異常狀態。 
+內容 : 互換目標對象和自己的位置，施展者和對象有機率陷入[混亂]的異常狀態。
 #
-
 KO_IZAYOI#
-第16個夜晚, 
-MAX Lv : 5 ,  
+第16個夜晚
+MAX Lv : 5 
 習得條件 : 忍術修練 5 
-內容 : 使用技能時，忍者所使用的全部技能的固定詠唱會消失，變動詠唱時間會減半，MATK也會增加一些。, 
+內容 : 使用技能時，忍者所使用的全部技能的固定詠唱會消失，變動詠唱時間會減半，MATK也會增加一些。
 #
 KO_KAHU_ENTEN#
 火符 : 炎天
-MAX Lv : 1 ,  
+MAX Lv : 1 
 內容 : 使用火符來招喚火之靈氣，以增加火屬性忍術的攻擊力。
 最多可招喚10個靈氣，當招喚10個靈氣時，使武器變成火屬性。
-使用技能時會消耗火符1個。, 
+使用技能時會消耗火符1個。
 #
-
-
 KO_HYOUHU_HUBUKI#
 冰符 : 吹雪
-MAX Lv : 1 ,  
-內容 : 使用冰符來招喚水之靈氣，以增加水屬性忍術的攻擊力。 , 
+MAX Lv : 1 
+內容 : 使用冰符來招喚水之靈氣，以增加水屬性忍術的攻擊力。 
 最多可招喚10個靈氣，當招喚10個靈氣時，使武器變成水屬性。
-使用技能時會消耗冰符1個。, 
+使用技能時會消耗冰符1個。
 #
-
-
 KO_KAZEHU_SEIRAN#
 風符 : ?嵐
-MAX Lv : 1 ,  
-內容 : 使用風符來招喚火之靈氣，以增加風屬性忍術的攻擊力。 
+MAX Lv : 1 
+內容 : 使用風符來招喚火之靈氣，以增加風屬性忍術的攻擊力。
 最多可招喚10個靈氣，當招喚10個靈氣時，使武器變成風屬性。
-使用技能時會消耗風符1個。, 
+使用技能時會消耗風符1個。
 #
-
-
 KO_DOHU_KOUKAI#
 地符 : 剛塊
-MAX Lv : 1 ,  
+MAX Lv : 1 
 內容 : 使用地符來招喚地之靈氣，以增加施展者的攻擊力和防禦力。
 最多可招喚10個靈氣，當招喚10個靈氣時，使武器變成地屬性。
-使用技能時會消耗地符1個。, 
+使用技能時會消耗地符1個。
 #
-
 KO_KAIHOU#
 法術–釋放
-MAX Lv : 1 ,  
+MAX Lv : 1 
 習得條件 : 火符 : 炎天 1 , 冰符 : 吹雪 1、風符 : ?嵐 1、地符 : 剛塊 1  
 內容 : 向對象1個釋放靈氣的力量後造成傷害，傷害屬性以招喚的靈氣屬性為依據。
 #
-
-KO_ZENKAI]	= 
+KO_ZENKAI#
 法術–施展
-MAX Lv : 1 ,  
+MAX Lv : 1 
 習得條件 : 法術–釋放 1 , 第16個夜晚 1 
 內容 : 將靈氣的力量施展到地面，可形成多種效果的陣法。
  火屬性靈氣- 對範圍內的全部敵人陷入著火異常狀態，若裝備的武器為火屬性時會增加攻擊力。
@@ -9382,296 +9178,281 @@ MAX Lv : 1 ,
  風屬性靈氣- 對範圍內的全部敵人陷入沉默/睡眠/沉睡中的一項異常狀態，若裝備的武器為風屬性時會增加攻擊力。 
  地屬性靈氣- 對範圍內的全部敵人陷入石化/毒中的一項異常狀態，若裝備的武器為地屬性時會增加攻擊力。
 #
-
 KG_KAGEHUMI#
 踏影
-MAX Lv : 5 ,  
+MAX Lv : 5 
 習得條件 : 幻術–殘影 1 
-內容 : 針對使用隱身技能的對象使其暫時停止動作，並強制解除該技能。, 
+內容 : 針對使用隱身技能的對象使其暫時停止動作，並強制解除該技能。
 [LV 1]  效果範圍 5 x 5 格  
 [LV 2]  效果範圍 7 x 7 格   
 [LV 3]  效果範圍 9 x 9 格   
 [LV 4]  效果範圍 11 x 11 格   
 [LV 5]  效果範圍 13 x 13 格   
 #
-
 KG_KYOMU#
 虛無飄妙之影
-MAX Lv : 5, 
+MAX Lv : 5
 習得條件 : 踏影 2 
-內容 : 在一定時間內讓對象擁有的反射能力變無效。, 
-陷入虛無飄妙之影期間，有機率使用技能時會失敗，使用技能時會消耗丸球1個。, 
+內容 : 在一定時間內讓對象擁有的反射能力變無效。
+陷入虛無飄妙之影期間，有機率使用技能時會失敗，使用技能時會消耗丸球1個。
 [LV 1]  持續時間 10 秒  
 [LV 2]  持續時間 15 秒   
 [LV 3]  持續時間 20 秒   
 [LV 4]  持續時間 25 秒   
 [LV 5]  持續時間 30 秒   
 #
-
 KG_KAGEMUSYA#
 影子武士
-MAX Lv : 5, 
+MAX Lv : 5
 習得條件 : 虛無飄妙之影 3 
 內容 : 在一定時間內讓對象1個賦予[技能 : 二刀連擊]能力。
-在持續時間內每秒會消耗 1 SP，使用技能時會消耗丸球1個。, 
+在持續時間內每秒會消耗 1 SP，使用技能時會消耗丸球1個。
 [LV 1]  持續時間 60 秒  
 [LV 2]  持續時間 90 秒   
 [LV 3]  持續時間 120 秒   
 [LV 4]  持續時間 150 秒   
 [LV 5]  持續時間 180 秒   
 #
-
 OB_ZANGETSU#
 變形的上弦月
-MAX Lv : 5, 
+MAX Lv : 5
 習得條件 : 幻術–迷惑 1 
-內容 : 依照目前對象的HP, SP數值來變化對象的MATK 或ATK。, 
+內容 : 依照目前對象的HP, SP數值來變化對象的MATK 或ATK。
 [LV 1]  持續時間 60 秒  
 [LV 2]  持續時間 75 秒   
 [LV 3]  持續時間 90 秒   
 [LV 4]  持續時間 105 秒   
 [LV 5]  持續時間 120 秒   
 #
-
 OB_AKAITSUKI#
-{	
 不祥的紅月
-MAX Lv : 5, 
+MAX Lv : 5
 習得條件 : 扭曲的上弦月 2 
 內容 : 當陷入此效果的對象收到特定HP恢復技能時，該對象反而會遭受傷害。
-該技能於PVP以外的地區不能對玩家使用，且對我軍與怪物也無效。, 
+該技能於PVP以外的地區不能對玩家使用，且對我軍與怪物也無效。
 [LV 1]  持續時間 10 秒  
 [LV 2]  持續時間 15 秒   
 [LV 3]  持續時間 20 秒   
 [LV 4]  持續時間 25 秒   
 [LV 5]  持續時間 30 秒   
 #
-
 OB_OBOROGENSOU#
 陰月的幻影
-MAX Lv : 5, 
+MAX Lv : 5
 習得條件 : 不祥的紅月 3 
 內容 : 依照目前1個對象的HP, SP數值來隨機增加或減少HP和SP。
-當陷入此效果的對象遭受傷害時，也會把此傷害分散到周圍的其他對象，該技能隊怪物無效。, 
+當陷入此效果的對象遭受傷害時，也會把此傷害分散到周圍的其他對象，該技能隊怪物無效。
 [LV 1]  持續時間 10 秒  
 [LV 2]  持續時間 15 秒   
 [LV 3]  持續時間 20 秒   
 [LV 4]  持續時間 25 秒   
 [LV 5]  持續時間 30 秒   
 #
-
-ECLAGE_RECALL# 
+ECLAGE_RECALL#
 返回艾可拉珠
 MAX LV : 1
 系列 : 輔助(返城)
 內容 :  可返回“艾可拉珠”，有固定詠唱 3 秒 / 使用後5分鐘的冷卻時間。
 #
-
-ECL_SNOWFLIP# 
+ECL_SNOWFLIP#
 冰雪寒葉
 像雪花一樣冰冷的葉子，要小心凍傷。
  使用後可治癒著火, 出血, 沉睡, 睡眠。
-
-},	
-
-
-ECL_PEONYMAMY# 
+#
+ECL_PEONYMAMY#
 粉紅粗葉
  像母親的胸懷一樣溫暖的粉紅厚片葉子。
  使用後可治癒冰凍、冷凍、冰封。
-},	
-
-ECL_SADAGUI# 
+#
+ECL_SADAGUI#
 筮答葵葉
  具有強烈刺鼻香氣的藥草葉，小心有副作用。 
  使用後可治癒暈眩、恐怖、混亂、幻覺。
-},	
-
-ECL_SEQUOIADUST]  = 
+#
+ECL_SEQUOIADUST#
 世界樹之塵
  落在生命之樹上的塵埃，收集後可做淨化之用。 
  使用後可治癒石化、黑暗、詛咒、毒、敏捷降低、變成獸人面孔。
-},	
-
-    [SKID.GC_DARKCROW# 
-            致命爪痕 (DARK CROW)
-        MAX Lv : 5
-        習得條件 : 黑色幻影 5 
-        系列 :  主動 / 傷害 - 特殊 
-        內容 :  給敵人留下痛苦的傷口，此傷口會持續5秒，被近距離物理攻擊時傷害更大。
-        [Level 1] :  傷害 100% / 傷口的傷害量 +1.3倍
-        [Level 2] :  傷害 200% / 傷口的傷害量 +1.6倍
-        [Level 3] :  傷害 300% / 傷口的傷害量 +1.9倍
-        [Level 4] :  傷害 400% / 傷口的傷害量 +2.2倍
-        [Level 5] :  傷害 500% / 傷口的傷害量 +2.5倍
-    #
-    [SKID.RA_UNLIMIT# 
-            精英狙擊 (UNLIMIT)
-        MAX Lv : 5
-        習得條件 : 微風恐懼 5
-        系列 :  主動 綁定 / BUFF (自己)  
-        內容 :  短暫具有超高的狙擊能力，但有效時間內防禦力變薄弱。
-        [Level 1] :  1分內遠距離物理攻擊力 +1.5倍
-        [Level 2] :  1分內遠距離物理攻擊力 +2.0倍
-        [Level 3] :  1分內遠距離物理攻擊力 +2.5倍
-        [Level 4] :  1分內遠距離物理攻擊力 +3.0倍
-        [Level 5] :  1分內遠距離物理攻擊力 +3.5倍
-    #
-    [SKID.LG_KINGS_GRACE# 
-            王的恩典 (KINGS GRACE)
-        MAX Lv : 5
-        習得條件 : 反射傷害 5 
-        系列 :  主動 / BUFF 
-        內容 : 可從施法者和施法者附近我軍的所有異常狀態和傷害中受保護及恢復。
-        受保護期間無法操控，PVP時限對自己和隊員有效。
-        可治癒之異常狀態 : 中毒, 黑暗, 冰凍, 石化, 暈眩, 睡眠, 出血, 詛咒, 混亂, 幻覺, 沉默, 著火 , 冷凍, 冰封, 沉睡, 恐怖, 曼陀羅魔花的尖叫
-        [Level 1] :  5秒內治癒我軍的異常狀態，每秒恢復4%的HP。 
-        [Level 2] :  5秒內治癒我軍的異常狀態，每秒恢復5%的HP。 
-        [Level 3] :  5秒內治癒我軍的異常狀態，每秒恢復6%的HP。 
-        [Level 4] :  5秒內治癒我軍的異常狀態，每秒恢復7%的HP。 
-        [Level 5] :  5秒內治癒我軍的異常狀態，每秒恢復8%的HP。 
-    #
-    [SKID.RK_DRAGONBREATH_WATER# 
-            龍之氣息 - 水 (Dragon Breath WATER)
-        MAX Lv : 10
-        習得條件 : 龍駕馭 2
-        系列 : 範圍傷害
-        內容 : 龍會噴出冰氣使對方凍僵來降低移動速度，其威力依本身的狀態而不同。
-    #
-    [SKID.NC_MAGMA_ERUPTION# 
-            岩漿噴發 (MAGMA ERUPTION)
-        MAX Lv : 5
-        習得條件 : 火焰與大地的研究 1 
-        系列 :  主動 
-        內容 :  以強大力量引起地面波動後，使噴出岩漿。
-         重擊地面時會造成7X7格上傷害和暈眩，噴出的熔岩區會持續5秒，及可形成3個以上。
-        [Level 1] :  熔岩區 : 每0.5秒有1000的固定傷害, 著火機率 10% 
-        [Level 2] :  熔岩區 : 每0.5秒有1200的固定傷害, 著火機率 20% 
-        [Level 3] :  熔岩區 : 每0.5秒有1400的固定傷害, 著火機率 30% 
-        [Level 4] :  熔岩區 : 每0.5秒有1600的固定傷害, 著火機率 40% 
-        [Level 5] :  熔岩區 : 每0.5秒有1800的固定傷害, 著火機率 50% 
-    #
-    [SKID.WM_FRIGG_SONG# 
-            豐年頌 (FRIGG'S SONG)
-        MAX Lv : 5
-        習得條件 : 課程 2 
-        系列 :  主動 / BUFF 
-        內容 :  樂器 / 鞭子專屬技能。60 秒內提升所有我軍的MHP, 恢復一定的 HP，消耗傷心淚水1個。
-          PVP等攻城戰模式中效果只限自己和隊員。
-        [Level 1] :  效果範圍 施法者周圍 7 x 7, MHP +5%，每秒恢復100。
-        [Level 2] :  效果範圍 施法者周圍 9 x 9, MHP +10%，每秒恢復120。
-        [Level 3] :  效果範圍 施法者周圍 11 x 11, MHP +15%，每秒恢復140。
-        [Level 4] :  效果範圍 施法者周圍 13 x 13, MHP +20%，每秒恢復160。
-        [Level 5] :  效果範圍 施法者周圍 15 x 15, MHP +25%，每秒恢復180。
-    #
-    [SKID.SO_ELEMENTAL_SHIELD# 
-            精靈結界 (ELEMENTAL SHIELD)
-        MAX Lv : 5
-        習得條件 : 操控精靈 3
-        系列 : 輔助(念力)
-        對象 : 地面
-        內容 : 引爆精靈力量後，在自己和隊員的位置上形成魔法防禦壁和光之障壁，防禦壁和光之障壁有各自的有效時間，當耐久力失效或有效時間過時就消失。 
-        結界範圍是以施法者為中心的整個畫面，招喚的精靈也會消失。 
-        消耗1個藍色魔力礦石。 
-    #
-    [SKID.SR_FLASHCOMBO# 
-            閃光連擊
-        MAX Lv : 5
-        習得條件 : 雙龍腳 3 / 大纏崩墜 3 / 虎砲 1 / 天羅地網 1
-        系列 :  主動 / 連接 
-        內容 :  以超快速的接連使用雙龍腳, 大纏崩墜, 虎砲, 天羅地網的技能。各連接技能本身最高等級來施放。
-        內容 :  連接未結束前不能使用技能及道具。
-        [Level 1] : 消耗氣彈 5個, 4秒內ATK +40。
-        [Level 2] : 消耗氣彈 5個, 4秒內ATK +60。
-        [Level 3] : 消耗氣彈 4個, 4秒內ATK +80。
-        [Level 4] : 消耗氣彈 4個, 4秒內ATK +100。
-        [Level 5] : 消耗氣彈 3個, 4秒內ATK +120。
-    #
-    [SKID.SC_ESCAPE# 
-            緊急脫身 (ESCAPE)
-        MAX Lv : 5
-        習得條件 : 三角射擊 2 
-        系列 :  主動 / 輔助 
-        內容 :  使用時會在自己位置上設陷阱並後退以保持與敵人的距離，不能跨越不可移動格，只能前進到正前方。
-         會消耗1個設置用陷阱道具或特殊合金陷阱。
-        [Level 1] :  迴避距離 5 格
-        [Level 2] :  迴避距離 6 格
-        [Level 3] :  迴避距離 7 格
-        [Level 4] :  迴避距離 8 格
-        [Level 5] :  迴避距離 9 格
-    #
-    [SKID.AB_OFFERTORIUM# 
-            奉獻頌 (OFFERTORIUM)
-        MAX Lv : 5
-        習得條件 : 高階治癒術 2
-        系列 : 主動 / BUFF
-        內容 : 透過奉獻祈禱可於一定時間內提升恢復技能的效率，及可治癒施法者所有的異常狀態。
-         不會與聖母之頌歌效果重複。
-         可治癒之異常狀態 : 黑暗, 詛咒, 中毒, 幻覺, 混亂, 出血, 著火, 冰封, 冷凍, 曼陀羅魔花的尖叫
-         治癒效率增加所影響的技能 : 治癒術, 光耀之堂, 燦爛聖光, 高階治癒術  
-        [Level 1] :  90秒內治癒的效率 +1.3倍/ 使用技能時消耗SP 2.2倍 
-        [Level 2] :  90秒內治癒的效率 +1.6倍/ 使用技能時消耗SP 2.4倍 
-        [Level 3] :  90秒內治癒的效率 +1.9倍/ 使用技能時消耗SP 2.6倍 
-        [Level 4] :  90秒內治癒的效率 +2.2倍/ 使用技能時消耗SP 2.7倍 
-        [Level 5] :  90秒內治癒的效率 +2.5倍/ 使用技能時消耗SP 3倍 
-    #
-    [SKID.WL_TELEKINESIS_INTENSE# 
-            終極念力 (TELEKINESIS INTENSE)
-        MAX LV 5 
-        習得條件 : 靈魂爆炸 5 
-        系列 :  主動 / BUFF 
-        內容 :  將體內念屬性魔法打通，以維持念屬性魔法及快速詠唱為最佳狀態。 
-         此狀態無法用魔法效果解除, 解除技能來解除。 
-        [Level 1] :  1分內念屬性魔法攻擊力 +1.4倍 / 變動詠唱 -10%  / 念屬性魔法技能的消耗SP 10% 
-        [Level 2] :  1分內念屬性魔法攻擊力 +1.8倍 / 變動詠唱 -20%  / 念屬性魔法技能的消耗SP 20% 
-        [Level 3] :  1分內念屬性魔法攻擊力 +2.2倍 / 變動詠唱 -30%  / 念屬性魔法技能的消耗SP 30% 
-        [Level 4] :  1分內念屬性魔法攻擊力 +2.6倍 / 變動詠唱 -40%  / 念屬性魔法技能的消耗SP 40% 
-        [Level 5] :  1分內念屬性魔法攻擊力 +3倍 / 變動詠唱 -50%  / 念屬性魔法技能的消耗SP 50% 
-    #
-    [SKID.ALL_FULL_THROTTLE# 
-            烈火戰車  (FULL THROTTLE)
-        MAX Lv : 5
-        習得條件 : 3轉職業 
-        內容 :  超越人體極限把基本生命力消耗殆盡後短暫的強化自己，持續時間過後變非常疲憊。
-         使用瞬間完全恢復HP，於持續時間內移動速度增加，All State +20%。此狀態無法用魔法效果和解除技能來解除。 
-        [Level 1] :  持續時間 10秒 / 每1秒消耗MSP 6% 
-        [Level 2] :  持續時間 15秒 / 每1秒消耗MSP 4% 
-        [Level 3] :  持續時間 20秒 / 每1秒消耗MSP 3% 
-        [Level 4] :  持續時間 25秒 / 每1秒消耗MSP 2% 
-        [Level 5] :  持續時間 30秒 / 每1秒消耗MSP 1% 
-    #
-    [SKID.GN_ILLUSIONDOPING# 
-            幻覺禁藥 (ILLUSION DOPING)
-        MAX Lv : 5
-        習得條件 : 專門配藥 1 
-        系列 :  特殊 / DEBUFF  
-        內容 :  向目標和其周圍投擲高濃度酒精，有較高機率造成幻覺和命中率下降的狀態，消耗酒精 1個。
-        [Level 1] :  傷害 100% / 目標和其周圍 9X9 格 
-        [Level 2] :  傷害 100% / 目標和其周圍 11X11 格 
-        [Level 3] :  傷害 100% / 目標和其周圍 13X13 格 
-        [Level 4] :  傷害 100% / 目標和其周圍 15X15 格 
-        [Level 5] :  傷害 100% / 以目標為中心的整個畫面 
-    #
-          [SKID.GM_ITEM_ATKMAX# 
-               物理道具攻擊力最大
-          MAX LV : 1
-          內容 :  物理道具攻擊力最大
-     #
-          [SKID.GM_ITEM_ATKMIN# 
-               物理道具攻擊力最小
-          MAX LV : 1
-          內容 :  物理道具攻擊力最小
-     #
-          [SKID.GM_ITEM_MATKMAX# 
-               魔法道具攻擊力最大
-          MAX LV : 1
-          內容 :  魔法道具攻擊力最大
-     }
-          [SKID.GM_ITEM_MATKMIN# 
-               魔法道具攻擊力最小
-          MAX LV : 1
-          內容 :  魔法道具攻擊力最小
-     #
+#
+GC_DARKCROW#
+致命爪痕 (DARK CROW)
+MAX Lv : 5
+習得條件 : 黑色幻影 5 
+系列 :  主動 / 傷害 - 特殊 
+內容 :  給敵人留下痛苦的傷口，此傷口會持續5秒，被近距離物理攻擊時傷害更大。
+[Level 1] :  傷害 100% / 傷口的傷害量 +1.3倍
+[Level 2] :  傷害 200% / 傷口的傷害量 +1.6倍
+[Level 3] :  傷害 300% / 傷口的傷害量 +1.9倍
+[Level 4] :  傷害 400% / 傷口的傷害量 +2.2倍
+[Level 5] :  傷害 500% / 傷口的傷害量 +2.5倍
+#
+RA_UNLIMIT#
+精英狙擊 (UNLIMIT)
+MAX Lv : 5
+習得條件 : 微風恐懼 5
+系列 :  主動 綁定 / BUFF (自己)  
+內容 :  短暫具有超高的狙擊能力，但有效時間內防禦力變薄弱。
+[Level 1] :  1分內遠距離物理攻擊力 +1.5倍
+[Level 2] :  1分內遠距離物理攻擊力 +2.0倍
+[Level 3] :  1分內遠距離物理攻擊力 +2.5倍
+[Level 4] :  1分內遠距離物理攻擊力 +3.0倍
+[Level 5] :  1分內遠距離物理攻擊力 +3.5倍
+#
+LG_KINGS_GRACE#
+王的恩典 (KINGS GRACE)
+MAX Lv : 5
+習得條件 : 反射傷害 5 
+系列 :  主動 / BUFF 
+內容 : 可從施法者和施法者附近我軍的所有異常狀態和傷害中受保護及恢復。
+受保護期間無法操控，PVP時限對自己和隊員有效。
+可治癒之異常狀態 : 中毒, 黑暗, 冰凍, 石化, 暈眩, 睡眠, 出血, 詛咒, 混亂, 幻覺, 沉默, 著火 , 冷凍, 冰封, 沉睡, 恐怖, 曼陀羅魔花的尖叫
+[Level 1] :  5秒內治癒我軍的異常狀態，每秒恢復4%的HP。 
+[Level 2] :  5秒內治癒我軍的異常狀態，每秒恢復5%的HP。 
+[Level 3] :  5秒內治癒我軍的異常狀態，每秒恢復6%的HP。 
+[Level 4] :  5秒內治癒我軍的異常狀態，每秒恢復7%的HP。 
+[Level 5] :  5秒內治癒我軍的異常狀態，每秒恢復8%的HP。 
+#
+RK_DRAGONBREATH_WATER#
+龍之氣息 - 水 (Dragon Breath WATER)
+MAX Lv : 10
+習得條件 : 龍駕馭 2
+系列 : 範圍傷害
+內容 : 龍會噴出冰氣使對方凍僵來降低移動速度，其威力依本身的狀態而不同。
+#
+NC_MAGMA_ERUPTION#
+岩漿噴發 (MAGMA ERUPTION)
+MAX Lv : 5
+習得條件 : 火焰與大地的研究 1 
+系列 :  主動 
+內容 :  以強大力量引起地面波動後，使噴出岩漿。
+ 重擊地面時會造成7X7格上傷害和暈眩，噴出的熔岩區會持續5秒，及可形成3個以上。
+[Level 1] :  熔岩區 : 每0.5秒有1000的固定傷害, 著火機率 10% 
+[Level 2] :  熔岩區 : 每0.5秒有1200的固定傷害, 著火機率 20% 
+[Level 3] :  熔岩區 : 每0.5秒有1400的固定傷害, 著火機率 30% 
+[Level 4] :  熔岩區 : 每0.5秒有1600的固定傷害, 著火機率 40% 
+[Level 5] :  熔岩區 : 每0.5秒有1800的固定傷害, 著火機率 50% 
+#
+WM_FRIGG_SONG#
+豐年頌 (FRIGG'S SONG)
+MAX Lv : 5
+習得條件 : 課程 2 
+系列 :  主動 / BUFF 
+內容 :  樂器 / 鞭子專屬技能。60 秒內提升所有我軍的MHP, 恢復一定的 HP，消耗傷心略?個。
+  PVP等攻城戰模式中效果只限自己和隊員。
+[Level 1] :  效果範圍 施法者周圍 7 x 7, MHP +5%，每秒恢復100。
+[Level 2] :  效果範圍 施法者周圍 9 x 9, MHP +10%，每秒恢復120。
+[Level 3] :  效果範圍 施法者周圍 11 x 11, MHP +15%，每秒恢復140。
+[Level 4] :  效果範圍 施法者周圍 13 x 13, MHP +20%，每秒恢復160。
+[Level 5] :  效果範圍 施法者周圍 15 x 15, MHP +25%，每秒恢復180。
+#
+SO_ELEMENTAL_SHIELD#
+精靈結界 (ELEMENTAL SHIELD)
+MAX Lv : 5
+習得條件 : 操控精靈 3
+系列 : 輔助(念力)
+對象 : 地面
+內容 : 引爆精靈力量後，在自己和隊員的位置上形成魔法防禦壁和光之障壁，防禦壁和光之障壁有各自的有效時間，當耐久力失效或有效時間過時就消失。 
+結界範圍是以施法者為中心的整個畫面，招喚的精靈也會消失。 
+消耗1個藍色魔力礦石。 
+#
+SR_FLASHCOMBO#
+閃光連擊
+MAX Lv : 5
+習得條件 : 雙龍腳 3 / 大纏崩墜 3 / 虎砲 1 / 天羅地網 1
+系列 :  主動 / 連接 
+內容 :  以超快速的接連使用雙龍腳, 大纏崩墜, 虎砲, 天羅地網的技能。各連接技能本身最高等級來施放。
+內容 :  連接未結束前不能使用技能及道具。
+[Level 1] : 消耗氣彈 5個, 4秒內ATK +40。
+[Level 2] : 消耗氣彈 5個, 4秒內ATK +60。
+[Level 3] : 消耗氣彈 4個, 4秒內ATK +80。
+[Level 4] : 消耗氣彈 4個, 4秒內ATK +100。
+[Level 5] : 消耗氣彈 3個, 4秒內ATK +120。
+#
+SC_ESCAPE#
+緊急脫身 (ESCAPE)
+MAX Lv : 5
+習得條件 : 三角射擊 2 
+系列 :  主動 / 輔助 
+內容 :  使用時會在自己位置上設陷阱並後退以保持與敵人的距離，不能跨越不可移動格，只能前進到正前方。
+ 會消耗1個設置用陷阱道具或特殊合金陷阱。
+[Level 1] :  迴避距離 5 格
+[Level 2] :  迴避距離 6 格
+[Level 3] :  迴避距離 7 格
+[Level 4] :  迴避距離 8 格
+[Level 5] :  迴避距離 9 格
+#
+AB_OFFERTORIUM#
+奉獻頌 (OFFERTORIUM)
+MAX Lv : 5
+習得條件 : 高階治癒術 2
+系列 : 主動 / BUFF
+內容 : 透過奉獻祈禱可於一定時間內提升恢復技能的效率，及可治癒施法者所有的異常狀態。
+ 不會與聖母之頌歌效果重複。
+ 可治癒之異常狀態 : 黑暗, 詛咒, 中毒, 幻覺, 混亂, 出血, 著火, 冰封, 冷凍, 曼陀羅魔花的尖叫
+ 治癒效率增加所影響的技能 : 治癒術, 光耀之堂, 燦爛聖光, 高階治癒術  
+[Level 1] :  90秒內治癒的效率 +1.3倍/ 使用技能時消耗SP 2.2倍 
+[Level 2] :  90秒內治癒的效率 +1.6倍/ 使用技能時消耗SP 2.4倍 
+[Level 3] :  90秒內治癒的效率 +1.9倍/ 使用技能時消耗SP 2.6倍 
+[Level 4] :  90秒內治癒的效率 +2.2倍/ 使用技能時消耗SP 2.7倍 
+[Level 5] :  90秒內治癒的效率 +2.5倍/ 使用技能時消耗SP 3倍 
+#
+WL_TELEKINESIS_INTENSE#
+終極念力 (TELEKINESIS INTENSE)
+MAX LV 5 
+習得條件 : 靈魂爆炸 5 
+系列 :  主動 / BUFF 
+內容 :  將體內念屬性魔法打通，以維持念屬性魔法及快速詠唱為最佳狀態。 
+ 此狀態無法用魔法效果解除, 解除技能來解除。 
+[Level 1] :  1分內念屬性魔法攻擊力 +1.4倍 / 變動詠唱 -10%  / 念屬性魔法技能的消耗SP 10% 
+[Level 2] :  1分內念屬性魔法攻擊力 +1.8倍 / 變動詠唱 -20%  / 念屬性魔法技能的消耗SP 20% 
+[Level 3] :  1分內念屬性魔法攻擊力 +2.2倍 / 變動詠唱 -30%  / 念屬性魔法技能的消耗SP 30% 
+[Level 4] :  1分內念屬性魔法攻擊力 +2.6倍 / 變動詠唱 -40%  / 念屬性魔法技能的消耗SP 40% 
+[Level 5] :  1分內念屬性魔法攻擊力 +3倍 / 變動詠唱 -50%  / 念屬性魔法技能的消耗SP 50% 
+#
+ALL_FULL_THROTTLE#
+烈火戰車  (FULL THROTTLE)
+MAX Lv : 5
+習得條件 : 3轉職業 
+內容 :  超越人體極限把基本生命力消耗殆盡後短暫的強化自己，持續時間過後變非常疲憊。
+ 使用瞬間完全恢復HP，於持續時間內移動速度增加，All State +20%。此狀態無法用魔法效果和解除技能來解除。 
+[Level 1] :  持續時間 10秒 / 每1秒消耗MSP 6% 
+[Level 2] :  持續時間 15秒 / 每1秒消耗MSP 4% 
+[Level 3] :  持續時間 20秒 / 每1秒消耗MSP 3% 
+[Level 4] :  持續時間 25秒 / 每1秒消耗MSP 2% 
+[Level 5] :  持續時間 30秒 / 每1秒消耗MSP 1% 
+#
+GN_ILLUSIONDOPING#
+幻覺禁藥 (ILLUSION DOPING)
+MAX Lv : 5
+習得條件 : 專門配藥 1 
+系列 :  特殊 / DEBUFF  
+內容 :  向目標和其周圍投擲高濃度酒精，有較高機率造成幻覺和命中率下降的狀態，消耗酒精 1個。
+[Level 1] :  傷害 100% / 目標和其周圍 9X9 格 
+[Level 2] :  傷害 100% / 目標和其周圍 11X11 格 
+[Level 3] :  傷害 100% / 目標和其周圍 13X13 格 
+[Level 4] :  傷害 100% / 目標和其周圍 15X15 格 
+[Level 5] :  傷害 100% / 以目標為中心的整個畫面 
+#
+GM_ITEM_ATKMAX#
+物理道具攻擊力最大
+MAX LV : 1
+內容 :  物理道具攻擊力最大
+#
+GM_ITEM_ATKMIN#
+物理道具攻擊力最小
+MAX LV : 1
+內容 :  物理道具攻擊力最小
+#
+GM_ITEM_MATKMAX#
+魔法道具攻擊力最大
+MAX LV : 1
+內容 :  魔法道具攻擊力最大
+#
+GM_ITEM_MATKMIN#
+魔法道具攻擊力最小
+MAX LV : 1
+內容 :  魔法道具攻擊力最小
+#
 RL_RICHS_COIN#
 富翁的財貨
 MAX Lv : 1
@@ -9680,8 +9461,8 @@ MAX Lv : 1
 內容 : 使用100 Zeny一次可作出10個硬幣。
 學會此技能後，使用[裝滿硬幣]時就算失敗也不會失去硬幣。
 #
-RL_FALLEN_ANGEL# 
-墮落天使, 
+RL_FALLEN_ANGEL#
+墮落天使
 MAX Lv : 5
 獲得條件 : 亡命之徒 10
 系列 : 攻擊 / 移動
@@ -9690,8 +9471,7 @@ MAX Lv : 5
 移動路徑途中，若因牆壁或障礙物而遭到阻擋，則技能自動失敗。
 技能等級越高，技能再使用時間越短。
 使用技能時會消耗1枚硬幣。
-},	
-
+#
 RL_S_STORM#
 粉碎風暴
 MAX Lv : 5
@@ -9699,8 +9479,8 @@ MAX Lv : 5
 系列 : 攻擊 / 特殊
 內容 : 散彈槍專用技能
 可使目標對象和5 x 5 cell範圍內的所有對象受到傷害，且隨機破壞一個裝備中的裝備。
-施展者的DEX和技能等級越高，且對象的等級和AGI越低，則裝備破壞成功率越高。
-但若是有附加保護功能，或是存在不可破壞屬性的物品，則粉碎風暴的效果不適用。
+施展者的DEX和技能等級越高，且對象的等級和AGI越低，則裝備破壞成必v越高。
+但若是有附加保護弁遄A或是存在不可破壞屬性的物品，則粉碎風暴的效果不適用。
 使用技能時，會消耗3枚硬幣和裝備中的1顆子彈。
 #
 RL_MASS_SPIRAL#
@@ -9716,7 +9496,7 @@ MAX Lv : 5
 [Level 2] : 攻擊力 400% + 根據對象的防禦力
 [Level 3] : 攻擊力 600% + 根據對象的防禦力
 [Level 4] : 攻擊力 800% + 根據對象的防禦力
-[Level 5] : 攻擊力 1000% + 根據對象的防禦力,	
+[Level 5] : 攻擊力 1000% + 根據對象的防禦力
 #
 RL_E_CHAIN#
 無限連鎖
@@ -9745,7 +9525,7 @@ MAX Lv : 5
 內容 : 榴彈發射器專用技能
 對目標對象發射附著型炸彈給予傷害。最多可發射5次。
 使用[閃爍信號]技能使破壞怒吼爆發後，目標對象和其周圍會受到額外的火屬性傷害。
-唯有[閃爍信號]可使破壞怒吼 爆發，若是未爆發，則30秒後破壞怒吼將不會對目標對象產生作用。,	
+唯有[閃爍信號]可使破壞怒吼 爆發，若是未爆發，則30秒後破壞怒吼將不會對目標對象產生作用。
 因破壞怒吼的爆發而受到火屬性傷害的所有對象，有一定機率陷入異常狀態[著火]。
 使用技能時會消耗1枚硬幣和1顆投射型地雷。
 [Level 1] : 攻擊力 400% + 爆發傷害 800%
@@ -9753,8 +9533,7 @@ MAX Lv : 5
 [Level 3] : 攻擊力 800% + 爆發傷害 1400%
 [Level 4] : 攻擊力 1000% + 爆發傷害 1700%
 [Level 5] : 攻擊力 1200% + 爆發傷害 2000%
-},	
-
+#
 RL_FIRE_RAIN#
 火焰暴雨
 MAX Lv : 5
@@ -9768,16 +9547,15 @@ MAX Lv : 5
 [Level 2] : 攻擊力 2000% + 根據施展者DEX
 [Level 3] : 攻擊力 2000% + 根據施展者DEX
 [Level 4] : 攻擊力 2000% + 根據施展者DEX
-[Level 5] : 攻擊力 2000% + 根據施展者DEX,	
+[Level 5] : 攻擊力 2000% + 根據施展者DEX
 #
 RL_FLICKER#
 閃爍信號
 MAX Lv : 1
 獲得條件 : 投擲硬幣 1
 系列 : 特殊
-內容 : 發動畫面上自己有的特定技能[破壞怒吼] / [暗黑地獄]。只會發動自己的技能。,	
-},	
-
+內容 : 發動畫面上自己有的特定技能[破壞怒吼] / [暗黑地獄]。只會發動自己的技能。
+#
 RL_FIREDANCE#
 殺戮暗舞
 MAX Lv : 5
@@ -9799,7 +9577,7 @@ MAX Lv : 5
 [Level 2] : 隨機刪除2個Buff 
 [Level 3] : 隨機刪除3個Buff 
 [Level 4] : 隨機刪除4個Buff 
-[Level 5] : 隨機刪除5個Buff ,	
+[Level 5] : 隨機刪除5個Buff 
 #
 RL_AM_BLAST#
 毀滅重擊
@@ -9814,7 +9592,7 @@ MAX Lv : 5
 [Level 2] : 持續時間 7秒 / 抗性減少20 %
 [Level 3] : 持續時間 8秒 / 抗性減少30 %
 [Level 4] : 持續時間 9秒 / 抗性減少40 %
-[Level 5] : 持續時間 10秒 / 抗性減少50 %,	
+[Level 5] : 持續時間 10秒 / 抗性減少50 %
 #
 RL_QD_SHOT#
 瞬速子彈
@@ -9825,8 +9603,8 @@ MAX Lv : 1
 發動連鎖衝擊途中可接續使用此技能。施展者的DEX越高，額外攻擊次數越多。
 在施展者周圍21 x 21的範圍內，若是刻有[血色烙印]的對象，則該對象全員將額外受到瞬速子彈攻擊。
 #
-RL_D_TAIL# 
-魔獸擺尾
+RL_D_TAIL#
+魔獸禮?,
 MAX Lv : 5
 獲得條件 : 血色烙印 1, 破壞怒吼  3
 系列 : 攻擊
@@ -9834,14 +9612,14 @@ MAX Lv : 5
 對畫面內所有刻有血色烙印的敵人發射導彈。
 若是有多名敵人刻有血色烙印，雖然會攻擊對象全員，但傷害會分散。
 若是沒有一個敵人刻有血色烙印，則不會發動技能。
-使用技能時會消耗一顆魔獸擺尾導彈。
+使用技能時會消耗一顆魔獸禮擰冱u。
 [Level 1] : 攻擊力 3000 %
 [Level 2] : 攻擊力 3500 %
 [Level 3] : 攻擊力 4000 %
 [Level 4] : 攻擊力 4500 %
 [Level 5] : 攻擊力 5000 %
 #
-RL_R_TRIP# 
+RL_R_TRIP#
 圓桌舞蹈
 MAX Lv : 5
 獲得條件 : 火焰暴雨 1
@@ -9859,11 +9637,11 @@ MAX Lv : 5
 [Level 5] : 效果範圍 13 x 13
 #
 RL_HEAT_BARREL#
-加速子彈,		
+加速子彈
 MAX Lv : 5
 獲得條件 : 殺戮暗舞 2
 系列 : 輔助
-內容 : 持有的硬幣全數消耗後，雖然固定詠唱減少、攻擊速度增加，且獲得額外的攻擊力，但迴避率會降低。,	
+內容 : 持有的硬幣全數消耗後，雖然固定詠唱減少、攻擊速度增加，且獲得額外的攻擊力，但迴避率會降低。
 固定詠唱減少效果會根據消耗的硬幣數量而提升。
 技能持續時間結束後，10秒內無法使用攻擊、技能、物品。
 此外，若是在技能效果途中更換裝備，則技能效果會馬上消失，且產生10秒的???。
@@ -9873,8 +9651,7 @@ MAX Lv : 5
 [Level 3] : FLEE - 60 / 持續時間 60秒
 [Level 4] : FLEE - 55 / 持續時間 60秒
 [Level 5] : FLEE - 50 / 持續時間 60秒
-},	
-
+#
 RL_SLUGSHOT#
 根源破壞
 MAX Lv : 5
@@ -9890,17 +9667,17 @@ MAX Lv : 5
 [Level 2] : 3 cell起，每1 cell命中率-9
 [Level 3] : 3 cell起，每1 cell命中率-8
 [Level 4] : 3 cell起，每1 cell命中率-7
-[Level 5] : 3 cell起，每1 cell命中率-6,	
+[Level 5] : 3 cell起，每1 cell命中率-6
 #
 RL_HAMMER_OF_GOD#
-根天神憤怒, 
+根天神憤怒
 MAX Lv : 5
 獲得條件 : 毀滅重擊 3
 系列 : 攻擊 / 特殊
 內容 : 來福槍專用技能
 決定天神的憤怒要降至何處的技能。
 目標對象若是刻有[血色烙印]，則將以目標對象為中心的5 x 5 cell發動攻擊。
-若是未刻有[血色烙印]，則根天神憤怒將隨機降至目標周圍的位置。,	
+若是未刻有[血色烙印]，則根天神憤怒將隨機降至目標周圍的位置。
 發動技能時會消耗持有的全數硬幣，且攻擊力會根據硬幣的數量而增加。
 受到傷害的所有對象將會陷入100 %的暈眩狀態，且狀態的持續時間會根據技能等級而增加。
 [Level 1] : 攻擊力 2400 % / 暈眩持續時間 3秒
@@ -9908,15 +9685,14 @@ MAX Lv : 5
 [Level 3] : 攻擊力 4000 % / 暈眩持續時間 4秒
 [Level 4] : 攻擊力 4800 % / 暈眩持續時間 4秒
 [Level 5] : 攻擊力 5600 % / 暈眩持續時間 5秒
-},	
-   
+#
 RL_C_MARKER#
 血色烙印
 MAX Lv : 1
 獲得條件 : 命中率遞增 1
 系列 : 特殊
 內容 : 針對1位對象血色烙印後迴避率減少10，且會在小地圖上標示位置。
-血色烙印最多可對3人使用，且會影響到[瞬速子彈] / [魔獸擺尾] / [根天神憤怒]。
+血色烙印最多可對3人使用，且會影響到[瞬速子彈] / [魔獸禮館 / [根天神憤怒]。
 [Level 1] : 持續時間 30秒
 #
 RL_P_ALTER#
@@ -9926,18 +9702,17 @@ MAX Lv : 5
 系列 : 輔助
 內容 : 唯有在自己使用的子彈是聖屬性時才會發動。
 發動技能時會消耗持有的全數硬幣，且攻擊力會根據技能等級和消耗的硬幣數量而提升。
-此外，在白金祭壇發動途中，若是受到來自不死系怪物的傷害，則傷害會減少一定量。,	
+此外，在白金祭壇發動途中，若是受到來自不死系怪物的傷害，則傷害會減少一定量。
 若是在持續時間結束前更換武器或是子彈，則白金祭壇的效果將會消失。
 此技能無法與[瘋狂凱斯樂]和[加速子彈]同時使用。
 [Level 1] : 持續時間 30秒
 [Level 2] : 持續時間 45秒
 [Level 3] : 持續時間 60秒
 [Level 4] : 持續時間 75秒
-[Level 5] : 持續時間 90秒,	
-},	
-
+[Level 5] : 持續時間 90秒
+#
 RL_B_TRAP#
-暗黑地獄, 
+暗黑地獄
 MAX Lv : 5
 獲得條件 : 反叛者基本
 系列 :  地面 / 特殊
@@ -9950,9 +9725,9 @@ MAX Lv : 5
 [Level 2] : 效果範圍 5 x 5 / 持續時間 4 + 7秒
 [Level 3] : 效果範圍 5 x 5 / 持續時間 4 + 8秒
 [Level 4] : 效果範圍 7 x 7 / 持續時間 4 + 9秒
-[Level 5] : 效果範圍 7 x 7 / 持續時間 4 + 10秒,	
+[Level 5] : 效果範圍 7 x 7 / 持續時間 4 + 10秒
 #
-GD_GUILD_STORAGE# 
+GD_GUILD_STORAGE#
 公會倉庫擴充
 系列 : 被動
 對象 : 公會
@@ -9963,7 +9738,6 @@ GD_GUILD_STORAGE#
 [Level 4] : 欄位 400個
 [Level 5] : 欄位 500個
 #
-
 RL_RICHS_COIN#
 富翁的財貨
 MAX Lv : 1
@@ -9972,8 +9746,8 @@ MAX Lv : 1
 內容 : 使用100 Zeny一次可作出10個硬幣。
 學會此技能後，使用[裝滿硬幣]時就算失敗也不會失去硬幣。
 #
-RL_FALLEN_ANGEL# 
-墮落天使, 
+RL_FALLEN_ANGEL#
+墮落天使
 MAX Lv : 5
 獲得條件 : 亡命之徒 10
 系列 : 攻擊 / 移動
@@ -9982,8 +9756,7 @@ MAX Lv : 5
 移動路徑途中，若因牆壁或障礙物而遭到阻擋，則技能自動失敗。
 技能等級越高，技能再使用時間越短。
 使用技能時會消耗1枚硬幣。
-},	
-
+#
 RL_S_STORM#
 粉碎風暴
 MAX Lv : 5
@@ -9991,8 +9764,8 @@ MAX Lv : 5
 系列 : 攻擊 / 特殊
 內容 : 散彈槍專用技能
 可使目標對象和5 x 5 cell範圍內的所有對象受到傷害，且隨機破壞一個裝備中的裝備。
-施展者的DEX和技能等級越高，且對象的等級和AGI越低，則裝備破壞成功率越高。
-但若是有附加保護功能，或是存在不可破壞屬性的物品，則粉碎風暴的效果不適用。
+施展者的DEX和技能等級越高，且對象的等級和AGI越低，則裝備破壞成必v越高。
+但若是有附加保護弁遄A或是存在不可破壞屬性的物品，則粉碎風暴的效果不適用。
 使用技能時，會消耗3枚硬幣和裝備中的1顆子彈。
 #
 RL_MASS_SPIRAL#
@@ -10008,7 +9781,7 @@ MAX Lv : 5
 [Level 2] : 攻擊力 400% + 根據對象的防禦力
 [Level 3] : 攻擊力 600% + 根據對象的防禦力
 [Level 4] : 攻擊力 800% + 根據對象的防禦力
-[Level 5] : 攻擊力 1000% + 根據對象的防禦力,	
+[Level 5] : 攻擊力 1000% + 根據對象的防禦力
 #
 RL_E_CHAIN#
 無限連鎖
@@ -10037,7 +9810,7 @@ MAX Lv : 5
 內容 : 榴彈發射器專用技能
 對目標對象發射附著型炸彈給予傷害。最多可發射5次。
 使用[閃爍信號]技能使破壞怒吼爆發後，目標對象和其周圍會受到額外的火屬性傷害。
-唯有[閃爍信號]可使破壞怒吼 爆發，若是未爆發，則30秒後破壞怒吼將不會對目標對象產生作用。,	
+唯有[閃爍信號]可使破壞怒吼 爆發，若是未爆發，則30秒後破壞怒吼將不會對目標對象產生作用。
 因破壞怒吼的爆發而受到火屬性傷害的所有對象，有一定機率陷入異常狀態[著火]。
 使用技能時會消耗1枚硬幣和1顆投射型地雷。
 [Level 1] : 攻擊力 400% + 爆發傷害 800%
@@ -10045,8 +9818,7 @@ MAX Lv : 5
 [Level 3] : 攻擊力 800% + 爆發傷害 1400%
 [Level 4] : 攻擊力 1000% + 爆發傷害 1700%
 [Level 5] : 攻擊力 1200% + 爆發傷害 2000%
-},	
-
+#
 RL_FIRE_RAIN#
 火焰暴雨
 MAX Lv : 5
@@ -10060,16 +9832,15 @@ MAX Lv : 5
 [Level 2] : 攻擊力 2000% + 根據施展者DEX
 [Level 3] : 攻擊力 2000% + 根據施展者DEX
 [Level 4] : 攻擊力 2000% + 根據施展者DEX
-[Level 5] : 攻擊力 2000% + 根據施展者DEX,	
+[Level 5] : 攻擊力 2000% + 根據施展者DEX
 #
 RL_FLICKER#
 閃爍信號
 MAX Lv : 1
 獲得條件 : 投擲硬幣 1
 系列 : 特殊
-內容 : 發動畫面上自己有的特定技能[破壞怒吼] / [暗黑地獄]。只會發動自己的技能。,	
-},	
-
+內容 : 發動畫面上自己有的特定技能[破壞怒吼] / [暗黑地獄]。只會發動自己的技能。
+#
 RL_FIREDANCE#
 殺戮暗舞
 MAX Lv : 5
@@ -10091,7 +9862,7 @@ MAX Lv : 5
 [Level 2] : 隨機刪除2個Buff 
 [Level 3] : 隨機刪除3個Buff 
 [Level 4] : 隨機刪除4個Buff 
-[Level 5] : 隨機刪除5個Buff ,	
+[Level 5] : 隨機刪除5個Buff 
 #
 RL_AM_BLAST#
 毀滅重擊
@@ -10106,7 +9877,7 @@ MAX Lv : 5
 [Level 2] : 持續時間 7秒 / 抗性減少20 %
 [Level 3] : 持續時間 8秒 / 抗性減少30 %
 [Level 4] : 持續時間 9秒 / 抗性減少40 %
-[Level 5] : 持續時間 10秒 / 抗性減少50 %,	
+[Level 5] : 持續時間 10秒 / 抗性減少50 %
 #
 RL_QD_SHOT#
 瞬速子彈
@@ -10117,8 +9888,8 @@ MAX Lv : 1
 發動連鎖衝擊途中可接續使用此技能。施展者的DEX越高，額外攻擊次數越多。
 在施展者周圍21 x 21的範圍內，若是刻有[血色烙印]的對象，則該對象全員將額外受到瞬速子彈攻擊。
 #
-RL_D_TAIL# 
-魔獸擺尾
+RL_D_TAIL#
+魔獸禮?,
 MAX Lv : 5
 獲得條件 : 血色烙印 1, 破壞怒吼  3
 系列 : 攻擊
@@ -10126,14 +9897,14 @@ MAX Lv : 5
 對畫面內所有刻有血色烙印的敵人發射導彈。
 若是有多名敵人刻有血色烙印，雖然會攻擊對象全員，但傷害會分散。
 若是沒有一個敵人刻有血色烙印，則不會發動技能。
-使用技能時會消耗一顆魔獸擺尾導彈。
+使用技能時會消耗一顆魔獸禮擰冱u。
 [Level 1] : 攻擊力 3000 %
 [Level 2] : 攻擊力 3500 %
 [Level 3] : 攻擊力 4000 %
 [Level 4] : 攻擊力 4500 %
 [Level 5] : 攻擊力 5000 %
 #
-RL_R_TRIP# 
+RL_R_TRIP#
 圓桌舞蹈
 MAX Lv : 5
 獲得條件 : 火焰暴雨 1
@@ -10151,11 +9922,11 @@ MAX Lv : 5
 [Level 5] : 效果範圍 13 x 13
 #
 RL_HEAT_BARREL#
-加速子彈,		
+加速子彈
 MAX Lv : 5
 獲得條件 : 殺戮暗舞 2
 系列 : 輔助
-內容 : 持有的硬幣全數消耗後，雖然固定詠唱減少、攻擊速度增加，且獲得額外的攻擊力，但迴避率會降低。,	
+內容 : 持有的硬幣全數消耗後，雖然固定詠唱減少、攻擊速度增加，且獲得額外的攻擊力，但迴避率會降低。
 固定詠唱減少效果會根據消耗的硬幣數量而提升。
 技能持續時間結束後，10秒內無法使用攻擊、技能、物品。
 此外，若是在技能效果途中更換裝備，則技能效果會馬上消失，且產生10秒的???。
@@ -10165,8 +9936,7 @@ MAX Lv : 5
 [Level 3] : FLEE - 60 / 持續時間 60秒
 [Level 4] : FLEE - 55 / 持續時間 60秒
 [Level 5] : FLEE - 50 / 持續時間 60秒
-},	
-
+#
 RL_SLUGSHOT#
 根源破壞
 MAX Lv : 5
@@ -10182,17 +9952,17 @@ MAX Lv : 5
 [Level 2] : 3 cell起，每1 cell命中率-9
 [Level 3] : 3 cell起，每1 cell命中率-8
 [Level 4] : 3 cell起，每1 cell命中率-7
-[Level 5] : 3 cell起，每1 cell命中率-6,	
+[Level 5] : 3 cell起，每1 cell命中率-6
 #
 RL_HAMMER_OF_GOD#
-根天神憤怒, 
+根天神憤怒
 MAX Lv : 5
 獲得條件 : 毀滅重擊 3
 系列 : 攻擊 / 特殊
 內容 : 來福槍專用技能
 決定天神的憤怒要降至何處的技能。
 目標對象若是刻有[血色烙印]，則將以目標對象為中心的5 x 5 cell發動攻擊。
-若是未刻有[血色烙印]，則根天神憤怒將隨機降至目標周圍的位置。,	
+若是未刻有[血色烙印]，則根天神憤怒將隨機降至目標周圍的位置。
 發動技能時會消耗持有的全數硬幣，且攻擊力會根據硬幣的數量而增加。
 受到傷害的所有對象將會陷入100 %的暈眩狀態，且狀態的持續時間會根據技能等級而增加。
 [Level 1] : 攻擊力 2400 % / 暈眩持續時間 3秒
@@ -10200,15 +9970,14 @@ MAX Lv : 5
 [Level 3] : 攻擊力 4000 % / 暈眩持續時間 4秒
 [Level 4] : 攻擊力 4800 % / 暈眩持續時間 4秒
 [Level 5] : 攻擊力 5600 % / 暈眩持續時間 5秒
-},	
-   
+#
 RL_C_MARKER#
 血色烙印
 MAX Lv : 1
 獲得條件 : 命中率遞增 1
 系列 : 特殊
 內容 : 針對1位對象血色烙印後迴避率減少10，且會在小地圖上標示位置。
-血色烙印最多可對3人使用，且會影響到[瞬速子彈] / [魔獸擺尾] / [根天神憤怒]。
+血色烙印最多可對3人使用，且會影響到[瞬速子彈] / [魔獸禮館 / [根天神憤怒]。
 [Level 1] : 持續時間 30秒
 #
 RL_P_ALTER#
@@ -10218,18 +9987,17 @@ MAX Lv : 5
 系列 : 輔助
 內容 : 唯有在自己使用的子彈是聖屬性時才會發動。
 發動技能時會消耗持有的全數硬幣，且攻擊力會根據技能等級和消耗的硬幣數量而提升。
-此外，在白金祭壇發動途中，若是受到來自不死系怪物的傷害，則傷害會減少一定量。,	
+此外，在白金祭壇發動途中，若是受到來自不死系怪物的傷害，則傷害會減少一定量。
 若是在持續時間結束前更換武器或是子彈，則白金祭壇的效果將會消失。
 此技能無法與[瘋狂凱斯樂]和[加速子彈]同時使用。
 [Level 1] : 持續時間 30秒
 [Level 2] : 持續時間 45秒
 [Level 3] : 持續時間 60秒
 [Level 4] : 持續時間 75秒
-[Level 5] : 持續時間 90秒,	
-},	
-
+[Level 5] : 持續時間 90秒
+#
 RL_B_TRAP#
-暗黑地獄, 
+暗黑地獄
 MAX Lv : 5
 獲得條件 : 反叛者基本
 系列 :  地面 / 特殊
@@ -10242,273 +10010,6 @@ MAX Lv : 5
 [Level 2] : 效果範圍 5 x 5 / 持續時間 4 + 7秒
 [Level 3] : 效果範圍 5 x 5 / 持續時間 4 + 8秒
 [Level 4] : 效果範圍 7 x 7 / 持續時間 4 + 9秒
-[Level 5] : 效果範圍 7 x 7 / 持續時間 4 + 10秒,	
-#
-ALL_NIFLHEIM_RECALL# 
-前往尼芙菲姆!(RETURN TO NIFLHEIM)
-MAX LV : 1
-系列 : 輔助(返城)
-內容 : 返回「尼芙菲姆」，使用後有5分鐘的冷卻時間。
-#
-SU_BASIC_SKILL#
-新基本技能 (New Basic Skill)
-MAX Lv : 1
-系列 : 被動
-內容 : 可以使用基本介面的相關功能。
-角色之間可交易、可以使用表情、坐下、開設聊天室、加入隊伍及組隊，卡普拉倉庫。
-}
-SU_BITE#
-狠咬 (Bite)
-MAX Lv : 1
-習得條件 : 新基本技能 1
-系列 : 攻擊
-對象 : 敵人
-內容 : 狠咬敵人來攻擊，若敵人處虛弱狀態時會進行更猛烈的攻擊。
-若BaseLv逾30以上時，攻擊的技能有機率再發動一次。BaseLv每上升30時，觸發機率也會增加。
-[Level 1] : ATK 200%
-}
-SU_HIDE#
-躲藏 (Hide)
-MAX Lv : 1
-習得條件 : 狠咬 1
-系列 : 輔助
-內容 : 躲藏在草叢裡以避開敵人的攻擊，會被敵人的偵測技能發現。
-}
-SU_SCRATCH#
-抓傷 (Scratch)
-MAX Lv : 3
-習得條件 : 躲藏 1
-系列 : 攻擊
-對象 : 敵人
-內容 : 對指定的敵人進行抓傷攻擊。(有機率讓敵人陷入出血異常狀態)
-若BaseLv逾30以上時，攻擊的技能有機率再發動一次。BaseLv每上升30時，觸發機率也會增加。
-[Level 1] : 攻擊力 100%
-[Level 2] : 攻擊力 150%
-[Level 3] : 攻擊力 200%
-}
-SU_STOOP#
-俯身 (Stoop)
-MAX Lv : 1
-習得條件 : 抓傷 3
-系列 : 輔助
-內容 : 6秒內所受傷害-90%，被倒退時會強制解除。
-}
-SU_LOPE#
-跳躍 (Lope)
-MAX Lv : 3
-習得條件 : 俯身 1
-系列 : 移動
-內容 : 往高處跳躍來移動位置。
-若鎖定的目標為不可移動的座標時，會原地跳躍。
-在不可使用蒼蠅翅膀的地圖上無法施放該技能。
-習得跳躍後公會技能緊急呼叫的詠唱時間增2倍。
-[Level 1] 移動格數 6
-[Level 2] 移動格數 10
-[Level 3] 移動格數 14
-}
-SU_SPRITEMABLE#
-靈魂魔珠 (Sprite Mable)
-MAX Lv : 1
-習得條件 : 跳躍 3
-系列 : 被動
-內容 : 可使喚靈魂。
-MHP + 1000, MSP + 100.
-可使喚海洋靈魂, 大地靈魂, 生命靈魂。
-}
-SU_FRESHSHRIMP#
-活蝦 (Frash Shrimp)
-MAX Lv : 5
-習得條件 : 靈魂魔珠 1
-系列 : 海鮮類(恢復)
-對象 : 玩家
-內容 : 2分內吸收小活蝦的靈魂後少量恢復HP。
-[Level 1] : 每10秒恢復
-[Level 2] : 每9秒恢復
-[Level 3] : 每8秒恢復
-[Level 4] : 每7秒恢復
-[Level 5] : 每6秒恢復
-}
-SU_BUNCHOFSHRIMP#
-蝦群 (Bunch of Shrimp)
-MAX Lv : 5
-習得條件 : 活蝦 3
-系列 : 海鮮類(輔助)
-對象 : 畫面內所有隊員
-內容 : 借助蝦群之力一定時間內ATK和MATK +10%。
-需要蝦子1個
-[Level 1] : 持續60秒
-[Level 2] : 持續90秒
-[Level 3] : 持續120秒
-[Level 4] : 持續150秒
-[Level 5] : 持續180秒
-}
-SU_TUNABELLY#
-鮪魚肚肉 (Tuna Belly)
-MAX Lv : 5
-習得條件 : 蝦群 3
-系列 : 海鮮類(恢復)
-對象 : 玩家
-內容 : 吸收美味的鮪魚肚肉靈魂後可恢復對象一定量的MHP。
-[Level 1] : MHP恢復10%
-[Level 2] : MHP恢復30%
-[Level 3] : MHP恢復50%
-[Level 4] : MHP恢復70%
-[Level 5] : MHP恢復90%
-}
-SU_TUNAPARTY#
-鮪魚派對 (Tuna Party)
-MAX Lv : 5
-習得條件 : 鮪魚肚肉 3
-系列 : 海鮮類(輔助)
-對象 : 玩家
-內容 : 美味的鮪魚靈魂30秒內保會對象
-[Level 1] : 鮪魚的防禦力 : 施展者的MHP 10%
-[Level 2] : 鮪魚的防禦力 : 施展者的MHP 20%
-[Level 3] : 鮪魚的防禦力 : 施展者的MHP 30%
-[Level 4] : 鮪魚的防禦力 : 施展者的MHP 40%
-[Level 5] : 鮪魚的防禦力 : 施展者的MHP 50%
-}
-SU_SV_STEMSPEAR#
-獼猴桃梗槍 (SV Stem Spear)
-MAX Lv : 5
-習得條件 : 靈魂魔珠 1
-系列 : 蔬菜類(攻擊)
-對象 : 敵人
-內容 : 以獼猴桃攻擊的靈魂貫穿敵人。
-若BaseLv逾30以上時，攻擊的技能有機率再發動一次。BaseLv每上升30時，觸發機率也會增加。
-[Level 1] : 地屬性魔法 / MATK 700% / 出血機率 10%.
-[Level 2] : 火屬性魔法 / MATK 700% / 出血機率 10%.
-[Level 3] : 水屬性魔法 / MATK 700% / 出血機率 10%.
-[Level 4] : 風屬性魔法 / MATK 700% / 出血機率 10%.
-[Level 5] : 念屬性魔法 / MATK 700% / 出血機率 10%.
-}
-SU_SV_ROOTTWIST#
-獼猴桃根莖纏繞 (SV Root Twist)
-MAX Lv : 5
-習得條件 : 獼猴桃梗槍 3
-系列 : 蔬菜類(輔助)
-對象 : 敵人
-內容 : 以獼猴桃根莖的靈魂抓住敵人，被抓到的敵人受到毒屬性傷害。
-可用崩裂術, 摧殘解除，對BOSS怪無效。
-[Level 1] : 持續7秒
-[Level 2] : 持續9秒
-[Level 3] : 持續11秒
-[Level 4] : 持續13秒
-[Level 5] : 持續15秒
-}
-SU_CN_METEOR#
-貓薄荷隕石 (CN Meteor)
-MAX Lv : 5
-習得條件 : 獼猴桃根莖纏繞 3
-系列 : 蔬菜類(攻擊)
-對象 : 敵人
-內容 : 將巨大貓薄荷的靈魂從高處召喚後墜落，依等級墜落的貓薄荷數量會增加。
-貓薄荷果實消耗1個時，敵人陷入詛咒的機率會增加。
-[Level 1] : 無屬性魔法 / 效果範圍 3 x 3 / MATK 300%
-[Level 2] : 無屬性魔法 / 效果範圍 3 x 3 / MATK 400%
-[Level 3] : 無屬性魔法 / 效果範圍 5 x 5 / MATK 500%
-[Level 4] : 無屬性魔法 / 效果範圍 5 x 5 / MATK 600%
-[Level 5] : 無屬性魔法 / 效果範圍 7 x 7 / MATK 700%
-}
-SU_CN_POWDERING#
-貓薄荷灑粉 (CN Powdering)
-MAX Lv : 5
-習得條件 : 貓薄荷隕石 3
-系列 : 蔬菜類(輔助)
-對象 : 敵人
-內容 : 在有撒貓薄荷粉末的地方，一定時間內ATK和MATK-50%，且移動速度變慢。
-HP和SP的自然恢復力大幅增加。
-需要貓薄荷果實1個。
-[Level 1] : 效果範圍 3 x 3 / 持續3秒
-[Level 2] : 效果範圍 3 x 3 /持續4秒
-[Level 3] : 效果範圍 5 x 5 /持續5秒
-[Level 4] : 效果範圍 5 x 5 /持續6秒
-[Level 5] : 效果範圍 7 x 7 /持續7秒
-}
-SU_PICKYPECK#
-小雞啄擊 (Picky Peck)
-MAX Lv : 5
-習得條件 : 靈魂魔珠 1
-系列 : 動物類(攻擊)
-對象 : 敵人
-內容 : 憤怒的小雞靈魂啄擊敵人，敵人的血未滿50%時，傷害增加2倍。
-若BaseLv逾30以上時，攻擊的技能有機率再發動一次。BaseLv每上升30時，觸發機率也會增加。
-[Level 1] : 遠程物理 / ATK 300%
-[Level 2] : 遠程物理 / ATK 400%
-[Level 3] : 遠程物理 / ATK 500%
-[Level 4] : 遠程物理 / ATK 600%
-[Level 5] : 遠程物理 / ATK 700%
-}
-SU_ARCLOUSEDASH#
-捲甲蟲暴衝 (Arclouse Dash)
-MAX Lv : 5
-習得條件 : 小雞啄擊 3
-系列 : 動物類(輔助)
-對象 : 玩家
-內容 : 吸收捲甲蟲的靈魂後暫時變得非常敏捷，若目標是都蘭族時(含自己), 遠程物理攻擊力再 +10%。
-[Level 1] : 60秒內AGI20, 移動速度增加
-[Level 2] : 70秒內AGI25, 移動速度增加
-[Level 3] : 80秒內AGI30, 移動速度增加
-[Level 4] : 90秒內AGI35, 移動速度增加
-[Level 5] : 100秒內AGI40, 移動速度增加
-}
-SU_SCAROFTAROU#
-白鼠創傷 (Scar of Tarou)
-MAX Lv : 5
-習得條件 : 捲甲蟲暴衝 3
-系列 : 動物類(攻擊)
-對象 : 敵人
-內容 : 鄉村老鼠受傷的靈魂給予敵人相同的創傷。
-咬傷處受到技能等級和DEX的影響，增加MHP的流失量。
-可用治癒術、治療術、驅散解除，對BOSS怪無效，而攻擊力增加2倍。
-若BaseLv逾30以上時，攻擊的技能有機率再發動一次。BaseLv每上升30時，觸發機率也會增加。
-[Level 1] : ATK 100% / 咬傷 : 9秒內每秒MHP流失一定量
-[Level 2] : ATK 200% / 咬傷 : 9秒內每秒MHP流失一定量
-[Level 3] : ATK 300% / 咬傷 : 9秒內每秒MHP流失一定量
-[Level 4] : ATK 400% / 咬傷 : 9秒內每秒MHP流失一定量
-[Level 5] : ATK 500% / 咬傷 : 9秒內每秒MHP流失一定量
-}
-SU_LUNATICCARROTBEAT#
-瘋兔胡蘿蔔重擊 (Lunatic Carrot Beat)
-MAX Lv : 5
-習得條件 : 白鼠創傷 3
-系列 : 動物類(攻擊)
-對象 : 敵人
-內容 : 憤怒的瘋兔靈魂用胡蘿蔔重擊敵人。
-胡蘿蔔消耗1個時，敵人陷入暈眩的機率增加。
-[Level 1] : ATK 300% / 效果範圍 3 x 3 
-[Level 2] : ATK 400% / 效果範圍 3 x 3 
-[Level 3] : ATK 500% / 效果範圍 5 x 5 
-[Level 4] : ATK 600% / 效果範圍 5 x 5 
-[Level 5] : ATK 700% / 效果範圍 7 x 7 
-}
-SU_POWEROFSEA#
-海洋力量 (Power of Sea)
-MAX Lv : 1
-習得條件 : 鮪魚派對 3
-系列 : 被動
-內容 : 透過靈魂可取得少許海洋力量。
-治癒量+10%，對海鮮類技能投資20點以上時，治癒量再+20%。
-}
-SU_POWEROFLAND#
-大地力量 (Power of Land)
-MAX Lv : 1
-習得條件 : 貓薄荷灑粉 3
-系列 : 被動
-內容 : 透過靈魂可取得少許大地力量。
-INT+20，對蔬菜類技能投資20點以上時，MATK+20%。
-}
-SU_POWEROFLIFE#
-生命力量 (Power of Life)
-MAX Lv : 1
-習得條件 : 瘋兔 胡蘿蔔重擊 3
-系列 : 被動
-內容 : 透過靈魂可取得少許生命力量。
-FLEE, HIT, CRI各+20，對動物類技能投資20點以上時，遠程物理攻擊力+20% 。
-}
-ALL_GLASTHEIM_RECALL#
-返回克雷斯特漢姆
-MAX LV : 1
-系列 : 輔助(返回)
-內容 :  返回“克雷斯特漢姆”，冷卻時間5分鐘。
-}
+[Level 5] : 效果範圍 7 x 7 / 持續時間 4 + 10秒
+
+

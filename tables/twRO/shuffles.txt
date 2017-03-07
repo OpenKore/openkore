@@ -1,10 +1,10 @@
-# Client Date <20170227>
+# Client Date <20170306>
 # PacketExtractor by BryanWai
 0369 0089 actor_action
 0A68 0113 skill_use
 0437 0085 character_move
 035F 007E sync
-0202 009B actor_look_at
+0942 009B actor_look_at
 07E4 009F item_take
 0362 00A2 item_drop
 07EC 00F3 storage_item_add
@@ -19,6 +19,6 @@
 0365 0802 booking_register
 0A5A 0072 map_login
 0802 02C4 party_join_request_by_name
-023B 0202 friend_request
-0361 022D homunculus_command
-0A5C 023B storage_password
+089D 0202 friend_request
+094F 022D homunculus_command
+08A8 023B storage_password
