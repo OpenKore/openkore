@@ -644,9 +644,7 @@ sub initMapChangeVars {
 	undef %items;
 	undef %spells;
 	undef %incomingParty;
-	
 	undef %talk;
-	
 	$ai_v{temp} = {};
 	undef @venderItemList;
 	undef $venderID;
