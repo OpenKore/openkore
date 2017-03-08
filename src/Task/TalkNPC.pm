@@ -194,16 +194,6 @@ sub setTarget {
 
 	if ($target) {
 		debug "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
-	};
-
-	if ($target && $target->{statuses}->{EFFECTSTATE_BURROW}) {
-		# FIXME: what if NPC initiated the talk by itself?
-		# we should only prevent initiating talks with hidden NPCs
-
-		# TODO: way to override this, globally and in arguments for task
-
-		$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
-		return;
 	}
 
 	$self->{target} = $target;
@@ -212,7 +202,7 @@ sub setTarget {
 	# FIXME: We probably need to look at the target->pos_to (if defined),
 	# not at self, as coordinates can be omitted.
 	if (defined $self->{x} && defined $self->{y}) {
-		lookAtPosition($self);
+		lookAtPosition($self) unless (%talk);
 	}
 
 	return 1;
@@ -769,10 +759,15 @@ sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
 		my ($actor) = grep { $self->{nameID} eq $_->{nameID} } @{$actorList->getItems};
+		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW}) {
+			$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
+			return;
+		}
 		return $actor;
 	}
 	foreach my $actor (@{$actorList->getItems()}) {
 		my $pos = ($actor->isa('Actor::NPC')) ? $actor->{pos} : $actor->{pos_to};
+		next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
 		if ($pos->{x} == $self->{x} && $pos->{y} == $self->{y}) {
 			if (defined $actor->{name}) {
 				return $actor;
