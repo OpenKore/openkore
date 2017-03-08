@@ -64416,6 +64416,20 @@ Cannot be dropped or placed in Cart.
 Weight : ^7777771^000000
 #
 17379#
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Weight: 0
+^FFFFFF_^000000
+When Opened Contains one of the following
+Costume Cowlick (White)
+Costume Flying Helmet
+Costume Sky Helm
+Costume Wrapping Cloth
+Costume Crown of Ancient Queen
+Costume Hair Buns (White)
+Costume Wings of Happiness
+Costume Rabbit Ribbon
 #
 17380#
 #
@@ -70212,16 +70226,16 @@ Required Jobs: All Jobs
 Str + 5
 Int + 5
 Reduces the variable casting time of ^0000FFCart Cannon^000000 by 100%.
-Increases the damage of ^0000FFCart Cannon^000000 by 10%.
-Increases the damage of ^0000FFCart Tornado^000000 by 5%.
 Reduces the SP cost of ^0000FFCart Cannon^000000 by 30.
 Reduces the SP cost of ^0000FFCart Tornado^000000 by 5.
+Increases the skill damage bonus of ^0000FFCart Cannon^000000 by 100%.
+Increases the skill damage bonus of ^0000FFCart Tornado^000000 by 5%.
 If upgrade level is +5 or higher,
-Increases the damage of ^0000FFCart Cannon^000000 by an additional 20%.
-Increases the damage of ^0000FFCart Tornado^000000 by an additional 10%.
+Increases the skill damage bonus of ^0000FFCart Cannon^000000 by an additional 200%.
+Increases the skill damage bonus of ^0000FFCart Tornado^000000 by an additional 10%.
 If upgrade level is +7 or higher,
-Increases the damage of ^0000FFCart Cannon^000000 by an additional 30%.
-Increases the damage of ^0000FFCart Tornado^000000 by an additional 20%.
+Increases the skill damage bonus of ^0000FFCart Cannon^000000 by an additional 300%.
+Increases the skill damage bonus of ^0000FFCart Tornado^000000 by an additional 20%.
 #
 19201#
 A box that contains 10 Classic Battle Manual

@@ -7327,7 +7327,7 @@
 17376#Winter_Wonder_Time_Lucky_Crate#
 17377#Santa's_Wardrobe_Box#
 17378#Paws_N_Claws_Starter_Pack#
-17379#Dragoon_Shield_Shadow_Box#
+17379#Anniversary_Costume_Box#
 17380#Satanic_Shield_Shadow_Box#
 17381#Flameguard_Shield_Shadow_Box#
 17382#Requiem_Shield_Shadow_Box#
