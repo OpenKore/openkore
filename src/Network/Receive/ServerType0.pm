@@ -2097,6 +2097,10 @@ sub map_changed {
 		delete $char->{encoreSkill};
 	}
 	undef %guild;
+	if ( $char->cartActive ) {
+		$char->cart->close;
+		$char->cart->clear;
+	}
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
