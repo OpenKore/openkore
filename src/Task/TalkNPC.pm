@@ -230,45 +230,8 @@ sub iterate {
 	$self->SUPER::iterate(); # Do not forget to call this!
 	return unless ($net->getState() == Network::IN_GAME);
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
-	
-	if ($self->{stage} == NOT_STARTED) {
-		if ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
-			debug "Talking was initiated by the other side and finished instantly\n", "ai_npcTalk";
-			$self->conversation_end;
-			return;
-		}
-		
-		if (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
-			# Wait for us to stop moving before talking.
-			return;
 
-		} elsif (timeOut($self->{time}, $timeResponse)) {
-			if ($self->{nameID}) {
-				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC with id (%d).",
-					$self->{nameID}));
-			} else {
-				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC at location (%d,%d).",
-					$self->{x}, $self->{y}));
-			}
-
-		} else {
-			my $target = $self->find_and_set_target;
-			
-			unless (exists $talk{nameID}) {
-				$self->addSteps('x');
-				undef $ai_v{'npc_talk'}{'time'};
-				undef $ai_v{'npc_talk'}{'talk'};
-			}
-			
-			return unless $self->addSteps($self->{sequence});
-
-			if ($target || %talk) {
-				$self->{stage} = TALKING_TO_NPC;
-				$self->{time} = time;
-			}
-		}
-
-	} elsif ($self->{map_change}) {
+	if ($self->{map_change}) {
 		
 		#A conversation started right after mapchange (eg. payon guards)
 		if (%talk) {
@@ -297,6 +260,45 @@ sub iterate {
 			$self->conversation_end;
 		}
 	
+	} elsif ($self->{stage} == NOT_STARTED) {
+		if ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
+			debug "Talking was initiated by the other side and finished instantly\n", "ai_npcTalk";
+			#We must still send talk cancel or otherwise the character can't move.
+			$self->{stage} = AFTER_NPC_CLOSE;
+			$self->find_and_set_target;
+			$self->{time} = time;
+			return;
+			
+		} elsif (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+			# Wait for us to stop moving before talking.
+			return;
+
+		} elsif (timeOut($self->{time}, $timeResponse)) {
+			if ($self->{nameID}) {
+				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC with id (%d).",
+					$self->{nameID}));
+			} else {
+				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC at location (%d,%d).",
+					$self->{x}, $self->{y}));
+			}
+
+		} else {
+			my $target = $self->find_and_set_target;
+			
+			unless (exists $talk{nameID}) {
+				$self->addSteps('x');
+				undef $ai_v{'npc_talk'}{'time'};
+				undef $ai_v{'npc_talk'}{'talk'};
+			}
+			
+			return unless $self->addSteps($self->{sequence});
+
+			if ($target || %talk) {
+				$self->{stage} = TALKING_TO_NPC;
+				$self->{time} = time;
+			}
+		}
+	
 	# This is where things may bug in npcs which have no chat (private healers)
 	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
 		# If NPC does not respond before timing out, then by default, it's
@@ -304,11 +306,11 @@ sub iterate {
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
-	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, 1.5)) {
-		# $config{npcTimeResponse} + 4 seconds have passed since we sent the last conversation step
-		# or 1.5 seconds have passed since the npc answered us.
+	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'})) {
+		# $config{npcTimeResponse} seconds have passed since we sent the last conversation step
+		# or $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} seconds have passed since the npc answered us.
 		
-		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and asume it's over
+		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
 			undef %talk;
 			if (defined $self->{error_code}) {
@@ -586,7 +588,7 @@ sub iterate {
 	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
 	# This needs more investigation.
 	} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
-		return unless (timeOut($self->{time}, 1));
+		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'}));
 		#Now 'n' step is totally unnecessary as we always send it but this must be done for backwards compatibility
 		if ( $self->{steps}[0] =~ /^n/i ) {
 			shift(@{$self->{steps}});
@@ -598,7 +600,7 @@ sub iterate {
 	
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
 	} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
-		return unless (timeOut($self->{time}, 1));
+		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'}));
 		
 		if (defined $self->{error_code}) {
 			$self->setError($self->{error_code}, $self->{error_message});
@@ -789,7 +791,7 @@ sub waitingForSteps {
 	return 0 unless ($self->{stage} == TALKING_TO_NPC);
 	return 0 unless ($self->noMoreSteps);
 	return 0 if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont});
-	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, 1.5));
+	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'}));
 	return 1;
 }
 
