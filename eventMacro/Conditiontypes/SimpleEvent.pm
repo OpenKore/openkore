@@ -6,8 +6,9 @@ use base 'eventMacro::Condition';
 
 use eventMacro::Data;
 
-sub validate_condition {
-	return $self->SUPER::validate_condition( 1 );;
+sub validate_condition  {
+	my ($self) = @_;
+	return $self->SUPER::validate_condition( 1 );
 }
 
 sub condition_type {
