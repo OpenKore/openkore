@@ -30,7 +30,8 @@ sub Unload {
 sub main {
 	my ($cmd, $args) = @_;
 	my ($key, $filename) = split(" ", $args);
-	my $macro_file = Settings::getControlFilename($config{macro_file} || 'macros.txt');
+	my $mcr = $config{macro_file} || 'macros.txt';
+	my $macro_file = Settings::getControlFilename($mcr);
 
 	
 	if ($macro_file eq "") {
@@ -130,7 +131,7 @@ sub main {
 				open (FILE,">$macro_file");
 				print FILE join ("\n", @newlines);
 				close(FILE);
-				Commands::run("reload macro");
+				Commands::run("reload $mcr");
 			}
 			else
 			{
