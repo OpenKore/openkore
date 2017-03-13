@@ -1939,9 +1939,11 @@ sub itemName {
 		my $elementID = $cards[1] % 10;
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
-		if ($starCrumbs >= 1 && $starCrumbs <= 3 ) {
-			$prefix .= (T("V")x$starCrumbs).T("S ") if $starCrumbs;
-		}
+		
+		# Translation-friendly
+		($starCrumbs == 1) ? ($prefix .= T("VS")) : (($starCrumbs == 2) ? ($prefix .= T("VVS")) : ($prefix .= T("VVVS")));
+		$prefix .= " ";
+
 		# $prefix .= "$elementName " if ($elementName ne "");
 		$suffix = "$elementName" if ($elementName ne "");
 	} elsif (@cards) {
