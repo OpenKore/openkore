@@ -738,6 +738,36 @@ sub defined_var {
 # Scalars
 sub get_scalar_var {
 	my ($self, $variable_name) = @_;
+
+	# Handle special variables.
+	if ( substr( $variable_name, 0, 1 ) eq '.' ) {
+
+		# Time-related variables.
+		if    ( $variable_name eq '.time' )     { return time; }
+		elsif ( $variable_name eq '.datetime' ) { return scalar localtime; }
+		elsif ( $variable_name eq '.second' )   { return ( localtime() )[0]; }
+		elsif ( $variable_name eq '.minute' )   { return ( localtime() )[1]; }
+		elsif ( $variable_name eq '.hour' )     { return ( localtime() )[2]; }
+
+		# Field-related variables.
+		elsif ( $variable_name eq '.map' ) { return $field ? $field->baseName : ''; }
+
+		# Character-related variables.
+		elsif ( $variable_name eq '.pos' ) { return $char ? sprintf( '%d %d', @{ calcPosition( $char ) }{ 'x', 'y' } ) : ''; }
+		elsif ( $variable_name eq '.hp' )        { return $char && $char->{hp}         || 0; }
+		elsif ( $variable_name eq '.sp' )        { return $char && $char->{sp}         || 0; }
+		elsif ( $variable_name eq '.lvl' )       { return $char && $char->{lv}         || 0; }
+		elsif ( $variable_name eq '.joblvl' )    { return $char && $char->{lv_job}     || 0; }
+		elsif ( $variable_name eq '.spirits' )   { return $char && $char->{spirits}    || 0; }
+		elsif ( $variable_name eq '.zeny' )      { return $char && $char->{zeny}       || 0; }
+		elsif ( $variable_name eq '.weight' )    { return $char && $char->{weight}     || 0; }
+		elsif ( $variable_name eq '.maxweight' ) { return $char && $char->{weight_max} || 0; }
+		elsif ( $variable_name eq '.status' ) {
+			return '' if !$char;
+			return join ',', sort( ( $char->{muted} ? 'muted' : () ), ( $char->{dead} ? 'dead' : () ), map { $statusName{$_} || $_ } keys %{ $char->{statuses} } );
+		}
+	}
+
 	return $self->{Scalar_Variable_List_Hash}{$variable_name} if (exists $self->{Scalar_Variable_List_Hash}{$variable_name});
 	return undef;
 }

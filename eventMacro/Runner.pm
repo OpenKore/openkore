@@ -16,7 +16,7 @@ use List::Util qw(max min sum);
 use eventMacro::Data;
 use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
-use eventMacro::Utilities qw(cmpr refreshGlobal getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
+use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index);
 use eventMacro::Automacro;
@@ -1729,9 +1729,6 @@ sub parse_command {
 	return "" unless defined $command;
 	my ($keyword, $inside_brackets, $parsed, $result, $sub, $val);
 
-	# refresh global vars only once per command line
-	refreshGlobal();
-	
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		

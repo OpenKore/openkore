@@ -5,7 +5,7 @@ use strict;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs refreshGlobal getnpcID getPlayerID
+our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
@@ -186,38 +186,6 @@ sub getConfig {
 		};
 	};
 	return (defined $::config{$arg1})?$::config{$arg1}:"";
-}
-
-# sets and/or refreshes global variables
-sub refreshGlobal {
-	my $var = $_[0];
-
-	$eventMacro->set_scalar_var(".time", time, 0);
-	$eventMacro->set_scalar_var(".datetime", scalar localtime, 0);
-	my ($sec, $min, $hour) = localtime;
-	$eventMacro->set_scalar_var(".second", $sec, 0);
-	$eventMacro->set_scalar_var(".minute", $min, 0);
-	$eventMacro->set_scalar_var(".hour", $hour, 0);
-	
-	return unless $net && $net->getState == Network::IN_GAME;
-	
-	$eventMacro->set_scalar_var(".map", (defined $field)?$field->baseName:"undef", 0);
-	my $pos = calcPosition($char); 
-	$eventMacro->set_scalar_var(".pos", sprintf("%d %d", $pos->{x}, $pos->{y}), 0);
-	
-	$eventMacro->set_scalar_var(".hp", $char->{hp}, 0);
-	$eventMacro->set_scalar_var(".sp", $char->{sp}, 0);
-	$eventMacro->set_scalar_var(".lvl", $char->{lv}, 0);
-	$eventMacro->set_scalar_var(".joblvl", $char->{lv_job}, 0);
-	$eventMacro->set_scalar_var(".spirits", ($char->{spirits} or 0), 0);
-	$eventMacro->set_scalar_var(".zeny", $char->{zeny}, 0);
-	$eventMacro->set_scalar_var(".weight", $char->{weight}, 0);
-	$eventMacro->set_scalar_var(".maxweight", $char->{weight_max}, 0);
-	$eventMacro->set_scalar_var('.status', (join ',',
-		('muted')x!!$char->{muted},
-		('dead')x!!$char->{dead},
-		map { $statusName{$_} || $_ } keys %{$char->{statuses}}
-	) || 'none', 0);
 }
 
 # get NPC array index
