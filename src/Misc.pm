@@ -1941,8 +1941,13 @@ sub itemName {
 		my $starCrumbs = ($cards[1] >> 8) / 5;
 		
 		# Translation-friendly
-		($starCrumbs == 1) ? ($prefix .= T("VS")) : (($starCrumbs == 2) ? ($prefix .= T("VVS")) : ($prefix .= T("VVVS")));
-		$prefix .= " ";
+		if ($starCrumbs == 1) {
+			$prefix .= T("VS ");
+		} elsif ($starCrumbs == 2) {
+			$prefix .= T("VVS ");
+		} elsif ($starCrumbs == 3) {
+			$prefix .= T("VVVS ");
+		}
 
 		# $prefix .= "$elementName " if ($elementName ne "");
 		$suffix = "$elementName" if ($elementName ne "");
