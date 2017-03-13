@@ -350,15 +350,12 @@ sub iterate {
 		}
 
 		if ($self->noMoreSteps) {
-		
 			# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
 			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell)$/) {
 				$self->conversation_end;
-			
-			#Wait for more commands
-			} else {
-				return;
 			}
+			#Wait for more commands
+			return;
 		
 		#We give the NPC some time to respond. This time will be reset once the NPC responds.
 		} else {
