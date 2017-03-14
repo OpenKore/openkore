@@ -751,9 +751,12 @@ sub get_scalar_var {
 
 		# Field-related variables.
 		elsif ( $variable_name eq '.map' ) { return $field ? $field->baseName : ''; }
+		elsif ( $variable_name eq '.incity' ) { return $field && $field->isCity ? 1 : 0; }
 
 		# Character-related variables.
+		elsif ( $variable_name eq '.job' ) { return $char && $jobs_lut{ $char->{jobID} } || ''; }
 		elsif ( $variable_name eq '.pos' ) { return $char ? sprintf( '%d %d', @{ calcPosition( $char ) }{ 'x', 'y' } ) : ''; }
+		elsif ( $variable_name eq '.name' )      { return $char && $char->{name}       || 0; }
 		elsif ( $variable_name eq '.hp' )        { return $char && $char->{hp}         || 0; }
 		elsif ( $variable_name eq '.sp' )        { return $char && $char->{sp}         || 0; }
 		elsif ( $variable_name eq '.lvl' )       { return $char && $char->{lv}         || 0; }
@@ -766,6 +769,17 @@ sub get_scalar_var {
 			return '' if !$char;
 			return join ',', sort( ( $char->{muted} ? 'muted' : () ), ( $char->{dead} ? 'dead' : () ), map { $statusName{$_} || $_ } keys %{ $char->{statuses} } );
 		}
+
+		# Cart-related variables.
+		elsif ( $variable_name eq '.cartweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
+		elsif ( $variable_name eq '.cartmaxweight' ) { return $char && $char->cart->isReady ? $char->cart->{weight_max} : 0; }
+		elsif ( $variable_name eq '.cartitems' )     { return $char && $char->cart->isReady ? $char->cart->items        : 0; }
+		elsif ( $variable_name eq '.cartmaxitems' )  { return $char && $char->cart->isReady ? $char->cart->items_max    : 0; }
+
+		# Storage-related variables.
+		elsif ( $variable_name eq '.storageopen' )     { return $char && $char->storage->isReady              ? 1                         : 0; }
+		elsif ( $variable_name eq '.storageitems' )    { return $char && $char->storage->wasOpenedThisSession ? $char->storage->items     : 0; }
+		elsif ( $variable_name eq '.storagemaxitems' ) { return $char && $char->storage->wasOpenedThisSession ? $char->storage->items_max : 0; }
 	}
 
 	return $self->{Scalar_Variable_List_Hash}{$variable_name} if (exists $self->{Scalar_Variable_List_Hash}{$variable_name});
