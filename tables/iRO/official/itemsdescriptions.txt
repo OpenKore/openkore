@@ -37140,6 +37140,20 @@ Required Jobs: All Jobs
 Increases physical and magical damage on Demon race targets by 5%.
 Reduces damage taken from Demon race enemies by 5%.
 #
+5921#
+^808080Gills of a black and red monster fish.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Middle
+Defense: 1
+Weight: 20
+Required Level: 10
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical damage on Fish race targets by 5%.
+Reduces damage taken from Fish race enemies by 5%.
+#
 5933#
 ^808080The mask carries the grudge of its previous owner.^000000
 ^FFFFFF_^000000
@@ -37195,6 +37209,21 @@ Increases MATK by a % equal to the refine level of the item.
 If refined to greater than +6 Increases the damage of Reverbration by 30% and subtracts 18 from the SP Cost
 If refined to greater than +9 decreases the after cast delay of Metallic Sound
 Weight : ^7777771^000000
+#
+5973#
+^808080An accessory with the spirit of an ancient elf who loved nature.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 20
+Required Level: 70
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Luk + 10
+Mdef + 10
+Perfect Dodge + 2
 #
 5978#
 ^808080It is not known what exactly is contained within this syringe.^000000
@@ -59505,6 +59534,20 @@ Weight : ^777777100^000000
 Required Level : ^77777799^000000
 Job : ^777777All Classes^000000
 #
+15087#
+^808080This armor contains the soul of the Azure Dragon.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 55
+Property: Water
+Weight: 50
+Required Level: 1
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Mdef + 5
+Increases physical damage on Water property targets by 10%.
+#
 15088#
 The cloth worn by student for school.
 AGI+2, LUK+1.
@@ -59645,6 +59688,20 @@ Property: Holy
 Weight: 50
 Required Level: 70
 Required Jobs: All Jobs
+#
+15104#
+^808080Armor worn by fishermen to protect themselves from rough seas.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 30
+Property: N/A
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical and magical damage on Fish race targets by 3%.
+Increases magical damage on Fish race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
 #
 15105#
 A gown that was once worn by a great saint of a distant empire. When torn, it causes a burning sensation on the skin.
@@ -59891,6 +59948,43 @@ Mdef + 5
 Additional Mdef + 1 per upgrade level of the item.
 Reduces damage taken from Formless race enemies by 5%.
 Reduces damage taken from Formless race enemies by an additional 1% per upgrade level of the item.
+#
+15142#
+^808080These clothes possess the power to reject sea creatures. It seems to be used when performing special rituals.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 30
+Property: Neutral
+Weight: 120
+Required Level: 70
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Fish race enemies by 5%.
+Reduces damage taken from Fish race enemies by an additional 1% per upgrade level of the item.
+#
+15145#
+^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to absorb all kinds of energy.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 60
+Property: Neutral
+Weight: 400
+Required Level: 99
+Required Jobs: All Jobs
+^FFFFFF_^000000
+If upgrade level is +8 or higher,
+Adds a 3% chance of restoring 3% of damage as HP when performing a physical attack.
+Adds a 2% chance of restoring 2% of damage as SP when performing a physical attack.
+If upgrade level is +9 or higher,
+Adds an additional 1% chance of restoring an additional 1% of damage as HP when performing a physical attack.
+Adds an additional 1% chance of restoring an additional 1% of damage as SP when performing a physical attack.
+If upgrade level is +10 or higher,
+Adds an additional 2% chance of restoring an additional 2% of damage as HP when performing a physical attack.
+Adds an additional 2% chance of restoring an additional 2% of damage as SP when performing a physical attack.
 #
 15150#
 ^808080A clean and bright white shirt.^000000
@@ -60352,6 +60446,40 @@ This item is indestructible in battle.
 ^FFFFFF_^000000
 If the user's base level is 70 or higher,
 For every 10 base levels, ATK + 5.
+#
+16051#
+^808080The royal hammer of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced. ^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Mace
+Attack: 50
+Property: N/A
+Weight: 10
+Weapon Level: 4
+Required Level: 70
+Required Jobs: Novice, Swordman, Merchant, Acolyte, Knight, Blacksmith, Priest, Crusader, Alchemist, Monk, Lord Knight, Master Smith, High Priest, Paladin, Biochemist, Champion, Rune Knight, Mechanic, Arch Bishop, Royal Guard, Geneticist, Sura
+^FFFFFF_^000000
+Matk + 50
+If used by Novice, Priest,
+Atk + 50
+Matk + 100
+ASPD + 1% per upgrade level of the item.
+If used by Novice, Monk,
+Max SP + 200
+Perfect Dodge + 1 per upgrade level of the item.
+Reduces the SP cost of skills by 5%.
+If used by Novice, Merchant,
+Atk + 100
+Hit + 10
+Reduces the variable casting time of skills by 1% per 2 upgrade levels of the item.
+If used by Novice, Swordsman,
+Vit + 1 per upgrade level of the item.
+Max HP + 500
+Max SP + 100
+If used by Novice,
+Matk + 100
+Max HP + 200 per upgrade level of the item.
+Max SP + 100
 #
 16131#
 #
@@ -65356,6 +65484,13 @@ Costume Red Cat Ears Cape
 Costume Angel's Black Mini Silk Hat
 Costume Rosary's Necklace
 
+#
+17788#
+^808080Gives one of the following when opened Monster Fish Gills Ancient Elven Ear Azure Dragon Armor [1] Fisherman's Mail [1] Orca Clothes [1] Evil Dragon Armor [1] Valkyrie Hammer [4] Loyalists Hood [1] Fisherman's Shoes Vesper Gear 02 [1] Magical Ring Wing of Beezlebub Box (2000) Prize Medal (6) BattlemanualX3 (5) Bloody Dead Branch^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -75500,6 +75635,21 @@ If upgrade level is +7 or higher,
 Increases the damage of Water property magical attacks on targets by an additional 3%.
 Reduces the damage of Wind property magical attacks on targets by 10%.
 #
+20730#
+^808080A loyal servant of the gods sacrificed himself while wearing this hood.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 30
+Weight: 20
+Required Level: 80
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Str + 2
+Max HP + 10%
+Increases damage taken from Neutral, Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost, Undead property attacks by 20%.
+Prevents the user from being knocked back.
+#
 20732#
 ^808080This mechanical device heals wounds and rejuvenates your body.^000000
 ^FFFFFF_^000000
@@ -76396,6 +76546,19 @@ Defense : ^7777778^000000
 Weight : ^77777730^000000
 Required Level : ^77777799^000000
 Job : ^777777Novice Class^000000
+#
+22017#
+^808080These shoes were worn by a man who made a living out of catching fish. They contain the man's many years of experience.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 10
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases the experience given from Fish race monsters by 5%.
+Increases the experience given from Fish race monsters by an additional 1% per upgrade level of the item.
 #
 22033#
 Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, these shoes protect their wearer against holiness and fear.
@@ -79344,6 +79507,19 @@ Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+28353#
+^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 1
+Weight: 10
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Atk + 5%
+Mdef + 3
+#
 28359#
 ^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
 ^FFFFFF_^000000
@@ -79380,6 +79556,25 @@ Max SP + 5 for every 5 base levels.
 ATK + 2 for every 5 base levels.
 MATK + 2 for every 5 base levels.
 Increases the experience given from monsters by 5%.
+#
+28377#
+^808080A ring created to enhance magical powers. The sorceress who made this ring was a great admirer of rune knights.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Defense: 0
+Weight: 10
+Required Level: 20
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases the damage of Water property magical attacks on targets by 5%.
+Increases the damage of Earth property magical attacks on targets by 5%.
+Increases the damage of Fire property magical attacks on targets by 5%.
+Increases the damage of Wind property magical attacks on targets by 5%.
+Increases the damage of ^0000FFCold Bolt^000000 by 1% for every 5 base levels.
+Increases the damage of ^0000FFEarth Spike^000000 by 1% for every 5 base levels.
+Increases the damage of ^0000FFFire Bolt^000000 by 1% for every 5 base levels.
+Increases the damage of ^0000FFLightning Bolt^000000 by 1% for every 5 base levels.
 #
 28380#
 ^808080A fresh necklace woven with clover flowers.^000000
