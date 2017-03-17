@@ -3508,10 +3508,12 @@
 5907#Sea_Captain_Hat#
 5912#Costume_Servant_Devilring#
 5916#Exorcist_Glasses#
+5921#Monster_Fish_Gills#
 5933#Crow_Tengu_Mask#
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
+5973#Ancient_Elven_Ear#
 5978#Toy_Syringe#
 6000#Ashes_of_Darkness#
 6001#Essence_of_Fire#
@@ -6805,6 +6807,7 @@
 15072#Nectar_Suit#
 15073#Anti-magic_Suit#
 15074#Geffen_Magic_Robe#
+15087#Azure_Dragon_Armor#
 15088#School_Uniform#
 15089#Lounge_Suit#
 15090#Armor_Of_Gray#
@@ -6818,6 +6821,7 @@
 15100#Frozen_Breastplate#
 15101#Harden_Breastplate#
 15103#Kirin_Armor#
+15104#Fisherman's_Mail#
 15105#Kaftan#
 15106#Engineer_Mail#
 15110#Supplement_Part_Str#
@@ -6833,6 +6837,8 @@
 15129#Luxurious_Doram_Suit#
 15138#Egir_Armour#
 15140#Natural_Clothes#
+15142#Orca_Clothes#
+15145#Evil_Dragon_Armor#
 15150#White_Shirt#
 15151#White_Eco_Shirt#
 15156#Elegant_Doram_Suit#
@@ -6868,6 +6874,7 @@
 16036#Ru_Blue_Mace#
 16037#Ru_Gold_Mace#
 16040#Crimson_Mace#
+16051#Valkyrie_Hammer#
 16131#Lady_Tanee_Doll_Box#
 16132#Lunatic_Hat_Box#
 16133#Sunshine_Staff_Box#
@@ -7401,6 +7408,7 @@
 17778#Overseas_Care_Package_III#
 17779#Love_Garden_Costume_Box#
 17786#Gothic_Costume_Egg#
+17788#Overseas_Care_Package_IV#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8408,6 +8416,7 @@
 20721#Cloak_Of_Gray#
 20725#Ribbon_Piamat#
 20728#Water_Dragon_Coat#
+20730#Loyalists_Hood#
 20732#Supplement_Part_Con#
 20733#Upgrade_Part_-_Engine#
 20734#Manteau_Of_Leafwind#
@@ -8465,6 +8474,7 @@
 22012#Mana_Boots#
 22014#Enhanced_Variant_Shoes#
 22015#Advanced_Angel's_Reincarnation#
+22017#Fisherman's_Shoes#
 22033#Boots_Of_Gray#
 22035#Hero_Nependess_Shoes#
 22036#Hero_Silverleather_Boots#
@@ -8746,8 +8756,10 @@
 28326#Broken_Chip_01#
 28327#Broken_Chip_02#
 28332#Jewerly_Ring#
+28353#Vesper_Gear_02#
 28359#Vesper_Gear_04#
 28374#Foxtail_Ring#
+28377#Magical_Ring#
 28380#Fresh_Grass_Necklace#
 28381#Cute_Grass_Necklace#
 28382#Charming_Grass_Necklace#
