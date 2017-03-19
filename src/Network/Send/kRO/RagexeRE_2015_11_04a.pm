@@ -21,7 +21,6 @@ sub new {
 	
 	my %packets = (
 #		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0887' => undef,
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0928' => ['actor_look_at', 'v C', [qw(head body)]],
 #		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
