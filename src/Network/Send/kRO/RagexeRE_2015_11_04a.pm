@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 
-package Network::Send::kRO::RagexeRE_2015_11_04a_;
+package Network::Send::kRO::RagexeRE_2015_11_04a;
 
 use strict;
 use base 'Network::Send::kRO::RagexeRE_2015_05_13a';
