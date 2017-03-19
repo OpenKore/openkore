@@ -38,7 +38,7 @@ sub new {
 		'088B' => ['storage_item_add', 'v V', [qw(index amount)]],
 #		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
 		'0886' => ['sync', 'V', [qw(time)]],
-	#	'093A' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+#		'093A' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0940' => ['storage_password'],
 	);
 	
