@@ -13,6 +13,7 @@ my @tests = qw(
 	CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
 	ItemsTest
+	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	PluginsHookTest
 	FileParsersTest

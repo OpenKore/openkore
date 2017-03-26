@@ -78,92 +78,6 @@ sub import {
 
 ### CATEGORY: Class methods
 
-##
-# void Network::Send::encrypt(r_msg, themsg)
-#
-# This is an old method used back in the iRO beta 2 days when iRO had encrypted packets.
-# At the moment (December 20 2006) there are no servers that still use encrypted packets.
-sub encrypt {
-	use bytes;
-	my $r_msg = shift;
-	my $themsg = shift;
-	my @mask;
-	my $newmsg;
-	my ($in, $out);
-	my $temp;
-	my $i;
-
-	if ($config{encrypt} == 1 && $conState >= 5) {
-		$out = 0;
-		for ($i = 0; $i < 13;$i++) {
-			$mask[$i] = 0;
-		}
-		{
-			use integer;
-			$temp = ($encryptVal * $encryptVal * 1391);
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 13;
-		$mask[$temp] = 1;
-		{
-			use integer;
-			$temp = $encryptVal * 1397;
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 13;
-		$mask[$temp] = 1;
-		for($in = 0; $in < length($themsg); $in++) {
-			if ($mask[$out % 13]) {
-				$newmsg .= pack("C1", int(rand() * 255) & 0xFF);
-				$out++;
-			}
-			$newmsg .= substr($themsg, $in, 1);
-			$out++;
-		}
-		$out += 4;
-		$newmsg = pack("v2", $out, $encryptVal) . $newmsg;
-		while ((length($newmsg) - 4) % 8 != 0) {
-			$newmsg .= pack("C1", (rand() * 255) & 0xFF);
-		}
-	} elsif ($config{encrypt} >= 2 && $conState >= 5) {
-		$out = 0;
-		for ($i = 0; $i < 17;$i++) {
-			$mask[$i] = 0;
-		}
-		{
-			use integer;
-			$temp = ($encryptVal * $encryptVal * 34953);
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 17;
-		$mask[$temp] = 1;
-		{
-			use integer;
-			$temp = $encryptVal * 2341;
-		}
-		$temp = ~(~($temp));
-		$temp = $temp % 17;
-		$mask[$temp] = 1;
-		for($in = 0; $in < length($themsg); $in++) {
-			if ($mask[$out % 17]) {
-				$newmsg .= pack("C1", int(rand() * 255) & 0xFF);
-				$out++;
-			}
-			$newmsg .= substr($themsg, $in, 1);
-			$out++;
-		}
-		$out += 4;
-		$newmsg = pack("v2", $out, $encryptVal) . $newmsg;
-		while ((length($newmsg) - 4) % 8 != 0) {
-			$newmsg .= pack("C1", (rand() * 255) & 0xFF);
-		}
-	} else {
-		$newmsg = $themsg;
-	}
-
-	$$r_msg = $newmsg;
-}
-
 ### CATEGORY: Methods
 
 ##
@@ -233,13 +147,11 @@ sub injectMessage {
 	my ($self, $message) = @_;
 	my $name = stringToBytes("|");
 	my $msg .= $name . stringToBytes(" : $message") . chr(0);
-	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
 	#$self->encryptMessageID(\$msg);
 
 	$msg = pack("C*", 0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
-	## encrypt(\$msg, $msg);
 	$self->{net}->clientSend($msg);
 }
 
@@ -251,7 +163,6 @@ sub injectAdminMessage {
 	my ($self, $message) = @_;
 	$message = stringToBytes($message);
 	$message = pack("C*",0x9A, 0x00) . pack("v*", length($message)+5) . $message .chr(0);
-	# encrypt(\$message, $message);
 
 	# Packet Prefix Encryption Support
 	#$self->encryptMessageID(\$message);
@@ -318,8 +229,6 @@ sub sendToServer {
 		Plugins::callHook($hookName, \%args);
 		return if ($args{return});
 	}
-
-	# encrypt(\$msg, $msg);
 
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);

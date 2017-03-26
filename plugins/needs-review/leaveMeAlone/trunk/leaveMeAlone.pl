@@ -144,11 +144,6 @@ sub turnOn {
 	
 
 sub start {
-	if (!&Settings::getSVNRevision()) {
-		msg("[".PLUGINNAME."] We couldn't check your OpenKore Revision. Please make sure that you're using at least revision 7970, or use version 4 for older revisions.", 3);
-	} elsif (&Settings::getSVNRevision() < 7970) {
-		msg("[".PLUGINNAME."] Seems like you're using OpenKore r".&Settings::getSVNRevision().". Please make sure that you're using at least revision 7970, otherwise some functions may not work properly.", 3);
-	}
 	my @ha = &Settings::getControlFolders();	
 	if ($config{leaveMeAlone_useControlFolder}) {
 		$blackListFile = &Settings::getControlFilename("blacklist.txt");

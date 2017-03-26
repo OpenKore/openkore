@@ -2,6 +2,7 @@ package Interface::Wx::List::ItemList;
 
 use strict;
 use base 'Interface::Wx::List';
+use Wx ':everything';
 
 use Globals qw/%equipTypes_lut/;
 use Translation qw/T TF/;
@@ -14,45 +15,16 @@ sub new {
 	return $self;
 }
 
-sub setItem {
-	my ($self, $index, $item) = @_;
-	
-	if ($item && $item->{amount}) {
-		my $i;
-		if (-1 == ($i = $self->{list}->FindItemData (-1, $index))) {
-		 	my $listItem = new Wx::ListItem;
-		 	$listItem->SetData ($index);
-			$i = $self->{list}->InsertItem ($listItem);
-		}
-		
-		$self->{list}->SetItemText ($i, $index);
-		$self->{list}->SetItem ($i, 1, $item->{amount});
-		$self->{list}->SetItem ($i, 2,
-			$item->{name}
-			. ($item->{equipped} ? ($equipTypes_lut{$item->{equipped}} ? ' ('.$equipTypes_lut{$item->{equipped}}.')' : T(' (Equipped)')) : '')
-			. ($item->{identified} ? '' : T(' (Not identified)'))
-		);
-	} else {
-		$self->{list}->DeleteItem ($self->{list}->FindItemData (-1, $index));
-	}
-}
+sub onListRightClick {
+	my ($self, $item, $list, $event) = @_;
 
-sub removeAllItems {
-	my ($self) = @_;
-	
-	$self->{list}->DeleteAllItems;
-}
+	# Translation Comment: Item menu header ("10 x Blue Herb (3)...")
+	my $title = TF("%d x %s...", $item->{amount}, $item);
+	my $menu = new Wx::Menu($title);
 
-sub contextMenu {
-	my ($self, $items) = (shift, shift);
-	
-	#push @$items, {title => 'Description', callback => sub { $self->_onDescription; }};
-	
-	return $self->SUPER::contextMenu ($items, @_);
-}
+	$self->onContextMenu($menu, $item);
 
-sub _onDescription {
-
+	$self->PopupMenu($menu, wxDefaultPosition);
 }
 
 1;

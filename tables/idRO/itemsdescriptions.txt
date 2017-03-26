@@ -44825,3 +44825,309 @@ Job : ^777777Semua Job^000000
 Shining Blue Lucky Egg
 Berat : ^7777771^000000
 #
+
+//--------------- Update Oktober Lucky Scroll 20161011--------------
+
+17476#
+Tidak tahu apa yang ada di dalam scroll ini. Namun, akan ada kejutan jika kamu membukanya.
+Berat : ^7777771^000000
+#
+19015#
+Ikat rambut yang dipenuhi dengan gold rune.
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+19788#
+penutup mata pink berbentuk hati. Cocok juka dipakaikan ke topi perawat
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Tengah ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20020#
+Boneka yang terlihat seperti peri Zaha. Sangat manis jika digunakan
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20021#
+Ikat rambut lucu dengan tali pita biru
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20022#
+Potongan hati yang mencerminkan hati manusia
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Bawah ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20023#
+Ada kabar bahwa pejuang spesial menggunakan ini. Mewakili keberanian dan ketakutan.
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20024#
+Biasanya dibuat untuk perempuan. Jangan menggunakan ini jika kamu adalah laki-laki
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20031#
+Kostum Bunny Ear
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20032#
+Firinto Scarf
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20033#
+Buddhist Priest Crown
+Jenis : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+17500#
+Tidak yakin apa isi dalam scroll. Tapi, sesuatu yang spesial bisa saja keluar.
+^ff0000Barang tidak dapat ditransaksikan.^000000
+Berat : ^7777771^000000
+#
+19574#
+Helm yang meniru helm death master.
+Jenis : ^777777Kostum^000000
+Posisi : ^777777Atas Tengah ^000000 Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20126#
+Sebuah topeng yang dipakai oleh thanatos.
+Jenis : ^777777Kostum^000000Def : ^7777770^000000
+Posisi : ^777777Tengah Bawah ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20127#
+Sebuah helm yang dipakai oleh abyss knight.
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20128#
+Topi ini sepertinya sering memberi kamu masalah.
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20129#
+Topi berbentuk Poporing. Tidak ada racun.
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20130#
+Topi tinggi berbentuk Whisper
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20131#
+Sebuah headset yang diatur oleh manajer menara jam
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Tengah ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20132#
+Aura aneh mengelilingi tubuhku.
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Bawah ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20133#
+Apa Poring memakan kamu hidup-hidup?!
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+20134#
+Helm yang digunakan oleh white abyss knight
+Jenis : ^777777Kostum^000000 Def : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lvl Dibutuhkan : ^7777771^000000
+Job : ^777777Semua^000000
+#
+17506#
+Tidak tahu apa yang ada di dalam scroll ini. Namun, akan ada kejutan jika kamu membukanya.
+^ff0000Barang tidak dapat ditransaksikan.^000000
+Berat: ^7777771^000000
+#
+19834#
+Sebuah topi yang digunakan untuk melindungi mata dari sinar matahari.
+Jenis: ^777777Equip Kostum^000000
+Untuk Bagian: ^777777Kepala Atas ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20148#
+Sebuah topi yang membuat kamu merasa sedang berada disamping Meja Bundar sambil memegang senjata.
+Menampilkan banyak sekali bulu-bulu indah.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Atas ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20149#
+Kacamata yang pernah digunakan oleh entomologist terkenal.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Tengah ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20150#
+Sebuah alat yang membuat kamu dapat mengendalikan angin dengan tanganmu. Konon dahulu digunakan oleh dewa angin.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Bawah ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20151#
+Sebuah topi yang dibuat dari kepala Poison Spore(?).
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Atas ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20152#
+Sepertinya ditutupi dengan tas jerami.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Atas Tengah Bawah ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20153#
+Monochrome Cap
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Head Upper ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20154#
+Dedaunan jatuh menutupi tubuhmu.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Tengah ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20155#
+Topi bulu perempuan bangsawan yang elegan.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Atas ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+20156#
+Sebagai sebuah kebutuhan di musim panas, sangat pragmatis karena kecil dan ringan.
+Jenis: ^777777Equip Kostum^000000 DEF: ^7777770^000000
+Untuk Bagian: ^777777Kepala Bawah ^000000 Berat: ^7777770^000000
+Lv Dibutuhkan.: ^7777771^000000
+Job: ^777777Semua Job^000000
+#
+17514#
+Kamu tidak akan pernah tahu apa isinya, tapi ada sesuau yang luar biasa disana.
+^ff0000Tidak dapat ditransaksikan.^000000
+Berat : ^7777771^000000
+#
+20166#
+Hockey Mask. Kamu mungkin ingin memiliki senjata setelah memakainya.
+Job : ^777777Equip Kostum^000000Pertahanan : ^7777770^000000
+Posisi : ^777777Tengah-bawah ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20167#
+Sebuah headphone dengan bentuk Deviruchi. Mencegah suara masuk dari luar.
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20168#
+Death Hood.
+Memberikan nasib buruk disekeliling kamu.
+Job : ^777777Equip Kostum^000000Pertahanan : ^7777770^000000
+Posisi : ^777777Atas Tengah bawah ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20169#
+Long Tongue.
+Tapi terlalu panjang, kamu bisa menggigit dirimu sendiri.
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Bawah ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20170#
+Terlihat seperti bayi Deviruchi, Sangat lucu hingga membuat orang senang melihatnya.
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20171#
+Topi lucu dengan warna sephia
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20172#
+Jepit rambut labu.
+Campuran antara aneh dan menyenangkan
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20173#
+Kenakan hood untuk menjadi hantu yang lucu!
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20174#
+topi penyihir yang didesain untuk halloween.
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+20175#
+Sebuah headphone dengan bentuk Diabolic. Mencegah suara dari luar masuk.
+Job : ^777777Equip Kostum^000000 Pertahanan : ^7777770^000000
+Posisi : ^777777Atas ^000000Berat : ^7777770^000000
+Lv Dibutuhkan. : ^7777771^000000
+Job : ^777777Semua Job^000000
+#

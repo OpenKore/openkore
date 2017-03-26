@@ -1,0 +1,180 @@
+5#VAR_MAXHPAMOUNT#Max HP + %d
+6#VAR_MAXSPAMOUNT#Max SP + %d
+7#VAR_STRAMOUNT#STR + %d
+8#VAR_AGIAMOUNT#AGI + %d
+9#VAR_VITAMOUNT#VIT + %d
+10#VAR_INTAMOUNT#INT + %d
+11#VAR_DEXAMOUNT#DEX + %d
+12#VAR_LUKAMOUNT#LUK + %d
+13#VAR_MAXHPPERCENT#Max HP + %d%%
+14#VAR_MAXSPPERCENT#Max SP + %d%%
+15#VAR_HPACCELERATION#HP Recovery + %d%%
+16#VAR_SPACCELERATION#SP Recovery + %d%%
+17#VAR_ATKPERCENT#ATK + %d%%
+18#VAR_MAGICATKPERCENT#MATK + %d%%
+19#VAR_PLUSASPD#ASPD + %d
+20#VAR_PLUSASPDPERCENT#ASPD + %d%%
+21#VAR_ATTPOWER#ATK + %d
+22#VAR_HITSUCCESSVALUE#HIT + %d
+23#VAR_ATTMPOWER#MATK + %d
+24#VAR_ITEMDEFPOWER#DEF + %d
+25#VAR_MDEFPOWER#MDEF + %d
+26#VAR_AVOIDSUCCESSVALUE#FLEE + %d
+27#VAR_PLUSAVOIDSUCCESSVALUE#Perfect Dodge + %d
+28#VAR_CRITICALSUCCESSVALUE#CRIT + %d
+29#ATTR_TOLERACE_NOTHING#Reduces damage taken from Neutral property attacks by %d%%.
+30#ATTR_TOLERACE_WATER#Reduces damage taken from Water property attacks by %d%%.
+31#ATTR_TOLERACE_GROUND#Reduces damage taken from Earth property attacks by %d%%.
+32#ATTR_TOLERACE_FIRE#Reduces damage taken from Fire property attacks by %d%%.
+33#ATTR_TOLERACE_WIND#Reduces damage taken from Wind property attacks by %d%%.
+34#ATTR_TOLERACE_POISON#Reduces damage taken from Poison property attacks by %d%%.
+35#ATTR_TOLERACE_SAINT#Reduces damage taken from Holy property attacks by %d%%.
+36#ATTR_TOLERACE_DARKNESS#Reduces damage taken from Shadow property attacks by %d%%.
+37#ATTR_TOLERACE_TELEKINESIS#Reduces damage taken from Ghost property attacks by %d%%.
+38#ATTR_TOLERACE_UNDEAD#Reduces damage taken from Undead property attacks by %d%%.
+39#ATTR_TOLERACE_ALL#Reduces damage taken from All property attacks by %d%%.
+40#DAMAGE_PROPERTY_NOTHING_USER#Reduces physical damage taken from Neutral property monsters by %d%%.
+41#DAMAGE_PROPERTY_NOTHING_TARGET#Increases physical damage on Neutral property monsters by %d%%.
+42#DAMAGE_PROPERTY_WATER_USER#Reduces physical damage taken from Water property monsters by %d%%.
+43#DAMAGE_PROPERTY_WATER_TARGET#Increases physical damage on Water property monsters by %d%%.
+44#DAMAGE_PROPERTY_GROUND_USER#Reduces physical damage taken from Earth property monsters by %d%%.
+45#DAMAGE_PROPERTY_GROUND_TARGET#Increases physical damage on Earth property monsters by %d%%.
+46#DAMAGE_PROPERTY_FIRE_USER#Reduces physical damage taken from Fire property monsters by %d%%.
+47#DAMAGE_PROPERTY_FIRE_TARGET#Increases physical damage on Fire property monsters by %d%%.
+48#DAMAGE_PROPERTY_WIND_USER#Reduces physical damage taken from Wind property monsters by %d%%.
+49#DAMAGE_PROPERTY_WIND_TARGET#Increases physical damage on Wind property monsters by %d%%.
+50#DAMAGE_PROPERTY_POISON_USER#Reduces physical damage taken from Poison property monsters by %d%%.
+51#DAMAGE_PROPERTY_POISON_TARGET#Increases physical damage on Poison property monsters by %d%%.
+52#DAMAGE_PROPERTY_SAINT_USER#Reduces physical damage taken from Holy property monsters by %d%%.
+53#DAMAGE_PROPERTY_SAINT_TARGET#Increases physical damage on Holy property monsters by %d%%.
+54#DAMAGE_PROPERTY_DARKNESS_USER#Reduces physical damage taken from Shadow property monsters by %d%%.
+55#DAMAGE_PROPERTY_DARKNESS_TARGET#Increases physical damage on Shadow property monsters by %d%%.
+56#DAMAGE_PROPERTY_TELEKINESIS_USER#Reduces physical damage taken from Ghost property monsters by %d%%.
+57#DAMAGE_PROPERTY_TELEKINESIS_TARGET#Increases physical damage on Ghost property monsters by %d%%.
+58#DAMAGE_PROPERTY_UNDEAD_USER#Reduces physical damage taken from Undead property monsters by %d%%.
+59#DAMAGE_PROPERTY_UNDEAD_TARGET#Increases physical damage on Neutral Undead monsters by %d%%.
+60#MDAMAGE_PROPERTY_NOTHING_USER#Reduces magical damage taken from Neutral property monsters by %d%%.
+61#MDAMAGE_PROPERTY_NOTHING_TARGET#Increases magical damage on Neutral property monsters by %d%%.
+62#MDAMAGE_PROPERTY_WATER_USER#Reduces magical damage taken from Water property monsters by %d%%.
+63#MDAMAGE_PROPERTY_WATER_TARGET#Increases magical damage on Water property monsters by %d%%.
+64#MDAMAGE_PROPERTY_GROUND_USER#Reduces magical damage taken from Earth property monsters by %d%%.
+65#MDAMAGE_PROPERTY_GROUND_TARGET#Increases magical damage on Earth property monsters by %d%%.
+66#MDAMAGE_PROPERTY_FIRE_USER#Reduces magical damage taken from Fire property monsters by %d%%.
+67#MDAMAGE_PROPERTY_FIRE_TARGET#Increases magical damage on Fire property monsters by %d%%.
+68#MDAMAGE_PROPERTY_WIND_USER#Reduces magical damage taken from Wind property monsters by %d%%.
+69#MDAMAGE_PROPERTY_WIND_TARGET#Increases magical damage on Wind property monsters by %d%%.
+70#MDAMAGE_PROPERTY_POISON_USER#Reduces magical damage taken from Poison property monsters by %d%%.
+71#MDAMAGE_PROPERTY_POISON_TARGET#Increases magical damage on Poison property monsters by %d%%.
+72#MDAMAGE_PROPERTY_SAINT_USER#Reduces magical damage taken from Holy property monsters by %d%%.
+73#MDAMAGE_PROPERTY_SAINT_TARGET#Increases magical damage on Holy property monsters by %d%%.
+74#MDAMAGE_PROPERTY_DARKNESS_USER#Reduces magical damage taken from Shadow property monsters by %d%%.
+75#MDAMAGE_PROPERTY_DARKNESS_TARGET#Increases magical damage on Shadow property monsters by %d%%.
+76#MDAMAGE_PROPERTY_TELEKINESIS_USER#Reduces magical damage taken from Ghost property monsters by %d%%.
+77#MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Increases magical damage on Ghost property monsters by %d%%.
+78#MDAMAGE_PROPERTY_UNDEAD_USER#Reduces magical damage taken from Undead property monsters by %d%%.
+79#MDAMAGE_PROPERTY_UNDEAD_TARGET#Increases magical damage on Undead property monsters by %d%%.
+80#BODY_ATTR_WATER#The user's property becomes Level 1 Water.
+81#BODY_ATTR_GROUND#The user's property becomes Level 1 Earth.
+82#BODY_ATTR_FIRE#The user's property becomes Level 1 Fire.
+83#BODY_ATTR_WIND#The user's property becomes Level 1 Wind.
+84#BODY_ATTR_POISON#The user's property becomes Level 1 Poison.
+85#BODY_ATTR_SAINT#The user's property becomes Level 1 Holy.
+86#BODY_ATTR_DARKNESS#The user's property becomes Level 1 Shadow.
+87#BODY_ATTR_TELEKINESIS#The user's property becomes Level 1 Ghost.
+88#BODY_ATTR_UNDEAD#The user's property becomes Level 1 Undead.
+89#RACE_TOLERACE_NOTHING#Reduces damage taken from Formless race attackers by %d%%.
+90#RACE_TOLERACE_UNDEAD#Reduces damage taken from Undead race attackers by %d%%.
+91#RACE_TOLERACE_ANIMAL#Reduces damage taken from Brute race attackers by %d%%.
+92#RACE_TOLERACE_PLANT#Reduces damage taken from Plant race attackers by %d%%.
+93#RACE_TOLERACE_INSECT#Reduces damage taken from Insect race attackers by %d%%.
+94#RACE_TOLERACE_FISHS#Reduces damage taken from Fish race attackers by %d%%.
+95#RACE_TOLERACE_DEVIL#Reduces damage taken from Demon race attackers by %d%%.
+96#RACE_TOLERACE_HUMAN#Reduces damage taken from Demi-Human race attackers by %d%%.
+97#RACE_TOLERACE_ANGEL#Reduces damage taken from Angel race attackers by %d%%.
+98#RACE_TOLERACE_DRAGON#Reduces damage taken from Dragon race attackers by %d%%.
+99#RACE_DAMAGE_NOTHING#Increases physical damage on Formless race targets by %d%%.
+100#RACE_DAMAGE_UNDEAD#Increases physical damage on Undead race targets by %d%%.
+101#RACE_DAMAGE_ANIMAL#Increases physical damage on Brute race targets by %d%%.
+102#RACE_DAMAGE_PLANT#Increases physical damage on Plant race targets by %d%%.
+103#RACE_DAMAGE_INSECT#Increases physical damage on Insect race targets by %d%%.
+104#RACE_DAMAGE_FISHS#Increases physical damage on Fish race targets by %d%%.
+105#RACE_DAMAGE_DEVIL#Increases physical damage on Demon race targets by %d%%.
+106#RACE_DAMAGE_HUMAN#Increases physical damage on Demi-Human race targets by %d%%.
+107#RACE_DAMAGE_ANGEL#Increases physical damage on Angel race targets by %d%%.
+108#RACE_DAMAGE_DRAGON#Increases physical damage on Dragon race targets by %d%%.
+109#RACE_MDAMAGE_NOTHING#Increases magical damage on Formless race targets by %d%%.
+110#RACE_MDAMAGE_UNDEAD#Increases magical damage on Undead race targets by %d%%.
+111#RACE_MDAMAGE_ANIMAL#Increases magical damage on Brute race targets by %d%%.
+112#RACE_MDAMAGE_PLANT#Increases magical damage on Plant Plant targets by %d%%.
+113#RACE_MDAMAGE_INSECT#Increases magical damage on Insect race targets by %d%%.
+114#RACE_MDAMAGE_FISHS#Increases magical damage on Fish race targets by %d%%.
+115#RACE_MDAMAGE_DEVIL#Increases magical damage on Demon race targets by %d%%.
+116#RACE_MDAMAGE_HUMAN#Increases magical damage on Demi-Human race targets by %d%%.
+117#RACE_MDAMAGE_ANGEL#Increases magical damage on Angel race targets by %d%%.
+118#RACE_MDAMAGE_DRAGON#Increases magical damage on Dragon race targets by %d%%.
+119#RACE_CRI_PERCENT_NOTHING#CRIT + (%d / 10) on Formless race targets.
+120#RACE_CRI_PERCENT_UNDEAD#CRIT + (%d / 10) on Undead race targets.
+121#RACE_CRI_PERCENT_ANIMAL#CRIT + (%d / 10) on Brute race targets.
+122#RACE_CRI_PERCENT_PLANT#CRIT + (%d / 10) on Plant race targets.
+123#RACE_CRI_PERCENT_INSECT#CRIT + (%d / 10) on Insect race targets.
+124#RACE_CRI_PERCENT_FISHS#CRIT + (%d / 10) on Fish race targets.
+125#RACE_CRI_PERCENT_DEVIL#CRIT + (%d / 10) on Demon race targets.
+126#RACE_CRI_PERCENT_HUMAN#CRIT + (%d / 10) on Demi-Human race targets.
+127#RACE_CRI_PERCENT_ANGEL#CRIT + (%d / 10) on Angel race targets.
+128#RACE_CRI_PERCENT_DRAGON#CRIT + (%d / 10) on Dragon race targets.
+129#RACE_IGNORE_DEF_PERCENT_NOTHING#Pierces %d%% of DEF on Formless race targets when performing a physical attack.
+130#RACE_IGNORE_DEF_PERCENT_UNDEAD#Pierces %d%% of DEF on Undead race targets when performing a physical attack.
+131#RACE_IGNORE_DEF_PERCENT_ANIMAL#Pierces %d%% of DEF on Brute race targets when performing a physical attack.
+132#RACE_IGNORE_DEF_PERCENT_PLANT#Pierces %d%% of DEF on Plant race targets when performing a physical attack.
+133#RACE_IGNORE_DEF_PERCENT_INSECT#Pierces %d%% of DEF on Insect race targets when performing a physical attack.
+134#RACE_IGNORE_DEF_PERCENT_FISHS#Pierces %d%% of DEF on Fish race targets when performing a physical attack.
+135#RACE_IGNORE_DEF_PERCENT_DEVIL#Pierces %d%% of DEF on Demon race targets when performing a physical attack.
+136#RACE_IGNORE_DEF_PERCENT_HUMAN#Pierces %d%% of DEF on Demi-Human race targets when performing a physical attack.
+137#RACE_IGNORE_DEF_PERCENT_ANGEL#Pierces %d%% of DEF on Angel race targets when performing a physical attack.
+138#RACE_IGNORE_DEF_PERCENT_DRAGON#Pierces %d%% of DEF on Dragon race targets when performing a physical attack.
+139#RACE_IGNORE_MDEF_PERCENT_NOTHING#Pierces %d%% of MDEF on Formless race targets when performing a magical attack.
+140#RACE_IGNORE_MDEF_PERCENT_UNDEAD#Pierces %d%% of MDEF on Undead race targets when performing a magical attack.
+141#RACE_IGNORE_MDEF_PERCENT_ANIMAL#Pierces %d%% of MDEF on Brute race targets when performing a magical attack.
+142#RACE_IGNORE_MDEF_PERCENT_PLANT#Pierces %d%% of MDEF on Plant race targets when performing a magical attack.
+143#RACE_IGNORE_MDEF_PERCENT_INSECT#Pierces %d%% of MDEF on Insect race targets when performing a magical attack.
+144#RACE_IGNORE_MDEF_PERCENT_FISHS#Pierces %d%% of MDEF on Fish race targets when performing a magical attack.
+145#RACE_IGNORE_MDEF_PERCENT_DEVIL#Pierces %d%% of MDEF on Demon race targets when performing a magical attack.
+146#RACE_IGNORE_MDEF_PERCENT_HUMAN#Pierces %d%% of MDEF on Demi-Human race targets when performing a magical attack.
+147#RACE_IGNORE_MDEF_PERCENT_ANGEL#Pierces %d%% of MDEF on Angel race targets when performing a magical attack.
+148#RACE_IGNORE_MDEF_PERCENT_DRAGON#Pierces %d%% of MDEF on Dragon race targets when performing a magical attack.
+149#CLASS_DAMAGE_NORMAL_TARGET#Increases physical damage on Normal protocol targets by %d%%.
+150#CLASS_DAMAGE_BOSS_TARGET#Increases physical damage on Boss protocol targets by %d%%.
+151#CLASS_DAMAGE_NORMAL_USER#Reduces damage taken from Normal protocol attackers by %d%%.
+152#CLASS_DAMAGE_BOSS_USER#Reduces damage taken from Boss protocol attackers by %d%%.
+153#CLASS_MDAMAGE_NORMAL#Increases magical damage on Normal protocol targets by %d%%.
+154#CLASS_MDAMAGE_BOSS#Increases magical damage on Boss protocol targets by %d%%.
+155#CLASS_IGNORE_DEF_PERCENT_NORMAL#Pierces %d%% of DEF on Normal protocol targets when performing a physical attack.
+156#CLASS_IGNORE_DEF_PERCENT_BOSS#Pierces %d%% of DEF on Boss protocol targets when performing a physical attack.
+157#CLASS_IGNORE_MDEF_PERCENT_NORMAL#Pierces %d%% of MDEF on Normal protocol targets when performing a magical attack.
+158#CLASS_IGNORE_MDEF_PERCENT_BOSS#Pierces %d%% of MDEF on Boss protocol targets when performing a magical attack.
+159#DAMAGE_SIZE_SMALL_TARGET#Increases physical damage on Small size targets by %d%%.
+160#DAMAGE_SIZE_MIDIUM_TARGET#Increases physical damage on Medium size targets by %d%%.
+161#DAMAGE_SIZE_LARGE_TARGET#Increases physical damage on Large size targets by %d%%.
+162#DAMAGE_SIZE_SMALL_USER#Reduces damage taken from Small size attackers by %d%%.
+163#DAMAGE_SIZE_MIDIUM_USER#Reduces damage taken from Medium size attackers by %d%%.
+164#DAMAGE_SIZE_LARGE_USER#Reduces damage taken from Large size attackers by %d%%.
+165#DAMAGE_SIZE_PERFECT#Recovers 100% of damage lost from size penalties.
+166#DAMAGE_CRI_TARGET#Increases critical damage on targets by %d%%.
+167#DAMAGE_CRI_USER#Reduces critical damage from attackers by %d%%.
+168#RANGE_ATTACK_DAMAGE_TARGET#Increases long-ranged damage on targets by %d%%.
+169#RANGE_ATTACK_DAMAGE_USER#Reduces damage taken from long-ranged attacks by %d%%.
+170#HEAL_VALUE#Increases the recovery rate of recovery skills by %d%%.
+171#HEAL_MODIFY_PERCENT#Increases the recovery rate of recovery skills received by %d%%.
+172#DEC_SPELL_CAST_TIME#Variable Casting Time - %d%%
+173#DEC_SPELL_DELAY_TIME#Reduces the cooldown of skills by %d%%.
+174#DEC_SP_CONSUMPTION#%d%% SP drain when using skills, this one needs to be tested when implemented as it is not clear enough.
+175#WEAPON_ATTR_NOTHING#Element: Neutral##
+176#WEAPON_ATTR_WATER#Element: Water#Ice#
+177#WEAPON_ATTR_GROUND#Element: Earth#Earth#
+178#WEAPON_ATTR_FIRE#Element: Fire#Fire#
+179#WEAPON_ATTR_WIND#Element: Wind#Wind#
+180#WEAPON_ATTR_POISON#Element: Poison#Poison#
+181#WEAPON_ATTR_SAINT#Element: Holy#Holy#
+182#WEAPON_ATTR_DARKNESS#Element: Shadow#Dark#
+183#WEAPON_ATTR_TELEKINESIS#Element: Ghost#Ghost#
+184#WEAPON_ATTR_UNDEAD#Element: Undead#Undead#

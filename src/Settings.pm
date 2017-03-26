@@ -80,7 +80,7 @@ our $VERSION = 'what-will-become-2.1';
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . getRevisionString() . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -530,72 +530,71 @@ sub loadByHandle {
 }
 
 ##
-# void Settings::loadAll(regexp, [Function progressHandler])
+# void Settings::loadByRegexp(regexp, [Function progressHandler])
 #
-# (Re)loads all registered data files whose name matches the given regular expression.
-# This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
-sub loadByRegexp {	# FIXME: only hook those that match the regexp?
-	my ($regexp, $progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		if ($object->{name} =~ /$regexp/) {
-			loadByHandle($object->{index}, $progressHandler);
-		}
-		$i++;
-	}
-
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+# Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
+sub loadByRegexp {
+    my ($regexp, $progressHandler) = @_;
+    loadFiles([grep { $_->{name} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##
 # void Settings::loadAll([Function progressHandler])
 #
-# (Re)loads all registered data files. This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
+# Calls 'loadFiles' with the list of all registered data files.
 sub loadAll {
-	my ($progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-	
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		loadByHandle($object->{index}, $progressHandler);
-		return if $Globals::quit;
-		$i++;
-	}
-	
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+    my ($progressHandler) = @_;
+    loadFiles($files->getItems, $progressHandler);
 }
 
 ##
-# int Settings::getSVNRevision()
+# void Settings::loadFiles(files, [Function progressHandler])
 #
-# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
-sub getSVNRevision {
-	my $f;
-	if (open($f, "<", "$RealBin/.svn/entries")) {
-		my $revision;
-		eval {
-			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
-			die unless <$f> eq "\n";	# Empty string for current directory.
-			die unless <$f> eq "dir\n";	# We expect a directory entry.
-			$revision = <$f>;
-			$revision =~ s/[\r\n]//g;
-			undef $revision unless $revision =~ /^\d+$/;
-		};
-		close($f);
-		return $revision;
-	} else {
-		return;
+# (Re)loads all registered data files given in 'files'.
+# Use this method to load a specific list of files.
+# This method follows the same contract as
+# Settings::loadByHandle(), so see that method for parameter descriptions
+# and exceptions.
+sub loadFiles {
+    my ($files, $progressHandler) = @_;
+
+    Plugins::callHook('preloadfiles', {files => $files});
+
+    my $i = 1;
+    foreach my $object (@$files) {
+        Plugins::callHook('loadfiles', {files => $files, current => $i});
+        loadByHandle($object->{index}, $progressHandler);
+        $i++;
+    }
+
+    Plugins::callHook('postloadfiles', {files => $files});
+}
+
+##
+# str Settings::getRevisionString()
+#
+# Return OpenKore's revision as a string to be displayed to the user.
+sub getRevisionString {
+	my @revisions;
+
+    # The best and most accurate version is the git commit sha, if available.
+	my $git = getGitRevision();
+	if ( $git ) {
+		push @revisions, "git:$git";
 	}
+
+    # "Download ZIP" on github sets the file creation times to (around) the
+    # last time a commit was uploaded to github. This can help make a good
+    # guess about what version is in use.
+	my $time = ( stat( __FILE__ ) )[10] || ( stat( _ ) )[9];
+	if ( $time ) {
+		my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $time );
+		push @revisions, sprintf 'ctime:%04d_%02d_%02d', $year + 1900, $month + 1, $day;
+	}
+
+	push @revisions, '?' if !@revisions;
+
+	join ' ', @revisions;
 }
 
 ##

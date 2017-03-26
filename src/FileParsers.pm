@@ -598,8 +598,11 @@ sub parsePortals {
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $3;
 			} elsif ($misc =~ /^(\d+)\s(.*)$/) { # [cost] [talk sequence]
 				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $2;
 			} else { # [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = 0;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $misc;
 			}
 		}
