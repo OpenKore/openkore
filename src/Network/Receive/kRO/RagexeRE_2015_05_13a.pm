@@ -17,6 +17,22 @@ package Network::Receive::kRO::RagexeRE_2015_05_13a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2014_10_22b);
 
+
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		  '0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+	);
+
+	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+
+	return $self;
+}
+
+    
+    
 1;
 
 =pod
