@@ -23,7 +23,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		  '0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+	'0A0C' => ['inventory_item_added', 'v3 C3 a8 V C2 a4 v a25', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+	'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
