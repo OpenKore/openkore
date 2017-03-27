@@ -1556,6 +1556,11 @@ sub processCmd {
 		}
 		if (defined $self->{Macro_Runner} && $self->{Macro_Runner}->finished) {
 			$self->clear_queue();
+			
+		} elsif (!defined $self->{Macro_Runner}) {
+			debug "[eventMacro] Macro runner object got undefined during a command.\n", "eventMacro", 2;
+			return;
+			
 		} else {
 			$self->{Macro_Runner}->ok;
 		}
