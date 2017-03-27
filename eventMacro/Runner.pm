@@ -1051,7 +1051,8 @@ sub next {
 				my $value = $1;
 				
 				if ($value =~ /(?:undef|unset)/) {
-					$eventMacro->clear_array($var->{real_name});
+					$eventMacro->clear_array($var->{real_name}) if ($var->{type} eq 'array');
+					$eventMacro->clear_hash($var->{real_name}) if ($var->{type} eq 'hash');
 				
 				} elsif ($value =~ /^\((.*)\)$/) {
 					my @members = split(/\s*,\s*/, $1);

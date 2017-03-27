@@ -5,6 +5,8 @@ use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/..";
+use lib "$RealBin/../..";
+use lib "$RealBin/../../..";
 
 # Try to find OpenKore.
 our $openkore_dir;
