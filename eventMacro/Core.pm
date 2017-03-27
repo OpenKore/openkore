@@ -1484,7 +1484,9 @@ sub ai_is_eventMacro {
 	# may happen when messing around with "ai clear" and stuff.
 	$self->enforce_orphan if (defined $self->{Macro_Runner} && !AI::inQueue('eventMacro'));
 	
-	return AI::is('eventMacro', 'deal')
+	return 1 if (AI::is('eventMacro', 'deal'));
+	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
+	return 0;
 }
 
 sub enforce_orphan {
