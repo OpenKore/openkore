@@ -17,19 +17,6 @@ package Network::Receive::kRO::RagexeRE_2013_05_22;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2013_05_15a);
 
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	my %packets = (
-			'09CB' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]], # 17
-	);
-
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
-
-	return $self;
-}
-
 1;
 =pod
 //2013-05-22 Ragexe (Yommy)
