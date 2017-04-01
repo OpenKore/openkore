@@ -559,83 +559,22 @@ sub commandHandler {
 		
 	### parameter: include
 	} elsif ($arg eq 'include') {
-		my @lines = ();
-		my $needrewrite = 0;
-		my $macro_file = Settings::getControlFilename($config{eventMacro_file} || "eventMacros.txt");
-
-		if ($macro_file eq "") {
-			message "[eventMacro] The eventMacro file was not found\n",'list';
-			return 0;
-		}
-		
-		open(my $fp,"<:utf8",$macro_file);	my @lines = <$fp>;	close($fp);
-		if ($params[0] eq 'list') {
-			my $on = "\n------on-------\n";
-			my $off = "\n------off------\n";
-			foreach (@lines) {
-				$on .= $_ if /^!include/;
-				$off .= $_ if /^#[# ]*!include/;
-			}	
-			message "$on$off", 'list';
-			
-		} elsif ($params[0] eq 'on') {
-			if ($params[1] eq 'all') {
-				foreach (@lines) {
-					if (/^#[# ]*!include/) {
-						$needrewrite = 1;
-						s/^#[# ]*!/!/g;
-						message "[eventMacro] $_", 'list';
-					}
-				}
-				
-			} elsif ($params[1]) {
-				foreach (@lines) {
-					if (/^#[# ]*!include .*$params[1].*/) {
-						$needrewrite = 1;
-						s/^#[# ]*!/!/g;
-						message "[eventMacro] $_", 'list';
-					}
-				} 
-				
-			} else {
-				message "[eventMacro] Usage: eventMacro include on ( all | <filename> )\n",'list'
-			}
-			
-		} elsif ($params[0] eq 'off') {
-			if ($params[1] eq 'all') {
-				foreach (@lines) {
-					if (/^!include/) {
-						$needrewrite = 1;
-						s/^!/#!/g;
-						message "[eventMacro] $_", 'list';
-					}
-				}
-				
-			} elsif ($params[1])	{
-				foreach (@lines) {
-					if (/^!include .*$params[1].*/) {
-						$needrewrite = 1;
-						s/^!/#!/g;
-						message "[eventMacro] $_", 'list';
-					}
-				}
-				
-			} else {
-				message "[eventMacro] Usage: eventMacro include off ( all | <filename> )\n",'list'
-			}
-			
-		} else {
+	
+		if (
+		($params[0] ne 'list' && $params[0] ne 'on' && $params[0] ne 'off') ||
+		($params[0] eq 'list' && @params > 1) ||
+		(($params[0] eq 'on' || $params[0] eq 'off') && @params < 2) ||
+		(@params > 2 || @params < 1)
+		) {
 			message "[eventMacro] Usage:\n".
 					"eventMacro include on <filename or pattern>\n".
 					"eventMacro include on all\n".
 					"eventMacro include off <filename or pattern>\n".
 					"eventMacro include off all\n".
 					"eventMacro include list\n", 'list';
+			return;
 		}
-		
-		if ($needrewrite) {
-			open (my $fp,">:utf8",$macro_file); print $fp join ("", @lines); close($fp);
-		}
+		$eventMacro->include($params[0], $params[1]);
 	
 	### if nothing triggered until here it's probably a macro name
 	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {

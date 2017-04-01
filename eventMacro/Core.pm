@@ -20,6 +20,8 @@ sub new {
 	my ($class, $file) = @_;
 	my $self = bless {}, $class;
 	
+	$self->{file} = $file;
+	
 	my $parse_result = parseMacroFile($file, 0);
 	return undef unless ($parse_result);
 	
@@ -1589,6 +1591,55 @@ sub clear_queue {
 	$self->{Macro_Runner} = undef;
 	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}) if (defined $self->{AI_start_Macros_Running_Hook_Handle});
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+}
+
+sub include {
+	my ($self, $key, $param) = @_;
+	
+	unless ( open( IN, "<:utf8", $self->{file} ) ) {
+		error "[eventMacro] Could not open eventMacro file for include operation.\n", "eventMacro";
+		return;
+	}
+	my @lines = <IN>;
+	close(IN);
+	
+	my $on = "\n------on-------\n";
+	my $off = "\n------off------\n";
+	my $needrewrite = 0;
+	
+	foreach (@lines) {
+		if (/^!include/) {
+			if ($key eq 'list') {
+				$on .= $_;
+				
+			} elsif ($key eq 'off') {
+				if ($param eq 'all' || /^!include .*$param.*/) {
+					s/^!/#!/g;
+					$needrewrite = 1;
+					message "[eventMacro] $_", 'list';
+				}
+			}
+			
+		} elsif (/^#[# ]*!include/) {
+			if ($key eq 'list') {
+				$off .= $_;
+				
+			} elsif ($key eq 'on') {
+				if ($param eq 'all' || /^#[# ]*!include .*$param.*/) {
+					s/^#[# ]*!/!/g;
+					$needrewrite = 1;
+					message "[eventMacro] $_", 'list';
+				}
+			}
+		}
+	}
+	message "$on$off", 'list' if ($key eq 'list');
+	
+	if ($needrewrite) {
+		open (IN, ">:utf8", $self->{file});
+		print IN join ("", @lines);
+		close(IN);
+	}
 }
 
 
