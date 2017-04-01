@@ -102,7 +102,7 @@ sub parseAndHook {
 sub commandHandler {
 	### no parameter given
 	if (!defined $_[1]) {
-		message "usage: eventMacro [MACRO|auto|list|status|check|stop|pause|unpause|var_get|var_set|enable|disable] [extras]\n", "list";
+		message "usage: eventMacro [MACRO|auto|list|status|check|stop|pause|unpause|var_get|var_set|enable|disable|include] [extras]\n", "list";
 		message 
 			"eventMacro MACRO: Run macro MACRO\n".
 			"eventMacro auto AUTOMACRO: Get info on an automacro and it's conditions\n".
@@ -115,8 +115,9 @@ sub commandHandler {
 			"eventMacro var_get: Shows the value of one or all variables\n".
 			"eventMacro var_set: Set the value of a variable\n".
 			"eventMacro enable [automacro]: Enable one or all automacros\n".
-			"eventMacro disable [automacro]: Disable one or all automacros\n";
-		return
+			"eventMacro disable [automacro]: Disable one or all automacros\n".
+			"eventMacro include [on|off|list] <filename or pattern>: Enables or disables !include in eventMacros file\n";
+		return;
 	}
 	my ( $arg, @params ) = parseArgs( $_[1] );
 	
@@ -554,6 +555,86 @@ sub commandHandler {
 				message "[eventMacro] Disabled automacro '".$automacro_name."'.\n";
 				$eventMacro->disabled_automacro($automacro);
 			}
+		}
+		
+	### parameter: include
+	} elsif ($arg eq 'include') {
+		my @lines = ();
+		my $needrewrite = 0;
+		my $macro_file = Settings::getControlFilename($config{eventMacro_file} || "eventMacros.txt");
+
+		if ($macro_file eq "") {
+			message "[eventMacro] The eventMacro file was not found\n",'list';
+			return 0;
+		}
+		
+		open(my $fp,"<:utf8",$macro_file);	my @lines = <$fp>;	close($fp);
+		if ($params[0] eq 'list') {
+			my $on = "\n------on-------\n";
+			my $off = "\n------off------\n";
+			foreach (@lines) {
+				$on .= $_ if /^!include/;
+				$off .= $_ if /^#[# ]*!include/;
+			}	
+			message "$on$off", 'list';
+			
+		} elsif ($params[0] eq 'on') {
+			if ($params[1] eq 'all') {
+				foreach (@lines) {
+					if (/^#[# ]*!include/) {
+						$needrewrite = 1;
+						s/^#[# ]*!/!/g;
+						message "[eventMacro] $_", 'list';
+					}
+				}
+				
+			} elsif ($params[1]) {
+				foreach (@lines) {
+					if (/^#[# ]*!include .*$params[1].*/) {
+						$needrewrite = 1;
+						s/^#[# ]*!/!/g;
+						message "[eventMacro] $_", 'list';
+					}
+				} 
+				
+			} else {
+				message "[eventMacro] Usage: eventMacro include on ( all | <filename> )\n",'list'
+			}
+			
+		} elsif ($params[0] eq 'off') {
+			if ($params[1] eq 'all') {
+				foreach (@lines) {
+					if (/^!include/) {
+						$needrewrite = 1;
+						s/^!/#!/g;
+						message "[eventMacro] $_", 'list';
+					}
+				}
+				
+			} elsif ($params[1])	{
+				foreach (@lines) {
+					if (/^!include .*$params[1].*/) {
+						$needrewrite = 1;
+						s/^!/#!/g;
+						message "[eventMacro] $_", 'list';
+					}
+				}
+				
+			} else {
+				message "[eventMacro] Usage: eventMacro include off ( all | <filename> )\n",'list'
+			}
+			
+		} else {
+			message "[eventMacro] Usage:\n".
+					"eventMacro include on <filename or pattern>\n".
+					"eventMacro include on all\n".
+					"eventMacro include off <filename or pattern>\n".
+					"eventMacro include off all\n".
+					"eventMacro include list\n", 'list';
+		}
+		
+		if ($needrewrite) {
+			open (my $fp,">:utf8",$macro_file); print $fp join ("", @lines); close($fp);
 		}
 	
 	### if nothing triggered until here it's probably a macro name
