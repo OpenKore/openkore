@@ -1169,6 +1169,12 @@ sub next {
 		$self->parse_set($parameter, $new_value);
 		
 	##########################################
+	# include command
+	} elsif ($self->{current_line} =~ /^include\s+/) {
+		my ($key, $param) = $self->{current_line} =~ /^include\s+(\w+)\s+(.*)$/;
+		$self->parse_include($key, $param);
+		
+	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
 	} elsif ($self->{current_line} =~ /^(?:\w+)\s*\(.*?\)/) {
 		$self->perl_sub_command;
@@ -1201,6 +1207,32 @@ sub parse_and_check_condition_text {
 	} else {
 		return 0;
 	}
+}
+
+sub parse_include {
+	my ($self, $key, $param) = @_;
+	
+	my $parsed_key = $self->parse_command($key);
+	my $parsed_param = $self->parse_command($param);
+	return if (defined $self->error);
+	
+	if (!defined $parsed_key || !defined $parsed_param) {
+		$self->error("Could not define include command");
+		return;
+	}
+	
+	if (
+	($parsed_key ne 'list' && $parsed_key ne 'on' && $parsed_key ne 'off') ||
+	($parsed_key eq 'list' && defined $parsed_param) ||
+	(($parsed_key eq 'on' || $parsed_key eq 'off') && !defined $parsed_param)
+	) {
+		$self->error("Invalid include syntax");
+		return;
+	}
+	$eventMacro->include($parsed_key, $parsed_param);
+	
+	$self->timeout($self->macro_delay);
+	$self->next_line;
 }
 
 sub parse_do {
