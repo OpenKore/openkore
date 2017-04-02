@@ -7408,6 +7408,7 @@
 17778#Overseas_Care_Package_III#
 17779#Love_Garden_Costume_Box#
 17786#Gothic_Costume_Egg#
+17787#2017_April_Costume_Box#
 17788#Overseas_Care_Package_IV#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
@@ -8393,6 +8394,7 @@
 20407#Costume_Red_Subject_Aura#
 20430#Costume_Loyal_Servant_of_Morocc#
 20434#Costume:_Drooping_Gunslinger#
+20449#Costume_Black_and_White_Temptation#
 20450#Costume_Gram_Peony#
 20451#Costume_Night_Sky_of_Memory#
 20453#Costume_Wrapping_Cloth#
@@ -8400,6 +8402,11 @@
 20458#Costume_Wild_Poring_Rider#
 20468#Costume_Harum_Beret#
 20470#Costume_Sweet_Chocolate_Hat#
+20495#Costume_Quati_Hat#
+20496#Costume_Black_Shiba_Inu_Hat#
+20497#Costume_Umbala_Spirit#
+20498#Costume_Elephant_Hat#
+20499#Costume_Cat_Ear_Hat#
 20500#Costume:_Archangel_Wing#
 20700#Egir_Manteau#
 20702#TE_WoE_Muffler#
@@ -8810,6 +8817,10 @@
 29031#MATK+1%(Lower)#
 29032#SP_Absorption_1#
 29033#MDEF+4#
+31027#Costume_Pretty_Bear#
+31028#Black_Cat_Hoodie#
+31029#Costume_Pig_Nose#
+31030#Costume_Tiger_Face#
 31040#Costume_Magical_Feather#
 31041#Costume_Kitten_Lace_Hairband#
 31042#Costume_Survival_Circlet#

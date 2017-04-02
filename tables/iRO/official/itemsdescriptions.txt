@@ -65485,6 +65485,21 @@ Costume Angel's Black Mini Silk Hat
 Costume Rosary's Necklace
 
 #
+17787#
+Open the box to receive 1 of the following
+Costume Black Cat Hoodie
+Costume Tiger Face
+Costume Black and White Temptation
+Costume Pig Head
+Costume Pretty Bear
+Costume Cat Ear Hat
+Costume Elephant Hat
+Costume Umbala Spirit
+Costume Black Shiba Inu Hat
+Costume Quati Hat
+
+Weight : ^7777771^000000
+#
 17788#
 ^808080Gives one of the following when opened Monster Fish Gills Ancient Elven Ear Azure Dragon Armor [1] Fisherman's Mail [1] Orca Clothes [1] Evil Dragon Armor [1] Valkyrie Hammer [4] Loyalists Hood [1] Fisherman's Shoes Vesper Gear 02 [1] Magical Ring Wing of Beezlebub Box (2000) Prize Medal (6) BattlemanualX3 (5) Bloody Dead Branch^000000
 ^FFFFFF_^000000
@@ -75398,6 +75413,12 @@ Location : ^777777Upper ^000000 Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+20449#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
 20450#
 A beautiful magician hat with flower on it.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
@@ -75447,6 +75468,38 @@ Class : ^777777Costume^000000 Def : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required LvL : ^7777771^000000
 Job : ^777777All^000000
+#
+20495#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+20496#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+20497#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+20498#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+20499#
+A hat with attached cat ears
+If you want to wear cat ears and hat at the same time, this is the one for you.
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
 #
 20500#
 White wings of a holy Archangel.
@@ -80222,6 +80275,33 @@ Absorb 1% of damage dealt to enemy into SP with 1% chance.
 #
 29033#
 MDEF + 4
+#
+31027#
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+31028#
+A cute black hoodie with soft fluffy cat ears.
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+31029#
+A mask that looks like the nose of a Savage Babe.
+Wear this mask together with other accessories to have your own unique look.
+Class :^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
+31030#
+Class :^777777Defense : ^7777770^000000
+Location : ^777777Middle Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
 #
 31040#
 ^808080Sponsored by Aldebaran Alchemists Guild!
