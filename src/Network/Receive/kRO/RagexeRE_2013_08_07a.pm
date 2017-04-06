@@ -22,7 +22,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-			'09CB' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]], # 17
+			'09CB' => ['skill_used_no_damage', 'v2 v a4 a4 C', [qw(skillID lv amount targetID sourceID success)]], # 17
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
