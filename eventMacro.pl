@@ -102,7 +102,7 @@ sub parseAndHook {
 sub commandHandler {
 	### no parameter given
 	if (!defined $_[1]) {
-		message "usage: eventMacro [MACRO|auto|list|status|check|stop|pause|unpause|var_get|var_set|enable|disable] [extras]\n", "list";
+		message "usage: eventMacro [MACRO|auto|list|status|check|stop|pause|unpause|var_get|var_set|enable|disable|include] [extras]\n", "list";
 		message 
 			"eventMacro MACRO: Run macro MACRO\n".
 			"eventMacro auto AUTOMACRO: Get info on an automacro and it's conditions\n".
@@ -115,8 +115,9 @@ sub commandHandler {
 			"eventMacro var_get: Shows the value of one or all variables\n".
 			"eventMacro var_set: Set the value of a variable\n".
 			"eventMacro enable [automacro]: Enable one or all automacros\n".
-			"eventMacro disable [automacro]: Disable one or all automacros\n";
-		return
+			"eventMacro disable [automacro]: Disable one or all automacros\n".
+			"eventMacro include [on|off|list] <filename or pattern>: Enables or disables !include in eventMacros file\n";
+		return;
 	}
 	my ( $arg, @params ) = parseArgs( $_[1] );
 	
@@ -555,6 +556,25 @@ sub commandHandler {
 				$eventMacro->disabled_automacro($automacro);
 			}
 		}
+		
+	### parameter: include
+	} elsif ($arg eq 'include') {
+	
+		if (
+		($params[0] ne 'list' && $params[0] ne 'on' && $params[0] ne 'off') ||
+		($params[0] eq 'list' && @params > 1) ||
+		(($params[0] eq 'on' || $params[0] eq 'off') && @params < 2) ||
+		(@params > 2 || @params < 1)
+		) {
+			message "[eventMacro] Usage:\n".
+					"eventMacro include on <filename or pattern>\n".
+					"eventMacro include on all\n".
+					"eventMacro include off <filename or pattern>\n".
+					"eventMacro include off all\n".
+					"eventMacro include list\n", 'list';
+			return;
+		}
+		$eventMacro->include($params[0], $params[1]);
 	
 	### if nothing triggered until here it's probably a macro name
 	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {
