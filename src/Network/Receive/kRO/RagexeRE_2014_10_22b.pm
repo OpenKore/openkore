@@ -37,6 +37,4 @@ sub new {
 	return $self;
 }
 
-
-
 1;
