@@ -535,9 +535,8 @@ sub items_nonstackable {
 		$args->{switch} eq '0996'	# storage
 	) {
 		return $items->{type6};
-
-	} elsif ($args->{switch} eq '0A0D') {
-		warning "We\'are returning type7\n";
+	} elsif ($args->{switch} eq '0A0D'
+	) {
 		return $items->{type7};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
