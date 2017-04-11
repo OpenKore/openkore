@@ -389,6 +389,11 @@ sub new {
 				types => 'v2 C V2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V x48 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			}
 		},
 		items_stackable => {
 			type1 => {
@@ -531,6 +536,9 @@ sub items_nonstackable {
 	) {
 		return $items->{type6};
 
+	} elsif ($args->{switch} eq '0A0D') {
+		warning "We\'are returning type7\n";
+		return $items->{type7};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
