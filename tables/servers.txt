@@ -9,24 +9,7 @@
 #####################
 # Official RO Servers
 
-[Brazil - bRO: Asgard]
-ip 200.229.50.20
-port 6900
-master_version 22
-version 1
-serverType bRO
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-gameGuard 0
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders bRO
-charBlockSize 124
-pinCode 1
-
-[Brazil - bRO: Odin]
+[Brazil - bRO: Valhalla]
 ip 200.229.50.36
 port 6900
 master_version 22
@@ -40,7 +23,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 124
+charBlockSize 144
 pinCode 1
 
 [Brazil - bRO: Thor]
@@ -57,7 +40,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 124
+charBlockSize 144
 pinCode 1
 
 ## http://euro-ro.net/
