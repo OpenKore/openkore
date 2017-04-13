@@ -4149,7 +4149,7 @@ sub cmdPrivateMessage {
 		}
 
 	} else {
-		$user =~ s/^\"(.*)\"$/\1/;
+		$user =~ s/^\"(.*)\"$/$1/;
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
