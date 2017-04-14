@@ -10121,6 +10121,31 @@ Adds a 100% chance to drain 5% SP from the target when performing a physical att
 If upgrade level is +6 or higher,
 Adds a 100% chance to drain an additional 3% SP from the target when performing a physical attack.
 #
+1664#
+^808080A staff which is covered with thorns, containing strong meanings of sorcery.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: One-Handed Staff
+Attack: 60
+Property: Shadow
+Weight: 70
+Weapon Level: 4
+Required Level: 75
+Required Jobs: High Priest Jobs, High Wizard Jobs, Champion Jobs, Scholar Jobs
+^FFFFFF_^000000
+Int + 3
+Dex + 3
+MATK + 160
+Reduces the cooldown of skills by 3% per 2 upgrade levels of the item.
+Bypass 1% of Mdef of Normal, Boss, Player targets when performing a magical attack per upgrade level of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Skull Cap^000000
+^008080Thorn Staff of Darkness^000000
+Matk + 10 per upgrade level of the ^008080Thorn Staff of Darkness^000000.
+If ^008080Thorn Staff of Darkness^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 10%.
+#
 1665#
 ^808080A staff with a jewel in it that causes shock waves which bypass some of the enemies magical defense.^000000
 ^FFFFFF_^000000
@@ -18910,15 +18935,29 @@ Weight : ^77777720^000000
 Jobs : ^777777All Jobs^000000
 #
 2596#
-a magical manteau with property resistance in it
-decrease damage -5% from fire property monster
-increase damage +5% from evil type monster
-if equipped with Sharel Shield, can decrease damage 1% from evil type monster per refined lv 1
-if equipped with Sharel Shield, can increase damage 1% from fire property monster per refined lv 1
-Class : ^777777robe^000000    Def : ^77777720^000000
-weight : ^77777770^000000
-Required level : ^77777765^000000
-Jobs : ^777777All Jobs Jobs available^000000
+^808080A magical manteau containing the power of fire.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 20
+Weight: 70
+Required Level: 65
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Reduces damage taken from Fire property enemies by 5%.
+Reduces damage taken from Demon race enemies by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Sharel Manteau^000000
+^008080Sharel Shield^000000
+Reduces damage taken from Demon race enemies by an additional 1% per upgrade level of the item.
+Increases damage taken from Fire property enemies by 1% per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Sharel Manteau^000000
+^008080Sharel Shoes^000000
+Max HP + 1% per upgrade level of ^008080Sharel Manteau^000000.
+Max SP + 1% per upgrade level of ^008080Sharel Manteau^000000.
+Increases physical damage on Fire property targets by 5%.
 #
 2598#
 a magical manteau with property in it
@@ -37189,6 +37228,24 @@ Increases long-ranged damage on targets by an additional 1%.
 If the users base STR is 120 or higher,
 Increases physical damage on Small, Medium and Large size targets by an additional 3%.
 Increases long-ranged damage on targets by an additional 1%.
+#
+5937#
+^808080A hat which will help you to see things that are far away while you are in the air. It will also help you sense danger more quicker.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 5
+Weight: 30
+Required Level: 20
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Restores 100 HP to the user when a monster is killed by a short-ranged attack.
+Restores 5 SP to the user when a Dragon race monster is killed by a short-ranged attack.
+If upgrade level is +5 or higher,
+Reduces damage taken from Dragon race enemies by 5%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Dragon race enemies by an additional 5%.
 #
 5948#
 A mask for Assassins
@@ -59733,6 +59790,19 @@ Required Jobs: All Jobs
 Increases physical and magical damage on Formless race targets by 3%.
 Increases physical and magical damage on Formless race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
 #
+15108#
+^808080An armor made out of a urn which contained all kinds of venomous snakes and insects.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 55
+Property: Poison
+Weight: 50
+Required Level: 70
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases physical damage on Poison property targets by 10%.
+#
 15110#
 ^808080This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.^000000
 ^FFFFFF_^000000
@@ -59870,6 +59940,23 @@ Required Level: 145
 Required Job: All classes
 ^FFFFFF_^000000
 When using magic attacks has a small chance of increasing mATK by 8*the refine level of the robe for a short period of time.
+#
+15125#
+^808080A white suit which is worn by female divers. It has mysterious powers to attract fish.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Armor
+Defense: 20
+Property: Neutral
+Weight: 30
+Required Level: 80
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Adds a chance of gaining ^008080Fresh Fish^000000 when a monster is killed.
+Adds an additional chance of gaining ^008080Fresh Fish^000000 when a monster is killed per upgrade level of the item.
+If upgrade level is +7 or higher,
+HP Recovery - 100%
+Restores 100 HP to the user when a monster is killed by a physical attack.
 #
 15126#
 ^808080Light outfit favored by the tidy Doram.^000000
@@ -65506,6 +65593,32 @@ Weight : ^7777771^000000
 Type: Consumable
 Class: Item Giver
 Weight: 1
+#
+17790#
+^808080A care package from jRO.^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+When opened gives one of the following at random,
+Sharel Manteau
+Venomous Insect Armor
+Female Diver's Suit
+Flying Helmet
+Assassin Muffler
+Assassin Shoes
+Sharel Shoes
+Assassin's Despair
+Matagi Swordaxe
+Tips of Thieves Vol. 1
+Valkyrie Knife
+Mini Glasses
+Heroic Backpack
+Fallen Angel Wing
+(5) Bloody Branch
+(6) Battle Manual X3
+(6) HE Bubble Gum
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -75624,6 +75737,23 @@ If used by Acolyte, Mage and Archer Classes,
 Perfect DODGE + 5
 Additional Perfect DODGE + 2 per upgrade 2 upgrade levels of the item up to a maximum upgrade level of 10.
 #
+20714#
+^808080Muffler worn by an assassin group from the far east. This muffler will strengthen the wearer's legs.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Garment
+Defense: 16
+Weight: 10
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Agi + 2 per upgrade level of the item past the upgrade level of 5.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Assassin's Despair^000000
+^008080Assassin's Muffler^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
+#
 20717#
 The scalp of a Faceworm that was defeated in the Dimensional Crack. Faceworms were once called Jormungand's reincarnates.
 MDEF 10.
@@ -76600,6 +76730,24 @@ Weight : ^77777730^000000
 Required Level : ^77777799^000000
 Job : ^777777Novice Class^000000
 #
+22016#
+^808080These shoes were worn by a man who lived as an assassin. These shoes contains the man's many years of experience.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 10
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Increases the experience given from Demi-Human race monsters by 5%.
+Increases the experience given from Demi-Human race monsters by an additional 1% per upgrade level of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Assassin's Despair^000000
+^008080Assassin's Shoes^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
+#
 22017#
 ^808080These shoes were worn by a man who made a living out of catching fish. They contain the man's many years of experience.^000000
 ^FFFFFF_^000000
@@ -76740,6 +76888,33 @@ Required Jobs: All Jobs
 Increases the experience given from Undead race monsters by 5%.
 Increases the experience given from Undead race monsters by an additional 1% per upgrade level of the item.
 #
+22055#
+^808080A magical pair of shoes containing the power of fire.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 12
+Weight: 25
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Max HP + 1% per upgrade level of the item.
+Max SP + 1% per upgrade level of the item.
+Mdef + 3
+Reduces damage taken from Fire property attacks by 5%.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Sharel Manteau^000000
+^008080Sharel Shoes^000000
+Max HP + 1% per upgrade level of ^008080Sharel Shield^000000.
+Max SP + 1% per upgrade level of ^008080Sharel Shield^000000.
+Increases physical damage on Fire property targets by 5%.
+^800080Set Bonus^000000
+^008080Sharel Shield^000000
+^008080Sharel Shoes^000000
+Reduces damage taken from Fire property attacks by 2% per upgrade level of ^008080Sharel Shield^000000.
+Reduces damage taken from Fire property enemies by 5%.
+#
 22058#
 ^808080These shoes were worn by a man who made a living out of raising dragons. These shoes contains the man’s many years of experience.^000000
 ^FFFFFF_^000000
@@ -76787,6 +76962,28 @@ Class : ^777777Shoes^000000 Defense : ^77777712^000000
 Weight : ^77777725^000000
 Required Level : ^77777790^000000
 Job : ^777777All^000000
+#
+22064#
+^808080Boots covered with razorsharp thorns.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Shoes
+Defense: 25
+Weight: 100
+Required Level: 70
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Reflects 1% of the received short-ranged damage back to the attacker per 2 upgrade levels of the item.
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Thorny Shield^000000
+^008080Thorny Shoes^000000
+Aspd + 6% per upgrade 3 upgrade levels of ^008080Thorny Shield^000000.
+^800080Set Bonus^000000
+^008080Bison Horn^000000
+^008080Thorny Shoes^000000
+If the users base Agi is 120 or higher,
+Aspd + 1
 #
 22067#
 A pair of witch's shoe with a kitten on it.
@@ -79435,6 +79632,19 @@ Required Job: Rebellion
 A 10% chance of casting ^0000FFLevel 1 Cross Slash^000000 on the target when dealing physical attacks.
 A 3% chance of inflicting ^800000Curse^000000 status on the target when dealing physical attacks.
 #
+28303#
+^808080An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Weight: 10
+Required Level: 1
+Required Jobs: Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs
+^FFFFFF_^000000
+Str + 3
+Atk + 10
+Mdef + 3
+#
 28305#
 ^808080An object which seems to be a part of the Vesper. Possesses a mysterious power that enables its owner to be more dexterous and accurate.^000000
 ^FFFFFF_^000000
@@ -79482,6 +79692,30 @@ Required Job: All classes
 Enables to use skill Teleport Lv.1.
 #
 28319#
+#
+28320#
+^808080A sculpture expressing the despair of an assassin who had to kill his beloved one.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Weight: 10
+Required Level: 50
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Aspd + 1
+^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Assassin's Despair^000000
+^008080Assassin's Mask^000000
+Increases physical damage on Demi-Human race targets by 10%.
+^800080Set Bonus^000000
+^008080Assassin's Despair^000000
+^008080Assassin's Muffler^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
+^800080Set Bonus^000000
+^008080Assassin's Despair^000000
+^008080Assassin's Shoes^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 28324#
 A ring for new users who start Ragnarok.
@@ -80088,6 +80322,52 @@ Required Jobs: Doram
 Reduces the variable casting time of ^0000FFPicky Peck^000000 by 50%.
 Increases the damage of ^0000FFPicky Peck^000000 by 1% per level of ^0000FFPicky Peck^000000 known for every 6 base DEX.
 #
+28491#
+^808080A dagger with a wide variety of applications. Particularly useful for hunting in the mountains.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Luk + 2
+Hit + 10
+Crit + 5 when performing a long-ranged attack.
+Enables ^0000FFLevel 1 Hiding^000000.
+If the users base Luk is 100 or higher,
+Additional Hit + 5
+Additional Crit + 10 when performing a long-ranged attack.
+#
+28492#
+^808080A written guide full of various techniques for thieves. It's contents are not recommended for the general public.^000000
+^FFFFFF_^000000
+Type: Equipment
+Class: Accessory
+Weight: 10
+Required Level: 100
+Required Jobs: All Jobs
+^FFFFFF_^000000
+Str + 5
+Agi + 5
+Int + 5
+If ^0000FFMasquerade-Enervation^000000 is at maximum level,
+Enables ^0000FFLevel 5 Wind Walker^000000.
+If ^0000FFMasquerade-Groomy^000000 is at maximum level,
+Enables ^0000FFLevel 5 Assumptio^000000.
+If ^0000FFMasquerade-Ignorance^000000 is at maximum level,
+Enables ^0000FFLevel 5 Maximum Power Thrust^000000.
+If ^0000FFMasquerade-Laziness^000000 is at maximum level,
+Enables ^0000FFLevel 5 Meteor Assault^000000.
+If ^0000FFScribble^000000 is at maximum level,
+Additional Str + 5
+Additional Agi + 5
+Additional Int + 5
+If ^0000FFMasquerade-Unlucky^000000 is at maximum level,
+Enables ^0000FFLevel 5 Mystical Amplification^000000.
+If ^0000FFMasquerade-Weakness^000000 is at maximum level,
+Enables ^0000FFLevel 1 Frenzy^000000.
+#
 28600#
 #
 28601#
@@ -80133,6 +80413,52 @@ MATK + (Upgrade Level * Upgrade Level) / 2 up to a maximum Upgrade Level of 15.
 ^FFFFFF_^000000
 If the user's base level is 70 or higher,
 For every 10 base levels, ATK + 5.
+#
+28717#
+^808080The royal knife of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced.^000000
+^FFFFFF_^000000
+Type: Weapon
+Class: Dagger
+Attack: 50
+Property: Neutral
+Weight: 10
+Weapon Level: 4
+Required Level: 70
+Required Jobs: Novice Jobs, Swordman, Merchant Jobs, Thief Jobs, Archer Jobs, Knight Jobs, Wizard Jobs, Crusader, Sage Jobs, Royal Guard, Soul Linker, Ninja Jobs
+^FFFFFF_^000000
+If used by Thief,
+Max SP + 100
+Matk + 150
+Increases critical damage on targets by 1% per upgrade level of the item.
+If used by Novice, Mage,
+Max HP + 200 per upgrade level of the item past the upgrade level of 7.
+Max SP + 20 per upgrade level of the item past the upgrade level of 7.
+If used by Novice, Mage and If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by 10%.
+If used by Hunter,
+Int + 2 per upgrade level of the item.
+Dex + 2 per upgrade level of the item.
+Max HP + 200
+Reduces the SP cost of skills by 5%.
+If used by Dancer, Bard,
+Dex - 1 for every 10 base Dex per upgrade level of the item.
+Atk + 100
+Aspd + 10% per upgrade level of the item.
+This item is indestructible in battle.
+If used by Novice,
+Int + 2 per upgrade level of the item past the upgrade level of 7.
+Dex + 2 per upgrade level of the item past the upgrade level of 7.
+Dex - 1 for every 10 base Dex per upgrade level of the item past the upgrade level of 7.
+Max HP + 300
+Max SP + 300
+Atk + 100
+Matk + 150
+Additional Matk + 15 per upgrade level of the item past the upgrade level of 7.
+Crit + 7 per upgrade level of the item past the upgrade level of 7.
+Aspd + 10% per upgrade level of the item past the upgrade level of 7.
+Increases critical damage on targets by 1% per upgrade level of the item past the upgrade level of 7.
+Reduces the SP cost of skills by 5%.
+This item is indestructible in battle.
 #
 28901#
 A rag doll that Piamette is using for both attack and defense?

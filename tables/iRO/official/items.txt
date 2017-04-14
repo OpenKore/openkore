@@ -887,6 +887,7 @@
 1659#Recovery_Light#
 1660#Empowered_Wand_Of_Affection#
 1661#Mental_Destroyer#
+1664#Thorn_Staff_of_Darkness#
 1665#Piercing_Staff#
 1667#TE_WoE_Staff#
 1668#Sword_Stick#
@@ -3510,6 +3511,7 @@
 5916#Exorcist_Glasses#
 5921#Monster_Fish_Gills#
 5933#Crow_Tengu_Mask#
+5937#Flying_Helmet#
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
@@ -6824,6 +6826,7 @@
 15104#Fisherman's_Mail#
 15105#Kaftan#
 15106#Engineer_Mail#
+15108#Venomous_Insect_Armor#
 15110#Supplement_Part_Str#
 15111#Upgrade_Part_-_Plate#
 15113#Exorcist_Mail#
@@ -6833,6 +6836,7 @@
 15119#PRO_10th_Robe#
 15120#PRO_10th_Shoes#
 15121#Sarah's_Battle_Robe#
+15125#Female_Diver's_Suit#
 15126#Doram_Suit#
 15129#Luxurious_Doram_Suit#
 15138#Egir_Armour#
@@ -7410,6 +7414,7 @@
 17786#Gothic_Costume_Egg#
 17787#2017_April_Costume_Box#
 17788#Overseas_Care_Package_IV#
+17790#Overseas_Care_Package_V#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8418,6 +8423,7 @@
 20709#Mana_Mantle#
 20710#Advanced_Angelic_Cardigan#
 20712#Valkyrie_Cape#
+20714#Assassin's_Muffler#
 20717#Giant_Faceworm_Snake_Skin#
 20718#Giant_Faceworm_Snake_Skin#
 20721#Cloak_Of_Gray#
@@ -8481,6 +8487,7 @@
 22012#Mana_Boots#
 22014#Enhanced_Variant_Shoes#
 22015#Advanced_Angel's_Reincarnation#
+22016#Assassin's_Shoes#
 22017#Fisherman's_Shoes#
 22033#Boots_Of_Gray#
 22035#Hero_Nependess_Shoes#
@@ -8492,10 +8499,12 @@
 22046#Airship‘s_Boots#
 22047#Felrock‘s_Boots#
 22052#Gravekeeper_Shoes#
+22055#Sharel_Shoes#
 22058#Dragon_Trainer_Shoes#
 22059#Egir_Shoes#
 22060#Hunter_Shoes#
 22061#Lumiere_Shoes#
+22064#Thorny_Shoes#
 22067#Witch_Shoes#
 22069#Lian_Shoes#
 22076#Wooden_Slippers#
@@ -8755,10 +8764,12 @@
 28200#End_of_Horizon#
 28201#Southern_Cross#
 28202#Southern_Cross#
+28303#Vesper_Core_02#
 28305#Vesper_Core_04#
 28310#Sarah's_Left_Earring#
 28311#Sarah's_Right_Earring#
 28319#Cauda_Daemonica#
+28320#Assassin's_Despair#
 28324#Steam_Starter_Ring#
 28326#Broken_Chip_01#
 28327#Broken_Chip_02#
@@ -8786,6 +8797,8 @@
 28422#Shining_Branch_Charm#
 28423#Fresh_Tuna_Charm#
 28424#Plump_Earthworm_Charm#
+28491#Hunting_Knife#
+28492#Thieve's_Guide_Vol._1#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
@@ -8793,6 +8806,7 @@
 28701#Ru_Gold_Knife#
 28702#Ru_Gold_Ashura#
 28705#Crimson_Dagger#
+28717#Valkyrie_Knife#
 28901#Mad_Bunny_Special#
 28902#Mad_Bunny_Special#
 28910#Imuke_Upper_Shield#
