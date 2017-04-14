@@ -80426,27 +80426,39 @@ Weapon Level: 4
 Required Level: 70
 Required Jobs: Novice Jobs, Swordman, Merchant Jobs, Thief Jobs, Archer Jobs, Knight Jobs, Wizard Jobs, Crusader, Sage Jobs, Royal Guard, Soul Linker, Ninja Jobs
 ^FFFFFF_^000000
-If used by Novice, Thief,
+If used by Thief,
 Max SP + 100
 Matk + 150
 Increases critical damage on targets by 1% per upgrade level of the item.
-If used by Novice, Mage and upgrade level is +7 or higher,
-Max HP + 200 per upgrade level of the item.
-Max SP + 20 per upgrade level of the item.
+If used by Novice, Mage,
+Max HP + 200 per upgrade level of the item past the upgrade level of 7.
+Max SP + 20 per upgrade level of the item past the upgrade level of 7.
+If used by Novice, Mage and If upgrade level is +7 or higher,
 Reduces damage taken from Demi-Human race enemies by 10%.
-If used by Novice, Hunter,
+If used by Hunter,
 Int + 2 per upgrade level of the item.
 Dex + 2 per upgrade level of the item.
 Max HP + 200
 Reduces the SP cost of skills by 5%.
-If used by Novice, Dancer, Bard,
+If used by Dancer, Bard,
 Dex - 1 for every 10 base Dex per upgrade level of the item.
 Atk + 100
 Aspd + 10% per upgrade level of the item.
 This item is indestructible in battle.
 If used by Novice,
-Matk + 15 per upgrade level of the item.
-Crit + 7 per upgrade level of the item.
+Int + 2 per upgrade level of the item past the upgrade level of 7.
+Dex + 2 per upgrade level of the item past the upgrade level of 7.
+Dex - 1 for every 10 base Dex per upgrade level of the item past the upgrade level of 7.
+Max HP + 300
+Max SP + 300
+Atk + 100
+Matk + 150
+Additional Matk + 15 per upgrade level of the item past the upgrade level of 7.
+Crit + 7 per upgrade level of the item past the upgrade level of 7.
+Aspd + 10% per upgrade level of the item past the upgrade level of 7.
+Increases critical damage on targets by 1% per upgrade level of the item past the upgrade level of 7.
+Reduces the SP cost of skills by 5%.
+This item is indestructible in battle.
 #
 28901#
 A rag doll that Piamette is using for both attack and defense?
