@@ -33,9 +33,9 @@ sub new {
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
 	
 	my %handlers = qw(
-		received_characters 09A5
-		received_characters_info 02F3
-		sync_received_characters 09A7
+		received_characters 099D
+		received_characters_info 082D
+		sync_received_characters 09A0
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
