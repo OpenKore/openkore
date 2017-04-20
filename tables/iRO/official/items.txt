@@ -8798,7 +8798,7 @@
 28423#Fresh_Tuna_Charm#
 28424#Plump_Earthworm_Charm#
 28491#Hunting_Knife#
-28492#Thieve's_Guide_Vol._1#
+28492#Thieves'_Guide_Vol._1#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
