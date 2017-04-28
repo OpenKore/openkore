@@ -524,3 +524,14 @@ serverEncoding Western
 charBlockSize 112
 chatLangCode 0
 addTableFolders pserver/AegisRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
+
+[Localhost Ragexe_2014_10_22b]
+ip 127.0.0.1
+port 6900
+version 51
+master_version 2
+serverType kRO_Ragexe_2014_10_22b
+serverEncoding Western
+charBlockSize 147
+addTableFolders kRO/Ragexe_2014_10_22b;translated;translated/kRO_english;kRO
+pinCode 1
