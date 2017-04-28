@@ -80364,9 +80364,9 @@ Additional Str + 5
 Additional Agi + 5
 Additional Int + 5
 If ^0000FFMasquerade-Unlucky^000000 is at maximum level,
-Enables ^0000FFLevel 5 Mystical Amplification^000000.
-If ^0000FFMasquerade-Weakness^000000 is at maximum level,
 Enables ^0000FFLevel 1 Frenzy^000000.
+If ^0000FFMasquerade-Weakness^000000 is at maximum level,
+Enables ^0000FFLevel 5 Mystical Amplification^000000.
 #
 28600#
 #
