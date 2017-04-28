@@ -5421,7 +5421,7 @@
 12410#Thick_Pork_Belly#
 12411#HE_Battle_Manual#
 12412#HE_Bubble_Gum#
-12413#PC_Cafe_Coupon_Box¥±#
+12413#PC_Cafe_Coupon_Boxâ…¡#
 12414#Guarana_Candy#
 12415#Siege_Teleport_Scroll_Silver#
 12416#Thanksgiving_Groove_Pack#
@@ -5495,7 +5495,7 @@
 12537#Gift_Chocolate_Basket#
 12538#Firecracker_Basket#
 12539#Splendid_Box#
-12545#Fortune_Egg¥´#
+12545#Fortune_Eggâ…¤#
 12548#Black_Market_Bulk_Buyer_Shop_License#
 12549#Condensed_White_Potion_200_Box#
 12550#Poison_Bottle_Box#
@@ -5630,9 +5630,9 @@
 12768#Worldcup_Hat_of_Fight_Box#
 12769#Worldcup_Hat_of_Victory_Box#
 12770#Worldcup_Hat_of_Honor_Box#
-12771#Worldcup_Hat_of_Passion_Box¥±#
-12772#Worldcup_Hat_of_Fight_Box¥±#
-12773#Worldcup_Hat_of_Victory_Box¥±#
+12771#Worldcup_Hat_of_Passion_Boxâ…¡#
+12772#Worldcup_Hat_of_Fight_Boxâ…¡#
+12773#Worldcup_Hat_of_Victory_Boxâ…¡#
 12774#Empty_Vial#
 12775#Greater_Agimat_of_Ancient_Spirit#
 12778#Baphomet_Jr_Ally_Scroll#
@@ -6830,8 +6830,8 @@
 15110#Supplement_Part_Str#
 15111#Upgrade_Part_-_Plate#
 15113#Exorcist_Mail#
-15116#Airship¡®s_Armor#
-15117#Felrock¡®s_Armor#
+15116#Airshipâ€˜s_Armor#
+15117#Felrockâ€˜s_Armor#
 15118#PRO_10th_Armor#
 15119#PRO_10th_Robe#
 15120#PRO_10th_Shoes#
@@ -8157,7 +8157,7 @@
 19910#Costume_Halloween_hat#
 19911#Costume_Triangle_roof_hat#
 19912#Costume_Cat_eye#
-19914#Felrock¡®s_Hat#
+19914#Felrockâ€˜s_Hat#
 19915#Costume_Little_Devil_S_Horn#
 19917#Costume:_Gloomy_Pumpkin_Hat#
 19918#Costume:_Lude_Mask#
@@ -8434,8 +8434,8 @@
 20733#Upgrade_Part_-_Engine#
 20734#Manteau_Of_Leafwind#
 20735#Manteau_Of_Flame_Heart#
-20743#Airship¡®s_Cloak#
-20744#Felrock¡®s_Cloak#
+20743#Airshipâ€˜s_Cloak#
+20744#Felrockâ€˜s_Cloak#
 20745#Manteau_Of_Mistic_Froz#
 20746#Costume:_Rudra's_Grace#
 20747#Manteau_Great_Nature#
@@ -8496,8 +8496,8 @@
 22042#Talaria_Shoes#
 22043#Supplement_Part_Agi#
 22044#Upgrade_Part_-_Booster#
-22046#Airship¡®s_Boots#
-22047#Felrock¡®s_Boots#
+22046#Airshipâ€˜s_Boots#
+22047#Felrockâ€˜s_Boots#
 22052#Gravekeeper_Shoes#
 22055#Sharel_Shoes#
 22058#Dragon_Trainer_Shoes#
@@ -8862,7 +8862,7 @@
 31120#Costume_Vampire_Familiar#
 31121#Costume_Bat_Stole#
 31122#Costume_Bloody_Vicious_Stop_Bandage#
-31123#Costume_£Çhostring_Tall_Hat#
+31123#Costume_ï¼§hostring_Tall_Hat#
 31132#Costume_Christmas_Wreath#
 31160#Costume_Rune_Helm#
 31161#Costume_Tiger_Mask#
