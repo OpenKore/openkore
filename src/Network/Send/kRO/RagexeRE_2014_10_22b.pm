@@ -34,7 +34,8 @@ sub new {
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(688214506, 761751195, 731196533);
+	
+#	$self->cryptKeys(688214506, 761751195, 731196533);
 
 	return $self;
 }
