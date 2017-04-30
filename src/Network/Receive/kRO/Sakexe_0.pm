@@ -389,6 +389,11 @@ sub new {
 				types => 'v2 C V2 C a8 l v2 C',
 				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V2 C a8 l v2 C a25 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -530,7 +535,13 @@ sub items_nonstackable {
 		$args->{switch} eq '0996'	# storage
 	) {
 		return $items->{type6};
-
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
+	) {
+		return $items->{type7};
+		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
