@@ -27,6 +27,7 @@ sub new {
 
 	my %packets = (
 		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'035F' => ['character_move', 'x10 a3', [qw(coords)]],
 	);
 
 	foreach my $switch (keys %packets) {
