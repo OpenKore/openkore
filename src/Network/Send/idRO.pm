@@ -37,7 +37,7 @@ sub new {
 		send_equip 00A9
 		storage_password 023B
 		sync 0360
-		character_move 035F
+		character_move 0085
 		actor_info_request 0368
 		actor_look_at 0361
 		item_take 0362
