@@ -101,7 +101,7 @@ sub new {
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
 		'02F1' => ['notify_progress_bar_complete'],
-		'035F' => ['character_move', 'a3', [qw(coords)]],
+		#'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0362' => ['item_take', 'x4 a4', [qw(ID)]],
