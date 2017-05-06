@@ -1595,7 +1595,8 @@ sub bracket {
 
 # parses all macro perl sub-routine found in the macro script
 sub parse_perl_subs {
-	my @full = $_[0] =~ /(?:^|\s+)(\w+)s*((s*(.*?)s*).*)$/i;
+	my ($command) = @_;
+	my @full = $command =~ /(?:^|\s+)(\w+)\s*(\(\s*(.*?)\s*\).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
 	return unless $bracketed;
@@ -1737,7 +1738,7 @@ sub substitue_variables {
 
 sub parse_keywords {
 	my ($command) = @_;
-	my @full = $command =~ /$macro_keywords_character($macroKeywords)s*((s*(.*?)s*).*)$/i;
+	my @full = $command =~ /$macro_keywords_character($macroKeywords)\s*(\(\s*(.*?)\s*\).*)$/i;
 	my @pair = ($full[0]);
 	my ($bracketed) = extract_bracketed ($full[1], '()');
 	return unless $bracketed;
