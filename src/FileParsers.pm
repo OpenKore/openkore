@@ -1296,30 +1296,18 @@ sub updateMonsterLUT {
 }
 
 sub updatePortalLUT {
-	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY) = @_;
-	
-	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY};
-	Plugins::callHook('updatePortalLUT', $plugin_args);
-	
-	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY\n";
-		close FILE;
-	}
+	my ($file, $src, $x1, $y1, $dest, $x2, $y2) = @_;
+	open FILE, ">>:utf8", $file;
+	print FILE "$src $x1 $y1 $dest $x2 $y2\n";
+	close FILE;
 }
 
 #Add: NPC talk Sequence
 sub updatePortalLUT2 {
-	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY, $steps) = @_;
-	
-	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY, steps => $steps};
-	Plugins::callHook('updatePortalLUT2', $plugin_args);
-	
-	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY $steps\n";
-		close FILE;
-	}
+	my ($file, $src, $x1, $y1, $dest, $x2, $y2, $seq) = @_;
+	open FILE, ">>:utf8", $file;
+	print FILE "$src $x1 $y1 $dest $x2 $y2 $seq\n";
+	close FILE;
 }
 
 sub updateNPCLUT {
