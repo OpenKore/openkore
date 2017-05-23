@@ -2274,8 +2274,8 @@ sub quest_add {
 		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
 	}
 
-	my $pack = 'V v Z24';
-	$pack = 'x4 x4 V x4 v2 Z24' if $args->{switch} eq '09F9';
+	my $pack = 'a0 V v Z24';
+	$pack = 'V x4 V x4 v Z24' if $args->{switch} eq '09F9';
 	my $pack_len = length pack $pack, ( 0 ) x 7;
 
 	$quest->{time_start} = $args->{time_start};
@@ -2284,9 +2284,10 @@ sub quest_add {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
 	my $o = 17;
 	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ( $mobID, $count, $mobName ) = unpack $pack, substr $args->{RAW_MSG}, $o + $i * $pack_len, $pack_len;
-		my $mission = \%{$quest->{missions}->{$mobID}};
+		my ( $conditionID, $mobID, $count, $mobName ) = unpack $pack, substr $args->{RAW_MSG}, $o + $i * $pack_len, $pack_len;
+		my $mission = \%{$quest->{missions}->{$conditionID || $mobID}};
 		$mission->{mobID} = $mobID;
+		$mission->{conditionID} = $conditionID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
 		Plugins::callHook('quest_mission_added', {

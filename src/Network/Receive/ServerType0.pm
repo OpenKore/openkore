@@ -1155,6 +1155,7 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
+		our $quest_generation++;
 	}
 
 	$char->{pos} = {};
@@ -6003,15 +6004,16 @@ sub quest_all_list3 {
 
 		if ( $mission_amount > 0 ) {
 			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
-				my ( $mobID, $count, $amount, $mobName ) = unpack( 'x4 x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
+				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
 				$i += 44;
-				my $mission = \%{ $quest->{missions}->{$mobID} };
+				my $mission = \%{ $quest->{missions}->{$conditionID} };
+				$mission->{conditionID} = $conditionID;
 				$mission->{mobID}       = $mobID;
 				$mission->{count}       = $count;
-				$mission->{amount}      = $amount;
+				$mission->{goal}        = $goal;
 				$mission->{mobName_org} = $mobName;
 				$mission->{mobName}     = bytesToString( $mobName );
-				debug "- $mobID $count / $amount $mobName\n", "info";
+				debug "- $mobID $count / $goal $mobName\n", "info";
 			}
 		}
 	}
