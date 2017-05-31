@@ -44,6 +44,8 @@ pauseCharServer 0
 # 連接角色伺服器前等候時間 [ 秒 ]
 pauseMapServer 0
 # 連接地圖伺服器前等候時間 [ 秒 ]
+pauseLoginPin 3
+# 輸入滑鼠鎖前等候時間 [ 秒 ]
 ignoreInvalidLogin 0
 # 若設為 1，則會忽視 "帳號不存在" 的訊息
 secureLogin_requestCode

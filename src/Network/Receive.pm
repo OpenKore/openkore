@@ -1773,6 +1773,10 @@ sub login_pin_code_request {
 
 		message T("Server requested PIN password in order to select your character.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
+		if ($config{pauseLoginPin}) {
+			message T("Pausing for " . $config{pauseLoginPin} . " second(s)...\n"), "system";
+			sleep $config{pauseLoginPin};
+		}
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 2) {
 		# PIN code has never been set before, so set it.
