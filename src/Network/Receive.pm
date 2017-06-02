@@ -2263,6 +2263,7 @@ sub quest_all_mission {
 }
 
 # 02B3
+# 09F9
 # note: this packet shows all missions for 1 quest and has fixed length
 sub quest_add {
 	my ($self, $args) = @_;
@@ -2273,14 +2274,20 @@ sub quest_add {
 		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
 	}
 
+	my $pack = 'a0 V v Z24';
+	$pack = 'V x4 V x4 v Z24' if $args->{switch} eq '09F9';
+	my $pack_len = length pack $pack, ( 0 ) x 7;
+
 	$quest->{time_start} = $args->{time_start};
 	$quest->{time} = $args->{time};
 	$quest->{active} = $args->{active};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	my $o = 17;
 	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
-		my $mission = \%{$quest->{missions}->{$mobID}};
+		my ( $conditionID, $mobID, $count, $mobName ) = unpack $pack, substr $args->{RAW_MSG}, $o + $i * $pack_len, $pack_len;
+		my $mission = \%{$quest->{missions}->{$conditionID || $mobID}};
 		$mission->{mobID} = $mobID;
+		$mission->{conditionID} = $conditionID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
 		Plugins::callHook('quest_mission_added', {
@@ -2301,10 +2308,12 @@ sub quest_delete {
 }
 
 sub parse_quest_update_mission_hunt {
-	my ($self, $args) = @_;
-	@{$args->{mobs}} = map {
-		my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result
-	} unpack '(a10)*', $args->{mobInfo};
+	my ( $self, $args ) = @_;
+	if ( $args->{switch} eq '09FA' ) {
+		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result } unpack '(a12)*', $args->{mobInfo};
+	} else {
+		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result } unpack '(a10)*', $args->{mobInfo};
+	}
 }
 
 sub reconstruct_quest_update_mission_hunt {
@@ -2325,6 +2334,7 @@ sub reconstruct_quest_update_mission_hunt_v2 {
 }
 
 # 02B5
+# 09FA
 sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
 	my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));

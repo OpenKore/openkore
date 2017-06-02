@@ -565,6 +565,8 @@ sub new {
 		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
+		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
+		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
@@ -573,8 +575,9 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A23' => ['achievement_list', 'v', [qw(len)]],
+		'0A24' => ['achievement_update'],
 		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
-		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
@@ -1152,6 +1155,7 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
+		our $quest_generation++;
 	}
 
 	$char->{pos} = {};
@@ -6000,15 +6004,16 @@ sub quest_all_list3 {
 
 		if ( $mission_amount > 0 ) {
 			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
-				my ( $mobID, $count, $amount, $mobName ) = unpack( 'x4 x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
+				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
 				$i += 44;
-				my $mission = \%{ $quest->{missions}->{$mobID} };
+				my $mission = \%{ $quest->{missions}->{$conditionID} };
+				$mission->{conditionID} = $conditionID;
 				$mission->{mobID}       = $mobID;
 				$mission->{count}       = $count;
-				$mission->{amount}      = $amount;
+				$mission->{goal}        = $goal;
 				$mission->{mobName_org} = $mobName;
 				$mission->{mobName}     = bytesToString( $mobName );
-				debug "- $mobID $count / $amount $mobName\n", "info";
+				debug "- $mobID $count / $goal $mobName\n", "info";
 			}
 		}
 	}
