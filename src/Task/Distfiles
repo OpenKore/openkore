@@ -18,4 +18,6 @@ UseSkill.pm
 UseSkill.png
 UseSkill.zargo
 Wait.pm
+WaitFor.pm
+WaitForAnyHook.pm
 WithSubtask.pm

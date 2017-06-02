@@ -715,6 +715,7 @@ relogAfterStorage 0
 minStorageZeny 50
 
 npcTimeResponse
+npcWrongStepsMethod 0
 
 getAuto {
 	minAmount

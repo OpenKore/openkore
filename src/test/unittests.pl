@@ -15,6 +15,8 @@ my @tests = qw(
 	ItemsTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
+    TaskWaitForTest
+    TaskWaitForAnyHookTest
 	PluginsHookTest
 	FileParsersTest
 	NetworkTest
