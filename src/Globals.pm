@@ -567,5 +567,11 @@ our @deadTime;
 END {
 	undef $interface if defined $interface;
 }
-
+sub UnknowLog{
+	my ($args1) = @_;
+	my $filename = 'logs/UnknowLog.txt';
+	open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
+	print $fh $args1."\n";
+	close $fh;
+}
 return 1;
