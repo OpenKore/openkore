@@ -567,5 +567,25 @@ our @deadTime;
 END {
 	undef $interface if defined $interface;
 }
-
+sub UnknowRecv{
+	my ($args1, $args2) = @_;
+	my $filename = 'logs/UknowRecv.txt';
+	open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
+	print $fh $args1 ." ". $args2 ."\n";
+	close $fh;
+}
+sub UnknowSend{
+	my ($args1, $args2) = @_;
+	my $filename = 'logs/UknowSend.txt';
+	open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
+	print $fh $args1 ." ". $args2 ."\n";
+	close $fh;
+}
+sub UnknowLog{
+	my ($args1, $args2) = @_;
+	my $filename = 'logs/UnknowLog.txt';
+	open(my $fh, '>>', $filename) or die "Could not open file '$filename' $!";
+	print $fh $args1."\n";
+	close $fh;
+}
 return 1;

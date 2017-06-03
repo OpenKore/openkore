@@ -434,6 +434,22 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
+[Thailand - tRO (EXE)]
+ip 103.55.55.12
+port 6900
+master_version 7
+version 24
+serverType tRO
+secureLogin 0
+secureLogin_type 0
+secureLogin_account 0
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 144
+gameguard 1
+
 ## http://ro.kunlun.com/
 [cRO - China]
 ip 118.186.39.226

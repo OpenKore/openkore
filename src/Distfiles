@@ -27,3 +27,6 @@ TaskManager.pm
 Translation.pm
 Utils.pm
 XSTools.pm
+HMAC.pm
+HMAC_MD5.pm
+HMAC_SHA1.pm

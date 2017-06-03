@@ -9,6 +9,9 @@ username
 password
 loginPinCode
 char
+login_packet 
+#example# 
+#login_packet 760a1800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
 # Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
 # They must be the same as Query Server config in Poseidon.txt
