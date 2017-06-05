@@ -2497,14 +2497,14 @@ sub processPartySkillUse {
 				if (
 					( # range check
 						$party_skill{owner}{ID} eq $player->{ID}
-						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8")
+						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{"partySkill_$i"."_dist"} or $config{partySkillDistance} or "0..8")
 					)
 					&& ( # target check
 						!$config{"partySkill_$i"."_target"}
 						or existsInList($config{"partySkill_$i"."_target"}, $player->{name})
-						or $player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main')
-						or $char->{homunculus} && $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
-						or $char->{mercenary} && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
+						or ($player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main'))
+						or ($char->{homunculus} && $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus'))
+						or ($char->{mercenary} && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary'))
 					)
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 				){
