@@ -153,6 +153,11 @@ sub checkConfig {
 		warning "[macro] orphans: using method 'terminate'\n";
 		configModify('macro_orphans', 'terminate')
 	}
+	
+	if (!defined $::config{macro_defaultPriority} || $::config{macro_defaultPriority} !~ /^\d+$/) {
+		warning "[macro] default priority: using 0 (\"check first\")\n";
+		configModify('macro_defaultPriority', '0');
+	}
 
 	return 1
 }
@@ -179,7 +184,7 @@ sub commandHandler {
 		foreach my $m (keys %macro) {message "$m\n" unless $m =~ /^tempMacro/}
 		message(sprintf("%sautomacros%s\n", "-"x8, "-"x7), "list");
 		foreach my $a (sort {
-			($automacro{$a}->{priority} or 0) <=> ($automacro{$b}->{priority} or 0)
+			($automacro{$a}->{priority} or $config{macro_defaultPriority}) <=> ($automacro{$b}->{priority} or $config{macro_defaultPriority})
 		} keys %automacro) {message "$a\n"}
 		message(sprintf("%sPerl Sub%s\n", "-"x9, "-"x8), "list");
 		foreach my $s (@perl_name) {message "$s\n"}
