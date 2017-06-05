@@ -1720,7 +1720,8 @@ sub gameguard_request {
 	my ($self, $args) = @_;
 
 	return if (($net->version == 1 && $config{gameGuard} ne '2') || ($config{gameGuard} == 0));
-	Poseidon::Client::getInstance()->query(
+	Log::warning "[gameguard request] Sending query to poseidon server [ Time: ".time." ]\n";
+	Poseidon::QueryClient::getInstance()->query(
 		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
 	);
 	debug "Querying Poseidon\n", "poseidon";

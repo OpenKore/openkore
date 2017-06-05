@@ -12,11 +12,11 @@
 # MODULE DESCRIPTION: Poseidon GameGuard query handler.
 #
 # Poseidon provides a simple way to respond to GameGuard queries.
-package Poseidon::Client;
+package Poseidon::QueryClient;
 
 use strict;
 use IO::Socket::INET;
-use Globals qw(%config);
+use Globals qw(%config $poseidon_query_port $poseidon_query_ip);
 use Log qw(error debug);
 use Bus::MessageParser;
 use Bus::Messages qw(serialize);
@@ -24,15 +24,14 @@ use Utils qw(dataWaiting);
 use Plugins;
 use Misc;
 
-use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
+use constant DEFAULT_POSEIDON_SERVER_PORT => 24391;
 use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
 
 our $instance;
 
-
-# Poseidon::Client Poseidon::Client->new(String host, int port)
+# Poseidon::QueryClient Poseidon::QueryClient->new(String host, int port)
 #
-# Create a new Poseidon::Client object.
+# Create a new Poseidon::QueryClient object.
 sub _new {
 	my ($class, $host, $port) = @_;
 	my %self = (
@@ -83,6 +82,7 @@ sub query {
 		args => \%args,
 	});
 	$args{packet} = $packet;
+	$args{username} = $config{username};
 	$data = serialize("Poseidon Query", \%args);
 	$socket->send($data);
 	$socket->flush();
@@ -124,7 +124,15 @@ sub getResult {
 			return undef;
 		} else {
 			$self->{socket} = undef;
-			return $args->{packet};
+			my %return;
+			$return{packet} = $args->{packet};
+			if (exists $args->{error}) {
+				$return{error} = $args->{error};
+				error "The Poseidon server was not able to answer our query and sent a error message.\n";
+				error "Poseidon error message: '".$args->{error}."'.\n;";
+				offlineMode();
+			}
+			return \%return;
 		}
 	} else {
 		# We haven't gotten a full message yet.
@@ -133,14 +141,15 @@ sub getResult {
 }
 
 ##
-# Poseidon::Client Poseidon::Client::getInstance()
+# Poseidon::QueryClient Poseidon::QueryClient::getInstance()
 #
-# Get the global Poseidon::Client instance.
+# Get the global Poseidon::QueryClient instance.
 sub getInstance {
 	if (!$instance) {
-		$instance = Poseidon::Client->_new(
-			$config{poseidonServer} || 'localhost',
-			$config{poseidonPort} || DEFAULT_POSEIDON_SERVER_PORT);
+		$instance = Poseidon::QueryClient->_new(
+			$poseidon_query_ip   || 'localhost',
+			$poseidon_query_port || DEFAULT_POSEIDON_SERVER_PORT
+		);
 	}
 	return $instance;
 }

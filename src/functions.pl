@@ -719,6 +719,7 @@ sub initStatVars {
 # MISC. MAIN LOOP FUNCTIONS
 #####################################################
 
+my $poseidon_connect = -1;
 
 # This function is called every time in the main loop, when OpenKore has been
 # fully initialized.
@@ -751,14 +752,41 @@ sub mainLoop_initialized {
 			$outgoingClientMessages, $clientPacketHandler
 		);
 	}
-
+	
 	# GameGuard support
-	if ($config{gameGuard} && ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2'))) {
-		my $result = Poseidon::Client::getInstance()->getResult();
-		if (defined($result)) {
-			debug "Received Poseidon result.\n", "poseidon";
-			#$messageSender->encryptMessageID(\$result, unpack("v", $result));
-			$messageSender->sendToServer($result);
+	if ($config{gameGuard}) {
+		if ($poseidon_connect == -1) {
+			Log::warning "Contacting poseidon to ask for a connection: " . $config{poseidonServer} . ":" . $config{poseidonPort} . "\n";
+			$poseidon_connect = Poseidon::ConnectClient::->new($config{poseidonServer}, $config{poseidonPort});
+			$poseidon_connect->askForConnection;
+			
+		} elsif (!defined $poseidon_query_port) {
+			my $result = $poseidon_connect->getResult();
+			if (defined($result)) {
+				
+				if ($result->{client} == -1) {
+					Log::warning "Received Denied Poseidon result for connection request.\n";
+					# unsafe to continue, disconnect
+					offlineMode();
+					return;
+					
+				} else {
+					Log::warning "Received Sucessful Poseidon result for connection request [Client: " . $result->{client} . "] [Port: " . $result->{port} . "] [Ip: " . $result->{ip} . "].\n";
+					$poseidon_query_ip = $result->{ip};
+					$poseidon_query_port = $result->{port};
+				}
+				
+			}
+			
+		} elsif ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2')) {
+			my $result = Poseidon::QueryClient::getInstance()->getResult();
+			if (defined($result)) {
+				debug "Received Poseidon result.\n", "poseidon";
+				unless (exists $result->{error}) {
+					Log::warning "[gameguard request] Received successful result from poseidon [ Time: ".time." ]\n";
+					$messageSender->sendToServer($result->{packet});
+				}
+			}
 		}
 	}
 
