@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2015_11_04a;
 
 use strict;
-use base 'Network::Send::kRO::RagexeRE_2015_05_13a';
+use base 'Network::Send::kRO::RagexeRE_2015_10_01b';
 
 sub new {
 	my ($class) = @_;
@@ -24,7 +24,6 @@ sub new {
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0928' => ['actor_look_at', 'v C', [qw(head body)]],
 #		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0363' => undef,
 		'0363' => ['character_move', 'a3', [qw(coordString)]],
 		'07EC' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'088D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
