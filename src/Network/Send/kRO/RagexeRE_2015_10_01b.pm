@@ -20,6 +20,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
