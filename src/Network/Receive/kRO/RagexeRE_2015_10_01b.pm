@@ -16,6 +16,23 @@ package Network::Receive::kRO::RagexeRE_2015_10_01b;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2015_09_16);
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0977' => ['attack'],
+
+ foreach my $switch (keys %packets) {
+      $self->{packet_list}{$switch} = $packets{$switch};
+   }
+   my %handlers = qw(
+      attack 0977
+   );
+   $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+   
+   return $self;
+}
 
 1;
 
