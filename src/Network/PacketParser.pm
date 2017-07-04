@@ -471,6 +471,12 @@ sub parse_pre {
 			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
 			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
+			if (existsInList($config{'debugPacket_dumpFile'}, $switch)) {
+				open my $dump, '>>', 'DUMP_LINE.txt';
+				my (undef, $microseconds) = Time::HiRes::gettimeofday;
+				$microseconds = substr($microseconds, 0, 2);
+				print $dump "[".getFormattedDate(int(time)).".$microseconds] " . unpack('H*', $msg) . "\n";
+			}
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {
 			Misc::dumpData($msg, 1);
 		} elsif ($config{debugPacket_include_dumpMethod} == 4 && existsInList($config{'debugPacket_include'}, $switch)) {

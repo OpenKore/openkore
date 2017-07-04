@@ -573,9 +573,12 @@ sub new {
 		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
-		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0A23' => ['achievement_list', 'v', [qw(len)]],
+		'0A24' => ['achievement_update'],
 		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
 		'0A28' => ['vending_confirm', 'C', [qw(success)]],
+		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
@@ -982,7 +985,7 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
-		
+
 	} elsif ($args->{switch} eq '0992' # inventory
 		|| $args->{switch} eq '0994' # cart
 		|| $args->{switch} eq '0996' # storage
@@ -991,13 +994,13 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
-		
+
 	} elsif ($args->{switch} eq '0A0D' # inventory
 		|| $args->{switch} eq '0A0F' # cart
 		|| $args->{switch} eq '0A10'	# storage
 	) {
 		return $items->{type7};
-		
+
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1032,7 +1035,7 @@ sub items_stackable {
 		|| $args->{switch} eq '0902' # cart
 	) {
 		return $items->{type5};
-		
+
 	} elsif ($args->{switch} eq '0991' # inventory
 		|| $args->{switch} eq '0993' # cart
 		|| $args->{switch} eq '0995' # storage
@@ -1040,7 +1043,7 @@ sub items_stackable {
 		|| $args->{switch} eq '0009' # guild storage
 	) {
 		return $items->{type6};
-		
+
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1094,7 +1097,7 @@ sub parse_items_stackable {
 
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-		
+
 		$item->{idenfitied} = $item->{identified} & (1 << 0);
 		if ($item->{flag} == 0) {
 			$item->{identified} = 0;
@@ -3621,7 +3624,7 @@ sub npc_sell_list {
 		$self->decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	}
-	
+
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
@@ -3629,12 +3632,12 @@ sub npc_sell_list {
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
-	
+
 	foreach my $item (@{$char->inventory->getItems()}) {
 		next if ($item->{equipped} || $item->{sellable});
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
-	
+
 	undef $talk{buyOrSell};
 	message T("Ready to start selling items\n");
 
@@ -3714,7 +3717,7 @@ sub npc_talk {
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
 	$msg =~ s/\^[a-fA-F0-9]{6}//g;
- 
+
 	# Prepend existing conversation.
 	$talk{msg} .= "\n" if $talk{msg};
 	$talk{msg} .= $msg;
@@ -4480,7 +4483,7 @@ sub received_characters {
 	# FIXME better support for multiple received_characters packets
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
-	if (($args->{switch} eq '099D') && 
+	if (($args->{switch} eq '099D') &&
 		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO ))
 	) {
 		$net->setState(1.5);
@@ -5072,7 +5075,7 @@ sub skill_use {
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 			'skillID' => $args->{skillID},
 			'sourceID' => $args->{sourceID},
@@ -5161,7 +5164,7 @@ sub skill_use_location {
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 		'skillID' => $skillID,
 		'sourceID' => $sourceID,
@@ -5241,12 +5244,12 @@ sub skill_used_no_damage {
 			}
 		}
 	}
-	
+
 	#EFST_MAGICPOWER OVERRIDE
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 		skillID => $args->{skillID},
 		sourceID => $args->{sourceID},
@@ -5638,7 +5641,7 @@ our %stat_info_handlers = (
 		message sprintf($actor->verb("%s are now job level %d\n", "%s is now job level %d\n"), $actor, $actor->{lv_job}), "success", $actor->isa('Actor::You') ? 1 : 2;
 
 		return unless $actor->isa('Actor::You');
-		
+
 		Plugins::callHook('job_level_changed', {
 			level	=> $actor->{lv_job}
 		});
@@ -7506,20 +7509,32 @@ sub quest_all_list2 {
 
 sub show_script {
 	my ($self, $args) = @_;
-	
+
 	debug "$args->{ID}\n", 'parseMsg';
 }
 
 sub senbei_amount {
 	my ($self, $args) = @_;
-	
+
 	$char->{senbei} = $args->{senbei};
 }
 
 sub vending_confirm {
 	my ($self, $args) = @_;
-	
+
 	debug "Vending shop started\n", 'parseMsg';
+}
+
+sub achievement_list {
+	my ($self, $args) = @_;
+
+	debug "achievement_list\n", 'parseMsg';
+}
+
+sub achievement_update {
+	my ($self, $args) = @_;
+
+	debug "achievement_update\n", 'parseMsg';
 }
 
 1;
