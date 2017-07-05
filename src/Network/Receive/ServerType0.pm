@@ -566,6 +566,7 @@ sub new {
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
@@ -581,6 +582,7 @@ sub new {
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['misc_effect', 'v a4 C v', [qw(len ID flag effect)]],
+		'0A95' => ['call_partner_feature_flag', 'C', [qw(type)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -7531,10 +7533,62 @@ sub achievement_list {
 	debug "achievement_list\n", 'parseMsg';
 }
 
+sub quest_all_list3 {
+	my ( $self, $args ) = @_;
+
+	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
+	our $quest_generation      ||= 0;
+	our $last_quest_generation ||= 0;
+	if ( $last_quest_generation != $quest_generation ) {
+		$last_quest_generation = $quest_generation;
+		$questList             = {};
+	}
+
+	my $i = 0;
+	while ( $i < $args->{RAW_MSG_SIZE} - 8 ) {
+		my ( $questID, $active, $time_start, $time, $mission_amount ) = unpack( 'V C V2 v', substr( $args->{message}, $i, 15 ) );
+		$i += 15;
+
+		$questList->{$questID}->{active} = $active;
+		debug "$questID $active\n", "info";
+
+		my $quest = \%{ $questList->{$questID} };
+		$quest->{time_start}     = $time_start;
+		$quest->{time}           = $time;
+		$quest->{mission_amount} = $mission_amount;
+		debug "$questID $time_start $time $mission_amount\n", "info";
+
+		if ( $mission_amount > 0 ) {
+			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
+				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
+				$i += 44;
+				my $mission = \%{ $quest->{missions}->{$conditionID} };
+				$mission->{conditionID} = $conditionID;
+				$mission->{mobID}       = $mobID;
+				$mission->{count}       = $count;
+				$mission->{goal}        = $goal;
+				$mission->{mobName_org} = $mobName;
+				$mission->{mobName}     = bytesToString( $mobName );
+				debug "- $mobID $count / $goal $mobName\n", "info";
+			}
+		}
+	}
+}
+
 sub achievement_update {
 	my ($self, $args) = @_;
 
 	debug "achievement_update\n", 'parseMsg';
+}
+
+sub call_partner_feature_flag {
+	my ($self, $args) = @_;
+
+	if ($args->{type}) {
+		message T("Call Partner Feature Enabled\n"), "status";
+	} else {
+		message T("Call Partner Feature Disabled\n"), "status";
+	}
 }
 
 1;
