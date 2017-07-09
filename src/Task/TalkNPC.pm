@@ -805,7 +805,8 @@ sub addSteps {
 sub validateStep {
 	my ($self, $step) = @_;
 	return 1 if ($step =~ /^(?:c|w\d+|n|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
-	$self->setError(WRONG_SYNTAX_IN_STEPS, TF("Invalid NPC conversation code: %s.", $step));
+	$self->{error_code} = WRONG_SYNTAX_IN_STEPS;
+	$self->{error_message} = TF("Invalid NPC conversation code: %s.", $step);
 	return 0;
 }
 
