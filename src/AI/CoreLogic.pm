@@ -2626,6 +2626,16 @@ sub processAutoEquip {
 			my $ID = AI::args($ai_index_attack)->{ID};
 			$monster = $monsters{$ID};
 		}
+		
+		my @skip_slots;
+		if (AI::is('skill_use')) {
+			my $args = AI::args;
+			foreach my $slot (values %equipSlot_lut) {
+				if (exists $config{"$args->{prefix}_equip_$slot"}) {
+					push(@skip_slots, $slot);
+				}
+			}
+		}
 
 		# we will create a list of items to equip
 		my %eq_list;
@@ -2639,6 +2649,7 @@ sub processAutoEquip {
 			 && Actor::Item::scanConfigAndCheck("equipAuto_$i")
 			) {
 				foreach my $slot (values %equipSlot_lut) {
+					next if (defined binFind(\@skip_slots, $slot));
 					if (exists $config{"equipAuto_$i"."_$slot"}) {
 						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
