@@ -1159,6 +1159,7 @@ sub actor_info {
 			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
 			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
+			Plugins::callHook('mobNameUpdate', {monster => $monster});
 		}
 	}
 
@@ -1176,6 +1177,7 @@ sub actor_info {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
 		}
+		Plugins::callHook('npcNameUpdate', {npc => $npc});
 	}
 
 	my $pet = $pets{$args->{ID}};
@@ -1188,6 +1190,7 @@ sub actor_info {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
 		}
+		Plugins::callHook('petNameUpdate', {pet => $pet});
 	}
 
 	my $slave = $slavesList->getByID($args->{ID});
@@ -1199,6 +1202,7 @@ sub actor_info {
 		my $binID = binFind(\@slavesID, $args->{ID});
 		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($slave);
+		Plugins::callHook('slaveNameUpdate', {slave => $slave});
 	}
 
 	# TODO: $args->{ID} eq $accountID
