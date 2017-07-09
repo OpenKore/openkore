@@ -11,7 +11,7 @@ sub _hooks {
 }
 
 sub _dynamic_hooks {
-	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','player_moved'];
+	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','player_moved','charNameUpdate'];
 }
 
 sub _parse_syntax {
@@ -69,6 +69,31 @@ sub validate_condition {
 			
 			if ($self->{number_of_possible_fulfill_actors} == 0) {
 				$self->add_or_remove_dynamic_hooks(0);
+			}
+		
+		} elsif ($callback_name eq 'charNameUpdate') {
+		
+			if (!defined $self->{fulfilled_actor} && $self->validator_check(0,$args->{player}->{name})) {
+				if ($self->{number_of_possible_fulfill_actors} == 0) {
+					$self->add_or_remove_dynamic_hooks(1);
+				}
+				$self->{number_of_possible_fulfill_actors}++;
+				$self->{possible_fulfill_actors}{$args->{player}->{binID}} = $args->{player};
+				if ( !defined $self->{fulfilled_actor} && $self->validator_check( 1, distance($char->{pos_to}, $args->{player}->{pos_to}) ) ) {
+					$self->{fulfilled_actor} = $args->{player};
+				}
+				
+			} elsif (exists($self->{possible_fulfill_actors}{$args->{player}->{binID}})) {
+				$self->{number_of_possible_fulfill_actors}--;
+				delete $self->{possible_fulfill_actors}{$args->{player}->{binID}};
+				
+				if (defined $self->{fulfilled_actor} && $args->{player}->{binID} == $self->{fulfilled_actor}->{binID}) {
+					$self->search_for_dist_match_on_possible_fulfill_actors_list;
+				}
+				
+				if ($self->{number_of_possible_fulfill_actors} == 0) {
+					$self->add_or_remove_dynamic_hooks(0);
+				}
 			}
 			
 		} elsif ( $callback_name eq 'player_moved' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::Player')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::Player')) ) {

@@ -10,7 +10,7 @@ use Globals;
 
 #'packet/map_property3' has to exchanged
 sub _hooks {
-	['packet_mapChange','packet/map_property3','add_npc_list','npc_disappeared'];
+	['packet_mapChange','packet/map_property3','add_npc_list','npc_disappeared','npcNameUpdate'];
 }
 
 sub _parse_syntax {
@@ -43,6 +43,22 @@ sub validate_condition {
 				next unless ($self->validator_check($actor->{name}));
 				$self->{not_fulfilled_actor} = $actor;
 				last;
+			}
+		
+		} elsif ($callback_name eq 'npcNameUpdate') {
+		
+			if (!defined $self->{not_fulfilled_actor} && $self->validator_check($args->{npc}->{name})) {
+				$self->{not_fulfilled_actor} = $args->{npc};
+				
+			} elsif (defined $self->{not_fulfilled_actor} && $args->{npc}->{binID} == $self->{not_fulfilled_actor}->{binID}) {
+				unless ($self->validator_check($args->{npc}->{name})) {
+					$self->{not_fulfilled_actor} = undef;
+					foreach my $actor (@{$npcsList->getItems()}) {
+						next unless ($self->validator_check($actor->{name}));
+						$self->{not_fulfilled_actor} = $actor;
+						last;
+					}
+				}
 			}
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
