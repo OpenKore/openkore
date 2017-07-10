@@ -290,10 +290,9 @@ sub iterate {
 				undef $ai_v{'npc_talk'}{'time'};
 				undef $ai_v{'npc_talk'}{'talk'};
 			}
-			
-			return unless $self->addSteps($self->{sequence});
 
 			if ($target || %talk) {
+				return unless ($self->addSteps($self->{sequence}));
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
 			}
