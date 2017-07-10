@@ -493,7 +493,7 @@ sub ParsePacket
 
 		$client->send(pack("v a4", 0x0283, $accountID));
 		# mapLogin packet
-		$client->send(pack("H536", "eb0206ad09222b56c0050500000f012c010100000000000900000001004e565f42415349430000000000000000080000000f0000000030000000000000000000010054465f444f55424c4500000000000000090000000f0000000131000000000000000000010054465f4d495353000000000000000000070000000f0000000132000100000000000a00010054465f535445414c0000000000000000080000000f0000000133000400000000000a00010054465f484944494e4700000000000000090000000f0000000034000100000000000c00020054465f504f49534f4e00000000000000090000000f0000000135001000000000000a00090054465f4445544f5849465900000000000b0000000f000000008e00040000000100030001004e565f464952535441494400000000000b0000000f00000000d701df145a000200000000d701df145a0003000000003a010100d701df145a0002f13200003a010100b0001900d06b0000b0001800b2110000b102080000000000b202080000000000b0002a003f000000b0002b0000000000b0002e002d000000b000300000000000d9070039020000000000000000000000000000000000000000000000000000233000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"));
+		$client->send(pack("v", 0x2EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
 		$client->{connectedToMap} = 1;
 
 	} elsif ($msg =~ /^$packed_switch/
@@ -556,8 +556,7 @@ sub ParsePacket
 	} elsif ($switch eq '018A') { # client sends quit packet
 		
 		SendQuitGame($self, $client, $msg, $index);
-
-	} elsif ($switch eq '0228') { # client sends game guard sync
+	} elsif ($switch eq '09D0' || $switch eq '0228') { # client sends game guard sync
 		# Queue the response
 		# Don't allow other packet's (like Sync) to get to RO server.
 		my $length = unpack("v",substr($msg,2,2));
@@ -824,10 +823,13 @@ sub SendCharacterList
 	# Character Block Pack String
 	my $packstring = '';
 
+	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $blocksize == 147;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $blocksize == 144;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 x4 x4' if $blocksize == 136;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 x4' if $blocksize == 132;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $blocksize == 140;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $blocksize == 136;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V' if $blocksize == 132;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16' if $blocksize == 128;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z12' if $blocksize == 124;
 	$packstring = 'a4 V9 v V2 v14 Z24 C6 v2 x4' if $blocksize == 116;
 	$packstring = 'a4 V9 v V2 v14 Z24 C6 v2' if $blocksize == 112;
 	$packstring = 'a4 V9 v17 Z24 C6 v2' if $blocksize == 108;

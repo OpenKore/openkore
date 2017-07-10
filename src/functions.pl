@@ -613,7 +613,10 @@ sub initMapChangeVars {
 		delete $char->{warp};
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
-		$char->inventory->clear();
+		$char->inventory->onMapChange();
+		# Clear the cart but do not close it.
+		$char->cart->clear;
+		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
@@ -638,11 +641,7 @@ sub initMapChangeVars {
 	undef %spells;
 	undef %incomingParty;
 	undef %talk;
-	$ai_v{cart_time} = time + 60;
-	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
-	$cart{inventory} = [];
-	delete $storage{opened};
 	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;

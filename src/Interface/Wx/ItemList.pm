@@ -28,18 +28,21 @@ use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
 use File::Spec;
 use Scalar::Util;
 
+use Globals qw/%equipTypes_lut/;
+
 use Translation qw/T TF/;
 
 sub new {
-	my $class = shift;
-	my $parent = shift;
-	my $self = $class->SUPER::new($parent, 622, wxDefaultPosition, wxDefaultSize,
-		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
+	my ($class, $parent, $title) = @_;
+	my $self = $class->SUPER::new($parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL | wxLC_NO_HEADER);
 
-	$self->InsertColumn(0, T("Players, Monsters & Items"));
-	$self->SetColumnWidth(0, -2);
-	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
-	EVT_LIST_ITEM_RIGHT_CLICK($self, 622, \&_onRightClick);
+	$self->InsertColumn (0, T('ID'));
+	$self->InsertColumn (1, $title || T('Actors'));
+	$self->SetColumnWidth (0, 44);
+	$self->SetColumnWidth (1, 350);
+	EVT_LIST_ITEM_ACTIVATED($self, $self->GetId, \&_onActivate);
+	EVT_LIST_ITEM_RIGHT_CLICK($self, $self->GetId, \&_onRightClick);
 	return $self;
 }
 
@@ -56,7 +59,13 @@ sub DESTROY {
 
 sub init {
 	my $self = shift;
-	my @lists;
+
+	if ($self->{lists}) {
+		$self->DESTROY;
+	}
+
+	$self->{lists} = [];
+	$self->{onNameChangeCallbacks} = {};
 	for (my $i = 0; $i < @_; $i += 2) {
 		my $actorList = $_[$i];
 		my $color = $_[$i + 1];
@@ -64,12 +73,15 @@ sub init {
 		my $removeID = $actorList->onRemove()->add($self, \&_onRemove);
 		my $clearBeginID = $actorList->onClearBegin()->add($self, \&_onClearBegin);
 		my $clearEndID = $actorList->onClearEnd()->add($self, \&_onClearEnd);
-		push @lists, { actorList => $actorList, color => $color,
+		push @{$self->{lists}}, { actorList => $actorList, color => $color,
 			       addID => $addID, removeID => $removeID,
 			       clearBeginID => $clearBeginID, clearEndID => $clearEndID };
+
+		# add already existing actors
+		for my $actor (@{$actorList->getItems}) {
+			$self->_onAdd(undef, [$actor, $actor->{binID} // $actor->{invIndex}]);
+		}
 	}
-	$self->{lists} = \@lists;
-	$self->{onNameChangeCallbacks} = {};
 }
 
 # Set the item count of this list to the total number of actors in the observed ActorLists.
@@ -108,7 +120,7 @@ sub _onAdd {
 	my ($actor, $index) = @{$arg};
 	my $addr = Scalar::Util::refaddr($actor);
 	$self->DeleteAllItems;
-	my $ID = $actor->onNameChange->add($self, \&_onNameChange);
+	my $ID = $actor->onNameChange->add($self, \&_onChange);
 	$self->{onNameChangeCallbacks}{$addr} = $ID;
 
 	$self->_setItemCount();
@@ -146,12 +158,11 @@ sub _onClearEnd {
 	$self->RefreshItems(0, -1);
 }
 
-sub _onNameChange {
+sub _onChange {
 	my ($self) = @_;
 	$self->_setItemCount();
 	$self->RefreshItems(0, -1);
 }
-
 
 sub _onActivate {
 	my ($self, $event) = @_;
@@ -184,16 +195,34 @@ sub onRightClick {
 sub OnGetItemText {
 	my ($self, $item, $column) = @_;
 	my $actor = $self->_getActorForIndex($item);
-	my $acnam = "$actor->{name}";
-	if ($acnam eq "") {
-		$acnam = $actor->name;
+	return '' unless $actor;
+
+	my $info = '';
+
+	if ($column == 0) {
+		$info = $actor->{binID} // $actor->{invIndex};
+	} elsif ($column == 1) {
+		$info = $actor->name;
+
+		if ($actor->{pos_to}) {
+			$info = "$info ($actor->{pos_to}{x},$actor->{pos_to}{y})";
+		}
+
+		if ($actor->{equipped}) {
+			$info = TF("%s (equipped as %s)", $info, $equipTypes_lut{$actor->{equipped}} || $actor->{equipped});
+		}
+
+		if (defined $actor->{identified} and !$actor->{identified}) {
+			$info = TF("%s (not identified)", $info);
+		}
+
+		if (defined $actor->{amount}) {
+			# Translation Comment: Item with amount ("10 x Blue Herb...")
+			$info = TF("%d x %s", $actor->{amount}, $info);
+		}
 	}
-	my $info = "$acnam($actor->{pos_to}{x},$actor->{pos_to}{y})";
-	if ($actor) {
-		return $info;
-	} else {
-		return "";
-	}
+
+	$info
 }
 
 sub OnGetItemAttr {
@@ -204,6 +233,16 @@ sub OnGetItemAttr {
 	if ($actor) {
 		foreach my $l (@{$self->{lists}}) {
 			my $actorList = $l->{actorList};
+
+			# FIXME: InventoryLists have a different interface
+			if ($actorList->can('getByServerIndex')) {
+				if ($actorList->getByServerIndex($actor->{index})) {
+					$attr->SetTextColour($l->{color}) if ($l->{color});
+					last;
+				}
+				next;
+			}
+
 			if ($actorList->getByID($actor->{ID})) {
 				$attr->SetTextColour($l->{color}) if ($l->{color});
 				last;
