@@ -185,6 +185,7 @@ sub iterate {
 				@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos_to}}{qw(x y)};
 				$self->{old_map} = $field->baseName;
 				my $task = new Task::TalkNPC(
+					type => 'talknpc',
 					x => $self->{mapSolution}[0]{pos}{x},
 					y => $self->{mapSolution}[0]{pos}{y},
 					sequence => $self->{mapSolution}[0]{steps});

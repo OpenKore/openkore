@@ -1323,6 +1323,37 @@ sub minimap_indicator {
 	}
 }
 
+# 0x01B3
+sub parse_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = bytesToString($args->{npc_image});
+}
+
+sub reconstruct_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = stringToBytes($args->{npc_image});
+}
+
+sub npc_image {
+	my ($self, $args) = @_;
+
+	if ($args->{type} == 2) {
+		message TF("NPC image: %s\n", $args->{npc_image}), 'npc';
+	} elsif ($args->{type} == 255) {
+		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+	} else {
+		message TF("NPC image: %s (unknown type %s)\n", $args->{npc_image}, $args->{type}), 'npc';
+	}
+
+	unless ($args->{type} == 255) {
+		$talk{image} = $args->{npc_image};
+	} else {
+		delete $talk{image};
+	}
+}
+
 sub local_broadcast {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
@@ -3910,6 +3941,134 @@ sub hat_effect {
 			$actor->verb(T("%s are no longer: %s\n"), T("%s is no longer: %s\n")),
 			$actor, $hatName
 		), 'effect';
+	}
+}
+
+sub npc_talk_close {
+	my ($self, $args) = @_;
+	# 00b6: long ID
+	# "Close" icon appreared on the NPC message dialog
+	my $ID = $args->{ID};
+	my $name = getNPCName($ID);
+
+	$ai_v{'npc_talk'}{'talk'} = 'close';
+	$ai_v{'npc_talk'}{'time'} = time;
+	undef %talk;
+
+	Plugins::callHook('npc_talk_done', {ID => $ID});
+}
+
+sub npc_talk_continue {
+	my ($self, $args) = @_;
+	my $ID = substr($args->{RAW_MSG}, 2, 4);
+	my $name = getNPCName($ID);
+
+	$ai_v{'npc_talk'}{'talk'} = 'next';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_talk_number {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'talk'} = 'number';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_talk_responses {
+	my ($self, $args) = @_;
+	# 00b7: word len, long ID, string str
+	# A list of selections appeared on the NPC message dialog.
+	# Each item is divided with ':'
+	my $msg = $args->{RAW_MSG};
+
+	my $ID = substr($msg, 4, 4);
+	$talk{ID} = $ID;
+	my $talk = unpack("Z*", substr($msg, 8));
+	$talk = substr($msg, 8) if (!defined $talk);
+	$talk = bytesToString($talk);
+
+	my @preTalkResponses = split /:/, $talk;
+	$talk{responses} = [];
+	foreach my $response (@preTalkResponses) {
+		# Remove RO color codes
+		$response =~ s/\^[a-fA-F0-9]{6}//g;
+		if ($response =~ /^\^nItemID\^(\d+)$/) {
+			$response = itemNameSimple($1);
+		}
+
+		push @{$talk{responses}}, $response if ($response ne "");
+	}
+
+	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
+
+	$ai_v{'npc_talk'}{'talk'} = 'select';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	Commands::run('talk resp');
+
+	my $name = getNPCName($ID);
+	Plugins::callHook('npc_talk_responses', {
+						ID => $ID,
+						name => $name,
+						responses => $talk{responses},
+						});
+}
+
+sub npc_talk_text {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'talk'} = 'text';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_store_begin {
+	my ($self, $args) = @_;
+	undef %talk;
+	$talk{ID} = $args->{ID};
+	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	my $name = getNPCName($args->{ID});
+}
+
+sub npc_store_info {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	undef @storeList;
+	my $storeList = 0;
+	undef %talk;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
+		my $price = unpack("V1", substr($msg, $i, 4));
+		my $type = unpack("C1", substr($msg, $i + 8, 1));
+		my $ID = unpack("v1", substr($msg, $i + 9, 2));
+
+		my $store = $storeList[$storeList] = {};
+		# TODO: use itemName() or itemNameSimple()?
+		my $display = ($items_lut{$ID} ne "")
+			? $items_lut{$ID}
+			: T("Unknown ").$ID;
+		$store->{name} = $display;
+		$store->{nameID} = $ID;
+		$store->{type} = $type;
+		$store->{price} = $price;
+		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
+		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
+		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
+		$storeList++;
+	}
+
+	$ai_v{npc_talk}{talk} = 'store';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	if (AI::action ne 'buyAuto') {
+		Commands::run('store');
 	}
 }
 
