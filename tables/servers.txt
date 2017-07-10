@@ -132,6 +132,8 @@ serverType iRO
 addTableFolders iRO
 serverEncoding Western
 charBlockSize 145
+patchserver ropatch1.gravityus.com
+patchpath /repatch
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
