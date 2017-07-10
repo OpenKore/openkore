@@ -10596,26 +10596,6 @@ msgstr ""
 "Новые порталы добавлены в базу данных порталов. Для пользования порталами "
 "база должна быть скомпилирована. Хотите ли вы скопилировать порталы сейчас?\n"
 
-#: ../functions.pl:386
-msgid "Yes, compile now."
-msgstr "Да, скомпилировать."
-
-#: ../functions.pl:386
-msgid "No, don't compile it."
-msgstr "Нет, не компилировать."
-
-#: ../functions.pl:387
-msgid "Compile portals?"
-msgstr "Скомпилировать порталы?"
-
-#: ../functions.pl:389
-msgid "compiling portals"
-msgstr "Компиляция порталов..."
-
-#: ../functions.pl:392
-msgid "skipping compile"
-msgstr "пропуск компиляции порталов"
-
 #: ../functions.pl:395
 msgid ""
 "none found\n"
