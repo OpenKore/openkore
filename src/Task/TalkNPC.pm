@@ -456,7 +456,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a response to be selected, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a response to be selected, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -468,7 +468,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires the next button to be pressed now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires the next button to be pressed now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 			
@@ -481,7 +481,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a number to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a number to be sent now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 			
@@ -494,7 +494,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a text to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a text to be sent now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -516,7 +516,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -554,7 +554,7 @@ sub iterate {
 				
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires the buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires the buy or cancel button to be pressed, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -638,7 +638,7 @@ sub iterate {
 						
 					} else {
 						# TODO: maybe just warn about remaining steps and do not set error flag?
-						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
+						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").\n");
 					}
 				}
 			
