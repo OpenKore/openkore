@@ -4900,6 +4900,13 @@ sub cmdTalk {
 	}
 	
 	my @steps = split(/\s*,\s*/, $args);
+	
+	if (!@steps) {
+		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
+			"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
+		return;
+	}
+	
 	my $steps_string = "";
 	my $nameID;
 	foreach my $index (0..$#steps) {
@@ -4927,7 +4934,7 @@ sub cmdTalk {
 				return;
 			
 			} else {
-				my $npc = $npcsList->get($args);
+				my $npc = $npcsList->get($type);
 				if ($npc) {
 					$nameID = $npc->{nameID};
 				} else {
