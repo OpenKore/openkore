@@ -1787,3 +1787,18 @@ c_tower3_.rsw#夢魘密穴鐘塔 3樓#
 
 //代表公會 MD
 1@ffp.rsw#餘孽的大本營#
+
+//EP16.1
+1@mir.rsw#儀式之屋# 
+2@mir.rsw#儀式之屋# 
+1@sthb.rsw#空中要塞內部# 
+1@sthc.rsw#空中要塞密室# 
+1@sthd.rsw#空中要塞頂樓# 
+
+prt_cas.rsw#普隆德拉中央宮#
+prt_cas_q.rsw#普隆德拉行宮#
+prt_prison.rsw#普隆德拉地下監獄#
+prt_lib.rsw#王室的記憶#
+prt_lib_q.rsw#過去王室的記憶#
+prt_q.rsw#被入侵的普隆德拉#
+prt_pri00.rsw#普隆德拉監獄#
