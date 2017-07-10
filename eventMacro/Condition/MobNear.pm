@@ -36,7 +36,7 @@ sub validate_condition {
 		} elsif ($callback_name eq 'mobNameUpdate') {
 		
 			if (!defined $self->{fulfilled_actor} && $self->validator_check($args->{monster}->{name})) {
-				$self->{fulfilled_actor} = $args;
+				$self->{fulfilled_actor} = $args->{monster};
 				
 			} elsif (defined $self->{fulfilled_actor} && $args->{monster}->{binID} == $self->{fulfilled_actor}->{binID}) {
 				unless ($self->validator_check($args->{monster}->{name})) {

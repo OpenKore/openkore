@@ -38,7 +38,7 @@ sub validate_condition {
 		} elsif ($callback_name eq 'charNameUpdate') {
 		
 			if (!defined $self->{fulfilled_actor} && $self->validator_check($args->{player}->{name})) {
-				$self->{fulfilled_actor} = $args;
+				$self->{fulfilled_actor} = $args->{player};
 				
 			} elsif (defined $self->{fulfilled_actor} && $args->{player}->{binID} == $self->{fulfilled_actor}->{binID}) {
 				unless ($self->validator_check($args->{player}->{name})) {

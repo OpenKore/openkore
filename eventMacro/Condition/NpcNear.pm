@@ -36,7 +36,7 @@ sub validate_condition {
 		} elsif ($callback_name eq 'npcNameUpdate') {
 		
 			if (!defined $self->{fulfilled_actor} && $self->validator_check($args->{npc}->{name})) {
-				$self->{fulfilled_actor} = $args;
+				$self->{fulfilled_actor} = $args->{npc};
 				
 			} elsif (defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
 				unless ($self->validator_check($args->{npc}->{name})) {
