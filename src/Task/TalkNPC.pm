@@ -95,6 +95,8 @@ sub new {
 	$self->{error_message} = undef;
 	$self->{map_change} = 0;
 	
+	debug "Task::TalkNPC::new has been called with sequence '".$self->{sequence}."'.\n", "ai_npcTalk";
+	
 	return $self;
 }
 
@@ -692,6 +694,7 @@ sub conversation_end {
 	my ($self) = @_;
 	$self->delHooks;
 	$self->setDone();
+	debug "Task::TalkNPC::conversation_end called at ai npc_talk '".$ai_v{'npc_talk'}{'talk'}."'.\n", "ai_npcTalk";
 	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
 }
 
@@ -795,6 +798,9 @@ sub waitingForSteps {
 sub addSteps {
 	my ($self, $steps) = @_;
 	my @new_steps = parseArgs($steps);
+	
+	debug "Task::TalkNPC::addSteps has been called with value '".$steps."'.\n", "ai_npcTalk";
+	
 	foreach my $step (@new_steps) {
 		return 0 unless $self->validateStep($step);
 	}
