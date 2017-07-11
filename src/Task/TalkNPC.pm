@@ -378,6 +378,8 @@ sub iterate {
 			}
 		}
 		
+		debug "Iteration at Task::TalkNPC, current_talk_step '".$current_talk_step."', next step '".$step."'.\n", "ai_npcTalk", 2;
+		
 		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
 			debug "$self->{target}: Initiating the talk\n", 'ai_npcTalk';
