@@ -1877,10 +1877,10 @@
 2969#Chambered_RWC_2012_Pendant#
 2971#Pocket_Watch#
 2976#Red_Lantern#
-2977#Hurt_Mind#
-2978#Kind_Heart#
+2977#Hurt_Mind_(Check_Script)#
+2978#Kind_Heart_(Check_Script)#
 2979#Strawberry_Decoration#
-2980#Evilspirit_Gloves#
+2980#Evil_Spirit_Glove_(Check_Script)#
 2981#Hero_Ring#
 2985#Gyges_Ring#
 2988#Hero_Ring_Of_Newoz#
@@ -6928,7 +6928,7 @@
 15177#Elemental_Robe#
 15178#Golden_Ninja_Suit#
 15179#Mine_Worker's_Vest#
-15180#Hippie_Clothes_(Assistance)#
+15180#Hippie_Clothes#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -6963,7 +6963,7 @@
 16040#Crimson_Mace#
 16041#Vicious_Mind_Mace#
 16051#Valkyrie_Hammer#
-16060#Liquor_Bottle_(Assistance)#
+16060#Liquor_Bottle#
 16131#Lady_Tanee_Doll_Box#
 16132#Lunatic_Hat_Box#
 16133#Sunshine_Staff_Box#
@@ -7510,6 +7510,8 @@
 17802#Overseas_Care_Package_VI#
 17804#Overseas_Care_Package_VII#
 17805#Scrambled_Anniversary_Costume_Box#
+17806#July_Costume_Box#
+17807#July_Costume_Box#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -7812,7 +7814,7 @@
 18843#Small_Deviling_Hat#
 18844#Blue_Poring_Bubble#
 18845#Banshee_Master_Kiss#
-18848#Lush_Rose_(Assistance)#
+18848#Lush_Rose#
 18849#Celine's_Ribbon#
 18850#Polar_Bear_Cap#
 18851#Valentine_Heart_Hairband#
@@ -8065,6 +8067,7 @@
 19589#Costume:_Fallen_Angel#
 19597#Costume_Magic_Eyes#
 19598#Costume:_Wondering_Wolf_Helm#
+19599#Costume_Imp_Hat#
 19600#Costume:_Drooping_Kiehl_Doll#
 19601#Costume:_Drooping_Aliot_Doll#
 19602#Classic_Hunting_Cap_Box#
@@ -8236,6 +8239,7 @@
 19840#Costume:_Solar_Gold_Helm#
 19841#Costume:_Dragonhelm_Copper#
 19842#Costume:_Puppy_Hat#
+19848#Costume_Angeling_Cap#
 19871#Musical_Decoration#
 19873#Costume:_Carnival_Hat#
 19874#Costume:_Carnival_Circlet#
@@ -8341,7 +8345,16 @@
 20036#Costume:_Sword_Master's_Crown#
 20037#Costume:_Owlduke_Silk_Hat#
 20038#Haunted_Armor_Helm#
+20039#Costume_Butterfly_Wing_Ears#
+20040#Costume_Rose_Crown#
 20041#Costume_Earth_Goddess_Flower#
+20042#Costume_Hermode_Cap#
+20043#Costume_Red_Cherry_Blossom#
+20044#Costume_Carmen_Miranda's_Hat#
+20045#Costume_Samambaia#
+20046#Costume_Blue_Rose_Decoration#
+20047#Costume_Cherry_Blossom_Pray#
+20048#Costume_Wind_of_the_Prairie#
 20054#(null)#
 20071#Costume_Worg_In_Mouth#
 20085#Costume_Green_Clover_Hat#
@@ -8485,6 +8498,7 @@
 20340#Costume_Ponytail_Black#
 20341#Costume_Cowlick_Hairstyle_Black#
 20342#Costume_Twin_Ponytail_Black#
+20349#Costume_Flying_Galapago#
 20350#Costume_Cowlick_Hairstyle_Yellow#
 20351#Costume_Cowlick_Hairstyle_Green#
 20352#Costume_Cowlick_Hairstyle_Purple#
@@ -8517,7 +8531,7 @@
 20379#(null)#
 20397#Jakk#
 20398#Costume_Niffleheim_Bunny_Hat#
-20405#Costume:_Eremes_Scarf#
+20405#Costume_Eremes'_Scarf#
 20407#Costume_Red_Subject_Aura#
 20430#Costume_Loyal_Servant_of_Morocc#
 20434#Costume:_Drooping_Gunslinger#
@@ -8933,7 +8947,7 @@
 28104#Ru_Gold_Axe_M#
 28106#Crimson_Twohand_Axe#
 28107#Vicious_Mind_Two-Handed_Axe#
-28116#Mine_Worker's_Pickaxe_(Assistance)#
+28116#Mine_Worker's_Pickaxe#
 28200#End_of_Horizon#
 28201#Southern_Cross#
 28202#Southern_Cross#
@@ -8995,7 +9009,7 @@
 28705#Crimson_Dagger#
 28706#Vicious_Mind_Dagger#
 28717#Valkyrie_Knife#
-28721#Monokage_(Assistance)#
+28721#Monokage#
 28900#Royal_Guard_Shield#
 28901#Mad_Bunny_Special#
 28902#Mad_Bunny_Special#
@@ -9050,6 +9064,11 @@
 31047#Costume_First_Love_Cheeks#
 31048#Costume_White_Lily_with_Black_Ribbon#
 31052#Costume_Alchemist_Mask#
+31053#Costume_Drooping_Eddga#
+31054#Costume_Sting_Hat#
+31055#Costume_Poring_Bubble_Pipe#
+31056#Costume_Exploding_Wave_(Red)#
+31057#Costume_Eremes'_Scarf_(Black)#
 31063#Costume_Hair_in_a_Bun(Blue)#
 31064#Costume_Hair_in_a_Bun(Red)#
 31065#Costume_Hair_in_a_Bun(Yellow)#
@@ -9059,6 +9078,8 @@
 31069#Costume_Hair_in_a_Bun(Brown)#
 31070#Costume_Hair_in_a_Bun(Purple)#
 31087#Costume_Dwarf_Beard#
+31089#Costume_Exploding_Wave#
+31090#Costume_Flapping_Angeling#
 31091#Costume:_Show_Me_The_Zeny#
 31092#Costume_Rabbit_Ribbon#
 31117#Costume_Hoplite_Helmet#
@@ -9069,6 +9090,9 @@
 31122#Costume_Bloody_Vicious_Stop_Bandage#
 31123#Costume_Ｇhostring_Tall_Hat#
 31132#Costume_Christmas_Wreath#
+31140#Costume_Black_Cowboy_Hat#
+31141#Costume_Cactus_Flower_Corsage#
+31144#Costume_Native_Feather_Headband#
 31160#Costume_Rune_Helm#
 31161#Costume_Tiger_Mask#
 31162#Costume_Shaving_Foam#

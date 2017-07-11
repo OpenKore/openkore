@@ -1677,6 +1677,12 @@ Bring the Laphine craftsman 15 Crystallized Teardrops and 15 Fluorescent Liquid.
 You did great finding the Crystallized Teardrops and Fluorescent Liquid. They have enough supply for today.#
 #
 
+7117#Sprakki's Task I#SG_FEEL#QUE_NOIMAGE#
+Follow Sprakki's directions and walk across the bridge to the east.#
+Walk across the bridge to the east.#
+
+
+
 // 샌냦볷
 //--------------------뻮뷪뷅샼쇷--------------------------------
 8000#Quitting Job Change#SG_FEEL#QUE_NOIMAGE#
