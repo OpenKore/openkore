@@ -85,7 +85,7 @@ sub import {
 sub encryptMessageID {
 	my ($self, $r_message) = @_;
 	my $messageID = unpack("v", $$r_message);
-	
+
 	if ($self->{encryption}->{crypt_key_3}) {
 		if (sprintf("%04X",$messageID) eq $self->{packet_lut}{map_login}) {
 			$self->{encryption}->{crypt_key} = $self->{encryption}->{crypt_key_1};
@@ -93,21 +93,21 @@ sub encryptMessageID {
 			# Turn off keys
 			$self->{encryption}->{crypt_key} = 0; return;
 		}
-			
+
 		# Checking if Encryption is Activated
 		if ($self->{encryption}->{crypt_key} > 0) {
 			# Saving Last Informations for Debug Log
 			my $oldMID = $messageID;
 			my $oldKey = ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF;
-			
+
 			# Calculating the Encryption Key
 			$self->{encryption}->{crypt_key} = ($self->{encryption}->{crypt_key} * $self->{encryption}->{crypt_key_3} + $self->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
-		
+
 			# Xoring the Message ID
 			$messageID = ($messageID ^ (($self->{encryption}->{crypt_key} >> 16) & 0x7FFF)) & 0xFFFF;
 			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 
-			# Debug Log	
+			# Debug Log
 			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
 		}
 	} else {
@@ -235,7 +235,7 @@ sub sendToServer {
 
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
-	
+
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $messageID) && $config{debugPacket_include_dumpMethod} < 3) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			"[$packetDescriptions{Send}{$messageID}]" : '';
@@ -245,7 +245,7 @@ sub sendToServer {
 			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
 		}
 	}
-	
+
 	if ($config{'debugPacket_include_dumpMethod'} && !existsInList($config{debugPacket_exclude}, $messageID) && existsInList($config{'debugPacket_include'}, $messageID)) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			"[$packetDescriptions{Send}{$messageID}]" : '';
@@ -283,7 +283,7 @@ sub sendRaw {
 
 sub parse_master_login {
 	my ($self, $args) = @_;
-	
+
 	if (exists $args->{password_md5_hex}) {
 		$args->{password_md5} = pack 'H*', $args->{password_md5_hex};
 	}
@@ -300,12 +300,12 @@ sub parse_master_login {
 
 sub reconstruct_master_login {
 	my ($self, $args) = @_;
-	
+
 	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
 	$args->{mac} = '111111111111' unless exists $args->{mac}; # gibberish
 	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
 	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
-	
+
 	if (exists $args->{password}) {
 		for (Digest::MD5->new) {
 			$_->add($args->{password});
@@ -334,7 +334,7 @@ sub sendMasterLogin {
 		&& ($self->{packet_lut}{master_login} = $masterServer->{masterLogin_packet})
 	) {
 		$self->sendClientMD5Hash() unless $masterServer->{clientHash} eq ''; # this is a hack, just for testing purposes, it should be moved to the login algo later on
-		
+
 		$msg = $self->reconstruct({
 			switch => 'master_login',
 			version => $version || $self->version,
@@ -356,7 +356,7 @@ sub sendMasterLogin {
 sub secureLoginHash {
 	my ($self, $password, $salt, $type) = @_;
 	my $md5 = Digest::MD5->new;
-	
+
 	$password = stringToBytes($password);
 	if ($type % 2) {
 		$salt = $salt . $password;
@@ -364,7 +364,7 @@ sub secureLoginHash {
 		$salt = $password . $salt;
 	}
 	$md5->add($salt);
-	
+
 	$md5->digest
 }
 
@@ -372,7 +372,7 @@ sub sendMasterSecureLogin {
 	my ($self, $username, $password, $salt, $version, $master_version, $type, $account) = @_;
 
 	$self->{packet_lut}{master_login} ||= $type < 3 ? '01DD' : '01FA';
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'master_login',
 		version => $version || $self->version,
@@ -412,7 +412,7 @@ sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	if ($self->{serverType} == 0 || $self->{serverType} == 21 || $self->{serverType} == 22) {
 		$msg = $self->reconstruct({
 			switch => 'map_login',
@@ -873,14 +873,14 @@ sub sendCharDelete2Cancel {
 
 sub reconstruct_client_hash {
 	my ($self, $args) = @_;
-	
+
 	if (defined $args->{code}) {
 		# FIXME there's packet switch in that code. How to handle it correctly?
 		my $code = $args->{code};
 		$code =~ s/^02 04 //;
-		
+
 		$args->{hash} = pack 'C*', map hex, split / /, $code;
-		
+
 	} elsif ($args->{type}) {
 		if ($args->{type} == 1) {
 			$args->{hash} = pack('C*', 0x7B, 0x8A, 0xA8, 0x90, 0x2F, 0xD8, 0xE8, 0x30, 0xF8, 0xA5, 0x25, 0x7A, 0x0D, 0x3B, 0xCE, 0x52);
@@ -956,15 +956,15 @@ sub sendHomunculusCommand {
 	debug "Sent Homunculus Command $command", "sendPacket", 2;
 }
 
-sub sendPartyJoinRequestByName 
+sub sendPartyJoinRequestByName
 {
 	my ($self, $name) = @_;
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_join_request_by_name',
 		partyName => stringToBytes ($name),
-	}));	
-	
+	}));
+
 	debug "Sent Request Join Party (by name): $name\n", "sendPacket", 2;
 }
 
@@ -978,14 +978,14 @@ sub sendSkillSelect {
 	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
 }
 
-sub sendReplySyncRequestEx 
+sub sendReplySyncRequestEx
 {
 	my ($self, $SyncID) = @_;
 	# Packing New Message and Dispatching
 	my $pid = sprintf("%04X", $SyncID);
 	$self->sendToServer(pack("C C", hex(substr($pid, 2, 2)), hex(substr($pid, 0, 2))));
 	# Debug Log
-	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";		
+	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";
 	# Debug Log
 	debug "Sent Reply Sync Request Ex\n", "sendPacket", 2;
 }
