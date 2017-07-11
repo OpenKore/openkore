@@ -156,7 +156,7 @@ sub getByName {
 # If nothing is found, undef is returned.
 sub getByServerIndex {
 	my ($self, $serverIndex) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{index} == $serverIndex) {
 			return $item;
 		}
@@ -171,7 +171,7 @@ sub getByServerIndex {
 # If nothing is found, undef is returned.
 sub getByNameID {
 	my ($self, $nameID) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{nameID} eq $nameID) {
 			return $item;
 		}
@@ -189,7 +189,7 @@ sub getByNameID {
 # being checked.
 sub getByCondition {
 	my ($self, $condition) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($condition->($item)) {
 			return $item;
 		}
@@ -286,7 +286,7 @@ sub removeByName {
 # overloaded
 sub doClear {
 	my ($self) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		assert(defined $item->{invIndex}, "invIndex must be defined") if DEBUG;
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
 		delete $self->{nameChangeEvents}{$item->{invIndex}};
@@ -361,7 +361,7 @@ sub sumByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
 	my $sum = 0;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{name} eq $name) {
 			$sum = $sum + $item->{amount};
 		}
