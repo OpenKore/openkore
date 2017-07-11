@@ -1,7 +1,7 @@
 # xConf plugin by 4epT (ICQ 2227733)
 # Based on Lims idea
-# Version: 4
-# Last changes 15.05.2013
+# Version: 4.1
+# Last changes 12.03.2017 by Mortimal
 # Plug-in for change mon_control/pickupitems/items_control/priority files, using console commands.
 #
 # Examples of commands:
@@ -15,6 +15,9 @@
 # pconf 914 -1
 #
 # priconf Pupa, Poring, Lunatic
+#
+# mconf clearall
+# iconf setall 0 0 0
 
 package xConf;
 
@@ -79,7 +82,24 @@ debug "KEY: $key, VALUE: $value\n";
 		$file2 = 'tables\..\items.txt';
 		$type = 'Item';
 	}
-
+	
+## Command "sconf" don't have setall & clearall feature
+	if( (($key eq "clearall") || ($key eq "setall"))
+	    && ($cmd eq 'sconf')
+	  )
+	{
+		error "Syntax Error in function '$cmd'. Keys 'setall' and 'clearall' is not suported.\n";
+		return;
+	}elsif($key eq "clearall")	## If $key is "clear" clear file content and exit	
+	{
+		fileclear($file);
+		return;
+	}elsif (($key eq "setall"))	## If $key is "setall" setting all keys in file to $key
+	{
+		filesetall($file, $value);
+		return;
+	}
+	
 ## Check $key in tables\monsters.txt & tables\items.txt
 	if ($key ne "all") {
 ## Search name by ID
@@ -138,7 +158,60 @@ debug "VALUE: '$value', OLDVALUE: '$oldval'\n";
 		filewrite($file, $key, $value, $oldval,$shopname);
 	}
 }
+## clear file leave only #lines, emptylines and all parameter.
+sub fileclear {
+	my ($file) = @_;
+	my $controlfile = Settings::getControlFilename($file);
+	
+	open(FILE, "<:utf8", $controlfile);
+	my @lines = <FILE>;
+	close(FILE);
+	chomp @lines;
+	
+	my @newlines;	
+	foreach (@lines) {
+		push (@newlines,$_) if $_ =~ /^$/ || $_ =~ /^#/ || $_ =~ /^all/;
+	}
+	
+	open(WRITE, ">:utf8", $controlfile);
+	print WRITE join ("\n", @newlines);
+	close(WRITE);
+	
+	message "xConf. $file: cleared.\n", 'info';
+	Commands::run("reload $file")
+}
+## set all keys to $value
+sub filesetall {
+	my ($file,$value) = @_;
+	my 	@value;
+	
+	if (!$value) {
+		push (@value, "0") ;
+	}else{
+		@value = split(/\s+/, $value);
+	}
+	
+	my $controlfile = Settings::getControlFilename($file);
 
+	open(FILE, "<:utf8", $controlfile);
+	my @lines = <FILE>;
+	close(FILE);
+	chomp @lines;
+	
+	foreach my $line (@lines) {
+		next if $line =~ /^$/ || $line =~ /^#/;
+		my ($what) = $line =~ /([\s\S]+?)(?:\s[\-\d\.]+[\s\S]*)/;
+		$what =~ s/\s+$//g;
+		$line = join (' ', $what, @value);
+	}
+	
+	open(WRITE, ">:utf8", $controlfile);
+	print WRITE join ("\n", @lines);
+	close(WRITE);
+	
+	message "xConf. $file: all set to $value.\n", 'info';
+	Commands::run("reload $file")
+}
 ## write FILE
 sub filewrite {
 	my ($file, $key, $value, $oldval,$shopname) = @_;
