@@ -945,7 +945,7 @@ sub processDead {
 			}
 		}
 
-	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
+	} elsif (AI::action ne "dead" && $char->{'dead'}) {
 		AI::clear();
 		AI::queue("dead");
 		$char->setStatus('Dead', 1);
