@@ -961,3 +961,12 @@ prt_lib.rsw#Royal Memory#
 prt_lib_q.rsw#Old Memoir of Royal Family#
 prt_q.rsw#Prontera Invasion#
 prt_pri00.rsw#Prontera Prison#
+
+
+har_in01.rsw#Rock Ridge#
+harboro1.rsw#Rock Ridge#
+harboro2.rsw#Culvert#
+rockmi1.rsw#Rock Ridge Mine#
+rockmi2.rsw#Rock Ridge Mine#
+rockrdg1.rsw#Kiwawa Desert#
+rockrdg2.rsw#Kiwawa Desert#
