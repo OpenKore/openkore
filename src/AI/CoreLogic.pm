@@ -1532,13 +1532,15 @@ sub processAutoSell {
 				my $realpos = {};
 				getNPCInfo($config{"sellAuto_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's');
 
 				return;
 			}
 			$args->{'done'} = 1;			
 			
 			Plugins::callHook("AI_sell_auto");
+			
+			return unless ($ai_v{'npc_talk'}{'talk'} eq 'sell');
 			
 			# Form list of items to sell
 			my @sellItems;
@@ -1750,10 +1752,12 @@ sub processAutoBuy {
 				my $realpos = {};
 				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b');
 				return;
 			}
 
+			return unless ($ai_v{'npc_talk'}{'talk'} eq 'store');
+			
 			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
 			$needbuy -= $char->inventory->get($args->{invIndex})->{amount} if ($args->{invIndex} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory

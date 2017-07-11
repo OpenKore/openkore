@@ -243,14 +243,16 @@ sub remove {
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
 		my $indexSlot = $self->getNameIndexSlot($item->{name});
-		for (my $i = 0; $i < @{$indexSlot}; $i++) {
-			if ($indexSlot->[$i] == $item->{invIndex}) {
-				splice(@{$indexSlot}, $i, 1);
-				last;
-			}
-		}
-		if (@{$indexSlot} == 0) {
+		
+		if (@{$indexSlot} == 1) {
 			delete $self->{nameIndex}{lc($item->{name})};
+		} else {
+			for (my $i = 0; $i < @{$indexSlot}; $i++) {
+				if ($indexSlot->[$i] == $item->{invIndex}) {
+					splice(@{$indexSlot}, $i, 1);
+					last;
+				}
+			}
 		}
 
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};

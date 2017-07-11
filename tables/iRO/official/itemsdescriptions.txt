@@ -1140,15 +1140,12 @@ Required Job: Novice Jobs, Swordman Jobs, Mage Jobs, Archer, Hunter Jobs, Mercha
 ASPD + 15% for 30 minutes.
 #
 657#
-^808080A Remarkably powerful medicine that stimulates circulation and amplifies quickness. Temporarily increases attack speed.^000000
-^FFFFFF_^000000
-Type: Consumable
+^808080A remarkably powerful medicine that stimulates circulation and amplifies quickness.^000000
 Class: Stat Boost
 Weight: 20
 Required Level: 85
-Required Job: Novice Jobs, Swordman Jobs, Mage, Wizard Jobs, Merchant Jobs, Thief, Rogue Jobs, Gunslinger Jobs, Taekwon, Taekwon Master
-^FFFFFF_^000000
-ASPD + 20% for 30 minutes.
+Required Jobs: Swordman Jobs, Merchant Jobs, Thief, Mage, Wizard Jobs, Rogue Jobs, Taekwon Jobs, Gunslinger Jobs
+Aspd + 20% for 30 minutes.
 #
 658#
 ^808080A symbol of solidarity that evokes feelings of nobility in those who see it.^000000
@@ -4563,39 +4560,33 @@ Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, 
 #
 1219#
 ^808080A strong dagger that is usually crafted by traditional artisans.^000000
-^FFFFFF_^000000
-Type: Weapon
 Class: Dagger
 Attack: 105
 Property: Neutral
 Weight: 70
 Weapon Level: 3
 Required Level: 24
-Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
+Required Jobs: Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
 #
 1220#
 ^808080A strong dagger that is usually crafted by traditional artisans.^000000
-^FFFFFF_^000000
-Type: Weapon
 Class: Dagger
 Attack: 105
 Property: Neutral
 Weight: 70
 Weapon Level: 3
 Required Level: 24
-Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
+Required Jobs: Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
 #
 1221#
 ^808080A strong dagger that is usually crafted by traditional artisans.^000000
-^FFFFFF_^000000
-Type: Weapon
 Class: Dagger
 Attack: 105
 Property: Neutral
 Weight: 70
 Weapon Level: 3
 Required Level: 24
-Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
+Required Jobs: Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs
 #
 1222#
 ^808080A lethal knife made of a special metal that can easily cut straight into the heart of an enemy.^000000
@@ -22218,50 +22209,37 @@ Jobs : ^777777Mage Jobs/Soul Linker^000000
 #
 2976#
 ^808080A spooky red lantern.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
+Class: Accessory
 Weight: 20
-Required Level: 100
-Required Job: All Jobs
-^FFFFFF_^000000
+Required Level: 110
+Required Jobs: All Jobs
 Max SP - 300
-Enables ^0000FFLevel 1 Sight^000000.
-Adds a X% chance of gaining ^008080Alcohol^000000, ^008080Detrimindexta^000000 or ^008080Karvodailnirol^000000 when a monster is killed.
+Enables ^0000FFLevel 1 Sight^000000
+Adds a chance of gaining ^008080Alcohol^000000, ^008080Detrimindexta^000000 or ^008080Karvodailnirol^000000 when a monster is killed.
 #
 2977#
 ^808080A desperately broken gem bearing both spell power and a grudge.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
+Class: Accessory
 Weight: 10
 Required Level: 110
-Required Job: All Jobs
-^FFFFFF_^000000
+Required Jobs: All Jobs
 Max SP + 200
 Enables ^0000FFLevel 3 Scream^000000.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Hurt Mind [1]^000000
-^008080Kind Heart [1]^000000
-???
+008080Hurt Mind^000000
+^008080Kind Heart^000000
 #
 2978#
 ^808080A gem bearing warm light having cozy and mild spell power in it.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
+Class: Accessory
 Weight: 10
 Required Level: 110
-Required Job: All Jobs
-^FFFFFF_^000000
+Required Jobs: All Jobs
 Max HP + 500
 Restores 300 HP to the user every 10 seconds.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Hurt Mind [1]^000000
-^008080Kind Heart [1]^000000
-???
+008080Hurt Mind^000000
+^008080Kind Heart^000000
 #
 2979#
 Fleet belongs aroma of dark fruit, to bite.
@@ -22276,13 +22254,11 @@ Req LV: ^7777771 ^000000
 jobs: ^777777except novice All Jobs ^000000
 #
 2980#
-^808080A glove dwelling with dark power. Enables to move dolls vividly by controlling the strands of magical thread connected to the tips of fingers.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
+^808080A glove possessed by a dark force. Enables the ability to move dolls vividly by controlling the strands of magical thread connected to the tips of fingers.^000000
+Class: Accessory
 Weight: 10
 Required Level: 110
-Required Job: All Jobs
+Required Jobs: All Jobs
 Max HP + 500
 Max SP + 200
 Enables ^0000FFLevel 1 Fiber Lock^000000.
@@ -35297,16 +35273,20 @@ Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 5570#
-A magnificent crown created to pay tribute to the 3rd sign of the zodiac, Gemini the Twins.  Attached to the crown is an Alexandrite gemstone, the birthstone for those born under this sign.
-Atk +2, MDef +5,
-If refined to 7 or higher,
-Def +1, Flee +10, Atk +15, and Increase resistance to Wind Property by 5%
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+^808080A magnificent crown created to pay tribute to the 3rd sign of the zodiac, Gemini the Twins.  Attached to the crown is an Alexandrite gemstone, the birthstone for those born under this sign.^000000
+Class: Headgear
+Position: Upper
+Defense: 4
+Weight: 30
+Required Level: 70
+Required Jobs: All Jobs
+Atk + 2
+Mdef + 5
+If upgrade level is +7 or higher,
+Atk + 15
+Def + 1
+Flee + 10
+Reduces damage taken from Wind property attacks by 5%.
 #
 5573#
 Baby Dokkaebi's strong firm horn. Some say this brings you wealth.
@@ -53993,27 +53973,32 @@ Weight: 0.5
 13228#
 ^808080A bullet endowed with fire.^000000
 Class: Bullet
+Attack: 20
 Weight: 0.2
 #
 13229#
 ^808080A bullet endowed with lightning.^000000
 Class: Bullet
+Attack: 20
 Weight: 0.2
 #
 13230#
 ^808080A bullet endowed with ice.^000000
 Class: Bullet
+Attack: 20
 Weight: 0.2
 #
 13231#
 ^808080A bullet coated with poison.^000000
 Class: Bullet
+Attack: 20
 Weight: 0.2
 Adds a 5% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
 #
 13232#
 ^808080A bullet shrouded in darkness.^000000
 Class: Bullet
+Attack: 20
 Weight: 0.2
 Adds a 5% chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
 #
@@ -54976,19 +54961,16 @@ Job : ^777777Swordsman Classes^000000
 #
 13442#
 ^808080A very old and worn-out parasol. No one knows how old it is, but you can feel magic eminating from it.^000000
-^FFFFFF_^000000
-Type: Weapon
 Class: One-Handed Sword
 Attack: 120
 Property: Neutral
 Weight: 50
 Weapon Level: 3
 Required Level: 80
-Required Job: Swordman Jobs, Merchant Jobs, Thief Jobs
-^FFFFFF_^000000
-MATK + 80
+Required Jobs: Swordman Jobs, Merchant Jobs, Thief Jobs
+Matk + 80
+Additional Matk + 10 per upgrade level of the item.
 Enables ^0000FFLevel 10 Soul Strike^000000.
-MATK + X per upgrade level of the item.
 #
 13444#
 Increases Attack Speed. (-8% post-attack delay)
@@ -61040,7 +61022,7 @@ Required Level: 100
 Required Jobs: Maestro, Wanderer
 Atk + 20
 If upgrade level is +9 or higher,
-Adds a X% chance of casting ^0000FFLevel 3 Double Strafe^000000 on the target when performing a short-ranged attack, if a higher level of this skill is known, it will be cast instead.
+Adds a 1% chance of casting ^0000FFLevel 3 Double Strafe^000000 on the target when performing a short-ranged attack, if a higher level of this skill is known, it will be cast instead.
 ^800080Set Bonus^000000
 ^008080Hippie Clothes^000000
 ^008080Hippie Feather^000000
@@ -61484,7 +61466,6 @@ Max SP + 100
 #
 16060#
 ^808080An empty liquor bottle. It makes an effective weapon.^000000
-^FF0000What is the stun effect?^000000
 Class: Mace
 Attack: 120
 Property: Neutral
@@ -61492,6 +61473,7 @@ Weight: 70
 Weapon Level: 3
 Required Level: 100
 Required Jobs: Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs
+Adds a 3% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack per upgrade level of the item.
 This item is indestructible in battle.
 #
 16131#
@@ -66707,6 +66689,27 @@ Costume Love Guard
 Costume Evil Mask
 Costume Jumping Poring
 Costume Rainbow Poring Hat
+#
+17806#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
+17807#
+^FF0000Account Bound^000000
+When Opened Gives one of the following,
+Costume Butterfly Wing Ears
+Costume Rose Crown
+Costume Hermode Cap
+Costume Red Cherry Blossom
+Costume Carmen Miranda's Hat
+Costume Samambaia
+Costume Blue Rose Decoration
+Costume Cherry Blossom Pray
+Costume Wind of the Prairie
+Costume Earth Goddess Flower
+Class: Item Giver
+Weight: 1
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -72730,6 +72733,14 @@ Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
 Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
+19599#
+^808080A friendly Imp.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 19600#
 A cute doll of a drooping Kiehl from the Robot Factory.
 ^FF0000Created by Allysia^000000
@@ -74077,6 +74088,14 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
+19848#
+^808080It is a hat made in the appearance of Angeling, the mother of all Porings, whose duty is to protect them from human beings.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 19871#
 #
 19873#
@@ -74901,12 +74920,84 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20039#
+^808080Beautiful magical butterfly wing ears.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20040#
+^808080A rose crown worn on weddings in the ancient oriental worlds.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 20041#
 ^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
 Class : ^777777Costume Gear^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Lv : ^7777771^000000
 Job : ^777777All Jobs^000000
+#
+20042#
+^808080A cap worn by a desert assassin who fought with incredible speed.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20043#
+^808080A twig with delicate red cherry blossoms sprouting from it.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20044#
+^808080A hat made with tropical fruits. It looks delicious.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20045#
+^808080A circlet made out of Samambaia leaves.^000000
+Class: Costume
+Position: Upper, Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20046#
+^808080A cute hairband decorated with blue lace ribbons.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20047#
+^808080An amulet decorated with cherry blossoms.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+20048#
+^808080A pin decrated with a flower that looks like the wind of the prairie.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20054#
 An item used to shut babies up when they're crying.
@@ -76477,6 +76568,14 @@ Location : ^777777Lower ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20349#
+^808080A flying Galapago. This creature hopes to fly by itself one day.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 20350#
 Stylish Wig.
 A hair extension that looks like a sharp cowlick.
@@ -76804,11 +76903,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20405#
-A Scarf of some kind. Lost by an old hero...
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080A scarf which once belonged to an old hero.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20407#
 Unknown aura that wrapped your body.
@@ -81114,6 +81214,7 @@ Increases long-ranged damage on targets by 7%.
 This item cannot be upgraded.
 #
 26107#
+^808080A staff created by the natives ancestors of Rockridge.^000000
 Class: One-Handed Staff
 Attack: 60
 Property: Neutral
@@ -81316,17 +81417,14 @@ Required Level : ^777777120^000000
 Job : ^777777Swordsman and Merchant Classes^000000
 #
 28101#
-^808080Its name is coined from the shape of the blade.^000000
-^FFFFFF_^000000
-Type: Weapon
+^808080It's name is coined from the shape of the blade.^000000
 Class: Two-Handed Axe
 Attack: 320
 Property: Wind
 Weight: 400
 Weapon Level: 4
 Required Level: 100
-Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist
-^FFFFFF_^000000
+Required Jobs: Rune Knight, Mechanic, Royal Guard, Geneticist
 Reduces the cooldown of ^0000FFAxe Tornado^000000 by 1 second.
 #
 28103#
@@ -81375,7 +81473,7 @@ Weight: 400
 Weapon Level: 3
 Required Level: 100
 Required Jobs: Mechanic
-Adds a X% chance of buffing the user for 7 seconds when performing a short-ranged attack; Crit + 20.
+Adds a 0.5% chance of buffing the user for 7 seconds when performing a short-ranged attack; Crit + 20.
 This item is indestructible in battle.
 If upgrade level is +7 or higher,
 Increases critical damage on targets by 5%.
@@ -82356,7 +82454,7 @@ Reduces damage taken from Demi-Human race enemies by an additional 2% for every 
 Increases the recovery rate of recovery skills by 10% for every combined sum of 80 base Int and Dex.
 #
 28503#
-^808080A replica of an device used by the foreign thunder god to create thunder storms.^000000
+^808080A replica of a device used by an individual who could call down god's thunder.^000000
 Class: Accessory
 Weight: 10
 Required Level: 100
@@ -82366,6 +82464,7 @@ Atk + 5%
 Aspd + 5%
 Reduces the variable casting time of ^0000FFHell Gate^000000 by 3% for every 20 base levels.
 Reduces the variable casting time of ^0000FFLightning Ride^000000 by 5% for every 15 base levels.
+Reduces the cooldown of ^0000FFPower Absorb^000000 by 3 seconds.
 Increases the damage of ^0000FFLightning Ride^000000 by 5%.
 #
 28600#
@@ -82524,7 +82623,7 @@ Weight: 80
 Weapon Level: 3
 Required Level: 100
 Required Jobs: Kagerou/Oboro
-Increases the damage of ^0000FFKunai Explosion^000000 and ^0000FFKunai Splash^000000 by X% per level of ^0000FFDagger Throwing Practice^000000 known.
+Increases the damage of ^0000FFKunai Explosion^000000 by 1% per level of ^0000FFDagger Throwing Practice^000000 known.
 If upgrade level is +7 or higher,
 Increases long-ranged damage on targets by 2%.
 If upgrade level is +9 or higher,
@@ -82988,6 +83087,46 @@ Location : ^777777Upper/Mid/Lower ^000000Weight : ^7777770^000000
 Req. level : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
+31053#
+^808080A hat inspired by Eddga.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31054#
+^808080A hat shaped into a Sting by a first class hat maker. His very soul is said to have brought it to life.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31055#
+^808080A fancy pipe which is popular among the Jack gang members.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31056#
+^808080It is time to demonstrate your true power!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31057#
+^808080A scarf which once belonged to an old hero.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 31063#
 Cute hair in a bun.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
@@ -83051,6 +83190,22 @@ Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Lower ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
+#
+31089#
+^808080It is time to demonstrate your true power!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31090#
+^808080A hat mimicking an Angeling flapping its feeble wings because it wants to fly.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 31091#
 ^808080Thoughts of zeny cloud the mind.^000000
@@ -83135,6 +83290,30 @@ Required Jobs: All Jobs
 ^FFFFFF_^000000
 ^FF0000The following effects are active during the month of December.^000000
 Adds a chance of casting ^0000FFLevel 1 Christmas Blessing^000000 on the user when receiving a physical or magical attack that lasts for 7 seconds.
+#
+31140#
+^808080A black cowboy hat notoriously worn by western villains.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31141#
+^808080A corsage shaped like a cactus flower. It's as beautiful as a real one.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31144#
+^808080A gorgeous headdress made of colorful bird feathers and worn by members of certain tribes.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 31160#
 ^808080This mysterious helm can increase the power of rune stones.^000000
