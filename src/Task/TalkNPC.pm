@@ -95,6 +95,8 @@ sub new {
 	$self->{error_message} = undef;
 	$self->{map_change} = 0;
 	
+	debug "Task::TalkNPC::new has been called with sequence '".$self->{sequence}."'.\n", "ai_npcTalk";
+	
 	return $self;
 }
 
@@ -376,6 +378,8 @@ sub iterate {
 			}
 		}
 		
+		debug "Iteration at Task::TalkNPC, current_talk_step '".$current_talk_step."', next step '".$step."'.\n", "ai_npcTalk", 2;
+		
 		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
 			debug "$self->{target}: Initiating the talk\n", 'ai_npcTalk';
@@ -455,7 +459,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a response to be selected, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a response to be selected, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -467,7 +471,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires the next button to be pressed now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires the next button to be pressed now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 			
@@ -480,7 +484,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a number to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a number to be sent now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 			
@@ -493,7 +497,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires a text to be sent now, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires a text to be sent now, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -515,7 +519,7 @@ sub iterate {
 			
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("This npc requires the sell, buy or cancel button to be pressed, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -553,7 +557,7 @@ sub iterate {
 				
 			# Wrong sequence
 			} else {
-				$self->manage_wrong_sequence(T("NPC requires the buy or cancel button to be pressed, but the given instructions don't match that."));
+				$self->manage_wrong_sequence(TF("NPC requires the buy or cancel button to be pressed, but the given instructions don't match that (current step: %s).", $step));
 				return;
 			}
 		
@@ -637,7 +641,7 @@ sub iterate {
 						
 					} else {
 						# TODO: maybe just warn about remaining steps and do not set error flag?
-						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended.\n");
+						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").\n");
 					}
 				}
 			
@@ -691,6 +695,7 @@ sub conversation_end {
 	my ($self) = @_;
 	$self->delHooks;
 	$self->setDone();
+	debug "Task::TalkNPC::conversation_end called at ai npc_talk '".$ai_v{'npc_talk'}{'talk'}."'.\n", "ai_npcTalk";
 	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
 }
 
@@ -794,6 +799,9 @@ sub waitingForSteps {
 sub addSteps {
 	my ($self, $steps) = @_;
 	my @new_steps = parseArgs($steps);
+	
+	debug "Task::TalkNPC::addSteps has been called with value '".$steps."'.\n", "ai_npcTalk";
+	
 	foreach my $step (@new_steps) {
 		return 0 unless $self->validateStep($step);
 	}
