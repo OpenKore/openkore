@@ -230,6 +230,9 @@ sub iterate {
 	$self->SUPER::iterate(); # Do not forget to call this!
 	return unless ($net->getState() == Network::IN_GAME);
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
+	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
+	my $ai_npc_talk_wait_after_close_to_cancel = $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} : 0.5;
+	my $ai_npc_talk_wait_after_cancel_to_destroy = $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} : 0.5;
 
 	if ($self->{map_change}) {
 		
@@ -305,9 +308,9 @@ sub iterate {
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
-	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'})) {
+	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer)) {
 		# $config{npcTimeResponse} seconds have passed since we sent the last conversation step
-		# or $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} seconds have passed since the npc answered us.
+		# or $ai_npc_talk_wait_to_answer seconds have passed since the npc answered us.
 		
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
@@ -584,7 +587,7 @@ sub iterate {
 	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
 	# This needs more investigation.
 	} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
-		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'}));
+		return unless (timeOut($self->{time}, $ai_npc_talk_wait_after_close_to_cancel));
 		#Now 'n' step is totally unnecessary as we always send it but this must be done for backwards compatibility
 		if ( $self->{steps}[0] =~ /^n/i ) {
 			shift(@{$self->{steps}});
@@ -596,7 +599,7 @@ sub iterate {
 	
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
 	} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
-		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'}));
+		return unless (timeOut($self->{time}, $ai_npc_talk_wait_after_cancel_to_destroy));
 		
 		if (defined $self->{error_code}) {
 			$self->setError($self->{error_code}, $self->{error_message});
@@ -787,7 +790,8 @@ sub waitingForSteps {
 	return 0 unless ($self->{stage} == TALKING_TO_NPC);
 	return 0 unless ($self->noMoreSteps);
 	return 0 if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont});
-	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'}));
+	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
+	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer));
 	return 1;
 }
 
