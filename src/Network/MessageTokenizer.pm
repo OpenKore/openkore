@@ -37,7 +37,7 @@ sub new {
 	assert(defined $rpackets) if DEBUG;
 	#Log::warning (Data::Dumper::Dumper($rpackets)."\n");
 	my %self = (
-		
+
 		rpackets => $rpackets,
 		buffer => ''
 	);
@@ -119,17 +119,17 @@ sub readNext {
 	my $switch = getMessageID($$buffer);
 	my $rpackets = $self->{rpackets};
 	my $size = $rpackets->{$switch}{length};
-	
+
 	my $result;
-	
-	#Log::warning sprintf("Packet %s %d %d \n", $switch, $rpackets->{$switch}{length}, $size);
+
+	Log::debug sprintf("Packet %s %d %d \n", $switch, $rpackets->{$switch}{length}, $size);
 
 	my $nextMessageMightBeAccountID = $self->{nextMessageMightBeAccountID};
 	$self->{nextMessageMightBeAccountID} = undef;
 
 	if ($nextMessageMightBeAccountID) {
 		if (length($$buffer) >= 4) {
-			
+
 		$result = substr($$buffer, 0, 4);
 		if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
 				substr($$buffer, 0, 4, '');
@@ -138,7 +138,7 @@ sub readNext {
 				# Account ID is "hidden" in a packet (0283 is one of them)
 				return $self->readNext($type);
 			}
-		
+
 		} else {
 			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
 		}
@@ -178,10 +178,10 @@ sub slicePacket {
 	my ($self, $data, $additional_data) = @_;
 	# temporary hack for new recvpackets format
 	my $switch = getMessageID($data);
-	my $real_length = $self->{rpackets}{$switch}{length};	
+	my $real_length = $self->{rpackets}{$switch}{length};
 	my $packet;
 	if (($real_length > 0) # packet size is not variable
-			&& (length($data) > $real_length)) { 
+			&& (length($data) > $real_length)) {
 		$packet = substr($data, 0, $real_length);
 		$$additional_data = substr($data, $real_length); # sliced data
 	} else { # packet is at correct size
