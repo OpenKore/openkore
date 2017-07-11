@@ -285,7 +285,7 @@ sub iterate {
 		} else {
 			my $target = $self->find_and_set_target;
 			
-			unless (exists $talk{nameID}) {
+			unless (exists $talk{nameID} || $self->{steps}[0] eq 'x') {
 				$self->addSteps('x');
 				undef $ai_v{'npc_talk'}{'time'};
 				undef $ai_v{'npc_talk'}{'talk'};
