@@ -1,4 +1,4 @@
-ï»¿//renewal
+//renewal
 dicastes01.rsw#El Dicastes, the Capital of Sapha#
 dicastes02.rsw#Brumbeld Jorhi Forest#
 dic_in01.rsw#Inside of Dicastes#
@@ -835,7 +835,7 @@ bra_fild01.rsw#Brasilis Field#
 bra_dun01.rsw#Cave behind Waterfall#
 bra_dun02.rsw#Cave behind Waterfall#
 evt_hello.rsw#Halloween Field#
-// ---------- Port Malaya ½Å±Ô ¸Ê ------------
+// ---------- Port Malaya ï¿½Å±ï¿½ ï¿½ï¿½ ------------
 malaya.rsw#Port Malaya#
 ma_fild01.rsw#Baryo Mahiwaga#
 ma_fild02.rsw#Forest#
