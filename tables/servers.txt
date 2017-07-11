@@ -158,20 +158,19 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 #addTableFolders translated/kRO_english;kRO
 addTableFolders kRO
 
-[Philippines - pRO: New Chaos]
-ip 202.57.117.45
+[Philippines - pRO (EXE): Thor/Loki]
+ip 116.93.119.116
 port 6900
 master_version 15
-version 1
-secureLogin 1
+version 24
+secureLogin 0
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
+# patchserver
+# patchpath
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
 charBlockSize 144
 addTableFolders pRO
 pinCode 1
