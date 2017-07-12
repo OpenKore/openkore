@@ -130,14 +130,16 @@ sub buy_result {
 } 
 
 sub sendCharCreate { 
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_; 
+	my ($self, $slot, $name, $hair_style, $hair_color, $jobID, $sex) = @_; 
 	$hair_color ||= 1; 
 	$hair_style ||= 0; 
- 
-	my $msg = pack('C2 a24 C v2', 0x70, 0x09,  
-		stringToBytes($name), $slot, $hair_color, $hair_style); 
+	$jobID ||= 0:
+	
+	#0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
+	my $msg = pack('C2 a24 C v2 v v C', 0x39, 0x0A,  
+		stringToBytes($name), $slot, $hair_color, $hair_style, $jobID, 0, $sex); 
 	$self->sendToServer($msg); 
-	debug "Sent sendCharCreate [0970]\n", "sendPacket", 2; 
+	debug "Sent sendCharCreate [0A39]\n", "sendPacket", 2; 
 } 
 
 sub sendMapLoaded {
