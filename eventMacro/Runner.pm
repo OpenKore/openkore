@@ -241,7 +241,12 @@ sub validate_AI_queue_to_overrideAI {
 sub register {
 	my ($self) = @_;
 	debug "[eventMacro] Macro '".$self->{name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
-	AI::queue('eventMacro');
+	if (AI::is("NPC")) {
+		splice(@AI::ai_seq, 1, 0, 'eventMacro');
+		splice(@AI::ai_seq_args, 1, 0, {});
+	} else {
+		AI::queue('eventMacro');
+	}
 	$self->{registered} = 1;
 }
 
