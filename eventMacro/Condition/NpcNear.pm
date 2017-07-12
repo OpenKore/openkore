@@ -7,7 +7,7 @@ use Utils;
 use base 'eventMacro::Conditiontypes::RegexConditionState';
 
 sub _hooks {
-	['packet_mapChange','add_npc_list','npc_disappeared'];
+	['packet_mapChange','add_npc_list','npc_disappeared','npcNameUpdate'];
 }
 
 sub validate_condition {
@@ -31,6 +31,22 @@ sub validate_condition {
 				next unless ($self->validator_check($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
 				last;
+			}
+		
+		} elsif ($callback_name eq 'npcNameUpdate') {
+		
+			if (!defined $self->{fulfilled_actor} && $self->validator_check($args->{npc}->{name})) {
+				$self->{fulfilled_actor} = $args->{npc};
+				
+			} elsif (defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
+				unless ($self->validator_check($args->{npc}->{name})) {
+					$self->{fulfilled_actor} = undef;
+					foreach my $actor (@{$npcsList->getItems()}) {
+						next unless ($self->validator_check($actor->{name}));
+						$self->{fulfilled_actor} = $actor;
+						last;
+					}
+				}
 			}
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
