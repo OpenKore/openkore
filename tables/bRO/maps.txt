@@ -562,7 +562,7 @@ lhz_fild02.rsw#Campos de Lighthalzen (Vale da Morte) #
 ein_fild04.rsw#Campos de Einbroch #
 ein_fild03.rsw#Campos de Einbroch #
 
-// 10.4 
+// 10.4
 
 hugel.rsw#Hugel, a Vila do Jardim Fantástico#
 hu_in01.rsw#Interior de Hugel#
@@ -591,7 +591,7 @@ kh_vila.rsw#Cabana de Kiel Hyre#
 auction_01.rsw#Sala de Leilão#
 auction_02.rsw#Sala de Leilão#
 
-// 11.1 
+// 11.1
 
 06guild_r.rsw#Arena de Batalha de Clãs - Sala de Espera#
 06guild_01.rsw#Arena de Batalha de Clãs#
@@ -769,7 +769,7 @@ spl_fild01.rsw#Campos dos Esplendores#
 spl_in01.rsw#Dentro de Esplendor#
 spl_in02.rsw#Dentro de Esplendor#
 
-// --- brazil localizing 
+// --- brazil localizing
 brasilis.rsw#Cidade de Brasilis#
 bra_in01.rsw#Interior de Brasilis#
 bra_fild01.rsw#Floresta de Brasilis#
