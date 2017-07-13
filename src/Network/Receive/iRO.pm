@@ -87,11 +87,11 @@ sub achievement_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 22;
-	my $achive_len = 50;
+	my $achieve_len = 50;
 
 	my @achieves;
 	
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achive_len) {
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
 		my $achieve = {};
 
 		($achieve->{ach_id},
@@ -107,7 +107,7 @@ sub achievement_list {
 		$achieve->{objective9},
 		$achieve->{objective10},
 		$achieve->{completed_at},
-		$achieve->{reward})	= unpack('V C V10 V C', substr($msg, $i, $achive_len));
+		$achieve->{reward})	= unpack('V C V10 V C', substr($msg, $i, $achieve_len));
 		push(@achieves, $achieve);
 	}
 	use Data::Dumper;
