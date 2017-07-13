@@ -16,7 +16,7 @@ package Network::Receive::iRO;
 use strict;
 use base qw(Network::Receive::ServerType0);
 
-use Globals qw($messageSender %timeout @articles $articles %shop %itemTypes_lut $shopEarned $venderID $venderCID %config @venderItemList);
+use Globals qw($messageSender %timeout @articles $articles %shop %itemTypes_lut $shopEarned $venderID $venderCID %config @venderItemList $achievementList);
 use Log qw(message debug);
 use Misc qw(center itemName);
 use Translation qw(T TF);
@@ -84,16 +84,16 @@ struct packet_achievement_reward_ack {
 sub achievement_list {
 	my ($self, $args) = @_;
 	
+	$achievementList = {};
+	
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 22;
 	my $achieve_pack = 'V C V10 V C';
 	my $achieve_len = length pack $achieve_pack;
-
-	my @achieves;
 	
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
-		my $achieve = {};
+		my $achieve;
 
 		($achieve->{ach_id},
 		$achieve->{completed},
@@ -109,24 +109,30 @@ sub achievement_list {
 		$achieve->{objective10},
 		$achieve->{completed_at},
 		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
-		push(@achieves, $achieve);
+		
+		$achievementList->{$achieve->{ach_id}} = $achieve;
+		message "Achievement ".$achieve->{ach_id}." added.\n", "info";
 	}
 	use Data::Dumper;
-	Log::warning "[Achievemente List] => ".Dumper(\@achieves);
+	Log::warning "[Achievemente List] => ".Dumper($achievementList);
 }
 
 sub achievement_update {
 	my ($self, $args) = @_;
 	
-	my %achieve;
-	@achieve{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
+	my $achieve;
+	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
+	
+	$achievementList->{$achieve->{ach_id}} = $achieve;
+	message "Achievement ".$achieve->{ach_id}." added or updated.\n", "info";
 	
 	use Data::Dumper;
-	Log::warning "[Achievemente update] => ".Dumper(\%achieve);
+	Log::warning "[Achievemente update] => ".Dumper($achieve);
 }
 
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
+	message "Received reward for achievement ".$args->{ach_id}.".\n", "info";
 	use Data::Dumper;
 	Log::warning "[Achievemente reward] => ".Dumper($args);
 }
