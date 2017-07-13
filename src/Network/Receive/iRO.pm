@@ -112,7 +112,7 @@ sub achievement_list {
 		push(@achieves, $achieve);
 	}
 	use Data::Dumper;
-	Log::warning "[test dump achiev4] => ".Dumper(\@achieves);
+	Log::warning "[Achievemente List] => ".Dumper(\@achieves);
 }
 
 sub achievement_update {
@@ -122,14 +122,13 @@ sub achievement_update {
 	@achieve{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
 	
 	use Data::Dumper;
-	Log::warning "[test dump achiev1] => ".Dumper($args);
-	Log::warning "[test dump achiev2] => ".Dumper(\%achieve);
+	Log::warning "[Achievemente update] => ".Dumper(\%achieve);
 }
 
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
 	use Data::Dumper;
-	Log::warning "[test dump achiev3] => ".Dumper($args);
+	Log::warning "[Achievemente reward] => ".Dumper($args);
 }
 
 # The packet number didn't change, but the length of the packet did, and

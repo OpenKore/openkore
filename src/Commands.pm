@@ -56,6 +56,7 @@ our %customCommands;
 sub initHandlers {
 	%handlers = (
 	a					=> \&cmdAttack,
+	achievegetreward	=> \&cmdAchieveGetReward,
 	ai					=> \&cmdAI,
 	aiv					=> \&cmdAIv,
 	al					=> \&cmdShopInfoSelf,
@@ -6096,6 +6097,12 @@ sub cmdDeadTime {
 		$msg = T("You have not died yet.\n");
 	}
 	message $msg, "list";
+}
+
+sub cmdAchieveGetReward {
+	my ($cmd, $achieve_id) = @_;
+	message "Seding request for reward of achievement ".$achieve_id.".\n";
+	$messageSender->sendAchievementGetReward($achieve_id);
 }
 
 1;
