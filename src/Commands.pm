@@ -6101,8 +6101,19 @@ sub cmdDeadTime {
 
 sub cmdAchieveGetReward {
 	my ($cmd, $achieve_id) = @_;
-	message "Seding request for reward of achievement ".$achieve_id.".\n";
-	$messageSender->sendAchievementGetReward($achieve_id);
+	if (!exists $achievementList->{$achieve_id}) {
+		error "You don't have the achievement $achieve_id.\n";
+		
+	} elsif ($achievementList->{$achieve_id}{completed} != 1) {
+		error "You haven't completed the achievement $achieve_id.\n";
+	
+	} elsif ($achievementList->{$achieve_id}{reward} == 1) {
+		error "You have already claimed the achievement $achieve_id reward.\n";
+		
+	} else {
+		message "Sending request for reward of achievement ".$achieve_id.".\n";
+		$messageSender->sendAchievementGetReward($achieve_id);
+	}
 }
 
 1;
