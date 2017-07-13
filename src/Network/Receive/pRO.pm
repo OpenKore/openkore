@@ -27,10 +27,6 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0276' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C a4 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex iAccountSID serverInfo)]],
-		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
-		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
-		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'0A7B' => ['gameguard_request', 'v a*', [qw(len data)]],
 	);
 
@@ -39,11 +35,6 @@ sub new {
 	}
 
 	my %handlers = qw(
-		actor_moved 0856
-		actor_exists 0857
-		actor_connected 0858
-		account_id 0283
-		received_characters 099D
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
