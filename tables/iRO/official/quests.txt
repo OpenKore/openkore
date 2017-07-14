@@ -21275,3 +21275,446 @@ Something fatal showed up from festival eggs. You can capture those bugs from my
 62909#Repay from good work#SG_FEEL#QUE_NOIMAGE#
 Helped twice on catching fatal bugs. Festival guide mentioned about special repay. Let's do it once more.#
 #
+
+
+
+//Last revision: Dec 1, 2016 at 06:38 p.m.
+//Rock Ridge
+1298#Gas! Gas!#SG_FEEL#QUE_NOIMAGE#
+Ghast in front of the Rock Ridge Mine asked me to hunt Gasters. I should eliminate 20 Gasters.#
+Eliminate 20 Gasters.#
+
+1299#Patrol Once a Day#SG_FEEL#QUE_NOIMAGE#
+Ghast said he only needs me to hunt Gasters once a day, before his patrol shift begins. I should wait until his shift begins at 4:00 a.m. the next day.#
+Revisit Ghast after 4:00 a.m. the next day.#
+
+1321#Spotty and Her Ring#SG_FEEL#QUE_NOIMAGE#
+Spotty took Mrs. McPhy's ring with him, and Mr. McPhy is too scared of the Buffalo Bandits to go search for it. I should help them.#
+Find the ring that Spotty took.#
+
+1322#Found Something#SG_FEEL#QUE_NOIMAGE#
+I've found something shiny inside one of the holes Spotty dug, but it's not a gold ring. I've searched along the barbed wire fence enough. I should return to Mrs. McPhy.#
+Return to Mrs. McPhy.#
+
+1323#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1324#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1325#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1326#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1327#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1328#Found Missing Items#SG_FEEL#QUE_NOIMAGE#
+I've found what Mrs. McPhy is looking for inside one of the holes Spotty dug. I should go back to Mrs. Mrs. McPhy.#
+Return to Mrs. McPhy.#
+
+1329#Spotty in the Dreamland#SG_FEEL#QUE_NOIMAGE#
+Spotty looks like he's done for the day; he's sound asleep. I should come back after 4:00 a.m. tomorrow and ask Mrs. McPhy if she needs help.#
+Revisit Mrs. McPhy after 4:00 a.m. the next day.#
+
+1330#Spotty's Holes#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy will tell me where he thinks Spotty's holes are. I should go outside the village and look for him.#
+Look for Mr. McPhy outside the village.#
+
+1331#Avenging Spotty#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy, convinced that the Buffalo Bandits wronged Spotty, asked me to take care of them. I should eliminate 3 yellow-haired, 3 black-haired, and 3 white-haired Buffalo Bandits.#
+Eliminate Buffalo Bandits.#
+
+1332#Blood for Blood#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy is not done avenging Spotty. I should come back to Mr. McPhy in town after 4:00 a.m. the next day.#
+Revisit Mr. McPhy after 4:00 a.m. the next day.#
+
+//Rock Ridge
+7790#Rock Ridge, Land of Opportunities#SG_FEEL#QUE_NOIMAGE#
+Karam Pucci has waived the ship fare to Rock Ridge as a complimentary service.#
+#
+
+7791#Problems in Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+Karam Pucci said Rock Ridge needs help. I should go to Rock Ridge and talk to Mayor Costello by the dock.#
+Talk to Costello.#
+
+7792#Problems in Rock Ridge 2#SG_FEEL#QUE_NOIMAGE#
+Mayor Costello said Rock Ridge is in trouble because of the Buffalo Bandits, and that he wants me to solve the problem in concert with the sheriff. ^4d4dffI should go to the sheriff's office and meet Wyatt Warp^000000.#
+Talk to Wyatt Warp.#
+
+7793#Good News#SG_FEEL#QUE_NOIMAGE#
+Johnny James, the leader of the Buffalo Bandits, only wants to negotiate with Mayor Costello. I should deliver this exciting news to ^4d4dffCostello at the dock^000000.#
+Talk to Costello.#
+
+7794#Expected Response#SG_FEEL#QUE_NOIMAGE#
+Costello, too afraid of the bandits to go negotiate with them, asked me to go on his behalf. I should go tell Sheriff Warp.#
+Talk to Wyatt Warp.#
+
+7795#Negotiation on the Railroad#SG_FEEL#QUE_NOIMAGE#
+The negotiation meeting will take place by the ^4d4dffunmoving freight train^000000. I can find it if I exit the village through the eastern gate and follow the railroad.#
+
+Find Unmoving Freight Train.#
+7796#Unexpected Arrest#SG_FEEL#QUE_NOIMAGE#
+Cactus vigilantes have helped us capture the leader of the Buffalo Bandits, Johnny James. I should return to the ^4d4dffsheriff's office and talk to the sheriffs about our next move^000000.#
+
+Talk to Wyatt and Ivoka.#
+7797#Hear Me Out 1#SG_FEEL#QUE_NOIMAGE#
+Like Ivoka suggested, I should talk to Johnny James and plant a seed of doubt in his mind about Albert Ford.#
+Talk to Johnny James.#
+
+7798#Perfectly Primed#SG_FEEL#QUE_NOIMAGE#
+Johnny James is convinced that Albert Ford betrayed him. He asked me to get rid of Albert and bring his mane as proof. I should report to the Sheriff for now.#
+Talk to Wyatt Warp.#
+
+7799#Shawn McCurdy's Weapon 1#SG_FEEL#QUE_NOIMAGE#
+Sheriff Warp said ^4d4dffForeman McCurdy^000000 has a good bargaining chip. He's in the plaza.#
+Talk to Shawn McCurdy.#
+
+7800#Shawn McCurdy's Weapon 2#SG_FEEL#QUE_NOIMAGE#
+I could get some purple ores, which I thought could no longer be mined because of the Buffalo Bandits. I should find Shawn McCurdy ^4d4dffsouth from the entrance to the mine^000000.#
+Talk to Shawn McCurdy.#
+
+7801#Shawn McCurdy's Weapon 3#SG_FEEL#QUE_NOIMAGE#
+We were able to sneak into the second floor of the mine. I should get ^4d4dff1 Purple Ore^000000, and then talk to Shawn.#
+1 Purple Ore#
+
+7802#Hear Me Out 2#SG_FEEL#QUE_NOIMAGE#
+I should ^4d4dffknock on the signaling rock 3 times^000000, and then talk to Albert Ford about his gang's future.#
+Talk to Albert Ford.#
+
+7803#Happy for Broken Trust#SG_FEEL#QUE_NOIMAGE#
+Albert Ford, convinced Johnny James betrayed his gang, has agreed to make a deal. I should deliver Albert's Mane to Johnny James as proof.#
+Talk to Johnny James.#
+
+7804#Location of the Ores#SG_FEEL#QUE_NOIMAGE#
+Johnny told me where he hid the ores: ^4d4dffunder the elevator on the second floor of the mine^000000. I should report to Sheriff Warp with this information.#
+Talk to Wyatt Warp.#
+
+7805#Location of the Ores 2#SG_FEEL#QUE_NOIMAGE#
+^4d4dffShawn McCurdy^000000 is at the ^4d4dfftemporary entrance to the second floor of the mine^000000. I should tell him where the ores are and follow him to the inside of the mine.#
+Talk to Shawn McCurdy.#
+
+7806#Location of the Ores 3#SG_FEEL#QUE_NOIMAGE#
+The broken elevator is to the north from the center of the second floor. I should find an ^4d4dffOre Box^000000 underneath the elevator, and bring it to Shawn McCurdy.#
+1 Ore Box#
+
+7807#Ace up Our Sleeve#SG_FEEL#QUE_NOIMAGE#
+I should get rid of some Buffalo Bandits and collect ^4d4dff5 Brown Mufflers and 5 Bandit Scarves^000000 to show Albert Ford. He'll hit the roof.#
+5 Brown Mufflers and 5 Bandit Scarves#
+
+7808#Case Solved#SG_FEEL#QUE_NOIMAGE#
+I might have burned my bridges with Albert Ford, but I don't care. I don't have to see him anymore. I should report to Sheriff Warp.#
+Talk to Wyatt Warp.#
+
+7809#Collecting Ores#SG_FEEL#QUE_NOIMAGE#
+Collected the ores.#
+#
+
+//North America Local Map Rock Ridge Quest
+9438#To the New Land!#SG_FEEL#QUE_NOIMAGE#
+Talk to Karam Pucci in Alberta and go to the new land.#
+Talk to Karam Pucci in Alberta.#
+
+9439#Serious Problem#SG_FEEL#QUE_NOIMAGE#
+Costello in Rock Ridge needs help for some problem that his village is having.#
+Meet Costello in Rock Ridge.#
+
+9440#To Address the Problem#SG_FEEL#QUE_NOIMAGE#
+Ask the village sheriff, Wyatt Warp, for more details about the problem.#
+Talk to Wyatt Warp in the sheriff's office in Rock Ridge.#
+
+9441#The Quickest Solution#SG_FEEL#QUE_NOIMAGE#
+Ask Costello for his opinion on how to solve the problem.#
+Talk to Costello.#
+
+9442#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Ask Ivoka Skudi for his opinion on how to solve the problem.#
+Talk to Ivoka Skudi in the sheriff's office.#
+
+9443#Taking Our Time#SG_FEEL#QUE_NOIMAGE#
+Ask Shawn McCurdy for his opinion on how to solve the problem.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9444#Making My Decision#SG_FEEL#QUE_NOIMAGE#
+Select one of the three propositions.#
+Talk to Wyatt Warp.#
+
+9445#How Much?#SG_FEEL#QUE_NOIMAGE#
+Give Costello 1 million Zeny for the negotiation.#
+Talk to Costello while carrying 1 million Zeny.#
+
+9446#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Ivoka Skudi in the sheriff's office, and then talk to Johnny James in the underground jail cell.#
+Talk to Ivoka Skudi and Johnny James.#
+
+9447#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Now that I convinced Johnny James, it's time to convince Albert Ford.#
+Talk to Albert Ford by the entrance to the mine.#
+
+9448#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Use Albert Ford's mane to reassure Johnny James.#
+Bring the mane to Johnny James.#
+
+9449#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Now I know where the ores are. I should report to Ivoka Skudi and Wyatt Warp.#
+Talk to Ivoka Skudi and Wyatt Warp.#
+
+9450#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy and learn about the secret passage into the mine.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9451#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy by the secret entrance to the mine and enter the mine.#
+Talk to Shawn McCurdy in the Rock Ridge field.#
+
+9452#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+I should talk to Shawn McCurdy about mining.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9453#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy by the secret entrance to the mine and enter the mine.#
+Talk to Shawn McCurdy in the Rock Ridge field.#
+
+9454#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Collect Purple Ores in the mine, and bring at least 20 Purple Ores to Costello.#
+Collect 20 Purple Ores and bring them to Costello.#
+
+9455#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Bring the ores to Albert Ford by the entrance to the mine, and renegotiate with him.#
+Collect 20 Purple Ores and bring them to Albert Ford.#
+
+9456#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Go over the new negotiation details with Albert Ford, and then report to Costello.#
+Talk to Costello.#
+
+9457#Solved Anyway#SG_FEEL#QUE_NOIMAGE#
+Solve the problem of the Rock Ridge village.#
+Talk to Wyatt Warp.#
+
+9458#Pipe Cleaning#SG_FEEL#QUE_NOIMAGE#
+Eliminate sea anemones that keep sticking to the water pipes in the basement of Rock Ridge.#
+Eliminate 20 Sea Anemones.#
+
+9459#Too Early for Pipe Cleaning#SG_FEEL#QUE_NOIMAGE#
+There are not yet many sea anemones to get rid of.#
+#
+
+9460#Collecting Ore Fragments#SG_FEEL#QUE_NOIMAGE#
+Hunt monsters in the Rock Ridge fields and mine, and collect ore fragments.#
+Collect 10 Ore Fragments and deliver them to Crouched Horse.#
+
+9461#Enough Ores#SG_FEEL#QUE_NOIMAGE#
+Crouched Horse doesn't need more ores at this moment.#
+#
+
+//Rock Ridge
+
+12381#New Continent's Food Supplier#SG_FEEL#QUE_NOIMAGE#
+Supply food ingredients to the new continent to the best of your ability.#
+New continent's food supplier#
+
+12382#Distributing Food#SG_FEEL#QUE_NOIMAGE#
+Thanks to you, now the food distributer has enough ingredients to cook for everyone who has been waiting for their food.#
+Quest resets at 4:00 a.m.#
+
+12383#Sweet Potato Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Sweet Potatoes516 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Sweet Potatoes516#
+
+12384#Meat Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 50 Meats517 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+50 Meats517#
+
+12385#Carrot Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Carrots515 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Carrots515#
+
+12386#Banana Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Bananas513 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Bananas513#
+
+12387#Pumpkin Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Pumpkins535 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Pumpkins535#
+
+12388#Mushroom Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 60 Mushrooms581 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+60 Mushrooms581#
+
+12389#Guardian of Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+You have joined the vigilante group of the pioneer village in the new continent.#
+Vigilantes in the new continent#
+
+12390#Relieved for Now#SG_FEEL#QUE_NOIMAGE#
+This should keep the pioneer village safe from monsters for now.#
+Quest resets at 4:00 a.m.#
+
+12391#Buffaloes with Rifles#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000rifle Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12392#Punishing the Red Masks#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000red mask Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12393#Eye Patch Desperadoes#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000eye patch Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12394#Exterminate Gray Four-legged Beasts#SG_FEEL#QUE_NOIMAGE#
+Eliminate 20 ^ff0000Coyotes^000000. They are mainly found in the narrow valley in the west of Rock Ridge.#
+Eliminate 20 Coyotes.#
+
+12395#Exterminate Swamp Arclouzes#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Swamp Arclouzes^000000. You can find them in the basement of Rock Ridge.#
+Eliminate 10 Swamp Arclouzes.#
+
+12396#Exterminate Brown Rats#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Brown Rats^000000. You can find them in the basement of Rock Ridge.#
+Eliminate 10 Brown Rats.#
+
+12398#You're Good#SG_FEEL#QUE_NOIMAGE#
+Good job accomplishing a tricky mission. Go ahead and rest for a while.#
+Quest resets at 4:00 a.m.#
+
+12399#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000rifle Buffalo Bandits with glowing blue eyes^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12400#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Buffalo Bandits wearing green masks^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12401#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Buffalo Bandits wearing an eye patch and a pale green vest^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12402#Eliminate Dangerous Gas#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Gasters^000000. #
+Eliminate 10 Gasters.#
+
+12403#Laborers of Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+Be the supplier of water for the pioneer village in the new continent.#
+Protect the water in the new continent.#
+
+12404#Are You Not Tired?#SG_FEEL#QUE_NOIMAGE#
+You have maintained all the pipes in the basement of Rock Ridge. The desalination system should be fine for a while.#
+Quest resets at 4:00 a.m.#
+
+12405#Maintain the Red Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky red pipe. Find a glowing red spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing red spot in the basement of Rock Ridge.#
+
+12406#Maintain the Blue Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky blue pipe. Find a glowing blue spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing blue spot in the basement of Rock Ridge.#
+
+12407#Maintain the Yellow Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky yellow pipe. Find a glowing yellow spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing yellow spot in the basement of Rock Ridge.#
+
+12408#Maintain the White Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky white pipe. Find a glowing white spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing white spot in the basement of Rock Ridge.#
+
+12409#Pipes Maintained#SG_FEEL#QUE_NOIMAGE#
+You have maintained all the pipes. Now return to the ground level and talk to Desalination Facility Manager.#
+Return to the ground level.#
+
+12410#Contract with the Wealthy Merchant#SG_FEEL#QUE_NOIMAGE#
+Entered a contract with the wealthy merchant.#
+Entered a contract with the wealthy merchant.#
+
+12411#Come Back Tomorrow#SG_FEEL#QUE_NOIMAGE#
+He's done doing business with you for the day. Please come back tomorrow.#
+Quest resets at 4:00 a.m.#
+
+//Rock Ridge Fireworks Festival Committee
+
+14672#Preparing for the Firework Festival#SG_FEEL#QUE_NOIMAGE#
+Gasters drop deadly poisonous powder and explosive powder. Bring me 10 Deadly Poisonous Powders and 1 Explosive Powder. Oh, and don't forget to cull Gasters by hunting 15 of them.#
+10 Deadly Poisonous Powders and 1 Explosive Powder#
+
+14673#Time to Make Bombs#SG_FEEL#QUE_NOIMAGE#
+You've brought me enough ingredients to make bombs all night. Come back early in the morning tomorrow. That's the best time to do things. - Demon#
+Quest resets at 4:00 a.m.#
+
+//Rock Ridge
+62910#Peace of the Family#SG_FEEL#QUE_NOIMAGE#
+Mrs. Cacturon asked me to find 5 Juice Mix Packages that she bought for her son and lost in the wasteland. I might as well hunt 30 Coyotes for the safety of these villagers.#
+Get 5 Juice Mix Packages and hunt Coyotes.#
+
+62911#Back for More Coyotes Tomorrow#SG_FEEL#QUE_NOIMAGE#
+I should call it a day today and come back tomorrow to hunt more coyotes.#
+Reset at 4:00 a.m.#
+
+62912#Hunting Coyotes Again#SG_FEEL#QUE_NOIMAGE#
+I should hunt 30 Coyotes to protect the villagers, and report to Mrs. Cacturon.#
+Hunt coyotes.#
+
+62913#Failed to Get Juice Mix Package#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62914#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62915#Discovered Wasteland Cactuten#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62916#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62917#Discovered Coyote#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62918#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62919#Discovered Cactus Girl#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62920#Discovered Coyote#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62921#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62922#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62923#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62924#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62925#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62926#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62927#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
