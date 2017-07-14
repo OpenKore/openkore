@@ -6105,27 +6105,27 @@ sub cmdAchieve {
 	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
 	
 	if (($arg1 ne 'list' && $arg1 ne 'reward') || ($arg1 eq 'list' && defined $arg2) || ($arg1 eq 'reward' && !defined $arg2)) {
-		message "[eventMacro] Usage:\n".
-				"eventMacro include on <filename or pattern>\n".
-				"eventMacro include on all\n".
-				"eventMacro include off <filename or pattern>\n".
-				"eventMacro include off all\n".
-				"eventMacro include list\n", 'list';
+		error T("Syntax Error in function 'achieve'\n".
+			"Usage: achieve [<list|reward>] [<achievemente_id>]\n".
+			"Usage: achieve list: Shows all current achievements\n".
+			"Usage: achieve reward achievemente_id: Request reward for the achievement of id achievemente_id\n"
+			);
+			
 		return;
 	}
 
 	if ($arg1 eq 'reward') {
 		if (!exists $achievementList->{$arg2}) {
-			error "You don't have the achievement $arg2.\n";
+			error TF("You don't have the achievement %s.\n", $arg2);
 			
 		} elsif ($achievementList->{$arg2}{completed} != 1) {
-			error "You haven't completed the achievement $arg2.\n";
+			error TF("You haven't completed the achievement %s.\n", $arg2);
 		
 		} elsif ($achievementList->{$arg2}{reward} == 1) {
-			error "You have already claimed the achievement $arg2 reward.\n";
+			error TF("You have already claimed the achievement %s reward.\n", $arg2);
 			
 		} else {
-			message "Sending request for reward of achievement ".$arg2.".\n";
+			message TF("Sending request for reward of achievement %s.\n", $arg2);
 			$messageSender->sendAchievementGetReward($arg2);
 		}
 	
