@@ -145,9 +145,10 @@ sub readNext {
 		my $extraByte = unpack("C", substr($$buffer, 2, 1));
 
 		# sometimes the server just sends us 3 bytes for no reason o_O
-		if (length($$buffer) == 3) {
-			$self->{buffer} = "";
+		if ($packetSize == 3) {
 			Log::debug("received just 3 bytes;  removing from buffer\n");
+			$self->{buffer} = "";
+			substr($$buffer, 0, 3, "");
 			return $$buffer;
 		}
 
