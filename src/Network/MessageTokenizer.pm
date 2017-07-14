@@ -119,7 +119,10 @@ sub readNext {
 
 	# parse packets that are prefixed by the packet length
 	# these packets only happen during the Network::IN_GAME state
-	if ($net->getState() == Network::IN_GAME && (!!$config{enablePrefixedPackets})) {
+	if (
+		($net->getState() == Network::IN_GAME) ||
+		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
+		(!!$config{enablePrefixedPackets})) {
 		Log::debug("parsing packets that are prefixed with its length");
 
 		# get the first 2 bytes, which signal the total length of this packet
