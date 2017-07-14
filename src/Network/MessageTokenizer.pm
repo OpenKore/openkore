@@ -144,6 +144,13 @@ sub readNext {
 		# there is this third byte that I have no idea what it does
 		my $extraByte = unpack("C", substr($$buffer, 2, 1));
 
+		# sometimes the server just sends us 3 bytes for no reason o_O
+		if (length($$buffer) == 3) {
+			$self->{buffer} = "";
+			Log::debug("received just 3 bytes;  removing from buffer\n");
+			return $$buffer;
+		}
+
 		# remove the three bytes; now the buffer contains at least one full packet
 		substr($$buffer, 0, 3, "");
 	}
