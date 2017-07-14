@@ -25,7 +25,7 @@ use Modules 'register';
 use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
-use Globals qw($net)
+use Globals qw($net);
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
