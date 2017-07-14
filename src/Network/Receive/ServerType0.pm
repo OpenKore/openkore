@@ -582,6 +582,19 @@ sub new {
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
+		
+		'09F0' => ['rodex_next_page', 'v C C C', [qw(len type count isEnd)]],   # -1
+		'09F6' => ['rodex_delete', 'C q', [qw(type mailID)]],   # 11
+		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
+		'09EB' => ['rodex_read_mail', 'v C q v q C', [qw(len type mailID text zeny itemCount)]],   # -1
+		'09F2' => ['rodex_get_zeny', 'q C C', [qw(mailID type result)]],   # 12
+		'09F4' => ['rodex_get_item', 'q C C', [qw(mailID type result)]],   # 12
+		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A07' => ['rodex_remove_item', 'C v v v', [qw(result index count weight)]],   # 9
+		'0A14' => ['rodex_check_player', 'V v v Z24', [qw(char_id class base_level name)]],   # 10
+		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
+		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
+		'0A7D' => ['rodex_mail_list', 'v C C C', [qw(len type count isEnd)]],   # -1
 	};
 
 	# Item RECORD Struct's
@@ -5876,6 +5889,55 @@ sub senbei_amount {
 	my ($self, $args) = @_;
 	
 	$char->{senbei} = $args->{senbei};
+}
+
+sub rodex_mail_list {
+	
+}
+
+sub rodex_open_write {
+	
+}
+
+sub rodex_check_player {
+	
+}
+
+sub rodex_get_item {
+	
+}
+
+sub rodex_remove_item {
+	
+}
+
+sub rodex_add_item {
+	
+}
+
+sub rodex_delete {
+	
+}
+
+sub rodex_next_page {
+	
+}
+
+sub unread_rodex {
+	my ( $self, $args ) = @_;
+	message "You have new unread rodexes.\n";
+}
+
+sub rodex_read_mail {
+	
+}
+
+sub rodex_write_result {
+	
+}
+
+sub rodex_get_zeny {
+	
 }
 
 1;

@@ -138,6 +138,19 @@ sub new {
 		'09A1' => ['sync_received_characters'],
 		'09D0' => ['gameguard_reply'],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
+		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
+		'09EF' => ['rodex_refresh_maillist', 'C q', [qw(type mailID)]],   # 11 -- RodexRefreshMaillist
+		'09F5' => ['rodex_delete_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexDeleteMail
+		'09EA' => ['rodex_read_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexReadMail
+		'09E8' => ['rodex_open_mailbox', 'C q', [qw(type mailID)]],   # 11 -- RodexOpenMailbox
+		'09F1' => ['rodex_request_zeny', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestZeny
+		'09F3' => ['rodex_request_items', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestItems
+		'0A03' => ['rodex_cancel_write_mail'],   # 2 -- RodexCancelWriteMail
+		'0A04' => ['rodex_add_item', 'c c', [qw(index count)]],   # 6 -- RodexAddItem
+		'0A06' => ['rodex_remove_item', 'c c', [qw(index count)]],   # 6 -- RodexRemoveItem
+		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
+		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 q v v V', [qw(len receiver sender zeny title_len text_len char_id)]],   # -1 -- RodexSendMail
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -152,6 +165,57 @@ sub new {
 	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
+}
+
+sub rodex_send_mail {
+}
+
+sub rodex_open_write_mail {
+	
+}
+
+sub rodex_checkname {
+	
+}
+
+sub rodex_request_items {
+	
+}
+
+sub rodex_delete_mail {
+	
+}
+
+sub rodex_read_mail {
+	
+}
+
+sub rodex_request_zeny {
+	
+}
+
+sub rodex_refresh_maillist {
+	
+}
+
+sub rodex_remove_item {
+	
+}
+
+sub rodex_add_item {
+	
+}
+
+sub rodex_cancel_write_mail {
+	
+}
+
+sub rodex_open_mailbox {
+
+}
+
+sub rodex_close_mailbox {
+	
 }
 
 sub version {
