@@ -26,6 +26,7 @@ use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
 use Globals qw($net %config);
+use Misc;
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
@@ -123,14 +124,16 @@ sub readNext {
 		($net->getState() == Network::IN_GAME) ||
 		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
 		(!!$config{enablePrefixedPackets})) {
-		Log::debug("parsing packets that are prefixed with its length");
+		Log::debug("parsing packets that are prefixed with its length\n");
+		Log::debug ("current buffer contents: \n");
+		Misc::visualDump($$buffer);
 
 		# get the first 2 bytes, which signal the total length of this packet
 		my $packetSize = unpack("v", substr($$buffer, 0, 2));
 
-		# not enough bytes, cleanup and return them to the buffer
 		if (length($$buffer) < $packetSize) {
 			$self->{buffer} = "";
+			Log::debug("not enough bytes, cleanup and returning them to the buffer\n");
 			return $$buffer;
 		}
 
