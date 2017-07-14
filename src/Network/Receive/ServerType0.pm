@@ -583,7 +583,6 @@ sub new {
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
-		
 		'09F0' => ['rodex_next_page', 'v C C C', [qw(len type count isEnd)]],   # -1
 		'09F6' => ['rodex_delete', 'C q', [qw(type mailID)]],   # 11
 		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
@@ -5936,35 +5935,82 @@ sub senbei_amount {
 }
 
 sub rodex_mail_list {
+	my ( $self, $args ) = @_;
 	
+	$rodexList = {};
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v C C C';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $mail_pack = 'V2 C C Z24 V V v';
+	my $base_mail_len = length pack $mail_pack;
+	
+	my $mail_len;
+	
+	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
+		my $mail;
+
+		($mail->{mailID1},
+		$mail->{mailID2},
+		$mail->{isRead},
+		$mail->{type},
+		$mail->{sender},
+		$mail->{regDateTime},
+		$mail->{expireDateTime},
+		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
+		
+		my $title_unpack = 'Z' x $mail->{Titlelength};
+		
+		$mail->{msg} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
+		
+		$mail_len = $base_mail_len + $mail->{Titlelength};
+		
+		$rodexList->{$mail->{mailID1}} = $mail;
+	}
 }
 
 sub rodex_open_write {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_open_write] ".Dumper($args);
 }
 
 sub rodex_check_player {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_check_player] ".Dumper($args);
 }
 
 sub rodex_get_item {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_get_item] ".Dumper($args);
 }
 
 sub rodex_remove_item {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_remove_item] ".Dumper($args);
 }
 
 sub rodex_add_item {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_add_item] ".Dumper($args);
 }
 
 sub rodex_delete {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_delete] ".Dumper($args);
 }
 
 sub rodex_next_page {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_next_page] ".Dumper($args);
 }
 
 sub unread_rodex {
@@ -5973,15 +6019,21 @@ sub unread_rodex {
 }
 
 sub rodex_read_mail {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_read_mail] ".Dumper($args);
 }
 
 sub rodex_write_result {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_write_result] ".Dumper($args);
 }
 
 sub rodex_get_zeny {
-	
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_get_zeny] ".Dumper($args);
 }
 
 1;

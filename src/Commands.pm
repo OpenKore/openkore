@@ -55,6 +55,7 @@ our %customCommands;
 
 sub initHandlers {
 	%handlers = (
+	rodex				=> \&cmdRodex,
 	a					=> \&cmdAttack,
 	achieve				=> \&cmdAchieve,
 	ai					=> \&cmdAI,
@@ -6135,6 +6136,34 @@ sub cmdAchieve {
 		foreach my $achieve_id (keys %{$achievementList}) {
 			my $achieve = $achievementList->{$achieve_id};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15)), [$index, $achieve_id, $achieve->{completed} ? "complete" : "incomplete", $achieve->{reward}  ? "rewarded" : "not rewarded"]);
+			$index++;
+		}
+		$msg .= sprintf("%s\n", ('-'x79));
+		message $msg, "list";
+	}
+}
+
+sub cmdRodex {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
+
+	if ($arg1 eq 'open') {
+		$messageSender->rodex_open_mailbox(0,0,0);
+	
+	} elsif ($arg1 eq 'close') {
+		$messageSender->rodex_close_mailbox();
+		
+	} elsif ($arg1 eq 'list') {
+		if (!$rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+		}
+		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
+		my $index = 0;
+		foreach my $mail_id (keys %{$rodexList}) {
+			my $mail = $rodexList->{$mail_id};
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x5), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{msg}]);
 			$index++;
 		}
 		$msg .= sprintf("%s\n", ('-'x79));
