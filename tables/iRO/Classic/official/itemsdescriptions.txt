@@ -70742,3 +70742,28 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19955#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pecopeco Hairband!
+500 Peco Peco Feather
+300 Wing of Dragonfly
+100 Elastic Bands
+1 Blue Feather
+1000 Zeny
+1 Pecopeco Hairband Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19957#
+Take this Tier 2 Treasure Cache and appropriate key to Asgard Village 125, 110
+and old man will be able to help you.
+#
+
+19958#
+Take this Tier 3 Treasure Cache and appropriate key to Asgard Village 125, 110
+and old man will be able to help you.
+#

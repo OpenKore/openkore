@@ -6906,3 +6906,7 @@
 19952#Forgery_Token#
 19953#Donut_In_Mouth_Certificate#
 19954#Neko_Mimi_Kafra_Certificate#
+19955#Pecopeco_Hairband_Certificate#
+
+19957#Tier_2_Treasure_Cache#
+19958#Tier_3_Treasure_Cache#
