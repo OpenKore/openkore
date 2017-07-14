@@ -124,12 +124,16 @@ sub readNext {
 		($net->getState() == Network::IN_GAME) ||
 		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
 		(!!$config{enablePrefixedPackets})) {
-		Log::debug("parsing packets that are prefixed with its length\n");
-		Log::debug ("current buffer contents: \n");
-		Misc::visualDump($$buffer);
+
+		if ($config{'debugPacket_'.$config_suffix} == 2 {
+			Log::debug("trying to parse packets that are prefixed with its length\n");
+			Log::debug ("current buffer contents: \n");
+			Misc::visualDump($$buffer);
+		}
 
 		# get the first 2 bytes, which signal the total length of this packet
 		my $packetSize = unpack("v", substr($$buffer, 0, 2));
+		Log::debug sprintf("parsed packet size is: %d\n", $packetSize);
 
 		if (length($$buffer) < $packetSize) {
 			$self->{buffer} = "";
