@@ -5891,7 +5891,7 @@ sub achievement_list {
 		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
 		
 		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message "Achievement ".$achieve->{ach_id}." added.\n", "info";
+		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
 	}
 }
 
@@ -5902,12 +5902,12 @@ sub achievement_update {
 	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
 	
 	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message "Achievement ".$achieve->{ach_id}." added or updated.\n", "info";
+	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
 }
 
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
-	message "Received reward for achievement ".$args->{ach_id}.".\n", "info";
+	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
 sub show_script {
