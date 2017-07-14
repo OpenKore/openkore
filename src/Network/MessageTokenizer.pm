@@ -116,6 +116,27 @@ sub readNext {
 
 	return undef if (length($$buffer) < 2);
 
+	# parse packets that are prefixed by the packet length
+	# these packets only happen during the Network::CONNECTED state
+	if ($net->getState >= Network::CONNECTED && (!!$config{enablePrefixedPackets})) {
+		Log::debug("parsing packets that are prefixed with its length");
+
+		# get the first 2 bytes, which signal the total length of this packet
+		my $packetSize = unpack("v", substr($$buffer, 0 2));
+
+		# not enough bytes, cleanup and return them to the buffer
+		if (length($$buffer) < $packetSize) {
+			$self->{buffer} = "";
+			return $$buffer;
+		}
+
+		# there is this third byte that I have no idea what it does
+		my $extraByte = unpack("C", substr($$buffer, 2, 1));
+
+		# remove the three bytes; now the buffer contains at least one full packet
+		substr($$buffer, 0, 3, "");
+	}
+
 	my $switch = getMessageID($$buffer);
 	my $rpackets = $self->{rpackets};
 	my $size = $rpackets->{$switch}{length};
