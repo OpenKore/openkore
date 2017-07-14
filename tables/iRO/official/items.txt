@@ -619,6 +619,7 @@
 1293#Bellum_Jamadhar#
 1294#Bellum_Scale#
 1295#Bloody_Tears#
+1297#Inverse_Scale#
 1299#TE_WoE_Katar#
 1301#Axe#
 1302#Axe#
@@ -1208,6 +1209,7 @@
 2190#Ancient_Shield_Of_Aeon#
 2191#Solomon's_Key#
 2192#Rose_of_Eden#
+2193#Fallen_Angel_Shield#
 2195#Lian_Shield#
 2196#White_Gold_Shield#
 2199#Ahura_Mazdah#
@@ -1877,10 +1879,10 @@
 2969#Chambered_RWC_2012_Pendant#
 2971#Pocket_Watch#
 2976#Red_Lantern#
-2977#Hurt_Mind_(Check_Script)#
-2978#Kind_Heart_(Check_Script)#
+2977#Hurt_Mind#
+2978#Kind_Heart#
 2979#Strawberry_Decoration#
-2980#Evil_Spirit_Glove_(Check_Script)#
+2980#Evil_Spirit_Glove#
 2981#Hero_Ring#
 2985#Gyges_Ring#
 2988#Hero_Ring_Of_Newoz#
@@ -6929,6 +6931,7 @@
 15178#Golden_Ninja_Suit#
 15179#Mine_Worker's_Vest#
 15180#Hippie_Clothes#
+15196#Sea_Dragon_Armor#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -7387,6 +7390,7 @@
 17325#Horror_Egg#
 17333#Star-Spangled_Bandana_box#
 17334#'Merica_box#
+17336#Cash_Hair_Coupon_Box#
 17340#Pumpkin_Spiced_Lucky_Crate#
 17341#Random_Headgear_Box#
 17342#Groovember_Pack#
@@ -7484,6 +7488,7 @@
 17614#Early_Fall_Costume_Box#
 17629#Spellflow_Shadow_Pack#
 17645#Thanksgiving_Groove_Pack#
+17646#Halter_Lead_Box#
 17667#Heart's_Foundation_Lucky_Box#
 17709#Costume_Amistr_Bag_Box#
 17714#Akiba's_Gashapon_Pack#
@@ -7510,8 +7515,26 @@
 17802#Overseas_Care_Package_VI#
 17804#Overseas_Care_Package_VII#
 17805#Scrambled_Anniversary_Costume_Box#
-17806#July_Costume_Box#
+17806#2017_July_Costume_Box#
 17807#July_Costume_Box#
+17837#Silvervine_10_Box#
+17838#Silvervine_25_Box#
+17839#Silvervine_100_Box#
+17840#Box_of_Quivers#
+17841#Box_of_Iron_Quivers#
+17842#Box_of_Steel_Quivers#
+17843#Box_of_Oridecon_Quivers#
+17844#Box_of_Fire_Quivers#
+17845#Box_of_Silver_Quivers#
+17846#Box_of_Wind_Quivers#
+17847#Box_of_Stone_Quivers#
+17848#Box_of_Crystal_Quivers#
+17849#Box_of_Shadow_Quivers#
+17850#Box_of_Immaterial_Quivers#
+17851#Box_of_Rusty_Quivers#
+17852#Costume_Box_I_Feline_Fine#
+17877#RESTARTer_Pack#
+17878#RESTARTer_Pack_Plus#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -7940,7 +7963,7 @@
 19079#Celestial_Woman's_Flower#
 19083#Mask_of_Hero#
 19084#Parfaille_Vigilante_Hat#
-19101#Classic_Omni_Clothing_Dye_Coupon_Box#
+19101#Glast_Heim_Spectator#
 19102#Pale_Moon_Hat#
 19103#Classic_New_Hairstyle_Coupon_Box#
 19104#Classic_Max_Weight_up_Scroll_Box#
@@ -7952,6 +7975,7 @@
 19110#Classic_Neuralizer_Box#
 19111#Classic_Dungeon_Teleport_1_10_Box#
 19112#Tengu_Scroll#
+19113#Gemini-S58_Eyes#
 19114#Sting_Silk_Ribbon#
 19125#Cylinder_Hairband#
 19201#Classic_Battle_Manual_10_Box#
@@ -7963,6 +7987,7 @@
 19207#Classic_Token_of_Siegfried_10_Box#
 19208#Classic_Small_Life_Potion_10_Box#
 19209#Classic_Giant_Flywing_500_Box#
+19212#Malangdo_Pirate_Hat#
 19377#Shiny_Marinade_Beef#
 19378#Chile_Shrimp_Gratin#
 19379#Red_Mushroom_Wine#
@@ -8347,7 +8372,7 @@
 20038#Haunted_Armor_Helm#
 20039#Costume_Butterfly_Wing_Ears#
 20040#Costume_Rose_Crown#
-20041#Costume_Earth_Goddess_Flower#
+20041#Costume:_Earth_Goddess_Flower#
 20042#Costume_Hermode_Cap#
 20043#Costume_Red_Cherry_Blossom#
 20044#Costume_Carmen_Miranda's_Hat#
@@ -8389,7 +8414,7 @@
 20153#C_Monochrome_Cap#
 20154#C_Maple_Which_Falls#
 20155#C_Ladys_Feather_Hat#
-20156#C_Fan_In_Mouth#
+20156#Costume:_Fan_in_Mouth#
 20160#C_Fan_In_Mouth#
 20161#Rental_Saharic_Saber#
 20162#Rental_Saharic_Gladius#
@@ -8484,7 +8509,7 @@
 20326#Classic_Underneath_Knuckle_Duster_2_Week_Rental_Box#
 20327#Classic_Underneath_Lute_2_Week_Rental_Box#
 20328#Classic_Underneath_Wire_2_Week_Rental_Box#
-20329#Costume_Very_Cute_Doll_Hat#
+20329#Costume:_Very_Cute_Doll_Hat#
 20330#Costume_Sombrero#
 20331#Classic_Underneath_HammerAxe_2_Week_Rental_Box#
 20332#Classic_Underneath_Trident_2_Week_Rental_Box#
@@ -8775,6 +8800,8 @@
 23295#Lian_Bundle_B#
 23296#D.Burger#
 23297#Lovely_Egg_Box#
+23414#Overseas_Care_Package_VIII#
+23415#Orleans_Bundle_C#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -8989,6 +9016,8 @@
 28423#Fresh_Tuna_Charm#
 28424#Plump_Earthworm_Charm#
 28429#Arquien's_Necklace#
+28430#Arch_Bishop_Ring#
+28434#Boxing_Gloves#
 28441#Vigilante_Badge#
 28442#Hippie_Feather#
 28491#Hunting_Knife#
@@ -8998,6 +9027,7 @@
 28501#Horn_of_Kirin#
 28502#Mob_Scarf#
 28503#Keraunos#
+28507#Magician's_Gloves#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
