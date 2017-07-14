@@ -33,9 +33,6 @@ sub new {
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
 		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'099D' => ['received_characters', 'x2 a*', [qw(charInfo)]],
-		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
-		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
-		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
 	);
 
 	foreach my $switch (keys %packets) {
@@ -43,98 +40,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-=pod
-struct packet_achievement_update {
-	uint16 packet_id;
-	uint32 total_points;
-	uint16 rank;
-	uint32 current_rank_points;
-	uint32 next_rank_points;
-	struct ach_list_info ach;
-} __attribute__((packed));
-
-struct ach_list_info {
-	uint32 ach_id; 
-	uint8 completed; 
-	uint32 objective[MAX_ACHIEVEMENT_OBJECTIVES];
-	uint32 completed_at; 
-	uint8 reward; 
-} __attribute__((packed));
-
-struct packet_achievement_list {
-	uint16 packet_id;
-	uint16 packet_len;
-	uint32 total_achievements;
-	uint32 total_points;
-	uint16 rank;
-	uint32 current_rank_points;
-	uint32 next_rank_points;
-	struct ach_list_info ach[MAX_ACHIEVEMENT_DB];
-} __attribute__((packed));
-
-struct packet_achievement_reward_ack {
-	uint16 packet_id;
-	uint8 received;
-	uint32 ach_id;
-} __attribute__((packed));
-=cut
-
-sub achievement_list {
-	my ($self, $args) = @_;
-	
-	$achievementList = {};
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen = 22;
-	my $achieve_pack = 'V C V10 V C';
-	my $achieve_len = length pack $achieve_pack;
-	
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
-		my $achieve;
-
-		($achieve->{ach_id},
-		$achieve->{completed},
-		$achieve->{objective1},
-		$achieve->{objective2},
-		$achieve->{objective3},
-		$achieve->{objective4},
-		$achieve->{objective5},
-		$achieve->{objective6},
-		$achieve->{objective7},
-		$achieve->{objective8},
-		$achieve->{objective9},
-		$achieve->{objective10},
-		$achieve->{completed_at},
-		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
-		
-		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message "Achievement ".$achieve->{ach_id}." added.\n", "info";
-	}
-	use Data::Dumper;
-	Log::warning "[Achievemente List] => ".Dumper($achievementList);
-}
-
-sub achievement_update {
-	my ($self, $args) = @_;
-	
-	my $achieve;
-	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
-	
-	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message "Achievement ".$achieve->{ach_id}." added or updated.\n", "info";
-	
-	use Data::Dumper;
-	Log::warning "[Achievemente update] => ".Dumper($achieve);
-}
-
-sub achievement_reward_ack {
-	my ($self, $args) = @_;
-	message "Received reward for achievement ".$args->{ach_id}.".\n", "info";
-	use Data::Dumper;
-	Log::warning "[Achievemente reward] => ".Dumper($args);
 }
 
 # The packet number didn't change, but the length of the packet did, and

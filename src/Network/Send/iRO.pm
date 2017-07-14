@@ -26,8 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
+		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]]
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -53,12 +52,6 @@ sub new {
 	$self->{sell_mode} = 0;
 	
 	return $self;
-}
-
-sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
-	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
-	$self->sendToServer($msg);
 }
 
 sub sendMove {
