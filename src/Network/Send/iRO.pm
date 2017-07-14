@@ -26,7 +26,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]]
+		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

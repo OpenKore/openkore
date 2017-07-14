@@ -16,7 +16,7 @@ package Network::Receive::iRO;
 use strict;
 use base qw(Network::Receive::ServerType0);
 
-use Globals qw($messageSender %timeout @articles $articles %shop %itemTypes_lut $shopEarned $venderID $venderCID %config @venderItemList $achievementList);
+use Globals qw($messageSender %timeout @articles $articles %shop %itemTypes_lut $shopEarned $venderID $venderCID %config @venderItemList);
 use Log qw(message debug);
 use Misc qw(center itemName);
 use Translation qw(T TF);
