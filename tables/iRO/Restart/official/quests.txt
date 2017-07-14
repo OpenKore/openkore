@@ -71,8 +71,8 @@ Gain 2 base levels to complete your Field Combat Training by killing as many mon
 // 솶만솤
 
 2000#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Einbech and help one of our guild members Geschupenschte.#
-Meet Geschupenschte, Blacksmith of Einbech.#
+We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Alberta and help one of our guild members Geschupenschte.#
+Meet Geschupenschte, Blacksmith of Alberta.#
 
 2001#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
 It pains me to say this, but it seems you need to study a little more. You can never be a Blacksmith with this score!#
@@ -111,19 +111,19 @@ All done! Okay. Give this Gladius to Wickebine in Morroc of Rune-Midgarts Kingdo
 Deliver Gladius to Wickebine in Morroc.#
 
 2010#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-All done! Okay. Give this Tsurugi to Krongast who is in Lighthalzen. Be sure to bring the reciept back to me.#
-Deliver Tsurugi to Krongast in Lighthalzen.#
+All done! Okay. Give this Tsurugi to Grongast who is in Izlude. Be sure to bring the reciept back to me.#
+Deliver Tsurugi to Krongast in Izlude.#
 
 2011#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
 All done! Okay. Give this Arbalest to Talpiz who is in Payon of Rune-Midgarts Kingdom. Be sure to bring the reciept back to me.#
 Deliver Arbalest to Talpiz in Payon.#
 
 2012#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-All done! Okay. Give this Ring Pommel Saber to Bismarc who is in Hugel. Be sure to bring the reciept back to me.#
-Deliver Ring Pommel Saber to Bismarc in Hugel.#
+All done! Okay. Give this Ring Pommel Saber to Bismarc who is in Comodo. Be sure to bring the reciept back to me.#
+Deliver Ring Pommel Saber to Bismarc in Comodo.#
 
 2013#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-Well done! You're a great merchant indeed! Okay, go to Altiregen in Einbroch!#
+Well done! You're a great merchant indeed! Okay, go to Altiregen in Geffen!#
 Go back to Altiregen#
 
 2014#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
@@ -21724,3 +21724,161 @@ Hunt coyotes.#
 62927#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
 #
 #
+
+
+62626#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62627#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62628#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62629#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62630#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62631#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62632#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62633#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62634#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62635#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62636#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62637#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62638#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62639#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62640#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62641#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62642#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62643#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62651#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62652#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62653#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62654#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62655#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62656#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62657#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62658#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62659#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+
+62928#Silvervine Quest - Angeling#SG_FEEL#QUE_NOIMAGE#
+Please help me get my revenge!#
+Eliminate the Angeling#
+
+62929#Silvervine Quest - Archangeling#SG_FEEL#QUE_NOIMAGE#
+This monster beat me up in the past! Make it disappear!#
+Eliminate the Archangeling#
+
+62930#Silvervine Quest - Cat o Nine Tails#SG_FEEL#QUE_NOIMAGE#
+Please get rid of it!#
+Eliminate the Cat o Nine Tails#
+
+62931#Silvervine Quest - Deviling#SG_FEEL#QUE_NOIMAGE#
+Exterminate...Exterminate...!#
+Eliminate the Deviling#
+
+62932#Silvervine Quest - Dragonfly#SG_FEEL#QUE_NOIMAGE#
+Help me squash it!#
+Eliminate the Dragonfly#
+
+62933#Silvervine Quest - Eclipse#SG_FEEL#QUE_NOIMAGE#
+Please help me get my revenge!#
+Eliminate the Eclipse#
+
+62934#Silvervine Quest - Ghostring#SG_FEEL#QUE_NOIMAGE#
+Get rid of the spookiness.#
+Eliminate the Ghostring#
+
+62935#Silvervine Quest - Mastering#SG_FEEL#QUE_NOIMAGE#
+Please help eliminate!#
+Eliminate the Mastering#
+
+62936#Silvervine Quest - Maya Purple#SG_FEEL#QUE_NOIMAGE#
+Help me out and I'll reward you!#
+Eliminate the Maya Purple#
+
+62937#Silvervine Quest - Toad#SG_FEEL#QUE_NOIMAGE#
+Please banish the Toad!#
+Eliminate the Toad#
+
+62938#Silvervine Quest - Vagabond Wolf#SG_FEEL#QUE_NOIMAGE#
+Make it disappear and I'll reward you!#
+Eliminate the Vagabond Wolf#
+
+62939#Silvervine Quest - Vocal#SG_FEEL#QUE_NOIMAGE#
+I never liked bugs...please get rid of this monster.#
+Eliminate the Vocal#
