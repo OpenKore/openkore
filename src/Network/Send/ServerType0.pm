@@ -137,6 +137,7 @@ sub new {
 		'0998' => ['send_equip', 'v V', [qw(index type)]],#8
 		'09A1' => ['sync_received_characters'],
 		'09D0' => ['gameguard_reply'],
+		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -1238,5 +1239,11 @@ sub sendCaptchaAnswer {
 }
 
 # 0x0204,18
+
+sub sendAchievementGetReward {
+	my ($self, $ach_id) = @_;
+	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
+	$self->sendToServer($msg);
+}
 
 1;

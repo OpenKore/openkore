@@ -56,6 +56,7 @@ our %customCommands;
 sub initHandlers {
 	%handlers = (
 	a					=> \&cmdAttack,
+	achieve				=> \&cmdAchieve,
 	ai					=> \&cmdAI,
 	aiv					=> \&cmdAIv,
 	al					=> \&cmdShopInfoSelf,
@@ -6096,6 +6097,49 @@ sub cmdDeadTime {
 		$msg = T("You have not died yet.\n");
 	}
 	message $msg, "list";
+}
+
+sub cmdAchieve {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
+	
+	if (($arg1 ne 'list' && $arg1 ne 'reward') || ($arg1 eq 'list' && defined $arg2) || ($arg1 eq 'reward' && !defined $arg2)) {
+		error T("Syntax Error in function 'achieve'\n".
+			"Usage: achieve [<list|reward>] [<achievemente_id>]\n".
+			"Usage: achieve list: Shows all current achievements\n".
+			"Usage: achieve reward achievemente_id: Request reward for the achievement of id achievemente_id\n"
+			);
+			
+		return;
+	}
+
+	if ($arg1 eq 'reward') {
+		if (!exists $achievementList->{$arg2}) {
+			error TF("You don't have the achievement %s.\n", $arg2);
+			
+		} elsif ($achievementList->{$arg2}{completed} != 1) {
+			error TF("You haven't completed the achievement %s.\n", $arg2);
+		
+		} elsif ($achievementList->{$arg2}{reward} == 1) {
+			error TF("You have already claimed the achievement %s reward.\n", $arg2);
+			
+		} else {
+			message TF("Sending request for reward of achievement %s.\n", $arg2);
+			$messageSender->sendAchievementGetReward($arg2);
+		}
+	
+	} elsif ($arg1 eq 'list') {
+		my $msg .= center(" " . "Achievement List" . " ", 79, '-') . "\n";
+		my $index = 0;
+		foreach my $achieve_id (keys %{$achievementList}) {
+			my $achieve = $achievementList->{$achieve_id};
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15)), [$index, $achieve_id, $achieve->{completed} ? "complete" : "incomplete", $achieve->{reward}  ? "rewarded" : "not rewarded"]);
+			$index++;
+		}
+		$msg .= sprintf("%s\n", ('-'x79));
+		message $msg, "list";
+	}
 }
 
 1;
