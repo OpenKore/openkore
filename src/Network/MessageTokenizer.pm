@@ -25,6 +25,7 @@ use Modules 'register';
 use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
+use Globals qw($net)
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
@@ -122,7 +123,7 @@ sub readNext {
 		Log::debug("parsing packets that are prefixed with its length");
 
 		# get the first 2 bytes, which signal the total length of this packet
-		my $packetSize = unpack("v", substr($$buffer, 0 2));
+		my $packetSize = unpack("v", substr($$buffer, 0, 2));
 
 		# not enough bytes, cleanup and return them to the buffer
 		if (length($$buffer) < $packetSize) {
