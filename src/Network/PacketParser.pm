@@ -119,10 +119,10 @@ sub new {
 # Throws FileNotFoundException, ModuleLoadException.
 sub create {
 	my ($base, $net, $serverType) = @_;
-	
+
 	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
 	my $class = join '::', $base, $type, (($param) || ()); #param like Thor in bRO_Thor
-	
+
 	debug "[$base] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
 
 	undef $@;
@@ -137,14 +137,14 @@ sub create {
 				$type, $@)
 		);
 	}
-	
+
 	my $self = $class->new;
-	
+
 	$self->{hook_prefix} = $base;
 	$self->{net} = $net;
 	$self->{serverType} = $type; # TODO: eliminate {serverType} from there
 	Modules::register($class);
-	
+
 	return $self;
 }
 
@@ -171,7 +171,7 @@ sub reconstruct {
 				}
 			}
 		}
-		
+
 		$switch = $self->{packet_lut}{$switch} || $switch;
 	}
 
@@ -186,7 +186,7 @@ sub reconstruct {
 		$self->$custom_reconstruct($args);
 	}
 	my $packet = pack("v $packString", hex $switch, $packString && @{$args}{@$varNames});
-	
+
 	if (exists $rpackets{$switch}) {
 		if ($rpackets{$switch}{length} > 0) {
 			# fixed length packet, pad/truncate to the correct length
@@ -196,7 +196,7 @@ sub reconstruct {
 			substr($packet, 2, 2) = pack('v', length $packet);
 		}
 	}
-	
+
 	return $packet;
 }
 
@@ -283,7 +283,7 @@ sub parse {
 
 sub unhandledMessage {
 	my ($self, $args) = @_;
-	
+
 	warning "Packet Parser: Unhandled Packet: $args->{switch} Handler: $self->{packet_list}{$args->{switch}}[0]\n";
 	debug ("Unpacked: " . join(', ', @{$args}{@{$args->{KEYS}}}) . "\n"), "packetParser", 2 if $args->{KEYS};
 }
@@ -381,23 +381,23 @@ sub mangle {
 
 sub process {
 	my ($self, $tokenizer, $handleContainer, @handleArguments) = @_;
-	
+
 	my @result;
 	my $type;
 	while (my $message = $tokenizer->readNext(\$type)) {
 		$handleContainer->{bytesProcessed} += length($message);
 		$handleContainer->{lastPacketTime} = time;
-		
+
 		my $args;
-		
+
 		if ($type == Network::MessageTokenizer::KNOWN_MESSAGE) {
 			my $switch = Network::MessageTokenizer::getMessageID($message);
-			
+
 			# FIXME?
 			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message);
-			
+
 			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
-			
+
 			if ($args = $self->parse($message, $handleContainer, @handleArguments)) {
 				$args->{mangle} ||= $willMangle && $handleContainer->mangle($args);
 			} else {
@@ -407,12 +407,12 @@ sub process {
 					(mangle => 2) x!! $willMangle,
 				};
 			}
-			
+
 		} elsif ($type == Network::MessageTokenizer::ACCOUNT_ID) {
 			$args = {
 				RAW_MSG => $message
 			};
-			
+
 		} elsif ($type == Network::MessageTokenizer::UNKNOWN_MESSAGE) {
 			$args = {
 				switch => Network::MessageTokenizer::getMessageID($message),
@@ -420,11 +420,18 @@ sub process {
 				# RAW_MSG_SIZE => length($message),
 			};
 			$handleContainer->unknownMessage($args, @handleArguments);
-			
+
+		} elsif ($type == Network::MessageTokenizer::ENCRYPTED_MESSAGE) {
+			$args = {
+				RAW_MSG => $message,
+				# RAW_MSG_SIZE => length($message),
+			};
+			$handleContainer->unknownMessage($args, @handleArguments);
+
 		} else {
 			die "Packet Tokenizer: Unknown type: $type";
 		}
-		
+
 		unless ($args->{mangle}) {
 			# Packet was not mangled
 			push @result, $args->{RAW_MSG};
@@ -437,9 +444,9 @@ sub process {
 			# Packet was suppressed
 		}
 	}
-	
+
 	# If we're running in X-Kore mode, pass messages back to the RO client.
-	
+
 	# It seems like messages can't be just concatenated safely
 	# (without "use bytes" pragma or messing with unicode stuff)
 	# http://perldoc.perl.org/perlunicode.html#The-%22Unicode-Bug%22
@@ -453,7 +460,7 @@ sub parse_pre {
 		'Network::ClientReceive' => ['<< Sent by RO client:', 'ro_sent', 'ROSend', 'RO_sendMsg_pre'],
 	}->{$mode} or return;
 	my ($title, $config_suffix, $desc_key, $hook) = @$values;
-	
+
 	if ($config{'debugPacket_'.$config_suffix} && !existsInList($config{'debugPacket_exclude'}, $switch) ||
 		$config{'debugPacket_include_dumpMethod'} && existsInList($config{'debugPacket_include'}, $switch))
 	{
@@ -478,19 +485,29 @@ sub parse_pre {
 			print $dump sprintf("%-4s %2d %s%s\n", $switch, length($msg), $desc_key, $label);
 		}
 	}
-	
+
 	Plugins::callHook($hook, {switch => $switch, msg => $msg, msg_size => length($msg), realMsg => \$msg});
 }
 
 sub unknownMessage {
 	my ($self, $args) = @_;
-	
+
 	# Unknown message - ignore it
 	unless (existsInList($config{debugPacket_exclude}, $args->{switch})) {
 		warning TF("Packet Tokenizer: Unknown switch: %s\n", $args->{switch}), 'connection';
 		Misc::visualDump($args->{RAW_MSG}, "<< Received unknown packet") if $config{debugPacket_unparsed};
 	}
-	
+
+	# Pass it along to the client, whatever it is
+}
+
+sub encryptedMessage {
+	my ($self, $args) = @_;
+
+	# Encrypted message - ignore it (for now)
+	warning TF("Packet Tokenizer: Encrypted packet received.\n"), 'connection';
+	Misc::visualDump($args->{RAW_MSG}, "<< Received encrypted packet") if $config{debugPacket_unparsed};
+
 	# Pass it along to the client, whatever it is
 }
 

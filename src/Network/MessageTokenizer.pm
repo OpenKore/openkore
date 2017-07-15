@@ -24,7 +24,7 @@ use Carp::Assert;
 use Modules 'register';
 use bytes;
 no encoding 'utf8';
-use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
+use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID ENCRYPTED_MESSAGE);
 use Globals qw($net %config %masterServers);
 use Misc;
 
@@ -111,6 +111,7 @@ sub getBuffer {
 # - KNOWN_MESSAGE - This is a known message, i.e. we know its length.
 # - UNKNOWN_MESSAGE - This is an unknown message, i.e. we don't know its length.
 # - ACCOUNT_ID - This is an account ID.
+# - ENCRYPTED_MESSAGE - This is an encrypted message, i.e. we need to decrypt this.
 # `l`
 sub readNext {
 	my ($self, $type) = @_;
@@ -120,10 +121,12 @@ sub readNext {
 
 	# parse packets that are prefixed by the packet length
 	# these packets only happen during the Network::IN_GAME state
+	my $prefixedPacketsExpected = $masterServers{$config{master}}->{enablePrefixedPackets};
+	my $encryptionFlag;
 	if (
 		($net->getState() == Network::IN_GAME) ||
 		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
-		(!!$masterServers{$config{master}}->{enablePrefixedPackets})) {
+		(!!$prefixedPacketsExpected)) {
 
 		if ($config{'debugPacket_received'} == 2) {
 			Log::debug("trying to parse packets that are prefixed with its length\n");
@@ -141,8 +144,11 @@ sub readNext {
 			return $$buffer;
 		}
 
-		# there is this third byte that I have no idea what it does
-		my $extraByte = unpack("C", substr($$buffer, 2, 1));
+		# there is this third byte marks this packet as either encrypted or not
+		my $encryptionFlag = unpack("C", substr($$buffer, 2, 1));
+		if ($encryptionFlag == 1) {
+			Log::debug("encryption flag set; incoming packets need to be decrypted.\n");
+		}
 
 		# sometimes the server just sends us 3 bytes for no reason o_O
 		if ($packetSize == 3) {
@@ -208,8 +214,13 @@ sub readNext {
 	} else {
 		$result = $$buffer;
 		$self->{buffer} = '';
-		$$type = UNKNOWN_MESSAGE;
+		if (!!$prefixedPacketsExpected && $encryptionFlag == 1) {
+			$$type = ENCRYPTED_MESSAGE;
+		} else {
+			$$type = UNKNOWN_MESSAGE;
+		}
 	}
+
 	return $result;
 }
 
