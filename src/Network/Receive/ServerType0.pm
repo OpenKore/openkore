@@ -5949,6 +5949,9 @@ sub rodex_mail_list {
 	
 	my $mail_len;
 	
+	my $print_msg = center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
+	
+	my $index = 0;
 	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
 		my $mail;
 
@@ -5961,59 +5964,16 @@ sub rodex_mail_list {
 		$mail->{expireDateTime},
 		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
 		
-		$mail->{msg} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
+		$mail->{title} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
 		
 		$mail_len = $base_mail_len + $mail->{Titlelength};
 		
 		$rodexList->{$mail->{mailID1}} = $mail;
+		$print_msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x5), ('<'x28), ('<'x28)), [$index, $mail->{mailID1}, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
+		$index++;
 	}
-}
-
-sub rodex_open_write {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_open_write] ".Dumper($args);
-}
-
-sub rodex_check_player {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_check_player] ".Dumper($args);
-}
-
-sub rodex_get_item {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_item] ".Dumper($args);
-}
-
-sub rodex_remove_item {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_remove_item] ".Dumper($args);
-}
-
-sub rodex_add_item {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_add_item] ".Dumper($args);
-}
-
-sub rodex_delete {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_delete] ".Dumper($args);
-}
-
-sub rodex_next_page {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_next_page] ".Dumper($args);
-}
-
-sub unread_rodex {
-	my ( $self, $args ) = @_;
-	message "You have new unread rodexes.\n";
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
 }
 
 sub rodex_read_mail {
@@ -6078,28 +6038,52 @@ sub rodex_read_mail {
 	warning "[rodex_read_mail mail] ".Dumper($mail);
 }
 
-=pod
-		struct item {
-			int id;
-			short nameid;
-			short amount;
-			unsigned int equip; // Location(s) where item is equipped (using enum equip_pos for bitmasking).
-			char identify;
-			char refine;
-			char attribute;
-			short card[MAX_SLOTS];
-			unsigned int expire_time;
-			char favorite;
-			unsigned char bound;
-			uint64 unique_id;
-			
-			struct {
-				int16 index;
-				int16 value;
-				uint8 param;
-			} option[MAX_ITEM_OPTIONS];
-		};
-=cut
+sub unread_rodex {
+	my ( $self, $args ) = @_;
+	message "You have new unread rodex mails.\n";
+}
+
+sub rodex_open_write {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_open_write] ".Dumper($args);
+}
+
+sub rodex_check_player {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_check_player] ".Dumper($args);
+}
+
+sub rodex_get_item {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_get_item] ".Dumper($args);
+}
+
+sub rodex_remove_item {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_remove_item] ".Dumper($args);
+}
+
+sub rodex_add_item {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_add_item] ".Dumper($args);
+}
+
+sub rodex_delete {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_delete] ".Dumper($args);
+}
+
+sub rodex_next_page {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_next_page] ".Dumper($args);
+}
 
 sub rodex_write_result {
 	my ( $self, $args ) = @_;

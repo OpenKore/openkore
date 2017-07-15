@@ -6131,7 +6131,7 @@ sub cmdAchieve {
 		}
 	
 	} elsif ($arg1 eq 'list') {
-		my $msg .= center(" " . "Achievement List" . " ", 79, '-') . "\n";
+		my $msg = center(" " . "Achievement List" . " ", 79, '-') . "\n";
 		my $index = 0;
 		foreach my $achieve_id (keys %{$achievementList}) {
 			my $achieve = $achievementList->{$achieve_id};
@@ -6177,7 +6177,7 @@ sub cmdRodex {
 		my $index = 0;
 		foreach my $mail_id (keys %{$rodexList}) {
 			my $mail = $rodexList->{$mail_id};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x5), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{msg}]);
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x5), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
 			$index++;
 		}
 		$msg .= sprintf("%s\n", ('-'x79));
