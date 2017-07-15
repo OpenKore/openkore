@@ -426,7 +426,7 @@ sub process {
 				RAW_MSG => $message,
 				# RAW_MSG_SIZE => length($message),
 			};
-			$handleContainer->unknownMessage($args, @handleArguments);
+			$handleContainer->encryptedMessage($args, @handleArguments);
 
 		} else {
 			die "Packet Tokenizer: Unknown type: $type";
