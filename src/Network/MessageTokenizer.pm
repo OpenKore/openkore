@@ -122,7 +122,7 @@ sub readNext {
 	# parse packets that are prefixed by the packet length
 	# these packets only happen during the Network::IN_GAME state
 	my $prefixedPacketsExpected = $masterServers{$config{master}}->{enablePrefixedPackets};
-	my $encryptionFlag;
+	my $encryptionFlag = 0;
 	if (
 		($net->getState() == Network::IN_GAME) ||
 		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
@@ -214,7 +214,7 @@ sub readNext {
 	} else {
 		$result = $$buffer;
 		$self->{buffer} = '';
-		if (!!$prefixedPacketsExpected && $encryptionFlag == 1) {
+		if ($encryptionFlag == 1) {
 			$$type = ENCRYPTED_MESSAGE;
 		} else {
 			$$type = UNKNOWN_MESSAGE;
