@@ -25,7 +25,7 @@ use Modules 'register';
 use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
-use Globals qw($net %config );
+use Globals qw($net %config %masterServers);
 use Misc;
 
 ##
@@ -123,7 +123,7 @@ sub readNext {
 	if (
 		($net->getState() == Network::IN_GAME) ||
 		($net->getState() == Network::CONNECTED_TO_CHAR_SERVER) &&
-		(!!$config{enablePrefixedPackets})) {
+		(!!$masterServers{$config{master}}->{enablePrefixedPackets})) {
 
 		if ($config{'debugPacket_received'} == 2) {
 			Log::debug("trying to parse packets that are prefixed with its length\n");
