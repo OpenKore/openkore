@@ -140,9 +140,9 @@ sub new {
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
-		'09EF' => ['rodex_refresh_maillist', 'C q', [qw(type mailID)]],   # 11 -- RodexRefreshMaillist
+		'09EF' => ['rodex_refresh_maillist', 'C V V', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
 		'09F5' => ['rodex_delete_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexDeleteMail
-		'09EA' => ['rodex_read_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexReadMail
+		'09EA' => ['rodex_read_mail', 'C V V', [qw(type mailID1 mailID2)]],   # 11 -- RodexReadMail
 		'09E8' => ['rodex_open_mailbox', 'C V V', [qw(type mailID1 mailID2)]],   # 11 -- RodexOpenMailbox
 		'09F1' => ['rodex_request_zeny', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestZeny
 		'09F3' => ['rodex_request_items', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestItems
@@ -169,9 +169,14 @@ sub new {
 }
 
 sub rodex_send_mail {
+
 }
 
 sub rodex_open_write_mail {
+	
+}
+
+sub rodex_cancel_write_mail {
 	
 }
 
@@ -179,15 +184,7 @@ sub rodex_checkname {
 	
 }
 
-sub rodex_request_items {
-	
-}
-
 sub rodex_delete_mail {
-	
-}
-
-sub rodex_read_mail {
 	
 }
 
@@ -195,7 +192,7 @@ sub rodex_request_zeny {
 	
 }
 
-sub rodex_refresh_maillist {
+sub rodex_request_items {
 	
 }
 
@@ -207,8 +204,24 @@ sub rodex_add_item {
 	
 }
 
-sub rodex_cancel_write_mail {
-	
+sub rodex_refresh_maillist {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_refresh_maillist',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_read_mail {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_read_mail',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
 }
 
 sub rodex_open_mailbox {
@@ -226,24 +239,8 @@ sub rodex_close_mailbox {
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_close_mailbox',
 	}));
-	$rodexList = {};
+	undef $rodexList;
 }
-
-=pod
-		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
-		'09EF' => ['rodex_refresh_maillist', 'C q', [qw(type mailID)]],   # 11 -- RodexRefreshMaillist
-		'09F5' => ['rodex_delete_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexDeleteMail
-		'09EA' => ['rodex_read_mail', 'C q', [qw(type mailID)]],   # 11 -- RodexReadMail
-		'09E8' => ['rodex_open_mailbox', 'C q', [qw(type mailID)]],   # 11 -- RodexOpenMailbox
-		'09F1' => ['rodex_request_zeny', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestZeny
-		'09F3' => ['rodex_request_items', 'q C', [qw(mailID type)]],   # 11 -- RodexRequestItems
-		'0A03' => ['rodex_cancel_write_mail'],   # 2 -- RodexCancelWriteMail
-		'0A04' => ['rodex_add_item', 'c c', [qw(index count)]],   # 6 -- RodexAddItem
-		'0A06' => ['rodex_remove_item', 'c c', [qw(index count)]],   # 6 -- RodexRemoveItem
-		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
-		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
-		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 q v v V', [qw(len receiver sender zeny title_len text_len char_id)]],   # -1 -- RodexSendMail
-=cut
 
 sub version {
 	return $masterServer->{version} || 1;

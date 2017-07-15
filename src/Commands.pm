@@ -6149,14 +6149,28 @@ sub cmdRodex {
 	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
 
 	if ($arg1 eq 'open') {
+		if (defined $rodexList) {
+			error "Your rodex mail box is already opened.\n";
+			return;
+		}
+		message "Sending request to open rodex mailbox.\n";
 		$messageSender->rodex_open_mailbox(0,0,0);
 	
 	} elsif ($arg1 eq 'close') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed.\n";
+			return;
+		}
+		message "Your rodex mail box has been closed.\n";
 		$messageSender->rodex_close_mailbox();
 		
 	} elsif ($arg1 eq 'list') {
-		if (!$rodexList) {
+		if (!defined $rodexList) {
 			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!$rodexList) {
+			message "Your rodex mail box is empty.\n";
 			return;
 		}
 		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
@@ -6168,6 +6182,26 @@ sub cmdRodex {
 		}
 		$msg .= sprintf("%s\n", ('-'x79));
 		message $msg, "list";
+		
+	} elsif ($arg1 eq 'refresh') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		}
+		$messageSender->rodex_refresh_maillist(0,0,0);
+		
+	} elsif ($arg1 eq 'read') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!exists $rodexList->{$arg2}) {
+			error "Mail of id $arg2 doesn't exist.\n";
+			return;
+		}
+		
+		$messageSender->rodex_read_mail(0,$arg2,0);
 	}
 }
 

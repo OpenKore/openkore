@@ -586,7 +586,7 @@ sub new {
 		'09F0' => ['rodex_next_page', 'v C C C', [qw(len type count isEnd)]],   # -1
 		'09F6' => ['rodex_delete', 'C q', [qw(type mailID)]],   # 11
 		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
-		'09EB' => ['rodex_read_mail', 'v C q v q C', [qw(len type mailID text zeny itemCount)]],   # -1
+		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
 		'09F2' => ['rodex_get_zeny', 'q C C', [qw(mailID type result)]],   # 12
 		'09F4' => ['rodex_get_item', 'q C C', [qw(mailID type result)]],   # 12
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
@@ -5961,8 +5961,6 @@ sub rodex_mail_list {
 		$mail->{expireDateTime},
 		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
 		
-		my $title_unpack = 'Z' x $mail->{Titlelength};
-		
 		$mail->{msg} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
 		
 		$mail_len = $base_mail_len + $mail->{Titlelength};
@@ -6020,9 +6018,88 @@ sub unread_rodex {
 
 sub rodex_read_mail {
 	my ( $self, $args ) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v C V2 v V2 C';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $mail = {};
+	
+	my $mail->{body} = substr($msg, $header_len, $args->{text_len});
+	
+	my $item_pack = 'V v v V C C C v v v v V C C V V v v C v v C v v C v v C v v C';
+	my $item_len = length pack $item_pack;
+	
+	
+	my $mail_len;
+	
+	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
+		my $item;
+
+		($item->{id},
+		$item->{nameid},
+		$item->{amount},
+		$item->{equip_location},
+		$item->{identified},
+		$item->{refine},
+		$item->{atribute},
+		$item->{Titlelength},
+		$item->{card1},
+		$item->{card2},
+		$item->{card3},
+		$item->{card4},
+		$item->{expire_time},
+		$item->{favorite},
+		$item->{char_bound},
+		$item->{unique_id1},
+		$item->{unique_id2},
+		$item->{index1},
+		$item->{value1},
+		$item->{param1},
+		$item->{index2},
+		$item->{value2},
+		$item->{param2},
+		$item->{index3},
+		$item->{value3},
+		$item->{param3},
+		$item->{index4},
+		$item->{value4},
+		$item->{param4},
+		$item->{index5},
+		$item->{value5},
+		$item->{param5}) = unpack($item_pack, substr($msg, $i, $item_len));
+		
+		push(@{$mail->{items}}, $item);
+	}
+	
 	use Data::Dumper;
-	warning "[rodex_read_mail] ".Dumper($args);
+	warning "[rodex_read_mail args] ".Dumper($args);
+	warning "[rodex_read_mail mail] ".Dumper($mail);
 }
+
+=pod
+		struct item {
+			int id;
+			short nameid;
+			short amount;
+			unsigned int equip; // Location(s) where item is equipped (using enum equip_pos for bitmasking).
+			char identify;
+			char refine;
+			char attribute;
+			short card[MAX_SLOTS];
+			unsigned int expire_time;
+			char favorite;
+			unsigned char bound;
+			uint64 unique_id;
+			
+			struct {
+				int16 index;
+				int16 value;
+				uint8 param;
+			} option[MAX_ITEM_OPTIONS];
+		};
+=cut
 
 sub rodex_write_result {
 	my ( $self, $args ) = @_;
