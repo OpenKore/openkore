@@ -564,6 +564,9 @@ sub new {
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
+		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
+		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'v V v C4 a8 a25', [qw(index amount nameID type identified broken upgrade cards options)]],
@@ -571,8 +574,12 @@ sub new {
 		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
+		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
+		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
 		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
-		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
@@ -1149,6 +1156,7 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
+		our $quest_generation++;
 	}
 
 	$char->{pos} = {};
@@ -2202,19 +2210,6 @@ sub mvp_you {
 	chatLog("k", $msg);
 }
 
-sub npc_image {
-	my ($self, $args) = @_;
-	my ($imageName) = bytesToString($args->{npc_image});
-	if ($args->{type} == 2) {
-		debug "Show NPC image: $imageName\n", "parseMsg";
-	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $imageName\n", "parseMsg";
-	} else {
-		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
-	}
-	$talk{image} = $imageName;
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
@@ -2232,63 +2227,28 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 	
-	undef $talk{buyOrSell};
+	undef %talk;
 	message T("Ready to start selling items\n");
 
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-}
-
-sub npc_store_begin {
-	my ($self, $args) = @_;
-	undef %talk;
-	$talk{buyOrSell} = 1;
-	$talk{ID} = $args->{ID};
-	$ai_v{npc_talk}{talk} = 'buy';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($args->{ID});
-
-	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
-}
-
-sub npc_store_info {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
-	undef $talk{'buyOrSell'};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
-
-		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'store';
+	$ai_v{npc_talk}{talk} = 'sell';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	if (AI::action ne 'buyAuto') {
-		Commands::run('store');
-	}
 }
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+	}
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -2313,117 +2273,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $msg\n", "npc";
-}
-
-sub npc_talk_close {
-	my ($self, $args) = @_;
-	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	message TF("%s: Done talking\n", $name), "npc";
-
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
-
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
-	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
-}
-
-sub npc_talk_continue {
-	my ($self, $args) = @_;
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
-}
-
-sub npc_talk_number {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk_responses {
-	my ($self, $args) = @_;
-	# 00b7: word len, long ID, string str
-	# A list of selections appeared on the NPC message dialog.
-	# Each item is divided with ':'
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($msg, 4, 4);
-	$talk{ID} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8));
-	$talk = substr($msg, 8) if (!defined $talk);
-	$talk = bytesToString($talk);
-
-	my @preTalkResponses = split /:/, $talk;
-	$talk{responses} = [];
-	foreach my $response (@preTalkResponses) {
-		# Remove RO color codes
-		$response =~ s/\^[a-fA-F0-9]{6}//g;
-		if ($response =~ /^\^nItemID\^(\d+)$/) {
-			$response = itemNameSimple($1);
-		}
-
-		push @{$talk{responses}}, $response if ($response ne "");
-	}
-
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
-
-	Commands::run('talk resp');
-
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
-}
-
-sub npc_talk_text {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
-	$ai_v{npc_talk}{talk} = 'text';
-	$ai_v{npc_talk}{time} = time;
 }
 
 # TODO: store this state
@@ -5968,6 +5817,97 @@ sub quest_all_list2 {
 			}
 		}
 	}
+}
+
+sub quest_all_list3 {
+	my ( $self, $args ) = @_;
+
+	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
+	our $quest_generation      ||= 0;
+	our $last_quest_generation ||= 0;
+	if ( $last_quest_generation != $quest_generation ) {
+		$last_quest_generation = $quest_generation;
+		$questList             = {};
+	}
+
+	my $i = 0;
+	while ( $i < $args->{RAW_MSG_SIZE} - 8 ) {
+		my ( $questID, $active, $time_start, $time, $mission_amount ) = unpack( 'V C V2 v', substr( $args->{message}, $i, 15 ) );
+		$i += 15;
+
+		$questList->{$questID}->{active} = $active;
+		debug "$questID $active\n", "info";
+
+		my $quest = \%{ $questList->{$questID} };
+		$quest->{time_start}     = $time_start;
+		$quest->{time}           = $time;
+		$quest->{mission_amount} = $mission_amount;
+		debug "$questID $time_start $time $mission_amount\n", "info";
+
+		if ( $mission_amount > 0 ) {
+			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
+				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
+				$i += 44;
+				my $mission = \%{ $quest->{missions}->{$conditionID} };
+				$mission->{conditionID} = $conditionID;
+				$mission->{mobID}       = $mobID;
+				$mission->{count}       = $count;
+				$mission->{goal}        = $goal;
+				$mission->{mobName_org} = $mobName;
+				$mission->{mobName}     = bytesToString( $mobName );
+				debug "- $mobID $count / $goal $mobName\n", "info";
+			}
+		}
+	}
+}
+
+sub achievement_list {
+	my ($self, $args) = @_;
+	
+	$achievementList = {};
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 22;
+	my $achieve_pack = 'V C V10 V C';
+	my $achieve_len = length pack $achieve_pack;
+	
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
+		my $achieve;
+
+		($achieve->{ach_id},
+		$achieve->{completed},
+		$achieve->{objective1},
+		$achieve->{objective2},
+		$achieve->{objective3},
+		$achieve->{objective4},
+		$achieve->{objective5},
+		$achieve->{objective6},
+		$achieve->{objective7},
+		$achieve->{objective8},
+		$achieve->{objective9},
+		$achieve->{objective10},
+		$achieve->{completed_at},
+		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
+		
+		$achievementList->{$achieve->{ach_id}} = $achieve;
+		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
+	}
+}
+
+sub achievement_update {
+	my ($self, $args) = @_;
+	
+	my $achieve;
+	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
+	
+	$achievementList->{$achieve->{ach_id}} = $achieve;
+	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
+}
+
+sub achievement_reward_ack {
+	my ($self, $args) = @_;
+	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
 sub show_script {

@@ -27,7 +27,7 @@
 16265#Caixa de Carnium Perfeito[10]#
 1191#Lâmina Escarlate#
 1287#Durga#
-1649#Cajado Raffine#
+1649#Cajado dos Esplêndidos#
 1746#Arco Élfico#
 16003#Maça Carga#
 1192#Espada Valhalla Iniciante#
@@ -1810,7 +1810,7 @@
 560#Chocolate Branco feito a mão#
 561#Chocolate Branco#
 573#Chocolate Quente#
-// 2006 Carnival 
+// 2006 Carnival
 5145#Chapéu_de_Carnaval#
 // Summer in rune event
 7525#Vale-Prêmio#
@@ -1997,7 +1997,7 @@
 7550#Ticket de Contribuição#
 7551#Ticket de Segunda Profissão#
 7552#Nota_com_Horários_dos_Jogos#
-//event - Roberto Magnus Quiz Show 
+//event - Roberto Magnus Quiz Show
 12137#Primeiro Prêmio#
 12138#Segundo Prêmio#
 12139#Terceiro Prêmio#
@@ -2426,7 +2426,7 @@
 7351#Diário do Amigo#
 2658#Rosa do Nilo#
 
-// -------- Ancient Relics, Juperos ---------- 
+// -------- Ancient Relics, Juperos ----------
 
 7352#Prato Transparente#
 7353#Prato Transparente#
@@ -2455,7 +2455,7 @@
 12040#Pedra do Sábio#
 
 
-// -- Jewel MOnster 
+// -- Jewel MOnster
 7575#Jóia Vermelha#
 7576#Jóia Azul#
 7577#Jóia Dourada#
@@ -2684,8 +2684,8 @@
 12910#Cx Asas de Mosca Gigantes[10]#
 12911#Caixa de Neuralizador[1]#
 12912#Espelho Convexo[10]#
-12913#Caixa Abençoada[10]#
-12914#Caixa Ágil[10]#
+12913#Caixa Abençoada[20]#
+12914#Caixa Ágil[20]#
 12915#Caixa de Aspersio[20]#
 12916#Caixa de Assumptio[20]#
 12917#Caixa do Vento[10]#
@@ -2938,7 +2938,7 @@
 // --------- Aventura de Hugel Odeng -----------
 584#Sopa com Bolinhos de Peixe#
 
-// --- 2007 Valentine's 
+// --- 2007 Valentine's
 7715#Receita_de_Chocolate_Caseiro#
 7716#Receita_de_Chocolate_Com_Morango#
 7717#Receita_de_Torta_de_Chocolate#
@@ -3139,21 +3139,21 @@
 7776#Passe_Antigravitacional#
 
 // ---------------- ????? 20070702 -----------------
-13711#Poção_Menor_de_Vida[10]#
-13712#Poção_Menor_de_Vida[30]#
-13713#Poção_Menor_de_Vida[50]#
-13714#Poção_Média_de_Vida[10]#
-13715#Poção_Média_de_Vida[30]#
-13716#Poção_Média_de_Vida[50]#
-13717#Caixa_de_Abrasivos[5]#
-13718#Caixa_de_Abrasivos[10]#
-13719#Caixa_de_Regeneração[5]#
-13720#Caixa_de_Regeneração[10]#
-13721#Teleporte_para_Calabouço[10]#
-14534#Poção_Menor_de_Vida#
-14535#Poção_Média_de_Vida#
+13711#Poção Menor de Vida [10]#
+13712#Poção Menor de Vida [30]#
+13713#Poção Menor de Vida [50]#
+13714#Poção Média de Vida [10]#
+13715#Poção Média de Vida [30]#
+13716#Poção Média de Vida [50]#
+13717#Caixa de_Abrasivos [5]#
+13718#Caixa de_Abrasivos [10]#
+13719#Caixa de_Regeneração [5]#
+13720#Caixa de Regeneração [10]#
+13721#Teleporte para Calabouço[10]#
+14534#Poção Menor de Vida#
+14535#Poção Média de Vida#
 14536#Abrasivo#
-14537#Poção_de_Regeneração#
+14537#Poção de Regeneração#
 
 // ---------------- ????? 20070801 -----------------
 13738#Cálice_da_Ilusão[5]#
@@ -3187,7 +3187,7 @@
 // ---------------- Halloween 2007 -----------------
 5356#Chapéu_de_Abóbora_do_Festival#
 
-// --------------- Draconic Society --------------------	
+// --------------- Draconic Society --------------------
 7558#Ticket de Promoção#
 
 // ------------------ New Headgears --------------------
@@ -3501,14 +3501,14 @@
 7840#Presente_da_Valquíria#
 
 // ---------- New Hats ----------
-	
+
 5322#Lencinho#
-5352#Chapéu_de_Poporing#			
-5100#Placa_de_Promoção#			
-5103#Presilha de Girassol#			
-5189#Espírito de Outono#			
-5200#Boina_Rosa#					
-5209#Boné Amarelo de Beisebol#	
+5352#Chapéu_de_Poporing#
+5100#Placa_de_Promoção#
+5103#Presilha de Girassol#
+5189#Espírito de Outono#
+5200#Boina_Rosa#
+5209#Boné Amarelo de Beisebol#
 5270#Folhas_de_Outono#
 
 // -------------- 2007? 9? ?? ??? ?? 13? -----------------
@@ -3908,7 +3908,7 @@
 5491#Chapéu de Cangaceiro#
 12375#Acarajé#
 
-//---- Poring Battle 
+//---- Poring Battle
 // ----------- ???? ??? ??? ------------
 2765#Estatueta de Aprendiz#
 2766#Estatueta de Espadachin#
@@ -5364,7 +5364,7 @@
 4484#Carta_Abelha_Rainha_Selada#
 4485#Carta_Pesar_Noturno_Selada#
 2481#Botas_Rúnicas#
-2573#Asas_de_Arcanjo# 
+2573#Asas_de_Arcanjo#
 
 
 //------Xma's Quest 2011-----
@@ -5552,7 +5552,7 @@
 18639#Quepe_da_Marinha#
 18590#Tiara_das_Cinco_Almas#
 17181#Caixa_de_Madeira_Entalhada#
-14545#Super_Manual_de_Batalha#
+14545#Diário de Aventuras#
 2164#Escudo_Brilhante#
 18631#Lacinho_da_Cozinheira#
 18645#Quepe_do_Marinheiro#
@@ -5977,11 +5977,11 @@
 18647#Tapa-Olho Estrelado#
 18648#Língua Congelada#
 12853#Ovo Estelar#
-17178#Água Milagrosa[50]#
+17178#Água Milagrosa [50]#
 12832#Água Milagrosa#
 17224#Bolinho Divino[10]#
 12883#Bolinho Divino#
- 
+
 1562#Diário de Campo de Batalha#
 //-----------------May 2013 items-----------------------------------
 19541#Flor Amável Branca#
@@ -6190,7 +6190,7 @@
 
 4869#Anti-Atraso 1#
 4872#Anti-Atraso 2#
-4873#Anti-Atraso 3# 
+4873#Anti-Atraso 3#
 4863#Crítico 1#
 4864#Crítico 2#
 4865#Crítico 3#
@@ -7190,7 +7190,7 @@
 15096#Malha Heroica do Comércio#
 15097#Traje Heroico da Ocultação#
 15098#Vestes Heroicas da Precisão#
-18122#Arco Colossal#
+18122#Arco Gigante#
 18123#Arco das Tempestades#
 4890#DEFM +1#
 4891#DEFM +3#
@@ -7404,4 +7404,275 @@
 19922#Chapéu Arcebispal#
 1837#Garra de Ferro#
 19020#Tiara Arcana#
+//*****************************************************
+//------------Aplicar em 2017-02-01--------------------
+//*****************************************************
+22101#Botas do ArchAngeling#
+29148#Gema de Leão#
+29149#Gema de Peixes#
+29151#Gema de Aquário#
+29150#Gema de Capricórnio#
+29152#Gema de Escorpião#
+29153#Gema de Touro#
+20383#Boneco da Artilharia Arcana#
+20382#Boneco da Artilharia Caçadora#
+20448#Dobra de Água#
+19118#Super Óculos Poring#
+23073#Caixa do ArchAngeling#
+//*****************************************************
+//------------Aplicar em 2017-02-07--------------------
+//*****************************************************
+31055#Sopra-Poring de Sabão#
+15186#Uniforme de Kafra#
+19168#Tiara Especial de Kafra#
+19220#Elmo Gigante#
+20393#Elmo do Alquimista Metálico#
+20462#Capa com Capuz de Gatinho#
+20374#Chapéu Cyberpunk Florido#
+23177#Cartão Kafra Especial#
+//*****************************************************
+//------------Aplicar em 2017-02-14--------------------
+//*****************************************************
+19111#Olho da Cecil#
+20176#Máscara Feliz do Pierrot#
+19892#Chapéu da Amoeba Alada#
+23135#Caixa de Balões Poring#
+31125#Chapéu da Realeza Pirata#
+20467#Mini Coroa da Primavera#
+19143#Balão de Poring#
+19146#Balão de Marin#
+19147#Balão de Drops#
+19148#Balão de Poring Natalino#
+19149#Balão de Poporing#
+19150#Balão de Metaling#
+19151#Balão de Deviling#
+19152#Balão de Angeling#
+19153#Balão de Ghostring#
+19154#Balão de Archangeling#
+//*****************************************************
+//------------Aplicar em 2017-02-21--------------------
+//*****************************************************
+20349#Meu Amigo Pingu#
+5933#Máscara do Tengu Corvo#
+20399#Fantasia do Tengu Corvo#
+19704#Peruca Afro Ruiva#
+19705#Peruca Afro Loira#
+19703#Peruca Afro Blackpower#
+//*****************************************************
+//------------Aplicar em 2017-03-07--------------------
+//*****************************************************
+31040#Tiara das Plumas Mágicas#
+19760#Véu do Arco-Íris#
+31046#Diadema de Rosas Brancas#
+31045#Laço Azul Delicado#
+20326#Gola Escolar de Marinheiro#
+//*****************************************************
+//------------Aplicar em 2017-03-14--------------------
+//*****************************************************
+9044#Ovo de Shinobi#
+9053#Ovo de Golem#
+9054#Ovo de Pesadelo#
+10026#Cantil de Vinho#
+10035#Mola de Corda#
+10036#Chifres Infernais#
+6099#Bolinho de Arroz Grelhado#
+6129#Ticket do Pesadelo#
+6141#Ticket do Shinobi#
+6142#Ticket do Golem#
+19762#Pombinhos Apaixonados#
+20482#Gaiola Florida#
+20196#Gorro de Leopardo#
+20449#Casal de Gatinhos#
+31028#Sobrepeliz de Gatinho#
+20499#Cartola da Pata de Gato#
+19138#Diadema do Serafim#
+//*****************************************************
+//------------Aplicar em 2017-03-21--------------------
+//*****************************************************
+18742#Luar de Cristal#
+19676#Chapéu do Poring Prismático#
+20148#Chapéu do Dartanham#
+18823#Diadema do Grifo#
+28910#Escudo de Placas Samurai#
+18564#Biscoito de Coração#
+23044#Doce de Elvira#
+//*****************************************************
+//------------Aplicar em 2017-03-28--------------------
+//*****************************************************
+20062#Brilho do Sol Nascente#
+15169#Manto do Kardui#
+//*****************************************************
+//------------Aplicar em 2017-04-05--------------------
+//*****************************************************
+28394#Bracelete da Valquíria Mágica#
+16051#Maça da Valquíria Mágica#
+5930#Tiara da Valquíria Mágica#
+19109#Tiara de Popstar#
+28377#Anel Mágico Elemental#
+20463#Boina Duplo-Tom#
+20458#Poring da Rosa Selvagem#
+31062#Peruca de Eleanor #
+5979#Penas Clampi ®#
+28321#Garra do Falcoeiro#
+28322#Luva do Falcoeiro#
+18985#Pena de Falcão#
+5985#Máscara da Nobreza#
+//*****************************************************
+//------------Aplicar em 2017-04-12--------------------
+//*****************************************************
+20268#Família Eclipse Dorminhoca#
+31139#Orelhas do Coelho Branco#
+31186#Gatinho Preto#
+20257#Capuz com Orelhas de Coelho#
+20298#Orelhas Brancas de Lunático#
+31167#Orelhas Pretas de Lunático#
+19117#Super Óculos Poring#
+//*****************************************************
+//------------Aplicar em 2017-04-18--------------------
+//*****************************************************
+18865#Coroa do Mestre Espadachim#
+19759#Chapéu da Corporação Sombrinha#
+19756#Chapéu do Amor Materno#
+//*****************************************************
+//------------Aplicar em 2017-04-25--------------------
+//*****************************************************
+5909#Bravura dos Einherjar#
+15166#Colar com Rosário#
+28386#Rosário do Monge Decaído#
+20487#Valsa da Primavera#
+20406#Chapéu de Andrômeda#
+31149#Peruca da Nidhogg#
+20439#Aura Solar#
+31166#Capuz de Ursinho#
+14000#Balas Amargas [500]#
+13571#Cx Asas de Mosca Gigantes[100]#
+13998#Cx Asas de Mosca Gigantes[500]#
+//*****************************************************
+//------------Aplicar em 2017-05-10--------------------
+//*****************************************************
+22106#Botas Gigantes#
+18652#Elmo de Vanargandr#
+18528#Gatinho Ranzinza#
+19271#Chapéu do Tigre Branco#
+//*****************************************************
+//------------Heroes Trail Parte I---------------------
+//*****************************************************
+6648#Coroa Entortada#
+6649#Chifre Quebrado#
+6650#Anel Antigo#
+6651#Bracelete Enferrujado#
+6652#Antigo Álbum de Fotos#
+6653#Pílula Antiga#
+13089#Perna de Verme com Rosto#
+13090#Perna da Rainha Verme#
+20717#Pele da Rainha Verme#
+20718#Pele da Rainha Verme#
+22507#Velho Pergaminho#
+//*****************************************************
+//------------Heroes Trail Parte II--------------------
+//*****************************************************
+1438#Lança de Cinzas#
+1496#Lança Dupla de Cinzas#
+1669#Cajado de Cinzas#
+1671#Cajado Esconjurante#
+1836#Punho de Cinzas#
+1933#Violino de Cinzas#
+1988#Chicote de Cinzas#
+2023#Cajado Duplo de Cinzas#
+2185#Refletor Mágico#
+2186#Enciclopédia Revisada#
+2187#Escudo de Cinzas#
+2963#Anel de Reforço Físico#
+2964#Anel de Reforço Mágico#
+4556#Carta Fenrir#
+4557#Carta Fenris#
+4885#Pedra de Feitiço 1#
+4886#Pedra de Feitiço 2#
+4887#Pedra de Feitiço 3#
+4888#Pedra de Feitiço 4#
+4889#Pedra de Feitiço 5#
+6671#Moeda Mágica de Geffen#
+6672#Fragmento de Cinzas#
+7641#Caixa com Primeiros Socorros#
+13093#Adaga de Cinzas#
+13094#Punhal Esconjurante#
+13441#Espada de Cinzas#
+15073#Traje Anti-Magia#
+15074#Manto Mágico de Geffen#
+15090#Armadura de Cinzas#
+15091#Manto de Cinzas#
+16027#Maça Esconjurante#
+16028#Maça de Cinzas#
+18119#Arco de Cinzas#
+18120#Arco Esconjurante#
+18820#Elmo de Cinzas#
+20721#Capa de Cinzas#
+21009#Grande Espada de Cinzas#
+21010#Espada Esconjurante#
+22033#Botas de Cinzas#
+22511#Carta Fenris Fenrir#
+22517#Pergaminho de Loki#
+28000#Katar de Cinzas#
+28001#Katar Esconjurante#
+28100#Machado de Cinzas#
+//*****************************************************
+//------------Aplicar em 2017-05-16--------------------
+//*****************************************************
+20746#Visual de Asas da Fênix#
+20761#Visual de Asas de Alfheim#
+19614#Supervisual de Aprendiz#
+31164#Xale do Xerloque#
+//*****************************************************
+//------------Aplicar em 2017-05-30--------------------
+//*****************************************************
+18522#Chapéu da Banda Infernal#
+28515#Anel Imperial#
+20069#Tiara de Grifo Real#
+//*****************************************************
+//------------Aplicar em 2017-06-07--------------------
+//*****************************************************
+12927#Caixa de Aspersio Especial [10]#
+31188#Chapéu Gótico-Lolita#
+19944#Fadinha Angelical#
+19257#Véu da Arcebispa#
+19252#Orelhas de Kardui#
+20727#Asas Douradas da Justiça#
+19106#Véu das Gemas Sagradas#
+31165#Pequeno Aprendiz#
+//*****************************************************
+//------------Aplicar em 2017-06-13--------------------
+//*****************************************************
+20451#Quepe da Estrela#
+31160#Elmo Rúnico Dourado#
+//*****************************************************
+//------------Aplicar em 2017-06-20--------------------
+//*****************************************************
+31189#Capa Vermelha de Gatinho#
+31168#Abafadores de Orelha de Carneiro#
+21012#Espada Mágica Celestial#
+19156#Orgulho Arco-Íris#
+20764#Asas Negras do Arcanjo#
+//*****************************************************
+//------------Aplicar em 2017-06-27--------------------
+//*****************************************************
+20431#Fita Mágica de Cetim#
+31121#Estola do Demônio#
+15206#Armadura Tatenashi#
+//*****************************************************
+//------------Aplicar em 2017-07-04--------------------
+//*****************************************************
+20507#Mochila de Poring#
+20133#Fantasia de Poring#
+20504#Asas da Sarakura#
+28025#Katares do Monarca#
+22104#Botas da Pororoca#
+20799#Toalha do Mochileiro#
+27120#Carta Iara#
+27121#Carta Espírito da Água#
+27122#Carta Curupira#
+27123#Carta Espírito do Vento#
+27124#Carta Espírito da Terra#
+27125#Carta Mula Sem Cabeça#
+27126#Carta Boitatá#
+13863#Pergam. Reparar Arma [10]#
 //file end

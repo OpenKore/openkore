@@ -156,7 +156,7 @@ sub getByName {
 # If nothing is found, undef is returned.
 sub getByServerIndex {
 	my ($self, $serverIndex) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{index} == $serverIndex) {
 			return $item;
 		}
@@ -171,7 +171,7 @@ sub getByServerIndex {
 # If nothing is found, undef is returned.
 sub getByNameID {
 	my ($self, $nameID) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{nameID} eq $nameID) {
 			return $item;
 		}
@@ -189,7 +189,7 @@ sub getByNameID {
 # being checked.
 sub getByCondition {
 	my ($self, $condition) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($condition->($item)) {
 			return $item;
 		}
@@ -243,14 +243,16 @@ sub remove {
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
 		my $indexSlot = $self->getNameIndexSlot($item->{name});
-		for (my $i = 0; $i < @{$indexSlot}; $i++) {
-			if ($indexSlot->[$i] == $item->{invIndex}) {
-				splice(@{$indexSlot}, $i, 1);
-				last;
-			}
-		}
-		if (@{$indexSlot} == 0) {
+		
+		if (@{$indexSlot} == 1) {
 			delete $self->{nameIndex}{lc($item->{name})};
+		} else {
+			for (my $i = 0; $i < @{$indexSlot}; $i++) {
+				if ($indexSlot->[$i] == $item->{invIndex}) {
+					splice(@{$indexSlot}, $i, 1);
+					last;
+				}
+			}
 		}
 
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
@@ -284,7 +286,7 @@ sub removeByName {
 # overloaded
 sub doClear {
 	my ($self) = @_;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		assert(defined $item->{invIndex}, "invIndex must be defined") if DEBUG;
 		my $eventID = $self->{nameChangeEvents}{$item->{invIndex}};
 		delete $self->{nameChangeEvents}{$item->{invIndex}};
@@ -359,7 +361,7 @@ sub sumByName {
 	my ($self, $name) = @_;
 	assert(defined $name) if DEBUG;
 	my $sum = 0;
-	foreach my $item (@{$self->getItems()}) {
+	for my $item (@$self) {
 		if ($item->{name} eq $name) {
 			$sum = $sum + $item->{amount};
 		}
