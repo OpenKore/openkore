@@ -5257,17 +5257,14 @@ If upgrade level is +9 or higher,
 ^0000FFLevel 2 Fatal Wound^000000 will be cast instead.
 #
 1269#
-^808080A Katar made from a dragon's scale.^000000
-^FFFFFF_^000000
-Type: Weapon
+^808080A katar made from a dragon's scale. Using it in battle causes enemies to be intimidated.^000000
 Class: Katar
 Attack: 140
 Property: Holy
 Weight: 150
 Weapon Level: 4
 Required Level: 55
-Required Job: Assassin Cross Jobs
-^FFFFFF_^000000
+Required Jobs: Assassin Cross Jobs
 Adds a 3% chance of casting ^0000FFLevel 1 Dragon Fear^000000 on the target when performing a physical attack.
 #
 1270#
@@ -5621,6 +5618,17 @@ Required Jobs: Assassin Cross
 Inflicts Bleeding on every enemy within the range of 5*5 cell for successful attack.
 Inflicts Bleeding on every enemy within the range of 11*11 cell for Refine Lv. 9 and up.
 
+#
+1297#
+^808080A katar made from a dragon's scale. Using it in battle causes enemies to be intimidated.^000000
+Class: Katar
+Attack: 140
+Property: Holy
+Weight: 150
+Weapon Level: 4
+Required Level: 55
+Required Jobs: Assassin Cross Jobs
+Adds a 3% chance of casting ^0000FFLevel 1 Dragon Fear^000000 on the target when performing a physical attack.
 #
 1299#
 ^FF0000Character Bound^000000
@@ -14890,6 +14898,19 @@ Increases the recovery rate of ^0000FFColuseo Heal^000000, ^0000FFHeal^000000, ^
 ^008080Rose of Eden^000000
 Increases the recovery rate of ^0000FFColuseo Heal^000000, ^0000FFHeal^000000, ^0000FFHigh Heal^000000, ^0000FFPotion Pitcher^000000 and ^0000FFSanctuary^000000 by an additional 10%.
 #
+2193#
+^808080A shield owned by an angel who was expelled from the heaven.^000000
+Class: Shield
+Defense: 100
+Weight: 50
+Required Level: 60
+Required Jobs: All Jobs
+Adds a 5% chance of buffing the user for 5 seconds when performing a magical attack; Reduces the cast delay of skills by 10%, Reduces the cast delay of skills by an additional 5% per upgrade level of the item past the upgrade level of 6.
+^800080Set Bonus^000000
+^008080Diabolus Robe^000000
+^008080Fallen Angel Shield^000000
+Reduces the cast delay of skills by 10%
+#
 2195#
 ^808080A shield with mystical powers.^000000
 ^FFFFFF_^000000
@@ -22226,8 +22247,12 @@ Required Jobs: All Jobs
 Max SP + 200
 Enables ^0000FFLevel 3 Scream^000000.
 ^800080Set Bonus^000000
-008080Hurt Mind^000000
+^008080Hurt Mind^000000
 ^008080Kind Heart^000000
+Adds a 1% chance of casting ^0000FFLevel 10 Frost Nova^000000 on the target when performing a physical or magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Mystical Amplification^000000 on the user when performing a magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Psychic Wave^000000 on the target when performing a physical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Scream^000000 on the attacker when receiving a short-ranged or magical attack.
 #
 2978#
 ^808080A gem bearing warm light having cozy and mild spell power in it.^000000
@@ -22238,8 +22263,12 @@ Required Jobs: All Jobs
 Max HP + 500
 Restores 300 HP to the user every 10 seconds.
 ^800080Set Bonus^000000
-008080Hurt Mind^000000
+^008080Hurt Mind^000000
 ^008080Kind Heart^000000
+Adds a 1% chance of casting ^0000FFLevel 10 Frost Nova^000000 on the target when performing a physical or magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Mystical Amplification^000000 on the user when performing a magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Psychic Wave^000000 on the target when performing a physical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Scream^000000 on the attacker when receiving a short-ranged or magical attack.
 #
 2979#
 Fleet belongs aroma of dark fruit, to bite.
@@ -22262,7 +22291,10 @@ Required Jobs: All Jobs
 Max HP + 500
 Max SP + 200
 Enables ^0000FFLevel 1 Fiber Lock^000000.
-Adds a X% chance of casting ^0000FFLevel X SKILL^000000 on the target when dealing and receiving a physical or magical attack.
+Adds a 1% chance of casting ^0000FFLevel 10 Frost Nova^000000 on the target when performing a physical or magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Mystical Amplification^000000 on the user when performing a magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Psychic Wave^000000 on the target when performing a physical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Scream^000000 on the attacker when receiving a short-ranged or magical attack.
 #
 2981#
 A ring made for warriors on the quest to defeat Morroc.
@@ -49487,13 +49519,11 @@ for 1 minute.
 Weight : ^7777771^000000
 #
 12464#
-A secret potion made
-using tough dragon
-scales. Adds 3%
-resistance to Physical
-Attacks for 3 minutes.
-^ffffff_^000000
-Weight : ^7777771^000000
+^808080A secret potion made using tough dragon scales.^000000
+^FF0000Account Bound^000000
+Class: Stat Boost
+Weight: 1
+Reduces damage taken from physical attacks by 3% for 3 minutes.
 #
 12465#
 A secret potion made
@@ -61038,6 +61068,25 @@ Atk + 30
 Aspd + 1
 Increases critical damage on targets by 20%.
 #
+15196#
+^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to enhance magical abilities.^000000
+Class: Armor
+Defense: 100
+Property: Neutral
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+All Stats + 1
+Reduces the SP cost of skills by 10%.
+If upgrade level is +7 or higher,
+Reduces the variable casting time of skills by 5%.
+Increases magical damage on Boss targets by 10%.
+Reduces the SP cost of skills by an additional 5%.
+If upgrade level is +9 or higher,
+Reduces the variable casting time of skills by an additional 5%.
+Increases magical damage on Boss targets by an additional 10%.
+Reduces the SP cost of skills by an additional 5%.
+#
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
 MaxSP +50.
@@ -65045,6 +65094,20 @@ Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 Box Weight : ^7777771^000000
 #
+17336#
+^808080^ff0000Cannot trade to other users.^000000
+Contains 1 Cash Hair Coupon.
+^ffffff_^000000
+Chief Hair Designer Jeremy's hairstyle change coupon. He can make you ultimately stylish!
+^ffffff_^000000
+^ff0000This item is excluded from subspscription withdrawal or refund.^000000
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
+#
 17340#
 A crate that contains 5 Pumpkin Spiced Lucky Boxes
 Lucky Box description:
@@ -66228,6 +66291,12 @@ Bloody Dead Branch x 2
 Chibi Pope Hat
 +20 Basic Food Pack
 #
+17646#
+^808080An animal halter lead that summons a creature to ride on. All mounts provide a 25% increase to movement speed, however you cannot attack while mounted.^000000
+^FF0000Account Bound^000000
+Class: Generic
+Weight: 1
+#
 17667#
 It's taken exactly 12 months for the scientist Kafras at the Kafra co to perfect the most romantic lucky box yet!
 They recommend standing back when opening these boxes or risk taking splash damage from the love energy generated by the fun Lunar New Year and Valentine's themed items within!
@@ -66710,6 +66779,127 @@ Costume Wind of the Prairie
 Costume Earth Goddess Flower
 Class: Item Giver
 Weight: 1
+#
+17837#
+^808080A box containing 10 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
+Class: Item Giver
+Weight: 1
+#
+17838#
+^808080A box containing 25 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
+Class: Item Giver
+Weight: 1
+#
+17839#
+^808080A box containing 100 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
+Class: Item Giver
+Weight: 1
+#
+17840#
+^808080A box which contains 5 Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17841#
+^808080A box which contains 5 Iron Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17842#
+^808080A box which contains 5 Steel Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17843#
+^808080A box which contains 5 Oridecon Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17844#
+^808080A box which contains 5 Fire Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17845#
+^808080A box which contains 5 Silver Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17846#
+^808080A box which contains 5 Wind Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17847#
+^808080A box which contains 5 Stone Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17848#
+^808080A box which contains 5 Crystal Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17849#
+^808080A box which contains 5 Shadow Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17850#
+^808080A box which contains 5 Immaterial Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17851#
+^808080A box which contains 5 Rusty Arrow Quiver.^000000
+Class: Item Giver
+Weight: 1
+#
+17852#
+^808080A mysterious egg which contains a costume.^000000
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Black Cat Hoodie
+Costume Tiger Face
+Costume Black and White Temptation
+Costume Pig Head
+Costume Pretty Bear
+Costume Cat Ear Hat
+Costume Elephant Hat
+Costume Umbala Spirit
+Costume Black Shiba Inu Hat
+Costume Quati Hat
+#
+17877#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+When opened it gives the following:
+15 Big Defense Potion
+15 Big Magic Defense Potion
+6 Medium Life Potion
+10 Token of Siegfried
+3 Life Insurance
+5 Regeneration Potion
+4 Mega Resist Potion
+1 Advanced WOE Supply Box
+1 Kafra Card Box
+#
+17878#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+When opened it gives the following:
+30 Big Defense Potion
+30 Big Magic Defense Potion
+12 Medium Life Potion
+20 Token of Siegfried
+6 Life Insurance
+10 Regeneration Potion
+8 Mega Resist Potion
+2 Advanced WOE Supply Box
+2 Kafra Card Box
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -71404,11 +71594,15 @@ LUK + 1
 Adds a chance of casting ^0000FFLevel 3 Blessing^000000 on the user when performing a physical or magical attack.
 #
 19101#
-A box that contains 1 Classic Omni Clothing Dye Coupon
-Description:
-If you give this coupon to the NPC, she will dye your costume.
-^ffffff_^000000
-Weight : ^7777770^000000
+^808080A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 10
+Required Level: 80
+Required Jobs: All Jobs
+Atk + 2%
+Reduces the cast delay of skills by 5%.
 #
 19102#
 ^808080A hat which is sealed with the executors wing.^000000
@@ -71574,7 +71768,6 @@ Weight : ^7777771^000000
 #
 19112#
 ^808080The scroll resonates with an ominous green glow in the form of an ancient spell.^000000
-^FFFFFF_^000000
 Type: Equipment
 Class: Headgear
 Position: Lower
@@ -71582,22 +71775,31 @@ Defense: 0
 Weight: 30
 Required Level: 40
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Adds a 3% chance of restoring 5% of damage as HP when performing a physical attack.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Tengu Scroll^000000
 ^008080Tengu Crow Mask^000000
+^008080Tengu Scroll^000000
 Increases physical damage on Small, Medium and Large size targets by 1%.
 Increases long-ranged damage on targets by 1%.
-^FFFFFF_^000000
-If the users base STR is 108 or higher,
+If the users base Str is 108 or higher,
 Increases physical damage on Small, Medium and Large size targets by an additional 2%.
 Increases long-ranged damage on targets by an additional 1%.
-^FFFFFF_^000000
-If the users base STR is 120 or higher,
+If the users base Str is 120 or higher,
 Increases physical damage on Small, Medium and Large size targets by an additional 3%.
 Increases long-ranged damage on targets by an additional 1%.
+#
+19113#
+^808080A pair of colored contact lenses that make the wearers eyes appear like those of the Gemini-S58.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 100
+Required Jobs: All Jobs
+Reduces damage taken from ^0000FFGenesis Ray^000000 and ^0000FFPsychic Wave^000000 by 30%.
+Increases resistance to ^800000Silence^000000 and ^800000Stun^000000 by 10%.
+If the users base Agi is 90 or higher,
+Increases resistance to ^800000Silence^000000 and ^800000Stun^000000 by an additional 30%.
 #
 19114#
 ^808080A luxurious ribbon made with soft silk.^000000
@@ -71763,6 +71965,26 @@ of many people when^FFFFFF       ^000000 used by a Party Master.
 This item can be traded and put into storage.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+19212#
+^808080The cat ears makes this a cute hat to wear.^000000
+Class: Headgear
+Position: Upper
+Defense: 2
+Weight: 50
+Required Level: 40
+Required Jobs: All Jobs
+Increases physical and magical damage on Malangdo monsters by 15%.
+Reduces damage taken from Malangdo monsters by 15%.
+Reduces damage taken from Wind property attacks by 10%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Malangdo monsters by an additional 15%.
+Reduces damage taken from Malangdo monsters by an additional 15%.
+If upgrade level is +8 or higher,
+Reduces damage taken from Wind property attacks by an additional 15%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Malangdo monsters by an additional 20%.
+Reduces damage taken from Malangdo monsters by an additional 20%.
 #
 19377#
 A marinated beef dish
@@ -74937,11 +75159,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20041#
-^ff0000From 3-17-2016 to 6-01-2016 will increase Luk by 5 and enable the dropping of Green Ale Items.^000000
-Class : ^777777Costume Gear^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A remarkable headpiece reflecting the beauty of Mother Earth^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20042#
 ^808080A cap worn by a desert assassin who fought with incredible speed.^000000
@@ -75410,10 +75633,12 @@ Required Lv. : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
 20156#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Bottom ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A cool fan for warm days. Hold it in your mouth when you need to use both hands!^000000
+Type: Equipment
+Class: Costume
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20160#
 PecoPoco Fried Egg.
@@ -76230,13 +76455,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20319#
-^808080A booster features its red color. The design looks like a manical booster, but the purpose of its development is unknown.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
+^808080A booster features its red color. The design looks like a magical booster, but the purpose of its development is unknown.^000000
+Class: Costume
+Position: Middle
 Weight: 0
 Required Level: 1
-Required Job: All Jobs
+Required Jobs: All Jobs
 #
 20321#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
@@ -76368,14 +76592,11 @@ Jobs : ^777777Dancer^000000
 #
 20329#
 ^808080There are no worries in the world when you are wearing this on your head.^000000
-^FFFFFF_^000000
-Type: Costume
+Class: Costume
 Position: Upper
 Weight: 0
 Required Level: 1
-Required Job: All Jobs
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+Required Jobs: All Jobs
 #
 20330#
 ^808080A traditional Mexican hat with a wide round brim.^000000
@@ -79644,6 +79865,31 @@ Type: Consumable
 Class: Item Giver
 Weight: 0
 #
+23414#
+^808080Weight : ^7777771^000000
+^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+When opened gives one of the following
+Magician's Gloves [1]
+Arch Bishop Ring
+Valkyrie Knife
+Evil Dragon Armor [1]
+Magical Ring [1]
+Tips of Thieves Vol. 1
+Hunting Knife
+Cylinder Hairband
+Beelzebub Wing Box
+(30) Enriched Oridecon
+(30) Enriched Elunium
+(5) Bloody Branch
+
+#
+23415#
+Class: Item Giver
+Weight: 1
+#
 24012#
 Gloves worn to enhance attacking accuracy.
 Dex +1
@@ -82292,6 +82538,65 @@ Increases the recovery rate of ^008080Candy^000000 and ^008080Candy Cane^000000 
 ^008080Lover in Mouth^000000
 Disables all the effects of ^008080Lover in Mouth^000000.
 #
+28430#
+^808080A beautiful ring engraved with a cross. It belonged to a leader with a special role.^000000
+Type: Equipment
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+Luk + 2
+Perfect Dodge + 5
+Increases the recovery rate of recovery skills by 15%.
+Reduces the SP cost of skills by 5%.
+Increases the recovery rate of recovery items by 15%.
+^800080Set Bonus^000000
+^008080Arch Bishop Ring^000000
+^008080Archbishop Lv1^000000
+Luk + 2
+Perfect Dodge + 5
+Reduces the variable casting time of ^0000FFHigh Heal^000000 by 100%.
+Increases the recovery rate of recovery skills by 3%.
+Reduces the SP cost of skills by 5%.
+^800080Set Bonus^000000
+^008080Arch Bishop Ring^000000
+^008080Catholic Lv1^000000
+Luk + 2
+Perfect Dodge + 5
+Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
+Increases the recovery rate of recovery skills by 3%.
+Reduces the SP cost of skills by 5%.
+Reduces the SP cost of ^0000FFColuseo Heal^000000 by 20.
+^800080Set Bonus^000000
+^008080Arch Bishop Ring^000000
+^008080Cure Lv1^000000
+Luk + 2
+Perfect Dodge + 5
+Reduces the cooldown of ^0000FFEpiclesis^000000 by 10 seconds.
+Increases the recovery rate of recovery skills by 3%.
+Reduces the SP cost of skills by 5%.
+Reduces the SP cost of ^0000FFEpiclesis^000000 by 100.
+^800080Set Bonus^000000
+^008080Arch Bishop Ring^000000
+^008080Heal3^000000
+Luk + 2
+Perfect Dodge + 5
+Reduces the cast delay delay of ^0000FFHigh Heal^000000 by 1 second.
+Increases the recovery rate of recovery skills by 3%.
+Reduces the SP cost of skills by 5%.
+#
+28434#
+^808080A pair of gloves once owned by a great boxer. They were designed to perform powerful attacks.^000000
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+Max SP + 100
+Atk + 2%
+Enables ^0000FFLevel 1 Spiritual Sphere Absorption^000000.
+If the users base Str is 100 or higher,
+Additional Atk + 5%
+#
 28441#
 ^808080A badge worn by members of a vigilante group that once existed to stop criminals.^000000
 Class: Accessory
@@ -82466,6 +82771,18 @@ Reduces the variable casting time of ^0000FFHell Gate^000000 by 3% for every 20 
 Reduces the variable casting time of ^0000FFLightning Ride^000000 by 5% for every 15 base levels.
 Reduces the cooldown of ^0000FFPower Absorb^000000 by 3 seconds.
 Increases the damage of ^0000FFLightning Ride^000000 by 5%.
+#
+28507#
+^808080A pair of gloves once owned by a genius magician. They allow the wearer to use their magic more efficiently.^000000
+^FF0000The glove can only be equipped in the right accessory slot.^000000
+Type: Equipment
+Class: Accessory
+Weight: 50
+Required Level: 80
+Required Jobs: All Jobs
+Reduces the variable casting time of skills by 10%.
+Increases the damage of Water, Earth, Fire, Wind and Ghost property magical attacks on targets by 5%
+Bypass 50% of Mdef of Normal and Boss targets when performing a magical attack. ^FF0000This effect does not work on other players.^000000
 #
 28600#
 #
