@@ -145,7 +145,7 @@ sub readNext {
 		}
 
 		# there is this third byte marks this packet as either encrypted or not
-		my $encryptionFlag = unpack("C", substr($$buffer, 2, 1));
+		$encryptionFlag = unpack("C", substr($$buffer, 2, 1));
 		if ($encryptionFlag == 1) {
 			Log::debug("encryption flag set; incoming packets need to be decrypted.\n");
 		}
