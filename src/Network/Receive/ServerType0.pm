@@ -583,18 +583,18 @@ sub new {
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
-		'09F0' => ['rodex_next_page', 'v C C C', [qw(len type count isEnd)]],   # -1
-		'09F6' => ['rodex_delete', 'C q', [qw(type mailID)]],   # 11
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type count isEnd)]],   # -1
+		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
-		'09F2' => ['rodex_get_zeny', 'q C C', [qw(mailID type result)]],   # 12
-		'09F4' => ['rodex_get_item', 'q C C', [qw(mailID type result)]],   # 12
+		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
-		'0A07' => ['rodex_remove_item', 'C v v v', [qw(result index count weight)]],   # 9
-		'0A14' => ['rodex_check_player', 'V v v Z24', [qw(char_id class base_level name)]],   # 10
+		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index count weight)]],   # 9
+		'0A14' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 10
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
-		'0A7D' => ['rodex_mail_list', 'v C C C', [qw(len type count isEnd)]],   # -1
+		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type count isEnd)]],   # -1
 	};
 
 	# Item RECORD Struct's
@@ -5987,6 +5987,8 @@ sub rodex_read_mail {
 	my $mail = {};
 	
 	$mail->{body} = substr($msg, $header_len, $args->{text_len});
+	$mail->{zeny1} = $args->{zeny1};
+	$mail->{zeny2} = $args->{zeny2};
 	
 	my $item_pack = 'v2 C3 v4 C9 v2 C v2 C v2 C v2 C v2 C';
 	my $item_len = length pack $item_pack;
@@ -5997,9 +5999,9 @@ sub rodex_read_mail {
 	
 	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
 	
-	$print_msg .= "Message: ".$mail->{body}.".\n";
+	$print_msg .= swrite(sprintf("\@%s", ('>'x($args->{text_len} + 12))), ["Message: ".$mail->{body}]);
 	
-	$print_msg .= "Item count: ".$args->{itemCount}.".\n";
+	$print_msg .= swrite(sprintf("\@%s \@%s", ('<'x18), ('<'x25)), ["Item count: ".$args->{itemCount}, "Zeny: ".$args->{zeny1}]);
 	
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
@@ -6046,7 +6048,7 @@ sub rodex_read_mail {
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
 	
-	@{$rodexList->{$args->{mailID1}}}{qw(body items)} = @{$mail}{qw(body items)};
+	@{$rodexList->{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
 }
 
 sub unread_rodex {
