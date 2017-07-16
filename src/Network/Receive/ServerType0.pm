@@ -591,7 +591,7 @@ sub new {
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index count weight)]],   # 9
-		'0A14' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 10
+		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type count isEnd)]],   # -1
@@ -6056,16 +6056,35 @@ sub unread_rodex {
 	message "You have new unread rodex mails.\n";
 }
 
-sub rodex_open_write {
+=pod
+		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
+		
+		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		
+		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		
+		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index count weight)]],   # 9
+		
+		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		
+		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type count isEnd)]],   # -1
+		
+		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
+=cut
+
+sub rodex_write_result {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
-	warning "[rodex_open_write] ".Dumper($args);
+	warning "[rodex_write_result] ".Dumper($args);
 }
 
-sub rodex_check_player {
+sub rodex_get_zeny {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
-	warning "[rodex_check_player] ".Dumper($args);
+	warning "[rodex_get_zeny] ".Dumper($args);
 }
 
 sub rodex_get_item {
@@ -6074,16 +6093,22 @@ sub rodex_get_item {
 	warning "[rodex_get_item] ".Dumper($args);
 }
 
+sub rodex_open_write {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_open_write] ".Dumper($args);
+}
+
 sub rodex_remove_item {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
 	warning "[rodex_remove_item] ".Dumper($args);
 }
 
-sub rodex_add_item {
+sub rodex_check_player {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
-	warning "[rodex_add_item] ".Dumper($args);
+	warning "[rodex_check_player] ".Dumper($args);
 }
 
 sub rodex_delete {
@@ -6098,16 +6123,10 @@ sub rodex_next_page {
 	warning "[rodex_next_page] ".Dumper($args);
 }
 
-sub rodex_write_result {
+sub rodex_add_item {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
-	warning "[rodex_write_result] ".Dumper($args);
-}
-
-sub rodex_get_zeny {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_zeny] ".Dumper($args);
+	warning "[rodex_add_item] ".Dumper($args);
 }
 
 1;
