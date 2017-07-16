@@ -5969,7 +5969,7 @@ sub rodex_mail_list {
 		$mail_len = $base_mail_len + $mail->{Titlelength};
 		
 		$rodexList->{$mail->{mailID1}} = $mail;
-		$print_msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x5), ('<'x28), ('<'x28)), [$index, $mail->{mailID1}, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
+		$print_msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail->{mailID1}, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
 		$index++;
 	}
 	$print_msg .= sprintf("%s\n", ('-'x79));
@@ -5986,34 +5986,42 @@ sub rodex_read_mail {
 	
 	my $mail = {};
 	
-	my $mail->{body} = substr($msg, $header_len, $args->{text_len});
+	$mail->{body} = substr($msg, $header_len, $args->{text_len});
 	
-	my $item_pack = 'V v v V C C C v v v v V C C V V v v C v v C v v C v v C v v C';
+	my $item_pack = 'v2 C3 v4 C9 v2 C v2 C v2 C v2 C v2 C';
 	my $item_len = length pack $item_pack;
-	
 	
 	my $mail_len;
 	
+	$mail->{items} = [];
+	
+	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
+	
+	$print_msg .= "Message: ".$mail->{body}.".\n";
+	
+	$print_msg .= "Item count: ".$args->{itemCount}.".\n";
+	
+	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 		my $item;
-
-		($item->{id},
-		$item->{nameid},
-		$item->{amount},
-		$item->{equip_location},
-		$item->{identified},
-		$item->{refine},
-		$item->{atribute},
-		$item->{Titlelength},
+		($item->{count},
+		$item->{ITID},
+		$item->{IsIdentified},
+		$item->{IsDamaged},
+		$item->{refiningLevel},
 		$item->{card1},
 		$item->{card2},
 		$item->{card3},
 		$item->{card4},
-		$item->{expire_time},
-		$item->{favorite},
-		$item->{char_bound},
-		$item->{unique_id1},
-		$item->{unique_id2},
+		$item->{unknow1},
+		$item->{unknow2},
+		$item->{unknow3},
+		$item->{unknow4},
+		$item->{type},
+		$item->{unknow5},
+		$item->{unknow6},
+		$item->{unknow7},
+		$item->{unknow8},
 		$item->{index1},
 		$item->{value1},
 		$item->{param1},
@@ -6031,11 +6039,14 @@ sub rodex_read_mail {
 		$item->{param5}) = unpack($item_pack, substr($msg, $i, $item_len));
 		
 		push(@{$mail->{items}}, $item);
+		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{ITID}, "Amount: ".$item->{count}]);
+		$index++;
 	}
 	
-	use Data::Dumper;
-	warning "[rodex_read_mail args] ".Dumper($args);
-	warning "[rodex_read_mail mail] ".Dumper($mail);
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+	
+	@{$rodexList->{$args->{mailID1}}}{qw(body items)} = @{$mail}{qw(body items)};
 }
 
 sub unread_rodex {
