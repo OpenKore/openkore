@@ -6509,9 +6509,51 @@ sub cmdRodex {
 		message "Sending rodex mail.\n";
 		$messageSender->rodex_send_mail();
 		
+	} elsif ($arg1 eq 'getitems') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexList->{current_read}) {
+			error "You are not reading a rodex mail.\n";
+			return;
+			
+		} elsif (scalar @{$rodexList->{$rodexList->{current_read}}{items}} == 0) {
+			error "The current rodex mail has no items.\n";
+			return;
+		}
+		
+		message "Requesting items of current rodex mail.\n";
+		$messageSender->rodex_request_items($rodexList->{current_read}, 0, 0);
+		
+	} elsif ($arg1 eq 'getzeny') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexList->{current_read}) {
+			error "You are not reading a rodex mail.\n";
+			return;
+			
+		} elsif ($rodexList->{$rodexList->{current_read}}{zeny1} == 0) {
+			error "The current rodex mail has no zeny.\n";
+			return;
+		}
+		
+		message "Requesting zeny of current rodex mail.\n";
+		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
+		
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|refresh|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+			"Usage: rodex [<open|close|refresh|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send|getitems|getzeny>]\n");
 	}
 }
 

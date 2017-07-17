@@ -587,8 +587,8 @@ sub new {
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
-		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
-		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
+		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index amount weight)]],   # 9
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
@@ -6042,6 +6042,7 @@ sub rodex_read_mail {
 	message $print_msg, "list";
 	
 	@{$rodexList->{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
+	$rodexList->{current_read} = $args->{mailID1};
 }
 
 sub unread_rodex {
@@ -6141,26 +6142,37 @@ sub rodex_write_result {
 	undef $rodexWrite;
 }
 
-=pod
-		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
-		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
-		
-		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		
-		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
-=cut
-
 sub rodex_get_zeny {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_zeny] ".Dumper($args);
+	
+	if ($args->{fail}) {
+		error "You failed to get the zeny of the rodex mail.\n";
+		return;
+	}
+	
+	message "The zeny of the rodex mail was requested with success.\n";
+	
+	$rodexList->{$args->{mailID1}}{zeny1} = 0;
 }
 
 sub rodex_get_item {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_item] ".Dumper($args);
+	
+	if ($args->{fail}) {
+		error "You failed to get the items of the rodex mail.\n";
+		return;
+	}
+	
+	message "The items of the rodex mail were requested with success.\n";
+	
+	$rodexList->{$args->{mailID1}}{items} = [];
 }
+
+=pod
+		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
+=cut
 
 sub rodex_delete {
 	my ( $self, $args ) = @_;
