@@ -55,7 +55,6 @@ our %customCommands;
 
 sub initHandlers {
 	%handlers = (
-	rodex				=> \&cmdRodex,
 	a					=> \&cmdAttack,
 	achieve				=> \&cmdAchieve,
 	ai					=> \&cmdAI,
@@ -166,6 +165,7 @@ sub initHandlers {
 	relog				=> \&cmdRelog,
 	repair				=> \&cmdRepair,
 	respawn				=> \&cmdRespawn,
+	rodex				=> \&cmdRodex,
 	s					=> \&cmdStatus,
 	sell				=> \&cmdSell,
 	send				=> \&cmdSendRaw,
@@ -6508,6 +6508,10 @@ sub cmdRodex {
 		
 		message "Sending rodex mail.\n";
 		$messageSender->rodex_send_mail();
+		
+	} else {
+		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
+			"Usage: rodex [<open|close|refresh|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
 	}
 }
 
