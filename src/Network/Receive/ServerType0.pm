@@ -6077,9 +6077,9 @@ sub rodex_remove_item {
 	
 	my $rodex_item = $rodexWrite->{items}->getByServerIndex($args->{index});
 	
-	my $rodex_disp = TF("Item removed from rodex mail message: %s x %d - %s",
+	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{invIndex}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$rodex_disp\n", "drop";
+	message "$disp\n", "drop";
 	
 	$rodex_item->{amount} -= $args->{amount};
 	if ($rodex_item->{amount} <= 0) {
