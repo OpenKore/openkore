@@ -5969,7 +5969,9 @@ sub rodex_mail_list {
 		$mail_len = $base_mail_len + $mail->{Titlelength};
 		
 		$rodexList->{$mail->{mailID1}} = $mail;
-		$print_msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail->{mailID1}, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
+		
+		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		
 		$index++;
 	}
 	$print_msg .= sprintf("%s\n", ('-'x79));
@@ -6119,7 +6121,7 @@ sub rodex_check_player {
 	
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 	
-	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x20), ('<'x50), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
+	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x28), ('<'x50), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
 	
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
@@ -6129,8 +6131,6 @@ sub rodex_check_player {
 
 sub rodex_write_result {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_write_result] ".Dumper($args);
 	
 	if ($args->{fail}) {
 		error "You failed to send the rodex mail.\n";
