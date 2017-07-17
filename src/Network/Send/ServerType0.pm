@@ -244,8 +244,6 @@ sub rodex_checkname {
 sub rodex_send_mail {
 	my ($self) = @_;
 	
-	use Data::Dumper;
-	
 	my $title_len = length($rodexWrite->{title});
 	my $text_len = length($rodexWrite->{body});
 	
@@ -269,13 +267,6 @@ sub rodex_send_mail {
 	my $body = stringToBytes($rodexWrite->{body});
 	
 	my $pack = $base_pack . $title . $body;
-	
-	Log::warning "[rodex_send_mail header_base_len] ".Dumper($header_base_len);
-	Log::warning "[rodex_send_mail title_len] ".Dumper($title_len);
-	Log::warning "[rodex_send_mail text_len] ".Dumper($text_len);
-	Log::warning "[rodex_send_mail len] ".Dumper($len);
-	Log::warning "[rodex_send_mail base pack true len] ".(length($base_pack))."\n";;
-	Log::warning "[rodex_send_mail true len] ".(length($pack))."\n";;
 	
 	$self->sendToServer($pack);
 }
