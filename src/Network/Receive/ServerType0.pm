@@ -583,18 +583,18 @@ sub new {
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
-		'09F0' => ['rodex_next_page', 'v C3', [qw(len type count isEnd)]],   # -1
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
-		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index count weight)]],   # 9
+		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index amount weight)]],   # 9
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
-		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
-		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type count isEnd)]],   # -1
+		'0A05' => ['rodex_add_item', 'C v3 C4 a8 a25 v a5', [qw(fail index amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
+		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 	};
 
 	# Item RECORD Struct's
@@ -6006,7 +6006,7 @@ sub rodex_read_mail {
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 		my $item;
-		($item->{count},
+		($item->{amount},
 		$item->{ITID},
 		$item->{IsIdentified},
 		$item->{IsDamaged},
@@ -6041,7 +6041,7 @@ sub rodex_read_mail {
 		$item->{param5}) = unpack($item_pack, substr($msg, $i, $item_len));
 		
 		push(@{$mail->{items}}, $item);
-		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{ITID}, "Amount: ".$item->{count}]);
+		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{ITID}, "Amount: ".$item->{amount}]);
 		$index++;
 	}
 	
@@ -6064,15 +6064,15 @@ sub unread_rodex {
 		
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		
-		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index count weight)]],   # 9
+		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index amount weight)]],   # 9
 		
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		
-		'09F0' => ['rodex_next_page', 'v C3', [qw(len type count isEnd)]],   # -1
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
 		
-		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index count ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
+		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index amount ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
 =cut
 
 sub rodex_write_result {
@@ -6095,20 +6095,34 @@ sub rodex_get_item {
 
 sub rodex_open_write {
 	my ( $self, $args ) = @_;
+	
+	$rodexWrite = {};
+	
+	$rodexWrite->{items} = new InventoryList;
+	
 	use Data::Dumper;
 	warning "[rodex_open_write] ".Dumper($args);
-}
-
-sub rodex_remove_item {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_remove_item] ".Dumper($args);
+	
 }
 
 sub rodex_check_player {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
 	warning "[rodex_check_player] ".Dumper($args);
+	
+	if (!$args->{char_id}) {
+		error "Could not find player with name '".$args->{name}."'.";
+		return;
+	}
+	
+	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
+	
+	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x35), ('<'x20), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
+	
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+	
+	@{$rodexWrite->{target}}{qw(name base_level class)} = @{$args}{qw(name base_level class)};
 }
 
 sub rodex_delete {
@@ -6123,10 +6137,89 @@ sub rodex_next_page {
 	warning "[rodex_next_page] ".Dumper($args);
 }
 
+sub rodex_remove_item {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_remove_item] ".Dumper($args);
+	
+	if (!$args->{result}) {
+		error "You failed to remove an item from rodex mail.\n";
+		return;
+	}
+	
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	
+	my $rodex_item = $rodexWrite->{items}->getByServerIndex($args->{index});
+	
+	my $rodex_disp = TF("Item removed from rodex mail message: %s x %d - %s",
+			$rodex_item->{name}, $rodex_item->{invIndex}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
+	message "$rodex_disp\n", "drop";
+	
+	if (!$item) {
+		$item = new Actor::Item();
+		$item->{index} = $args->{index};
+		$item->{nameID} = $rodex_item->{nameID};
+		$item->{type} = $rodex_item->{type};
+		$item->{amount} = $args->{amount};
+		$item->{identified} = $rodex_item->{identified};
+		$item->{broken} = $rodex_item->{broken};
+		$item->{upgrade} = $rodex_item->{upgrade};
+		$item->{cards} = $rodex_item->{cards};
+		$item->{options} = $rodex_item->{options};
+		$item->{name} = itemName($item);
+		$char->inventory->add($item);
+	} else {
+		$item->{amount} += $args->{amount};
+	}
+	
+	$rodex_item->{amount} -= $args->{amount};
+	if ($rodex_item->{amount} <= 0) {
+		$rodexWrite->{items}->remove($rodex_item);
+	}
+
+	my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
+		$item->{name}, $item->{invIndex}, $args->{amount}, $itemTypes_lut{$item->{type}});
+	message "$disp\n", "drop";
+}
+
 sub rodex_add_item {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
 	warning "[rodex_add_item] ".Dumper($args);
+	
+	if ($args->{fail}) {
+		error "You failed to add an item to rodex mail.\n";
+		return;
+	}
+	
+	my $item = $char->inventory->getByServerIndex($args->{index});
+	
+	my $rodex_item = $rodexWrite->{items}->getByServerIndex($args->{index});
+	
+	if ($rodex_item) {
+		$rodex_item->{amount} += $args->{amount};
+	} else {
+		$rodex_item = new Actor::Item();
+		$rodex_item->{index} = $args->{index};
+		$rodex_item->{nameID} = $args->{nameID};
+		$rodex_item->{type} = $args->{type};
+		$rodex_item->{amount} = $args->{amount};
+		$rodex_item->{identified} = $args->{identified};
+		$rodex_item->{broken} = $args->{broken};
+		$rodex_item->{upgrade} = $args->{upgrade};
+		$rodex_item->{cards} = $args->{cards};
+		$rodex_item->{options} = $args->{options};
+		$rodex_item->{name} = itemName($rodex_item);
+		
+		$rodexWrite->{items_count}++;
+		$rodexWrite->{items}->add($rodex_item);
+	}
+	
+	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
+			$rodex_item->{name}, $rodex_item->{invIndex}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
+	message "$disp\n", "drop";
+
+	inventoryItemRemoved($item->{invIndex}, $args->{amount});
 }
 
 1;
