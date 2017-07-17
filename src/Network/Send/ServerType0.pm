@@ -168,14 +168,6 @@ sub new {
 	return $self;
 }
 
-=pod
-		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
-		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
-		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
-		
-		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v2 V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
-=cut
-
 sub rodex_delete_mail {
 	my ($self, $type, $mailID1, $mailID2) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -205,6 +197,12 @@ sub rodex_request_items {
 		type => $type,
 	}));
 }
+
+=pod
+		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
+		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
+		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
+=cut
 
 sub rodex_cancel_write_mail {
 	my ($self) = @_;

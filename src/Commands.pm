@@ -6261,47 +6261,6 @@ sub cmdRodex {
 		message "Setting target of rodex mail to '".$arg2."'.\n";
 		$messageSender->rodex_checkname($arg2);
 		
-	} elsif ($arg1 eq 'add') {
-		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
-			return;
-			
-		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
-			return;
-			
-		} elsif ($arg2 eq "") {
-			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Usage: rodex add <item>\n");
-			return;
-		}
-		
-		my $max_items = $config{rodexMaxItems} || 5;
-		if ($rodexWrite->{items_count} > $max_items) {
-			error T("You can't add any more items to the rodex mail\n");
-			return;
-		}
-		
-		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
-		
-		my $item = $char->inventory->get($name);
-		if (!$item) {
-			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Inventory Item %s does not exist.\n", $name);
-			return;
-			
-		} elsif ($item->{equipped}) {
-			error TF("Inventory Item '%s' is equipped.\n", $name);
-			return;
-		}
-
-		if (!defined($amount) || $amount > $item->{amount}) {
-			$amount = $item->{amount};
-		}
-		
-		message "Adding amount ".$amount." of item ".$item." to rodex mail.\n";
-		$messageSender->rodex_add_item($item->{index}, $amount);
-		
 	} elsif ($arg1 eq 'itemslist') {
 		if (!defined $rodexList) {
 			error "Your rodex mail box is closed";
@@ -6428,6 +6387,9 @@ sub cmdRodex {
 			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
 				"Usage: rodex setzeny <zeny amount>\n");
 			return;
+		} elsif ($arg2 > $char->{zeny}) {
+			error "You can't add more zeny than you have to the rodex mail.\n";
+			return;
 		}
 		
 		if (exists $rodexWrite->{zeny}) {
@@ -6437,6 +6399,56 @@ sub cmdRodex {
 		}
 		
 		$rodexWrite->{zeny} = $arg2;
+		
+	} elsif ($arg1 eq 'add') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
+				"Usage: rodex add <item>\n");
+			return;
+		}
+		
+		my $max_items = $config{rodexMaxItems} || 5;
+		if ($rodexWrite->{items}->size >= $max_items) {
+			error T("You can't add any more items to the rodex mail\n");
+			return;
+		}
+		
+		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
+		
+		my $rodex_item = $rodexWrite->{items}->get($name);
+		my $item = $char->inventory->get($name);
+		
+		if (!$item) {
+			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
+				"Inventory Item %s does not exist.\n", $name);
+			return;
+		} elsif ($item->{equipped}) {
+			error TF("Inventory Item '%s' is equipped.\n", $name);
+			return;
+		} elsif ($rodex_item && $rodex_item->{amount} == $item->{amount}) {
+			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $name);
+			return;
+		} elsif ($rodex_item) {
+			my $max_add = ($item->{amount} - $rodex_item->{amount});
+			if (!defined($amount) || $amount > $max_add) {
+				$amount = $max_add;
+			}
+		} else {
+			if (!defined($amount) || $amount > $item->{amount}) {
+				$amount = $item->{amount};
+			}
+		}
+		
+		message "Adding amount ".$amount." of item ".$item." to rodex mail.\n";
+		$messageSender->rodex_add_item($item->{index}, $amount);
 		
 	} elsif ($arg1 eq 'remove') {
 		if (!defined $rodexList) {
@@ -6481,6 +6493,16 @@ sub cmdRodex {
 		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
 				"You still have to set something to send the mail (title, body, zeny oy target)\n");
+			return;
+		}
+		
+		
+		my $zeny_tax = int($rodexWrite->{zeny} / 50);
+		my $items_tax = ($rodexWrite->{items}->size * 2500);
+		my $tax = ($zeny_tax + $items_tax);
+		
+		if (($rodexWrite->{zeny} + $tax) > $char->{zeny}) {
+			error "The current tax for this rodex mail is $tax, you don't have enough zeny to pay for it.\n";
 			return;
 		}
 		

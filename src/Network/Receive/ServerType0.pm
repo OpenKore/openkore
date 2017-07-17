@@ -5999,9 +5999,17 @@ sub rodex_read_mail {
 	
 	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
 	
-	$print_msg .= swrite(sprintf("\@%s", ('>'x($args->{text_len} + 12))), ["Message: ".$mail->{body}]);
+	my @message_parts = unpack("(A51)*", $mail->{body});
 	
-	$print_msg .= swrite(sprintf("\@%s \@%s", ('<'x18), ('<'x25)), ["Item count: ".$args->{itemCount}, "Zeny: ".$args->{zeny1}]);
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Message:", $message_parts[0]]);
+	
+	foreach my $part (@message_parts[1..$#message_parts]) {
+		$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["", $part]);
+	}
+	
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
+	
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
 
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
@@ -6017,8 +6025,14 @@ sub rodex_read_mail {
 		$item->{unknow2},
 		$item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
 		
+		$item->{name} = itemName($item);
+		
+		my $display = $item->{name};
+		$display .= " x $item->{amount}";
+		
+		$print_msg .= swrite("@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $display]);
+		
 		push(@{$mail->{items}}, $item);
-		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{nameID}, "Amount: ".$item->{amount}]);
 		$index++;
 	}
 	
@@ -6033,98 +6047,13 @@ sub unread_rodex {
 	message "You have new unread rodex mails.\n";
 }
 
-=pod
-		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
-		
-		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
-		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
-		
-		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		
-		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
-=cut
-
-sub rodex_write_result {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_write_result] ".Dumper($args);
-	
-	if ($args->{fail}) {
-		error "You failed to send the rodex mail.\n";
-		return;
-	}
-	
-	message "Your rodex mail was sent with success.\n";
-	undef $rodexWrite;
-}
-
-sub rodex_get_zeny {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_zeny] ".Dumper($args);
-}
-
-sub rodex_get_item {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_get_item] ".Dumper($args);
-}
-
-sub rodex_open_write {
-	my ( $self, $args ) = @_;
-	
-	$rodexWrite = {};
-	
-	$rodexWrite->{items} = new InventoryList;
-	
-	use Data::Dumper;
-	warning "[rodex_open_write] ".Dumper($args);
-	
-}
-
-sub rodex_check_player {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_check_player] ".Dumper($args);
-	
-	if (!$args->{char_id}) {
-		error "Could not find player with name '".$args->{name}."'.";
-		return;
-	}
-	
-	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
-	
-	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x50), ('<'x20), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
-	
-	$print_msg .= sprintf("%s\n", ('-'x79));
-	message $print_msg, "list";
-	
-	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
-}
-
-sub rodex_delete {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_delete] ".Dumper($args);
-}
-
-sub rodex_next_page {
-	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_next_page] ".Dumper($args);
-}
-
 sub rodex_remove_item {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_remove_item] ".Dumper($args);
 	
 	if (!$args->{result}) {
 		error "You failed to remove an item from rodex mail.\n";
 		return;
 	}
-	
-	my $item = $char->inventory->getByServerIndex($args->{index});
 	
 	my $rodex_item = $rodexWrite->{items}->getByServerIndex($args->{index});
 	
@@ -6132,44 +6061,19 @@ sub rodex_remove_item {
 			$rodex_item->{name}, $rodex_item->{invIndex}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
 	message "$rodex_disp\n", "drop";
 	
-	if (!$item) {
-		$item = new Actor::Item();
-		$item->{index} = $args->{index};
-		$item->{nameID} = $rodex_item->{nameID};
-		$item->{type} = $rodex_item->{type};
-		$item->{amount} = $args->{amount};
-		$item->{identified} = $rodex_item->{identified};
-		$item->{broken} = $rodex_item->{broken};
-		$item->{upgrade} = $rodex_item->{upgrade};
-		$item->{cards} = $rodex_item->{cards};
-		$item->{options} = $rodex_item->{options};
-		$item->{name} = itemName($item);
-		$char->inventory->add($item);
-	} else {
-		$item->{amount} += $args->{amount};
-	}
-	
 	$rodex_item->{amount} -= $args->{amount};
 	if ($rodex_item->{amount} <= 0) {
 		$rodexWrite->{items}->remove($rodex_item);
 	}
-
-	my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
-		$item->{name}, $item->{invIndex}, $args->{amount}, $itemTypes_lut{$item->{type}});
-	message "$disp\n", "drop";
 }
 
 sub rodex_add_item {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_add_item] ".Dumper($args);
 	
 	if ($args->{fail}) {
 		error "You failed to add an item to rodex mail.\n";
 		return;
 	}
-	
-	my $item = $char->inventory->getByServerIndex($args->{index});
 	
 	my $rodex_item = $rodexWrite->{items}->getByServerIndex($args->{index});
 	
@@ -6187,16 +6091,87 @@ sub rodex_add_item {
 		$rodex_item->{cards} = $args->{cards};
 		$rodex_item->{options} = $args->{options};
 		$rodex_item->{name} = itemName($rodex_item);
-		
-		$rodexWrite->{items_count}++;
+
 		$rodexWrite->{items}->add($rodex_item);
 	}
 	
 	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{invIndex}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
 	message "$disp\n", "drop";
+}
 
-	inventoryItemRemoved($item->{invIndex}, $args->{amount});
+sub rodex_open_write {
+	my ( $self, $args ) = @_;
+	
+	$rodexWrite = {};
+	
+	$rodexWrite->{items} = new InventoryList;
+	
+}
+
+sub rodex_check_player {
+	my ( $self, $args ) = @_;
+	
+	if (!$args->{char_id}) {
+		error "Could not find player with name '".$args->{name}."'.";
+		return;
+	}
+	
+	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
+	
+	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x20), ('<'x50), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
+	
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+	
+	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
+}
+
+sub rodex_write_result {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_write_result] ".Dumper($args);
+	
+	if ($args->{fail}) {
+		error "You failed to send the rodex mail.\n";
+		return;
+	}
+	
+	message "Your rodex mail was sent with success.\n";
+	undef $rodexWrite;
+}
+
+=pod
+		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
+		
+		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		
+		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
+=cut
+
+sub rodex_get_zeny {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_get_zeny] ".Dumper($args);
+}
+
+sub rodex_get_item {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_get_item] ".Dumper($args);
+}
+
+sub rodex_delete {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_delete] ".Dumper($args);
+}
+
+sub rodex_next_page {
+	my ( $self, $args ) = @_;
+	use Data::Dumper;
+	warning "[rodex_next_page] ".Dumper($args);
 }
 
 1;
