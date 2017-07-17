@@ -6176,7 +6176,7 @@ sub cmdRodex {
 		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
 		my $index = 0;
 		foreach my $mail_id (keys %{$rodexList}) {
-			my $mail = $rodexList->{$mail_id};
+			my $mail = $rodexList->{mails}{$mail_id};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
 			$index++;
 		}
@@ -6201,7 +6201,7 @@ sub cmdRodex {
 				"Usage: rodex read <mail id>\n");
 			return;
 			
-		} elsif (!exists $rodexList->{$arg2}) {
+		} elsif (!exists $rodexList->{mails}{$arg2}) {
 			error "Mail of id $arg2 doesn't exist.\n";
 			return;
 		}
@@ -6522,7 +6522,7 @@ sub cmdRodex {
 			error "You are not reading a rodex mail.\n";
 			return;
 			
-		} elsif (scalar @{$rodexList->{$rodexList->{current_read}}{items}} == 0) {
+		} elsif (scalar @{$rodexList->{mails}{$rodexList->{current_read}}{items}} == 0) {
 			error "The current rodex mail has no items.\n";
 			return;
 		}
@@ -6543,7 +6543,7 @@ sub cmdRodex {
 			error "You are not reading a rodex mail.\n";
 			return;
 			
-		} elsif ($rodexList->{$rodexList->{current_read}}{zeny1} == 0) {
+		} elsif ($rodexList->{mails}{$rodexList->{current_read}}{zeny1} == 0) {
 			error "The current rodex mail has no zeny.\n";
 			return;
 		}
@@ -6551,9 +6551,55 @@ sub cmdRodex {
 		message "Requesting zeny of current rodex mail.\n";
 		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
 		
+	} elsif ($arg1 eq 'nextpage') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (exists $rodexList->{last_page}) {
+			error "You have already reached the last rodex mail page.\n";
+			return;
+		}
+		
+		message "Requesting the next page of rodex mail.\n";
+		$messageSender->rodex_next_maillist(0, $rodexList->{current_page_last_mailID}, 0);
+		
+	} elsif ($arg1 eq 'maillist') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+		}
+		
+		my @pages;
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
+			my $mail = $rodexList->{mails}{$mail_id};
+			
+			my $index;
+			if ($mail->{page} == 0) {
+				$index = $mail->{page_index};
+			} else {
+				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
+			}
+			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		}
+		
+		my $print_msg;
+		foreach my $page_index (0..$#pages) {
+			$print_msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
+			foreach my $mail_msg (@{$pages[$page_index]}) {
+				$print_msg .= $mail_msg;
+			}
+		}
+		$print_msg .= sprintf("%s\n", ('-'x79));
+		message $print_msg, "list";
+		
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|refresh|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send|getitems|getzeny>]\n");
+			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send|getitems|getzeny>]\n");
 	}
 }
 
