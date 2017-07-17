@@ -585,7 +585,7 @@ sub new {
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
+		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
@@ -5990,7 +5990,7 @@ sub rodex_read_mail {
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 	
-	my $item_pack = 'v2 C3 v4 C9 v2 C v2 C v2 C v2 C v2 C';
+	my $item_pack = 'v2 C3 a8 a4 C a4 a25';
 	my $item_len = length pack $item_pack;
 	
 	my $mail_len;
@@ -6002,46 +6002,23 @@ sub rodex_read_mail {
 	$print_msg .= swrite(sprintf("\@%s", ('>'x($args->{text_len} + 12))), ["Message: ".$mail->{body}]);
 	
 	$print_msg .= swrite(sprintf("\@%s \@%s", ('<'x18), ('<'x25)), ["Item count: ".$args->{itemCount}, "Zeny: ".$args->{zeny1}]);
-	
+
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 		my $item;
 		($item->{amount},
-		$item->{ITID},
-		$item->{IsIdentified},
-		$item->{IsDamaged},
-		$item->{refiningLevel},
-		$item->{card1},
-		$item->{card2},
-		$item->{card3},
-		$item->{card4},
+		$item->{nameID},
+		$item->{identified},
+		$item->{broken},
+		$item->{upgrade},
+		$item->{cards},
 		$item->{unknow1},
-		$item->{unknow2},
-		$item->{unknow3},
-		$item->{unknow4},
 		$item->{type},
-		$item->{unknow5},
-		$item->{unknow6},
-		$item->{unknow7},
-		$item->{unknow8},
-		$item->{index1},
-		$item->{value1},
-		$item->{param1},
-		$item->{index2},
-		$item->{value2},
-		$item->{param2},
-		$item->{index3},
-		$item->{value3},
-		$item->{param3},
-		$item->{index4},
-		$item->{value4},
-		$item->{param4},
-		$item->{index5},
-		$item->{value5},
-		$item->{param5}) = unpack($item_pack, substr($msg, $i, $item_len));
+		$item->{unknow2},
+		$item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
 		
 		push(@{$mail->{items}}, $item);
-		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{ITID}, "Amount: ".$item->{amount}]);
+		$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x10), ('<'x15)), [$index, "ID: ".$item->{nameID}, "Amount: ".$item->{amount}]);
 		$index++;
 	}
 	
@@ -6057,28 +6034,28 @@ sub unread_rodex {
 }
 
 =pod
-		'09ED' => ['rodex_write_result', 'C', [qw(result)]],   # 3
+		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type result)]],   # 12
 		
-		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
-		
-		'0A07' => ['rodex_remove_item', 'C v3', [qw(result index amount weight)]],   # 9
-		
-		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
-		
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		
 		'09F0' => ['rodex_next_page', 'v C3', [qw(len type amount isEnd)]],   # -1
-		
-		'0A05' => ['rodex_add_item', 'C v3 C4 v4 v2 C v2 C v2 C v2 C v2 C v a5', [qw(result index amount ITID type IsIdentified IsDamaged refiningLevel card1 card2 card3 card4 index1 value1 param1 index2 value2 param2 index3 value3 param3 index4 value4 param4 index5 value5 param5 weight unknow)]],   # 53
 =cut
 
 sub rodex_write_result {
 	my ( $self, $args ) = @_;
 	use Data::Dumper;
 	warning "[rodex_write_result] ".Dumper($args);
+	
+	if ($args->{fail}) {
+		error "You failed to send the rodex mail.\n";
+		return;
+	}
+	
+	message "Your rodex mail was sent with success.\n";
+	undef $rodexWrite;
 }
 
 sub rodex_get_zeny {
@@ -6117,12 +6094,12 @@ sub rodex_check_player {
 	
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 	
-	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x35), ('<'x20), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
+	$print_msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x50), ('<'x20), ('<'x20)), ["Name: ".$args->{name}, "Base Level: ".$args->{base_level}, "Class: ".$args->{class}]);
 	
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
 	
-	@{$rodexWrite->{target}}{qw(name base_level class)} = @{$args}{qw(name base_level class)};
+	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
 }
 
 sub rodex_delete {

@@ -6415,6 +6415,29 @@ sub cmdRodex {
 		
 		$rodexWrite->{body} = $arg2;
 		
+	} elsif ($arg1 eq 'setzeny') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
+			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
+				"Usage: rodex setzeny <zeny amount>\n");
+			return;
+		}
+		
+		if (exists $rodexWrite->{zeny}) {
+			message "Changed the rodex mail message zeny to '".$arg2."'.\n";
+		} else {
+			message "Set the rodex mail message zeny to '".$arg2."'.\n";
+		}
+		
+		$rodexWrite->{zeny} = $arg2;
+		
 	} elsif ($arg1 eq 'remove') {
 		if (!defined $rodexList) {
 			error "Your rodex mail box is closed";
@@ -6445,6 +6468,24 @@ sub cmdRodex {
 		
 		message "Removing amount ".$amount." of item ".$item." from rodex mail.\n";
 		$messageSender->rodex_remove_item($item->{index}, $amount);
+		
+	} elsif ($arg1 eq 'send') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
+			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
+				"You still have to set something to send the mail (title, body, zeny oy target)\n");
+			return;
+		}
+		
+		message "Sending rodex mail.\n";
+		$messageSender->rodex_send_mail();
 	}
 }
 
