@@ -179,10 +179,6 @@ sub rodex_delete_mail {
 	}));
 }
 
-=pod
-		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
-=cut
-
 sub rodex_request_zeny {
 	my ($self, $mailID1, $mailID2, $type) = @_;
 	$self->sendToServer($self->reconstruct({

@@ -6185,14 +6185,14 @@ sub rodex_get_item {
 	$rodexList->{mails}{$args->{mailID1}}{items} = [];
 }
 
-=pod
-		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-=cut
-
 sub rodex_delete {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
-	warning "[rodex_delete] ".Dumper($args);
+	
+	return unless (exists $rodexList->{mails}{$args->{mailID1}});
+	
+	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
+	
+	delete $rodexList->{mails}{$args->{mailID1}};
 }
 
 1;

@@ -6597,9 +6597,26 @@ sub cmdRodex {
 		$print_msg .= sprintf("%s\n", ('-'x79));
 		message $print_msg, "list";
 		
+	} elsif ($arg1 eq 'delete') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex delete' (Delete rodex mail)\n" .
+				"Usage: rodex delete <mail id>\n");
+			return;
+			
+		} elsif (!exists $rodexList->{mails}{$arg2}) {
+			error "Mail of id $arg2 doesn't exist.\n";
+			return;
+		}
+		
+		$messageSender->rodex_delete_mail(0,$arg2,0);
+		
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send|getitems|getzeny>]\n");
+			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
 	}
 }
 
