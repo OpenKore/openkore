@@ -34,7 +34,7 @@ sub new {
 
 	$self->{packet_list}{$_} = ['sync_request_ex'] for keys %npSync; #Shuffle Sync
 	$self->{sync_ex_reply}{$_} = $npSync{value} for keys %npSync; #Sync Reply
-	
+
 	#new packets
 	my %packets = ( #unique packets
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
@@ -58,13 +58,14 @@ sub gameguard_request {
 
 	debug "NProtect request received\n", "NProtect";
 	return if ($config{NProtect} == 0); #Disabled
+	return if ($config{XKore} > 1);
 	return if ($taskManager->countTasksByName('NProtect')); #Found task
-	
+
 	my $task; #Initialise
 	my $relogDelay = int(rand(int($timeout{'NProtect_relog_delay'}{'timeout'})) + 1) + 300 || 300;
 	my $relogSecond = int(rand($timeout{'NProtect_relog_second'}{'timeout'}) + 1) + 30 || 30;
 	error TF("NProtect check request received. Re-loging in %s seconds.\n", $relogDelay), 'info';
-	
+
 	if ($config{NProtect} == 1) {
 		$task = new Task::Chained(
 			name => 'NProtect',
@@ -84,13 +85,13 @@ sub gameguard_request {
 				new Task::Wait(seconds => $relogDelay),
 				new Task::Function(function => sub {
 					$messageSender->sendRestart(1);
-					if ($net->getState() != Network::IN_GAME) {					
+					if ($net->getState() != Network::IN_GAME) {
 						$_[0]->setDone;
 					}
 				})
 		]);
 	}
-	
+
 	$taskManager->add($task);
 }
 
@@ -141,7 +142,7 @@ sub parse_items_stackable {
 	my ($self, $args) = @_;
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-		
+
 		$item->{idenfitied} = $item->{identified} & (1 << 0);
 		if ($item->{flag} == 0) {
 			$item->{identified} = 0;
