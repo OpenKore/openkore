@@ -24,6 +24,8 @@ sub new {
 	my %packets = (
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v2 v a4 a4 C', [qw(skillID lv amount targetID sourceID success)]], # 17
+		#'09CB' => ['skill_used_no_damage', 'v v x2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],  #16
+
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
