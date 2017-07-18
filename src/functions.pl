@@ -660,6 +660,8 @@ sub initMapChangeVars {
 	undef $repairList;
 	undef $devotionList;
 	undef $cookingList;
+	undef $rodexList;
+	undef $rodexWrite;
 	$captcha_state = 0;
 
 	$itemsList->clear();
