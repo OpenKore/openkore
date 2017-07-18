@@ -1609,28 +1609,32 @@ sub include {
 	my $off = "\n------off------\n";
 	my $needrewrite = 0;
 	
-	foreach (@lines) {
-		if (/^!include/) {
+	foreach my $line (@lines) {
+		if ($line =~ /^\s*(!include\s.+)$/) {
+			my $include = $1;
 			if ($key eq 'list') {
-				$on .= $_;
+				$on .= $include."\n";
 				
 			} elsif ($key eq 'off') {
-				if ($param eq 'all' || /^!include .*$param.*/) {
-					s/^!/#!/g;
+				if ($param eq 'all' || $include =~ /.*$param.*/) {
+					$line =~ s/!include/#!include/g;
 					$needrewrite = 1;
-					message "[eventMacro] $_", 'list';
+					my ($file) = $include =~ /!include\s+(.+)$/;
+					message "[eventMacro] Removed ".$file."\n", 'list';
 				}
 			}
 			
-		} elsif (/^#[# ]*!include/) {
+		} elsif ($line =~ /^\s*(#!include\s.+)$/) {
+			my $include = $1;
 			if ($key eq 'list') {
-				$off .= $_;
+				$off .= $include."\n";
 				
 			} elsif ($key eq 'on') {
-				if ($param eq 'all' || /^#[# ]*!include .*$param.*/) {
-					s/^#[# ]*!/!/g;
+				if ($param eq 'all' || $include =~ /.*$param.*/) {
+					$line =~ s/#!include/!include/g;
 					$needrewrite = 1;
-					message "[eventMacro] $_", 'list';
+					my ($file) = $include =~ /#!include\s+(.+)$/;
+					message "[eventMacro] Added ".$file."\n", 'list';
 				}
 			}
 		}
