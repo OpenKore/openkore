@@ -359,15 +359,22 @@ sub iterate {
 			return;
 		}
 		
+		if ($ai_v{'npc_talk'}{'talk'} ne 'next') {
+			while ($self->{steps}[0] =~ /^c/i) {
+				warning "Ignoring excessive use 'c' in conversation with npc.\n";
+				shift(@{$self->{steps}});
+			}
+		
 		#This is to make non-autotalkcont sequences compatible with autotalkcont ones
-		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
+		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
 			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
 			debug "$self->{target}: Auto-continuing talking\n", 'ai_npcTalk';
+		}
 			
 		#This is done to restart the conversation (check if this is necessary)
-		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
+		if ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
 
