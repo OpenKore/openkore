@@ -104,7 +104,7 @@ sub new {
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0362' => ['item_take', 'x4 a4', [qw(ID)]],
+		'0362' => ['item_take', 'a4', [qw(ID)]],
 		'0363' => ['item_drop', 'v2', [qw(index amount)]],
 		'0364' => ['storage_item_add', 'v V', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v V', [qw(index amount)]],
