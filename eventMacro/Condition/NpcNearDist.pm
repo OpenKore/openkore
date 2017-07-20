@@ -4,179 +4,54 @@ use strict;
 use Globals;
 use Utils;
 
-use base 'eventMacro::Conditiontypes::MultipleValidatorState';
+use base 'eventMacro::Condition::BaseActorNearDist';
 
 sub _hooks {
-	['add_npc_list','npc_disappeared'];
+	my ( $self ) = @_;
+	my $hooks = $self->SUPER::_hooks;
+	my @other_hooks = ('add_npc_list','npc_disappeared');
+	push(@{$hooks}, @other_hooks);
+	return $hooks;
 }
 
 sub _dynamic_hooks {
-	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','npc_moved','npcNameUpdate'];
-}
-
-sub _parse_syntax {
-	my ( $self, $condition_code ) = @_;
-	
-	$self->{validators_index} = {
-		0 => 'eventMacro::Validator::RegexCheck',
-		1 => 'eventMacro::Validator::NumericComparison'
-	};
-	
-	$self->{number_of_possible_fulfill_actors} = 0;
-	$self->{possible_fulfill_actors} = {};
-	$self->{fulfilled_actor} = undef;
-	
-	$self->SUPER::_parse_syntax($condition_code);
+	my ( $self ) = @_;
+	my $hooks = $self->SUPER::_dynamic_hooks;
+	my @other_hooks = ('npc_moved','npcNameUpdate');
+	push(@{$hooks}, @other_hooks);
+	return $hooks;
 }
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	if ($callback_type eq 'variable') {
-		$self->update_validator_var($callback_name, $args);
+	if ($callback_type eq 'hook') {
+		$self->{actorList} = $npcsList;
+		$self->{actorType} = 'Actor::NPC';
 		
-		foreach my $validator_index ( @{ $self->{var_to_validator_index}{$callback_name} } ) {
-			if ($validator_index == 0) {
-				$self->recheck_all_actor_names;
-			} elsif ($validator_index == 1) {
-				$self->search_for_dist_match_on_possible_fulfill_actors_list;
-			}
-		}
-		
-	} elsif ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'add_npc_list' && $self->validator_check(0,$args->{name})) {
-			
-			if ($self->{number_of_possible_fulfill_actors} == 0) {
-				$self->add_or_remove_dynamic_hooks(1);
-			}
-			
-			$self->{number_of_possible_fulfill_actors}++;
-			$self->{possible_fulfill_actors}{$args->{binID}} = $args;
-			
-			if ( !defined $self->{fulfilled_actor} && $self->validator_check( 1, distance($char->{pos_to}, $args->{pos_to}) ) ) {
-				$self->{fulfilled_actor} = $args;
-			}
+		if ($callback_name eq 'add_npc_list') {
+			$self->{actor} = $args;
+			$self->{hook_type} = 'add_list';
 
-		} elsif ( $callback_name eq 'npc_disappeared' && exists($self->{possible_fulfill_actors}{$args->{npc}->{binID}}) ) {
-		
-			$self->{number_of_possible_fulfill_actors}--;
-			delete $self->{possible_fulfill_actors}{$args->{npc}->{binID}};
-			
-			if (defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
-				$self->search_for_dist_match_on_possible_fulfill_actors_list;
-			}
-			
-			if ($self->{number_of_possible_fulfill_actors} == 0) {
-				$self->add_or_remove_dynamic_hooks(0);
-			}
+		} elsif ($callback_name eq 'npc_disappeared') {
+			$self->{actor} = $args->{npc};
+			$self->{hook_type} = 'disappeared';
 		
 		} elsif ($callback_name eq 'npcNameUpdate') {
-		
-			if (!defined $self->{fulfilled_actor} && $self->validator_check(0,$args->{npc}->{name})) {
-				if ($self->{number_of_possible_fulfill_actors} == 0) {
-					$self->add_or_remove_dynamic_hooks(1);
-				}
-				$self->{number_of_possible_fulfill_actors}++;
-				$self->{possible_fulfill_actors}{$args->{npc}->{binID}} = $args->{npc};
-				if ( !defined $self->{fulfilled_actor} && $self->validator_check( 1, distance($char->{pos_to}, $args->{npc}->{pos_to}) ) ) {
-					$self->{fulfilled_actor} = $args->{npc};
-				}
-				
-			} elsif (exists($self->{possible_fulfill_actors}{$args->{npc}->{binID}})) {
-				$self->{number_of_possible_fulfill_actors}--;
-				delete $self->{possible_fulfill_actors}{$args->{npc}->{binID}};
-				
-				if (defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
-					$self->search_for_dist_match_on_possible_fulfill_actors_list;
-				}
-				
-				if ($self->{number_of_possible_fulfill_actors} == 0) {
-					$self->add_or_remove_dynamic_hooks(0);
-				}
-			}
+			$self->{actor} = $args->{npc};
+			$self->{hook_type} = 'NameUpdate';
 			
-		} elsif ( $callback_name eq 'npc_moved' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::NPC')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::NPC')) ) {
-			my $actor;
-			unless  ($callback_name eq 'npc_moved') {
-				$actor = Actor::get($args->{ID});
-				return $self->SUPER::validate_condition unless ($actor->isa('Actor::NPC'));
-			} else {
-				$actor = $args;
-			}
+		} elsif ($callback_name eq 'npc_moved') {
+			$self->{actor} = $args;
+			$self->{hook_type} = 'moved';
 			
-			return $self->SUPER::validate_condition unless (exists($self->{possible_fulfill_actors}{$actor->{binID}}));
-			
-			if (defined $self->{fulfilled_actor}) {
-			
-				return $self->SUPER::validate_condition if ($actor->{binID} != $self->{fulfilled_actor}->{binID} || $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ));
-				$self->search_for_dist_match_on_possible_fulfill_actors_list;
-				
-			} else {
-				
-				return $self->SUPER::validate_condition unless ( $self->validator_check( 1, distance( $char->{pos_to}, $actor->{pos_to} ) ) );
-				$self->{fulfilled_actor} = $actor;
-				
-			}
-		} elsif ($callback_name eq 'packet/character_moves' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::You')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::You'))) {
-			
-			if (defined $self->{fulfilled_actor}) {
-				return $self->SUPER::validate_condition if ( $self->validator_check( 1, distance( $char->{pos_to}, $self->{fulfilled_actor}->{pos_to} ) ) );
-				$self->search_for_dist_match_on_possible_fulfill_actors_list;
-			} else {
-				$self->search_for_dist_match_on_possible_fulfill_actors_list;
-			}
-			
-		} elsif ($callback_name eq 'packet_mapChange') {
-			if ($self->{number_of_possible_fulfill_actors} > 0) {
-				$self->add_or_remove_dynamic_hooks(0);
-			}
-			$self->{number_of_possible_fulfill_actors} = 0;
-			$self->{possible_fulfill_actors} = {};
-			$self->{fulfilled_actor} = undef;
-		}
-		
-	} elsif ($callback_type eq 'recheck') {
-		$self->recheck_all_actor_names;
-	}
-	return $self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
-}
-
-sub search_for_dist_match_on_possible_fulfill_actors_list {
-	my ($self) = @_;
-	$self->{fulfilled_actor} = undef;
-	my @array_of_possibles = values %{ $self->{possible_fulfill_actors} };
-	foreach my $actor (@array_of_possibles) {
-		next unless ( $self->validator_check( 1, distance($char->{pos_to}, $actor->{pos_to}) ) );
-		$self->{fulfilled_actor} = $actor;
-		last;
-	}
-}
-
-sub recheck_all_actor_names {
-	my ($self) = @_;
-	
-	my $pre_number = $self->{number_of_possible_fulfill_actors};
-	
-	$self->{fulfilled_actor} = undef;
-	$self->{number_of_possible_fulfill_actors} = 0;
-	$self->{possible_fulfill_actors} = {};
-	foreach my $actor (@{$npcsList->getItems()}) {
-		next unless ( $self->validator_check(0, $actor->{name}) );
-		$self->{number_of_possible_fulfill_actors}++;
-		$self->{possible_fulfill_actors}{$actor->{binID}} = $actor;
-		
-		unless (defined $self->{fulfilled_actor}) {
-			next unless ( $self->validator_check( 1, distance($char->{pos_to}, $actor->{pos_to}) ) );
-			$self->{fulfilled_actor} = $actor;
+		} elsif ($callback_name eq 'packet/actor_movement_interrupted' || $callback_name eq 'packet/high_jump') {
+			$self->{actor} = Actor::get($args->{ID});
+			$self->{hook_type} = 'interrupted_or_jump';
 		}
 	}
 	
-	if ($pre_number == 0 && $self->{number_of_possible_fulfill_actors} > 0) {
-		$self->add_or_remove_dynamic_hooks(1);
-	} elsif ($pre_number > 0 && $self->{number_of_possible_fulfill_actors} == 0) {
-		$self->add_or_remove_dynamic_hooks(0);
-	}
+	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
 }
 
 sub get_new_variable_list {
