@@ -124,7 +124,7 @@ charBlockSize 108
 #Re:Start
 # http://playragnarok.com
 [International - iRO: Re:Start]
-ip 128.241.92.134
+ip 128.241.92.133
 port 6800
 version 18
 master_version 1
@@ -135,6 +135,9 @@ charBlockSize 145
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 
+
+
+ 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
