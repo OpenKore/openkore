@@ -139,7 +139,7 @@ patchpath /repatch
 #Re:Start V2
 # I do not know what it is
 #I found in data.grf  yclientinfo.xml 
-[International - iRO: Re:Start]
+[International - iRO: Re:Start V2]
 ip 128.241.92.162
 port 6800
 version 18
