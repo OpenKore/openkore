@@ -135,6 +135,22 @@ charBlockSize 145
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 
+#Re:Start V2
+# I do not know what it is
+#I found in data.grf  yclientinfo.xml 
+[International - iRO: Re:Start]
+ip 128.241.92.162
+port 6800
+version 18
+master_version 1
+serverType iRO
+addTableFolders iRO
+serverEncoding Western
+charBlockSize 145
+patchserver ropatch1.gravityus.com
+patchpath /repatch
+
+
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
