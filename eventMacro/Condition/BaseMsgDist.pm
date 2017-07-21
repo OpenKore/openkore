@@ -29,7 +29,7 @@ sub validate_condition {
 	if ($callback_type eq 'hook') {
 		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
 		
-		foreach my $actor (@$self->{actorList}) {
+		foreach my $actor (@%$self->{actorList}) {
 			next unless ($actor->{name} eq $self->{source});
 			$self->{actor} = $actor;
 			$self->{dist} = distance($char->{pos_to}, $actor->{pos_to});
