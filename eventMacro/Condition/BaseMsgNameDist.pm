@@ -32,7 +32,7 @@ sub validate_condition {
 		
 		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 1, $self->{source} );
 		
-		foreach my $actor (@%$self->{actorList}) {
+		foreach my $actor (@{$self->{actorList}->getItems}) {
 			next unless ($actor->{name} eq $self->{source});
 			$self->{actor} = $actor;
 			$self->{dist} = distance($char->{pos_to}, $actor->{pos_to});
