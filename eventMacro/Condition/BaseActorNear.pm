@@ -27,7 +27,7 @@ sub validate_condition {
 			#need to check all other actor to find another one that matches or not
 			my $last_bin_id = $self->{fulfilled_actor}->{binID};
 			$self->{fulfilled_actor} = undef;
-			foreach my $actor (@%$self->{actorList}) {
+			foreach my $actor (@{$self->{actorList}->getItems}) {
 				next if ($actor->{binID} == $last_bin_id);
 				next unless ($self->validator_check($actor->{name}));
 				$self->{fulfilled_actor} = $actor;
@@ -42,7 +42,7 @@ sub validate_condition {
 			} elsif (defined $self->{fulfilled_actor} && $self->{actor}->{binID} == $self->{fulfilled_actor}->{binID}) {
 				unless ($self->validator_check($self->{actor}->{name})) {
 					$self->{fulfilled_actor} = undef;
-					foreach my $actor (@%$self->{actorList}) {
+					foreach my $actor (@{$self->{actorList}->getItems}) {
 						next unless ($self->validator_check($actor->{name}));
 						$self->{fulfilled_actor} = $actor;
 						last;
@@ -63,7 +63,7 @@ sub validate_condition {
 sub recheck_all_actor_names {
 	my ($self) = @_;
 	$self->{fulfilled_actor} = undef;
-	foreach my $actor (@%$self->{actorList}) {
+	foreach my $actor (@{$self->{actorList}->getItems}) {
 		next unless ($self->validator_check($actor->{name}));
 		$self->{fulfilled_actor} = $actor;
 		last;
