@@ -25,12 +25,15 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
+	$self->{char_create_version} = 1;
+
 	my %packets = (
 		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
+		character_create 0970
 		sync 0360
 		character_move 035F
 		actor_info_request 0368
