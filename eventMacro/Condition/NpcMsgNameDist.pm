@@ -16,13 +16,20 @@ sub _hooks {
 	return $hooks;
 }
 
+sub _parse_syntax {
+	my ( $self, $condition_code ) = @_;
+	
+	$self->{actorList} = $npcsList;
+	
+	$self->SUPER::_parse_syntax($condition_code);
+}
+
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{msg};
 		$self->{source} = $args->{name};
-		$self->{actorList} = $npcsList;
 	}
 	
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
