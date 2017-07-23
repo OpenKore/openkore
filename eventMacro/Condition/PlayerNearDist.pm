@@ -22,12 +22,19 @@ sub _dynamic_hooks {
 	return $hooks;
 }
 
+sub _parse_syntax {
+	my ( $self, $condition_code ) = @_;
+	
+	$self->{actorList} = $playersList;
+	$self->{actorType} = 'Actor::Player';
+	
+	$self->SUPER::_parse_syntax($condition_code);
+}
+
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
-		$self->{actorList} = $playersList;
-		$self->{actorType} = 'Actor::Player';
 		
 		if ($callback_name eq 'add_player_list') {
 			$self->{actor} = $args;
