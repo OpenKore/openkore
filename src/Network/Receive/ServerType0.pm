@@ -253,7 +253,7 @@ sub new {
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_info', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]],
-		'0199' => ['map_property', 'v', [qw(type)]],
+		'0199' => ['map_property', 'v', [qw(map_property_type)]],
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'],
@@ -296,7 +296,7 @@ sub new {
 		# OLD '01DA' => ['actor_moved', 'a4 v5 C x v3 x4 v5 a4 x4 v x C a5 x3 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords unknown1 unknown2 lv)]], # walking
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
-		'01D6' => ['map_property2', 'v', [qw(type)]],
+		'01D6' => ['map_property', 'v', [qw(map_type)]],
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
@@ -439,7 +439,7 @@ sub new {
 		# a4 a4 a4 V3 v C V ?
 		#'02E1' => ['actor_action', 'a4 a4 a4 V2 v x2 v x2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
-		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]],
+		'02E7' => ['map_property', 'x2 v b16', [qw(map_property_type info_bits)]],
 		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'02EA' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -552,7 +552,7 @@ sub new {
 		'0997' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'099B' => ['map_property', 'v b16', [qw(map_type info_bits)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
@@ -3175,49 +3175,6 @@ sub no_teleport {
 		error T("Unavailable Area To Memo\n");
 	} else {
 		error TF("Unavailable Area To Teleport (fail code %s)\n", $fail);
-	}
-}
-
-sub map_property {
-	my ($self, $args) = @_;
-
-	if($config{'status_mapProperty'}){
-		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-		map {[$_, defined $mapPropertyTypeHandle{$_} ? $mapPropertyTypeHandle{$_} : "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
-		1 .. List::Util::max $args->{type}, keys %mapPropertyTypeHandle;
-
-		if ($args->{info_table}) {
-			my $info_table = unpack('V1',$args->{info_table});
-			for (my $i = 0; $i < 16; $i++) {
-				if ($info_table&(1<<$i)) {
-					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
-				}
-			}
-		}
-	}
-	$pvp = {1 => 1, 3 => 2}->{$args->{type}};
-	if ($pvp) {
-		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # 1 PvP, 2 GvG
-		});
-	}
-}
-
-sub map_property2 {
-	my ($self, $args) = @_;
-
-	if($config{'status_mapType'}){
-		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
-		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
-	}
-	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
-	if ($pvp) {
-		Plugins::callHook('pvp_mode', {
-			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
-		});
 	}
 }
 

@@ -29,7 +29,7 @@ sub new {
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0999' => ['equip_item', 'v V v C', [qw(index type viewID success)]], #11
 		'099A' => ['unequip_item', 'v V C', [qw(index type success)]],#9
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
+		'099B' => ['map_property', 'v b16', [qw(map_type info_bits)]], #8
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
 		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1

@@ -1990,27 +1990,65 @@ sub actor_status_active {
 	}
 }
 
-#099B
-sub map_property3 {
+# 0199, 01D6, 02E7, 099B
+sub parse_map_property {
 	my ($self, $args) = @_;
 
-	if($config{'status_mapType'}){
-		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
-		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
-		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
-		0 .. List::Util::max $args->{type}, keys %mapTypeHandle;
+	if (defined $args->{info_bits}) {
+		$args->{info_status} = [split //, $args->{info_bits}];
+	}
 
-		if ($args->{info_table}) {
-			my $info_table = unpack('V1',$args->{info_table});
+	# 1 PvP, 2 GvG, 3 Battleground
+	if (defined $args->{mapPropertyType}) {
+		# 0199, 02E7
+		$args->{pvp} = {1 => 1, 3 => 2}->{$args->{mapPropertyType}};
+	} elsif (defined $args->{mapType}) {
+		# 01D6, 099B
+		$args->{pvp} = {6 => 1, 8 => 2, 19 => 3}->{$args->{mapType}};
+	}
+}
+
+sub reconstuct_map_property {
+	my ($self, $args) = @_;
+
+	if (defined $args->{info_status}) {
+		$args->{info_bits} = join '', @{$args->{info_status}};
+	}
+}
+
+sub map_property {
+	my ($self, $args) = @_;
+
+	if ($config{'status_mapType'}) {
+		# 0199, 02E7
+		if (defined $args->{map_property_type}) {
+			$char->setStatus(@$_) for map {[$_->[1], $args->{map_property_type} == $_->[0]]}
+			grep { $args->{map_property_type} == $_->[0] || $char->{statuses}{$_->[1]} }
+			map {[$_, $mapPropertyTypeHandle{$_} // "UNKNOWN_MAPPROPERTY_TYPE_$_"]}
+			1 .. List::Util::max $args->{map_property_type}, keys %mapPropertyTypeHandle;
+		}
+
+		# 01D6, 099B
+		if (defined $args->{map_type}) {
+			$char->setStatus(@$_) for map {[$_->[1], $args->{map_type} == $_->[0]]}
+			grep { $args->{map_type} == $_->[0] || $char->{statuses}{$_->[1]} }
+			map {[$_, $mapTypeHandle{$_} // "UNKNOWN_MAPTYPE_$_"]}
+			0 .. List::Util::max $args->{map_type}, keys %mapTypeHandle;
+		}
+	}
+
+	if ($config{'status_mapProperty'}) {
+		# 02E7, 099B
+		if (defined $args->{info_status}) {
 			for (my $i = 0; $i < 16; $i++) {
-				if ($info_table&(1<<$i)) {
+				if ($args->{info_status}[$i]) {
 					$char->setStatus(defined $mapPropertyInfoHandle{$i} ? $mapPropertyInfoHandle{$i} : "UNKNOWN_MAPPROPERTY_INFO_$i",1);
 				}
 			}
 		}
 	}
 
-	$pvp = {6 => 1, 8 => 2, 19 => 3}->{$args->{type}};
+	$pvp = $args->{pvp};
 	if ($pvp) {
 		Plugins::callHook('pvp_mode', {
 			pvp => $pvp # 1 PvP, 2 GvG, 3 Battleground
