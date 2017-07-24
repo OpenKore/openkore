@@ -1159,6 +1159,7 @@ sub actor_info {
 			$monster->setName($name);
 			$monsters_lut{$monster->{nameID}} = $name;
 			updateMonsterLUT(Settings::getTableFilename("monsters.txt"), $monster->{nameID}, $name);
+			Plugins::callHook('mobNameUpdate', {monster => $monster});
 		}
 	}
 
@@ -1176,6 +1177,7 @@ sub actor_info {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
 		}
+		Plugins::callHook('npcNameUpdate', {npc => $npc});
 	}
 
 	my $pet = $pets{$args->{ID}};
@@ -1188,6 +1190,7 @@ sub actor_info {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
 		}
+		Plugins::callHook('petNameUpdate', {pet => $pet});
 	}
 
 	my $slave = $slavesList->getByID($args->{ID});
@@ -1199,6 +1202,7 @@ sub actor_info {
 		my $binID = binFind(\@slavesID, $args->{ID});
 		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($slave);
+		Plugins::callHook('slaveNameUpdate', {slave => $slave});
 	}
 
 	# TODO: $args->{ID} eq $accountID
@@ -1316,6 +1320,37 @@ sub minimap_indicator {
 		message TF("%s cleared %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
 		'effect';
+	}
+}
+
+# 0x01B3
+sub parse_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = bytesToString($args->{npc_image});
+}
+
+sub reconstruct_npc_image {
+	my ($self, $args) = @_;
+
+	$args->{npc_image} = stringToBytes($args->{npc_image});
+}
+
+sub npc_image {
+	my ($self, $args) = @_;
+
+	if ($args->{type} == 2) {
+		message TF("NPC image: %s\n", $args->{npc_image}), 'npc';
+	} elsif ($args->{type} == 255) {
+		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+	} else {
+		message TF("NPC image: %s (unknown type %s)\n", $args->{npc_image}, $args->{type}), 'npc';
+	}
+
+	unless ($args->{type} == 255) {
+		$talk{image} = $args->{npc_image};
+	} else {
+		delete $talk{image};
 	}
 }
 
@@ -2251,12 +2286,19 @@ sub quest_all_mission {
 			$mission->{mobID} = $mobID;
 			$mission->{count} = $count;
 			$mission->{mobName} = bytesToString($mobName);
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+				
+			});
 			debug "- $mobID $count $mobName\n", "info";
 		}
 	}
 }
 
 # 02B3
+# 09F9
 # note: this packet shows all missions for 1 quest and has fixed length
 sub quest_add {
 	my ($self, $args) = @_;
@@ -2267,16 +2309,27 @@ sub quest_add {
 		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
 	}
 
+	my $pack = 'a0 V v Z24';
+	$pack = 'V x4 V x4 v Z24' if $args->{switch} eq '09F9';
+	my $pack_len = length pack $pack, ( 0 ) x 7;
+
 	$quest->{time_start} = $args->{time_start};
 	$quest->{time} = $args->{time};
 	$quest->{active} = $args->{active};
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
+	my $o = 17;
 	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 17+$i*30, 30));
-		my $mission = \%{$quest->{missions}->{$mobID}};
+		my ( $conditionID, $mobID, $count, $mobName ) = unpack $pack, substr $args->{RAW_MSG}, $o + $i * $pack_len, $pack_len;
+		my $mission = \%{$quest->{missions}->{$conditionID || $mobID}};
 		$mission->{mobID} = $mobID;
+		$mission->{conditionID} = $conditionID;
 		$mission->{count} = $count;
 		$mission->{mobName} = bytesToString($mobName);
+		Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count
+		});
 		debug "- $mobID $count $mobName\n", "info";
 	}
 }
@@ -2290,10 +2343,12 @@ sub quest_delete {
 }
 
 sub parse_quest_update_mission_hunt {
-	my ($self, $args) = @_;
-	@{$args->{mobs}} = map {
-		my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result
-	} unpack '(a10)*', $args->{mobInfo};
+	my ( $self, $args ) = @_;
+	if ( $args->{switch} eq '09FA' ) {
+		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result } unpack '(a12)*', $args->{mobInfo};
+	} else {
+		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result } unpack '(a10)*', $args->{mobInfo};
+	}
 }
 
 sub reconstruct_quest_update_mission_hunt {
@@ -2314,14 +2369,23 @@ sub reconstruct_quest_update_mission_hunt_v2 {
 }
 
 # 02B5
+# 09FA
 sub quest_update_mission_hunt {
-   my ($self, $args) = @_;
-   my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
-   my $quest = \%{$questList->{$questID}};
-   my $mission = \%{$quest->{missions}->{$mobID}};
-   $mission->{goal} = $goal;
-   $mission->{count} = $count;
-   debug "- $questID $mobID $count $goal\n", "info";
+	my ($self, $args) = @_;
+	my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
+	debug "- $questID $mobID $count $goal\n", "info";
+	if ($questID) {
+		my $quest = \%{$questList->{$questID}};
+		my $mission = \%{$quest->{missions}->{$mobID}};
+		$mission->{goal} = $goal;
+		$mission->{count} = $count;
+		Plugins::callHook('quest_mission_updated', {
+				questID => $questID,
+				mobID => $mobID,
+				count => $count,
+				goal => $goal
+		});
+	}
 }
 
 # 02B7
@@ -2418,6 +2482,8 @@ sub storage_closed {
 
 sub storage_items_stackable {
 	my ($self, $args) = @_;
+
+	$char->storage->clear;
 
 	$self->_items_list({
 		class => 'Actor::Item',
@@ -2839,9 +2905,8 @@ sub chat_newowner {
 		if ($user eq $char->{name}) {
 			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
 		} else {
-			my $players = $playersList->getItems();
 			my $player;
-			foreach my $p (@{$players}) {
+			for my $p (@$playersList) {
 				if ($p->{name} eq $user) {
 					$player = $p;
 					last;
@@ -3632,7 +3697,7 @@ sub item_disappeared {
 	my $item = $itemsList->getByID($args->{ID});
 	if ($item) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems(lc($item->{name})) > 0) {
-			foreach my Actor::Monster $monster (@{$monstersList->getItems()}) { # attack looter code
+			for my Actor::Monster $monster (@$monstersList) { # attack looter code
 				if (my $control = mon_control($monster->name,$monster->{nameID})) {
 					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
 						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
@@ -3875,6 +3940,134 @@ sub hat_effect {
 			$actor->verb(T("%s are no longer: %s\n"), T("%s is no longer: %s\n")),
 			$actor, $hatName
 		), 'effect';
+	}
+}
+
+sub npc_talk_close {
+	my ($self, $args) = @_;
+	# 00b6: long ID
+	# "Close" icon appreared on the NPC message dialog
+	my $ID = $args->{ID};
+	my $name = getNPCName($ID);
+
+	$ai_v{'npc_talk'}{'talk'} = 'close';
+	$ai_v{'npc_talk'}{'time'} = time;
+	undef %talk;
+
+	Plugins::callHook('npc_talk_done', {ID => $ID});
+}
+
+sub npc_talk_continue {
+	my ($self, $args) = @_;
+	my $ID = substr($args->{RAW_MSG}, 2, 4);
+	my $name = getNPCName($ID);
+
+	$ai_v{'npc_talk'}{'talk'} = 'next';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_talk_number {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'talk'} = 'number';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_talk_responses {
+	my ($self, $args) = @_;
+	# 00b7: word len, long ID, string str
+	# A list of selections appeared on the NPC message dialog.
+	# Each item is divided with ':'
+	my $msg = $args->{RAW_MSG};
+
+	my $ID = substr($msg, 4, 4);
+	$talk{ID} = $ID;
+	my $talk = unpack("Z*", substr($msg, 8));
+	$talk = substr($msg, 8) if (!defined $talk);
+	$talk = bytesToString($talk);
+
+	my @preTalkResponses = split /:/, $talk;
+	$talk{responses} = [];
+	foreach my $response (@preTalkResponses) {
+		# Remove RO color codes
+		$response =~ s/\^[a-fA-F0-9]{6}//g;
+		if ($response =~ /^\^nItemID\^(\d+)$/) {
+			$response = itemNameSimple($1);
+		}
+
+		push @{$talk{responses}}, $response if ($response ne "");
+	}
+
+	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
+
+	$ai_v{'npc_talk'}{'talk'} = 'select';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	Commands::run('talk resp');
+
+	my $name = getNPCName($ID);
+	Plugins::callHook('npc_talk_responses', {
+						ID => $ID,
+						name => $name,
+						responses => $talk{responses},
+						});
+}
+
+sub npc_talk_text {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'talk'} = 'text';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_store_begin {
+	my ($self, $args) = @_;
+	undef %talk;
+	$talk{ID} = $args->{ID};
+	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	my $name = getNPCName($args->{ID});
+}
+
+sub npc_store_info {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	undef @storeList;
+	my $storeList = 0;
+	undef %talk;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
+		my $price = unpack("V1", substr($msg, $i, 4));
+		my $type = unpack("C1", substr($msg, $i + 8, 1));
+		my $ID = unpack("v1", substr($msg, $i + 9, 2));
+
+		my $store = $storeList[$storeList] = {};
+		# TODO: use itemName() or itemNameSimple()?
+		my $display = ($items_lut{$ID} ne "")
+			? $items_lut{$ID}
+			: T("Unknown ").$ID;
+		$store->{name} = $display;
+		$store->{nameID} = $ID;
+		$store->{type} = $type;
+		$store->{price} = $price;
+		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
+		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
+		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
+		$storeList++;
+	}
+
+	$ai_v{npc_talk}{talk} = 'store';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	if (AI::action ne 'buyAuto') {
+		Commands::run('store');
 	}
 }
 

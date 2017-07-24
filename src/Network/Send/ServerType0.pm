@@ -22,7 +22,7 @@ use Misc qw(stripLanguageCode);
 use Network::Send ();
 use base qw(Network::Send);
 use Plugins;
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync);
+use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $rodexList $rodexWrite);
 use Log qw(debug);
 use Translation qw(T TF);
 use I18N qw(bytesToString stringToBytes);
@@ -137,7 +137,22 @@ sub new {
 		'0998' => ['send_equip', 'a2 V', [qw(ID type)]],#8
 		'09A1' => ['sync_received_characters'],
 		'09D0' => ['gameguard_reply'],
+		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
+		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
+		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
+		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
+		'09EA' => ['rodex_read_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexReadMail
+		'09E8' => ['rodex_open_mailbox', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexOpenMailbox
+		'09EE' => ['rodex_next_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexNextMaillist
+		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
+		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
+		'0A03' => ['rodex_cancel_write_mail'],   # 2 -- RodexCancelWriteMail
+		'0A04' => ['rodex_add_item', 'v2', [qw(index amount)]],   # 6 -- RodexAddItem
+		'0A06' => ['rodex_remove_item', 'v2', [qw(index amount)]],   # 6 -- RodexRemoveItem
+		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
+		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -152,6 +167,156 @@ sub new {
 	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
+}
+
+sub rodex_delete_mail {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_delete_mail',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_request_zeny {
+	my ($self, $mailID1, $mailID2, $type) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_request_zeny',
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+		type => $type,
+	}));
+}
+
+sub rodex_request_items {
+	my ($self, $mailID1, $mailID2, $type) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_request_items',
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+		type => $type,
+	}));
+}
+
+sub rodex_cancel_write_mail {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_cancel_write_mail',
+	}));
+	undef $rodexWrite;
+}
+
+sub rodex_add_item {
+	my ($self, $index, $amount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_add_item',
+		index => $index,
+		amount => $amount,
+	}));
+}
+
+sub rodex_remove_item {
+	my ($self, $index, $amount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_remove_item',
+		index => $index,
+		amount => $amount,
+	}));
+}
+
+sub rodex_open_write_mail {
+	my ($self, $name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_open_write_mail',
+		name => $name,
+	}));
+}
+
+sub rodex_checkname {
+	my ($self, $name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_checkname',
+		name => $name,
+	}));
+}
+
+sub rodex_send_mail {
+	my ($self) = @_;
+	
+	my $title_len = length($rodexWrite->{title});
+	my $text_len = length($rodexWrite->{body});
+	
+	my $header_pack = 'v Z24 Z24 V2 v2 V';
+	my $header_base_len = ((length pack $header_pack) + 2);
+	my $len = $header_base_len + $text_len + $title_len;
+	
+	my $base_pack = $self->reconstruct({
+		switch => 'rodex_send_mail',
+		len => $len,
+		receiver => $rodexWrite->{target}{name},
+		sender => $char->{name},
+		zeny1 => $rodexWrite->{zeny},
+		zeny2 => 0,
+		title_len => $title_len,
+		text_len => $text_len,
+		char_id => $rodexWrite->{target}{char_id}
+	});
+	
+	my $title = stringToBytes($rodexWrite->{title});
+	my $body = stringToBytes($rodexWrite->{body});
+	
+	my $pack = $base_pack . $title . $body;
+	
+	$self->sendToServer($pack);
+}
+
+sub rodex_refresh_maillist {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_refresh_maillist',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_read_mail {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_read_mail',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_next_maillist {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_next_maillist',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_open_mailbox {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_open_mailbox',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_close_mailbox {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_close_mailbox',
+	}));
+	undef $rodexList;
 }
 
 sub version {
@@ -1232,5 +1397,11 @@ sub sendCaptchaAnswer {
 }
 
 # 0x0204,18
+sub sendAchievementGetReward {
+	my ($self, $ach_id) = @_;
+	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
+	$self->sendToServer($msg);
+}
 
 1;
+

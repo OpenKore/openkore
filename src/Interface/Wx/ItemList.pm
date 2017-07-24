@@ -106,7 +106,7 @@ sub _getActorForIndex {
 	foreach my $l (@{$lists}) {
 		my $actorList = $l->{actorList};
 		if ($index >= $minIndex && $index < $minIndex + $actorList->size()) {
-			return $actorList->getItems()->[$index - $minIndex];
+			return $actorList->[$index - $minIndex];
 		} else {
 			$minIndex += $actorList->size();
 		}
@@ -142,9 +142,8 @@ sub _onRemove {
 
 sub _onClearBegin {
 	my ($self, $actorList) = @_;
-	my $actors = $actorList->getItems();
 
-	foreach my $actor (@{$actors}) {
+	foreach my $actor (@$actorList) {
 		my $addr = Scalar::Util::refaddr($actor);
 		my $ID = $self->{onNameChangeCallbacks}{$addr};
 		$actor->onNameChange->remove($ID);

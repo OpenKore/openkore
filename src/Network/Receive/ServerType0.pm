@@ -564,6 +564,9 @@ sub new {
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
+		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
+		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
@@ -571,11 +574,27 @@ sub new {
 		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
+		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
+		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
 		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
-		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
+		'09F0' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
+		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
+		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
+		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
+		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
+		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A07' => ['rodex_remove_item', 'C a2 v2', [qw(result ID amount weight)]],   # 9
+		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
+		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
+		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 	};
 
 	# Item RECORD Struct's
@@ -1149,6 +1168,7 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
+		our $quest_generation++;
 	}
 
 	$char->{pos} = {};
@@ -1477,14 +1497,14 @@ sub character_creation_successful {
 		$char->{$_} = $args->{$_} if (exists $args->{$_});
 	}
 	$char->{name} = bytesToString($args->{name});
-	$char->{jobID} = 0;
+	$char->{jobID} = defined $args->{job_id} ? $args->{job_id} : 0;
 	$char->{headgear}{low} = 0;
 	$char->{headgear}{top} = 0;
 	$char->{headgear}{mid} = 0;
 	$char->{nameID} = unpack("V", $accountID);
 	#$char->{lv} = 1;
 	#$char->{lv_job} = 1;
-	$char->{sex} = $accountSex2;
+	$char->{sex} = defined $args->{sex} ? $args->{sex} : $accountSex2;
 	$chars[$char->{slot}] = $char;
 
 
@@ -2097,6 +2117,10 @@ sub map_changed {
 		delete $char->{encoreSkill};
 	}
 	undef %guild;
+	if ( $char->cartActive ) {
+		$char->cart->close;
+		$char->cart->clear;
+	}
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
@@ -2198,19 +2222,6 @@ sub mvp_you {
 	chatLog("k", $msg);
 }
 
-sub npc_image {
-	my ($self, $args) = @_;
-	my ($imageName) = bytesToString($args->{npc_image});
-	if ($args->{type} == 2) {
-		debug "Show NPC image: $imageName\n", "parseMsg";
-	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $imageName\n", "parseMsg";
-	} else {
-		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
-	}
-	$talk{image} = $imageName;
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
@@ -2228,63 +2239,28 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 	
-	undef $talk{buyOrSell};
+	undef %talk;
 	message T("Ready to start selling items\n");
 
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-}
-
-sub npc_store_begin {
-	my ($self, $args) = @_;
-	undef %talk;
-	$talk{buyOrSell} = 1;
-	$talk{ID} = $args->{ID};
-	$ai_v{npc_talk}{talk} = 'buy';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($args->{ID});
-
-	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
-}
-
-sub npc_store_info {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
-	undef $talk{'buyOrSell'};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
-
-		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'store';
+	$ai_v{npc_talk}{talk} = 'sell';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	if (AI::action ne 'buyAuto') {
-		Commands::run('store');
-	}
 }
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+	}
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -2309,117 +2285,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $msg\n", "npc";
-}
-
-sub npc_talk_close {
-	my ($self, $args) = @_;
-	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	message TF("%s: Done talking\n", $name), "npc";
-
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
-
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
-	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
-}
-
-sub npc_talk_continue {
-	my ($self, $args) = @_;
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
-}
-
-sub npc_talk_number {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk_responses {
-	my ($self, $args) = @_;
-	# 00b7: word len, long ID, string str
-	# A list of selections appeared on the NPC message dialog.
-	# Each item is divided with ':'
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($msg, 4, 4);
-	$talk{ID} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8));
-	$talk = substr($msg, 8) if (!defined $talk);
-	$talk = bytesToString($talk);
-
-	my @preTalkResponses = split /:/, $talk;
-	$talk{responses} = [];
-	foreach my $response (@preTalkResponses) {
-		# Remove RO color codes
-		$response =~ s/\^[a-fA-F0-9]{6}//g;
-		if ($response =~ /^\^nItemID\^(\d+)$/) {
-			$response = itemNameSimple($1);
-		}
-
-		push @{$talk{responses}}, $response if ($response ne "");
-	}
-
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
-
-	Commands::run('talk resp');
-
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
-}
-
-sub npc_talk_text {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
-	$ai_v{npc_talk}{talk} = 'text';
-	$ai_v{npc_talk}{time} = time;
 }
 
 # TODO: store this state
@@ -5898,6 +5763,7 @@ sub skill_delete {
 	return if !$skill;
 	return if !$char->{skills}->{ $skill->getHandle };
 
+	message TF( "Lost skill: %s\n", $skill->getName ), 'skill';
 	delete $char->{skills}->{ $skill->getHandle };
 	binRemove( \@skillsID, $skill->getHandle );
 }
@@ -5965,6 +5831,97 @@ sub quest_all_list2 {
 	}
 }
 
+sub quest_all_list3 {
+	my ( $self, $args ) = @_;
+
+	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
+	our $quest_generation      ||= 0;
+	our $last_quest_generation ||= 0;
+	if ( $last_quest_generation != $quest_generation ) {
+		$last_quest_generation = $quest_generation;
+		$questList             = {};
+	}
+
+	my $i = 0;
+	while ( $i < $args->{RAW_MSG_SIZE} - 8 ) {
+		my ( $questID, $active, $time_start, $time, $mission_amount ) = unpack( 'V C V2 v', substr( $args->{message}, $i, 15 ) );
+		$i += 15;
+
+		$questList->{$questID}->{active} = $active;
+		debug "$questID $active\n", "info";
+
+		my $quest = \%{ $questList->{$questID} };
+		$quest->{time_start}     = $time_start;
+		$quest->{time}           = $time;
+		$quest->{mission_amount} = $mission_amount;
+		debug "$questID $time_start $time $mission_amount\n", "info";
+
+		if ( $mission_amount > 0 ) {
+			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
+				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
+				$i += 44;
+				my $mission = \%{ $quest->{missions}->{$conditionID} };
+				$mission->{conditionID} = $conditionID;
+				$mission->{mobID}       = $mobID;
+				$mission->{count}       = $count;
+				$mission->{goal}        = $goal;
+				$mission->{mobName_org} = $mobName;
+				$mission->{mobName}     = bytesToString( $mobName );
+				debug "- $mobID $count / $goal $mobName\n", "info";
+			}
+		}
+	}
+}
+
+sub achievement_list {
+	my ($self, $args) = @_;
+	
+	$achievementList = {};
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 22;
+	my $achieve_pack = 'V C V10 V C';
+	my $achieve_len = length pack $achieve_pack;
+	
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
+		my $achieve;
+
+		($achieve->{ach_id},
+		$achieve->{completed},
+		$achieve->{objective1},
+		$achieve->{objective2},
+		$achieve->{objective3},
+		$achieve->{objective4},
+		$achieve->{objective5},
+		$achieve->{objective6},
+		$achieve->{objective7},
+		$achieve->{objective8},
+		$achieve->{objective9},
+		$achieve->{objective10},
+		$achieve->{completed_at},
+		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
+		
+		$achievementList->{$achieve->{ach_id}} = $achieve;
+		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
+	}
+}
+
+sub achievement_update {
+	my ($self, $args) = @_;
+	
+	my $achieve;
+	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
+	
+	$achievementList->{$achieve->{ach_id}} = $achieve;
+	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
+}
+
+sub achievement_reward_ack {
+	my ($self, $args) = @_;
+	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
+}
+
 sub show_script {
 	my ($self, $args) = @_;
 	
@@ -5975,6 +5932,267 @@ sub senbei_amount {
 	my ($self, $args) = @_;
 	
 	$char->{senbei} = $args->{senbei};
+}
+
+sub rodex_mail_list {
+	my ( $self, $args ) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v C C C';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $mail_pack = 'V2 C C Z24 V V v';
+	my $base_mail_len = length pack $mail_pack;
+	
+	if ($args->{switch} eq '0A7D') {
+		$rodexList->{current_page} = 0;
+		$rodexList = {};
+		$rodexList->{mails} = {};
+	} else {
+		$rodexList->{current_page}++;
+	}
+	
+	if ($args->{isEnd} == 1) {
+		$rodexList->{last_page} = $rodexList->{current_page};
+	} else {
+		$rodexList->{mails_per_page} = $args->{amount};
+	}
+	
+	my $mail_len;
+	
+	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 79, '-') . "\n";
+	
+	my $index = 0;
+	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
+		my $mail;
+
+		($mail->{mailID1},
+		$mail->{mailID2},
+		$mail->{isRead},
+		$mail->{type},
+		$mail->{sender},
+		$mail->{regDateTime},
+		$mail->{expireDateTime},
+		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
+		
+		$mail->{title} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
+		
+		$mail->{page} = $rodexList->{current_page};
+		$mail->{page_index} = $index;
+		
+		$mail_len = $base_mail_len + $mail->{Titlelength};
+		
+		$rodexList->{mails}{$mail->{mailID1}} = $mail;
+		
+		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
+		
+		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		
+		$index++;
+	}
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+}
+
+sub rodex_read_mail {
+	my ( $self, $args ) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v C V2 v V2 C';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $mail = {};
+	
+	$mail->{body} = substr($msg, $header_len, $args->{text_len});
+	$mail->{zeny1} = $args->{zeny1};
+	$mail->{zeny2} = $args->{zeny2};
+	
+	my $item_pack = 'v2 C3 a8 a4 C a4 a25';
+	my $item_len = length pack $item_pack;
+	
+	my $mail_len;
+	
+	$mail->{items} = [];
+	
+	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
+	
+	my @message_parts = unpack("(A51)*", $mail->{body});
+	
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Message:", $message_parts[0]]);
+	
+	foreach my $part (@message_parts[1..$#message_parts]) {
+		$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["", $part]);
+	}
+	
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
+	
+	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
+
+	my $index = 0;
+	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
+		my $item;
+		($item->{amount},
+		$item->{nameID},
+		$item->{identified},
+		$item->{broken},
+		$item->{upgrade},
+		$item->{cards},
+		$item->{unknow1},
+		$item->{type},
+		$item->{unknow2},
+		$item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
+		
+		$item->{name} = itemName($item);
+		
+		my $display = $item->{name};
+		$display .= " x $item->{amount}";
+		
+		$print_msg .= swrite("@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $display]);
+		
+		push(@{$mail->{items}}, $item);
+		$index++;
+	}
+	
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+	
+	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
+	$rodexList->{current_read} = $args->{mailID1};
+}
+
+sub unread_rodex {
+	my ( $self, $args ) = @_;
+	message "You have new unread rodex mails.\n";
+}
+
+sub rodex_remove_item {
+	my ( $self, $args ) = @_;
+	
+	if (!$args->{result}) {
+		error "You failed to remove an item from rodex mail.\n";
+		return;
+	}
+	
+	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
+	
+	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
+			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
+	message "$disp\n", "drop";
+	
+	$rodex_item->{amount} -= $args->{amount};
+	if ($rodex_item->{amount} <= 0) {
+		$rodexWrite->{items}->remove($rodex_item);
+	}
+}
+
+sub rodex_add_item {
+	my ( $self, $args ) = @_;
+	
+	if ($args->{fail}) {
+		error "You failed to add an item to rodex mail.\n";
+		return;
+	}
+	
+	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
+	
+	if ($rodex_item) {
+		$rodex_item->{amount} += $args->{amount};
+	} else {
+		$rodex_item = new Actor::Item();
+		$rodex_item->{ID} = $args->{ID};
+		$rodex_item->{nameID} = $args->{nameID};
+		$rodex_item->{type} = $args->{type};
+		$rodex_item->{amount} = $args->{amount};
+		$rodex_item->{identified} = $args->{identified};
+		$rodex_item->{broken} = $args->{broken};
+		$rodex_item->{upgrade} = $args->{upgrade};
+		$rodex_item->{cards} = $args->{cards};
+		$rodex_item->{options} = $args->{options};
+		$rodex_item->{name} = itemName($rodex_item);
+
+		$rodexWrite->{items}->add($rodex_item);
+	}
+	
+	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
+			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
+	message "$disp\n", "drop";
+}
+
+sub rodex_open_write {
+	my ( $self, $args ) = @_;
+	
+	$rodexWrite = {};
+	
+	$rodexWrite->{items} = new InventoryList;
+	
+}
+
+sub rodex_check_player {
+	my ( $self, $args ) = @_;
+	
+	if (!$args->{char_id}) {
+		error "Could not find player with name '".$args->{name}."'.";
+		return;
+	}
+	
+	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
+	
+	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $args->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
+	
+	$print_msg .= sprintf("%s\n", ('-'x79));
+	message $print_msg, "list";
+	
+	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
+}
+
+sub rodex_write_result {
+	my ( $self, $args ) = @_;
+	
+	if ($args->{fail}) {
+		error "You failed to send the rodex mail.\n";
+		return;
+	}
+	
+	message "Your rodex mail was sent with success.\n";
+	undef $rodexWrite;
+}
+
+sub rodex_get_zeny {
+	my ( $self, $args ) = @_;
+	
+	if ($args->{fail}) {
+		error "You failed to get the zeny of the rodex mail.\n";
+		return;
+	}
+	
+	message "The zeny of the rodex mail was requested with success.\n";
+	
+	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
+}
+
+sub rodex_get_item {
+	my ( $self, $args ) = @_;
+	
+	if ($args->{fail}) {
+		error "You failed to get the items of the rodex mail.\n";
+		return;
+	}
+	
+	message "The items of the rodex mail were requested with success.\n";
+	
+	$rodexList->{mails}{$args->{mailID1}}{items} = [];
+}
+
+sub rodex_delete {
+	my ( $self, $args ) = @_;
+	
+	return unless (exists $rodexList->{mails}{$args->{mailID1}});
+	
+	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
+	
+	delete $rodexList->{mails}{$args->{mailID1}};
 }
 
 1;

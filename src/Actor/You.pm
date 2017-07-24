@@ -272,7 +272,7 @@ sub attack {
 					if ($Leq && !$Leq->{equipped}) {
 						if ($Req == $Leq) {
 							undef $Leq;
-							foreach my $item (@{$char->inventory->getItems()}) {
+							for my $item (@{$char->inventory}) {
 								if ($item->{name} eq $config{"autoSwitch_${i}_leftHand"} && $item != $Req) {
 									$Leq = $item;
 									last;
@@ -341,7 +341,7 @@ sub attack {
 			if ($Leq && !$Leq->{equipped}) {
 				if ($Req == $Leq) {
 					undef $Leq;
-					foreach my $item (@{$char->inventory->getItems()}) {
+					for my $item (@{$char->inventory}) {
 						if ($item->{name} eq $config{"autoSwitch_default_leftHand"} && $item != $Req) {
 							$Leq = $item;
 							last;

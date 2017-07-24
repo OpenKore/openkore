@@ -254,7 +254,7 @@ sub searchStep {
 
 			} elsif ( Task::Route->getRoute($self->{solution}, $self->{dest}{field}, $portals_lut{$portal}{dest}{$dest}, $self->{dest}{pos}) ) {
 				my $walk = "$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}=$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}";
-				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{$dest}{walk};
+				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{walk};
 				$closelist->{$walk}{parent} = $parent;
 				$closelist->{$walk}{zeny} = $closelist->{$parent}{zeny};
 				$closelist->{$walk}{allow_ticket} = $closelist->{$parent}{allow_ticket};
@@ -294,7 +294,7 @@ sub searchStep {
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
 						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
-						$openlist->{"$child=$subchild"}{allow_ticket} = $closelist->{$parent}{allow_ticket};
+						$openlist->{"$child=$subchild"}{allow_ticket} = $portals_lut{$child}{dest}{$subchild}{allow_ticket};
 					}
 				}
 			}

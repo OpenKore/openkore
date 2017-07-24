@@ -389,6 +389,11 @@ sub new {
 				types => 'a2 v C V2 C a8 l v2 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
+			type7 => {
+				len => 57,
+				types => 'v2 C V2 C a8 l v2 C a25 C',
+				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -530,7 +535,13 @@ sub items_nonstackable {
 		$args->{switch} eq '0996'	# storage
 	) {
 		return $items->{type6};
-
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
+	) {
+		return $items->{type7};
+		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1903,18 +1914,6 @@ sub mvp_you {
 	chatLog("k", $msg);
 }
 
-sub npc_image {
-	my ($self, $args) = @_;
-	my ($imageName) = bytesToString($args->{npc_image});
-	if ($args->{type} == 2) {
-		debug "Show NPC image: $imageName\n", "parseMsg";
-	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $imageName\n", "parseMsg";
-	} else {
-		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
-	}
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
@@ -1935,63 +1934,23 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 	
-	undef $talk{buyOrSell};
+	undef %talk;
 	message T("Ready to start selling items\n");
 
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-}
-
-sub npc_store_begin {
-	my ($self, $args) = @_;
-	undef %talk;
-	$talk{buyOrSell} = 1;
-	$talk{ID} = $args->{ID};
-	$ai_v{npc_talk}{talk} = 'buy';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($args->{ID});
-
-	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
-}
-
-sub npc_store_info {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
-	undef $talk{'buyOrSell'};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
-
-		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'store';
+	$ai_v{npc_talk}{talk} = 'sell';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	if (AI::action ne 'buyAuto') {
-		Commands::run('store');
-	}
 }
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		AI::queue("NPC", new Task::TalkNPC(type => 'autotalk', nameID => $nameID));
+	}
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -2011,117 +1970,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $talk{msg}\n", "npc";
-}
-
-sub npc_talk_close {
-	my ($self, $args) = @_;
-	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	message TF("%s: Done talking\n", $name), "npc";
-
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
-
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
-	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
-}
-
-sub npc_talk_continue {
-	my ($self, $args) = @_;
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
-}
-
-sub npc_talk_number {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk_responses {
-	my ($self, $args) = @_;
-	# 00b7: word len, long ID, string str
-	# A list of selections appeared on the NPC message dialog.
-	# Each item is divided with ':'
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($msg, 4, 4);
-	$talk{ID} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8));
-	$talk = substr($msg, 8) if (!defined $talk);
-	$talk = bytesToString($talk);
-
-	my @preTalkResponses = split /:/, $talk;
-	$talk{responses} = [];
-	foreach my $response (@preTalkResponses) {
-		# Remove RO color codes
-		$response =~ s/\^[a-fA-F0-9]{6}//g;
-		if ($response =~ /^\^nItemID\^(\d+)$/) {
-			$response = itemNameSimple($1);
-		}
-
-		push @{$talk{responses}}, $response if ($response ne "");
-	}
-
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
-
-	Commands::run('talk resp');
-	
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
-}
-
-sub npc_talk_text {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
-	$ai_v{npc_talk}{talk} = 'text';
-	$ai_v{npc_talk}{time} = time;
 }
 
 sub party_allow_invite {

@@ -779,8 +779,7 @@ sub objectIsMovingTowardsPlayer {
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
-		my $players = $playersList->getItems();
-		foreach my $player (@{$players}) {
+		for my $player (@$playersList) {
 			my $ID = $player->{ID};
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
@@ -1261,7 +1260,13 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ($messageSender->{char_create_version}) {
+			if ( $messageSender->{char_create_version} == 0x0A39 ) {
+				$message
+					= T( "Please enter the desired properties for your characters, in this form:\n" )
+					. T( "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n" )
+					. T( "Job should be one of 'novice' or 'summoner' (default is 'novice').\n" )
+					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
+			} elsif ($messageSender->{char_create_version}) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
 					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
 			} else {
@@ -1535,7 +1540,20 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ($messageSender->{char_create_version}) {
+	if ( $messageSender->{char_create_version} == 0x0A39 ) {
+		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
+		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
+
+		if ( grep { !/^(novice|summoner|male|female|m|f)$/io } @_ ) {
+			$interface->errorDialog( T( 'Unknown job or sex.' ), 0 );
+			return 0;
+		}
+
+		my $job_id = scalar( grep {/^summoner$/io} @_ ) ? 4218 : 0;
+		my $sex    = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
+
+		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $job_id, $sex );
+	} elsif ($messageSender->{char_create_version}) {
 		my ($hair_style, $hair_color) = @_;
 
 		$messageSender->sendCharCreate($slot, $name,
@@ -1920,9 +1938,16 @@ sub itemName {
 		my $elementID = $cards[1] % 10;
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
-		if ($starCrumbs >= 1 && $starCrumbs <= 3 ) {
-			$prefix .= (T("V")x$starCrumbs).T("S ") if $starCrumbs;
+		
+		# Translation-friendly
+		if ($starCrumbs == 1) {
+			$prefix .= T("VS ");
+		} elsif ($starCrumbs == 2) {
+			$prefix .= T("VVS ");
+		} elsif ($starCrumbs == 3) {
+			$prefix .= T("VVVS ");
 		}
+
 		# $prefix .= "$elementName " if ($elementName ne "");
 		$suffix = "$elementName" if ($elementName ne "");
 	} elsif (@cards) {
@@ -2263,8 +2288,7 @@ sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $ID = $player->{ID};
 		next if ($char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
@@ -2278,8 +2302,7 @@ sub positionNearPortal {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $portals = $portalsList->getItems();
-	foreach my $portal (@{$portals}) {
+	for my $portal (@$portalsList) {
 		return 1 if (distance($r_hash, $portal->{pos}) <= $dist);
 	}
 	return 0;
@@ -3247,7 +3270,7 @@ sub writeStorageLog {
 
 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
-		foreach my $item (@{$char->storage->getItems()}) {
+		for my $item (@{$char->storage}) {
 
 			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
@@ -3554,8 +3577,7 @@ sub percent_weight {
 #######################################
 
 sub avoidGM_near {
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
@@ -3613,8 +3635,7 @@ sub avoidGM_near {
 sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
@@ -4028,8 +4049,7 @@ sub checkSelfCondition {
     if (defined $config{$prefix . "_monstersCount"}) {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
-				my $monsters = $monstersList->getItems();
-				foreach my $monster (@{$monsters}) {
+				for my $monster (@$monstersList) {
 					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
                 }
             }
