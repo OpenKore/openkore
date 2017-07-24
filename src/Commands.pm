@@ -4285,7 +4285,7 @@ sub cmdSell {
 				}
 
 				$obj{name} = $item->nameString();
-				$obj{index} = $item->{ID};
+				$obj{ID} = $item->{ID};
 				$obj{binID} = $item->{binID};
 				if (!$args[1] || $args[1] > $item->{amount}) {
 					$obj{amount} = $item->{amount};
