@@ -1560,7 +1560,7 @@ sub processAutoSell {
 					$args->{lastIndex} = $item->{ID};
 
 					my %obj;
-					$obj{index} = $item->{ID};
+					$obj{ID} = $item->{ID};
 					$obj{amount} = $item->{amount} - $control->{keep};
 					push @sellItems, \%obj;
 
