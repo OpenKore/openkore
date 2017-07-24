@@ -148,8 +148,8 @@ sub new {
 		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
 		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
 		'0A03' => ['rodex_cancel_write_mail'],   # 2 -- RodexCancelWriteMail
-		'0A04' => ['rodex_add_item', 'v2', [qw(index amount)]],   # 6 -- RodexAddItem
-		'0A06' => ['rodex_remove_item', 'v2', [qw(index amount)]],   # 6 -- RodexRemoveItem
+		'0A04' => ['rodex_add_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexAddItem
+		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
@@ -208,19 +208,19 @@ sub rodex_cancel_write_mail {
 }
 
 sub rodex_add_item {
-	my ($self, $index, $amount) = @_;
+	my ($self, $ID, $amount) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_add_item',
-		index => $index,
+		ID => $ID,
 		amount => $amount,
 	}));
 }
 
 sub rodex_remove_item {
-	my ($self, $index, $amount) = @_;
+	my ($self, $ID, $amount) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_remove_item',
-		index => $index,
+		ID => $ID,
 		amount => $amount,
 	}));
 }
