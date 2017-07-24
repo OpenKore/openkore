@@ -15,10 +15,10 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{wanted_ID} = undef;
+	$self->{wanted} = undef;
 	
 	if ($condition_code =~ /^(\d+)\s+(\S.*)$/) {
-		$self->{wanted_ID} = $1;
+		$self->{wanted} = $1;
 		$condition_code = $2;
 	} else {
 		$self->{error} = "Item name must be inside quotation marks and a numeric comparison must be given";
@@ -33,7 +33,7 @@ sub _parse_syntax {
 
 sub _get_val {
 	my ( $self ) = @_;
-	getInventoryAmountbyID($self->{wanted_ID});
+	getInventoryAmountbyID($self->{wanted});
 }
 
 sub validate_condition {
@@ -68,8 +68,8 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".".$self->{name}."Last"} = $self->{wanted_ID};
-	$new_variables->{".".$self->{name}."LastAmount"} = getInventoryAmountbyID($self->{wanted_ID});
+	$new_variables->{".".$self->{name}."Last"} = $self->{wanted};
+	$new_variables->{".".$self->{name}."LastAmount"} = getInventoryAmountbyID($self->{wanted});
 	
 	return $new_variables;
 }

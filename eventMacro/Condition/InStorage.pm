@@ -13,11 +13,11 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{wanted_name} = undef;
+	$self->{wanted} = undef;
 	$self->{was_opened} = 0;
 	
 	if ($condition_code =~ /"(.+)"\s+(\S.*)/) {
-		$self->{wanted_name} = $1;
+		$self->{wanted} = $1;
 		$condition_code = $2;
 	} else {
 		$self->{error} = "Item name must be inside quotation marks and a numeric comparison must be given";
@@ -32,7 +32,7 @@ sub _parse_syntax {
 
 sub _get_val {
 	my ( $self ) = @_;
-	$char->storage->sumByName($self->{wanted_name});
+	$char->storage->sumByName($self->{wanted});
 }
 
 sub validate_condition {
@@ -62,8 +62,8 @@ sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
 	
-	$new_variables->{".".$self->{name}."Last"} = $self->{wanted_name};
-	$new_variables->{".".$self->{name}."LastAmount"} = $char->storage->sumByName($self->{wanted_name});
+	$new_variables->{".".$self->{name}."Last"} = $self->{wanted};
+	$new_variables->{".".$self->{name}."LastAmount"} = $char->storage->sumByName($self->{wanted});
 	
 	return $new_variables;
 }
