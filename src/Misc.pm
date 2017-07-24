@@ -4424,7 +4424,7 @@ sub makeShop {
 	my %used_items;
 	for my $sale (@{$shop{items}}) {
 		my $cart_item;
-		for my $item (@{$char->cart->getItems}) {
+		for my $item (@{$char->cart}) {
 			next unless $item->{name} eq $sale->{name};
 			next if $used_items{$item->{binID}};
 			$cart_item = $used_items{$item->{binID}} = $item;
@@ -4437,7 +4437,7 @@ sub makeShop {
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $cart_item->{ID};
+		$item{ID} = $cart_item->{ID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
