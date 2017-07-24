@@ -2097,6 +2097,7 @@ sub look {
 		look_body => shift,
 		look_head => shift
 	);
+	$args{look_head} = 0 unless (defined $args{look_head});
 	AI::queue("look", \%args);
 }
 
