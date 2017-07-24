@@ -186,7 +186,7 @@ sub reconstruct {
 		$self->$custom_reconstruct($args);
 	}
 
-	if (DEBUG) {
+	if (DEBUG && $config{debugAssertOnNetwork}) {
 		# check if all values we're going to pack are defined
 		for (@$varNames) {
 			assert(defined $args->{$_}, "Argument $_ should be defined for packet $name");
