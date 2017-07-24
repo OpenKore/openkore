@@ -185,6 +185,14 @@ sub reconstruct {
 	if (my $custom_reconstruct = $self->can('reconstruct_'.$name)) {
 		$self->$custom_reconstruct($args);
 	}
+
+	if (DEBUG) {
+		# check if all values we're going to pack are defined
+		for (@$varNames) {
+			assert(defined $args->{$_}, "Argument $_ should be defined for packet $name");
+		}
+	}
+
 	my $packet = pack("v $packString", hex $switch, $packString && @{$args}{@$varNames});
 	
 	if (exists $rpackets{$switch}) {

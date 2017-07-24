@@ -33,7 +33,7 @@ sub addToCart {
 	if ($char->can('cart')) {
 		$char->cart->add($item);
 	} else {
-		$cart{inventory}[$item->{index}] = $item;
+		$cart{inventory}[$item->{ID}] = $item;
 	}
 }
 
@@ -49,21 +49,21 @@ sub run {
 	for (1..2) {
 		my $sword = Actor::Item->new;
 		$sword->{name} = SWORD_NAME;
-		$sword->{index} = $_;
+		$sword->{ID} = $_;
 		$sword->{amount} = 1;
 		$sword->{identified} = 1;
 		$self->addToCart($sword);
 	}
 	my $potion = Actor::Item->new;
 	$potion->{name} = POTION_NAME;
-	$potion->{index} = 0;
+	$potion->{ID} = 0;
 	$potion->{amount} = POTION_AMOUNT + 100;
 	$potion->{identified} = 1;
 	$self->addToCart($potion);
 
 	my $other = Actor::Item->new;
 	$other->{name} = LOOT_NAME;
-	$other->{index} = 9;
+	$other->{ID} = 9;
 	$other->{amount} = 1;
 	$other->{identified} = 1;
 

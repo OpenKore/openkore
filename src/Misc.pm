@@ -1609,7 +1609,7 @@ sub deal {
 sub dealAddItem {
 	my ($item, $amount) = @_;
 
-	$messageSender->sendDealAddItem($item->{index}, $amount);
+	$messageSender->sendDealAddItem($item->{ID}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
 }
 
@@ -1625,7 +1625,7 @@ sub drop {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendDrop($item->{index}, $amount);
+		$messageSender->sendDrop($item->{ID}, $amount);
 	}
 }
 
@@ -1799,73 +1799,73 @@ sub inInventory {
 	my $item = $char->inventory->getByName($itemIndex);
 	return if !$item;
 	return unless $item->{amount} >= $quantity;
-	return $item->{invIndex};
+	return $item->{binID};
 }
 
 ##
-# inventoryItemRemoved($invIndex, $amount)
+# inventoryItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{inventory}.
+# Removes $amount of $binID from $char->{inventory}.
 # Also prints a message saying the item was removed (unless it is an arrow you
 # fired).
 sub inventoryItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+	my $item = $char->inventory->get($binID);
+	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
 		# This item is not an equipped arrow
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		if ($char->{arrow} && $char->{arrow} == $item->{index}) {
-			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
+		if ($char->{arrow} && $char->{arrow} == $item->{ID}) {
+			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $binID), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
 		}
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('inventory_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
-# storageItemRemoved($invIndex, $amount)
+# storageItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{storage}.
+# Removes $amount of $binID from $char->{storage}.
 # Also prints a message saying the item was removed
 sub storageItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->storage->get($invIndex);
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
+	my $item = $char->storage->get($binID);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "storage";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('storage_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('storage_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
-# cartItemRemoved($invIndex, $amount)
+# cartItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{cart}.
+# Removes $amount of $binID from $char->{cart}.
 # Also prints a message saying the item was removed
 sub cartItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->cart->get($invIndex);
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
+	my $item = $char->cart->get($binID);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "cart";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('cart_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('cart_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 # Resolve the name of a card
@@ -2018,7 +2018,7 @@ sub storageGet {
 		if (!defined($max) || $max > $item->{amount}) {
 			$max = $item->{amount};
 		}
-		$messageSender->sendStorageGet($item->{index}, $max);
+		$messageSender->sendStorageGet($item->{ID}, $max);
 
 	} else {
 		my %args;
@@ -3192,7 +3192,7 @@ sub useTeleport {
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendItemUse($item->{index}, $accountID);
+			$messageSender->sendItemUse($item->{ID}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -3272,7 +3272,7 @@ sub writeStorageLog {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for my $item (@{$char->storage}) {
 
-			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -4426,8 +4426,8 @@ sub makeShop {
 		my $cart_item;
 		for my $item (@{$char->cart->getItems}) {
 			next unless $item->{name} eq $sale->{name};
-			next if $used_items{$item->{invIndex}};
-			$cart_item = $used_items{$item->{invIndex}} = $item;
+			next if $used_items{$item->{binID}};
+			$cart_item = $used_items{$item->{binID}} = $item;
 			last;
 		}
 		next unless ($cart_item);
@@ -4437,7 +4437,7 @@ sub makeShop {
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $cart_item->{index};
+		$item{index} = $cart_item->{ID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {

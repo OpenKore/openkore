@@ -980,7 +980,7 @@ sub processStorageGet {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendStorageGet($item->{index}, $amount) if $char->storage->isReady();
+		$messageSender->sendStorageGet($item->{ID}, $amount) if $char->storage->isReady();
 		AI::args->{time} = time;
 		AI::dequeue if !@{AI::args->{items}};
 	}
@@ -994,7 +994,7 @@ sub processCartAdd {
 		my $item = AI::args->{items}[0];
 		my $invItem = $char->inventory->get($item->{index});
 		if ($invItem) {
-			$messageSender->sendCartAdd($invItem->{index}, min($invItem->{amount}, $item->{amount} || $invItem->{amount}));
+			$messageSender->sendCartAdd($invItem->{ID}, min($invItem->{amount}, $item->{amount} || $invItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1010,7 +1010,7 @@ sub processCartGet {
 		my $amount = $item->{amount};
 		my $cartItem = $char->cart->get($item->{index});
 		if ($cartItem) {
-			$messageSender->sendCartGet($cartItem->{index}, min($cartItem->{amount}, $item->{amount} || $cartItem->{amount}));
+			$messageSender->sendCartGet($cartItem->{ID}, min($cartItem->{amount}, $item->{amount} || $cartItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1285,18 +1285,18 @@ sub processAutoStorage {
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					if ($control->{storage} && $item->{amount} > $control->{keep}) {
-						if ($args->{lastIndex} == $item->{index} &&
+						if ($args->{lastIndex} == $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{lastIndex} != $item->{index}) {
+						} elsif ($args->{lastIndex} != $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						$args->{lastIndex} = $item->{index};
+						$args->{lastIndex} = $item->{ID};
 						$args->{lastNameID} = $item->{nameID};
 						$args->{lastAmount} = $item->{amount};
 						$args->{lastInventoryCount} = $char->inventory->size;
-						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
+						$messageSender->sendStorageAdd($item->{ID}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{nextItem} = $i;
 						return;
@@ -1316,15 +1316,15 @@ sub processAutoStorage {
 					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					# store from cart as well as inventory if the flag is equal to 2
 					if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
-						if ($args->{cartLastIndex} == $item->{index} &&
+						if ($args->{cartLastIndex} == $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{cartLastIndex} != $item->{index}) {
+						} elsif ($args->{cartLastIndex} != $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						$args->{cartLastIndex} = $item->{index};
-						$messageSender->sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
+						$args->{cartLastIndex} = $item->{ID};
+						$messageSender->sendStorageAddFromCart($item->{ID}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{cartNextItem} = $i;
 						return;
@@ -1369,9 +1369,9 @@ sub processAutoStorage {
 					my $storeItem = $char->storage->getByName($itemName);
 					my $storeAmount = $char->storage->sumByName($itemName);
 					$item{name} = $itemName;
-					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
+					$item{inventory}{index} = $invItem ? $invItem->{binID} : undef;
 					$item{inventory}{amount} = $invItem ? $invAmount : 0;
-					$item{storage}{index} = $storeItem ? $storeItem->{invIndex} : undef;
+					$item{storage}{index} = $storeItem ? $storeItem->{binID} : undef;
 					$item{storage}{amount} = $storeItem ? $storeAmount : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
@@ -1385,7 +1385,7 @@ sub processAutoStorage {
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
-						$messageSender->sendStorageGet($storeItem->{index}, $item{amount_get});
+						$messageSender->sendStorageGet($storeItem->{ID}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{retry}++;
 						return;
@@ -1551,16 +1551,16 @@ sub processAutoSell {
 				my $control = items_control($item->{name});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
-					if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
+					if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
 						return;
-					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{index}) {
+					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{ID}) {
 						$timeout{ai_sellAuto_giveup}{time} = time;
 					}
 					undef $args->{done};
-					$args->{lastIndex} = $item->{index};
+					$args->{lastIndex} = $item->{ID};
 
 					my %obj;
-					$obj{index} = $item->{index};
+					$obj{index} = $item->{ID};
 					$obj{amount} = $item->{amount} - $control->{keep};
 					push @sellItems, \%obj;
 
@@ -1636,7 +1636,7 @@ sub processAutoBuy {
 			next if ($args->{index_failed}{$i});
 
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
-			$args->{invIndex} = $item ? $item->{invIndex} : undef;
+			$args->{binID} = $item ? $item->{binID} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
 				next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
@@ -1724,9 +1724,9 @@ sub processAutoBuy {
 
 			# find the item ID if we don't know it yet
 			if ($args->{itemID} eq "") {
-				if ($args->{invIndex} && $char->inventory->get($args->{invIndex})) {
+				if ($args->{binID} && $char->inventory->get($args->{binID})) {
 					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->inventory->get($args->{invIndex})->{nameID};
+					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
 				} else {
 					# scan the entire items.txt file (this is slow)
 					foreach (keys %items_lut) {
@@ -1760,7 +1760,7 @@ sub processAutoBuy {
 			
 			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
-			$needbuy -= $char->inventory->get($args->{invIndex})->{amount} if ($args->{invIndex} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
+			$needbuy -= $char->inventory->get($args->{binID})->{amount} if ($args->{binID} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
 			$messageSender->sendBuyBulk([{itemID  => $args->{itemID}, amount => ($maxbuy > $needbuy) ? $needbuy : $maxbuy}]); # TODO: we could buy more types of items at once
 
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
@@ -1784,10 +1784,10 @@ sub processAutoCart {
 					my $control = items_control($invItem->{name});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
-						$obj{index} = $invItem->{invIndex};
+						$obj{index} = $invItem->{binID};
 						$obj{amount} = $invItem->{amount} - $control->{keep};
 						push @addItems, \%obj;
-						debug "Scheduling $invItem->{name} ($invItem->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
+						debug "Scheduling $invItem->{name} ($invItem->{binID}) x $obj{amount} for adding to cart\n", "ai_autoCart";
 					}
 				}
 				cartAdd(\@addItems);
@@ -1809,10 +1809,10 @@ sub processAutoCart {
 				}
 				if ($amount > 0) {
 					my %obj;
-					$obj{index} = $cartItem->{invIndex};
+					$obj{index} = $cartItem->{binID};
 					$obj{amount} = $amount;
 					push @getItems, \%obj;
-					debug "Scheduling $cartItem->{name} ($cartItem->{index}) x $obj{amount} for getting from cart\n", "ai_autoCart";
+					debug "Scheduling $cartItem->{name} ($cartItem->{ID}) x $obj{amount} for getting from cart\n", "ai_autoCart";
 				}
 			}
 			cartGet(\@getItems);
@@ -2276,7 +2276,7 @@ sub processAutoItemUse {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $item = $char->inventory->getByNameList($config{"useSelf_item_$i"});
 				if ($item) {
-					$messageSender->sendItemUse($item->{index}, $accountID);
+					$messageSender->sendItemUse($item->{ID}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $item->{name}\n~, "ai";

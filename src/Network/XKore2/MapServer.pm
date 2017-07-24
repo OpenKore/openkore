@@ -603,7 +603,7 @@ sub send_inventory {
 		my $n = 0;
 		my $i = 0;
 		foreach my $item (@{$char->cart->getItems()}) {
-			$item->{index} = $i++;
+			$item->{ID} = $i++;
 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) {
 				push @stackable, $item;
 			} else {
@@ -616,7 +616,7 @@ sub send_inventory {
 		$n = 0;
 		foreach my $item (@stackable) {
 			$data .= pack('v2 C2 v2 a8 l',
-				$item->{index},
+				$item->{ID},
 				$item->{nameID},
 				$item->{type},
 				$item->{identified},  # identified
@@ -635,7 +635,7 @@ sub send_inventory {
 		$n = 0;
 		foreach my $item (@nonstackable) {
 			$data .= pack('v2 C2 v2 C2 a8 l v2',
-				$item->{index},
+				$item->{ID},
 				$item->{nameID},
 				$item->{type},
 				$item->{identified},  # identified
@@ -670,7 +670,7 @@ sub send_inventory {
 		$data = undef;
 		foreach my $item (@stackable) {
 			$data .= pack('v2 C2 v1 x2',
-				$item->{index},
+				$item->{ID},
 				$item->{nameID},
 				$item->{type},
 				1,  # identified
@@ -684,7 +684,7 @@ sub send_inventory {
 		$data = undef;
 		foreach my $item (@nonstackable) {
 			$data .= pack('v2 C2 v2 C2 a8',
-				$item->{index}, $item->{nameID}, $item->{type},
+				$item->{ID}, $item->{nameID}, $item->{type},
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
 				$item->{upgrade}, $item->{cards});
 		}

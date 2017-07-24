@@ -19,15 +19,16 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
 		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],

@@ -80,7 +80,7 @@ sub AI {
 
 sub add {
 	my ($self,$item,$ammount) = @_;
-	$messageSender->sendDealAddItem($item->{index},$ammount);
+	$messageSender->sendDealAddItem($item->{ID},$ammount);
 }
 
 sub accept {

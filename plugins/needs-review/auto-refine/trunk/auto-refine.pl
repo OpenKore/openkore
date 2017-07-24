@@ -127,7 +127,7 @@ sub talkNPC {
 
 sub checkItem {
 	$talking = 0;
-	$item = $char->inventory->getByServerIndex($item->{index});
+	$item = $char->inventory->getByID($item->{ID});
 	$taskManager->onTaskFinished->remove($talkCallback);
 	if (!$item) {
 		$startRefine = 0;

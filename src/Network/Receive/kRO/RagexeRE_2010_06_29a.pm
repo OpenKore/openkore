@@ -25,7 +25,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'00AA' => ['equip_item', 'v3 C', [qw(index type viewid success)]], # 9
+		'00AA' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]], # 9
 	);
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};

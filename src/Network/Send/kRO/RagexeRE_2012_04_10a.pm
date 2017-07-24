@@ -29,7 +29,7 @@ sub new {
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0865' => undef,
 		'086A' => undef,
-		'086C' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'086C' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0884' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0863' => undef,
@@ -38,9 +38,9 @@ sub new {
 		'0887' => undef,
 		'0889' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0890' => undef,
-		'0891' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0891' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'089C' => ['friend_request', 'a*', [qw(username)]],#26
-		'08A6' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'08A6' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'08C9' => ['request_cashitems'],#2
 # TODO 0x08D7,28,battlegroundreg,2:4
 # TODO 0x08E5,41,bookingregreq,2:4
