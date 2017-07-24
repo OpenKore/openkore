@@ -25,11 +25,11 @@ sub new {
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
 		'022B' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'07E4' => ['item_take', 'a4', [qw(ID)]],
 		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0281' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0860' => ['storage_password'],
