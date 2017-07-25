@@ -1285,10 +1285,10 @@ sub processAutoStorage {
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					if ($control->{storage} && $item->{amount} > $control->{keep}) {
-						if ($args->{lastIndex} == $item->{ID} &&
+						if ($args->{lastIndex} eq $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{lastIndex} != $item->{ID}) {
+						} elsif ($args->{lastIndex} ne $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
@@ -1551,9 +1551,9 @@ sub processAutoSell {
 				my $control = items_control($item->{name});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
-					if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
+					if ($args->{lastIndex} ne "" && $args->{lastIndex} eq $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
 						return;
-					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{ID}) {
+					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} ne $item->{ID}) {
 						$timeout{ai_sellAuto_giveup}{time} = time;
 					}
 					undef $args->{done};

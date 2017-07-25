@@ -125,7 +125,7 @@ sub sendStorageAdd {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xF3, 0x00, 0x6E, 0x05, 0x78, 0xD1, 0x00) .
-			pack("v", $index) .
+			pack("a2", $index) .
 			pack("C*", 0xE5) .
 			pack("V", $amount);
 	$self->sendToServer($msg);
@@ -135,7 +135,7 @@ sub sendStorageAdd {
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg = pack("C*", 0xF5, 0x00, 0x00, 0x00, 0x10, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00) .
-			pack("v*", $index) .
+			pack("a2", $index) .
 			pack("C*", 0x21, 0x7E) .
 			pack("V*", $amount);
 	$self->sendToServer($msg);
