@@ -812,7 +812,7 @@ sub processDeal {
 				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name})) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
+				$messageSender->sendDealAddItem(pack('v', 0), $currentDeal{'you_zeny'});
 				$messageSender->sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2 &&

@@ -1136,9 +1136,6 @@ sub sendProduceMix {
 
 sub sendDealAddItem {
 	my ($self, $ID, $amount) = @_;
-	if ($ID == 0) {
-		$ID = pack('v', $ID);
-	}
 	$self->sendToServer($self->reconstruct({
 		switch => 'deal_item_add',
 		ID => $ID,

@@ -1086,30 +1086,6 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-sub deal_add_you {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error T("That person is overweight; you cannot trade.\n"), "deal";
-		return;
-	} elsif ($args->{fail} == 2) {
-		error T("This item cannot be traded.\n"), "deal";
-		return;
-	} elsif ($args->{fail}) {
-		error TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal";
-		return;
-	}
-
-	return unless $args->{ID} > 0;
-
-	my $item = $char->inventory->getByID($args->{ID});
-	$args->{item} = $item;
-	$currentDeal{you_items}++;
-	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
-  	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
-}
-
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
