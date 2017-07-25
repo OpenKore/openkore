@@ -4771,16 +4771,29 @@ sub rates_info {
 
 sub rates_info2 {
 	my ($self, $args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v V3';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $detail_pack = 'C l3';
+	my $detail_len = length pack $detail_pack;
+	
 	my %rates = (
-		exp => { total => $args->{exp}/(100*10) }, # Value to Percentage => /100
-		death => { total => $args->{death}/(100*10) }, # 1 d.p. => /10
-		drop => { total => $args->{drop}/(100*10) },
+		exp => { total => $args->{exp}/1000 }, # Value to Percentage => /100
+		death => { total => $args->{death}/1000 }, # 1 d.p. => /10
+		drop => { total => $args->{drop}/1000 },
 	);
 
 	# get details
-	for (my $offset = 0; $offset < length($args->{detail}); $offset += 13) {
-		my ($type, $exp, $death, $drop) = unpack("C V3", substr($args->{detail}, $offset, 13));
-		$rates{exp}{$type} = $exp; $rates{death}{$type} = $death; $rates{drop}{$type} = $drop;
+	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i += $detail_len) {
+	
+		my ($type, $exp, $death, $drop) = unpack($detail_pack, substr($msg, $i, $detail_len));
+		
+		$rates{exp}{$type} = $exp/1000;
+		$rates{death}{$type} = $death/1000;
+		$rates{drop}{$type} = $drop/1000;
 	}
 
 	# we have 4 kinds of detail:
