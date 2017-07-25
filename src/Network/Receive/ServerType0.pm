@@ -1566,34 +1566,6 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-sub deal_add_you {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error T("That person is overweight; you cannot trade.\n"), "deal";
-		return;
-	} elsif ($args->{fail} == 2) {
-		error T("This item cannot be traded.\n"), "deal";
-		return;
-	} elsif ($args->{fail}) {
-		error TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal";
-		return;
-	}
-
-	return unless $args->{ID} > 0;
-
-	my $item = $char->inventory->getByID($args->{ID});
-	$args->{item} = $item;
-	# FIXME: quickly add two items => lastItemAmount is lost => inventory corruption; see also Misc::dealAddItem
-	# FIXME: what will be in case of two items with the same nameID?
-	# TODO: no info about items is stored
-	$currentDeal{you_items}++;
-	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
-	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
-	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
-}
-
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});

@@ -1530,7 +1530,7 @@ sub cmdDeal {
 		$currentDeal{'final'} = 1;
 		message T("You accepted the final Deal\n"), "deal";
 	} elsif ($arg[0] eq "" && %currentDeal) {
-		$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
+		$messageSender->sendDealAddItem(pack('v', 0), $currentDeal{'you_zeny'});
 		$messageSender->sendDealFinalize();
 
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
