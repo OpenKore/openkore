@@ -25,7 +25,7 @@ sub _dynamic_hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{actorList} = $monstersList;
+	$self->{actorList} = \$monstersList;
 	$self->{actorType} = 'Actor::Monster';
 	
 	$self->SUPER::_parse_syntax($condition_code);

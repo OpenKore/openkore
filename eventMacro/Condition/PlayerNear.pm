@@ -17,7 +17,7 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{actorList} = $playersList;
+	$self->{actorList} = \$playersList;
 	
 	$self->SUPER::_parse_syntax($condition_code);
 }

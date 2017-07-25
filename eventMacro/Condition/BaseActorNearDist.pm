@@ -153,7 +153,7 @@ sub recheck_all_actor_names {
 	$self->{fulfilled_actor} = undef;
 	$self->{number_of_possible_fulfill_actors} = 0;
 	$self->{possible_fulfill_actors} = {};
-	foreach my $actor (@{$self->{actorList}->getItems}) {
+	foreach my $actor (@{${$self->{actorList}}->getItems}) {
 		next unless ( $self->validator_check(0, $actor->{name}) );
 		$self->{number_of_possible_fulfill_actors}++;
 		$self->{possible_fulfill_actors}{$actor->{binID}} = $actor;
