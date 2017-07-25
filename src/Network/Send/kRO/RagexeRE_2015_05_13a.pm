@@ -20,9 +20,9 @@ sub new {
 
 		my %packets = (
 		'0958' => ['item_take', 'a4', [qw(ID)]],
-		'0885' => ['item_drop', 'v2', [qw(index amount)]],
-		'0879' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0864' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0885' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0879' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0864' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0363' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0924' => ['actor_look_at', 'v C', [qw(head body)]],
