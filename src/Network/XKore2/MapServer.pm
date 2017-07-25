@@ -615,7 +615,7 @@ sub send_inventory {
 		$data = undef;
 		$n = 0;
 		foreach my $item (@stackable) {
-			$data .= pack('v2 C2 v2 a8 l',
+			$data .= pack('a2 v C2 v2 a8 l',
 				$item->{ID},
 				$item->{nameID},
 				$item->{type},
@@ -634,7 +634,7 @@ sub send_inventory {
 		$data = undef;
 		$n = 0;
 		foreach my $item (@nonstackable) {
-			$data .= pack('v2 C2 v2 C2 a8 l v2',
+			$data .= pack('a2 v C2 v2 C2 a8 l v2',
 				$item->{ID},
 				$item->{nameID},
 				$item->{type},
@@ -669,7 +669,7 @@ sub send_inventory {
 		# Send stackable item information
 		$data = undef;
 		foreach my $item (@stackable) {
-			$data .= pack('v2 C2 v1 x2',
+			$data .= pack('a2 v C2 v1 x2',
 				$item->{ID},
 				$item->{nameID},
 				$item->{type},
@@ -683,7 +683,7 @@ sub send_inventory {
 		# Send non-stackable item (mostly equipment) information
 		$data = undef;
 		foreach my $item (@nonstackable) {
-			$data .= pack('v2 C2 v2 C2 a8',
+			$data .= pack('a2 v C2 v2 C2 a8',
 				$item->{ID}, $item->{nameID}, $item->{type},
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
 				$item->{upgrade}, $item->{cards});
