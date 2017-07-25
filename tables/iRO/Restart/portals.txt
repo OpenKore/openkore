@@ -624,8 +624,7 @@ ayo_in01 177 129 ayothaya 111 109
 ayo_in01 194 183 ayothaya 62 104
 ayo_in02 100 148 ayothaya 208 283
 ayo_fild01 32 240 ayothaya 273 176
-ayo_fild01 129 197 ayo_fild02 100 100 0 c c c c c r0 c c c
-ayo_fild01 129 197 ayo_fild02 30 135 c w1 c w1 c1 w1 c1 w1 c1 r0 c w1 c w1 c n
+ayo_fild01 129 197 ayo_fild02 30 135 c c c c c r0 c c c n
 ayo_fild02 285 149 ayo_dun01 275 18
 ayo_fild02 25 154 ayo_fild01 115 200 c r0 c n
 ayo_dun01 274 14 ayo_fild02 279 150
