@@ -1134,4 +1134,17 @@ sub sendProduceMix {
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
+sub sendDealAddItem {
+	my ($self, $ID, $amount) = @_;
+	if ($ID == 0) {
+		$ID = pack('v', $ID);
+	}
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_item_add',
+		ID => $ID,
+		amount => $amount
+	}));
+	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
 1;

@@ -59,6 +59,7 @@ sub new {
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
+		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
@@ -470,14 +471,6 @@ sub sendDealReply {
 }
 
 # 0x00e7,3
-
-# 0x00e8,8,tradeadditem,2:4
-sub sendDealAddItem {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v', 0x00E8) . pack("a2", $ID) . pack("V*", $amount);
-	$_[0]->sendToServer($msg);
-	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
 
 # 0x00e9,19
 # 0x00ea,5
