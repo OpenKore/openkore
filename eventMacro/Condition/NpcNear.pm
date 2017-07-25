@@ -4,69 +4,43 @@ use strict;
 use Globals;
 use Utils;
 
-use base 'eventMacro::Conditiontypes::RegexConditionState';
+use base 'eventMacro::Condition::BaseActorNear';
 
 sub _hooks {
-	['packet_mapChange','add_npc_list','npc_disappeared','npcNameUpdate'];
+	my ( $self ) = @_;
+	my $hooks = $self->SUPER::_hooks;
+	my @other_hooks = ('add_npc_list','npc_disappeared','npcNameUpdate');
+	push(@{$hooks}, @other_hooks);
+	return $hooks;
+}
+
+sub _parse_syntax {
+	my ( $self, $condition_code ) = @_;
+	
+	$self->{actorList} = $npcsList;
+	
+	$self->SUPER::_parse_syntax($condition_code);
 }
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	if ($callback_type eq 'variable') {
-		$self->update_validator_var($callback_name, $args);
-		$self->recheck_all_actor_names;
-		
-	} elsif ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'add_npc_list' && !defined $self->{fulfilled_actor} && $self->validator_check($args->{name})) {
-			$self->{fulfilled_actor} = $args;
+	if ($callback_type eq 'hook') {
+		if ($callback_name eq 'add_npc_list') {
+			$self->{actor} = $args;
+			$self->{hook_type} = 'add_list';
 
-		} elsif ($callback_name eq 'npc_disappeared' && defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
-			#need to check all other actor to find another one that matches or not
-			my $last_bin_id = $self->{fulfilled_actor}->{binID};
-			$self->{fulfilled_actor} = undef;
-			foreach my $actor (@{$npcsList->getItems()}) {
-				next if ($actor->{binID} == $last_bin_id);
-				next unless ($self->validator_check($actor->{name}));
-				$self->{fulfilled_actor} = $actor;
-				last;
-			}
+		} elsif ($callback_name eq 'npc_disappeared') {
+			$self->{actor} = $args->{npc};
+			$self->{hook_type} = 'disappeared';
 		
 		} elsif ($callback_name eq 'npcNameUpdate') {
-		
-			if (!defined $self->{fulfilled_actor} && $self->validator_check($args->{npc}->{name})) {
-				$self->{fulfilled_actor} = $args->{npc};
-				
-			} elsif (defined $self->{fulfilled_actor} && $args->{npc}->{binID} == $self->{fulfilled_actor}->{binID}) {
-				unless ($self->validator_check($args->{npc}->{name})) {
-					$self->{fulfilled_actor} = undef;
-					foreach my $actor (@{$npcsList->getItems()}) {
-						next unless ($self->validator_check($actor->{name}));
-						$self->{fulfilled_actor} = $actor;
-						last;
-					}
-				}
-			}
-			
-		} elsif ($callback_name eq 'packet_mapChange') {
-			$self->{fulfilled_actor} = undef;
+			$self->{actor} = $args->{npc};
+			$self->{hook_type} = 'NameUpdate';
 		}
-		
-	} elsif ($callback_type eq 'recheck') {
-		$self->recheck_all_actor_names;
 	}
-	return $self->SUPER::validate_condition( (defined $self->{fulfilled_actor} ? 1 : 0) );
-}
-
-sub recheck_all_actor_names {
-	my ($self) = @_;
-	$self->{fulfilled_actor} = undef;
-	foreach my $actor (@{$npcsList->getItems()}) {
-		next unless ($self->validator_check($actor->{name}));
-		$self->{fulfilled_actor} = $actor;
-		last;
-	}
+	
+	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
 }
 
 sub get_new_variable_list {
@@ -79,6 +53,10 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Dist"} = distance($char->{pos_to}, $self->{fulfilled_actor}->{pos_to});
 	
 	return $new_variables;
+}
+
+sub usable {
+	1;
 }
 
 1;
