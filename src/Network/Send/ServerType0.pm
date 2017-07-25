@@ -63,6 +63,7 @@ sub new {
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['sendAddStatusPoint'],
 		#'00F3' => ['map_login', '', [qw()]],
+		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
@@ -563,13 +564,6 @@ sub sendDealAccept {
 sub sendDealCancel {
 	$_[0]->sendDealReply(4);
 	debug "Sent Cancel Deal\n", "sendPacket", 2;
-}
-
-sub sendDealAddItem {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack("C*", 0xE8, 0x00) . pack("a2", $ID) . pack("V*", $amount);
-	$_[0]->sendToServer($msg);
-	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendDealFinalize {
