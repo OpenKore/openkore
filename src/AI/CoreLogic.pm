@@ -2676,6 +2676,11 @@ sub processAutoAttack {
 				 && !$monster->{dmgFromYou}
 				 && ($control->{dist} eq '' || distance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					my %hookArgs;
+					$hookArgs{monster} = $monster;
+					$hookArgs{return} = 1;
+					Plugins::callHook("checkMonsterAutoAttack", \%hookArgs);
+					next if (!$hookArgs{return});
 					push @cleanMonsters, $_;
 				}
 			}
