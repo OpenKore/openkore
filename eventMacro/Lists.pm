@@ -17,7 +17,6 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	$self->clear();
-	$self->SUPER::DESTROY();
 }
 
 sub add {
