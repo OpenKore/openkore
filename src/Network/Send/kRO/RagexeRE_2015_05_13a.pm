@@ -31,6 +31,7 @@ sub new {
 		'08A8' => ['friend_request', 'a*', [qw(username)]],#26
 		'0817' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0923' => ['storage_password'],
+		'035F' => ['sync', 'V', [qw(time)]],
 		);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -47,6 +48,7 @@ sub new {
 		storage_item_add 0879
 		storage_item_remove 0864
 		storage_password 0923
+		sync 035F 
 	);
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 
