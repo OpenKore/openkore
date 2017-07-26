@@ -6044,6 +6044,9 @@ sub rodex_read_mail {
 	message $print_msg, "list";
 	
 	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
+	
+	$rodexList->{mails}{$args->{mailID1}}{isRead} = 1;
+	
 	$rodexList->{current_read} = $args->{mailID1};
 }
 
