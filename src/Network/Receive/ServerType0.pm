@@ -106,6 +106,7 @@ sub new {
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
 		'00A0' => ['inventory_item_added', 'a2 v2 C3 a8 v C2', [qw(ID amount nameID identified broken upgrade cards type_equip type fail)]],
+		'0A00' => ['hotkeys'], #20141022servertybe
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
 		'00A3' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
