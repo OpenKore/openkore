@@ -1813,13 +1813,13 @@ sub inventoryItemRemoved {
 
 	return if $amount == 0;
 	my $item = $char->inventory->get($binID);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{ID})) {
+	if (!$char->{arrow} || ($item && $char->{arrow} ne $item->{ID})) {
 		# This item is not an equipped arrow
 		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		if ($char->{arrow} && $char->{arrow} == $item->{ID}) {
+		if ($char->{arrow} && $char->{arrow} eq $item->{ID}) {
 			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $binID), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};

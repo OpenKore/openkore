@@ -2662,7 +2662,7 @@ sub inventory_items_stackable {
 		callback => sub {
 			my ($local_item) = @_;
 
-			if (defined $char->{arrow} && $local_item->{ID} == $char->{arrow}) {
+			if (defined $char->{arrow} && $local_item->{ID} eq $char->{arrow}) {
 				$local_item->{equipped} = 32768;
 				$char->{equipment}{arrow} = $local_item;
 			}
