@@ -1316,10 +1316,10 @@ sub processAutoStorage {
 					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					# store from cart as well as inventory if the flag is equal to 2
 					if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
-						if ($args->{cartLastIndex} == $item->{ID} &&
+						if ($args->{cartLastIndex} eq $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{cartLastIndex} != $item->{ID}) {
+						} elsif ($args->{cartLastIndex} ne $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
