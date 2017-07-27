@@ -93,7 +93,7 @@ sub sendGetPlayerInfo {
 # 0x0094,19,movetokafra,3:15
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x v x10 V', 0x0094, $index, $amount);
+	my $msg = pack('v x a2 x10 V', 0x0094, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -145,7 +145,7 @@ sub sendTake {
 # 0x00f7,17,movefromkafra,3:13
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack('v x v x8 V', 0x00F7, $index, $amount);
+	my $msg = pack('v x a2 x8 V', 0x00F7, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }

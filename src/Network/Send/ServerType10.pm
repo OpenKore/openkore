@@ -153,14 +153,14 @@ sub sendSkillUseLoc {
 
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x7E, 0x00) . pack("v", $index) . pack("C*", 0x00) . pack("V", $amount);
+	my $msg = pack("C*", 0x7E, 0x00) . pack("a2", $index) . pack("C*", 0x00) . pack("V", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0xF7, 0x00) . pack("v", $index) . pack("x12") . pack("V*", $amount);
+	my $msg = pack("C*", 0xF7, 0x00) . pack("a2", $index) . pack("x12") . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }

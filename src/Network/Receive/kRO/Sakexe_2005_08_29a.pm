@@ -28,7 +28,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]], # -1
-		'0255' => ['mail_setattachment', 'v C', [qw(index fail)]], # 5
+		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
 
 		# 0x0256,0
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8

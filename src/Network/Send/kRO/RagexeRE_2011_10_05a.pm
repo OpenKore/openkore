@@ -25,7 +25,7 @@ sub new {
 	my %packets = (
 		'0202' => undef,
 		'022D' => undef,
-		'023B' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'023B' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10 
 		'0360' => undef,
 		'035F' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
@@ -37,14 +37,14 @@ sub new {
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19 
 		'07E4' => undef,
 		'07EC' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
-		'0802' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'0802' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'08A7' => ['item_take', 'a4', [qw(ID)]],#6
 		'0815' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0835' => ['friend_request', 'a*', [qw(username)]],#26
 		'083C' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0885' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],#6
-		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'08A4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'08AD' => undef,
 		'0365' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 		);

@@ -129,7 +129,7 @@ port 6800
 version 18
 master_version 1
 serverType iRO
-addTableFolders iRO
+addTableFolders iRO/Restart;iRO
 serverEncoding Western
 charBlockSize 145
 patchserver ropatch1.gravityus.com
@@ -137,7 +137,7 @@ patchpath /repatch
 
 
 
- 
+
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
@@ -492,7 +492,7 @@ ip 69.197.167.236
 port 6900
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
@@ -506,7 +506,7 @@ ip 69.197.167.236
 port 6901
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO

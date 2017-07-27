@@ -26,14 +26,14 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
-		'0990' => ['inventory_item_added', 'v3 C3 a8 V C2 V v', [qw(index amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
+		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 V v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'0908' => ['inventory_item_favorite', 'v C', [qw(index flag)]],#5
+		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
 		'0997' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],#-1
 	);
 
@@ -45,15 +45,15 @@ sub new {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type6 => {
 				len => 31,
-				types => 'v2 C V2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id flag)],
+				types => 'a2 v C V2 C a8 l v2 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id flag)],
 			},
 		},
 		items_stackable => { # ITEMLIST_NORMAL_ITEM
 			type6 => {
 				len => 24,
-				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire flag)],
+				types => 'a2 v C v V a8 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
@@ -127,7 +127,7 @@ sub parse_items_stackable {
 
 sub inventory_item_favorite {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($args->{flag}) {
 		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
 	} else {
@@ -144,7 +144,7 @@ sub show_eq {
 			$expire, $bindOnEquipType, $sprite_id, $identified) = unpack($unpack_string, substr($args->{equips_info}, $i));
 
 		my $item = {};
-		$item->{index} = $index;
+		$item->{ID} = $index;
 		$item->{nameID} = $ID;
 		$item->{type} = $type;
 		$item->{identified} = $identified;

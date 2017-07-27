@@ -35,10 +35,10 @@ sub new {
 		'094B' => undef,
 		'0957' => undef,
 		'0964' => undef,
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],#8
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0437' => ['character_move','a3', [qw(coords)]],#5
 		'035F' => ['sync', 'V', [qw(time)]],#6
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6

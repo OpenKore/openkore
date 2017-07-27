@@ -28,9 +28,9 @@ sub new {
 		'022D' => ['sync', 'V', [qw(time)]],#6
 		'092E' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0943' => ['item_take', 'a4', [qw(ID)]],#6
-		'093C' => ['item_drop', 'v2', [qw(index amount)]],#6
-		'086B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
-		'08AB' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'093C' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
+		'086B' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
+		'08AB' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		#'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
