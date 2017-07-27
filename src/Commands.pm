@@ -4889,7 +4889,7 @@ sub cmdTalk {
 	
 	if (!@steps) {
 		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-			"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
+			"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|<number #>]\n");
 		return;
 	}
 	
@@ -4899,7 +4899,7 @@ sub cmdTalk {
 		my $step = $steps[$index];
 		my $type;
 		my $arg;
-		if ($step =~ /^(cont|text|num|resp|\d+)\s+(\S.*)$/) {
+		if ($step =~ /^(cont|text|num|resp|\d+|"[^"]+")\s+(\S.*)$/) {
 			$type = $1;
 			$arg = $2;
 		} else {
@@ -4908,7 +4908,8 @@ sub cmdTalk {
 		
 		my $current_step;
 		
-		if ($type =~ /^\d+$/) {
+		if ($type =~ /^\d+|"([^"]+)"$/) {
+			$type = $1 if $1;
 			if (AI::is("NPC")) {
 				error "Error in function 'talk' (Talk to NPC)\n" .
 					"You are already talking with an npc\n";
@@ -4990,7 +4991,7 @@ sub cmdTalk {
 			
 		} elsif (!(defined $nameID && $index == 0)) {
 			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-				"Usage: talk <NPC # | cont | resp | num | text > [<response #>|<number #>]\n");
+				"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|<number #>]\n");
 			return;
 		}
 			
