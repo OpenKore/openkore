@@ -129,7 +129,7 @@ port 6800
 version 18
 master_version 1
 serverType iRO
-addTableFolders iRO
+addTableFolders iRO/Restart;iRO
 serverEncoding Western
 charBlockSize 145
 patchserver ropatch1.gravityus.com
@@ -137,7 +137,7 @@ patchpath /repatch
 
 
 
- 
+
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
