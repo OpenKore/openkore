@@ -570,7 +570,9 @@ sub parseMonControl {
 sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
+	my $r_array = shift;
 	undef %{$r_hash};
+	undef @{$r_array};
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();

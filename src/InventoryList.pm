@@ -35,7 +35,7 @@ use base qw(ActorList);
 #
 # Creates a new InventoryList object.
 sub new {
-	my ($class) = @_;
+	my ($class, %args) = @_;
 	my $self = $class->SUPER::new('Actor::Item');
 
 	# Hash<String, Array<int>> nameIndex
@@ -70,6 +70,10 @@ sub new {
 	#     defined(nameChangeEvents)
 	#     scalar(keys nameChangeEvents) == size()
 	$self->{nameChangeEvents} = {};
+
+	if ( $args{items} ) {
+		$self->add( $_ ) foreach @{ $args{items} };
+	}
 
 	return $self;
 }
@@ -165,6 +169,23 @@ sub getByNameID {
 }
 
 ##
+# Actor::Item $InventoryList->sumByNameID(nameID)
+#
+# Returns the amount of items with a given nameID.
+# If nothing is found, 0 is returned.
+sub sumByNameID {
+	my ($self, $id) = @_;
+	my $sum = 0;
+	for my $item (@$self) {
+		if ($item->{nameID} == $id) {
+			$sum = $sum + $item->{amount};
+		}
+	}
+
+	return $sum;
+}
+
+##
 # Actor::Item $InventoryList->getByCondition(Function condition)
 #
 # Return the first Actor::Item object for which the function $condition returns true.
@@ -208,6 +229,33 @@ sub getByNameList {
 		}
 	}
 	return undef;
+}
+
+##
+# Actor::Item $InventoryList->getMultiple(String searchPattern)
+# searchPattern: a search pattern.
+# Returns: an array of Actor::Item objects.
+#
+# Select one or more items by name and/or index.
+# $searchPattern has the following syntax:
+# <pre>index1,index2,...,indexN,name1,name2,...nameN</pre>
+# You can also use '-' to indicate a range (only for indexes), like:
+# <pre>1-5,7,9</pre>
+sub getMultiple {
+	my ( $self, $lists ) = @_;
+	assert( defined $lists ) if DEBUG;
+	my @indexes = split / *,+ */, lc( $lists );
+	my @items;
+	foreach my $index ( @indexes ) {
+		if ( $index =~ /^(\d+)-(\d+)$/o ) {
+			push @items, $self->get( $_ ) foreach $1 .. $2;
+		} elsif ( $index =~ /^(\d+)$/o ) {
+			push @items, $self->get( $index );
+		} else {
+			push @items, $self->getByName( $index );
+		}
+	}
+	grep {$_} @items;
 }
 
 ##
@@ -353,6 +401,11 @@ sub sumByName {
 	}
 
 	return $sum;
+}
+
+# isReady is true if this InventoryList has actionable data. Eg, storage is open, or we have a cart, etc.
+sub isReady {
+    1;
 }
 
 1;

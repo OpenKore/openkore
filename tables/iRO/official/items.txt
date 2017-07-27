@@ -7515,7 +7515,7 @@
 17802#Overseas_Care_Package_VI#
 17804#Overseas_Care_Package_VII#
 17805#Scrambled_Anniversary_Costume_Box#
-17806#2017_July_Costume_Box#
+17806#Costume_Eremes'_Scarf_(Black)_Box#
 17807#July_Costume_Box#
 17837#Silvervine_10_Box#
 17838#Silvervine_25_Box#

@@ -1427,44 +1427,64 @@ sub sage_autospell {
 
 sub show_eq {
 	my ($self, $args) = @_;
+	my $item_info;
+	my @item;
+	
+	if ($args->{switch} eq '02D7') {  # PACKETVER DEFAULT	
+		$item_info = {
+			len => 26,
+			types => 'a2 v C2 v2 C2 a8 l v',
+			keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
+		};
+		
+		if (exists $args->{robe}) {  # PACKETVER >= 20100629
+			$item_info->{type} .= 'v';
+			$item_info->{len} += 2;
+		}
+		
+	} elsif ($args->{switch} eq '0906') {  # PACKETVER >= ?? NOT IMPLEMENTED ON EATHENA BASED EMULATOR	
+		$item_info = {
+			len => 27,
+			types => 'v2 C v2 C a8 l v2 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+		};
 
-	my $jump = 26;
-
-	my $unpack_string  = "v ";
-	   $unpack_string .= "v C2 v v C2 ";
-	   $unpack_string .= "a8 ";
-	   $unpack_string .= "a6"; #unimplemented in eA atm
-
-	if (exists $args->{robe}) {  # check packet version
-		$unpack_string .= "v "; # ??
-		$jump += 2;
+	} elsif ($args->{switch} eq '0859') { # PACKETVER >= 20101124	
+		$item_info = {
+			len => 28,
+			types => 'a2 v C2 v2 C2 a8 l v2',
+			keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
+		};
+		
+	} elsif ($args->{switch} eq '0997') { # PACKETVER >= 20120925
+		$item_info = {
+			len => 31,
+			types => 'a2 v C V2 C a8 l v2 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+		};
+		
+	} elsif ($args->{switch} eq '0A2D') { # PACKETVER >= 20150226
+		$item_info = {
+			len => 57,
+			types => 'a2 v C V2 C a8 l v2 C a25 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+		};
+	} else { # this can't happen
+		return; 
 	}
+	
+	message "--- $args->{name} Equip Info --- \n";
 
-	for (my $i = 0; $i < length($args->{equips_info}); $i += $jump) {
-		my ($index,
-			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
-			$cards,
-			$expire) = unpack($unpack_string, substr($args->{equips_info}, $i));
-
-		my $item = {};
-		$item->{ID} = $index;
-
-		$item->{nameID} = $ID;
-		$item->{type} = $type;
-
-		$item->{identified} = $identified;
-		$item->{type_equip} = $type_equip;
-		$item->{equipped} = $equipped;
-		$item->{broken} = $broken;
-		$item->{upgrade} = $upgrade;
-
-		$item->{cards} = $cards;
-
-		$item->{expire} = $expire;
-
+	for (my $i = 0; $i < length($args->{equips_info}); $i += $item_info->{len}) {
+		my $item;		
+		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));			
+		$item->{broken} = 0;
+		$item->{identified} = 1;		
 		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
 	}
+	
+	message "----------------- \n";
+	
 }
 
 sub show_eq_msg_other {
@@ -2836,6 +2856,10 @@ sub chat_created {
 	binAdd(\@chatRoomsID, $accountID);
 	binAdd(\@currentChatRoomUsers, $char->{name});
 	message T("Chat Room Created\n");
+	
+	Plugins::callHook('chat_created', {
+		chat => $chatRooms{$accountID},
+	});
 }
 
 sub chat_info {
@@ -2879,21 +2903,29 @@ sub chat_modified {
 
 	my $title = bytesToString($args->{title});
 
-	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
-
+	my ($ownerID, $chat_ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
+	my $ID;
 	if ($ownerID eq $accountID) {
-		$chatRooms{new}{title} = $title;
-		$chatRooms{new}{ownerID} = $ownerID;
-		$chatRooms{new}{limit} = $limit;
-		$chatRooms{new}{public} = $public;
-		$chatRooms{new}{num_users} = $num_users;
+		$ID = $accountID;
 	} else {
-		$chatRooms{$ID}{title} = $title;
-		$chatRooms{$ID}{ownerID} = $ownerID;
-		$chatRooms{$ID}{limit} = $limit;
-		$chatRooms{$ID}{public} = $public;
-		$chatRooms{$ID}{num_users} = $num_users;
+		$ID = $chat_ID;
 	}
+	
+	my %chat = ();
+	$chat{title} = $title;
+	$chat{ownerID} = $ownerID;
+	$chat{limit} = $limit;
+	$chat{public} = $public;
+	$chat{num_users} = $num_users;
+	
+	Plugins::callHook('chat_modified', {
+		ID => $ID,
+		old => $chatRooms{$ID},
+		new => \%chat,
+	});
+	
+	$chatRooms{$ID} = {%chat};
+	
 	message T("Chat Room Properties Modified\n");
 }
 
@@ -2949,6 +2981,7 @@ sub chat_user_leave {
 		undef @currentChatRoomUsers;
 		$currentChatRoom = "";
 		message T("You left the Chat Room\n");
+		Plugins::callHook('chat_leave');
 	} else {
 		message TF("%s has left the Chat Room\n", $user);
 	}
@@ -2958,7 +2991,12 @@ sub chat_removed {
 	my ($self, $args) = @_;
 
 	binRemove(\@chatRoomsID, $args->{ID});
-	delete $chatRooms{ $args->{ID} };
+	my $chat = delete $chatRooms{ $args->{ID} };
+	
+	Plugins::callHook('chat_removed', {
+		ID => $args->{ID},
+		chat => $chat,
+	});
 }
 
 sub deal_add_other {
@@ -4033,33 +4071,24 @@ sub npc_store_begin {
 	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	my $name = getNPCName($args->{ID});
+	$storeList->{npcName} = getNPCName($args->{ID}) || T('Unknown');
 }
 
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
+	my $pack = 'V V C v';
+	my $len = length pack $pack;
+	$storeList->clear;
 	undef %talk;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
+		my $item = Actor::Item->new;
+		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
+		$item->{ID} = $item->{nameID};
+		$item->{name} = itemName($item);
+		$storeList->add($item);
 
-		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
 	}
 
 	$ai_v{npc_talk}{talk} = 'store';

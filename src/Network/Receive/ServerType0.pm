@@ -145,7 +145,7 @@ sub new {
 		'00DB' => ['chat_users'],
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]],
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]],
-		'00DF' => ['chat_modified', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
+		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]],
 		'00E5' => ['deal_request', 'Z24', [qw(user)]],
 		'00E7' => ['deal_begin', 'C', [qw(type)]],
@@ -529,7 +529,7 @@ sub new {
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0902' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0903' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0906' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -549,7 +549,7 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
-		'0997' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0997' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
@@ -577,7 +577,7 @@ sub new {
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
-		'0A2D' => ['character_equip', 'v Z24 x17 a*', [qw(len name itemInfo)]],
+		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
@@ -1349,6 +1349,9 @@ sub buy_result {
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
+	if (AI::is("buyAuto")) {
+		AI::args->{recv_buy_packet} = 1;
+	}
 }
 
 sub card_merge_list {
@@ -1546,6 +1549,10 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
+	
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
 }
 
 sub cast_cancelled {
@@ -2226,12 +2233,15 @@ sub npc_talk {
 	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
 		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
 		AI::queue("NPC", $task);
 		# TODO: The following npc_talk hook is only added on activation.
 		# Make the task module or AI listen to the hook instead
 		# and wrap up all the logic.
 		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
 	}
 
 	$talk{ID} = $args->{ID};
@@ -2292,10 +2302,9 @@ sub party_chat {
 	});
 }
 
-# TODO: itemPickup itemDivision
 sub party_exp {
 	my ($self, $args) = @_;
-	$char->{party}{share} = $args->{type};
+	$char->{party}{share} = $args->{type}; # Always will be there, in 0101 also in 07D8
 	if ($args->{type} == 0) {
 		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
@@ -2303,19 +2312,23 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
-	if ($args->{itemPickup} == 0) {
-		message T("Party item set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemPickup} == 1) {
-		message T("Party item set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
-	if ($args->{itemDivision} == 0) {
-		message T("Party item division set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemDivision} == 1) {
-		message T("Party item division set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
+	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
+		$char->{party}{itemPickup} = $args->{itemPickup};
+		$char->{party}{itemDivision} = $args->{itemDivision};
+		if ($args->{itemPickup} == 0) {
+			message T("Party item set to Individual Take\n"), "party", 1;
+		} elsif ($args->{itemPickup} == 1) {
+			message T("Party item set to Even Share\n"), "party", 1;
+		} else {
+			error T("Error setting party option\n");
+		}
+		if ($args->{itemDivision} == 0) {
+			message T("Party item division set to Individual Take\n"), "party", 1;
+		} elsif ($args->{itemDivision} == 1) {
+			message T("Party item division set to Even Share\n"), "party", 1;
+		} else {
+			error T("Error setting party option\n");
+		}
 	}
 }
 
@@ -2486,30 +2499,7 @@ sub party_join {
 	$actor->{name} = $user;
 	$actor->{ID} = $ID;
 	$char->{party}{users}{$ID} = $actor;
-
-=pod
-	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
-	$char->{party}{users}{$ID}{admin} = !$role;
-	if ($type == 0) {
-		$char->{party}{users}{$ID}{online} = 1;
-	} elsif ($type == 1) {
-		$char->{party}{users}{$ID}{online} = 0;
-		delete $char->{party}{users}{$ID}{statuses};
-	}
-=cut
 	$char->{party}{name} = $name;
-=pod
-	$char->{party}{users}{$ID}{pos}{x} = $x;
-	$char->{party}{users}{$ID}{pos}{y} = $y;
-	$char->{party}{users}{$ID}{map} = $map;
-	$char->{party}{users}{$ID}{name} = $user;
-	$char->{party}{users}{$ID}->{ID} = $ID;
-=cut
-
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-
-	}
 }
 
 use constant {
@@ -2587,10 +2577,7 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}->{ID} = $ID;
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-	}
+	}	
 }
 
 sub pet_capture_result {
@@ -4446,6 +4433,8 @@ sub vender_items_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen;
+	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_len = length pack $item_pack;
 
 	# a hack, but the best we can do now
 	if ($args->{switch} eq "0133") {
@@ -4454,57 +4443,36 @@ sub vender_items_list {
 		$headerlen = 12;
 	}
 
-	undef @venderItemList;
-	undef $venderID;
-	undef $venderCID;
 	$venderID = $args->{venderID};
-	$venderCID = $args->{venderCID} if exists $args->{venderCID};
+	$venderCID = $args->{venderCID};
 	my $player = Actor::get($venderID);
+	$venderItemList->clear;
 
 	message TF("%s\n" .
 		"#   Name                                      Type        Amount          Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), ($config{showDomain_Shop}?$config{showDomain_Shop}:"list");
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
-		my $item = {};
-		my $index;
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), $config{showDomain_Shop} || 'list';
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$item_len) {
+		my $item = Actor::Item->new;
 
-		($item->{price},
-		$item->{amount},
-		$index,
-		$item->{type},
-		$item->{nameID},
-		$item->{identified}, # should never happen
-		$item->{broken}, # should never happen
-		$item->{upgrade},
-		$item->{cards})	= unpack('V v2 C v C3 a8', substr($args->{RAW_MSG}, $i, 22));
+ 		@$item{qw( price amount ID type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $args->{RAW_MSG}, $i, $item_len;
 
 		$item->{name} = itemName($item);
-		$venderItemList[$index] = $item;
+		$venderItemList->add($item);
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
-		Plugins::callHook('packet_vender_store', {
-			venderID => $venderID,
-			number => $index,
-			name => $item->{name},
-			amount => $item->{amount},
-			price => $item->{price},
-			upgrade => $item->{upgrade},
-			cards => $item->{cards},
-			type => $item->{type},
-			id => $item->{nameID}
-		});
+		Plugins::callHook('packet_vender_store', { item => $item });
 
 		message(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
-			($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
+			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
+			$config{showDomain_Shop} || 'list');
 	}
-	message("-------------------------------------------------------------------------------\n", ($config{showDomain_Shop}?$config{showDomain_Shop}:"list"));
+	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
 
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $venderID,
-		itemList => \@venderItemList
+		itemList => $venderItemList,
 	});
 }
 
@@ -4536,6 +4504,8 @@ sub vending_start {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = unpack("v1",substr($msg, 2, 2));
+	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_len = length pack $item_pack;
 
 	#started a shop.
 	message TF("Shop '%s' opened!\n", $shop{title}), "success";
@@ -4547,18 +4517,11 @@ sub vending_start {
 	# the shop title instead of using $shop{title}.
 	my $display = center(" $shop{title} ", 79, '-') . "\n" .
 		T("#  Name                                       Type        Amount          Price\n");
-	for (my $i = 8; $i < $msg_size; $i += 22) {
-		my $number = unpack("v1", substr($msg, $i + 4, 2));
-		my $item = $articles[$number] = {};
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
+	for (my $i = 8; $i < $msg_size; $i += $item_len) {
+	    my $item = {};
+	    @$item{qw( price number quantity type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $msg, $i, $item_len;
 		$item->{name} = itemName($item);
+	    $articles[delete $item->{number}] = $item;
 		$articles++;
 
 		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
@@ -5359,6 +5322,9 @@ sub sell_result {
 		error T("Sell failed.\n");
 	} else {
 		message T("Sell completed.\n"), "success";
+	}
+	if (AI::is("sellAuto")) {
+		AI::args->{recv_sell_packet} = 1;
 	}
 }
 

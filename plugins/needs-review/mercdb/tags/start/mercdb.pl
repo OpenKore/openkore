@@ -274,7 +274,7 @@ sub mercDbFill{
 
 	#print "Shop-Owner: " . $shopOwner . "(" . $shopOwnerID .")\n";
 	#print "Shop-Array: " . $::venderItemList . "\n";
-	if (!($::venderItemList[$::number]{'name'} eq "")) {
+	if (!($::venderItemList->get($::number)->{'name'} eq "")) {
 
 		#
 		# check if the offered items are already in the database
@@ -284,7 +284,7 @@ sub mercDbFill{
 		my $shopOwner = $::players{$::venderID}{'name'};
 		$shopOwner =~ s/\\/\\\\/g;
 		$shopOwner =~ s/'/\\'/g;
-		my $iid = $::venderItemList[$::number]{'nameID'};
+		my $iid = $::venderItemList->get($::number)->{'nameID'};
 		my $custom = unpack("C1", substr($::msg, $::i + 13, 1));
 		my $cardDB = substr($::msg, $::i + 14, 8);
 		my $suffix = "";
@@ -354,12 +354,12 @@ sub mercDbFill{
 		# if actual price is lower than average price minus standard deviation it's a HOT DEAL
 		
 		my $barrier_price = $avg_price - $std_price;
-		if ($::venderItemList[$::number]{'price'} < $barrier_price){
+		if ($::venderItemList->get($::number)->{'price'} < $barrier_price){
 			#
 			# HOT DEAL !!!!!!!!!!!!
 			#
 			print " HOT DEAL !!!!!!!!! \n";	
-#			print $avg_price . " - " . $std_price . " = " . $barrier_price . " // price: " . $::venderItemList[$::number]{'price'} ."\n";
+#			print $avg_price . " - " . $std_price . " = " . $barrier_price . " // price: " . $::venderItemList->get($::number)->{'price'} ."\n";
 #			print $avg_std_query . "\n";
 			
 			my @shoppinglist = split(/,/, $Settings::config{"merchantDB_shoppinglist"});
@@ -372,7 +372,7 @@ sub mercDbFill{
 #				print "bi: " . $buyitem . " / in: " . $itemNameLong . "\n";
 				if (($buyitem eq "all") || ($buyitem eq $itemNameLong)){					
 					# ok, its in our list ...
-					if ($chars[$config{'char'}]{'zenny'} >= $::venderItemList[$::number]{'price'}){
+					if ($chars[$config{'char'}]{'zenny'} >= $::venderItemList->get($::number)->{'price'}){
 						# ... and we have the money to buy it, let's go shopping
 						::sendBuyVender(\$::remote_socket, $::venderID, $::number, 1);
 					} else {
@@ -451,7 +451,7 @@ sub mercDbFill{
 			# this item wasn't offered by this dealer on this server
 			#
 			
-			$itemName = $::venderItemList[$::number]{'name'};
+			$itemName = $::venderItemList->get($::number)->{'name'};
 			$itemName = main::itemNameSimple($iid);
 			$itemName =~ s/\\/\\\\/g;
 			$itemName =~ s/'/\\'/g;
@@ -465,16 +465,16 @@ sub mercDbFill{
 			shopName = '" . $shopName . "', 
 			itemID = '" . $iid . "', 
 			name = '" . $itemName . "', 
-			amount = " . $::venderItemList[$::number]{'amount'} . ", 
-			typus = '" . $::itemTypes_lut{$::venderItemList[$::number]{'type'}} . "', 
-			identifiziert = '" . $::venderItemList[$::number]{'identified'} . "', \n"; 
+			amount = " . $::venderItemList->get($::number)->{'amount'} . ", 
+			typus = '" . $::itemTypes_lut{$::venderItemList->get($::number)->{'type'}} . "', 
+			identifiziert = '" . $::venderItemList->get($::number)->{'identified'} . "', \n"; 
 			
 			my $slots = 0;
 			$slots = $itemSlotCount_lut{$iid};
 			$insertQuery .= " slots = '$slots', \n";
 			
 			$insertQuery .= $insertQuery2 . $insertTemp;
-			$insertQuery .= " price = " . $::venderItemList[$::number]{'price'} . ", \n";
+			$insertQuery .= " price = " . $::venderItemList->get($::number)->{'price'} . ", \n";
 			$insertQuery .= " posx = '" . $::players{pack("L1",$shopOwnerID)}{'pos_to'}{'x'} . "', \n";
 			$insertQuery .= " posy = '" . $::players{pack("L1",$shopOwnerID)}{'pos_to'}{'y'} . "', \n";
 			$insertQuery .= " time = " . time . ", \n";
@@ -517,21 +517,21 @@ sub mercDbFill{
 			}
 			
 			# price has changed
-			if (@existingItem[19] != $::venderItemList[$::number]{'price'}){
+			if (@existingItem[19] != $::venderItemList->get($::number)->{'price'}){
 				if ($updateItem) {
 					$updateQuery .= ", ";
 				}
 				$updateItem = -1;
-				$updateQuery .= "price = '" . $::venderItemList[$::number]{'price'} . "'";
+				$updateQuery .= "price = '" . $::venderItemList->get($::number)->{'price'} . "'";
 			}
 			
 			# amount has changed
-                        if (@existingItem[6] != $::venderItemList[$::number]{'amount'}){
+                        if (@existingItem[6] != $::venderItemList->get($::number)->{'amount'}){
                                 if ($updateItem) {
                                         $updateQuery .= ", ";
                                 }
                                 $updateItem = -1;
-                                $updateQuery .= "amount = '" . $::venderItemList[$::number]{'amount'} . "'";
+                                $updateQuery .= "amount = '" . $::venderItemList->get($::number)->{'amount'} . "'";
                         }
 
 			# pos_x has changed

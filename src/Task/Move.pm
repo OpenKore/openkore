@@ -79,7 +79,7 @@ sub new {
 	}
 
 	$self->{$_} = $args{$_} for qw(actor x y);
-	$self->{retry}{timeout} = $args{retryTime} || 0.5;
+	$self->{retry}{timeout} = $args{retryTime} || $timeout{ai_move_retry}{timeout} || 0.5;
 	$self->{giveup}{timeout} = $args{giveupTime} || $timeout{ai_move_giveup}{timeout} || 3;
 
 	# Watch for map change events. Pass a weak reference to ourselves in order

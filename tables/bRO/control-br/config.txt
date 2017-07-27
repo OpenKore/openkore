@@ -217,6 +217,7 @@ route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 15
+route_tryToGuessMissingPortalByDistance 1
 
 runFromTarget 0
 runFromTarget_dist 6

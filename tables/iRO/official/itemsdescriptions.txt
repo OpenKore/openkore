@@ -66761,6 +66761,7 @@ Costume Rainbow Poring Hat
 #
 17806#
 ^FF0000Account Bound^000000
+When opened gives one Costume Eremes' Scarf (Black).
 Class: Item Giver
 Weight: 1
 #

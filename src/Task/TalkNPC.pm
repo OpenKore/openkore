@@ -21,7 +21,7 @@ use utf8;
 use Modules 'register';
 use Task;
 use base qw(Task);
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
+use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config $storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
 use Commands;
@@ -84,6 +84,7 @@ sub new {
 	$self->{type} = $args{type};
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
+	$self->{ID} = $args{ID};
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
@@ -103,8 +104,28 @@ sub new {
 sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
+	
+	# TODO: maybe better create a new task
+	if ($self->{stage} == AFTER_NPC_CANCEL) {
+		debug "Npc has restarted conversation after talk cancel was sent.\n", "ai_npcTalk";
+		
+		if ($self->noMoreSteps) {
+			debug "Continuing the talk within the same task, no conversation steps left.\n", 'ai_npcTalk';
+		} else {
+			debug "Continuing the talk within the same task and remaining conversation steps.\n", 'ai_npcTalk';
+		}
+		
+		$self->find_and_set_target;
+		$self->{stage} = TALKING_TO_NPC;
+		$self->{time} = time;
+	}
+	
 	if ($hook_name eq 'npc_talk_done') {
-		if ($self->{stage} != TALKING_TO_NPC || !$self->{target} || $self->{target}->{ID} != $args->{ID}) {
+		if ($self->{stage} == NOT_STARTED) {
+			debug "Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
+			return;
+			
+		} elsif ($self->{stage} != TALKING_TO_NPC || !$self->{target} || $self->{target}->{ID} != $args->{ID}) {
 			debug "We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
 			return;
 		}
@@ -122,7 +143,7 @@ sub handleNPCTalk {
 			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_store_begin') {
-			message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $self->{target}), "npc";
+			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to cancel\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
@@ -541,8 +562,8 @@ sub iterate {
 				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
 					my $index = $1;
 					my $amount = $2;
-					if ($storeList[$index]) {
-						my $itemID = $storeList[$index]{nameID};
+					if ($storeList->get($index)) {
+						my $itemID = $storeList->get($index)->{nameID};
 						push (@{$ai_v{npc_talk}{itemsIDlist}},$itemID);
 						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 					} else {
@@ -551,10 +572,8 @@ sub iterate {
 					}
 					shift @{$self->{steps}};
 				}
-				if (grep(defined, @bulkitemlist)) {
-					$messageSender->sendBuyBulk(\@bulkitemlist);
-					$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
-				}
+				completeNpcBuy(\@bulkitemlist);
+				$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
 				# We give some time to get inventory_item_added packet from server.
 				# And skip this itteration.
 				$ai_v{'npc_talk'}{'time'} = time + 0.2;
@@ -619,51 +638,28 @@ sub iterate {
 		}
 		
 		# No more steps to be sent
-		if ($self->noMoreSteps) {
-			# Usual end of a conversation
-			if (!%talk) {
-				$self->conversation_end;
-			
-			# No more steps but we still have a defined %talk
-			} else {
-				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
-				# TODO: maybe better create a new task
-				debug "Continuing the talk within the same task\n", 'ai_npcTalk';
-				my $target = $self->find_and_set_target;
-				$self->{stage} = TALKING_TO_NPC;
-				$self->{time} = time;
-			}
+		# Usual end of a conversation
+		if ($self->noMoreSteps && !%talk) {
+			$self->conversation_end;
 		
-		# There are more steps
-		} else {
-			# No conversation with npc
-			if (!%talk) {
-				# Usual 'x' step
-				if ($self->{steps}[0] =~ /x/i) {
-					debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
-					$self->{stage} = TALKING_TO_NPC;
-					$self->{time} = time;
-				
-				# Too many steps
-				} else {
-					if ( scalar @{$self->{steps}} == 1 && $self->{steps}[0] =~ /^n$/i ) {
-						#Here for backwards compatibility
-						$self->conversation_end;
-						
-					} else {
-						# TODO: maybe just warn about remaining steps and do not set error flag?
-						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").\n");
-					}
-				}
-			
-			# We still have steps but we also still have a defined %talk
-			} else {
-				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
-				# TODO: maybe better create a new task and pass remaining steps to it
-				debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
-				my $target = $self->find_and_set_target;
+		# There are more steps but no conversation with npc
+		} elsif (!%talk) {
+			# Usual 'x' step
+			if ($self->{steps}[0] =~ /x/i) {
+				debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+			
+			# Too many steps
+			} else {
+				if ( scalar @{$self->{steps}} == 1 && $self->{steps}[0] =~ /^n$/i ) {
+					#Here for backwards compatibility
+					$self->conversation_end;
+					
+				} else {
+					# TODO: maybe just warn about remaining steps and do not set error flag?
+					$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").");
+				}
 			}
 		}
 	}

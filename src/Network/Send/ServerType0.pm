@@ -37,7 +37,7 @@ use Utils::Rijndael;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
@@ -154,9 +154,13 @@ sub new {
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
+		'48FF' => ['actor_info_request', 'a4', [qw(ID)]],
+		'49A3' => ['actor_look_at', 'v C', [qw(head body)]],
+		'49B0' => ['character_move', 'a3', [qw(coords)]],
+		'4AD0' => ['sync', 'V', [qw(time)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	# # it would automatically use the first available if not set
 	# my %handlers = qw(
 	# 	master_login 0064
@@ -166,7 +170,7 @@ sub new {
 	# 	buy_bulk_vender 0134
 	# );
 	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -244,14 +248,14 @@ sub rodex_checkname {
 
 sub rodex_send_mail {
 	my ($self) = @_;
-	
+
 	my $title_len = length($rodexWrite->{title});
 	my $text_len = length($rodexWrite->{body});
-	
+
 	my $header_pack = 'v Z24 Z24 V2 v2 V';
 	my $header_base_len = ((length pack $header_pack) + 2);
 	my $len = $header_base_len + $text_len + $title_len;
-	
+
 	my $base_pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		len => $len,
@@ -263,12 +267,12 @@ sub rodex_send_mail {
 		text_len => $text_len,
 		char_id => $rodexWrite->{target}{char_id}
 	});
-	
+
 	my $title = stringToBytes($rodexWrite->{title});
 	my $body = stringToBytes($rodexWrite->{body});
-	
+
 	my $pack = $base_pack . $title . $body;
-	
+
 	$self->sendToServer($pack);
 }
 
@@ -382,14 +386,6 @@ sub sendBanCheck {
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
-=pod
-sub sendBuy {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack("C*", 0xC8, 0x00, 0x08, 0x00) . pack("v*", $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
@@ -867,7 +863,7 @@ sub sendPartyJoinRequest {
 
 sub _binName {
 	my $name = shift;
-	
+
 	$name = stringToBytes ($name);
 	$name = substr ($name, 0, 24) if 24 < length $name;
 	$name .= "\x00" x (24 - length $name);
@@ -909,7 +905,7 @@ sub sendPartyOrganize {
 	#my $msg = pack("C*", 0xF9, 0x00) . $binName;
 	# I think this is obsolete - which serverTypes still support this packet anyway?
 	# FIXME: what are shared with $share1 and $share2? experience? item? vice-versa?
-	
+
 	my $msg = pack("C*", 0xE8, 0x01) . $binName . pack("C*", $share1, $share2);
 
 	$self->sendToServer($msg);
@@ -926,7 +922,7 @@ sub sendPartyShareEXP {
 # note: item share changing seems disabled in newest clients
 sub sendPartyOption {
 	my ($self, $exp, $itemPickup, $itemDivision) = @_;
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_setting',
 		exp => $exp,
@@ -1001,9 +997,9 @@ sub sendRaw {
 sub sendRequestMakingHomunculus {
 	# WARNING: If you don't really know, what are you doing - don't touch this
 	my ($self, $make_homun) = @_;
-	
+
 	my $skill = new Skill (idn => 241);
-	
+
 	if (
 		Actor::Item::get (997) && Actor::Item::get (998) && Actor::Item::get (999)
 		&& ($char->getSkillLevel ($skill) > 0)
@@ -1026,15 +1022,6 @@ sub sendRepairItem {
 	my $msg = pack("C2 a2 v V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
 	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
-}
-
-sub sendSell {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("a2 v", $ID, $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent sell: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendSellBulk {
@@ -1139,13 +1126,13 @@ sub sendTop10Blacksmith {
 	my $msg = pack("v", 0x0217);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}	
+}
 
 sub sendTop10PK {
 	my $self = shift;
 	my $msg = pack("v", 0x0237);
 	$self->sendToServer($msg);
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
+	debug "Sent Top 10 PK request\n", "sendPacket", 2;
 }
 
 sub sendTop10Taekwon {
@@ -1232,7 +1219,7 @@ sub sendMailSetAttach {
 		$self->sendMailOperateWindow(1);
 	} else {
 		$self->sendMailOperateWindow(2);
-	}	
+	}
 	$AI::temp::mailAttachAmount = $amount;
 	$self->sendToServer($msg);
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
@@ -1325,11 +1312,11 @@ sub sendAutoRevive {
 
 sub sendMercenaryCommand {
 	my ($self, $command) = @_;
-	
+
 	# 0x0 => COMMAND_REQ_NONE
 	# 0x1 => COMMAND_REQ_PROPERTY
 	# 0x2 => COMMAND_REQ_DELETE
-	
+
 	my $msg = pack ('v C', 0x029F, $command);
 	$self->sendToServer($msg);
 	debug "Sent Mercenary Command $command", "sendPacket", 2;

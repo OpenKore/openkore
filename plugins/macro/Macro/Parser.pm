@@ -306,16 +306,16 @@ sub parseCmd {
 		elsif ($kw eq 'Cart')       {$ret = join ',', getItemIDs($arg, $char->cart->getItems)}
 		elsif ($kw eq 'inventory')  {($ret) = getInventoryIDs($arg)}
 		elsif ($kw eq 'Inventory')  {$ret = join ',', getInventoryIDs($arg)}
-		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, \@::storeList)}
+		elsif ($kw eq 'store')      {($ret) = getItemIDs($arg, $storeList->getItems)}
 		elsif ($kw eq 'storage')    {($ret) = getStorageIDs($arg)}
 		elsif ($kw eq 'Storage')    {$ret = join ',', getStorageIDs($arg)}
 		elsif ($kw eq 'player')     {$ret = getPlayerID($arg)}
 		elsif ($kw eq 'monster')    {$ret = getMonsterID($arg)}
 		elsif ($kw eq 'vender')     {$ret = getVenderID($arg)}
-		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, \@::venderItemList)}
-		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, \@::venderItemList)}
+		elsif ($kw eq 'venderitem') {($ret) = getItemIDs($arg, $venderItemList->getItems)}
+		elsif ($kw eq 'venderItem') {$ret = join ',', getItemIDs($arg, $venderItemList->getItems)}
+		elsif ($kw eq 'venderprice'){$ret = getItemPrice($arg, $venderItemList->getItems)}
+		elsif ($kw eq 'venderamount'){$ret = getVendAmount($arg, $venderItemList->getItems)}
 		elsif ($kw eq 'random')     {$ret = getRandom($arg); $randomized = 1}
 		elsif ($kw eq 'rand')       {$ret = getRandomRange($arg); $randomized = 1}
 		elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
