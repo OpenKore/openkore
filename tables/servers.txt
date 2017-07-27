@@ -129,7 +129,7 @@ port 6800
 version 18
 master_version 1
 serverType iRO
-addTableFolders iRO/Restart;iRO
+addTableFolders iRO/Restart/official;iRO
 serverEncoding Western
 charBlockSize 145
 patchserver ropatch1.gravityus.com
