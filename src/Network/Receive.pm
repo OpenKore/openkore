@@ -1427,44 +1427,57 @@ sub sage_autospell {
 
 sub show_eq {
 	my ($self, $args) = @_;
-
-	my $jump = 26;
-
-	my $unpack_string  = "v ";
-	   $unpack_string .= "v C2 v v C2 ";
-	   $unpack_string .= "a8 ";
-	   $unpack_string .= "a6"; #unimplemented in eA atm
-
-	if (exists $args->{robe}) {  # check packet version
-		$unpack_string .= "v "; # ??
-		$jump += 2;
+	my $item_info;
+	my @item;
+	
+	if ($args->{switch} eq '02D7') {  # PACKETVER DEFAULT	
+		$item_info = {
+			len => 26,
+			types => 'a2 v C2 v2 C2 a8 l v',
+			keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
+		};
+		
+		if (exists $args->{robe}) {  # PACKETVER >= 20100629
+			$item_info->{type} .= 'v';
+			$item_info->{len} += 2;
+		}
+		
+	} elsif ($args->{switch} eq '0859') { # PACKETVER >= 20101124	
+		$item_info = {
+			len => 28,
+			types => 'a2 v C2 v2 C2 a8 l v2',
+			keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
+		};
+		
+	} elsif ($args->{switch} eq '0997') { # PACKETVER >= 20120925
+		$item_info = {
+			len => 31,
+			types => 'a2 v C V2 C a8 l v2 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+		};
+		
+	} elsif ($args->{switch} eq '0A2D') { # PACKETVER >= 20150226
+		$item_info = {
+			len => 57,
+			types => 'a2 v C V2 C a8 l v2 C a25 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+		};
+	} else { # this can't happen
+		return; 
 	}
+	
+	message "--- $args->{name} Equip Info --- \n";
 
-	for (my $i = 0; $i < length($args->{equips_info}); $i += $jump) {
-		my ($index,
-			$ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, # typical for nonstackables
-			$cards,
-			$expire) = unpack($unpack_string, substr($args->{equips_info}, $i));
-
-		my $item = {};
-		$item->{ID} = $index;
-
-		$item->{nameID} = $ID;
-		$item->{type} = $type;
-
-		$item->{identified} = $identified;
-		$item->{type_equip} = $type_equip;
-		$item->{equipped} = $equipped;
-		$item->{broken} = $broken;
-		$item->{upgrade} = $upgrade;
-
-		$item->{cards} = $cards;
-
-		$item->{expire} = $expire;
-
+	for (my $i = 0; $i < length($args->{equips_info}); $i += $item_info->{len}) {
+		my $item;		
+		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));			
+		$item->{broken} = 0;
+		$item->{idenfitied} = 1;		
 		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
-		debug "$index, $ID, $type, $identified, $type_equip, $equipped, $broken, $upgrade, $cards, $expire\n";
 	}
+	
+	message "----------------- \n";
+	
 }
 
 sub show_eq_msg_other {
