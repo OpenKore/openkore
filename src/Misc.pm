@@ -320,6 +320,7 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 }
 
