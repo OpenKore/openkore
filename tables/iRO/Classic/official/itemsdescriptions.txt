@@ -69900,12 +69900,12 @@ Character Bound
 
 19894#
 Take this key and a Treasure Cache to Asgard Village 125, 110
-and old man will be able to help you.
+and the Treasure Cache Opener will be able to help you.
 #
 
 19895#
-Take this Treasure Cache and appropriate key to Asgard Village 125, 110
-and old man will be able to help you.
+Take this Tier 1 Treasure Cache and appropriate key to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
 #
 
 19898#
@@ -70293,7 +70293,7 @@ Jobs : ^777777All^000000
 
 19929#
 Take this key and a Treasure Cache to Asgard Village 125, 110
-and old man will be able to help you.
+and the Treasure Cache Opener will be able to help you.
 #
 
 19930#
@@ -70760,10 +70760,40 @@ Character Bound
 
 19957#
 Take this Tier 2 Treasure Cache and appropriate key to Asgard Village 125, 110
-and old man will be able to help you.
+and the Treasure Cache Opener will be able to help you.
 #
 
 19958#
 Take this Tier 3 Treasure Cache and appropriate key to Asgard Village 125, 110
-and old man will be able to help you.
+and the Treasure Cache Opener will be able to help you.
+#
+
+19971#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Fish In Mouth!
+400 Sharp Scales
+200 Worm Peelings
+50 Ancient Tooth
+1 Small Bottle
+1000 Zeny
+1 Fish In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19972#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hockey Mask!
+400 Skel-Bones
+200 White Herbs
+50 Garnets
+1 Well-Dried Bone
+1000 Zeny
+1 Hockey Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
 #

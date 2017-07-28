@@ -6832,7 +6832,7 @@
 19892#Lunatic_Hat_Certificate#
 19894#Bronze_Key#
 19893#Takius_Blindfold_Certificate#
-19895#Low_Level_Treasure_Cache#
+19895#Tier_1_Treasure_Cache#
 19898#Evil_Marching_Hat_Certificate#
 19899#Skull_Cap_Certificate#
 25133#Dry_White_Stem#
@@ -6910,3 +6910,6 @@
 
 19957#Tier_2_Treasure_Cache#
 19958#Tier_3_Treasure_Cache#
+
+19971#Fish_In_Mouth_Certificate#
+19972#Hockey_Mask_Certificate#
