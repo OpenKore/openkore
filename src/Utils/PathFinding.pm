@@ -95,10 +95,16 @@ sub reset {
 	}
 
 	# Default optional arguments
-	$args{distance_map} = \($args{field}->{dstMap}) unless $args{distance_map};
-	$args{width} = $args{field}{width} unless $args{width};
-	$args{height} = $args{field}{height} unless $args{height};
-	$args{timeout} = 1500 unless $args{timeout};
+	my %hookArgs;
+	$hookArgs{args} = \%args;
+	$hookArgs{return} = 1;
+	Plugins::callHook("PathFindingReset", \%hookArgs);
+	if ($hookArgs{return}) {
+		$args{distance_map} = \($args{field}->{dstMap}) unless $args{distance_map};
+		$args{width} = $args{field}{width} unless $args{width};
+		$args{height} = $args{field}{height} unless $args{height};
+		$args{timeout} = 1500 unless $args{timeout};
+	}
 
 	return $class->_reset($args{distance_map}, $args{weights}, $args{width}, $args{height},
 		$args{start}{x}, $args{start}{y},
