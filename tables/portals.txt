@@ -1,16 +1,6 @@
 #format: <source coordinate><destination coordinate>[zenny cost][conversation sequence]
 
-#RO:RE old moc_fild 
-moc_fild10 19 207 morocc 302 207
-morocc 302 207 moc_fild10 19 207
-moc_fild10 384 258 moc_fild09 30 162
-moc_fild09 30 162 moc_fild10 384 258
-moc_fild11 26 161 moc_fild12 289 168
-moc_fild11 379 197 moc_fild15 38 105
-moc_fild11 212 29 moc_fild17 218 369
-moc_fild12 118 30 moc_fild18 158 382
-moc_fild12 159 381 morocc 160 17
-moc_fild12 289 168 moc_fild11 26 161
+
 
 alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0
