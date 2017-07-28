@@ -6912,3 +6912,4 @@
 19958#Tier_3_Treasure_Cache#
 
 19971#Fish_In_Mouth_Certificate#
+19972#Hockey_Mask_Certificate#

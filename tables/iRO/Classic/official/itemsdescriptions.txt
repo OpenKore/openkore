@@ -70782,3 +70782,18 @@ It is worth 2 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19972#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hockey Mask!
+400 Skel-Bones
+200 White Herbs
+50 Garnets
+1 Well-Dried Bone
+1000 Zeny
+1 Hockey Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
