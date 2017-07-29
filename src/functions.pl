@@ -300,6 +300,8 @@ sub loadDataFiles {
 	}
 	return if $quit;
 
+	Settings::update_log_filenames();
+
 	Plugins::callHook('start3');
 
 	if ($config{'adminPassword'} eq 'x' x 10) {
@@ -688,16 +690,7 @@ sub initMapChangeVars {
 
 	Plugins::callHook('packet_mapChange');
 
-	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
-	$logAppend = ($config{logAppendServer}) ? "_$servers[$config{'server'}]{'name'}".$logAppend : $logAppend;
-	
-	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
-		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
-		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
-		$Settings::shop_log_file     = substr($Settings::shop_log_file,    0, length($Settings::shop_log_file)    - 4) . "$logAppend.txt";
-		$Settings::monster_log_file  = substr($Settings::monster_log_file, 0, length($Settings::monster_log_log)  - 4) . "$logAppend.txt";
-		$Settings::item_log_file     = substr($Settings::item_log_file,    0, length($Settings::item_log_file)    - 4) . "$logAppend.txt";
-	}
+	Settings::update_log_filenames();
 }
 
 # Initialize variables when your character logs in
