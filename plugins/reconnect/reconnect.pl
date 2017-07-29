@@ -8,7 +8,7 @@ package OpenKore::Plugins::reconnect;
 
 use strict;
 
-use Globals qw( %timeout );
+use Globals qw( %config %masterServers %timeout );
 use Log qw( &message );
 use Plugins;
 use Utils qw( &min );
@@ -29,7 +29,13 @@ sub unload {
 }
 
 sub trying_to_connect {
-	my $timeout = timeout();
+	my ( undef, $params ) = @_;
+
+	# Only trigger if we're connecting to the login server.
+	next if $masterServers{ $config{master} }->{ip} ne $params->{host};
+	next if $masterServers{ $config{master} }->{port} ne $params->{port};
+
+    my $timeout = timeout();
 
 	$timeout{reconnect} = { timeout => timeout() };
 	$counter++;
