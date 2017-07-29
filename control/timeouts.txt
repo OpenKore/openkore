@@ -12,6 +12,13 @@ play 40
 # When disconnected, wait x seconds before reconnecting again
 reconnect 30
 
+# After repeated disconnects, wait longer before reconnecting, to reduce load on the server.
+# The first value in this list overrides the "reconnect" timeout above.
+reconnect_backoff 30,60,120,180,300,600,600,900,900,1800
+
+# Add a random amount of seconds to reconnect time, up to a maximum of reconnect_random seconds.
+reconnect_random 20
+
 # Wait x seconds for a poseidon reply before disconnecting
 # Ignore this if you don't use Poseidon Server
 poseidon_wait_reply 15
