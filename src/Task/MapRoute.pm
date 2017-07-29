@@ -271,8 +271,25 @@ sub iterate {
 
 	} elsif ( $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"}{source} ) {
 		# This is a portal solution
+		
+		
+		if ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
+				return unless (timeOut($timeout{ai_portal_wait}));
+				if ($config{route_tryToGuessWrongPortalByDistance}) {
+					my $max_guess_distance = ($config{route_GuessWrongPortalMaxDistance} || 5);
+					for my $portal (@$portalsList) {
+						next unless (distance($self->{actor}{pos_to}, $portal->{pos}) <= $max_guess_distance);
+						$self->{actor}->sendMove(map int, @{$portal->{pos}}{qw(x y)});
+					}
+					
+				} else {
+					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+					$self->initMapCalculator();	# redo MAP router
+				}
 
-		if ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
+		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
+			
 			# Portal is within 'Enter Distance'
 			$timeout{ai_portal_wait}{timeout} = $timeout{ai_portal_wait}{timeout} || 0.5;
 			if ( timeOut($timeout{ai_portal_wait}) ) {
