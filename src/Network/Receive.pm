@@ -1442,6 +1442,13 @@ sub show_eq {
 			$item_info->{len} += 2;
 		}
 		
+	} elsif ($args->{switch} eq '0906') {  # PACKETVER >= ?? NOT IMPLEMENTED ON EATHENA BASED EMULATOR	
+		$item_info = {
+			len => 27,
+			types => 'v2 C v2 C a8 l v2 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+		};
+
 	} elsif ($args->{switch} eq '0859') { # PACKETVER >= 20101124	
 		$item_info = {
 			len => 28,
@@ -1472,7 +1479,7 @@ sub show_eq {
 		my $item;		
 		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));			
 		$item->{broken} = 0;
-		$item->{idenfitied} = 1;		
+		$item->{identified} = 1;		
 		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
 	}
 	
