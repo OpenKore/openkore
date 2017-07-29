@@ -54,9 +54,21 @@ package Benchmark;
 use strict;
 use Time::HiRes;
 use Modules 'register';
+use Log qw(error);
+use Translation qw(T);
 use XSTools;
 
-XSTools::bootModule('Utils::Benchmark');
+eval {
+	XSTools::bootModule('Utils::Benchmark');
+};
+if ($@) {
+	error T("Benchmarking was not compiled on this system\n");
+	*begin = sub {};
+	*end = sub {};
+	*results = sub { T("Benchmarking was not compiled on this system\n") };
+	return 1;
+}
+
 init();
 
 # Note that some functions are implemented in src/auto/XSTools/utils/perl/Benchmark.xs

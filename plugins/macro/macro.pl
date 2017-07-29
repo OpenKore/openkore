@@ -260,7 +260,7 @@ sub commandHandler {
 			if ($params[$idx] eq '-exclusive') {$exclusive = 1}
 			if ($params[$idx] eq '-macro_delay') {$mdelay = $params[++$idx]}
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
-			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params), 2); last}
+			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params[$idx..($#params)]), 2); last}
 		}
 		
 		delete $varStack{$_} for grep /^\.param\d+$/, keys %varStack;

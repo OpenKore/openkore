@@ -209,7 +209,7 @@ sub sendSkillUseLoc {
 
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("v1 x5 v1 x1 V1", 0x94, $index, $amount);
+	my $msg = pack("v1 x5 a2 x1 V1", 0x94, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -223,7 +223,7 @@ sub sendStorageClose {
 
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
-	my $msg = pack("v1 x12 v1 x2 V1", 0xf7, $index, $amount);
+	my $msg = pack("v1 x12 a2 x2 V1", 0xf7, $index, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }

@@ -186,7 +186,7 @@ prt_fild08a.gnd#prt_fild08.gnd#
 prt_fild08a.gat#prt_fild08.gat#
 prt_fild08a.rsw#prt_fild08.rsw#
 삯샺샎엍웤샌붺\map\prt_fild08a.bmp#삯샺샎엍웤샌붺\map\prt_fild08.bmp#
-                 
+
 iz_ac02_d.gnd#iz_ac02.gnd#
 iz_ac02_d.gat#iz_ac02.gat#
 iz_ac02_d.rsw#iz_ac02.rsw#
@@ -1454,34 +1454,34 @@ ecl_tdun03.rsw#ecl_tdun03.rsw#
 1@xm_d.rsw#1@xm_d.rsw#
 삯샺샎엍웤샌붺\map\1@xm_d.bmp#삯샺샎엍웤샌붺\map\1@xm_d.bmp#
 
-//14.3 2차
+//14.3 2Â÷
 1@eom.gnd#1@eom.gnd#
 1@eom.gat#1@eom.gat#
 1@eom.rsw#1@eom.rsw#
-유저인터페이스\map\1@eom.bmp#유저인터페이스\map\1@eom.bmp#
+삯샺샎엍웤샌붺\map\1@eom.bmp#삯샺샎엍웤샌붺\map\1@eom.bmp#
 
 1@jtb.gnd#1@jtb.gnd#
 1@jtb.gat#1@jtb.gat#
 1@jtb.rsw#1@jtb.rsw#
-유저인터페이스\map\1@jtb.bmp#유저인터페이스\map\1@jtb.bmp#
+삯샺샎엍웤샌붺\map\1@jtb.bmp#삯샺샎엍웤샌붺\map\1@jtb.bmp#
 
 //EP.14.3
 1@rev.gnd#1@rev.gnd#
 1@rev.gat#1@rev.gat#
 1@rev.rsw#1@rev.rsw#
-유저인터페이스\map\1@rev.bmp#유저인터페이스\map\1@rev.bmp#
+삯샺샎엍웤샌붺\map\1@rev.bmp#삯샺샎엍웤샌붺\map\1@rev.bmp#
 
 1@dth3.gnd#1@dth3.gnd#
 1@dth3.gat#1@dth3.gat#
 1@dth3.rsw#1@dth3.rsw#
-유저인터페이스\map\1@dth3.bmp#유저인터페이스\map\1@dth3.bmp#
+삯샺샎엍웤샌붺\map\1@dth3.bmp#삯샺샎엍웤샌붺\map\1@dth3.bmp#
 
 1@dth2.gnd#1@dth2.gnd#
 1@dth2.gat#1@dth2.gat#
 1@dth2.rsw#1@dth2.rsw#
-유저인터페이스\map\1@dth2.bmp#유저인터페이스\map\1@dth2.bmp#
+삯샺샎엍웤샌붺\map\1@dth2.bmp#삯샺샎엍웤샌붺\map\1@dth2.bmp#
 
 1@dth1.gnd#1@dth1.gnd#
 1@dth1.gat#1@dth1.gat#
 1@dth1.rsw#1@dth1.rsw#
-유저인터페이스\map\1@dth1.bmp#유저인터페이스\map\1@dth1.bmp#
+삯샺샎엍웤샌붺\map\1@dth1.bmp#삯샺샎엍웤샌붺\map\1@dth1.bmp#

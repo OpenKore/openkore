@@ -79,7 +79,7 @@ sub init {
 
 		# add already existing actors
 		for my $actor (@{$actorList->getItems}) {
-			$self->_onAdd(undef, [$actor, $actor->{binID} // $actor->{invIndex}]);
+			$self->_onAdd(undef, [$actor, $actor->{binID}]);
 		}
 	}
 }
@@ -106,7 +106,7 @@ sub _getActorForIndex {
 	foreach my $l (@{$lists}) {
 		my $actorList = $l->{actorList};
 		if ($index >= $minIndex && $index < $minIndex + $actorList->size()) {
-			return $actorList->getItems()->[$index - $minIndex];
+			return $actorList->[$index - $minIndex];
 		} else {
 			$minIndex += $actorList->size();
 		}
@@ -142,9 +142,8 @@ sub _onRemove {
 
 sub _onClearBegin {
 	my ($self, $actorList) = @_;
-	my $actors = $actorList->getItems();
 
-	foreach my $actor (@{$actors}) {
+	foreach my $actor (@$actorList) {
 		my $addr = Scalar::Util::refaddr($actor);
 		my $ID = $self->{onNameChangeCallbacks}{$addr};
 		$actor->onNameChange->remove($ID);
@@ -200,7 +199,7 @@ sub OnGetItemText {
 	my $info = '';
 
 	if ($column == 0) {
-		$info = $actor->{binID} // $actor->{invIndex};
+		$info = $actor->{binID};
 	} elsif ($column == 1) {
 		$info = $actor->name;
 
@@ -233,15 +232,6 @@ sub OnGetItemAttr {
 	if ($actor) {
 		foreach my $l (@{$self->{lists}}) {
 			my $actorList = $l->{actorList};
-
-			# FIXME: InventoryLists have a different interface
-			if ($actorList->can('getByServerIndex')) {
-				if ($actorList->getByServerIndex($actor->{index})) {
-					$attr->SetTextColour($l->{color}) if ($l->{color});
-					last;
-				}
-				next;
-			}
 
 			if ($actorList->getByID($actor->{ID})) {
 				$attr->SetTextColour($l->{color}) if ($l->{color});

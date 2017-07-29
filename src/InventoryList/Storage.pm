@@ -31,7 +31,10 @@ sub open {
 	$self->{items_max} = $args->{items_max};
 	if (!$self->{opened}) {
 		$self->{opened} = 1;
-		$self->{openedThisSession} = 1;
+		if (!$self->{openedThisSession}) {
+			$self->{openedThisSession} = 1;
+			Plugins::callHook('storage_first_session_openning');
+		}
 		Plugins::callHook('packet_storage_open');
 	}
 }
@@ -39,6 +42,7 @@ sub open {
 sub close {
 	my ($self) = @_;
 	$self->{opened} = 0;
+	Plugins::callHook('packet_storage_close');
 }
 
 sub isFull {

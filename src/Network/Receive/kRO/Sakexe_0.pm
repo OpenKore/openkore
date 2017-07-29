@@ -103,16 +103,16 @@ sub new {
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
 		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
-		'00A0' => ['inventory_item_added', 'v3 C3 a8 v C2', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]], # 23
+		'00A0' => ['inventory_item_added', 'a2 v2 C3 a8 v C2', [qw(ID amount nameID identified broken upgrade cards type_equip type fail)]], # 23
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]], # 6
 		'00A3' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'00A8' => ['use_item', 'v2 C', [qw(index amount success)]], # 7
-		'00AA' => ['equip_item', 'v2 C', [qw(index type success)]], # 7
-		'00AC' => ['unequip_item', 'v2 C', [qw(index type success)]], # 7
-		'00AF' => ['inventory_item_removed', 'v2', [qw(index amount)]], # 6
+		'00A8' => ['use_item', 'a2 v C', [qw(ID amount success)]], # 7
+		'00AA' => ['equip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AC' => ['unequip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AF' => ['inventory_item_removed', 'a2 v', [qw(ID amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
 		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
@@ -147,14 +147,14 @@ sub new {
 		'00E5' => ['deal_request', 'Z24', [qw(user)]], # 26
 		'00E7' => ['deal_begin', 'C', [qw(type)]], # 3
 		'00E9' => ['deal_add_other', 'V v C3 a8', [qw(amount nameID identified broken upgrade cards)]], # 19
-		'00EA' => ['deal_add_you', 'v C', [qw(index fail)]], # 5
+		'00EA' => ['deal_add_you', 'a2 C', [qw(ID fail)]], # 5
 		'00EC' => ['deal_finalize', 'C', [qw(type)]], # 3
 		'00EE' => ['deal_cancelled'], # 2
 		'00F0' => ['deal_complete', 'C', [qw(fail)]], # 3
 		'00F1' => ['deal_undo'], # 2
 		'00F2' => ['storage_opened', 'v2', [qw(items items_max)]], # 6
-		'00F4' => ['storage_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
-		'00F6' => ['storage_item_removed', 'v V', [qw(index amount)]], # 8
+		'00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
+		'00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'00F8' => ['storage_closed'], # 2
 		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
 		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]], # -1
@@ -165,7 +165,7 @@ sub new {
 		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
 		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
-		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v3', [qw(type index upgrade)]],
+		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
 		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
@@ -188,21 +188,21 @@ sub new {
 		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]], # 14
 		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0123' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0124' => ['cart_item_added', 'v V v C3 a8', [qw(index amount nameID identified broken upgrade cards)]], # 21
-		'0125' => ['cart_item_removed', 'v V', [qw(index amount)]], # 8
+		'0124' => ['cart_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
+		'0125' => ['cart_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'012B' => ['cart_off'], # 2
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
-		'0135' => ['vender_buy_fail', 'v2 C', [qw(index amount fail)]], # 7
+		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
-		'013C' => ['arrow_equipped', 'v', [qw(index)]], # 4
+		'013C' => ['arrow_equipped', 'a2', [qw(ID)]], # 4
 		'013D' => ['hp_sp_changed', 'v2', [qw(type amount)]], # 6
 		'013E' => ['skill_cast', 'a4 a4 v3 V2', [qw(sourceID targetID x y skillID type wait)]], # 24
 		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
@@ -240,9 +240,9 @@ sub new {
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0177' => ['identify_list'], # -1
-		'0179' => ['identify', 'v C', [qw(index flag)]], # 5
+		'0179' => ['identify', 'a2 C', [qw(ID flag)]], # 5
 		'017B' => ['card_merge_list'], # -1
-		'017D' => ['card_merge_status', 'v2 C', [qw(item_index card_index fail)]], # 7
+		'017D' => ['card_merge_status', 'a2 a2 C', [qw(item_index card_index fail)]], # 7
 		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
@@ -250,7 +250,7 @@ sub new {
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
 		# // 0x0186,0
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
-		'0188' => ['item_upgrade', 'v3', [qw(type index upgrade)]], # 8
+		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
@@ -286,10 +286,10 @@ sub new {
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
-		'01C4' => ['storage_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
-		'01C5' => ['cart_item_added', 'v V v C4 a8', [qw(index amount nameID type identified broken upgrade cards)]], # 22
+		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
+		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
-		'01C8' => ['item_used', 'v2 a4 v C', [qw(index itemID ID remaining success)]], # 13
+		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		# // 0x01ca,0
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
@@ -338,7 +338,7 @@ sub new {
 		# // 0x020b,0
 		# // 0x020c,0
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
-		'07FA' => ['inventory_item_removed', 'v3', [qw(reason index amount)]], #//0x07fa,8
+		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -348,8 +348,8 @@ sub new {
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
-		'08D0' => ['equip_item', 'v3 C', [qw(index type viewid success)]],
-		'08D1' => ['unequip_item', 'v2 C', [qw(index type success)]],
+		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
+		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
@@ -361,60 +361,65 @@ sub new {
 		items_nonstackable => { # EQUIPMENTITEM_EXTRAINFO
 			type1 => {
 				len => 20,
-				types => 'v2 C2 v2 C2 a8',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards)],
+				types => 'a2 v C2 v2 C2 a8',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards)],
 			},
 			type2 => {
 				len => 24,
-				types => 'v2 C2 v2 C2 a8 l',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire)],
+				types => 'a2 v C2 v2 C2 a8 l',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire)],
 			},
 			type3 => {
 				len => 26,
-				types => 'v2 C2 v2 C2 a8 l v',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
+				types => 'a2 v C2 v2 C2 a8 l v',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType)],
 			},
 			type4 => {
 				len => 28,
-				types => 'v2 C2 v2 C2 a8 l v2',
-				keys => [qw(index nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
+				types => 'a2 v C2 v2 C2 a8 l v2',
+				keys => [qw(ID nameID type identified type_equip equipped broken upgrade cards expire bindOnEquipType sprite_id)],
 			},
 			type5 => {
 				len => 27,
-				types => 'v2 C v2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+				types => 'a2 v C v2 C a8 l v2 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 			type6 => {
 				len => 31,
-				types => 'v2 C V2 C a8 l v2 C',
-				keys => [qw(index nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+				types => 'a2 v C V2 C a8 l v2 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
+			},
+			type7 => {
+				len => 57,
+				types => 'a2 v C V2 C a8 l v2 C a25 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
 		},
 		items_stackable => {
 			type1 => {
 				len => 10,
-				types => 'v2 C2 v2',
-				keys => [qw(index nameID type identified amount type_equip)], # type_equip or equipped?
+				types => 'a2 v C2 v2',
+				keys => [qw(ID nameID type identified amount type_equip)], # type_equip or equipped?
 			},
 			type2 => {
 				len => 18,
-				types => 'v2 C2 v2 a8',
-				keys => [qw(index nameID type identified amount type_equip cards)],
+				types => 'a2 v C2 v2 a8',
+				keys => [qw(ID nameID type identified amount type_equip cards)],
 			},
 			type3 => {
 				len => 22,
-				types => 'v2 C2 v2 a8 l',
-				keys => [qw(index nameID type identified amount type_equip cards expire)],
+				types => 'a2 v C2 v2 a8 l',
+				keys => [qw(ID nameID type identified amount type_equip cards expire)],
 			},
 			type5 => {
 				len => 22,
-				types => 'v2 C v2 a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire identified)],
+				types => 'a2 v C v2 a8 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 			type6 => {
 				len => 24,
-				types => 'v2 C v V a8 l C',
-				keys => [qw(index nameID type amount type_equip cards expire flag)],
+				types => 'a2 v C v V a8 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire flag)],
 			},
 		},
 	};
@@ -530,7 +535,13 @@ sub items_nonstackable {
 		$args->{switch} eq '0996'	# storage
 	) {
 		return $items->{type6};
-
+	} elsif ($args->{switch} eq '0A0D' # inventory
+		|| $args->{switch} eq '0A0F' # cart
+		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
+	) {
+		return $items->{type7};
+		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -648,7 +659,7 @@ sub _items_list {
 
 		$args->{adder}($local_item) if $add;
 
-		my $index = ($local_item->{invIndex} >= 0) ? $local_item->{invIndex} : $local_item->{index};
+		my $index = ($local_item->{binID} >= 0) ? $local_item->{binID} : $local_item->{ID};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
 		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
 	}
@@ -829,7 +840,7 @@ sub arrowcraft_list {
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
-		binAdd(\@arrowCraftID, $item->{invIndex});
+		binAdd(\@arrowCraftID, $item->{binID});
 	}
 
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
@@ -875,9 +886,9 @@ sub card_merge_list {
 
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
-		$index = unpack("v", substr($msg, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
-		binAdd(\@cardMergeItemsID, $item->{invIndex});
+		$index = unpack("a2", substr($msg, $i, 2));
+		my $item = $char->inventory->getByID($index);
+		binAdd(\@cardMergeItemsID, $item->{binID});
 	}
 
 	Commands::run('card mergelist');
@@ -894,16 +905,13 @@ sub card_merge_status {
 	if ($fail) {
 		message T("Card merging failed\n");
 	} else {
-		my $item = $char->inventory->getByServerIndex($item_index);
-		my $card = $char->inventory->getByServerIndex($card_index);
+		my $item = $char->inventory->getByID($item_index);
+		my $card = $char->inventory->getByID($card_index);
 		message TF("%s has been successfully merged into %s\n",
 			$card->{name}, $item->{name}), "success";
 
 		# Remove one of the card
-		$card->{amount} -= 1;
-		if ($card->{amount} <= 0) {
-			$char->inventory->remove($card);
-		}
+		inventoryItemRemoved($card->{binID}, 1);
 
 		# Rename the slotted item now
 		# FIXME: this is unoptimized
@@ -1078,37 +1086,11 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-sub deal_add_you {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error T("That person is overweight; you cannot trade.\n"), "deal";
-		return;
-	} elsif ($args->{fail} == 2) {
-		error T("This item cannot be traded.\n"), "deal";
-		return;
-	} elsif ($args->{fail}) {
-		error TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal";
-		return;
-	}
-
-	return unless $args->{index} > 0;
-
-	my $item = $char->inventory->getByServerIndex($args->{index});
-	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
-	$item->{amount} -= $currentDeal{lastItemAmount};
-	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
-	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
-	$currentDeal{you_items}++;
-	$args->{item} = $item;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
-}
-
 sub equip_item {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	if (!$args->{success}) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{invIndex});
+		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -1123,7 +1105,7 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{invIndex},
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
 			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
@@ -1450,9 +1432,9 @@ sub identify_list {
 
 	undef @identifyID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack('v', substr($msg, $i, 2));
-		my $item = $char->inventory->getByServerIndex($index);
-		binAdd(\@identifyID, $item->{invIndex});
+		my $index = unpack('a2', substr($msg, $i, 2));
+		my $item = $char->inventory->getByID($index);
+		binAdd(\@identifyID, $item->{binID});
 	}
 
 	my $num = @identifyID;
@@ -1464,14 +1446,14 @@ sub inventory_item_added {
 
 	return unless changeToInGameState();
 
-	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
+	my ($index, $amount, $fail) = ($args->{ID}, $args->{amount}, $args->{fail});
 
 	if (!$fail) {
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		if (!$item) {
 			# Add new item
 			$item = new Actor::Item();
-			$item->{index} = $index;
+			$item->{ID} = $index;
 			$item->{nameID} = $args->{nameID};
 			$item->{type} = $args->{type};
 			$item->{type_equip} = $args->{type_equip};
@@ -1494,7 +1476,7 @@ sub inventory_item_added {
 
 		$itemChange{$item->{name}} += $amount;
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
-			$item->{name}, $item->{invIndex}, $amount, $itemTypes_lut{$item->{type}});
+			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
 		$disp .= " (". $field->baseName . ")\n";
 		itemLog($disp);
@@ -1512,8 +1494,8 @@ sub inventory_item_added {
 		if ($AI == AI::AUTO) {
 			# Auto-drop item
 			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				$messageSender->sendDrop($item->{index}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{invIndex}, $amount), "drop";
+				$messageSender->sendDrop($item->{ID}, $amount);
+				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
 			}
 		}
 
@@ -1542,7 +1524,7 @@ sub inventory_items_nonstackable {
 
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
 
-		unless($local_item = $char->inventory->getByServerIndex($item->{index})) {
+		unless($local_item = $char->inventory->getByID($item->{ID})) {
 			$local_item = new Actor::Item();
 			$add = 1;
 		}
@@ -1564,19 +1546,19 @@ sub inventory_items_nonstackable {
 
 		$char->inventory->add($local_item) if ($add);
 
-		debug "Inventory: $local_item->{name} ($local_item->{invIndex}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{invIndex}});
+		debug "Inventory: $local_item->{name} ($local_item->{binID}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $local_item->{binID}});
 
 =pod
 		my $index = unpack("v1", substr($msg, $i, 2));
 		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByServerIndex($index);
+		my $item = $char->inventory->getByID($index);
 		my $add;
 		if (!$item) {
 			$item = new Actor::Item();
 			$add = 1;
 		}
-		$item->{index} = $index;
+		$item->{ID} = $index;
 		$item->{nameID} = $ID;
 		$item->{amount} = 1;
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
@@ -1603,8 +1585,8 @@ sub inventory_items_nonstackable {
 
 		$char->inventory->add($item) if ($add);
 
-		debug "Inventory: $item->{name} ($item->{invIndex}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $item->{invIndex}});
+		debug "Inventory: $item->{name} ($item->{binID}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $item->{binID}});
 =cut
 	}
 }
@@ -1908,18 +1890,6 @@ sub mvp_you {
 	chatLog("k", $msg);
 }
 
-sub npc_image {
-	my ($self, $args) = @_;
-	my ($imageName) = bytesToString($args->{npc_image});
-	if ($args->{type} == 2) {
-		debug "Show NPC image: $imageName\n", "parseMsg";
-	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $imageName\n", "parseMsg";
-	} else {
-		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
-	}
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
@@ -1929,8 +1899,8 @@ sub npc_sell_list {
 	
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
-		my ($index, $price, $price_overcharge) = unpack("v L L", substr($args->{itemsdata},$i,($i + 10)));
-		my $item = $char->inventory->getByServerIndex($index);
+		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByID($index);
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
@@ -1940,63 +1910,23 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 	
-	undef $talk{buyOrSell};
+	undef %talk;
 	message T("Ready to start selling items\n");
 
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-}
-
-sub npc_store_begin {
-	my ($self, $args) = @_;
-	undef %talk;
-	$talk{buyOrSell} = 1;
-	$talk{ID} = $args->{ID};
-	$ai_v{npc_talk}{talk} = 'buy';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($args->{ID});
-
-	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
-}
-
-sub npc_store_info {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
-	undef $talk{'buyOrSell'};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
-
-		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'store';
+	$ai_v{npc_talk}{talk} = 'sell';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
-
-	if (AI::action ne 'buyAuto') {
-		Commands::run('store');
-	}
 }
 
 sub npc_talk {
 	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		AI::queue("NPC", new Task::TalkNPC(type => 'autotalk', nameID => $nameID));
+	}
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -2016,117 +1946,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $talk{msg}\n", "npc";
-}
-
-sub npc_talk_close {
-	my ($self, $args) = @_;
-	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	message TF("%s: Done talking\n", $name), "npc";
-
-	# I noticed that the RO client doesn't send a 'talk cancel' packet
-	# when it receives a 'npc_talk_closed' packet from the server'.
-	# But on pRO Thor (with Kapra password) this is required in order to
-	# open the storage.
-	#
-	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
-	# This needs more investigation.
-	if (!$talk{canceled}) {
-		$messageSender->sendTalkCancel($ID);
-	}
-
-	$ai_v{npc_talk}{talk} = 'close';
-	$ai_v{npc_talk}{time} = time;
-	undef %talk;
-
-	Plugins::callHook('npc_talk_done', {ID => $ID});
-}
-
-sub npc_talk_continue {
-	my ($self, $args) = @_;
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{npc_talk}{talk} = 'next';
-	$ai_v{npc_talk}{time} = time;
-
-	if ($config{autoTalkCont}) {
-		message TF("%s: Auto-continuing talking\n", $name), "npc";
-		$messageSender->sendTalkContinue($ID);
-		# This time will be reset once the NPC responds
-		$ai_v{npc_talk}{time} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-	} else {
-		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
-	}
-}
-
-sub npc_talk_number {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{npc_talk}{talk} = 'number';
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
-	$ai_v{'npc_talk'}{'talk'} = 'num';
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk_responses {
-	my ($self, $args) = @_;
-	# 00b7: word len, long ID, string str
-	# A list of selections appeared on the NPC message dialog.
-	# Each item is divided with ':'
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($msg, 4, 4);
-	$talk{ID} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8));
-	$talk = substr($msg, 8) if (!defined $talk);
-	$talk = bytesToString($talk);
-
-	my @preTalkResponses = split /:/, $talk;
-	$talk{responses} = [];
-	foreach my $response (@preTalkResponses) {
-		# Remove RO color codes
-		$response =~ s/\^[a-fA-F0-9]{6}//g;
-		if ($response =~ /^\^nItemID\^(\d+)$/) {
-			$response = itemNameSimple($1);
-		}
-
-		push @{$talk{responses}}, $response if ($response ne "");
-	}
-
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
-
-	Commands::run('talk resp');
-	
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
-	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
-}
-
-sub npc_talk_text {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
-	$ai_v{npc_talk}{talk} = 'text';
-	$ai_v{npc_talk}{time} = time;
 }
 
 sub party_allow_invite {
@@ -2702,15 +2521,15 @@ sub repair_list {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my $item = {};
 
-		($item->{index},
+		($item->{ID},
 		$item->{nameID},
 		$item->{status},	# what is this?
 		$item->{status2},	# what is this?
-		$item->{index}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
+		$item->{ID}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
 
-		$repairList->[$item->{index}] = $item;
+		$repairList->[$item->{ID}] = $item;
 		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{index} . " $name\n";
+		$msg .= $item->{ID} . " $name\n";
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
@@ -3867,7 +3686,7 @@ sub unequip_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	delete $item->{equipped};
 
 	if ($args->{type} == 10 || $args->{type} == 32768) {
@@ -3885,7 +3704,7 @@ sub unequip_item {
 	}
 	if ($item) {
 		message TF("You unequip %s (%d) - %s\n",
-			$item->{name}, $item->{invIndex},
+			$item->{name}, $item->{binID},
 			$equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
@@ -3913,13 +3732,10 @@ sub unit_levelup {
 sub use_item {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($item) {
-		$item->{amount} -= $args->{amount};
-		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{invIndex}, $args->{amount}), "useItem";
-		if ($item->{amount} <= 0) {
-			$char->inventory->remove($item);
-		}
+		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{binID}, $args->{amount}), "useItem";
+		inventoryItemRemoved($item->{binID}, $args->{amount});
 	}
 }
 
@@ -4021,11 +3837,11 @@ sub vender_buy_fail {
 
 	my $reason;
 	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{index});
+		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{ID});
 	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{index});
+		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{ID});
 	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{index}, $args->{fail});
+		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
 	}
 }
 
@@ -4162,9 +3978,9 @@ sub mail_setattachment {
 	my ($self, $args) = @_;
 	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
 	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
 	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{index}) ? T("item: ").$char->inventory->getByServerIndex($args->{index}) : T("zeny")), "info";
+		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
 	}
 }
 
@@ -4314,10 +4130,10 @@ sub auction_windows {
 sub auction_add_item {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
-		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{index}), "info";
+		message TF("Failed (note: usable items can't be auctioned) to add item with index: %s.\n", $args->{ID}), "info";
 	}
 	else {
-		message TF("Succeeded to add item with index: %s.\n", $args->{index}), "info";
+		message TF("Succeeded to add item with index: %s.\n", $args->{ID}), "info";
 	}
 }
 
@@ -4513,9 +4329,9 @@ sub upgrade_list {
 	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my ($index, $nameID, $upgrade, $cards) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByServerIndex($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{invIndex}, itemName($item)]);
+		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
+		my $item = $char->inventory->getByID($index);
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
 	}
 	$msg .= sprintf("%s\n", ('-'x79));
 	message($msg, "list");
@@ -4812,21 +4628,21 @@ sub booking_delete_request {
 sub booking_insert {
 	my ($self, $args) = @_;
 
-	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{index});
+	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{ID});
 }
 
 # 0x80A
 sub booking_update {
 	my ($self, $args) = @_;
 
-	message TF("Reserve index of %s has changed its settings\n", $args->{index});
+	message TF("Reserve index of %s has changed its settings\n", $args->{ID});
 }
 
 # 0x80B
 sub booking_delete {
 	my ($self, $args) = @_;
 
-	message TF("Deleted reserve group index %s\n", $args->{index});
+	message TF("Deleted reserve group index %s\n", $args->{ID});
 }
 
 sub disconnect_character {

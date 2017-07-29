@@ -56,6 +56,7 @@ our %customCommands;
 sub initHandlers {
 	%handlers = (
 	a					=> \&cmdAttack,
+	achieve				=> \&cmdAchieve,
 	ai					=> \&cmdAI,
 	aiv					=> \&cmdAIv,
 	al					=> \&cmdShopInfoSelf,
@@ -164,6 +165,7 @@ sub initHandlers {
 	relog				=> \&cmdRelog,
 	repair				=> \&cmdRepair,
 	respawn				=> \&cmdRespawn,
+	rodex				=> \&cmdRodex,
 	s					=> \&cmdStatus,
 	sell				=> \&cmdSell,
 	send				=> \&cmdSendRaw,
@@ -661,12 +663,12 @@ sub cmdAutoSell {
 		my @sellItems;
 		my $msg = center(T(" Items to sell (simulation) "), 50, '-') ."\n".
 				T("Amount  Item Name\n");
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
 			my $control = items_control($item->{name});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
-				$obj{index} = $item->{index};
+				$obj{index} = $item->{ID};
 				$obj{amount} = $item->{amount} - $control->{keep};
 				my $item_name = $item->{name};
 				$item_name .= ' (if unequipped)' if ($item->{equipped});
@@ -784,8 +786,8 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			my $found = binFind(\@cardMergeItemsID, $arg2);
 			if (defined $found) {
-				$messageSender->sendCardMerge($char->inventory->get($cardMergeIndex)->{index},
-					$char->inventory->get($arg2)->{index});
+				$messageSender->sendCardMerge($char->inventory->get($cardMergeIndex)->{ID},
+					$char->inventory->get($arg2)->{ID});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error TF("Error in function 'card merge' (Finalize card merging onto item)\n" .
@@ -804,7 +806,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->inventory->get($arg2)) {
 				$cardMergeIndex = $arg2;
-				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{index});
+				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{ID});
 				message TF("Sending merge list request for %s...\n",
 					$char->inventory->get($cardMergeIndex)->{name});
 			} else {
@@ -818,12 +820,12 @@ sub cmdCard {
 		}
 	} elsif ($arg1 eq "list") {
 		my $msg = center(T(" Card List "), 50, '-') ."\n";
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			if ($item->mergeable) {
 				my $display = "$item->{name} x $item->{amount}";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$item->{invIndex}, $display]);
+					[$item->{binID}, $display]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
@@ -836,8 +838,8 @@ sub cmdCard {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n"), $arg3;
 		} else {
-			$messageSender->sendCardMerge($char->inventory->get($arg2)->{index},
-				$char->inventory->get($arg3)->{index});
+			$messageSender->sendCardMerge($char->inventory->get($arg2)->{ID},
+				$char->inventory->get($arg3)->{ID});
 		}
 	} else {
 		error T("Syntax Error in function 'card' (Card Compounding)\n" .
@@ -916,20 +918,20 @@ sub cmdCart_list {
 	my @non_useable;
 	my ($i, $display, $index);
 	
-	foreach my $item (@{$char->cart->getItems()}) {
+	for my $item (@{$char->cart}) {
 		if ($item->usable) {
-			push @useable, $item->{invIndex};
+			push @useable, $item->{binID};
 		} elsif ($item->equippable) {
 			my %eqp;
-			$eqp{index} = $item->{index};
-			$eqp{binID} = $item->{invIndex};
+			$eqp{index} = $item->{ID};
+			$eqp{binID} = $item->{binID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
 			push @equipment, \%eqp;
 		} else {
-			push @non_useable, $item->{invIndex};
+			push @non_useable, $item->{binID};
 		}
 	}
 
@@ -1005,7 +1007,7 @@ sub cmdCart_add {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendCartAdd($item->{index}, $amount);
+	$messageSender->sendCartAdd($item->{ID}, $amount);
 }
 
 sub cmdCart_get {
@@ -1033,7 +1035,7 @@ sub cmdCart_get {
 	if (!$amount || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendCartGet($item->{index}, $amount);
+	$messageSender->sendCartGet($item->{ID}, $amount);
 }
 
 sub cmdCash {
@@ -1481,7 +1483,7 @@ sub cmdDeal {
 	my @arg = parseArgs( $args );
 
 	if ( $arg[0] && $arg[0] !~ /^(\d+|no|add)$/ ) {
-		my ( $partner ) = grep { $_->name eq $arg[0] } @{ $playersList->getItems };
+		my ( $partner ) = grep { $_->name eq $arg[0] } @$playersList;
 		if ( !$partner ) {
 			error TF( "Unknown player [%s]. Player not nearby?\n", $arg[0] );
 			return;
@@ -1528,7 +1530,7 @@ sub cmdDeal {
 		$currentDeal{'final'} = 1;
 		message T("You accepted the final Deal\n"), "deal";
 	} elsif ($arg[0] eq "" && %currentDeal) {
-		$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
+		$messageSender->sendDealAddItem(pack('v', 0), $currentDeal{'you_zeny'});
 		$messageSender->sendDealFinalize();
 
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
@@ -1572,7 +1574,7 @@ sub cmdDeal {
 		if ($currentDeal{you_items} > $max_items) {
 			error T("You can't add any more items to the deal\n"), "deal";
 		}
-		my $items = [ grep { $_ && lc( $_->{name} ) eq lc( $arg[1] ) && !$_->{equipped} } @{ $char->inventory->getItems } ];
+		my $items = [ grep { $_ && lc( $_->{name} ) eq lc( $arg[1] ) && !$_->{equipped} } @$char->inventory ];
 		my $n = $currentDeal{you_items};
 		my $a = $arg[2] || 1;
 		my $c = 0;
@@ -1798,7 +1800,7 @@ sub cmdEquip {
 
 	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17 && $item->{type} != 8) {
 		error TF("Inventory Item %s (%s) can't be equipped.\n",
-			$item->{name}, $item->{invIndex});
+			$item->{name}, $item->{binID});
 		return;
 	}
 	if ($slot) {
@@ -2926,7 +2928,7 @@ sub cmdIdentify {
 			error TF("Error in function 'identify' (Identify Item)\n" .
 				"Identify Item %s does not exist\n", $arg1);
 		} else {
-			$messageSender->sendIdentify($char->inventory->get($identifyID[$arg1])->{index});
+			$messageSender->sendIdentify($char->inventory->get($identifyID[$arg1])->{ID});
 		}
 
 	} else {
@@ -3028,13 +3030,13 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index, $sell);
 
-		foreach my $item (@{$char->inventory->getItems()}) {
+		for my $item (@{$char->inventory}) {
 			if ($item->usable) {
-				push @useable, $item->{invIndex};
+				push @useable, $item->{binID};
 			} elsif ($item->equippable && $item->{type_equip} != 0) {
 				my %eqp;
-				$eqp{index} = $item->{index};
-				$eqp{binID} = $item->{invIndex};
+				$eqp{index} = $item->{ID};
+				$eqp{binID} = $item->{binID};
 				$eqp{name} = $item->{name};
 				$eqp{amount} = $item->{amount};
 				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
@@ -3048,7 +3050,7 @@ sub cmdInventory {
 					push @uequipment, \%eqp;
 				}
 			} else {
-				push @non_useable, $item->{invIndex};
+				push @non_useable, $item->{binID};
 			}
 		}
 		# Start header -- Note: Title is translatable.
@@ -3058,7 +3060,7 @@ sub cmdInventory {
 			# Translation Comment: List of equipment items worn by character
 			$msg .= T("-- Equipment (Equipped) --\n");
 			foreach my $item (@equipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
@@ -3068,7 +3070,7 @@ sub cmdInventory {
 			# Translation Comment: List of equipment items NOT worn
 			$msg .= T("-- Equipment (Not Equipped) --\n");
 			foreach my $item (@uequipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
 				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
 				$display .= " x $item->{amount}" if $item->{amount} > 1;
 				$display .= $item->{identified};
@@ -3085,7 +3087,7 @@ sub cmdInventory {
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
 				# Translation Comment: Tell if the item is marked to be sold
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
@@ -3100,7 +3102,7 @@ sub cmdInventory {
 				my $item = $char->inventory->get($index);
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
-				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? T("Will be sold") : "";
+				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
 					[$index, $display, $sell]);
@@ -3263,8 +3265,7 @@ sub cmdMonsterList {
 		my ($dmgTo, $dmgFrom, $dist, $pos, $name, $monsters);
 		my $msg = center(T(" Monster List "), 79, '-') ."\n".
 			T("#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n");
-		$monsters = $monstersList->getItems() if ($monstersList);
-		foreach my $monster (@{$monsters}) {
+		for my $monster (@$monstersList) {
 			$dmgTo = ($monster->{dmgTo} ne "")
 				? $monster->{dmgTo}
 				: 0;
@@ -3426,8 +3427,7 @@ sub cmdNPCList {
 			return;
 		}
 
-		my $npcs = $npcsList->getItems();
-		foreach my $npc (@{$npcs}) {
+		for my $npc (@$npcsList) {
 			my $pos = "($npc->{pos}{x}, $npc->{pos}{y})";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
@@ -3692,7 +3692,7 @@ sub cmdPet {
 	} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
 		if(my $item = Match::inventoryItem($args[1])) {
 			# beware, you must first use the item "Pet Incubator", else you will get disconnected
-			$messageSender->sendPetHatch($item->{index});
+			$messageSender->sendPetHatch($item->{ID});
 		} else {
 			error TF("Error in function 'pet [hatch|h] #' (Hatch Pet)\n" .
 				"Egg: %s could not be found.\n", $args[1]);
@@ -3738,8 +3738,7 @@ sub cmdPetList {
 	my $msg = center(T(" Pet List "), 68, '-') ."\n".
 		T("#   Name                      Type             Distance  Coordinates\n");
 
-	$pets = $petsList->getItems() if ($petsList);
-	foreach my $pet (@{$pets}) {
+	for my $pet (@$petsList) {
 		$dist = distance($char->{pos_to}, $pet->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $pet->{pos_to}{x} . ', ' . $pet->{pos_to}{y} . ')';
@@ -3758,36 +3757,32 @@ sub cmdPlayerList {
 	my $msg;
 
 	if ($args eq "g") {
-		my $maxpl;
 		my $maxplg;
 		$msg = center(T(" Guild Player List "), 79, '-') ."\n".
 			T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
 
-				if ($char->{guild}{name} eq ($player->{guild}{name})) {
+			if ($char->{guild}{name} eq ($player->{guild}{name})) {
 
-					if ($player->{guild} && %{$player->{guild}}) {
-						$name .= " [$player->{guild}{name}]";
-					}
-					$dist = distance($char->{pos_to}, $player->{pos_to});
-					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-
-					$maxplg++;
-
-					$msg .= swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				if ($player->{guild} && %{$player->{guild}}) {
+					$name .= " [$player->{guild}{name}]";
 				}
-				$maxpl = @{$playersList->getItems()};
+				$dist = distance($char->{pos_to}, $player->{pos_to});
+				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+
+				$maxplg++;
+
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 			}
 		}
 		$msg .= TF("Total guild players: %s\n",$maxplg) if $maxplg;
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $totalPlayers = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $totalPlayers);
 		} else {
 			$msg .= T("There are no players near you.\n");
 		}
@@ -3797,36 +3792,32 @@ sub cmdPlayerList {
 	}
 
 	if ($args eq "p") {
-		my $maxpl;
 		my $maxplp;
 		$msg = center(T(" Party Player List "), 79, '-') ."\n".
 			T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
 
-				if ($char->{party}{name} eq ($player->{party}{name})) {
+			if ($char->{party}{name} eq ($player->{party}{name})) {
 
-					if ($player->{guild} && %{$player->{guild}}) {
-						$name .= " [$player->{guild}{name}]";
-					}
-					$dist = distance($char->{pos_to}, $player->{pos_to});
-					$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-					$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-
-					$maxplp++;
-
-					$msg .= swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-						[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+				if ($player->{guild} && %{$player->{guild}}) {
+					$name .= " [$player->{guild}{name}]";
 				}
-				$maxpl = @{$playersList->getItems()};
+				$dist = distance($char->{pos_to}, $player->{pos_to});
+				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+
+				$maxplp++;
+
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 			}
 		}
 		$msg .= TF("Total party players: %s \n",$maxplp)  if $maxplp;
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $totalPlayers = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $totalPlayers);
 		} else {
 			$msg .= T("There are no players near you.\n");
 		}
@@ -3914,27 +3905,23 @@ sub cmdPlayerList {
 	}
 
 	{
-		my $maxpl;
 		$msg = center(T(" Player List "), 79, '-') ."\n".
 		T("#    Name                                Sex   Lv   Job         Dist Coord\n");
-		if ($playersList) {
-			foreach my $player (@{$playersList->getItems()}) {
-				my ($name, $dist, $pos);
-				$name = $player->name;
-				if ($player->{guild} && %{$player->{guild}}) {
-					$name .= " [$player->{guild}{name}]";
-				}
-				$dist = distance($char->{pos_to}, $player->{pos_to});
-				$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-				$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
-				$maxpl = @{$playersList->getItems()};
-				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
-					[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
+		for my $player (@$playersList) {
+			my ($name, $dist, $pos);
+			$name = $player->name;
+			if ($player->{guild} && %{$player->{guild}}) {
+				$name .= " [$player->{guild}{name}]";
 			}
+			$dist = distance($char->{pos_to}, $player->{pos_to});
+			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+			$pos = '(' . $player->{pos_to}{x} . ', ' . $player->{pos_to}{y} . ')';
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+				[$player->{binID}, $name, $sex_lut{$player->{sex}}, $player->{lv}, $player->job, $dist, $pos]);
 		}
-		if ($maxpl ne "") {
-			$msg .= TF("Total players: %s \n",$maxpl);
+		if (my $playersTotal = $playersList && $playersList->size) {
+			$msg .= TF("Total players: %s \n", $playersTotal);
 		} else	{$msg .= T("There are no players near you.\n");}
 		$msg .= '-' x 79 . "\n";
 		message $msg, "list";
@@ -4213,7 +4200,7 @@ sub cmdSell {
 	}
 	my @args = parseArgs($_[1]);
 
-	if ($args[0] eq "" && $talk{buyOrSell}) {
+	if ($args[0] eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
 		$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 	} elsif ($args[0] eq "list") {
@@ -4223,7 +4210,7 @@ sub cmdSell {
 			my $msg = center(T(" Sell List "), 41, '-') ."\n".
 				T("#   Item                           Amount\n");
 			foreach my $item (@sellList) {
-				$msg .= sprintf("%-3d %-30s %d\n", $item->{invIndex}, $item->{name}, $item->{amount});
+				$msg .= sprintf("%-3d %-30s %d\n", $item->{binID}, $item->{name}, $item->{amount});
 			}
 			$msg .= ('-'x41) . "\n";
 			message $msg, "list";
@@ -4254,21 +4241,21 @@ sub cmdSell {
 			foreach my $item (@items) {
 				my %obj;
 
-				if (defined(findIndex(\@sellList, "invIndex", $item->{invIndex}))) {
-					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{invIndex});
+				if (defined(findIndex(\@sellList, "binID", $item->{binID}))) {
+					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{binID});
 					next;
 				}
 
 				$obj{name} = $item->nameString();
-				$obj{index} = $item->{index};
-				$obj{invIndex} = $item->{invIndex};
+				$obj{ID} = $item->{ID};
+				$obj{binID} = $item->{binID};
 				if (!$args[1] || $args[1] > $item->{amount}) {
 					$obj{amount} = $item->{amount};
 				} else {
 					$obj{amount} = $args[1];
 				}
 				push @sellList, \%obj;
-				message TF("Added to sell list: %s (%s) x %s\n", $obj{name}, $obj{invIndex}, $obj{amount}), "info";
+				message TF("Added to sell list: %s (%s) x %s\n", $obj{name}, $obj{binID}, $obj{amount}), "info";
 			}
 			message T("Type 'sell done' to sell everything in your sell list.\n"), "info";
 
@@ -4423,8 +4410,7 @@ sub cmdSlaveList {
 	my ($dist, $pos, $name, $slaves);
 	my $msg = center(T(" Slave List "), 79, '-') ."\n".
 		T("#   Name                                   Type         Distance    Coordinates\n");
-	$slaves = $slavesList->getItems() if ($slavesList);
-	foreach my $slave (@{$slaves}) {
+	for my $slave (@$slavesList) {
 		$dist = distance($char->{pos_to}, $slave->{pos_to});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $slave->{pos_to}{x} . ', ' . $slave->{pos_to}{y} . ')';
@@ -4677,7 +4663,7 @@ sub cmdStorage_add {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendStorageAdd($item->{index}, $amount);
+	$messageSender->sendStorageAdd($item->{ID}, $amount);
 }
 
 sub cmdStorage_addfromcart {
@@ -4693,7 +4679,7 @@ sub cmdStorage_addfromcart {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	$messageSender->sendStorageAddFromCart($item->{index}, $amount);
+	$messageSender->sendStorageAddFromCart($item->{ID}, $amount);
 }
 
 sub cmdStorage_get {
@@ -4707,7 +4693,7 @@ sub cmdStorage_get {
 		if ($name =~ /^(\d+)\-(\d+)$/) {
 			for my $i ($1..$2) {
 				my $item = $char->storage->get($i);
-				#push @items, $item->{index} if ($item);
+				#push @items, $item->{ID} if ($item);
 				push @items, $item if ($item);
 			}
 
@@ -4717,7 +4703,7 @@ sub cmdStorage_get {
 				error TF("Storage Item '%s' does not exist.\n", $name);
 				next;
 			}
-			#push @items, $item->{index};
+			#push @items, $item->{ID};
 			push @items, $item;
 		}
 	}
@@ -4744,7 +4730,7 @@ sub cmdStorage_gettocart {
 			"You do not have a cart.\n");
 		return;
 	}
-	$messageSender->sendStorageGetToCart($item->{index}, $amount);
+	$messageSender->sendStorageGetToCart($item->{ID}, $amount);
 }
 
 sub cmdStorage_close {
@@ -4771,7 +4757,7 @@ sub cmdStore {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	if ($arg1 eq "" && !$talk{'buyOrSell'}) {
+	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
 		my $msg = center(TF(" Store List (%s) ", $storeList[0]{npcName}), 54, '-') ."\n".
 			T("#  Name                    Type                  Price\n");
 		my $display;
@@ -4785,7 +4771,7 @@ sub cmdStore {
 	$msg .= ('-'x54) . "\n";
 	message $msg, "list";
 
-	} elsif ($arg1 eq "" && $talk{'buyOrSell'}
+	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
@@ -4840,112 +4826,155 @@ sub cmdTalk {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	$args =~ s/^\w+\s+//;
-	my $arg2;
-	if ($args =~ /^(-?\d+)/) {
-		$arg2 = $1;
-	} else {
-		($arg2) = $args =~ /^(\/.*?\/\w?)$/;
-	}
-	if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
-		error TF("Error in function 'talk' (Talk to NPC)\n" .
-			"NPC %s does not exist\n", $arg1);
-	} elsif ($arg1 =~ /^\d+$/) {
-		AI::clear("route");
-		$messageSender->sendTalk($npcsID[$arg1]);
-
-	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
-		error TF("Error in function 'talk %s' (Respond to NPC)\n" .
-			"You are not talking to any NPC.\n", $arg1);
-
-	} elsif ($arg1 eq "resp" && $arg2 eq "") {
+	
+	if ($args =~ /^resp$/) {
 		if (!$talk{'responses'}) {
-		error T("Error in function 'talk resp' (Respond to NPC)\n" .
-			"No NPC response list available.\n");
+			error T("Error in function 'talk resp' (Respond to NPC)\n" .
+				"No NPC response list available.\n");
+			return;
+					
+		} else {
+			my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
+				TF("#  Response\n");
+			for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+				$msg .= swrite(
+				"@< @*",
+				[$i, $talk{responses}[$i]]);
+			}
+			$msg .= ('-'x40) . "\n";
+			message $msg, "list";
 			return;
 		}
-		my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
-			TF("#  Response\n");
-		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-			$msg .= swrite(
-			"@< @*",
-			[$i, $talk{responses}[$i]]);
+	}
+	
+	my @steps = split(/\s*,\s*/, $args);
+	
+	if (!@steps) {
+		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
+			"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|<number #>]\n");
+		return;
+	}
+	
+	my $steps_string = "";
+	my $nameID;
+	foreach my $index (0..$#steps) {
+		my $step = $steps[$index];
+		my $type;
+		my $arg;
+		if ($step =~ /^(cont|text|num|resp|\d+|"[^"]+")\s+(\S.*)$/) {
+			$type = $1;
+			$arg = $2;
+		} else {
+			$type = $step;
 		}
-		$msg .= ('-'x40) . "\n";
-		message $msg, "list";
-	} elsif ($arg1 eq "resp" && $arg2 =~ /^\/(.*?)\/(\w?)$/) {
-		my $regex = $1;
-		my $postCondition = $2;
-		my $index = 1;
-		foreach my $testResponse (@{$talk{'responses'}}) {
-			if ($testResponse =~ /$regex/ || ($postCondition eq 'i' && $testResponse =~ /$regex/i)) {
-				$messageSender->sendTalkResponse($talk{'ID'}, $index);
+		
+		my $current_step;
+		
+		if ($type =~ /^\d+|"([^"]+)"$/) {
+			$type = $1 if $1;
+			if (AI::is("NPC")) {
+				error "Error in function 'talk' (Talk to NPC)\n" .
+					"You are already talking with an npc\n";
+				return;
+			
+			} elsif ($index != 0) {
+				error "Error in function 'talk' (Talk to NPC)\n" .
+					"You cannot start a conversation during one\n";
+				return;
+			
+			} else {
+				my $npc = $npcsList->get($type);
+				if ($npc) {
+					$nameID = $npc->{nameID};
+				} else {
+					error "Error in function 'talk' (Talk to NPC)\n" .
+						"Given npc not found\n";
+					return;
+				}
+			}
+		
+		} elsif (!AI::is("NPC") && !defined $nameID) {
+			error "Error in function 'talk' (Talk to NPC)\n" .
+				"You are not talkning to an npc\n";
+			return;
+		
+		} elsif ($type eq "resp") {
+			if ($arg =~ /^(\/(.*?)\/(\w?))$/) {
+				$current_step = 'r~'.$1;
+				
+			} elsif ($arg =~ /^\d+$/) {
+				$current_step = 'r'.$arg;
+			
+			} elsif (!$arg) {
+				error T("Error in function 'talk resp' (Respond to NPC)\n" .
+					"You must specify a response.\n");
+				return;
+			
+			} else {
+				error T("Error in function 'talk resp' (Respond to NPC)\n" .
+					"Wrong talk resp sintax.\n");
 				return;
 			}
-		} continue {
-			$index++;
+			
+		} elsif ($type eq "num") {
+			if ($arg eq "") {
+				error T("Error in function 'talk num' (Respond to NPC)\n" .
+					"You must specify a number.\n");
+				return;
+				
+			} elsif ($arg !~ /^-?\d+$/) {
+				error TF("Error in function 'talk num' (Respond to NPC)\n" .
+					"%s is not a valid number.\n", $arg);
+				return;
+				
+			} elsif ($arg =~ /^-?\d+$/) {
+				$current_step = 'd'.$arg;
+			}
+
+		} elsif ($type eq "text") {
+			if ($args eq "") {
+				error T("Error in function 'talk text' (Respond to NPC)\n" .
+					"You must specify a string.\n");
+				return;
+				
+			} else {
+				$current_step = 't='.$arg;
+			}
+
+		} elsif ($type eq "cont") {
+			$current_step = 'c';
+
+		} elsif ($type eq "no") {
+			$current_step = 'n';
 		}
-		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
-			"No match was found on responses with regex %s .\n", $regex);
-	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
-		error TF("Error in function 'talk resp' (Respond to NPC)\n" .
-			"Response %s does not exist.\n", $arg2);
-
-	} elsif ($arg1 eq "resp" && $arg2 ne "") {
-		if ($talk{'responses'}[$arg2] eq T("Cancel Chat")) {
-			$arg2 = 255;
-		} else {
-			$arg2 += 1;
+			
+		if (defined $current_step) {
+			$steps_string .= $current_step;
+			
+		} elsif (!(defined $nameID && $index == 0)) {
+			error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
+				"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|<number #>]\n");
+			return;
 		}
-		$messageSender->sendTalkResponse($talk{'ID'}, $arg2);
-
-	} elsif ($arg1 eq "num" && $arg2 eq "") {
-		error T("Error in function 'talk num' (Respond to NPC)\n" .
-			"You must specify a number.\n");
-
-	} elsif ($arg1 eq "num" && !($arg2 =~ /^-?\d+$/)) {
-		error TF("Error in function 'talk num' (Respond to NPC)\n" .
-			"%s is not a valid number.\n", $arg2);
-
-	} elsif ($arg1 eq "num" && $arg2 =~ /^-?\d+$/) {
-		$messageSender->sendTalkNumber($talk{'ID'}, $arg2);
-
-	} elsif ($arg1 eq "text") {
-		if ($args eq "") {
-			error T("Error in function 'talk text' (Respond to NPC)\n" .
-				"You must specify a string.\n");
-		} else {
-			$messageSender->sendTalkText($talk{'ID'}, $args);
-		}
-
-	} elsif ($arg1 eq "cont" && !%talk) {
-		error T("Error in function 'talk cont' (Continue Talking to NPC)\n" .
-			"You are not talking to any NPC.\n");
-
-	} elsif ($arg1 eq "cont") {
-		$messageSender->sendTalkContinue($talk{'ID'});
-
-	} elsif ($arg1 eq "no") {
-		if (!%talk) {
-			error T("You are not talking to any NPC.\n");
-		} elsif ($ai_v{npc_talk}{talk} eq 'select') {
-			$messageSender->sendTalkResponse($talk{ID}, 255);
-		} elsif (!$talk{canceled}) {
-			$messageSender->sendTalkCancel($talk{ID});
-			$talk{canceled} = 1;
-		}
-
+			
+		last if ($index == $#steps);
+			
+	} continue {
+		$steps_string .= " " unless (defined $nameID && $index == 0);
+	}
+	if (defined $nameID) {
+		AI::clear("route");
+		AI::queue("NPC", new Task::TalkNPC(type => 'talk', nameID => $nameID, sequence => $steps_string));
 	} else {
-		error T("Syntax Error in function 'talk' (Talk to NPC)\n" .
-			"Usage: talk <NPC # | cont | resp | num | text | no> [<response #>|<number #>]\n");
+		my $task = $char->args;
+		$task->addSteps($steps_string);
 	}
 }
 
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
 
-	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+) (.+)$/;
+	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+)(?: (.+))?$/;
 	unless (defined $x) {
 		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
 			"Usage: talknpc <x> <y> <sequence>\n");
@@ -4978,7 +5007,7 @@ sub cmdTank {
 
 	} else {
 		my $name;
-		for (@{$playersList->getItems}, @{$slavesList->getItems}) {
+		for (@$playersList, @$slavesList) {
 			if (lc $_->{name} eq lc $arg) {
 				$name = $_->{name};
 				last;
@@ -5114,7 +5143,7 @@ sub cmdUnequip {
 
 	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17) {
 		error TF("Inventory Item %s (%s) can't be unequipped.\n",
-			$item->{name}, $item->{invIndex});
+			$item->{name}, $item->{binID});
 		return;
 	}
 	if ($slot) {
@@ -5671,7 +5700,7 @@ sub cmdMail {
 			} elsif ($args[1] eq "item" && defined $args[3]) {
 				my $item = Actor::Item::get($args[3]);
 				if ($item) {
-					my $serverIndex = $item->{index};
+					my $serverIndex = $item->{ID};
 					$messageSender->sendMailSetAttach($args[2], $serverIndex);
 				} else {
 					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
@@ -5733,7 +5762,7 @@ sub cmdAuction {
 		unless (defined $args[0] && $args[1] =~ /^\d+$/) {
 			message T("Usage: aua (<item #>|<item name>) <amount>\n"), "info";
 		} elsif (my $item = Actor::Item::get($args[0])) {
-			my $serverIndex = $item->{index};
+			my $serverIndex = $item->{ID};
 			$messageSender->sendAuctionAddItem($serverIndex, $args[1]);
 		}
 	# auction remove item
@@ -5926,7 +5955,7 @@ sub cmdWeaponRefine {
 	}
 	my ($cmd, $arg) = @_;
 	if(my $item = Match::inventoryItem($arg)) {
-		$messageSender->sendWeaponRefine($item->{index});
+		$messageSender->sendWeaponRefine($item->{ID});
 	} else {
 		message TF("Item with name or id: %s not found.\n", $arg), "info";
 	}
@@ -5954,20 +5983,20 @@ sub cmdStorage_list {
 	my @non_useable;
 	my ($i, $display, $index);
 	
-	foreach my $item (@{$char->storage->getItems()}) {
+	for my $item (@{$char->storage}) {
 		if ($item->usable) {
-			push @useable, $item->{invIndex};
+			push @useable, $item->{binID};
 		} elsif ($item->equippable) {
 			my %eqp;
-			$eqp{index} = $item->{index};
-			$eqp{binID} = $item->{invIndex};
+			$eqp{index} = $item->{ID};
+			$eqp{binID} = $item->{binID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 			$eqp{type} = $itemTypes_lut{$item->{type}};
 			push @equipment, \%eqp;
 		} else {
-			push @non_useable, $item->{invIndex};
+			push @non_useable, $item->{binID};
 		}
 	}
 
@@ -6032,6 +6061,526 @@ sub cmdDeadTime {
 		$msg = T("You have not died yet.\n");
 	}
 	message $msg, "list";
+}
+
+sub cmdAchieve {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
+	
+	if (($arg1 ne 'list' && $arg1 ne 'reward') || ($arg1 eq 'list' && defined $arg2) || ($arg1 eq 'reward' && !defined $arg2)) {
+		error T("Syntax Error in function 'achieve'\n".
+			"Usage: achieve [<list|reward>] [<achievemente_id>]\n".
+			"Usage: achieve list: Shows all current achievements\n".
+			"Usage: achieve reward achievemente_id: Request reward for the achievement of id achievemente_id\n"
+			);
+			
+		return;
+	}
+
+	if ($arg1 eq 'reward') {
+		if (!exists $achievementList->{$arg2}) {
+			error TF("You don't have the achievement %s.\n", $arg2);
+			
+		} elsif ($achievementList->{$arg2}{completed} != 1) {
+			error TF("You haven't completed the achievement %s.\n", $arg2);
+		
+		} elsif ($achievementList->{$arg2}{reward} == 1) {
+			error TF("You have already claimed the achievement %s reward.\n", $arg2);
+			
+		} else {
+			message TF("Sending request for reward of achievement %s.\n", $arg2);
+			$messageSender->sendAchievementGetReward($arg2);
+		}
+	
+	} elsif ($arg1 eq 'list') {
+		my $msg = center(" " . "Achievement List" . " ", 79, '-') . "\n";
+		my $index = 0;
+		foreach my $achieve_id (keys %{$achievementList}) {
+			my $achieve = $achievementList->{$achieve_id};
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15)), [$index, $achieve_id, $achieve->{completed} ? "complete" : "incomplete", $achieve->{reward}  ? "rewarded" : "not rewarded"]);
+			$index++;
+		}
+		$msg .= sprintf("%s\n", ('-'x79));
+		message $msg, "list";
+	}
+}
+
+sub cmdRodex {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
+
+	if ($arg1 eq 'open') {
+		if (defined $rodexList) {
+			error "Your rodex mail box is already opened.\n";
+			return;
+		}
+		message "Sending request to open rodex mailbox.\n";
+		$messageSender->rodex_open_mailbox(0,0,0);
+	
+	} elsif ($arg1 eq 'close') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed.\n";
+			return;
+		}
+		message "Your rodex mail box has been closed.\n";
+		$messageSender->rodex_close_mailbox();
+		
+	} elsif ($arg1 eq 'list') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!$rodexList) {
+			message "Your rodex mail box is empty.\n";
+			return;
+		}
+		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
+		my $index = 0;
+		foreach my $mail_id (keys %{$rodexList}) {
+			my $mail = $rodexList->{mails}{$mail_id};
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
+			$index++;
+		}
+		$msg .= sprintf("%s\n", ('-'x79));
+		message $msg, "list";
+		
+	} elsif ($arg1 eq 'refresh') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+		}
+		
+		$messageSender->rodex_refresh_maillist(0,0,0);
+		
+	} elsif ($arg1 eq 'read') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex read' (Read rodex mail)\n" .
+				"Usage: rodex read <mail id>\n");
+			return;
+			
+		} elsif (!exists $rodexList->{mails}{$arg2}) {
+			error "Mail of id $arg2 doesn't exist.\n";
+			return;
+		}
+		
+		$messageSender->rodex_read_mail(0,$arg2,0);
+		
+	} elsif ($arg1 eq 'write') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are already writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
+				"Usage: rodex write <player name>\n");
+			return;
+		}
+		
+		message "Opening rodex mail write box.\n";
+		$messageSender->rodex_open_write_mail($arg2);
+		
+	} elsif ($arg1 eq 'cancel') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+		}
+		
+		message "Closing rodex mail write box.\n";
+		$messageSender->rodex_cancel_write_mail();
+		
+	} elsif ($arg1 eq 'settarget') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif (exists $rodexWrite->{target}) {
+			error "You have already set the mail target.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n" .
+				"Usage: rodex settarget <player name>\n");
+			return;
+		}
+		
+		message "Setting target of rodex mail to '".$arg2."'.\n";
+		$messageSender->rodex_checkname($arg2);
+		
+	} elsif ($arg1 eq 'itemslist') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		}
+		
+		my @useable;
+		my @equipment;
+		my @non_useable;
+		my ($i, $display, $index);
+		
+		for my $item (@{$rodexWrite->{items}}) {
+			if ($item->usable) {
+				push @useable, $item->{binID};
+			} elsif ($item->equippable) {
+				my %eqp;
+				$eqp{index} = $item->{ID};
+				$eqp{binID} = $item->{binID};
+				$eqp{name} = $item->{name};
+				$eqp{amount} = $item->{amount};
+				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+				$eqp{type} = $itemTypes_lut{$item->{type}};
+				push @equipment, \%eqp;
+			} else {
+				push @non_useable, $item->{binID};
+			}
+		}
+
+		my $msg = center(T(" Rodex mail item list "), 50, '-') ."\n";
+
+		$msg .= T("-- Usable --\n");
+		for (my $i = 0; $i < @useable; $i++) {
+			$index = $useable[$i];
+			my $item = $rodexWrite->{items}->get($index);
+			$display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+
+		$msg .= T("\n-- Equipment --\n");
+		foreach my $item (@equipment) {
+			## altered to allow for Arrows/Ammo which will are stackable equip.
+			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			$display .= " x $item->{amount}" if $item->{amount} > 1;
+			$display .= $item->{identified};
+			$msg .= sprintf("%-57s\n", $display);
+		}
+
+		$msg .= T("\n-- Non-Usable --\n");
+		for (my $i = 0; $i < @non_useable; $i++) {
+			$index = $non_useable[$i];
+			my $item = $rodexWrite->{items}->get($index);
+			$display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+		message $msg, "list";
+		
+	} elsif ($arg1 eq 'settitle') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex settitle' (Set title of rodex mail)\n" .
+				"Usage: rodex settitle <title>\n");
+			return;
+		}
+		
+		if (exists $rodexWrite->{title}) {
+			message "Changed the rodex mail message title to '".$arg2."'.\n";
+		} else {
+			message "Set the rodex mail message title to '".$arg2."'.\n";
+		}
+		
+		$rodexWrite->{title} = $arg2;
+		
+	} elsif ($arg1 eq 'setbody') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex setbody' (Set body of rodex mail)\n" .
+				"Usage: rodex setbody <body>\n");
+			return;
+		}
+		
+		if (exists $rodexWrite->{body}) {
+			message "Changed the rodex mail message body to '".$arg2."'.\n";
+		} else {
+			message "Set the rodex mail message body to '".$arg2."'.\n";
+		}
+		
+		$rodexWrite->{body} = $arg2;
+		
+	} elsif ($arg1 eq 'setzeny') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
+			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
+				"Usage: rodex setzeny <zeny amount>\n");
+			return;
+		} elsif ($arg2 > $char->{zeny}) {
+			error "You can't add more zeny than you have to the rodex mail.\n";
+			return;
+		}
+		
+		if (exists $rodexWrite->{zeny}) {
+			message "Changed the rodex mail message zeny to '".$arg2."'.\n";
+		} else {
+			message "Set the rodex mail message zeny to '".$arg2."'.\n";
+		}
+		
+		$rodexWrite->{zeny} = $arg2;
+		
+	} elsif ($arg1 eq 'add') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
+				"Usage: rodex add <item>\n");
+			return;
+		}
+		
+		my $max_items = $config{rodexMaxItems} || 5;
+		if ($rodexWrite->{items}->size >= $max_items) {
+			error T("You can't add any more items to the rodex mail\n");
+			return;
+		}
+		
+		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
+		
+		my $rodex_item = $rodexWrite->{items}->get($name);
+		my $item = $char->inventory->get($name);
+		
+		if (!$item) {
+			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
+				"Inventory Item %s does not exist.\n", $name);
+			return;
+		} elsif ($item->{equipped}) {
+			error TF("Inventory Item '%s' is equipped.\n", $name);
+			return;
+		} elsif ($rodex_item && $rodex_item->{amount} == $item->{amount}) {
+			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $name);
+			return;
+		} elsif ($rodex_item) {
+			my $max_add = ($item->{amount} - $rodex_item->{amount});
+			if (!defined($amount) || $amount > $max_add) {
+				$amount = $max_add;
+			}
+		} else {
+			if (!defined($amount) || $amount > $item->{amount}) {
+				$amount = $item->{amount};
+			}
+		}
+		
+		message "Adding amount ".$amount." of item ".$item." to rodex mail.\n";
+		$messageSender->rodex_add_item($item->{ID}, $amount);
+		
+	} elsif ($arg1 eq 'remove') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex remove' (Remove item from rodex mail)\n" .
+				"Usage: rodex remove <item>\n");
+			return;
+		}
+		
+		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
+		
+		my $item = $rodexWrite->{items}->get($name);
+		if (!$item) {
+			error TF("Error in function 'rodex remove' (Remove item from rodex mail)\n" .
+				"Rodex mail Item %s does not exist.\n", $name);
+			return;
+		}
+
+		if (!defined($amount) || $amount > $item->{amount}) {
+			$amount = $item->{amount};
+		}
+		
+		message "Removing amount ".$amount." of item ".$item." from rodex mail.\n";
+		$messageSender->rodex_remove_item($item->{ID}, $amount);
+		
+	} elsif ($arg1 eq 'send') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (!defined $rodexWrite) {
+			error "You are not writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
+			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
+				"You still have to set something to send the mail (title, body, zeny oy target)\n");
+			return;
+		}
+		
+		
+		my $zeny_tax = int($rodexWrite->{zeny} / 50);
+		my $items_tax = ($rodexWrite->{items}->size * 2500);
+		my $tax = ($zeny_tax + $items_tax);
+		
+		if (($rodexWrite->{zeny} + $tax) > $char->{zeny}) {
+			error "The current tax for this rodex mail is $tax, you don't have enough zeny to pay for it.\n";
+			return;
+		}
+		
+		message "Sending rodex mail.\n";
+		$messageSender->rodex_send_mail();
+		
+	} elsif ($arg1 eq 'getitems') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexList->{current_read}) {
+			error "You are not reading a rodex mail.\n";
+			return;
+			
+		} elsif (scalar @{$rodexList->{mails}{$rodexList->{current_read}}{items}} == 0) {
+			error "The current rodex mail has no items.\n";
+			return;
+		}
+		
+		message "Requesting items of current rodex mail.\n";
+		$messageSender->rodex_request_items($rodexList->{current_read}, 0, 0);
+		
+	} elsif ($arg1 eq 'getzeny') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (!exists $rodexList->{current_read}) {
+			error "You are not reading a rodex mail.\n";
+			return;
+			
+		} elsif ($rodexList->{mails}{$rodexList->{current_read}}{zeny1} == 0) {
+			error "The current rodex mail has no zeny.\n";
+			return;
+		}
+		
+		message "Requesting zeny of current rodex mail.\n";
+		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
+		
+	} elsif ($arg1 eq 'nextpage') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif (defined $rodexWrite) {
+			error "You are writing a rodex mail.\n";
+			return;
+			
+		} elsif (exists $rodexList->{last_page}) {
+			error "You have already reached the last rodex mail page.\n";
+			return;
+		}
+		
+		message "Requesting the next page of rodex mail.\n";
+		$messageSender->rodex_next_maillist(0, $rodexList->{current_page_last_mailID}, 0);
+		
+	} elsif ($arg1 eq 'maillist') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+		}
+		
+		my @pages;
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
+			my $mail = $rodexList->{mails}{$mail_id};
+			
+			my $index;
+			if ($mail->{page} == 0) {
+				$index = $mail->{page_index};
+			} else {
+				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
+			}
+			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		}
+		
+		my $print_msg;
+		foreach my $page_index (0..$#pages) {
+			$print_msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
+			foreach my $mail_msg (@{$pages[$page_index]}) {
+				$print_msg .= $mail_msg;
+			}
+		}
+		$print_msg .= sprintf("%s\n", ('-'x79));
+		message $print_msg, "list";
+		
+	} elsif ($arg1 eq 'delete') {
+		if (!defined $rodexList) {
+			error "Your rodex mail box is closed";
+			return;
+			
+		} elsif ($arg2 eq "") {
+			error T("Syntax Error in function 'rodex delete' (Delete rodex mail)\n" .
+				"Usage: rodex delete <mail id>\n");
+			return;
+			
+		} elsif (!exists $rodexList->{mails}{$arg2}) {
+			error "Mail of id $arg2 doesn't exist.\n";
+			return;
+		}
+		
+		$messageSender->rodex_delete_mail(0,$arg2,0);
+		
+	} else {
+		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
+			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+	}
 }
 
 1;

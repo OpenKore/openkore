@@ -500,11 +500,6 @@ sub finalInitialization {
 	$totalJobExp = 0;
 	$startTime_EXP = time;
 	$taskManager = new TaskManager();
-	# run 'permanent' tasks
-	for (qw/Task::RaiseStat Task::RaiseSkill/) {
-		eval "require $_";
-		$taskManager->add($_->new);
-	}
 
 	if (DEBUG) {
 		# protect various stuff from autovivification
@@ -619,7 +614,8 @@ sub initMapChangeVars {
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
 		$char->inventory->onMapChange();
-		$char->cart->onMapChange() if ($char->cartActive());
+		# Clear the cart but do not close it.
+		$char->cart->clear;
 		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
@@ -664,6 +660,8 @@ sub initMapChangeVars {
 	undef $repairList;
 	undef $devotionList;
 	undef $cookingList;
+	undef $rodexList;
+	undef $rodexWrite;
 	$captcha_state = 0;
 
 	$itemsList->clear();
