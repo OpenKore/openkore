@@ -1728,12 +1728,22 @@ sub processAutoBuy {
 					# if we have the item in our inventory, we can quickly get the nameID
 					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
 				} else {
-					# scan the entire items.txt file (this is slow)
-					foreach (keys %items_lut) {
-						if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
-							$args->{itemID} = $_;
+					
+					# scan the npc sell list
+					for (my $i = 0; $i < @storeList; $i++) {
+						my $item = $storeList[$i];
+						if (lc($item->{name}) eq lc($config{"buyAuto_$args->{index}"})) {
+							$args->{itemID} = $item->{nameID};
+							last;
 						}
 					}
+					
+					# scan the entire items.txt file (this is slow)
+					#foreach (keys %items_lut) {
+					#	if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
+					#		$args->{itemID} = $_;
+					#	}
+					#}
 				}
 				if ($args->{itemID} eq "") {
 					# the specified item doesn't even exist
