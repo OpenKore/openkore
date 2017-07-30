@@ -4686,22 +4686,27 @@ sub cmdStorage {
 sub cmdStorage_add {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::inventoryItem($name);
-	if (!$item) {
-		error TF("Inventory Item '%s' does not exist.\n", $name);
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage add Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = Actor::Item::getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Inventory Item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	if ($item->{equipped}) {
-		error TF("Inventory Item '%s' is equipped.\n", $name);
-		return;
-	}
+	foreach my $item ( @items ) {
+		if ( $item->{equipped} ) {
+			error TF( "Inventory Item '%s' is equipped.\n", $item->{name} );
+			next;
+		}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+		$messageSender->sendStorageAdd( $item->{ID}, min( $item->{amount}, $amount || $item->{amount} ) );
 	}
-	$messageSender->sendStorageAdd($item->{ID}, $amount);
 }
 
 sub cmdStorage_addfromcart {
