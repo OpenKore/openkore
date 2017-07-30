@@ -276,14 +276,14 @@ sub iterate {
 		
 		if ($self->{missing_portal}) {
 		
-			if (!$config{route_tryToGuessMissingPortalByDistance} || $portalsList->size == 0) {
+			if (!$config{route_tryToGuessMissingPortalByDistance}) {
 				delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
 				warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 				delete $self->{missing_portal};
 				delete $self->{guess_portal};
 				$self->initMapCalculator();	# redo MAP router
 				
-			} elsif ($config{route_tryToGuessMissingPortalByDistance}) {
+			} else {
 				if (!exists $self->{guess_portal}) {
 					my $closest_portal_binID;
 					my $closest_portal_dist;
@@ -328,6 +328,13 @@ sub iterate {
 		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
 				$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 3;
 				return unless (timeOut($timeout{'ai_portal_wait'}{'time'}, $timeout{ai_portal_give_up}{timeout}));
+				
+				my %plugin_args;
+				$plugin_args{object} = $self;
+				$plugin_args{solution} = \@solution;
+				$plugin_args{return} = 1;
+				Plugins::callHook('Task::MapRoute::iterate::missing_portal', \%plugin_args);
+				return if (!$plugin_args{return});
 				
 				$self->{missing_portal} = 1;
 
