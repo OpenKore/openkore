@@ -4693,7 +4693,7 @@ sub cmdStorage_add {
 	} else {
 		( $name, $amount ) = parseArgs( $items );
 	}
-	my @items = Actor::Item::getMultiple( $name );
+	my @items = $char->inventory->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Inventory Item '%s' does not exist.\n", $name );
 		return;
@@ -4712,68 +4712,75 @@ sub cmdStorage_add {
 sub cmdStorage_addfromcart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Cart Item '%s' does not exist.\n", $name);
+	if (!$char->cart->isReady) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage addfromcart Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	$messageSender->sendStorageAddFromCart($item->{ID}, $amount);
+	my @items = $char->cart->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Cart Item '%s' does not exist.\n", $name );
+		return;
+	}
+
+	foreach my $item ( @items ) {
+		$messageSender->sendStorageAddFromCart( $item->{ID}, min( $item->{amount}, $amount || $item->{amount} ) );
+	}
 }
 
 sub cmdStorage_get {
 	my $items = shift;
 
-	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my @names = split(',', $names);
-	my @items;
-
-	for my $name (@names) {
-		if ($name =~ /^(\d+)\-(\d+)$/) {
-			for my $i ($1..$2) {
-				my $item = $char->storage->get($i);
-				#push @items, $item->{ID} if ($item);
-				push @items, $item if ($item);
-			}
-
-		} else {
-			my $item = Match::storageItem($name);
-			if (!$item) {
-				error TF("Storage Item '%s' does not exist.\n", $name);
-				next;
-			}
-			#push @items, $item->{ID};
-			push @items, $item;
-		}
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage Item '%s' does not exist.\n", $name );
+		return;
 	}
 
-	storageGet(\@items, $amount) if @items;
+	# TODO: Do this as an AI sequence if we're getting more than one item. (existing sequence: storageGet)
+	foreach my $item ( @items ) {
+		$messageSender->sendStorageGet( $item->{ID}, min( $item->{amount}, $amount || $item->{amount} ) );
+	}
 }
 
 sub cmdStorage_gettocart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::storageItem($name);
-	if (!$item) {
-		error TF("Storage Item '%s' does not exist.\n", $name);
+	if ( !$char->cart->isReady ) {
+		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	
-	if (!$char->cartActive) {
-		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
-			"You do not have a cart.\n");
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage Item '%s' does not exist.\n", $name );
 		return;
 	}
-	$messageSender->sendStorageGetToCart($item->{ID}, $amount);
+
+	foreach my $item ( @items ) {
+		$messageSender->sendStorageGetToCart( $item->{ID}, min( $item->{amount}, $amount || $item->{amount} ) );
+	}
 }
 
 sub cmdStorage_close {
