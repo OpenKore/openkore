@@ -665,7 +665,7 @@ sub cmdAutoSell {
 				T("Amount  Item Name\n");
 		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
-			my $control = items_control($item->{name});
+			my $control = items_control($item->{name},$item->{nameID});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
 				$obj{index} = $item->{ID};

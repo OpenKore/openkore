@@ -1281,7 +1281,7 @@ sub processAutoStorage {
 						next;
 					}
 
-					my $control = items_control($item->{name});
+					my $control = items_control($item->{name}, $item->{nameID});
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					if ($control->{storage} && $item->{amount} > $control->{keep}) {
@@ -1311,7 +1311,7 @@ sub processAutoStorage {
 					my $item = $char->cart->[$i];
 					next unless ($item && %{$item});
 
-					my $control = items_control($item->{name});
+					my $control = items_control($item->{name}, $item->{nameID});
 
 					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					# store from cart as well as inventory if the flag is equal to 2
@@ -1548,7 +1548,7 @@ sub processAutoSell {
 				next if ($item->{equipped});
 				next if (!$item->{sellable});
 
-				my $control = items_control($item->{name});
+				my $control = items_control($item->{name}, $item->{nameID});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 					if ($args->{lastIndex} ne "" && $args->{lastIndex} eq $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
@@ -1781,7 +1781,7 @@ sub processAutoCart {
 				for my $invItem (@{$char->inventory}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
-					my $control = items_control($invItem->{name});
+					my $control = items_control($invItem->{name}, $invItem->{nameID});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
 						$obj{index} = $invItem->{binID};
@@ -1794,7 +1794,7 @@ sub processAutoCart {
 			}
 
 			for my $cartItem (@{$char->cart}) {
-				my $control = items_control($cartItem->{name});
+				my $control = items_control($cartItem->{name}, $cartItem->{nameID});
 				next unless ($control->{cart_get});
 
 				my $invItem = $char->inventory->getByName($cartItem->{name});
