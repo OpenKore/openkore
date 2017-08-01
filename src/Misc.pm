@@ -82,6 +82,7 @@ our @EXPORT = (
 	qw/inInventory
 	inventoryItemRemoved
 	storageGet
+	transferItems
 	cardName
 	itemName
 	itemNameSimple
@@ -1999,9 +2000,11 @@ sub itemNameToID {
 }
 
 ##
-# storageGet(items, max)
+# DEPRECATED: Use transferItems() instead.
+#
+# storageGet(items, amount)
 # items: reference to an array of storage item hashes.
-# max: the maximum amount to get, for each item, or 0 for unlimited.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
 #
 # Get one or more items from storage.
 #
@@ -2011,23 +2014,36 @@ sub itemNameToID {
 # # Get items $a and $b from storage, but at most 30 of each item.
 # storageGet([$a, $b], 30);
 sub storageGet {
-	my $indices = shift;
-	my $max = shift;
+	my ( $items, $amount ) = @_;
+	transferItems( $items, $amount, 'storage' => 'inventory' );
+}
 
-	if (@{$indices} == 1) {
-		my ($item) = @{$indices};
-		if (!defined($max) || $max > $item->{amount}) {
-			$max = $item->{amount};
+##
+# transferItems(items, amount, source, target)
+# items: reference to an array of Actor::Items.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
+# source: where the items come from; one of 'inventory', 'storage', 'cart'
+# target: where the items shoudl go; one of 'inventory', 'storage', 'cart'
+#
+# Transfer one or more items from their current location to another location.
+#
+# Example:
+# # Get items $a and $b from storage to inventory.
+# transferItems([$a, $b], 'storage' => 'inventory');
+# # Send items $a and $b from cart to storage, but at most 30 of each item.
+# transferItems([$a, $b], 30, 'cart' => 'storage');
+sub transferItems {
+	my ( $items, $amount, $source, $target ) = @_;
+
+	AI::queue(
+		transferItems => {
+			timeout => $timeout{ai_transfer_items} || 0.15,
+			items => [ map { { item => $_, source => $source, target => $target, amount => $amount } } @$items ],
 		}
-		$messageSender->sendStorageGet($item->{ID}, $max);
+	);
 
-	} else {
-		my %args;
-		$args{items} = $indices;
-		$args{max} = $max;
-		$args{timeout} = 0.15;
-		AI::queue("storageGet", \%args);
-	}
+	# Immediately run the AI sequence once. This will remove it from the queue if there's only one item to transfer.
+	AI::CoreLogic::processTransferItems();
 }
 
 ##
