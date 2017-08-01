@@ -13,6 +13,7 @@
 package Network::Send::bRO;
 use strict;
 use base 'Network::Send::ServerType0';
+use Log qw (debug);
 
 sub new {
 	my ($class) = @_;
@@ -52,6 +53,34 @@ sub new {
 	$self->cryptKeys(1232604492, 967142427, 1771636794);
 
 	return $self;
+}
+		
+sub sendTop10Blacksmith {
+	my $self = shift;
+	my $msg = pack("v2", 0x097C, 0x0);
+	$self->sendToServer($msg);
+	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
+}
+
+sub sendTop10Alchemist {
+	my $self = shift;
+	my $msg = pack("v2", 0x097C, 0x1);
+	$self->sendToServer($msg);
+	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
+}
+
+sub sendTop10Taekwon {
+	my $self = shift;
+	my $msg = pack("v2", 0x097C, 0x2);
+	$self->sendToServer($msg);
+	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
+}
+
+sub sendTop10PK {
+	my $self = shift;
+	my $msg = pack("v2", 0x097C, 0x3);
+	$self->sendToServer($msg);
+	debug "Sent Top 10 PK request\n", "sendPacket", 2;
 }
 
 1;

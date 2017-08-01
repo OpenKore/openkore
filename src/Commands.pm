@@ -982,60 +982,41 @@ sub cmdCart_list {
 }
 
 sub cmdCart_add {
-	my ($name) = @_;
+	my $items = shift;
 
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-			"Usage: cart add <item>\n");
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "cart add Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->inventory->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Inventory item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::inventoryItem($name);
-
-	if (!$item) {
-		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
-			"Inventory Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartAdd($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'inventory' => 'cart' );
 }
 
 sub cmdCart_get {
-	my ($name) = @_;
+	my $items = shift;
 
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-			"Usage: cart get <cart item>\n");
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "cart get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->cart->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Cart item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
-			"Cart Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartGet($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'cart' => 'inventory' );
 }
 
 sub cmdCash {
@@ -4686,89 +4667,87 @@ sub cmdStorage {
 sub cmdStorage_add {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::inventoryItem($name);
-	if (!$item) {
-		error TF("Inventory Item '%s' does not exist.\n", $name);
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage add Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->inventory->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Inventory item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	if ($item->{equipped}) {
-		error TF("Inventory Item '%s' is equipped.\n", $name);
-		return;
-	}
-
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendStorageAdd($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'inventory' => 'storage' );
 }
 
 sub cmdStorage_addfromcart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Cart Item '%s' does not exist.\n", $name);
+	if (!$char->cart->isReady) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage addfromcart Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	$messageSender->sendStorageAddFromCart($item->{ID}, $amount);
+	my @items = $char->cart->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Cart item '%s' does not exist.\n", $name );
+		return;
+	}
+
+	transferItems( \@items, $amount, 'cart' => 'storage' );
 }
 
 sub cmdStorage_get {
 	my $items = shift;
 
-	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my @names = split(',', $names);
-	my @items;
-
-	for my $name (@names) {
-		if ($name =~ /^(\d+)\-(\d+)$/) {
-			for my $i ($1..$2) {
-				my $item = $char->storage->get($i);
-				#push @items, $item->{ID} if ($item);
-				push @items, $item if ($item);
-			}
-
-		} else {
-			my $item = Match::storageItem($name);
-			if (!$item) {
-				error TF("Storage Item '%s' does not exist.\n", $name);
-				next;
-			}
-			#push @items, $item->{ID};
-			push @items, $item;
-		}
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage item '%s' does not exist.\n", $name );
+		return;
 	}
 
-	storageGet(\@items, $amount) if @items;
+	transferItems( \@items, $amount, 'storage' => 'inventory' );
 }
 
 sub cmdStorage_gettocart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::storageItem($name);
-	if (!$item) {
-		error TF("Storage Item '%s' does not exist.\n", $name);
+	if ( !$char->cart->isReady ) {
+		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	
-	if (!$char->cartActive) {
-		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
-			"You do not have a cart.\n");
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage item '%s' does not exist.\n", $name );
 		return;
 	}
-	$messageSender->sendStorageGetToCart($item->{ID}, $amount);
+
+	transferItems( \@items, $amount, 'storage' => 'cart' );
 }
 
 sub cmdStorage_close {

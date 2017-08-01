@@ -211,6 +211,33 @@ sub getByNameList {
 }
 
 ##
+# Actor::Item $InventoryList->getMultiple(String searchPattern)
+# searchPattern: a search pattern.
+# Returns: an array of Actor::Item objects.
+#
+# Select one or more items by name and/or index.
+# $searchPattern has the following syntax:
+# <pre>index1,index2,...,indexN,name1,name2,...nameN</pre>
+# You can also use '-' to indicate a range (only for indexes), like:
+# <pre>1-5,7,9</pre>
+sub getMultiple {
+	my ( $self, $lists ) = @_;
+	assert( defined $lists ) if DEBUG;
+	my @indexes = split / *,+ */, lc( $lists );
+	my @items;
+	foreach my $index ( @indexes ) {
+		if ( $index =~ /^(\d+)-(\d+)$/o ) {
+			push @items, $self->get( $_ ) foreach $1 .. $2;
+		} elsif ( $index =~ /^(\d+)$/o ) {
+			push @items, $self->get( $index );
+		} else {
+			push @items, $self->getByName( $index );
+		}
+	}
+	grep {$_} @items;
+}
+
+##
 # boolean $InventoryList->remove(Actor::Item item)
 # Requires: defined($item) && defined($item->{name})
 #

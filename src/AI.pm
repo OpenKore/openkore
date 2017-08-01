@@ -232,7 +232,7 @@ sub ai_partyfollow {
 
 	my %master;
 	$master{id} = main::findPartyUserID($config{followTarget});
-	if ($master{id} ne "" && !AI::inQueue("storageAuto","storageGet","sellAuto","buyAuto")) {
+	if ($master{id} ne "" && !AI::inQueue("storageAuto","transferItems","sellAuto","buyAuto")) {
 
 		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};

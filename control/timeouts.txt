@@ -71,6 +71,9 @@ ai_items_gather_auto .3
 # Only gather items that have been more than x seconds on screen
 ai_items_gather_start .3
 
+# Delay between items when tranferring in batches.
+ai_transfer_items 0.15
+
 ai_follow_lost_end 10
 ai_getInfo 1
 ai_thanks_set 8
