@@ -2037,7 +2037,7 @@ sub transferItems {
 
 	AI::queue(
 		transferItems => {
-			timeout => $timeout{ai_transfer_items} || 0.15,
+			timeout => $timeout{ai_transfer_items}{timeout} || 0.15,
 			items => [ map { { item => $_, source => $source, target => $target, amount => $amount } } @$items ],
 		}
 	);
