@@ -28,7 +28,7 @@ use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
 use Plugins;
-use Misc qw(useTeleport);
+use Misc qw(useTeleport portalExists);
 use Utils qw(timeOut distance existsInList);
 use Utils::PathFinding;
 use Utils::Exceptions;
@@ -296,6 +296,7 @@ sub iterate {
 						my $dist = distance($self->{actor}{pos_to}, $portal->{pos});
 						next if (exists $self->{guess_skip} && exists $self->{guess_skip}{$portal->{binID}});
 						next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
+						next if (portalExists($portal->{pos})); # Only guess unknown portals
 						$closest_portal_binID = $portal->{binID};
 						$closest_portal_dist = $dist;
 					}
