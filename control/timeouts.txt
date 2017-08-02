@@ -109,6 +109,12 @@ ai_teleport_safe_force 120
 ai_teleport_retry 0.5
 ai_teleport_delay 0.5
 
+ai_portal_wait 0.5
+
+# These timeouts are used in missing portals logic
+ai_portal_give_up 10
+ai_portal_re_add_missed 3600
+
 # You probably don't ever have to change the following timeouts
 ai_route_calcRoute 1
 ai_route_npcTalk 10

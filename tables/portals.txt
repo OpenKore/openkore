@@ -1,3 +1,11 @@
+
+
+
+payon 160 230 pay_dun04 150 150
+payon 160 225 pay_dun04 150 150
+
+
+
 #format: <source coordinate><destination coordinate>[zenny cost][conversation sequence]
 alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0

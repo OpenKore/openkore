@@ -277,6 +277,11 @@ sub iterate {
 		if ($self->{missing_portal}) {
 		
 			if (!$config{route_tryToGuessMissingPortalByDistance}) {
+				my $missed = {};
+				$missed->{time} = time;
+				$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+				$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+				push(@portals_lut_missed, $missed);
 				delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
 				warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 				delete $self->{missing_portal};
@@ -298,6 +303,11 @@ sub iterate {
 						$self->{guess_portal} = $portalsList->get($closest_portal_binID);
 						warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "route";
 					} else {
+						my $missed = {};
+						$missed->{time} = time;
+						$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+						$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+						push(@portals_lut_missed, $missed);
 						delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
 						warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 						delete $self->{missing_portal};
@@ -326,8 +336,13 @@ sub iterate {
 			}
 			
 		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
-				$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 3;
-				return unless (timeOut($timeout{'ai_portal_wait'}{'time'}, $timeout{ai_portal_give_up}{timeout}));
+				if (!exists $timeout{ai_portal_give_up}{time}) {
+					$timeout{ai_portal_give_up}{time} = time;
+					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
+					return;
+				}
+				return unless (timeOut($timeout{ai_portal_give_up}));
+				delete $timeout{ai_portal_give_up}{time};
 				
 				my %plugin_args;
 				$plugin_args{object} = $self;
