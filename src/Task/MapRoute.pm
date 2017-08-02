@@ -296,7 +296,7 @@ sub iterate {
 						my $dist = distance($self->{actor}{pos_to}, $portal->{pos});
 						next if (exists $self->{guess_skip} && exists $self->{guess_skip}{$portal->{binID}});
 						next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
-						next if (portalExists($portal->{pos})); # Only guess unknown portals
+						next if (portalExists($field->baseName, $portal->{pos})); # Only guess unknown portals
 						$closest_portal_binID = $portal->{binID};
 						$closest_portal_dist = $dist;
 					}
