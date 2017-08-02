@@ -48,25 +48,34 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{char_create_version} = 0x0A39;
-
-	$self->{sell_mode} = 0;
 	
 	return $self;
 }
 
-sub sendMove {
+sub sendBuyBulk {
 	my $self = shift;
+	$self->SUPER::sendBuyBulk(@_);
+	$self->sendSellComplete;
+	$self->sendSellComplete;
+}
 
-	# The server won't let us move until we send the sell complete packet.
-	$self->sendSellComplete if $self->{sell_mode};
+sub sendSell {
+	my $self = shift;
+	$self->SUPER::sendSell(@_);
+	$self->sendSellComplete;
+	$self->sendSellComplete;
+}
 
-	$self->SUPER::sendMove(@_);
+sub sendSellBulk {
+	my $self = shift;
+	$self->SUPER::sendSellBulk(@_);
+	$self->sendSellComplete;
+	$self->sendSellComplete;
 }
 
 sub sendSellComplete {
 	my ($self) = @_;
 	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
-	$self->{sell_mode} = 0;
 }
 
 sub reconstruct_char_delete2_accept {
