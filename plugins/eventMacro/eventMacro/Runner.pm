@@ -10,7 +10,7 @@ use Globals;
 use AI;
 use Log qw(message error warning debug);
 use Text::Balanced qw/extract_bracketed/;
-use Utils qw/existsInList/;
+use Utils qw/existsInList parseArgs/;
 use List::Util qw(max min sum);
 
 use eventMacro::Data;
@@ -1080,6 +1080,11 @@ sub next {
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
 					
+				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(\s*(.*?)\s*\)$/) {
+					my ( $pattern, $scalar ) = map {/^\s*(.*?)\s*$/} parseArgs( "$1", undef, ',' );
+					my $scalar_var = find_variable( $scalar );
+					$self->error( "Scalar variable not recognized" ), return if !$scalar_var;
+					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_scalar_var( $scalar_var->{real_name} ) ] );
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
 					my $var2 = find_variable($2);
@@ -1378,27 +1383,24 @@ sub parse_release_and_lock {
 sub parse_call {
 	my ($self, $call_command) = @_;
 	
-	my $repeat_times;
-	my $macro_name;
-	
-	if ($call_command =~ /\s/) {
-		($macro_name, $repeat_times) = $call_command =~ /(.*?)\s+(.*)/;
-		my $parsed_repeat_times = $self->parse_command($repeat_times);
-		return if (defined $self->error);
-		if (!defined $parsed_repeat_times) {
-			$self->error("repeat value could not be defined");
-		} elsif ($parsed_repeat_times !~ /^\d+$/) {
-			$self->error("repeat value '$parsed_repeat_times' must be numeric");
-		} elsif ($parsed_repeat_times <= 0) {
-			$self->error("repeat value '$parsed_repeat_times' must be bigger than 0");
-		}
-		return if (defined $self->error);
-		$repeat_times = $parsed_repeat_times;
-	} else {
-		$macro_name = $call_command;
-		$repeat_times = 1;
+	# Perform substitutions on the macro, so that macros can be called by variable.
+	# For example:
+	#   $macro = foo
+	#   $value = bar
+	#   call $macro $value baz
+	$call_command = $self->substitue_variables( $call_command );
+
+	my $macro_name   = $call_command;
+	my $repeat_times = 1;
+	if ( $call_command =~ /\s/ ) {
+	    my @params;
+		( $macro_name, @params ) = parseArgs( $call_command );
+
+		# Update $.paramN with the values from the call.
+		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
+		$eventMacro->set_scalar_var( ".param$_", undef,             0 ) foreach ( @params + 1 ) .. 100;
 	}
-		
+
 	my $parsed_macro_name = $self->parse_command($macro_name);
 	return if (defined $self->error);
 		
@@ -1781,22 +1783,23 @@ sub parse_command {
 			$result = getnpcID($parsed);
 			
 		} elsif ($keyword eq 'cart') {
-			$result = getItemIDs($parsed, $::cart{'inventory'});
+			$result = (getItemIDs($parsed, $char->cart))[0];
 			
 		} elsif ($keyword eq 'Cart') {
-			$result = join ',', getItemIDs($parsed, $::cart{'inventory'});
+			$result = join ',', getItemIDs($parsed, $char->cart);
 			
 		} elsif ($keyword eq 'inventory') {
-			$result = getInventoryIDs($parsed);
+			$result = (getInventoryIDs($parsed))[0];
 			
 		} elsif ($keyword eq 'Inventory') {
 			$result = join ',', getInventoryIDs($parsed);
 			
 		} elsif ($keyword eq 'store') {
+		    # TODO: Fix this to work with the new getItemIDs() implementation.
 			$result = getItemIDs($parsed, \@::storeList);
 			
 		} elsif ($keyword eq 'storage') {
-			($result) = getStorageIDs($parsed);
+			($result) = (getStorageIDs($parsed))[0];
 			
 		} elsif ($keyword eq 'Storage') {
 			$result = join ',', getStorageIDs($parsed);
@@ -1811,7 +1814,7 @@ sub parse_command {
 			$result = getVenderID($parsed);
 			
 		} elsif ($keyword eq 'venderitem') {
-			($result) = getItemIDs($parsed, \@::venderItemList);
+			($result) = (getItemIDs($parsed, \@::venderItemList))[0];
 			
 		} elsif ($keyword eq 'venderItem') {
 			$result = join ',', getItemIDs($parsed, \@::venderItemList);
