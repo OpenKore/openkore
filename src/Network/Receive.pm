@@ -4068,11 +4068,14 @@ sub npc_store_info {
 		my $ID = unpack("v1", substr($msg, $i + 9, 2));
 
 		my $store = $storeList[$storeList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: T("Unknown ").$ID;
-		$store->{name} = $display;
+		
+		my $name = itemNameSimple($ID);
+		
+		my $numSlots = $itemSlotCount_lut{$ID};
+		
+		$name .= " [$numSlots]" if $numSlots;
+		
+		$store->{name} = $name;
 		$store->{nameID} = $ID;
 		$store->{type} = $type;
 		$store->{price} = $price;

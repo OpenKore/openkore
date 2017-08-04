@@ -1777,28 +1777,6 @@ sub processAutoBuy {
 			}
 			$args->{lastIndex} = $args->{index};
 
-			# find the item ID if we don't know it yet
-			if ($args->{itemID} eq "") {
-				if ($args->{binID} && $char->inventory->get($args->{binID})) {
-					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
-				} else {
-					# scan the entire items.txt file (this is slow)
-					foreach (keys %items_lut) {
-						if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
-							$args->{itemID} = $_;
-						}
-					}
-				}
-				if ($args->{itemID} eq "") {
-					# the specified item doesn't even exist
-					# don't try this index again
-					$args->{index_failed}{$args->{index}} = 1;
-					debug "buyAuto index $args->{index} failed, item doesn't exist\n", "npc";
-					return;
-				}
-			}
-
 			if (!$args->{sentBuy}) {
 				$args->{sentBuy} = 1;
 				$timeout{ai_buyAuto_wait}{time} = time;
@@ -1812,6 +1790,25 @@ sub processAutoBuy {
 			}
 
 			return unless ($ai_v{'npc_talk'}{'talk'} eq 'store');
+			
+			# find the item ID if we don't know it yet
+			if ($args->{itemID} eq "") {
+				# scan the npc sell list
+				for (my $i = 0; $i < @storeList; $i++) {
+					my $item = $storeList[$i];
+					if (lc($item->{name}) eq lc($config{"buyAuto_$args->{index}"})) {
+						$args->{itemID} = $item->{nameID};
+						last;
+					}
+				}
+				if ($args->{itemID} eq "") {
+					# the specified item doesn't even exist
+					# don't try this index again
+					$args->{index_failed}{$args->{index}} = 1;
+					error "buyAuto index ".$args->{index}." (".$config{"buyAuto_$args->{index}"}.") failed, item doesn't exist in npc sell list.\n", "npc";
+					return;
+				}
+			}
 			
 			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
