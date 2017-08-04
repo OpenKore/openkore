@@ -1081,10 +1081,10 @@ sub next {
 					}
 					
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(\s*(.*?)\s*\)$/) {
-					my ( $pattern, $scalar ) = map {/^\s*(.*?)\s*$/} parseArgs( "$1", undef, ',' );
-					my $scalar_var = find_variable( $scalar );
-					$self->error( "Scalar variable not recognized" ), return if !$scalar_var;
-					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_scalar_var( $scalar_var->{real_name} ) ] );
+					my ( $pattern, $var_str ) = map {/^\s*(.*?)\s*$/} parseArgs( "$1", undef, ',' );
+					my $split_var = find_variable( $var_str );
+					$self->error( 'Scalar variable not recognized' ), return if !$split_var;
+					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
 					my $var2 = find_variable($2);
