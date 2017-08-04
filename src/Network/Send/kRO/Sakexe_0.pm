@@ -301,16 +301,6 @@ sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 # 0x00c6,-1
 # 0x00c7,-1
 
-=pod
-# TODO: this is a variable length message, we could buy multiple types of items at once!!!!
-sub sendBuy {
-	my ($self, $ID, $amount) = @_;
-	my $len = 8;
-	my $msg = pack('v4', 0x00C8, $len, $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;

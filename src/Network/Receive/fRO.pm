@@ -36,27 +36,4 @@ sub new {
 	return $self;
 }
 
-sub sell_result {
-	my ($self, $args) = @_;
-
-	$self->SUPER::sell_result($args);
-
-	# The server won't let us move until we send the sell complete packet.
-	$self->sendSellComplete;
-}
-
-sub buy_result {
-	my ($self, $args) = @_;
-
-	$self->SUPER::buy_result($args);
-
-	# The server won't let us move until we send the sell complete packet.
-	$self->sendSellComplete;
-}
-
-sub sendSellComplete {
-	my ($self) = @_;
-	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
-}
-
 1;

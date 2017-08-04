@@ -75,6 +75,7 @@ sub initHandlers {
 	buyer				=> \&cmdBuyer,
 	bs					=> \&cmdBuyShopInfoSelf,
 	c					=> \&cmdChat,
+	cancel				=> \&cmdCancel,
 	card				=> \&cmdCard,
 	cart				=> \&cmdCart,
 	cash				=> \&cmdCash,
@@ -739,9 +740,7 @@ sub cmdBuy {
 		push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 	}
 
-	if (grep(defined, @bulkitemlist)) {
-		$messageSender->sendBuyBulk(\@bulkitemlist);
-	}
+	completeNpcBuy(\@bulkitemlist);
 }
 
 sub cmdCard {
@@ -4255,15 +4254,13 @@ sub cmdSell {
 		}
 
 	} elsif ($args[0] eq "done") {
-		if (@sellList == 0) {
-			message T("Your sell list is empty.\n"), "info";
-		} else {
-			$messageSender->sendSellBulk(\@sellList);
-			message TF("Sold %s items.\n", @sellList.""), "success";
-			@sellList = ();
-		}
+		completeNpcSell(\@sellList);
+		@sellList = ();
+		message TF("Sold %s items.\n", @sellList.""), "success";
+		
 	} elsif ($args[0] eq "cancel") {
 		@sellList = ();
+		completeNpcSell(\@sellList);
 		message T("Sell list has been cleared.\n"), "info";
 
 	} elsif ($args[0] eq "" || ($args[0] !~ /^\d+$/ && $args[0] !~ /[,\-]/)) {
@@ -6618,6 +6615,19 @@ sub cmdRodex {
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
 			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+	}
+}
+
+sub cmdCancel {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	
+	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
+		cancelNpcBuySell();
+	} else {
+		error T("You are not on a sell or store npc interaction.\n");
 	}
 }
 

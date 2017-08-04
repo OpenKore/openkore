@@ -1349,6 +1349,9 @@ sub buy_result {
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
+	if (AI::is("buyAuto")) {
+		AI::args->{recv_buy_packet} = 1;
+	}
 }
 
 sub card_merge_list {
@@ -5359,6 +5362,9 @@ sub sell_result {
 		error T("Sell failed.\n");
 	} else {
 		message T("Sell completed.\n"), "success";
+	}
+	if (AI::is("sellAuto")) {
+		AI::args->{recv_sell_packet} = 1;
 	}
 }
 

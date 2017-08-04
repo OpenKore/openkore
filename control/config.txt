@@ -692,6 +692,7 @@ buyAuto {
 	price
 	minAmount 2
 	maxAmount 3
+	maxAtTime
 	disabled 0
 }
 

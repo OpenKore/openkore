@@ -382,14 +382,6 @@ sub sendBanCheck {
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
-=pod
-sub sendBuy {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack("C*", 0xC8, 0x00, 0x08, 0x00) . pack("v*", $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
@@ -1026,15 +1018,6 @@ sub sendRepairItem {
 	my $msg = pack("C2 a2 v V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
 	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
-}
-
-sub sendSell {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("a2 v", $ID, $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent sell: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendSellBulk {

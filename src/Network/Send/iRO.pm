@@ -52,28 +52,7 @@ sub new {
 	return $self;
 }
 
-sub sendBuyBulk {
-	my $self = shift;
-	$self->SUPER::sendBuyBulk(@_);
-	$self->sendSellComplete;
-	$self->sendSellComplete;
-}
-
-sub sendSell {
-	my $self = shift;
-	$self->SUPER::sendSell(@_);
-	$self->sendSellComplete;
-	$self->sendSellComplete;
-}
-
-sub sendSellBulk {
-	my $self = shift;
-	$self->SUPER::sendSellBulk(@_);
-	$self->sendSellComplete;
-	$self->sendSellComplete;
-}
-
-sub sendSellComplete {
+sub sendSellBuyComplete {
 	my ($self) = @_;
 	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
 }

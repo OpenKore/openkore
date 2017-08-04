@@ -122,7 +122,7 @@ sub handleNPCTalk {
 			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_store_begin') {
-			message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $self->{target}), "npc";
+			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'cancel' to cancel\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
@@ -551,10 +551,8 @@ sub iterate {
 					}
 					shift @{$self->{steps}};
 				}
-				if (grep(defined, @bulkitemlist)) {
-					$messageSender->sendBuyBulk(\@bulkitemlist);
-					$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
-				}
+				completeNpcBuy(\@bulkitemlist);
+				$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
 				# We give some time to get inventory_item_added packet from server.
 				# And skip this itteration.
 				$ai_v{'npc_talk'}{'time'} = time + 0.2;
