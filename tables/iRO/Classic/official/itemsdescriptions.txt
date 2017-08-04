@@ -70797,3 +70797,19 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19973#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sagittarius Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+50 Zircon
+1 Archer Skeleton Card
+1000 Zeny
+1 Sagittarius Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#

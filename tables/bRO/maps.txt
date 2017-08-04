@@ -892,18 +892,3 @@ moro_cav.rsw#Flame Cave#
 //Hero's Trail pt.1, 2
 dali.rsw#Fissura Dimensional (1)#
 dali02.rsw#Fissura Dimensional (2)#
-1@face.rsw#Covil de Vermes#
-1@sara.rsw#Memórias de Sara#
-1@tnm1.rsw#Andar Superior da Torre do Demonio#
-1@tnm2.rsw#Topo da Torre do Demonio#
-1@tnm3.rsw#Subterrâneo da Torre do Demonio#
-1@ge_st.rsw#Torneio de Magia#
-1@gef.rsw#Torneio de Magia#
-1@gef_in.rsw#Torneio de Magia#
-1@spa.rsw#Palácio das Mágoas#
-
-//Old Glastheim
-gl_cas02_.rsw#Castelo Amaldiçoado#
-gl_chyard_.rsw#Cemitério Amaldiçoado#
-2@gl_k.rsw#Ordem dos Cavaleiros 2º Andar#
-1@gl_k.rsw#Ordem dos Cavaleiros 1º Andar#
