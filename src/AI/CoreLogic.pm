@@ -1917,12 +1917,12 @@ sub processAutoBuy {
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
 			
-			my $maxAtTime = $config{"buyAuto_".$args->{lastIndex}."_maxAtTime"};
+			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
 			
-			if ($maxAtTime && $maxAtTime < $buy_amount) {
+			if ($batchSize && $batchSize < $buy_amount) {
 			
 				while ($buy_amount > 0) {
-					my $amount = ($buy_amount > $maxAtTime) ? $maxAtTime : $buy_amount;
+					my $amount = ($buy_amount > $batchSize) ? $batchSize : $buy_amount;
 					my %buy = (
 						itemID  => $args->{'nameID'},
 						amount => $amount
