@@ -50,6 +50,7 @@ sub iterate {
 	processWipeOldActors();
 	processGetPlayerInfo();
 	processMisc();
+	processReAddMissingPortals();
 	processPortalRecording();
 	Benchmark::end("ai_prepare") if DEBUG;
 	
@@ -413,6 +414,16 @@ sub processDrop {
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
+}
+
+##### PORTALREADD #####
+# Automatically adds the last missing portals to portals_lut
+sub processReAddMissingPortals {
+	return unless (@portals_lut_missed);
+	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
+	my $portal = shift(@portals_lut_missed);
+	$portals_lut{$portal->{name}} = $portal->{portal};
+	debug "Re adding portal '".$portal->{name}."' to portals list.\n", "portalReAdd";
 }
 
 ##### PORTALRECORD #####
