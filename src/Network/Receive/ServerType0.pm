@@ -2232,6 +2232,9 @@ sub npc_talk {
 		# Make the task module or AI listen to the hook instead
 		# and wrap up all the logic.
 		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
 	}
 
 	$talk{ID} = $args->{ID};
