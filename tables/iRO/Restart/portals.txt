@@ -91,56 +91,56 @@ ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 # to add: Eden warper, Prontera warper
 
 # Non-VIP Warps
-prontera 146 89 izlude 94 103 2000 c r2 c r0
-prontera 146 89 geffen 120 39 2000 c r2 c r1
-prontera 146 89 payon 161 58 2000 c r2 c r2
-prontera 146 89 morocc 156 47 2000 c r2 c r3
-prontera 146 89 alberta 117 56 2000 c r2 c r5
-prontera 146 89 comodo 209 143 3000 c r2 c r6
-prontera 146 89 umbala 100 154 3000 c r2 c r7
-prontera 151 29 izlude 94 103 2000 c r2 c r0
-prontera 151 29 geffen 120 39 2000 c r2 c r1
-prontera 151 29 payon 161 58 2000 c r2 c r2
-prontera 151 29 morocc 156 47 2000 c r2 c r3
-prontera 151 29 alberta 117 56 2000 c r2 c r5
-prontera 151 29 comodo 209 143 3000 c r2 c r6
-prontera 151 29 umbala 100 154 3000 c r2 c r7
-prontera 282 200 izlude 94 103 2000 c r2 c r0
-prontera 282 200 geffen 120 39 2000 c r2 c r1
-prontera 282 200 payon 161 58 2000 c r2 c r2
-prontera 282 200 morocc 156 47 2000 c r2 c r3
-prontera 282 200 alberta 117 56 2000 c r2 c r5
-prontera 282 200 comodo 209 143 3000 c r2 c r6
-prontera 282 200 umbala 100 154 3000 c r2 c r7
-prontera 29 207 izlude 94 103 2000 c r2 c r0
-prontera 29 207 geffen 120 39 2000 c r2 c r1
-prontera 29 207 payon 161 58 2000 c r2 c r2
-prontera 29 207 morocc 156 47 2000 c r2 c r3
-prontera 29 207 alberta 117 56 2000 c r2 c r5
-prontera 29 207 comodo 209 143 3000 c r2 c r6
-prontera 29 207 umbala 100 154 3000 c r2 c r7
-prontera 98 120 yuno 157 167 1800 c c r0 c
-geffen 120 62 prontera 116 72 1200 c r2 c r0
-geffen 120 62 aldebaran 168 112 1200 c r2 c r1
-geffen 120 62 gef_fild10 52 326 1200 c r2 c r2
-geffen 120 62 mjolnir_02 99 351 1700 c r2 c r3
-geffen 203 123 prontera 116 72 1200 c r2 c r0
-geffen 203 123 aldebaran 168 112 1200 c r2 c r1
-geffen 203 123 gef_fild10 52 326 1200 c r2 c r2
-geffen 203 123 mjolnir_02 99 351 1700 c r2 c r3
-aldebaran 143 119 geffen 120 39 2000 c r2 c r0
-izlude 134 88 prontera 116 72 2000 c r2 c r0
-yuno 152 187 einbroch 67 195 2000 c r2 c r0
-yuno 152 187 lighthalzen 159 90 2000 c r2 c r1
-yuno 152 187 hugel 98 150 2000 c r2 c r2
-yuno 152 187 rachel 119 135 2000 c r2 c r3
-yuno 327 108 aldebaran 168 112 2000 c r2 c r0
-yuno 142 183 prontera 116 72 1800 c c r0 c n
-morocc 156 97 prontera 116 72 2000 c r2 c r0
-comodo 195 150 morocc 156 47 2000 c c r2 c r0
-payon 181 104 prontera 116 72 2000 c r2 c r0
-payon 175 226 prontera 116 72 1200 c r2 c r0
-alberta 113 60 payon 161 58 2000 c r2 c r0
+prontera 146 89 izlude 94 103 2000 1 c r2 c r0
+prontera 146 89 geffen 120 39 2000 1 c r2 c r1
+prontera 146 89 payon 161 58 2000 1 c r2 c r2
+prontera 146 89 morocc 156 47 2000 1 c r2 c r3
+prontera 146 89 alberta 117 56 2000 1 c r2 c r5
+prontera 146 89 comodo 209 143 3000 1 c r2 c r6
+prontera 146 89 umbala 100 154 3000 1 c r2 c r7
+prontera 151 29 izlude 94 103 2000 1 c r2 c r0
+prontera 151 29 geffen 120 39 2000 1 c r2 c r1
+prontera 151 29 payon 161 58 2000 1 c r2 c r2
+prontera 151 29 morocc 156 47 2000 1 c r2 c r3
+prontera 151 29 alberta 117 56 2000 1 c r2 c r5
+prontera 151 29 comodo 209 143 3000 1 c r2 c r6
+prontera 151 29 umbala 100 154 3000 1 c r2 c r7
+prontera 282 200 izlude 94 103 2000 1 c r2 c r0
+prontera 282 200 geffen 120 39 2000 1 c r2 c r1
+prontera 282 200 payon 161 58 2000 1 c r2 c r2
+prontera 282 200 morocc 156 47 2000 1 c r2 c r3
+prontera 282 200 alberta 117 56 2000 1 c r2 c r5
+prontera 282 200 comodo 209 143 3000 1 c r2 c r6
+prontera 282 200 umbala 100 154 3000 1 c r2 c r7
+prontera 29 207 izlude 94 103 2000 1 c r2 c r0
+prontera 29 207 geffen 120 39 2000 1 c r2 c r1
+prontera 29 207 payon 161 58 2000 1 c r2 c r2
+prontera 29 207 morocc 156 47 2000 1 c r2 c r3
+prontera 29 207 alberta 117 56 2000 1 c r2 c r5
+prontera 29 207 comodo 209 143 3000 1 c r2 c r6
+prontera 29 207 umbala 100 154 3000 1 c r2 c r7
+prontera 98 120 yuno 157 167 1800 1 c c r0 c
+geffen 120 62 prontera 116 72 1200 1 c r2 c r0
+geffen 120 62 aldebaran 168 112 1200 1 c r2 c r1
+geffen 120 62 gef_fild10 52 326 1200 1 c r2 c r2
+geffen 120 62 mjolnir_02 99 351 1700 1 c r2 c r3
+geffen 203 123 prontera 116 72 1200 1 c r2 c r0
+geffen 203 123 aldebaran 168 112 1200 1 c r2 c r1
+geffen 203 123 gef_fild10 52 326 1200 1 c r2 c r2
+geffen 203 123 mjolnir_02 99 351 1700 1 c r2 c r3
+aldebaran 143 119 geffen 120 39 2000 1 c r2 c r0
+izlude 134 88 prontera 116 72 2000 1 c r2 c r0
+yuno 152 187 einbroch 67 195 2000 1 c r2 c r0
+yuno 152 187 lighthalzen 159 90 2000 1 c r2 c r1
+yuno 152 187 hugel 98 150 2000 1 c r2 c r2
+yuno 152 187 rachel 119 135 2000 1 c r2 c r3
+yuno 327 108 aldebaran 168 112 2000 1 c r2 c r0
+yuno 142 183 prontera 116 72 1800 1 c c r0 c n
+morocc 156 97 prontera 116 72 2000 1 c r2 c r0
+comodo 195 150 morocc 156 47 2000 1 c c r2 c r0
+payon 181 104 prontera 116 72 2000 1 c r2 c r0
+payon 175 226 prontera 116 72 1200 1 c r2 c r0
+alberta 113 60 payon 161 58 2000 1 c r2 c r0
 rachel 109 138 veins 205 101 2200 c r2 c r0
 rachel 109 138 yuno 158 125 3000 c r2 c r1
 veins 208 128 rachel 115 125 2200 c r2 c r0
@@ -214,11 +214,17 @@ new_3-2 46 172 new_3-2 78 106
 new_4-2 46 172 new_4-2 78 106
 new_5-2 46 172 new_5-2 78 106
 
-new_1-3 96 174 new_1-4 99 10 0 c r0 c
-new_2-3 96 174 new_2-4 99 10 0 c r0 c
-new_3-3 96 174 new_3-4 99 10 0 c r0 c
-new_4-3 96 174 new_4-4 99 10 0 c r0 c
-new_5-3 96 174 new_5-4 99 10 0 c r0 c
+new_1-3 95 174 new_1-4 99 15
+new_2-3 95 174 new_2-4 99 15
+new_3-3 95 174 new_3-4 99 15
+new_4-3 95 174 new_4-4 99 15
+new_5-3 95 174 new_5-4 99 15
+
+new_1-4 99 9 new_1-3 95 174
+new_2-4 99 9 new_2-3 95 174
+new_3-4 99 9 new_3-3 95 174
+new_4-4 99 9 new_4-3 95 174
+new_5-4 99 9 new_5-3 95 174
 
 # Training Grounds exit
 new_1-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
@@ -2906,7 +2912,56 @@ lou_in01 28 19 louyang 136 245
 
 # Mushroom Farm
 moc_ruins 141 125 job_thief1 133 333 0 c # random endpoint
-job_thief1 180 15 moc_ruins 145 117
+
+# Sworman Guild
+izlude_in 62 170 izlude_in 39 170 c
+
+# Sworman Job Test
+sword_2-1 192 244 sword_2-1 215 244
+sword_2-1 222 244 sword_2-1 11 206
+sword_2-1 161 27 sword_2-1 11 207
+sword_2-1 193 207 sword_2-1 215 205
+sword_2-1 223 205 sword_2-1 11 168
+sword_2-1 239 117 sword_2-1 11 169
+sword_2-1 193 168 sword_2-1 215 167
+sword_2-1 65 117 sword_2-1 10 245
+
+sword_1-1 192 244 sword_1-1 215 244
+sword_1-1 222 244 sword_1-1 11 206
+sword_1-1 161 27 sword_1-1 11 207
+sword_1-1 193 207 sword_1-1 215 205
+sword_1-1 223 205 sword_1-1 11 168
+sword_1-1 239 117 sword_1-1 11 169
+sword_1-1 193 168 sword_1-1 215 167
+sword_1-1 65 117 sword_1-1 10 245
+
+sword_3-1 192 244 sword_3-1 215 244
+sword_3-1 222 244 sword_3-1 11 206
+sword_3-1 161 27 sword_3-1 11 207
+sword_3-1 193 207 sword_3-1 215 205
+sword_3-1 223 205 sword_3-1 11 168
+sword_3-1 239 117 sword_3-1 11 169
+sword_3-1 193 168 sword_3-1 215 167
+sword_3-1 65 117 sword_3-1 10 245
+
+sword_2-2 192 244 sword_2-2 215 244
+sword_2-2 222 244 sword_2-2 11 206
+sword_2-2 161 27 sword_2-2 11 207
+sword_2-2 193 207 sword_2-2 215 205
+sword_2-2 223 205 sword_2-2 11 168
+sword_2-2 239 117 sword_2-2 11 169
+sword_2-2 193 168 sword_2-2 215 167
+sword_2-2 65 117 sword_2-2 10 245
+
+job_sword1 192 244 job_sword1 215 244
+job_sword1 222 244 job_sword1 11 206
+job_sword1 161 27 job_sword1 11 207
+job_sword1 193 207 job_sword1 215 205
+job_sword1 223 205 job_sword1 11 168
+job_sword1 239 117 job_sword1 11 169
+job_sword1 193 168 job_sword1 215 167
+job_sword1 65 117 job_sword1 10 245
+
 
 # Hugel - Lighthalzen Airship (needs additional configuration)
 #airplane 243 73 einbroch 92 278
@@ -3134,6 +3189,4 @@ casp_in01 191 205 casp_in01 262 203
 casp_in01 231 203 casp_in01 159 205
 casp_in01 262 203 casp_in01 191 201
 casp_auct02 40 36 caspen 151 198
-casp_dun01 23 38 caspen 267 277new_1-4 99 9 new_1-3 95 174
-new_1-3 95 174 new_1-4 99 15
-new_1-4 99 9 new_1-3 95 174
+casp_dun01 23 38 caspen 267 277
