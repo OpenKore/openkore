@@ -279,7 +279,7 @@ sub run {
 		$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
 		$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && (!$AI_forcedOff) && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state != AI::AUTO && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -290,7 +290,7 @@ sub run {
 			debug "Command queueing started\n", "ai";
 		} elsif (($switch eq 'pause') && ($cmdQueue > 0)) {
 			push(@cmdQueueList, $command);
-		} elsif (($switch eq 'pause') && (($AI_forcedOff == 1) || ($net->getState() != Network::IN_GAME))) {
+		} elsif (($switch eq 'pause') && (AI::state != AI::AUTO || ($net->getState() != Network::IN_GAME))) {
 			error T("Cannot use pause command now.\n");
 		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart') && ($command ne 'storage'))) {
 			push(@cmdQueueList, $command);
@@ -494,7 +494,6 @@ sub cmdAI {
 			message T("AI is already set to auto mode\n"), "success";
 		} else {
 			AI::state(AI::AUTO);
-			undef $AI_forcedOff;
 			message T("AI set to auto mode\n"), "success";
 		}
 	} elsif ($args eq 'manual') {
@@ -503,7 +502,6 @@ sub cmdAI {
 			message T("AI is already set to manual mode\n"), "success";
 		} else {
 			AI::state(AI::MANUAL);
-			$AI_forcedOff = 1;
 			message T("AI set to manual mode\n"), "success";
 		}
 	} elsif ($args eq 'off') {
@@ -512,7 +510,6 @@ sub cmdAI {
 			message T("AI is already off\n"), "success";
 		} else {
 			AI::state(AI::OFF);
-			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
 		}
 
@@ -520,15 +517,12 @@ sub cmdAI {
 		# Toggle AI
 		if (AI::state == AI::AUTO) {
 			AI::state(AI::OFF);
-			$AI_forcedOff = 1;
 			message T("AI turned off\n"), "success";
 		} elsif (AI::state == AI::OFF) {
 			AI::state(AI::MANUAL);
-			$AI_forcedOff = 1;
 			message T("AI set to manual mode\n"), "success";
 		} elsif (AI::state == AI::MANUAL) {
 			AI::state(AI::AUTO);
-			undef $AI_forcedOff;
 			message T("AI set to auto mode\n"), "success";
 		}
 
@@ -1676,13 +1670,13 @@ sub cmdDebug {
 
 		message center(T(" Debug information "), 56, '-') ."\n".
 			TF("ConState: %s\t\tConnected: %s\n" .
-			"AI enabled: %s\t\tAI_forcedOff: %s\n" .
+			"AI enabled: %s\n" .
 			"\@ai_seq = %s\n" .
 			"Last packet: %.2f secs ago\n" .
 			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			('-'x56) . "\n",
-		$conState, $connected, AI::state, $AI_forcedOff, "@ai_seq", $time, $ai_timeout,
+		$conState, $connected, AI::state, "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	}
 }
