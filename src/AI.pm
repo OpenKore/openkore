@@ -308,7 +308,7 @@ sub ai_getAggressives {
 	my $num = 0;
 	my @agMonsters;
 
-	foreach my $monster (@{$monstersList->getItems()}) {
+	for my $monster (@$monstersList) {
 		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
 		next if (!timeOut($monster->{attack_failedLOS}, 6));
@@ -497,7 +497,7 @@ sub ai_route { $char->route(@_) }
 
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
-	foreach my $item (@{$char->inventory->getItems()}) {
+	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped} || $item->{unsellable});
 		my $control = Misc::items_control($item->{name});
 		if ($control->{sell} && $item->{amount} > $control->{keep}) {
@@ -573,7 +573,7 @@ sub ai_storageAutoCheck {
 	if ($config{minStorageZeny}) {
 		return 0 if ($char->{zeny} < $config{minStorageZeny});
 	}
-	foreach my $item (@{$char->inventory->getItems()}) {
+	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped});
 		my $control = Misc::items_control($item->{name});
 		if ($control->{storage} && $item->{amount} > $control->{keep}) {
@@ -644,7 +644,7 @@ sub cartAdd {
 # Talks to an NPC.
 sub ai_talkNPC {
 	require Task::TalkNPC;
-	AI::queue("NPC", new Task::TalkNPC(x => $_[0], y => $_[1], sequence => $_[2]));
+	AI::queue("NPC", new Task::TalkNPC(type => 'talknpc', x => $_[0], y => $_[1], sequence => $_[2]));
 }
 
 sub attack { $char->attack(@_) }

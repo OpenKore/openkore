@@ -9,24 +9,7 @@
 #####################
 # Official RO Servers
 
-[Brazil - bRO: Asgard]
-ip 200.229.50.20
-port 6900
-master_version 22
-version 1
-serverType bRO
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-gameGuard 0
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders bRO
-charBlockSize 124
-pinCode 1
-
-[Brazil - bRO: Odin]
+[Brazil - bRO: Valhalla]
 ip 200.229.50.36
 port 6900
 master_version 22
@@ -40,7 +23,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 124
+charBlockSize 144
 pinCode 1
 
 [Brazil - bRO: Thor]
@@ -57,7 +40,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 124
+charBlockSize 144
 pinCode 1
 
 ## http://euro-ro.net/
@@ -108,7 +91,7 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO
-charBlockSize 144
+charBlockSize 145
 charDeleteDateType 1
 
 [International - iRO: Sakray]
@@ -123,7 +106,7 @@ paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 addTableFolders iRO
-charBlockSize 144
+charBlockSize 145
 
 #Pre-renewal
 [International - iRO: Loki Classic]
@@ -137,6 +120,23 @@ serverType iRO_Classic
 serverEncoding Western
 addTableFolders iRO/Classic;iRO
 charBlockSize 108
+
+#Re:Start
+# http://playragnarok.com
+[International - iRO: Re:Start]
+ip 128.241.92.133
+port 6800
+version 18
+master_version 1
+serverType iRO
+addTableFolders iRO/Restart;iRO
+serverEncoding Western
+charBlockSize 145
+patchserver ropatch1.gravityus.com
+patchpath /repatch
+
+
+
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
@@ -492,7 +492,7 @@ ip 69.197.167.236
 port 6900
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
@@ -506,7 +506,7 @@ ip 69.197.167.236
 port 6901
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO

@@ -116,8 +116,7 @@ sub new {
 
 	$self->{time_start} = time;
 
-	$self->{revision} = Settings::getSVNRevision;
-	$self->{revision} = " (r$self->{revision})" if defined $self->{revision};
+	$self->{revision} = Settings::getRevisionString();
 
 	$self->{loading} = {
 		current => 0,
@@ -562,7 +561,7 @@ sub updateStatus {
 	if ($self->{loading} && $self->{loading}{finish} != 2) {
 		erase $self->{winStatus};
 		my $width = int($self->{winStatusWidth});
-		my $title = "$Settings::NAME ${Settings::VERSION}$self->{revision}";
+		my $title = "$Settings::NAME ${Settings::VERSION} $self->{revision}";
 		$self->printw($self->{winStatus}, 0, 0, "{bold|yellow}          @*{bold|blue} @".(">"x($width - length ($title) - 20)),
 			$title, $Settings::WEBSITE);
 		my $loadingbar = $self->makeBar($width-18, $self->{loading}{current}, $self->{loading}{total});
@@ -714,8 +713,8 @@ sub updateObjects {
 			($objectsID, $objects, $style) = (\@skillsID, $char->{skills}, 'cyan');
 		} elsif ($_ eq 'inventory') {
 			for my $item (@{$char->inventory->getItems}) {
-				$objectsID->[$item->{invIndex}] = $item->{invIndex};
-				$objects->{$item->{invIndex}} = $item;
+				$objectsID->[$item->{binID}] = $item->{binID};
+				$objects->{$item->{binID}} = $item;
 			}
 			$style = 'normal';
 		} else {

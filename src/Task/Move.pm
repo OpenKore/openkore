@@ -58,6 +58,7 @@ use constant MUTEXES => Task::SitStand::MUTEXES;
 # Create a new Task::Move object. The following options are allowed:
 # `l
 # - All options allowed by Task->new(), except 'movement', 'autostop' and 'autofail'.
+# - <tt>actor</tt> (required) - Which Actor this task should move.
 # - <tt>x</tt> (required) - The X-coordinate that you want to move to.
 # - <tt>y</tt> (required) - The Y-coordinate that you want to move to.
 # - <tt>retryTime</tt> - After a 'move' message has been sent, if the character does not

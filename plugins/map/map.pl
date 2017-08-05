@@ -53,14 +53,9 @@ sub onMapCommand {
 
     if ( !@params ) {
         Log::message("map: Usage\n");
-        Log::message("  map legend             - display what the various map characters mean\n");
         Log::message("  map [width] [height]   - display map (default size: 30 15)\n");
         Log::message("  map set x y            - set a map cell\n");
         return;
-    }
-
-    if ($params[0] eq 'legend') {
-        
     }
 
     if ( !$char || !$char->{pos} ) {
@@ -83,6 +78,7 @@ sub onMapCommand {
 }
 
 sub drawmap {
+    return if !$field;
     my $map = drawcolormap( @_ );
     return [ map { join '', @{ $_->{mapchars} } } @$map ];
 }
@@ -187,6 +183,21 @@ sub drawcolormap {
             my ( $safest ) = sort { $a->{threat} <=> $b->{threat} } @$poss;
             add_pos( '*', $safest );
         }
+    }
+
+    # Add current route (if any).
+    my $route_task;
+    foreach ( 0 .. 10 ) {
+        if ( AI::action( $_ ) eq '' ) {
+            last;
+        } elsif ( AI::action( $_ ) eq 'route' ) {
+            $route_task = AI::args( $_ );
+            last;
+        }
+    }
+    $route_task = $route_task->{ST_subtask} if $route_task && $route_task->isa( 'Task::MapRoute' );
+    if ( $route_task && $route_task->{solution} ) {
+        add_pos( '.', $_ ) foreach @{ $route_task->{solution} };
     }
 
     # Add player.

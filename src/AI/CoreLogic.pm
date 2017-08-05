@@ -149,9 +149,6 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
-	#processAutoStatsRaise(); moved to a task
-	#processAutoSkillsRaise(); moved to a task
-	#processTask("skill_raise");
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
@@ -815,7 +812,7 @@ sub processDeal {
 				(!$config{dealAuto_names} || existsInList($config{dealAuto_names}, $currentDeal{name})) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				$messageSender->sendDealAddItem(0, $currentDeal{'you_zeny'});
+				$messageSender->sendDealAddItem(pack('v', 0), $currentDeal{'you_zeny'});
 				$messageSender->sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2 &&
@@ -983,7 +980,7 @@ sub processStorageGet {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendStorageGet($item->{index}, $amount) if $char->storage->isReady();
+		$messageSender->sendStorageGet($item->{ID}, $amount) if $char->storage->isReady();
 		AI::args->{time} = time;
 		AI::dequeue if !@{AI::args->{items}};
 	}
@@ -997,7 +994,7 @@ sub processCartAdd {
 		my $item = AI::args->{items}[0];
 		my $invItem = $char->inventory->get($item->{index});
 		if ($invItem) {
-			$messageSender->sendCartAdd($invItem->{index}, min($invItem->{amount}, $item->{amount} || $invItem->{amount}));
+			$messageSender->sendCartAdd($invItem->{ID}, min($invItem->{amount}, $item->{amount} || $invItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1013,7 +1010,7 @@ sub processCartGet {
 		my $amount = $item->{amount};
 		my $cartItem = $char->cart->get($item->{index});
 		if ($cartItem) {
-			$messageSender->sendCartGet($cartItem->{index}, min($cartItem->{amount}, $item->{amount} || $cartItem->{amount}));
+			$messageSender->sendCartGet($cartItem->{ID}, min($cartItem->{amount}, $item->{amount} || $cartItem->{amount}));
 		}
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
@@ -1039,7 +1036,7 @@ sub processAutoMakeArrow {
 		}
 		$messageSender->sendArrowCraft(-1) if ($nMake == 0 && $max > 0);
 		if ($nMake == 0 && !$useArrowCraft){
-			foreach my $item (@{$char->inventory->getItems()}) {
+			for my $item (@{$char->inventory}) {
 				if ($arrowcraft_items{lc($item->{name})}) {
 					$useArrowCraft = 1;
 					last;
@@ -1219,10 +1216,10 @@ sub processAutoStorage {
 				} else {
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
-						$config{'storageAuto_npc_steps'} = "c r1 n";
+						$config{'storageAuto_npc_steps'} = "c r1";
 						debug "Using standard iRO npc storage steps.\n", "npc";
 					} elsif ($config{'storageAuto_npc_type'} eq "2") {
-						$config{'storageAuto_npc_steps'} = "c c r1 n";
+						$config{'storageAuto_npc_steps'} = "c c r1";
 						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
 					} elsif ($config{'storageAuto_npc_type'} eq "3") {
 						message T("Using storage steps defined in config.\n"), "info";
@@ -1270,14 +1267,14 @@ sub processAutoStorage {
 
 				# inventory to storage
 				$args->{nextItem} = 0 unless $args->{nextItem};
-				for (my $i = $args->{nextItem}; $i < @{$char->inventory->getItems()}; $i++) {
-					my $item = $char->inventory->getItems()->[$i];
+				for (my $i = $args->{nextItem}; $i < $char->inventory->size; $i++) {
+					my $item = $char->inventory->[$i];
 					next if $item->{equipped};
 					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
 					if (defined($args->{lastInventoryCount}) &&  defined($args->{lastNameID}) && defined($args->{lastAmount}) &&
 					    $args->{lastNameID} == $item->{nameID} &&
-					    $args->{lastInventoryCount} == @{$char->inventory->getItems()} &&
+					    $args->{lastInventoryCount} == $char->inventory->size &&
 						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
@@ -1288,18 +1285,18 @@ sub processAutoStorage {
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					if ($control->{storage} && $item->{amount} > $control->{keep}) {
-						if ($args->{lastIndex} == $item->{index} &&
+						if ($args->{lastIndex} eq $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{lastIndex} != $item->{index}) {
+						} elsif ($args->{lastIndex} ne $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						$args->{lastIndex} = $item->{index};
+						$args->{lastIndex} = $item->{ID};
 						$args->{lastNameID} = $item->{nameID};
 						$args->{lastAmount} = $item->{amount};
-						$args->{lastInventoryCount} = scalar(@{$char->inventory->getItems()});
-						$messageSender->sendStorageAdd($item->{index}, $item->{amount} - $control->{keep});
+						$args->{lastInventoryCount} = $char->inventory->size;
+						$messageSender->sendStorageAdd($item->{ID}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{nextItem} = $i;
 						return;
@@ -1310,8 +1307,8 @@ sub processAutoStorage {
 				# we don't really need to check if we have a cart
 				# if we don't have one it will not find any items to loop through
 				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
-				for (my $i = $args->{cartNextItem}; $i < @{$char->cart->getItems()}; $i++) {
-					my $item = $char->cart->getItems()->[$i];
+				for (my $i = $args->{cartNextItem}; $i < $char->cart->size; $i++) {
+					my $item = $char->cart->[$i];
 					next unless ($item && %{$item});
 
 					my $control = items_control($item->{name});
@@ -1319,15 +1316,15 @@ sub processAutoStorage {
 					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					# store from cart as well as inventory if the flag is equal to 2
 					if ($control->{storage} == 2 && $item->{amount} > $control->{keep}) {
-						if ($args->{cartLastIndex} == $item->{index} &&
+						if ($args->{cartLastIndex} eq $item->{ID} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							return;
-						} elsif ($args->{cartLastIndex} != $item->{index}) {
+						} elsif ($args->{cartLastIndex} ne $item->{ID}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						$args->{cartLastIndex} = $item->{index};
-						$messageSender->sendStorageAddFromCart($item->{index}, $item->{amount} - $control->{keep});
+						$args->{cartLastIndex} = $item->{ID};
+						$messageSender->sendStorageAddFromCart($item->{ID}, $item->{amount} - $control->{keep});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{cartNextItem} = $i;
 						return;
@@ -1372,9 +1369,9 @@ sub processAutoStorage {
 					my $storeItem = $char->storage->getByName($itemName);
 					my $storeAmount = $char->storage->sumByName($itemName);
 					$item{name} = $itemName;
-					$item{inventory}{index} = $invItem ? $invItem->{invIndex} : undef;
+					$item{inventory}{index} = $invItem ? $invItem->{binID} : undef;
 					$item{inventory}{amount} = $invItem ? $invAmount : 0;
-					$item{storage}{index} = $storeItem ? $storeItem->{invIndex} : undef;
+					$item{storage}{index} = $storeItem ? $storeItem->{binID} : undef;
 					$item{storage}{amount} = $storeItem ? $storeAmount : 0;
 					$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
@@ -1388,7 +1385,7 @@ sub processAutoStorage {
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
-						$messageSender->sendStorageGet($storeItem->{index}, $item{amount_get});
+						$messageSender->sendStorageGet($storeItem->{ID}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{retry}++;
 						return;
@@ -1535,7 +1532,7 @@ sub processAutoSell {
 				my $realpos = {};
 				getNPCInfo($config{"sellAuto_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's');
 
 				return;
 			}
@@ -1543,25 +1540,27 @@ sub processAutoSell {
 			
 			Plugins::callHook("AI_sell_auto");
 			
+			return unless ($ai_v{'npc_talk'}{'talk'} eq 'sell');
+			
 			# Form list of items to sell
 			my @sellItems;
-			foreach my $item (@{$char->inventory->getItems()}) {
+			for my $item (@{$char->inventory}) {
 				next if ($item->{equipped});
 				next if (!$item->{sellable});
 
 				my $control = items_control($item->{name});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
-					if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
+					if ($args->{lastIndex} ne "" && $args->{lastIndex} eq $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
 						return;
-					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{index}) {
+					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} ne $item->{ID}) {
 						$timeout{ai_sellAuto_giveup}{time} = time;
 					}
 					undef $args->{done};
-					$args->{lastIndex} = $item->{index};
+					$args->{lastIndex} = $item->{ID};
 
 					my %obj;
-					$obj{index} = $item->{index};
+					$obj{ID} = $item->{ID};
 					$obj{amount} = $item->{amount} - $control->{keep};
 					push @sellItems, \%obj;
 
@@ -1637,7 +1636,7 @@ sub processAutoBuy {
 			next if ($args->{index_failed}{$i});
 
 			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
-			$args->{invIndex} = $item ? $item->{invIndex} : undef;
+			$args->{binID} = $item ? $item->{binID} : undef;
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
 				next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
@@ -1725,9 +1724,9 @@ sub processAutoBuy {
 
 			# find the item ID if we don't know it yet
 			if ($args->{itemID} eq "") {
-				if ($args->{invIndex} && $char->inventory->get($args->{invIndex})) {
+				if ($args->{binID} && $char->inventory->get($args->{binID})) {
 					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->inventory->get($args->{invIndex})->{nameID};
+					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
 				} else {
 					# scan the entire items.txt file (this is slow)
 					foreach (keys %items_lut) {
@@ -1753,13 +1752,15 @@ sub processAutoBuy {
 				my $realpos = {};
 				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
 
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b e');
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b');
 				return;
 			}
 
+			return unless ($ai_v{'npc_talk'}{'talk'} eq 'store');
+			
 			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
-			$needbuy -= $char->inventory->get($args->{invIndex})->{amount} if ($args->{invIndex} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
+			$needbuy -= $char->inventory->get($args->{binID})->{amount} if ($args->{binID} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
 			$messageSender->sendBuyBulk([{itemID  => $args->{itemID}, amount => ($maxbuy > $needbuy) ? $needbuy : $maxbuy}]); # TODO: we could buy more types of items at once
 
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
@@ -1777,22 +1778,22 @@ sub processAutoCart {
 			my $max;
 
 			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
-				foreach my $invItem (@{$char->inventory->getItems()}) {
+				for my $invItem (@{$char->inventory}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
 					my $control = items_control($invItem->{name});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
-						$obj{index} = $invItem->{invIndex};
+						$obj{index} = $invItem->{binID};
 						$obj{amount} = $invItem->{amount} - $control->{keep};
 						push @addItems, \%obj;
-						debug "Scheduling $invItem->{name} ($invItem->{invIndex}) x $obj{amount} for adding to cart\n", "ai_autoCart";
+						debug "Scheduling $invItem->{name} ($invItem->{binID}) x $obj{amount} for adding to cart\n", "ai_autoCart";
 					}
 				}
 				cartAdd(\@addItems);
 			}
 
-			foreach my $cartItem (@{$char->cart->getItems()}) {
+			for my $cartItem (@{$char->cart}) {
 				my $control = items_control($cartItem->{name});
 				next unless ($control->{cart_get});
 
@@ -1808,10 +1809,10 @@ sub processAutoCart {
 				}
 				if ($amount > 0) {
 					my %obj;
-					$obj{index} = $cartItem->{invIndex};
+					$obj{index} = $cartItem->{binID};
 					$obj{amount} = $amount;
 					push @getItems, \%obj;
-					debug "Scheduling $cartItem->{name} ($cartItem->{index}) x $obj{amount} for getting from cart\n", "ai_autoCart";
+					debug "Scheduling $cartItem->{name} ($cartItem->{ID}) x $obj{amount} for getting from cart\n", "ai_autoCart";
 				}
 			}
 			cartGet(\@getItems);
@@ -1871,108 +1872,6 @@ sub processLockMap {
 	}
 }
 
-=pod moved to task
-##### AUTO STATS RAISE #####
-sub processAutoStatsRaise {
-	if (!$statChanged && $config{statsAddAuto}) {
-		# Split list of stats/values
-		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
-		my $statAmount;
-		my ($num, $st);
-
-		foreach my $item (@list) {
-			# Split each stat/value pair
-			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
-			$st = lc $st;
-			# If stat needs to be raised to match desired amount
-			$statAmount = $char->{$st};
-			$statAmount += $char->{"${st}_bonus"} if (!$config{statsAddAuto_dontUseBonus});
-
-			if ($statAmount < $num && ($char->{$st} < 99 || $config{statsAdd_over_99})) {
-				# If char has enough stat points free to raise stat
-				if ($char->{points_free} &&
-				    $char->{points_free} >= $char->{"points_$st"}) {
-					my $ID;
-					if ($st eq "str") {
-						$ID = 0x0D;
-					} elsif ($st eq "agi") {
-						$ID = 0x0E;
-					} elsif ($st eq "vit") {
-						$ID = 0x0F;
-					} elsif ($st eq "int") {
-						$ID = 0x10;
-					} elsif ($st eq "dex") {
-						$ID = 0x11;
-					} elsif ($st eq "luk") {
-						$ID = 0x12;
-					}
-
-					$char->{$st} += 1;
-					# Raise stat
-					message TF("Auto-adding stat %s\n", $st);
-					$messageSender->sendAddStatusPoint($ID);
-					# Save which stat was raised, so that when we received the
-					# "stat changed" packet (00BC?) we can changed $statChanged
-					# back to 0 so that kore will start checking again if stats
-					# need to be raised.
-					# This basically prevents kore from sending packets to the
-					# server super-fast, by only allowing another packet to be
-					# sent when $statChanged is back to 0 (when the server has
-					# replied with a a stat change)
-					$statChanged = $st;
-					# After we raise a stat, exit loop
-					last;
-				}
-				# If stat needs to be changed but char doesn't have enough stat points to raise it then
-				# don't raise it, exit loop
-				last;
-			}
-		}
-	}
-}
-=cut
-
-=pod moved to task
-##### AUTO SKILLS RAISE #####
-sub processAutoSkillsRaise {
-	if (!$skillChanged && $config{skillsAddAuto}) {
-		# Split list of skills and levels
-		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
-
-		foreach my $item (@list) {
-			# Split each skill/level pair
-			my ($sk, undef, $num) = $item =~ /^(.*?)( (\d+))?$/;
-			$num = 1 if (!defined $num);
-			my $skill = new Skill(auto => $sk);
-
-			if (!$skill->getIDN()) {
-				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
-				$config{skillsAddAuto} = 0;
-				last;
-			}
-
-			my $handle = $skill->getHandle();
-
-			# If skill needs to be raised to match desired amount && skill points are available
-			if ($skill->getIDN() && $char->{points_skill} > 0 && $char->getSkillLevel($skill) < $num) {
-				# raise skill
-				$messageSender->sendAddSkillPoint($skill->getIDN());
-				message TF("Auto-adding skill %s\n", $skill->getName());
-
-				# save which skill was raised, so that when we received the
-				# "skill changed" packet (010F?) we can changed $skillChanged
-				# back to 0 so that kore will start checking again if skills
-				# need to be raised.
-				# this basically does what $statChanged does for stats
-				$skillChanged = $handle;
-				# after we raise a skill, exit loop
-				last;
-			}
-		}
-	}
-}
-=cut
-
 ##### RANDOM WALK #####
 sub processRandomWalk {
 	if (AI::isIdle && (AI::SlaveManager::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
@@ -2024,7 +1923,7 @@ sub processFollow {
 	}
 	if($config{'sitAuto_follow'} && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'}) && $field->isCity) {
 	my $action = AI::action;
-		if($action eq "sitting" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3){
+		if($action eq "sitting" && !$char->{sitting} && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1)){
 			sit();
 		}
 		return;
@@ -2040,7 +1939,7 @@ sub processFollow {
 
 	# if we are not following now but master is in the screen...
 	if (!defined $args->{'ID'}) {
-		foreach my Actor::Player $player (@{$playersList->getItems()}) {
+		for my Actor::Player $player (@$playersList) {
 			if (($player->name eq $config{followTarget}) && !$player->{'dead'}) {
 				$args->{'ID'} = $player->{ID};
 				$args->{'following'} = 1;
@@ -2287,7 +2186,7 @@ sub processSitAutoIdle {
 			$timeout{ai_sit_idle}{time} = time;
 		}
 
-		if ($char->{skills}{NV_BASIC}{lv} >= 3 && !$char->{sitting} && timeOut($timeout{ai_sit_idle})
+		if (($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1) && !$char->{sitting} && timeOut($timeout{ai_sit_idle})
 		 && (!$config{shopAuto_open} || timeOut($timeout{ai_shop})) ) {
 			sit();
 		}
@@ -2306,7 +2205,7 @@ sub processSitAuto {
 	}
 
 	# Sit if we're not already sitting
-	if ($action eq "sitAuto" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3 &&
+	if ($action eq "sitAuto" && !$char->{sitting} && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1) &&
 	    !ai_getAggressives() && ($weight < 50 || $config{'sitAuto_over_50'})) {
 		debug "sitAuto - sit\n", "sitAuto";
 		sit();
@@ -2377,7 +2276,7 @@ sub processAutoItemUse {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $item = $char->inventory->getByNameList($config{"useSelf_item_$i"});
 				if ($item) {
-					$messageSender->sendItemUse($item->{index}, $accountID);
+					$messageSender->sendItemUse($item->{ID}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $item->{name}\n~, "ai";
@@ -2626,6 +2525,16 @@ sub processAutoEquip {
 			my $ID = AI::args($ai_index_attack)->{ID};
 			$monster = $monsters{$ID};
 		}
+		
+		my @skip_slots;
+		if (AI::is('skill_use')) {
+			my $args = AI::args;
+			foreach my $slot (values %equipSlot_lut) {
+				if (exists $config{"$args->{prefix}_equip_$slot"}) {
+					push(@skip_slots, $slot);
+				}
+			}
+		}
 
 		# we will create a list of items to equip
 		my %eq_list;
@@ -2639,6 +2548,7 @@ sub processAutoEquip {
 			 && Actor::Item::scanConfigAndCheck("equipAuto_$i")
 			) {
 				foreach my $slot (values %equipSlot_lut) {
+					next if (defined binFind(\@skip_slots, $slot));
 					if (exists $config{"equipAuto_$i"."_$slot"}) {
 						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
@@ -2681,7 +2591,7 @@ sub processAutoAttack {
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
 		if ($config{'tankMode'}) {
-			for (@{$playersList->getItems}, @{$slavesList->getItems}) {
+			for (@$playersList, @$slavesList) {
 				if (
 					$config{tankModeTarget} eq $_->{name}
 					or $char->{homunculus} && $config{tankModeTarget} eq '@homunculus' && $_->{ID} eq $char->{homunculus}{ID}
@@ -2766,6 +2676,11 @@ sub processAutoAttack {
 				 && !$monster->{dmgFromYou}
 				 && ($control->{dist} eq '' || distance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					my %hookArgs;
+					$hookArgs{monster} = $monster;
+					$hookArgs{return} = 1;
+					Plugins::callHook("checkMonsterAutoAttack", \%hookArgs);
+					next if (!$hookArgs{return});
 					push @cleanMonsters, $_;
 				}
 			}
@@ -2943,7 +2858,7 @@ sub processAutoTeleport {
 				$ok = 1;
 			}
 		} else {
-			foreach my Actor::Player $player (@{$playersList->getItems()}) {
+			for my Actor::Player $player (@$playersList) {
 				if (!existsInList($config{teleportAuto_notPlayers}, $player->{name}) && !existsInList($config{teleportAuto_notPlayers}, $player->{nameID})) {
 					$ok = 1;
 					last;

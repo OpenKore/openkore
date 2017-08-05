@@ -33,11 +33,11 @@ sub new {
 		'095E' => undef,
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
 		'089C' => undef,
-		'0362' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'08A3' => undef,
-		'07EC' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'087E' => undef,
-		'0364' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0811' => undef,
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'08A6' => undef,
