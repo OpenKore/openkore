@@ -116,8 +116,7 @@ sub new {
 
 	$self->{time_start} = time;
 
-	$self->{revision} = Settings::getSVNRevision;
-	$self->{revision} = " (r$self->{revision})" if defined $self->{revision};
+	$self->{revision} = Settings::getRevisionString();
 
 	$self->{loading} = {
 		current => 0,
@@ -562,7 +561,7 @@ sub updateStatus {
 	if ($self->{loading} && $self->{loading}{finish} != 2) {
 		erase $self->{winStatus};
 		my $width = int($self->{winStatusWidth});
-		my $title = "$Settings::NAME ${Settings::VERSION}$self->{revision}";
+		my $title = "$Settings::NAME ${Settings::VERSION} $self->{revision}";
 		$self->printw($self->{winStatus}, 0, 0, "{bold|yellow}          @*{bold|blue} @".(">"x($width - length ($title) - 20)),
 			$title, $Settings::WEBSITE);
 		my $loadingbar = $self->makeBar($width-18, $self->{loading}{current}, $self->{loading}{total});
@@ -592,7 +591,7 @@ sub updateStatus {
 		hp       => { title => 'HP',     cur => $char->{hp},        max => $char->{hp_max},     color1 => 'bold|red',  color2 => 'bold|green', threshold => 15 },
 		sp       => { title => 'SP',     cur => $char->{sp},        max => $char->{sp_max},     color1 => 'bold|blue', color2 => '',           threshold => 0 },
 		weight   => { title => 'Weight', cur => $char->{weight},    max => $char->{weight_max}, color1 => 'cyan',      color2 => 'red',        threshold => 50 },
-		cart     => { title => 'Cart W', cur => $cart{weight},      max => $cart{weight_max},   color1 => 'cyan',      color2 => '',           threshold => 0 },
+		cart     => { title => 'Cart W', cur => $char->cart->{weight},      max => $char->cart->{weight_max},   color1 => 'cyan',      color2 => '',           threshold => 0 },
 		hunger   => { title => 'Hunger', cur => $homun->{hunger},   max => 100,                 color1 => 'red',       color2 => 'green',      threshold => 0 },
 		intimacy => { title => 'Loyal',  cur => $homun->{intimacy}, max => 1000,                color1 => 'red',       color2 => 'green',      threshold => 10 },
 		hom_hp   => { title => 'Hom HP', cur => $homun->{hp},       max => $homun->{hp_max},    color1 => 'bold|red',  color2 => 'bold|green', threshold => 0 },
@@ -714,8 +713,8 @@ sub updateObjects {
 			($objectsID, $objects, $style) = (\@skillsID, $char->{skills}, 'cyan');
 		} elsif ($_ eq 'inventory') {
 			for my $item (@{$char->inventory->getItems}) {
-				$objectsID->[$item->{invIndex}] = $item->{invIndex};
-				$objects->{$item->{invIndex}} = $item;
+				$objectsID->[$item->{binID}] = $item->{binID};
+				$objects->{$item->{binID}} = $item;
 			}
 			$style = 'normal';
 		} else {

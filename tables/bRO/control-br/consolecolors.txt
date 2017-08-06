@@ -24,16 +24,16 @@ attackMon cyan
 attackMonMiss cyan
 attacked magenta
 attackedMiss magenta
- 
+
 connection darkgreen
 startup darkgreen
 menu yellow
 drop blue
 useItem blue
- 
+
 skill green
 selfSkill green
- 
+
 success green
 system yellow
 pm yellow
@@ -47,13 +47,14 @@ list white
 info white
 equip grey
 teleport yellow
- 
+plugin gray
+
 [error]
 default red
- 
+
 [warning]
 default yellow
 info yellow
- 
+
 [debug]
-default default
+default gray

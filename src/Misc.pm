@@ -82,11 +82,11 @@ our @EXPORT = (
 	qw/inInventory
 	inventoryItemRemoved
 	storageGet
+	transferItems
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID
-	buyingstoreitemdelete/,
+	itemNameToID/,
 
 	# File Parsing and Writing
 	qw/chatLog
@@ -195,13 +195,12 @@ our @EXPORT = (
 	checkSelfCondition
 	checkPlayerCondition
 	checkMonsterCondition
-	findCartItemInit
-	findCartItem
 	makeShop
 	openShop
 	closeShop
 	inLockMap
-	parseReload/
+	parseReload
+	setCharDeleteDate/
 	);
 
 
@@ -322,6 +321,7 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 }
 
@@ -781,8 +781,7 @@ sub objectIsMovingTowardsPlayer {
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
-		my $players = $playersList->getItems();
-		foreach my $player (@{$players}) {
+		for my $player (@$playersList) {
 			my $ID = $player->{ID};
 			next if (
 			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
@@ -1171,7 +1170,11 @@ sub charSelectScreen {
 
 		my $messageDeleteDate;
 		if ($chars[$num]{deleteDate}) {
-			$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+			if (int(time) > $chars[$num]{deleteDateTimestamp}) {
+				$messageDeleteDate = TF("\n     -> Deleting is possible since %s.", $chars[$num]{deleteDate});
+			} else {
+				$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+			}
 		}
 		
 		push @charNames, TF("Slot %d: %s (%s, level %d/%d)%s",
@@ -1198,9 +1201,16 @@ sub charSelectScreen {
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{char} ne "" && $chars[$config{char}]) {
-		$messageSender->sendCharLogin($config{char});
-		$timeout{charlogin}{time} = time;
-		return 1;
+		if ($chars[$config{char}]{deleteDate}) {
+			error TF("Cannot select character \"%s\" that requested for deletion.\n", $chars[$config{char}]{name});
+			configModify("char",'');
+			relog(10);
+			return 0;
+		} else {
+			$messageSender->sendCharLogin($config{char});
+			$timeout{charlogin}{time} = time;
+			return 1;
+		}
 	}
 
 	my @choices = @charNames;
@@ -1229,11 +1239,16 @@ sub charSelectScreen {
 		return 0;
 
 	} elsif ($choice < @charNames) {
-		# Character chosen
-		configModify('char', $charNameIndices[$choice], 1);
-		$messageSender->sendCharLogin($config{char});
-		$timeout{charlogin}{time} = time;
-		return 1;
+		if ($chars[$charNameIndices[$choice]]{deleteDate}) {
+			error TF("Cannot select character \"%s\" that requested for deletion.\n", $chars[$charNameIndices[$choice]]{name});
+			goto TOP;
+		} else {
+			# Character chosen
+			configModify('char', $charNameIndices[$choice], 1);
+			$messageSender->sendCharLogin($config{char});
+			$timeout{charlogin}{time} = time;
+			return 1;
+		}
 
 	} elsif ($choice == @charNames) {
 		# 'Create character' chosen
@@ -1247,7 +1262,13 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ($messageSender->{char_create_version}) {
+			if ( $messageSender->{char_create_version} == 0x0A39 ) {
+				$message
+					= T( "Please enter the desired properties for your characters, in this form:\n" )
+					. T( "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n" )
+					. T( "Job should be one of 'novice' or 'summoner' (default is 'novice').\n" )
+					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
+			} elsif ($messageSender->{char_create_version}) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
 					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
 			} else {
@@ -1282,12 +1303,45 @@ sub charSelectScreen {
 		my $charIndex = @charNameIndices[$choice];
 
 		if ($charDeleteVersion) {
-		$messageSender->{char_delete_slot} = $charIndex;
+			$messageSender->{char_delete_slot} = $charIndex;
 
 			if ($chars[$charIndex]{deleteDate}) {
-				$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
+				my $confirm = $interface->showMenu(
+					TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+					[T("Back"), T("No, don't delete"), T("Yes, delete")],
+					title => T("Confirm delete"));
+
+				if ($confirm == 0) {
+					goto TOP;
+				} elsif ($confirm == 1) { # Request cancel
+					$chars[$charIndex]{deleteDate} = undef;
+					$chars[$charIndex]{deleteDateTimestamp} = undef;
+					message TF("Canceling delete request for character %s...\n", $chars[$charIndex]{name}), "connection";
+					$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
+				} elsif ($confirm == 2 && int(time) > $chars[$charIndex]{deleteDateTimestamp}) {
+					my $code = $interface->query("Enter your birthdate or deletion code.");
+					if (!defined($code)) {
+						goto TOP;
+					}
+
+					my $confirmation = $interface->showMenu(
+						TF("Are you ABSOLUTELY SURE you want to delete:\n%s", $charNames[$choice]),
+						[T("No, don't delete"), T("Yes, delete")],
+						title => T("Confirm delete"));
+					if ($confirmation != 1) {
+						goto TOP;
+					}
+
+					$messageSender->sendCharDelete2Accept($chars[$charIndex]{charID}, $code);
+					message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
+					$AI::temp::delIndex = $charIndex;
+					$timeout{charlogin}{time} = time;
+				} else {
+					message TF("Character %s cannot be deleted yet. Please wait until %s\n", $chars[$charIndex]{name}, $chars[$charIndex]{deleteDate}), "info";
+					goto TOP;
+				}
 			} else {
-				$messageSender->sendCharDelete2($chars[$charIndex]{charID});
+				$messageSender->sendCharDelete2($chars[$charIndex]{charID}); # Request date deletion.
 			}
 		} else {
 			my $email = $interface->query("Enter your email address.");
@@ -1488,7 +1542,20 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ($messageSender->{char_create_version}) {
+	if ( $messageSender->{char_create_version} == 0x0A39 ) {
+		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
+		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
+
+		if ( grep { !/^(novice|summoner|male|female|m|f)$/io } @_ ) {
+			$interface->errorDialog( T( 'Unknown job or sex.' ), 0 );
+			return 0;
+		}
+
+		my $job_id = scalar( grep {/^summoner$/io} @_ ) ? 4218 : 0;
+		my $sex    = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
+
+		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $job_id, $sex );
+	} elsif ($messageSender->{char_create_version}) {
 		my ($hair_style, $hair_color) = @_;
 
 		$messageSender->sendCharCreate($slot, $name,
@@ -1544,7 +1611,7 @@ sub deal {
 sub dealAddItem {
 	my ($item, $amount) = @_;
 
-	$messageSender->sendDealAddItem($item->{index}, $amount);
+	$messageSender->sendDealAddItem($item->{ID}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
 }
 
@@ -1560,7 +1627,7 @@ sub drop {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendDrop($item->{index}, $amount);
+		$messageSender->sendDrop($item->{ID}, $amount);
 	}
 }
 
@@ -1734,34 +1801,73 @@ sub inInventory {
 	my $item = $char->inventory->getByName($itemIndex);
 	return if !$item;
 	return unless $item->{amount} >= $quantity;
-	return $item->{invIndex};
+	return $item->{binID};
 }
 
 ##
-# inventoryItemRemoved($invIndex, $amount)
+# inventoryItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{inventory}.
+# Removes $amount of $binID from $char->{inventory}.
 # Also prints a message saying the item was removed (unless it is an arrow you
 # fired).
 sub inventoryItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+	my $item = $char->inventory->get($binID);
+	if (!$char->{arrow} || ($item && $char->{arrow} ne $item->{ID})) {
 		# This item is not an equipped arrow
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		if ($char->{arrow} && $char->{arrow} == $item->{index}) {
-			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
+		if ($char->{arrow} && $char->{arrow} eq $item->{ID}) {
+			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $binID), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
 		}
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+}
+
+##
+# storageItemRemoved($binID, $amount)
+#
+# Removes $amount of $binID from $char->{storage}.
+# Also prints a message saying the item was removed
+sub storageItemRemoved {
+	my ($binID, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->storage->get($binID);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "storage";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->storage->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('storage_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+}
+
+##
+# cartItemRemoved($binID, $amount)
+#
+# Removes $amount of $binID from $char->{cart}.
+# Also prints a message saying the item was removed
+sub cartItemRemoved {
+	my ($binID, $amount) = @_;
+
+	return if $amount == 0;
+	my $item = $char->cart->get($binID);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "cart";
+	$item->{amount} -= $amount;
+	if ($item->{amount} <= 0) {
+		$char->cart->remove($item);
+	}
+	$itemChange{$item->{name}} -= $amount;
+	Plugins::callHook('cart_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 # Resolve the name of a card
@@ -1834,9 +1940,16 @@ sub itemName {
 		my $elementID = $cards[1] % 10;
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
-		if ($starCrumbs >= 1 && $starCrumbs <= 3 ) {
-			$prefix .= (T("V")x$starCrumbs).T("S ") if $starCrumbs;
+		
+		# Translation-friendly
+		if ($starCrumbs == 1) {
+			$prefix .= T("VS ");
+		} elsif ($starCrumbs == 2) {
+			$prefix .= T("VVS ");
+		} elsif ($starCrumbs == 3) {
+			$prefix .= T("VVVS ");
 		}
+
 		# $prefix .= "$elementName " if ($elementName ne "");
 		$suffix = "$elementName" if ($elementName ne "");
 	} elsif (@cards) {
@@ -1848,6 +1961,17 @@ sub itemName {
 		$suffix = join(':', map {
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
+	}
+
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	foreach ( @options ) {
+		if ( $_->{type} == 175 ) {
+			# Neutral element.
+		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
+			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
+		} else {
+			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		}
 	}
 
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
@@ -1876,9 +2000,11 @@ sub itemNameToID {
 }
 
 ##
-# storageGet(items, max)
+# DEPRECATED: Use transferItems() instead.
+#
+# storageGet(items, amount)
 # items: reference to an array of storage item hashes.
-# max: the maximum amount to get, for each item, or 0 for unlimited.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
 #
 # Get one or more items from storage.
 #
@@ -1888,23 +2014,36 @@ sub itemNameToID {
 # # Get items $a and $b from storage, but at most 30 of each item.
 # storageGet([$a, $b], 30);
 sub storageGet {
-	my $indices = shift;
-	my $max = shift;
+	my ( $items, $amount ) = @_;
+	transferItems( $items, $amount, 'storage' => 'inventory' );
+}
 
-	if (@{$indices} == 1) {
-		my ($item) = @{$indices};
-		if (!defined($max) || $max > $item->{amount}) {
-			$max = $item->{amount};
+##
+# transferItems(items, amount, source, target)
+# items: reference to an array of Actor::Items.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
+# source: where the items come from; one of 'inventory', 'storage', 'cart'
+# target: where the items shoudl go; one of 'inventory', 'storage', 'cart'
+#
+# Transfer one or more items from their current location to another location.
+#
+# Example:
+# # Get items $a and $b from storage to inventory.
+# transferItems([$a, $b], 'storage' => 'inventory');
+# # Send items $a and $b from cart to storage, but at most 30 of each item.
+# transferItems([$a, $b], 30, 'cart' => 'storage');
+sub transferItems {
+	my ( $items, $amount, $source, $target ) = @_;
+
+	AI::queue(
+		transferItems => {
+			timeout => $timeout{ai_transfer_items}{timeout} || 0.15,
+			items => [ map { { item => $_, source => $source, target => $target, amount => $amount } } @$items ],
 		}
-		$messageSender->sendStorageGet($item->{index}, $max);
+	);
 
-	} else {
-		my %args;
-		$args{items} = $indices;
-		$args{max} = $max;
-		$args{timeout} = 0.15;
-		AI::queue("storageGet", \%args);
-	}
+	# Immediately run the AI sequence once. This will remove it from the queue if there's only one item to transfer.
+	AI::CoreLogic::processTransferItems();
 }
 
 ##
@@ -2135,9 +2274,9 @@ sub objectRemoved {
 # Returns the items_control.txt settings for item name $name.
 # If $name has no specific settings, use 'all'.
 sub items_control {
-	my ($name) = @_;
-
-	return $items_control{lc($name)} || $items_control{all} || {};
+	my $name = shift;
+	my $nameID = shift;	
+	return $items_control{lc($name)} || $items_control{lc($nameID)} || $items_control{all} || {};
 }
 
 ##
@@ -2166,8 +2305,7 @@ sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $ID = $player->{ID};
 		next if ($char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
@@ -2181,8 +2319,7 @@ sub positionNearPortal {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	my $portals = $portalsList->getItems();
-	foreach my $portal (@{$portals}) {
+	for my $portal (@$portalsList) {
 		return 1 if (distance($r_hash, $portal->{pos}) <= $dist);
 	}
 	return 0;
@@ -3072,7 +3209,7 @@ sub useTeleport {
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendItemUse($item->{index}, $accountID);
+			$messageSender->sendItemUse($item->{ID}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -3150,11 +3287,9 @@ sub writeStorageLog {
 
 	if (open($f, ">:utf8", $Settings::storage_log_file)) {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
-		for (my $i = 0; $i < @storageID; $i++) {
-			next if (!$storageID[$i]);
-			my $item = $storage{$storageID[$i]};
+		for my $item (@{$char->storage}) {
 
-			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -3162,7 +3297,7 @@ sub writeStorageLog {
 			print $f "$display\n";
 		}
 		# Translation Comment: Storage Capacity
-		print $f TF("\nCapacity: %d/%d\n", $storage{items}, $storage{items_max});
+		print $f TF("\nCapacity: %d/%d\n", $char->storage->items, $char->storage->items_max);
 		print $f "-------------------------------\n";
 		close $f;
 
@@ -3459,8 +3594,7 @@ sub percent_weight {
 #######################################
 
 sub avoidGM_near {
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
@@ -3518,8 +3652,7 @@ sub avoidGM_near {
 sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
-	my $players = $playersList->getItems();
-	foreach my $player (@{$players}) {
+	for my $player (@$playersList) {
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
@@ -3933,8 +4066,7 @@ sub checkSelfCondition {
     if (defined $config{$prefix . "_monstersCount"}) {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
-				my $monsters = $monstersList->getItems();
-				foreach my $monster (@{$monsters}) {
+				for my $monster (@$monstersList) {
 					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
                 }
             }
@@ -3972,6 +4104,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inInventory"}) {
+		return 0 if (!$char->inventory->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
@@ -3981,12 +4114,12 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inCart"}) {
+		return 0 if (!$char->cart->isReady());
 		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
 			my ($item,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
- 			my $item = $cart{inventory}[$iX];
-			return 0 if !inRange(!defined $iX ? 0 : $item->{amount}, $count);
+			my $item = $char->cart->getByName($item);
+			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
 
@@ -4269,45 +4402,6 @@ sub checkMonsterCondition {
 }
 
 ##
-# findCartItemInit()
-#
-# Resets all "found" flags in the cart to 0.
-sub findCartItemInit {
-	for (@{$cart{inventory}}) {
-		next unless $_ && %{$_};
-		undef $_->{found};
-	}
-}
-
-##
-# findCartItem($name [, $found [, $nounid]])
-#
-# Returns the integer index into $cart{inventory} for the cart item matching
-# the given name, or undef.
-#
-# If an item is found, the "found" value for that item is set to 1. Items
-# cannot be found again until you reset the "found" flags using
-# findCartItemInit(), if $found is true.
-#
-# Unidentified items will not be returned if $nounid is true.
-sub findCartItem {
-	my ($name, $found, $nounid) = @_;
-
-	$name = lc($name);
-	my $index = 0;
-	for (@{$cart{inventory}}) {
-		if (lc($_->{name}) eq $name &&
-		    !($found && $_->{found}) &&
-			!($nounid && !$_->{identified})) {
-			$_->{found} = 1;
-			return $index;
-		}
-		$index++;
-	}
-	return undef;
-}
-
-##
 # makeShop()
 #
 # Returns an array of items to sell. The array can be no larger than the
@@ -4343,19 +4437,24 @@ sub makeShop {
 	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
 
 	# Iterate through items to be sold
-	findCartItemInit();
 	shuffleArray(\@{$shop{items}}) if ($config{'shop_random'} eq "2");
+	my %used_items;
 	for my $sale (@{$shop{items}}) {
-		my $index = findCartItem($sale->{name}, 1, 1);
-		next unless defined($index);
+		my $cart_item;
+		for my $item (@{$char->cart}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{binID}};
+			$cart_item = $used_items{$item->{binID}} = $item;
+			last;
+		}
+		next unless ($cart_item);
 
 		# Found item to vend
-		my $cart_item = $cart{inventory}[$index];
 		my $amount = $cart_item->{amount};
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $index;
+		$item{ID} = $cart_item->{ID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
@@ -4447,16 +4546,27 @@ sub MODINIT {
 	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
 }
 
-sub buyingstoreitemdelete {
-	my ($invIndex, $amount) = @_;
+# There are 2 types of clients that receive deletion timestamp 'deleteDate'
+# 0: As when char can be deleted
+# 1: As remaining time
+#    -> kRO 2013 clients
+#    -> idRO since 2016-04-06
+sub setCharDeleteDate {
+	my ($slot, $deleteDate) = @_;
 
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+	return if (!$deleteDate);
+
+	if (!defined $chars[$slot]) {
+		error TF("Invalid char in specified slot %d\n", $slot);
+		return;
 	}
-	$item->{amount} -= $amount;
-	$char->inventory->remove($item) if ($item->{amount} <= 0);
-	$itemChange{$item->{name}} -= $amount;
+
+	if ($masterServer->{charDeleteDateType} == 1) { # New clients receive deleteTime as 'time remaining'
+		$deleteDate = int(time) + $deleteDate;
+	}
+
+	$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
+	$chars[$slot]{deleteDateTimestamp} = $deleteDate;
 }
 
 return 1;

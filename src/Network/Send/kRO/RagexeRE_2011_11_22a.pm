@@ -23,11 +23,11 @@ sub new {
 		'023B' => undef,
 		'02C4' => undef,
 		'035F' => ['actor_name_request', 'a4', [qw(ID)]],#6
-		'0362' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'0362' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0364' => undef,
 		'0366' => undef,
 		'0369' => undef,
-		'0436' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0436' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0815' => undef,
 		'0817' => undef,
 		'0835' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
@@ -46,10 +46,10 @@ sub new {
 		'0899' => ['sync', 'V', [qw(time)]],#6
 		'089E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'08A1' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'08A4' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'08A4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'08AA' => undef,
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
-		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
+		'0907' => ['item_to_favorite', 'a2 C', [qw(ID flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
 		'088C' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		'089B' => undef,
 		'08A9' => ['buy_bulk_closeShop'],#2

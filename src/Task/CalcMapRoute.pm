@@ -93,6 +93,14 @@ sub new {
 	}
 	
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
+	
+	my $tickets = $char->inventory->getByNameID(7060);
+	
+	if ($tickets) {
+		$self->{tickets_amount} = $tickets->{amount};
+	} else {
+		$self->{tickets_amount} = 0;
+	}
 
 	$self->{stage} = INITIALIZE;
 	$self->{openlist} = {};
@@ -141,6 +149,13 @@ sub iterate {
 					$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
 					$openlist->{"$portal=$dest"}{zeny} = $entry->{dest}{$dest}{cost};
 					$openlist->{"$portal=$dest"}{allow_ticket} = $entry->{dest}{$dest}{allow_ticket};
+					if ($self->{tickets_amount} > 0 && $openlist->{"$portal=$dest"}{allow_ticket}) {
+						$openlist->{"$portal=$dest"}{zeny_covered_by_tickets} = $openlist->{"$portal=$dest"}{zeny};
+						$openlist->{"$portal=$dest"}{amount_of_tickets_used} = 1;
+					} else {
+						$openlist->{"$portal=$dest"}{zeny_covered_by_tickets} = 0;
+						$openlist->{"$portal=$dest"}{amount_of_tickets_used} = 0;
+					}
 				}
 			}
 		}
@@ -215,16 +230,19 @@ sub searchStep {
 	#foreach my $parent (keys %{$openlist})
 	{
 		my ($portal, $dest) = split /=/, $parent;
-		if ($self->{budget} ne '' && !($char->inventory->getByNameID(7060) && $openlist->{$parent}{allow_ticket}) && ($openlist->{$parent}{zeny} > $self->{budget})) {
+		
+		if ($self->{budget} ne '' && $self->{budget} < ($openlist->{$parent}{zeny} - $openlist->{$parent}{zeny_covered_by_tickets})) {
 			# This link is too expensive
-			# We should calculate the entire route cost
 			delete $openlist->{$parent};
 			next;
+
 		} else {
 			# MOVE this entry into the CLOSELIST
 			$closelist->{$parent}{walk}   = $openlist->{$parent}{walk};
 			$closelist->{$parent}{zeny}  = $openlist->{$parent}{zeny};
 			$closelist->{$parent}{allow_ticket}  = $openlist->{$parent}{allow_ticket};
+			$closelist->{$parent}{zeny_covered_by_tickets} = $openlist->{$parent}{zeny_covered_by_tickets};
+			$closelist->{$parent}{amount_of_tickets_used} = $openlist->{$parent}{amount_of_tickets_used};
 			$closelist->{$parent}{parent} = $openlist->{$parent}{parent};
 			# Then delete in from OPENLIST
 			delete $openlist->{$parent};
@@ -245,6 +263,8 @@ sub searchStep {
 					$arg{walk} = $closelist->{$this}{walk};
 					$arg{zeny} = $closelist->{$this}{zeny};
 					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
+					$arg{zeny_covered_by_tickets} = $closelist->{$this}{zeny_covered_by_tickets};
+					$arg{amount_of_tickets_used} = $closelist->{$this}{amount_of_tickets_used};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -254,10 +274,12 @@ sub searchStep {
 
 			} elsif ( Task::Route->getRoute($self->{solution}, $self->{dest}{field}, $portals_lut{$portal}{dest}{$dest}, $self->{dest}{pos}) ) {
 				my $walk = "$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}=$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}";
-				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{$dest}{walk};
+				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{walk};
 				$closelist->{$walk}{parent} = $parent;
 				$closelist->{$walk}{zeny} = $closelist->{$parent}{zeny};
 				$closelist->{$walk}{allow_ticket} = $closelist->{$parent}{allow_ticket};
+				$closelist->{$walk}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
+				$closelist->{$walk}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
 				$self->{found} = $walk;
 				$self->{done} = 1;
 				$self->{mapSolution} = [];
@@ -270,6 +292,8 @@ sub searchStep {
 					$arg{walk} = $closelist->{$this}{walk};
 					$arg{zeny} = $closelist->{$this}{zeny};
 					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
+					$arg{zeny_covered_by_tickets} = $closelist->{$this}{zeny_covered_by_tickets};
+					$arg{amount_of_tickets_used} = $closelist->{$this}{amount_of_tickets_used};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 
 					unshift @{$self->{mapSolution}}, \%arg;
@@ -294,7 +318,14 @@ sub searchStep {
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
 						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
-						$openlist->{"$child=$subchild"}{allow_ticket} = $closelist->{$parent}{allow_ticket};
+						$openlist->{"$child=$subchild"}{allow_ticket} = $portals_lut{$child}{dest}{$subchild}{allow_ticket};
+						if ($openlist->{"$child=$subchild"}{allow_ticket} && $self->{tickets_amount} > $openlist->{"$child=$subchild"}{amount_of_tickets_used}) {
+							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $openlist->{"$child=$subchild"}{zeny};
+							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
+						} else {
+							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
+							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
+						}
 					}
 				}
 			}

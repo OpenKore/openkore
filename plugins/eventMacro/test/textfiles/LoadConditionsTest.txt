@@ -1,0 +1,45 @@
+automacro test1 {
+	BaseLevel 5
+	JobLevel 10
+	exclusive 1
+	priority 0
+	call testmacro1
+}
+
+macro testmacro1 {
+	log This works
+	log hehe
+}
+
+automacro test2 {
+	BaseLevel 2
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+macro testmacro2 {
+	log This also works
+	log hehe 2
+}
+
+automacro test3 {
+	BaseLevel $scalar1
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test4 {
+	BaseLevel $array1[1]
+	JobLevel 20
+	priority 0
+	call testmacro2
+}
+
+automacro test5 {
+	BaseLevel $hash2{key5}
+	JobLevel 20
+	priority 0
+	call testmacro2
+}

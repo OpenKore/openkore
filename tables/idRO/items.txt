@@ -6726,3 +6726,118 @@
 20404#C_Blessing_Of_Angels#
 20407#C_Subject_Aura_Red#
 17681#Midgard_Lucky_Scroll#
+
+//--------------- Update Shapeshifter Costume Scroll 20160516---------------
+14735#Shapeshifter Costume#
+19827#C_Amistr_Cap#
+19831#C_Filir_Hat#
+19835#C_Lif_Doll_Hat#
+19839#C_Vanilmirth_Hat#
+19853#C_Filir_Wing_Ears#
+20065#C_Hairband_Of_Grandpeco#
+20066#C_Pecopeco_Hairband#
+20069#C_Gryphon_Hairband#
+20070#C_Alpaca_Hood#
+20071#C_Worg_In_Mouth#
+
+//--------------- Update Feather Costume Scroll 20160531---------------
+17493#Burning Feather Costume Scroll#
+20075#C_Little_Fhat#
+20076#C_Idun_Wing_Ears#
+20077#C_Wing_Form_Spectacle#
+20078#C_White_Feather#
+20079#C_Love_Daddy_2013#
+20080#C_Shaman's_Hair_Ornament#
+20098#C_Vampire_Hairband#
+20100#C_Volume_Fhat#
+20101#C_Bragi_Wing_Ears#
+
+//--------------- Update Blessing Scarlet Scroll 20160607---------------
+20405#Eremes Scarf#
+20406#Commandments Of Chain#
+19109#Valhalla Idol#
+19111#Laser of Eagle#
+17692#Blessing Scarlet Egg#
+
+//--------------- Update Limited Item Mall June 20160621---------------
+5917#Yellow_Scarf#
+28410#Sapphire_Wrist#
+28411#Emerald_Earring#
+28358#Cursed_Lucky_Clover#
+18575#Wunderkammer#
+18521#Lucky_Clover#
+
+//--------------- Update limited item mall July 20160719---------------
+20268#C_Sleep_Eclipse_Family#
+20240#C_Gift_Of_Snow#
+20285#C_Blossom_Fluttering#
+20312#C_Baron_Evil_Eye#
+
+//--------------- Update July Lucky Scroll 20160726---------------
+19116#Red Baby Dragon#
+22103#Excelion Leg#
+14805#Almighty Lucky Egg#
+
+//--------------- Update August Costume Scroll 20160809--------------
+17523#Mystical Costume Scroll#
+19615#C_Loki_Mask#
+20213#C_Sirt_Evil_Eye#
+20214#C_Evil_Marcher_Hat#
+20215#C_Black_Devil_Mask#
+20216#C_Rideword_Hat#
+20217#C_Arabian_Veil#
+20219#C_Angel_Marcher_Hat#
+20221#C_Eyes_Of_Ifrit#
+
+//--------------- Update September Lucky Scroll 20160831--------------
+19139#SurviveOrb#
+22106#Giant_Boots#
+20815#SeraphimRobe#
+19140#Squirrel_Ear_Hat#
+23196#Shining_Blue_Lucky_Egg#
+
+//--------------- Update Oktober Lucky Scroll 20161011--------------
+17476#Kostum_GirlsSelection2#
+19015#Kostum_Gemma's_Hairband#
+19788#Kostum_Heart_Eyepatch#
+20020#Kostum_Zaha_Doll_Topi_J#
+20021#Kostum_Heart_Ribbon_Band#
+20022#Kostum_Love_Piece#
+20023#Kostum_Red_Beret#
+20024#Kostum_Ribbon_Orange#
+20031#Kostum_Bunny_Head_Dress#
+20032#Kostum_Firinto_Scarf#
+20033#Kostum_Buddhist_Priest_Crown#
+17500#Kostum_Monsters#
+19574#Kostum_Dead_Man_Helm#
+20126#Kostum_Thanatos_Topie_Topeng#
+20127#Kostum_Abyss_Helm#
+20128#Kostum_Remover_Topi#
+20129#Kostum_Poporing_Topi#
+20130#Kostum_Whisper_Tall_Topi#
+20131#Kostum_Clocktower_Manager_Topi#
+20132#Kostum_Drak_Aura#
+20133#Kostum_Overlapped_Poring#
+20134#White_Abyss_Knight_Helm#
+17506#Kostum_AutumnParty#
+19834#Kostum_Baseball_Cap#
+20148#Kostum_Noble_Hat#
+20149#Kostum_Hexagon_Spectacles#
+20150#Kostum_GodOfWinds_Fan#
+20151#Kostum_Poison_Spore_Hat#
+20152#Kostum_Straw_Rice_Bag#
+20153#Kostum_Monochrome_Cap#
+20154#Kostum_Maple_Which_Falls#
+20155#Kostum_Ladys_Feather_Hat#
+20156#Kostum_Fan_In_Mouth#
+17514#Kostum_HalloweenII#
+20166#Kostum_Hockey_Mask#
+20167#Kostum_Devi_Headphone#
+20168#Kostum_Skull_Jhood#
+20169#Kostum_Long_Tongue#
+20170#Kostum_Gray_Deviruchi_Cap#
+20171#Kostum_Sepia_Cap#
+20172#Kostum_Pumpkin_Head#
+20173#Kostum_Lude_Hood#
+20174#Kostum_Halloween_Hat_Orange#
+20175#Kostum_Diabolic_Headphone#

@@ -1,11 +1,11 @@
-Você concorda?#
+Você deseja assistir o Replay?#
 Não foi possível conectar-se ao servidor.#
 Desconectado do servidor.#
 Desconectado do servidor.#
 Servidor fechado.#
 Alguém já está utilizando esta conta.#
 Conta não registrada. Certifique-se de que registrou corretamente.#
-Senha incorreta.  Tente novamente. #
+Senha incorreta. Tente novamente.#
 Esta conta expirou e não é mais válida.#
 Recusado pelo servidor.#
 Já existe um personagem com este nome.#
@@ -256,7 +256,7 @@ Poder de Ataque#
 Taxa de Defesa#
 Taxa de Precisão#
 Taxa de Ataque Crítico#
-Clã#
+Clã #
 Pontos utilizados para melhorar cada parâmetro#
 Poder de Ataque Mágico#
 Defesa Mágica#
@@ -265,7 +265,7 @@ Velocidade de Ataque#
 Servidor Superpopulado.#
 Configuração#
 Servidor Indisponível. Por favor, tente novamente em alguns minutos.#
-Senha incorreta. Certifique-se que sua senha esteja correta e/ou o Cadeado Level Up liberado.#
+Houve um erro ao acessar sua conta. Confirme se: 1 - A senha está correta / 2 - O Cadeado Level Up está desativado.#
 Escolha o penteado#
 Atq.#
 Def.#
@@ -278,7 +278,7 @@ Snap de Item Ligado#
 Snap de Item Desligado#
 Snap#
 Você não pode carregar mais de 30.000 de um mesmo tipo de item.#
-Você não pode deletar um personagem com nível superior a 30.  Se você quiser deletar o personagem contate um Game Master ou envie um email para a Central de Suporte #
+Você não pode deletar um personagem com nível superior a 30.  Se você quiser deletar o personagem contate um Game Master ou envie um email para a Central de Suporte#
 Enquanto estiver em uma troca você não pode utilizar uma loja de um NPC.#
 Nome da Loja#
 Árvore de Habilidades#
@@ -326,10 +326,10 @@ Resolução de Sprites#
 Resolução de Textura#
 Acertar detalhes#
 Você ganhou %s Zeny#
-Nome do Clã#
-Nível do Clã#
-Líder do Clã#
-Membros do Clã#
+Nome do Clã #
+Nível do Clã #
+Líder do Clã #
+Membros do Clã #
 Nível Médio dos Membros#
 Território#
 Tendência#
@@ -338,13 +338,13 @@ Emblema#
 Pontos#
 Alianças#
 Inimigos#
-Informações do Clã#
+Informações do Clã #
 Informações dos Membros#
 Posição#
-Habilidades do Clã#
+Habilidades do Clã #
 Histórico de Expulsões#
-Aviso do Clã#
-Lista de Todo o Clã#
+Aviso do Clã #
+Lista de Todo o Clã #
 Lista de mensagens#
 Abrir janela de mensagens#
 Como abrir a janela de mensagens: Pressione [Alt] + [H]#
@@ -362,7 +362,7 @@ Abrir Chat particular#
 Abrir Chat particular entre não-contatos#
 Avisar quando receber um Chat particular#
 Tem certeza que deseja excluir o personagem?#
-%s saiu do Clã#
+%s saiu do Clã #
 Razão do Afastamento: %s#
 Você não conseguiu desfazer o Clã.#
 Razão da Dissolução: %s#
@@ -435,7 +435,7 @@ Nível muito elevado para esta classe.#
 Classe inadequada para este tipo de trabalho.#
 Gravar mensagens na caixa de mensagens#
 Digite as mensagens para a caixa de mensagens#
-Enviar para Clã#
+Enviar para Clã #
 Ocorreu um erro. Verifique a existência de créditos em sua conta em nosso site.#
 Não foi possível conectar. Por favor, tente novamente em alguns minutos.#
 O servidor ainda reconhece seu último log-in.  Tente novamente em alguns minutos.#
@@ -449,17 +449,17 @@ Trip#
 Quád#
 Seu acesso está bloqueado até %s. Acesse o site e consulte a lista de punidos para mais informações.#
  #
- Flamejante #
- Glacial #
- Trovejante #
- Mineral #
+ Flamejante#
+ Glacial#
+ Trovejante#
+ Mineral#
 210.14.27.200#
 6900#
-http://www.levelupgames.com.br/ragnarok #
+http://www.levelupgames.com.br/ragnarok#
 Usar ataque letal em %s#
-Forte #
+Forte#
 Muito Forte#
-Fortíssima #
+Fortíssima#
 Razão da expulsão#
 Velocidade de Ataque aumentada.#
 Velocidade de Ataque voltou ao normal.#
@@ -506,19 +506,19 @@ Classe#
 Nota#
 Porcent#
 Pts Doados#
-Sair do Clã#
+Sair do Clã #
 Expulsar#
-Nº#
+Nº #
 Posição#
 Recrutador#
 Punidor#
 Taxa %#
 Título#
 Conteúdo#
-Nome do Clã#
-Deixar Clã#
-Membros do Clã#
-Nº#
+Nome do Clã #
+Deixar Clã #
+Membros do Clã #
+Nº #
 Identificação do Item#
 Inserir Carta#
 Digite a razão.#
@@ -526,7 +526,7 @@ Digite a razão da Expulsão.#
 Feche sua loja.#
 Nome da Habilidade#
 Nome do Item#
-http://levelupgames.uol.com.br/website/redirs/redir_minhaconta.htm #
+http://levelupgames.uol.com.br/website/redirs/redir_minhaconta.htm#
 A capacidade de IP desta Lan-House está lotada. Você gostaria de pagar a base pessoal?#
 Ocorreu um erro. Verifique a existência de créditos em sua conta em nosso site.#
 Nome muito comprido.  Digite um nome com no máximo 23 caracteres.#
@@ -733,15 +733,15 @@ Não mostre mensagem vermelha de falha na habilidade [Falha de Habilidade Deslig
 /notalkmsg: Não mostrar conversas na tela Ligado Desligado#
 Mostrar conversas na tela de Chat [Chat Ligado]#
 Não mostrar conversas na tela de Chat [Chat Desligado]#
-/set1 : /noctrl + /showname + /skillfail #
+/set1 : /noctrl + /showname + /skillfail#
 /fog: Você pode ligar e desligar o efeito de Névoa#
-um pedido de casamento para você, você aceita? #
+um pedido de casamento para você, você aceita?#
 Como dividir itens#
 Dividido individual#
 Dividido igual#
 nProtect KeyCrypt#
 nomsg#
-Instalação concluída Reiniciando \n\n system #
+Instalação concluída Reiniciando \n\n system#
 A instalação falhou.#
 Proceder sem ajustar o teclado de segurança#
 Do not exist files need in Keyboard secure  \n\n(npkeyc.vxd, npkeyc.sys, npkeycs.sys)#
@@ -752,9 +752,9 @@ althogh there exists the Hacking tool,the vaccine process didn't operate normall
 Hacking tool didn't download normally. Please download ragnarok0226.exe and set up in the installed folder of Ragnarok.#
 there is registration error on NPX.DLL or has not file that need to drive FindHack.Please download ragnarok0226.exe and set up in the installed folder of Ragnarok.#
 Exceptional situation happened. Please call (02-3281-0361) . Return value(%d)#
-You have pressed the off button #
+You have pressed the off button#
 Fail to access on Findhack update server. Please retry again in a minute or contact Gravity operation department#
-Amado #
+Amado#
 /report : Salva o conteúdo do chat para relatar ao GM.#
 Conteúdos de chat não são aceitos como evidência. Salve apenas para guardar como referência.#
 Eu te amo!!!#
@@ -813,17 +813,17 @@ Sua conta foi temporariamente bloqueada para investigação de bugs.#
 Este item pode ser consertado#
 Item consertado com sucesso.#
 O item não foi consertado (Por favor, verifique os materiais e a distância entre os personagens)#
-Checagem contínua de status do sistema ativada. [modo GM][/sc Ligado] #
-Checagem contínua de status do sistema desativada. [Modo GM][/sc Desligado] #
-/systemcheck: Checagem contínua de status do sistema. [Modo GM] #
-(%s) deseja ser seu amigo. Você aceita? #
-Sua lista de contatos está cheia. #
-(%s) não pode registrar mais contatos. #
-(%s) é seu amigo agora. #
+Checagem contínua de status do sistema ativada. [modo GM][/sc Ligado]#
+Checagem contínua de status do sistema desativada. [Modo GM][/sc Desligado]#
+/systemcheck: Checagem contínua de status do sistema. [Modo GM]#
+(%s) deseja ser seu amigo. Você aceita?#
+Sua lista de contatos está cheia.#
+(%s) não pode registrar mais contatos.#
+(%s) é seu amigo agora.#
 (%s) não deseja ser seu amigo.#
-Este personagem foi bloqueado por %s. #
+Este personagem foi bloqueado por %s.#
 ATENÇÃO! Este item será vendido por 99,990,000z!#
-(Muito Abaixo) #
+(Muito Abaixo)#
 (Abaixo)#
 (Normal)#
 (Acima)#
@@ -838,26 +838,26 @@ Bloqueio de chat automático terminou. Por favor, não digite a mesma mensagem m
 %s foi escolhido(a) como %s do Sol.#
 %s foi escolhido(a) como %s da Lua.#
 %s foi escolhido(a) como %s da Estrela.#
-O Sol de %s é %s. #
-A Lua de %s é %s. #
-A Estrela de %s é %s. #
+O Sol de %s é %s.#
+A Lua de %s é %s.#
+A Estrela de %s é %s.#
 %s foi escolhido(a) como Monstro %s do Sol.#
 %s foi escolhido(a) como Monstro %s da Lua.#
 %s foi escolhido(a) como Monstro %s da Estrela.#
-O Sol de %s é %s. #
-A Lua de %s é %s. #
-A Estrela de %s é %s. #
+O Sol de %s é %s.#
+A Lua de %s é %s.#
+A Estrela de %s é %s.#
 /window : este comando faz com que as janelas 'grudem' uma com as outras.#
 As janelas 'grudam' umas com as outras. [/wi Ligado]#
 As janelas não 'grudam' umas com as outras. [/wi Desligado]#
-/pvpinfo: Permite que você veja sua colocação. #
-No momento, %d Vitórias, %d Derrotas, sua pontuação de PVP é %d. #
+/pvpinfo: Permite que você veja sua colocação.#
+No momento, %d Vitórias, %d Derrotas, sua pontuação de PVP é %d.#
 Ponto de Julgamento enviado com sucesso.#
-PK,ou player-kill, está ativado neste local, esteja preparado. #
-O 'Game Guard' não pôde funcionar devido à um vírus ou spyware em seu computador. #
+PK,ou player-kill, está ativado neste local, esteja preparado.#
+O 'Game Guard' não pôde funcionar devido à um vírus ou spyware em seu computador.#
 Este programa será finalizado devido à incompatibilidade com o Windows. Por favor reinicie o programa.#
 Fala, habilidades e uso de itens não estão disponíveis nesse momento.#
-Devido à ter deletado um personagem, você não pode fazer o login por alguns momentos. #
+Devido à ter deletado um personagem, você não pode fazer o login por alguns momentos.#
 Devido à ter deletado um personagem de seu parceiro, você não pode fazer o login temporariamente.#
 Aprendiz#
 Espadachim#
@@ -892,8 +892,8 @@ será isentado de todas as condições por 1 minuto.#
 Seu HP máximo aumentará durante 1 minuto.#
 Seu SP máximo aumentará durante 1 minuto.#
 Suas habilidades serão aprimoradas durante 1 minuto.#
-Sua arma terá propriedades Sagradas durante 1 minuto. #
-Sua armadura terá propriedades Sagradas durante 1 minuto. #
+Sua arma terá propriedades Sagradas durante 1 minuto.#
+Sua armadura terá propriedades Sagradas durante 1 minuto.#
 Sua defesa aumentará por 10 segundos.#
 Seu ataque aumentará por 1 minuto.#
 Sua precisão e esquiva aumentará durante  1 minuto.#
@@ -921,8 +921,8 @@ O nome é similar ao nome do seu companheiro de Clã mas esta pessoa não é do 
 ATENÇÃO! Este item será vendido por 99.99 Milhões de Zeny!#
 Mensagens dos seus amigos e companheiros de clã serão mostrada como [ Nome ].#
 ( From Nome: ) Esta mensagem não é de nenhum amigo ou companheiro de Clã seu.#
-/blacksmith: Mostra a qualificação dos top 10 Ferreiros. #
-/alchemist: Mostra a qualificação dos top 10 Alquimistas. #
+/blacksmith: Mostra a qualificação dos top 10 Ferreiros.#
+/alchemist: Mostra a qualificação dos top 10 Alquimistas.#
 ALT+Y: Uma janela para vários comandos se abrirá.#
 [PONTOS] Qualificação na Missão de Taekwon aumentou %d. O total de pontos é %d.#
 [Missão de Taekwon] Monstro Alvo: %s (%d%%)#
@@ -1026,7 +1026,7 @@ Comportamento do Homunculus é controlado por ele mesmo.#
 Caixa de mensagens#
 Criar mensagem#
 Ler mensagem#
-Você poderá se registrar somente uma vez e não poderá alterar os dados inseridos. Você deseja continuar? #
+Você poderá se registrar somente uma vez e não poderá alterar os dados inseridos. Você deseja continuar?#
 O item foi adicionado a seu inventário.#
 O item 'Você é adoravel' não pode ser adicionado a seu inventário.#
 Sua mensagem foi enviada.#
@@ -1067,7 +1067,7 @@ Fim do Período#
 %m/%d/%H:00#
 Determinar Tempo(h)#
 Taxa#
-Nenhum leilão encontrado para o item.#
+Nenhum item encontrado.#
 Você não está vendendo nenhum item.#
 Você não está comprando nenhum item.#
 A Informação do Leilão não está correta.#
@@ -1224,7 +1224,7 @@ Não existem membros no grupo neste mapa para serem invocados.#
 Você não consegue encontrar rastros de MVP nesta área.#
 O MVP '%s' aparecerá em %02dh%02d.#
 A localização do MVP, '%s' será indicada no minimapa.#
-Você deseja abrir '%s'? Uma vez aberto, os itens irão para o local apropriado do seu inventário e a caixa irá sumir. #
+Você deseja abrir '%s'? Uma vez aberto, os itens irão para o local apropriado do seu inventário e a caixa irá sumir.#
 O NPC não existe. A compra foi cancelada.#
 Sistema de ROPs não está funcionando corretamente. A compra foi cancelada.#
 Você não pode comprar enquanto estiver em outra negociação.#
@@ -1273,7 +1273,7 @@ Bônus de IP : Exp. Base/Exp. Classe %d%%, Penalidade %d%%, 'Drop' %d%%#
 Por favor, tente após 24 horas.#
 O Assistente seguirá a AI customizada.#
 O Assistente seguirá a AI padrão.#
-%s: #
+%s:#
 %s adquiriu %s.#
 Mensagens Públicas#
 Mensagens Particulares#
@@ -1304,7 +1304,7 @@ arma#
 armadura#
 Não é possível unir-se ao Grupo. Nível de habilidade insuficiente.#
 [%s]'s ROP's promocionais : %d ROP's#
-Use ROP's promocionais : #
+Use ROP's promocionais :#
 ROPs#
 http://payment.ro.hangame.com/index.asp#
 Você precisa aceitar a Política de Privacidade da Gravity para utilizar este serviço.#
@@ -1345,7 +1345,7 @@ O calabouço solicitado será removido se você não adentrá-lo em ^FF0000%s^00
 Tempo limite da missão:#
 A reserva do Calabouço Dimensional foi cancelada.#
 A duração do Calabouço Dimensional expirou; ela foi destruída.#
-O tempo limite para entrar no Calabouço Dimensional expirou; ela foi destruída.#
+O tempo limite para entrar no Calabouço Dimensional expirou; a entrada foi destruída.#
 O Calabouço Dimensional foi removido.#
 Um erro de sistema ocorreu no Calabouço Dimensional. Por favor, feche completamente o jogo e volte para continuar.#
 Você não pode usar o slot selecionado.#
@@ -1373,10 +1373,10 @@ O Calabouço Dimensional se abriu.#
 A confirmação desta conta não foi realizada se conectando com a chave segura. Por favor, se conecte primeiro com a chave e depois entre no jogo.#
 O número de contas conectadas neste IP excedeu o limite.#
 Você recebeu uma nova missão.#
-^777777Condições para aquisição : #
+^777777Condições para aquisição :#
 Exibir Info#
 Os pontos de habilidade gastos não podem ser revertidos. Quer gastar o(s) ponto(s) de habilidade?#
-1ª#
+1ª #
 2ª - T#
 Esta conta foi usada por um programa ilegal ou de hacking.            Tempo de Bloqueio: %s#
 Foi detectada a possibilidade de exposição a programa ilegal, infecção por vírus de computador ou ferramenta de hacking. Por favor, execute o programa-cliente oficial. Nossa equipe está tentando criar o melhor ambiente para jogadores do bRO.#
@@ -1393,7 +1393,7 @@ ROPs: %d ROPs#
 Dinheiro Grátis : %d (em dinheiro)#
 Um usuário deste servidor não pode conectar-se ao servidor gratuito#
 Sua senha expirou. Por favor, conecte-se novamente#
-3ª#
+3ª #
 Esta habilidade não pode ser usada neste item#
 Você não pode utilizar a habilidade porque excedeu a quantidade de Ancillas que pode carregar#
 necessita de Água Benta#
@@ -1463,13 +1463,13 @@ Não é possível deletar acima do nível %d#
 Não pode ser usado com o M.E.C.H.A.#
 Desmonte do Ferus#
 Saia do M.E.C.H.A.#
-Gaste#
+item#
 Dinheiro#
 Armadura#
 Arma#
 Projétil#
 Carta#
-Misc.#
+etc#
 A conexão foi encerrada porque o programa demorou a responder#
 Versão incorreta do arquivo do HackShield. Reinstale o programa#
 Necessita de um Grimório#
@@ -1517,7 +1517,7 @@ Som de entrada de Bate-Papo DESLIGADO#
 /panic#
 /whisp#
 vazio#
-Pode ser usado apenas com Cartas equipadas#
+Só pode ser utilizado quando estiver utilizando carrinho#
 Será necessário o item [Semente de Planta Selvagem]#
 Será necessário o item [Semente Sanguessuga]#
 Não pode mais conjurar#
@@ -1608,7 +1608,7 @@ Alguém#
 [%s] recebeu '%d' de dano.#
 [%s] deu [%s] dano de '%d'.#
 %s %d derrubado(s)#
-Derrotou [%s] monstro(s) da missão [%s]. (%d/%d)#
+Da missão [%s], você derrotou [%s]. (%d/%d)#
 %s Missão foi deletada.#
 [%s] possui#
 %d' de EXP#
@@ -1695,13 +1695,13 @@ Apenas caracteres alfa numéricos são aceitos.#
 Notas#
 Compra de item falhou devido a informações incorretas da loja.#
 Pode derrubar da janela de itens.#
-Tempo#
+Hora#
 Mapa#
 Você não pode usar, equipar ou desarmar itens que você está trocando.#
 Valor não identificado#
 /stateinfo : Mostra explicações dos Ícones de Estado. LIGADO / DESLIGADO#
-Informação de Estado Ligada : Mostra informações sobre os Ícones de Estado #
-Informação de Estado Desligada : Não mostra informações sobre os Ícones de Estado #
+Informação de Estado Ligada : Mostra informações sobre os Ícones de Estado#
+Informação de Estado Desligada : Não mostra informações sobre os Ícones de Estado#
 Os mesmos itens não podem ser comprados mais que %d por vez.#
 Os mesmos itens não podem ser vendidos mais que %d por vez.#
 O total adquirido dos itens correspondentes é %d.#
@@ -1715,11 +1715,11 @@ Defesa#
 Recuperação#
 Assistência#
 Lista de comandos de oferta de Grupo#
-Não é possível se aliar a um Clã#
+Não é possível se aliar a um Clã #
 Não é possível se aliar a um Clã adversário#
 Não é possível adicionar amigos em mapas de Castelo#
 Abre loja de rua#
-Preço #
+Preço#
 Zeny#
 Limite de Compra#
 Não registrou item de compra. Registre item de compra.#
@@ -1758,23 +1758,23 @@ Prioridade da primeira classe#
 Segunda prioridade da primeira classe#
 Classe 3-1#
 Classe 3-2#
-1a classe completa #
-2a classe completa #
+1a classe completa#
+2a classe completa#
 Campo de classe#
 Convidando#
 Convidar membros do Grupo#
 Buscando#
 Selecionar tudo#
-Você deve convidar ao menos uma classe #
-Você deve selecionar ao menos uma classe #
+Você deve convidar ao menos uma classe#
+Você deve selecionar ao menos uma classe#
 Você selecionou %d das classes. Você pode escolher 6 classes#
-Apenas números podem ser colocados no nível #
+Apenas números podem ser colocados no nível#
 Insira o nível entre 1 e 150#
 Não é possível ver este mapa#
 Você não pode ter itens deste nível#
 Você não pode usar itens deste nível#
 Bate-papo ATIVADO/DESATIVADO#
-Não pode adicionar devido a limite de tamanho #
+Não pode adicionar devido a limite de tamanho#
 Informação de Janela de Assinatura#
 Ven.#
 Com.#
@@ -1803,13 +1803,13 @@ Insira o prefiro ou sufixo da carta#
 Buscas restantes : %d#
 Nenhuma Loja encontrada#
 Fora do valor#
-Equipamentos em geral#
+Equipamentos#
 Visuais#
 minutos#
 segundos#
 Insira o nome do item#
 O item não existe#
-Mapa não disponível #
+Mapa não disponível#
 Não existe o sufixo/prefixo selecionado#
 Você pode adquirir no máximo 10#
 Não foi possível comprar#
@@ -1819,9 +1819,9 @@ Um erro no database ocorreu#
 Você deve deixar o clã para remover o personagem#
 Você deve deixar o grupo para remover o personagem#
 Não é possível deletar devido a configurações#
-Não é possível deletar agora #
+Não é possível deletar agora#
 A data de nascimento não confere#
-Necessário aumentar Lealdade #
+Necessário aumentar Lealdade#
 Disponível apenas no modo de Combate#
 only available on style change grapler mode Novice#
 Não foi possível registrar o Grupo#
@@ -1844,9 +1844,9 @@ comprar#
 esvaziar carrinho#
 primeira página#
 última página#
-Novo #
+Novo#
 Popular#
-limitado #
+limitado#
 Equipamento de aluguel#
 Equipamento permanente#
 Buff#
@@ -1857,21 +1857,21 @@ Qtd:#
 Unidade(s)#
 Cash gratuito : %s C#
 ROPs : %s C#
-Impossível invocar monstros nessa área #
-Total de cash gratuito foi excedido #
-Informação será salva em [SaveData_ExMacro%d] #
-É possível usar %d segundos mais tarde #
-Deve ter [Lança] equipada #
-Disponível apenas no dragão #
-Impossível proceder devido a exceder a capacidade #
-É necessário identificar o nome real. Mover para um site de certificação #
-Selecione o local em que você deseja salvar #
+Impossível invocar monstros nessa área#
+Total de cash gratuito foi excedido#
+Informação será salva em [SaveData_ExMacro%d]#
+É possível usar %d segundos mais tarde#
+Deve ter [Lança] equipada#
+Disponível apenas no dragão#
+Impossível proceder devido a exceder a capacidade#
+É necessário identificar o nome real. Mover para um site de certificação#
+Selecione o local em que você deseja salvar#
 Parabéns %s,  adquiriu '%s' !#
 Impossível utilizar nesse estado#
-Excedeu o preço de produtos comprados #
-Não pode aceitar ninguém no grupo neste mapa #
-Não pode retirar ninguém do grupo neste mapa #
-Não pode desfazer o grupo neste mapa #
+Excedeu o preço de produtos comprados#
+Não pode aceitar ninguém no grupo neste mapa#
+Não pode retirar ninguém do grupo neste mapa#
+Não pode desfazer o grupo neste mapa#
 Nome real#
 Número de identificação#
 Email#
@@ -1887,7 +1887,7 @@ Impossível atacar neste modo#
 Impossível conjurar neste modo#
 Número de Pin deve ter 4 caracteres#
 Log-in realizado com sucesso#
-Segunda senha inserida com sucesso#
+PIN cadastrado com sucesso#
 Segunda senha deletada#
 Segunda senha corrigida#
 falha ao logar#
@@ -1897,13 +1897,13 @@ falha ao corrigir segunda senha#
 PIN inválido. Por favor, não use sequências ou números repetidos.#
 Impossível utilizar o número de residência#
 Código de segurança#
-Inserir senha (4~6 caracteres)#
+Inserir senha (4 caracteres)#
 Defina um PIN para sua segurança#
 Código de segurança não está em uso#
 Falha ao definir código de segurança#
 Código de segurança ativado. Será usado na próxima vez#
 Falha ao definir código de segurança#
-Defina um Código PIN para sua segurança#
+Utilize um Código PIN para sua segurança#
 Clique em uma sequência de 4 números#
 Fechando após inserir o PIN incorretamente 3 vezes.#
 ITEM#
@@ -1916,106 +1916,106 @@ BUFF#
 AUTO EQUIPADO#
 PRIMEIRO ATAQUE#
 ATAQUE#
-Tempo para próximo ataque : #
+Tempo para próximo ataque :#
 quando morreu#
 quando convidado a um grupo#
 recolher item#
 Acima de 85% do peso#
-Por favor, primeiro termine esse processo e depois tente novamente.(Diálogo, Refino, etc) #
-Durante %d minutos, a quantidade de Job EXP recebida ao derrotar monstros será de %.2f vezes #
+Por favor, primeiro termine esse processo e depois tente novamente.(Diálogo, Refino, etc)#
+Durante %d minutos, a quantidade de Job EXP recebida ao derrotar monstros será de %.2f vezes#
 SaveData_ExMacro%d#
 Sua configuração foi salva em [%s]#
-Nível de Segurança #
+Nível de Segurança#
 Por favor, retire o personagem do grupo e/ou clã para ser deletado.#
 Você pode utilizar essa habilidade apenas próximo a muros .#
 %s : Nível %d %s procurando grupo#
 Você não pode utilizar este item de montaria enquanto estiver usando montaria.#
 Você precisa de 1% de EXP para utilizar essa habilidade.#
-Taxa de E X P: #
-Taxa de Drop : #
-Penalidade de Morte : #
+Taxa de E X P:#
+Taxa de Drop :#
+Penalidade de Morte :#
 %d%% (PC cafe %d%% + TPLUS %d%% + premium %d%% + %s server %d%%)#
-Quantidade de SP dos membros do grupo não é suficiente para usar 'Canto de batalha' #
-Você não pode realizar a troca porque esse personagem possui muitos tipos de itens #
-Você não pode realizar a troca porque esse personagem atingiu o limite de itens. #
-Você já possui o limite desse item. #
-Aguarde o Registro do Anúncio. #
+Quantidade de SP dos membros do grupo não é suficiente para usar 'Canto de batalha'#
+Você não pode realizar a troca porque esse personagem possui muitos tipos de itens#
+Você não pode realizar a troca porque esse personagem atingiu o limite de itens.#
+Você já possui o limite desse item.#
+Aguarde o Registro do Anúncio.#
 Por favor, encaminhe um arquivo com as informações necessárias para sua \r\n Central de Atendimento.\r\n#
-existe um erro no sistema de billing(%d) #
-Sua compra falhou. Você já possui muitas runas. #
-Sua compra falhou. O número de cada item excedeu o limite . #
-Sua compra falhou. Erro desconhecido. #
-Por favor, tente mais tarde. #
-Você precisa equipar [Kunai] para utilizar essa habilidade. #
-Por favor, insira um nível mínimo. #
-Você não pode adquirir itens do NPC Zonda. Certifique-se de possuir espaço em seu inventário. #
-Esta habilidade está disponível apenas para os mapas de guerra. #
-Esta habilidade está disponível apenas para personagens. #
-Você não pode equipar isso nesse momento. #
-Você não pode usar o 'chat' ou 'vender' nessa localização. #
+existe um erro no sistema de billing(%d)#
+Sua compra falhou. Você já possui muitas runas.#
+Sua compra falhou. O número de cada item excedeu o limite .#
+Sua compra falhou. Erro desconhecido.#
+Por favor, tente mais tarde.#
+Você precisa equipar [Kunai] para utilizar essa habilidade.#
+Por favor, insira um nível mínimo.#
+Você não pode adquirir itens do NPC Zonda. Certifique-se de possuir espaço em seu inventário.#
+Esta habilidade está disponível apenas para os mapas de guerra.#
+Esta habilidade está disponível apenas para personagens.#
+Você não pode equipar isso nesse momento.#
+Você não pode usar o 'chat' ou 'vender' nessa localização.#
 Tempo decorrido: %d:%d:%d / %d:%d:%d#
-Velocidade : X 1/4 #
-Velocidade : X 1/2 #
-Velocidade : X 1   #
-Velocidade : X 2   #
-Velocidade : X 4   #
-Velocidade : X 8   #
-Velocidade : X 16  #
-Velocidade : desconhecida #
+Velocidade : X 1/4#
+Velocidade : X 1/2#
+Velocidade : X 1#
+Velocidade : X 2#
+Velocidade : X 4#
+Velocidade : X 8#
+Velocidade : X 16#
+Velocidade : desconhecida#
 Info de serviço : %s#
 Nome do Personagem : %s#
 Nome do Mapa : %s#
 Tempo Recorde: %d-%01d-%01d %d: %02d: %02d#
 Horas de Jogo: %02d: %02d: %02d#
-Sem arquivo de Replay. #
-Servidor não respondendo #
-Opções de Replay #
-Por favor, insira o nome do arquivo. #
-Salvar dados do Replay #
-Definir Opção de Gravação #
+Sem arquivo de Replay.#
+Servidor não respondendo#
+Opções de Replay#
+Por favor, insira o nome do arquivo.#
+Salvar dados do Replay#
+Definir Opção de Gravação#
 %.1f %% Pos¢Ñ:%d:%d:%d#
-%.1f %% Pos¢Ñ:não pode se mover #
-Iniciar #
-Parar #
-inserir nome do arquivo -> Iniciar #
-Abrir Opções #
-Fechar Opções #
-Fim #
-Tempo #
-Grupo & Amigos #
-Bate-Papo #
-Atalho #
-Auto criação de nome do arquivo #
-Checando Subscrição #
-Este é o mesmo nome do arquivo #
-Início do registro #
- foi salvo. #
+%.1f %% Pos¢Ñ:não pode se mover#
+Iniciar#
+Parar#
+inserir nome do arquivo -> Iniciar#
+Abrir Opções#
+Fechar Opções#
+Fim#
+Tempo#
+Grupo & Amigos#
+Bate-Papo#
+Atalho#
+Auto criação de nome do arquivo#
+Checando Subscrição#
+Este é o mesmo nome do arquivo#
+Início do registro#
+ foi salvo.#
 Peso : %3d / %3d#
 Custo : %s C#
-Você precisa equipar [Shuriken] para usar essa habilidade. #
+Você precisa equipar [Shuriken] para usar essa habilidade.#
 Base Lv. %d#
 Classe Lv. %d#
 Zeny : %s#
-Trilinear #
-Ataque #
-Habilidade #
-item #
-No-Ctrl #
-Campo de Batalhas #
+Trilinear#
+Ataque#
+Habilidade#
+item#
+No-Ctrl#
+Campo de Batalhas#
 (Personagens / Total)#
-serviço Premium #
-Premium #
-Serviço #
+serviço Premium#
+Premium#
+Serviço#
 Billing Service#
-Billing #
-Lista de Comandos #
+Billing#
+Lista de Comandos#
 LEVEL#
 MAPA#
 CLASSE#
-Não disponível #
+Não disponível#
 [Anjo Guardião] Se você estiver no nível máximo, não poderá usar isso.#
-Are you sure to move?#
-Character slot movement has been failed.#
+Você confirma a mudança de Slot?#
+Ocorreu um erro na mudança de Slot.#
 Character name is wrong.#
 Quest window#
 The game will be limited to under 16 age during 0~6am by law.#
@@ -2023,7 +2023,7 @@ By the Korean law, the under 16 age users will be^ff0000limited to play games un
 Para que você consiga mudar o nome do seu personagem, é necessário que você deixe seu clã.#
 Para que você consiga mudar o nome do seu personagem, é necessário que você deixe seu grupo.#
 O nome do personagem não pode ser alterado devido a um erro desconhecido.#
-Você já pode trocar o nome deste personagem. Vá até a tela de Seleção de Personagens.(%d)#
+Você já pode trocar o slot deste personagem. Vá até a tela de Seleção de Personagens.(%d)#
 Você já está pronto para trocar o nome. Verifique a tela de Seleção de Personagens.(%d)#
 the length of the name you are trying to change is exceeded maximum length, so it has failed to change the name.#
 there is a word you cannot use included, therefore it has failed to change the character's name change.#
@@ -2048,9 +2048,9 @@ Please write the party ad in memo.#
 Only party leader can add party advertisement.#
 It is already added party advertisment.#
 Content#
-Equipment#
-Individual#
-Lock the item throw#
+equip#
+ordem#
+Bloquear Drop#
 Notice to find part members#
 Organize a party#
 Leave the party#
@@ -2095,7 +2095,7 @@ The user is currently joining in the Siege.#
 It is not possible to change the party leader in the same map.#
 It is not possible to change the party leader in current area.#
 dpwn the Gryphon#
-%d Month %d day %d time %d min %d sec#
+%d Mês %d Dia %d Hora %d Min %d Sec#
 You canot invite to the guild as you are in the siege.#
 You have requested to wait to enter in Battle ground.#
 the maximum amount has been exceeded.#
@@ -2149,8 +2149,8 @@ You have applied the battle as a party. is it correct?#
 You have applied the battle as a guild. is it correct?#
 Battle ground list#
 %d VS %d#
-Base LV under %d #
-Base LV over %d #
+Base LV under %d#
+Base LV over %d#
 Base LV %d ~ %d#
 No limits#
 [Not possible to apply from the current map.]#
@@ -2161,17 +2161,16 @@ No limits#
 [You should join the guld first.]#
 [Only the guild leader can apply.]#
 [There are too many guild members logged in.]#
-book the transfer#
-transfer#
+Realizar a troca de slot#
+Trocar para esse slot#
 Trocar Nome#
 Make Character#
 http://ro.tahadi.com/en/game-guide#
 %s Server#
-Card book#
-Merge items(To select all:Ctrl+Click)#
+Unificar Itens#
 Select at least 2 items of the same kind.#
-Item Merging Succeeded.#
-Item Merging can work for one kind of items once at a time.#
+Unificação dos itens realizada com sucesso.#
+Você deve unificar somente 1 tipo de item por vez.#
 The amount of the item is over 30000 pieces.#
 Turn on left#
 Turn on right#
@@ -2179,10 +2178,10 @@ See previous server info of (%s)#
 Previous server info#
 ^ff0000Previous server : ^0000ff#
 ^ff0000Previous character name : ^0000ff#
-HP for attacking monsters will be displayed.#
-HP for attacking monsters will not be displayed.#
-None of the item can be merged.#
-None of the item can be merged.#
+O HP dos monstros atacados será mostrado.#
+O HP dos monstros atacados não será mostrado.#
+Nenhum dos itens disponíveis podem ser unificados.#
+Nenhum dos itens disponíveis podem ser unificados.#
 Progress#
 Delay#
 Recommend#
@@ -2195,64 +2194,64 @@ Reward items#
 Required items#
 Limited time#
 Closing time#
-Search #
-Lead to the target#
+Busca#
+Calcular Rota#
 Road info#
 Search info#
-Change the mode#
+Mudar mode de Exibição#
 Change the color of navigation#
-Close#
-Change to basic UI#
-Change to easy UI#
-Help word#
+Fechar#
+Maximizar#
+Minimizar#
+Ajuda#
 ALL#
 Map#
 Npc#
 Mob#
-Set the search words (Ex: word word ...#
+Coloque o que você quer procurar (Ex: payon, zumbi...)#
 Scroll#
-Apply to use dungeon move scroll#
+Calcular rota com Pergaminho#
 Service#
-Allow the service of location move#
+Calcular rota com a Kafra#
 Plane#
-Apply transferring with Airship#
+Calcular rota com Aeroplano#
 >> Cannot read the target info!#
 << noticing >>#
 << searching... >>#
 -----------#
 Navigation#
-== search result(%d)==#
+== Resultado(%d)==#
 Npc)%s:%s#
 Mob)%s:%s#
 Map)%s#
-======== Result info ==========#
-Distance   : %d Sell %d WarpMove#
-Target map: %s(%s)#
-Target   : %s(%d, %d)#
+======== Resultado ==========#
+Distância   : %d Sell %d WarpMove#
+Destino: %s(%s)#
+Alvo   : %s(%d, %d)#
 Boss#
 normal#
-Target   : %s(%s)#
-Target: (%d, %d)#
-======= Navigation info =======#
+Alvo   : %s(%s)#
+Alvo: (%d, %d)#
+======== Rota ========#
 %2d) Item:%s => %s use#
 %2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s#
-It is navigating, would you like to close?#
+A localização está ativa, você gostaria de fechar o sistema de navegação?#
 Navigation help#
-------------------- command --------------------#
+------------------- Comandos --------------------#
 1. /navigation      /navi#
-  ex)/navi prontera 100/100 -> map name, 100/100#
+  ex)/navi prontera 100/100 -> nome do mapa, 100/100#
   Basic command are zeny, ariship search.#
 2. /navigation2      /navi2#
   ex) /navi2 prontera 100/100 1/1/1#
--> map name, location(100/100), scrool/zeny/plane (1:use 0: not use)#
-3. $$all   show all list (show Type list, possible to divide.)#
-4. $$lv30   show monsters on this level#
-5. $$lv20~30  show the monsters in this level range#
--------------------  description  --------------------#
-1.Search type are All, map, NPC, Monsters.#
-2.Search with the commend. Rules are that shows all information including the search text.#
+-> nome do mapa, loocalização(100/100), scrool/zeny/plane (1:use 0: not use)#
+3. $$all   mostra toda a lista (show Type list, possible to divide.)#
+4. $$lv30   localiza monstros nesse Nível#
+5. $$lv20~30  localiza monstros dentro desse alcance#
+-------------------  Descrição  --------------------#
+1.Opções de Busca são All, Mapa, NPC e Monstros.#
+2.Search with the command. Rules are that shows all information including the search text.#
   ex) pron kaf ->it shows all of prontera's Kafra in search result.#
 3.if you click from the lsit, the information will be shown.#
   if there is a target you want and click the naviating, it will show the road to the target.#
@@ -2260,7 +2259,7 @@ Navigation help#
 5.if the navigation button is clicked, the result window will be changed to navigation list window.#
 6.By using the below button in the search list window#
  possible to change as [Result window] <-> [Navigation info window].#
-Level:%d (boss)#
+Level:%d (MVP)#
 Level:%d (normal)#
 Água%d#
 Terra%d#
@@ -2285,42 +2284,42 @@ Humanóide#
 Anjo#
 Dragão#
 Amorfo#
-Ciick to move %s #
-Use NPC move service#
-NPC click#
+Clique para se mover %s#
+Use o sistema de navegação de NPC#
+NPC Clique#
 %s move#
-Move through airship#
-Use warp#
-arrival point : ( %d %d )#
-It is not available to provide navigation in this area.#
-You are searching unclear target.#
-it is not matched map.#
-failed to set the departure area#
-failed to set the arrival area!#
-Failed to find a way#
-Failed to find the player's location#
-There is no information in navigation.#
-this map is not providing the navigation system.#
-Please set the target.#
-arrived.#
-the navigation is started.#
-this is the map having the monster you are looking for.#
-This is the map you are looking for.#
-Please transfer by using items.#
-Please move to the location showing.#
-You have arrived to the target map.#
-You have arrived to the map having the NPC you are looking for. Please move near NPC.#
-This is the map where the monsters live.#
-It is the same target as before.#
-Please go to the pointing way.#
-This is the target.#
-Navigation >: %s#
-Navigation >: By using  %s#
-Navigation >: please move to the map(%s)#
-Navigation >: please move by selecting the map(%s)#
-Navigation >: Please move to Airship#
-Navigation >: Please move to next location by using warp.#
-Item: #
+Utilize o Aeroplano#
+Use teleporte#
+Chegada : ( %d %d )#
+Não é possível utilizar o Sistema de Navegação nessa área.#
+Você está procurando por um lugar desconhecido.#
+não é um mapa compatível.#
+falha ao definir a área de saída#
+falha ao definir a área de destino!#
+Falha ao encontrar uma rota#
+Falha o encontrar a localidade do jogador#
+Não há informação no Sistema de Navegação.#
+Esse mapa não está ativo para o Sistema de Navegação.#
+Escolha o destino, por favor.#
+Chegou.#
+a navegação começou.#
+Esse é o mapa que contém os monstros que você estva procurando.#
+Esse é o mapa que você estva procurando.#
+Por favor, se locomova utilizando itens.#
+Por favor, vá para a localização indicada.#
+Você chegou ao mapa desejado.#
+Você chegou ao mapa que contém o NPC que você está procurando. Por favor, se locomova até ele.#
+Esse é o mapa em que os monstros se encontram.#
+Este é o mesmo destino que o anterior.#
+Por favor, vá para o caminho direcionado.#
+Esse é o destino.#
+Navegação >: %s#
+Navegação >: Utilizando  %s#
+Navegação >: Por favor, se direcione até o local (%s)#
+Navegação >: Por favor, utilize a Kafra e selecione a opção (%s)#
+Navegação >: Por favor, vá até o Aeroplano#
+Navegação >: Por favor, vá até ao próximo lugar utilizando um teleporte.#
+Item:#
 $$#
 $$lv#
 ~#
@@ -2330,3 +2329,587 @@ the total price of the item you select is#
 Zeny.#
 Would you like to purchase?#
 %.3f%% (PC bang %.3f%% + TPLUS %.3f%% + premium %.3f%% + %sserver %.3f%%)#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+/monsterhp : Mostra a barra de HP dos monstros quando você ataca. On Off#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+Visuais/Sombrios#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+1#
+%.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#

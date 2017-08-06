@@ -2,29 +2,35 @@ package Interface::Wx::List::ItemList::Cart;
 
 use strict;
 use base 'Interface::Wx::List::ItemList';
+use Wx ':everything';
+use Wx::Event qw(EVT_MENU);
 
-use Globals qw/$char $conState %cart %storage/;
+use Globals qw($char);
 use Translation qw/T TF/;
 
 sub new {
 	my ($class, $parent, $id) = @_;
 	
 	my $self = $class->SUPER::new ($parent, $id, [
-		{key => 'count', max => %cart && $cart{items_max} ? $cart{items_max} : '100'},
-		{key => 'weight', title => T('Weight'), max => %cart && $cart{weight_max} ? $cart{weight_max} : '100'},
+		{key => 'count', title => T('Items'), max => $char && $char->cart->{items_max}},
+		{key => 'weight', title => T('Weight'), max => $char && $char->cart->{weight_max}},
 	]);
-	
+
+	my $onLoaded = sub { $self->{list}->init($char->cart) };
+	my $onChange = sub { $self->{list}->_onChange };
 	$self->{hooks} = Plugins::addHooks (
-		['packet/map_loaded',              sub { $self->clear }],
+		['packet/map_loaded',              $onLoaded],
 		['packet/cart_info',               sub { $self->onInfo }],
-		['packet/cart_items_stackable',    sub { $self->update }],
-		['packet/cart_items_nonstackable', sub { $self->update }],
-		['packet/cart_item_added',         sub { $self->onItemsChanged ($_[1]{index}) }],
-		['packet/cart_item_removed',       sub { $self->onItemsChanged ($_[1]{index}) }],
+		['packet/cart_items_stackable',    $onChange],
+		['packet/cart_items_nonstackable', $onChange],
+		['packet/cart_item_added',         $onChange],
+		['packet/cart_item_removed',       $onChange],
 	);
 	
-	$self->onInfo;
-	$self->update;
+	if ($char) {
+		$self->onInfo;
+		$onLoaded->();
+	}
 	
 	return $self;
 }
@@ -38,73 +44,37 @@ sub unload {
 sub onInfo {
 	my ($self) = @_;
 	
-	if ($char && $char->cartActive) {
-		$self->setStat ('count', $cart{items}, $cart{items_max});
-		$self->setStat ('weight', $cart{weight}, $cart{weight_max});
-	} else {
-		$self->clear;
+	if ($char->cart->isReady) {
+		$self->setStat('count', @{$char->cart}{qw(items items_max)});
+		$self->setStat('weight', @{$char->cart}{qw(weight weight_max)});
 	}
 }
 
-sub onItemsChanged {
-	my $self = shift;
+sub onContextMenu {
+	my ($self, $menu, $item) = @_;
 	
-	$self->setItem ($_->[0], $_->[1]) foreach map { [$_, $cart{inventory}[$_]] } @_;
-}
+	Scalar::Util::weaken($item);
 
-sub update {
-	my ($self, $handler, $args) = @_;
-	
-	$self->Freeze;
-	$self->setItem ($_->{index}, $_) foreach (grep defined, @{$cart{inventory}});
-	$self->Thaw;
-}
-
-sub clear { $_[0]->removeAllItems }
-
-sub getSelection { map { $cart{inventory}[$_] } @{$_[0]{selection}} }
-
-sub _onRightClick {
-	my ($self) = @_;
-	
-	return unless scalar (my @selection = $self->getSelection);
-	
-	my $title;
-	if (@selection > 3) {
-		my $total = 0;
-		$total += $_->{amount} foreach @selection;
-		$title = @selection . ' items';
-		$title .= ' (' . $total . ' total)' unless $total == @selection;
-	} else {
-		$title = join '; ', map { join ' ', @$_{'amount', 'name'} } @selection;
+	if ($char->cart->isReady) {
+		EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to inventory'))->GetId, sub { $self->onListActivate($item) });
+		if ($char->storage->isReady) {
+			EVT_MENU($menu, $menu->Append(wxID_ANY, T('Move all to storage'))->GetId, sub { $self->_onStorage($item) });
+		}
 	}
-	$title .= '...';
-	
-	my @menu;
-	push @menu, {title => $title};
-	
-	my ($canStorage) = (%storage && $storage{opened});
-	
-	push @menu, {title => T('Move all to inventory') . "\tDblClick", callback => sub { $self->_onActivate; }};
-	push @menu, {title => T('Move all to storage'), callback => sub { $self->_onStorage; }} if $canStorage;
-	
-	$self->contextMenu (\@menu);
 }
 
-sub _onActivate {
-	my ($self) = @_;
-	
-	foreach ($self->getSelection) {
-		Commands::run ('cart get ' . $_->{index});
-	}
+sub onListActivate {
+	my ($self, $item) = @_;
+
+	return unless $item;
+	Commands::run ('cart get ' . $item->{binID});
 }
 
 sub _onStorage {
-	my ($self) = @_;
+	my ($self, $item) = @_;
 	
-	foreach ($self->getSelection) {
-		Commands::run ('storage addfromcart ' . $_->{index});
-	}
+	return unless $item;
+	Commands::run ('storage addfromcart ' . $item->{binID});
 }
 
 1;

@@ -55,6 +55,7 @@ use Translation qw(T TF);
 use Utils::ObjectList;
 use Utils::Exceptions;
 use List::MoreUtils qw( uniq );
+use Globals qw( %config @servers );
 
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
@@ -80,7 +81,7 @@ our $VERSION = 'what-will-become-2.1';
 #our $SVN = T(" (SVN Version) ");
 our $WEBSITE = 'http://www.openkore.com/';
 # Translation Comment: Version String
-our $versionText = "*** $NAME ${VERSION} ( version " . (getGitRevision() || '?') . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $versionText = "*** $NAME ${VERSION} ( version " . getRevisionString() . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
 
 
@@ -104,16 +105,30 @@ our $items_control_file;
 our $shop_file;
 our $recvpackets_name;
 
+# The base log file names, as set by the command line.
+our $base_chat_log_file;
+our $base_console_log_file;
+our $base_storage_log_file;
+our $base_shop_log_file;
+our $base_monster_log_file;
+our $base_item_log_file;
+our $base_dead_log_file;
+
+# The final log file names, as modified by logAppendUsername, etc.
 our $chat_log_file;
+our $console_log_file;
 our $storage_log_file;
 our $shop_log_file;
-our $sys_file;
 our $monster_log_file;
 our $item_log_file;
 our $dead_log_file;
 
+our $sys_file;
+
 our $interface;
 our $lockdown;
+our $starting_ai;
+our $command;
 our $no_connect;
 
 
@@ -153,6 +168,7 @@ sub parseArguments {
 	undef $items_control_file;
 	undef $shop_file;
 	undef $chat_log_file;
+	undef $console_log_file;
 	undef $storage_log_file;
 	undef $sys_file;
 	undef $interface;
@@ -173,12 +189,15 @@ sub parseArguments {
 		'mon_control=s',      \$mon_control_file,
 		'items_control=s',    \$items_control_file,
 		'shop=s',             \$shop_file,
-		'chat-log=s',         \$chat_log_file,
-		'storage-log=s',      \$storage_log_file,
+		'chat-log=s',         \$base_chat_log_file,
+		'console-log=s',      \$base_console_log_file,
+		'storage-log=s',      \$base_storage_log_file,
 		'sys=s',              \$sys_file,
 
 		'interface=s',        \$interface,
 		'lockdown',           \$lockdown,
+		'ai=s',               \$starting_ai,
+		'command=s',          \$command,
 		'help',	              \$options{help},
 		'version|v',          \$options{version},
 
@@ -204,12 +223,15 @@ sub parseArguments {
 	$fields_folder = "fields" if (!defined $fields_folder);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$maps_folder = "map" unless defined $maps_folder;
-	$chat_log_file = File::Spec->catfile($logs_folder, "chat.txt");
-	$storage_log_file = File::Spec->catfile($logs_folder, "storage.txt");
-	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
-	$monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
-	$item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
-	$dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
+	$base_chat_log_file ||= File::Spec->catfile($logs_folder, "chat.txt");
+	$base_console_log_file ||= File::Spec->catfile($logs_folder, "console.txt");
+	$base_storage_log_file ||= File::Spec->catfile($logs_folder, "storage.txt");
+	$base_shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
+	$base_monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
+	$base_item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
+	$base_dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
+	update_log_filenames();
+
 	if (!defined $interface) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
 			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
@@ -217,6 +239,11 @@ sub parseArguments {
 			$interface = "Console"
 		}
 	}
+	if ($starting_ai) {
+		$Globals::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
+		$Globals::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
+		$Globals::AI = AI::OFF()    if $starting_ai =~ /^off$/;
+    }
 
 	return 0 if ($options{help});
 	return 0 if ($options{version});
@@ -227,6 +254,21 @@ sub parseArguments {
 		}
 	}
 	return 1;
+}
+
+sub update_log_filenames {
+	my @logAppend;
+	push @logAppend, "_$config{username}_$config{char}" if $config{logAppendUsername} && $config{username};
+	push @logAppend, "_$servers[$config{server}]{name}" if $config{logAppendServer}   && $config{server};
+	my $logAppend = join '', @logAppend;
+
+	$chat_log_file    = substr( $base_chat_log_file,    0, length( $base_chat_log_file ) - 4 ) . "$logAppend.txt";
+	$console_log_file = substr( $base_console_log_file, 0, length( $base_console_log_file ) - 4 ) . "$logAppend.txt";
+	$storage_log_file = substr( $base_storage_log_file, 0, length( $base_storage_log_file ) - 4 ) . "$logAppend.txt";
+	$shop_log_file    = substr( $base_shop_log_file,    0, length( $base_shop_log_file ) - 4 ) . "$logAppend.txt";
+	$monster_log_file = substr( $base_monster_log_file, 0, length( $base_monster_log_file ) - 4 ) . "$logAppend.txt";
+	$item_log_file    = substr( $base_item_log_file,    0, length( $base_item_log_file ) - 4 ) . "$logAppend.txt";
+	$dead_log_file    = substr( $base_dead_log_file,    0, length( $base_dead_log_file ) - 4 ) . "$logAppend.txt";
 }
 
 ##
@@ -280,12 +322,15 @@ sub getUsageText {
 		--items_control=FILENAME  Which items_control.txt to use.
 		--shop=FILENAME           Which shop.txt to use.
 		--chat-log=FILENAME       Which chat log file to use.
+		--console-log=FILENAME    Which console log file to use.
 		--storage-log=FILENAME    Which storage log file to use.
 		--sys=FILENAME            Which sys.txt to use.
 
 		Other options:
 		--interface=NAME          Which interface to use at startup.
 		--lockdown                Disable potentially insecure features.
+		--ai                      Starting AI mode (on, manual, off) (default: on)
+		--command=COMMAND         Initial command to place on the AI queue
 		--help                    Displays this help message.
 		--version                 Displays the program version.
 
@@ -519,72 +564,71 @@ sub loadByHandle {
 }
 
 ##
-# void Settings::loadAll(regexp, [Function progressHandler])
+# void Settings::loadByRegexp(regexp, [Function progressHandler])
 #
-# (Re)loads all registered data files whose name matches the given regular expression.
-# This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
-sub loadByRegexp {	# FIXME: only hook those that match the regexp?
-	my ($regexp, $progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		if ($object->{name} =~ /$regexp/) {
-			loadByHandle($object->{index}, $progressHandler);
-		}
-		$i++;
-	}
-
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+# Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
+sub loadByRegexp {
+    my ($regexp, $progressHandler) = @_;
+    loadFiles([grep { $_->{name} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##
 # void Settings::loadAll([Function progressHandler])
 #
-# (Re)loads all registered data files. This method follows the same contract as
-# Settings::loadByHandle(), so see that method for parameter descriptions
-# and exceptions.
+# Calls 'loadFiles' with the list of all registered data files.
 sub loadAll {
-	my ($progressHandler) = @_;
-	
-	Plugins::callHook('preloadfiles', {files => \@{$files->getItems}});
-	
-	my $i = 1;
-	foreach my $object (@{$files->getItems()}) {
-		Plugins::callHook('loadfiles', {files => \@{$files->getItems}, current => $i});
-		loadByHandle($object->{index}, $progressHandler);
-		return if $Globals::quit;
-		$i++;
-	}
-	
-	Plugins::callHook('postloadfiles', {files => \@{$files->getItems}});
+    my ($progressHandler) = @_;
+    loadFiles($files->getItems, $progressHandler);
 }
 
 ##
-# int Settings::getSVNRevision()
+# void Settings::loadFiles(files, [Function progressHandler])
 #
-# Return OpenKore's SVN revision number, or undef if that information cannot be retrieved.
-sub getSVNRevision {
-	my $f;
-	if (open($f, "<", "$RealBin/.svn/entries")) {
-		my $revision;
-		eval {
-			die unless <$f> =~ /^\d+$/;	# We only support the non-XML format
-			die unless <$f> eq "\n";	# Empty string for current directory.
-			die unless <$f> eq "dir\n";	# We expect a directory entry.
-			$revision = <$f>;
-			$revision =~ s/[\r\n]//g;
-			undef $revision unless $revision =~ /^\d+$/;
-		};
-		close($f);
-		return $revision;
-	} else {
-		return;
+# (Re)loads all registered data files given in 'files'.
+# Use this method to load a specific list of files.
+# This method follows the same contract as
+# Settings::loadByHandle(), so see that method for parameter descriptions
+# and exceptions.
+sub loadFiles {
+    my ($files, $progressHandler) = @_;
+
+    Plugins::callHook('preloadfiles', {files => $files});
+
+    my $i = 1;
+    foreach my $object (@$files) {
+        Plugins::callHook('loadfiles', {files => $files, current => $i});
+        loadByHandle($object->{index}, $progressHandler);
+        $i++;
+    }
+
+    Plugins::callHook('postloadfiles', {files => $files});
+}
+
+##
+# str Settings::getRevisionString()
+#
+# Return OpenKore's revision as a string to be displayed to the user.
+sub getRevisionString {
+	my @revisions;
+
+    # The best and most accurate version is the git commit sha, if available.
+	my $git = getGitRevision();
+	if ( $git ) {
+		push @revisions, "git:$git";
 	}
+
+    # "Download ZIP" on github sets the file creation times to (around) the
+    # last time a commit was uploaded to github. This can help make a good
+    # guess about what version is in use.
+	my $time = ( stat( __FILE__ ) )[10] || ( stat( _ ) )[9];
+	if ( $time ) {
+		my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $time );
+		push @revisions, sprintf 'ctime:%04d_%02d_%02d', $year + 1900, $month + 1, $day;
+	}
+
+	push @revisions, '?' if !@revisions;
+
+	join ' ', @revisions;
 }
 
 ##

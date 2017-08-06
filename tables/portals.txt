@@ -357,6 +357,27 @@ prt_fild08a 170 378 prontera 156 22
 prt_fild08a 233 16 moc_fild01 239 382
 prt_fild08a 371 212 izlude 24 98
 
+#################### Criatura Academy ####################
+izlude 125 257 iz_ac01 99 29
+izlude 130 257 iz_ac01 99 29
+iz_ac01 100 24 izlude 127 253
+# Eden Teleport Officer
+iz_ac01 106 36 moc_para01 31 14 0 c r0 c
+# Garden
+iz_ac01 45 80 new_1-3 95 171 0 c r0 c
+new_1-3 96 176 iz_ac01 49 73
+# Second floor
+iz_ac01 78 25 iz_ac02 104 27
+iz_ac01 122 25 iz_ac02 104 27
+iz_ac02 94 27 iz_ac01 78 28
+iz_ac02 113 27 iz_ac01 122 28
+# Free Warps (Kafra)
+iz_ac01 95 46 iz_ac01 97 86 0 c c c r2 c c c r1 r0
+iz_ac01 95 46 iz_ac02 104 179 0 c c c r2 c c c r1 r1
+iz_ac01 95 46 izlude 128 98 0 c c c r2 c c c r1 r2 c r1
+iz_ac02 101 176 iz_ac01 97 86 0 c c c r2 c c c r1 r0
+iz_ac02 101 176 izlude 128 98 0 c c c r2 c c c r1 r2 c r1
+
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
 alb_ship 41 163 alberta 178 165
@@ -3084,3 +3105,36 @@ casp_in01 231 203 casp_in01 159 205
 casp_in01 262 203 casp_in01 191 201
 casp_auct02 40 36 caspen 151 198
 casp_dun01 23 38 caspen 267 277
+
+//Museum
+brasilis 146 162 bra_in01 17 137
+bra_in01 17 134  brasilis 148 161
+bra_in01 50 145  bra_in01 81 143
+bra_in01 79 142  bra_in01 47 144
+bra_in01 50 171  bra_in01 82 168
+bra_in01 79 169  bra_in01 46 170
+bra_in01 138 174 bra_in01 12 183
+bra_in01 206 98  bra_in01 138 176
+
+//Inn
+brasilis 274 153 bra_in01 38 9
+bra_in01 39 7 brasilis 273 151
+bra_in01 52 27 bra_in01 85 26
+bra_in01 83 27 bra_in01 50 27
+bra_in01 9 67  bra_in01 154 22
+bra_in01 156 23 bra_in01 11 65
+bra_in01 52 67  bra_in01 87 66
+bra_in01 85 67  bra_in01 50 66
+bra_in01 31 29  bra_in01 23 70
+bra_in01 25 70  bra_in01 32 26
+bra_in01 31 74  bra_in01 148 59
+bra_in01 148 57 bra_in01 31 72
+
+//Dungeon
+bra_dun01 199 35 bra_dun02 261 263
+bra_dun02 261 265 bra_dun01 199 37
+
+//Dungeon Access
+bra_in01 144 187 bra_in01 0 206 102 c r0 n
+bra_in01 206 188 bra_dun01 87 47 0 n
+bra_dun01 87 43 bra_in01 206 185 0 n

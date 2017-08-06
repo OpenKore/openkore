@@ -22,6 +22,7 @@
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
+use lib "$RealBin/../..";
 use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
 use Poseidon::Config;
@@ -41,9 +42,9 @@ sub initialize
 	# Starting Poseidon
 	print "Starting Poseidon 2.1 (26 Sep 2012)...\n";
 	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
-	print "Ragnarok Online Server Ready At : " . $config{ragnarokserver_ip} . ":" . $config{ragnarokserver_port} . "\n";
+	print "Ragnarok Online Server Ready At : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
 	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
-	print "Query Server Ready At : " . $config{queryserver_ip} . ":" . $config{queryserver_port} . "\n";
+	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
 	print ">>> Poseidon 2.1 initialized <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . "\n";
 	print "for further instructions.\n";

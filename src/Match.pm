@@ -53,11 +53,11 @@ sub player {
 		return $playersList->get($ID);
 	} elsif ($partial) {
 		$ID = quotemeta $ID;
-		foreach my $player (@{$playersList->getItems()}) {
+		for my $player (@$playersList) {
 			return $player if ($player->name =~ /^$ID/i);
 		}
 	} else {
-		foreach my $player (@{$playersList->getItems()}) {
+		for my $player (@$playersList) {
 			return $player if (lc($player->name) eq lc($ID));
 		}
 	}
@@ -91,18 +91,17 @@ sub inventoryItem {
 #
 # Find an item in cart.
 sub cartItem {
-	my ($name) = @_;
-
+	my ($name) = lc shift;
+	my $item;
 	if ($name =~ /^\d+$/) {
 		# A number was provided
-		return unless $cart{inventory}[$name] && %{$cart{inventory}[$name]};
-		return $cart{inventory}[$name];
+		$item = $char->cart->get($name);
+	} else {
+		# A name was provided; match it
+		$item = $char->cart->getByName($name);
 	}
-
-	# A name was provided; match it
-	my $index = findIndexString_lc($cart{inventory}, 'name', $name);
-	return unless defined($index);
-	return $cart{inventory}[$index];
+	return $item if ($item);
+	return undef; # Not found
 }
 
 ##
@@ -113,19 +112,15 @@ sub cartItem {
 # Find an item in storage.
 sub storageItem {
 	my ($name) = lc shift;
-
+	my $item;
 	if ($name =~ /^\d+$/) {
 		# A number was provided
-		return unless defined($storageID[$name]); # Invalid number
-		return $storage{$storageID[$name]};
+		$item = $char->storage->get($name);
+	} else {
+		# A name was provided; match it
+		$item = $char->storage->getByName($name);
 	}
-
-	# A name was provided; match it
-	my $index;
-	for my $ID (@storageID) {
-		my $item = $storage{$ID};
-		return $item if lc($item->{name}) eq $name;
-	}
+	return $item if ($item);
 	return undef; # Not found
 }
 

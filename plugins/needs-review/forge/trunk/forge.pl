@@ -78,7 +78,7 @@ sub onCommandPost {
 	my $item;
 	my $error=0;
 	my $ii;
-	my $invIndex;
+	my $binID;
 	if ($cmd eq "forge") {
 		if ($subcmd eq "list") {
 			while (exists $forge{"forge_$i"}) {

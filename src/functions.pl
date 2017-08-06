@@ -65,6 +65,11 @@ sub mainLoop {
 	}
 
 
+	if ($state == STATE_INITIALIZED && $Settings::command) {
+		Commands::run($Settings::command);
+		$Settings::command = undef;
+	}
+
 	if ($state == STATE_INITIALIZED) {
 		Plugins::callHook('mainLoop_pre');
 		mainLoop_initialized();
@@ -240,7 +245,7 @@ sub loadDataFiles {
 	Settings::addTableFile('packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
-		loader => [\&parsePortals, \%portals_lut]);
+		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
 	Settings::addTableFile('portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);
 	Settings::addTableFile('sex.txt',
@@ -267,7 +272,9 @@ sub loadDataFiles {
 	Settings::addTableFile('skillsencore.txt', loader => [\&parseList, \%skillsEncore]);
 	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
 	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
-	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable], mustExist => 0);
+	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
+	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
+	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
 
 	use utf8;
 
@@ -292,6 +299,8 @@ sub loadDataFiles {
 		die $@;
 	}
 	return if $quit;
+
+	Settings::update_log_filenames();
 
 	Plugins::callHook('start3');
 
@@ -493,11 +502,6 @@ sub finalInitialization {
 	$totalJobExp = 0;
 	$startTime_EXP = time;
 	$taskManager = new TaskManager();
-	# run 'permanent' tasks
-	for (qw/Task::RaiseStat Task::RaiseSkill/) {
-		eval "require $_";
-		$taskManager->add($_->new);
-	}
 
 	if (DEBUG) {
 		# protect various stuff from autovivification
@@ -611,7 +615,10 @@ sub initMapChangeVars {
 		delete $char->{warp};
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
-		$char->inventory->clear();
+		$char->inventory->onMapChange();
+		# Clear the cart but do not close it.
+		$char->cart->clear;
+		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
@@ -636,11 +643,7 @@ sub initMapChangeVars {
 	undef %spells;
 	undef %incomingParty;
 	undef %talk;
-	$ai_v{cart_time} = time + 60;
-	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
-	$cart{inventory} = [];
-	delete $storage{opened};
 	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;
@@ -659,6 +662,8 @@ sub initMapChangeVars {
 	undef $repairList;
 	undef $devotionList;
 	undef $cookingList;
+	undef $rodexList;
+	undef $rodexWrite;
 	$captcha_state = 0;
 
 	$itemsList->clear();
@@ -685,16 +690,7 @@ sub initMapChangeVars {
 
 	Plugins::callHook('packet_mapChange');
 
-	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
-	$logAppend = ($config{logAppendServer}) ? "_$servers[$config{'server'}]{'name'}".$logAppend : $logAppend;
-	
-	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
-		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
-		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
-		$Settings::shop_log_file     = substr($Settings::shop_log_file,    0, length($Settings::shop_log_file)    - 4) . "$logAppend.txt";
-		$Settings::monster_log_file  = substr($Settings::monster_log_file, 0, length($Settings::monster_log_log)  - 4) . "$logAppend.txt";
-		$Settings::item_log_file     = substr($Settings::item_log_file,    0, length($Settings::item_log_file)    - 4) . "$logAppend.txt";
-	}
+	Settings::update_log_filenames();
 }
 
 # Initialize variables when your character logs in

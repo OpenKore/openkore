@@ -17,6 +17,20 @@ package Network::Receive::kRO::RagexeRE_2013_05_15a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2013_03_20);
 
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+	'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+	);
+	
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	return $self;
+	
+}
+
 1;
 =pod
 //2013-05-15a Ragexe (Yommy)

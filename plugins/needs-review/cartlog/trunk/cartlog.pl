@@ -22,12 +22,12 @@ use strict;
 use sort 'stable';
 use Plugins;
 use Globals;
-use Log qw(message);
+use Log qw(message error);
 
 Plugins::register('cartlog', 'writes cart inventory to file.', \&Unload);
 
 my $hook = Commands::register(['cartlog', "print cart contents to file", \&cartLog]);
-            
+
 sub Unload {
 	Commands::unregister($hook)
 }
@@ -35,9 +35,13 @@ sub Unload {
 sub cartLog {
 	my $logfile = $_[1]?$_[1]:"$Settings::logs_folder/cartlog.csv";
 
+	unless ($char) {
+		error "Character not ready\n";
+		return;
+	}
+
 	my $cartlog;
-	foreach my $inv (@{$cart{inventory}}) {
-		next unless defined $inv->{name};
+	foreach my $inv (@{$char->cart->getItems}) {
 		if (defined $cartlog->{$inv->{name}}) {
 			$cartlog->{$inv->{name}}++
 		} else {

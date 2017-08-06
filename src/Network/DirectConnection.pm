@@ -498,6 +498,7 @@ sub checkConnection {
 			if ($master->{charServer_ip}) {
 				$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
 			} elsif ($servers[$config{'server'}]) {
+				message TF("Selected server: %s\n", $servers[$config{server}]->{name}), 'connection';
 				$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
 			} else {
 				error TF("Invalid server specified, server %s does not exist...\n", $config{server}), "connection";
