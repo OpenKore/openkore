@@ -22,6 +22,10 @@ package Network::Receive;
 use strict;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
+# Edit by Robert Chen
+# from http://optw.nva-hk.com/forum.php?mod=viewthread&tid=3&extra=page%3D1
+use Time::HiRes qw(time usleep);
+#End of Edit
 use utf8;
 use Carp::Assert;
 use Scalar::Util;
@@ -259,7 +263,8 @@ sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
 		# change $hairstyle
-		return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $_ == 147;
+		#return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $_ == 147;
+		return 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 C1' if $_ == 147;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 x1' if $_ == 145;
 		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $_ == 144;
 		# change slot feature
