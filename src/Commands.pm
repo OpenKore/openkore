@@ -726,7 +726,7 @@ sub cmdBuy {
 				"Usage: buy <item #> [<amount>][, <item #> [<amount>]]...\n");
 			return;
 
-		} elsif ($storeList[$index] eq "") {
+		} elsif (!$storeList->get($index)) {
 			error TF("Error in function 'buy' (Buy Store Item)\n" .
 				"Store Item %s does not exist.\n", $index);
 			return;
@@ -735,7 +735,7 @@ sub cmdBuy {
 			$amount = 1;
 		}
 
-		my $itemID = $storeList[$index]{nameID};
+		my $itemID = $storeList->get($index)->{nameID};
 		push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 	}
 
@@ -4775,28 +4775,26 @@ sub cmdStore {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
-		my $msg = center(TF(" Store List (%s) ", $storeList[0]{npcName}), 54, '-') ."\n".
+		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 54, '-') ."\n".
 			T("#  Name                    Type                  Price\n");
-		my $display;
-		for (my $i = 0; $i < @storeList; $i++) {
-			$display = $storeList[$i]{'name'};
+		foreach my $item (@$storeList) {
 			$msg .= swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z",
-				[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]);
+				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}]);
 		}
-	$msg .= "Store list is empty.\n" if !$display;
-	$msg .= ('-'x54) . "\n";
-	message $msg, "list";
+		$msg .= "Store list is empty.\n" if !$storeList->size;
+		$msg .= ('-'x54) . "\n";
+		message $msg, "list";
 
 	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList->get($arg2)) {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
 			"Store item %s does not exist\n", $arg2);
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		printItemDesc($storeList[$arg2]{nameID});
+		printItemDesc($storeList->get($arg2)->{nameID});
 
 	} else {
 		error T("Syntax Error in function 'store' (Store Functions)\n" .
@@ -5365,7 +5363,7 @@ sub cmdVender {
 		error T("Syntax error in function 'vender' (Vender Shop)\n" .
 			"Usage: vender <vender # | end> [<item #> <amount>]\n");
 	} elsif ($arg1 eq "end") {
-		undef @venderItemList;
+		$venderItemList->clear;
 		undef $venderID;
 		undef $venderCID;
 	} elsif ($venderListsID[$arg1] eq "") {
@@ -5376,11 +5374,13 @@ sub cmdVender {
 	} elsif ($venderListsID[$arg1] ne $venderID) {
 		error T("Error in function 'vender' (Vender Shop)\n" .
 			"Vender ID is wrong.\n");
+	} elsif (!$venderItemList->get( $arg2 )) {
+		error TF("Error in function 'vender' (Vender Shop)\n" .
+			"Item %s does not exist.\n", $arg2);
 	} else {
-		if ($arg3 <= 0) {
-			$arg3 = 1;
-		}
-		$messageSender->sendBuyBulkVender($venderID, [{itemIndex  => $arg2, amount => $arg3}], $venderCID);
+		$arg3 = 1 if $arg3 <= 0;
+		my $item = $venderItemList->get( $arg2 );
+		$messageSender->sendBuyBulkVender( $venderID, [ { itemIndex => $item->{ID}, amount => $arg3 } ], $venderCID );
 	}
 }
 

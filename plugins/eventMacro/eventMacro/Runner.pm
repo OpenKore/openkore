@@ -1081,9 +1081,10 @@ sub next {
 					}
 					
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(\s*(.*?)\s*\)$/) {
-					my ( $pattern, $var_str ) = map {/^\s*(.*?)\s*$/} parseArgs( "$1", undef, ',' );
+					my ( $pattern, $var_str ) = parseArgs( "$1", undef, ',' );
+					$var_str =~ s/^\s+|\s+$//gos;
 					my $split_var = find_variable( $var_str );
-					$self->error( 'Scalar variable not recognized' ), return if !$split_var;
+					$self->error( 'Variable not recognized' ), return if !$split_var;
 					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
@@ -1795,11 +1796,10 @@ sub parse_command {
 			$result = join ',', getInventoryIDs($parsed);
 			
 		} elsif ($keyword eq 'store') {
-		    # TODO: Fix this to work with the new getItemIDs() implementation.
-			$result = getItemIDs($parsed, \@::storeList);
+			$result = (getItemIDs($parsed, $storeList))[0];
 			
 		} elsif ($keyword eq 'storage') {
-			($result) = (getStorageIDs($parsed))[0];
+			$result = (getStorageIDs($parsed))[0];
 			
 		} elsif ($keyword eq 'Storage') {
 			$result = join ',', getStorageIDs($parsed);
@@ -1814,16 +1814,16 @@ sub parse_command {
 			$result = getVenderID($parsed);
 			
 		} elsif ($keyword eq 'venderitem') {
-			($result) = (getItemIDs($parsed, \@::venderItemList))[0];
+			$result = (getItemIDs($parsed, $venderItemList))[0];
 			
 		} elsif ($keyword eq 'venderItem') {
-			$result = join ',', getItemIDs($parsed, \@::venderItemList);
+			$result = join ',', getItemIDs($parsed, $venderItemList);
 			
 		} elsif ($keyword eq 'venderprice') {
-			$result = getItemPrice($parsed, \@::venderItemList);
+			$result = getItemPrice($parsed, $venderItemList->getItems);
 			
 		} elsif ($keyword eq 'venderamount') {
-			$result = getVendAmount($parsed, \@::venderItemList);
+			$result = getVendAmount($parsed, $venderItemList->getItems);
 			
 		} elsif ($keyword eq 'random') {
 			$result = getRandom($parsed);
