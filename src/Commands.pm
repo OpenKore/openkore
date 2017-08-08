@@ -1536,11 +1536,7 @@ sub cmdDeal {
 		while (@items && $n < $max_items) {
 			my $item = shift @items;
 			next if $item->{equipped};
-			my $amount = $item->{amount};
-			if (!$arg[2] || $arg[2] > $amount) {
-				$arg[2] = $amount;
-			}
-			dealAddItem($item, $arg[2]);
+			dealAddItem( $item, min( $item->{amount}, $arg[2] || $item->{amount} ) );
 			$n++;
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
