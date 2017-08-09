@@ -1363,7 +1363,7 @@ sub cmdCloseBuyShop {
 
 sub cmdConf {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2) = $args =~ /^(\S+)\s*(.*?)\s*$/;
+	my ( $force, $arg1, $arg2 ) = $args =~ /^(-f\s+)?(\S+)\s*(.*)$/;
 
 	# Basic Support for "label" in blocks. Thanks to "piroJOKE"
 	if ($arg1 =~ /\./) {
@@ -1388,8 +1388,9 @@ sub cmdConf {
 	};
 
 	if ($arg1 eq "") {
-		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n" .
-			"Usage: conf <variable> [<value>|none]\n");
+		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n");
+		error T("Usage: conf [-f] <variable> [<value>|none]\n");
+		error T("  -f  force variable to be set, even if it does not already exist in config.txt\n");
 
 	} elsif ($arg1 =~ /\*/) {
 		my $pat = $arg1;
@@ -1398,7 +1399,7 @@ sub cmdConf {
 		error TF( "Config variables matching %s do not exist\n", $arg1 ) if !@keys;
 		message TF( "Config '%s' is %s\n", $_, defined $config{$_} ? $config{$_} : 'not set' ), "info" foreach @keys;
 
-	} elsif (!exists $config{$arg1}) {
+	} elsif (!exists $config{$arg1} && !$force) {
 		error TF("Config variable %s doesn't exist\n", $arg1);
 
 	} elsif ($arg2 eq "") {
