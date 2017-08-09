@@ -96,30 +96,30 @@ prontera 146 89 geffen 120 39 2000 1 c r2 c r1
 prontera 146 89 payon 161 58 2000 1 c r2 c r2
 prontera 146 89 morocc 156 47 2000 1 c r2 c r3
 prontera 146 89 alberta 117 56 2000 1 c r2 c r5
-prontera 146 89 comodo 209 143 3000 1 c r2 c r6
-prontera 146 89 umbala 100 154 3000 1 c r2 c r7
+#prontera 146 89 comodo 209 143 3000 1 c r2 c r6
+#prontera 146 89 umbala 100 154 3000 1 c r2 c r7
 prontera 151 29 izlude 94 103 2000 1 c r2 c r0
 prontera 151 29 geffen 120 39 2000 1 c r2 c r1
 prontera 151 29 payon 161 58 2000 1 c r2 c r2
 prontera 151 29 morocc 156 47 2000 1 c r2 c r3
 prontera 151 29 alberta 117 56 2000 1 c r2 c r5
-prontera 151 29 comodo 209 143 3000 1 c r2 c r6
-prontera 151 29 umbala 100 154 3000 1 c r2 c r7
+#prontera 151 29 comodo 209 143 3000 1 c r2 c r6
+#prontera 151 29 umbala 100 154 3000 1 c r2 c r7
 prontera 282 200 izlude 94 103 2000 1 c r2 c r0
 prontera 282 200 geffen 120 39 2000 1 c r2 c r1
 prontera 282 200 payon 161 58 2000 1 c r2 c r2
 prontera 282 200 morocc 156 47 2000 1 c r2 c r3
 prontera 282 200 alberta 117 56 2000 1 c r2 c r5
-prontera 282 200 comodo 209 143 3000 1 c r2 c r6
-prontera 282 200 umbala 100 154 3000 1 c r2 c r7
+#prontera 282 200 comodo 209 143 3000 1 c r2 c r6
+#prontera 282 200 umbala 100 154 3000 1 c r2 c r7
 prontera 29 207 izlude 94 103 2000 1 c r2 c r0
 prontera 29 207 geffen 120 39 2000 1 c r2 c r1
 prontera 29 207 payon 161 58 2000 1 c r2 c r2
 prontera 29 207 morocc 156 47 2000 1 c r2 c r3
 prontera 29 207 alberta 117 56 2000 1 c r2 c r5
-prontera 29 207 comodo 209 143 3000 1 c r2 c r6
-prontera 29 207 umbala 100 154 3000 1 c r2 c r7
-prontera 98 120 yuno 157 167 1800 1 c c r0 c
+#prontera 29 207 comodo 209 143 3000 1 c r2 c r6
+#prontera 29 207 umbala 100 154 3000 1 c r2 c r7
+#prontera 98 120 yuno 157 167 1800 1 c c r0 c
 geffen 120 62 prontera 116 72 1200 1 c r2 c r0
 geffen 120 62 aldebaran 168 112 1200 1 c r2 c r1
 geffen 120 62 gef_fild10 52 326 1200 1 c r2 c r2
@@ -137,6 +137,7 @@ yuno 152 187 rachel 119 135 2000 1 c r2 c r3
 yuno 327 108 aldebaran 168 112 2000 1 c r2 c r0
 yuno 142 183 prontera 116 72 1800 1 c c r0 c n
 morocc 156 97 prontera 116 72 2000 1 c r2 c r0
+morocc 156 97 comodo 209 143 1800 1 c r2 c r3
 comodo 195 150 morocc 156 47 2000 1 c c r2 c r0
 payon 181 104 prontera 116 72 2000 1 c r2 c r0
 payon 175 226 prontera 116 72 1200 1 c r2 c r0
@@ -267,7 +268,7 @@ moc_fild20 203 336 morocc 160 61 0 c r1 c c c c r1 c c r1
 moc_fild20 215 336 morocc 160 61 0 c r1 c c c c r1 c c r1
 morocc 299 207 moc_fild20 36 177
 prt_fild09 95 19 moc_fild20 209 333
-prt_fild09 246 17 moc_fild20 209 333
+prt_fild09 246 16 moc_fild04 92 378
 prt_fild10 263 23 moc_fild20 209 333
 
 # Dimensional Gorge (Episode 12)
@@ -1079,6 +1080,7 @@ gonryun 215 114 gon_in 149 24
 gonryun 221 162 gon_in 109 98
 hu_fild04 122 27 yuno_fild02 117 375
 in_moc_16 18 8 moc_fild16 205 296
+in_moc_16 182 169 in_moc_16 181 183
 in_orcs01 29 116 gef_fild10 138 284
 in_orcs01 30 154 gef_fild10 63 337
 in_orcs01 30 182 orcsdun01 32 172
@@ -1301,7 +1303,7 @@ moc_fild01 68 16 moc_fild04 314 381
 moc_fild01 101 16 moc_fild04 314 381
 moc_fild04 14 122 moc_fild05 384 126
 moc_fild04 19 206 moc_fild05 378 208
-moc_fild04 92 381 prt_fild09 246 16
+moc_fild04 92 381 prt_fild09 246 19
 moc_fild04 175 18 moc_fild08 170 383
 moc_fild04 219 327 anthell01 35 267
 moc_fild04 314 381 moc_fild01 68 16
@@ -1326,8 +1328,8 @@ moc_fild09 80 369 moc_fild05 82 16
 moc_fild09 126 20 moc_fild15 158 363
 moc_fild09 267 371 moc_fild05 268 18
 moc_fild09 374 195 moc_fild08 16 207
-moc_fild10 19 207 morocc 302 207
-morocc 302 207 moc_fild10 19 207
+moc_fild10 19 207 morocc 299 207
+morocc 302 207 moc_fild10 22 207
 moc_fild10 189 23 moc_fild11 189 363
 moc_fild10 208 298 moc_fild06 207 18
 moc_fild11 189 363 moc_fild10 189 23
