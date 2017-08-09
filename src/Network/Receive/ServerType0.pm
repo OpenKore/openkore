@@ -2326,6 +2326,9 @@ sub party_exp {
 		} else {
 			error T("Error setting party option\n");
 		}
+		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin} && exists($char->{party}{itemDivision}) && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});		
+		}
 	}
 }
 
@@ -2496,29 +2499,7 @@ sub party_join {
 	$actor->{name} = $user;
 	$actor->{ID} = $ID;
 	$char->{party}{users}{$ID} = $actor;
-
-=pod
-	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
-	$char->{party}{users}{$ID}{admin} = !$role;
-	if ($type == 0) {
-		$char->{party}{users}{$ID}{online} = 1;
-	} elsif ($type == 1) {
-		$char->{party}{users}{$ID}{online} = 0;
-		delete $char->{party}{users}{$ID}{statuses};
-	}
-=cut
 	$char->{party}{name} = $name;
-=pod
-	$char->{party}{users}{$ID}{pos}{x} = $x;
-	$char->{party}{users}{$ID}{pos}{y} = $y;
-	$char->{party}{users}{$ID}{map} = $map;
-	$char->{party}{users}{$ID}{name} = $user;
-	$char->{party}{users}{$ID}->{ID} = $ID;
-=cut
-
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});		
-	}
 }
 
 use constant {
@@ -2596,9 +2577,6 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}->{ID} = $ID;
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin} && exists($char->{party}{itemDivision}) && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});		
 	}	
 }
 
