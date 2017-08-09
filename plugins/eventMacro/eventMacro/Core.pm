@@ -682,6 +682,12 @@ sub check_all_conditions {
 	}
 }
 
+# Given the results of Utilities::find_variable(), return the variable data.
+sub get_split_var {
+	my ( $self, $var ) = @_;
+	$self->get_var( $var->{type}, $var->{real_name}, $var->{complement} );
+}
+
 # Generic variable functions
 sub get_var {
 	my ($self, $type, $variable_name, $complement) = @_;

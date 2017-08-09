@@ -252,13 +252,10 @@ sub getInventoryIDs {
 # get item array index
 sub getItemIDs {
 	my ($item, $pool) = (lc($_[0]), $_[1]);
-	my @ids;
-	for (my $id = 0; $id < @{$pool}; $id++) {
-		next unless $$pool[$id];
-		if (lc($$pool[$id]{name}) eq $item) {push @ids, $id}
-	}
-	unless (@ids) {push @ids, -1}
-	return @ids
+	return if !$pool->isReady;
+	my @ids = map { $_->{binID} } grep { $item eq lc $_->name } @$pool;
+	push @ids, -1 if !@ids;
+	@ids;
 }
 
 # get item price from its index

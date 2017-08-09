@@ -35,7 +35,7 @@ use base qw(ActorList);
 #
 # Creates a new InventoryList object.
 sub new {
-	my ($class) = @_;
+	my ($class, %args) = @_;
 	my $self = $class->SUPER::new('Actor::Item');
 
 	# Hash<String, Array<int>> nameIndex
@@ -70,6 +70,10 @@ sub new {
 	#     defined(nameChangeEvents)
 	#     scalar(keys nameChangeEvents) == size()
 	$self->{nameChangeEvents} = {};
+
+	if ( $args{items} ) {
+		$self->add( $_ ) foreach @{ $args{items} };
+	}
 
 	return $self;
 }
@@ -380,6 +384,11 @@ sub sumByName {
 	}
 
 	return $sum;
+}
+
+# isReady is true if this InventoryList has actionable data. Eg, storage is open, or we have a cart, etc.
+sub isReady {
+    1;
 }
 
 1;
