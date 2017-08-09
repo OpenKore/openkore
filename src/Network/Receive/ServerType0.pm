@@ -2307,6 +2307,10 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
+	
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {		
+		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});		
+	}
 		
 	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
 		$char->{party}{itemPickup} = $args->{itemPickup};
@@ -2325,10 +2329,7 @@ sub party_exp {
 			message T("Party item division set to Even Share\n"), "party", 1;
 		} else {
 			error T("Error setting party option\n");
-		}
-		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin} && exists($char->{party}{itemDivision}) && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
-			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});		
-		}
+		}		
 	}
 }
 
