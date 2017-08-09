@@ -1928,7 +1928,15 @@ sub npc_talk {
 	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
 		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		AI::queue("NPC", new Task::TalkNPC(type => 'autotalk', nameID => $nameID));
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
 	}
 
 	$talk{ID} = $args->{ID};
@@ -3765,6 +3773,8 @@ sub vender_items_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen;
+	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_len = length pack $item_pack;
 
 	# a hack, but the best we can do now
 	if ($args->{switch} eq "0133") {
@@ -3773,57 +3783,36 @@ sub vender_items_list {
 		$headerlen = 12;
 	}
 
-	undef @venderItemList;
-	undef $venderID;
-	undef $venderCID;
 	$venderID = $args->{venderID};
-	$venderCID = $args->{venderCID} if exists $args->{venderCID};
+	$venderCID = $args->{venderCID};
 	my $player = Actor::get($venderID);
+	$venderItemList->clear;
 
 	message TF("%s\n" .
-		"#  Name                                       Type           Amount       Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), "list";
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=22) {
-		my $item = {};
-		my $index;
+		"#   Name                                      Type        Amount          Price\n",
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), $config{showDomain_Shop} || 'list';
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$item_len) {
+		my $item = Actor::Item->new;
 
-		($item->{price},
-		$item->{amount},
-		$index,
-		$item->{type},
-		$item->{nameID},
-		$item->{identified}, # should never happen
-		$item->{broken}, # should never happen
-		$item->{upgrade},
-		$item->{cards})	= unpack('V v2 C v C3 a8', substr($args->{RAW_MSG}, $i, 22));
+ 		@$item{qw( price amount ID type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $args->{RAW_MSG}, $i, $item_len;
 
 		$item->{name} = itemName($item);
-		$venderItemList[$index] = $item;
+		$venderItemList->add($item);
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
-		Plugins::callHook('packet_vender_store', {
-			venderID => $venderID,
-			number => $index,
-			name => $item->{name},
-			amount => $item->{amount},
-			price => $item->{price},
-			upgrade => $item->{upgrade},
-			cards => $item->{cards},
-			type => $item->{type},
-			id => $item->{nameID}
-		});
+		Plugins::callHook('packet_vender_store', { item => $item });
 
 		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
-			"list");
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$item->{ID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
+			$config{showDomain_Shop} || 'list');
 	}
-	message("-------------------------------------------------------------------------------\n", "list");
+	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
 
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $venderID,
-		itemList => \@venderItemList
+		itemList => $venderItemList,
 	});
 }
 

@@ -4053,36 +4053,24 @@ sub npc_store_begin {
 	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	my $name = getNPCName($args->{ID});
+	$storeList->{npcName} = getNPCName($args->{ID}) || T('Unknown');
 }
 
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	undef @storeList;
-	my $storeList = 0;
+	my $pack = 'V V C v';
+	my $len = length pack $pack;
+	$storeList->clear;
 	undef %talk;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("V1", substr($msg, $i, 4));
-		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("v1", substr($msg, $i + 9, 2));
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
+		my $item = Actor::Item->new;
+		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
+		$item->{ID} = $item->{nameID};
+		$item->{name} = itemName($item);
+		$storeList->add($item);
 
-		my $store = $storeList[$storeList] = {};
-		
-		my $name = itemNameSimple($ID);
-		
-		my $numSlots = $itemSlotCount_lut{$ID};
-		
-		$name .= " [$numSlots]" if $numSlots;
-		
-		$store->{name} = $name;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $price;
-		# Real RO client can be receive this message without NPC Information. We should mimic this behavior.
-		$store->{npcName} = (defined $talk{ID}) ? getNPCName($talk{ID}) : T('Unknown') if ($storeList == 0);
-		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
-		$storeList++;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
 	}
 
 	$ai_v{npc_talk}{talk} = 'store';

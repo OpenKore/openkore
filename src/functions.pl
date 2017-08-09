@@ -245,7 +245,7 @@ sub loadDataFiles {
 	Settings::addTableFile('packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
-		loader => [\&parsePortals, \%portals_lut]);
+		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
 	Settings::addTableFile('portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);
 	Settings::addTableFile('sex.txt',
@@ -526,6 +526,8 @@ sub finalInitialization {
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
 	$slavesList = new ActorList('Actor::Slave');
+	$venderItemList = InventoryList->new;
+	$storeList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
@@ -644,7 +646,6 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef %talk;
 	$ai_v{temp} = {};
-	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;
 	undef @venderListsID;
@@ -673,6 +674,8 @@ sub initMapChangeVars {
 	$portalsList->clear();
 	$npcsList->clear();
 	$slavesList->clear();
+	$venderItemList->clear;
+	$storeList->clear;
 
 	@unknownPlayers = ();
 	@unknownNPCs = ();

@@ -21,7 +21,7 @@ use utf8;
 use Modules 'register';
 use Task;
 use base qw(Task);
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
+use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config $storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
 use Commands;
@@ -541,8 +541,8 @@ sub iterate {
 				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
 					my $index = $1;
 					my $amount = $2;
-					if ($storeList[$index]) {
-						my $itemID = $storeList[$index]{nameID};
+					if ($storeList->get($index)) {
+						my $itemID = $storeList->get($index)->{nameID};
 						push (@{$ai_v{npc_talk}{itemsIDlist}},$itemID);
 						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 					} else {
