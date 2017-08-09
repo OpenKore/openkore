@@ -1879,9 +1879,9 @@ sub processAutoBuy {
 
 			# load the real npc location just in case we used standpoint
 			my $realpos = {};
-			getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
+			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
 
-			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b');
+			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
 			
 			$args->{'sentNpcTalk'} = 1;
 			$args->{'sentNpcTalk_time'} = time;
@@ -1905,18 +1905,15 @@ sub processAutoBuy {
 		
 		my @buyList;
 		
-		# scan the npc sell list
-		for (my $i = 0; $i < @storeList; $i++) {
-			my $item = $storeList[$i];
-			if (lc($item->{name}) eq lc($config{"buyAuto_$args->{index}"})) {
-				$args->{'nameID'} = $item->{nameID};
-				last;
-			}
+		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+		
+		if (defined $buy_item) {
+			$args->{'nameID'} = $item->{nameID};
 		}
 		
 		if (!exists $args->{'nameID'}) {
-			$args->{index_failed}{$args->{index}} = 1;
-			error "buyAuto index ".$args->{index}." (".$config{"buyAuto_$args->{index}"}.") failed, item doesn't exist in npc sell list.\n", "npc";
+			$args->{index_failed}{$args->{lastIndex}} = 1;
+			error "buyAuto index ".$args->{lastIndex}." (".$config{"buyAuto_".$args->{lastIndex}}.") failed, item doesn't exist in npc sell list.\n", "npc";
 			
 		} else {
 			my $maxbuy = ($config{"buyAuto_".$args->{lastIndex}."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
