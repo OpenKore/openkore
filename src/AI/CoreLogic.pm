@@ -1907,7 +1907,7 @@ sub processAutoBuy {
 		
 		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
 		
-		if (defined $buy_item) {
+		if (defined $item) {
 			$args->{'nameID'} = $item->{nameID};
 		}
 		
