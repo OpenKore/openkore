@@ -1,11 +1,11 @@
-package eventMacro::Condition::InLockMap;
+package eventMacro::Condition::InSaveMap;
 
 use strict;
 
 use base 'eventMacro::Condition';
 
-#InLockMap 1 -> Only triggers in the lockMap
-#InLockMap 0 -> Only triggers outside of the lockMap
+#InSaveMap 1 -> Only triggers in the saveMap
+#InSaveMap 0 -> Only triggers outside of the saveMap
 
 use Globals qw( $field %config );
 
@@ -21,10 +21,10 @@ sub _parse_syntax {
 		return 0;
 	}
 
-	$self->{wanted_return_InLockMap} = $condition_code;
+	$self->{wanted_return_InSaveMap} = $condition_code;
 	
 	$self->{lastMap} = $field ? $field->baseName : '';
-	$self->{lastLockMap} = $config{'lockMap'} || '';
+	$self->{lastSaveMap} = $config{'saveMap'} || '';
 
 	1;
 }
@@ -34,25 +34,25 @@ sub validate_condition {
 
 	if ($callback_type eq 'hook') {
 		
-		if ($callback_name eq 'configModify' && $args->{key} eq 'lockMap') {
-			$self->{lastLockMap} = $args->{val} || '';
+		if ($callback_name eq 'configModify' && $args->{key} eq 'saveMap') {
+			$self->{lastSaveMap} = $args->{val} || '';
 			
 		} elsif ($callback_name eq 'pos_load_config.txt' || $callback_name eq 'in_game') {
-			$self->{lastLockMap} = $config{'lockMap'} || '';
+			$self->{lastSaveMap} = $config{'saveMap'} || '';
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
 			$self->{lastMap} = $field ? $field->baseName : '';
 		}
 	
 	} elsif ($callback_type eq 'recheck') {
-		$self->{lastLockMap} = $config{'lockMap'} || '';
+		$self->{lastSaveMap} = $config{'saveMap'} || '';
 		$self->{lastMap} = $field ? $field->baseName : '';
 	}
 	
-	if ( $self->{lastLockMap} eq '' || $self->{lastMap} eq '' ) {
+	if ( $self->{lastSaveMap} eq '' || $self->{lastMap} eq '' ) {
 		$self->SUPER::validate_condition( 0 );
 	} else {
-		$self->SUPER::validate_condition( ( $self->{lastMap} eq $self->{lastLockMap} ? 1 : 0 ) == $self->{wanted_return_InLockMap} );
+		$self->SUPER::validate_condition( ( $self->{lastMap} eq $self->{lastSaveMap} ? 1 : 0 ) == $self->{wanted_return_InSaveMap} );
 	}
 }
 
