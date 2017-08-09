@@ -526,6 +526,8 @@ sub finalInitialization {
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
 	$slavesList = new ActorList('Actor::Slave');
+	$venderItemList = InventoryList->new;
+	$storeList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
@@ -644,7 +646,6 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef %talk;
 	$ai_v{temp} = {};
-	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;
 	undef @venderListsID;
@@ -673,6 +674,8 @@ sub initMapChangeVars {
 	$portalsList->clear();
 	$npcsList->clear();
 	$slavesList->clear();
+	$venderItemList->clear;
+	$storeList->clear;
 
 	@unknownPlayers = ();
 	@unknownNPCs = ();
