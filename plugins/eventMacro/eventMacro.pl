@@ -92,10 +92,10 @@ sub parseAndHook {
 		debug "[eventMacro] Plugin global variable '\$eventMacro' was set to undefined.\n", "eventMacro", 2;
 	}
 	$eventMacro = new eventMacro::Core($file);
-	if (defined $eventMacro) {
-		debug "[eventMacro] Loading success\n", "eventMacro", 2;
-	} else {
+	if ($eventMacro->{parse_failed}) {
 		debug "[eventMacro] Loading error\n", "eventMacro", 2;
+	} else {
+		debug "[eventMacro] Loading success\n", "eventMacro", 2;
 	}
 }
 
