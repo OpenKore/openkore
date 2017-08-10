@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 03/07, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 04/07. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 24/07, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 25/07. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -34104,15 +34104,26 @@ Classes que utilizam: ^777777Todas^000000
 //---- CASH Items November 2010 ----
 16666#
 Uma caixa contendo 10 Doces Mágicos.
-^CD3278Doce Mágico - Durante 1 minuto, concede ATQM +30, reduz o tempo de conjuração em 70%, a conjuração de habilidades não pode ser interrompida, consome 90 de SP a cada 10 segundos.^000000
-Só pode ser usado novamente após 3 minutos. O efeito é cancelado quando o personagem é nocauteado.
-Peso : ^7777771^000000
+^FF6347Detalhes do item:^000000
+^0000ffATQM +30.^000000
+^0000ffConjuração fixa -70%.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+^0000ffDrena 90 de SP a cada 10 segundos.^000000
+É cancelado se o personagem for nocauteado.
+Duração: ^77777760 segundos^000000
+Recarga: ^7777773 minutos^000000
+Peso: ^7777771^000000
 #
 12596#
 Esse doce mágico vai derreter na sua boca. Só não se esqueça de escovar os dentes depois de deliciá-lo.
-^CD3278Durante 1 minuto, concede ATQM +30, reduz o tempo de conjuração em 70%, a conjuração de habilidades não pode ser interrompida, consome 90 de SP a cada 10 segundos.^000000
-Só pode ser usado novamente após 3 minutos. O efeito é cancelado quando o personagem é nocauteado.
-Peso : ^7777771^000000
+^0000ffATQM +30.^000000
+^0000ffConjuração fixa -70%.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+^0000ffDrena 90 de SP a cada 10 segundos.^000000
+É cancelado se o personagem for nocauteado.
+Duração: ^77777760 segundos^000000
+Recarga: ^7777773 minutos^000000
+Peso: ^7777771^000000
 #
 5680#
 Quer dizer que você andou pilotando protótipos de M.E.C.H.A.s gigantes e enfrentando seres da raça anjo por aí, e agora está com esse curativo em um dos olhos? Veja pelo lado positivo (com o olho que restou, lógico): ao menos ele ajuda a aumentar sua concentração e melhora sua precisão.
@@ -34324,14 +34335,15 @@ Classes que utilizam: ^777777Todas^000000
 //---- CASH Items February 2011 ----
 5790#
 O chapéu sagrado usado pela Papisa durante as cerimônias religiosas para a deusa Freya. Imbuído com energia sagrada, ele garante uma proteção divina contra seus inimigos.
-O usuário recebe +5% de dano de monstros do tipo Demônio e Morto-Vivo.
-Ao realizar ataque físico, chance de auto-conjurar Bênção em nível 1 no oponente.
-Tipo: ^777777Equipamento para a cabeça^000000
+^0000ffResistência a raça Demônio e Morto-Vivo -5%.^000000
+Ao realizar ataques físicos:
+^0000ffPequena chance de autoconjurar [Bênção] nv. 1 no oponente.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo e Centro^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777745^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 16995#
 Uma velha caixa de cor azulada.
@@ -34394,15 +34406,17 @@ Nível necessário: ^77777730^000000
 Classes: ^777777Todas, exceto Aprendizes^000000
 #
 15041#
-Criada com as escamas rígidas da cauda cortada da lendária Boitatá, a cobra de fogo. Mais resistente que armaduras de placas de aço e mais leve que um manto de linho, ela rivaliza com as melhores armaduras do mundo, sendo também Indestrutível.
-Esquiva + 5, HP Máximo + 5%, DEFM + 3.
-Reduz em 7% o dano causado por ataques da propriedade Neutra.
-Indestrutível em batalha.
-Tipo : ^777777Armadura^000000
+Criada com as escamas rígidas da cauda cortada da lendária Boitatá, a cobra de fogo. Mais resistente que armaduras de placas de aço e mais leve que um manto de linho, ela rivaliza com as melhores armaduras do mundo.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDEFM +3.^000000
+^0000ffHP máx. +5%.^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Neutro +7%.^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777745^000000
-Peso : ^77777760^000000
-Nível necessário : ^77777760^000000
-Profissões que utilizam : ^777777Todas^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
 #
 
 17026#
@@ -34868,16 +34882,20 @@ Uma coroa idêntica à usada pela jovem Papisa de Rachel durante cerimônias de 
 ^0000ffEfetividade de cura recebida +5%.^000000
 Refino +7 ou mais:
 ^0000ffEfetividade de cura +3% adicional.^000000
-^FF6347Conjunto [Cajado Restaurador]^000000
-^0000ffEfetividade de cura +1% por refino do Cajado.^000000
-^FF6347Conjunto [Vara Sagrada]^000000
-^0000ffEfetividade de cura +3% por refino da Vara.^000000
-Tipo: ^777777Equipamento para a Cabeça^000000
-Defesa: ^77777710^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado Restaurador]^000000
+A cada refino da arma:
+^0000ffEfetividade de cura +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Vara Sagrada]^000000
+A cada refino da arma:
+^0000ffEfetividade de cura +3%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo e Meio^000000
+Defesa: ^77777710^000000
 Peso: ^77777750^000000
-Nível Necessário : ^77777710^000000
-Classes que utilizam:  ^777777Todas^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 
 6413#
@@ -35057,16 +35075,19 @@ Classe : ^777777Todas as Classes^000000
 18541#
 Um pequeno e levíssimo chapéu com uma adornada pluma em sua lateral.
 Normalmente utilizados por destemidos aventureiros em dias de caça.
-DES + 2
-Dano Crítico + 10%
-Quando equipado com Flecha Afiada, + 5% de Dano Crítico
-Caso o item seja refinado +7 ou mais, adiciona-se + 5% de Danos Críticos
-Tipo : ^777777Equipamento para cabeça^000000
+^0000ffDES +2.^000000
+^0000ffDano crítico +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Flecha Afiada]^000000
+^0000ffDano crítico +5% adicional.^000000
+Refino +7 ou mais:
+^0000ffDano crítico +5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777771^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777730^000000
-Classe : ^777777Todas as Classes^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
 #
 
 //------2011.Sep.lucky_egg_scroll_5---dropitems
@@ -36058,28 +36079,34 @@ Equipa em : ^777777Vestimenta^000000
 Peso : ^7777771^000000
 #
 2481#
-As lendárias botas negras de couro utilizadas pelos Cavaleiros Rúnicos
+As lendárias botas negras de couro utilizadas pelos Cavaleiros Rúnicos.
 ^a400cdIndestrutível em batalha.^000000
 FOR base 90 ou mais:
 ^0000ffATQ +10.^000000
 FOR base 120 ou mais:
 ^0000ffATQ +10 adicional.^000000
 INT base 90 ou mais:
-^0000ffATQM +3%.^000000
+^0000ffDano mágico +3%.^000000
 INT base 120 ou mais:
-^0000ffATQM +2% adicional.^000000
-^FF6347Conjunto [Selo da Guarda Continental]^000000
-^0000ffATQ +1 por refino.^000000
-^FF6347Conjunto [Pedra Encantada de Morroc]^000000
-^0000ffATQM +1% a cada 2 refinos.^000000
-^0000ffTempo de conjuração variável -1% a cada 2 refinos.^000000
-^FF6347Conjunto [Anel de Morroc]^000000
-^0000ffCRIT +1 a cada 2 refinos.^000000
-Tipo : ^777777Calçado^000000
+^0000ffDano mágico +2% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Selo da Guarda Continental]^000000
+A cada refino:
+^0000ffATQ +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedra Encantada de Morroc]^000000
+A cada 2 refinos:
+^0000ffDano mágico +1%.^000000
+^0000ffConjuração variável -1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel de Morroc]^000000
+A cada 2 refinos:
+^0000ffCRIT +1.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^7777775^000000
-Peso : ^77777710^000000
-Nível necessário : ^7777771^000000
-Classes : ^777777Todas as classes^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2573#
 Lindas Asas de Arcanjo. Brancas como a neve e leves feito plumas.
@@ -37367,16 +37394,20 @@ Peso : ^7777770^000000
 #
 
 15058#
-Uma jaqueta de couro utilizada pelos motociclistas que fazem parte da Gang Z.
-Esta peça de roupa é muito resistente e evita que se machuque caso caia de sua montaria.
-AGI + 1.
-Aumenta 01 ponto de Agi a cada 2 níveis de refinamento da jaqueta.
-Quando equipado com a Insígnia do Cavaleiro e Botas Pretas de Couro adiciona AGI + 2, Esquiva + 5.
-Tipo : ^777777Vestimenta^000000
+Uma jaqueta de couro utilizada pelos motociclistas que fazem parte da Gang Z. Esta peça de roupa é muito resistente e evita que se machuque caso caia de sua montaria.
+^0000ffAGI +1.^000000
+A cada 2 refinos até o +10:
+^0000ffAGI +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Insígnia da Cavalaria]^000000
+^FF6347[Botas Pretas de Couro]^000000
+^0000ffEsquiva +5.^000000
+^0000ffAGI +2 adicional.^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777740^000000
-Peso : ^777777100^000000
-Nível Necessário : ^77777755^000000
-Classes : ^777777Todas as Transcendentais, exceto Aprendiz^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777755^000000
+Classes: ^777777Todas as Transclasses, exceto Aprendizes^000000
 #
 
 12834#
@@ -37907,14 +37938,16 @@ Classe : ^777777Todas exceto Aprendiz^000000
 
 18701#
 Este chapéu é usado pelos Sábios mais inteligentes e importantes do Castelo do Dragão, em Louyang. Dizem os rumores que, apesar de serem ratos de biblioteca e estarem sempre com um livro a tiracolo, estes sábios conseguem conjurar magias mais rápido que muito aventureiro por aí.
-INT + 3, DES + 2, SOR + 1.
-Quando equipado em conjunto com uma arma do tipo Livro, diminui o Tempo de Conjuração Variável em 3%. Impossível refinar.
+^0000ffINT +3. DES +2. SOR +1.^000000
+^FF6347Conjunto^000000
+^FF6347Arma do tipo Livro^000000
+^0000ffConjuração variável -3%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777772^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^77777750^000000
-Nível necessário : ^77777770^000000
-Classe : ^777777Todas exceto Aprendiz^000000
+Equipa em: ^777777Topo^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 
 
@@ -38449,8 +38482,7 @@ Nível Necessário : ^77777720^000000
 Classes : ^777777Todos exceto Aprendiz^000000
 #
 18703#
-Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.
-Aumenta em 20% a tolerância contra o status Veneno.
+Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.Aumenta em 20% a tolerância contra o status Veneno.
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa: ^7777770^000000
 Equipa em : ^777777Baixo^000000
@@ -38548,23 +38580,35 @@ Um lendário arco real. Ele oferece poderes mágicos para flechas específicas.
 ^FF6347Conjunto^000000
 ^FF6347[Flecha Luminosa]^000000
 ^0000ffDano físico +50%.^000000
-Ao equipar Carta Deviance
-^0000ffDano físico contra a raça Planta +2% por refino.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Flecha Amaldiçoada]^000000
 ^0000ffDano físico +50%.^000000
-Ao equipar Carta Deviance
-^0000ffDano físico contra a raça Humanoide +2% por refino.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Flecha Sonífera]^000000
 ^0000ffDano físico +50%.^000000
-Ao equipar Carta Deviance
-^0000ffDano físico contra a raça Bruto +2% por refino.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Flecha Emudecedora]^000000
 ^0000ffDano físico +50%.^000000
-Ao equipar Carta Deviance
-^0000ffDano físico contra a raça Inseto +2% por refino.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Deviace]^000000
+^FF6347[Flecha Luminosa]^000000
+A cada refino:
+^0000ffDano físico contra a raça Planta +2%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Deviace]^000000
+^FF6347[Flecha Amaldiçoada]^000000
+A cada refino:
+^0000ffDano físico contra a raça Humanoide +2%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Deviace]^000000
+^FF6347[Flecha Sonífera]^000000
+A cada refino:
+^0000ffDano físico contra a raça Bruto +2%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Deviace]^000000
+^FF6347[Flecha Luminosa]^000000
+A cada refino:
+^0000ffDano físico contra a raça Inseto +2%.^000000
 Tipo: ^777777Arco^000000
 Ataque: ^77777780^000000
 Peso: ^777777150^000000
@@ -39953,13 +39997,10 @@ Refino +10 ou mais:
 ^0000ffTodas as magias anteriores passam a ser autoconjuradas em nível 5.^000000
 Tipo : ^777777Espada de uma mão^000000
 Ataque : ^777777165^000000
-
-Peso : ^777777200^000000
-
+Peso : ^777777200^000000
 Nível da Arma : ^7777774^000000
 Nível Requerido : ^777777105^000000
-
-Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
+Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
 #
 4503#
 DES +2.
@@ -40424,6 +40465,7 @@ Peso: ^7777770^000000
 [^ff0000Frágil^000000]
 Um lubrificante de alta corrosão. Lendário por derreter a superfície de um objeto para que qualquer coisa possa ser separada.
 É perfeito para retirar cartas MVP de alguns equipamentos, inclusive de Elmos contendo uma carta Abelha-Rainha. A chance de remoção é 100%.
+^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 11536#
@@ -40630,8 +40672,7 @@ Criado pela famosa estilista marinha, Leira, este chapéu é uma cópia exata do
 Recuperação usando os itens Sushi e Peixe Cru +50%
 Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000
 Tipo : ^777777Equipamento para Cabeça^000000
-Defesa: ^77777713^000000
-Equipa em : ^777777Topo^000000
+Defesa: ^77777713^000000Equipa em : ^777777Topo^000000
 Peso : ^77777730^000000Nível Necessário : ^77777710^000000
 Classe: ^777777Todas^000000
 #
@@ -40759,16 +40800,29 @@ Equipa em: ^777777Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
-13081#Uma faca fina, que possui um cabo com empunhadura firme, perfeita para cortar frutos do mar.
-^0000FFPrecisão +1 a cada refinamento.
-Se combinada com uma Carta Caranguejo, aumenta em 8% o dano contra o monstro Caranguejo.Se combinada com uma Carta Estrela-do-mar, aumenta em 8% o dano contra o monstro Estrela-do-mar.Se combinada com uma Carta Molusco, aumenta em 8% o dano contra o monstro Molusco.
-Se combinada com as Cartas Caranguejo, Estrela-do-mar e Molusco aumenta em 16% o dano contra os monstros Caranguejo, Estrela-do-mar e Molusco.^000000
-Classe : ^777777Adaga^000000
-Ataque : ^777777140^000000
-Peso :^777777 70^000000
-Nível da Arma : ^7777774^000000
-Nível Necessário : ^777777105^000000
-Classes : ^7777773ª classe de Espadachins/Magos/Arqueiros/Mercadores/Gatunos, Espiritualistas e Ninjas^000000
+13081#
+Uma faca fina, que possui um cabo com empunhadura firme, perfeita para cortar frutos do mar.
+^0000ffPrecisão +1 por refino.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Caranguejo]^000000
+^0000ffDano físico contra oponentes de propriedade Água +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Estrela-do-mar]^000000
+^0000ffDano físico contra oponentes de propriedade Água +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Molusco]^000000
+^0000ffDano físico contra oponentes de propriedade Água +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Caranguejo]^000000
+^FF6347[Carta Molusco]^000000
+^FF6347[Carta Estrela-do-mar]^000000
+^0000ffDano físico contra oponentes de propriedade Água +16%.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777140^000000
+Peso: ^77777770^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Ninjas, Espiritualistas e evoluções^000000
 #
 
 //-------Abismo 2013Q2------------
@@ -45348,13 +45402,13 @@ Classes : ^777777Todas^000000
 #
 5658#
 Um boneco encantado criado nos laboratórios de Lighthalzen, ele se assemelha a um pequeno Imp empoleirado em sua cabeça que produz chamas genuínas. Proteções bioquímicas revestem o Imp para não queimar sua cabeça, mas não protegerão seus inimigos. Só não se espante se começar a sentir cheiro de cabelo queimado e descobrir que você ganhou um novo penteado.
-^0000ffAo realizar ataque físico, chance de auto conjurar a habilidade "Encantar com Chama" em nível 1.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
+^0000ffAo realizar ataques físicos, chance de autoconjurar [Encantar com Chama] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777771^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777740^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5659#
 Uma escultura de areia no formato de um Rochoso, encantada para tornar você capaz de causar tremores que vão abalar seus inimigos. Com o tempo, pode acontecer da sua roupa de baixo se encher de areia. Caso isso lhe incomode, basta plantar bananeira e aguardar durante uma hora para a areia terminar de escorrer de volta pra sua cabeça, o que é útil para marcar as horas.
@@ -48219,7 +48273,7 @@ Tipo: ^777777Cajado^000000
 Ataque: ^77777730^000000
 Peso: ^77777750^000000
 Propriedade: ^777777Sagrado^000000
-Nível da arma: ^7777773^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Arcebispos^000000
 #
@@ -50459,20 +50513,20 @@ Classes: ^777777Todas^000000
 #
 5933#
 Essa máscara representa um Karasu Tengu, ou Tengu Corvo, uma variação do Tengu de nariz comprido. De acordo com as investigações da jornalista Aia Xameimaru, os Karasu Tengus são os seres místicos mais poderosos de Amatsu. Mas Aia é conhecida por exagerar...
-^0000ffDano físico +1%.^000000
 ^0000ffDano físico a distância +2%.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +1%.^000000
 FOR base 108 ou mais:
-^0000ffDano físico +1% adicional.^000000
 ^0000ffDano físico a distância +2% adicional.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +1% adicional.^000000
 FOR base 120 ou mais:
-^0000ffDano físico +2% adicional.^000000
 ^0000ffDano físico a distância +3% adicional.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +2% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classe: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 20399#
 Essa máscara tem um visual parecido com o da Máscara do Tengu Corvo, e por algum motivo era usada pela gangue de ninjas “Corvos” quando tentavam enfrentar o ninja Girayo.
@@ -52629,6 +52683,802 @@ Peso: ^7777771^000000
 ^0000ffDano físico contra oponentes de propriedade Vento e Terra +40%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-07-11--------------------
+//*****************************************************
+31244#
+Um visual que demonstra que você é fã do famoso grupo de heroínas conhecido como Falcoeiras de Rapina. Nele, você vê o brasão da sentinela oráculo conhecida como Barbaria Gordin (ou Familiar Girl), que lutava ao lado da Condor Negro e da Caçadora (que depois evoluiu e virou Atiradora de Elite).
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20377#
+Perfeito pra você que não sabe pilotar um aeroplano, mas mesmo assim já ficou perdido no deserto de Morroc, onde encontrou um Pequeno Filho de um Rei. Assim você sempre se lembrará de importantes lições de vida, como saber que o essencial é invisível aos olhos ou que é loucura odiar todos os hodes porque um te espetou. Opa...
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31187#
+Um laço que de forma alguma imita o visual da famosa Princesa Guerreira Chena. Tudo bem, talvez você seja novo demais para saber quem é Chena, a Princesa Guerreira, mas se a tivesse conhecido como eu, saberia que, mesmo usando esse laço, ela ainda diria: “IIIALALALALALALA!”
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28728#
+Uma adaga dada de presente pelo próprio Odin para suas guerreiras de elite.
+^0000ffATQM +50.^000000
+^FF6347Aprendizes e Superaprendizes:^000000
+^0000ffTorna a arma indestrutível em batalha.^000000
+^0000ffATQ +100.^000000
+^0000ffATQM +150 adicional.^000000
+^0000ffHP e SP máx. +300.^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +10%.^000000
+A cada 2 refinos acima do +7:
+^0000ffINT +2. DES +2.^000000
+^0000ffHP máx. +200.^000000
+^0000ffSP máx. +20.^000000
+^0000ffDano crítico +1%.^000000
+^0000ffATQM +15. CRIT +7.^000000
+^0000ffVelocidade de ataque +10%.^000000
+A cada 10 de DES base:
+^0000ffDES -1 a cada 2 refinos.^000000
+^FF6347Gatunos e evoluções:^000000
+^0000ffATQM +150 adicional.^000000
+^0000ffSP máx. +100.^000000
+A cada 2 refinos:
+^0000ffDano crítico +1%.^000000
+^FF6347Magos e evoluções:^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +10%.^000000
+A cada 2 refinos acima do +7:
+^0000ffHP máx. +200.^000000
+^0000ffSP máx. +20.^000000
+^FF6347Caçadores e evoluções:^000000
+^0000ffHP máx. +200.^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+A cada 2 refinos:
+^0000ffINT +2. DES +2.^000000
+^FF6347Bardos e evoluções:^000000
+^0000ffATQ +100.^000000
+^0000ffTorna a arma indestrutível em batalha.^000000
+A cada 10 de DES base:
+^0000ffDES -1 a cada 2 refinos.^000000
+A cada 2 refinos:
+^0000ffVelocidade de ataque +10%.^000000
+^FF6347Odaliscas e evoluções:^000000
+^0000ffATQ +100.^000000
+^0000ffTorna a arma indestrutível em batalha.^000000
+A cada 10 de DES base:
+^0000ffDES -1 a cada 2 refinos.^000000
+A cada 2 refinos:
+^0000ffVelocidade de ataque +10%.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777750^000000
+Peso: ^77777710^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Aprendizes, Superaprendizes, Ninjas, Espiritualistas, Gatunos, Magos, Espadachins, Arqueiros, Mercadores e evoluções^000000
+#
+1841#
+Garras feitas de cristal encantado. Com elas, você ficará tão rápido que fará a luz refratar durante os seus golpes. Ao menos seus inimigos morrerão diante de um belo show de cores e efeitos visuais.
+^0000ffVelociade de ataque +1.^000000
+A cada refino:
+^0000ffVelociade de ataque +1%.^000000
+^0000ffDano físico contra oponentes de tamanho Médio +1%.^000000
+Tipo: ^777777Soqueira^000000
+Ataque: ^777777140^000000
+Peso: ^77777740^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Shuras^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-07-18--------------------
+//*****************************************************
+5980#
+Um belo chapéu da aristocracia de Einbroch, que deu início à moda chamada “Vitoriana”. Esse modelo ficou particularmente famoso quando foi usado pela Espiritualista Vanessa Alves, durante um baile de gala que ela participou antes de ir caçar o Drácula.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20450#
+Apesar de ser algo considerado impossível no mundo de Rune-Midgard, muitos aventureiros já sonharam em como seria poder seguir o caminho de duas classes diferentes. Pensando nisso, a estilista Peônia criou esse belo chapéu de Bruxo-Menestrel, ou caso prefira, Bruxa-Cigana. Como marca registrada, ele ainda leva a flor que dá nome à criativa estilista.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19048#
+Uma malha de combate encantada com forças elementais. Criada especialmente para a selvagem atração de PvP dos Jogos Vorags, foi usada pela famosa arqueira Gataniss Sempredim. Parece ter suas habilidades aumentadas se usada em conjunto com outros itens queridos por fãs da literatura.
+^0000ffDano físico a distância +2%.^000000
+Refino +7 ou mais:
+^0000ffTorna a armadura indestrutível em batalha.^000000
+Refino +8 ou mais:
+^0000ffDano físico a distância +2% adicional.^000000
+Refino +9 ou mais:
+^0000ffDano físico a distância +3% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco Incendiário]^000000
+^FF6347[Flecha de Fogo]^000000
+^0000ffDano físico a distância +20%.^000000
+^0000ffResistência a propriedade Fogo -10%.^000000
+Arco com refino +10 ou mais:
+^0000ffVelocidade de Ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco Glacial]^000000
+^FF6347[Flecha de Cristal]^000000
+^0000ffDano físico a distância +20%.^000000
+^0000ffDesativa a chance da arma de infligir Congelamento.^000000
+Arco com refino +10 ou mais:
+^0000ffVelocidade de Ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco do Vendaval]^000000
+^FF6347[Flecha de Vento]^000000
+^0000ffDano físico a distância +20%.^000000
+^0000ffDesativa a chance da arma de autoconjurar [Lâmina de Vento].^000000
+Arco com refino +10 ou mais:
+^0000ffVelocidade de Ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco da Terra]^000000
+^FF6347[Flecha de Pedra]^000000
+^0000ffDano físico a distância +20%.^000000
+^0000ffDesativa a chance da arma de infligir Petrificação.^000000
+Arco com refino +10 ou mais:
+^0000ffVelocidade de Ataque +1.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777745^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+19019#
+Dizem que essa coroa foi usada por uma rainha fanática por rosas vermelhas que governou um país maravilhoso, cheio de lagartas azuis, antes de perder a cabeça. Encantada com forças elementais, seus poderes aumentam se usada em conjunto com outros itens queridos por fãs da literatura.
+^0000ffDES +3.^000000
+^0000ffDano físico a distância +4%.^000000
+Até o nível base 129:
+^0000ffDES +1 a cada 2 refinos.^000000
+A partir do nv. base 130:
+^0000ffDES +1 por refino.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco Incendiário]^000000
+^0000ffDano físico a distância +45%.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco Glacial]^000000
+^0000ffDano físico a distância +45%.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco do Vendaval]^000000
+^0000ffDano físico a distância +45%.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco da Terra]^000000
+^0000ffDano físico a distância +45%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+28411#
+Dizem que as esmeraldas usadas neste par de brincos foram mineradas no Vulcão de Thor. Talvez por isso o brinco seja tão procurado por Ciganas e Menestréis.
+^0000ffDES +5. AGI +5. INT +5.^000000
+A cada 2 níveis de [Domínio Musical]:
+^0000ffATQM +20.^000000
+^0000ffDES +1. AGI +1. INT +1.^000000
+A cada nível de base:
+^0000ffDano de [Vulcão de Flechas] [Estilingue] e [Flecha Melódica] +1%.^000000
+A cada 5 níveis de base:
+^0000ffDano de [Ruído Estridente] +2%.^000000
+^0000ffConjuração variável de [Ruído Estridente] -1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777773^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-07-25--------------------
+//*****************************************************
+31038#
+Uma bandana vermelha xadrez, bastante estilosa. Embora originalmente tenha sido feita pra se usar no pescoço, vários grupos como bardos, arruaceiros, skatistas e até alguns Rockers passaram a amarrá-la na cabeça. Entre personalidades famosas que adotaram seu uso estão o Algoz Cozinheiro, Ryou Kibakubo, e a treinadora de pets, Maia, da cidade de Petelburgo.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20131#
+Desde que a musa Meeku Rátishune se tornou um fenômeno musical em Amatsu, outros cantores foram se unindo ao seu grupo, os Vocalroks. Incluindo os jovens Aprendizes, Lenon e Rima Poopoomine. Não se sabe ainda se os dois são gêmeos ou namorados, já que muitos fãs adoram shipá-los, mas o que importa é que muita gente gosta das músicas deles.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-08-01--------------------
+//*****************************************************
+31208#
+Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira loira... Mesmo que isso seja apenas uma peruca! Tá, ainda não está tão longo quanto o da donzela Rapunzela, mas um dia você ainda chega lá. Perfeito pra quem não quer se disfarçar de sacerdote pra conquistar aquele espadachim amado.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31209#
+Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira... Mesmo que isso seja apenas uma peruca! Se você sempre quis se parecer com o guerreiro yokai Inu Se Acha, com o líder do Bando do Falcão, Graffite ou com a famosa arruaceira Gatuna Negra, essa é a sua chance.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19265#
+Antigas lendas relatam que os Fumacentos usam folhas mágicas na cabeça para ficarem invisíveis ou mesmo se disfarçarem, assumindo até mesmo formas humanas. Agora que você está desfilando com esse chapéu, fica a dúvida: será que no fundo você é um desses Fumacentos disfarçado de aventureiro? Porque você está cheio de truques!
+^0000ffA cada refino:^000000
+^0000ffDano mágico de todas as propriedades +1%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de se transformar em um Fumacento por 5 segundos.^000000
+^FF6347Durante a transformação:^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Lanças de Fogo], [Lanças de Gelo], [Relâmpago] e [Coluna de Pedra] nv. 2.^000000
+Refino +7 ou mais:
+^0000ff4% de chance de autoconjurar [Congelar] nv. 5.^000000
+Refino +8 ou mais:
+^0000ff3% de chance de autoconjurar [Tempestade de Raios] nv. 5.^000000
+Refino +9 ou mais,
+Nv. base 100 ou mais:
+^0000ff2% de chance de autoconjurar [Chamas de Hela] nv. 5.^000000
+Refino +10 ou mais,
+Nv. base 100 ou mais:
+^0000ff1% de chance de autoconjurar [Corrente Elétrica] nv. 5.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777777^000000
+Peso: ^77777760^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28538#
+Dizem que essas luvas foram encantadas por uma das 6 Joias do Faniquito, ganhando assim poderes de acelerar o tempo ou até quebrar proteções mágicas. Era um dos itens mágicos usados pelo Dr. Esquisito quando ele se tornou o Bruxo Supremo.
+^0000ffConjuração variável -5%.^000000
+^0000ffIgnora 20% da DEFM dos monstros.^000000
+^0000ffDano mágico de propriedade Fogo, Água, Terra, Vento e Neutro +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+12796#
+Uma poção fabricada antigamente na pirâmide de Morroc, que deixa seu usuário mais concentrado para a batalha.
+^0000ffATQ e ATQM +30.^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffHP e SP máx. -10%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de autoconjurar [Concentração] nv. 3 ou no nível aprendido.^000000
+É cancelado se o personagem for nocauteado.
+Duração: ^77777710 minutos^000000
+Peso: ^7777771^000000
+#
+12298#
+Um elixir inventado pela Corporação Pata de Gato que, de tão azedo, reduz temporariamente seus gastos de SP ao ativar suas habilidades.
+^0000ffCusto de SP das habilidades -15%.^000000
+Duração: ^77777760 minutos^000000
+Peso: ^7777771^000000
+#
+//*****************************************************
+//-------------------OLD GLAST HEIM--------------------
+//*****************************************************
+2022#
+Uma arma empoeirada, mas que dá para sentir uma grande quantidade de poder mágico. Algumas palavras estão gravadas em relevo:
+'Criado pela grande maga da Torre de Geffen, Catherine F. Heine'.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +300.^000000
+^0000ffINT +20.^000000
+Tipo: ^777777Cajado de Duas Mãos^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777771^000000
+Nível necessário: ^777777150^000000
+Classes: ^777777Arcanos^000000
+#
+2499#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+2949#
+Um bracelete misterioso que é muito parecido com o Bracelete Temporal.
+^0000ffDEFM +3.^000000
+^0000ffTodos os atributos +1.^000000
+^0000ffHabilita [Desconcentrar] nv. 5.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777773^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
+#
+4875#
+^0000ffDrena 300 de SP ao desequipar.^000000
+Ao receber ataques físicos:
+^0000ffChance de ativar [Delírio] por 5 segundos.^000000
+^FF6347Delírio:^000000
+^0000ffFOR +200.^000000
+^0000ffSe transforma em um Pé-Grande.^000000
+^0000ffDrena 500 de HP do usuário a cada 1 segundo.^000000
+#
+4876#
+^0000ffDrena 2.000 de SP ao desequipar.^000000
+Ao realizar ataques mágicos:
+^0000ffChance de ativar [Epifania] por 10 segundos.^000000
+^FF6347Epifania:^000000
+^0000ffINT +200.^000000
+^0000ffDrena 200 de SP do usuário a cada 1 segundo.^000000
+#
+4877#
+^0000ffDrena 300 de SP ao desequipar.^000000
+Ao realizar ataques físicos:
+^0000ffPequena chance de ativar [Ânimo] por 5 segundos.^000000
+^FF6347Ânimo:^000000
+^0000ffEsquiva Perfeita +100.^000000
+^0000ffVelocidade de ataque +100%.^000000
+^0000ffDrena 400 de HP e 40 de SP do usuário a cada 1 segundo.^000000
+#
+4878#
+^0000ffDrena 300 de SP ao desequipar.^000000
+Ao receber ataques físicos:
+^0000ffPequena chance de ativar [Histeria] por 5 segundos.^000000
+^FF6347Histeria:^000000
+^0000ffVIT +200.^000000
+^0000ffDano físico -50%.^000000
+^0000ffDano mágico -50%.^000000
+#
+4879#
+^0000ffDrena 300 de SP ao desequipar.^000000
+Ao realizar ataques físicos:
+^0000ffPequena chance de ativar [Instinto] por 5 segundos.^000000
+^FF6347Instinto:^000000
+^0000ffDES +200.^000000
+^0000ffDrena 50 de SP do usuário a cada 1 segundo.^000000
+#
+4880#
+^0000ffDrena 300 de SP ao desequipar.^000000
+Ao realizar ataques físicos:
+^0000ffPequena chance de ativar [Euforia] por 5 segundos.^000000
+^FF6347Euforia:^000000
+^0000ffSOR +200.^000000
+^0000ffAo derrotar monstros, chance de derrubar [Arca de Tesouro].^000000
+#
+6607#
+Um pequeno e raro cristal que foi moldado magicamente pela distorção do tempo.
+Peso: ^7777771^000000
+#
+6608#
+Essa coisa macia é formada por um feitiço que pode atravessar o tempo.
+Peso: ^7777771^000000
+#
+6609#
+Unhas limpas dos mortos que voltaram à vida de repente. São muito valiosas para os negociantes.
+Peso: ^7777771^000000
+#
+6610#
+Arcada dentária dos mortos que voltaram à vida de repente. São muito valiosas para os negociantes.
+Peso: ^7777771^000000
+#
+6611#
+Chave dourada decorada com muitos detalhes, que parece ser bem valiosa. Não se sabe qual porta é aberta por esta chave.
+Peso: ^7777771^000000
+#
+6612#
+Uma cesta cheia de moedas antigas de ouro. Tem uma águia e duas lanças esculpidas nas moedas.
+'Marquês Evene F. Wigner, D.G. 669.'
+Peso: ^77777720^000000
+#
+6613#
+Um broche grande e bonito. Ele ainda brilha lindamente, mesmo estando bem empoeirado e sem alfinete.
+Tem uma pequena gravura na parte de trás.
+'Feliz aniversário de 10 anos, Earich Lowenburg.'
+Peso: ^7777771^000000
+#
+13086#
+Adaga esplêndida com decoração em ouro. Parece tão antiga que mal dá para ler o que está escrito em relevo.
+'Vida longa e próspera à família Gaebolg'.
+^0000ffATQM +25.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777735^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777771^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Espadachins, Magos, Mercadores, Gatunos, Ninjas, Espiritualistas e evoluções^000000
+#
+13440#
+Uma arma muito bonita para usar em combate, parece com uma espada cerimonial dos nobres de alta classe.
+Tem uma pequena gravura em relevo.
+'Presente de casamento para minha bela irmã, Raina Nerius, de seu irmão, Rauven Nerius'.
+Tipo: ^777777Espada^000000
+Ataque: ^77777760^000000
+Peso: ^77777750^000000
+Propriedade: ^777777Sagrado^000000
+Nível da arma: ^7777771^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Magos, Mercadores, Gatunos e evoluções^000000
+#
+15066#
+Armadura com detalhes em peridoto. Parece boa, só está empoeirada.
+'Stern R. Walter, o Cavaleiro do Crepúsculo'.
+^0000ffDEFM +25.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777120^000000
+Peso: ^777777300^000000
+Nível necessário: ^777777150^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
+18752#
+Um livro vermelho de tanto absorver o sangue de seus oponentes.
+^0000ff4% de chance de converter 4% do dano físico causado em HP.^000000
+^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
+^0000ffDrena 1 de HP do usuário a cada 5 segundos.^000000
+A cada refino:
+^0000ffDrena +1 de HP.^000000
+A cada 2 refinos:
+^0000ffConversão de HP +1%.^000000
+A cada 3 refinos:
+^0000ffConversão de SP +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas as transcendentais, exceto Aprendizes^000000
+#
+21003#
+Espada oriental, batizada com o nome do famoso artesão do antigo Japão.
+^0000ffCRIT +30.^000000
+^0000ffVelocidade de ataque +8%.^000000
+Ao realizar ataques físicos:
+^0000ffPequena chance de infligir Maldição no usuário.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777155^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777748^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
+21007#
+Espada grande usada na guerra há muito tempo atrás. Tem uma mensagem encravada na lâmina.
+'A espada de Grants Richard será lembrada por muitos heróis.
+^0000ffFOR +20.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777330^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777771^000000
+Nível necessário: ^777777150^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
+22000#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22001#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22002#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22003#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22004#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22005#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22006#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22007#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22008#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22009#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22010#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+22011#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Terceiras classes^000000
+#
+4601#
+^0000ffDano físico +15%.^000000
+^0000ffDano mágico +15%.^000000
+^0000ffDrena 666 de HP e 66 de SP do usuário a cada 4 segundos.^000000
+Ao desequipar:
+^0000ffDrena 6.666 de HP e 666 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+4603#
+^0000ffATQ +20.^000000
+Ao realizar ataques físicos:
+^0000ffAlta chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4605#
+^0000ffHP máx. -44%.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRegenera 200 de HP.^000000
+A cada refino:
+^0000ffRegenera +10 de HP.^000000
+Ao desequipar:
+^0000ffDrena 4.444 de HP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cavaleira Desmorta]^000000
+^0000ffResistência a propriedade Neutro +20%.^000000
+^0000ffDrena 100 de HP do usuário a cada 6 segundos.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+4606#
+^0000ffSP máx. -44%.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRegenera 20 de SP.^000000
+A cada 2 refinos:
+^0000ffRegenera +1 de SP.^000000
+Ao desequipar:
+^0000ffDrena 444 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cavaleiro Desmorto]^000000
+^0000ffEsquiva +20.^000000
+^0000ffDrena 6 de SP do usuário a cada 6 segundos.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 //file end
