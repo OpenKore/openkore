@@ -1887,7 +1887,7 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:989 ../Network/Receive/ServerType0.pm:1463
 msgid "Charname already exists.\n"
-msgstr "Já existe um clã com este nome.\n"
+msgstr "Já existe um personagem com este nome.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:991 ../Network/Receive/ServerType0.pm:1465
 msgid "Char creation denied.\n"
