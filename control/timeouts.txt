@@ -85,6 +85,8 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
+# Every x seconds, check party share settings
+ai_partyShareCheck 60
 # Every x seconds, check pet hungry for feeding
 ai_petFeed 60
 # Every x seconds, check homun hungry for feeding

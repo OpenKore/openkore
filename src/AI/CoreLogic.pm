@@ -123,6 +123,7 @@ sub iterate {
 	processDeal();
 	processDealAuto();
 	processPartyAuto();
+	processPartyShareAuto();
 	processGuildAutoDeny();
 
 	Misc::checkValidity("AI part 1.1");
@@ -3195,6 +3196,23 @@ sub processFeed {
 		$messageSender->sendPetMenu(1);
 		$timeout{ai_petFeed}{time} = time;
 	}
+}
+
+sub processPartyShareAuto {
+	return if (!$char->{party}{users}{$accountID}{admin} || $char->{party}{shareForcedByCommand});	
+	
+	if (timeOut($timeout{ai_partyShareCheck})) {
+		if (!exists($char->{party}{shareTimes})) { $char->{party}{shareTimes} = 1; }
+		
+		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
+			$char->{party}{shareTimes}++;
+			if ($char->{party}{shareTimes} > 5) {
+				warning T("Party Share Settings have been sent many times, please check your party\n");
+			}			
+		}
+		$timeout{ai_partyShareCheck}{time} = time;
+	}	
 }
 
 1;
