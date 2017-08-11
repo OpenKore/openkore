@@ -82,7 +82,8 @@ use constant MANUAL => 1;
 # AI is turned on.
 use constant AUTO => 2;
 
-my $AI = AUTO;
+# Do not change $AI::AI directly, use AI::state instead
+our $AI = AUTO;
 
 ### CATEGORY: Functions
 
