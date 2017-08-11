@@ -56,6 +56,12 @@ sub new {
 	$self->create_automacro_list($parse_result->{automacros});
 
 	$self->define_automacro_check_state;
+	
+	$self->{AI_state_change_Hook_Handle} = Plugins::addHook( 'AI_state_change',  sub { my $state = $_[1]->{new}; $self->adapt_to_AI_state($state); }, undef );
+	
+	$self->{Currently_AI_state_Adapted_Automacros} = undef;
+	
+	$self->adapt_to_AI_state(AI::state);
 
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
 	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
@@ -77,11 +83,35 @@ sub new {
 	return $self;
 }
 
+sub adapt_to_AI_state {
+	my ($self, $state) = @_;
+	
+	$self->{Currently_AI_state_Adapted_Automacros} = undef;
+	
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		my $automacro_index = $automacro->get_index;
+		
+		if ($self->{automacros_index_to_AI_check_state}{$automacro_index}{$state} == 1) {
+			
+			$self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} = 1;
+			if (!$automacro->running_status && $automacro->can_be_added_to_queue) {
+				$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+			}
+			
+		} else {
+			if ($automacro->running_status) {
+				$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
+			}
+		}
+	}
+}
+
 sub unload {
 	my ($self) = @_;
 	$self->clear_queue();
 	$self->clean_hooks();
 	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
+	Plugins::delHook($self->{AI_state_change_Hook_Handle});
 }
 
 sub clean_hooks {
@@ -680,7 +710,7 @@ sub check_all_conditions {
 			debug "[eventMacro] Checking condition of index '".$condition->get_index."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
 			$automacro->check_state_type_condition($condition->get_index, 'recheck')
 		}
-		if ($automacro->can_be_added_to_queue) {
+		if (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_index} && $automacro->can_be_added_to_queue) {
 			$self->add_to_triggered_prioritized_automacros_index_list($automacro);
 		}
 	}
@@ -1284,7 +1314,7 @@ sub manage_event_callbacks {
 					$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
 				
 				#remove from running queue
-				} elsif ($result && $automacro->can_be_added_to_queue) {
+				} elsif ($result && exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && $automacro->can_be_added_to_queue) {
 					$self->add_to_triggered_prioritized_automacros_index_list($automacro);
 					
 				}
@@ -1297,7 +1327,7 @@ sub manage_event_callbacks {
 				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				$automacro->check_event_type_condition($callback_type, $callback_name, $callback_args);
 				
-			} elsif (($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event && $self->{automacros_index_to_AI_check_state}{$automacro_index}{$AI} == 1) {
+			} elsif (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
 				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $callback_args)) {
@@ -1391,8 +1421,6 @@ sub AI_start_checker {
 	my ($self, $state) = @_;
 	
 	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
-		
-		next unless ($self->{automacros_index_to_AI_check_state}{$array_member->{index}}{$state} == 1);
 		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
