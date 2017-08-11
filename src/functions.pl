@@ -245,7 +245,7 @@ sub loadDataFiles {
 	Settings::addTableFile('packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
-		loader => [\&parsePortals, \%portals_lut]);
+		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
 	Settings::addTableFile('portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);
 	Settings::addTableFile('sex.txt',
@@ -299,6 +299,8 @@ sub loadDataFiles {
 		die $@;
 	}
 	return if $quit;
+
+	Settings::update_log_filenames();
 
 	Plugins::callHook('start3');
 
@@ -524,6 +526,8 @@ sub finalInitialization {
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
 	$slavesList = new ActorList('Actor::Slave');
+	$venderItemList = InventoryList->new;
+	$storeList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
@@ -642,7 +646,6 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef %talk;
 	$ai_v{temp} = {};
-	undef @venderItemList;
 	undef $venderID;
 	undef $venderCID;
 	undef @venderListsID;
@@ -671,6 +674,8 @@ sub initMapChangeVars {
 	$portalsList->clear();
 	$npcsList->clear();
 	$slavesList->clear();
+	$venderItemList->clear;
+	$storeList->clear;
 
 	@unknownPlayers = ();
 	@unknownNPCs = ();
@@ -688,16 +693,7 @@ sub initMapChangeVars {
 
 	Plugins::callHook('packet_mapChange');
 
-	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
-	$logAppend = ($config{logAppendServer}) ? "_$servers[$config{'server'}]{'name'}".$logAppend : $logAppend;
-	
-	if ($config{logAppendUsername} && index($Settings::storage_log_file, $logAppend) == -1) {
-		$Settings::chat_log_file     = substr($Settings::chat_log_file,    0, length($Settings::chat_log_file)    - 4) . "$logAppend.txt";
-		$Settings::storage_log_file  = substr($Settings::storage_log_file, 0, length($Settings::storage_log_file) - 4) . "$logAppend.txt";
-		$Settings::shop_log_file     = substr($Settings::shop_log_file,    0, length($Settings::shop_log_file)    - 4) . "$logAppend.txt";
-		$Settings::monster_log_file  = substr($Settings::monster_log_file, 0, length($Settings::monster_log_log)  - 4) . "$logAppend.txt";
-		$Settings::item_log_file     = substr($Settings::item_log_file,    0, length($Settings::item_log_file)    - 4) . "$logAppend.txt";
-	}
+	Settings::update_log_filenames();
 }
 
 # Initialize variables when your character logs in

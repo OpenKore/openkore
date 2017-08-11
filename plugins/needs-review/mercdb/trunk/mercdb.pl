@@ -265,7 +265,7 @@ sub mercDbFill{
 				# HOT DEAL !!!!!!!!!!!!
 				#
 				Log::message("HOT DEAL !!!!!!!!!");	
-	#			print $avg_price . " - " . $std_price . " * " . $myHotDeal . " = " . $barrier_price . " // price: " . $::venderItemList[$::number]{'price'} ."\n";
+	#			print $avg_price . " - " . $std_price . " * " . $myHotDeal . " = " . $barrier_price . " // price: " . $::venderItemList->get($::number)->{'price'} ."\n";
 	#			print $avg_std_query . "\n";
 				
 				my @shoppinglist = split(/,/, $Settings::config{"merchantDB_shoppinglist"});
@@ -371,7 +371,7 @@ sub mercDbFill{
 				# this item wasn't offered by this dealer on this server
 				#
 				
-				#$itemName = $::venderItemList[$::number]{'name'};
+				#$itemName = $::venderItemList->get($::number)->{'name'};
 				#$itemName = main::itemNameSimple($iid);
 				$itemName = $myItemList->{itemList}[$idx]{name};
 				$itemName =~ s/\\/\\\\/g;

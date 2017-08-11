@@ -28,7 +28,7 @@ use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
 use Plugins;
-use Misc qw(useTeleport);
+use Misc qw(useTeleport portalExists);
 use Utils qw(timeOut distance existsInList);
 use Utils::PathFinding;
 use Utils::Exceptions;
@@ -155,6 +155,8 @@ sub iterate {
 		delete $self->{substage};
 		delete $self->{timeout};
 		delete $self->{mapChanged};
+		delete $self->{missing_portal};
+		delete $self->{guess_portal};
 		shift @{$self->{mapSolution}};
 
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
@@ -271,8 +273,89 @@ sub iterate {
 
 	} elsif ( $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"}{source} ) {
 		# This is a portal solution
+		
+		if ($self->{missing_portal}) {
+		
+			if (!$config{route_tryToGuessMissingPortalByDistance}) {
+				my $missed = {};
+				$missed->{time} = time;
+				$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+				$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+				push(@portals_lut_missed, $missed);
+				delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+				warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+				delete $self->{missing_portal};
+				delete $self->{guess_portal};
+				$self->initMapCalculator();	# redo MAP router
+				
+			} else {
+				if (!exists $self->{guess_portal}) {
+					my $closest_portal_binID;
+					my $closest_portal_dist;
+					for my $portal (@$portalsList) {
+						my $dist = distance($self->{actor}{pos_to}, $portal->{pos});
+						next if (exists $self->{guess_skip} && exists $self->{guess_skip}{$portal->{binID}});
+						next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
+						next if (portalExists($field->baseName, $portal->{pos})); # Only guess unknown portals
+						$closest_portal_binID = $portal->{binID};
+						$closest_portal_dist = $dist;
+					}
+					if (defined $closest_portal_binID) {
+						$self->{guess_portal} = $portalsList->get($closest_portal_binID);
+						warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "route";
+					} else {
+						my $missed = {};
+						$missed->{time} = time;
+						$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+						$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+						push(@portals_lut_missed, $missed);
+						delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+						warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+						delete $self->{missing_portal};
+						$self->initMapCalculator();	# redo MAP router
+					}
+					
+				} else {
+					# Portal is reachable
+					if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $self->{guess_portal}{pos} ) ) {
+						my $task = new Task::Route(
+							actor => $self->{actor},
+							x => $self->{guess_portal}{pos}{x},
+							y => $self->{guess_portal}{pos}{y},
+							maxTime => $self->{maxTime},
+							avoidWalls => $self->{avoidWalls},
+							solution => \@solution
+						);
+						$self->setSubtask($task);
+						
+						return;
+					} else {
+						$self->{guess_skip}{$self->{guess_portal}->{binID}} = 1;
+						delete $self->{guess_portal};
+					}
+				}
+			}
+			
+		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
+				if (!exists $timeout{ai_portal_give_up}{time}) {
+					$timeout{ai_portal_give_up}{time} = time;
+					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
+					return;
+				}
+				return unless (timeOut($timeout{ai_portal_give_up}));
+				delete $timeout{ai_portal_give_up}{time};
+				
+				my %plugin_args;
+				$plugin_args{object} = $self;
+				$plugin_args{solution} = \@solution;
+				$plugin_args{return} = 1;
+				Plugins::callHook('Task::MapRoute::iterate::missing_portal', \%plugin_args);
+				return if (!$plugin_args{return});
+				
+				$self->{missing_portal} = 1;
 
-		if ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
+		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
+			
 			# Portal is within 'Enter Distance'
 			$timeout{ai_portal_wait}{timeout} = $timeout{ai_portal_wait}{timeout} || 0.5;
 			if ( timeOut($timeout{ai_portal_wait}) ) {

@@ -246,7 +246,7 @@ sub ai_partyfollow {
 
 	my %master;
 	$master{id} = main::findPartyUserID($config{followTarget});
-	if ($master{id} ne "" && !AI::inQueue("storageAuto","storageGet","sellAuto","buyAuto")) {
+	if ($master{id} ne "" && !AI::inQueue("storageAuto","transferItems","sellAuto","buyAuto")) {
 
 		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
@@ -499,7 +499,7 @@ sub ai_route { $char->route(@_) }
 sub ai_sellAutoCheck {
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped} || $item->{unsellable});
-		my $control = Misc::items_control($item->{name});
+		my $control = Misc::items_control($item->{name}, $item->{nameID});
 		if ($control->{sell} && $item->{amount} > $control->{keep}) {
 			return 1;
 		}
@@ -575,7 +575,7 @@ sub ai_storageAutoCheck {
 	}
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped});
-		my $control = Misc::items_control($item->{name});
+		my $control = Misc::items_control($item->{name}, $item->{nameID});
 		if ($control->{storage} && $item->{amount} > $control->{keep}) {
 			return 1;
 		}

@@ -659,7 +659,7 @@ sub cmdAutoSell {
 				T("Amount  Item Name\n");
 		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
-			my $control = items_control($item->{name});
+			my $control = items_control($item->{name},$item->{nameID});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
 				$obj{index} = $item->{ID};
@@ -720,7 +720,7 @@ sub cmdBuy {
 				"Usage: buy <item #> [<amount>][, <item #> [<amount>]]...\n");
 			return;
 
-		} elsif ($storeList[$index] eq "") {
+		} elsif (!$storeList->get($index)) {
 			error TF("Error in function 'buy' (Buy Store Item)\n" .
 				"Store Item %s does not exist.\n", $index);
 			return;
@@ -729,7 +729,7 @@ sub cmdBuy {
 			$amount = 1;
 		}
 
-		my $itemID = $storeList[$index]{nameID};
+		my $itemID = $storeList->get($index)->{nameID};
 		push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 	}
 
@@ -976,60 +976,41 @@ sub cmdCart_list {
 }
 
 sub cmdCart_add {
-	my ($name) = @_;
+	my $items = shift;
 
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-			"Usage: cart add <item>\n");
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "cart add Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->inventory->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Inventory item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::inventoryItem($name);
-
-	if (!$item) {
-		error TF("Error in function 'cart add' (Add Item to Cart)\n" .
-			"Inventory Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartAdd($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'inventory' => 'cart' );
 }
 
 sub cmdCart_get {
-	my ($name) = @_;
+	my $items = shift;
 
-	if (!defined $name) {
-		error T("Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-			"Usage: cart get <cart item>\n");
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "cart get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->cart->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Cart item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	my $amount;
-	if ($name =~ /^(.*?) (\d+)$/) {
-		$name = $1;
-		$amount = $2;
-	}
-
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Error in function 'cart get' (Get Item from Cart)\n" .
-			"Cart Item %s does not exist.\n", $name);
-		return;
-	}
-
-	if (!$amount || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendCartGet($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'cart' => 'inventory' );
 }
 
 sub cmdCash {
@@ -1376,7 +1357,7 @@ sub cmdCloseBuyShop {
 
 sub cmdConf {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2) = $args =~ /^(\S+)\s*(.*?)\s*$/;
+	my ( $force, $arg1, $arg2 ) = $args =~ /^(-f\s+)?(\S+)\s*(.*)$/;
 
 	# Basic Support for "label" in blocks. Thanks to "piroJOKE"
 	if ($arg1 =~ /\./) {
@@ -1401,8 +1382,9 @@ sub cmdConf {
 	};
 
 	if ($arg1 eq "") {
-		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n" .
-			"Usage: conf <variable> [<value>|none]\n");
+		error T("Syntax Error in function 'conf' (Change a Configuration Key)\n");
+		error T("Usage: conf [-f] <variable> [<value>|none]\n");
+		error T("  -f  force variable to be set, even if it does not already exist in config.txt\n");
 
 	} elsif ($arg1 =~ /\*/) {
 		my $pat = $arg1;
@@ -1411,7 +1393,7 @@ sub cmdConf {
 		error TF( "Config variables matching %s do not exist\n", $arg1 ) if !@keys;
 		message TF( "Config '%s' is %s\n", $_, defined $config{$_} ? $config{$_} : 'not set' ), "info" foreach @keys;
 
-	} elsif (!exists $config{$arg1}) {
+	} elsif (!exists $config{$arg1} && !$force) {
 		error TF("Config variable %s doesn't exist\n", $arg1);
 
 	} elsif ($arg2 eq "") {
@@ -1549,11 +1531,7 @@ sub cmdDeal {
 		while (@items && $n < $max_items) {
 			my $item = shift @items;
 			next if $item->{equipped};
-			my $amount = $item->{amount};
-			if (!$arg[2] || $arg[2] > $amount) {
-				$arg[2] = $amount;
-			}
-			dealAddItem($item, $arg[2]);
+			dealAddItem( $item, min( $item->{amount}, $arg[2] || $item->{amount} ) );
 			$n++;
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
@@ -3566,7 +3544,7 @@ sub cmdParty {
 			$messageSender->sendPartyJoinRequestByName ($arg2);
 		}
 	# party leader specific commands
-	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
+	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
 		my $party_admin;
 		# check if we are the party leader before using leader specific commands.
 		for (my $i = 0; $i < @partyUsersID; $i++) {
@@ -3587,7 +3565,7 @@ sub cmdParty {
 				"Usage: party share <flag>\n");
 		} elsif ($arg1 eq "share") {
 			$messageSender->sendPartyOption($arg2, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-
+			$char->{party}{shareForcedByCommand} = 1;
 		} elsif ($arg1 eq "shareitem" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 			error T("Error in function 'party shareitem' (Set Party Share Item)\n" .
 				"Can't set share - you're not in a party.\n");
@@ -3596,7 +3574,7 @@ sub cmdParty {
 				"Usage: party shareitem <flag>\n");
 		} elsif ($arg1 eq "shareitem") {
 			$messageSender->sendPartyOption($config{partyAutoShare}, $arg2, $config{partyAutoShareItemDiv});
-
+			$char->{party}{shareForcedByCommand} = 1;
 		} elsif ($arg1 eq "sharediv" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 			error T("Error in function 'party share' (Set Party Share EXP)\n" .
 				"Can't set share - you're not in a party.\n");
@@ -3605,8 +3583,10 @@ sub cmdParty {
 				"Usage: party share <flag>\n");
 		} elsif ($arg1 eq "sharediv") {
 			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $arg2);
-
-
+			$char->{party}{shareForcedByCommand} = 1;
+		} elsif ($arg1 eq "shareauto") {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
+			$char->{party}{shareForcedByCommand} = undef;
 		} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 			error T("Error in function 'party kick' (Kick Party Member)\n" .
 				"Can't kick member - you're not in a party.\n");
@@ -3634,7 +3614,7 @@ sub cmdParty {
 		}
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|shareitem|sharediv|kick|leader>]\n");
+			"Usage: party [<create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n");
 	}
 }
 
@@ -4680,89 +4660,87 @@ sub cmdStorage {
 sub cmdStorage_add {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::inventoryItem($name);
-	if (!$item) {
-		error TF("Inventory Item '%s' does not exist.\n", $name);
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage add Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->inventory->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Inventory item '%s' does not exist.\n", $name );
 		return;
 	}
 
-	if ($item->{equipped}) {
-		error TF("Inventory Item '%s' is equipped.\n", $name);
-		return;
-	}
-
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
-	}
-	$messageSender->sendStorageAdd($item->{ID}, $amount);
+	transferItems( \@items, $amount, 'inventory' => 'storage' );
 }
 
 sub cmdStorage_addfromcart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::cartItem($name);
-	if (!$item) {
-		error TF("Cart Item '%s' does not exist.\n", $name);
+	if (!$char->cart->isReady) {
+		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage addfromcart Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	$messageSender->sendStorageAddFromCart($item->{ID}, $amount);
+	my @items = $char->cart->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Cart item '%s' does not exist.\n", $name );
+		return;
+	}
+
+	transferItems( \@items, $amount, 'cart' => 'storage' );
 }
 
 sub cmdStorage_get {
 	my $items = shift;
 
-	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my @names = split(',', $names);
-	my @items;
-
-	for my $name (@names) {
-		if ($name =~ /^(\d+)\-(\d+)$/) {
-			for my $i ($1..$2) {
-				my $item = $char->storage->get($i);
-				#push @items, $item->{ID} if ($item);
-				push @items, $item if ($item);
-			}
-
-		} else {
-			my $item = Match::storageItem($name);
-			if (!$item) {
-				error TF("Storage Item '%s' does not exist.\n", $name);
-				next;
-			}
-			#push @items, $item->{ID};
-			push @items, $item;
-		}
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
+	}
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage item '%s' does not exist.\n", $name );
+		return;
 	}
 
-	storageGet(\@items, $amount) if @items;
+	transferItems( \@items, $amount, 'storage' => 'inventory' );
 }
 
 sub cmdStorage_gettocart {
 	my $items = shift;
 
-	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
-	my $item = Match::storageItem($name);
-	if (!$item) {
-		error TF("Storage Item '%s' does not exist.\n", $name);
+	if ( !$char->cart->isReady ) {
+		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
 		return;
 	}
 
-	if (!defined($amount) || $amount > $item->{amount}) {
-		$amount = $item->{amount};
+	my ( $name, $amount );
+	if ( $items =~ /^[^"'].* .+$/ ) {
+		# Backwards compatibility: "storage get Empty Bottle 1" still works.
+		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+	} else {
+		( $name, $amount ) = parseArgs( $items );
 	}
-	
-	if (!$char->cartActive) {
-		error T("Error in function 'storage_gettocart' (Cart Management)\n" .
-			"You do not have a cart.\n");
+	my @items = $char->storage->getMultiple( $name );
+	if ( !@items ) {
+		error TF( "Storage item '%s' does not exist.\n", $name );
 		return;
 	}
-	$messageSender->sendStorageGetToCart($item->{ID}, $amount);
+
+	transferItems( \@items, $amount, 'storage' => 'cart' );
 }
 
 sub cmdStorage_close {
@@ -4790,28 +4768,26 @@ sub cmdStore {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
-		my $msg = center(TF(" Store List (%s) ", $storeList[0]{npcName}), 54, '-') ."\n".
+		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 54, '-') ."\n".
 			T("#  Name                    Type                  Price\n");
-		my $display;
-		for (my $i = 0; $i < @storeList; $i++) {
-			$display = $storeList[$i]{'name'};
+		foreach my $item (@$storeList) {
 			$msg .= swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z",
-				[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]);
+				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}]);
 		}
-	$msg .= "Store list is empty.\n" if !$display;
-	$msg .= ('-'x54) . "\n";
-	message $msg, "list";
+		$msg .= "Store list is empty.\n" if !$storeList->size;
+		$msg .= ('-'x54) . "\n";
+		message $msg, "list";
 
 	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList->get($arg2)) {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
 			"Store item %s does not exist\n", $arg2);
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		printItemDesc($storeList[$arg2]{nameID});
+		printItemDesc($storeList->get($arg2)->{nameID});
 
 	} else {
 		error T("Syntax Error in function 'store' (Store Functions)\n" .
@@ -5380,7 +5356,7 @@ sub cmdVender {
 		error T("Syntax error in function 'vender' (Vender Shop)\n" .
 			"Usage: vender <vender # | end> [<item #> <amount>]\n");
 	} elsif ($arg1 eq "end") {
-		undef @venderItemList;
+		$venderItemList->clear;
 		undef $venderID;
 		undef $venderCID;
 	} elsif ($venderListsID[$arg1] eq "") {
@@ -5391,11 +5367,13 @@ sub cmdVender {
 	} elsif ($venderListsID[$arg1] ne $venderID) {
 		error T("Error in function 'vender' (Vender Shop)\n" .
 			"Vender ID is wrong.\n");
+	} elsif (!$venderItemList->get( $arg2 )) {
+		error TF("Error in function 'vender' (Vender Shop)\n" .
+			"Item %s does not exist.\n", $arg2);
 	} else {
-		if ($arg3 <= 0) {
-			$arg3 = 1;
-		}
-		$messageSender->sendBuyBulkVender($venderID, [{itemIndex  => $arg2, amount => $arg3}], $venderCID);
+		$arg3 = 1 if $arg3 <= 0;
+		my $item = $venderItemList->get( $arg2 );
+		$messageSender->sendBuyBulkVender( $venderID, [ { itemIndex => $item->{ID}, amount => $arg3 } ], $venderCID );
 	}
 }
 

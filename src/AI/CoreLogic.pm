@@ -50,6 +50,7 @@ sub iterate {
 	processWipeOldActors();
 	processGetPlayerInfo();
 	processMisc();
+	processReAddMissingPortals();
 	processPortalRecording();
 	Benchmark::end("ai_prepare") if DEBUG;
 	
@@ -122,12 +123,13 @@ sub iterate {
 	processDeal();
 	processDealAuto();
 	processPartyAuto();
+	processPartyShareAuto();
 	processGuildAutoDeny();
 
 	Misc::checkValidity("AI part 1.1");
 	#processAutoBreakTime(); moved to a plugin
 	processDead();
-	processStorageGet();
+	processTransferItems();
 	processCartAdd();
 	processCartGet();
 	processAutoMakeArrow();
@@ -413,6 +415,16 @@ sub processDrop {
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
+}
+
+##### PORTALREADD #####
+# Automatically adds the last missing portals to portals_lut
+sub processReAddMissingPortals {
+	return unless (@portals_lut_missed);
+	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
+	my $portal = shift(@portals_lut_missed);
+	$portals_lut{$portal->{name}} = $portal->{portal};
+	debug "Re adding portal '".$portal->{name}."' to portals list.\n", "portalReAdd";
 }
 
 ##### PORTALRECORD #####
@@ -970,20 +982,75 @@ sub processDead {
 	}
 }
 
-##### STORAGE GET #####
-# Get one or more items from storage.
-sub processStorageGet {
-	if (AI::action eq "storageGet" && timeOut(AI::args)) {
-		my $item = shift @{AI::args->{items}};
-		my $amount = AI::args->{max};
+##### TRANSFER ITEMS #####
+# Transfer one or more items from one location (inventory/cart/storage) to another.
+# AI::args should look like:
+#   {
+#     items => [ # list of items to transfer
+#       { source => 'inventory', target => 'cart',    item => Actor::Item, amount => 10 },
+#       { source => 'inventory', target => 'storage', item => Actor::Item },
+#     ],
+#     timeout => 0.5, # 0.5 seconds between transfers
+#   }
+sub processTransferItems {
+	return if AI::action ne 'transferItems';
+	return if !timeOut( AI::args );
 
-		if (!$amount || $amount > $item->{amount}) {
-			$amount = $item->{amount};
+	{
+		my $row = shift @{ AI::args->{items} };
+		last if !$row;
+		redo if !$row->{source} || !$row->{target} || !$row->{item};
+
+		# Skip if we're transferring from and to the same location.
+		redo if $row->{source} eq $row->{target};
+
+		# Skip if we don't know how to handle the source and/or target.
+		redo if $row->{source} !~ /^(inventory|storage|cart)$/o;
+		redo if $row->{target} !~ /^(inventory|storage|cart)$/o;
+
+		# Figure out where the item came from and what packet we need to use to transfer it.
+		my ( $source, $target, $method );
+		if ( $row->{source} eq 'inventory' ) {
+			( $source, $target, $method ) = ( $char->inventory => $char->storage, 'sendStorageAdd' ) if $row->{target} eq 'storage';
+			( $source, $target, $method ) = ( $char->inventory => $char->cart,    'sendCartAdd' )    if $row->{target} eq 'cart';
+		} elsif ( $row->{source} eq 'storage' ) {
+			( $source, $target, $method ) = ( $char->storage => $char->inventory, 'sendStorageGet' )       if $row->{target} eq 'inventory';
+			( $source, $target, $method ) = ( $char->storage => $char->cart,      'sendStorageGetToCart' ) if $row->{target} eq 'cart';
+		} elsif ( $row->{source} eq 'cart' ) {
+			( $source, $target, $method ) = ( $char->cart => $char->inventory, 'sendCartGet' )            if $row->{target} eq 'inventory';
+			( $source, $target, $method ) = ( $char->cart => $char->storage,   'sendStorageAddFromCart' ) if $row->{target} eq 'storage';
 		}
-		$messageSender->sendStorageGet($item->{ID}, $amount) if $char->storage->isReady();
-		AI::args->{time} = time;
-		AI::dequeue if !@{AI::args->{items}};
+
+		# Make sure source and target are available.
+		foreach ( [ $row->{source}, $source ], [ $row->{target}, $target ] ) {
+			my ( $name, $list ) = @$_;
+			next if $list->isReady;
+			error T( "Your inventory is not available. Unable to transfer item '%s'.\n", $row->{item} ) if $name eq 'inventory';
+			error T( "Your storage is not available. Unable to transfer item '%s'.\n",   $row->{item} ) if $name eq 'storage';
+			error T( "Your cart is not available. Unable to transfer item '%s'.\n",      $row->{item} ) if $name eq 'cart';
+			redo;
+		}
+
+		# Verify that the item is still in the source list and has not changed.
+		my $item = $source->get( $row->{item}->{binID} );
+		if ( !$item || $item->nameString ne $row->{item}->nameString ) {
+			error TF( "Inventory item '%s' disappeared!\n", $row->{item} ) if $row->{source} eq 'inventory';
+			error TF( "Storage item '%s' disappeared!\n",   $row->{item} ) if $row->{source} eq 'storage';
+			error TF( "Cart item '%s' disappeared!\n",      $row->{item} ) if $row->{source} eq 'cart';
+			redo;
+		}
+
+		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
+			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
+			redo;
+		}
+
+		# Transfer the item!
+		$messageSender->$method( $item->{ID}, min( $item->{amount}, $row->{amount} || $item->{amount} ) );
 	}
+
+	AI::args->{time} = time;
+	AI::dequeue if !@{ AI::args->{items} };
 }
 
 #### CART ADD ####
@@ -1281,7 +1348,7 @@ sub processAutoStorage {
 						next;
 					}
 
-					my $control = items_control($item->{name});
+					my $control = items_control($item->{name}, $item->{nameID});
 
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					if ($control->{storage} && $item->{amount} > $control->{keep}) {
@@ -1311,7 +1378,7 @@ sub processAutoStorage {
 					my $item = $char->cart->[$i];
 					next unless ($item && %{$item});
 
-					my $control = items_control($item->{name});
+					my $control = items_control($item->{name}, $item->{nameID});
 
 					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $control->{storage}, keep = $control->{keep}\n", "storage";
 					# store from cart as well as inventory if the flag is equal to 2
@@ -1548,7 +1615,7 @@ sub processAutoSell {
 				next if ($item->{equipped});
 				next if (!$item->{sellable});
 
-				my $control = items_control($item->{name});
+				my $control = items_control($item->{name}, $item->{nameID});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 					if ($args->{lastIndex} ne "" && $args->{lastIndex} eq $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
@@ -1781,7 +1848,7 @@ sub processAutoCart {
 				for my $invItem (@{$char->inventory}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
-					my $control = items_control($invItem->{name});
+					my $control = items_control($invItem->{name}, $invItem->{nameID});
 					if ($control->{cart_add} && $invItem->{amount} > $control->{keep}) {
 						my %obj;
 						$obj{index} = $invItem->{binID};
@@ -1794,7 +1861,7 @@ sub processAutoCart {
 			}
 
 			for my $cartItem (@{$char->cart}) {
-				my $control = items_control($cartItem->{name});
+				my $control = items_control($cartItem->{name}, $cartItem->{nameID});
 				next unless ($control->{cart_get});
 
 				my $invItem = $char->inventory->getByName($cartItem->{name});
@@ -3129,6 +3196,23 @@ sub processFeed {
 		$messageSender->sendPetMenu(1);
 		$timeout{ai_petFeed}{time} = time;
 	}
+}
+
+sub processPartyShareAuto {
+	return if (!$char->{party}{users}{$accountID}{admin} || $char->{party}{shareForcedByCommand});	
+	
+	if (timeOut($timeout{ai_partyShareCheck})) {
+		if (!exists($char->{party}{shareTimes})) { $char->{party}{shareTimes} = 1; }
+		
+		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
+			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
+			$char->{party}{shareTimes}++;
+			if ($char->{party}{shareTimes} > 5) {
+				warning T("Party Share Settings have been sent many times, please check your party\n");
+			}			
+		}
+		$timeout{ai_partyShareCheck}{time} = time;
+	}	
 }
 
 1;
