@@ -781,6 +781,10 @@ sub get_scalar_var {
 			return '' if !$char;
 			return join ',', sort( ( $char->{muted} ? 'muted' : () ), ( $char->{dead} ? 'dead' : () ), map { $statusName{$_} || $_ } keys %{ $char->{statuses} } );
 		}
+		elsif ( $variable_name eq '.statushandle') {
+			return '' if !$char;
+			return join ',', keys %{ $char->{statuses} } ;
+		}
 
 		# Cart-related variables.
 		elsif ( $variable_name eq '.cartweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
