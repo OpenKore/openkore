@@ -11591,32 +11591,3 @@ Inscreva-se no Torneio de Magia.#
 9316#Torneio de Magia#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#
-
-//-------Old Glast Heim
-12316#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-Finalmente encontrei Hugin. Ele provavelmente se lembra de mim, mas não sei se posso dizer o mesmo.#
-Continue a conversa com Hugin.#
-
-12317#Traço de Viagem Temporal#SG_FEEL#QUE_NOIMAGE#
-Aventurar-se no tempo pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
-Aguarde o tempo de espera para retornar.#
-
-12318#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-Himelmez está em busca do Coração de Ymir em Glast Heim. É claro que ela deixou armadilhas para atrapalhar qualquer um que ouse cruzar o caminho da Senhora dos Mortos.#
-Elimine a Origem da Maldição.#
-
-12319#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-Himelmez está em busca do Coração de Ymir em Glast Heim. É claro que ela deixou armadilhas para atrapalhar qualquer um que ouse cruzar o caminho da Senhora dos Mortos.#
-Elimine o Amdarais#
-
-12320#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-A viagem temporal para a Antiga Glast Heim foi parcialmente concluída#
-Reporte o caso a Hugin.#
-
-12321#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-A viagem temporal para a Antiga Glast Heim foi totalmente concluída#
-Reporte o caso a Hugin.#
-
-12322#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
-O tempo foi distorcido por Hugin! Qualquer coisa pode acontecer dentro deste castelo.#
-Distorção Espacial#
