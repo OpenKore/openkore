@@ -19,57 +19,61 @@ use eventMacro::Utilities qw(find_variable get_key_or_index);
 sub new {
 	my ($class, $file) = @_;
 	my $self = bless {}, $class;
-	
+
 	$self->{file} = $file;
-	
-	my $parse_result = parseMacroFile($file, 0);
-	return undef unless ($parse_result);
-	
+
 	$self->{Macro_List} = new eventMacro::Lists;
-	$self->create_macro_list($parse_result->{macros});
-	
 	$self->{Automacro_List} = new eventMacro::Lists;
 	$self->{Condition_Modules_Loaded} = {};
-	$self->create_automacro_list($parse_result->{automacros});
-	
 	$self->{automacros_index_to_AI_check_state} = {};
-	$self->define_automacro_check_state;
-	
-	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
-	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
-	$self->set_automacro_checking_status();
-	
+
 	$self->{Event_Related_Hooks} = {};
 	$self->{Hook_Handles} = {};
-	
+
 	$self->{Event_Related_Static_Variables} = {};
-	
+
 	$self->{Dynamic_Variable_Complements} = {};
 	$self->{Dynamic_Variable_Sub_Callbacks} = {};
 	$self->{Event_Related_Dynamic_Variables} = {};
-	
-	$self->create_callbacks();
-	
-	$self->{Macro_Runner} = undef;
-	
+
 	$self->{Scalar_Variable_List_Hash} = {};
 	$self->{Array_Variable_List_Hash} = {};
 	$self->{Hash_Variable_List_Hash} = {};
-	
-	$self->{number_of_triggered_automacros} = 0;
-	
+
 	#must add a sorting algorithm here later
 	$self->{triggered_prioritized_automacros_index_list} = [];
-	
+
 	$self->{automacro_index_to_queue_index} = {};
-	
+
+	my $parse_result = parseMacroFile($file, 0);
+	if ( !$parse_result ) {
+		$self->{parse_failed} = 1;
+		return $self;
+	}
+
+	$self->create_macro_list($parse_result->{macros});
+
+	$self->create_automacro_list($parse_result->{automacros});
+
+	$self->define_automacro_check_state;
+
+	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
+	$self->set_automacro_checking_status();
+
+	$self->create_callbacks();
+
+	$self->{Macro_Runner} = undef;
+
+	$self->{number_of_triggered_automacros} = 0;
+
 	$self->set_arrays_size_to_zero();
 	$self->set_hashes_size_to_zero();
-	
+
 	if ($char && $net && $net->getState() == Network::IN_GAME) {
 		$self->check_all_conditions();
 	}
-	
+
 	return $self;
 }
 
