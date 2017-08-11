@@ -2856,6 +2856,10 @@ sub chat_created {
 	binAdd(\@chatRoomsID, $accountID);
 	binAdd(\@currentChatRoomUsers, $char->{name});
 	message T("Chat Room Created\n");
+	
+	Plugins::callHook('chat_created', {
+		chat => $chatRooms{$accountID},
+	});
 }
 
 sub chat_info {
@@ -2896,24 +2900,41 @@ sub chat_join_result {
 
 sub chat_modified {
 	my ($self, $args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v a4 a4 v2 C';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $title_len = ($args->{len} - $header_len);
+	
+	my $title = substr($msg, $header_len, $title_len);
 
-	my $title = bytesToString($args->{title});
-
-	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
-
+	my ($ownerID, $chat_ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
+	
+	my $ID;
+	
 	if ($ownerID eq $accountID) {
-		$chatRooms{new}{title} = $title;
-		$chatRooms{new}{ownerID} = $ownerID;
-		$chatRooms{new}{limit} = $limit;
-		$chatRooms{new}{public} = $public;
-		$chatRooms{new}{num_users} = $num_users;
+		$ID = $accountID;
 	} else {
-		$chatRooms{$ID}{title} = $title;
-		$chatRooms{$ID}{ownerID} = $ownerID;
-		$chatRooms{$ID}{limit} = $limit;
-		$chatRooms{$ID}{public} = $public;
-		$chatRooms{$ID}{num_users} = $num_users;
+		$ID = $chat_ID;
 	}
+	
+	my %chat = ();
+	$chat{title} = $title;
+	$chat{ownerID} = $ownerID;
+	$chat{limit} = $limit;
+	$chat{public} = $public;
+	$chat{num_users} = $num_users;
+	
+	Plugins::callHook('chat_modified', {
+		ID => $ID,
+		old => $chatRooms{$ID},
+		new => \%chat,
+	});
+	
+	$chatRooms{$ID} = {%chat};
+	
 	message T("Chat Room Properties Modified\n");
 }
 
@@ -2969,6 +2990,7 @@ sub chat_user_leave {
 		undef @currentChatRoomUsers;
 		$currentChatRoom = "";
 		message T("You left the Chat Room\n");
+		Plugins::callHook('chat_leave');
 	} else {
 		message TF("%s has left the Chat Room\n", $user);
 	}
@@ -2978,7 +3000,12 @@ sub chat_removed {
 	my ($self, $args) = @_;
 
 	binRemove(\@chatRoomsID, $args->{ID});
-	delete $chatRooms{ $args->{ID} };
+	my $chat = delete $chatRooms{ $args->{ID} };
+	
+	Plugins::callHook('chat_removed', {
+		ID => $args->{ID},
+		chat => $chat,
+	});
 }
 
 sub deal_add_other {
