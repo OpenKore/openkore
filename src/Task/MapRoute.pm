@@ -165,16 +165,28 @@ sub iterate {
 		# If current solution has conversation steps specified
 		if ( $self->{substage} eq 'Waiting for Warp' ) {
 			$self->{timeout} = time unless $self->{timeout};
-			if (timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10)) #|| $ai_v{npc_talk}{talk} eq 'close')
-			{
-				# We waited for 10 seconds and got nothing
+			
+			if (exists $self->{mapSolution}[0]{error} || timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10)) {
 				delete $self->{substage};
 				delete $self->{timeout};
-				if (++$self->{mapSolution}[0]{retry} >= ($config{route_maxNpcTries} || 5)) {
+				
+				warning TF("Failed to teleport using NPC at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+				warning TF("NPC error: %s.\n", $self->{mapSolution}[0]{error}), "route" if (exists $self->{mapSolution}[0]{error});
+				
+				if ($self->{mapSolution}[0]{retry} < ($config{route_maxNpcTries} || 5)) {
+					warning "Retrying for the ".$self->{mapSolution}[0]{retry}." time...\n", "route";
+					delete $self->{mapSolution}[0]{error};
+					
+				} else {
 					# NPC sequence is a failure
 					# We delete that portal and try again
+					my $missed = {};
+					$missed->{time} = time;
+					$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+					$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					push(@portals_lut_missed, $missed);
 					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-					warning TF("Unable to talk to NPC at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+					error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "route";
 					$self->initMapCalculator();	# redo MAP router
 				}
 			}
@@ -183,15 +195,8 @@ sub iterate {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
-				$self->{substage} = 'Waiting for Warp';
-				@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos_to}}{qw(x y)};
-				$self->{old_map} = $field->baseName;
-				my $task = new Task::TalkNPC(
-					type => 'talknpc',
-					x => $self->{mapSolution}[0]{pos}{x},
-					y => $self->{mapSolution}[0]{pos}{y},
-					sequence => $self->{mapSolution}[0]{steps});
-				$self->setSubtask($task);
+				$self->setNpcTalk();
+				
 			} else {
 				error TF("You need %sz to pay for warp service at %s (%s,%s), you have %sz.\n",
 					$portals_lut{$from}{dest}{$to}{cost},
@@ -199,8 +204,7 @@ sub iterate {
 					$self->{actor}{zeny}), "route";
 					AI::clear(qw/move route mapRoute/);
 					message T("Stopped all movement\n"), "success";
-# TODO: need to pave another route
-#				$self->initMapCalculator(); # Redo MAP router
+				$self->initMapCalculator();	# redo MAP router
 			}
 
 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
@@ -452,6 +456,19 @@ sub iterate {
 	}
 }
 
+sub setNpcTalk {
+	my ($self) = @_;
+	$self->{substage} = 'Waiting for Warp';
+	@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos_to}}{qw(x y)};
+	$self->{old_map} = $field->baseName;
+	my $task = new Task::TalkNPC(
+		type => 'talknpc',
+		x => $self->{mapSolution}[0]{pos}{x},
+		y => $self->{mapSolution}[0]{pos}{y},
+		sequence => $self->{mapSolution}[0]{steps});
+	$self->setSubtask($task);
+}
+
 sub initMapCalculator {
 	my ($self) = @_;
 	my $task = new Task::CalcMapRoute(
@@ -529,7 +546,8 @@ sub subtaskDone {
 			} else {
 				$code = UNKNOWN_ERROR;
 			}
-			$self->setError($code, $error->{message});
+			$self->{mapSolution}[0]{retry}++;
+			$self->{mapSolution}[0]{error} = $error->{message};
 		}
 
 	} elsif (my $error = $task->getError()) {

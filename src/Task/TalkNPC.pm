@@ -652,7 +652,7 @@ sub iterate {
 						
 					} else {
 						# TODO: maybe just warn about remaining steps and do not set error flag?
-						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").\n");
+						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].")");
 					}
 				}
 			
