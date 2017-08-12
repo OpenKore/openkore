@@ -25,6 +25,9 @@ sub _parse_syntax {
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
+	$self->{actor} = undef;
+	$self->{hook_type} = undef;
+	
 	if ($callback_type eq 'hook') {
 		if ($callback_name eq 'add_player_list') {
 			$self->{actor} = $args;
