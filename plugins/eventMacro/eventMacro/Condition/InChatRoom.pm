@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 use Globals;
 
 sub _hooks {
-	['packet_mapChange','chat_created','chat_leave'];
+	['packet_mapChange','chat_created','chat_leave','chat_joined'];
 }
 
 sub _parse_syntax {
@@ -28,7 +28,7 @@ sub _parse_syntax {
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	return $self->SUPER::validate_condition( (($currentChatRoom ne "" ? 1 : 0) == $self->{wanted_state}) ? 1 : 0 );
+	return $self->SUPER::validate_condition( (($currentChatRoom eq "" ? 0 : 1) == $self->{wanted_state}) ? 1 : 0 );
 }
 
 1;
