@@ -258,7 +258,10 @@ sub searchStep {
 			if ( !$target->{x} || !$target->{y} ) {
 				$self->{found} = $parent;
 			} elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $portals_lut{$portal}{dest}{$dest}, $target) ) {
-				$self->{found} = $parent;
+				my $walk = $self->{found} = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
+				$closelist->{$walk}         = { %{ $closelist->{$parent} } };
+				$closelist->{$walk}{walk}   = scalar @{ $self->{solution} } + $closelist->{$parent}{walk};
+				$closelist->{$walk}{parent} = $parent;
 			}
 
 
