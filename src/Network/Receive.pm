@@ -2906,12 +2906,9 @@ sub chat_modified {
 	my $header_pack = 'v a4 a4 v2 C';
 	my $header_len = ((length pack $header_pack) + 2);
 	
-	my $title_len = ($args->{len} - $header_len);
-	
-	my $title = substr($msg, $header_len, $title_len);
+	my $title = bytesToString(substr $msg, $header_len);
 
 	my ($ownerID, $chat_ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
-	
 	my $ID;
 	
 	if ($ownerID eq $accountID) {

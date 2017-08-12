@@ -142,7 +142,7 @@ sub new {
 		'00DB' => ['chat_users'], # -1
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]], # 28
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]], # 29
-		'00DF' => ['chat_modified', 'v a4 a4 v2 C', [qw(len ownerID ID limit num_users public)]], # -1
+		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00E1' => ['chat_newowner', 'V Z24', [qw(type user)]], # 30 # type = role
 		'00E5' => ['deal_request', 'Z24', [qw(user)]], # 26
 		'00E7' => ['deal_begin', 'C', [qw(type)]], # 3
