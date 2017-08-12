@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index getQuestStatus);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -1878,6 +1878,19 @@ sub parse_command {
 			$result = $self->parse_defined($inside_brackets);
 			return if (defined $self->error);
 			$only_replace_once = 1;
+
+		} elsif ( $keyword eq 'questStatus' ) {
+			$result = getQuestStatus( $parsed )->{$parsed} || 'unknown';
+
+		} elsif ( $keyword eq 'questInactiveCount' ) {
+			$result = grep { $_ eq 'inactive' } values %{ getQuestStatus( split /\s*,\s*/, $parsed ) };
+
+		} elsif ( $keyword eq 'questIncompleteCount' ) {
+			$result = grep { $_ eq 'incomplete' } values %{ getQuestStatus( split /\s*,\s*/, $parsed ) };
+
+		} elsif ( $keyword eq 'questCompleteCount' ) {
+			$result = grep { $_ eq 'complete' } values %{ getQuestStatus( split /\s*,\s*/, $parsed ) };
+
 		}
 		
 		return unless defined $result;
