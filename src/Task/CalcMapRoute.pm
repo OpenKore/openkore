@@ -11,7 +11,7 @@
 #########################################################################
 # This task calculates a route between different maps. When the calculation
 # is successfully completed, the result can be retrieved with
-# $Task_CalcMapRoute->getRoute() or $Task_CalcMapRoute->getRouteString().
+# $task->getRoute() or $task->getRouteString().
 #
 # Note that this task only performs calculation. The MapRoute task is
 # responsible for actually walking from a map to another.
@@ -50,10 +50,12 @@ use enum qw(
 # Create a new Task::CalcMapRoute object. The following options are allowed:
 # `l
 # - All options allowed for Task->new()
-# - map (required) - The map you want to go to, for example "prontera".
-# - x, y - The coordinate on the destination map you want to walk to. On some maps this is
-#          important because they're split by a river. Depending on which side of the river
-#          you want to be, the route may be different.
+# - targets - An arrayref of hashrefs, each of which must contain "map", "x", "y" keys. The
+#             path to the closest target will be calculated and returned.
+#   - map (required) - The map you want to go to, for example "prontera".
+#   - x, y - The coordinate on the destination map you want to walk to. On some maps this is
+#            important because they're split by a river. Depending on which side of the river
+#            you want to be, the route may be different.
 # - sourceMap - The map you're coming from. If not specified, the current map
 #               (where the character is) is assumed.
 # - sourceX and sourceY - The source position where you're coming from. If not specified,
@@ -68,18 +70,20 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
-	if (!$args{map}) {
-		ArgumentException->throw(error => "Invalid arguments.");
+	if ( $args{map} && !$args{targets} ) {
+		$args{targets} = [ { map => $args{map}, x => $args{x}, y => $args{y} } ];
+	}
+
+	if ( !$args{targets} || ref $args{targets} ne 'ARRAY' || !@{ $args{targets} } ) {
+		ArgumentException->throw( error => "Invalid arguments." );
 	}
 
 	$self->{source}{field} = defined($args{sourceMap}) ? Field->new(name => $args{sourceMap}) : $field;
 	$self->{source}{map} = $self->{source}{field}->baseName;
 	$self->{source}{x} = defined($args{sourceX}) ? $args{sourceX} : $char->{pos_to}{x};
 	$self->{source}{y} = defined($args{sourceY}) ? $args{sourceY} : $char->{pos_to}{y};
-	($self->{dest}{map}, undef) = Field::nameToBaseName(undef, $args{map}); # Hack to clean up InstanceID
-	# $self->{dest}{map} = $args{map};
-	$self->{dest}{pos}{x} = $args{x};
-	$self->{dest}{pos}{y} = $args{y};
+	$self->{targets} = $args{targets};
+	$_->{map} = ( Field::nameToBaseName( undef, $_->{map} ) )[0] foreach @{ $args{targets} };
 	if ($args{budget} ne '') {
 		$self->{budget} = $args{budget};
 	} elsif ($config{route_maxWarpFee} ne '') {
@@ -107,7 +111,7 @@ sub new {
 	$self->{closelist} = {};
 	$self->{mapSolution} = [];
 	$self->{solution} = [];
-	$self->{dest}{field} = {};
+	$self->{mapChangeWeight} = $args{mapChangeWeight} || 1;
 
 	return $self;
 }
@@ -120,22 +124,24 @@ sub iterate {
 	if ($self->{stage} == INITIALIZE) {
 		my $openlist = $self->{openlist};
 		my $closelist = $self->{closelist};
-		eval {
-			$self->{dest}{field} = new Field(name => $self->{dest}{map});
-		};
-		if (caught('FileNotFoundException', 'IOException')) {
-			$self->setError(CANNOT_LOAD_FIELD, TF("Cannot load field '%s'.", $self->{dest}{map}));
-			return;
-		} elsif ($@) {
-			die $@;
-		}
+		foreach ( @{ $self->{targets} } ) {
+			$_->{field} = eval { Field->new( name => $_->{map} ) };
+			if ( caught( 'FileNotFoundException', 'IOException' ) ) {
+				$self->setError( CANNOT_LOAD_FIELD, TF( "Cannot load field '%s'.", $_->{map} ) );
+				return;
+			} elsif ( $@ ) {
+				die $@;
+			}
 
-		# Check whether destination is walkable from the starting point.
-		if ($self->{source}{map} eq $self->{dest}{map}
-		 && Task::Route->getRoute(undef, $self->{source}{field}, $self->{source}, $self->{dest}{pos}, 0)) {
-			$self->{mapSolution} = [];
-			$self->setDone();
-			return;
+			# Check whether destination is walkable from the starting point.
+			if ( $self->{source}{map} eq $_->{map} && Task::Route->getRoute( undef, $_->{field}, $self->{source}, $_, 0 ) ) {
+				$self->{mapSolution} = [];
+				$self->{target} = $_;
+				$self->{target}->{pos}->{x} = $_->{x};
+				$self->{target}->{pos}->{y} = $_->{y};
+				$self->setDone();
+				return;
+			}
 		}
 
 		# Initializes the openlist with portals walkable from the starting point.
@@ -171,24 +177,23 @@ sub iterate {
 			delete $self->{openlist};
 			delete $self->{solution};
 			delete $self->{closelist};
-			delete $self->{dest}{field};
+			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
 			debug "Map Solution Ready for traversal.\n", "route";
 			debug sprintf("%s\n", $self->getRouteString()), "route";
 
 		} elsif ($self->{done}) {
-			my $destpos = "$self->{dest}{pos}{x},$self->{dest}{pos}{y}";
-			$destpos = "($destpos)" if ($destpos ne "");
-			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s %s",
+			my $destpos = $self->{target}->{x} ? " ($self->{target}->{x},$self->{target}->{y})" : '';
+			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
-				$self->{dest}{map}, $destpos));
+				$self->{target}->{map}, $destpos));
 			debug "CalcMapRoute failed.\n", "route";
 		}
 	}
 }
 
 ##
-# Array<Hash>* $Task_CalcMapRoute->getRoute()
+# Array<Hash>* $task->getRoute()
 # Requires: $self->getStatus() == Task::DONE && !defined($self->getError())
 #
 # Return the calculated route.
@@ -197,19 +202,25 @@ sub getRoute {
 }
 
 ##
-# String $Task_CalcMapRoute->getRoute()
+# String $task->getRouteString()
 # Requires: $self->getStatus() == Task::DONE && !defined($self->getError())
 #
 # Return a string which describes the calculated route. This string has
 # the following form: "payon -> pay_arche -> pay_dun00 -> pay_dun01"
 sub getRouteString {
-	my ($self) = @_;
-	my @maps;
-	foreach my $node (@{$self->{mapSolution}}) {
-		push @maps, $node->{map};
-	}
-	push @maps, "$self->{dest}{map}";
-	return join(' -> ', @maps);
+	my ( $self ) = @_;
+	join ' -> ', map { $_->{map} } @{ $self->getRoute }, $self->{target};
+}
+
+##
+# String $task->getFullRouteString()
+# Requires: $self->getStatus() == Task::DONE && !defined($self->getError())
+#
+# Return a string which describes the calculated route. This string has
+# the following form: "payon 228 329 -> pay_arche 36 131 -> pay_dun00 184 33 -> pay_dun01 286 25"
+sub getFullRouteString {
+	my ( $self ) = @_;
+	join ' -> ', map { "$_->{map} $_->{pos}->{x} $_->{pos}->{y}" } @{ $self->getRoute }, $self->{target};
 }
 
 sub searchStep {
@@ -238,51 +249,28 @@ sub searchStep {
 
 		} else {
 			# MOVE this entry into the CLOSELIST
-			$closelist->{$parent}{walk}   = $openlist->{$parent}{walk};
-			$closelist->{$parent}{zeny}  = $openlist->{$parent}{zeny};
-			$closelist->{$parent}{allow_ticket}  = $openlist->{$parent}{allow_ticket};
-			$closelist->{$parent}{zeny_covered_by_tickets} = $openlist->{$parent}{zeny_covered_by_tickets};
-			$closelist->{$parent}{amount_of_tickets_used} = $openlist->{$parent}{amount_of_tickets_used};
-			$closelist->{$parent}{parent} = $openlist->{$parent}{parent};
-			# Then delete in from OPENLIST
-			delete $openlist->{$parent};
+			$closelist->{$parent} = delete $openlist->{$parent};
 		}
 
-		if ($portals_lut{$portal}{dest}{$dest}{map} eq $self->{dest}{map}) {
-			if ($self->{dest}{pos}{x} eq '' && $self->{dest}{pos}{y} eq '') {
+		foreach my $target ( @{ $self->{targets} } ) {
+			next if $portals_lut{$portal}{dest}{$dest}{map} ne $target->{map};
+
+			if ( !$target->{x} || !$target->{y} ) {
 				$self->{found} = $parent;
-				$self->{done} = 1;
-				$self->{mapSolution} = [];
-				my $this = $self->{found};
-				while ($this) {
-					my %arg;
-					$arg{portal} = $this;
-					my ($from, $to) = split /=/, $this;
-					($arg{map}, $arg{pos}{x}, $arg{pos}{y}) = split / /, $from;
-					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
-					$arg{walk} = $closelist->{$this}{walk};
-					$arg{zeny} = $closelist->{$this}{zeny};
-					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
-					$arg{zeny_covered_by_tickets} = $closelist->{$this}{zeny_covered_by_tickets};
-					$arg{amount_of_tickets_used} = $closelist->{$this}{amount_of_tickets_used};
-					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
-
-					unshift @{$self->{mapSolution}}, \%arg;
-					$this = $closelist->{$this}{parent};
-				}
-				return;
-
-			} elsif ( Task::Route->getRoute($self->{solution}, $self->{dest}{field}, $portals_lut{$portal}{dest}{$dest}, $self->{dest}{pos}) ) {
-				my $walk = "$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}=$self->{dest}{map} $self->{dest}{pos}{x} $self->{dest}{pos}{y}";
-				$closelist->{$walk}{walk} = scalar @{$self->{solution}} + $closelist->{$parent}{walk};
+			} elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $portals_lut{$portal}{dest}{$dest}, $target) ) {
+				my $walk = $self->{found} = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
+				$closelist->{$walk}         = { %{ $closelist->{$parent} } };
+				$closelist->{$walk}{walk}   = scalar @{ $self->{solution} } + $closelist->{$parent}{walk};
 				$closelist->{$walk}{parent} = $parent;
-				$closelist->{$walk}{zeny} = $closelist->{$parent}{zeny};
-				$closelist->{$walk}{allow_ticket} = $closelist->{$parent}{allow_ticket};
-				$closelist->{$walk}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
-				$closelist->{$walk}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
-				$self->{found} = $walk;
+			}
+
+
+			if ( $self->{found} ) {
 				$self->{done} = 1;
 				$self->{mapSolution} = [];
+				$self->{target} = $target;
+				$self->{target}->{pos}->{x} = $self->{target}->{x};
+				$self->{target}->{pos}->{y} = $self->{target}->{y};
 				my $this = $self->{found};
 				while ($this) {
 					my %arg;
