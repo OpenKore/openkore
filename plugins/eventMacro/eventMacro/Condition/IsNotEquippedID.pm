@@ -189,8 +189,12 @@ sub validate_condition {
 			$self->check_slot($args->{slot}, $args->{item});
 			
 		} elsif ($callback_name eq 'unequipped_item') {
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot} && $self->{fulfilled_slot} ne $args->{slot});
 			return $self->SUPER::validate_condition unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
+			if (defined $self->{fulfilled_slot}) {
+				return $self->SUPER::validate_condition if ($self->{fulfilled_slot} ne $args->{slot});
+			} else {
+				$self->{fulfilled_slot} = $args->{slot};
+			}
 			$self->{is_fulfilled_empty} = 1;
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
