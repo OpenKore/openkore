@@ -137,12 +137,17 @@ ai_npc_talk_wait_after_close_to_cancel 0.5
 ai_npc_talk_wait_after_cancel_to_destroy 0.5
 
 ai_buyAuto 5
-ai_buyAuto_giveup 15
 ai_buyAuto_wait 2
-ai_buyAuto_wait_buy 5
+ai_buyAuto_wait_giveup_npc 15
+ai_buyAuto_wait_before_buy 2
+ai_buyAuto_wait_after_packet_giveup 15
+ai_buyAuto_wait_after_restart 2
 
 ai_sellAuto 2
-ai_sellAuto_giveup 15
+ai_sellAuto_wait_giveup_npc 15
+ai_sellAuto_wait_before_sell 2
+ai_sellAuto_wait_after_packet_giveup 15
+
 ai_storageAuto 2
 ai_storageAuto_giveup 15
 # delay between sending cart item add/get packets

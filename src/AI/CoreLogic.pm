@@ -1530,6 +1530,11 @@ sub processAutoSell {
 	}
 
 	if (AI::action eq "sellAuto" && AI::args->{'done'}) {
+		
+		if (exists AI::args->{'error'}) {
+			error AI::args->{'error'}.".\n";
+		}
+		
 		my $var = AI::args->{'forcedByBuy'};
 		my $var2 = AI::args->{'forcedByStorage'};
 		message T("Auto-sell sequence completed.\n"), "success";
@@ -1541,6 +1546,22 @@ sub processAutoSell {
 		}
 	} elsif (AI::action eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
 		my $args = AI::args;
+		
+		if (exists $args->{sentSellPacket_time} && exists $args->{'sentEmptyList'}) {
+			$args->{'done'} = 1;
+			return;
+			
+		} elsif (exists $args->{sentSellPacket_time} && !exists $args->{'sentEmptyList'}) {
+			if (exists $args->{recv_sell_packet}) {
+				$args->{'done'} = 1;
+				
+			} elsif (timeOut($args->{sentSellPacket_time}, $timeout{ai_sellAuto_wait_after_packet_giveup}{timeout})) {
+				$args->{'error'} = 'Did not received the sell result from server after sell packet was sent';
+				$args->{'done'} = 1;
+			}
+			return;
+		
+		}
 
 		$args->{'npc'} = {};
 		my $destination = $config{sellAuto_standpoint} || $config{sellAuto_npc};
@@ -1550,13 +1571,13 @@ sub processAutoSell {
 			return;
 		}
 		
-		if (!AI::args->{distance}) {
+		if (!$args->{distance}) {
 			if ($config{'sellAuto_standpoint'}) {
-				AI::args->{distance} = 1;
+				$args->{distance} = 1;
 			} elsif ($config{'sellAuto_minDistance'} && $config{'sellAuto_maxDistance'}) {
-				AI::args->{distance} = $config{'sellAuto_minDistance'} + round(rand($config{'sellAuto_maxDistance'} - $config{'sellAuto_minDistance'}));
+				$args->{distance} = $config{'sellAuto_minDistance'} + round(rand($config{'sellAuto_maxDistance'} - $config{'sellAuto_minDistance'}));
 			} else {
-				AI::args->{distance} = $config{'sellAuto_distance'};
+				$args->{distance} = $config{'sellAuto_distance'};
 			}
 		}
 		
@@ -1564,9 +1585,22 @@ sub processAutoSell {
 		if ($field->baseName ne $args->{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentSell})) {
-				$ai_v{'temp'}{'do_route'} = 1;
+			my $found = 0;
+			foreach my $actor (@{$npcsList->getItems()}) {
+				my $pos = $actor->{pos};
+				next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
+				if ($pos->{x} == $args->{npc}{pos}{x} && $pos->{y} == $args->{npc}{pos}{y}) {
+					if (defined $actor->{name}) {
+						$found = 1;
+						last;
+					}
+				}
+			}
+			unless ($found) {
+				$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+				if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !defined($args->{sentSell})) {
+					$ai_v{'temp'}{'do_route'} = 1;
+				}
 			}
 		}
 		if ($ai_v{'temp'}{'do_route'}) {
@@ -1586,89 +1620,95 @@ sub processAutoSell {
 	 			message TF("Calculating auto-sell route to: %s(%s): %s, %s\n", $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}, $ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}), "route";
 				ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
 					attackOnRoute => 1,
-					distFromGoal => AI::args->{distance},
+					distFromGoal => $args->{distance},
 					noSitAuto => 1);
 			}
 		} else {
-			$args->{'npc'} = {};
-			getNPCInfo($config{'sellAuto_npc'}, $args->{'npc'});
-			if (!defined($args->{'sentSell'})) {
-				$args->{'sentSell'} = 1;
+		
+			if (!exists $args->{'sentNpcTalk'}) {
 
 				# load the real npc location just in case we used standpoint
 				my $realpos = {};
 				getNPCInfo($config{"sellAuto_npc"}, $realpos);
 
 				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{sellAuto_npc_steps} || 's');
-
+				
+				$args->{'sentNpcTalk'} = 1;
+				$args->{'sentNpcTalk_time'} = time;
+				
 				return;
+				
+			} elsif ($ai_v{'npc_talk'}{'talk'} ne 'sell') {
+				if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_sellAuto_wait_giveup_npc}{timeout})) {
+					$args->{'error'} = 'Npc did not respond';
+					$args->{'done'} = 1;
+				}
+				return;
+				
+			} elsif (!exists $args->{'recv_sellList_time'}) {
+				$args->{'recv_sellList_time'} = time;
+				return;
+				
+			} else {
+				return unless (timeOut($args->{'recv_sellList_time'}, $timeout{ai_sellAuto_wait_before_sell}{timeout}));
 			}
-			$args->{'done'} = 1;			
 			
 			Plugins::callHook("AI_sell_auto");
-			
-			return unless ($ai_v{'npc_talk'}{'talk'} eq 'sell');
 			
 			# Form list of items to sell
 			my @sellItems;
 			for my $item (@{$char->inventory}) {
-				next if ($item->{equipped});
-				next if (!$item->{sellable});
+				next if ($item->{equipped} || !$item->{sellable});
 
 				my $control = items_control($item->{name}, $item->{nameID});
 
 				if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
-					if ($args->{lastIndex} ne "" && $args->{lastIndex} eq $item->{ID} && timeOut($timeout{'ai_sellAuto_giveup'})) {
-						return;
-					} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} ne $item->{ID}) {
-						$timeout{ai_sellAuto_giveup}{time} = time;
-					}
-					undef $args->{done};
-					$args->{lastIndex} = $item->{ID};
-
 					my %obj;
 					$obj{ID} = $item->{ID};
 					$obj{amount} = $item->{amount} - $control->{keep};
 					push @sellItems, \%obj;
-
-					$timeout{ai_sellAuto}{time} = time;
 				}
 			}
-			$messageSender->sendSellBulk(\@sellItems) if (@sellItems);
-
-			if ($args->{done}) {
-				# plugins can hook here and decide to keep sell going longer
-				my %hookArgs;
-				Plugins::callHook("AI_sell_done", \%hookArgs);
-				undef $args->{done} if ($hookArgs{return});
+			
+			if (@sellItems == 0) {
+				$args->{'sentEmptyList'} = 1;
 			}
+		
+			completeNpcSell(\@sellItems);
+			
+			delete $args->{'sentNpcTalk'};
+			delete $args->{'sentNpcTalk_time'};
+			delete $args->{'recv_sellList_time'};
+
+			$args->{sentSellPacket_time} = time;
+			
 		}
 	}
 }
 
 #####AUTO BUY#####
 sub processAutoBuy {
-		my $needitem;
+	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		undef $ai_v{'temp'}{'found'};
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			
-			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
-			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
-				&& (checkSelfCondition("buyAuto_$i"))
-				&& (!$item
-				    || ($item->{amount} <= $config{"buyAuto_$i"."_minAmount"}
-				        && $item->{amount} < $config{"buyAuto_$i"."_maxAmount"}
-				       )
-				)
+			my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			if (
+				$config{"buyAuto_$i"."_minAmount"} ne "" &&
+				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
+				(checkSelfCondition("buyAuto_$i")) &&
+				$amount <= $config{"buyAuto_$i"."_minAmount"} &&
+				$amount < $config{"buyAuto_$i"."_maxAmount"}
 			) {
 				$ai_v{'temp'}{'found'} = 1;
 				my $bai = $config{"buyAuto_$i"};
 				if ($needitem eq "") {
 					$needitem = "$bai";
-				} else {$needitem = "$needitem, $bai";}
+				} else {
+					$needitem = "$needitem, $bai";
+				}
 			}
 		}
 		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
@@ -1682,6 +1722,11 @@ sub processAutoBuy {
 	}
 
 	if (AI::action eq "buyAuto" && AI::args->{'done'}) {
+		
+		if (exists AI::args->{'error'}) {
+			error AI::args->{'error'}.".\n";
+		}
+		
 		# buyAuto finished
 		$ai_v{'temp'}{'var'} = AI::args->{'forcedBySell'};
 		$ai_v{'temp'}{'var2'} = AI::args->{'forcedByStorage'};
@@ -1693,145 +1738,225 @@ sub processAutoBuy {
 			AI::queue("storageAuto", {forcedByBuy => 1});
 		}
 
-	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait}) && timeOut($timeout{ai_buyAuto_wait_buy})) {
+	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait})) {
 		my $args = AI::args;
-		undef $args->{index};
-
-		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
-			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
-			next if ($args->{index_failed}{$i});
-
-			my $item = $char->inventory->getByName($config{"buyAuto_$i"});
-			$args->{binID} = $item ? $item->{binID} : undef;
-			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && (!$item || $item->{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-				next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
-
-				# get NPC info, use standpoint if provided
-				$args->{npc} = {};
-				my $destination = $config{"buyAuto_$i"."_standpoint"} || $config{"buyAuto_$i"."_npc"};
-				getNPCInfo($destination, $args->{npc});
-
-				# did we succeed to load NPC info from this slot?
-				# (doesnt check validity of _npc if we used _standpoint...)
-				if ($args->{npc}{ok}) {
-					$args->{index} = $i;
-					if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
-						undef $args->{sentBuy};
-						undef AI::args->{distance};
-					}
-				}
-				last;
+		
+		if (exists $args->{sentBuyPacket_time} && exists $args->{index_failed}{$args->{lastIndex}}) {
+			if (timeOut($args->{sentBuyPacket_time}, $timeout{ai_buyAuto_wait_after_restart}{timeout})) {
+				delete $args->{sentBuyPacket_time};
+				delete $args->{lastIndex};
+				delete $args->{distance};
 			}
-		}
-
-		# failed to load any slots for buyAuto (we're done or they're all invalid)
-		# what does the second check do here?
-		if ($args->{index} eq "" || ($args->{lastIndex} ne "" && $args->{lastIndex} == $args->{index} && timeOut($timeout{'ai_buyAuto_giveup'}))) {
-			$args->{'done'} = 1;
 			return;
-		}
-
-		undef $ai_v{'temp'}{'do_route'};
-		if (!AI::args->{distance}) {
-			# Calculate variable or fixed (old) distance
-			if ($config{"buyAuto_$args->{index}"."_standpoint"}) {
-				AI::args->{distance} = 1;
-			} elsif ($config{"buyAuto_".$args->{index}."_minDistance"} && $config{"buyAuto_".$args->{index}."_maxDistance"}) {
-				AI::args->{distance} = $config{"buyAuto_$args->{index}"."_minDistance"} + round(rand($config{"buyAuto_$args->{index}"."_maxDistance"} - $config{"buyAuto_$args->{index}"."_minDistance"}));
-			} else {
-				AI::args->{distance} = $config{"buyAuto_$args->{index}"."_distance"};
+			
+		} elsif (exists $args->{sentBuyPacket_time} && !exists $args->{index_failed}{$args->{lastIndex}}) {
+			if (exists $args->{recv_buy_packet}) {
+				delete $args->{sentBuyPacket_time};
+				delete $args->{recv_buy_packet};
+				$args->{recv_buy_packet_time} = time;
+				
+			} elsif (timeOut($args->{sentBuyPacket_time}, $timeout{ai_buyAuto_wait_after_packet_giveup}{timeout})) {
+				$args->{'error'} = 'Did not received the buy result from server after buy packet was sent';
+				$args->{'done'} = 1;
 			}
+			return;
+		
+		} elsif (exists $args->{recv_buy_packet_time}) {
+			if (timeOut($args->{recv_buy_packet_time}, $timeout{ai_buyAuto_wait_after_restart}{timeout})) {
+				delete $args->{recv_buy_packet_time};
+				delete $args->{lastIndex};
+				delete $args->{distance};
+			}
+			return;
+			
 		}
 		
-		if ($field->baseName ne $args->{'npc'}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
-		} else {
-			$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			if (($ai_v{'temp'}{'distance'} > AI::args->{distance}) && !defined($args->{sentBuy})) {
-				$ai_v{'temp'}{'do_route'} = 1;
-			}
-		}
+		if (!exists $args->{lastIndex}) {
+			
+			delete $args->{index};
+			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+				next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
+				next if (exists $args->{index_failed}{$i});
 
-		my $msgneeditem;
-		if ($ai_v{'temp'}{'do_route'}) {
-			if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
-				undef $args->{warpedToSave};
-			}
+				my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && $amount < $config{"buyAuto_$i"."_maxAmount"}) {
+					next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
-				$args->{warpedToSave} = 1;
-				if ($needitem ne "") {
-					$msgneeditem = "Auto-buy: $needitem\n";
-				}
-				# If we still haven't warped after a certain amount of time, fallback to walking
-				$args->{warpStart} = time unless $args->{warpStart};
- 				message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
-				useTeleport(2);
-				$timeout{ai_buyAuto_wait}{time} = time;
-			} else {
-				if ($needitem ne "") {
-					$msgneeditem = "Auto-buy: $needitem\n";
-				}
- 				message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
-				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
-					attackOnRoute => 1,
-					distFromGoal => AI::args->{distance});
-			}
-		} else {
-			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
-				# sendBuyBulk automatically terminates the shopping
-				# to the seller NPC for each item bought.
-				undef $args->{itemID};
-				undef $args->{sentBuy};
-				$timeout{ai_buyAuto_giveup}{time} = time;
-			}
-			$args->{lastIndex} = $args->{index};
+					# get NPC info, use standpoint if provided
+					$args->{npc} = {};
+					my $destination = $config{"buyAuto_$i"."_standpoint"} || $config{"buyAuto_$i"."_npc"};
+					getNPCInfo($destination, $args->{npc});
 
-			# find the item ID if we don't know it yet
-			if ($args->{itemID} eq "") {
-				if ($args->{binID} && $char->inventory->get($args->{binID})) {
-					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->inventory->get($args->{binID})->{nameID};
-				} else {
-					# scan the entire items.txt file (this is slow)
-					foreach (keys %items_lut) {
-						if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
-							$args->{itemID} = $_;
-						}
+					# did we succeed to load NPC info from this slot?
+					# (doesnt check validity of _npc if we used _standpoint...)
+					if ($args->{npc}{ok}) {
+						$args->{index} = $i;
 					}
-				}
-				if ($args->{itemID} eq "") {
-					# the specified item doesn't even exist
-					# don't try this index again
-					$args->{index_failed}{$args->{index}} = 1;
-					debug "buyAuto index $args->{index} failed, item doesn't exist\n", "npc";
-					return;
+					last;
 				}
 			}
 
-			if (!$args->{sentBuy}) {
-				$args->{sentBuy} = 1;
-				$timeout{ai_buyAuto_wait}{time} = time;
-
-				# load the real npc location just in case we used standpoint
-				my $realpos = {};
-				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
-
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_$args->{index}"."_npc_steps"} || 'b');
+			# Failed to load any slots for buyAuto (we're done or they're all invalid)
+			if (!exists $args->{index}) {
+				$args->{'done'} = 1;
 				return;
 			}
 
-			return unless ($ai_v{'npc_talk'}{'talk'} eq 'store');
+			undef $ai_v{'temp'}{'do_route'};
+			if (!$args->{distance}) {
+				# Calculate variable or fixed (old) distance
+				if ($config{"buyAuto_$args->{index}"."_standpoint"}) {
+					$args->{distance} = 1;
+				} elsif ($config{"buyAuto_".$args->{index}."_minDistance"} && $config{"buyAuto_".$args->{index}."_maxDistance"}) {
+					$args->{distance} = $config{"buyAuto_$args->{index}"."_minDistance"} + round(rand($config{"buyAuto_$args->{index}"."_maxDistance"} - $config{"buyAuto_$args->{index}"."_minDistance"}));
+				} else {
+					$args->{distance} = $config{"buyAuto_$args->{index}"."_distance"};
+				}
+			}
 			
-			my $maxbuy = ($config{"buyAuto_$args->{index}"."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
-			my $needbuy = $config{"buyAuto_$args->{index}"."_maxAmount"};
-			$needbuy -= $char->inventory->get($args->{binID})->{amount} if ($args->{binID} ne ""); # we don't need maxAmount if we already have a certain amount of the item in our inventory
-			$messageSender->sendBuyBulk([{itemID  => $args->{itemID}, amount => ($maxbuy > $needbuy) ? $needbuy : $maxbuy}]); # TODO: we could buy more types of items at once
+			if ($field->baseName ne $args->{'npc'}{'map'}) {
+				$ai_v{'temp'}{'do_route'} = 1;
+			} else {
+				my $found = 0;
+				foreach my $actor (@{$npcsList->getItems()}) {
+					my $pos = $actor->{pos};
+					next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
+					if ($pos->{x} == $args->{npc}{pos}{x} && $pos->{y} == $args->{npc}{pos}{y}) {
+						if (defined $actor->{name}) {
+							$found = 1;
+							last;
+						}
+					}
+				}
+				unless ($found) {
+					$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+					if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !exists $args->{'sentNpcTalk'}) {
+						$ai_v{'temp'}{'do_route'} = 1;
+					}
+				}
+			}
 
-			$timeout{ai_buyAuto_wait_buy}{time} = time;
+			if ($ai_v{'temp'}{'do_route'}) {
+				if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
+					undef $args->{warpedToSave};
+				}
+				
+				my $msgneeditem;
+				if (
+					$config{'saveMap'} ne "" &&
+					$config{'saveMap_warpToBuyOrSell'} &&
+					!$args->{warpedToSave} &&
+					!$field->isCity && $config{'saveMap'} ne $field->baseName
+				) {
+					$args->{warpedToSave} = 1;
+					if ($needitem ne "") {
+						$msgneeditem = "Auto-buy: $needitem\n";
+					}
+					# If we still haven't warped after a certain amount of time, fallback to walking
+					$args->{warpStart} = time unless $args->{warpStart};
+					message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
+					useTeleport(2);
+					$timeout{ai_buyAuto_wait}{time} = time;
+					
+				} else {
+					if ($needitem ne "") {
+						$msgneeditem = "Auto-buy: $needitem\n";
+					}
+					message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+						attackOnRoute => 1,
+						distFromGoal => $args->{distance});
+				}
+				return;
+			}
 		}
+		
+		if (!exists $args->{lastIndex}) {
+			$args->{lastIndex} = $args->{index};
+			return;
+		
+		} elsif (!exists $args->{'sentNpcTalk'}) {
+
+			# load the real npc location just in case we used standpoint
+			my $realpos = {};
+			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
+
+			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			
+			$args->{'sentNpcTalk'} = 1;
+			$args->{'sentNpcTalk_time'} = time;
+			
+			return;
+			
+		} elsif ($ai_v{'npc_talk'}{'talk'} ne 'store') {
+			if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_buyAuto_wait_giveup_npc}{timeout})) {
+				$args->{'error'} = 'Npc did not respond';
+				$args->{'done'} = 1;
+			}
+			return;
+			
+		} elsif (!exists $args->{'recv_buyList_time'}) {
+			$args->{'recv_buyList_time'} = time;
+			return;
+			
+		} else {
+			return unless (timeOut($args->{'recv_buyList_time'}, $timeout{ai_buyAuto_wait_before_buy}{timeout}));
+		}
+		
+		my @buyList;
+		
+		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+		
+		if (defined $item) {
+			$args->{'nameID'} = $item->{nameID};
+		}
+		
+		if (!exists $args->{'nameID'}) {
+			$args->{index_failed}{$args->{lastIndex}} = 1;
+			error "buyAuto index ".$args->{lastIndex}." (".$config{"buyAuto_".$args->{lastIndex}}.") failed, item doesn't exist in npc sell list.\n", "npc";
+			
+		} else {
+			my $maxbuy = ($config{"buyAuto_".$args->{lastIndex}."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
+			my $needbuy = $config{"buyAuto_".$args->{lastIndex}."_maxAmount"};
+			
+			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'});
+
+			$needbuy -= $inv_amount;
+			
+			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
+			
+			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
+			
+			if ($batchSize && $batchSize < $buy_amount) {
+			
+				while ($buy_amount > 0) {
+					my $amount = ($buy_amount > $batchSize) ? $batchSize : $buy_amount;
+					my %buy = (
+						itemID  => $args->{'nameID'},
+						amount => $amount
+					);
+					push(@buyList, \%buy);
+					$buy_amount -= $amount;
+				}
+				
+			} else {
+				my %buy = (
+					itemID  => $args->{'nameID'},
+					amount => $buy_amount
+				);
+				push(@buyList, \%buy);
+			}
+		}
+		
+		completeNpcBuy(\@buyList);
+		
+		delete $args->{'nameID'};
+		delete $args->{'sentNpcTalk'};
+		delete $args->{'sentNpcTalk_time'};
+		delete $args->{'recv_buyList_time'};
+
+		$args->{sentBuyPacket_time} = time;
 	}
 }
 

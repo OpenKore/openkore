@@ -200,7 +200,12 @@ our @EXPORT = (
 	closeShop
 	inLockMap
 	parseReload
-	setCharDeleteDate/
+	setCharDeleteDate/,
+	
+	# Npc buy and sell
+	qw/cancelNpcBuySell
+	completeNpcSell
+	completeNpcBuy/,
 	);
 
 
@@ -4567,6 +4572,44 @@ sub setCharDeleteDate {
 
 	$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
 	$chars[$slot]{deleteDateTimestamp} = $deleteDate;
+}
+
+sub cancelNpcBuySell {
+	undef $ai_v{'npc_talk'};
+	
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+	}
+}
+
+sub completeNpcSell {
+	my $items = shift;
+	
+	if (@{$items}) {
+		$messageSender->sendSellBulk($items);
+	}
+	
+	undef $ai_v{'npc_talk'};
+	
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+		$messageSender->sendSellBuyComplete;
+	}
+}
+
+sub completeNpcBuy {
+	my $items = shift;
+	
+	if (@{$items}) {
+		$messageSender->sendBuyBulk($items);
+	}
+	
+	undef $ai_v{'npc_talk'};
+		
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+		$messageSender->sendSellBuyComplete;
+	}
 }
 
 return 1;

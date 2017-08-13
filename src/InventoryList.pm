@@ -169,6 +169,23 @@ sub getByNameID {
 }
 
 ##
+# Actor::Item $InventoryList->sumByNameID(nameID)
+#
+# Returns the amount of items with a given nameID.
+# If nothing is found, 0 is returned.
+sub sumByNameID {
+	my ($self, $id) = @_;
+	my $sum = 0;
+	for my $item (@$self) {
+		if ($item->{nameID} == $id) {
+			$sum = $sum + $item->{amount};
+		}
+	}
+
+	return $sum;
+}
+
+##
 # Actor::Item $InventoryList->getByCondition(Function condition)
 #
 # Return the first Actor::Item object for which the function $condition returns true.
