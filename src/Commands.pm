@@ -75,7 +75,7 @@ sub initHandlers {
 	buyer				=> \&cmdBuyer,
 	bs					=> \&cmdBuyShopInfoSelf,
 	c					=> \&cmdChat,
-	cancel				=> \&cmdCancel,
+	canceltransaction	=> \&cmdCancelTransaction,
 	card				=> \&cmdCard,
 	cart				=> \&cmdCart,
 	cash				=> \&cmdCash,
@@ -6594,7 +6594,7 @@ sub cmdRodex {
 	}
 }
 
-sub cmdCancel {
+sub cmdCancelTransaction {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;

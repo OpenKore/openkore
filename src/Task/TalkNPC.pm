@@ -122,7 +122,7 @@ sub handleNPCTalk {
 			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_store_begin') {
-			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'cancel' to cancel\n", $self->{target}), "npc";
+			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to cancel\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
