@@ -1066,6 +1066,10 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
+	
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
 }
 
 sub cast_cancelled {

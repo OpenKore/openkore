@@ -145,7 +145,7 @@ sub new {
 		'00DB' => ['chat_users'],
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]],
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]],
-		'00DF' => ['chat_modified', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
+		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]],
 		'00E5' => ['deal_request', 'Z24', [qw(user)]],
 		'00E7' => ['deal_begin', 'C', [qw(type)]],
@@ -1546,6 +1546,10 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
+	
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
 }
 
 sub cast_cancelled {
