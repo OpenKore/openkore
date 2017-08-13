@@ -2901,12 +2901,7 @@ sub chat_join_result {
 sub chat_modified {
 	my ($self, $args) = @_;
 	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v a4 a4 v2 C';
-	my $header_len = ((length pack $header_pack) + 2);
-	
-	my $title = bytesToString(substr $msg, $header_len);
+	my $title = bytesToString($args->{title});
 
 	my ($ownerID, $chat_ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
 	my $ID;
