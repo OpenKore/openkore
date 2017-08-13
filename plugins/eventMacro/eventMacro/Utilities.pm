@@ -9,7 +9,7 @@ our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
-	getStorageAmountbyID getCartAmountbyID);
+	getStorageAmountbyID getCartAmountbyID getQuestStatus);
 
 use Utils;
 use Globals;
@@ -186,6 +186,29 @@ sub getConfig {
 		};
 	};
 	return (defined $::config{$arg1})?$::config{$arg1}:"";
+}
+
+# get quest status
+# returns a hash of { id => status }, where status is:
+#   'inactive'    - if the quest doesn't exist or is not active
+#   'incomplete'  - if the quest has a timer which hasn't timed out, or incomplete kill missions
+#   'complete'    - if the quest is active and both timer and missions (if any) are complete
+sub getQuestStatus {
+	my @quest_ids = @_;
+	my $result = {};
+	foreach my $quest_id ( @quest_ids ) {
+		my $quest = $questList->{$quest_id};
+		if ( !$quest || !$quest->{active} ) {
+			$result->{$quest_id} = 'inactive';
+		} elsif ( $quest->{time} && $quest->{time} > time ) {
+			$result->{$quest_id} = 'incomplete';
+        } elsif ( grep { $_->{goal} && $_->{count} < $_->{goal} } values %{ $quest->{missions} } ) {
+			$result->{$quest_id} = 'incomplete';
+		} else {
+			$result->{$quest_id} = 'complete';
+		}
+	}
+	$result;
 }
 
 # get NPC array index
