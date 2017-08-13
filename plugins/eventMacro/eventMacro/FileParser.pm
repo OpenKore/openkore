@@ -14,6 +14,7 @@ use Utils::Exceptions;
 use List::Util qw(max min sum);
 use Log qw(message error warning debug);
 use Text::Balanced qw/extract_bracketed/;
+use Translation qw( T TF );
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -174,7 +175,10 @@ sub parseMacroFile {
 		}
 	}
 	
-	return 0 if %block;
+	if (%block) {
+		warning TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
+		return 0;
+	}
 	return {macros => \%macro, automacros => \%automacro};
 }
 

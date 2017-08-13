@@ -145,7 +145,7 @@ sub new {
 		'00DB' => ['chat_users'],
 		'00DC' => ['chat_user_join', 'v Z24', [qw(num_users user)]],
 		'00DD' => ['chat_user_leave', 'v Z24 C', [qw(num_users user flag)]],
-		'00DF' => ['chat_modified', 'x2 a4 a4 v2 C a*', [qw(ownerID ID limit num_users public title)]],
+		'00DF' => ['chat_modified', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]], # -1
 		'00E1' => ['chat_newowner', 'C x3 Z24', [qw(type user)]],
 		'00E5' => ['deal_request', 'Z24', [qw(user)]],
 		'00E7' => ['deal_begin', 'C', [qw(type)]],
@@ -1549,6 +1549,10 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
+	
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
 }
 
 sub cast_cancelled {
@@ -2229,7 +2233,7 @@ sub npc_talk {
 	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
 		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID);
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
 		AI::queue("NPC", $task);
 		# TODO: The following npc_talk hook is only added on activation.
 		# Make the task module or AI listen to the hook instead
@@ -2298,10 +2302,9 @@ sub party_chat {
 	});
 }
 
-# TODO: itemPickup itemDivision
 sub party_exp {
 	my ($self, $args) = @_;
-	$char->{party}{share} = $args->{type};
+	$char->{party}{share} = $args->{type}; # Always will be there, in 0101 also in 07D8
 	if ($args->{type} == 0) {
 		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
@@ -2309,19 +2312,23 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
-	if ($args->{itemPickup} == 0) {
-		message T("Party item set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemPickup} == 1) {
-		message T("Party item set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
-	if ($args->{itemDivision} == 0) {
-		message T("Party item division set to Individual Take\n"), "party", 1;
-	} elsif ($args->{itemDivision} == 1) {
-		message T("Party item division set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
+	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
+		$char->{party}{itemPickup} = $args->{itemPickup};
+		$char->{party}{itemDivision} = $args->{itemDivision};
+		if ($args->{itemPickup} == 0) {
+			message T("Party item set to Individual Take\n"), "party", 1;
+		} elsif ($args->{itemPickup} == 1) {
+			message T("Party item set to Even Share\n"), "party", 1;
+		} else {
+			error T("Error setting party option\n");
+		}
+		if ($args->{itemDivision} == 0) {
+			message T("Party item division set to Individual Take\n"), "party", 1;
+		} elsif ($args->{itemDivision} == 1) {
+			message T("Party item division set to Even Share\n"), "party", 1;
+		} else {
+			error T("Error setting party option\n");
+		}
 	}
 }
 
@@ -2492,30 +2499,7 @@ sub party_join {
 	$actor->{name} = $user;
 	$actor->{ID} = $ID;
 	$char->{party}{users}{$ID} = $actor;
-
-=pod
-	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
-	$char->{party}{users}{$ID}{admin} = !$role;
-	if ($type == 0) {
-		$char->{party}{users}{$ID}{online} = 1;
-	} elsif ($type == 1) {
-		$char->{party}{users}{$ID}{online} = 0;
-		delete $char->{party}{users}{$ID}{statuses};
-	}
-=cut
 	$char->{party}{name} = $name;
-=pod
-	$char->{party}{users}{$ID}{pos}{x} = $x;
-	$char->{party}{users}{$ID}{pos}{y} = $y;
-	$char->{party}{users}{$ID}{map} = $map;
-	$char->{party}{users}{$ID}{name} = $user;
-	$char->{party}{users}{$ID}->{ID} = $ID;
-=cut
-
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-
-	}
 }
 
 use constant {
@@ -2593,10 +2577,7 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$char->{party}{users}{$ID}->{ID} = $ID;
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-	}
+	}	
 }
 
 sub pet_capture_result {

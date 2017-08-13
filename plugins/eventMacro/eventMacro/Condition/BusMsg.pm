@@ -1,30 +1,28 @@
-package eventMacro::Condition::GuildMsgName;
+package eventMacro::Condition::BusMsg;
 
 use strict;
 use Globals;
 use Utils;
 
-use eventMacro::Data;
-
-use base 'eventMacro::Condition::BaseMsgName';
+use base 'eventMacro::Condition::BaseMsg';
 
 sub _hooks {
 	my ( $self ) = @_;
 	my $hooks = $self->SUPER::_hooks;
-	my @other_hooks = ('packet_guildMsg');
+	my @other_hooks = ('bus_received');
 	push(@{$hooks}, @other_hooks);
 	return $hooks;
 }
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
-	
-	$self->{message} = undef;
-	$self->{source} = undef;
-	
 	if ($callback_type eq 'hook') {
-		$self->{message} = $args->{Msg};
-		$self->{source} = $args->{MsgUser};
+		$self->{message} = $args->{message};
+		if (exists $args->{sender}) {
+			$self->{source} = $args->{sender};
+		} else {
+			$self->{source} = undef;
+		}
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
 }

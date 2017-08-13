@@ -52,36 +52,26 @@ our %parameters = (
 	'CheckOnAI' => 1,    # option: on which AI state the automacro will be checked
 );
 
-our $macroKeywords =
-	"npc"          . "|" .
-	"store"        . "|" .
-	"player"       . "|" .
-	"monster"      . "|" .
-	"venderitem"   . "|" .
-	"venderprice"  . "|" .
-	"venderamount" . "|" .
-	"random"       . "|" .
-	"rand"         . "|" .
-	"invamount"    . "|" .
-	"cartamount"   . "|" .
-	"shopamount"   . "|" .
-	"storamount"   . "|" .
-	"[Ii]nventory" . "|" .
-	"[Ss]torage"   . "|" .
-	"[Cc]art"      . "|" .
-	"vender"       . "|" .
-	"config"       . "|" .
-	"eval"         . "|" .
-	"arg"          . "|" .
-	"listitem"     . "|" .
-   	"nick"         . "|" .
-	"push"         . "|" .
-	"pop"          . "|" .
-	"unshift"      . "|" .
-	"shift"        . "|" .
-	"exists"       . "|" .
-	"delete"       . "|" .
-	"defined"
-;
+our $macroKeywords = join '|', qw(
+	npc
+	store
+	player
+	monster
+	vender venderitem venderprice venderamount
+	random rand
+	invamount inventory Inventory
+	cartamount cart Cart
+	storamount storage Storage
+	shopamount
+	config
+	eval
+	arg
+	listitem
+	nick
+	push pop unshift shift
+	exists delete
+	defined
+	questStatus questInactiveCount questIncompleteCount questCompleteCount
+);
 
 1;

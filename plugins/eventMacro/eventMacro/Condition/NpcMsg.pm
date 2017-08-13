@@ -16,6 +16,10 @@ sub _hooks {
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
+	
+	$self->{message} = undef;
+	$self->{source} = undef;
+	
 	if ($callback_type eq 'hook') {
 		$self->{message} = $args->{msg};
 		$self->{source} = $args->{name};
