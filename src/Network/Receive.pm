@@ -2900,12 +2900,11 @@ sub chat_join_result {
 
 sub chat_modified {
 	my ($self, $args) = @_;
-	
+
 	my $title = bytesToString($args->{title});
 
 	my ($ownerID, $chat_ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
 	my $ID;
-	
 	if ($ownerID eq $accountID) {
 		$ID = $accountID;
 	} else {
