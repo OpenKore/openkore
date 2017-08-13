@@ -864,18 +864,27 @@ sub cmdCart {
 		cmdCart_list($arg1);
 		
 	} elsif ($arg1 eq "desc") {
-		cmdCart_desc($arg2);
-		
+		if($arg2 ne "") {
+			cmdCart_desc($arg2);
+		} else {
+			error T("Usage: cart desc <cart item #>\n");
+		}
 	} elsif (($arg1 eq "add" || $arg1 eq "get" || $arg1 eq "release" || $arg1 eq "change") && (!$net || $net->getState() != Network::IN_GAME)) {
 		error TF("You must be logged in the game to use this command '%s'\n", 'cart ' .$arg1);
 			return;
 
 	} elsif ($arg1 eq "add") {
-		cmdCart_add($arg2);
-
+		if($arg2 ne "") {
+			cmdCart_add($arg2);
+		} else {
+			error T("Usage: cart add <inventory item> <amount>\n");
+		}
 	} elsif ($arg1 eq "get") {
-		cmdCart_get($arg2);
-
+		if($arg2 ne "") {
+			cmdCart_get($arg2);
+		} else {
+			error T("Usage: cart get <cart item> <amount>\n");
+		}
 	} elsif ($arg1 eq "release") {
 		$messageSender->sendCompanionRelease();
 		message T("Trying to released the cart...\n");

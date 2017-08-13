@@ -134,22 +134,14 @@ geffen 203 123 gef_fild10 52 326 1200 1 c r2 c r2
 geffen 203 123 mjolnir_02 99 351 1700 1 c r2 c r3
 aldebaran 143 119 geffen 120 39 2000 1 c r2 c r0
 izlude 134 88 prontera 116 72 2000 1 c r2 c r0
-yuno 152 187 einbroch 67 195 2000 1 c r2 c r0
-yuno 152 187 lighthalzen 159 90 2000 1 c r2 c r1
-yuno 152 187 hugel 98 150 2000 1 c r2 c r2
-yuno 152 187 rachel 119 135 2000 1 c r2 c r3
+yuno 152 187 aldebaran 168 112 1200 1 c r2 c r0
 yuno 327 108 aldebaran 168 112 2000 1 c r2 c r0
-yuno 142 183 prontera 116 72 1800 1 c c r0 c n
 morocc 156 97 prontera 116 72 2000 1 c r2 c r0
 morocc 156 97 comodo 209 143 1800 1 c r2 c r3
 comodo 195 150 morocc 156 47 2000 1 c c r2 c r0
 payon 181 104 prontera 116 72 2000 1 c r2 c r0
 payon 175 226 prontera 116 72 1200 1 c r2 c r0
 alberta 113 60 payon 161 58 2000 1 c r2 c r0
-rachel 109 138 veins 205 101 2200 c r2 c r0
-rachel 109 138 yuno 158 125 3000 c r2 c r1
-veins 208 128 rachel 115 125 2200 c r2 c r0
-veins 208 128 yuno 158 125 3000 c r2 c r1
 
 # Training Grounds
 new_1-1 148 112 new_1-2 100 9
