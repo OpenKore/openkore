@@ -885,7 +885,7 @@ sub mainLoop_initialized {
 		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
 			$charName, $char->{lv}, $basePercent . '%',
 			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, $aiText, $Settings::NAME);
+			$weight, $pos, $aiSeq, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
