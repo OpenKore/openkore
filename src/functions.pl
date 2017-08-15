@@ -882,10 +882,10 @@ sub mainLoop_initialized {
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 
 		# Translation Comment: Interface Title with character status
-		my $index = 0;
 		my $aiText = "";
+		my $index = 0;
 		foreach (@ai_seq) {
-			$aiText .= ("$_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n");
+			$aiText .= (keys %{$ai_seq_args[$index]});
 			$index++;
 		}
 
