@@ -885,7 +885,7 @@ sub mainLoop_initialized {
 		my $aiText = "";
 		my $index = 0;
 		foreach (@ai_seq) {
-			$aiText .= (keys %{$ai_seq_args[$index]});
+			$aiText .= (keys @AI::ai_seq_args);
 			$index++;
 		}
 
