@@ -325,7 +325,7 @@ sub initNetworking {
 	my $XKore_version = $config{XKore};
 	eval {
 		$clientPacketHandler = Network::ClientReceive->new;
-		
+
 		if ($XKore_version eq "1") {
 			# Inject DLL to running Ragnarok process
 			require Network::XKore;
@@ -364,7 +364,7 @@ sub initNetworking {
 		$bus = new Bus::Client(host => $host, port => $port, userAgent => $userAgent);
 		our $busMessageHandler = new Bus::Handlers($bus);
 	}
-	
+
 	Network::PaddedPackets::init();
 }
 
@@ -373,11 +373,11 @@ sub initPortalsDatabase {
 	# -1: skip compile
 	#  0: ask user
 	#  1: auto compile
-	
+
 	# TODO: detect when another instance already compiles portals?
-	
+
 	return if $config{portalCompile} < 0;
-	
+
 	Log::message(T("Checking for new portals... "));
 	if (compilePortals_check()) {
 		Log::message(T("found new portals!\n"));
@@ -446,7 +446,7 @@ sub processServerSettings {
 
 	# Parse server settings
 	my $master = $masterServer = $masterServers{$config{master}};
-	
+
 	# Stop if server now marked as dead
 	if ($master->{dead}) {
 		$interface->errorDialog($master->{dead_message} || TF("Server you've selected (%s) is now marked as dead.", $master->{title} || $config{master}));
@@ -466,7 +466,7 @@ sub processServerSettings {
 		$quit = 1;
 		return;
 	}
-	
+
 	foreach my $serverOption ('storageEncryptKey', 'gameGuard','paddedPackets','paddedPackets_attackID',
 				'paddedPackets_skillUseID') {
 		if ($master->{$serverOption} ne '' && !(defined $config{$serverOption})) {
@@ -479,12 +479,12 @@ sub processServerSettings {
 			configModify($serverOption, $master->{$serverOption});
 		}
 	}
-	
+
 	# Process adding Custom Table folders
 	if($masterServer->{addTableFolders}) {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
 	}
-	
+
 	# Process setting custom recvpackets option
 	Settings::setRecvPacketsName($masterServer->{recvpackets} && $masterServer->{recvpackets} ne '' ? $masterServer->{recvpackets} : Settings::getRecvPacketsFilename() );
 }
@@ -505,10 +505,10 @@ sub finalInitialization {
 
 	if (DEBUG) {
 		# protect various stuff from autovivification
-		
+
 		require Utils::BlessedRefTie;
 		tie $char, 'Tie::BlessedRef';
-		
+
 		require Utils::ActorHashTie;
 		tie %items, 'Tie::ActorHash';
 		tie %monsters, 'Tie::ActorHash';
@@ -543,7 +543,7 @@ sub finalInitialization {
 	$timeout{'injectSync'}{'time'} = time;
 
 	Log::message("\n");
-	
+
 	Log::message("Initialized, use 'connect' to continue\n") if $Settings::no_connect;
 
 	Plugins::callHook('initialized');
@@ -806,7 +806,7 @@ sub mainLoop_initialized {
 		undef $conState_tries;
 		initRandomRestart();
 	}
-	
+
 	Misc::checkValidity("mainLoop_part2.3");
 
 	# Automatically switch to a different config file
@@ -867,7 +867,7 @@ sub mainLoop_initialized {
 	#processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
 	Misc::checkValidity("mainLoop_part2.4");
-	
+
 	# Set interface title
 	my $charName;
 	my $title;
@@ -882,10 +882,17 @@ sub mainLoop_initialized {
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 
 		# Translation Comment: Interface Title with character status
-		$title = TF("%s B%s (%s), J%s (%s) : w%s%s - %s",
+		my $index = 0;
+		my $aiText = "";
+		foreach (@ai_seq) {
+			$aiText .= ("$_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n");
+			$index++;
+		}
+
+		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
 			$charName, $char->{lv}, $basePercent . '%',
 			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, $Settings::NAME);
+			$weight, $pos, $aiText, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
