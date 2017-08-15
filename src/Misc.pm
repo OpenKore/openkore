@@ -4068,6 +4068,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field->baseName eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
+	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
     if (defined $config{$prefix . "_monstersCount"}) {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
