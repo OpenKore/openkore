@@ -880,12 +880,12 @@ sub mainLoop_initialized {
 		$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
 		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
-
+		$aiSeq = join(",", @ai_seq);
 		# Translation Comment: Interface Title with character status
 		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
 			$charName, $char->{lv}, $basePercent . '%',
 			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, @ai_seq, $Settings::NAME);
+			$weight, $pos, $aiText, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
