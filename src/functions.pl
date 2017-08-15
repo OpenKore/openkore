@@ -882,17 +882,10 @@ sub mainLoop_initialized {
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 
 		# Translation Comment: Interface Title with character status
-		my $aiText = "";
-		my $index = 0;
-		foreach (@ai_seq) {
-			$aiText .= (keys @AI::ai_seq_args);
-			$index++;
-		}
-
 		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
 			$charName, $char->{lv}, $basePercent . '%',
 			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, $aiText, $Settings::NAME);
+			$weight, $pos, @ai_seq, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
