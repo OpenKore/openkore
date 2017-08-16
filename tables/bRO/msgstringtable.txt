@@ -2196,34 +2196,34 @@ Limited time#
 Closing time#
 Busca#
 Calcular Rota#
-Road info#
-Search info#
+Indicação de Rota#
+Detalhes da Busca#
 Mudar mode de Exibição#
 Change the color of navigation#
 Fechar#
 Maximizar#
 Minimizar#
 Ajuda#
-ALL#
-Map#
+Tudo#
+Mapa#
 Npc#
-Mob#
+Monstro#
 Coloque o que você quer procurar (Ex: payon, zumbi...)#
-Scroll#
+Perg.#
 Calcular rota com Pergaminho#
-Service#
+Kafra#
 Calcular rota com a Kafra#
-Plane#
+Aerop.#
 Calcular rota com Aeroplano#
->> Cannot read the target info!#
-<< noticing >>#
-<< searching... >>#
+>> Não é possível ler a informação do alvo!#
+<< notando >>#
+<< procurando... >>#
 -----------#
-Navigation#
+Navegação#
 == Resultado(%d)==#
 Npc)%s:%s#
-Mob)%s:%s#
-Map)%s#
+Mons)%s:%s#
+Mapa)%s#
 ======== Resultado ==========#
 Distância   : %d Sell %d WarpMove#
 Destino: %s(%s)#
