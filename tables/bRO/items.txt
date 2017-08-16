@@ -5053,7 +5053,7 @@
 18543#Chapéu de Bruxa#
 
 //---- CASH Items November 2010 ----
-16666#Caixa de Doces Mágicos#
+16666#Caixa de Doces Mágicos [10]#
 12596#Doce Mágico#
 5680#Bandagem para Olho#
 5679#Chapéu de Engenheiro#
@@ -5504,7 +5504,7 @@
 18676#Digimóculos#
 18555#Elmo_do_General#
 18571#Chapéu_das_Flores_Encantadas#
-12792#Grande_Pílula_de_Combate#
+12792#Grande Pílula de Combate#
 12794#Grande_Pílula_de_Combate[10]#
 15058#Jaqueta_de_Motociclista#
 12834#Ovo_dos_Mortos-Vivos#
@@ -7742,8 +7742,27 @@
 22009#Botas Temporais INT#
 22010#Botas Temporais AGI#
 22011#Botas Temporais SOR#
-4601#Carta Amdaris#
+4601#Carta Amdarais#
 4603#Carta Origem da Maldição#
-4605#Carta Cavaleira Desmorta#
-4606#Carta Cavaleiro Desmorto#
+4605#Carta Cavaleiro Desmorto#
+4606#Carta Cavaleira Desmorta#
+//*****************************************************
+//------------Aplicar em 2017-08-08--------------------
+//*****************************************************
+31199#Cavanhaque Bifurcado#
+31202#Quepe do Serumaninho#
+28537#Colar de Juperos#
+5918#Marcas de Comodo#
+19268#Hálito de Verme com Rosto#
+19081#Casca de Ovo de Verme#
+19112#Pergaminho do Tengu#
+12299#Poção de Mega Resistência#
+//*****************************************************
+//------------Aplicar em 2017-08-16--------------------
+//*****************************************************
+31200#Laço Esplêndido#
+31300#Gatchecol#
+5978#Vacina da Cura#
+2192#Escudo da Rosa#
+1993#Concertina de Arame#
 //file end
