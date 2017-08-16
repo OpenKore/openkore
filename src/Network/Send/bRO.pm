@@ -68,8 +68,7 @@ sub sendTop10 {
 	elsif ($type == 0x3) { $type_msg = T("PK"); }
 	else { $type_msg = T("Unknown"); }
 	
-	debug TF("Sent Top 10 %s request
-", $type_msg), "sendPacket", 2;
+	debug TF("Sent Top 10 %s request\n", $type_msg), "sendPacket", 2;
 }
 
 sub sendTop10Blacksmith {
