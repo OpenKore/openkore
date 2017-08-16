@@ -1369,12 +1369,21 @@ sub parse_release_and_lock {
 	}
 	return if (defined $self->error);
 	
-	my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
-	
-	if ($type == 1) {
-		$eventMacro->disable_automacro($automacro);
+	if ($parsed_automacro_name eq 'all') {
+		if ($type == 1) {
+			$eventMacro->disable_all_automacros();
+		} else {
+			$eventMacro->enable_all_automacros();
+		}
+		
 	} else {
-		$eventMacro->enable_automacro($automacro);
+		my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
+		
+		if ($type == 1) {
+			$eventMacro->disable_automacro($automacro);
+		} else {
+			$eventMacro->enable_automacro($automacro);
+		}
 	}
 	
 	$self->timeout(0);

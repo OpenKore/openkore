@@ -1410,6 +1410,20 @@ sub AI_start_checker {
 	}
 }
 
+sub disable_all_automacros {
+	my ($self) = @_;
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		$self->disable_automacro($automacro);
+	}
+}
+
+sub enable_all_automacros {
+	my ($self) = @_;
+	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
+		$self->enable_automacro($automacro);
+	}
+}
+
 sub disable_automacro {
 	my ($self, $automacro) = @_;
 	$automacro->disable;

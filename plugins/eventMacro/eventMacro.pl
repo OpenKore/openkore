@@ -519,10 +519,7 @@ sub commandHandler {
 	### parameter: enable
 	} elsif ($arg eq 'enable') {
 		if (!defined $params[0]) {
-			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
-				message "[eventMacro] Enabled automacro '".$automacro->get_name."'.\n";
-				$eventMacro->enable_automacro($automacro);
-			}
+			$eventMacro->enable_all_automacros();
 			message "[eventMacro] All automacros were enabled.\n";
 			return;
 		}
@@ -540,10 +537,7 @@ sub commandHandler {
 	### parameter: disable
 	} elsif ($arg eq 'disable') {
 		if (!defined $params[0]) {
-			foreach my $automacro (@{$eventMacro->{Automacro_List}->getItems()}) {
-				message "[eventMacro] Disabled automacro '".$automacro->get_name."'.\n";
-				$eventMacro->disable_automacro($automacro);
-			}
+			$eventMacro->disable_all_automacros();
 			message "[eventMacro] All automacros were disabled.\n";
 			return;
 		}
