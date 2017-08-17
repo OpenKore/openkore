@@ -359,6 +359,12 @@ sub iterate {
 	}
 }
 
+sub resetRoute {
+	my ($self) = @_;
+	$self->{solution} = [];
+	$self->{stage} = '';
+}
+
 ##
 # boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
 # $solution: The route solution will be stored in here.

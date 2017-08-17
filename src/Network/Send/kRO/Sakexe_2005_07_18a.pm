@@ -36,15 +36,15 @@ sub new {
 		'0085' => ['actor_look_at', 'x4 C x3 C', [qw(head body)]],
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
-		'0094' => ['storage_item_add', 'x10 v x3 V', [qw(index amount)]],
+		'0094' => ['storage_item_add', 'x10 a2 x3 V', [qw(ID amount)]],
 		'009B' => ['map_login', 'x a4 x6 a4 x5 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'009F' => ['item_use', 'x v x3 a4', [qw(index targetID)]],#12
+		'009F' => ['item_use', 'x a2 x3 a4', [qw(ID targetID)]],#12
 		'00A2' => ['actor_name_request', 'x12 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x10 a3', [qw(coords)]],
 		'00F5' => ['item_take', 'x a4', [qw(ID)]],
-		'00F7' => ['storage_item_remove', 'x3 v x2 V', [qw(index amount)]],
+		'00F7' => ['storage_item_remove', 'x3 a2 x2 V', [qw(ID amount)]],
 		'0113' => ['skill_use_location', 'x7 v x4 v x6 v x3 v', [qw(lv skillID x y)]],
-		'0116' => ['item_drop', 'x4 v x2 v', [qw(index amount)]],
+		'0116' => ['item_drop', 'x4 a2 x2 v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x3 a4 x11 C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -95,8 +95,8 @@ sub sendMailOperateWindow {
 sub sendMailSetAttach {
 	my $self = $_[0];
 	my $amount = $_[1];
-	my $index = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack('v2 V', 0x0247, $index, $amount);
+	my $ID = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
+	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
 	$self->sendToServer($msg);
 	debug "Sent mail set attachment.\n", "sendPacket", 2;
 }
@@ -109,8 +109,8 @@ sub sendMailSend {
 }
 
 sub sendAuctionAddItem {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x024C, $index, $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack('v a2 V', 0x024C, $ID, $amount);
 	$self->sendToServer($msg);
 	debug "Sent Auction Add Item.\n", "sendPacket", 2;
 }

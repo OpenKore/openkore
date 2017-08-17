@@ -225,7 +225,7 @@ sub sendStorageAdd {
 	my $msg;
 	
 	$msg = pack("C*", 0x94, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00) .
-		pack("v*", $index) .
+		pack("a2", $index) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00) .
 		pack("V*", $amount);
 	
@@ -240,7 +240,7 @@ sub sendStorageGet {
 	$msg = pack("C*", 0xf7, 0x00, 0x00, 0x00) .
 		pack("V*", getTickCount()) .
 		pack("C*", 0x00, 0x00, 0x00) .
-		pack("v*", $index) .
+		pack("a2", $index) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00) .
 		pack("V*", $amount);
 	

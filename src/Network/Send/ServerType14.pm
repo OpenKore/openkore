@@ -158,7 +158,7 @@ sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 	
-	$msg = pack("C2 x2 v1 V1", 0x13, 0x01, $index, $amount);
+	$msg = pack("C2 x2 a2 V1", 0x13, 0x01, $index, $amount);
 	
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -168,7 +168,7 @@ sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 
-	$msg = pack("C2 V1 v1 x2", 0x9B, 0x00, $amount, $index);
+	$msg = pack("C2 V1 a2 x2", 0x9B, 0x00, $amount, $index);
 	
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;

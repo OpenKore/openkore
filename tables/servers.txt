@@ -25,6 +25,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 addTableFolders bRO
 charBlockSize 144
 pinCode 1
+charDeleteDateType 1
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -42,6 +43,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 addTableFolders bRO
 charBlockSize 144
 pinCode 1
+charDeleteDateType 1
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -124,16 +126,19 @@ charBlockSize 108
 #Re:Start
 # http://playragnarok.com
 [International - iRO: Re:Start]
-ip 128.241.92.134
+ip 128.241.92.133
 port 6800
 version 18
 master_version 1
 serverType iRO
-addTableFolders iRO
+addTableFolders iRO/Restart;iRO
 serverEncoding Western
 charBlockSize 145
 patchserver ropatch1.gravityus.com
 patchpath /repatch
+
+
+
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
@@ -489,7 +494,7 @@ ip 69.197.167.236
 port 6900
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
@@ -503,7 +508,7 @@ ip 69.197.167.236
 port 6901
 version 51
 master_version 2
-serverType kRO_RagexeRE_2014_10_22b
+serverType RMS
 serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO

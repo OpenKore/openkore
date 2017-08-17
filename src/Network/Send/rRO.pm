@@ -29,7 +29,7 @@ sub new {
 		'00F7' => ['sendStorageClose'],
 		'0112' => ['sendAddSkillPoint'],
 		'0130' => ['sendEnteringVender'],
-		'0907' => ['item_to_favorite', 'v C', [qw(index flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
+		'0907' => ['item_to_favorite', 'a2 C', [qw(ID flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

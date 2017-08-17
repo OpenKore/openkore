@@ -68,7 +68,7 @@ sub AI_pre {
 				distFromGoal => $args->{'distFromGoal'});
 			$args->{'stage'} = 'talk';
 		} elsif ($args->{'stage'} eq 'talk') {
-			$args->{'stage'} = ($char->{'inventory'}[$args->{'invIndex'}]{'amount'} >= $args->{'requiredAmount'}) ? 'talk' : 'end';
+			$args->{'stage'} = ($char->{'inventory'}[$args->{'binID'}]{'amount'} >= $args->{'requiredAmount'}) ? 'talk' : 'end';
 			main::ai_talkNPC($args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}, $args->{'steps'}) if ($args->{'stage'} ne 'end');
 		}
 	}
@@ -81,11 +81,11 @@ sub exchange {
 	my $i = 0;
  
 	while (exists $config{$prefix.$i}) {
-		my $invIndex = main::findIndexStringList_lc($char->{'inventory'}, "name", $config{$prefix.$i});
-		my $item = $char->{'inventory'}[$invIndex];
+		my $binID = main::findIndexStringList_lc($char->{'inventory'}, "name", $config{$prefix.$i});
+		my $item = $char->{'inventory'}[$binID];
 		if (
-		((defined $invIndex) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"}) && (checkSelfCondition($prefix.$i))) ||
-		((defined $invIndex) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))
+		((defined $binID) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"}) && (checkSelfCondition($prefix.$i))) ||
+		((defined $binID) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))
 		) {
 			main::useTeleport(2) if ($config{$prefix.$i."_respawnFirst"});
 			my %args;
@@ -94,7 +94,7 @@ sub exchange {
 			$args{'distFromGoal'} = $config{$prefix.$i."_distance"};
 			$args{'steps'} = $config{$prefix.$i."_steps"};
 			$args{'requiredAmount'} = $config{$prefix.$i."_requiredAmount"};
-			$args{'invIndex'} = $invIndex;
+			$args{'binID'} = $binID;
 			$args{'stage'} = ($field->baseName eq $args{'npc'}{'map'} || $field->name eq $args{'npc'}{'map'}) ? 'talk' : 'route';
 			AI::queue('itemExchange', \%args);
 			last;

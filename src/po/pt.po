@@ -1887,7 +1887,7 @@ msgstr ""
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:989 ../Network/Receive/ServerType0.pm:1463
 msgid "Charname already exists.\n"
-msgstr "Já existe um clã com este nome.\n"
+msgstr "Já existe um personagem com este nome.\n"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:991 ../Network/Receive/ServerType0.pm:1465
 msgid "Char creation denied.\n"
@@ -9333,19 +9333,19 @@ msgstr "Item Removido do Carrinho: %s (%d) x %s\n"
 
 #: ../Misc.pm:1945
 msgid "VS "
-msgstr "Forte"
+msgstr "FORTE "
 
 #: ../Misc.pm:1947
 msgid "VVS "
-msgstr "Muito Forte"
+msgstr "MUITO FORTE "
 
 #: ../Misc.pm:1949
 msgid "VVVS "
-msgstr "Fortíssimo"
+msgstr "FORTÍSSIMO "
 
 #: ../Misc.pm:1979
 msgid "BROKEN "
-msgstr "DANIFICADO"
+msgstr "DANIFICADO "
 
 #: ../Misc.pm:2043 ../Misc.pm:3835
 msgid "Nothing"

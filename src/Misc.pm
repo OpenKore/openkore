@@ -82,6 +82,7 @@ our @EXPORT = (
 	qw/inInventory
 	inventoryItemRemoved
 	storageGet
+	transferItems
 	cardName
 	itemName
 	itemNameSimple
@@ -199,7 +200,12 @@ our @EXPORT = (
 	closeShop
 	inLockMap
 	parseReload
-	setCharDeleteDate/
+	setCharDeleteDate/,
+	
+	# Npc buy and sell
+	qw/cancelNpcBuySell
+	completeNpcSell
+	completeNpcBuy/,
 	);
 
 
@@ -320,6 +326,7 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 }
 
@@ -1609,7 +1616,7 @@ sub deal {
 sub dealAddItem {
 	my ($item, $amount) = @_;
 
-	$messageSender->sendDealAddItem($item->{index}, $amount);
+	$messageSender->sendDealAddItem($item->{ID}, $amount);
 	$currentDeal{lastItemAmount} = $amount;
 }
 
@@ -1625,7 +1632,7 @@ sub drop {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		$messageSender->sendDrop($item->{index}, $amount);
+		$messageSender->sendDrop($item->{ID}, $amount);
 	}
 }
 
@@ -1799,73 +1806,73 @@ sub inInventory {
 	my $item = $char->inventory->getByName($itemIndex);
 	return if !$item;
 	return unless $item->{amount} >= $quantity;
-	return $item->{invIndex};
+	return $item->{binID};
 }
 
 ##
-# inventoryItemRemoved($invIndex, $amount)
+# inventoryItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{inventory}.
+# Removes $amount of $binID from $char->{inventory}.
 # Also prints a message saying the item was removed (unless it is an arrow you
 # fired).
 sub inventoryItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->inventory->get($invIndex);
-	if (!$char->{arrow} || ($item && $char->{arrow} != $item->{index})) {
+	my $item = $char->inventory->get($binID);
+	if (!$char->{arrow} || ($item && $char->{arrow} ne $item->{ID})) {
 		# This item is not an equipped arrow
-		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $invIndex, $amount), "inventory";
+		message TF("Inventory Item Removed: %s (%d) x %d\n", $item->{name}, $binID, $amount), "inventory";
 	}
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
-		if ($char->{arrow} && $char->{arrow} == $item->{index}) {
-			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $invIndex), "inventory";
+		if ($char->{arrow} && $char->{arrow} eq $item->{ID}) {
+			message TF("Run out of Arrow/Bullet: %s (%d)\n", $item->{name}, $binID), "inventory";
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
 		}
 		$char->inventory->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('inventory_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
-# storageItemRemoved($invIndex, $amount)
+# storageItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{storage}.
+# Removes $amount of $binID from $char->{storage}.
 # Also prints a message saying the item was removed
 sub storageItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->storage->get($invIndex);
-	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "storage";
+	my $item = $char->storage->get($binID);
+	message TF("Storage Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "storage";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('storage_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('storage_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 ##
-# cartItemRemoved($invIndex, $amount)
+# cartItemRemoved($binID, $amount)
 #
-# Removes $amount of $invIndex from $char->{cart}.
+# Removes $amount of $binID from $char->{cart}.
 # Also prints a message saying the item was removed
 sub cartItemRemoved {
-	my ($invIndex, $amount) = @_;
+	my ($binID, $amount) = @_;
 
 	return if $amount == 0;
-	my $item = $char->cart->get($invIndex);
-	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $invIndex, $amount), "cart";
+	my $item = $char->cart->get($binID);
+	message TF("Cart Item Removed: %s (%d) x %s\n", $item->{name}, $binID, $amount), "cart";
 	$item->{amount} -= $amount;
 	if ($item->{amount} <= 0) {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('cart_item_removed', {item => $item, index => $invIndex, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('cart_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
 }
 
 # Resolve the name of a card
@@ -1998,9 +2005,11 @@ sub itemNameToID {
 }
 
 ##
-# storageGet(items, max)
+# DEPRECATED: Use transferItems() instead.
+#
+# storageGet(items, amount)
 # items: reference to an array of storage item hashes.
-# max: the maximum amount to get, for each item, or 0 for unlimited.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
 #
 # Get one or more items from storage.
 #
@@ -2010,23 +2019,36 @@ sub itemNameToID {
 # # Get items $a and $b from storage, but at most 30 of each item.
 # storageGet([$a, $b], 30);
 sub storageGet {
-	my $indices = shift;
-	my $max = shift;
+	my ( $items, $amount ) = @_;
+	transferItems( $items, $amount, 'storage' => 'inventory' );
+}
 
-	if (@{$indices} == 1) {
-		my ($item) = @{$indices};
-		if (!defined($max) || $max > $item->{amount}) {
-			$max = $item->{amount};
+##
+# transferItems(items, amount, source, target)
+# items: reference to an array of Actor::Items.
+# amount: the maximum amount to get, for each item, or 0 for unlimited.
+# source: where the items come from; one of 'inventory', 'storage', 'cart'
+# target: where the items shoudl go; one of 'inventory', 'storage', 'cart'
+#
+# Transfer one or more items from their current location to another location.
+#
+# Example:
+# # Get items $a and $b from storage to inventory.
+# transferItems([$a, $b], 'storage' => 'inventory');
+# # Send items $a and $b from cart to storage, but at most 30 of each item.
+# transferItems([$a, $b], 30, 'cart' => 'storage');
+sub transferItems {
+	my ( $items, $amount, $source, $target ) = @_;
+
+	AI::queue(
+		transferItems => {
+			timeout => $timeout{ai_transfer_items}{timeout} || 0.15,
+			items => [ map { { item => $_, source => $source, target => $target, amount => $amount } } @$items ],
 		}
-		$messageSender->sendStorageGet($item->{index}, $max);
+	);
 
-	} else {
-		my %args;
-		$args{items} = $indices;
-		$args{max} = $max;
-		$args{timeout} = 0.15;
-		AI::queue("storageGet", \%args);
-	}
+	# Immediately run the AI sequence once. This will remove it from the queue if there's only one item to transfer.
+	AI::CoreLogic::processTransferItems();
 }
 
 ##
@@ -2257,9 +2279,9 @@ sub objectRemoved {
 # Returns the items_control.txt settings for item name $name.
 # If $name has no specific settings, use 'all'.
 sub items_control {
-	my ($name) = @_;
-
-	return $items_control{lc($name)} || $items_control{all} || {};
+	my $name = shift;
+	my $nameID = shift;	
+	return $items_control{lc($name)} || $items_control{lc($nameID)} || $items_control{all} || {};
 }
 
 ##
@@ -3192,7 +3214,7 @@ sub useTeleport {
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
 			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendItemUse($item->{index}, $accountID);
+			$messageSender->sendItemUse($item->{ID}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -3272,7 +3294,7 @@ sub writeStorageLog {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for my $item (@{$char->storage}) {
 
-			my $display = sprintf "%2d %s x %s", $item->{invIndex}, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
@@ -4424,10 +4446,10 @@ sub makeShop {
 	my %used_items;
 	for my $sale (@{$shop{items}}) {
 		my $cart_item;
-		for my $item (@{$char->cart->getItems}) {
+		for my $item (@{$char->cart}) {
 			next unless $item->{name} eq $sale->{name};
-			next if $used_items{$item->{invIndex}};
-			$cart_item = $used_items{$item->{invIndex}} = $item;
+			next if $used_items{$item->{binID}};
+			$cart_item = $used_items{$item->{binID}} = $item;
 			last;
 		}
 		next unless ($cart_item);
@@ -4437,7 +4459,7 @@ sub makeShop {
 
 		my %item;
 		$item{name} = $cart_item->{name};
-		$item{index} = $cart_item->{index};
+		$item{ID} = $cart_item->{ID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
@@ -4550,6 +4572,44 @@ sub setCharDeleteDate {
 
 	$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
 	$chars[$slot]{deleteDateTimestamp} = $deleteDate;
+}
+
+sub cancelNpcBuySell {
+	undef $ai_v{'npc_talk'};
+	
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+	}
+}
+
+sub completeNpcSell {
+	my $items = shift;
+	
+	if (@{$items}) {
+		$messageSender->sendSellBulk($items);
+	}
+	
+	undef $ai_v{'npc_talk'};
+	
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+		$messageSender->sendSellBuyComplete;
+	}
+}
+
+sub completeNpcBuy {
+	my $items = shift;
+	
+	if (@{$items}) {
+		$messageSender->sendBuyBulk($items);
+	}
+	
+	undef $ai_v{'npc_talk'};
+		
+	if ($messageSender->can('sendSellBuyComplete')) {
+		$messageSender->sendSellBuyComplete;
+		$messageSender->sendSellBuyComplete;
+	}
 }
 
 return 1;

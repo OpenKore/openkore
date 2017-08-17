@@ -26,7 +26,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'035F' => ['character_move','a4', [qw(coordString)]],#5
 	);
 
 	foreach my $switch (keys %packets) {

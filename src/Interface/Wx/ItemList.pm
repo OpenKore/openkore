@@ -78,8 +78,8 @@ sub init {
 			       clearBeginID => $clearBeginID, clearEndID => $clearEndID };
 
 		# add already existing actors
-		for my $actor (@$actorList) {
-			$self->_onAdd(undef, [$actor, $actor->{binID} // $actor->{invIndex}]);
+		for my $actor (@{$actorList->getItems}) {
+			$self->_onAdd(undef, [$actor, $actor->{binID}]);
 		}
 	}
 }
@@ -199,7 +199,7 @@ sub OnGetItemText {
 	my $info = '';
 
 	if ($column == 0) {
-		$info = $actor->{binID} // $actor->{invIndex};
+		$info = $actor->{binID};
 	} elsif ($column == 1) {
 		$info = $actor->name;
 
@@ -232,15 +232,6 @@ sub OnGetItemAttr {
 	if ($actor) {
 		foreach my $l (@{$self->{lists}}) {
 			my $actorList = $l->{actorList};
-
-			# FIXME: InventoryLists have a different interface
-			if ($actorList->can('getByServerIndex')) {
-				if ($actorList->getByServerIndex($actor->{index})) {
-					$attr->SetTextColour($l->{color}) if ($l->{color});
-					last;
-				}
-				next;
-			}
 
 			if ($actorList->getByID($actor->{ID})) {
 				$attr->SetTextColour($l->{color}) if ($l->{color});

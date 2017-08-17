@@ -30,9 +30,9 @@ sub new {
 # 0x01fd,15,repairitem,2
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack('v3 V2 C', 0x01FD, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
+	my $msg = pack('v a2 v V2 C', 0x01FD, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 =pod

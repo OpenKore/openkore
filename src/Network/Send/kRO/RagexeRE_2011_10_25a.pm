@@ -35,11 +35,11 @@ sub new {
 		'035F' => ['sync', 'V', [qw(time)]],#6
 		'08A7' => undef,
 		'0835' => ['item_take', 'a4', [qw(ID)]],#6
-		'0893' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0893' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'08A4' => undef,
-		'089B' => ['storage_item_add', 'v V', [qw(index amount)]],#8
+		'089B' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'0802' => undef,
-		'08A6' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'08A6' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0438' => undef,
 		'0885' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'0887' => undef,

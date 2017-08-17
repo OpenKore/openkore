@@ -7,7 +7,8 @@ use Test::More;
 use InventoryList;
 use Actor::Item;
 use ObjectListTest;
-use base qw(ObjectListTest);
+use ActorListTest;
+use base qw(ActorListTest);
 
 sub start {
 	print "### Starting InventoryListTest\n";
@@ -48,6 +49,7 @@ sub createTestObject {
 	} else {
 		$item->{name} = "Item $count";
 	}
+	$item->{ID} = pack("V", $count);
 	return $item;
 }
 

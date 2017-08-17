@@ -66,6 +66,7 @@ sub new {
 	require Network::DirectConnection;
 	$self->{server} = new Network::DirectConnection($self);
 
+	$self->{publicIP} = $config{XKore_publicIp} || undef;
 	$self->{client_state} = 0;
 	$self->{nextIp} = undef;
 	$self->{nextPort} = undef;
@@ -97,7 +98,7 @@ sub version {
 sub DESTROY {
 	my $self = shift;
 
-	close($self->{proxy_listen});	
+	close($self->{proxy_listen});
 	close($self->{proxy});
 }
 
@@ -148,7 +149,7 @@ sub serverDisconnect {
 	my $preserveClient = shift;
 
 	return unless ($self->serverAlive);
-	
+
 	close($self->{proxy}) unless $preserveClient;
 	$self->{waitClientDC} = 1 if $preserveClient;
 
@@ -221,10 +222,10 @@ sub clientSend {
 
 sub clientFlush {
 	my $self = shift;
-	
+
 	return unless (length($clientBuffer));
-	
-	$self->{proxy}->send($clientBuffer);	
+
+	$self->{proxy}->send($clientBuffer);
 	debug "Client network buffer flushed out\n";
 	$clientBuffer = '';
 }
@@ -256,7 +257,7 @@ sub checkConnection {
 
 	# Check server connection
 	$self->checkServer();
-	
+
 	# Check the Poseidon Embed Server
 	if ($self->clientAlive() && $self->getState() == Network::IN_GAME
 	 && defined($config{gameGuard}) && $config{gameGuard} ne '2') {
@@ -266,7 +267,7 @@ sub checkConnection {
 
 sub checkProxy {
 	my $self = shift;
-	
+
 	if (defined $self->{proxy_listen}) {
 		# Listening for a client
 		if (dataWaiting($self->{proxy_listen})) {
@@ -284,7 +285,7 @@ sub checkProxy {
 			$self->{gotError} = 0;
 		}
 		#return;
-		
+
 	} elsif (!$self->proxyAlive) {
 		# Client disconnected... (or never existed)
 		if ($self->serverAlive()) {
@@ -302,7 +303,7 @@ sub checkProxy {
 		# FIXME: there's a racing condition here. If the RO client tries to connect
 		# to the listening port before we've set it up (this happens if sleepTime is
 		# sufficiently high), then the client will freeze.
-		
+
 		# (Re)start listening...
 		my $ip = $config{XKore_listenIp} || '127.0.0.1';
 		my $port = $config{XKore_listenPort} || 6901;
@@ -312,7 +313,7 @@ sub checkProxy {
 			Listen		=> 5,
 			Proto		=> 'tcp',
 			ReuseAddr   => 1);
-		die "Unable to start the X-Kore proxy ($ip:$port): $@\n" . 
+		die "Unable to start the X-Kore proxy ($ip:$port): $@\n" .
 			"Make sure no other servers are running on port $port." unless $self->{proxy_listen};
 
 		# setup master server if necessary
@@ -322,7 +323,7 @@ sub checkProxy {
 		$self->{waitingClient} = 0;
 		return;
 	}
-	
+
 	if ($self->proxyAlive() && defined($self->{packetPending})) {
 		checkPacketReplay();
 	}
@@ -330,13 +331,13 @@ sub checkProxy {
 
 sub checkServer {
 	my $self = shift;
-	
+
 	# Do nothing until the client has (re)connected to us
 	return if (!$self->proxyAlive() || $self->{waitClientDC});
-	
+
 	# Connect to the next server for proxying the packets
 	if (!$self->serverAlive()) {
-	
+
 		# Setup the next server to connect.
 		if (!$self->{nextIp} || !$self->{nextPort}) {
 			# if no next server was defined by received packets, setup a primary server.
@@ -364,7 +365,7 @@ sub checkServer {
 			error T("Invalid server specified or server does not exist...\n"), "connection" if (!$self->{gotError});
 			$self->{gotError} = 1;
 		}
-		
+
 		# clean Next Server uppon connection
 		$self->{nextIp} = undef;
 		$self->{nextPort} = undef;
@@ -380,12 +381,12 @@ sub checkServer {
 # This is an internal function.
 sub checkPacketReplay {
 	my $self = shift;
-	
+
 	#message "Pending packet check\n";
-	
+
 	if ($self->{replayTimeout}{time} && timeOut($self->{replayTimeout})) {
 		if ($self->{packetReplayTrial} < 3) {
-			warning TF("Client did not respond in time.\n" . 
+			warning TF("Client did not respond in time.\n" .
 				"Trying to replay the packet for %s of 3 times\n", $self->{packetReplayTrial}++);
 			$self->clientSend($self->{packetPending});
 			$self->{replayTimeout}{time} = time;
@@ -395,11 +396,11 @@ sub checkPacketReplay {
 			close($self->{proxy});
 			return;
 		}
-		
+
 	} elsif (!$self->{replayTimeout}{time}) {
 		$self->{replayTimeout}{time} = time;
 		$self->{replayTimeout}{timeout} = 2.5;
-	} 
+	}
 }
 
 sub modifyPacketIn {
@@ -409,7 +410,7 @@ sub modifyPacketIn {
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($switch eq "02AE") {
-		$msg = ""; 
+		$msg = "";
 	}
 
 	# packet replay check: reset status for every different packet received
@@ -433,51 +434,51 @@ sub modifyPacketIn {
 
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
-		
+
 		# Modify the server config'ed on Kore to point to proxy
 		my $accountInfo = substr($msg, 0, 47);
 		my $serverInfo = substr($msg, 47, length($msg));
 		my $newServers = '';
 		my $serverCount = 0;
-		
+
 		my $msg_size = length($serverInfo);
 		debug "Modifying Account Info packet...";
-		
+
 		for (my $i = 0; $i < $msg_size; $i+=32) {
 			if ($config{'server'} == $serverCount++) {
 				$self->{nextIp} = makeIP(substr($serverInfo, $i, 4));
 				$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 				$self->{nextPort} = unpack("v1", substr($serverInfo, $i+4, 2));
 				debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
-				
+
 				$self->{charServerIp} = $self->{nextIp};
 				$self->{charServerPort} = $self->{nextPort};
 
 				my $newName = unpack("Z*", substr($serverInfo, $i + 6, 20));
 				#$newName = "$newName (proxied)";
-				$newServers .= encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) . 
+				$newServers .= encodeIP($self->{publicIP} || $self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) .
 					pack("Z20", $newName) . substr($serverInfo, $i + 26, 4) . pack("v1", 0);
-				
+
 			} else {
 				$newServers .= substr($serverInfo, $i, 32);
 			}
 		}
-		
+
 		message T("Closing connection to Account Server\n"), 'connection' if (!$self->{packetReplayTrial});
 		$self->serverDisconnect(1);
 		$msg = $accountInfo . $newServers;
-		
+
 	} elsif ($switch eq "0071" || $switch eq "0092") {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
-		
+
 		# Proxy the Logon to Map server
 		debug "Modifying Map Logon packet...", "connection";
 		my $logonInfo = substr($msg, 0, 22);
 		my @mapServer = unpack("x22 a4 v1", $msg);
 		my $mapIP = $mapServer[0];
 		my $mapPort = $mapServer[1];
-		
+
 		$self->{nextIp} = makeIP($mapIP);
 		$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$self->{nextPort} = $mapPort;
@@ -490,8 +491,8 @@ sub modifyPacketIn {
 		}
 		$self->serverDisconnect(1);
 
-		$msg = $logonInfo . encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
-		
+		$msg = $logonInfo . encodeIP($self->{publicIP} || $self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
+
 	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081") {
 		# An error occurred. Restart proxying
 		$self->{gotError} = 1;
@@ -500,17 +501,17 @@ sub modifyPacketIn {
 		$self->{charServerIp} = undef;
 		$self->{charServerPort} = undef;
 		$self->serverDisconnect(1);
-		
+
 	} elsif ($switch eq "00B3") {
 		$self->{nextIp} = $self->{charServerIp};
-		$self->{nextPort} = $self->{charServerPort};		
+		$self->{nextPort} = $self->{charServerPort};
 		$self->serverDisconnect(1);
-		
+
 	} elsif ($switch eq "0259") {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 	}
-	
+
 	return $msg;
 }
 
@@ -538,14 +539,14 @@ sub modifyPacketOut {
 
 		$msg = "";
 		$messageSender->sendSync() if ($messageSender);
-		
+
 	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} ne '2') {
 		if ($self->{poseidon}->awaitingResponse) {
 			$self->{poseidon}->setResponse($msg);
 			$msg = '';
 		}
-	} 
-	
+	}
+
 	return $msg;
 }
 

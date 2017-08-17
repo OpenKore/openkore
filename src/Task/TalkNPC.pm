@@ -21,7 +21,7 @@ use utf8;
 use Modules 'register';
 use Task;
 use base qw(Task);
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config @storeList $net %talk);
+use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config $storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
 use Commands;
@@ -84,6 +84,7 @@ sub new {
 	$self->{type} = $args{type};
 	$self->{x} = $args{x};
 	$self->{y} = $args{y};
+	$self->{ID} = $args{ID};
 	$self->{nameID} = $args{nameID};
 	$self->{sequence} = $args{sequence};
 	$self->{sequence} =~ s/^ +| +$//g;
@@ -103,8 +104,28 @@ sub new {
 sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
+	
+	# TODO: maybe better create a new task
+	if ($self->{stage} == AFTER_NPC_CANCEL) {
+		debug "Npc has restarted conversation after talk cancel was sent.\n", "ai_npcTalk";
+		
+		if ($self->noMoreSteps) {
+			debug "Continuing the talk within the same task, no conversation steps left.\n", 'ai_npcTalk';
+		} else {
+			debug "Continuing the talk within the same task and remaining conversation steps.\n", 'ai_npcTalk';
+		}
+		
+		$self->find_and_set_target;
+		$self->{stage} = TALKING_TO_NPC;
+		$self->{time} = time;
+	}
+	
 	if ($hook_name eq 'npc_talk_done') {
-		if ($self->{stage} != TALKING_TO_NPC || !$self->{target} || $self->{target}->{ID} != $args->{ID}) {
+		if ($self->{stage} == NOT_STARTED) {
+			debug "Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
+			return;
+			
+		} elsif ($self->{stage} != TALKING_TO_NPC || !$self->{target} || $self->{target}->{ID} != $args->{ID}) {
 			debug "We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
 			return;
 		}
@@ -122,7 +143,7 @@ sub handleNPCTalk {
 			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_store_begin') {
-			message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $self->{target}), "npc";
+			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to cancel\n", $self->{target}), "npc";
 			
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
@@ -232,6 +253,9 @@ sub iterate {
 	$self->SUPER::iterate(); # Do not forget to call this!
 	return unless ($net->getState() == Network::IN_GAME);
 	my $timeResponse = ($config{npcTimeResponse} >= 5) ? $config{npcTimeResponse}:5;
+	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
+	my $ai_npc_talk_wait_after_close_to_cancel = $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} : 0.5;
+	my $ai_npc_talk_wait_after_cancel_to_destroy = $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} : 0.5;
 
 	if ($self->{map_change}) {
 		
@@ -307,9 +331,9 @@ sub iterate {
 		$messageSender->sendTalkCancel($self->{ID});
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
-	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'})) {
+	} elsif ($self->{stage} == TALKING_TO_NPC && timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer)) {
 		# $config{npcTimeResponse} seconds have passed since we sent the last conversation step
-		# or $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} seconds have passed since the npc answered us.
+		# or $ai_npc_talk_wait_to_answer seconds have passed since the npc answered us.
 		
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
@@ -338,15 +362,43 @@ sub iterate {
 			return;
 		}
 		
+		# Wait x seconds.
+		if ($self->{steps}[0] =~ /^w(\d+)/i) {
+			my $time = $1;
+			debug "$self->{target}: Waiting for $time seconds...\n", 'ai_npcTalk';
+			$ai_v{'npc_talk'}{'time'} = time + $time;
+			$self->{time} = time + $time;
+			shift @{$self->{steps}};
+			return;
+			
+		# Run a command.
+		} elsif ($self->{steps}[0] =~ /^a=(.*)/i) {
+			my $command = $1;
+			my $timeout = $timeResponse - 4;
+			$timeout = 0 if $timeout < 0;
+			$ai_v{'npc_talk'}{'time'} = time + $timeout;
+			$self->{time} = time + $timeout;
+			Commands::run($command);
+			shift @{$self->{steps}};
+			return;
+		}
+		
+		if ($ai_v{'npc_talk'}{'talk'} ne 'next') {
+			while ($self->{steps}[0] =~ /^c/i) {
+				warning "Ignoring excessive use 'c' in conversation with npc.\n";
+				shift(@{$self->{steps}});
+			}
+		
 		#This is to make non-autotalkcont sequences compatible with autotalkcont ones
-		if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
+		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont}) {
 			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
 			debug "$self->{target}: Auto-continuing talking\n", 'ai_npcTalk';
+		}
 			
 		#This is done to restart the conversation (check if this is necessary)
-		} elsif ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
+		if ($ai_v{'npc_talk'}{'talk'} eq 'close' && $self->{steps}[0] =~ /x/i) {
 			undef $ai_v{'npc_talk'}{'talk'};
 		}
 
@@ -364,7 +416,6 @@ sub iterate {
 			$self->{time} = time;
 		}
 		
-		my @bulkitemlist;
 		my $step = $self->{steps}[0];
 		my $current_talk_step = $ai_v{'npc_talk'}{'talk'};
 
@@ -384,26 +435,6 @@ sub iterate {
 		if ( $step =~ /^x/i ) {
 			debug "$self->{target}: Initiating the talk\n", 'ai_npcTalk';
 			$self->{target}->sendTalk;
-			
-		# Wait x seconds.
-		} elsif ($step =~ /^w(\d+)/i) {
-			my $time = $1;
-			debug "$self->{target}: Waiting for $time seconds...\n", 'ai_npcTalk';
-			$ai_v{'npc_talk'}{'time'} = time + $time;
-			$self->{time} = time + $time;
-			shift @{$self->{steps}};
-			return;
-			
-		# Run a command.
-		} elsif ( $step =~ /^a=(.*)/i ) {
-			my $command = $1;
-			my $timeout = $timeResponse - 4;
-			$timeout = 0 if $timeout < 0;
-			$ai_v{'npc_talk'}{'time'} = time + $timeout;
-			$self->{time} = time + $timeout;
-			Commands::run($command);
-			shift @{$self->{steps}};
-			return;
 		
 		# Select an answer
 		} elsif ($current_talk_step eq 'select') {
@@ -527,11 +558,12 @@ sub iterate {
 			
 			# Buy Items
 			if ($step =~ /^b(\d+),(\d+)/i) {
+				my @bulkitemlist;
 				while ($self->{steps}[0] =~ /^b(\d+),(\d+)/i){
 					my $index = $1;
 					my $amount = $2;
-					if ($storeList[$index]) {
-						my $itemID = $storeList[$index]{nameID};
+					if ($storeList->get($index)) {
+						my $itemID = $storeList->get($index)->{nameID};
 						push (@{$ai_v{npc_talk}{itemsIDlist}},$itemID);
 						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 					} else {
@@ -540,10 +572,8 @@ sub iterate {
 					}
 					shift @{$self->{steps}};
 				}
-				if (grep(defined, @bulkitemlist)) {
-					$messageSender->sendBuyBulk(\@bulkitemlist);
-					$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
-				}
+				completeNpcBuy(\@bulkitemlist);
+				$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
 				# We give some time to get inventory_item_added packet from server.
 				# And skip this itteration.
 				$ai_v{'npc_talk'}{'time'} = time + 0.2;
@@ -588,7 +618,7 @@ sub iterate {
 	# UPDATE: not sending 'talk cancel' breaks autostorage on iRO.
 	# This needs more investigation.
 	} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
-		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'}));
+		return unless (timeOut($self->{time}, $ai_npc_talk_wait_after_close_to_cancel));
 		#Now 'n' step is totally unnecessary as we always send it but this must be done for backwards compatibility
 		if ( $self->{steps}[0] =~ /^n/i ) {
 			shift(@{$self->{steps}});
@@ -600,7 +630,7 @@ sub iterate {
 	
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
 	} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
-		return unless (timeOut($self->{time}, $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'}));
+		return unless (timeOut($self->{time}, $ai_npc_talk_wait_after_cancel_to_destroy));
 		
 		if (defined $self->{error_code}) {
 			$self->setError($self->{error_code}, $self->{error_message});
@@ -608,51 +638,28 @@ sub iterate {
 		}
 		
 		# No more steps to be sent
-		if ($self->noMoreSteps) {
-			# Usual end of a conversation
-			if (!%talk) {
-				$self->conversation_end;
-			
-			# No more steps but we still have a defined %talk
-			} else {
-				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
-				# TODO: maybe better create a new task
-				debug "Continuing the talk within the same task\n", 'ai_npcTalk';
-				my $target = $self->find_and_set_target;
-				$self->{stage} = TALKING_TO_NPC;
-				$self->{time} = time;
-			}
+		# Usual end of a conversation
+		if ($self->noMoreSteps && !%talk) {
+			$self->conversation_end;
 		
-		# There are more steps
-		} else {
-			# No conversation with npc
-			if (!%talk) {
-				# Usual 'x' step
-				if ($self->{steps}[0] =~ /x/i) {
-					debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
-					$self->{stage} = TALKING_TO_NPC;
-					$self->{time} = time;
-				
-				# Too many steps
-				} else {
-					if ( scalar @{$self->{steps}} == 1 && $self->{steps}[0] =~ /^n$/i ) {
-						#Here for backwards compatibility
-						$self->conversation_end;
-						
-					} else {
-						# TODO: maybe just warn about remaining steps and do not set error flag?
-						$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").\n");
-					}
-				}
-			
-			# We still have steps but we also still have a defined %talk
-			} else {
-				debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
-				# TODO: maybe better create a new task and pass remaining steps to it
-				debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
-				my $target = $self->find_and_set_target;
+		# There are more steps but no conversation with npc
+		} elsif (!%talk) {
+			# Usual 'x' step
+			if ($self->{steps}[0] =~ /x/i) {
+				debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+			
+			# Too many steps
+			} else {
+				if ( scalar @{$self->{steps}} == 1 && $self->{steps}[0] =~ /^n$/i ) {
+					#Here for backwards compatibility
+					$self->conversation_end;
+					
+				} else {
+					# TODO: maybe just warn about remaining steps and do not set error flag?
+					$self->setError(STEPS_AFTER_AFTER_NPC_CLOSE, "There are still steps to be done but the conversation has already ended (current step: ".$self->{steps}[0].").");
+				}
 			}
 		}
 	}
@@ -792,7 +799,8 @@ sub waitingForSteps {
 	return 0 unless ($self->{stage} == TALKING_TO_NPC);
 	return 0 unless ($self->noMoreSteps);
 	return 0 if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont});
-	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'}));
+	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
+	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer));
 	return 1;
 }
 

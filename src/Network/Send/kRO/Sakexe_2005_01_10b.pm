@@ -36,16 +36,16 @@ sub new {
 		'0085' => ['actor_look_at', 'x10 C x9 C', [qw(head body)]],
 		'0089' => ['sync', 'x3 V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x2 a4', [qw(ID)]],
-		'0094' => ['storage_item_add', 'x8 v x4 V', [qw(index amount)]],
+		'0094' => ['storage_item_add', 'x8 a2 x4 V', [qw(ID amount)]],
 		'009B' => ['map_login', 'x a4 x5 a4 x7 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'009F' => ['item_use', 'x3 v x6 a4', [qw(index targetID)]],#17
+		'009F' => ['item_use', 'x3 a2 x6 a4', [qw(ID targetID)]],#17
 		'00A2' => ['actor_name_request', 'x5 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x8 a3', [qw(coords)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F5' => ['item_take', 'x3 a4', [qw(ID)]],
-		'00F7' => ['storage_item_remove', 'x9 v x4 V', [qw(index amount)]],
+		'00F7' => ['storage_item_remove', 'x9 a2 x4 V', [qw(ID amount)]],
 		'0113' => ['skill_use_location', 'x8 v x6 v x2 v x8 v', [qw(lv skillID x y)]],
-		'0116' => ['item_drop', 'x13 v x v', [qw(index amount)]],
+		'0116' => ['item_drop', 'x13 a2 x v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
 		'0193' => undef,
 	);

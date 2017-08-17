@@ -61,7 +61,7 @@ sub new {
 	my $self = $class->SUPER::new();
 
 	# Invariant: defined(type)
-	$self->{type} = $type;
+	$self->{AL_type} = $type;
 
 	# Hash<Bytes, Actor> IDmap
 	# Maps an actor ID ($Actor->{ID}) to an actor. Used
@@ -92,7 +92,7 @@ sub new {
 sub add {
 	my ($self, $actor) = @_;
 	assert(defined $actor) if DEBUG;
-	assert($actor->isa($self->{type})) if DEBUG;
+	assert($actor->isa($self->{AL_type})) if DEBUG;
 	assert(defined $actor->{ID}) if DEBUG;
 	assert(!exists $self->{IDmap}{$actor->{ID}}) if DEBUG;
 
@@ -127,7 +127,7 @@ sub getByID {
 sub remove {
 	my ($self, $actor) = @_;
 	assert(defined $actor) if DEBUG;
-	assert(UNIVERSAL::isa($actor, $self->{type})) if DEBUG;
+	assert(UNIVERSAL::isa($actor, $self->{AL_type})) if DEBUG;
 	assert(defined $actor->{ID}) if DEBUG;
 
 	my $result = $self->SUPER::remove($actor);
@@ -169,7 +169,7 @@ sub checkValidity {
 	my ($self) = @_;
 	$self->SUPER::checkValidity();
 
-	assert(defined $self->{type});
+	assert(defined $self->{AL_type});
 	assert(defined $self->{IDmap});
 	should(scalar(keys %{$self->{IDmap}}), $self->size());
 	foreach my $v (values %{$self->{IDmap}}) {

@@ -31,13 +31,13 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0072' => ['item_use', 'x7 v x9 a4', [qw(index targetID)]],#24 Here is error, the packet length should be 20
-		'007E' => ['storage_item_add', 'x v x10 V', [qw(index amount)]],
+		'0072' => ['item_use', 'x7 a2 x9 a4', [qw(ID targetID)]],#24 Here is error, the packet length should be 20
+		'007E' => ['storage_item_add', 'x a2 x10 V', [qw(ID amount)]],
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
 		'0089' => ['character_move', 'x4 a3', [qw(coords)]],
 		'008C' => undef,
 		'009B' => ['actor_info_request', 'x8 a4', [qw(ID)]],
-		'0094' => ['item_drop', 'x4 v x7 v', [qw(index amount)]],
+		'0094' => ['item_drop', 'x4 a2 x7 v', [qw(ID amount)]],
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00A2' => ['actor_name_request', 'x8 a4', [qw(ID)]],
 		'00A7' => ['skill_use_location', 'x8 v x2 v x2 v x3 v', [qw(lv skillID x y)]],
@@ -47,7 +47,7 @@ sub new {
 		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0116' => ['sync', 'x5 V', [qw(time)]],
 		'0190' => ['skill_use', 'x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
-		'0193' => ['storage_item_remove', 'x v x8 V', [qw(index amount)]],
+		'0193' => ['storage_item_remove', 'x a2 x8 V', [qw(ID amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

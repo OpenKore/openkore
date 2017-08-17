@@ -35,15 +35,15 @@ sub new {
 		'0085' => ['actor_look_at', 'x5 C x3 C', [qw(head body)]],
 		# 0089 unchanged
 		'008C' => ['actor_info_request', 'x6 a4', [qw(ID)]],
-		'0094' => ['storage_item_add', 'x3 v x12 V', [qw(index amount)]],
+		'0094' => ['storage_item_add', 'x3 a2 x12 V', [qw(ID amount)]],
 		'009B' => ['map_login', 'x7 a4 x8 a4 x3 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'009F' => ['item_use', 'x7 v x9 a4', [qw(index targetID)]],#24
+		'009F' => ['item_use', 'x7 a2 x9 a4', [qw(ID targetID)]],#24
 		'00A2' => ['actor_name_request', 'x5 a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x10 a3', [qw(coords)]],
 		# 00F5 unchanged
-		'00F7' => ['storage_item_remove', 'x9 v x9 V', [qw(index amount)]],
+		'00F7' => ['storage_item_remove', 'x9 a2 x9 V', [qw(ID amount)]],
 		'0113' => ['skill_use_location', 'x3 v x8 v x12 v x7 v', [qw(lv skillID x y)]],
-		'0116' => ['item_drop', 'x6 v x5 v', [qw(index amount)]],
+		'0116' => ['item_drop', 'x6 a2 x5 v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x5 a4 x6 C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
