@@ -1,17 +1,17 @@
 #############################################################################################
-# A CodificaÁ„o do texto est· correta?
-# CodificaÁ„o:  ANSI -> UTF8 Without boom
-# Se vocÍ n„o est· vendo a acentuaÁ„o corretamente, seu arquivo est· no formato incorreto.
-# CrÈditos traduÁ„o: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
+# A Codifica√ß√£o do texto est√° correta?
+# Codifica√ß√£o:  ANSI -> UTF8 Without boom
+# Se voc√™ n√£o est√° vendo a acentua√ß√£o corretamente, seu arquivo est√° no formato incorreto.
+# Cr√©ditos tradu√ß√£o: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
 #############################################################################################
-# Nesse arquivo vocÍ pode configurar quais itens ser„o adicionados no armazÈm,
-# quais ser„o vendidos em NPC, ou deixados no invent·rio.
+# Nesse arquivo voc√™ pode configurar quais itens ser√£o adicionados no armaz√©m,
+# quais ser√£o vendidos em NPC, ou deixados no invent√°rio.
 #
 # Sintaxe:
-# (nome do item) (mÌnimo) (auto-armazÈm) (auto-venda) [por no carrinho] [pegar do carrinho]
+# (nome do item) (m√≠nimo) (auto-armaz√©m) (auto-venda) [por no carrinho] [pegar do carrinho]
 # nome do item          : Nome do item (Digite i no console do openkore para saber o nome correto.)
-# mÌnimo                        : Quantidade mÌnima desse item que deseja manter no invent·rio.
-# auto-armazÈm         : Coloque 1 para voltar ao NPC da Kafra e adicionar esse item ao armazÈm.
+# m√≠nimo                        : Quantidade m√≠nima desse item que deseja manter no invent√°rio.
+# auto-armaz√©m         : Coloque 1 para voltar ao NPC da Kafra e adicionar esse item ao armaz√©m.
 # auto-venda            : Coloque 1 para vender esse item em NPC.
 # por no carrinho       : Coloque 1 para adicionar esse item automaticamente no carrinho.
 # pegar do carrinho     : Coloque 1 para retirar esse item automaticamente do carrinho.
@@ -22,28 +22,28 @@
 #	Faca 0 1 0
 #	Flor 0 0 0 1
 #
-# Neste exemplo, ser· coletado PoÁıes Vermelhas do carrinho se vocÍ tiver menos que 25
-# deste item em seu invent·rio:
-# 	PoÁ„o Vermelha 25 0 0 0 1
+# Neste exemplo, ser√° coletado Po√ß√µes Vermelhas do carrinho se voc√™ tiver menos que 25
+# deste item em seu invent√°rio:
+# 	Po√ß√£o Vermelha 25 0 0 0 1
 #
-# O nome do item n„o È diferenciado por letras mai˙sculas ou min˙sculas. Apenas os itens encontrados
-# neste arquivo ser„o armazenados ou vendidos.
+# O nome do item n√£o √© diferenciado por letras mai√∫sculas ou min√∫sculas. Apenas os itens encontrados
+# neste arquivo ser√£o armazenados ou vendidos.
 #
-# Se o auto-armazÈm e auto-venda estiverem como 1, o Kore ir· armazenar primeiro (exceto se
-# o armazÈm estiver lotado), e somente depois ir· vender os itens.
+# Se o auto-armaz√©m e auto-venda estiverem como 1, o Kore ir√° armazenar primeiro (exceto se
+# o armaz√©m estiver lotado), e somente depois ir√° vender os itens.
 #
-# O Kore jamais ir· vender ou armazenar itens equipados. Por exemplo, se voce estiver usando
-# uma faca e na lista ter uma linha de auto-venda de todas as facas, o Kore ir· vender somente
-# as que estiverem no invent·rio, jamais a faca que estiver usando.
+# O Kore jamais ir√° vender ou armazenar itens equipados. Por exemplo, se voce estiver usando
+# uma faca e na lista ter uma linha de auto-venda de todas as facas, o Kore ir√° vender somente
+# as que estiverem no invent√°rio, jamais a faca que estiver usando.
 #
-# N„o esqueÁa de definir storageAuto, sellAuto e demais configuraÁıes relacionadas
-# no config.txt, ou ent„o este arquivo n„o ter· efeito algum.
+# N√£o esque√ßa de definir storageAuto, sellAuto e demais configura√ß√µes relacionadas
+# no config.txt, ou ent√£o este arquivo n√£o ter√° efeito algum.
 #
-# As listas de auto-venda e auto-armazÈm s„o padronizadas. Modifique-as
+# As listas de auto-venda e auto-armaz√©m s√£o padronizadas. Modifique-as
 # como achar melhor.
 
 
-# Todos os itens n„o mencionados nesse arquivo ser„o automaticamente adicionados no armazÈm.
+# Todos os itens n√£o mencionados nesse arquivo ser√£o automaticamente adicionados no armaz√©m.
 all 0 1 0
 
 
@@ -53,30 +53,30 @@ all 0 1 0
 Asas de Borboleta 10 1 0
 Asas de Mosca 100 1 0
 
-PoÁ„o Azul 0 1 0
-PoÁ„o Vermelha Compacta 50 1 0
-PoÁ„o Branca Compacta 50 1 0
-PoÁ„o Amarela Compacta 50 1 0
-PoÁ„o Verde 0 1 0
-PoÁ„o Vermelha 25 1 0
-PoÁ„o Laranja 25 1 0
-PoÁ„o Branca 25 1 0
-PoÁ„o Amarela 25 1 0
+Po√ß√£o Azul 0 1 0
+Po√ß√£o Vermelha Compacta 50 1 0
+Po√ß√£o Branca Compacta 50 1 0
+Po√ß√£o Amarela Compacta 50 1 0
+Po√ß√£o Verde 0 1 0
+Po√ß√£o Vermelha 25 1 0
+Po√ß√£o Laranja 25 1 0
+Po√ß√£o Branca 25 1 0
+Po√ß√£o Amarela 25 1 0
 
 ##### FLECHAS #####
-# VocÍ pode precisar modificar esta linha se vocÍ È um arqueiro/caÁador.
+# Voc√™ pode precisar modificar esta linha se voc√™ √© um arqueiro/ca√ßador.
 
 Flecha 3000 1 0
 
 
 
 #########################
-##### ITENS ¿ VENDA #####
+##### ITENS √Ä VENDA #####
 #########################
 
 
-##### EQUIPAMENTOS IN⁄TEIS #####
-# Equipamentos in˙teis que ser„o vendidos por padr„o.
+##### EQUIPAMENTOS IN√öTEIS #####
+# Equipamentos in√∫teis que ser√£o vendidos por padr√£o.
 
 Anel de Caveira 0 0 1
 Anel de Diamante 0 0 1
@@ -86,13 +86,13 @@ Anel de Prata 0 0 1
 Armadura Acolchoada 0 0 1
 Armadura de Madeira [1] 0 0 1
 Armadura de Madeira 0 0 1
-Armadura Met·lica 0 0 1
+Armadura Met√°lica 0 0 1
 Bandana 0 0 1
 Barrete 0 0 1
 Botas 0 0 1
 Broquel 0 0 1
-Camisa de Algod„o [1] 0 0 1
-Camisa de Algod„o 0 0 1
+Camisa de Algod√£o [1] 0 0 1
+Camisa de Algod√£o 0 0 1
 Capacete de Schallern 0 0 1
 Capote [1] 0 0 1
 Capote 0 0 1
@@ -100,58 +100,58 @@ Capuz [1] 0 0 1
 Capuz 0 0 1
 Casaco [1] 0 0 1
 Casaco 0 0 1
-ChapÈu 0 0 1
+Chap√©u 0 0 1
 Cota de Malha 0 0 1
 Elmo 0 0 1
-Escapul·rio 0 0 1
+Escapul√°rio 0 0 1
 Escudo 0 0 1
 Escudo Espelhado 0 0 1
 Faixa de Cabelo 0 0 1
-Gib„o [1] 0 0 1
-Gib„o 0 0 1
-Grilhıes 0 0 1
-LaÁo [1] 0 0 1
-LaÁo 0 0 1
+Gib√£o [1] 0 0 1
+Gib√£o 0 0 1
+Grilh√µes 0 0 1
+La√ßo [1] 0 0 1
+La√ßo 0 0 1
 Malha 0 0 1
 Manteau 0 0 1
 Manto de Seda 0 0 1
 Manto Prateado [1] 0 0 1
 Manto Prateado 0 0 1
 Manto Sagrado 0 0 1
-M·scara Cir˙rgica 0 0 1
-M·scara Feliz 0 0 1
-M·scara X 0 0 1
-”culos de Mergulho 0 0 1
-”culos Escuros 0 0 1
-Ros·rio 0 0 1
+M√°scara Cir√∫rgica 0 0 1
+M√°scara Feliz 0 0 1
+M√°scara X 0 0 1
+√ìculos de Mergulho 0 0 1
+√ìculos Escuros 0 0 1
+Ros√°rio 0 0 1
 Rouba de Baixo 0 0 1
 Salto Alto 0 0 1
-Sand·lias [1] 0 0 1
-Sand·lias 0 0 1
+Sand√°lias [1] 0 0 1
+Sand√°lias 0 0 1
 #Sapatilha de Cristal 0 0 1
 Sapatos 0 0 1
 Sobrepeliz 0 0 1
-SolidÈu 0 0 1
+Solid√©u 0 0 1
 Tapa-Olho 0 0 1
 Tiara 0 0 1
 Traje de Gatuno 0 0 1
-T˙nica 0 0 1
+T√∫nica 0 0 1
 Turbante 0 0 1
 Vembrassa 0 0 1
 
 
-##### ARMAS IN⁄TEIS #####
-# Armas in˙teis que ser„o vendidas por padr„o.
+##### ARMAS IN√öTEIS #####
+# Armas in√∫teis que ser√£o vendidas por padr√£o.
 
-AÁoite [2] 0 0 1
-AÁoite [3] 0 0 1
+A√ßoite [2] 0 0 1
+A√ßoite [3] 0 0 1
 Adaga [2] 0 0 1
 Adaga [3] 0 0 1
 Adaga 0 0 1
 Alabarda [1] 0 0 1
 Alabarda [2] 0 0 1
-Ala˙de [2] 0 0 1
-Ala˙de [3] 0 0 1
+Ala√∫de [2] 0 0 1
+Ala√∫de [3] 0 0 1
 Alfanje [3] 0 0 1
 Alfanje 0 0 1
 Arbaleste [1] 0 0 1
@@ -171,13 +171,13 @@ Azorrague [1] 0 0 1
 Azorrague 0 0 1
 Bandolin [2] 0 0 1
 Bandolin [3] 0 0 1
-Bast„o [3] 0 0 1
-#Bast„o [4] 0 0 1
-Bast„o 0 0 1
+Bast√£o [3] 0 0 1
+#Bast√£o [4] 0 0 1
+Bast√£o 0 0 1
 Besta [2] 0 0 1
 Besta 0 0 1
-Besta de RebetiÁ„o [1] 0 0 1
-#BÌblia [2] 0 0 1
+Besta de Rebeti√ß√£o [1] 0 0 1
+#B√≠blia [2] 0 0 1
 Bracelete de Aprendiz [1] 0 0 1
 Cajado [2] 0 0 1
 Cajado 0 0 1
@@ -203,7 +203,7 @@ Dedos Afiados [1] 0 0 1
 Dedos Afiados [2] 0 0 1
 Demolidor [1] 0 0 1
 Demolidor 0 0 1
-#Di·rio de Menina [1] 0 0 1
+#Di√°rio de Menina [1] 0 0 1
 Dilaceradora [3] 0 0 1
 Dilaceradora [4] 0 0 1
 Dilaceradora 0 0 1
@@ -214,8 +214,8 @@ Espada [4] 0 0 1
 Espada 0 0 1
 Espada Bastarda [2] 0 0 1
 Espada Bastarda 0 0 1
-Espada de Duas M„os [1] 0 0 1
-Espada de Duas M„os 0 0 1
+Espada de Duas M√£os [1] 0 0 1
+Espada de Duas M√£os 0 0 1
 Espada Larga [1] 0 0 1
 Espada Matadora [2] 0 0 1
 Espada Matadora [3] 0 0 1
@@ -252,20 +252,20 @@ Harpa [1] 0 0 1
 Harpa [2] 0 0 1
 Jamadhar 0 0 1
 Jur [2] 0 0 1
-Katan· [3] 0 0 1
-Katan· [4] 0 0 1
-Katan· 0 0 1
+Katan√° [3] 0 0 1
+Katan√° [4] 0 0 1
+Katan√° 0 0 1
 Katar [1] 0 0 1
-L‚mina [3] 0 0 1
-L‚mina [4] 0 0 1
-L‚mina 0 0 1
-LanÁa 0 0 1
-MaÁa [3] 0 0 1
-#MaÁa [4] 0 0 1
-MaÁa 0 0 1
-MaÁa de Guerra [1] 0 0 1
-MaÁa de Guerra [2] 0 0 1
-MaÁa Espada 0 0 1
+L√¢mina [3] 0 0 1
+L√¢mina [4] 0 0 1
+L√¢mina 0 0 1
+Lan√ßa 0 0 1
+Ma√ßa [3] 0 0 1
+#Ma√ßa [4] 0 0 1
+Ma√ßa 0 0 1
+Ma√ßa de Guerra [1] 0 0 1
+Ma√ßa de Guerra [2] 0 0 1
+Ma√ßa Espada 0 0 1
 Machado [3] 0 0 1
 Machado [4] 0 0 1
 Machado 0 0 1
@@ -273,8 +273,8 @@ Machado de Batalha [3] 0 0 1
 Machado de Batalha [4] 0 0 1
 Machado de Batalha 0 0 1
 #Machado de Combate [1] 0 0 1
-Machado de Duas M„os [1] 0 0 1
-Machado de Duas M„os 0 0 1
+Machado de Duas M√£os [1] 0 0 1
+Machado de Duas M√£os 0 0 1
 Machado dos Orcs 0 0 1
 Main Gauche [3] 0 0 1
 Main Gauche 0 0 1
@@ -294,8 +294,8 @@ Ranseur 0 0 1
 Sabre [2] 0 0 1
 Sabre de Impacto [2] 0 0 1
 #Serpente 0 0 1
-Soco InglÍs [2] 0 0 1
-Soco InglÍs [3] 0 0 1
+Soco Ingl√™s [2] 0 0 1
+Soco Ingl√™s [3] 0 0 1
 Soqueira [2] 0 0 1
 Soqueira [3] 0 0 1
 Stiletto [2] 0 0 1
@@ -309,15 +309,15 @@ Tsurugi 0 0 1
 Vareta [2] 0 0 1
 Vareta [3] 0 0 1
 Vareta 0 0 1
-Viol„o [1] 0 0 1
-Viol„o 0 0 1
+Viol√£o [1] 0 0 1
+Viol√£o 0 0 1
 Violino [3] 0 0 1
 #Violino [4] 0 0 1
 Waghnak [3] 0 0 1
 Waghnak [4] 0 0 1
 
-##### ITENS N√O-ARMAZEN¡VEIS #####
-# N„o fazer nada com os seguintes itens
+##### ITENS N√ÉO-ARMAZEN√ÅVEIS #####
+# N√£o fazer nada com os seguintes itens
 
 671 0 0 0 0 0 # Gold_Coin
 675 0 0 0 0 0 # Silver_Coin
