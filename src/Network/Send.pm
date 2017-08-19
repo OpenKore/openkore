@@ -31,11 +31,23 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
 use Log qw(debug);
+
+sub new {
+	my ( $class ) = @_;
+	my $self = $class->SUPER::new( @_ );
+
+	my $cryptKeys = $masterServers{ $config{master} }->{sendCryptKeys};
+	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
+		$self->cryptKeys( hex $1, hex $2, hex $3 );
+	}
+
+	return $self;
+}
 
 sub import {
 	# This code is for backward compatibility reasons, so that you can still
