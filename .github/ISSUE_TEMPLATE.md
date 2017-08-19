@@ -1,3 +1,4 @@
+
 Please refer to the following resources for help using OpenKore:
  faqs - http://openkore.com/index.php/Frequently_Asked_Questions (such as "Packet Tokenizer")
  forum - http://forums.openkore.com
