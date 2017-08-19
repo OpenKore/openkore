@@ -17,7 +17,7 @@ use strict;
 use base qw(Network::Send::ServerType0);
 use Log qw(error debug);
 # use Misc qw(visualDump);
-use Utils qw(getCoordString);
+use Utils qw(getCoordString getHex);
 
 sub new {
 	my ($class) = @_;
@@ -28,21 +28,48 @@ sub new {
     actor_look_at 49A3
 		character_move 49B0
 		sync 4AD0
+		npc_talk 49A3
+		npc_talk_continue 4035
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
-	$self->cryptKeys(0x42780CC0, 0x67F86D28, 0x1CEB0ADC);
 
 	return $self;
 }
 
 sub sendMove {
+	# 0D 30
+	# B0 69
 	my ($self, $x, $y) = @_;
 
 	my $msg = pack("C*", 0xB0, 0x49) . getCoordString($x, $y, 1);
-
 	$self->sendToServer($msg);
-	debug "Sent move to: $x, $y\n", "sendPacket", 1;
+	debug "Sent move to: $x, $y\n", "sendPacket", 2;
+}
+
+sub sendGetPlayerInfo {
+	# DF 5E
+	# 7F 0C
+	# FF 48
+	my ($self, $ID) = @_;
+
+	my $msg = pack("C*", 0xFF, 0x48) . $ID;
+	$self->sendToServer($msg);
+	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendSync {
+	# 50 FC
+	# 50 0E
+	# D0 48
+	# D0 72
+	# D0 6A
+	# D0 4A
+	my ($self, $initialSync) = @_;
+	# XKore mode 1 lets the client take care of syncing.
+	return if ($self->{net}->version == 1);
+
+	$self->sendToServer($self->reconstruct({switch => 'sync'}));
+	debug "Sent Sync\n", "sendPacket", 2;
 }
 
 1;
