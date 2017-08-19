@@ -154,10 +154,13 @@ sub new {
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
+		'4035' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'48FF' => ['actor_info_request', 'a4', [qw(ID)]],
 		'49A3' => ['actor_look_at', 'v C', [qw(head body)]],
 		'49B0' => ['character_move', 'a3', [qw(coords)]],
 		'4AD0' => ['sync', 'V', [qw(time)]],
+		'49A3' => ['npc_talk', 'a4 C', [qw(ID type)]],
+
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
