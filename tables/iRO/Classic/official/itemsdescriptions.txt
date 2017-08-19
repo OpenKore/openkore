@@ -70828,3 +70828,19 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19975#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ribbon Chef Hat!
+100 Fabric
+50 Soft Silk
+5 Professional Cooking Kit
+1 Level 10 Cookbook
+1 Small Ribbons
+1000 Zeny
+1 Ribbon Chef Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
