@@ -32,6 +32,7 @@ sub new {
 		'0890' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'089C' => ['item_take', 'a4', [qw(ID)]],
 		'089D' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'08A1' => ['map_connected'],
 		'0927' => ['guild_info_request', 'V', [qw(type)]],
 		'092A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 		'092B' => ['map_loaded'],
@@ -58,6 +59,7 @@ sub new {
 		map_login 0890
 		item_take 089C
 		actor_action 089D
+		map_connected 08A1
 		guild_info_request 0927
 		party_join_request_by_name 092A
 		map_loaded 092B
@@ -76,7 +78,7 @@ sub new {
 
 sub sendMapConnected {
 	my $self = shift;
-	$self->sendToServer( pack 'v', 0x08A1 );
+	$self->sendToServer( $self->reconstruct( { switch => 'map_connected' } ) );
 }
 
 1;
