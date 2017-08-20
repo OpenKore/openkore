@@ -38,6 +38,7 @@ sub new {
 		'092F' => ['actor_look_at', 'v C', [qw(head body)]],
 		'093C' => ['character_move','a3', [qw(coords)]],
 		'0949' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0951' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'0953' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0958' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0A5C' => ['sync', 'V', [qw(time)]],
@@ -63,6 +64,7 @@ sub new {
 		actor_look_at 092F
 		character_move 093C
 		item_drop 0949
+		npc_talk_response 0951
 		skill_use_location 0953
 		storage_item_add 0958
 		sync 0A5C
