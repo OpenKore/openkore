@@ -46,31 +46,8 @@ sub new {
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
-	my %handlers = qw(
-		guild_check 0281
-		homunculus_command 0361
-		storage_item_remove 0369
-		npc_talk 07E4
-		storage_password 085A
-		actor_name_request 0862
-		actor_info_request 0873
-		skill_use 0887
-		item_list_res 0888
-		map_login 0890
-		item_take 089C
-		actor_action 089D
-		map_connected 08A1
-		guild_info_request 0927
-		party_join_request_by_name 092A
-		map_loaded 092B
-		actor_look_at 092F
-		character_move 093C
-		item_drop 0949
-		npc_talk_response 0951
-		skill_use_location 0953
-		storage_item_add 0958
-		sync 0A5C
-	);
+	my %handlers = qw();
+	while ( my ( $k, $v ) = each %packets ) { $handlers{ $v->[0] } = $k }
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
