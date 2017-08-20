@@ -153,7 +153,7 @@ sub new {
 		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
-		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V', [qw(len receiver sender zeny1 zeny2 title_len text_len char_id)]],   # -1 -- RodexSendMail
+		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -244,31 +244,22 @@ sub rodex_checkname {
 
 sub rodex_send_mail {
 	my ($self) = @_;
-	
-	my $title_len = length($rodexWrite->{title});
-	my $text_len = length($rodexWrite->{body});
-	
-	my $header_pack = 'v Z24 Z24 V2 v2 V';
-	my $header_base_len = ((length pack $header_pack) + 2);
-	my $len = $header_base_len + $text_len + $title_len;
-	
-	my $base_pack = $self->reconstruct({
+
+	my $title = stringToBytes($rodexWrite->{title});
+	my $body = stringToBytes($rodexWrite->{body});
+	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
-		len => $len,
 		receiver => $rodexWrite->{target}{name},
 		sender => $char->{name},
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
-		title_len => $title_len,
-		text_len => $text_len,
-		char_id => $rodexWrite->{target}{char_id}
+		title_len => length $title,
+		body_len => length $body,
+		char_id => $rodexWrite->{target}{char_id},
+		title => $title,
+		body => $body,
 	});
-	
-	my $title = stringToBytes($rodexWrite->{title});
-	my $body = stringToBytes($rodexWrite->{body});
-	
-	my $pack = $base_pack . $title . $body;
-	
+
 	$self->sendToServer($pack);
 }
 

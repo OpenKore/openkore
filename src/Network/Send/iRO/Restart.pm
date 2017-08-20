@@ -20,8 +20,9 @@ sub new {
 	my $self = $class->SUPER::new( @_ );
 
 	my %packets = (
+		'0090' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],
 		'0281' => ['guild_check'],
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0369' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'07E4' => ['npc_talk', 'a4 C', [qw(ID type)]],
 		'085A' => ['storage_password'],
@@ -34,7 +35,7 @@ sub new {
 		'089D' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'08A1' => ['map_connected'],
 		'0927' => ['guild_info_request', 'V', [qw(type)]],
-		'092A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'092A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'092B' => ['map_loaded'],
 		'092F' => ['actor_look_at', 'v C', [qw(head body)]],
 		'093C' => ['character_move','a3', [qw(coords)]],
