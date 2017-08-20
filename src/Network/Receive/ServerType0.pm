@@ -1162,8 +1162,6 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 
-		$messageSender->sendToServer(pack('v', 0x08A1)) if ($masterServer->{serverType} eq 'iRO_Restart');
-
 		$messageSender->sendSync(1);
 
 		$messageSender->sendGuildMasterMemberCheck();

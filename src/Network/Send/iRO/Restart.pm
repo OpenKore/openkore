@@ -74,4 +74,10 @@ sub new {
 	return $self;
 }
 
+sub sendMapLoaded {
+	my $self = shift;
+	$self->sendToServer( pack 'v', 0x08A1 );
+	$self->SUPER::sendMapLoaded( @_ );
+}
+
 1;
