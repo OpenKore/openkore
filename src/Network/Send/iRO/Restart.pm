@@ -23,6 +23,7 @@ sub new {
 		'0281' => ['guild_check'],
 		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
 		'0369' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'07E4' => ['npc_talk', 'a4 C', [qw(ID type)]],
 		'085A' => ['storage_password'],
 		'0862' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0873' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -47,6 +48,7 @@ sub new {
 		guild_check 0281
 		homunculus_command 0361
 		storage_item_remove 0369
+		npc_talk 07E4
 		storage_password 085A
 		actor_name_request 0862
 		actor_info_request 0873
