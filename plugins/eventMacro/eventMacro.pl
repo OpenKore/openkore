@@ -518,7 +518,7 @@ sub commandHandler {
 		
 	### parameter: enable
 	} elsif ($arg eq 'enable') {
-		if (!defined $params[0]) {
+		if (!defined $params[0] || $params[0] eq 'all') {
 			$eventMacro->enable_all_automacros();
 			message "[eventMacro] All automacros were enabled.\n";
 			return;
@@ -536,7 +536,7 @@ sub commandHandler {
 
 	### parameter: disable
 	} elsif ($arg eq 'disable') {
-		if (!defined $params[0]) {
+		if (!defined $params[0] || $params[0] eq 'all') {
 			$eventMacro->disable_all_automacros();
 			message "[eventMacro] All automacros were disabled.\n";
 			return;
