@@ -41,6 +41,7 @@ sub new {
 	$self->{line_index} = 0;
 	
 	$self->{label} = {scanLabels($self->{lines_array})};
+	$self->{loops} = {scanLoops($self->{lines_array})};
 	
 	$self->{time} = time;
 	
@@ -417,16 +418,29 @@ sub scanLabels {
 			my ($label) = ${$script}[$line] =~ /^:(.*)/;
 			$labels{$label} = $line
 		}
-		if (${$script}[$line] =~ /^while\s+/) {
-			my ($label) = ${$script}[$line] =~ /\s+as\s+(.*)/;
-			$labels{$label} = $line
-		}
-		if (${$script}[$line] =~ /^end\s+/) {
-			my ($label) = ${$script}[$line] =~ /^end\s+(.*)/;
-			$labels{"end ".$label} = $line
-		}
 	}
 	return %labels
+}
+
+# Scans the script for loops
+sub scanLoops {
+	my $script = $_[0];
+	my %loops;
+	my $block_start;
+	
+	for (my $line = 0; $line < @{$script}; $line++) {
+		
+		if (defined $block_start) {
+			next unless (${$script}[$line] =~ /^}$/);
+			$loops{end_to_start}{$line} = $block_start;
+			$loops{start_to_end}{$block_start} = $line;
+			undef $block_start;
+			
+		} elsif (${$script}[$line] =~ /^while\s+\(\s*(.*)\s*\)\s+{$/) {
+			$block_start = $line;
+		}
+	}
+	return %loops
 }
 
 # Decides what to do when we get to the end of a macro script
@@ -601,29 +615,14 @@ sub define_next_valid_command {
 			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
 			$check_need = 1;
 		}
-	
-		
-		######################################
-		# End of while 'block'
-		######################################
-		if ($self->{current_line} =~ /^end\s/) {
-			my ($label) = $self->{current_line} =~ /^end\s+(.*)/;
-			if (exists $self->{label}->{$label}) {
-				debug "[eventMacro] Script is the end of a while 'block' of label '$label'.\n", "eventMacro", 3;
-				debug "[eventMacro] Moving to the start of while 'block' of label '$label'.\n", "eventMacro", 3;
-				$self->line_index($self->{label}->{$label});
-			} else {
-				$self->error("Cannot find label '$label'");
-				return;
-			}
 		
 		######################################
 		# While statement: while (foo <= bar) as label
 		######################################
-		} elsif ($self->{current_line} =~ /^while\s/) {
-			my ($condition_text, $label) = $self->{current_line} =~ /^while\s+\(\s*(.*)\s*\)\s+as\s+(.*)/;
+		if ($self->{current_line} =~ /^while\s/) {
+			my ($condition_text) = $self->{current_line} =~ /^while\s+\(\s*(.*)\s*\)\s+{$/;
 			
-			debug "[eventMacro] Script is the start of a while 'block' of label '$label'.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
 			
 			my $result = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
@@ -633,8 +632,8 @@ sub define_next_valid_command {
 				debug "[eventMacro] Entering true 'while' 'block'.\n", "eventMacro", 3;
 			} else {
 				debug "[eventMacro] Condition of 'while' is false.\n", "eventMacro", 3;
-				debug "[eventMacro] Moving to the end of 'while' loop of label '$label'.\n", "eventMacro", 3;
-				$self->line_index($self->{label}->{"end ".$label});
+				debug "[eventMacro] Moving to the end of 'while' loop.\n", "eventMacro", 3;
+				$self->line_index($self->{loops}{start_to_end}{$self->line_index});
 			}
 			$self->next_line;
 			
@@ -917,11 +916,16 @@ sub define_next_valid_command {
 			$self->next_line;
 		
 		######################################
-		# End block of "if" or "switch"
+		# End block of "if", "switch" or "while"
 		######################################
 		} elsif ($self->{current_line} eq '}') {
-			debug "[eventMacro] Script is the end of a not important block.\n", "eventMacro", 3;
-			$self->next_line;
+			if (exists $self->{loops}{end_to_start}{$self->line_index}) {
+				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
+				$self->line_index($self->{loops}{end_to_start}{$self->line_index});
+			} else {
+				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
+				$self->next_line;
+			}
 		
 		######################################
 		# Label statement
