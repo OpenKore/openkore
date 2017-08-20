@@ -1153,16 +1153,16 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 	
-		$messageSender->sendToServer(pack('v', 0x08A1));
+		$messageSender->sendToServer(pack('v', 0x08A1)) if ($masterServer->{serverType} eq 'iRO_Restart'); # tested at iRO:Restart 2017.08.19 - henrybk
 
-		$messageSender->sendSync(1);
+		$messageSender->sendSync(1) if ($masterServer->{serverType} eq 'bRO' || $masterServer->{serverType} eq 'iRO_Restart'); # tested at bRO 2013.11.26 - revok | tested at iRO:Restart 2017.08.19 - henrybk
 
 		$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
 		$messageSender->sendGuildRequestInfo(0);
 
-		$messageSender->sendGuildRequestInfo(0);
+		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} eq 'bRO' || $masterServer->{serverType} eq 'iRO_Restart'); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok | tested at iRO:Restart 2017.08.19 - henrybk
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
