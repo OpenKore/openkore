@@ -15,12 +15,4 @@ package Network::Receive::iRO::Restart;
 use strict;
 use base qw(Network::Receive::iRO);
 
-use Globals qw ($messageSender);
-
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	return $self;
-}
-
 1;

@@ -15,9 +15,6 @@ package Network::Send::iRO::Restart;
 
 use strict;
 use base qw(Network::Send::iRO);
-use Log qw(error debug);
-# use Misc qw(visualDump);
-use Utils qw(getHex getTickCount getCoordString makeCoordsDir);
 
 sub new {
 	my ($class) = @_;
@@ -44,6 +41,7 @@ sub new {
 		'0927' => ['guild_info_request', 'V', [qw(type)]],
 		'0281' => ['guild_check'],
 		'092b' => ['map_loaded'],
+		'07E4' => ['npc_talk', 'a4 C', [qw(ID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -68,6 +66,7 @@ sub new {
 		guild_info_request 0927
 		guild_check 0281
 		map_loaded 092b
+		npc_talk 07E4
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
