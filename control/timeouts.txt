@@ -75,7 +75,7 @@ ai_items_gather_start .3
 ai_transfer_items 0.15
 
 ai_follow_lost_end 10
-ai_getInfo 1
+ai_getInfo 2
 ai_thanks_set 8
 ai_dealAuto 3
 ai_dealAutoCancel 5
