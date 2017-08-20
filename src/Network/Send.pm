@@ -242,11 +242,6 @@ sub sendToServer {
 		return if ($args{return});
 	}
 
-	my $counter = $self->{counters}->{$messageID}++;
-	if ( $self->{packet_sequence}->{$messageID} && $counter < @{ $self->{packet_sequence}->{$messageID} } ) {
-		substr $msg, 0, 2, pack 'H*', $self->{packet_sequence}->{$messageID}->[ $counter ];
-	}
-
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
 

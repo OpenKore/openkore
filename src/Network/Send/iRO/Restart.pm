@@ -67,12 +67,6 @@ sub new {
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
-	$self->{packet_sequence} = {
-		'48FF' => [qw( 5EDF 0C7F )],
-		'49B0' => [qw( 300D 69B0 )],
-		'4AD0' => [qw( FC50 0E50 48D0 72D0 6AD0 )],
-	};
-
 	return $self;
 }
 
