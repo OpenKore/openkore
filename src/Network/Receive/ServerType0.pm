@@ -665,6 +665,16 @@ sub new {
 		},
 	};
 
+
+	my %sync_ex;
+	my $load_sync = Settings::addTableFile( 'sync.txt', loader => [ \&FileParsers::parseDataFile2, \%sync_ex ] );
+	Settings::loadByHandle( $load_sync );
+
+	foreach ( keys %sync_ex ) {
+		$self->{packet_list}{$_}   = ['sync_request_ex'];
+		$self->{sync_ex_reply}{$_} = $sync_ex{$_};
+	}
+
 	return $self;
 }
 
