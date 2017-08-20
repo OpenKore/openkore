@@ -1364,8 +1364,6 @@ sub parse_release_and_lock {
 		
 	if (!defined $parsed_automacro_name) {
 		$self->error("automacro name could not be defined");
-	} elsif (!defined $eventMacro->{Automacro_List}->getByName($parsed_automacro_name)) {
-		$self->error("could not find automacro with name '$parsed_automacro_name'");
 	}
 	return if (defined $self->error);
 	
@@ -1378,6 +1376,9 @@ sub parse_release_and_lock {
 		
 	} else {
 		my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
+		if (!defined $automacro) {
+			$self->error("could not find automacro with name '$parsed_automacro_name'");
+		}
 		
 		if ($type == 1) {
 			$eventMacro->disable_automacro($automacro);

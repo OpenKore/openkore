@@ -547,7 +547,7 @@ sub commandHandler {
 				error "[eventMacro] Automacro '".$automacro_name."' not found.\n"
 			} else {
 				message "[eventMacro] Disabled automacro '".$automacro_name."'.\n";
-				$eventMacro->disabled_automacro($automacro);
+				$eventMacro->disable_automacro($automacro);
 			}
 		}
 		
