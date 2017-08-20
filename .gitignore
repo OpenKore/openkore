@@ -51,7 +51,6 @@ tables/iRO/Restart/quests-custom.txt
 tables/iRO/Restart/resnametable-custom.txt
 tables/iRO/Restart/skillnametable-custom.txt
 
-
 # Auto-generated files.
 tables/**/portalsLOS.txt
 tables/**/npcs.txt
