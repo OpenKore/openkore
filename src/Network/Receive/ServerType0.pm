@@ -1162,6 +1162,8 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 
+		$messageSender->sendMapConnected if $messageSender->can( 'sendMapConnected' );
+
 		$messageSender->sendSync(1);
 
 		$messageSender->sendGuildMasterMemberCheck();
