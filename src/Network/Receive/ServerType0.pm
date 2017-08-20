@@ -665,7 +665,6 @@ sub new {
 		},
 	};
 
-
 	my %sync_ex;
 	my $load_sync = Settings::addTableFile( 'sync.txt', loader => [ \&FileParsers::parseDataFile2, \%sync_ex ] );
 	Settings::loadByHandle( $load_sync );
