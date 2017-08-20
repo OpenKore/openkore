@@ -82,7 +82,22 @@ use constant MANUAL => 1;
 # AI is turned on.
 use constant AUTO => 2;
 
+# Do not change $AI::AI directly, use AI::state instead
+our $AI = AUTO;
+
 ### CATEGORY: Functions
+
+sub state {
+	if (defined $_[0]) {
+		if ($_[0] != OFF && $_[0] != MANUAL && $_[0] != AUTO) {
+			error "Invalid AI state value given to AI::state (".($_[0])."). Ignoring state change.\n";
+			return;
+		}
+		Plugins::callHook('AI_state_change', {old => $AI, new => $_[0]});
+		$AI = $_[0];
+	}
+	return $AI;
+}
 
 sub action {
 	my $i = (defined $_[0] ? $_[0] : 0);

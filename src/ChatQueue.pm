@@ -23,7 +23,7 @@ use Time::HiRes qw(time);
 
 use AI;
 use Commands;
-use Globals qw($accountID $AI %ai_v $char @chatResponses
+use Globals qw($accountID %ai_v $char @chatResponses
 		%config $field %itemChange @monsters_Killed %maps_lut $net %overallAuth
 		%players %responseVars $startTime_EXP %timeout
 		$totalBaseExp $totalJobExp $messageSender
@@ -599,7 +599,7 @@ sub processChatCommand {
 
 # Automatically reply to a chat message
 sub processChatResponse {
-	return unless ($AI == AI::AUTO);
+	return unless (AI::state == AI::AUTO);
 	my $cmd = shift;
 	my $msg = lc $cmd->{msg};
 	my $reply;
