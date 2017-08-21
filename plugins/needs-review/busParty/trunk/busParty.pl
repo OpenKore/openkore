@@ -1,9 +1,6 @@
 #############################################################################
 	# busParty plugin by Revok
 	# revok@openkore.com.br
-	# RevokStardust private development group
-	#
-	# Have access at revok.com.br/dreamteam
 	# @2013
 #############################################################################
 package busParty;
