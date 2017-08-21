@@ -665,6 +665,15 @@ sub new {
 		},
 	};
 
+	my %sync_ex;
+	my $load_sync = Settings::addTableFile( 'sync.txt', loader => [ \&FileParsers::parseDataFile2, \%sync_ex ], mustExist => 0 );
+	Settings::loadByHandle( $load_sync );
+
+	foreach ( keys %sync_ex ) {
+		$self->{packet_list}{$_}   = ['sync_request_ex'];
+		$self->{sync_ex_reply}{$_} = $sync_ex{$_};
+	}
+
 	return $self;
 }
 
@@ -1153,14 +1162,16 @@ sub map_loaded {
 		main::initMapChangeVars();
 	} else {
 
-		$messageSender->sendSync(1) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26 - revok
+		$messageSender->sendMapConnected if $messageSender->can( 'sendMapConnected' );
+
+		$messageSender->sendSync(1);
 
 		$messageSender->sendGuildMasterMemberCheck();
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
 		$messageSender->sendGuildRequestInfo(0);
 
-		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.26, this is sent two times and i don't know why - revok
+		$messageSender->sendGuildRequestInfo(0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
