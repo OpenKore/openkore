@@ -2,10 +2,15 @@
 # Version 2.0 rewrited by Mortimal
 # 
 # Created for alljobs macro
-# Last update 12.03.2017
+# Last update 21.08.2017
 # 
 # on/off !include in macros.txt
 # 
+# Use config option:
+# macroinclude macro
+# or
+# macroinclude eventMacro
+#
 # Usage:
 # include off all 
 # include on Novice
@@ -30,7 +35,23 @@ sub Unload {
 sub main {
 	my ($cmd, $args) = @_;
 	my ($key, $filename) = split(" ", $args);
-	my $mcr = $config{macro_file} || 'macros.txt';
+	my $mcr;
+	
+	# Choose file block.
+	if ($config{macroinclude} eq 'macro'){
+		$mcr = $config{macro_file} || 'macros.txt';
+	}elsif($config{macroinclude} eq 'eventMacro'){
+		$mcr = $config{eventMacro_file} || 'eventMacros.txt';
+	}else{
+		if($config{macro_file}){
+			$mcr = $config{macro_file};
+		}elsif($config{eventMacro_file}){
+			$mcr = $config{eventMacro_file};
+		}else{
+			$mcr = 'macros.txt';
+		}
+	}
+	
 	my $macro_file = Settings::getControlFilename($mcr);
 
 	
