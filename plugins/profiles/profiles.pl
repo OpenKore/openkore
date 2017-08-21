@@ -60,7 +60,7 @@ sub onStart {
 
    foreach (@conlist) {
       next unless -d File::Spec->catdir($profile_folder, $_);
-      next if ($_ =~ /^\./);
+      next if ($_ =~ /^\.|#/);
       push @profiles, $_;
    }
 
