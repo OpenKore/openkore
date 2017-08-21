@@ -57,7 +57,6 @@ sub onStart {
    closedir $d;
 
    my @profiles;
-   push @profiles, 'Use standard control folder';
 
    foreach (@conlist) {
       next unless -d File::Spec->catdir($profile_folder, $_);
@@ -66,7 +65,8 @@ sub onStart {
    }
 
    @profiles = sort { $a cmp $b } @profiles;
-
+   push @profiles, 'Use standard control folder';
+   
 	if ( $profile && !grep { $_ eq $profile } @profiles ) {
 		printf "Unknown profile [%s] requested.\n", $profile;
 		$profile = undef;
@@ -79,8 +79,9 @@ sub onStart {
 			title => "Profiles Selector"
 		);
 
+		my $num = @profiles;
+		return 0 if $choice == $num;
 		return $quit = 1 if $choice == -1;
-		return 0 if $choice == 0;
 
 		$profile = $profiles[$choice];
 	}
@@ -103,7 +104,6 @@ sub commandHandler {
 	if (!$new_profile) {
 
 		my @profiles;
-		push @profiles, 'Use standard control folder';
 
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
@@ -112,7 +112,8 @@ sub commandHandler {
 		}
 
 		@profiles = sort { $a cmp $b } @profiles;
-
+   		push @profiles, 'Use standard control folder';
+   
 		if (@profiles) {
 			my $choice = $interface->showMenu(	#
 				"Please choose a Profiles folder.",
@@ -120,8 +121,9 @@ sub commandHandler {
 				title => "Profiles Selector"
 			);
 
+			my $num = @profiles;
+			return 0 if $choice == $num;
 			return $quit = 1 if $choice == -1;
-			return 0 if $choice == 0;
 
 			$new_profile = $profiles[$choice];
 		} else {
