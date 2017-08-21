@@ -3,7 +3,7 @@ USE:
 busFollow is ideal for a party of master and slave, because it improves a lot the checking of the current place of master
 and helps finding him
 it doesn't follow him when the slave is autostoraging, or autobuying and that stuff 
-VERY RECOMMEDED for party of master and slave
+VERY RECOMMENDED for party of master and slave
 
 
 How to Install:
