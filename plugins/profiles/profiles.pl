@@ -80,7 +80,7 @@ sub onStart {
 		);
 
 		my $num = @profiles;
-		return 0 if $choice == $num;
+		return 0 if $choice == $num - 1;
 		return $quit = 1 if $choice == -1;
 
 		$profile = $profiles[$choice];
@@ -122,7 +122,7 @@ sub commandHandler {
 			);
 
 			my $num = @profiles;
-			return 0 if $choice == $num;
+			return 0 if $choice == $num - 1;
 			return $quit = 1 if $choice == -1;
 
 			$new_profile = $profiles[$choice];
