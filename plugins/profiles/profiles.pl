@@ -60,12 +60,13 @@ sub onStart {
 
    foreach (@conlist) {
       next unless -d File::Spec->catdir($profile_folder, $_);
-      next if ($_ =~ /^\./);
+      next if ($_ =~ /^\.|^#/);
       push @profiles, $_;
    }
 
    @profiles = sort { $a cmp $b } @profiles;
-
+   push @profiles, 'Use standard control folder';
+   
 	if ( $profile && !grep { $_ eq $profile } @profiles ) {
 		printf "Unknown profile [%s] requested.\n", $profile;
 		$profile = undef;
@@ -78,6 +79,8 @@ sub onStart {
 			title => "Profiles Selector"
 		);
 
+		my $num = @profiles;
+		return 0 if $choice == $num - 1;
 		return $quit = 1 if $choice == -1;
 
 		$profile = $profiles[$choice];
@@ -104,12 +107,13 @@ sub commandHandler {
 
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
-			next if ($_ =~ /^\./);
+			next if ($_ =~ /^\.|^#/);
 			push @profiles, $_;
 		}
 
 		@profiles = sort { $a cmp $b } @profiles;
-
+   		push @profiles, 'Use standard control folder';
+   
 		if (@profiles) {
 			my $choice = $interface->showMenu(	#
 				"Please choose a Profiles folder.",
@@ -117,6 +121,8 @@ sub commandHandler {
 				title => "Profiles Selector"
 			);
 
+			my $num = @profiles;
+			return 0 if $choice == $num - 1;
 			return $quit = 1 if $choice == -1;
 
 			$new_profile = $profiles[$choice];
@@ -128,7 +134,7 @@ sub commandHandler {
 		my $found = 0;
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
-			next if ($_ =~ /^\./);
+			next if ($_ =~ /^\.|^#/);
 			$found = 1 if ($new_profile eq $_);
 		}
 		if (!$found) {
