@@ -4104,7 +4104,7 @@ sub cmdPrivateMessage {
 			"Usage: pm (username) (message)\n       pm (<#>) (message)\n");
 		return;
 
-	} elsif ($user =~ /^\d+$/) {
+	} elsif ($user =~ /^[^"]{1}\d+[^"]{1}$/) {
 		if ($user - 1 >= @privMsgUsers) {
 			error TF("Error in function 'pm' (Private Message)\n" .
 				"Quick look-up %s does not exist\n", $user);
@@ -4118,6 +4118,7 @@ sub cmdPrivateMessage {
 		}
 
 	} else {
+		$user =~ s/^\"(.*)\"$/$1/;
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
