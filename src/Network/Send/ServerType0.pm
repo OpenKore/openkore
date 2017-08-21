@@ -70,6 +70,8 @@ sub new {
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
+		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -400,16 +402,20 @@ sub sendCardMergeRequest {
 
 sub sendCartAdd {
 	my ($self, $ID, $amount) = @_;
-	my $msg = pack("C*", 0x26, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Cart Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_add',
+		ID => $ID,
+		amount => $amount,
+	}));
 }
 
 sub sendCartGet {
 	my ($self, $ID, $amount) = @_;
-	my $msg = pack("C*", 0x27, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Cart Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_get',
+		ID => $ID,
+		amount => $amount,
+	}));
 }
 
 sub sendCharCreate {
