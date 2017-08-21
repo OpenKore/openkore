@@ -199,7 +199,7 @@ sub sub_execute {
 sub isNewCommandBlock {
 	my ($line) = @_;
 	
-	if ($line =~ /^if.*{$/ || $line =~ /^case.*{$/ || $line =~ /^switch.*{$/ || $line =~ /^else.*{$/) {
+	if ($line =~ /^if.*{$/ || $line =~ /^case.*{$/ || $line =~ /^switch.*{$/ || $line =~ /^else.*{$/ || $line =~ /^while.*{$/) {
 		return 1;
 	} else {
 		return 0;
