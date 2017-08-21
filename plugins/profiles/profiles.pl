@@ -57,7 +57,7 @@ sub onStart {
    closedir $d;
 
    my @profiles;
-   push @profiles, 'Use standart control folder';
+   push @profiles, 'Use standard control folder';
 
    foreach (@conlist) {
       next unless -d File::Spec->catdir($profile_folder, $_);
@@ -103,7 +103,7 @@ sub commandHandler {
 	if (!$new_profile) {
 
 		my @profiles;
-		push @profiles, 'Use standart control folder';
+		push @profiles, 'Use standard control folder';
 
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
