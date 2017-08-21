@@ -1,5 +1,9 @@
-How to Install:
+USE:
+busParty is to improves the information openkore has of the others players of the party (that are also using openkore)
+because it's using bus system, it cannot dectect players that are not using normal ragnarok.
+VERY RECCOMENDED in partys bigger than 2, it is also useful for master and slave party
 
+How to Install:
 Copy the plugin to the plugins folder on openkore
 open sys.txt (control folder ) and change:
 

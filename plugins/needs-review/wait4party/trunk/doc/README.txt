@@ -12,6 +12,16 @@ See <http://www.gnu.org/licenses/> for the full license.
 Copy the plugin to the plugins folder on openkore
 open sys.txt (control folder ) and change:
 
+
+USE:
+wait4party is used to make master wait for slave when it stopped for any reason
+maybe casting a skill , or sitting, it will wait for slave.
+solves most problems of "lose master , calculating route to" and other stuffs
+VERY RECOMMENDED for party of master and slave
+
+How to Install:
+Copy the plugin to the plugins folder on openkore
+open sys.txt (control folder ) and change:
 ###### Bus system settings ######
 # Whether to enable the bus system.
 bus 1   # MAKE SURE IT'S 1 

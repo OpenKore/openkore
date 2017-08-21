@@ -7,9 +7,16 @@ this software. However, if you distribute modified versions, you MUST
 also distribute the source code.
 See <http://www.gnu.org/licenses/> for the full license.
 
+
+Use:
+ 
+You can send console commands to other openkore clients open.
+You can specify char name or send to all, or send to all there is in a specific field.
+
+ 
+How to Install:
 Copy the plugin to the plugins folder on openkore
 open sys.txt (control folder ) and change:
-
 ###### Bus system settings ######
 # Whether to enable the bus system.
 bus 1   # MAKE SURE IT'S 1 
@@ -23,12 +30,7 @@ loadPlugins 2
 #   specifies which plugin files to load at startup or when the "plugin load all" command is used.
 loadPlugins_list macro,profiles,breakTime,raiseStat,raiseSkill,map,reconnect,eventMacro,busCommands #add busCommands here
 
-Use:
- 
-You can send console commands to other openkore clients open.
-You can specify char name or send to all, or send to all there is in a specific field.
 
- 
 How to use:
 
 in console type:
