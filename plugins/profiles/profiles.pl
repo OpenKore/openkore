@@ -57,10 +57,11 @@ sub onStart {
    closedir $d;
 
    my @profiles;
+   push @profiles, 'Use standart control folder';
 
    foreach (@conlist) {
       next unless -d File::Spec->catdir($profile_folder, $_);
-      next if ($_ =~ /^\./);
+      next if ($_ =~ /^\.|^#/);
       push @profiles, $_;
    }
 
@@ -79,6 +80,7 @@ sub onStart {
 		);
 
 		return $quit = 1 if $choice == -1;
+		return 0 if $choice == 0;
 
 		$profile = $profiles[$choice];
 	}
@@ -101,10 +103,11 @@ sub commandHandler {
 	if (!$new_profile) {
 
 		my @profiles;
+		push @profiles, 'Use standart control folder';
 
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
-			next if ($_ =~ /^\./);
+			next if ($_ =~ /^\.|^#/);
 			push @profiles, $_;
 		}
 
@@ -118,6 +121,7 @@ sub commandHandler {
 			);
 
 			return $quit = 1 if $choice == -1;
+			return 0 if $choice == 0;
 
 			$new_profile = $profiles[$choice];
 		} else {
@@ -128,7 +132,7 @@ sub commandHandler {
 		my $found = 0;
 		foreach (@conlist) {
 			next unless -d File::Spec->catdir($profile_folder, $_);
-			next if ($_ =~ /^\./);
+			next if ($_ =~ /^\.|^#/);
 			$found = 1 if ($new_profile eq $_);
 		}
 		if (!$found) {
