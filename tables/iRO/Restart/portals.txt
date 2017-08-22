@@ -96,29 +96,29 @@ prontera 146 89 izlude 94 103 600 1 c r2 c r0
 prontera 146 89 geffen 120 39 1200 1 c r2 c r1
 prontera 146 89 payon 161 58 1200 1 c r2 c r2
 prontera 146 89 morocc 156 47 1200 1 c r2 c r3
-prontera 146 89 gef_fild10 52 326 1700 1 c r2 c r2
-prontera 146 89 alberta 117 56 1700 1 c r2 c r4
+prontera 146 89 gef_fild10 52 326 1700 1 c r2 c r4
+prontera 146 89 alberta 117 56 1700 1 c r2 c r5
 
 prontera 151 29 izlude 94 103 600 1 c r2 c r0
 prontera 151 29 geffen 120 39 1200 1 c r2 c r1
 prontera 151 29 payon 161 58 1200 1 c r2 c r2
 prontera 151 29 morocc 156 47 1200 1 c r2 c r3
-prontera 151 29 gef_fild10 52 326 1700 1 c r2 c r2
-prontera 151 29 alberta 117 56 1700 1 c r2 c r4
+prontera 151 29 gef_fild10 52 326 1700 1 c r2 c r4
+prontera 151 29 alberta 117 56 1700 1 c r2 c r5
 
 prontera 282 200 izlude 94 103 600 1 c r2 c r0
 prontera 282 200 geffen 120 39 1200 1 c r2 c r1
 prontera 282 200 payon 161 58 1200 1 c r2 c r2
 prontera 282 200 morocc 156 47 1200 1 c r2 c r3
-prontera 282 200 gef_fild10 52 326 1700 1 c r2 c r2
-prontera 282 200 alberta 117 56 1700 1 c r2 c r4
+prontera 282 200 gef_fild10 52 326 1700 1 c r2 c r4
+prontera 282 200 alberta 117 56 1700 1 c r2 c r5
 
 prontera 29 207 izlude 94 103 600 1 c r2 c r0
 prontera 29 207 geffen 120 39 1200 1 c r2 c r1
 prontera 29 207 payon 161 58 1200 1 c r2 c r2
 prontera 29 207 morocc 156 47 1200 1 c r2 c r3
-prontera 29 207 gef_fild10 52 326 1700 1 c r2 c r2
-prontera 29 207 alberta 117 56 1700 1 c r2 c r4
+prontera 29 207 gef_fild10 52 326 1700 1 c r2 c r4
+prontera 29 207 alberta 117 56 1700 1 c r2 c r5
 
 #Geffen
 geffen 120 62 prontera 116 72 1200 1 c r2 c r0
