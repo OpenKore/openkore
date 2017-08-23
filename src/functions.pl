@@ -720,6 +720,11 @@ sub mainLoop_initialized {
 
 	# Handle connection states
 	$net->checkConnection();
+	
+	if (defined $charLoginTimeout && timeOut($charLoginTimeout)) {
+		CharacterLogin();
+		undef $charLoginTimeout;
+	}
 
 	# Receive and handle data from the RO server
 	my $data = $net->serverRecv;
