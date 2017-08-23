@@ -4597,6 +4597,23 @@ sub completeNpcSell {
 	}
 }
 
+sub checkItemBuyNeed{
+	my $i = shift;
+	
+	return 0 if (!$config{"buyAuto_$i"} 
+					 || !$config{"buyAuto_$i"."_npc"}
+					 || $config{"buyAuto_${i}_disabled"}
+					);
+	my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+	return 1 if ($config{"buyAuto_$i"."_minAmount"} ne ""
+				&& $config{"buyAuto_$i"."_maxAmount"} ne ""
+				&& (checkSelfCondition("buyAuto_$i"))
+				&& $amount <= $config{"buyAuto_$i"."_minAmount"}
+				&& $amount < $config{"buyAuto_$i"."_maxAmount"}
+			   );
+	return 0;
+}
+
 sub completeNpcBuy {
 	my $items = shift;
 	
