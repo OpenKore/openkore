@@ -785,28 +785,34 @@ sub get_scalar_var {
 	if ( substr( $variable_name, 0, 1 ) eq '.' ) {
 
 		# Time-related variables.
-		if    ( $variable_name eq '.time' )     { return time; }
-		elsif ( $variable_name eq '.datetime' ) { return scalar localtime; }
-		elsif ( $variable_name eq '.second' )   { return ( localtime() )[0]; }
-		elsif ( $variable_name eq '.minute' )   { return ( localtime() )[1]; }
-		elsif ( $variable_name eq '.hour' )     { return ( localtime() )[2]; }
-
+		if    ( $variable_name eq '.time' )       { return time; }
+		elsif ( $variable_name eq '.datetime' )   { return scalar localtime; }
+		elsif ( $variable_name eq '.second' )     { return ( localtime() )[0]; }
+		elsif ( $variable_name eq '.minute' )     { return ( localtime() )[1]; }
+		elsif ( $variable_name eq '.hour' )       { return ( localtime() )[2]; }
+		elsif ( $variable_name eq '.dayofmonth' ) { return ( localtime() )[3]; }
+		elsif ( $variable_name eq '.dayofweek' )  { 
+			my @wday = qw/Monday Tuesday Wednesday Thursday Friday Saturday Sunday+/;
+			return $wday[ (localtime())[6] - 1 ];
+		}
+		
 		# Field-related variables.
-		elsif ( $variable_name eq '.map' ) { return $field ? $field->baseName : ''; }
+		elsif ( $variable_name eq '.map' )    { return $field ? $field->baseName : ''; }
 		elsif ( $variable_name eq '.incity' ) { return $field && $field->isCity ? 1 : 0; }
 
 		# Character-related variables.
-		elsif ( $variable_name eq '.job' ) { return $char && $jobs_lut{ $char->{jobID} } || ''; }
-		elsif ( $variable_name eq '.pos' ) { return $char ? sprintf( '%d %d', @{ calcPosition( $char ) }{ 'x', 'y' } ) : ''; }
-		elsif ( $variable_name eq '.name' )      { return $char && $char->{name}       || 0; }
-		elsif ( $variable_name eq '.hp' )        { return $char && $char->{hp}         || 0; }
-		elsif ( $variable_name eq '.sp' )        { return $char && $char->{sp}         || 0; }
-		elsif ( $variable_name eq '.lvl' )       { return $char && $char->{lv}         || 0; }
-		elsif ( $variable_name eq '.joblvl' )    { return $char && $char->{lv_job}     || 0; }
-		elsif ( $variable_name eq '.spirits' )   { return $char && $char->{spirits}    || 0; }
-		elsif ( $variable_name eq '.zeny' )      { return $char && $char->{zeny}       || 0; }
-		elsif ( $variable_name eq '.weight' )    { return $char && $char->{weight}     || 0; }
-		elsif ( $variable_name eq '.maxweight' ) { return $char && $char->{weight_max} || 0; }
+		elsif ( $variable_name eq '.job' )          { return $char && $jobs_lut{ $char->{jobID} } || ''; }
+		elsif ( $variable_name eq '.pos' )          { return $char ? sprintf( '%d %d', @{ calcPosition( $char ) }{ 'x', 'y' } ) : ''; }
+		elsif ( $variable_name eq '.name' )         { return $char && $char->{name}       || 0; }
+		elsif ( $variable_name eq '.hp' )           { return $char && $char->{hp}         || 0; }
+		elsif ( $variable_name eq '.sp' )           { return $char && $char->{sp}         || 0; }
+		elsif ( $variable_name eq '.lvl' )          { return $char && $char->{lv}         || 0; }
+		elsif ( $variable_name eq '.joblvl' )       { return $char && $char->{lv_job}     || 0; }
+		elsif ( $variable_name eq '.spirits' )      { return $char && $char->{spirits}    || 0; }
+		elsif ( $variable_name eq '.zeny' )         { return $char && $char->{zeny}       || 0; }
+		elsif ( $variable_name eq '.weight' )       { return $char && $char->{weight}     || 0; }
+		elsif ( $variable_name eq '.weightpercent') {return $char && int $char->{weight} * 100 / int $char->{weight_max} || 0; }
+		elsif ( $variable_name eq '.maxweight' )    { return $char && $char->{weight_max} || 0; }
 		elsif ( $variable_name eq '.status' ) {
 			return '' if !$char;
 			return join ',', sort( ( $char->{muted} ? 'muted' : () ), ( $char->{dead} ? 'dead' : () ), map { $statusName{$_} || $_ } keys %{ $char->{statuses} } );
@@ -817,10 +823,11 @@ sub get_scalar_var {
 		}
 
 		# Cart-related variables.
-		elsif ( $variable_name eq '.cartweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
-		elsif ( $variable_name eq '.cartmaxweight' ) { return $char && $char->cart->isReady ? $char->cart->{weight_max} : 0; }
-		elsif ( $variable_name eq '.cartitems' )     { return $char && $char->cart->isReady ? $char->cart->items        : 0; }
-		elsif ( $variable_name eq '.cartmaxitems' )  { return $char && $char->cart->isReady ? $char->cart->items_max    : 0; }
+		elsif ( $variable_name eq '.cartweight' )       { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
+		elsif ( $variable_name eq '.cartweightpercent') { return $char && $char->cart->isReady ? int $char->cart->{weight} * 100 / int $char->cart->{weight_max} : 0;}
+		elsif ( $variable_name eq '.cartmaxweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight_max} : 0; }
+		elsif ( $variable_name eq '.cartitems' )        { return $char && $char->cart->isReady ? $char->cart->items        : 0; }
+		elsif ( $variable_name eq '.cartmaxitems' )     { return $char && $char->cart->isReady ? $char->cart->items_max    : 0; }
 
 		# Storage-related variables.
 		elsif ( $variable_name eq '.storageopen' )     { return $char && $char->storage->isReady              ? 1                         : 0; }
