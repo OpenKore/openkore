@@ -4615,7 +4615,7 @@ sub checkItemBuyNeed{
 				 && $amount <= $config{"buyAuto_$i"."_minAmount"}	# we got less than minAmount
 				 && $amount < $config{"buyAuto_$i"."_maxAmount"}	# we got less than maxAmount
 				 && ($config{"buyAuto_$i"."_price"}			# the price is set...
-					 && $zeny < $config{"buyAuto_$i"."_price"}	# ...and we can buy at least one of that item
+					 && $zeny > $config{"buyAuto_$i"."_price"}	# ...and we can buy at least one of that item
 				    )
 		    );
 	return 0;
