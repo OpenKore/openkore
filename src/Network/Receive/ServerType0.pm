@@ -2903,12 +2903,19 @@ sub received_characters {
 	# it doesn't work...
 	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
 	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
-	if (!$masterServer->{pinCode}) {
-		$charLoginTimeout = {timeout => 2, time => time};
-		
-	} else {
+	
+	if ($masterServer->{pinCode}) {
 		message T("Waiting for PIN code request\n"), "connection";
 		$timeout{'charlogin'}{'time'} = time;
+		
+	} elsif ($masterServer->{pauseCharLogin}) {
+		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
+			$timeout{'char_login_pause'}{'timeout'} = 2;
+		}
+		$timeout{'char_login_pause'}{'time'} = time;
+		
+	} else {
+		CharacterLogin();
 	}
 }
 
