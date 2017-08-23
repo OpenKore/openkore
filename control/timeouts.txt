@@ -172,3 +172,6 @@ injectSync 5
 injectKeepAlive 12
 welcomeText 4
 patchserver 120
+
+# Time to wait before character connection when pauseCharLogin is active
+char_login_pause 2
