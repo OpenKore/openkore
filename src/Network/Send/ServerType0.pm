@@ -172,6 +172,26 @@ sub new {
 	return $self;
 }
 
+sub shuffle {
+	my ( $self ) = @_;
+
+	my %shuffle;
+	my $load_shuffle = Settings::addTableFile( 'shuffle.txt', loader => [ \&FileParsers::parseDataFile2, \%shuffle ], mustExist => 0 );
+	Settings::loadByHandle( $load_shuffle );
+
+	# Build the list of changes. Be careful to handle swaps correctly.
+	my $new = {};
+	foreach ( sort keys %shuffle ) {
+		# We can only patch packets we know about.
+		next if !$self->{packet_list}->{$_};
+		$new->{ $shuffle{$_} } = $self->{packet_list}->{$_};
+	}
+
+    # Patch!
+	$self->{packet_list}->{$_} = $new->{$_} foreach keys %$new;
+	$self->{packet_lut}->{ $new->{$_}->[0] } = $_ foreach keys %$new;
+}
+
 sub rodex_delete_mail {
 	my ($self, $type, $mailID1, $mailID2) = @_;
 	$self->sendToServer($self->reconstruct({

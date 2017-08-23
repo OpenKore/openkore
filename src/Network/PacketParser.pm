@@ -139,6 +139,7 @@ sub create {
 	}
 	
 	my $self = $class->new;
+	$self->shuffle if $self->can( 'shuffle' );
 	
 	$self->{hook_prefix} = $base;
 	$self->{net} = $net;
