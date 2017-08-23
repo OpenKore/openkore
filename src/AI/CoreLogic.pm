@@ -1693,7 +1693,7 @@ sub processAutoBuy {
 		undef $ai_v{'temp'}{'found'};
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			if (checkItemBuyNeed($i)) {
+			if (checkItemBuyNeed($i,$char->{zeny})) {
 				$ai_v{'temp'}{'found'} = 1;
 				my $bai = $config{"buyAuto_$i"};
 				if ($needitem eq "") {
@@ -1903,8 +1903,9 @@ sub processAutoBuy {
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++)
 		{
 			next if (($config{"buyAuto_".$args->{lastIndex}}."_npc" ne $config{"buyAuto_".$i."_npc"})
+					  || !$args->{lastIndex}
 					  ||(($i != $args->{lastIndex})
-						&& !checkItemBuyNeed($i)
+						&& !checkItemBuyNeed($i,$zenyleft)
 						)
 					);
 			$item = $storeList->getByName( $config{"buyAuto_".$i} );
