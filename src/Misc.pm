@@ -205,6 +205,7 @@ our @EXPORT = (
 	# Npc buy and sell
 	qw/cancelNpcBuySell
 	completeNpcSell
+	checkItemBuyNeed
 	completeNpcBuy/,
 	);
 
