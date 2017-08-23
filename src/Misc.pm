@@ -4599,18 +4599,25 @@ sub completeNpcSell {
 
 sub checkItemBuyNeed{
 	my $i = shift;
+	my $zeny = shift;
+							#skip block if:
+	return 0 if (!$config{"buyAuto_$i"} 			# this block is non existant
+			|| !$config{"buyAuto_$i"."_npc"}	# npc is not set
+			|| $config{"buyAuto_${i}_disabled"}	# block is not disabled
+		    );
 	
-	return 0 if (!$config{"buyAuto_$i"} 
-					 || !$config{"buyAuto_$i"."_npc"}
-					 || $config{"buyAuto_${i}_disabled"}
-					);
-	my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
-	return 1 if ($config{"buyAuto_$i"."_minAmount"} ne ""
-				&& $config{"buyAuto_$i"."_maxAmount"} ne ""
-				&& (checkSelfCondition("buyAuto_$i"))
-				&& $amount <= $config{"buyAuto_$i"."_minAmount"}
-				&& $amount < $config{"buyAuto_$i"."_maxAmount"}
-			   );
+	my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});# getting items amount
+	
+										# item needded if:
+	return 1 if ($config{"buyAuto_$i"."_minAmount"} ne ""				# minAmount is set
+				 && $config{"buyAuto_$i"."_maxAmount"} ne ""		# maxamount is set
+				 && (checkSelfCondition("buyAuto_$i"))			# selfConditions are met
+				 && $amount <= $config{"buyAuto_$i"."_minAmount"}	# we got less than minAmount
+				 && $amount < $config{"buyAuto_$i"."_maxAmount"}	# we got less than maxAmount
+				 && ($config{"buyAuto_$i"."_price"}			# the price is set...
+					 && $zeny < $config{"buyAuto_$i"."_price"}	# ...and we can buy at least one of that item
+				    )
+		    );
 	return 0;
 }
 
