@@ -1896,14 +1896,15 @@ sub processAutoBuy {
 			return unless (timeOut($args->{'recv_buyList_time'}, $timeout{ai_buyAuto_wait_before_buy}{timeout}));
 		}
 		
+		return if !$args->{lastIndex};		
+		
 		my @buyList;
 		my $item;
 		my $zenyleft = $char->{zeny};
-		
+
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++)
 		{
 			next if (($config{"buyAuto_".$args->{lastIndex}."_npc"} ne $config{"buyAuto_".$i."_npc"})
-					  || !$args->{lastIndex}
 					  ||(($i != $args->{lastIndex})
 						&& !checkItemBuyNeed($i,$zenyleft)
 						)
