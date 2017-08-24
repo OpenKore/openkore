@@ -14,7 +14,7 @@
 # Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::fRO;
 use strict;
-use Globals;
+
 use base 'Network::Send::ServerType0';
 
 sub new {
@@ -43,7 +43,7 @@ sub new {
 
 sub sendSellBuyComplete {
 	my ($self) = @_;
-	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
+	$self->sendToServer(pack 'C*', 0xD4, 0x09);
 }
 
 1;
