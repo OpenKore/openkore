@@ -1161,8 +1161,7 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-
-		$messageSender->sendMapConnected if $messageSender->can( 'sendMapConnected' );
+		$messageSender->sendMapLoaded();
 
 		$messageSender->sendSync(1);
 
@@ -1177,7 +1176,6 @@ sub map_loaded {
 		$messageSender->sendGuildRequestInfo(1);
 		message(T("You are now in the game\n"), "connection");
 		Plugins::callHook('in_game');
-		$messageSender->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
 		our $quest_generation++;
 	}
