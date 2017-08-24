@@ -70,8 +70,8 @@ sub storeList {
 		my $maxPrice = $config{$prefix.$i."_maxPrice"};
 		my $maxAmount = $config{$prefix.$i."_maxAmount"};
 
-		my $invIndex = main::findIndexString_lc($char->{'inventory'}, "name", $config{$prefix.$i});
-		my $item = $char->{'inventory'}[$invIndex];
+		my $binID = main::findIndexString_lc($char->{'inventory'}, "name", $config{$prefix.$i});
+		my $item = $char->{'inventory'}[$binID];
 
 		if (main::checkSelfCondition($prefix.$i) &&
 			($price <= $maxPrice) &&

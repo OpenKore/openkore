@@ -62,7 +62,7 @@ sub new {
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
-		'029A' => ['inventory_item_added', 'v3 C3 a8 v C2 a4', [qw(index amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
+		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
 
 		'029C' => ['mercenary_property', 'v8 Z24 v5 a4 v V2', [qw(atk matk hit crit def mdef flee aspd name lv hp max_hp sp max_sp contract_end faith summons kills)]], # 66
 		'029D' => ['skills_list'], # -1 # mercenary skills

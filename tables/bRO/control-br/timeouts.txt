@@ -18,6 +18,13 @@ play 40
 # Quando desconectado, esperar x segundos antes de reconectar novamente
 reconnect 30
 
+# Depois de desconexões sucessivas, espera mais antes de tentar conectar novamente, para reduzir a carga no servidor.
+# O primeiro valor nesta lista sobrescreve o timeout "reconnec" acima.
+reconnect_backoff 30,60,120,180,300,600,600,900,900,1800
+
+# Adiciona uma quantidade de segundos aleatória ao tempo de reconexão, de no máximo "reconnect_random" segundos.
+reconnect_random 20
+
 # Espera x segundos por uma resposta do poseidon antes de desconectar-se
 # Ignore esta linha se você não usa Poseidon Server
 poseidon_wait_reply 15
@@ -70,6 +77,9 @@ ai_items_gather_auto .3
 # Apenas coletar itens que estão mais de x segundos na tela
 ai_items_gather_start .3
 
+# Atraso entre a transferência de cada item, quando transferindo múltiplos itens de uma vez.
+ai_transfer_items 0.15
+
 ai_follow_lost_end 10
 ai_getInfo 1
 ai_thanks_set 8
@@ -115,17 +125,33 @@ ai_teleport_safe_force 120
 ai_teleport_retry 0.5
 ai_teleport_delay 0.5
 
+ai_portal_wait 0.5
+
+# Estes timeouts são utilizados na lógica para portais que não existem
+ai_portal_give_up 10
+ai_portal_re_add_missed 3600
+
 # Você provavelmente jamais precisará mudar os tempos seguintes
 ai_route_calcRoute 1
 ai_route_npcTalk 10
 
+# Estes timeouts são utilizados na conversação com npc (Task::TalkNPC)
+ai_npc_talk_wait_to_answer 1.5
+ai_npc_talk_wait_after_close_to_cancel 0.5
+ai_npc_talk_wait_after_cancel_to_destroy 0.5
+
 ai_buyAuto 5
-ai_buyAuto_giveup 15
 ai_buyAuto_wait 2
-ai_buyAuto_wait_buy 5
+ai_buyAuto_wait_giveup_npc 15
+ai_buyAuto_wait_before_buy 2
+ai_buyAuto_wait_after_packet_giveup 15
+ai_buyAuto_wait_after_restart 2
 
 ai_sellAuto 2
-ai_sellAuto_giveup 15
+ai_sellAuto_wait_giveup_npc 15
+ai_sellAuto_wait_before_sell 2
+ai_sellAuto_wait_after_packet_giveup 15
+
 ai_storageAuto 2
 ai_storageAuto_giveup 15
 # atraso entre o envio dos pacotes "adicionar/pegar item do carrinho" (cart item add/get)

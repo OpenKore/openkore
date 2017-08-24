@@ -238,7 +238,7 @@ sub sendStorageAdd {
 	my $msg;
 	
 	$msg = pack("C*", 0x7E, 0x00) . pack("C*", 0x35, 0x34, 0x3D, 0x65) .
-		pack("v", $index) .
+		pack("a2", $index) .
 		pack("C", 0x30) .
 		pack("V", $amount);
 	
@@ -251,7 +251,7 @@ sub sendStorageGet {
 	my $msg;
 
 	$msg = pack("C*", 0x93, 0x01, 0x3B, 0x3A, 0x33, 0x69, 0x3B, 0x3B, 0x3E, 0x3A, 0x0A, 0x0A) .
-		pack("v*", $index) .
+		pack("a2", $index) .
 		pack("C*", 0x35, 0x34, 0x3D, 0x67) .
 		pack("V*", $amount);
 	

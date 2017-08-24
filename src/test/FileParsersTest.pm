@@ -54,8 +54,8 @@ sub start {
 			parseItemsControl('items_control.txt', \%items_control);
 			
 			is(items_control(NOT_CONFIGURED_ITEM)->{keep}, 9, 'all');
-			is(items_control($_)->{keep}, 2, $_) for @{$item_names_part[0]};
-			is(items_control($_)->{keep}, 22, $_) for @{$item_names_part[1]};
+			is(items_control($_,$_)->{keep}, 2, $_) for @{$item_names_part[0]};
+			is(items_control($_,$_)->{keep}, 22, $_) for @{$item_names_part[1]};
 		};
 		
 		subtest 'pickupitems.txt' => sub {

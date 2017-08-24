@@ -33,7 +33,7 @@ sub new {
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]], #86
 		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
 		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]], #10
-		'081C' => ['buying_store_item_delete', 'v2 V', [qw(index amount zeny)]], #10
+		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]], #10
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]], #6
 	);
 
@@ -81,10 +81,10 @@ sub buying_store_update {
 sub buying_store_item_delete {
 	my($self, $args) = @_;
 	return unless changeToInGameState();
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	my $zeny = $args->{amount} * $args->{zeny};
 	if ($item) {
-		inventoryItemRemoved($item->{invIndex}, $args->{amount});
+		inventoryItemRemoved($item->{binID}, $args->{amount});
 	}
 	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
 

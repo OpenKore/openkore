@@ -70,7 +70,14 @@ sub regSubmacro {
 
 # registers to AI queue
 sub register {
-	AI::queue('macro') unless $_[0]->{overrideAI};
+	unless ($_[0]->{overrideAI}) {
+		if (AI::is("NPC")) {
+			splice(@AI::ai_seq, 1, 0, 'macro');
+			splice(@AI::ai_seq_args, 1, 0, {});
+		} else {
+			AI::queue('macro');
+		}
+	}
 	$_[0]->{registered} = 1
 }
 

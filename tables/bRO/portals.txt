@@ -2761,7 +2761,7 @@ geffen 132 66 moc_para01 31 14 c c r0
 geffen_in 160 104 moc_para01 31 14 c c r0
 gonryun 145 120 moc_para01 31 14 c c r0
 hugel 93 153 moc_para01 31 14 c c r0
-izlude 131 148 moc_para01 31 14 c c r0
+izlude 134 98 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
 lighthalzen 164 86 moc_para01 31 14 c c r0
 louyang 227 107 moc_para01 31 14 c c r0
@@ -2878,3 +2878,36 @@ new_5-1 148 112 new_5-2 100 9
 new_5-2 100 6 new_5-1 148 112
 moc_para01 100 27 moc_para01 102 92
 
+man_fild02 138 40 manuk 112 357
+manuk 112 357 man_fild02 138 45
+man_fild01 373 238 man_fild02 32 262
+man_fild02 32 262 man_fild01 367 238
+mid_camp 336 171 man_fild01 36 235 c r0
+man_fild01 103 58 man_fild03 84 366
+man_fild03 84 366 man_fild01 103 58
+mid_campin 89 99 mid_camp 214 249
+mid_camp 214 249 mid_campin 89 102
+mid_campin 162 82 mid_campin 113 114
+mid_campin 113 114 mid_campin 165 82
+mid_camp 13 143 spl_fild02 379 143 c r0
+spl_fild02 382 143 mid_camp 16 143
+mid_campin 162 170 mid_campin 111 128
+mid_campin 111 128 mid_campin 165 170
+mid_campin 113 120 mid_campin 162 170
+mid_campin 162 126 mid_campin 110 120
+mid_campin 117 178 mid_campin 94 141
+mid_campin 94 141 mid_campin 117 181
+mid_campin 65 178 mid_campin 86 141
+mid_campin 86 141 mid_campin 66 181
+mid_campin 25 168 mid_campin 68 128
+mid_campin 68 128 mid_campin 22 168
+mid_campin 66 120 mid_campin 25 168
+mid_campin 66 114 mid_campin 25 124
+mid_campin 25 124 mid_campin 70 120
+mid_campin 25 80 mid_campin 70 114
+man_in01 275 41 manuk 311 142
+manuk 311 142 man_in01 277 41
+dic_dun01 165 227 dic_dun01 87 212
+dic_dun01 87 212 dic_dun01 169 227
+dic_dun01 28 156 dic_dun01 371 228
+dic_dun01 371 228 dic_dun01 32 156

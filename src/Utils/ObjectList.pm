@@ -67,6 +67,9 @@ use Carp::Assert;
 use Scalar::Util;
 use Utils::CallbackList;
 
+use overload 'bool' => sub { 1 };
+use overload '@{}' => \&getItems;
+
 ### CATEGORY: Class ObjectList
 
 ##

@@ -73,13 +73,13 @@ sub onListActivate {
 	my ($self, $item) = @_;
 
 	return unless $item;
-	Commands::run ('storage get ' . $item->{invIndex});
+	Commands::run ('storage get ' . $item->{binID});
 }
 
 sub _onCart {
 	my ($self, $item) = @_;
 	
-	Commands::run ('storage gettocart ' . $item->{invIndex});
+	Commands::run ('storage gettocart ' . $item->{binID});
 }
 
 1;

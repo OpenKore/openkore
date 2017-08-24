@@ -24,7 +24,10 @@ sub mainLoop_pre {
 	my (undef, $min, $hour, undef, undef, undef, $wday) = localtime;
 	debug sprintf("autoBreakTime: %s %s:%s\n", $wdays[$wday], $hour, $min), __PACKAGE__, 2;
 	for (my $i = 0 and my $prefix; exists $config{$prefix = "autoBreakTime_$i"}; $i++) {
-		next unless $config{$prefix} =~ /^(?:all|$wdays[$wday])$/i;
+		next unless split /\s+/,  $config{$prefix} =~ /all|$wdays[$wday]/i;
+
+		# Prefer to use Misc::checkSelfCondition but it requires that the AI is turned on. breakTime should work when the AI is off as well.
+		next if $config{"${prefix}_disabled"};
 		
 		my ($now, $start, $stop) = map { sub { ($_[0]*60 + $_[1])*60 } ->(@$_) } [$hour, $min], map {[split /:/]} (
 			$config{"${prefix}_startTime"}, $config{"${prefix}_stopTime"}

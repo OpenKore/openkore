@@ -91,7 +91,7 @@ sub add {
 			IOException->throw( TF( 'File [%s] cannot be created: $!', $file, $! ) );
 		}
 	} elsif (! -e $file) {
-		FileNotFoundException->throw( TF( 'File [%s] does not exist.', $file ) );
+		FileNotFoundException->throw( error => TF( 'File [%s] does not exist.', $file ), filename => $file );
 	} elsif (!open($handle, "<", $file)) {
 		IOException->throw(error => $!);
 	}

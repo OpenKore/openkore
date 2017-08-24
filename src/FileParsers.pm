@@ -570,7 +570,9 @@ sub parseMonControl {
 sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
+	my $r_array = shift;
 	undef %{$r_hash};
+	undef @{$r_array};
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -598,8 +600,11 @@ sub parsePortals {
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $3;
 			} elsif ($misc =~ /^(\d+)\s(.*)$/) { # [cost] [talk sequence]
 				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $2;
 			} else { # [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = 0;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $misc;
 			}
 		}

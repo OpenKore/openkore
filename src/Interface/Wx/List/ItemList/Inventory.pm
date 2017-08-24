@@ -90,7 +90,7 @@ sub onListActivate {
 			$item->unequip;
 		}
 	} elsif ($item->mergeable) {
-		Commands::run ('card use ' . $item->{invIndex});
+		Commands::run ('card use ' . $item->{binID});
 	}
 }
 
@@ -98,28 +98,28 @@ sub _onCart {
 	my ($self, $item) = @_;
 
 	return unless $item;
-	Commands::run ('cart add ' . $item->{invIndex});
+	Commands::run ('cart add ' . $item->{binID});
 }
 
 sub _onStorage {
 	my ($self, $item) = @_;
 
 	return unless $item;
-	Commands::run ('storage add ' . $item->{invIndex});
+	Commands::run ('storage add ' . $item->{binID});
 }
 
 sub _onSell {
 	my ($self, $item) = @_;
 
 	return unless $item;
-	Commands::run ('sell ' . $item->{invIndex} . ';;sell done');
+	Commands::run ('sell ' . $item->{binID} . ';;sell done');
 }
 
 sub _onDropOne {
 	my ($self, $item) = @_;
 
 	return unless $item;
-	Commands::run ('drop ' . $item->{invIndex} . ' 1');
+	Commands::run ('drop ' . $item->{binID} . ' 1');
 }
 
 1;

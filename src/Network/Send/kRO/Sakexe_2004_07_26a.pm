@@ -31,7 +31,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0072' => ['item_drop', 'x3 v x5 v', [qw(index amount)]],
+		'0072' => ['item_drop', 'x3 a2 x5 v', [qw(ID amount)]],
 		'007E' => ['map_login', 'x10 a4 x2 a4 x2 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0085' => ['skill_use', 'x5 V x v x2 a4', [qw(lv skillID targetID)]],#20
 		'0089' => ['actor_info_request', 'x9 a4', [qw(ID)]],
@@ -42,11 +42,11 @@ sub new {
 		'00A2' => undef,
 		'00A7' => ['actor_name_request', 'x6 a4', [qw(ID)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
-		'00F5' => ['item_use', 'x4 v x5 a4', [qw(index targetID)]],#17
+		'00F5' => ['item_use', 'x4 a2 x5 a4', [qw(ID targetID)]],#17
 		'00F7' => ['sync', 'x4 V', [qw(time)]],
-		'0113' => ['storage_item_add', 'x3 v x5 V', [qw(index amount)]],
+		'0113' => ['storage_item_add', 'x3 a2 x5 V', [qw(ID amount)]],
 		'0116' => undef,
-		'0190' => ['storage_item_remove', 'x8 v x10 V', [qw(index amount)]],
+		'0190' => ['storage_item_remove', 'x8 a2 x10 V', [qw(ID amount)]],
 		'0193' => ['actor_action', 'x a4 x C', [qw(targetID type)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

@@ -1,4 +1,4 @@
-﻿Você deseja assistir o Replay?#
+Você deseja assistir o Replay?#
 Não foi possível conectar-se ao servidor.#
 Desconectado do servidor.#
 Desconectado do servidor.#
@@ -265,7 +265,7 @@ Velocidade de Ataque#
 Servidor Superpopulado.#
 Configuração#
 Servidor Indisponível. Por favor, tente novamente em alguns minutos.#
-Senha incorreta. Certifique-se que sua senha esteja correta e/ou o Cadeado Level Up liberado.#
+Houve um erro ao acessar sua conta. Confirme se: 1 - A senha está correta / 2 - O Cadeado Level Up está desativado.#
 Escolha o penteado#
 Atq.#
 Def.#
@@ -1345,7 +1345,7 @@ O calabouço solicitado será removido se você não adentrá-lo em ^FF0000%s^00
 Tempo limite da missão:#
 A reserva do Calabouço Dimensional foi cancelada.#
 A duração do Calabouço Dimensional expirou; ela foi destruída.#
-O tempo limite para entrar no Calabouço Dimensional expirou; ela foi destruída.#
+O tempo limite para entrar no Calabouço Dimensional expirou; a entrada foi destruída.#
 O Calabouço Dimensional foi removido.#
 Um erro de sistema ocorreu no Calabouço Dimensional. Por favor, feche completamente o jogo e volte para continuar.#
 Você não pode usar o slot selecionado.#
@@ -1463,13 +1463,13 @@ Não é possível deletar acima do nível %d#
 Não pode ser usado com o M.E.C.H.A.#
 Desmonte do Ferus#
 Saia do M.E.C.H.A.#
-Gaste#
+item#
 Dinheiro#
 Armadura#
 Arma#
 Projétil#
 Carta#
-Misc.#
+etc#
 A conexão foi encerrada porque o programa demorou a responder#
 Versão incorreta do arquivo do HackShield. Reinstale o programa#
 Necessita de um Grimório#
@@ -1517,7 +1517,7 @@ Som de entrada de Bate-Papo DESLIGADO#
 /panic#
 /whisp#
 vazio#
-Pode ser usado apenas com Cartas equipadas#
+Só pode ser utilizado quando estiver utilizando carrinho#
 Será necessário o item [Semente de Planta Selvagem]#
 Será necessário o item [Semente Sanguessuga]#
 Não pode mais conjurar#
@@ -1608,7 +1608,7 @@ Alguém#
 [%s] recebeu '%d' de dano.#
 [%s] deu [%s] dano de '%d'.#
 %s %d derrubado(s)#
-Derrotou [%s] monstro(s) da missão [%s]. (%d/%d)#
+Da missão [%s], você derrotou [%s]. (%d/%d)#
 %s Missão foi deletada.#
 [%s] possui#
 %d' de EXP#
@@ -1803,7 +1803,7 @@ Insira o prefiro ou sufixo da carta#
 Buscas restantes : %d#
 Nenhuma Loja encontrada#
 Fora do valor#
-Equipamentos em geral#
+Equipamentos#
 Visuais#
 minutos#
 segundos#
@@ -2048,9 +2048,9 @@ Please write the party ad in memo.#
 Only party leader can add party advertisement.#
 It is already added party advertisment.#
 Content#
-Equipment#
-Individual#
-Lock the item throw#
+equip#
+ordem#
+Bloquear Drop#
 Notice to find part members#
 Organize a party#
 Leave the party#
@@ -2095,7 +2095,7 @@ The user is currently joining in the Siege.#
 It is not possible to change the party leader in the same map.#
 It is not possible to change the party leader in current area.#
 dpwn the Gryphon#
-%d Month %d day %d time %d min %d sec#
+%d Mês %d Dia %d Hora %d Min %d Sec#
 You canot invite to the guild as you are in the siege.#
 You have requested to wait to enter in Battle ground.#
 the maximum amount has been exceeded.#
@@ -2167,10 +2167,10 @@ Trocar Nome#
 Make Character#
 http://ro.tahadi.com/en/game-guide#
 %s Server#
-Merge items(To select all:Ctrl+Click)#
+Unificar Itens#
 Select at least 2 items of the same kind.#
-Item Merging Succeeded.#
-Item Merging can work for one kind of items once at a time.#
+Unificação dos itens realizada com sucesso.#
+Você deve unificar somente 1 tipo de item por vez.#
 The amount of the item is over 30000 pieces.#
 Turn on left#
 Turn on right#
@@ -2178,10 +2178,10 @@ See previous server info of (%s)#
 Previous server info#
 ^ff0000Previous server : ^0000ff#
 ^ff0000Previous character name : ^0000ff#
-HP for attacking monsters will be displayed.#
-HP for attacking monsters will not be displayed.#
-None of the item can be merged.#
-None of the item can be merged.#
+O HP dos monstros atacados será mostrado.#
+O HP dos monstros atacados não será mostrado.#
+Nenhum dos itens disponíveis podem ser unificados.#
+Nenhum dos itens disponíveis podem ser unificados.#
 Progress#
 Delay#
 Recommend#
@@ -2194,36 +2194,36 @@ Reward items#
 Required items#
 Limited time#
 Closing time#
-Search#
-Lead to the target#
-Road info#
-Search info#
-Change the mode#
+Busca#
+Calcular Rota#
+Indicação de Rota#
+Detalhes da Busca#
+Mudar mode de Exibição#
 Change the color of navigation#
-Close#
+Fechar#
 Maximizar#
 Minimizar#
 Ajuda#
-ALL#
-Map#
+Tudo#
+Mapa#
 Npc#
-Mob#
+Monstro#
 Coloque o que você quer procurar (Ex: payon, zumbi...)#
-Scroll#
-Apply to use dungeon move scroll#
-Service#
-Allow the service of location move#
-Plane#
-Apply transferring with Airship#
->> Cannot read the target info!#
-<< noticing >>#
-<< searching... >>#
+Perg.#
+Calcular rota com Pergaminho#
+Kafra#
+Calcular rota com a Kafra#
+Aerop.#
+Calcular rota com Aeroplano#
+>> Não é possível ler a informação do alvo!#
+<< notando >>#
+<< procurando... >>#
 -----------#
-Navigation#
+Navegação#
 == Resultado(%d)==#
 Npc)%s:%s#
-Mob)%s:%s#
-Map)%s#
+Mons)%s:%s#
+Mapa)%s#
 ======== Resultado ==========#
 Distância   : %d Sell %d WarpMove#
 Destino: %s(%s)#
@@ -2284,9 +2284,9 @@ Humanóide#
 Anjo#
 Dragão#
 Amorfo#
-Ciick to move %s#
+Clique para se mover %s#
 Use o sistema de navegação de NPC#
-NPC click#
+NPC Clique#
 %s move#
 Utilize o Aeroplano#
 Use teleporte#
@@ -2340,6 +2340,7 @@ Would you like to purchase?#
 1#
 1#
 1#
+/monsterhp : Mostra a barra de HP dos monstros quando você ataca. On Off#
 1#
 1#
 1#
@@ -2416,8 +2417,7 @@ Would you like to purchase?#
 1#
 1#
 1#
-1#
-1#
+Visuais/Sombrios#
 1#
 1#
 1#

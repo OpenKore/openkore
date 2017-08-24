@@ -81,7 +81,8 @@ sub testAdd {
 		$indices{$index} = 1;
 	}
 
-	is_deeply($self->{list}->getItems(), \@items);
+	is_deeply(\@{$self->{list}}, \@items);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->onAdd()->remove($ID);
 }
 
@@ -118,7 +119,8 @@ sub testRemove {
 	is($self->{list}->find($self->{item4}), $index4);
 	is($self->{list}->find($self->{item5}), $index5);
 	is($self->{list}->find($self->{item6}), -1);
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item3}, $self->{item4}, $self->{item5}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item3}, $self->{item4}, $self->{item5}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 
 	# Delete item 4
@@ -137,7 +139,8 @@ sub testRemove {
 	is($self->{list}->find($self->{item4}), -1);
 	is($self->{list}->find($self->{item5}), $index5);
 	is($self->{list}->find($self->{item6}), -1);
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item3}, $self->{item5}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item3}, $self->{item5}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 
 	# Put back item 2
@@ -155,7 +158,8 @@ sub testRemove {
 	is($self->{list}->find($self->{item4}), -1);
 	is($self->{list}->find($self->{item5}), $index5);
 	is($self->{list}->find($self->{item6}), -1);
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item5}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item5}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 
 	# Remove nonexistant item
@@ -172,7 +176,8 @@ sub testRemove {
 	is($self->{list}->find($self->{item4}), -1);
 	is($self->{list}->find($self->{item5}), $index5);
 	is($self->{list}->find($self->{item6}), -1);
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item5}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item5}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 
 	# Put back item 4
@@ -190,7 +195,8 @@ sub testRemove {
 	is($self->{list}->find($self->{item4}), $index4);
 	is($self->{list}->find($self->{item5}), $index5);
 	is($self->{list}->find($self->{item6}), -1);
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item4}, $self->{item5}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item2}, $self->{item3}, $self->{item4}, $self->{item5}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 }
 
@@ -222,7 +228,8 @@ sub testClear {
 	for (my $i = 0; $i < 15; $i++) {
 		ok(!defined $self->{list}->get($i));
 	}
-	is_deeply($self->{list}->getItems(), []);
+	is_deeply(\@{$self->{list}}, []);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 }
 
 # Test addition and removal of duplicate items.
@@ -242,7 +249,8 @@ sub testDuplicate {
 	ok(!defined $self->{list}->get($index2));
 	ok($self->{list}->get($index3) == $self->{item1});
 	ok($self->{list}->get($index4) == $self->{item3});
-	is_deeply($self->{list}->getItems(), [$self->{item1}, $self->{item3}]);
+	is_deeply(\@{$self->{list}}, [$self->{item1}, $self->{item3}]);
+	is_deeply($self->{list}->getItems, \@{$self->{list}});
 	$self->{list}->checkValidity();
 }
 

@@ -53,11 +53,11 @@ sub player {
 		return $playersList->get($ID);
 	} elsif ($partial) {
 		$ID = quotemeta $ID;
-		foreach my $player (@{$playersList->getItems()}) {
+		for my $player (@$playersList) {
 			return $player if ($player->name =~ /^$ID/i);
 		}
 	} else {
-		foreach my $player (@{$playersList->getItems()}) {
+		for my $player (@$playersList) {
 			return $player if (lc($player->name) eq lc($ID));
 		}
 	}

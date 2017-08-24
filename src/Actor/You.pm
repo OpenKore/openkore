@@ -256,7 +256,7 @@ sub attack {
 					$Req = $char->inventory->getByName($config{"autoSwitch_${i}_rightHand"});
 					if ($Req && !$Req->{equipped}){
 						message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
-						%eq_list = (rightHand => $Req->{invIndex});
+						%eq_list = (rightHand => $Req->{binID});
 					}
 
 				}
@@ -272,7 +272,7 @@ sub attack {
 					if ($Leq && !$Leq->{equipped}) {
 						if ($Req == $Leq) {
 							undef $Leq;
-							foreach my $item (@{$char->inventory->getItems()}) {
+							for my $item (@{$char->inventory}) {
 								if ($item->{name} eq $config{"autoSwitch_${i}_leftHand"} && $item != $Req) {
 									$Leq = $item;
 									last;
@@ -282,7 +282,7 @@ sub attack {
 
 						if ($Leq) {
 							message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
-							$eq_list{leftHand} = $Leq->{invIndex};
+							$eq_list{leftHand} = $Leq->{binID};
 						}
 					}
 				}
@@ -324,7 +324,7 @@ sub attack {
 			$Req = $char->inventory->getByName($config{"autoSwitch_default_rightHand"});
 			if ($Req && !$Req->{equipped}){
 				message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
-				%eq_list = (rightHand => $Req->{invIndex});
+				%eq_list = (rightHand => $Req->{binID});
 			}
 
 		}
@@ -341,7 +341,7 @@ sub attack {
 			if ($Leq && !$Leq->{equipped}) {
 				if ($Req == $Leq) {
 					undef $Leq;
-					foreach my $item (@{$char->inventory->getItems()}) {
+					for my $item (@{$char->inventory}) {
 						if ($item->{name} eq $config{"autoSwitch_default_leftHand"} && $item != $Req) {
 							$Leq = $item;
 							last;
@@ -351,7 +351,7 @@ sub attack {
 
 				if ($Leq) {
 					message TF("Auto Equiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
-					$eq_list{leftHand} = $Leq->{invIndex};
+					$eq_list{leftHand} = $Leq->{binID};
 				}
 			}
 		}
@@ -383,10 +383,10 @@ sub sendSit {
 		my $skill = new Skill(handle => 'LK_TENSIONRELAX');
 		AI::ai_skillUse2($skill, $char->{skills}{LK_TENSIONRELAX}{lv}, 1, 0, $char, "LK_TENSIONRELAX");
 	} else {
-		$messageSender->sendAction(undef, ACTION_SIT);
+		$messageSender->sendAction(0, ACTION_SIT);
 	}
 }
-sub sendStand { $messageSender->sendAction(undef, ACTION_STAND) }
+sub sendStand { $messageSender->sendAction(0, ACTION_STAND) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 
 1;

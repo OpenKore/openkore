@@ -31,11 +31,23 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
 use Log qw(debug);
+
+sub new {
+	my ( $class ) = @_;
+	my $self = $class->SUPER::new( @_ );
+
+	my $cryptKeys = $masterServers{ $config{master} }->{sendCryptKeys};
+	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
+		$self->cryptKeys( hex $1, hex $2, hex $3 );
+	}
+
+	return $self;
+}
 
 sub import {
 	# This code is for backward compatibility reasons, so that you can still
@@ -526,14 +538,15 @@ sub sendGetCharacterName {
 
 sub sendTalk {
 	my ($self, $ID) = @_;
-	$talk{msg} = $talk{image} = '';
+	delete $talk{msg};
+	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk', ID => $ID, type => 1}));
 	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkCancel {
 	my ($self, $ID) = @_;
-	$talk{msg} = $talk{image} = '';
+	undef %talk;
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_cancel', ID => $ID}));
 	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
 }
@@ -546,21 +559,24 @@ sub sendTalkContinue {
 
 sub sendTalkResponse {
 	my ($self, $ID, $response) = @_;
-	$talk{msg} = $talk{image} = '';
+	delete $talk{msg};
+	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_response', ID => $ID, response => $response}));
 	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
 }
 
 sub sendTalkNumber {
 	my ($self, $ID, $number) = @_;
-	$talk{msg} = $talk{image} = '';
+	delete $talk{msg};
+	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_number', ID => $ID, value => $number}));
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
 }
 
 sub sendTalkText {
 	my ($self, $ID, $input) = @_;
-	$talk{msg} = $talk{image} = '';
+	delete $talk{msg};
+	delete $talk{image};
 	$input = stringToBytes($input);
 	$self->sendToServer($self->reconstruct({
 		switch => 'npc_talk_text',
@@ -605,15 +621,15 @@ sub sendTake {
 }
 
 sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'item_drop', index => $index, amount => $amount}));
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_drop', ID => $ID, amount => $amount}));
+	debug sprintf("Sent drop: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendItemUse {
-	my ($self, $index, $targetID) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'item_use', index => $index, targetID => $targetID}));
-	debug "Item Use: $index\n", "sendPacket", 2;
+	my ($self, $ID, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
+	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # for old plugin compatibility, use sendRestart instead!
@@ -631,15 +647,15 @@ sub sendRestart {
 }
 
 sub sendStorageAdd {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', index => $index, amount => $amount}));
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', index => $index, amount => $amount}));
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStoragePassword {
@@ -1102,15 +1118,15 @@ sub sendHomunculusStandBy {
 }
 
 sub sendEquip {
-	my ($self, $index, $type) = @_;
+	my ($self, $ID, $type) = @_;
 	$self->sendToServer($self->reconstruct({
 				switch => 'send_equip',
-				index => $index,
+				ID => $ID,
 				type => $type
 			}
 		)
 	);
-	debug "Sent Equip: $index Type: $type\n" , 2;
+	debug sprintf("Sent Equip: %s Type: $type\n", unpack('v', $ID)), 2;
 }
 
 sub sendProgress {
@@ -1128,6 +1144,16 @@ sub sendProduceMix {
 	my $msg = pack('v5', 0x018E, $ID, $item1, $item2, $item3);
 	$self->sendToServer($msg);
 	debug "Sent Forge, Produce Item: $ID\n" , 2;
+}
+
+sub sendDealAddItem {
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_item_add',
+		ID => $ID,
+		amount => $amount
+	}));
+	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 1;

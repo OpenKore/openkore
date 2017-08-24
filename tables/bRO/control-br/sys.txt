@@ -1,4 +1,4 @@
-﻿#############################################################################################
+#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -55,7 +55,7 @@ loadPlugins 2
 # loadPlugins_list <list>
 # Se o loadPlugins é definido como 2, esta lista ficará separada por vírgulas de nomes dos plugins (nome do arquivo sem a extensão)
 # Especifica quais os arquivos do plugin vão ser carregados na inicialização ou quando o comando "plugin carregar todos" é usado.
-loadPlugins_list macro,profiles,breakTime
+loadPlugins_list macro,profiles,breakTime,raiseStat,raiseSkill,map,reconnect,eventMacro
 
 # skipPlugins_list <list>
 #   Se o loadPlugins é definido como 3, esta lista separada por vírgula de nomes dos plugins (nome do arquivo sem a extensão)

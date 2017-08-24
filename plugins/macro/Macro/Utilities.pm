@@ -48,7 +48,9 @@ sub ai_isIdle {
 			return 0
 		}
 	}
-	return AI::is('macro', 'deal')
+	return 1 if (AI::is('macro', 'deal'));
+	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
+	return 0;
 }
 
 sub between {
@@ -291,7 +293,7 @@ sub getInventoryIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -326,7 +328,7 @@ sub getStorageIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{invIndex}}
+		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids

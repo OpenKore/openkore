@@ -1973,8 +1973,8 @@ Pengaturan Replay#
 Silahkan masukan nama file.#
 Mengatur Replay Penyimpan Data#
 Mengatur Rec#
-%.1f %% Pos¢Ñ:%d:%d:%d#
-%.1f %% Pos¢Ñ:tidak dapat bergerak#
+%.1f %% Pos:%d:%d:%d#
+%.1f %% Pos:tidak dapat bergerak#
 Mulai#
 Berhenti#
 Masukan Nama File -> Mulai#

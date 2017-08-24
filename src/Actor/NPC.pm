@@ -22,12 +22,20 @@
 package Actor::NPC;
 
 use strict;
-use Actor;
+
 use base qw(Actor);
+
+use Globals qw($messageSender);
 
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new('NPC');
+}
+
+sub sendTalk {
+	my ($self) = @_;
+
+	$messageSender->sendTalk($self->{ID});
 }
 
 1;

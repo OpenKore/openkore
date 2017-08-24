@@ -20,9 +20,9 @@ sub new {
 
 	my %packets = (
 		'094E' => ['item_take', 'a4', [qw(ID)]],
-		'087D' => ['item_drop', 'v2', [qw(index amount)]],
-		'0878' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'08AA' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'087D' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0878' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'08AA' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'023B' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'093B' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'08AD' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -34,7 +34,8 @@ sub new {
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(688214506, 761751195, 731196533);
+	
+#	$self->cryptKeys(688214506, 761751195, 731196533);
 
 	return $self;
 }

@@ -12,8 +12,10 @@
 # bRO (Brazil)
 package Network::Receive::bRO;
 use strict;
-use Log qw(warning);
+use Log qw(warning debug);
 use base 'Network::Receive::ServerType0';
+use Globals qw(%charSvrSet $messageSender $monstersList);
+use Translation qw(TF);
 
 # Sync_Ex algorithm developed by Fr3DBr
 sub new {
@@ -22,31 +24,49 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
+		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
+		'09CB' => ['skill_used_no_damage', 'v v x2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 	);
 	# Sync Ex Reply Array 
 	$self->{sync_ex_reply} = {
-	'0969', '0953', '0954', '0966', '0922', '0962', '0959', '085E', '0923', '088E', '0965', '0895', '0861', '089C', '0927', '0890', '0886', '0931', '096A', '0932', '0949', '0937', '083C', '0899', '08A0', '0948', '0880', '08A2', '0897', '0802', '088B', '0930', '092C', '0878', '0958', '0896', '0951', '089F', '092D', '08A1', '0875', '0437', '0819', '0950', '0898', '095E', '088F', '0364', '023B', '091F', '0946', '093D', '095D', '089A', '094A', '08A6', '088A', '0963', '0883', '0888', '0838', '088D', '0368', '0281', '0369', '086D', '093B', '086E', '0363', '0957', '091B', '0879', '0925', '0942', '095C', '035F', '0884', '0955', '093C', '0961', '0860', '0945', '0876', '087A', '0367', '0362', '0863', '022D', '0864', '0881', '0935', '02C4', '08AB', '088C', '0892', '07EC', '0202', '086C', '08A8', '087F', '0893', '085F', '092E', '085A', '08AA', '0870', '0968', '0835', '0891', '0921', '08A9', '0934', '087E', '0940', '092A', '08A7', '0867', '0956', '093F', '091E', '094F', '093A', '0952', '0865', '0438', '089D', '0811', '0941', '08AD', '0894', '0872', '08AC', '085C', '094B', '0924', '0889', '094C', '086A', '0936', '0866', '0873', '07E4', '089E', '095A', '095B', '092B', '0938', '087C', '0947', '0919', '08A4', '0868', '086B', '093E', '089B', '0869', '0944', '086F', '0964', '0920', '095F', '0871', '085D', '087D', '0918', '0815', '094E', '0929'
+		'0870', '0368', '0886', '0945', '0936', '0802', '0958', '086E', '0866', '089B', '091A', '0885', '087E', '0871', '0872', '0949', '0946', '0962', '0942', '0874', '0811', '086B', '0918', '0898', '0930', '08A8', '0935', '094B', '08A7', '088D', '0369', '096A', '093A', '0957', '086D', '0815', '0896', '08AA', '0890', '02C4', '0884', '035F', '092A', '091C', '089D', '0869', '0965', '094E', '0817', '089F', '08A5', '0919', '0959', '091D', '0937', '092B', '0943', '0927', '095B', '0967', '0931', '0924', '0202', '095F', '093B', '023B', '0969', '0964', '08A4', '0361', '0888', '095D', '086C', '0928', '089A', '0868', '0873', '0364', '092D', '0963', '0952', '08A9', '0362', '0881', '0960', '0934', '0968', '0867', '0366', '091F', '0920', '0939', '093F', '0953', '0926', '085F', '0929', '087B', '0891', '091E', '0899', '0956', '0938', '07EC', '088A', '08A3', '091B', '0360', '095A', '085C', '0923', '0819', '0922', '093E', '094F', '089C', '088F', '0864', '0941', '0883', '0436', '0917', '0879', '0895', '0940', '08AD', '0954', '0437', '0877', '0876', '0878', '088E', '095C', '0889', '0861', '092F', '0860', '088B', '092E', '094D', '095E', '0838', '08A0', '0365', '086F', '0921', '085E', '0887', '0875', '0835', '0961', '088C', '0438', '0865', '086A', '0955', '022D', '0892', '0944', '087D', '0863', '08A6', '087C', '0932', '08A1', '0947', '08AC', '093D'
 	};
 	
 	foreach my $key (keys %{$self->{sync_ex_reply}}) { $packets{$key} = ['sync_request_ex']; }
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
 	
+	my %handlers = qw(
+		received_characters 099D
+		received_characters_info 082D
+		sync_received_characters 09A0
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
 	return $self;
 }
 
-sub items_nonstackable {
+sub sync_received_characters {
 	my ($self, $args) = @_;
 
-	my $items = $self->{nested}->{items_nonstackable};
+	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+	
+	# When XKore 2 client is already connected and Kore gets disconnected, send sync_received_characters anyway.
+	# In most servers, this should happen unless the client is alive
+	# This behavior was observed in April 12th 2017, when Odin and Asgard were merged into Valhalla
+	for (1..$args->{sync_Count}) {
+		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+	}
+}
 
-	if($args->{switch} eq '00A4' || $args->{switch} eq '00A6' || $args->{switch} eq '0122') {
-		return $items->{type4};
-	} elsif ($args->{switch} eq '0295' || $args->{switch} eq '0296' || $args->{switch} eq '0297') {
-		return $items->{type4};
-	} elsif ($args->{switch} eq '02D0' || $args->{switch} eq '02D1' || $args->{switch} eq '02D2') {
-		return  $items->{type4};
-	} else {
-		warning("items_nonstackable: unsupported packet ($args->{switch})!\n");
+# 0A36
+sub monster_hp_info_tiny {
+	my ($self, $args) = @_;
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		$monster->{hp} = $args->{hp};
+		
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp} * 4), "parseMsg_damage"; # FIXME: Probably inaccurate
 	}
 }
 

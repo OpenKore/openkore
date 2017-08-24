@@ -204,6 +204,7 @@ route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 15
+route_tryToGuessMissingPortalByDistance 1
 
 runFromTarget 0
 runFromTarget_dist 6
@@ -305,17 +306,17 @@ showAllDamage 0
 manualURL http://wiki.openkore.com/index.php?title=Manual
 forumURL http://forums.openkore.com
 
-logChat 0
+logChat 1
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
 logEmoticons
-logConsole 0
+logConsole 1
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
-logDead 0
+logDead 1
 
 chatTitleOversize 0
 shopTitleOversize 0
@@ -692,6 +693,7 @@ buyAuto {
 	price
 	minAmount 2
 	maxAmount 3
+	batchSize
 	disabled 0
 }
 
@@ -699,7 +701,7 @@ sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
 sellAuto_distance 5
-sellAuto_npc_steps s e
+sellAuto_npc_steps s
 
 storageAuto 0
 storageAuto_npc
@@ -715,6 +717,7 @@ relogAfterStorage 0
 minStorageZeny 50
 
 npcTimeResponse
+npcWrongStepsMethod 0
 
 getAuto {
 	minAmount

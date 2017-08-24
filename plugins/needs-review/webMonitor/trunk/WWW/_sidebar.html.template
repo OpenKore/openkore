@@ -2,18 +2,111 @@
 	<h5 class="center">
 		<i class="icon-map-marker"></i> <span class="value_field_description">{characterLocationDescription}</span>
 	</h5>
+    
 	<div class="center">
 		<!-- why canvas? -->
-		<canvas id="map" style="background-image: url('{characterLocationMapURL}')">
+        <!-- {characterLocationMapURL} -->
+		<canvas id="map" width="512" height="512" style="background-image: url('{characterLocationMapURL}'); width: 512px; height: 512px;">
 			<form action="/handler" method="GET">
 				<input type="hidden" name="csrf" value="{csrf}"/>
 				<input type="image" alt="{characterLocationMap}" src="{characterLocationMapURL}"/>
 			</form>
 		</canvas>
 	</div>
+    
 	<p>
 		<div class="center" id="coord">
 			<span class="value_char_pos_x">{characterLocationX}</span>, <span class="value_char_pos_y">{characterLocationY}</span>
 		</div>
 	</p>
+    
+    <script type="text/javascript">
+        $(function(){
+            var $map = $("#map");
+            
+            $map.on("click", function(){
+                var newWH = {
+                    width: "",
+                    height: "",
+                };
+                
+                if ($map.css("width") != "512px") {
+                    newWH = {
+                       width: "512px", 
+                       height: "512px", 
+                    };
+                }
+                
+                $map.css(newWH);
+            });
+            
+            var canvas = $map[0];
+            var ctx = canvas.getContext("2d");
+            
+            function clearMap() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            function draw() {
+                clearMap();
+                
+                drawPoints();
+                drawPlayer();
+            }
+            
+            setInterval(draw, 1000);
+            draw();
+            
+            function drawPoint(x, y, color, text, textColor) {
+                var ox = x, oy = y;
+                var w = h = 3;
+                var ratio = 512 / 400
+                
+                x = (x * ratio) - (w / 2);
+                y = 512 - (y * ratio) - (h / 2);
+                
+                ctx.fillStyle = "#FFFFFF";
+                ctx.fillRect(x - 4, y - 4, w + 8, h + 8);
+                
+                ctx.fillStyle = "#000000";
+                ctx.fillRect(x - 2, y - 2, w + 4, h + 4);
+                
+                ctx.fillStyle = color;
+                ctx.fillRect(x, y, w, h);
+                
+                if (typeof text !== "undefined") {
+                    // ctx.font = "14px Georgia";
+                    // ctx.fillStyle = textColor ? textColor : "#FF0000";
+                    // ctx.fillText(text, x + (w * 2 + 8), y + (h * 2) - (h / 2));
+                    
+                    var tx = x + (w * 2 + 8);
+                    var ty = y + (h * 2) - (h / 2);
+                    
+                    ctx.font = "16px Georgia"
+                    
+                    ctx.strokeStyle = "#FFFFFF";
+                    ctx.lineWidth = 4;
+                    ctx.strokeText(text, tx, ty);
+                    
+                    ctx.fillStyle = "#000000";
+                    ctx.fillText(text, tx, ty);
+                }
+            }
+            
+            function drawPlayer() {
+                var x = parseInt($(".value_char_pos_x").text());
+                var y = parseInt($(".value_char_pos_y").text());
+                
+                drawPoint(x, y, "#FF0000");
+            }
+            
+            // function drawPoints() {
+                // var data = [[178, 370], [222, 24], [26, 318], [362, 263], [362, 73], [77, 366]];
+                // 
+                // data.forEach(function(v, k){
+                    // drawPoint(v[0], v[1], "#FFFF00", v[0] + ", " + v[1]);
+                // });
+            // }
+        });
+    </script>
 </div>

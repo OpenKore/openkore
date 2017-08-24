@@ -53,14 +53,15 @@ sub new {
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
-		'00A2' => ['item_drop', 'v2', [qw(index amount)]],
-		'00A7' => ['item_use', 'v a4', [qw(index targetID)]],#8
-		'00A9' => ['send_equip', 'v2', [qw(index type)]],#6
+		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],#8
+		'00A9' => ['send_equip', 'a2 v', [qw(ID type)]],#6
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
-		'00F3' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'00F5' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
+		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
@@ -232,10 +233,11 @@ sub sendGMMessage {
 
 # 0x00ab,4,unequipitem,2
 sub sendUnequip {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x00AB, $index);
+	my $self = shift;
+	my $ID = shift;
+	my $msg = pack("v", 0x00AB) . pack("a2", $ID);
 	$self->sendToServer($msg);
-	debug "Sent Unequip: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Unequip: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x00ac,7
@@ -299,16 +301,6 @@ sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
 # 0x00c6,-1
 # 0x00c7,-1
 
-=pod
-# TODO: this is a variable length message, we could buy multiple types of items at once!!!!
-sub sendBuy {
-	my ($self, $ID, $amount) = @_;
-	my $len = 8;
-	my $msg = pack('v4', 0x00C8, $len, $amount, $ID);
-	$self->sendToServer($msg);
-	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
@@ -322,11 +314,12 @@ sub sendBuyBulk {
 
 # 0x00c9,-1,npcselllistsend,2:4
 sub sendSellBulk {
-	my ($self, $r_array) = @_;
+	my $self = shift;
+	my $r_array = shift;
 	my $msg = pack('v2', 0x00C9, 4+4*@{$r_array});
 	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{index}, $r_array->[$i]{amount});
-		debug "Sent bulk sell: $r_array->[$i]{index} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+		$msg .= pack('a2 v', $r_array->[$i]{ID}, $r_array->[$i]{amount});
+		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
 }
@@ -468,14 +461,6 @@ sub sendDealReply {
 }
 
 # 0x00e7,3
-
-# 0x00e8,8,tradeadditem,2:4
-sub sendDealAddItem {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x00E8, $index, $amount);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal Add Item: $index, $amount\n", "sendPacket", 2;
-}
 
 # 0x00e9,19
 # 0x00ea,5
@@ -643,34 +628,38 @@ sub sendMemo {
 
 # 0x0126,8,putitemtocart,2:4
 sub sendCartAdd {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x0126, $index, $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack('v', 0x0126) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Cart Add: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Cart Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x0127,8,getitemfromcart,2:4
 sub sendCartGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x0127, $index, $amount);
+	my ($self, $ID, $amount) = @_;
+	my $msg = pack('v', 0x0127) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Cart Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x0128,8,movefromkafratocart,2:4
 sub sendStorageGetToCart {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x0128, $index, $amount);
+	my $self = shift;
+	my $ID = shift;
+	my $amount = shift;
+	my $msg = pack('v', 0x0128) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x0129,8,movetokafrafromcart,2:4
 sub sendStorageAddFromCart {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack('v2 V', 0x0129, $index, $amount);
+	my $self = shift;
+	my $ID = shift;
+	my $amount = shift;
+	my $msg = pack('v', 0x0129) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Storage Add From Cart: $index x $amount\n", "sendPacket", 2;
+	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x012a,2,removeoption,0
@@ -950,30 +939,31 @@ sub sendGuildAlly {
 
 # 0x0178,4,itemidentify,2
 sub sendIdentify {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x0178, $index);
+	my $self = shift;
+	my $ID = shift;
+	my $msg = pack('v', 0x0178) . pack("a2", $ID);
 	$self->sendToServer($msg);
-	debug "Sent Identify: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x0179,5
 
 # 0x017a,4,usecard,2
 sub sendCardMergeRequest {
-	my ($self, $card_index) = @_;
-	my $msg = pack('v2', 0x017A, $card_index);
+	my ($self, $card_ID) = @_;
+	my $msg = pack('v', 0x017A) . pack("a2", $card_ID);
 	$self->sendToServer($msg);
-	debug "Sent Card Merge Request: $card_index\n", "sendPacket";
+	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
 }
 
 # 0x017b,-1
 
 # 0x017c,6,insertcard,2:4
 sub sendCardMerge {
-	my ($self, $card_index, $item_index) = @_;
-	my $msg = pack('v3', 0x017C, $card_index, $item_index);
+	my ($self, $card_ID, $item_ID) = @_;
+	my $msg = pack('v', 0x017C) . pack("a2 a2", $card_ID, $item_ID);
 	$self->sendToServer($msg);
-	debug "Sent Card Merge: $card_index, $item_index\n", "sendPacket";
+	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
 }
 
 # 0x017d,7
@@ -1104,10 +1094,10 @@ sub sendPetName {
 
 # 0x01a7,4,selectegg,2
 sub sendPetHatch {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x01A7, $index);
+	my ($self, $ID) = @_;
+	my $msg = pack('v a2', 0x01A7, $ID);
 	$self->sendToServer($msg);
-	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
+	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 # 0x01a8,4
@@ -1127,10 +1117,10 @@ sub sendPetEmotion{
 
 # 0x01ae,4,selectarrow,2
 sub sendArrowCraft {
-	my ($self, $index) = @_;
-	my $msg = pack('v2', 0x01AE, $index);
+	my ($self, $nameID) = @_;
+	my $msg = pack('v2', 0x01AE, $nameID);
 	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
+	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
 }
 
 # 0x01af,4,changecart,2
@@ -1151,7 +1141,7 @@ sub sendOpenShop {
 	my $length = 0x55 + 0x08 * @{$items};
 	my $msg = pack('v2 a80 C', 0x01B2, $length, stringToBytes($title), 1);
 	foreach my $item (@{$items}) {
-		$msg .= pack('v2 V', $item->{index}, $item->{amount}, $item->{price});
+		$msg .= pack('a2 v V', $item->{ID}, $item->{amount}, $item->{price});
 	}
 	$self->sendToServer($msg);
 }
@@ -1344,9 +1334,9 @@ sub SendAdoptRequest {
 # 0x01fd,4,repairitem,2
 sub sendRepairItem {
 	my ($self, $args) = @_;
-	my $msg = pack('C2 v2 V2 C', 0x01FD, $args->{index}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
+	my $msg = pack('C2 a2 v V2 C', 0x01FD, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
 	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{index}."\n", "sendPacket", 2);
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 # 0x01fe,5

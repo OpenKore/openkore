@@ -55,6 +55,7 @@ use Translation qw(T TF);
 use Utils::ObjectList;
 use Utils::Exceptions;
 use List::MoreUtils qw( uniq );
+use Globals qw( %config @servers );
 
 use enum qw(CONTROL_FILE_TYPE TABLE_FILE_TYPE);
 
@@ -104,13 +105,25 @@ our $items_control_file;
 our $shop_file;
 our $recvpackets_name;
 
+# The base log file names, as set by the command line.
+our $base_chat_log_file;
+our $base_console_log_file;
+our $base_storage_log_file;
+our $base_shop_log_file;
+our $base_monster_log_file;
+our $base_item_log_file;
+our $base_dead_log_file;
+
+# The final log file names, as modified by logAppendUsername, etc.
 our $chat_log_file;
+our $console_log_file;
 our $storage_log_file;
 our $shop_log_file;
-our $sys_file;
 our $monster_log_file;
 our $item_log_file;
 our $dead_log_file;
+
+our $sys_file;
 
 our $interface;
 our $lockdown;
@@ -155,6 +168,7 @@ sub parseArguments {
 	undef $items_control_file;
 	undef $shop_file;
 	undef $chat_log_file;
+	undef $console_log_file;
 	undef $storage_log_file;
 	undef $sys_file;
 	undef $interface;
@@ -175,8 +189,9 @@ sub parseArguments {
 		'mon_control=s',      \$mon_control_file,
 		'items_control=s',    \$items_control_file,
 		'shop=s',             \$shop_file,
-		'chat-log=s',         \$chat_log_file,
-		'storage-log=s',      \$storage_log_file,
+		'chat-log=s',         \$base_chat_log_file,
+		'console-log=s',      \$base_console_log_file,
+		'storage-log=s',      \$base_storage_log_file,
 		'sys=s',              \$sys_file,
 
 		'interface=s',        \$interface,
@@ -208,12 +223,15 @@ sub parseArguments {
 	$fields_folder = "fields" if (!defined $fields_folder);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$maps_folder = "map" unless defined $maps_folder;
-	$chat_log_file = File::Spec->catfile($logs_folder, "chat.txt");
-	$storage_log_file = File::Spec->catfile($logs_folder, "storage.txt");
-	$shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
-	$monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
-	$item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
-	$dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
+	$base_chat_log_file ||= File::Spec->catfile($logs_folder, "chat.txt");
+	$base_console_log_file ||= File::Spec->catfile($logs_folder, "console.txt");
+	$base_storage_log_file ||= File::Spec->catfile($logs_folder, "storage.txt");
+	$base_shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
+	$base_monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
+	$base_item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
+	$base_dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
+	update_log_filenames();
+
 	if (!defined $interface) {
 		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
 			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
@@ -222,9 +240,9 @@ sub parseArguments {
 		}
 	}
 	if ($starting_ai) {
-		$Globals::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
-		$Globals::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
-		$Globals::AI = AI::OFF()    if $starting_ai =~ /^off$/;
+		$AI::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
+		$AI::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
+		$AI::AI = AI::OFF()    if $starting_ai =~ /^off$/;
     }
 
 	return 0 if ($options{help});
@@ -236,6 +254,21 @@ sub parseArguments {
 		}
 	}
 	return 1;
+}
+
+sub update_log_filenames {
+	my @logAppend;
+	push @logAppend, "_$config{username}_$config{char}" if $config{logAppendUsername} && $config{username};
+	push @logAppend, "_$servers[$config{server}]{name}" if $config{logAppendServer}   && $config{server};
+	my $logAppend = join '', @logAppend;
+
+	$chat_log_file    = substr( $base_chat_log_file,    0, length( $base_chat_log_file ) - 4 ) . "$logAppend.txt";
+	$console_log_file = substr( $base_console_log_file, 0, length( $base_console_log_file ) - 4 ) . "$logAppend.txt";
+	$storage_log_file = substr( $base_storage_log_file, 0, length( $base_storage_log_file ) - 4 ) . "$logAppend.txt";
+	$shop_log_file    = substr( $base_shop_log_file,    0, length( $base_shop_log_file ) - 4 ) . "$logAppend.txt";
+	$monster_log_file = substr( $base_monster_log_file, 0, length( $base_monster_log_file ) - 4 ) . "$logAppend.txt";
+	$item_log_file    = substr( $base_item_log_file,    0, length( $base_item_log_file ) - 4 ) . "$logAppend.txt";
+	$dead_log_file    = substr( $base_dead_log_file,    0, length( $base_dead_log_file ) - 4 ) . "$logAppend.txt";
 }
 
 ##
@@ -289,6 +322,7 @@ sub getUsageText {
 		--items_control=FILENAME  Which items_control.txt to use.
 		--shop=FILENAME           Which shop.txt to use.
 		--chat-log=FILENAME       Which chat log file to use.
+		--console-log=FILENAME    Which console log file to use.
 		--storage-log=FILENAME    Which storage log file to use.
 		--sys=FILENAME            Which sys.txt to use.
 

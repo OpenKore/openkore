@@ -24,7 +24,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0908' => ['inventory_item_favorite', 'v C', [qw(index flag)]],#5
+		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
 	);
 
 	foreach my $switch (keys %packets) {
@@ -36,7 +36,7 @@ sub new {
 
 sub inventory_item_favorite {
 	my ($self, $args) = @_;
-	my $item = $char->inventory->getByServerIndex($args->{index});
+	my $item = $char->inventory->getByID($args->{ID});
 	if ($args->{flag}) {
 		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
 	} else {

@@ -713,8 +713,8 @@ sub updateObjects {
 			($objectsID, $objects, $style) = (\@skillsID, $char->{skills}, 'cyan');
 		} elsif ($_ eq 'inventory') {
 			for my $item (@{$char->inventory->getItems}) {
-				$objectsID->[$item->{invIndex}] = $item->{invIndex};
-				$objects->{$item->{invIndex}} = $item;
+				$objectsID->[$item->{binID}] = $item->{binID};
+				$objects->{$item->{binID}} = $item;
 			}
 			$style = 'normal';
 		} else {

@@ -25,9 +25,18 @@ use strict;
 
 use base qw(Actor);
 
+use Globals qw($messageSender);
+
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new('Monster');
+}
+
+sub sendTalk {
+	my ($self) = @_;
+
+	# "attack once" action
+	$messageSender->sendAction($self->{ID}, 0);
 }
 
 1;

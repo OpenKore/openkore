@@ -933,3 +933,40 @@ un_bunker.rsw#Under Bunker#
 un_myst.rsw#Under Tunnel#
 1@uns.rsw#The Last Room#
 1@lab.rsw#Center Lab#
+1@xm_d.rsw#Horror Toy Factory#
+
+lasagna.rsw#Port city of Lasagna#
+lasa_fild01.rsw#Ravioli Plain Watch#
+lasa_fild02.rsw#Ravioli Forest#
+lasa_dun01.rsw#Dragon's Nest#
+lasa_dun02.rsw#Dragon's Nest#
+lasa_dun03.rsw#Dragon's Nest#
+conch_in.rsw#Inside the Kon-Kilina#
+lasa_in01.rsw#Inside Lasagna#
+lasa_dun_q.rsw#Dragon's Nest#
+
+//-- 쏖솾낻뷅 뿀죄 3:58 2015-02-23 못벭맶
+
+// ep16.1 뾵뿵삻 삧쟑 뾬좸 + 쟁럐엗뛳 뢮뒺뻳
+1@mir.rsw#Ritual Room#
+2@mir.rsw#Ritual Room#
+1@sthb.rsw#Inside Air Portress#
+1@sthc.rsw#Secret Room Air Portress#
+1@sthd.rsw#Top Floor Air Portress#
+
+prt_cas.rsw#Prontera Center Palace#
+prt_cas_q.rsw#Prontera Royal Villa#
+prt_prison.rsw#Prontera Underground Prison#
+prt_lib.rsw#Royal Memory#
+prt_lib_q.rsw#Old Memoir of Royal Family#
+prt_q.rsw#Prontera Invasion#
+prt_pri00.rsw#Prontera Prison#
+
+
+har_in01.rsw#Rock Ridge#
+harboro1.rsw#Rock Ridge#
+harboro2.rsw#Culvert#
+rockmi1.rsw#Rock Ridge Mine#
+rockmi2.rsw#Rock Ridge Mine#
+rockrdg1.rsw#Kiwawa Desert#
+rockrdg2.rsw#Kiwawa Desert#

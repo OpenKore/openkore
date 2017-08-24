@@ -36,7 +36,7 @@ sub new {
 		'0085' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x7 a4', [qw(ID)]],
-		'0094' => ['storage_item_add', 'x2 v x4 V', [qw(index amount)]],
+		'0094' => ['storage_item_add', 'x2 a2 x4 V', [qw(ID amount)]],
 		'009B' => undef,
 		'009F' => ['actor_action', 'x4 a4 x7 C', [qw(targetID type)]],
 		'00A2' => ['item_take', 'x a4', [qw(ID)]],
@@ -45,9 +45,9 @@ sub new {
 		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00F7' => ['actor_name_request', 'x8 a4', [qw(ID)]],
 		'0113' => undef,
-		'0116' => ['item_drop', 'x2 v x4 v', [qw(index amount)]],
-		'0190' => ['item_use', 'x v x6 a4', [qw(index targetID)]],#15
-		'0193' => ['storage_item_remove', 'x2 v x11 V', [qw(index amount)]],
+		'0116' => ['item_drop', 'x2 a2 x4 v', [qw(ID amount)]],
+		'0190' => ['item_use', 'x a2 x6 a4', [qw(ID targetID)]],#15
+		'0193' => ['storage_item_remove', 'x2 a2 x11 V', [qw(ID amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -83,8 +83,8 @@ sub sendSkillUseLocInfo {
 }
 
 sub sendWeaponRefine {
-	my ($self, $index) = @_;
-	my $msg = pack('v V', 0x0222, $index);
+	my ($self, $ID) = @_;
+	my $msg = pack('v a2', 0x0222, $ID);
 	$self->sendToServer($msg);
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }

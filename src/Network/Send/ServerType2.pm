@@ -145,7 +145,7 @@ sub sendStorageAdd {
 	my $msg;
 
 	$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
-		pack("v", $index) .
+		pack("a2", $index) .
 		pack("C", 0xFF) .
 		pack("V", $amount);	
 		

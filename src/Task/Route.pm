@@ -55,6 +55,7 @@ use enum qw(
 # Create a new Task::Route object. The following options are allowed:
 # `l
 # - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
+# - actor (required) - Which Actor this task should move.
 # - x (required) - The X-coordinate that you want to move to.
 # - y (required) - The Y-coordinate that you want to move to.
 # - maxDistance - The maximum distance (in blocks) that the route may be. If
@@ -356,6 +357,12 @@ sub iterate {
 		debug "Unexpected route stage [$self->{stage}] occured.\n", "route";
 		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [$self->{stage}] occured.\n");
 	}
+}
+
+sub resetRoute {
+	my ($self) = @_;
+	$self->{solution} = [];
+	$self->{stage} = '';
 }
 
 ##

@@ -179,7 +179,7 @@ sub sendStorageAdd {
 	my $msg;
 	
 	$msg = pack("C*", 0x94, 0x00) . pack("x3") .
-		pack("v*", $index) .
+		pack("a2", $index) .
 		pack("x12") .
 		pack("V*", $amount);
 	
@@ -192,7 +192,7 @@ sub sendStorageGet {
 	my $msg;
 
 	$msg = pack("C*", 0xf7, 0x00) . pack("x9") .
-		pack("v*", $index) . pack("x9") .
+		pack("a2", $index) . pack("x9") .
 		pack("V*", $amount);
 	
 	$self->sendToServer($msg);

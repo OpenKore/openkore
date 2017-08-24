@@ -20,15 +20,15 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0364' => ['item_drop', 'v2', [qw(index amount)]],#6
+		'0364' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'0437' => undef,
 		'0438' => undef,
 		'083C' => undef,
 		'07EC' => undef,
 		'022D' => undef,
-		'085A' => ['storage_item_add', 'v V', [qw(index amount)]],#8
-		'0869' => ['storage_item_remove', 'v V', [qw(index amount)]],#8
+		'085A' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
+		'0869' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0202' => undef,
 		'087C' => ['character_move','a3', [qw(coords)]],#5
 		'087D' => ['sync', 'V', [qw(time)]],#6
