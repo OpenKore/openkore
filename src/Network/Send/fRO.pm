@@ -14,7 +14,7 @@
 # Servertype overview: http://wiki.openkore.com/index.php/ServerType
 package Network::Send::fRO;
 use strict;
-
+use Globals;
 use base 'Network::Send::ServerType0';
 
 sub new {
