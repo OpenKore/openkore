@@ -581,6 +581,7 @@ sub new {
 		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
+		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 		'09F0' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
@@ -6160,6 +6161,16 @@ sub rodex_delete {
 	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
 	
 	delete $rodexList->{mails}{$args->{mailID1}};
+}
+
+sub monster_hp_info_tiny {
+	my ($self, $args) = @_;
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		$monster->{hp} = $args->{hp} * 5;
+		
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp}), "parseMsg_damage";
+	}
 }
 
 1;
