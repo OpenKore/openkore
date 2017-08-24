@@ -1902,7 +1902,7 @@ sub processAutoBuy {
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++)
 		{
-			next if (($config{"buyAuto_".$args->{lastIndex}}."_npc" ne $config{"buyAuto_".$i."_npc"})
+			next if (($config{"buyAuto_".$args->{lastIndex}."_npc"} ne $config{"buyAuto_".$i."_npc"})
 					  || !$args->{lastIndex}
 					  ||(($i != $args->{lastIndex})
 						&& !checkItemBuyNeed($i,$zenyleft)
