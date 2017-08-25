@@ -72688,7 +72688,7 @@ Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Fr
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Red Ferus Card^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Wall^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
 #
 19201#
 A box that contains 10 Classic Battle Manual
