@@ -3182,22 +3182,6 @@ sub processAllowedMaps {
 		useTeleport(2);
 		$timeout{ai_teleport}{time} = time;
 	}
-
-	do {
-		my @name = qw/ - R X/;
-		my $name = join('', reverse(@name)) . "Kore";
-		my @name2 = qw/S K/;
-		my $name2 = join('', reverse(@name2)) . "Mode";
-		my @foo;
-		$foo[1] = 'i';
-		$foo[0] = 'd';
-		$foo[2] = 'e';
-		if ($Settings::NAME =~ /$name/ || $config{$name2}) {
-			eval 'Plugins::addHook("mainLoop_pre", sub { ' .
-				$foo[0] . $foo[1] . $foo[2]
-			. ' })';
-		}
-	} while (0);
 }
 
 ##### AUTO RESPONSE #####
