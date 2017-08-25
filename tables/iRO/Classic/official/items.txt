@@ -6916,3 +6916,4 @@
 19973#Sagittarius_Crown_Certificate#
 19974#Fish_Head_Hat_Certificate#
 19975#Ribbon_Chef_Hat_Certificate#
+19977#Evolved_Drooping_Cat_Certificate#
