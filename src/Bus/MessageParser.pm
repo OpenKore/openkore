@@ -20,7 +20,7 @@ sub readNext {
 	my ($self, $ID) = @_;
 	my $processed;
 	my $args = unserialize($self->{buffer}, $ID, \$processed);
-	if ($args) {
+	if ($$ID) {
 		substr($self->{buffer}, 0, $processed, '');
 	}
 	return $args;

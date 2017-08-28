@@ -131,35 +131,37 @@ sub broadcast {
 ########### Internal message processors ###########
 
 sub processHELLO {
-	my ($self, $client, $args) = @_;
+	my ( $self, $client, $args ) = @_;
 
-	if (ref($args) ne 'HASH') {
-		# Arguments must be a hash.
-		$self->log("Client $client->{ID} didn't sent HELLO arguments as map.");
-		$client->close();
-
-	} elsif ($client->{state} == NOT_IDENTIFIED) {
-		# A new client just connected.
-		$client->{userAgent}   = $args->{userAgent} || "Unknown";
-		$client->{privateOnly} = $args->{privateOnly};
-		$client->{name}        = $args->{userAgent} . ":" . $client->{ID};
-		$client->{state}       = IDENTIFIED;
-
-		# Broadcast a JOIN message about this client.
-		$self->log("Client identified as $client->{name}; broadcasting JOIN\n");
-		my %args = (
-			clientID  => $client->{ID},
-			name      => $client->{name},
-			userAgent => $client->{userAgent},
-			host      => $client->getIP()
-		);
-		$self->broadcast("JOIN", \%args, { exclude => $client->{ID} });
-
-	} else {
-		# The client sent HELLO even though it has already done that.
-		$self->log("Client $client->{ID} sent invalid HELLO.\n");
-		$client->close();
+	# Arguments must be a hash.
+	if ( ref( $args ) ne 'HASH' ) {
+		$self->log( "Client $client->{ID} didn't sent HELLO arguments as map." );
+		$client->close;
+		return;
 	}
+
+	# The client sent HELLO even though it has already done that.
+	if ( $client->{state} != NOT_IDENTIFIED ) {
+		$self->log( "Client $client->{ID} sent invalid HELLO.\n" );
+		$client->close;
+		return;
+	}
+
+	# A new client just connected.
+	$client->{userAgent}   = $args->{userAgent} || "Unknown";
+	$client->{privateOnly} = $args->{privateOnly};
+	$client->{name}        = $args->{userAgent} . ":" . $client->{ID};
+	$client->{state}       = IDENTIFIED;
+
+	# Broadcast a JOIN message about this client.
+	$self->log( "Client identified as $client->{name}; broadcasting JOIN\n" );
+	my %args = (
+		clientID  => $client->{ID},
+		name      => $client->{name},
+		userAgent => $client->{userAgent},
+		host      => $client->getIP()
+	);
+	$self->broadcast( JOIN => \%args, { exclude => $client->{ID} } );
 }
 
 sub processLIST_CLIENTS {
@@ -185,6 +187,27 @@ sub processLIST_CLIENTS {
 		$args2{IRY} = 1;
 		$self->send($client->{ID}, "LIST_CLIENTS", \%args2);
 	}
+}
+
+sub processLIST_CLIENTS2 {
+	my ( $self, $client, $args ) = @_;
+
+	# Arguments must be undef or a hash.
+	if ( defined $args && ref( $args ) ne 'HASH' ) {
+		$self->log( "Client $client->{ID} didn't send LIST_CLIENTS2 arguments as map." );
+		$client->close;
+		return;
+	}
+
+	my $clients = [];
+	foreach my $client ( @{ $self->clients } ) {
+		next if $client->{state} != IDENTIFIED;
+		next if $args && !$args->{ $client->{ID} };
+		push @$clients, { clientID => $client->{ID}, name => "$client->{ID}:$client->{userAgent}", userAgent => $client->{userAgent}, host => $client->getIP };
+	}
+	my $msg = { IRY => 1, clients => $clients };
+	$msg->{SEQ} = $args->{SEQ} if exists $args->{SEQ};
+	$self->send( $client->{ID}, LIST_CLIENTS2 => $msg );
 }
 
 1;
