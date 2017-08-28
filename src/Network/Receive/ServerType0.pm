@@ -427,6 +427,7 @@ sub new {
 		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
+		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
