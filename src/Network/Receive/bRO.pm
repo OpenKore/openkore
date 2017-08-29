@@ -14,7 +14,7 @@ package Network::Receive::bRO;
 use strict;
 use Log qw(warning debug);
 use base 'Network::Receive::ServerType0';
-use Globals qw(%charSvrSet $messageSender $monstersList);
+use Globals qw(%charSvrSet $messageSender);
 use Translation qw(TF);
 
 sub new {
