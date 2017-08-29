@@ -206,6 +206,9 @@ our @EXPORT = (
 	qw/cancelNpcBuySell
 	completeNpcSell
 	completeNpcBuy/,
+	
+	# Char login
+	qw/CharacterLogin/,
 	);
 
 
@@ -4609,6 +4612,14 @@ sub completeNpcBuy {
 	if ($messageSender->can('sendSellBuyComplete')) {
 		$messageSender->sendSellBuyComplete;
 		$messageSender->sendSellBuyComplete;
+	}
+}
+
+sub CharacterLogin {
+	if (charSelectScreen(1) == 1) {
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
 	}
 }
 
