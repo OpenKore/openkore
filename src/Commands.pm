@@ -4636,7 +4636,6 @@ sub cmdStorage {
 			  )
 		{
 			if ($char->storage->isReady()) {
-				error T("Cannot get/add items because no items provided\n");
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
 				} elsif ($switch eq 'addfromcart') {
