@@ -1485,6 +1485,8 @@ sub call_macro {
 	my ($self, $automacro) = @_;
 	if (defined $self->{Macro_Runner}) {
 		$self->clear_queue();
+	}
+	
 	if ($automacro->get_parameter('call') =~ /\s+/) {
 		
 		#here the macro name and the params are together in get_parameter, time to split
