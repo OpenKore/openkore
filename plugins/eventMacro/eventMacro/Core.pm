@@ -202,15 +202,14 @@ sub create_automacro_list {
 			}
 			###Parameter: call with or without param
 			if ($parameter->{'key'} eq "call" && $parameter->{'value'} =~ /(\S+)\s+(.*)?/) {
-				if (!$self->{Macro_List}->getByName($1) ) {
-					warning "[eventMacro] Ignoring automacro '$name' (call '".$1."' is not a valid macro name)\n";
+				my ($macro_name, $params) = ($1 , $2); 
+				
+				if (!$self->{Macro_List}->getByName($macro_name) ) {
+					warning "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
 					next AUTOMACRO;
 				} else {
-					if (defined $2) {
-						#put both values together in call name, split later in sub call_macro
-						$parameter->{'value'} = join (" ",$1,$2);
-					} else {
-						$parameter->{'value'} = $1;
+					unless (defined $params) {
+					$parameter->{'value'} = $macro_name;
 					}
 					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 				}
@@ -1494,6 +1493,7 @@ sub call_macro {
 
 		# Update $.paramN with the values from the call.
 		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
+		$eventMacro->set_scalar_var( ".param$_", undef,             0 ) foreach ( @params + 1 ) .. 100;
 		
 		$automacro->set_call('call', $macro_name);
 	}

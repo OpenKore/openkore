@@ -1413,6 +1413,7 @@ sub parse_call {
 
 		# Update $.paramN with the values from the call.
 		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
+		$eventMacro->set_scalar_var( ".param$_", undef,             0 ) foreach ( @params + 1 ) .. 100;
 	}
 
 	my $parsed_macro_name = $self->parse_command($macro_name);
