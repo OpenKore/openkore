@@ -1,10 +1,11 @@
+
 # Please Read the Users Manual
 # The Manual is located at http://wiki.openkore.com/index.php?title=Manual
 
 ######## Login options and server-specific options ########
 
-master
-server
+master International - iRO: Re:Start
+server 0
 username
 password
 loginPinCode
@@ -63,7 +64,7 @@ attackAuto 2
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
-attackAuto_inLockOnly 1
+attackAuto_inLockOnly 2
 attackAuto_notInTown 1
 attackDistance 1.5
 attackDistanceAuto 0
@@ -112,14 +113,15 @@ autoConfChange {
 
 autoMakeArrows 0
 
-autoRestart 0
 
-autoRestartMin 10800
-autoRestartSeed 3600
+autoRestart 7840
+
+autoRestartMin 7800
+autoRestartSeed 300
 
 autoRestartSleep 1
-autoSleepMin 900
-autoSleepSeed 900
+autoSleepMin 30
+autoSleepSeed 300
 
 autoResponse 0
 autoResponseOnHeal 0
@@ -178,13 +180,13 @@ itemsTakeAuto 2
 itemsTakeAuto_party 0
 itemsGatherAuto 2
 itemsMaxWeight 89
-itemsMaxWeight_sellOrStore 48
+itemsMaxWeight_sellOrStore 49
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
 itemsTakeGreed 0
 
-lockMap
+lockMap pay_dun02
 lockMap_x
 lockMap_y
 lockMap_randX
@@ -203,13 +205,13 @@ route_teleport 0
 route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
-route_step 15
+route_step 10
 route_tryToGuessMissingPortalByDistance 1
 
 runFromTarget 0
 runFromTarget_dist 6
 
-saveMap
+saveMap payon
 saveMap_warpToBuyOrSell 1
 saveMap_warpChatCommand
 memo1
@@ -227,18 +229,18 @@ sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_follow 0
 sitAuto_over_50 0
-sitAuto_idle 1
+sitAuto_idle 0
 sitAuto_look
 sitAuto_look_from_wall
 sitTensionRelax 0
 
-statsAddAuto 0
-statsAddAuto_list
-statsAddAuto_dontUseBonus 0
+statsAddAuto 1
+statsAddAuto_list 20 vit, 20 dex, 50 agi, 50 str, 60 agi, 60 str, 70 str, 30 vit, 70 agi, 79 str, 79 agi, 89 str, 89 agi
+statsAddAuto_dontUseBonus 1
 statsAdd_over_99 0
 
-skillsAddAuto 0
-skillsAddAuto_list
+skillsAddAuto 1
+skillsAddAuto_list Katar Mastery 4, Sonic Blow 1, Katar Mastery 10, Sonic Blow 5, Cloaking 2, Grimtooth 1, Enchant Poison 1, Sonic Blow 10, Cloaking 3, Grimtooth 5, Enchant Poison 10
 
 tankMode 0
 tankModeTarget
@@ -249,9 +251,9 @@ teleportAuto_idle 0
 teleportAuto_portal 0
 teleportAuto_search 0
 teleportAuto_minAggressives 0
-teleportAuto_minAggressivesInLock 0
+teleportAuto_minAggressivesInLock 4
 teleportAuto_onlyWhenSafe 0
-teleportAuto_maxDmg 500
+teleportAuto_maxDmg 750
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
 teleportAuto_useSkill 3
@@ -286,7 +288,7 @@ verbose 1
 showDomain 0
 showDomain_NPC parseMsg_presence
 showDomain_Shop list
-squelchDomains
+squelchDomains publicchat
 verboseDomains
 beepDomains
 beepDomains_notInTown
@@ -598,9 +600,9 @@ partySkill {
 monsterSkill {
 	target
 	maxUses
-	# Skill Use Conditions, including isSelfSkill
-	# Self Conditions
-	# Target Monster Conditions
+       # Skill Use Conditions, including isSelfSkill
+       # Self Conditions
+       # Target Monster Conditions
 }
 
 autoSwitch_default_rightHand
@@ -678,7 +680,7 @@ useSelf_item {
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
-	timeout
+	timeout 0
 	disabled 0
 	inInventory
 	manualAI 0
@@ -698,16 +700,16 @@ buyAuto {
 }
 
 sellAuto 0
-sellAuto_npc
+sellAuto_npc payon_in02 87 34
 sellAuto_standpoint
 sellAuto_distance 5
 sellAuto_npc_steps s
 
 storageAuto 0
-storageAuto_npc
-storageAuto_distance 5
-storageAuto_npc_type 1
-storageAuto_npc_steps
+storageAuto_npc pay_arche 55 123
+storageAuto_distance 7
+storageAuto_npc_type 3
+storageAuto_npc_steps c r0 n
 storageAuto_password
 storageEncryptKey
 storageAuto_keepOpen 0
@@ -727,7 +729,7 @@ getAuto {
 
 ######## Debugging options; only useful for developers ########
 
-debug 0
+debug 1
 debugPacket_unparsed 0
 debugPacket_received 0
 debugPacket_ro_sent 0
@@ -741,3 +743,67 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+
+useSelf_item Potato, Carrot, Apple, Monster's Feed, Meat, Novice Potion, Red Potion {
+	label useHP
+	hp < 80%
+	notWhileSitting 1
+}
+
+attackSkillSlot Envenom {
+	dist 1.5
+	sp > 20
+	target_hp > 70%
+	inLockOnly 1
+	maxAttempts 1
+	target_whenStatusInactive Poisoned
+}
+attackSkillSlot Steal {
+	dist 1.5
+	sp > 40%
+	maxUses 1
+	maxAttempts 3
+	inLockOnly 1
+}
+
+useSelf_skill Detoxify {
+	lvl 1
+	sp > 25%
+	whenStatusActive Poisoned
+}
+useSelf_item Concentration Potion {
+	inLockOnly 1
+	notWhileSitting 1
+	notInTown 1
+	whenStatusInactive Concentration Potion
+}
+
+#buyAuto Butterfly Wing {
+#	label buyButterflyWing
+#	minAmount 1
+#	maxAmount 4
+#	passive 1
+#	npc payon_in02 87 34
+#}
+
+#buyAuto Red Potion {
+#	label buyRedPotion
+#	minAmount 3
+#	maxAmount 100
+#	passive 0
+#	npc payon_in02 87 34
+#}
+
+#buyAuto Fly Wing {
+#	label buyFlyWing
+#	minAmount 3
+#	maxAmount 25
+#	passive 0
+#	npc payon_in02 87 34
+#}
+
+reactOnNPC talk resp @resp(/Yes/i) {
+	type responses
+	msg_0 /Do you want to move?/i
+}
+macro_orphans terminate

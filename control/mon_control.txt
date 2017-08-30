@@ -59,10 +59,10 @@
 
 
 ##### Eggs #####
-Ant's Egg 0 0 0
-PecoPeco's Egg 0 0 0
-Pupa 0 0 0
-Thief Bug's Egg 0 0 0
+#Ant's Egg 0 0 0
+#PecoPeco's Egg 0 0 0
+#Pupa 0 0 0
+#Thief Bug's Egg 0 0 0
 
 ##### Alchemist Summons ####
 # Summoned Parasite
@@ -81,13 +81,13 @@ Thief Bug's Egg 0 0 0
 1590 0 0 0 
 
 ##### Plants #####
-Black Mushroom 0 0 0
-Blue Plant 0 0 0
+#Black Mushroom 0 0 0
+#Blue Plant 0 0 0
 Green Plant 0 0 0
-Red Mushroom 0 0 0
+#Red Mushroom 0 0 0
 Red Plant 0 0 0
-Shining Plant 0 0 0
-White Plant 0 0 0
+#Shining Plant 0 0 0
+#White Plant 0 0 0
 Yellow Plant 0 0 0
 
 
@@ -190,3 +190,12 @@ Tao Gunka 0 1 0
 Thanatos 0 1 0
 Turtle General 0 1 0
 Vesper 0 1 0
+all 1 0 0
+Poring 1 0 0
+Picky 1 0 0
+Willow 1 0 0
+Lunatic 1 0 0
+Fabre 1 0 0
+Chonchon 1 0 0
+Mushroom 1 0 0
+Spore 1 0 0

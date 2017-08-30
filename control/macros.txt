@@ -1,0 +1,58 @@
+automacro reload {
+  disabled 1
+  console /Cannot calculate a route from .* to/i
+  call {
+    do reload all
+  }
+}
+
+automacro pay_duna {
+  disabled 1
+  run-once 1
+  call pay_dun
+}
+
+macro pay_dun {
+  do conf lockMap pay_dun02
+  do conf saveMap_warpToBuyOrSell 1
+  do conf sellAuto 1
+  do conf storageAuto 1
+  do conf sellAuto_npc payon_in02 87 34
+  do conf sellAuto_npc_steps
+  do conf buyFlyWing.npc payon_in02 87 34
+  do conf buyButterflyWing.npc payon_in02 87 34
+  do conf buyRedPotion.npc payon_in02 87 34
+  do conf storageAuto_npc pay_arche 55 123
+  do conf storageAuto_distance 7
+  do conf storageAuto_npc_type 3
+  do conf storageAuto_npc_steps c r0 n
+  do conf saveMap payon
+  do conf route_randomWalk 1
+  do conf attackAuto 2
+  do conf attackAuto_inLockOnly 2
+
+## Individual Usage Settings
+  do conf buyFlyWing.minAmount 3
+  do conf buyFlyWing.maxAmount 25
+  do conf buyButterflyWing.minAmount 1
+  do conf buyButterflyWing.maxAmount 4
+  do conf buyRedPotion.minAmount 3
+  do conf buyRedPotion.maxAmount 100
+  do conf useHP.hp < 80%
+
+## Not part of map but I need to set
+  do conf teleportAuto_maxDmg 750
+  do conf skillsAddAuto 1
+  do conf skillsAddAuto_list Katar Mastery 4, Sonic Blow 1, Katar Mastery 10, Sonic Blow 5, Cloaking 2, Grimtooth 1, Enchant Poison 1, Sonic Blow 10, Cloaking 3, Grimtooth 5, Enchant Poison 10
+  do conf statsAddAuto 1
+  do conf statsAddAuto_dontUseBonus 1
+  do conf statsAddAuto_list 20 vit, 20 dex, 50 agi, 50 str, 60 agi, 60 str, 70 str, 30 vit, 70 agi, 79 str, 79 agi, 89 str, 89 agi
+}
+
+automacro NPCNineTail {
+        console /Shaking your head/i
+        call {
+          talk resp 1
+        }
+}
+

@@ -15,4 +15,4 @@
 # When someone says something that contains the word "bot" or "botter",
 # Kore will reply with "no", "I'm not a bot" or "huh?".
 
-bot,botter	no,I'm not a bot,huh?
+#bot,botter	no,I'm not a bot,huh?
