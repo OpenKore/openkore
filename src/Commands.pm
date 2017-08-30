@@ -4649,7 +4649,7 @@ sub cmdStorage {
 				}
 			} else {
 				error T("Cannot get/add/close storage because storage is not opened\n");
-			}	
+			}
 		} else {
 			error T("Syntax Error in function 'storage' (Storage Functions)\n" .
 				"Usage: storage [<eq|u|nu>]\n" .
