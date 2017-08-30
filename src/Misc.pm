@@ -1185,7 +1185,7 @@ sub charSelectScreen {
 			}
 		}
 		
-		push @charNames, TF("Slot %d: %s (%s %s, level %d/%d, %s)%s",
+		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d, %s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
