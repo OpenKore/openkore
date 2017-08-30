@@ -4631,14 +4631,12 @@ sub cmdStorage {
 			cmdStorage_log();
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
-		} elsif ($switch eq 'add' || $switch eq 'addfromcart' || $switch eq 'get' || $switch eq 'gettocart' || $switch eq 'close') {
+		}elsif(($switch =~ /^(add|addfromcart|get|gettocart)$/ && $items)
+				|| $switch eq 'close'
+			  )
+		{
 			if ($char->storage->isReady()) {
-			if (!$items
-				&& ($switch ne 'close')
-			   )
-			{
 				error T("Cannot get/add items because no items provided\n");
-			}else{
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
 				} elsif ($switch eq 'addfromcart') {
@@ -4650,10 +4648,9 @@ sub cmdStorage {
 				} elsif ($switch eq 'close') {
 					cmdStorage_close();
 				}
-			}
 			} else {
 				error T("Cannot get/add/close storage because storage is not opened\n");
-			}
+			}	
 		} else {
 			error T("Syntax Error in function 'storage' (Storage Functions)\n" .
 				"Usage: storage [<eq|u|nu>]\n" .
