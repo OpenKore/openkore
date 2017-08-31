@@ -63,6 +63,11 @@ sub onStart {
       next if ($_ =~ /^\.|^#/);
       push @profiles, $_;
    }
+   
+   if (!@profiles) {
+		message "No profiles found, using standard control folder\n";
+		return;
+	}
 
    @profiles = sort { $a cmp $b } @profiles;
    push @profiles, 'Use standard control folder';
