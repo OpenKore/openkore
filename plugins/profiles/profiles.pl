@@ -63,6 +63,11 @@ sub onStart {
       next if ($_ =~ /^\.|^#/);
       push @profiles, $_;
    }
+   
+   if (!@profiles) {
+		message "No profiles found, using standard control folder\n";
+		return;
+	}
 
    @profiles = sort { $a cmp $b } @profiles;
    push @profiles, 'Use standard control folder';
@@ -72,23 +77,18 @@ sub onStart {
 		$profile = undef;
 	}
 
-	if (!$profile) {
-		if (@profiles > 1) {
-			my $choice = $interface->showMenu(	#
-				"Please choose a Profiles folder.",
-				\@profiles,
-				title => "Profiles Selector"
-			);
+	if ( !$profile && @profiles ) {
+		my $choice = $interface->showMenu(	#
+			"Please choose a Profiles folder.",
+			\@profiles,
+			title => "Profiles Selector"
+		);
 
-			my $num = @profiles;
-			return 0 if $choice == $num - 1;
-			return $quit = 1 if $choice == -1;
+		my $num = @profiles;
+		return 0 if $choice == $num - 1;
+		return $quit = 1 if $choice == -1;
 
-			$profile = $profiles[$choice];
-		} else {
-			message "No profiles found, using standard control folder\n";
-			$profile = $profiles[0];
-		}
+		$profile = $profiles[$choice];
 	}
 
 	unshift @Settings::controlFolders, File::Spec->catdir( $profile_folder, $profile ) if $profile;
