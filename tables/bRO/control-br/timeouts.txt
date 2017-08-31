@@ -91,6 +91,8 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
+# A cada x segundos, checar as configurações do grupo
+ai_partyShareCheck 60
 # A cada x segundos, checar a fome do pet a fim de alimentá-lo
 ai_petFeed 60
 # A cada x segundos, checar a fome do homúnculo a fim de alimentá-lo.
@@ -176,3 +178,6 @@ injectSync 5
 injectKeepAlive 12
 welcomeText 4
 patchserver 120
+
+# atraso antes da seleção de personagem quando pauseCharLogin estiver ativado
+char_login_pause 2
