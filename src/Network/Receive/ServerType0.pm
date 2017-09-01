@@ -3904,6 +3904,7 @@ our %stat_info_handlers = (
 			}
 		}
 =cut
+
 		if ($actor->{lastJobLvl} eq $actor->{lv_job}) {
 			$monsterJobExp = $actor->{exp_job} - $actor->{exp_job_last};
 		} else {
