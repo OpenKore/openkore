@@ -178,6 +178,7 @@ sub shuffle {
 	my %shuffle;
 	my $load_shuffle = Settings::addTableFile( 'shuffle.txt', loader => [ \&FileParsers::parseDataFile2, \%shuffle ], mustExist => 0 );
 	Settings::loadByHandle( $load_shuffle );
+	Settings::removeFile( $load_shuffle );
 
 	# Build the list of changes. Be careful to handle swaps correctly.
 	my $new = {};
