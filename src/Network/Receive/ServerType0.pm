@@ -2857,6 +2857,7 @@ sub received_characters {
 		$chars[$slot]{zeny} = $zeny;
 		$chars[$slot]{exp_job} = $jobExp;
 		$chars[$slot]{lv_job} = $jobLevel;
+		$chars[$slot]{lastJobLvl} = $jobLevel;
 		$chars[$slot]{hp} = $hp;
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
@@ -2864,6 +2865,7 @@ sub received_characters {
 		$chars[$slot]{jobID} = $jobId;
 		$chars[$slot]{hair_style} = $hairstyle;
 		$chars[$slot]{lv} = $level;
+		$chars[$slot]{lastBaseLvl} = $level;
 		$chars[$slot]{headgear}{low} = $headLow;
 		$chars[$slot]{headgear}{top} = $headTop;
 		$chars[$slot]{headgear}{mid} = $headMid;
@@ -3846,7 +3848,7 @@ our %stat_info_handlers = (
 		$actor->{exp} = $value;
 
 		return unless $actor->isa('Actor::You');
-
+=pod
 		unless ($bExpSwitch) {
 			$bExpSwitch = 1;
 		} else {
@@ -3861,6 +3863,19 @@ our %stat_info_handlers = (
 				$bExpSwitch = 2;
 			}
 		}
+=cut
+
+		if ($actor->{lastBaseLvl} eq $actor->{lv}) {
+			$monsterBaseExp = $actor->{exp} - $actor->{exp_last};
+		} else {
+			$monsterBaseExp = $actor->{exp_max_last2} - $actor->{exp_last} + $actor->{exp};
+			$actor->{lastBaseLvl} = $actor->{lv};
+			$actor->{exp_max_last2} = $actor->{exp_max};
+		}
+
+		if ($monsterBaseExp > 0) {
+			$totalBaseExp += $monsterBaseExp;
+		}
 
 		# no VAR_JOBEXP next - no message?
 	},
@@ -3873,7 +3888,7 @@ our %stat_info_handlers = (
 		# TODO: message for all actors
 		return unless $actor->isa('Actor::You');
 		# TODO: exp report (statistics) - no globals, move to plugin
-
+=pod
 		if ($jExpSwitch == 0) {
 			$jExpSwitch = 1;
 		} else {
@@ -3888,6 +3903,19 @@ our %stat_info_handlers = (
 				$jExpSwitch = 2;
 			}
 		}
+=cut
+		if ($actor->{lastJobLvl} eq $actor->{lv_job}) {
+			$monsterJobExp = $actor->{exp_job} - $actor->{exp_job_last};
+		} else {
+			$monsterJobExp = $actor->{exp_job_max_last2} - $actor->{exp_job_last} + $actor->{exp_job};
+			$actor->{lastJobLvl} = $actor->{lv_job};
+			$actor->{exp_job_max_last2} = $actor->{exp_job_max};
+		}
+
+		if ($monsterJobExp > 0) {
+			$totalJobExp += $monsterJobExp;
+		}
+
 		my $basePercent = $char->{exp_max} ?
 			($monsterBaseExp / $char->{exp_max} * 100) :
 			0;
@@ -4002,6 +4030,7 @@ our %stat_info_handlers = (
 	#VAR_SEX
 	VAR_MAXEXP, sub {
 		$_[0]{exp_max_last} = $_[0]{exp_max};
+		$_[0]{exp_max_last2} = $_[0]{exp_max} if !$_[0]{exp_max_last2};
 		$_[0]{exp_max} = $_[1];
 
 		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
@@ -4011,6 +4040,7 @@ our %stat_info_handlers = (
 	},
 	VAR_MAXJOBEXP, sub {
 		$_[0]{exp_job_max_last} = $_[0]{exp_job_max};
+		$_[0]{exp_job_max_last2} = $_[0]{exp_job_max} if !$_[0]{exp_job_max_last2};
 		$_[0]{exp_job_max} = $_[1];
 		#message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
 	},
