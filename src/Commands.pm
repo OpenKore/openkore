@@ -4478,44 +4478,7 @@ sub cmdStand {
 }
 
 sub cmdStatAdd {
-	# Add status point
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", shift);
-		return;
-	}
-	my (undef, $arg) = @_;
-	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
-	 && $arg ne "dex" && $arg ne "luk") {
-		error T("Syntax Error in function 'stat_add' (Add Status Point)\n" .
-			"Usage: stat_add <str | agi | vit | int | dex | luk>\n");
-
-	} elsif ($char->{'$arg'} >= 99 && !$config{statsAdd_over_99}) {
-		error T("Error in function 'stat_add' (Add Status Point)\n" .
-			"You cannot add more stat points than 99\n");
-
-	} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
-		error TF("Error in function 'stat_add' (Add Status Point)\n" .
-			"Not enough status points to increase %s\n", $arg);
-
-	} else {
-		my $ID;
-		if ($arg eq "str") {
-			$ID = STATUS_STR;
-		} elsif ($arg eq "agi") {
-			$ID = STATUS_AGI;
-		} elsif ($arg eq "vit") {
-			$ID = STATUS_VIT;
-		} elsif ($arg eq "int") {
-			$ID = STATUS_INT;
-		} elsif ($arg eq "dex") {
-			$ID = STATUS_DEX;
-		} elsif ($arg eq "luk") {
-			$ID = STATUS_LUK;
-		}
-
-		$char->{$arg} += 1;
-		$messageSender->sendAddStatusPoint($ID);
-	}
+	cmdStats("st", "add ".$_[1]);
 }
 
 sub cmdStats {
@@ -4523,28 +4486,70 @@ sub cmdStats {
 		error T("Character stats information not yet available.\n");
 		return;
 	}
-	my $guildName = $char->{guild} ? $char->{guild}{name} : T("None");
-	my $msg = center(T(" Char Stats "), 44, '-') ."\n".
-		swrite(TF(
-		"Str: \@<<+\@<< #\@< Atk:  \@<<+\@<< Def:  \@<<+\@<<\n" .
-		"Agi: \@<<+\@<< #\@< Matk: \@<<\@\@<< Mdef: \@<<+\@<<\n" .
-		"Vit: \@<<+\@<< #\@< Hit:  \@<<     Flee: \@<<+\@<<\n" .
-		"Int: \@<<+\@<< #\@< Critical: \@<< Aspd: \@<<\n" .
-		"Dex: \@<<+\@<< #\@< Status Points: \@<<<\n" .
-		"Luk: \@<<+\@<< #\@< Guild: \@<<<<<<<<<<<<<<<<<<<<<<<\n\n" .
-		"Hair color: \@<<<<<<<<<<<<<<<<<\n" .
-		"Walk speed: %.2f secs per block", $char->{walk_speed}),
-		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'},
-		$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'},
-		$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
-		$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
-		$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
-		$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
-		"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+	
+	my ($subcmd, $arg) = parseArgs($_[1], 2);
+	
+	if ($subcmd eq "add") {
+		if (!$net || $net->getState() != Network::IN_GAME) {
+			error TF("You must be logged in the game to use this command 'st add'\n");
+			return;
+		}
+		
+		if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" && $arg ne "dex" && $arg ne "luk") {
+			error T("Syntax Error in function 'st add' (Add Status Point)\n" .
+				"Usage: st add <str | agi | vit | int | dex | luk>\n");
 
-	$msg .= T("You are sitting.\n") if $char->{sitting};
-	$msg .= ('-'x44) . "\n";
-	message $msg, "info";
+		} elsif ($char->{$arg} >= 99 && !$config{statsAdd_over_99}) {
+			error T("Error in function 'st add' (Add Status Point)\n" .
+				"You cannot add more stat points than 99\n");
+
+		} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
+			error TF("Error in function 'st add' (Add Status Point)\n" .
+				"Not enough status points to increase %s\n", $arg);
+
+		} else {
+			my $ID;
+			if ($arg eq "str") {
+				$ID = STATUS_STR;
+			} elsif ($arg eq "agi") {
+				$ID = STATUS_AGI;
+			} elsif ($arg eq "vit") {
+				$ID = STATUS_VIT;
+			} elsif ($arg eq "int") {
+				$ID = STATUS_INT;
+			} elsif ($arg eq "dex") {
+				$ID = STATUS_DEX;
+			} elsif ($arg eq "luk") {
+				$ID = STATUS_LUK;
+			}
+
+			$char->{$arg} += 1;
+			$messageSender->sendAddStatusPoint($ID);
+		}
+	} else {
+		my $guildName = $char->{guild} ? $char->{guild}{name} : T("None");
+		my $msg = center(T(" Char Stats "), 44, '-') ."\n".
+			swrite(TF(
+			"Str: \@<<+\@<< #\@< Atk:  \@<<+\@<< Def:  \@<<+\@<<\n" .
+			"Agi: \@<<+\@<< #\@< Matk: \@<<\@\@<< Mdef: \@<<+\@<<\n" .
+			"Vit: \@<<+\@<< #\@< Hit:  \@<<     Flee: \@<<+\@<<\n" .
+			"Int: \@<<+\@<< #\@< Critical: \@<< Aspd: \@<<\n" .
+			"Dex: \@<<+\@<< #\@< Status Points: \@<<<\n" .
+			"Luk: \@<<+\@<< #\@< Guild: \@<<<<<<<<<<<<<<<<<<<<<<<\n\n" .
+			"Hair color: \@<<<<<<<<<<<<<<<<<\n" .
+			"Walk speed: %.2f secs per block", $char->{walk_speed}),
+			[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'},
+			$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'},
+			$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'},
+			$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
+			$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
+			$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
+			"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+
+		$msg .= T("You are sitting.\n") if $char->{sitting};
+		$msg .= ('-'x44) . "\n";
+		message $msg, "info";
+	}
 }
 
 sub cmdStatus {
@@ -4631,7 +4636,7 @@ sub cmdStorage {
 			cmdStorage_log();
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
-		} elsif ($switch eq 'add' || $switch eq 'addfromcart' || $switch eq 'get' || $switch eq 'gettocart' || $switch eq 'close') {
+		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && $items) || $switch eq 'close') {
 			if ($char->storage->isReady()) {
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
