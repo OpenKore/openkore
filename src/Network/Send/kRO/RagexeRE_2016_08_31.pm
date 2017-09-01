@@ -28,7 +28,7 @@ sub new {
 		'086D' => ['buy_bulk_closeShop'],			
 		'0950' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'07EC' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
-		'0865' => ['character_move','a3', [qw(coords)]],
+		'0865' => ['character_move', 'a3', [qw(coordString)]],
 		'092C' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'093A' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0366' => ['item_drop', 'v2', [qw(index amount)]],
