@@ -1,0 +1,62 @@
+# max line width is 132 cols
+    -l=132
+
+# indent level is 4 cols
+    -i=4
+
+# entab at 4 cols
+    -et=4
+
+# continuation indent is 4 cols
+    -ci=4
+
+# output to stdout
+    -st
+
+# errors to stderr
+    -se
+
+# medium vertical tightness
+    -vt=2
+
+# no extra indentation for closing brackets
+    -cti=0
+
+# minimum parenthesis tightness
+    -pt=0
+
+# medium brace tightness
+    -bt=1
+
+# medium square bracket tightness
+    -sbt=1
+
+# medium block brace tightness
+    -bbt=1
+
+# no space before semicolons
+    -nsfs
+
+# don't outdent long quoted strings
+    -nolq
+
+# break before all operators
+    -wbb="% + - * / x != == >= <= =~ !~ < > | & = **= += *= &= <<= &&= -= /= |= >>= ||= .= %= ^= x="
+
+# No whitespace after semi-colons
+    -nwrs=";"
+
+# Cuddle else
+    -ce
+
+# Add whitespace before separating semi-colons in for statements
+    -sfs
+
+# Always put opening code block brace on right
+    -bar
+
+# Cuddle opening tokens with preceding commas (eg, "}, {" instead of "},\n\t{")
+    -otr
+
+# Always break after an opening non-block brace
+    -bvt=0

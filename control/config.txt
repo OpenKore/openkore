@@ -235,7 +235,7 @@ sitTensionRelax 0
 statsAddAuto 0
 statsAddAuto_list
 statsAddAuto_dontUseBonus 0
-statsAdd_over_99 0
+statsAdd_over_99 1
 
 skillsAddAuto 0
 skillsAddAuto_list
