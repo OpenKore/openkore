@@ -6180,5 +6180,8 @@ sub monster_hp_info_tiny {
 		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp}), "parseMsg_damage";
 	}
 }
+sub character_block_info {
+	#TODO
+}
 
 1;
