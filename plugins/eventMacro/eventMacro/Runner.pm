@@ -1407,7 +1407,7 @@ sub parse_call {
 
 	my $macro_name   = $call_command;
 	my $repeat_times = 1;
-	if ( $call_command =~ /\s/ ) {
+	if ( $call_command =~ /\s+/ ) {
 	    my @params;
 		( $macro_name, @params ) = parseArgs( $call_command );
 
