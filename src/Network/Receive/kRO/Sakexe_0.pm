@@ -305,6 +305,8 @@ sub new {
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]],
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
+		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
+
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		##
