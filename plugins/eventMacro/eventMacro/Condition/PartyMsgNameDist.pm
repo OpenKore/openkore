@@ -6,7 +6,7 @@ use Utils;
 
 use eventMacro::Data;
 
-use base 'eventMacro::Conditiontypes::BaseMsgNameDist';
+use base 'eventMacro::Condition::BaseMsgNameDist';
 
 sub _hooks {
 	my ( $self ) = @_;
