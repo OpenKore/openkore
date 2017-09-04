@@ -70,7 +70,7 @@ sub onStatInfo {
 		my $weight = abs( $args->{val} - $last_weight ) / $last_item->{amount};
 		if ( $item_weights->{ $last_item->{item_id} } ne $weight ) {
 			$item_weights->{ $last_item->{item_id} } = $weight;
-			Log::debug( sprintf( "Item [%s] has weight [%.1f]. (%s / %s)\n", $last_item->{item_id}, $weight / 10, $args->{val} - $last_weight, $last_item->{amount} ), $name );
+			Log::debug( sprintf( "Item [%s] has weight [%.1f].\n", $last_item->{item_id}, $weight / 10 ), $name );
 			log_update( $last_item->{item_id} );
 		}
 	}
