@@ -1412,7 +1412,7 @@ sub parse_call {
 		( $macro_name, @params ) = parseArgs( $call_command );
 
 		# Update $.param[n] with the values from the call.
-		$eventMacro->set_full_array( ".param", \@params );
+		$eventMacro->set_full_array( ".param", \@params);
 	}
 
 	my $parsed_macro_name = $self->parse_command($macro_name);
