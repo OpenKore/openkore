@@ -1065,7 +1065,7 @@ ECL_PEONYMAMY#Peônia#
 ECL_SADAGUI#Erva-Mate#
 ECL_SEQUOIADUST#Pó de Yggdrasil#
 ALL_RAY_OF_PROTECTION#Ray of Protection#
-MER_INVINCIBLEOFF2#Mind Blaster#
+MER_INVINCIBLEOFF2#Explosão da Mente#
 GC_DARKCROW#Garra Sombria#
 RA_UNLIMIT#Ilimitar#
 LG_KINGS_GRACE#Graça Real#

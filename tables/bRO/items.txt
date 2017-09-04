@@ -7765,4 +7765,19 @@
 5978#Vacina da Cura#
 2192#Escudo da Rosa#
 1993#Concertina de Arame#
+//*****************************************************
+//------------Aplicar em 2017-08-22--------------------
+//*****************************************************
+31179#Máscara Lupina#
+31249#Orelhas do Coelho da Lua#
+28933#Escudo de Ferro#
+28912#Escudo Higiênico#
+19114#Gravata de Sting#
+18804#Tiara Gótica de Espinhos#
+//*****************************************************
+//------------Aplicar em 2017-08-29--------------------
+//*****************************************************
+19935#Boné do D Fléchi#
+20255#Candura do Amor#
+22149#Botas com Espigões#
 //file end
