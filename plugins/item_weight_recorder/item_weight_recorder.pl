@@ -50,13 +50,13 @@ sub onInventoryItemAdded {
 	return if !$item || !$args->{amount};
 
 	$last_item = { item_id => $item->{nameID}, amount => $args->{amount} };
-    $inventory_changes++;
+	$inventory_changes++;
 }
 
 sub onInventoryItemRemoved {
 	my ( undef, $args ) = @_;
 	$last_item = { item_id => $args->{item}->{nameID}, amount => $args->{amount} };
-    $inventory_changes++;
+	$inventory_changes++;
 }
 
 # The server sends weight changes immediately after each inventory change.
