@@ -39,8 +39,8 @@ sub new {
 }
 
 1;
+=pod
 // 2016-02-03aRagexeRE
-#elif PACKETVER == 20160203
 	parseable_packet(0x0202,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0360,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0361,26,clif_parse_FriendsListAdd,2);
