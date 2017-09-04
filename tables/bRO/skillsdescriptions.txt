@@ -591,7 +591,6 @@ Tipo: ^777777Recuperação^000000
 Alvo: ^777777Jogador^000000
 Descrição: ^777777Cura atributos anormais de um jogador,
 como Silêncio, Caos, e Cegueira.
-Causa status negativos contra Mortos-Vivos.^000000
 #
 MC_INCCARRY#
 Aumentar Capacidade de Carga
@@ -4209,7 +4208,7 @@ Nível Máximo: 5
 ^777777Pré requisitos: Angelus 1,
 Aumentar Recuperação de SP 3, Impositio Manus 3^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta temporariamente a defesa do alvo em 100%.
+Conteúdo: ^777777Aumenta temporariamente a defesa do alvo baseada em seus equipamentos.
 Não pode ser usado com a Kyrie Eleison ao mesmo tempo. A defesa é aumentada em zonas de Guerra do Emperium e PvP.^000000
 [Nv 1]: ^777777Duração de 20 segundos^000000
 [Nv 2]: ^777777Duração de 40 segundos^000000
@@ -4436,10 +4435,10 @@ Conteúdo: ^777777Aumenta o dano com o Katar.^000000
 ASC_EDP#
 Encantar com Veneno Mortal
 Nível Máximo: 5
-^777777Pré requisitos: Envenenar 1, Envenenar Arma 5, Criar Veneno Mortal 1^000000 
+Pré-requisitos: ^777777Envenenar 10, Envenenar Arma 5, Criar Veneno Mortal 1^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Encanta com um veneno mortal e acrescenta dano adicional a uma arma. Requer 1 Garrafa de Veneno Mortal.
-Ao atacar, o alvo será envenenado ao acaso e seu HP será drasticamente reduzido em certo período de tempo. Não funciona com monstros tipo Chefe.^000000
+Descrição: ^777777Encanta a arma com um veneno mortal, acrescentando dano adicional. Requer 1 Garrafa de Veneno Mortal.
+Ao realizar ataques físicos, chance de infligir Envenenamento Mortal no oponente. Não funciona com monstros tipo Chefe.^000000
 ^00BB00Consome 1 Garrafa de Veneno.^000000
 #
 ASC_BREAKER#
@@ -5895,9 +5894,9 @@ Criação Espiritual de Poções II
 ^777777Pré requisitos: Preparar Poção 10^000000
 Tipo: ^777777Suporte^000000
 Descrição: ^777777Esta habilidade só é ativada através do poder do Anjo da Guarda Superaprendiz.
-Consome 200 SP para fazer 200 Poções Brancas, 1 tentativa a cada 0,005 segundos.
+Consome 200 SP para fazer 200 Poções Brancas Compactas, 1 tentativa a cada 0,005 segundos.
 Esta habilidade pode valer Pontos na Classificação de Alquimista, e possui a mesma chance de sucesso da habilidade Preparar Poção, além de um tempo de conjuração de 3 segundos, independente da DES.
-Cada uso consome a matéria-prima para fazer 200 Poções Brancas.^000000
+Cada uso consome a matéria-prima para fazer 200 Poções Brancas Compactas.^000000
 #
 AM_TWILIGHT3#
 Criação Espiritual de Poções III
@@ -7750,11 +7749,11 @@ Nível máximo 5
 Tipo: ^777777 Efeito negativo ^000000
 Descrição: ^777777 Espalha uma névoa congelante em área de 19 x 19. Os oponentes que entrarem na névoa receberão dano da propriedade Água e poderão sofrer o efeito negativo Hipotermia.
 Neste estado, a vel. de movimento e ataque são reduzidas, assim como o tempo fixo de conjuração. O nível de classe do usuário influencia na chance de ativar Hipotermia. ^000000
-[Nv 1]: ^777777 Chance de Hipotermia 32%   / Dano de propriedade Água 300% ^000000
-[Nv 2]: ^777777 Chance de Hipotermia 44%   / Dano de propriedade Água 400% ^000000
-[Nv 3]: ^777777 Chance de Hipotermia 56%   / Dano de propriedade Água 500% ^000000
-[Nv 4]: ^777777 Chance de Hipotermia 68%   / Dano de propriedade Água 600% ^000000
-[Nv 5]: ^777777 Chance de Hipotermia 80%   / Dano de propriedade Água 700% ^000000
+[Nv 1]: ^777777 Chance de Hipotermia 30%   / Dano de propriedade Água 300% ^000000
+[Nv 2]: ^777777 Chance de Hipotermia 35%   / Dano de propriedade Água 400% ^000000
+[Nv 3]: ^777777 Chance de Hipotermia 40%   / Dano de propriedade Água 500% ^000000
+[Nv 4]: ^777777 Chance de Hipotermia 45%   / Dano de propriedade Água 600% ^000000
+[Nv 5]: ^777777 Chance de Hipotermia 50%   / Dano de propriedade Água 700% ^000000
 #
 WL_JACKFROST#
 Esquife de Gelo
@@ -8112,7 +8111,7 @@ Investida de Worg
 Nível Máximo: 5
 ^777777Pré requisitos: Presas Afiadas 1 ^000000
 Tipo: ^777777  Ofensiva  ^000000
-Descrição: ^777777  Usada apenas quando o Sentinela estiver montado no Worg. O lobo ataca 1 alvo. O dano é aumentado de acordo com o nível da habilidade. ^000000
+Descrição: ^777777  Pode ser usada quando o Sentinela estiver acompanhado do Worg. O lobo ataca 1 alvo. O dano é aumentado de acordo com o nível da habilidade. ^000000
 [Nv 1]: ^777777 Dano 200%  ^000000
 [Nv 2]: ^777777 Dano 400%  ^000000
 [Nv 3]: ^777777 Dano 600%  ^000000
@@ -9014,7 +9013,7 @@ Consagração
 Nível Máximo: 5
 ^777777Pré requisitos: Aegis Domini 3 / Luz da Criação 4 / Devoção 5 ^000000
 Tipo: ^777777  Efeito positivo para o usuário ^000000
-Descrição: ^777777  Aumenta temporariamente Precisão e atributos. Todos os efeitos positivos e negativos são cancelados Reduz SP e HP do alvo continuamente. Faz com que o usuário receba parte do dano que causa como retorno. A habilidade é cancelada se o SP chegar a zero. Adiciona a chance de ter todo o HP e SP drenados ao conjurar a habilidade. 1% da EXP de base do usuário é perdida ao utilizar a habilidade. A habilidade não pode ser usada em conjunto com Formação Real e Prestígio Divino. ^000000
+Descrição: ^777777  Aumenta temporariamente Precisão e atributos. Efeitos positivos e negativos são cancelados Reduz SP e HP do alvo continuamente. Faz com que o usuário receba parte do dano que causa como retorno. A habilidade é cancelada se o SP chegar a zero. Adiciona a chance de ter todo o HP e SP drenados ao conjurar a habilidade. 1% da EXP de base do usuário é perdida ao utilizar a habilidade. A habilidade não pode ser usada em conjunto com Formação Real e Prestígio Divino. ^000000
 [Nv 1]: ^777777 30 segundos de duração ^000000
 [Nv 2]: ^777777 45 segundos de duração   ^000000
 [Nv 3]: ^777777 60 segundos de duração  ^000000
@@ -9044,7 +9043,6 @@ Nível Máximo: 5
 ^777777Pré requisitos: Punho do Dragão 3^000000
 Tipo: ^777777  Ofensiva ^000000
 Descrição: ^777777  Golpe giratório que atinge os inimigos ao redor, empurrando-os 3 células para trás. 
-Consome 1 Esfera Espiritual. O dano aumenta conforme a AGI do usuário.  ^000000
 [Nv 1]: ^777777 ATQ 80%   ^000000
 [Nv 2]: ^777777 ATQ 160%  ^000000
 [Nv 3]: ^777777 ATQ 240%  ^000000
@@ -9196,7 +9194,7 @@ Portões do Inferno
 Nível Máximo: 10
 ^777777Pré requisitos: Dragão Ascendente 5 / Garra de Tigre 5 ^000000
 Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Ataca o alvo repetidamente. O dano é aumentado se o HP do oponente estiver baixo. Consome 30% do SP máx e 5 Esferas Espirituais. A habilidade pode ser conjurada após Ruína, o que aumenta o dano. ^000000
+Descrição: ^777777  Ataca o alvo repetidamente. Quanto menor o HP do personagem, maior será o dano causado. Consome 30% do SP máx e 5 Esferas Espirituais. A habilidade pode ser conjurada após Ruína, o que aumenta o dano. ^000000
 #
 SR_GENTLETOUCH_QUIET#
 Chakra do Silêncio
@@ -11458,8 +11456,7 @@ MER_INVINCIBLEOFF2#
 !!
 Nível Máximo : 1
 Descrição : Desativa sua invencibilidade.
-#
-GC_DARKCROW#
+#GC_DARKCROW#
 Garra Sombria
 Nível Máximo : 5
 ^777777Pré requisito : Passo Sombrio 5 ^000000
@@ -11634,5 +11631,13 @@ Description : ^777777 Max Magic item attack rate^000000
 GM_ITEM_MATKMIN#
 Minimize Magic item attack rate
 MAX LV : 1
-Description : ^777777 Minimize Magic item attack rate^000000"
+Description : ^777777 Minimize Magic item attack rate^000000
+#
+MER_INVINCIBLEOFF2#
+Explosão da Mente
+Nível Máximo : 1
+Alcance: 2 células.
+Duração: 10 segundos.
+Tempo de recarga: 30 segundos.
+Descrição : Desativa o vínculo do Demônio Morroc com o Fanático das Trevas, permitindo atacá-lo com precisão."
 #
