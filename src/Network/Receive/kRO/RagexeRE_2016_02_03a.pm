@@ -11,7 +11,7 @@
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
-package Network::Receive::kRO::RagexeRE_2016_02_03;
+package Network::Receive::kRO::RagexeRE_2016_02_03a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2015_11_04a);
