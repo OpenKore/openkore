@@ -585,7 +585,7 @@ sub commandHandler {
 			next if $variable_name !~ /^\.param\d+$/o;
 			$eventMacro->set_scalar_var( $variable_name, undef, 0 );
 		}
-		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
+		$eventMacro->set_full_array( ".param", \@params );
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,
