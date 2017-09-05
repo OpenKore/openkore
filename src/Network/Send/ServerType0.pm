@@ -79,6 +79,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -796,11 +797,12 @@ sub sendHomunculusName {
 }
 
 sub sendIdentify {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0x78, 0x01) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'identify',
+		ID => $ID,
+	}));
+	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
 }
 
 sub sendIgnore {
