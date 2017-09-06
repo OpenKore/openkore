@@ -1902,22 +1902,17 @@ sub processAutoBuy {
 		my $item;
 		my $zenyleft = $char->{zeny};
 
-		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++)
-		{
+		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++){
 			next if (($config{"buyAuto_".$args->{lastIndex}."_npc"} ne $config{"buyAuto_".$i."_npc"})
-					  ||(($i != $args->{lastIndex})
-						&& !checkItemBuyNeed($i,$zenyleft)
-						)
-					);
+				  || (($i != $args->{lastIndex}) && !checkItemBuyNeed($i,$zenyleft)));
 			$item = $storeList->getByName( $config{"buyAuto_".$i} );
-			if (defined $item) {
+			if (defined $item){
 				$args->{'nameID'} = $item->{nameID};
 			}
-			if (!exists $args->{'nameID'})
-			{
+			if (!exists $args->{'nameID'}){
 				$args->{index_failed}{$i} = 1;
 				error "buyAuto index ".$i." (".$config{"buyAuto_".$i}.") failed, item doesn't exist in npc sell list.\n", "npc";
-			} else {
+			}else{
 				my $maxbuy = ($config{"buyAuto_".$i."_price"}) ? int($zenyleft/$config{"buyAuto_".$i."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 				my $needbuy = $config{"buyAuto_".$i."_maxAmount"};
 			
@@ -1929,10 +1924,8 @@ sub processAutoBuy {
 			
 				my $batchSize = $config{"buyAuto_".$i."_batchSize"};
 			
-				if ($batchSize && $batchSize < $buy_amount)
-				{
-					while ($buy_amount > 0)
-					{
+				if ($batchSize && $batchSize < $buy_amount){
+					while ($buy_amount > 0){
 						my $amount = ($buy_amount > $batchSize) ? $batchSize : $buy_amount;
 						my %buy = (
 							itemID  => $args->{'nameID'},
@@ -1942,7 +1935,7 @@ sub processAutoBuy {
 						$buy_amount -= $amount;
 						$zenyleft -= $amount * $config{"buyAuto_".$i."_price"};
 					}
-				} else {
+				}else{
 					my %buy = (
 						itemID  => $args->{'nameID'},
 						amount => $buy_amount
