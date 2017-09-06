@@ -20,12 +20,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
-	my %packets = (
-		'0887' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
-	);
-	
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
 	my %handlers = qw(
 		master_login 02B0
 		buy_bulk_vender 0801
@@ -33,7 +27,6 @@ sub new {
 		send_equip 0998
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
