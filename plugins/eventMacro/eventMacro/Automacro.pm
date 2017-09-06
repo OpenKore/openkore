@@ -86,6 +86,11 @@ sub get_parameter {
 	return $self->{parameters}{$parameter};
 }
 
+sub set_call {
+	my ($self, $parameters, $macro_name) = @_;
+	$self->{parameters}{'call'} = $macro_name;
+}
+
 sub set_parameters {
 	my ($self, $parameters) = @_;
 	foreach (keys %{$parameters}) {

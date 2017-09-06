@@ -7765,4 +7765,37 @@
 5978#Vacina da Cura#
 2192#Escudo da Rosa#
 1993#Concertina de Arame#
+//*****************************************************
+//------------Aplicar em 2017-08-22--------------------
+//*****************************************************
+31179#Máscara Lupina#
+31249#Orelhas do Coelho da Lua#
+28933#Escudo de Ferro#
+28912#Escudo Higiênico#
+19114#Gravata de Sting#
+18804#Tiara Gótica de Espinhos#
+//*****************************************************
+//------------Aplicar em 2017-08-29--------------------
+//*****************************************************
+19935#Boné do D Fléchi#
+20255#Candura do Amor#
+22149#Botas com Espigões#
+//*****************************************************
+//------------Aplicar em 2017-09-05--------------------
+//*****************************************************
+31301#Piscadela#
+31314#Chifres de Oni Adornados#
+20511#Asas Azuis de Fada#
+31316#Revoada de Borboletas#
+28505#Anel do Capiroto#
+15239#Vestes de Angeling#
+2983#Broche da Ganância#
+15219#Vestes de Ghostring#
+24012#Luvas Sombrias Festivas#
+24013#Malha Sombria Festiva#
+24014#Grevas Sombrias Festivas#
+24015#Escudo Sombrio Festivo#
+24016#Brincos Sombrios Festivos#
+24017#Colar Sombrio Festivo#
+15238#Cota do Dragão Maligno#
 //file end

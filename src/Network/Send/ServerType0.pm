@@ -79,6 +79,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -118,6 +119,7 @@ sub new {
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
+		'07E4' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], #Selling store
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 V s', [qw(level MapID job LastIndex ResultCount)]],
@@ -178,6 +180,7 @@ sub shuffle {
 	my %shuffle;
 	my $load_shuffle = Settings::addTableFile( 'shuffle.txt', loader => [ \&FileParsers::parseDataFile2, \%shuffle ], mustExist => 0 );
 	Settings::loadByHandle( $load_shuffle );
+	Settings::removeFile( $load_shuffle );
 
 	# Build the list of changes. Be careful to handle swaps correctly.
 	my $new = {};
@@ -795,11 +798,12 @@ sub sendHomunculusName {
 }
 
 sub sendIdentify {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0x78, 0x01) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'identify',
+		ID => $ID,
+	}));
+	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
 }
 
 sub sendIgnore {

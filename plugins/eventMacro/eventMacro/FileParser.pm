@@ -32,7 +32,6 @@ my %automacro;
 
 sub parseMacroFile {
 	my ($file, $recursive) = @_;
-	
 	unless ($recursive) {
 		undef %macro;
 		undef %automacro;
@@ -49,7 +48,6 @@ sub parseMacroFile {
 		s/^\s+|\s+$//gos;   # trim leading and trailing whitespace
 		s/  +/ /g;          # trim down spaces - very cool for user's string data?
 		next unless ($_);
-
 		if (!%block && /{$/) {
 			my ($key, $value) = $_ =~ /^(.*?)\s+(.*?)\s*{$/;
 			if ($key eq 'macro') {
@@ -113,6 +111,19 @@ sub parseMacroFile {
 				} else {
 					undef %block
 				}
+				
+				
+			} elsif (/call [^{]/ && !$macro{$block{loadmacro_name}}) {
+				my ($key, $value, $param) = $_ =~ /^(call)\s+(\S+)(?:\s*(.*))?/;
+				if (!defined $key || !defined $value) {
+					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					next;
+				}
+				#check if macro is being called with params or not
+				if (defined $param) {
+					$value = join (' ', $value,$param);
+				} 
+				push(@{$automacro{$block{name}}{parameters}}, {key => 'call', value => $value});
 			} elsif ($_ eq "call {") {
 				$block{loadmacro} = 1;
 				$block{loadmacro_name} = "tempMacro".$tempmacro++;

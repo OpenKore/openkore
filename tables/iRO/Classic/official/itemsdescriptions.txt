@@ -70859,3 +70859,18 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19978#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 AFK Hat!
+300 Cloud Crumbs
+200 Fluff
+50 Strange Steel Pieces
+1 Black Cat Doll
+1000 Zeny
+1 AFK Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
