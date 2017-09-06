@@ -17,7 +17,7 @@ Peso: ^7777771^000000
 //Pacote
 7550#
 Ticket promocional permite a entrada nos Mapas Especiais somente para personagens com nível de base maior que 70. Para acessá-los, fale com o NPC Nanaru, localizado em Prontera (162, 326).
-Este ticket desaparecerá durante a manutenção de 04/10/2016. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 03/10/2017. Aproveite e divirta-se!
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 Peso: ^7777770^000000
 #
@@ -11561,11 +11561,15 @@ Utilização: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4218#
-^0000ffVIT -3, HP máximo +1000 e recuperação de HP natural -20%.
-Se o usuário estiver equipado com um item que tenha a carta Incubus, VIT +4 e recuperação de HP natural +30%.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Armadura^000000
+^0000ffVIT -3.^000000
+^0000ffHP máx. +1.000.^000000
+^0000ffRegeneração natural de HP -20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Inccubus]^000000
+^0000ffVIT +4.^000000
+^0000ffRegeneração natural de HP +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4219#
@@ -11960,11 +11964,15 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4269#
-^0000ffINT -3, máximo SP +150 e recuperação de SP natural -20%.
-Se o usuário estiver equipado com um item que tenha a carta Succubus, INT +4 e recuperação de SP natural +30%.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+^0000ffINT -3.^000000
+^0000ffSP máx. +150.^000000
+^0000ffRegeneração natural de SP -20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Succubus]^000000
+^0000ffINT +4.^000000
+^0000ffRegeneração natural de SP +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4270#
@@ -15853,12 +15861,14 @@ Classes que utilizam: ^777777Todas^000000
 5253#
 Um chapéu feito à imagem da Lif, a homúnculo mais amada por 9 entre 10 Alquimistas. Ele é bem macio, feito em pelúcia importada de Arunfeltz, e tem um perfume suave de folhas fresquinhas. Você sentirá uma brisa gostosa sempre que estiver usando esta boneca. É o presente ideal para quem gosta de usar coisinhas fofas sobre a cabeça.
 ^0000ffINT +1.^000000
-A DEFM aumenta de acordo com o refinamento do equipamento.
-Tipo: ^777777Equipamento para a cabeça^000000
+A cada refino:
+^0000ffDEFM +1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo^000000    Peso: ^77777720^000000
-Nível necessário: ^77777720^000000
-Classes que utilizam: ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 5254#
 Um chapéu criado à imagem da ovelha negra da família Poring, o Deviling. As asas aerodinâmicas permitem que você guie melhor seus ataques, garantindo uma maior chance de conseguir acertos Críticos. Cuidado, pois Deviruchis e Marins podem começar a seguir você a todos os cantos!
@@ -18262,15 +18272,17 @@ Classes que utilizam: ^777777Todas^000000
 #
 5289#
 Um chapéu feito à imagem do Vanilmirth, o Homúnculo favorito dos Alquimistas. Apesar de não dar defesa alguma, dizem que ele absorve a energia arcana, e pode dispará-la acidentalmente contra as pessoas. Ele é bem gelatinoso ao toque, e parece mais ter fugido de uma fôrma de gelatina para vir direto para a sua cabeça.
-Chance de usar as habilidades Relâmpago, Lanças de Fogo ou Lanças de Gelo em nível 1 sempre que o usuário usar um golpe físico.
-Este item não pode ser aprimorado. Indestrutível.
-DEFM + 5
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777770^000000
+^a400cdIndestrutível em batalha.^000000
+^a400cdNão pode ser refinado.^000000
+^0000ffDEFM +5.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Relâmpago] [Lanças de Fogo] e [Lanças de Gelo] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5290#
 Um chapéu que parece um adorável coelho.
@@ -22822,12 +22834,14 @@ Classes que utilizam: ^777777Todas^000000
 
 5405#
 Um chapéu feito à imagem do Filir, o homúnculo mais ágil e energético de todos. Apesar de não ficar quieto na sua cabeça, seus pulos constantes e piado agudo ajudam a deixá-lo mais atento. Dizem que durante o combate este Filir fica tão rápido que é capaz de atingir os inimigos sem ser percebido, já que sua aparência gentil ajuda a pegá-los desprevenidos.
-Reflete 1% de todo dano físico de curta distância sofrido pelo usuário de volta para o oponente.
-Este item não pode ser aprimorado.
-Defesa: ^7777772^000000
+^a400cdNão pode ser refinado.^000000
+^0000ffReflete 1% do dano físico recebido.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
 #
 
 2438#
@@ -22978,13 +22992,13 @@ Classes que utilizam: ^777777Todas^000000
 #
 5477#
 Um chapéu feito com a imagem da bandeira brasileira.
-Permite a utilização da habilidade 'Golpe Fulminante' em nível 1.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
+^0000ffHabilita [Golpe Fulminante] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 14346#
 Uma caixa que contém 1 Bandeira do Brasil
@@ -34236,14 +34250,15 @@ Peso: ^7777771^000000
 #
 5766#
 Uma réplica felpuda e confortável do famoso Amistr, feito para ficar empoleirado sobre a sua cabeça. Além de confortável, ele ainda é um ótimo massagista, e seu cafuné energizante é capaz de aumentar ainda mais a sua energia.
-^FF6347VIT +5.
-Ao receber ataque físico, chance de reduzir em 20% todo ataque físico recebido por 2 segundos, mas ao mesmo tempo, a DEFM será reduzida em 20% também.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffVIT +5.^000000
+Ao receber ataques físicos:
+^0000ff3% de chance de autoconjurar [Pele Rochosa] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5390#
 Dizem que esse gorro de natal foi usado pelo próprio Cavaleiro da Tempestade durante o natal em que ele ajudou a puxar o trenó do Papai Noel, substituindo o Rudolph, que havia ficado doente. Talvez seja por isso que ele é capaz de protegê-lo de nevascas.
@@ -36037,20 +36052,22 @@ Classe : ^777777Todas as classes^000000
 
 //---------2011 december items
 18659#
-Um chapéu feito em homenagem ao temível MVP de Brasilis, Boitatá,
-a cobra de fogo aprisionada nas profundezas da cachoeira. O protetor das florestas brasileiras.
-Pequena chance de ativar 'Lâminas Destruidoras' em Nv5 ao realizar ataques físicos de curta distância.
-Pequena chance de Encantar a arma com propriedade 'Fogo' por três minutos ao realizar ataques físicos de curta distância.
-Se equipado com a Couraça do Boitatá adiciona:
-INT + 3, FOR + 3, DEFM + 10
-10% de dano à propriedade Terra
-Altera a propriedade da Couraça de Boitatá automaticamente para 'Fogo'.
-Tipo : ^777777Equipamento para cabeça^000000
+Um chapéu feito em homenagem ao temível MVP de Brasilis, Boitatá, a cobra de fogo aprisionada nas profundezas da cachoeira. O protetor das florestas brasileiras.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff1% de chance de autoconjurar [Lâminas Destruidoras] nv. 5.^000000
+^0000ff1% de chance de encantar a arma com propriedade Fogo por 3 minutos.^000000
+^FF6347Conjunto^000000
+^FF6347[Couraça do Boitatá]^000000
+^0000ffINT +3. FOR +3.^000000
+^0000ffDEFM +10.^000000
+^0000ffEncanta a armadura com a propriedade Fogo.^000000
+^0000ffDano físico contra oponentes de propriedade Terra +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo e Meio^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo-Centro^000000
-Peso : ^7777770^000000
-Nível Necessário: ^7777771^000000
-Classes : ^777777Todas as classes^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18529#
 Diferente das Rosas Selvagens comuns, que parecem ser incansáveis enquanto correm de um lado para o outro atrás itens derrubados no chão,
@@ -37752,6 +37769,7 @@ Peso : ^7777771^000000
 14545#
 Um manuscrito feito pelos 3 fundadores do bROWiki. Cada um colaborou com 100% do próprio conhecimento para guiar novos aventureiros em suas viagens por Midgard.
 ^0000ffEXP adquirida +300%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
 #
@@ -38498,7 +38516,8 @@ Nível Necessário : ^77777720^000000
 Classes : ^777777Todos exceto Aprendiz^000000
 #
 18703#
-Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.Aumenta em 20% a tolerância contra o status Veneno.
+Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.
+Aumenta em 20% a tolerância contra o status Veneno.
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa: ^7777770^000000
 Equipa em : ^777777Baixo^000000
@@ -40013,10 +40032,13 @@ Refino +10 ou mais:
 ^0000ffTodas as magias anteriores passam a ser autoconjuradas em nível 5.^000000
 Tipo : ^777777Espada de uma mão^000000
 Ataque : ^777777165^000000
-Peso : ^777777200^000000
+
+Peso : ^777777200^000000
+
 Nível da Arma : ^7777774^000000
 Nível Requerido : ^777777105^000000
-Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
+
+Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
 #
 4503#
 DES +2.
@@ -40688,7 +40710,8 @@ Criado pela famosa estilista marinha, Leira, este chapéu é uma cópia exata do
 Recuperação usando os itens Sushi e Peixe Cru +50%
 Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000
 Tipo : ^777777Equipamento para Cabeça^000000
-Defesa: ^77777713^000000Equipa em : ^777777Topo^000000
+Defesa: ^77777713^000000
+Equipa em : ^777777Topo^000000
 Peso : ^77777730^000000Nível Necessário : ^77777710^000000
 Classe: ^777777Todas^000000
 #
@@ -53959,6 +53982,295 @@ Tipo: ^777777Calçado^000000
 Defesa: ^77777725^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-09-05--------------------
+//*****************************************************
+31301#
+Você não consegue parar de notar como todo mundo que passa por você está reagindo. Tem gente que te olha desconfiado, algumas pessoas parecem chocadas ou até ofendidas, mas pelo menos você está conquistando alguns sorrisos marotos e piscadelas em resposta. E pensar que tudo isso porque você ficou olhando espantado pra um Arenoso que estava contra o vento...
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31314#
+Um par de belos chifres postiços semelhantes aos da famosa Oni de Amatsu, a asura Suica Ibuqui. Apesar de ser uma Oni, espécie lendária de criaturas demoníacas de Amatsu, Suica tem vários fãs em Amatsu já que possui uma personalidade carismática, alegre e infantil. O fato de Suica ser superforte e conseguir arremessar pedras gigantescas com uma só mão também ajuda a ninguém falar mal da garota.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20511#
+Quem diria que na verdade você descende de uma linhagem de nobres de Alfheim? Será que você herdou suas asas de Oberon e Titânia, ou seria do próprio Kardui? Talvez tenha sido do Rei Arlequim, o esplêndido mais conhecido como o Pecado da Preguiça do Pé Grande. Seja como for, o recente contato dos humanos com os Esplêndidos em Ash Vacuum fez suas asas de fada despertarem. Pena que você ainda pesa demais pra voar.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31316#
+Você está sempre cercado por uma aura de borboletas púrpuras. Seriam elas um sinal de que na verdade você teria descendência Esplêndida, com sangue de Alfeim correndo em suas veias? Ou será que você vai se transformar em uma ninja mutante capaz de ler mentes e criar espadas psíquicas? Talvez seja apenas o seu perfume. O que importa é que o efeito é legal!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28505#
+Um anel dado por Nephisto, o lorde infernal, quando vocês fizeram um pacto para te deixar mais agressivo e melhorar seus ataques. O que, devo dizer, não foi nada inteligente da sua parte. Será que você nunca ouviu falar da história do Pedro Parque, que fez um pacto com Nephisto para salvar a vida da sua tia velhinha? Ok, a tia dele até que foi ficando cada vez mais jovem, mas o preço pra isso foi acabar com o casamento do Pedro com a bela Maria Joana. Eu gostava da Maria Joana... maldito Nephisto.
+^0000ffDano mágico +5%.^000000
+^0000ffATQ da Arma +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de FOR 1]^000000
+^0000ffATQ da Arma +5%..^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de FOR 2]^000000
+^0000ffATQ da Arma +5%..^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de FOR 3]^000000
+^0000ffATQ da Arma +5%..^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de AGI 1]^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de AGI 2]^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de AGI 3]^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de VIT 1]^000000
+^0000ffHP máx. +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de VIT 2]^000000
+^0000ffHP máx. +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de VIT 3]^000000
+^0000ffHP máx. +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de INT 1]^000000
+^0000ffDano mágico +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de INT 2]^000000
+^0000ffDano mágico +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de INT 3]^000000
+^0000ffDano mágico +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de DES 1]^000000
+^0000ffConjuração variável -5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de DES 2]^000000
+^0000ffConjuração variável -5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de DES 3]^000000
+^0000ffConjuração variável -5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de SOR 1]^000000
+^0000ffDano crítico +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de SOR 2]^000000
+^0000ffDano crítico +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Essência de SOR 3]^000000
+^0000ffDano crítico +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+15239#
+Essas vestes sagradas foram abençoadas pelo próprio Angeling. Ao menos é isso o que a sacerdotisa do Templo Sagrado dos Ings dizia a todos os Aprendizes que ela auxiliava na entrada do Campo de Treinamento. Desde então, esse item passou a ter um significado especial para todo Super Aprendiz.
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +100.^000000
+A cada 3 níveis base a partir do 100:
+^0000ffHP máx. +30.^000000
+^0000ffSP máx. +5.^000000
+Refino +7 ou mais:
+^0000ffDano mágico +10%.^000000
+Refino +10 ou mais:
+^0000ffHabilita [Adrenalina Pura] nv. 5.^000000
+Refino +12 ou mais:
+^0000ffEncanta a armadura com propriedade Sagrado.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777777^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Aprendizes e Superaprendizes^000000
+#
+2983#
+Uma das joias usadas por um dos Sete Pecados Capitais, Ban Ban, o Pecado da Ganância das Nove Caudas. Assim como Ban Ban era capaz de absorver a força de seus alvos para se fortalecer e fazer o “monstro sair da jaula”, dizem que o anel é capaz de absorver a energia arcana alheia.
+^0000ffDrena 10 de HP do usuário a cada 5 segundos.^000000
+Ao derrotar monstros:
+^0000ffRecupera 2 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Succubus]^000000
+^0000ffVIT -3 adicional.^000000
+^0000ffHP máx. +1.000 adicional.^000000
+^0000ffRegeneração natural de HP -20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Inccubus]^000000
+^0000ffINT -3 adicional.^000000
+^0000ffSP máx. +150 adicional.^000000
+^0000ffRegeneração natural de SP -20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Succubus]^000000
+^FF6347[Carta Inccubus]^000000
+^0000ffINT +4. VIT +4.^000000
+^0000ffRegeneração natural de HP e SP +30%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+15219#
+À primeira vista, estes trapos lembram bastante as Vestes de Angeling depois de jogadas na máquina de lavar junto com meia dúzia de Chapéus de Esporo. De qualquer forma, esses trajes também são muito cobiçados por Super Aprendizes, que acreditam que o espírito da sacerdotisa do Templo Sagrado dos Ings ainda procura guarda-los do perigo.
+^0000ffDEFM +20.^000000
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +100.^000000
+A cada 3 níveis base a partir do 100:
+^0000ffHP máx. +50.^000000
+^0000ffSP máx. +3.^000000
+Refino +7 ou mais:
+^0000ffATQ da Arma +10%.^000000
+Refino +10 ou mais:
+^0000ffHabilita [Manejo Perfeito] nv. 5.^000000
+Refino +12 ou mais:
+^0000ffEncanta a armadura com propriedade Fantasma.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777777^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Aprendizes e Superaprendizes^000000
+#
+24012#
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Dentro das luvas você pode ver escrito “Parabéns”.
+^008080Equipamento Sombrio^000000
+Luva criada para complementar seus equipamentos.
+^0000ffDES +1.^000000
+A cada refino:
+^0000ffATQ e ATQM +1(Não implementado).^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Luva^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24013#
+Uma peça extremamente rara de equipamento sombrio, dada somente aos aventureiros mais tenazes. Foi forjada originalmente durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros, mas poucos conhecem esse detalhe. Costurado no tecido você consegue ler uma mensagem secreta: “Parabéns pela sua conquista! Como diziam os antigos, Let’s Rok!”
+^008080Equipamento Sombrio^000000
+Malha criada para complementar seus equipamentos.
+^0000ffSOR +1.^000000
+A cada refino:
+^0000ffHP máx. +10(Não implementado).^000000
+^ff0000Durante o evento:^000000
+^FF6347Conjunto^000000
+^FF6347[Colar Sombrio Festivo]^000000
+^FF6347[Escudo Sombrio Festivo]^000000
+^FF6347[Luvas Sombrias Festivas]^000000
+^FF6347[Grevas Sombrias Festivas]^000000
+^FF6347[Brincos Sombrios Festivos] ^000000
+^0000ffTodos os atributos +9 até o dia 06/11/2017.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Malha^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24014#
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Embaixo das botas você pode ler a inscrição “Up”.
+^008080Equipamento Sombrio^000000
+Greva criada para complementar seus equipamentos.
+^0000ffAGI +1.^000000
+A cada refino:
+^0000ffHP máx. +10(Não implementado).^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Greva^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24015#
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na brasão do escudo você pode ler a inscrição “bRO”.
+^008080Equipamento Sombrio^000000
+Escudo criado para complementar seus equipamentos.
+^0000ffVIT +1.^000000
+A cada refino:
+^0000ffHP máx. +10(Não implementado).^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Escudo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24016#
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Atrás dos brincos você pode ler a inscrição “Level”.
+^008080Equipamento Sombrio^000000
+Brinco criado para complementar seus equipamentos.
+^0000ffINT +1.^000000
+A cada refino:
+^0000ffHP máx. +10(Não implementado).^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Brinco^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24017#
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na frente do colar você pode ler a inscrição “13 Anos”.
+^008080Equipamento Sombrio^000000
+Colar criado para complementar seus equipamentos.
+^0000ffFOR +1.^000000
+A cada refino:
+^0000ffHP máx. +10(Não implementado).^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Colar^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15238#
+Uma armadura feita com escamas de um dragão zumbi, reanimado pelo maléfico Rei da Noite. Seus poderes necromânticos fazem com que o usuário possa absorver a própria vida ou energia mental de seus oponentes durante a batalha. Só tome cuidado, pois a armadura não combina muito bem com certos equipamentos.
+^0000ffRefino +6 ou mais:^000000
+^0000ff3% de chance de converter 3% do dano físico causado em HP.^000000
+^0000ff2% de chance de converter 2% do dano físico causado em SP.^000000
+Refino +9 ou mais:
+^0000ffConversão de HP e SP +1% adicional.^000000
+^0000ffChance de conversão de HP e SP +1% adicional.^000000
+Refino +12 ou mais:
+^0000ffConversão de HP e SP +2% adicional.^000000
+^0000ffChance de conversão de HP e SP +2% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Elmo de Vanargandr]^000000
+^0000ffAnula a conversão de HP e SP do Elmo.^000000
+^FF6347Conjunto^000000
+^FF6347[Chapéu de Rideword]^000000
+^0000ffAnula a conversão de HP e SP do Chapéu.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedaço de Pele do Guardião]^000000
+^0000ffAnula a conversão de SP da Capa.^000000
+^FF6347Conjunto^000000
+^FF6347[Chifres Majestosos Malignos]^000000
+^0000ffAnula a conversão de HP e SP dos Chifres.^000000
+^FF6347Conjunto^000000
+^FF6347[Livro Amaldiçoado]^000000
+^0000ffAnula a conversão de HP e SP do Livro.^000000
+^FF6347Conjunto^000000
+^FF6347[Tiara de Runas]^000000
+^0000ffAnula a conversão de HP e SP da Tiara.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777760^000000
+Peso: ^777777400^000000
+Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
 //file end
