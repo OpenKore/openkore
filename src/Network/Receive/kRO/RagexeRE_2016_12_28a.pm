@@ -5,7 +5,7 @@
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
 #  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
+#  this software. However, if you distribute modified versiaons, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
@@ -15,15 +15,7 @@ package Network::Receive::kRO::RagexeRE_2016_12_28a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2016_02_03a);
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
-		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
-		
-	);
-}
+
 1;
 =pod
 // 2016-12-28aRagexeRE
