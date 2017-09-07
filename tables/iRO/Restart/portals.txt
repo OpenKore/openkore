@@ -1287,6 +1287,7 @@ mjolnir_12 199 378 aldebaran 138 34
 mjolnir_12 220 26 mjolnir_05 220 382
 moc_castle 94 183 morocc 160 183
 moc_fild03 303 170 pay_fild01 13 152
+moc_fild03 17 37 moc_fild13 305 49
 moc_fild07 198 21 morocc 160 297
 moc_fild11 26 161 moc_fild12 289 168
 moc_fild11 212 29 moc_fild17 218 369
