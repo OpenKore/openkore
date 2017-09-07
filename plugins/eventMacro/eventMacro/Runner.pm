@@ -444,6 +444,7 @@ sub scanLoops {
 			
 			$loops{end_to_start}{$line} = $block_start;
 			$loops{start_to_end}{$block_start} = $line;
+			$line = ($block_start + 1);
 			undef $block_start;
 			
 		} elsif (${$script}[$line] =~ /^while\s+\(\s*(.*)\s*\)\s+{$/) {
