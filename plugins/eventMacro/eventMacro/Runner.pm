@@ -41,7 +41,7 @@ sub new {
 	$self->{line_index} = 0;
 	
 	$self->{label} = {scanLabels($self->{lines_array})};
-	$self->{loops} = {scanLoops($self->{lines_array})};
+	$self->{block} = scanBlocks($self->{lines_array});
 	
 	$self->{time} = time;
 	
@@ -422,25 +422,23 @@ sub scanLabels {
 	return %labels
 }
 
-# Scans the script for loops
-sub scanLoops {
+# Scans the script for blocks
+sub scanBlocks {
 	my $script = $_[0];
-	my %loops;
-	my $block_start;
+	my $blocks = {};
+	my $block_starts = [];
 	
 	for (my $line = 0; $line < @{$script}; $line++) {
-		
-		if (defined $block_start) {
-			next unless (${$script}[$line] =~ /^}$/);
-			$loops{end_to_start}{$line} = $block_start;
-			$loops{start_to_end}{$block_start} = $line;
-			undef $block_start;
-			
-		} elsif (${$script}[$line] =~ /^while\s+\(\s*(.*)\s*\)\s+{$/) {
-			$block_start = $line;
+		if ($script->[$line] =~ /^(if|switch|while)\s+\(.*\)\s+{$/) {
+			push @$block_starts, { type => $1, start => $line };
+		} elsif ($script->[$line] eq '}') {
+			my $block = pop @$block_starts;
+			$block->{end} = $line;
+			$blocks->{end_to_start}{$line} = $block;
+			$blocks->{start_to_end}{$block->{start}} = $block;
 		}
 	}
-	return %loops
+	$blocks;
 }
 
 # Decides what to do when we get to the end of a macro script
@@ -633,7 +631,7 @@ sub define_next_valid_command {
 			} else {
 				debug "[eventMacro] Condition of 'while' is false.\n", "eventMacro", 3;
 				debug "[eventMacro] Moving to the end of 'while' loop.\n", "eventMacro", 3;
-				$self->line_index($self->{loops}{start_to_end}{$self->line_index});
+				$self->line_index($self->{block}{start_to_end}{$self->line_index}{end});
 			}
 			$self->next_line;
 			
@@ -919,9 +917,9 @@ sub define_next_valid_command {
 		# End block of "if", "switch" or "while"
 		######################################
 		} elsif ($self->{current_line} eq '}') {
-			if (exists $self->{loops}{end_to_start}{$self->line_index}) {
+			if ($self->{block}{end_to_start}{$self->line_index}{type} eq 'while') {
 				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
-				$self->line_index($self->{loops}{end_to_start}{$self->line_index});
+				$self->line_index($self->{block}{end_to_start}{$self->line_index}{start});
 			} else {
 				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
 				$self->next_line;
