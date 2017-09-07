@@ -23,7 +23,7 @@ sub new {
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
 		
 	);
-
+}
 1;
 =pod
 // 2016-12-28aRagexeRE
