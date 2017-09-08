@@ -8589,6 +8589,7 @@
 20340#Costume_Ponytail_Black#
 20341#Costume_Cowlick_Hairstyle_Black#
 20342#Costume_Twin_Ponytail_Black#
+20344#Costume_Happy_Balloon#
 20349#Costume_Flying_Galapago#
 20350#Costume_Cowlick_Hairstyle_Yellow#
 20351#Costume_Cowlick_Hairstyle_Green#
@@ -8634,6 +8635,7 @@
 20451#Costume_Night_Sky_of_Memory#
 20453#Costume_Wrapping_Cloth#
 20454#Costume_Crown_of_Ancient_Queen#
+20457#Costume_Fluttering_Feather#
 20458#Costume_Wild_Poring_Rider#
 20468#Costume_Harum_Beret#
 20470#Costume_Sweet_Chocolate_Hat#
@@ -8886,6 +8888,7 @@
 23415#Orleans_Bundle_C#
 23451#Devil_Worshipper_Box_A#
 23452#Kardui_Bundle_B#
+23477#September_Costume_Box#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9296,3 +9299,11 @@
 31190#Costume_Angel's_Black_Mini_Silk_Hat#
 31195#Costume_Mini_Chocolate_Hat#
 31197#Costume_Egg_Crispinette#
+31198#Costume_Octopus_Hat#
+31199#Costume_Weird_Beard#
+31200#Costume_Wrapping_Ribbon#
+31201#Costume_Royal_Rabbit_Crown#
+31202#Costume_Dog_Officer#
+31203#Costume_Charcoal_Stove#
+31207#Costume_Dokkebi_Mask#
+31234#Costume_Persica#

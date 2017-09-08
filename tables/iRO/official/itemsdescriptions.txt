@@ -77722,6 +77722,15 @@ Location : ^777777Lower ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20344#
+^808080Colorful balloons decorated with cute Porings - guaranteed to bring smiles to everyone!^000000
+Type: Equipment
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 20349#
 ^808080A flying Galapago. This creature hopes to fly by itself one day.^000000
 Class: Costume
@@ -78140,6 +78149,15 @@ Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
+#
+20457#
+^808080Angelic feathers of many colors floating in the wind.^000000
+Type: Equipment
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20458#
 Two monsters became a team! To loot your heart!
@@ -81055,6 +81073,23 @@ Weight: 0
 23452#
 Class: Item Giver
 Weight: 0
+#
+23477#
+^808080Slow down those summer vibes and usher in the cool autumn weather with this sweet set of new costumes! For 300KP, you can buy a September Costume Box in the Cash Shop that contains one of the following items at random!
+Costume Charcoal Stove
+Costume Dog Officer
+Costume Dokkebi Mask
+Costume Happy Balloon
+Costume Octopus Hat
+Costume Persica
+Costume Royal Rabbit Crown
+Costume Weird Beard
+Costume Wrapping Ribbon ^000000
+Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -85282,6 +85317,78 @@ Weapon Level: 0
 ^FFFFFF_^000000
 Type: Costume
 Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31198#
+^808080Wear this octopus wearing a hat as a hat. Is it just me, or does it seem to be mocking you?^000000
+Type: Equipment
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31199#
+^808080A beard so weird, you might be feared. With this beard, you're rightly geared. To look so dandy, fine, revered. All because this beard appeared.^000000
+Type: Equipment
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31200#
+^808080Make your presence a present with this giant and lovely wrapping ribbon. Watch it flow dramatically behind you as you run!^000000
+Type: Equipment
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31201#
+^808080A cute little crown with big rabbit ears on either side.^000000
+Type: Equipment
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31202#
+^808080Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.^000000
+Type: Equipment
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31203#
+^808080For all those times you ever wanted to have a grill for a head. Since it's for decorative purposes only, it does not actually cook anything.^000000
+Type: Equipment
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31207#
+^808080A mask that resembles a fearsome monster who once had a secret group of followers. Some say he still does...^000000
+Type: Equipment
+Class: Costume
+Position: Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31234#
+^808080A hair accessory decorated with a spray of peach blossoms. It smells very sweet, and reminds you of Springtime.^000000
+Type: Equipment
+Class: Costume
+Position: Middle
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
