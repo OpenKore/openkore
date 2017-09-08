@@ -70874,3 +70874,18 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19979#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pirate Dagger!
+300 Skel-Bones
+100 Red Gemstones
+10 Gold
+1 Dagger [3]
+1000 Zeny
+1 Pirate Dagger Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
