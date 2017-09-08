@@ -6,6 +6,7 @@ package OpenKore::Plugins::ItemWeightRecorder;
 use strict;
 
 use Globals qw( $char );
+use Time::HiRes qw( &time );
 
 our $name = 'item_weight_recorder';
 
@@ -49,13 +50,17 @@ sub onInventoryItemAdded {
 	my $item = $char->inventory->getByID( $args->{ID} );
 	return if !$item || !$args->{amount};
 
-	$last_item = { item_id => $item->{nameID}, amount => $args->{amount} };
+	# Weight updates to equipped items happen in reverse order. Ignore changes to them.
+	return if $item->{equipped};
+
+	$last_item = { item_id => $item->{nameID}, amount => $args->{amount}, time => time };
 	$inventory_changes++;
 }
 
 sub onInventoryItemRemoved {
 	my ( undef, $args ) = @_;
-	$last_item = { item_id => $args->{item}->{nameID}, amount => $args->{amount} };
+	return if $args->{item}->{equipped};
+	$last_item = { item_id => $args->{item}->{nameID}, amount => $args->{amount}, time => time };
 	$inventory_changes++;
 }
 
@@ -66,7 +71,9 @@ sub onStatInfo {
 	# 0x18 is WEIGHT.
 	return if $args->{type} != 0x18;
 
-	if ( $inventory_changes == 1 && defined $last_weight ) {
+	# Ignore item changes from more than one second ago. This might result
+	# in some false negatives, but should also prevent some false positives.
+	if ( $inventory_changes == 1 && defined $last_weight && !Utils::timeOut( $last_item->{time}, 1 ) ) {
 		my $weight = abs( $args->{val} - $last_weight ) / $last_item->{amount};
 		if ( $item_weights->{ $last_item->{item_id} } ne $weight ) {
 			$item_weights->{ $last_item->{item_id} } = $weight;
