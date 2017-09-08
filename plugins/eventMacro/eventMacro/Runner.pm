@@ -428,16 +428,28 @@ sub scanLoops {
 	my %loops;
 	my $block_start;
 	
+	my $block_count;
+	
 	for (my $line = 0; $line < @{$script}; $line++) {
 		
 		if (defined $block_start) {
-			next unless (${$script}[$line] =~ /^}$/);
+			if (isNewCommandBlock(${$script}[$line])) {
+				$block_count++;
+			} elsif (${$script}[$line] eq '}') {
+				$block_count--;
+			} else {
+				next;
+			}
+			next unless ($block_count == 0);
+			
 			$loops{end_to_start}{$line} = $block_start;
 			$loops{start_to_end}{$block_start} = $line;
+			$line = ($block_start + 1);
 			undef $block_start;
 			
 		} elsif (${$script}[$line] =~ /^while\s+\(\s*(.*)\s*\)\s+{$/) {
 			$block_start = $line;
+			$block_count = 1;
 		}
 	}
 	return %loops
