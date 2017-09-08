@@ -31,6 +31,7 @@ my $hooks = Plugins::addHooks(    #
 	[ 'packet/inventory_item_added' => \&onInventoryItemAdded ],
 	[ 'inventory_item_removed'      => \&onInventoryItemRemoved ],
 	[ 'packet/stat_info'            => \&onStatInfo ],
+	[ 'packet/item_used'            => \&onItemUsed ],
 );
 
 sub Unload {
@@ -84,6 +85,12 @@ sub onStatInfo {
 	$last_item         = undef;
 	$last_weight       = $args->{val};
 	$inventory_changes = 0;
+}
+
+# The packet sequence here is: weight, item_used, inventory_removed.
+# Ignore the next inventory change to avoid a false positive.
+sub onItemUsed {
+    $inventory_changes++;
 }
 
 sub log_update {
