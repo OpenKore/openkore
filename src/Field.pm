@@ -19,7 +19,7 @@
 # each block has a specific type, like 'walkable', 'not walkable', 'water',
 # 'cliff', etc.
 #
-# This class is closely related to the .fld file, as used by OpenKore.
+# This class is closely related to the .fld2 file, as used by OpenKore.
 # See http://wiki.openkore.com/index.php/Field_file_format
 # for more information.
 #
@@ -29,8 +29,8 @@
 #                   You should not access this item directly; use the $Field->name() method instead.
 # - <tt>baseName</tt> - The name of the field, which is the base name of the field without the extension.
 #             This is not always the same as name: for example,
-#             descName: Training Ground, name: 'new_1-2', field file: 'new_zone01.fld', baseName: 'new_1-2'
-#             descName: Catacombs, name: '0021@cata', field file: '1@cata.fld', baseName: '1@cata'
+#             descName: Training Ground, name: 'new_1-2', field file: 'new_zone01.fld2', baseName: 'new_1-2'
+#             descName: Catacombs, name: '0021@cata', field file: '1@cata.fld2', baseName: '1@cata'
 # - <tt>width</tt> - The field's width. You should not access this item directly; use $Field->width() instead.
 # - <tt>height</tt> - The field's height. You should not access this item directly; use $Field->width() instead.
 # - <tt>rawMap</tt> - The raw map data. Contains information about which blocks you can walk on (byte 0),
@@ -54,26 +54,22 @@ use Translation qw(T TF);
 
 # Block types.
 use constant {
-	WALKABLE                        => 0,
-	NON_WALKABLE                    => 1,
-	NON_WALKABLE_NON_SNIPABLE_WATER => 2,
-	WALKABLE_WATER                  => 3,
-	NON_WALKABLE_SNIPABLE_WATER     => 4,
-	SNIPABLE_CLIFF                  => 5,
-	NON_SNIPABLE_CLIFF              => 6,
-	UNKNOWN                         => 7
+	TILE_NOWALK => 0,
+	TILE_WALK   => 1,
+	TILE_SNIPE  => 2,
+	TILE_WATER  => 4,
+	TILE_CLIFF  => 8,
 };
-
 
 ##
 # Field->new(options...)
 #
-# Create a new Load a field (.fld) file. This function also loads an associated .dist file
+# Create a new Load a field (.fld2) file. This function also loads an associated .dist file
 # (the distance map file), which is used by pathfinding (for wall avoidance support).
 # If the associated .dist file does not exist, it will be created.
 #
-# This function also supports gzip-compressed field files (.fld.gz). If the .fld file cannot
-# be found, but the corresponding .fld.gz file can be found, this function will load that
+# This function also supports gzip-compressed field files (.fld2.gz). If the .fld2 file cannot
+# be found, but the corresponding .fld2.gz file can be found, this function will load that
 # instead and decompress its data on-the-fly.
 #
 # Allowed options:
@@ -88,7 +84,7 @@ use constant {
 # ArgumentException will be thrown. For example:
 # <pre class="example">
 # new Field(name => "new_1-1");
-# new Field(file => "/path/to/prontera.fld");
+# new Field(file => "/path/to/prontera.fld2");
 # new Field(); # Error: an ArgumentException will be thrown
 # </pre>
 #
@@ -196,7 +192,7 @@ sub height {
 sub getBlock {
 	my ($self, $x, $y) = @_;
 	if ($self->isOffMap($x, $y)) {
-		return NON_WALKABLE;
+		return TILE_NOWALK;
 	} else {
 		return ord(substr($self->{rawMap}, ($y * $self->{width}) + $x, 1));
 	}
@@ -213,7 +209,7 @@ sub isOffMap {
 # Check whether you can walk on ($x,$y) on this field.
 sub isWalkable {
 	my $p = &getBlock;
-	return ($p == WALKABLE || $p == WALKABLE_WATER);
+	return ($p & TILE_WALK);
 }
 
 ##
@@ -222,7 +218,16 @@ sub isWalkable {
 # Check whether you can snipe through ($x,$y) on this field.
 sub isSnipable {
 	my $p = &getBlock;
-	return ($p == WALKABLE || $p == WALKABLE_WATER || $p == NON_WALKABLE_SNIPABLE_WATER || $p == SNIPABLE_CLIFF);
+	return ($p & TILE_SNIPE);
+}
+
+##
+# boolean $Field->isWater(int x, int y)
+#
+# Check whether there is water ($x,$y) on this field.
+sub isWater {
+	my $p = &getBlock;
+	return ($p & TILE_WATER);
 }
 
 ##
@@ -230,7 +235,7 @@ sub isSnipable {
 # filename: The filename of the field file to load.
 # loadDistanceMap: Whether to also load the associated distance map file.
 #
-# Load the specified field file (.fld file). This is like calling the constructor
+# Load the specified field file (.fld2 file). This is like calling the constructor
 # with the 'file' argument, but allows you to load a field inside this Field object.
 #
 # If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
@@ -287,7 +292,7 @@ sub loadFile {
 
 	# Load the associated distance map (.dist file)
 	my $distFile = $filename;
-	$distFile =~ s/\.fld(\.gz)?$/.dist/i;
+	$distFile =~ s/\.fld2(\.gz)?$/.dist/i;
 	if ($loadDistanceMap) {
 		if ((!-f $distFile && !-f $distFile.'.gz') || !$self->loadDistanceMap($distFile, $width, $height)) {
 			# (Re)create the distance map.
@@ -309,7 +314,7 @@ sub loadFile {
 	$self->{height} = $height;
 	$self->{rawMap} = $fieldData;
 	(undef, undef, $self->{baseName}) = File::Spec->splitpath($filename);
-	$self->{baseName} =~ s/\.fld$//i;
+	$self->{baseName} =~ s/\.fld2$//i;
 	$self->{name} = $self->{baseName};
 	return 1;
 }
@@ -407,7 +412,7 @@ sub loadByName {
 	my $baseName;
 	($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
 	$self->{baseName} = $baseName;
-	my $file = $self->sourceName . ".fld";
+	my $file = $self->sourceName . ".fld2";
 
 	if ($Settings::fields_folder) {
 		$file = File::Spec->catfile($Settings::fields_folder, $file);

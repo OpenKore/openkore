@@ -3893,7 +3893,7 @@ sub compilePortals {
 	# Print warning for missing fields
 	if (%missingMap) {
 		warning T("----------------------------Error Summary----------------------------\n");
-		warning TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
+		warning TF("Missing: %s.fld2\n", $_) foreach (sort keys %missingMap);
 		warning T("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
 			"      however it is safe to ignore if those map(s) are not used\n");
 		warning "---------------------------------------------------------------------\n";
@@ -4321,7 +4321,7 @@ sub checkSelfCondition {
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
-		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
+		return 0 if ($field->isWater($pos->{x}, $pos->{y}));
 	}
 	
 	if ($config{$prefix.'_devotees'}) {
