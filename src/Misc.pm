@@ -4626,4 +4626,11 @@ sub CharacterLogin {
 	}
 }
 
+sub getPartyLeaderName {
+	foreach (@partyUsersID) {
+		return $char->{'party'}{'users'}{$_}{'name'} if ($char->{'party'}{'users'}{$_}{'admin'});
+	}
+	
+}
+
 return 1;
