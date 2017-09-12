@@ -228,16 +228,16 @@ CODE:
 	   interesting to pathfinding. */
 	New (0, data, len, unsigned char);
 	Copy (c_rawMap, data, len, unsigned char);
+	int info;
+	int walkable;
 	for (i = 0; i < (int) len; i++) {
-		// 0 is open, 3 is walkable water
-		switch (data[i]) {
-		case 0:
-		case 3:
+		// first bit is 'walkable' info
+		info = data[i];
+		walkable = (info & 1) ? 1 : 0;
+		if (walkable == 1) {
 			data[i] = 255;
-			break;
-		default:
+		} else {
 			data[i] = 0;
-			break;
 		}
 	}
 

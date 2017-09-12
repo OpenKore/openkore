@@ -300,7 +300,7 @@ sub loadFile {
 			$self->{dstMap} = Utils::makeDistMap($fieldData, $width, $height);
 			if (open($f, ">", $distFile)) {
 				binmode $f;
-				print $f pack("a2 v1", 'V#', 3);
+				print $f pack("a2 v1", 'V#', 4);
 				print $f pack("v v", $width, $height);
 				print $f $self->{dstMap};
 				close $f;
@@ -378,10 +378,11 @@ sub loadDistanceMap {
 	# Version 0 files had a bug when height != width
 	# Version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt.
 	# Version 2 and greater have no know bugs, so just do a minimum validity check.
-	# Version 3 (the current version) adds better support for walkable water blocks.
-	# If the distance map version is smaller than 3, regenerate the distance map.
+	# Version 3 adds better support for walkable water blocks.
+	# Version 4 (the current version) uses the new fld2 field file format.
+	# If the distance map version is smaller than 4, regenerate the distance map.
 
-	if ($dversion >= 3 && $width == $dw && $height == $dh) {
+	if ($dversion >= 4 && $width == $dw && $height == $dh) {
 		$self->{dstMap} = $distData;
 		return 1;
 	} else {
