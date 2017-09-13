@@ -21882,3 +21882,19 @@ Eliminate the Vagabond Wolf#
 62939#Silvervine Quest - Vocal#SG_FEEL#QUE_NOIMAGE#
 I never liked bugs...please get rid of this monster.#
 Eliminate the Vocal#
+
+62942#Silvervine Miracle Elixir Buff I#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
+
+62943#Rock Ridge Spotlight Buff#SG_FEEL#QUE_NOIMAGE#
+You can get another Spotlight Buff tomorrow!#
+You can get another Spotlight Buff tomorrow!#
+
+62945#Silvervine Miracle Elixir Buff II#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
+
+62946#Silvervine Miracle Elixir Buff III#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
