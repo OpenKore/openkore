@@ -660,7 +660,7 @@ sub define_next_valid_command {
 		# Initial 'if'
 		######################################
 		} elsif ($self->{current_line} =~ /^if\s/) {
-			my ($condition_text, $post_if) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
+			my ($condition_text, $post_if) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s*(goto\s+.*|call\s+.*|stop|{|)\s*/;
 
 			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
 			
