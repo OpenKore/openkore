@@ -706,6 +706,7 @@ buyAuto {
 	price
 	minAmount 2
 	maxAmount 3
+	batchSize
 	disabled 0
 }
 

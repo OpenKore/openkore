@@ -136,7 +136,7 @@ serverEncoding Western
 charBlockSize 145
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-
+sendCryptKeys 0x42780CC0, 0x67F86D28, 0x1CEB0ADC
 
 
 
