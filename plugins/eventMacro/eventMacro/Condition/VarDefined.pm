@@ -11,6 +11,7 @@ sub _parse_syntax {
 	my ($self, $condition_code) = @_;
 
 	if ($condition_code =~ /^$general_variable_qr/) {
+		my $var = find_variable($condition_code);
 		
 		if ($var =~ /^\./) {
 			$self->{error} = "System variables should not be used in automacros (The ones starting with a dot '.')";
