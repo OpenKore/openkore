@@ -6919,3 +6919,4 @@
 19977#Evolved_Drooping_Cat_Certificate#
 19978#AFK_Hat_Certificate#
 19979#Pirate_Dagger_Certificate#
+19980#Tiger_Mask_Certificate#

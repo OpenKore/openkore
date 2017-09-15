@@ -61432,7 +61432,7 @@ Adds a 5% chance of casting ^0000FFLevel 5 Thunder Storm^000000 on the target wh
 ^008080Elemental Origin^000000
 ^008080Elemental Robe^000000
 Adds a 5% chance of casting ^0000FFLevel 5 Fire Ball^000000 on the target when performing a magical attack, if a higher level of this skill is known, it will be cast instead.
-Adds a 6% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
+Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
 #
 15178#
 ^808080A suit worn by the ninjas who were hired to secure ownership of some gold mine.^000000
@@ -61574,13 +61574,14 @@ Increases physical damage on Shadow and Undead property targets by an additional
 Increases physical damage on Demon and Undead race targets by an additional 15%.
 #
 15205#
-^808080A coat worn by medics working in the battlefields.^000000
+^808080Clothing worn by medics working in the battlefields.^000000
 Class: Armor
 Defense: 50
 Property: Neutral
 Weight: 100
 Required Level: 100
 Required Jobs: All Jobs
+Mdef + 10
 Reduces the cast delay of skills by 10%.
 Increases the recovery rate of recovery skills by 2%.
 Increases the recovery rate of incoming recovery skills by 1%.
@@ -61588,6 +61589,7 @@ If upgrade level is +7 or higher,
 Def + 50
 Increases the recovery rate of recovery skills by an additional 4%.
 Increases the recovery rate of incoming recovery skills by an additional 2%.
+This item is indestructible in battle.
 If upgrade level is +8 or higher,
 Additional Def + 100
 Increases physical damage on Demi-Human race targets by 7%.
@@ -61599,7 +61601,8 @@ Increases the recovery rate of incoming recovery skills by an additional 3%.
 Increases resistance to ^800000Stone Curse^000000 by 50%.
 ^800080Set Bonus^000000
 ^008080Argiope Card^000000
-^008080Holy Coat^000000
+^008080Medical Scrubs^000000
+If upgrade level is +9 or higher,
 Immune to ^800000Frozen^000000.
 #
 16000#
@@ -61995,38 +61998,43 @@ Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
 This item is indestructible in battle.
 #
 16051#
-^808080The royal hammer of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced. ^000000
-^FFFFFF_^000000
-Type: Weapon
+^808080The royal hammer of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced.^000000
 Class: Mace
 Attack: 50
-Property: N/A
+Property: Neutral
 Weight: 10
 Weapon Level: 4
 Required Level: 70
-Required Jobs: Novice, Swordman, Merchant, Acolyte, Knight, Blacksmith, Priest, Crusader, Alchemist, Monk, Lord Knight, Master Smith, High Priest, Paladin, Biochemist, Champion, Rune Knight, Mechanic, Arch Bishop, Royal Guard, Geneticist, Sura
-^FFFFFF_^000000
+Required Jobs: Novice, Swordman Jobs, Merchant Jobs, Acolyte Jobs
 Matk + 50
-If used by Novice, Priest,
-Atk + 50
-Matk + 100
-ASPD + 1% per upgrade level of the item.
-If used by Novice, Monk,
-Max SP + 200
-Perfect Dodge + 1 per upgrade level of the item.
-Reduces the SP cost of skills by 5%.
-If used by Novice, Merchant,
-Atk + 100
+^F4AD42Novice Bonus^000000
+Vit + 1 per upgrade level of the item.
+Max HP + 500
+Additional Max HP + 200 per upgrade level of the item.
+Max SP + 400
+Atk + 150
+Additional Matk + 200
 Hit + 10
+Perfect Dodge + 1 per upgrade level of the item.
+Aspd + 1% per upgrade level of the item.
 Reduces the variable casting time of skills by 1% per 2 upgrade levels of the item.
-If used by Novice, Swordsman,
+Reduces the SP cost of skills by 5%.
+^F4AD42Swordman Bonus^000000
 Vit + 1 per upgrade level of the item.
 Max HP + 500
 Max SP + 100
-If used by Novice,
-Matk + 100
-Max HP + 200 per upgrade level of the item.
-Max SP + 100
+^F4AD42Merchant Bonus^000000
+Atk + 100
+Hit + 10
+Reduces the variable casting time of skills by 1% per 2 upgrade levels of the item.
+^F4AD42Priest Bonus^000000
+Atk + 50
+Additional Matk + 100
+Aspd + 1% per upgrade level of the item.
+^F4AD42Monk Bonus^000000
+Max SP + 200
+Perfect Dodge + 1 per upgrade level of the item.
+Reduces the SP cost of skills by 5%.
 #
 16060#
 ^808080An empty liquor bottle. It makes an effective weapon.^000000
@@ -67432,6 +67440,22 @@ When opened it gives the following:
 2 Advanced WOE Supply Box
 2 Kafra Card Box
 #
+17892#
+Class: Item Giver
+Weight: 1
+When Opened gives one of the following
+Wakwak Manteau
+Strawberry in Mouth
+Luminous Blue Stone [1]
+Shadow Ring [1]
+Scutum [1]
+Faceworm Egg Shell [1]
+Wing of Beezlebub Box
+(6) Battle Manual X3
+(8) Job Battle Manual
+(2) Safe to 10 Certificate
+
+#
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
 Class : ^777777Cannonball^000000
@@ -72658,8 +72682,25 @@ If upgrade level is +7 or higher,
 Increases the skill damage bonus of ^0000FFCart Cannon^000000 by an additional 300%.
 Increases the skill damage bonus of ^0000FFCart Tornado^000000 by an additional 20%.
 #
+19137#
+^808080At first glance it doesn't seem all that practical, but there is clearly more than meets the eye with this fruity mouth guard.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 10
+Required Level: 80
+Required Jobs: All Jobs
+Vit + 2
+Reduces damage taken from long-ranged attacks by 5%.
+Reflects 5% of the received short-ranged damage back to the attacker.
+If the users base level is 99 or lower,
+Max HP + 200
+If the users base level is 100 or higher,
+Max HP + 2000
+#
 19156#
 ^808080A beautiful moon rainbow which is caused by the moonlight.^000000
+^FF0000A +10 version of this hat will casts a level 10 skill at 10% chance.^000000
 Class: Headgear
 Position: Upper
 Defense: 10
@@ -72672,23 +72713,23 @@ Mdef + 10
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Ring of the Ancient Wise King^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Water Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Water Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Pitman Card^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Earth Spike^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Earth Spike^000000 or ^0000FFLevel 4 Heaven's Drive^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Hill Wind Card^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Lightning Bolt^000000 or ^0000FFLevel 4 Thunderstorm^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Lightning Bolt^000000 or ^0000FFLevel 4 Thunderstorm^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Laurell Weinder Card^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Frost Nova^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Frost Nova^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 ^800080Set Bonus^000000
 ^008080Lunar Rainbow^000000
 ^008080Red Ferus Card^000000
-Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 19201#
 A box that contains 10 Classic Battle Manual
@@ -76383,17 +76424,12 @@ Jobs: ^777777Swordman
 and Merchant Classes^000000
 #
 20132#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Bottom ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
-Unknown aura that wrapped your body.
-^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
-^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080A mysterious aura that shrouds the body.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20133#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -76538,33 +76574,41 @@ Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 20152#
-Class : ^777777Costume_Equipment^000000Defense : ^7777770^000000
-Location : ^777777Upper-mid-Bottom ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080Someone pulled all the rice out of this bag. Time to wear it on my head!^000000
+Class: Costume
+Position: Upper, Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20153#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A little cap with a cool monochrome design.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20154#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Bottom ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A colorful landscape spreads out in front of you as autumn leaves start to fall.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20155#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080The calming shade and extravagant decoration of this hat is sure to turn heads as a symbol of noble elegance.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20156#
 ^808080A cool fan for warm days. Hold it in your mouth when you need to use both hands!^000000
-Type: Equipment
 Class: Costume
+Position: Lower
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
@@ -76717,22 +76761,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777Assassin^000000
 #
 20171#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A delicate sepia cap, soft and sweet like chocolate.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20172#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A luxurious costume hairband featuring a large pumpkin and ribbon - so big and festive!^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20173#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A unique costume hood illuminated by the light carried by a cute Lude.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20174#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -76751,10 +76801,12 @@ Jobs: ^777777Archer Class;
 Thief and Rogue Jobs^000000
 #
 20175#
-Class : ^777777Costume_Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A stylish set of headphones fashioned in the likeness of a Diabolic.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20176#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -77724,7 +77776,6 @@ Job : ^777777All^000000
 #
 20344#
 ^808080Colorful balloons decorated with cute Porings - guaranteed to bring smiles to everyone!^000000
-Type: Equipment
 Class: Costume
 Position: Lower
 Weight: 0
@@ -78152,7 +78203,6 @@ Job : ^777777All^000000
 #
 20457#
 ^808080Angelic feathers of many colors floating in the wind.^000000
-Type: Equipment
 Class: Costume
 Position: Lower
 Weight: 0
@@ -78967,38 +79017,36 @@ Attack Speed + 1
 #
 20800#
 ^808080This blood soaked cape releases a terrible aura.^000000
-^FFFFFF_^000000
-Type: Equipment
+^FF0000This item is currently not working as intended.^000000
 Class: Garment
 Defense: 18
 Weight: 30
 Required Level: 100
 Required Jobs: All Jobs
-^FFFFFF_^000000
+Mdef + 10
 Reduces the cast delay of skills by 5%.
 If ^0000FFGrimtooth^000000 is at maximum level,
 Increases the damage of ^0000FFGrimtooth^000000 by 50%.
-If used by Guillotine Cross,
-Max HP + 15%
-Reduces damage taken from long-ranged attacks by 20%.
 If upgrade level is +7 or higher,
 Reduces the cast delay of skills by an additional 3%.
 Increases the damage of ^0000FFGrimtooth^000000 by an additional 1% for every base level.
-If used by Guillotine Cross,
-Additional Max HP + 5%
-Reduces damage taken from long-ranged attacks by an additional 15%.
 If upgrade level is +9 or higher,
 Max SP + 5%
 Reduces the cast delay of skills by an additional 3%.
-^FFFFFF_^000000
+^F4AD42Guillotine Cross Bonus^000000
+Max HP + 15%
+Reduces damage taken from long-ranged attacks by 20%.
+If upgrade level is +7 or higher,
+Additional Max HP + 5%
+Reduces damage taken from long-ranged attacks by an additional 15%.
 ^800080Set Bonus^000000
 ^008080Enforcer Cape^000000
 ^008080Horn Card^000000
-Increases damage taken from long-ranged attacks by 35%.
+Disables the following effects of ^008080Horn Card^000000, Reduces damage taken from long-ranged attacks by 35%.
 ^800080Set Bonus^000000
 ^008080Enforcer Cape^000000
 ^008080Imuke Upper Shield^000000
-Increases damage taken from long-ranged attacks by 35%.
+Disables the following effects of ^008080Imuke Upper Shield^000000, Reduces damage taken from long-ranged attacks by 35%.
 #
 20802#
 ^808080A bag that resembles the homunculus, Amistr.^000000
@@ -79180,6 +79228,23 @@ Restores 3 SP to the user when performing a physical or magical attack.
 If upgrade level is +12 or higher/lower,
 The users casting cannot be interrupted outside of WoE.
 #
+20814#
+^808080A manteau made out of the wings of a Wakwak. By wearing it, you will feel like you can fly.^000000
+Class: Garment
+Defense: 40
+Weight: 40
+Required Level: 100
+Required Jobs: All Jobs
+Atk + 5%
+If upgrade level is +5 or higher,
+Atk + 2 for every 10 base Str
+If upgrade level is +7 or higher,
+Additional Atk + 3 for every 10 base Str
+^800080Set Bonus^000000
+^008080Wakwak Card^000000
+^008080Wakwak Manteau^000000
+Disables the following effects of ^008080Wakwak Card^000000, Atk + 5 for every 10 base Str.
+#
 20815#
 ^808080A muffler worn by a rebellious priest who betrayed the gods.^000000
 Class: Garment
@@ -79214,7 +79279,7 @@ Aspd + 5%
 ^008080Elemental Origin^000000
 ^008080Elemental Robe^000000
 Adds a 5% chance of casting ^0000FFLevel 5 Fire Ball^000000 on the target when performing a magical attack, if a higher level of this skill is known, it will be cast instead.
-Adds a 6% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
+Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
 #
 20821#
 ^808080A scarf worn by the ninjas who were hired to secure ownership of some gold mine.^000000
@@ -81076,6 +81141,9 @@ Weight: 0
 #
 23477#
 ^808080Slow down those summer vibes and usher in the cool autumn weather with this sweet set of new costumes! For 300KP, you can buy a September Costume Box in the Cash Shop that contains one of the following items at random!
+^000000
+Class: Item Giver
+Weight: 0
 Costume Charcoal Stove
 Costume Dog Officer
 Costume Dokkebi Mask
@@ -81084,12 +81152,7 @@ Costume Octopus Hat
 Costume Persica
 Costume Royal Rabbit Crown
 Costume Weird Beard
-Costume Wrapping Ribbon ^000000
-Type: Weapon
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
+Costume Wrapping Ribbon
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -83282,16 +83345,13 @@ Increases the damage of ^0000FFLightning Bolt^000000 by 1% for every 5 base leve
 #
 28379#
 ^808080A ring worn by first-class rogues.^000000
-^FF0000When performing physical attack,
-Stun rate increases depening on the skill level Sightless Mind.
-
-Don't know what this is.^000000
 Class: Accessory
 Weight: 10
 Required Level: 20
 Required Jobs: All Jobs
-Adds a X% chance of casting ^0000FFLevel 1 Mug^000000 on the target when performing a physical attack, if a higher level of this skill is known, it will be cast instead.
+Adds a 5% chance of casting ^0000FFLevel 1 Mug^000000 on the target when performing a physical attack, if a higher level of this skill is known, it will be cast instead.
 Increases the damage of ^0000FFBack Stab^000000 by 2% for every base level.
+Adds a 1% chance of inflicting ^800000Stun^000000 on the target when performing a short-ranged attack per level of ^0000FFSightless Mind^000000 known.
 Adds a 100% chance of buffing the user for 20 seconds when using ^0000FFEmergency Escape^000000; Increases the damage of ^0000FFTriangle Shot^000000 by 1% for every 3 base levels.
 #
 28380#
@@ -83820,6 +83880,29 @@ Reduces the cast delay delay of ^0000FFHigh Heal^000000 by 1 second.
 Increases the recovery rate of recovery skills by 3%.
 Reduces the SP cost of skills by 5%.
 #
+28433#
+^808080A luminous blue stone which was owned by Engel Howard. This stone contains the soul of a craftsman with a destructive impulse.^000000
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+Agi + 2
+Crit + 5
+Aspd + 5%
+Increases critical damage on targets by 2%.
+Enables ^0000FFLevel 1 Sight^000000.
+If the users base Luk is 100 or higher,
+Additional Crit + 10
+Increases critical damage on targets by an additional 10%.
+^800080Set Bonus^000000
+^008080Luminous Blue Stone^000000
+^008080Sharp1^000000
+Increases critical damage on targets by 10%.
+^800080Set Bonus^000000
+^008080Luminous Blue Stone^000000
+^008080Sharp2^000000
+Increases critical damage on targets by 10%.
+#
 28434#
 ^808080A pair of gloves once owned by a great boxer. They were designed to perform powerful attacks.^000000
 Class: Accessory
@@ -83956,6 +84039,14 @@ Reduces damage taken from Demon and Undead race enemies by 2%.
 Enables ^0000FFLevel 3 Increase Agility^000000.
 If the users base Agi is 100 or higher,
 Additional Aspd + 5%
+^800080Set Bonus^000000
+^008080DelayafterAttack1Lv^000000
+^008080Horn of Kirin^000000
+Aspd + 1
+^800080Set Bonus^000000
+^008080DelayafterAttack2Lv^000000
+^008080Horn of Kirin^000000
+Aspd + 1
 #
 28502#
 ^808080A scarf that is amazing to wear during riots.^000000
@@ -84078,7 +84169,7 @@ Increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000 and ^00
 ^008080Elemental Origin^000000
 ^008080Elemental Robe^000000
 Adds a 5% chance of casting ^0000FFLevel 5 Fire Ball^000000 on the target when performing a magical attack, if a higher level of this skill is known, it will be cast instead.
-Adds a 6% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
+Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
 #
 28700#
 #
@@ -84122,8 +84213,6 @@ Additional Matk + ((upgrade level * upgrade level) / 2) up to a maximum upgrade 
 #
 28717#
 ^808080The royal knife of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced.^000000
-^FFFFFF_^000000
-Type: Weapon
 Class: Dagger
 Attack: 50
 Property: Neutral
@@ -84131,39 +84220,43 @@ Weight: 10
 Weapon Level: 4
 Required Level: 70
 Required Jobs: Novice Jobs, Swordman, Merchant Jobs, Thief Jobs, Archer Jobs, Knight Jobs, Wizard Jobs, Crusader, Sage Jobs, Royal Guard, Soul Linker, Ninja Jobs
-^FFFFFF_^000000
-If used by Thief,
-Max SP + 100
-Matk + 150
-Increases critical damage on targets by 1% per upgrade level of the item.
-If used by Novice, Mage,
-Max HP + 200 per upgrade level of the item past the upgrade level of 7.
-Max SP + 20 per upgrade level of the item past the upgrade level of 7.
-If used by Novice, Mage and If upgrade level is +7 or higher,
-Reduces damage taken from Demi-Human race enemies by 10%.
-If used by Hunter,
-Int + 2 per upgrade level of the item.
-Dex + 2 per upgrade level of the item.
-Max HP + 200
-Reduces the SP cost of skills by 5%.
-If used by Dancer, Bard,
-Dex - 1 for every 10 base Dex per upgrade level of the item.
-Atk + 100
-Aspd + 10% per upgrade level of the item.
-This item is indestructible in battle.
-If used by Novice,
+Matk + 50
+^F4AD42Novice Bonus^000000
 Int + 2 per upgrade level of the item past the upgrade level of 7.
 Dex + 2 per upgrade level of the item past the upgrade level of 7.
 Dex - 1 for every 10 base Dex per upgrade level of the item past the upgrade level of 7.
 Max HP + 300
+Max HP + 200 per upgrade level of the item past the upgrade level of 7.
 Max SP + 300
+Max SP + 20 per upgrade level of the item past the upgrade level of 7.
 Atk + 100
-Matk + 150
+Additional Matk + 150
 Additional Matk + 15 per upgrade level of the item past the upgrade level of 7.
 Crit + 7 per upgrade level of the item past the upgrade level of 7.
 Aspd + 10% per upgrade level of the item past the upgrade level of 7.
 Increases critical damage on targets by 1% per upgrade level of the item past the upgrade level of 7.
 Reduces the SP cost of skills by 5%.
+This item is indestructible in battle.
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by 10%.
+^F4AD42Thief Bonus^000000
+Max SP + 100
+Matk + 150
+Increases critical damage on targets by 1% per upgrade level of the item.
+^F4AD42Mage Bonus^000000
+Max HP + 200 per upgrade level of the item past the upgrade level of 7.
+Max SP + 20 per upgrade level of the item past the upgrade level of 7.
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by 10%.
+^F4AD42Hunter Bonus^000000
+Int + 2 per upgrade level of the item.
+Dex + 2 per upgrade level of the item.
+Max HP + 200
+Reduces the SP cost of skills by 5%.
+^F4AD42Dancer and Bard Bonus^000000
+Dex - 1 for every 10 base Dex per upgrade level of the item.
+Atk + 100
+Aspd + 10% per upgrade level of the item.
 This item is indestructible in battle.
 #
 28721#
@@ -85323,7 +85416,6 @@ Required Jobs: All Jobs
 #
 31198#
 ^808080Wear this octopus wearing a hat as a hat. Is it just me, or does it seem to be mocking you?^000000
-Type: Equipment
 Class: Costume
 Position: Upper
 Weight: 0
@@ -85332,7 +85424,6 @@ Required Jobs: All Jobs
 #
 31199#
 ^808080A beard so weird, you might be feared. With this beard, you're rightly geared. To look so dandy, fine, revered. All because this beard appeared.^000000
-Type: Equipment
 Class: Costume
 Position: Lower
 Weight: 0
@@ -85341,7 +85432,6 @@ Required Jobs: All Jobs
 #
 31200#
 ^808080Make your presence a present with this giant and lovely wrapping ribbon. Watch it flow dramatically behind you as you run!^000000
-Type: Equipment
 Class: Costume
 Position: Upper
 Weight: 0
@@ -85350,7 +85440,6 @@ Required Jobs: All Jobs
 #
 31201#
 ^808080A cute little crown with big rabbit ears on either side.^000000
-Type: Equipment
 Class: Costume
 Position: Upper
 Weight: 0
@@ -85359,7 +85448,6 @@ Required Jobs: All Jobs
 #
 31202#
 ^808080Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.^000000
-Type: Equipment
 Class: Costume
 Position: Upper
 Weight: 0
@@ -85368,7 +85456,6 @@ Required Jobs: All Jobs
 #
 31203#
 ^808080For all those times you ever wanted to have a grill for a head. Since it's for decorative purposes only, it does not actually cook anything.^000000
-Type: Equipment
 Class: Costume
 Position: Middle
 Weight: 0
@@ -85377,7 +85464,6 @@ Required Jobs: All Jobs
 #
 31207#
 ^808080A mask that resembles a fearsome monster who once had a secret group of followers. Some say he still does...^000000
-Type: Equipment
 Class: Costume
 Position: Middle, Lower
 Weight: 0
@@ -85386,7 +85472,6 @@ Required Jobs: All Jobs
 #
 31234#
 ^808080A hair accessory decorated with a spray of peach blossoms. It smells very sweet, and reminds you of Springtime.^000000
-Type: Equipment
 Class: Costume
 Position: Middle
 Weight: 0
