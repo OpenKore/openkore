@@ -6476,7 +6476,7 @@ sub cmdRodex {
 			
 		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
-				"You still have to set something to send the mail (title, body, zeny oy target)\n");
+				"You still have to set something to send the mail (title, body, zeny or target)\n");
 			return;
 		}
 		
