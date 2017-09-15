@@ -70889,3 +70889,18 @@ It is worth 1 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19980#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Tiger Mask!
+200 Old White Cloths
+100 Black Bear Skins
+10 Striped Socks
+1 Denture from Dragon Mask
+1000 Zeny
+1 Tiger Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
