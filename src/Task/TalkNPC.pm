@@ -600,8 +600,8 @@ sub iterate {
 				shift @{$self->{steps}};
 				
 			} else {
-				$self->manage_wrong_sequence(T("According to the given NPC instructions, a npc conversation code " .
-					"should be used (".$step."), but it doesn't exist."));
+				$self->manage_wrong_sequence(T("According to the given NPC instructions, a npc conversation code ") .
+					TF("should be used (%s), but it doesn't exist.", $step));
 				return;
 			}
 		}
