@@ -3061,6 +3061,7 @@ sub deal_cancelled {
 	undef %outgoingDeal;
 	undef %currentDeal;
 	message T("Deal Cancelled\n"), "deal";
+	Plugins::callHook("cancelled_deal");
 }
 
 sub deal_complete {
@@ -3068,6 +3069,7 @@ sub deal_complete {
 	undef %incomingDeal;
 	undef %currentDeal;
 	message T("Deal Complete\n"), "deal";
+	Plugins::callHook("complete_deal");
 }
 
 sub deal_finalize {
