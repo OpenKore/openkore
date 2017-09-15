@@ -1038,7 +1038,7 @@ sub next {
 			} elsif ($value =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
 				
-				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
+				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name}, $complement)) : 0);
 				$eventMacro->set_var(
 					$var->{type}, 
 					$var->{real_name}, 
