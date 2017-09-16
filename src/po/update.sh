@@ -10,24 +10,25 @@ echo "Extracting messages from source..."
 xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	--add-comments='Translation Comment:' \
 	../../openkore.pl \
+	../functions.pl \
+	../*.pm \
 	../Actor/*.pm \
 	../AI/*.pm \
 	../AI/Slave/*.pm \
-	../Interface/Wx/List/ItemList/*.pm \
-	../Interface/Wx/List/*.pm \
-	../Interface/Wx/StatView/*.pm \
-	../Interface/Wx/*.pm \
 	../Interface/*.pm \
-	../Network/Receive/kRO/*.pm \
-	../Network/Receive/*.pm \
-	../Network/Send/kRO/*.pm \
-	../Network/Send/*.pm \
+	../Interface/Console/*.pm \
+	../Interface/Wx/*.pm \
+	../Interface/Wx/List/*.pm \
+	../Interface/Wx/List/ItemList/*.pm \
+	../Interface/Wx/StatView/*.pm \
 	../Network/*.pm \
+	../Network/Receive/*.pm \
+	../Network/Receive/kRO/*.pm \
+	../Network/Send/*.pm \
+	../Network/Send/kRO/*.pm \
 	../Poseidon/*.pm \
 	../Task/*.pm \
-	../*.pm \
-	../Misc.pm \
-	../functions.pl
+	../Utils/*.pm
 sed 's/charset=CHARSET/charset=UTF-8/; s/^# SOME DESCRIPTIVE TITLE\.$/# LANGUAGE translation for OpenKore/; s/# This file is distributed under the same license as the PACKAGE package\./# This file is distributed under the same license as OpenKore./' openkore.pot > openkore.pot.2
 mv openkore.pot.2 openkore.pot
 
