@@ -1436,19 +1436,50 @@ sub parse_call {
 
 
 #From here functions are meant to parse code and check order (I haven't even looked at them yet)
+#This function checks the if , while, switch case, and elsif statement
+#format accepted:
+#if ( [!] firstargument condition lastargument) {
+# do something
+#}
+#ex: if ( 2 > 1) {
+#	do anything
+#}
+# use of ! is optional, and will invert the result
 sub statement {
 	my ($self, $temp_multi) = @_;
-	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
-	if (!defined $first || !defined $cond || !defined $last) {
-		$self->error("syntax error in if statement");
+	my $negated   = $temp_multi =~ /^\s*(\!)\s*/; #check if there is a '!' in the beggning or not
+	my ($first)   = $temp_multi =~ /^\s*\!?\s*"?([^<>=!~].*?)"?\s+/; #checks the first argument
+	my ($cond)    = $temp_multi =~ /\s+([<>=!~]+?)/; #checks the condition
+	my ($last)    = $temp_multi =~ /^\s*\!?\s*"?.*?"?\s+[<>=!~]+?\s+"?(.+?)"?\s*$/; #checks the last argument
+
+	if (defined $first && !defined $cond && !defined $last) {
+		# if there is only the first argument, it is treated here
+		my $pfirst = $self->parse_command(refined_macroKeywords($first));
+		return if (defined $self->error);
+		if ($negated) {
+			return cmpr($pfirst) ? 0 : 1;  # return the opposite value of cmpr
+		} else {
+			return cmpr($pfirst); # return the normal value of cmpr
+		}
+	} elsif (!defined $first) {
+		$self->error("syntax error in statement: missing first argument or there is a typo");
+	} elsif (!defined $cond) {
+		$self->error("syntax errror in statement: missing condition (<= >= =~ =! ~ )");
+	} elsif (!defined $last) {
+		$self->error("syntax errror in statement: missing last argument or there is a typo");
 	} else {
+		#when has first argument, condition and last argument, it is treated here
 		my $pfirst = $self->parse_command(refined_macroKeywords($first));
 		my $plast = $self->parse_command(refined_macroKeywords($last));
 		return if (defined $self->error);
-		unless (defined $pfirst && defined $plast) {
-			$self->error("either '$first' or '$last' has failed");
-		} elsif (cmpr($pfirst, $cond, $plast)) {
-			return 1;
+		if (!defined $pfirst ) {
+			$self->error("'$first' has failed, check syntax");
+		} elsif (!defined $plast) {
+			$self->error("'$last' has failed, check syntax");
+		} elsif ($negated) {
+			return cmpr($pfirst, $cond, $plast) ? 0 : 1; # return the opposite value of cmpr
+		} elsif (!$negated) {
+			return cmpr($pfirst, $cond, $plast) ; #return the normal value of cmpr
 		}
 	}
 	return 0
