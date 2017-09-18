@@ -1452,8 +1452,7 @@ sub statement {
 	my ($self, $temp_multi) = @_;
 	my ($negate, $first) = $temp_multi =~ /^\s*(\!|not)?\s*"?(\S+)"?\s*/; #checks the first argument
 	my ($cond) = $temp_multi =~ /"?\S+"?\s*(==|=|<=|<|>=|>|!=|!|=~|~)/; #checks the condition
-	my ($last) = $temp_multi =~ /"?\S+"?\s*(?:==|=|<=|<|>=|>|!=|!|=~|~)\s*"?(\S+)"?\s*$/; #checks the last argument
-	
+	my ($last) = $temp_multi =~ /"?\S+"?\s*(?:==|=|<=|<|>=|>|!=|!|=~|~)\s*"?([^=~\s"]+)"?\s*$/; #checks the last argument
 	if (defined $first && !defined $cond && !defined $last) {
 		# if there is only the first argument, it is treated here
 		my $pfirst = $self->parse_command(refined_macroKeywords($first));
