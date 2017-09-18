@@ -31,7 +31,11 @@ sub cmpr {
 	my ($first, $cond, $second) = @_;
 	
 	if (defined $first && !defined $cond && !defined $second) {
-		return $first;
+		if ($first == 1 || $first == 0) {
+			return $first;
+		} else {
+			error "cmpr: the value must be either 0 or 1 (value: '$first')", "eventMacro";
+		}
 		
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
@@ -67,8 +71,8 @@ sub cmpr {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
 		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
-		return ($first > $second  ? 1 : 0) if ($cond eq ">");
-		return ($first < $second  ? 1 : 0) if ($cond eq "<");
+		return ($first >  $second ? 1 : 0) if ($cond eq ">");
+		return ($first <  $second ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
 		
 	} elsif (($cond eq "=" || $cond eq "==")) {
