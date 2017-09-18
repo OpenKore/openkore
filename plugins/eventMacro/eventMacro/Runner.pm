@@ -1451,8 +1451,8 @@ sub parse_call {
 sub statement {
 	my ($self, $temp_multi) = @_;
 	my ($negate, $first) = $temp_multi =~ /^\s*(\!|not)?\s*"?(\S+)"?\s*/; #checks the first argument
-	my ($cond) = $temp_multi =~ /"?\S+"?\s*([<>=!~]+)/; #checks the condition
-	my ($last) = $temp_multi =~ /^\s*(?:\!|not)?\s*"?\S+"?\s*[<>=!~]+\s*"?(\S+)"?\s*$/; #checks the last argument
+	my ($cond) = $temp_multi =~ /"?\S+"?\s*(==|=|<=|<|>=|>|!=|!|=~|~)/; #checks the condition
+	my ($last) = $temp_multi =~ /"?\S+"?\s*(?:==|=|<=|<|>=|>|!=|!|=~|~)\s*"?(\S+)"?\s*$/; #checks the last argument
 	
 	if (defined $first && !defined $cond && !defined $last) {
 		# if there is only the first argument, it is treated here
@@ -1465,13 +1465,13 @@ sub statement {
 			return cmpr($pfirst); # return the normal value of cmpr
 		}
 	} elsif (!defined $first) {
-		$self->error("syntax error in statement: missing first argument or there is a typo\n".
-		"first argument = missing  | Condition = $cond  | last argument = $last");
+		$self->error("syntax error in statement: missing first argument\n".
+		"first argument = missing, Condition: '$cond', last argument: '$last'");
 	} elsif (!defined $cond) {
 		$self->error("syntax errror in statement: missing condition (<= >= =~ =! ~ )");
 	} elsif (!defined $last) {
-		$self->error("syntax errror in statement: missing last argument or there is a typo\n".
-		"1st argument = $first | Condition = $cond, last argument =  missing");
+		$self->error("syntax errror in statement: missing last argument\n".
+		"1st argument: '$first', Condition: '$cond', last argument:  missing");
 	} else {
 		#when has first argument, condition and last argument, it is treated here
 		my $pfirst = $self->parse_command(refined_macroKeywords($first));
