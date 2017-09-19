@@ -7798,4 +7798,44 @@
 24016#Brincos Sombrios Festivos#
 24017#Colar Sombrio Festivo#
 15238#Cota do Dragão Maligno#
+//*****************************************************
+//------------Aplicar em 2017-09-12--------------------
+//*****************************************************
+20432#Elmo da Khalitzburg#
+20134#Elmo do Cavaleiro Branco#
+15240#Armadura do Dragão Vermelho#
+19136#Espírito da Donzela Verde#
+19249#Bênção Celestial#
+19263#Elmo do Xogunato#
+1590#Compêndio de Criaturas#
+1298#Bat-Katar#
+18559#Orelhas do Fafnir#
+18560#Máscara do Fafnir#
+//*****************************************************
+//------------Aplicar em 2017-09-19--------------------
+//*****************************************************
+20277#Boina Estudantil#
+20251#Capuz da Pastora#
+20441#Cachecol com Laço#
+//*****************************************************
+//------------QUEST DE ANIVERSÁRIO---------------------
+//*****************************************************
+28431#Anel de Corrida#
+28432#Anel Espiritual#
+2166#Bíblia de Exorcismo#
+19305#Lampião das Fadas#
+20054#Chupeta de Neném#
+20472#Elmo do Anjo#
+19639#Chapéu Rural#
+31093#Lanterna das Fadas#
+19913#Chapéu de Esterco#
+19638#Sr. Sorriso#
+18115#Arco de Orc#
+25402#Fada Capturada#
+25403#Moeda de Fada#
+23460#Bolsa Mágica#
+13073#Adaga Certeira#
+9068#Ovo de Unicórnio#
+25275#Ticket de Unicórnio#
+20344#Balões de Festa#
 //file end

@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 21/08, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 22/08. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 25/09, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 26/09. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -23,11 +23,11 @@ Peso: ^7777770^000000
 #
 //Ticket dos Gatos
 //7608#
-Um Ticket criado pelo Prefeito Thomas, Ex-almirante de uma embarcação da Corporação da Pata de Gato.
-Trocando-o no NPC de Promoções Especiais (Prontera, coordenadas 141, 226), você tem a chance de conseguir Frutas dos Gatos ou Ira do Deus do Mar.
-^ff0000ATENÇÃO: este Ticket será removido durante a manutenção do dia 13/06/17. O item obtido na troca com a NPC é aleatório! Boa sorte!^000000
-Peso: ^7777771^000000
-#
+//Um Ticket criado pelo Prefeito Thomas, Ex-almirante de uma embarcação da Corporação da Pata de Gato.
+//Trocando-o no NPC de Promoções Especiais (Prontera, coordenadas 141, 226), você tem a chance de conseguir Frutas dos Gatos ou Ira do Deus //do Mar.
+//^ff0000ATENÇÃO: este Ticket será removido durante a manutenção do dia 13/06/17. O item obtido na troca com a NPC é aleatório! Boa sorte!//^000000
+//Peso: ^7777771^000000
+//#
 501#
 Poção feita de ervas vermelhas. Recupera ^000088cerca de 45 HP^000000, dependendo da sua vitalidade. ^0000FFDê um clique duplo neste item para recuperar uma quantia de HP.^000000
 Peso: ^7777777^000000
@@ -8804,12 +8804,12 @@ Classes que utilizam: ^777777Mago e suas evoluções^000000
 1242#
 Faca criada por arquimagos poderosos. Ela descobre os pontos vulneráveis do alvo e permite causar acertos críticos.
 ^0000ffCRIT +90.^000000
-Classe: ^777777Adaga^000000
-Força de ataque: ^777777140^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777140^000000
 Peso: ^77777755^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Mago e suas evoluções^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
 #
 7093#
 Uma roda dentada de metal, bastante gasta. Parece fazer parte de um conjunto complexo de engrenagens.
@@ -19970,26 +19970,26 @@ Classes que utilizam:  ^777777Justiceiro^000000
 #
 2677#
 Um belo anel imbuído de estranhos poderes espirituais, que gera efeitos surpreendentes quando usado com os itens certos.
-INT +2, DES +1
-^99FF66Conjunto Cabalístico^000000
-^00FF00Anel Espiritual^000000
-^00FF00Cajado Esfíngico ou Cajado Cabalístico^000000
-ATQM +6%
-DES +2
-Reduz o tempo de conjuração variável
-em um percentual
-que depende do nível de
-aprimoramento do cajado.
-^99FF66Conjunto de Exorcismo^000000
-^00FF00Anel Espiritual^000000
-^00FF00Presilha ou Rosário^000000
-+30% de dano com Magnus Exorcismus
-+50% de dano com Curar em Morto-Vivos
-Recuperação de SP +9%
-Tipo de Item: ^777777Acessório^000000
+^0000FFINT +2. DES +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado Esfíngico]^000000
+ou
+^FF6347[Cajado Cabalístico]^000000
+^0000FFDES +2 adicional.^000000
+^0000FFDano mágico +6%.^000000
+A cada refino da arma:
+^0000FFConjuração variável -1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Presilha]^000000
+ou
+^FF6347[Rosário]^000000
+^0000FFDano de [Curar] +50%.^000000
+^0000FFDano de [Magnus Exorcismus] +30%.^000000
+^0000FFRegeneração natural de SP +9%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 2678#
 Um anel imbuído do poder do espírito-rei do fogo, que pode ser usado para fortalecer a arma do usuário.
@@ -23442,7 +23442,6 @@ Efeito é cancelado se o usuário morrer.
 Duração: ^77777720 minutos^000000
 Peso: ^7777778^000000
 #
-
 // ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
 7798#
 Um fragmento sombrio, imbuído com um espírito melancólico. Quando você olha para ele, pode se sentir absorto.
@@ -23455,8 +23454,6 @@ Você consegue sentir um poder muito perigoso deste cristal. Perto dele, você s
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
-
-
 // ------------------- 샌몥욮 뻆샌엛 ------------------
 6000#
 Cinzas imbuídas com um poder mágico misterioso e sombrio.
@@ -24880,14 +24877,18 @@ Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
 // ---------- 쟒슦 엗붺욮 -----------
 2129#
 Livro que contém habilidades básicas para Clérigos.
-Recuperação de HP e SP + 3%. INT + 1.
-Quando equipada com a Vara Sagrada, aumenta em 20% o dano com a habilidade 'Magnus Exorcismus'.
-Acidiona a chance de invocar a habilidade 'Esconjurar' quando o usuário receber dano físico.
+^0000FFINT +1.^000000
+^0000FFRegeneração natural de HP e SP +3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Vara Sagrada]^000000
+^0000FFDano de [Magnus Exorcismus] +20%.^000000
+Ao receber danos físicos:
+^0000FF2% de chance de autoconjurar [Esconjurar] nv. 1.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Sacerdote, Monge e evoluções^000000
+Classes: ^777777Sacerdotes, Monges e evoluções^000000
 #
 2130#
 Grande escudo no formato de uma cruz.
@@ -25526,12 +25527,12 @@ Classes: ^777777Transclasses^000000
 #
 2744#
 Um anel que dá a sensação de voar como um foguete. Mas a reação é tão grande quanto seu efeito.
-^0000ffTempo de conjuração variável -10%.^000000
-^0000ffTempo de pós-conjuração +5%.^000000
+^0000FFConjuração variável -10%.^000000
+^0000FFPós-conjuração +5%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Classes que utilizam:  ^7777772a. Classe Transcendental^000000
+Classes:  ^7777772a. Classe Transcendental^000000
 #
 2745#
 Um pequeno ramo de flores, parecido com o Pinguicula.
@@ -30572,8 +30573,8 @@ Um delicioso pastel recheado de carne de porco e vegetais.
 Peso: ^7777771^000000
 #
 12755#
-Fogos de Artifício que trazem "Sorte" e "Fortuna". Em algumas regiões da China, acredita-se que têm o poder de expulsar todos os males durante o Ano Novo.
-^0000ffAo ser utilizado conjura as habilidades "Invocar Esfera Espiritual" em nível 3 e "Disparo de Esferas Espirituais" em nível 5.^000000
+Fogos de artifício usados para ocasiões especiais! Você consegue até sentir o espírito do festival a cada explosão!
+^0000ffAtiva [Invocar Esfera Espiritual] nv. 3 e [Disparo de Esferas Espirituais] nv. 5.^000000
 Peso: ^7777771^000000
 #
 12756#
@@ -43168,24 +43169,27 @@ Classes: ^777777Todas^000000
 #
 18900#
 Na verdade, esse é um salsichão tradicional típico da República de Schwartzvald, cujo nome veio de uma famosa disputa que aconteceu na borda do Vulcão de Thor por um Anel Precioso.
-HP Máximo +50.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa : ^7777771^000000
-Equipa em : ^777777Baixo^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777760^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +50.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777771^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
 #
 18901#
 Chapéu usado por um mago muito famoso, que depois mudou seu guarda-roupa para branco. Foi ele quem liderou um grupo de anões rumo às profundezas do Lago do Abismo e mais tarde deu a ideia de personagens babies jogarem seu Anel Precioso no Vulcão de Thor.
-VIT +3. +10% de Recuperação de HP.
-Se usado em conjunto com  Dedo do Froido, adiciona +10% de Recuperação de SP.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa : ^7777775^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777760^000000
-Classe : ^777777Todas^000000
+^0000ffVIT +3.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Dedo do Froido]^000000
+^0000ffRegeneração natural de SP +10%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
 #
 //-------------------------------------------------------------------
 
@@ -43646,16 +43650,17 @@ Peso: ^7777771^000000
 //-------------------------------------------------------------------
 //--29-04-2014
 18863#
-Este robe pertenceu a um famoso exorcista, que combatia demônios de Gehenna ao lado de seu irmão gêmeo.  Por ser abençoado por chamas azuis, ele protege contra mortos-vivos.
+Este robe pertenceu a um famoso exorcista, que combatia demônios de Gehenna ao lado de seu irmão gêmeo. Por ser abençoado por chamas azuis, ele protege contra mortos-vivos.
 ^0000ffDEFM +5.^000000
-^0000ffResistência a propriedade Maldito +5% a cada 3 refinos.^000000
-Se usado por Noviços e evoluções:
+A cada 3 refinos:
+^0000ffResistência a raça Morto-Vivo +5%.^000000
+^FF6347Noviços e evoluções:^000000
 ^0000ffResistência a propriedade Maldito +10%.^000000
-Tipo : ^777777Armadura^000000
-Defesa : ^77777757^000000
-Peso : ^777777170^000000
-Nível Necessário : ^77777760^000000
-Classes : ^777777Todas^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777757^000000
+Peso: ^777777170^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
 #
 
 //-------------------------------------------------------------------
@@ -54271,6 +54276,412 @@ Tipo: ^777777Armadura^000000
 Defesa: ^77777760^000000
 Peso: ^777777400^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-09-12--------------------
+//*****************************************************
+20432#
+Este era o elmo original usado pela maior espadachim que viveu na antiga capital de Rune-Midgard. A capitã da Ordem dos Khalitzburg era perita no uso do florete, mas infelizmente acabou sucumbindo à Maldição de Glast Heim, lançada pela maligna valquíria necromante, Himelmez.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20134#
+Este era o elmo original usado pelo grande guerreiro da cavalaria da antiga capital de Rune-Midgard. O capitão da Ordem dos Cavaleiros Brancos era perito em combate montado, mas infelizmente acabou sucumbindo à Maldição de Glast Heim, lançada pela maligna valquíria necromante, Himelmez.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15240#
+Uma poderosa armadura feita com escamas e presas do Detardeurus. Há quem diga que ela foi usada pelo Drácula num dos remakes mais recentes da sua origem, seja lá o que isso significa. Outros dizem que ela foi usada por um serial killer que acabou sendo preso graças à ajuda que outro serial killer, chamado Cannibal Lecter, antes dele ajudar também a oficial da guarda Clarissa a quebrar o silêncio dos inocentes.
+^0000ffPrecisão +10.^000000
+^0000ffTodos os atributos +1.^000000
+Refino +6 ou mais:
+^0000ffPrecisão +10 adicional.^000000
+^0000ffDano físico contra monstros Chefes +10%.^000000
+Refino +11 ou mais:
+^0000ffPrecisão +10 adicional.^000000
+^0000ffDano físico contra monstros Chefes +10% adicional.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777100^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19136#
+Tudo começou quando você passou a sentir constantemente observado como se alguém, ou alguma coisa, estivesse de olho em você. Depois, vieram um estranho peso nas costas e dores no pescoço. Parecia até que você estava numa daquelas clássicas histórias de terror oriental, como a “Espíritos, a Donzela está ao seu lado”. Até que você descobriu que estava mesmo com o “encosto” da Donzela Verde de Louyang empoleirado nos seus ombros!
+^0000ffAo realizar ataques físicos ou mágicos:^000000
+^0000ffChance de se transformar em Donzela Verde por 5 segundos.^000000
+A cada 2 refinos:
+^0000ffTaxa de DROP +1%.^000000
+^0000ffEXP adquirida ao derrotar monstros +1%.^000000
+A cada 4 refinos:
+^0000ffHP e SP máx. +1%.^000000
+Refino +9 ou mais:
+^0000ffRegeneração natural de HP e SP +40%.^000000
+Refino +12 ou mais:
+^0000ffHP e SP máx. +3%.^000000
+^CD3278Durante a transformação:^000000
+^0000ffDano crítico +30%.^000000
+^0000ffDano mágico +30%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777771^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19249#
+Você foi escolhido pelos Aesir, os deuses de Rune-Midgard, como um de seus campeões. Essa auréola celestial que agora coroa a sua cabeça também serve como um circuito mágico que lhe garante alguns bônus especiais. Só tome cuidado, porque agora Hela, a deusa da Morte, vai enxergar você como um grande inimigo!
+^0000ffA cada 2 refinos:^000000
+^0000ffATQM +20.^000000
+Refino +7 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Neutro e Sombrio +10%.^000000
+Refino +11 ou mais:
+^0000ffDano mágico de propriedade Água, Vento, Terra e Fogo +10%.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado Mental]^000000
+A cada 2 refinos da arma:
+^0000ffDano de [Onda Psíquica] +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Kronos]^000000
+A cada 2 refinos da arma:
+^0000ffDano de [Chamas de Hela] +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Mikatsuki]^000000
+^FF6347[Adaga Raksasa]^000000
+A cada refino da Mikatsuki:
+^0000ffConjuração variável -1%.^000000
+A cada refino da Raksasa:
+^0000ffConjuração variável -1%.^000000
+A cada 2 refinos das duas armas:
+^0000ffDano de [Pétalas Flamejantes] [Lança Congelante] e [Lâmina de Vento] +5%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19263#
+Este era o elmo usado pelos grandes generais do antigo Xogum de Amatsu. O último samurai a vestir esse elmo antes de você foi um gaijin chamado Tom Crusoé, que adorava missões impossíveis e foi visto pela última vez indo pra Pirâmide de Morroc enfrentar uma múmia. Por algum motivo estranho, ele foi pra lá de olhos bem fechados, usando apenas uma camisa branca, óculos escuros, um par de meias e uma roupa de baixo, mas se achando um grande ás indomável.
+^0000ffA cada 2 refinos:^000000
+^0000ffATQ +15.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+Refino +9 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +11 ou mais:
+^0000ffDano crítico +15%.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Gungnir]^000000
+A cada 2 refinos da arma:
+^0000ffDano de [Toque do Oblívio] +7%.^000000
+^FF6347Conjunto^000000
+^FF6347[Zweihander]^000000
+A cada 2 refinos da arma:
+^0000ffATQ +20.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777712^000000
+Peso: ^77777780^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+1590#
+Tão essencial quanto o Manual do Jogador e a Enciclopédia do Mestre do Jogo. Sem esses três livros básico, você não poderá jogar uma campanha decente de Calabouços e Dragões. Além disso, neste livro estão listados todos os animais fantásticos e onde habitam, uma informação que você normalmente só encontra no database do jogo.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +110.^000000
+A cada refino:
+^0000ffATQ +3. ATQM +3.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Jiboia]^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Sorrateiro]^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Jiboia]^000000
+^FF6347[Carta Sorrateiro]^000000
+^0000ffVelocidade de ataque +1.^000000
+Tipo: ^777777Livro^000000
+Ataque: ^77777710^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Feiticeiros e Arcebispos^000000
+#
+1298#
+Este misterioso katar foi encontrado em uma cena de crime, onde testemunhas afirmam que um misterioso cavaleiro das trevas vestido de morcego estava batendo em um pobre coitado vestido de palhaço. Note o pequeno detalhe em formato de morcego na empunhadura do katar. Com certeza isso não tem nada a ver com o nome do item, e sim o fato que o vigilante parece gostar de BATer nas pessoas. É... acho que foi um bardo quem escreveu essa descrição.
+^CD3278Duplica a chance de causar um ataque crítico.^000000
+A cada refino:
+^0000ffCRIT +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Yakuza]^000000
+^0000ffDano crítico +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Sedora]^000000
+^0000ffDano crítico +5%.^000000
+Tipo: ^777777Katar^000000
+Ataque: ^777777110^000000
+Peso: ^777777270^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Sicários^000000
+#
+18559#
+Esse acessório usado na altura das orelhas simula as asas escamosas do ganancioso dragão Fafnir. Os bardos contam as lendas de que Fafnir na verdade era um anão, antes de se transformar em um dragão. Ele foi amaldiçoado por sua cobiça, após matar o próprio pai para ficar com o seu ouro.
+^0000ffCRIT +3.^000000
+^0000ffRegeneração natural de HP -100%.^000000
+^FF6347Conjunto^000000
+^FF6347[Fafnir_Mask]^000000
+^0000ffDano crítico +5%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777773^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+18560#
+Uma máscara perfeita para alguém ganancioso como você esconder suas verdadeiras intenções. Só tome cuidado se for tramar algum tipo de golpe para ficar com o ouro do seu pai ou de outras pessoas. Vai que os deuses te amaldiçoam e te transformam em um dragão...
+^0000ffCRIT +2.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777772^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-09-19--------------------
+//*****************************************************
+20277#
+Se você sempre quis ter o mesmo visual dos alunos da escola onde estudaram a heroína Sarakura Colecionadora de Cartas, o monge Chorão Li e a estilista Motoyo Doidage, essa boina com ar charmoso é a escolha perfeita para o seu guarda-roupa!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20251#
+Um capuz que protege contra o sol usado por pastoras de Bodes em Hugel. Enfeitado com rosas, esse é um visual ideal pra quem gosta da primavera, campos verdejantes ou apenas quer esconder sua identidade e seus planos malignos no meio da multidão. Mas hein?
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20441#
+Você que sempre sonhou em ser uma Rosa Selvagem, agora pelo menos pode se vestir mais ou menos como uma. E isso enquanto obedece sua mãe e sai bem agasalhado na rua. A combinação perfeita entre visual, conforto, praticidade e cosplay.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------QUEST DE ANIVERSÁRIO---------------------
+//*****************************************************
+28431#
+Um anel que dá a sensação de voar como um foguete. Mas a reação é tão grande quanto seu efeito.
+^0000FFConjuração variável -10%.^000000
+^0000FFPós-conjuração +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Classes:  ^7777772a. Classe Transcendental^000000
+#
+28432#
+Um belo anel imbuído de estranhos poderes espirituais, que gera efeitos surpreendentes quando usado com os itens certos.
+^0000FFINT +2. DES +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado Esfíngico]^000000
+ou
+^FF6347[Cajado Cabalístico]^000000
+^0000FFDES +2 adicional.^000000
+^0000FFDano mágico +6%.^000000
+A cada refino da arma:
+^0000FFConjuração variável -1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Presilha]^000000
+ou
+^FF6347[Rosário]^000000
+^0000FFDano de [Curar] +50%.^000000
+^0000FFDano de [Magnus Exorcismus] +30%.^000000
+^0000FFRegeneração natural de SP +9%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+2166#
+Livro que contém habilidades básicas para Clérigos.
+^0000FFINT +1.^000000
+^0000FFRegeneração natural de HP e SP +3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Vara Sagrada]^000000
+^0000FFDano de [Magnus Exorcismus] +20%.^000000
+Ao receber danos físicos:
+^0000FF2% de chance de autoconjurar [Esconjurar] nv. 1.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^77777780^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Sacerdotes, Monges e evoluções^000000
+#
+19305#
+Uma gaiola de vidro que contém fadas aprisionadas. O brilho delas deixa o lugar tristemente iluminado.
+^008080Durante o evento:^000000
+Ao derrotar o Réquiem de Marfim:
+^0000FF100% de chance de derrubar [Dente de Marfim].^000000
+Ao derrotar o Fanático das Trevas:
+^0000FF100% de chance de derrubar [Prêmio de Esquadrão].^000000
+Ao derrotar o Necromante de Morroc (Fantasma):
+^0000FF100% de chance de derrubar [Prêmio do Herói].^000000
+Ao derrotar o Polvo Gigante:
+^0000FF100% de chance de derrubar [Bolsa Gasta de Moedas].^000000
+Ao derrotar o Espectro da Celine:
+^0000FF100% de chance de derrubar [Caixa de Ferramentas Fechada].^000000
+Ao derrotar os Guardas de Payon, Soldados de Payon, Lobos Ferozes e Lobos da Guarda:
+^0000FF20% de chance de derrubar [Bala de Guaraná].^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Classe: ^777777Equipamento para a cabeça^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+20054#
+Uma chupeta usada para silenciar bebês e nenéns. Não é a toa que é o item favorito de diabinhos como Deviruchi, Diabolik e o seu irmão mais novo.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Classes: ^777777Todas^000000
+#
+20472#
+Um elmo usado por anjos da mais alta hierarquia. Seu ornamento com asas angelicais o tornam fabuloso.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19639#
+Chapéu cônico usado por trabalhadores em áreas rurais, mas pode ser usado para esconder seu rosto com facilidade.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31093#
+Uma gaiola de vidro que contém um brilho especial. Você se sente feliz ao lembrar que nenhuma fada está presa de verdade.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Classes: ^777777Todas^000000
+#
+19913#
+Um curioso chapéu muito usado por guerreiros no passado durante as famosas disputas feudais. Apesar de ser apenas um ornamento, ainda exala um cheiro desconfortável.
+Tipo: ^777777Equipamento para a cabeça^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19638#
+Uma máscara que representa o maior ícone de toda uma geração. Sempre que você a usá-la, lembrará da Dona Risadinha e seu marido, que nunca saberemos o rosto.
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+18115#
+O arco do Orc Arqueiro. Parece ser muito grande e forte.
+^0000FFAo derrotar monstros, chance de derrubar [Flecha de Aço].^000000
+^FF6347Conjunto^000000
+^FF6347[Flecha de Aço]^000000
+^0000FFDano físico a distância +50%.^000000
+Tipo: ^777777Arco^000000
+Ataque: ^777777120^000000
+Peso: ^777777160^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777765^000000
+Classes: ^777777Arqueiros, Arruaceiros e evoluções^000000
+#
+25402#
+Uma sacola com uma criatura mágica capturada. Você pode perceber que ela ainda está viva pelo brilho da sacola.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém.^000000
+Peso: ^7777771^000000
+#
+25403#
+Uma pequena moeda dourada usada pelas fadas.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém.^000000
+Peso: ^7777770^000000
+#
+23460#
+Uma sacola confeccionada especialmente para capturar seres mágicos.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém.^000000
+Peso: ^7777775^000000
+#
+13073#
+Faca criada por arquimagos poderosos. Ela descobre os pontos vulneráveis do alvo e permite causar acertos críticos.
+^0000ffCRIT +90.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777140^000000
+Peso: ^77777755^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777755^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
+#
+9068#
+Um ovo contendo um Unifada de estimação.
+Deve ser chocado usando uma [Incubadora]
+^008080Durante o evento:^000000
+^0000ffAumenta a velocidade de movimento.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Mascote^000000
+Alimentação: ^777777Erva Azul^000000
+Peso: ^7777770^000000
+#
+25275#
+Um trecho na linguagem das fadas pode ser facilmente traduzido para o nosso idioma. Nele, é possível ler que você pode conseguir um ^CD3278Ovo de Unicórnio^000000!
+^FF6347Pode ser trocado pela Negociadora de Ovos (prontera 221, 209)^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Peso: ^7777771^000000
+#
+20344#
+Balões inflados especialmente para comemorar uma data especial: 13 anos de Ragnarök Online no Brasil!
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //file end
