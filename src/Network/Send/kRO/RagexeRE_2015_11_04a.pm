@@ -27,7 +27,6 @@ sub new {
 		'0363' => ['character_move', 'a3', [qw(coordString)]],
 		'07EC' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'088D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
-		'0437' => undef,
 		'0437' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0964' => ['item_take', 'a4', [qw(ID)]],
 		'0360' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
@@ -39,6 +38,21 @@ sub new {
 		'0886' => ['sync', 'V', [qw(time)]],
 #		'093A' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0940' => ['storage_password'],
+		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
+		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
+		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
+		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
+		'09EA' => ['rodex_read_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexReadMail
+		'09E8' => ['rodex_open_mailbox', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexOpenMailbox
+		'09EE' => ['rodex_next_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexNextMaillist
+		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
+		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
+		'0A03' => ['rodex_cancel_write_mail'],   # 2 -- RodexCancelWriteMail
+		'0A04' => ['rodex_add_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexAddItem
+		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
+		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
+		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail		
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -61,6 +75,21 @@ sub new {
 		storage_item_remove 0364
 		sync 0886
 		storage_password 0940
+		achievement_get_reward 0A25
+		rodex_close_mailbox 09E9
+		rodex_refresh_maillist 09EF
+		rodex_delete_mail 09F5
+		rodex_read_mail 09EA
+		rodex_open_mailbox 09E8
+		rodex_next_maillist 09EE
+		rodex_request_zeny 09F1
+		rodex_request_items 09F3
+		rodex_cancel_write_mail 0A03
+		rodex_add_item 0A04
+		rodex_remove_item 0A06
+		rodex_open_write_mail 0A08
+		rodex_checkname 0A13
+		rodex_send_mail 0A6E
 	);
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
