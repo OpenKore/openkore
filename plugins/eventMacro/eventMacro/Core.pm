@@ -1491,10 +1491,9 @@ sub call_macro {
 		#here the macro name and the params are together in get_parameter, time to split
 		my ($macro_name, @params) = parseArgs($automacro->get_parameter('call'));
 
-		# Update $.paramN with the values from the call.
-		$eventMacro->set_scalar_var( ".param$_", $params[ $_ - 1 ], 0 ) foreach 1 .. @params;
-		$eventMacro->set_scalar_var( ".param$_", undef,             0 ) foreach ( @params + 1 ) .. 100;
-		
+		# Update $.param[0] with the values from the call.
+		$eventMacro->set_full_array( ".param", \@params);
+
 		$automacro->set_call('call', $macro_name);
 	}
 	

@@ -3025,8 +3025,10 @@ sub deal_begin {
 
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n"), "deal";
+		Plugins::callHook("error_deal", { type =>$args->{type}} );
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
+		Plugins::callHook("error_deal", { type =>$args->{type}} );
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -3044,10 +3046,13 @@ sub deal_begin {
 			undef %outgoingDeal;
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
+		Plugins::callHook("engaged_deal", {name => $currentDeal{name}});
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
+		Plugins::callHook("error_deal", { type =>$args->{type}} );
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
+		Plugins::callHook("error_deal", { type =>$args->{type}} );
 	}
 }
 
@@ -3056,6 +3061,7 @@ sub deal_cancelled {
 	undef %outgoingDeal;
 	undef %currentDeal;
 	message T("Deal Cancelled\n"), "deal";
+	Plugins::callHook("cancelled_deal");
 }
 
 sub deal_complete {
@@ -3063,6 +3069,7 @@ sub deal_complete {
 	undef %incomingDeal;
 	undef %currentDeal;
 	message T("Deal Complete\n"), "deal";
+	Plugins::callHook("complete_deal");
 }
 
 sub deal_finalize {
@@ -3070,6 +3077,7 @@ sub deal_finalize {
 	if ($args->{type} == 1) {
 		$currentDeal{other_finalize} = 1;
 		message TF("%s finalized the Deal\n", $currentDeal{name}), "deal";
+		Plugins::callHook("finalized_deal", {name => $currentDeal{name}});
 
 	} else {
 		$currentDeal{you_finalize} = 1;
@@ -3088,6 +3096,7 @@ sub deal_request {
 	$timeout{ai_dealAutoCancel}{time} = time;
 	message TF("%s (level %s) Requests a Deal\n", $user, $level), "deal";
 	message T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal";
+	Plugins::callHook("incoming_deal", {name => $user});
 }
 
 sub devotion {

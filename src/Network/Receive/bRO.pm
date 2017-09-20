@@ -22,7 +22,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
+		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 	);
 	

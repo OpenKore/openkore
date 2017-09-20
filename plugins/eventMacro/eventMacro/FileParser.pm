@@ -113,7 +113,7 @@ sub parseMacroFile {
 				}
 				
 				
-			} elsif (/call [^{]/) {
+			} elsif (/call [^{]/ && !$macro{$block{loadmacro_name}}) {
 				my ($key, $value, $param) = $_ =~ /^(call)\s+(\S+)(?:\s*(.*))?/;
 				if (!defined $key || !defined $value) {
 					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";

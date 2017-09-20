@@ -30,6 +30,7 @@ sub validate_condition {
 	
 	#always true
 	$self->{last_hook} = $callback_name;
+	$self->{vars} = \%$args;
 	
 	return $self->SUPER::validate_condition( 1 );
 }
@@ -39,6 +40,9 @@ sub get_new_variable_list {
 	my $new_variables;
 	
 	$new_variables->{".".$self->{name}."Last"} = $self->{last_hook};
+	while( my( $key, $value ) = each %{$self->{vars}} ){
+		$new_variables->{".".$self->{name}."Last".ucfirst($key)} = $value;
+	}
 	
 	return $new_variables;
 }
