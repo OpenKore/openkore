@@ -34,14 +34,22 @@ sub update {
 	my ($self) = @_;
 	
 	return unless $conState == Network::IN_GAME;
-	
+=pod
 	$self->set ('feed', defined %pet && $pet{ID});
 	$self->set ('performance', defined %pet && $pet{ID});
 	$self->set ('unequip', defined %pet && $pet{ID} && $pet{accessory});
 	$self->set ('return', defined %pet && $pet{ID});
 	
 	return unless defined %pet && $pet{ID};
-	
+# $pet{ID} doesn't work? need investigation
+=cut
+	$self->set ('feed', defined %pet);
+	$self->set ('performance', defined %pet);
+	$self->set ('unequip', defined %pet && $pet{accessory});
+	$self->set ('return', defined %pet);
+
+	return unless defined %pet;
+
 	$self->Freeze;
 	
 	$self->set ('name', $pet{name});
