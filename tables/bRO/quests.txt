@@ -11620,3 +11620,40 @@ Reporte o caso a Hugin.#
 12322#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
 O tempo foi distorcido por Hugin! Qualquer coisa pode acontecer dentro deste castelo.#
 Distorção Espacial#
+
+//13th anniversary
+291000#Presente das Fadas#SG_FEEL#QUE_NOIMAGE#
+Você capturou algumas fadas para a Garota Mimada em Alberta. Você pode dizer que fez uma boa ação, afinal... era o aniversário dela...#
+Volte amanhã.#
+
+291001#Presente das Fadas (Dia 1)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291002#Presente das Fadas (Dia 2)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291003#Presente das Fadas (Dia 3)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291004#Presente das Fadas (Dia 4)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291005#Presente das Fadas (Dia 5)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291006#Presente das Fadas (Dia 6)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291007#Presente das Fadas (Dia 7)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+7775#Mudança de Classe: Bioquímicos#SG_FEEL#QUE_NOIMAGE#
+A melhor maneira de treinar habilidades com o carrinho é usá-lo contra alguma coisa. Eu lembro de ter visto um monte de Esporos Venenosos em uma jaula...#
+Elimite 100 Esporos Venenosos na jaula da Guilda#

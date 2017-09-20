@@ -141,7 +141,7 @@ PES#
 [Alt] + [End]:  Liga ou Desliga a Barra de HP/SP#
 [Alt] + [Home]:  Liga ou Desliga o Cursor do Solo#
 [Insert]:  Faz o personagem sentar ou levantar.  (Atalho para /sit ou /stand)#
-Parabéns!  Você é o campeão!!  Sua recompensa é o item# 
+Parabéns!  Você é o campeão!!  Sua recompensa é o item#
 !#
 Parabéns!  Você é o campeão!! Sua recompensa em pontos de EXP é #
 adquirida!#
