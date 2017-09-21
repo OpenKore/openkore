@@ -1450,9 +1450,13 @@ sub parse_call {
 # use of [!/not] is optional, and will invert the result
 sub statement {
 	my ($self, $temp_multi) = @_;
-	my ($negate, $first) = $temp_multi =~ /^\s*(\!|not)?\s*"?(\S+)"?\s*/; #checks the first argument
-	my ($cond) = $temp_multi =~ /"?\S+"?\s*(==|=|<=|<|>=|>|!=|!|=~|~)/; #checks the condition
-	my ($last) = $temp_multi =~ /"?\S+"?\s*(?:==|=|<=|<|>=|>|!=|!|=~|~)\s*"?([^=~\s"]+)"?\s*$/; #checks the last argument
+	my ($negate, $first) = $temp_multi =~ /^\s*(\!|not)?\s*"?([^=<>\!~"]+)"?\s*/; #checks the first argument
+	my ($cond) = $temp_multi =~ /[^=<>\!~"]+"?\s*(==|=~|<=|>=|!=|<|>|!|=|~)/; #checks the condition
+	my ($last) = $temp_multi =~ /[^=<>\!~"]+"?\s*(?:==|=~|<=|>=|!=|<|>|!|=|~)\s*"?([^=~"]+)"?\s*$/; #checks the last argument
+	
+	$first =~ s/^\s+|\s+$//; #trim whitespace in the beginning and end of string
+	$last =~ s/^\s+|\s+$//; #trim whitespace in the beginning and end of string
+	
 	if (defined $first && !defined $cond && !defined $last) {
 		# if there is only the first argument, it is treated here
 		my $pfirst = $self->parse_command(refined_macroKeywords($first));
