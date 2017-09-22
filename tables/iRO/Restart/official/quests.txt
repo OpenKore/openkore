@@ -21898,3 +21898,7 @@ Come back later for another buff#
 62946#Silvervine Miracle Elixir Buff III#SG_FEEL#QUE_NOIMAGE#
 You can get this buff up to 3 times a day#
 Come back later for another buff#
+
+62948#Silvervine Stat Reset#SG_FEEL#QUE_NOIMAGE#
+You can reset 5 of your stat points once a week. Please come back next week if you'd like to reset your stats again.#
+Come back next week if you'd like another stat reset#
