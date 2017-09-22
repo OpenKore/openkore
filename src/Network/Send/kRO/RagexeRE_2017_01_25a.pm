@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-#bysctnightcore
+
 package Network::Send::kRO::RagexeRE_2017_01_25a;
 
 use strict;
