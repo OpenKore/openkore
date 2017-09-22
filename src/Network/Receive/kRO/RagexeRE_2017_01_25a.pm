@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-# Korea (kRO) #bysctnightcore
+# Korea (kRO) 
 # The majority of private servers use eAthena, this is a clone of kRO
 package Network::Receive::kRO::RagexeRE_2017_01_25a;
 
