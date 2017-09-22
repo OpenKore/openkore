@@ -4076,7 +4076,7 @@
 6814#Soul_of_Swordman#
 6815#Soul_of_Merchant#
 6816#Soul_of_Thief#
-6817#Soul_of_Magician#
+6817#Soul_of_Mage#
 6818#Soul_of_Archer#
 6819#Soul_of_Acolyte#
 6820#Energy_Fragment#
@@ -8476,8 +8476,8 @@
 20138#Rental_Underneath_Destroyer#
 20139#Rental_Underneath_Thunder_P#
 20145#Costume:_Robo_Eye#
-20146#Costume:_Angel's_Masquerade#
-20147#Costume:_Pigeon_On_Shoulder#
+20146#Costume:_Nero_Mask#
+20147#Costume:_Pigeon_on_Shoulder#
 20152#Costume_Straw_Rice_Bag#
 20153#Costume_Monochrome_Cap#
 20154#Costume:_Falling_Leaves#

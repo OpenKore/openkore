@@ -970,3 +970,6 @@ rockmi1.rsw#Rock Ridge Mine#
 rockmi2.rsw#Rock Ridge Mine#
 rockrdg1.rsw#Kiwawa Desert#
 rockrdg2.rsw#Kiwawa Desert#
+
+// 믽쎼듸샼 뷅뇔룊 뿀샼 2013-12-18
+lhz_dun_n.rsw#The Bed of Honor#
