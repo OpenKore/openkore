@@ -60863,9 +60863,7 @@ Required Level: ^777777130^000000
 Equip To: ^7777773rd Classes^000000
 #
 15103#
-^808080An armor containing the spirit of a legendary mythical beast of an East Asian culture.^000000
-^FFFFFF_^000000
-Type: Equipment
+^808080An armor containing the soul of the legendary Kirin.^000000
 Class: Armor
 Defense: 55
 Property: Holy
@@ -73930,15 +73928,12 @@ Required LV : ^7777771^000000
 Job : ^777777All^000000
 #
 19608#
-A hat adorned with a cute chick that brings feelings of joy to those that see it hopping.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A hat adorned with a cute chick that brings joy to those that see it hopping!^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19616#
 Wickebine's black cat ears
@@ -74106,15 +74101,12 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19654#
-A replica of the hats worn by the strange antlered captains of the airships that cross Rune Midgard.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A replica of the hats worn by the strange antlered captains of the airships that sail across Rune Midgard.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19655#
 A long and big bonnet. It is not sure when it is used for.
@@ -74450,15 +74442,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19712#
-This Angelic protector will call down holy wrath on those attacking you.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080You'll never feel anything less than blessed with this adorable angel relaxing atop your head!^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19713#
 A four leaf clover. It brings you with good luck.
@@ -74508,25 +74497,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 19721#
-This headgear with dark wings stretched to both sides intensifies certain Equipment's abilities.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
-This headgear with dark wings stretched to both sides intensifies certain Equipment's abilities.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
-A helm adorned with elegantly wide black wings.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080This headgear with dark wings that stretch menacingly to both sides.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19722#
 A dark-colored plastic frame glasses. Why don't you try this on?
@@ -75041,15 +75017,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19823#
-A hood of soft cat ears *no cats were harmed in the making of this headgear*
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1 and slot 2.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper/Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A hood of soft cat ears. No cats were harmed in the making of this headgear.^000000
+Class: Costume
+Position: Upper, Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19824#
 You can be chic and cynical with wearing this.
@@ -75218,15 +75191,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19876#
-An energetic Bunny Band perfect for a magic show.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A wonderful hat with rabbit ears on top. It's like magic!^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19877#
 A blindfold with scary eyes. It is said those eyes are moving sometimes.
@@ -76541,37 +76511,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
 20145#
-A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+^808080A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20146#
-A golden mask rumored to be worn by some ancient Goddess.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+^808080A golden mask which is rumored to belong to the goddess of water.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20147#
-It seems that this handsome pigeon has flocked to you! Don't worry about about feeding it, beakcause it's coo enough to find its own food!
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+^808080It seems that this handsome pigeon has flocked to you! Don't worry about about feeding it, beakcause it's coo' enough to find its own food!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20152#
 ^808080Someone pulled all the rice out of this bag. Time to wear it on my head!^000000
