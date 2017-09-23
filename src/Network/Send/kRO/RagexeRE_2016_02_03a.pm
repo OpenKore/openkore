@@ -39,7 +39,7 @@ sub new {
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'095D' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0954' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0954' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0873' => ['storage_password'],
 		'0437' => ['sync', 'V', [qw(time)]],		
 	);
