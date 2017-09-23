@@ -25,6 +25,7 @@ sub new {
 		buy_bulk_vender 0801
 		party_setting 07D7
 		send_equip 0998
+		pet_capture 08B5
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
