@@ -41,7 +41,7 @@ sub update {
 	$self->set ('return', defined %pet && $pet{ID});
 	
 	return unless defined %pet && $pet{ID};
-#doesn't work with $pet{ID} ? need investigation
+	#doesn't work with $pet{ID} ? need investigation
 =cut
 	$self->set ('feed', defined %pet);
 	$self->set ('performance', defined %pet);
