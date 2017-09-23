@@ -38,8 +38,8 @@ sub new {
 		'088A' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0885' => ['storage_item_add', 'v V', [qw(index amount)]],
-		'0891' => ['storage_item_remove', 'v V', [qw(index amount)]],
+		'0885' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0891' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0878' => ['storage_password'],
 		'035F' => ['sync', 'V', [qw(time)]],		
 	);

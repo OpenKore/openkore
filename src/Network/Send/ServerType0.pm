@@ -84,6 +84,7 @@ sub new {
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
+		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
@@ -135,6 +136,7 @@ sub new {
 		'0844' => ['cash_shop_open'],#2
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
 		'084A' => ['cash_shop_close'],#2
+		'08B5' => ['pet_capture', 'a4', [qw(ID)]],
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C9' => ['request_cashitems'],#2
@@ -951,8 +953,11 @@ sub sendPartyOption {
 
 sub sendPetCapture {
 	my ($self, $monID) = @_;
-	my $msg = pack('v a4', 0x019F, $monID);
-	$self->sendToServer($msg);
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_capture',
+		ID => $monID,
+	}));
 	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
