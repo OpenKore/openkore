@@ -2072,13 +2072,13 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 #
 1168#
 Espada de duas mãos gigantesca e pesada.
-^0000ffIndestrutível em batalha.^000000
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
+^a400cdIndestrutível em batalha.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^777777220^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1169#
 Espada usada para executar a pena de morte.
@@ -2866,15 +2866,15 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 #
 1413#
 Uma lança lendária que é famosa por nunca errar o alvo.
-^0000ffCada golpe possui uma chance de 25% de ser um ataque que não pode ser esquivado.^000000
-^0000ffPrecisão +30^000000
-Classe: ^777777Lança^000000
-Força de Ataque: ^777777120^000000
-Peso: ^77777750^000000
+^0000ffPrecisão +30.^000000
+^0000ffPrecisão perfeita +25.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777120^000000
 Propriedade: ^777777Vento^000000
+Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^7777774^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1414#
 Uma lança especialmente encantada com a propriedade Terra.
@@ -11412,14 +11412,20 @@ Combina com: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4199#
-Aumenta a Recuperação de SP e HP em 10%.
-^0000ffSe o usuário estiver equipado com itens que tenham as cartas Soldadinho de Chumbo, Anolian, Crocodilo e Lavadeira ao mesmo tempo, inflige-se 20% a mais de dano com Ataque Físico a Distância.
-AGI +5, DES +3.
-Ataque Preciso +20%.
-Se personagens da Classe Arqueiro e suas evoluções estiverem equipados com itens que tenham essas cartas listadas acima, o usuário passa a receber 5% a mais de Pontos de Experiência de monstros do tipo Bruto e adiciona-se a chance de causar Coma nos monstros ao realizar um Ataque Físico ao mesmo tempo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffRegeneração natural de HP e SP +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Anolian]^000000
+^FF6347[Carta Crocodilo]^000000
+^FF6347[Carta Lavadeira]^000000
+^FF6347[Carta Soldadinho de Chumbo]^000000
+^0000ffAGI +5. DES +3.^000000
+^0000ffPrecisão perfeita +20.^000000
+^0000ffDano físico a distância +20%.^000000
+Arqueiros e evoluções:
+^0000ffEXP adquirida ao derrotar monstros da raça Bruto +5%.^000000
+^0000ffAo realizar ataques físicos, chance de infligir [Coma] em monstros da raça Bruto.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4200#
@@ -11803,11 +11809,13 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4248#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Signum Crucis (nível 5), no inimigo, ao receber Dano Físico.
-Se o usuário estiver equipado com um item que tenha a carta Múmia, adiciona-se Ataque Guiado +20.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Escudo^000000
+Ao receber ataques físicos:
+^0000ff3% de chance de autoconjurar [Signum Crucis] nv. 5.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Múmia]^000000
+^0000ffPrecisão perfeita +20.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4249#
@@ -17609,15 +17617,15 @@ Classes: ^777777Noviços e evoluções^000000
 #
 1418#
 Uma lança lendária que é famosa por nunca errar o alvo.
-Cada golpe possui uma chance de 25% de ser um ataque que não pode ser esquivado.
-Precisão + 30
-Classe: ^777777Lança^000000
-Força de Ataque: ^777777120^000000
-Peso: ^77777750^000000
+^0000ffPrecisão +30.^000000
+^0000ffPrecisão perfeita +25.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777120^000000
 Propriedade: ^777777Vento^000000
+Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^7777774^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 13016#
 Adaga terrível de lâmina púrpura embebida em veneno.
@@ -17712,13 +17720,13 @@ Classes: ^777777Mercenários e evoluções^000000
 #
 1171#
 Espada de duas mãos gigantesca e pesada.
-Não pode ser destruída.
-Classe: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
+^a400cdIndestrutível em batalha.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^777777220^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1172#
 Grande espada larga de duas lâminas que costumava ser usada pelos
@@ -23012,13 +23020,17 @@ Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5379#
-Uma linda boina produzida pela estilista e escritora Motoyo Doidage. Ela ficou famosa por ser marca registrada da heroína de seus livros, Shoyo Sakura. Conhecida por “Colecionadora de Cartas e Molhos de Soja”, a Espiritualista procura recuperar os poderes do Mago Wloc.
-Cada ponto de aprimoramento reduz o tempo de conjuração variável em 1%.
-DEFM +2. ATQM +2%.
-Defesa: ^7777775^000000
+Uma linda boina produzida pela estilista e escritora Motoyo Doidage. Ela ficou famosa por ser marca registrada da heroína de seus livros, Shoyo Sakura. Conhecida por 'Colecionadora de Cartas e Molhos de Soja', a Espiritualista procura recuperar os poderes do Mago Wloc.
+^0000ffDEFM +2.^000000
+^0000ffDano mágico +2%.^000000
+A cada refino:
+^0000ffConjuração variável -1%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
 Peso: ^77777780^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 2640#
 Um belo anel forjado com uma pedra brilhante de cor vermelha. Foi encantado para fortalecer as Kafras e ajudá-las em suas mil e uma atividades.
@@ -27059,13 +27071,15 @@ Classes que utilizam: ^777777Todas^000000
 #
 5468#
 Produzida pela estilista e escritora Motoyo Doidage, essa é a marca registrada da heroína dos livros, a Colecionadora de Cartas e Molhos de Soja. Nas histórias, a boina é usada até mesmo pelo Monge Chorão Li, rival e verdadeiro amor da garota.
-Reduz em 5% o intervalo entre a conjuração de habilidades.
-Adicionalmente, para cada aprimoramento acima de +6, reduz o intervalo entre a conjuração de habilidades.
-Classe: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777775^000000
+^0000ffPós-conjuração -5%.^000000
+A partir do refino +6:
+^0000ffPós-conjuração -1% por refino.^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
 Peso: ^77777780^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2546#
 Uma capa com capuz típica dos habitantes de Comodo. Pode parecer estranho usar algo assim na praia mas, à noite, ela combina perfeitamente com o clima festivo do local. Ela foi feita especialmente para proteger contra o calor do sol e qualquer tipo de queimadura.
@@ -29161,15 +29175,17 @@ Classes que utilizam: ^777777Todas^000000
 //----Refining Event Nov 2009----
 5690#
 Um belo boné vermelho com asinhas nas laterais. Ao colocá-lo, você sente o desejo de abrir os braços e sair correndo por aí. Só não vá cutucar Chapéus Fedorentos por aí...
-^000088Concede FOR +1, INT +1, DES +1.^000000
-^000088Se refinado em +7, aumenta o ATQ e o ATQM em 2%.^000000
-^000088Se refinado em +9, aumenta o ATQ e o ATQM em 4%.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
+^0000ffFOR +1. INT +1. DES +1.^000000
+Refino +7 ou mais:
+^0000ffDano físico e mágico +2%.^000000
+Refino +9 ou mais:
+^0000ffDano físico e mágico +2% adicional.^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777760^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 
 //----Christmas Event 2009----
@@ -37748,16 +37764,17 @@ Classe : ^777777Todas exceto Aprendiz e Evoluções^000000
 
 18590#
 Belíssima tiara adornada com runas mágicas e fios de ouro. Nela encontra-se as duas metades da Joia das Cinco Almas, uma poderosa gema que no passado era guardada pela sacerdotisa Quiquiow. Dizem que a joia chegou a ser partir, mas foi reunida pela valente arqueira Gokame, que ao lado do espadachim Inu Seacha a usaram para enfrentar diversas criaturas demoníacas, inclusive o chatíssimo Narawootan.
-Aumenta em 5% o dano mágico e físico causado em monstros do tipo Demônio.
-Aumenta em 5% a resistência a ataques do tipo Demônio.
-Pequena chance de derrubar 'Selo Maldito' ao derrotar monstros do tipo Demônio.
-DEFM + 3.
+^0000ffDEFM +3.^000000
+^0000ffResistência a raça Demônio +5%.^000000
+^0000ffDano físico e mágico contra a raça Demônio +5%.^000000
+Ao derrotar monstros da raça Demônio:
+^0000ff0,2% de chance de derrubar [Selo Maldito].^000000
 Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777773^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777720^000000
-Nível Necessário : ^77777710^000000
-Classe : ^777777Todas as Classes^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 
 17181#
@@ -42920,16 +42937,17 @@ Peso : ^7777771^000000
 //--Aplicar em 2014-02-18
 18864#
 Uma flor abençoada por Freya, para homenagear uma Shura que era capaz até de dobrar pedras.
-+15% de resistência contra ataques da propriedade terra.
-Resistência adicional de 5% se refinada em +8 ou mais.
-Permite o uso da habilidade Coluna de Pedra em nível 5.
-VIT +2.
+^0000ffVIT +2.^000000
+^0000ffHabilita [Coluna de Pedra] nv. 5.^000000
+^0000ffResistência a propriedade Terra +15%.^000000
+Refino +8 ou mais:
+^0000ffResistência a propriedade Terra +5% adicional.^000000
 Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777725^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777725^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18878#
 Um chapéu usado por um grupo seleto de soldados, dispostos a arriscar a vida por seu líder.
@@ -48054,15 +48072,17 @@ Classes: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 18848#
 Uma bela presilha enfeitada com rosas encantadas e sem espinhos.
-ATQM +20.
-Adiciona +5 de ATQM a cada refinamento.
-Recupera 100 HP a cada monstro derrotado por ataques mágicos.
-Perde 50 HP a cada 5 segundos.
-Tipo: ^777777Equipamento para a Cabeça^000000
-Defesa: ^7777770^000000
+^0000ffATQM +20.^000000
+^0000ffDrena 50 de HP do usuário a cada 5 segundos.^000000
+Ao derrotar monstros com ataques mágicos:
+^0000ffRegenera 100 de HP.^000000
+A cada refino:
+^0000ffATQM +5.^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
 Peso: ^77777720^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 7642#
@@ -48110,15 +48130,18 @@ Classes: ^777777Todas^000000
 #
 18849#
 Um laço luxuoso bordado com fios de ouro. Foi feito com muito carinho para Kimi pelo artesão de bonecas que a criou.
-DES + 3, ATQM + 40.
-Adiciona +7 de ATQM a cada refinamento.
-Recupera 200 HP a cada monstro derrotado por ataques mágicos.
-Perde 50 HP a cada 5 segundos.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777770^000000
+^0000ffDES +3.^000000
+^0000ffATQM +40.^000000
+^0000ffDrena 50 de HP do usuário a cada 5 segundos.^000000
+Ao derrotar monstros com ataques mágicos:
+^0000ffRegenera 200 de HP.^000000
+A cada refino:
+^0000ffATQM +7.^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
 Peso: ^77777720^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 22534#
@@ -49474,15 +49497,6 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
-20344#
-Aeeee! Hoje você resolveu comemorar com tudo as suas aventuras! E pra isso, nada melhor do amarrar na cabeça esse balões com imagens da família Poring, distribuídos na comemoração do Dia das Crianças de 2016!
-Tipo: ^777777Visual ^000000
-Defesa: ^7777770 ^000000
-Equipa em: ^777777Baixo^000000
-Peso: ^7777770^000000
-Nível Necessário: ^7777771 ^000000
-Classes: ^777777Todas ^000000
-#
 //*****************************************************
 //------------Aplicar em 2016-10-18--------------------
 //*****************************************************
@@ -50077,7 +50091,7 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
-Classes: ^777777Todas^000000	
+Classes: ^777777Todas^000000
 #
 19602#
 Um chapéu banhado em uma tintura mágica, invisível aos olhos dos mortais. A tinta invisível é tão forte que faz com que o item equipado no mesmo local também fique invisível.
@@ -54606,7 +54620,7 @@ Classes: ^777777Todas^000000
 #
 19913#
 Um curioso chapéu muito usado por guerreiros no passado durante as famosas disputas feudais. Apesar de ser apenas um ornamento, ainda exala um cheiro desconfortável.
-Tipo: ^777777Equipamento para a cabeça^000000
+Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -54615,7 +54629,7 @@ Classes: ^777777Todas^000000
 #
 19638#
 Uma máscara que representa o maior ícone de toda uma geração. Sempre que você a usá-la, lembrará da Dona Risadinha e seu marido, que nunca saberemos o rosto.
-Tipo: ^777777Equipamento para a cabeça^000000
+Tipo: ^777777Visual^000000
 Equipa em: ^777777Meio e Baixo^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -54659,7 +54673,7 @@ Nível necessário: ^77777755^000000
 Classes: ^777777Magos, Espiritualistas e evoluções^000000
 #
 9068#
-Um ovo contendo um Unifada de estimação.
+Um ovo contendo um Unicórnio de estimação.
 Deve ser chocado usando uma [Incubadora]
 ^008080Durante o evento:^000000
 ^0000ffAumenta a velocidade de movimento.^000000
@@ -54676,12 +54690,24 @@ Peso: ^7777771^000000
 #
 20344#
 Balões inflados especialmente para comemorar uma data especial: 13 anos de Ragnarök Online no Brasil!
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém e vendido no NPC.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-09-26--------------------
+//*****************************************************
+31180#
+Uma faixa que virou meme, quer dizer, moda em Prontera. Originalmente, ela pertencia ao belo, habilidoso e perfeito shura, Rodrigo Rilberto, aquele homão da preula que, além de nunca ter perdido nenhuma batalha e ter dropado de primeira todas as cartas de MVP (inclusive no Thor), construiu uma casa de madeira para diversão do seu filho e foi o único em Rune-Midgard que conseguiu terminar a quest do Livro de Culinária Nível 11.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //file end
