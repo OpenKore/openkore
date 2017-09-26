@@ -4821,7 +4821,7 @@
 7998#Cartão Chinês 21#
 7999#Cartão Chinês 22#
 12754#Pastel Chinês#
-12755#Fogos de Artifício Chineses#
+12755#Fogos de Artifício Especiais#
 12756#Envelope do Ano Novo Chinês#
 12247#Salada de Frutas Tropicais#
 12232#Biscoito de Gengibre#
@@ -7838,4 +7838,8 @@
 9068#Ovo de Unicórnio#
 25275#Ticket de Unicórnio#
 20344#Balões de Festa#
+//*****************************************************
+//------------Aplicar em 2017-09-26--------------------
+//*****************************************************
+31180#Faixa do Shurão da Preula#
 //file end
