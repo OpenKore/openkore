@@ -195,22 +195,28 @@ sub create_automacro_list {
 		}
 		
 		PARAMETER: foreach my $parameter (@{$value->{'parameters'}}) {
-		
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
 				warning "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
 				next AUTOMACRO;
 			}
-			###Parameter: call
-			if ($parameter->{'key'} eq "call" && !$self->{Macro_List}->getByName($parameter->{'value'})) {
-				warning "[eventMacro] Ignoring automacro '$name' (call '".$parameter->{'value'}."' is not a valid macro name)\n";
-				next AUTOMACRO;
-			
+			###Parameter: call with or without param
+			if ($parameter->{'key'} eq "call" && $parameter->{'value'} =~ /(\S+)\s+(.*)?/) {
+				my ($macro_name, $params) = ($1 , $2); 
+				
+				if (!$self->{Macro_List}->getByName($macro_name) ) {
+					warning "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
+					next AUTOMACRO;
+				} else {
+					unless (defined $params) {
+					$parameter->{'value'} = $macro_name;
+					}
+					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
+				}
 			###Parameter: delay
 			} elsif ($parameter->{'key'} eq "delay" && $parameter->{'value'} !~ /\d+/) {
 				error "[eventMacro] Ignoring automacro '$name' (delay parameter should be a number)\n";
 				next AUTOMACRO;
-			
 			###Parameter: run-once
 			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /[01]/) {
 				error "[eventMacro] Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
@@ -1435,8 +1441,7 @@ sub AI_start_checker {
 		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
-		next unless $automacro->is_timed_out;
-		
+		next unless $automacro->is_timed_out;	
 		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
 		$self->call_macro($automacro);
@@ -1477,9 +1482,19 @@ sub enable_automacro {
 
 sub call_macro {
 	my ($self, $automacro) = @_;
-	
 	if (defined $self->{Macro_Runner}) {
 		$self->clear_queue();
+	}
+	
+	if ($automacro->get_parameter('call') =~ /\s+/) {
+		
+		#here the macro name and the params are together in get_parameter, time to split
+		my ($macro_name, @params) = parseArgs($automacro->get_parameter('call'));
+
+		# Update $.param[0] with the values from the call.
+		$eventMacro->set_full_array( ".param", \@params);
+
+		$automacro->set_call('call', $macro_name);
 	}
 	
 	$automacro->set_timeout_time(time);

@@ -26,6 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
+sendCryptKeys 0x28145541, 0x4C580C1C, 0x64A70485
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -44,6 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
+sendCryptKeys 0x28145541, 0x4C580C1C, 0x64A70485
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -137,7 +139,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x42780CC0, 0x67F86D28, 0x1CEB0ADC
+sendCryptKeys 0x502561F2, 0x29D8351C, 0x24EF2A25
 
 
 

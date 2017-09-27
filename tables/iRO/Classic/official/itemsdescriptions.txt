@@ -70844,3 +70844,48 @@ It is worth 2 Forgery Token
 Weight: 1
 Character Bound
 #
+
+19977#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Drooping Cat!
+300 Black Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Evolved Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19978#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 AFK Hat!
+300 Cloud Crumbs
+200 Fluff
+50 Strange Steel Pieces
+1 Black Cat Doll
+1000 Zeny
+1 AFK Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19979#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pirate Dagger!
+300 Skel-Bones
+100 Red Gemstones
+10 Gold
+1 Dagger [3]
+1000 Zeny
+1 Pirate Dagger Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#

@@ -3924,7 +3924,6 @@ sub map_change {
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
-		$messageSender->sendMapConnected if $messageSender->can( 'sendMapConnected' );
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
 		$timeout{ai}{time} = time;

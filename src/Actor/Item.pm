@@ -463,4 +463,15 @@ sub unequipFromSlot {
 	return 0;
 }
 
+##
+# void $ActorItem->weight()
+#
+# Returns item's weight, or undef if the weight is not known.
+# Depends on a plugin to implement the 'get_item_weight' hook.
+sub weight {
+	my ( $self ) = @_;
+	Plugins::callHook( 'get_item_weight', $self ) if !defined $self->{weight};
+	$self->{weight};
+};
+
 1;
