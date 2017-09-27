@@ -179,6 +179,8 @@ sub new {
 sub shuffle {
 	my ( $self ) = @_;
 
+	my $file_name = ($Settings::tablesFolders[0]."\\shuffle.txt");return if ( ! -e $file_name);
+
 	my %shuffle;
 	my $load_shuffle = Settings::addTableFile( 'shuffle.txt', loader => [ \&FileParsers::parseDataFile2, \%shuffle ], mustExist => 0 );
 	Settings::loadByHandle( $load_shuffle );
