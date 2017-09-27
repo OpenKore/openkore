@@ -545,8 +545,14 @@ sub iterate {
 				
 			# Click the cancel button in a shop.
 			} elsif ($step =~ /^e$/i) {
+				cancelNpcBuySell();
 				$ai_v{'npc_talk'}{'talk'} = 'close';
-				$self->conversation_end;
+				
+				if ($self->noMoreSteps) {
+					$self->conversation_end;
+				} else {
+					$self->{time} = time + 2;
+				}
 			
 			# Wrong sequence
 			} else {
@@ -578,6 +584,7 @@ sub iterate {
 				if ($self->noMoreSteps) {
 					$self->conversation_end;
 				} else {
+					$ai_v{'npc_talk'}{'talk'} = 'close';
 					$self->{time} = time + 2;
 				}
 				return;
@@ -590,6 +597,7 @@ sub iterate {
 				if ($self->noMoreSteps) {
 					$self->conversation_end;
 				} else {
+					$ai_v{'npc_talk'}{'talk'} = 'close';
 					$self->{time} = time + 2;
 				}
 				
