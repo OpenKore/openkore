@@ -31,7 +31,7 @@ sub new {
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
 		'08A0' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'07EC' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'086A' => ['item_drop', 'v2', [qw(index amount)]],
+		'086A' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'091D' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0861' => ['item_take', 'a4', [qw(ID)]],
 		'087F' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
