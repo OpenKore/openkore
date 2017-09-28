@@ -119,7 +119,7 @@ sub match {
 
 	if ($kw =~ /^\/([^\/]+)\/(\w?)$/) {
 		my ($match, $modifier) = ($1, $2);
-		#warning "match is '$match'\nmodifier is '$modifier'";
+		
 		if ($text =~ /$match/ || ($modifier eq 'i' && $text =~ /$match/i)) {
 			no strict;
 			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
