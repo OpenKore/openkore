@@ -83,9 +83,8 @@ sub cmpr {
 		foreach my $member (split(/\s*,\s*/, $second)) {
 			return 1 if ($first eq lc($member));
 		}
-		
-	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
-		return match($first, $second, 1);
+	} elsif ($cond eq "=~" && ($second =~ /^\/[^\/]+\/\w?\s*$/ || $second =~ /^"[^"]+"\s*$/)) {
+		return match($first, $second);
 	}
 
 	return 0;
@@ -98,7 +97,7 @@ sub q4rx {
 }
 
 sub q4rx2 {
-	# We let alone the original q4rx sub routine... 
+	# We let alone the original q4rx sub routine...
 	# instead, we use this for our new @nick ;p
 	my $s = $_[0];
 	$s =~ s/([\/*+(){}\[\]\\\$\^?"'\. ])/\\$1/g;
@@ -118,17 +117,17 @@ sub match {
 		return $text eq $1
 	}
 
-	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
-		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
-			if (!defined $cmpr) {
-				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
-				use strict;
-			}
+	if ($kw =~ /^\/([^\/]+)\/(\w?)$/) {
+		warning "found a valid regex\n";
+		my ($match, $modifier) = ($1, $2);
+		#warning "match is '$match'\nmodifier is '$modifier'";
+		if ($text =~ /$match/ || ($modifier eq 'i' && $text =~ /$match/i)) {
+			no strict;
+			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
+			use strict;
 			return 1
 		}
 	}
-
 	return 0
 }
 
