@@ -118,7 +118,6 @@ sub match {
 	}
 
 	if ($kw =~ /^\/([^\/]+)\/(\w?)$/) {
-		warning "found a valid regex\n";
 		my ($match, $modifier) = ($1, $2);
 		#warning "match is '$match'\nmodifier is '$modifier'";
 		if ($text =~ /$match/ || ($modifier eq 'i' && $text =~ /$match/i)) {
