@@ -6921,3 +6921,4 @@
 19979#Pirate_Dagger_Certificate#
 19980#Tiger_Mask_Certificate#
 19981#Taurus_Diadem_Certificate#
+19982#Blue_Drooping_Cat_Certificate#
