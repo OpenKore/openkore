@@ -14,7 +14,19 @@
 package Network::Receive::kRO::RagexeRE_2017_09_13b;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2017_06_14b);
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]],
+		'0ACB' => ['stat_info', 'v V', [qw(type val)]],
+	);
 
+	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+
+	return $self;
+}
 
 1;
 =pod
