@@ -13,7 +13,7 @@
 # The majority of private servers use eAthena, this is a clone of kRO
 package Network::Receive::kRO::RagexeRE_2017_06_14b;
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2017_05_17a);
+use base qw(Network::Receive::kRO::RagexeRE_2017_06_07c);
 
 
 1;
