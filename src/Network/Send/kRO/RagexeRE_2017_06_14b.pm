@@ -1,6 +1,6 @@
 #########################################################################
-#  OpenKore - Packet Receiveing
-#  This module contains functions for Receiveing packets to the server.
+#  OpenKore - Packet sending
+#  This module contains functions for sending packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -9,44 +9,78 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-# Korea (kRO) #bysctnightcore
-# The majority of private servers use eAthena, this is a clone of kRO
-package Network::Receive::kRO::RagexeRE_2017_06_14b;
-use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2017_06_07c);
+#bysctnightcore
+package Network::Send::kRO::RagexeRE_2017_06_14b;
 
+use strict;
+use base qw(Network::Send::kRO::RagexeRE_2017_06_07c);
+
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'083C' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0936' => ['actor_info_request', 'a4', [qw(ID)]],
+		'087E' => ['actor_look_at', 'v C', [qw(head body)]],
+		'087D' => ['actor_name_request', 'a4', [qw(ID)]],
+		'092F' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'086B' => ['buy_bulk_closeShop'],			
+		'08A2' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0860' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
+		'0361' => ['character_move', 'a3', [qw(coordString)]],
+		'0867' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0364' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0367' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'089D' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'08AD' => ['item_take', 'a4', [qw(ID)]],
+		'0944' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0899' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'091B' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0838' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0879' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'023B' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'0437' => ['storage_password'],
+		'0866' => ['sync', 'V', [qw(time)]],		
+	);
+	
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		actor_action 083C
+		actor_info_request 0936
+		actor_look_at 087E
+		actor_name_request 087D
+		buy_bulk_buyer 092F
+		buy_bulk_closeShop 086B
+		buy_bulk_openShop 08A2
+		buy_bulk_request 0860
+		character_move 0361
+		friend_request 0867
+		homunculus_command 0364
+		item_drop 0367
+		item_list_res 089D
+		item_take 08AD
+		map_login 0944
+		party_join_request_by_name 0899
+		skill_use 091B
+		skill_use_location 0838
+		storage_item_add 0879
+		storage_item_remove 023B
+		storage_password 0437
+		sync 0866
+	);
+	
+	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+#		#elif PACKETVER == 20170614 // 2017-06-14bRagexeRE
+#		packet_keys(0x5ED10A48,0x667F4301,0x2E5D761F);
+#		use = $key1 $key3 $key2
+#	$self->cryptKeys(0x5ED10A48,0x667F4301,0x2E5D761F);
+
+
+	return $self;
+}
 
 1;
-=pod
-// 2017-06-14bRagexeRE
-#elif PACKETVER == 20170614
-	parseable_packet(0x023B,8,clif_parse_MoveFromKafra,2,4);
-	parseable_packet(0x0361,5,clif_parse_WalkToXY,2);
-	parseable_packet(0x0364,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0367,6,clif_parse_DropItem,2,4);
-	parseable_packet(0x0437,36,clif_parse_StoragePassword,0);
-	parseable_packet(0x0838,10,clif_parse_UseSkillToPos,2,4,6,8);
-	parseable_packet(0x083C,7,clif_parse_ActionRequest,2,6);
-	parseable_packet(0x0860,6,clif_parse_ReqClickBuyingStore,2);
-	//parseable_packet(0x0865,4,NULL,0); // CZ_GANGSI_RANK
-	parseable_packet(0x0866,6,clif_parse_TickSend,2);
-	parseable_packet(0x0867,26,clif_parse_FriendsListAdd,2);
-	parseable_packet(0x086B,2,clif_parse_ReqCloseBuyingStore,0);
-	parseable_packet(0x086C,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x0877,18,clif_parse_PartyBookingRegisterReq,2,4);
-	parseable_packet(0x0879,8,clif_parse_MoveToKafra,2,4);
-	parseable_packet(0x087D,6,clif_parse_SolveCharName,2);
-	parseable_packet(0x087E,5,clif_parse_ChangeDir,2,4);
-	parseable_packet(0x0889,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
-	parseable_packet(0x0899,26,clif_parse_PartyInvite2,2);
-	parseable_packet(0x089D,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	parseable_packet(0x08A2,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	parseable_packet(0x08AD,6,clif_parse_TakeItem,2);
-	parseable_packet(0x091B,10,clif_parse_UseSkillToId,2,4,6);
-	parseable_packet(0x0928,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x092F,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
-	parseable_packet(0x0936,6,clif_parse_GetCharNameRequest,2);
-	parseable_packet(0x0944,19,clif_parse_WantToConnection,2,6,10,14,18);
-	//parseable_packet(0x0957,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
-	parseable_packet(0x0963,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
-=cut
