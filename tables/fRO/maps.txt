@@ -838,3 +838,59 @@ ecl_tdun03.rsw#Bifrost Floor 3#
 ecl_tdun04.rsw#Bifrost Floor 4#
 ecl_hub01.rsw#Eclage Perimeter#
 que_avan01.rsw#Avant's Laboratory#
+
+
+//°ø¼ºÀü TE º¹»ç¸Ê 
+te_prt_gld.rsw#Gloria#
+te_prtcas01.rsw#Gaebolg#
+te_prtcas02.rsw#Richard#
+te_prtcas03.rsw#Wigner#
+te_prtcas04.rsw#Heine#
+te_prtcas05.rsw#Nerious#
+teg_dun01.rsw#Subterranean Guild Dungeon#
+te_alde_gld.rsw#Kafragarten#
+te_aldecas1.rsw#Leilah#
+te_aldecas2.rsw#Pavianne#
+te_aldecas3.rsw#Jasmine#
+te_aldecas4.rsw#Roxie#
+te_aldecas5.rsw#Curly Sue#
+teg_dun02.rsw#Subterranean Guild Dungeon#
+
+niflxmas.rsw#Deadman's land Nifflheim#
+
+//Hero's trail
+
+1@face.rsw#Nest of Faceworm#
+1@sara.rsw#Memory of Sara#
+dali.rsw#Gap of Dimension#
+
+moc_para01.rsw#Morocc Eden Group Inside#
+
+//Old Glast Heim
+gl_cas02_.rsw#2nd Hall#
+gl_chyard_.rsw#Churchyard#
+2@gl_k.rsw#1st floor of Old Glast Heim Chivalry#
+1@gl_k.rsw#2nd floor of Old Glast Heim Chivalry#
+
+//Clocktower_nightmare
+c_tower2_.rsw#Twisted Time Clock Tower 2nd Floor#
+c_tower3_.rsw#Twisted Time Clock Tower 3rd Floor#
+//¿µ¿õÀÇÈçÀû
+dali02.rsw#Crack of Dimension#
+1@tnm1.rsw#Darklord Tower High Floor#
+1@tnm2.rsw#Darklord Tower Top Floor#
+1@tnm3.rsw#Morocc Castle Underground#
+1@ge_st.rsw#Geffen Magic Competition#
+1@gef.rsw#Geffen Magic Competition#
+1@gef_in.rsw#Geffen Magic Competition#
+1@spa.rsw#Lost Soul's Palace#
+
+//EP.14.3
+moro_vol.rsw#Flame Basin#
+moro_cav.rsw#Flame Cave#
+1@dth1.rsw#Bios Island#
+1@dth2.rsw#Bios Island#
+1@dth3.rsw#Bios Island#
+1@rev.rsw#Morse Cave#
+1@eom.rsw#Dark Lord Temple#
+1@jtb.rsw#Nightmare Jitterbug#
