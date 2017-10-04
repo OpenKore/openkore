@@ -10409,3 +10409,1852 @@ Conversation with Poring#
 2299#Property experience#SG_FEEL#QUE_NOIMAGE#
 Put damage onto Fire type egg#
 Attack Lv10 (Fire)#
+
+
+7671#Find me Little lamb.#SG_FEEL#QUE_NOIMAGE#
+Bori asks you to bring back his lost lambs by using ^4d4dffHunting Rope^000000 on to ^4d4dffLost Lambs^000000. Get him more 5 or more lost lambs back.#
+Captured lambs number 5#
+
+7672#He ran away everytime.#SG_FEEL#QUE_NOIMAGE#
+The guard dog barks every night. Come back the day after, there will be some lost lambs Bori wants back.#
+Refresh in the morning.#
+
+11393#2015 new year's hat#SG_FEEL#QUE_NOIMAGE#
+Shepherd Boy's latest masterpiece! Try make this warm looking wool hat.#
+Complete Hat manufacture.#
+
+7347#Delicious Takoyaki#SG_FEEL#QUE_NOIMAGE#
+You had too much takoyaki already. Why don't you take a break now?#
+Wait for the time to expire before trying again#
+
+// 2014-valentine/white day event
+
+14373#Finding sculptor#SG_FEEL#QUE_NOIMAGE#
+My wife wants me to make her statue but the sculptor didn't even mean to meet me. please meet him instead of me. if you are also rejected from him, go to find his apprentice#
+Finding sculptor#
+
+14374#to sculptor, again#SG_FEEL#QUE_NOIMAGE#
+I also haven't met my master quite a long time. Nowadays, he was murmuring as like he was talking to a woman!!#
+To sculptor#
+
+14375#To alchemist#SG_FEEL#QUE_NOIMAGE#
+Perhaps, the alchemist who is dealing with creation can turn my Maria into Human! there are famous alchemist in Mjornir..#
+To alchemist#
+
+14376#To monk#SG_FEEL#QUE_NOIMAGE#
+hum.. that's out of my my ability.. i guess a monk, the hands of God may have some idea for that. People said he is in somewhere in Prontera forest.#
+To monk#
+
+14377#to cursed priest#SG_FEEL#QUE_NOIMAGE#
+Let's go to meet cursed priest with the hint from Monk.#
+to cursed priest#
+
+14378#are you ready?#SG_FEEL#QUE_NOIMAGE#
+muhahaha,,,,well, i want to know how much he wants to make it real...tell me about his determination..#
+go to ask his determination#
+
+14379#I'm ready#SG_FEEL#QUE_NOIMAGE#
+I'm fully prepared to sacrifice anything. so please take care of my Maria.....#
+to cursed priest#
+
+14380#need some offerings#SG_FEEL#QUE_NOIMAGE#
+umhaha.. All ritual need offerings... I need 1 Leaf_Of_Yggdrasil, 1 Yggdrasilberry, 1 Seed_Of_Yggdrasil, 44 Immortal_Heart, 1 Cardinal_Jewel_ and 1 Star_Crumb....huh, can you take them all?#
+required offerings#
+
+14381#To scullptor#SG_FEEL#QUE_NOIMAGE#
+muhaha.. Put those offerings around statue and cast a spell as i told you.#
+To sculptor#
+
+14382#something wrong#SG_FEEL#QUE_NOIMAGE#
+Something must be wrong! the spell wasn't effective though it was correct...?!#
+To cursed priest#
+
+14383#more Offerings..#SG_FEEL#QUE_NOIMAGE#
+There are some missing part from offering..huh, 3 Water_Of_Darkness, 3 Holy_Water and 1 HandMade_Chocolate...bring them to statue and do ritual again, it must be working!#
+Find more offerings#
+
+14384#Soft stone#SG_FEEL#QUE_NOIMAGE#
+eh.. to complete statue for Maria, i need soft stones. you can find them after defeating Stalactic_Golem. please give me 30 soft stones.#
+soft stone#
+
+14385#soft stone#SG_FEEL#QUE_NOIMAGE#
+eh.. to complete statue for Maria, i need soft stones. you can find them after defeating Bradium_Golem. please give me 30 soft stones.#
+soft stone#
+
+14386#24 hours#SG_FEEL#QUE_NOIMAGE#
+i have enough material for today, please come back later.#
+24 hours#
+
+14387#take care of my honey#SG_FEEL#QUE_NOIMAGE#
+My darling said he is preparing propose event and it makes me nervous. can you check up on him? He is in Geffen.#
+Finding Hans#
+
+14388#Legendary Florist#SG_FEEL#QUE_NOIMAGE#
+Eh... i heard there is the legendary Florist in Morroc area.. Can you check up on him? he didn't answer for my mail and any contact,,#
+Legendary florist#
+
+14389#No water?!#SG_FEEL#QUE_NOIMAGE#
+Humm...this is odd..water is not running.. It is crucial for my flower.. Would you meet up Water facility manager in Morroc? and fertilizer didn't arrive here yet. please visit Payon once.#
+TO manager#
+
+14390#Unknown issue#SG_FEEL#QUE_NOIMAGE#
+Ah, i also wondering what happened cause i thought engineers will finish in a day for their skill but it is not done yet, please find them around Oasis#
+To Engineers#
+
+14391#Need fertilizer#SG_FEEL#QUE_NOIMAGE#
+Though the process was slow but it will be done following schedule. now it is time to find fertilizer in Payon#
+To fertilizer factory#
+
+14392#To the florist#SG_FEEL#QUE_NOIMAGE#
+There is nothing you can do. Should visit the florist to inform this situation#
+To the florist#
+
+14393#matchmaking - Morroc#SG_FEEL#QUE_NOIMAGE#
+Why don't you be a matchmaker? Go with Chocolate_Drink, it would be helpful.#
+Play matchmaker#
+
+14394#matchmaking - Geffen#SG_FEEL#QUE_NOIMAGE#
+Why don't you be a matchmaker? Go with Chocolate_Drink, it would be helpful.#
+Play matchmaker#
+
+14395#To the florist#SG_FEEL#QUE_NOIMAGE#
+Matchmaking success!! Visit the florist and get a Seed from him!#
+To the florist#
+
+14396#Got a seed#SG_FEEL#QUE_NOIMAGE#
+let's go back to Han as you've got a seed.#
+To Geffen#
+
+14397#To Al de baran#SG_FEEL#QUE_NOIMAGE#
+let's go back to Al de baran to inform that Hans' preparation was okay.#
+To Al de baran#
+
+14398#To Geffen#SG_FEEL#QUE_NOIMAGE#
+would the propose successful with blossom flower? should visit once again there to check up.#
+To Geffen#
+
+14399#That...thing..#SG_FEEL#QUE_NOIMAGE#
+i'm sorry to ask this but...To get enough flower to decorate event hall, i have to provide good quality fertilizer.. and i need 'that thing' from sachquachi...which is fermentated..... please bring 30 pieces for me..#
+Thant thing#
+
+14400#That...thing..#SG_FEEL#QUE_NOIMAGE#
+i'm sorry to ask this but...To get enough flower to decorate event hall, i have to provide good quality fertilizer.. and i need 'that thing' from sachquachi...which is fermentated..... please bring 30 pieces for me..#
+Thant thing#
+
+14401#24 hours#SG_FEEL#QUE_NOIMAGE#
+i have enouth fertilizer for today. Please come back later.#
+Delay - 24 hours#
+
+14402#Nervous Bitta#SG_FEEL#QUE_NOIMAGE#
+Nervous Bitta. he is struggling to recollect Chocoins. Recollect Chocoins by defeating Choco..#
+Recollect Chocoins#
+
+
+//-- Ninja Upper Class 2015
+5131#Strange Conversation#SG_FEEL#QUE_NOIMAGE#
+Strange conversation it is. A part of test? What is this about?#
+Hidden place? A wall? Shouldn't I check Ninja job change office wall?#
+
+5132#Family Business-(1)#SG_FEEL#QUE_NOIMAGE#
+Listen to the old family story from strange old man.#
+#
+
+5133#Family Business-(2)#SG_FEEL#QUE_NOIMAGE#
+Keep listen to the old family story from strange old man.#
+#
+
+5134#New path#SG_FEEL#QUE_NOIMAGE#
+Ready for finding the new path? Then!!#
+Find the guide Gion.#
+
+5135#4 tests#SG_FEEL#QUE_NOIMAGE#
+To find the new path, you must clear Knowledge, Survival, Weapons, and Battle total 4 tests.#
+Let's pass them.#
+
+5136#Knowledge test#SG_FEEL#QUE_NOIMAGE#
+You are now challenging for the Knowledge test.#
+You need to pass 9 questions out of 10, to pass the whole test.#
+
+5137#Survival test#SG_FEEL#QUE_NOIMAGE#
+You are now challenging for the Survival test.#
+You need reach the end point before loosing all LP(Life point), to pass the whole test.#
+
+5138#Weapons test#SG_FEEL#QUE_NOIMAGE#
+You are now challenging for the Weapons test.#
+You need to make such weapon that would satisfy yourself, to pass the whole test.#
+
+5139#The guy looks familiar!!#SG_FEEL#QUE_NOIMAGE#
+You've met Cougar from the Knowledge test arena.#
+Let's pass his Knowledge test questions.#
+
+5140#Uncertain chilliness#SG_FEEL#QUE_NOIMAGE#
+You've reached Survival test arena, feeling a bit spooky suddenly.#
+Let's hurry and escape.#
+
+5141#Got a curse!!#SG_FEEL#QUE_NOIMAGE#
+Bad feelings never miss, you've got a curse!!.#
+Curse seems to be lasting for 2 minutes.#
+
+5142#Prototype-(1)#SG_FEEL#QUE_NOIMAGE#
+Make the prototype of new weapon by mixing Iron Ore, Iron, Steel, Phracon, Emveretarcon, Rough Oridecon, and Rough Elunium.#
+Weapon can be made with Crafting Tools.#
+
+5143#Prototype-(2)#SG_FEEL#QUE_NOIMAGE#
+You've made dagger prototype item.#
+Bring the item to Red Leopard Joe.#
+
+5144#Prototype-(2)#SG_FEEL#QUE_NOIMAGE#
+You've made a Huuma Shuriken prototype.#
+Bring the item to Red Leopard Joe.#
+
+5145#Prototype-(3)#SG_FEEL#QUE_NOIMAGE#
+Need to enchant the prototype.#
+Bring the successfully enchanted item to Red Leopard Joe.#
+
+5146#Battle test#SG_FEEL#QUE_NOIMAGE#
+You are now challenging for the Battle test.#
+Kill the target 'Family Secret'!!#
+
+11446#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+Wake up with ghosts whispering, we now arrived to Nifelheim the city of death. let's hear ghosts' story.#
+Talk to Hororong#
+
+11447#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+They say Jack at the town square might know something. Let's talk with Jack at the town square.#
+Talk to Jack#
+
+11448#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+Jack told you the story about the place he's been. Let's go back to Hororong.#
+Talk to Hororong#
+
+11449#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+Hunt down 10 runaway Jacks at the field or dungeon, bring 10 Pumpkin Decorations and 20 Dried white stems to Hororong.#
+Send Jack to Nifelheim#
+
+11450#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+You've brought Jack to Nifelheim. Ghosts saying Jack cannot stay too long in the land of living. Get some rest let's.#
+Jack's rest#
+
+11451#Jack and Jack's Jacky days#SG_FEEL#QUE_NOIMAGE#
+Hunt down 10 runaway Jacks at the field or dungeon, bring 10 Pumpkin Decorations and 20 Dried white stems to Hororong.#
+Send Jack to Nifelheim#
+
+//2016
+
+11484#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+It is hard to understand, but seems like you have to get a Dry White Stem and come back to Jakk.#
+Obtained a Dry White Stem#
+
+11485#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+It seems like the surprised kitty ran away when Jakk was captured. Ask Harorong, who was with Jakk.#
+Talk to Harorong#
+
+11486#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+Nibble at the entrance may have seen the kitty. Talk to Nibble in the western entrance of Niflheim.#
+Nibble in the western Niflheim#
+
+11487#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+A  small, white object quickly passed the entrance not so long ago. They are not sure if it was a cat. Let's ask the guy outside the entrance.#
+Talk to nervous Jakk#
+
+11488#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+Jakk said that Jakk's kitty went to the place called 'there'. Let's inform Jakk, who is trying to find the kitty.#
+Talk to Jakk#
+
+11489#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+Seems like Jakk's kitty went to Midgard through the stem of Yggdrasil. It probably went through Umbala. Let's investigate.#
+Investigation on the northern entrance of Umbala#
+
+11490#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+The researcher says that he told the small and white thing how to get to Moroc. Let's investigate the nearby northern entrance of Moroc.#
+Investigation on the entrance of Moroc#
+
+11491#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+The merchant says that he told someone how to get to Alberta. Let's investigate the nearby northern entrance on Alberta.#
+Investigation on the entrance of Alberta#
+
+11492#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+If you go near the harbor, you can find many cats who want to take fish from you. Let's investigate near the harbor.#
+Investigation on Alberta harbor#
+
+11493#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+You found a white cat, but it doesn't look like Jakk's kitty. The pile of sand behind is suspicious. Let's investigate.#
+Investigation on the pile_of_sand#
+
+11494#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
+In the sand, you found bones that seem to come from a small animal. You also found a red necklace with a bell. Let's go back to Jakk.#
+Talk to Jakk in Niflheim#
+
+//------공성전 TE
+
+7501# 1 Suspicious Babee#SG_FEEL#QUE_NOIMAGE#
+A request to eliminate suspicious Babees that appear during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 1 Babee.#
+Suspicious Babee eliminated#
+
+7502# 10 Suspicious Babees#SG_FEEL#QUE_NOIMAGE#
+A request to eliminate suspicious Babees that appear during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 10 Babees.#
+Suspicious Babees eliminated#
+
+7503# 30 Suspicious Babees#SG_FEEL#QUE_NOIMAGE#
+A request to eliminate suspicious Babees that appear during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 30 Babees.#
+Suspicious Babees eliminated#
+
+7504# Destroy 1 Emperium#SG_FEEL#QUE_NOIMAGE#
+Emperium destroying, the flower of Multiplayer Battle Arena! Destroy at least 1 Emperium appearing at the fortresses in Gloria and Kafragaten in Multiplayer Battle Arena. Target number: 1 Emperium#
+Emperium destroyed#
+
+7505# Destroy 3 Emperiums#SG_FEEL#QUE_NOIMAGE#
+Emperium destroying, the flower of Multiplayer Battle Arena! Destroy at least 3 Emperiums appearing at the fortresses in Gloria and Kafragaten in Multiplayer Battle Arena. Target number: 3 Emperiums#
+Emperiums destroyed#
+
+7506# Destroy 5 Emperiums#SG_FEEL#QUE_NOIMAGE#
+Emperium destroying, the flower of Multiplayer Battle Arena! Destroy at least 5 Emperiums appearing at the fortresses in Gloria and Kafragaten in Multiplayer Battle Arena. Target number: 5 Emperiums#
+Emperiums destroyed#
+
+7507# 10 Small Wooden Boxes#SG_FEEL#QUE_NOIMAGE#
+Suspicious Babees have stolen many small wooden boxes at the fortress in Gloria. Collect 10 wooden boxes during Multiplayer Battle Arena TE hours.#
+10 Small Wooden Boxes#
+
+7508# 20 Small Wooden Boxes#SG_FEEL#QUE_NOIMAGE#
+Suspicious Babees have stolen many small wooden boxes at the fortress in Gloria. Collect 20 wooden boxes during Multiplayer Battle Arena TE hours.#
+20 Small Wooden Boxes#
+
+7509# 30 Small Wooden Boxes#SG_FEEL#QUE_NOIMAGE#
+Suspicious Babees have stolen many small wooden boxes at the fortress in Gloria. Collect 30 wooden boxes during Multiplayer Battle Arena TE hours.#
+30 Small Wooden Boxes#
+
+7510# Fight Off a Thief#SG_FEEL#QUE_NOIMAGE#
+A request to fight off Poring the Thief that appears during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 1 Poring.#
+Poring the Thief eliminated#
+
+7511# Fight Off 10 Thieves#SG_FEEL#QUE_NOIMAGE#
+A request to fight off Poring the Thief that appears during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 10 Porings.#
+Porings eliminated#
+
+7512# Fight Off 30 Thieves#SG_FEEL#QUE_NOIMAGE#
+A request to fight off Poring the Thief that appears during Multiplayer Battle Arena hours at the fortress in Gloria in Multiplayer Battle Arena TE. Target number: 30 Porings.#
+Porings eliminated#
+
+7513# 10 Paychecks#SG_FEEL#QUE_NOIMAGE#
+Looks like Poring the Thief stole paychecks from the Kafra shop. Find paychecks back. Target number: 10 paychecks#
+10 paychecks from the Kafra shop#
+
+7514# 20 Paychecks#SG_FEEL#QUE_NOIMAGE#
+Looks like Poring the Thief stole paychecks from the Kafra shop. Find paychecks back. Target number: 20 paychecks#
+20 paychecks from the Kafra shop#
+
+7515# 30 Paychecks#SG_FEEL#QUE_NOIMAGE#
+Looks like Poring the Thief stole paychecks from the Kafra shop. Find paychecks back. Target number: 30 paychecks#
+30 paychecks from the Kafra shop#
+
+7516# a Break for Commercial Development#SG_FEEL#QUE_NOIMAGE#
+Destroying Emperiums repeatedly staggers commercial development. Give it some time to maintain its commercial development.#
+20-minute Break#
+
+//-- Guild Quest Valkyrie Realm, Britoniah, Luina, Greenwood Lake
+
+7517# Occupy Valkyrie Realm#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Valkyrie Realm has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7518# Occupy Luina#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Luina has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7519# Occupy Britoniah#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Britoniah has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7520# Occupy Greenwood Lake#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Greenwood Lake has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7521# Occupy Nidabehl#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Nidabehl has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7522# Occupy Valfreyja#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Valfreyja has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7523# Occupy Gloria#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Gloria has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+7524# Occupy Kafragaten#SG_FEEL#QUE_NOIMAGE#
+Occupation of a fortress in Kafragaten has been reported. Next report can be made after 1 hour.#
+1-hour Standby#
+
+//-- Guild Dungeon Daily Quest
+
+7525# Valkyrie Realm Challenge 1#SG_FEEL#QUE_NOIMAGE#
+On the first floor of Valkyrie Realm guild dungeon, fight off 50 Caterpillars and Creamy Fears respectively.#
+Monsters eliminated from the first floor of guild dungeon#
+
+7526# Valkyrie Realm Challenge 2#SG_FEEL#QUE_NOIMAGE#
+On the second floor of Valkyrie Realm guild dungeon, fight off 3 types of Abysmal Kobold (30 of each type).#
+Monsters eliminated from the second floor of guild dungeon#
+
+7527# Valkyrie Realm Challenge 3#SG_FEEL#QUE_NOIMAGE#
+Fight off Pyuriel the Furious Outcast and Lora the Warrior in the Road of Warriors in Corridor of the Abyss in Valkyrie Realm.#
+Battle in Corridor of the Abyss#
+
+7528# Luina Challenge 1#SG_FEEL#QUE_NOIMAGE#
+On the first floor of Luina guild dungeon, fight off 50 Giant Hornets and Ancient Worms respectively.#
+Monsters eliminated from the first floor of guild dungeon#
+
+7529# Luina Challenge 2#SG_FEEL#QUE_NOIMAGE#
+On the second floor of Luina guild dungeon, fight off 40 Killer Mantises and 50 Angra Mantises.#
+Monsters eliminated from the second floor of guild dungeon#
+
+7530# Luina Challenge 3#SG_FEEL#QUE_NOIMAGE#
+Fight off Gioia and Elvira in Hero's Tear in Corridor of the Abyss in Luina.#
+Battle in Corridor of the Abyss#
+
+7531# Britoniah Challenge 1#SG_FEEL#QUE_NOIMAGE#
+On the first floor of Britoniah guild dungeon, fight off 50 Zombie Masters and Wraith Deads respectively.#
+Monsters eliminated from the first floor of guild dungeon#
+
+7532# Britoniah Challenge 2#SG_FEEL#QUE_NOIMAGE#
+On the second floor of Britoniah guild dungeon, fight off 20 Abysmal Dark Frames, 20 Abysmal Dark Priests, 50 Abysmal Dark Shadows.#
+Monsters eliminated from the second floor of guild dungeon#
+
+7533# Britoniah Challenge 3#SG_FEEL#QUE_NOIMAGE#
+Fight off Kades and Rudo, the guardians of the dead, in the Dead Man's Hill in Corridor of the Abyss in Britoniah.#
+Battle in Corridor of the Abyss#
+
+7534# Greenwood Lake Challenge 1#SG_FEEL#QUE_NOIMAGE#
+On the first floor of Greenwood Lake guild dungeon, fight off 50 Gullinbrustis and Leib Olmais respectively.#
+Monsters eliminated from the first floor of guild dungeon#
+
+7535# Greenwood Lake Challenge 2#SG_FEEL#QUE_NOIMAGE#
+On the second floor of Greenwood Lake guild dungeon, fight off 45 Skeleton Generals, 20 Am Muts, and 25 Gajomarts.#
+Monsters eliminated from the second floor of guild dungeon#
+
+7536# Greenwood Lake Challenge 3#SG_FEEL#QUE_NOIMAGE#
+Fight off General Daehyeon and Warrior Soheon in the Ancient Wind in in Corridor of the Abyss in Greenwood Lake.#
+Battle in Corridor of the Abyss#
+
+7537# Nidabehl Challenge 1#SG_FEEL#QUE_NOIMAGE#
+Fight off 50 Hell Apocalypses and Zakudams respectively in Nidabehl guild dungeon.#
+Monsters eliminated from guild dungeon 1#
+
+7538# Nidabehl Challenge 2#SG_FEEL#QUE_NOIMAGE#
+Fight off 35 Heavy Metalings and 35 Cobalt Minerals in Nidabehl guild dungeon.#
+Monsters eliminated from guild dungeon 2#
+
+7539# Valfreyja Challenge 1#SG_FEEL#QUE_NOIMAGE#
+Fight off 50 Banshee Masters and 30 Beholder Masters in Valfreyja guild dungeon.#
+Monsters eliminated from guild dungeon 1#
+
+7540# Valfreyja Challenge 2#SG_FEEL#QUE_NOIMAGE#
+Fight off 50 Aunoes and 20 Fanats in Valfreyja guild dungeon.#
+Monsters eliminated from guild dungeon 2#
+
+7541# Gloria Challenge 1#SG_FEEL#QUE_NOIMAGE#
+Fight off 30 Knights, Assassins, and Blacksmiths respectively in Gloria guild dungeon.#
+Monsters eliminated from guild dungeon 1#
+
+7542# Gloria Challenge 2#SG_FEEL#QUE_NOIMAGE#
+Fight off 30 Wizards, Priests, and Hunters respectively in Gloria guild dungeon.#
+Monsters eliminated from guild dungeon 2#
+
+//-- Guild Quest Standby Time
+7543# Standby for Valkyrie Realm Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Valkyrie Realm Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7544# Standby for Valkyrie Realm Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Valkyrie Realm Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7545# Standby for Valkyrie Realm Challenge 3#SG_FEEL#QUE_NOIMAGE#
+You have completed Valkyrie Realm Challenge 3 already. To challenge again, come back after 1 week.#
+See you next week!#
+
+7546# Standby for Luina Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Luina Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7547# Standby for Luina Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Luina Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7548# Standby for Luina Challenge 3#SG_FEEL#QUE_NOIMAGE#
+You have completed Luina Challenge 3 already. To challenge again, come back after 1 week.#
+See you next week!#
+
+7549# Standby for Britoniah Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Britoniah Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7550# Standby for Britoniah Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Britoniah Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7551# Standby for Britoniah Challenge 3#SG_FEEL#QUE_NOIMAGE#
+You have completed Britoniah Challenge 3 already. To challenge again, come back after 1 week.#
+See you next week!#
+
+7552# Standby for Greenwood Lake Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Greenwood Lake Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7553# Standby for Greenwood Lake Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Greenwood Lake Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7554# Standby for Greenwood Lake Challenge 3#SG_FEEL#QUE_NOIMAGE#
+You have completed Greenwood Lake Challenge 3 already. To challenge again, come back after 1 week.#
+See you next week!#
+
+7555# Standby for Nidabehl Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Nidabehl Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7556# Standby for Nidabehl Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Nidabehl Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7557# Standby for Valfreyja Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Valfreyja Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7558# Standby for Valfreyja Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Valfreyja Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7559# Standby for Gloria Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Gloria Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7560# Standby for Gloria Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Gloria Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7561# Kafragaten Challenge 1#SG_FEEL#QUE_NOIMAGE#
+Fight off 30 Crusaders, Rogues, and Alchemists respectively in Kafragaten guild dungeon.#
+Monsters eliminated from guild dungeon 1#
+
+7562# Kafragaten Challenge 2#SG_FEEL#QUE_NOIMAGE#
+Fight off 30 Sages, Monks, and Bards respectively in Kafragaten guild dungeon.#
+Monsters eliminated from guild dungeon 2#
+
+7563#Standby for Kafragaten Challenge 1#SG_FEEL#QUE_NOIMAGE#
+You have completed Kafragaten Challenge 1 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+7564# Standby for Kafragaten Challenge 2#SG_FEEL#QUE_NOIMAGE#
+You have completed Kafragaten Challenge 2 already. To challenge again, come back after 1 day.#
+Take a day off.#
+
+// 2015 Christmas
+9432#Antonio's Proposal#SG_FEEL#QUE_NOIMAGE#
+People are saying Antonio is looking for an Adventurer at Prontera. Sounds like a secret mission will be there....#
+Talk to Antonio at Niffelheim#
+
+9433#Collecting Gift Doll#SG_FEEL#QUE_NOIMAGE#
+Hunt down Mystcase inside the Lutie Toy Factory, collect 'Gift Stuffed Doll' for people of Niffelheim.#
+Collect 6 dolls, remodel them, return to Jakk#
+
+9434#One at a time#SG_FEEL#QUE_NOIMAGE#
+Doll collecting quest can be performed only once a day.#
+Quest resets 04:00 each day#
+
+
+
+//-- 영웅의 흔적과 차원이동
+7565#Return of Rayyan moore#SG_FEEL#QUE_NOIMAGE#
+The crack of space that has recently been used was found based on the information Rayyan moore provided. Let's listen to the story of Rayyan moore, under the protection in eclage, and ask him how has he been doing.#
+Rayyan moore#
+
+7566#Dimension Traveller#SG_FEEL#QUE_NOIMAGE#
+The moveable device is specially manufactured to enter the crack of space.#
+#
+
+
+//- 영웅의 흔적
+12325#The trace of faceworm nest#SG_FEEL#QUE_NOIMAGE#
+The aftereffect has remained after entering to the nest of faceworm.#
+The trace of faceworm nest#
+
+
+12326#The owner of old ring#SG_FEEL#QUE_NOIMAGE#
+Found the owner of the old ring. She will have been happy for a while.#
+The owner of old ring#
+
+12327#The memory of old photo album#SG_FEEL#QUE_NOIMAGE#
+The merchant will be happy if he receives the photo album. Let's find other photo albums if there is another time.#
+The memory of old photo album#
+
+12328#Madam why only to Dolse...#SG_FEEL#QUE_NOIMAGE#
+Madam seems to give rice only to Dolse. Let's show pills to him if they are found again.#
+Madam why only to Dolse...#
+
+12329#Rest in peace#SG_FEEL#QUE_NOIMAGE#
+Why this soul does not rest in peace? Shall it be in peace if I give another bracelet?#
+Rest in peace#
+
+//-영웅의 흔적
+15002#Memorial dungeon: The memory of sarah#SG_FEEL#QUE_NOIMAGE#
+After entering, Entering to the memory of sarah dungeon is not allowed for 20 hours. It is allowed after closing time written down here.#
+Re-enter within 20 hours not allowed#
+
+15003#The request of an adventurer leon#SG_FEEL#QUE_NOIMAGE#
+Memorial dungeon : Let's find an adventurer leon after clearing the memory of sarah.#
+Clear the memory of sarah#
+
+
+//---paradise team 100-140
+13002#Terms of adventurer - Brigan collecting#SG_FEEL#QUE_NOIMAGE#
+Just Brigan, There may be full in storage. If not enough, go collect quickly. It might be easy to get in GlastHeim or Turtle island#
+^FF0000Brigan^000000 ^0000FF50^000000 collecting#
+
+13003#I'm smiling but not smiling#SG_FEEL#QUE_NOIMAGE#
+This request is from merchant of Moroc. Carat who is monster of GlastHeim selling ice crean all year long that is why he can't make any profit. The paradise team knows that is not real reason but.. request is request.#
+Kill^FF000030 Carat^000000#
+
+13004#Killing Cara - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13005#Do not hull Beans!#SG_FEEL#QUE_NOIMAGE#
+Do you know ^FF0000Bean^000000 that is in other countries? When Arclouse curled up, it is similar to ^FF0000Bean^000000. A flower of ^FF0000Bean^000000is national flower of another country that is why everyone claims that makes lose prestige.#
+Kill^FF0000 22 Arclouse^000000#
+
+13006#Arclouse termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The bean is important, as well as loyalty. Please be careful! don't extinct Arclouse.#
+#
+
+13007#Pilgrimage - 1#SG_FEEL#QUE_NOIMAGE#
+People will walk around from Monastery to very downstair. Please hunt ^FF0000Anolian^000000 for safe trip.#
+^FF000030 Anolian^000000 termination#
+
+13008#Anolian termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13009#Pilgrimage - 2#SG_FEEL#QUE_NOIMAGE#
+For safe trip, please hunt ^FF0000Sting^000000 in underwater.#
+^FF000030 Sting^000000 termination#
+
+13010#Sting termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13011#Pilgrimage - 3#SG_FEEL#QUE_NOIMAGE#
+For safe trip, please hunt ^FF0000Majoruros^000000 in 2nd floor of cave.#
+^FF000030 Majoruros^000000 termination#
+
+13012#Majoruros termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13013#Care for adventurer#SG_FEEL#QUE_NOIMAGE#
+Pinguicula may first monster that adventurers see in another world. The base camp needs to reduce the number of monsters around there. Well, this is normal request.#
+^FF000030 Pinguicula^000000 termination#
+
+13014#Pinguicula termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13015#Trauma#SG_FEEL#QUE_NOIMAGE#
+This is private request. Some who has trauma of bee so, he might have trouble in this trip... This request is very nesessary for tourists of another world.#
+^FF000030 Luciola Vespa^000000 termination#
+
+13016#Luciola Vespa termination - Wait#SG_FEEL#QUE_NOIMAGE#
+Forget this stupid request. Just take a break.#
+#
+
+13017#Dancing with wolves#SG_FEEL#QUE_NOIMAGE#
+In nothr Rachel's cave developed new tourist attraction. Please hunt ^FF0000Desert Wolf^000000 in ice dungeon.#
+^FF000030 Desert Wolf^000000 termination#
+
+13018#Desert Wolf termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13019#Noisy guys#SG_FEEL#QUE_NOIMAGE#
+Snowier's heavy breather gives mental fatigue to adventurer. If you can endure that noise, please hunt Snowier.#
+^FF000030 Snowier^000000 termination#
+
+13020#Snowier termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13021#Golem? Golem!#SG_FEEL#QUE_NOIMAGE#
+Have you ever been Rachel's ice cave? If you go down 3rd stair, you can see Ice Titan monster. When research workers see him, they discuss that he is Golem or not. They need to reduce the number of monsters.#
+^FF000030 Ice Titan^000000 terminationc#
+
+13022#Ice Titan termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13023#Barely remember you#SG_FEEL#QUE_NOIMAGE#
+Someone who has good memory of love in Lava dungeon requested to hunt violence monsters. Please keep her good memory!#
+^FF000030 Nightmare Terror^000000 termination#
+
+13024#Nightmare Terror termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13025#The last dancing with me#SG_FEEL#QUE_NOIMAGE#
+Cause of Deleter's attack, I could not dance and got a letter from her^FF0000Good bye^000000... That is why he can't forgive deleter. Please hunt ^FF0000deleter^000000.#
+^FF000030 Deleter^000000 termination#
+
+13026#Deleter termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13040#Harhak#SG_FEEL#QUE_NOIMAGE#
+one of secret organization Goddess and Jokgoo asked to hunt Loli Ruri monster becasue these monsters make adventurer scared. Before they give us harder request, finish them.#
+^FF000030 Loli Ruri^000000 termination#
+
+13041#Loli Ruri termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13042#Scream of Beautician#SG_FEEL#QUE_NOIMAGE#
+This request from Beautician in Alberta. I really want to cut Medusa's snake hair. She is in south comodo cave. Terminate Medusa for beautician.#
+^FF000030 Medusa^000000 termination#
+
+13043#Medusa termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13044#Red star of desert#SG_FEEL#QUE_NOIMAGE#
+After morocc is broken, no one visit here that is why someone requested. It is not special request but if so many people will be able to visit morocc that will be great.#
+^FF000020 Anubis^000000 Combat#
+
+13045#Anubis termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The break is also part of training! Let's take a break for next request.#
+#
+
+13046#I'm a king of beast in this area!#SG_FEEL#QUE_NOIMAGE#
+Let's hunt Tendrilion in south west of base camp.#
+^FF0000Tendrilion^000000 ^FF00001^000000 Combat#
+
+13047#Tendrilion termination - Wait#SG_FEEL#QUE_NOIMAGE#
+The mission completed so, let's take a break and come back again.#
+#
+
+13048#I'm a king of beast in this area!#SG_FEEL#QUE_NOIMAGE#
+Well, I don't know it is Rotert's trick or not but I'll try to work hard.Let's hunt Tendrilion in south west of base camp.#
+^FF0000Tendrilion^000000 ^FF00001^000000 Combat#
+
+13049#Tendrilion termination - Wait#SG_FEEL#QUE_NOIMAGE#
+That's enough. Let's visit tomorrow again.#
+#
+
+
+
+
+13067#Raydric research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Raydric and study in Glast Heim knight#
+^FF000030 Raydric^000000 research#
+
+13068#Raydric research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13069#Khalitzburg research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Khalitzburg and study in Glast Heim knight#
+^FF000030 Khalitzburg^000000 research#
+
+13070#Khalitzburg research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13071#Wander Man research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Wander Man and study in second floor of GlastHeim castle#
+^FF000030 Wander Man^000000 research#
+
+13072#Wander Man research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13073#Ancient Mimic research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Ancient Mimic and study in Thanatos Tower #
+^FF0000 30 Ancient Mimic^000000 research#
+
+13074#Ancient Mimic research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13075#Death Word research#SG_FEEL#QUE_NOIMAGE#
+Let's research Death Word #
+^FF0000 30 Death Word^000000 research#
+
+13076#Death Word research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13077#Owl Baron research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 20 Owl Baron and study. Some said that there are many owl baron on sixth floor#
+^FF000020 Owl Baron^000000 Combat#
+
+13078#Owl Baron research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13079#List of Generic's antique book#SG_FEEL#QUE_NOIMAGE#
+If we can restore ancient antique book, it could be great research. We can get this from Death Word. Let's collect them.#
+^FF000020 bloodstained papers^000000 Collecting#
+
+13080#List of Generic's antique book - Wait#SG_FEEL#QUE_NOIMAGE#
+If there are bloodstained papers, that will be great. Let's collect them and send to him#
+#
+
+13081#Pinguicula dark research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Pinguicula dark and study in base camp#
+^FF000030 Pinguicula dark^000000 Combat#
+
+13082#Pinguicula dark research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13083#Nepenthes research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Nepenthes and study in base camp#
+^FF000030 Nepenthes^000000 Combat#
+
+13084#Nepenthes research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13085#Naga research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Naga and study in base camp. Be careful! He does not need cursed Naga by magic!#
+^FF000030 Naga^000000 Combat#
+
+13086#Naga research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13087#Centipede Larva research#SG_FEEL#QUE_NOIMAGE#
+Let's terminate 20 of Centipede Larva for Mingmin's study!#
+^FF000020 Centipede Larva^000000Combat#
+
+13088#Centipede Larva research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13089#Cornus research#SG_FEEL#QUE_NOIMAGE#
+Let's hunt 30 Cornus and study in base camp#
+^FF000030 Cornus^000000 Combat#
+
+13090#Cornus research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13091#We don't know the power of horn the day#SG_FEEL#QUE_NOIMAGE#
+Collecting 20 of power of horn from Cornus and send to Mingmin.#
+^FF000020 power of horn^000000 Collecting#
+
+13092#We don't know the power of horn the day - Wait#SG_FEEL#QUE_NOIMAGE#
+We are still researching power of horn so, collect it as much as you can and send to Mingmin when he needs#
+#
+
+13093#Ancient Mummy research#SG_FEEL#QUE_NOIMAGE#
+Even though you are not interested in Pudding, let's combat 30 of ancient mummy and study for Mingmin.#
+^FF000030 Ancient Mummy^000000Combat#
+
+13094#Ancient Mummy research - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13095#Geffenia expedition#SG_FEEL#QUE_NOIMAGE#
+Enter into Geffenia and take a look what kind of monster are there. Study and combat 10 of Inccubus, Succubus and Violy#
+Geffenia expedition#
+
+13096#Geffenia expedition - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13097#Juperos expedition#SG_FEEL#QUE_NOIMAGE#
+Find Venatu and study in Juperos dungeon. I'm not sure which Venatu but just do it! Combat 90 of Venatu#
+^FF0000Venatu ^000000Combat#
+
+13098#Juperos expedition - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+13099#When find Mystery Piece#SG_FEEL#QUE_NOIMAGE#
+Don't didappoint Mingmin and collect 10 Mystery Piece. Ah! He needs to have 20 Rusty Screw.#
+Collecting research material#
+
+13100#When find Mystery Piece - Wait#SG_FEEL#QUE_NOIMAGE#
+Mingmin is doing study hard. Let's come back later.#
+#
+
+
+
+
+13107#Thanatos Tower Search#SG_FEEL#QUE_NOIMAGE#
+Let's search Thanatos tower to find terms of adventurer.#
+#
+
+13108#Rachel holy ground Search#SG_FEEL#QUE_NOIMAGE#
+Let's search Rachel holy ground to find terms of adventurer.#
+#
+
+13109#Unknown island Search#SG_FEEL#QUE_NOIMAGE#
+Let's search Unknown island to find terms of adventurer.#
+#
+
+13110#Abyss Lake Search#SG_FEEL#QUE_NOIMAGE#
+Let's search Abyss Lake to find terms of adventurer.#
+#
+
+13111#Thanatos Tower  Search - Reporting results#SG_FEEL#QUE_NOIMAGE#
+We found terms of adventurer. Let's go back and report to Aigu.#
+#
+
+13112#Rachel holy ground Search - Reporting results#SG_FEEL#QUE_NOIMAGE#
+We found terms of adventurer. Let's go back and report to Aigu.#
+#
+
+13113#Unknown island Search - Reporting results#SG_FEEL#QUE_NOIMAGE#
+We found terms of adventurer. Let's go back and report to Aigu.#
+#
+
+13114#Abyss Lake Search - Reporting results#SG_FEEL#QUE_NOIMAGE#
+We found terms of adventurer. Let's go back and report to Aigu.#
+#
+
+13115#Thanatos Tower Search - Wait#SG_FEEL#QUE_NOIMAGE#
+It is not terms what Aigu is looking for.. Let's search again later.#
+#
+
+13116#Rachel holy ground Search - Wait#SG_FEEL#QUE_NOIMAGE#
+It is not terms what Aigu is looking for.. Let's search again later.#
+#
+
+
+13117#Unknown island Search - Wait#SG_FEEL#QUE_NOIMAGE#
+It is not terms what Aigu is looking for.. Let's search again later.#
+#
+
+13118#Abyss Lake Search - Wait#SG_FEEL#QUE_NOIMAGE#
+It is not terms what Aigu is looking for.. Let's search again later.#
+#
+
+13119#Combat Baroness of Retribution#SG_FEEL#QUE_NOIMAGE#
+Combat Baroness of Retribution in Thanatos Tower#
+Combat 30 Baroness of Retribution#
+
+13120#Combat Baroness of Retribution - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13121#Combat Lady Solace#SG_FEEL#QUE_NOIMAGE#
+Combat Lady Solace in Thanatos Tower#
+Combat 30 Lady Solace#
+
+13122#Combat Lady Solace - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13123#Combat Mistress of Shelter#SG_FEEL#QUE_NOIMAGE#
+Combat Mistress of Shelter in Thanatos Tower#
+Combat 30 Mistress of Shelter#
+
+13124#Combat Mistress of Shelter - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13125#Combat Dame of Sentinel#SG_FEEL#QUE_NOIMAGE#
+Combat Dame of Sentinel in Thanatos Tower#
+Combat 30 Dame of Sentinel#
+
+13126#Combat Dame of Sentinel - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13127#Combat Vanberk and Isilla#SG_FEEL#QUE_NOIMAGE#
+Combat Vanberk and Isilla in Rachel holy ground#
+Combat 20 of Vanberk and Isilla#
+
+13128#Combat Vanberk and Isilla - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13129#Combat Hodremlin#SG_FEEL#QUE_NOIMAGE#
+Combat Hodremlin in Rachel holy ground#
+Combat 30 Hodremlin#
+
+13130#Combat Hodremlin - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13131#Combat Agav and Echio#SG_FEEL#QUE_NOIMAGE#
+Combat Agav and Echio in Rachel holy ground#
+Combat 20 of Agav and Echio#
+
+13132#Combat Agav and Echio - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13133#Combat Ragged Zombie#SG_FEEL#QUE_NOIMAGE#
+Combat Ragged Zombie in unknown island#
+Combat 30 Ragged Zombie#
+
+13134#Combat Ragged Zombie - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13133#Combat Ragged Zombie#SG_FEEL#QUE_NOIMAGE#
+Combat Ragged Zombie in unknown island#
+Combat 30 Ragged Zombie#
+
+13134#Combat Ragged Zombie - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13135#Combat Zombie Slaughter#SG_FEEL#QUE_NOIMAGE#
+Combat Zombie Slaughter in unknown island#
+Combat 30 Zombie Slaughter#
+
+13136#Combat Zombie Slaughter - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13137#Combat Banshee#SG_FEEL#QUE_NOIMAGE#
+Combat Banshee in unknown island#
+Combat 30 Banshee#
+
+13138#Combat Banshee - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13139#Combat Ferus#SG_FEEL#QUE_NOIMAGE#
+Combat Ferus in Abyss Lake#
+Combat 30 Ferus#
+
+13140#Combat Ferus - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+13141#Combat Acidus#SG_FEEL#QUE_NOIMAGE#
+Combat Acidus in Abyss Lake#
+Combat 30 Acidus#
+
+13142#Combat Acidus - Wait#SG_FEEL#QUE_NOIMAGE#
+Today's mission success. Let's come back after one day.#
+#
+
+
+
+
+13143#Egnigem Story#SG_FEEL#QUE_NOIMAGE#
+Let's find Egnigem Cenia's story in lighthalzen#
+Egnigem Cenia 30th Encounter#
+
+13144#Egnigem Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13145#Armeyer Story#SG_FEEL#QUE_NOIMAGE#
+Let's find  Armeyer Dinze's story in lighthalzen#
+Armeyer Dinze 30th Encounter#
+
+13146#Armeyer Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13147#Whikebain Story#SG_FEEL#QUE_NOIMAGE#
+Let's find  Wickebine Tres' story in lighthalzen#
+Wickebine Tres 30th Encounter#
+
+13148#Whikebain Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13149#Kavach Story#SG_FEEL#QUE_NOIMAGE#
+Let's find  Kavach Icarus's story in lighthalzen#
+Kavach Icarus 30th Encounter#
+
+13150#Kavach Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13151#Errende Story#SG_FEEL#QUE_NOIMAGE#
+Let's find  Errende Ebecee's story in lighthalzen#
+Errende Ebecee 30th Encounter#
+
+13152#Errende Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13153#Laurell Story#SG_FEEL#QUE_NOIMAGE#
+Let's find  Laurell Weinder's story in lighthalzen#
+Laurell Weinder 30th Encounter#
+
+13154#Laurell Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13155#Morocc Story1#SG_FEEL#QUE_NOIMAGE#
+Let's terminate Morocc Incarnation who look like a Valkyrie#
+Morocc Incarnation 30th Combat#
+
+13156#Morocc Story1 - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13157#Morocc Story2#SG_FEEL#QUE_NOIMAGE#
+Let's terminate Morocc Incarnation who is strange and dark#
+Morocc Incarnation 30th Combat#
+
+13158#Morocc Story2 - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13159#Morocc Story3#SG_FEEL#QUE_NOIMAGE#
+Let's terminate Morocc Incarnation who look like ghost. Be careful! the normal attack is not working!#
+Morocc Incarnation 30th Combat#
+
+13160#Morocc Story3 - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13161#Single horn Skarava Story#SG_FEEL#QUE_NOIMAGE#
+Find Single horn Skarava and study in another world. Just try to talk and if does not answer, remove it.#
+Combat 30 single horn Skarava#
+
+13162#Single horn Skarava Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13163#Twin horn Skarava Story#SG_FEEL#QUE_NOIMAGE#
+Find Twin horn Skarava and study in another world. Just try to talk and if does not answer, remove it.#
+Combat 30 Twin horn Skarava#
+
+13164#Single horn Skarava Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13165#Antler Skarava Story#SG_FEEL#QUE_NOIMAGE#
+Find Antler Skarava and study in another world. Just try to talk and if does not answer, remove it.#
+Combat 30 Antler Skarava#
+
+13166#Antler Skarava Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+13167#Rake horn Skarava Story#SG_FEEL#QUE_NOIMAGE#
+Find Rake horn Skarava and study in another world. Just try to talk and if does not answer, remove it.#
+Combat 30 Rake horn Skarava#
+
+13168#Rake horn Skarava Story - Wait#SG_FEEL#QUE_NOIMAGE#
+Maybe there is more information to know.#
+#
+
+//-------Old Glast Heim
+12316#Meeting Hugin#SG_FEEL#QUE_NOIMAGE#
+Finally met Hugin for the first time. He probably remembers me, but not sure I would do the same.#
+First encounter.#
+
+
+12317#Trace of Time Travel#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glast Heim has been prohibited for 23hours.#
+Dimension distorted.#
+
+
+12318#Corrupted root Hunt#SG_FEEL#QUE_NOIMAGE#
+Take care of Corrupted root located in Old Glastheim 1F.#
+Corrupted root#
+
+
+12319#Amdarais Hunt#SG_FEEL#QUE_NOIMAGE#
+Take care of Amdarais located in Old Glastheim 2F.#
+Amdarais#
+
+
+12320#Time Traveler#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glastheim has been partially finished.#
+Old castle time travel#
+
+12321#Time Conqueror#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glastheim has been completely finished.#
+Old castle time travel#
+
+12322#Space Distortion#SG_FEEL#QUE_NOIMAGE#
+Inside of Glastheim has been distorted by Hugin. Anything can happen inside of this castle. #
+Space distorted#
+
+// -- 2016 크리스마스 이벤트
+1300#Trace of Support Goods#SG_FEEL#QUE_NOIMAGE#
+Volunteer Service Helping Hand is trying help neighbors with Vin Chaud, but the ingredient delivery being delayed. To help Ballery, visit people to find out what happened.#
+Meet ingredient supporters#
+
+1301#Trace of Support Goods-Geffen#SG_FEEL#QUE_NOIMAGE#
+At Geffen, meet Brewery Master Kantina and ask about the Fermented Grape Juice support.#
+Find Kantina#
+
+1302#Trace of Support Goods-Morocc#SG_FEEL#QUE_NOIMAGE#
+At Morocc, meet Wholesaler Brutaqual and ask about the Orange and Apple support.#
+Find Brutaqual#
+
+1303#Trace of Support Goods-Alberta#SG_FEEL#QUE_NOIMAGE#
+At Alberta, meet Trader Curundu and ask about the Cinamon, Nutmeg support.#
+Find Curundu#
+
+1304#Trace of Support Goods-Aldebaran#SG_FEEL#QUE_NOIMAGE#
+At Aldebaran, meet Seasoning Merchant Askar and ask about the Sugar support.#
+Find Askar#
+
+1305#Trace of Support Goods-Payon#SG_FEEL#QUE_NOIMAGE#
+At Payon, meet Farm Owner Vinpa and ask about the Apply support.#
+Find Vinpa#
+
+1306#Kantina's Request#SG_FEEL#QUE_NOIMAGE#
+Kantina said Happy Santa Orc took all of Fermented Grape Juice. Let's help Kantina get 6 Fermented Grape Juice back.#
+Collect 6 Fermented Grape Juice#
+
+1307#Curundu's Request#SG_FEEL#QUE_NOIMAGE#
+Santa Porings are eating all cargos. Let's take care of 3 Santa Poring while waiting for the support delivery.#
+Hunt 3 Santa Poring#
+
+1308#Askar's Request#SG_FEEL#QUE_NOIMAGE#
+Support delivery is being later. Let's collect the bag of sugar and deliver to Ballery.#
+Deliver Bag of Sugar to Ballery#
+
+1309#Share the Warmth with Helping Hand#SG_FEEL#QUE_NOIMAGE#
+Helping Hand trying to share Vin Chaud through their branch. Collect some fire woods to help the Helping Hand broil Vin Chaud, and deliver Vin Chaud to their branches.#
+Share the Warmth in designated area#
+
+1310#Share the Warmth in Izlude#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Izlude Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Izlude Branch Member#
+
+1311#Share the Warmth in Geffen#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Geffen Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Geffen Branch Member#
+
+1312#Share the Warmth in Payon#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Payon Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Payon Branch Member#
+
+1313#Share the Warmth in Morocc#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Morocc Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Morocc Branch Member#
+
+1314#Share the Warmth in Alberta#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Alberta Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Alberta Branch Member#
+
+1315#Share the Warmth in Aldebaran#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Aldebaran Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Aldebaran Branch Member#
+
+1316#Share the Warmth in Prontera#SG_FEEL#QUE_NOIMAGE#
+Meet Helping Hand Prontera Branch Member, deliver 1 Vin Chaud and 3 Fire Woods.#
+Deliver product to Prontera Branch Member#
+
+1317#Today's Vin Chaud making is over#SG_FEEL#QUE_NOIMAGE#
+Broild Vin Chaud all out of stock now. Let's come back at 4 AM when Vin Chaud is ready again.#
+Visit Ballery after 4 AM#
+
+1318#Elena's Favor#SG_FEEL#QUE_NOIMAGE#
+Elena asks to help her sister no matter how. To see what's going on, find Ballery in front of Prontera church.#
+Meet Ballery in front of Prontera Church#
+
+1319#Memory of Sprig of Holly#SG_FEEL#QUE_NOIMAGE#
+Ballery gave Sprig of Holly to thank the help, that can become a beautiful item by weaving. Find Brechen to ask for weaving the sprig, she can be found at Izlude square 7 O'clock way.#
+Izlude에서 Brechen#
+
+1320#Making Christmas Wreath#SG_FEEL#QUE_NOIMAGE#
+Brechen said collect 10 Sprig of Holly to make Christmas Wreath.#
+Collect 10 Sprig of Holly#
+
+1333#Sweet Temtation#SG_FEEL#QUE_NOIMAGE#
+Help the man struggle with sweet smell by hunting 5 Sweets Drops monster.#
+Take care of 5 Sweets Drops#
+
+1334#Sweetness don't last long#SG_FEEL#QUE_NOIMAGE#
+Struggled man got the peace back. LEt's check with him again after 4 AM tomorrow.#
+Visit Man with Struggle after 4 AM#
+
+1335#Lovely Candy Basket#SG_FEEL#QUE_NOIMAGE#
+Bring 5 Candy, 5 Lolipop, 3 Throat Candy to Garnish Lorenzo.#
+Deliver goods to Garnish#
+
+1336#Secret mission : Fill out candy basket#SG_FEEL#QUE_NOIMAGE#
+Garnish asks to come back after 4 AM as his son might find out.#
+Visit Garnish Lorenzo after 4 AM#
+
+1337#Lucky Sweets#SG_FEEL#QUE_NOIMAGE#
+Bring 1 Lucky Cady, 1 Luck Lolipop, 1 Lucky Cookie to Miss Fortuna.#
+Deliver goods to Miss Fortuna#
+
+1338#No more Sweets#SG_FEEL#QUE_NOIMAGE#
+Miss Fortuna says she would want some more sweets after 4 AM.#
+Visit Miss Fortuna after 4 AM#
+
+15125#In need of COCOA BEAN#SG_FEEL#QUE_NOIMAGE#
+Take care of Sweets Drops monsters from fields and dungeons. Get back to Charles with 20 stolen COCOA BEANs.#
+Collect 20 stolen COCOA BEANs#
+
+15127#Chocolate Delivery#SG_FEEL#QUE_NOIMAGE#
+Deliver chocolates in order of Geffen, Payon, Aldebarn, Prontera Sweets Shops.#
+Chocolate delivery to big city sweets shops#
+
+15128#Chocolate Delivery Complete#SG_FEEL#QUE_NOIMAGE#
+Finished chocolate delivery Charles requested. You can repeat after 4 AM.#
+Deliver again from 4 AM#
+
+15129#Daily Draw Limitation#SG_FEEL#QUE_NOIMAGE#
+Sweets Shop Draw is only possible once a day. Today you've draw one alredy, so let's try after tomorrow 4 AM.#
+Darwa Cool Time until 4 AM#
+
+1264#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 15 Burning Feathers from Fire Condors.#
+Talk to Base Investigator.#
+
+1265#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Find a scout somewhere in the Flaming Basin.#
+Talk to the scout.#
+
+1266#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 20 Patrol Logs from Fire Sandmen.#
+Talk to the scout.#
+
+1267#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Report to Base Investigator with news about the scout.#
+Talk to Base Investigator.#
+
+1268#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Cull the monsters; hunt 20 Fire Sandmen.#
+Talk to Base Investigator.#
+
+1269#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Cull the monsters; hunt 20 Fire Frilldoras.#
+Talk to Base Investigator.#
+
+1270#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+See if the Doom Prayers are really blessed. Collect 40 Blessing Stones from Fire Golems.#
+Talk to Doom Prayers Leader.#
+
+1271#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+No miracle happened.#
+Talk to Doom Prayers Leader.#
+
+1272#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+See if the Doom Prayers are really blessed. Collect 30 Monster Blood from Fire Sandmen and Fire Frilldoras.#
+Talk to Doom Prayers Leader.#
+
+1273#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+The leader had diarrhea and couldn't levitate himself. Talk to Doom Prayers Second-in-command.#
+Talk to Doom Prayers Second-in-command.#
+
+1274#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Collect 30 Fire Golem Teeth and 30 Fire Frilldora Napes for the Doom Prayers.#
+Talk to Doom Prayers Second-in-command.#
+
+1275#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Something special did happen, though it scared everyone who witnessed it.#
+Talk to Doom Prayers Leader.#
+
+1297#Flaming Basin and Doom Prayers#SG_FEEL#QUE_NOIMAGE#
+Meet Doom Prayers Leader to the northwest of the Base.#
+Talk to Doom Prayers Leader.#
+
+
+// Episode 14.3 Rebuilding the Destroyed Desert City, Morroc
+
+5251#wood Supply Mission#SG_FEEL#QUE_NOIMAGE#
+Exit through the southern gate (moc_fild12) of Morroc and collect 10 Wood. You do not have to deliver them at once.#
+Supply 10 Woods.#
+
+5252#[Pending] Wood Supply Mission#SG_FEEL#QUE_NOIMAGE#
+There's enough wood for now. Come back later.#
+Waiting Time: 3 hours#
+
+5253#Wood Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 Woods from Piled Wood, and take them to the central castle construction site.#
+Deliver 100 Woods.#
+
+5254#[Pending] Wood Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for wood have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5255#Rope Making Mission#SG_FEEL#QUE_NOIMAGE#
+Rope materials: 10 Pointed Scales, 10 Cobwebs, 10 Tendons, 10 Thin Stems, and 10 Tough Scale-like Stems. Collect just two kinds of materials.#
+Supply 2 kinds of rope materials.#
+
+5256#[Pending] Rope Making Mission#SG_FEEL#QUE_NOIMAGE#
+There's enough rope for now. Come back later.#
+Waiting Time: 3 hours#
+
+5257#Rope Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 lengths of rope from Coiled Rope, and take them to the central castle construction site.#
+Deliver 100 Ropes.#
+
+5258#[Pending] Rope Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for rope have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5259#Brick Making Mission#SG_FEEL#QUE_NOIMAGE#
+1 Brick is made up of 1 Sand Grain and 1 Fine Sand. Feed them to Mimic to create a Brick.#
+Supply 10 Bricks.#
+
+5260#[Pending] Brick Making Mission#SG_FEEL#QUE_NOIMAGE#
+There are enough bricks for now. Come back later.#
+Waiting Time: 3 hours#
+
+5261#Brick Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+Collect 100 Bricks from Piled Bricks, and take them to the central castle construction site.#
+Deliver 100 Bricks.#
+
+5262#[Pending] Brick Delivery Mission#SG_FEEL#QUE_NOIMAGE#
+No new orders for bricks have been received. Come back later.#
+Waiting Time: 3 hours#
+
+5263#Snack Order#SG_FEEL#QUE_NOIMAGE#
+You can bring any dish in the list I gave you: Bomber Steak, Herb Marinade Beef, Lutie Lady's Pancake, Shiny Marinade Beef, Tentacle Cheese Gratin, Lutie Cold Noodle, Steamed Bat Wing in Pumpkin, Chile Shrimp Gratin, Honey Herbal Tea, Morroc Fruit Wine, Mastela Fruit Wine, Red Mushroom Wine, Fruit Mix, Cream Sandwich, Green Salad, Peach Cake, Clam Soup, Seasoned Jellyfish, Spicy Fried Bao, Awfully Bitter Bracer, Fried Sweet Potato, Steamed Ancient Lips, Fried Scorpion Tails, and Lucky Soup.#
+Deliver 1 dish.#
+
+5264#[Pending] Snack Order#SG_FEEL#QUE_NOIMAGE#
+It's the recess before the next snack preparation begins.#
+Waiting Time: 3 hours#
+
+5265#Purging the Land (1)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Valkyrie-type Morroc Reincarnations.#
+#
+
+5266#Purging the Land (2)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Clay-type Morroc Reincarnations.#
+#
+
+5267#Purging the Land (3)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Exorcist-type Morroc Reincarnations.#
+#
+
+5268#Purging the Land (4)#SG_FEEL#QUE_NOIMAGE#
+Purge the land that Morroc has left tainted with evil. Eliminate 10 Ghost-type Morroc Reincarnations.#
+#
+
+5269#[Pending] Purging the Land#SG_FEEL#QUE_NOIMAGE#
+Take rest until the next subjugation mission begins.#
+Waiting Time: 3 hours#
+
+5270#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+Take the worker to a suitable construction site at once.#
+#
+
+5271#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5272#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5273#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5274#Worker Transport#SG_FEEL#QUE_NOIMAGE#
+The Supervisor wants to keep the worker. Dismiss the worker in the Mercenary Information window, and then talk to the Supervisor again.#
+#
+
+5275#[Pending] Worker Transport#SG_FEEL#QUE_NOIMAGE#
+No new workers have arrived. Come back later.#
+Waiting Time: 3 hours#
+
+//--- Episode 14.3
+
+7578#Rampaging Box#SG_FEEL#QUE_NOIMAGE#
+The Flaming Basin is overrun with animated boxes with hostile intent. Subjugate the boxes and identify them.#
+1 Bradium Box#
+
+7579#Collecting Bradiums#SG_FEEL#QUE_NOIMAGE#
+Those rampaging boxes are enchanted Bradium Boxes. Subjugate the boxes and collect Bradium Boxes.#
+10 Bradium Box#
+
+7580#Collecting Every Day#SG_FEEL#QUE_NOIMAGE#
+You've decided to collect Bradium Boxes every day to try to thwart Chesher's scheme. Come back to Hasranta tomorrow.#
+Wait for one day.#
+
+7581#Eliminating Risks#SG_FEEL#QUE_NOIMAGE#
+Morocc Fire Vassal, Morocc Twisted Vassal, and Morocc Cold Vassal are the biggest threat to our subjugation operation. Please take care of them.#
+#
+
+7582#Daily Cleaning#SG_FEEL#QUE_NOIMAGE#
+Leave them to other subjugators for now. You deserve a rest.#
+Wait for one day.#
+
+7583#Collecting Mana#SG_FEEL#QUE_NOIMAGE#
+Laphine Magic Scholar Avant has asked you to collect Mana Crystallines from those abnormally strong Demons. This quest can be performed with the Alliance quest, Eliminating Risks.#
+3 Mana Crystallines#
+
+7584#Unending Battle#SG_FEEL#QUE_NOIMAGE#
+The Demons are siphoning off the mana to maintain their strength. You've decided to come back to Avant every day, to help him collect Mana Crystallines.#
+Wait for one day.#
+
+//--- ep14.3 part2 end of morocc
+
+7593#Demon God Subjugation#SG_FEEL#QUE_NOIMAGE#
+It's time to finish the job: eliminate Morroc in the Temple of the Demon God.#
+#
+
+7594#Frost Spider and Fire Wolf#SG_FEEL#QUE_NOIMAGE#
+Eliminate Morroc's creations and his followers: Frost Spider Brinaranea and Fire Wolf Muspellskoll.#
+#
+
+7595#Wandering Orb Magic#SG_FEEL#QUE_NOIMAGE#
+Collect the mana stolen from Yggdrasil and the Orb: hit and scatter Brilliant Manas, Life Manas, and Earth Manas.#
+#
+
+7596#Qualifications of the Guests#SG_FEEL#QUE_NOIMAGE#
+To enter the Temple of the Demon God, you need a key. Eliminate Gatekeeper Ahat and Shnaim, and use their souls to open the temple entrance.#
+1 Ahat's Soul, 1 Shnaim's Soul#
+
+7597#Fall of the False God#SG_FEEL#QUE_NOIMAGE#
+You defeated Demon God Morroc, who wanted to create a new world and play God. Report to Commander Hiva Agip.#
+Report to the Commander.#
+
+7598#Caged God#SG_FEEL#QUE_NOIMAGE#
+Confined in his own world, the Demon God is cursed to suffer for eternity. Come back tomorrow and put him out of his misery once more.#
+Come back tomorrow.#
+
+7599#Unending Hunt#SG_FEEL#QUE_NOIMAGE#
+The hunting continues until every single Demon in the Temple of the Demon God is eliminated. Adjutant Abidal asked you to come back when you are fully rested.#
+Come back tomorrow.#
+
+7600#Promising Tomorrow#SG_FEEL#QUE_NOIMAGE#
+The Orb of Eclage and Yggdrasil have lost a substantial amount of mana, and thus the mana collection work continues until most of it is retrieved. Take a rest and come back to Hishieh before you move on to the Temple of the Demon God.#
+Come back tomorrow.#
+
+7601#Temple of the Demon God Phase 1#SG_FEEL#QUE_NOIMAGE#
+Eliminate Frost Spider Brinaranea to move on to the next area.#
+#
+
+7602#Temple of the Demon God Phase 1 Completed#SG_FEEL#QUE_NOIMAGE#
+You defeated Frost Spider Brinaranea.#
+#
+
+7603#Temple of the Demon God Phase 2#SG_FEEL#QUE_NOIMAGE#
+Eliminate Fire Wolf Muspellskoll to move on to the next area.#
+#
+
+7604#Temple of the Demon God Phase 2 Completed#SG_FEEL#QUE_NOIMAGE#
+You defeated Fire Wolf Muspellskoll.#
+#
+
+7605#Guardian's Blessing#SG_FEEL#QUE_NOIMAGE#
+Your latest contract with the Guardian has not yet expired. No new contracts can be made until then.#
+#
+
+
+// EP 14.3 Morse's Cave
+
+9318#Pursuing Hiding Morroc#SG_FEEL#QUE_NOIMAGE#
+The ^8B4513Senior Tracker^000000's message: Please enter the ^0000FFRed Flower^000000 and defeat Morroc.#
+Defeat the ^8B4513hiding Morroc and his lackeys^000000.#
+
+9319#Pursuing Hiding Morroc Continues#SG_FEEL#QUE_NOIMAGE#
+The ^8B4513Senior Tracker^000000's message: Please come back tomorrow and help me pursue Morroc.#
+Come back after ^8B451323 hours^000000.#
+
+//-- ep 14.3
+11349#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+He lost consciousness again, exhausting himself just from talking. You should give him Monster's Feed to eat.#
+Monster's Feed#
+
+11350#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+You fed him Monster's Feed. Resume conversation.#
+Resume conversation.#
+
+11351#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Talk to Tamarin at the oasis near the northwestern Sphinx.#
+Talk to Tamarin.#
+
+11352#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Talk to Tamarin at the Dimensional Crack.#
+Move to the Dimensional Crack.#
+
+11353#Dimensional Travel#SG_FEEL#QUE_NOIMAGE#
+Move to the 2nd floor and find the Dimensional Crack covered with dirt.#
+Find the Crack on the 2nd floor.#
+
+11354#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+You teleported through the Crack.#
+Talk to Barget Tiblack.#
+
+11355#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Investigate 20 fire pits and collect 50 Burning Insect Shells from Firebugs.#
+Investigate fire pits.#
+
+11356#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Pick 50 Sonias and collect 50 stems.#
+Talk to Tamarin.#
+
+11357#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Pick 25 Sonias and collect 25 stems. Meet Tamarin by the big rock in the center of the place.#
+Meet Tamarin.#
+
+11358#Specimen Collection#SG_FEEL#QUE_NOIMAGE#
+Return to Barget Tiblack in the Base.#
+Talk to Barget Tiblack.#
+
+11359#Antidote#SG_FEEL#QUE_NOIMAGE#
+Deliver 25 Delicious Stems to Instructor Rugen standing down below.#
+Talk to Instructor Rugen.#
+
+11360#Antidote#SG_FEEL#QUE_NOIMAGE#
+Feed Delicious Stems to the Intoxicated Patients.#
+Intoxicated Patient#
+
+11361#Antidote#SG_FEEL#QUE_NOIMAGE#
+The patients have gotten better. Talk to Instructor Rugen.#
+Talk to Instructor Rugen.#
+
+11362#Antidote#SG_FEEL#QUE_NOIMAGE#
+The Delicious Stems have proven to be effective. Return to Barget Tiblack.#
+Talk to Barget Tiblack.#
+
+// ep14.3 Nightmarish Jitterbug
+13181#Nightmarish Jitterbug#SG_FEEL#QUE_NOIMAGE#
+Register your name to the Temporary Guildsman List.#
+#
+
+13182#Nightmarish Jitterbug: Waiting#SG_FEEL#QUE_NOIMAGE#
+You have used Runane's warp.#
+#
+
+13183#Nightmarish Jitterbug: Completed#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+//-- ep 14.3 Isle of Bios
+15005#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+Isle of Bios becomes accessible for 23 hours after each exploration. You can enter it again after:#
+23-hour downtime.#
+
+15006#Isle of Bios Exploration#SG_FEEL#QUE_NOIMAGE#
+Memorial dungeon: Isle of Bios Exploration: Beginning#
+Isle of Bios Exploration: Beginning#
+
+15007#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+Isle of Bios allows reentry for the first 5 minutes after its opening. Its entrance closes after:#
+Reenter in 5 minutes.#
+
+15008#Memorial Dungeon: Isle of Bios#SG_FEEL#QUE_NOIMAGE#
+You cleared the dungeon in 5 minutes after you entered it. Isle of Bios is now closed for the next 23 hours.#
+23-hour downtime.#
+
+62854#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+You have started the 2015 quest. This flag is so that you can repeat it next year.#
+#
+
+62855#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Smith about paying for ship's guards.#
+#
+
+62856#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Jones about paying for ship's guards.#
+#
+
+62857#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Le Beou about paying for ship's guards.#
+#
+
+62858#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Talk to Captain Threepwood about paying for ship's guards.#
+#
+
+62859#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Find the retired pirate Butterbeard.#
+#
+
+62860#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Hunt Crewmembers of the Pirate Captain Le Picard#
+Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward.#
+
+62861#2015 Talk like a pirate day#SG_FEEL#QUE_NOIMAGE#
+Defeat the Pirate Captain Le Picard#
+Once you have completed Le Picard and His crew return to E.A.C. Rep for a reward.#
+
+60868#Red Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Red Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Red Lichtern monsters.#
+
+60869#Blue Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blue Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blue Lichtern monsters.#
+
+62866#Parcel Reward Service#SG_FEEL#QUE_NOIMAGE#
+Visit Dally Quen for your reward.#
+#
+62867#Parcel Service#SG_FEEL#QUE_NOIMAGE#
+Wait 16 hours between deliveries.#
+#
+
+62868#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Find Victoria Qwest in Comodo.#
+#
+62869#Parcel Service R I Pete#SG_FEEL#QUE_NOIMAGE#
+Find R I Pete in Niffleheim.#
+#
+62870#Parcel Service Ice Cold Austin#SG_FEEL#QUE_NOIMAGE#
+Find Ice Cold Austin in Lutie.#
+#
+62871#Parcel Service Ishmael#SG_FEEL#QUE_NOIMAGE#
+Find Ishmael in Izlude.#
+#
+62872#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Find 25 Mud Lumps for Victoria.#
+#
+62873#Parcel Service Victoria Qwest#SG_FEEL#QUE_NOIMAGE#
+Deliver the Package to B Rick and Mortah.#
+#
+62874#Parcel Service R I Pete#SG_FEEL#QUE_NOIMAGE#
+Deliver the slippers to A M Live.#
+#
+
+62875#Parcel Service Ice Cold Austin#SG_FEEL#QUE_NOIMAGE#
+Deliver 15 Well Baked Cookies to Austin's friends in Veins.#
+#
+62876#Parcel Service Ishmael#SG_FEEL#QUE_NOIMAGE#
+Deliver 20 Fishtail to Jiro in Amatsu.#
+#
+
+62877#Dally Quen Bonus Ticket#SG_FEEL#QUE_NOIMAGE#
+Visit Dally Quen for your reward.#
+#
+
+62878#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with Deviling to hear out his story!#
+#
+62879#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with Angeling to try and see if she prefers any particular present!#
+#
+62880#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Talk with townspeople in order to see what kind of gifts Angeling may like.#
+#
+62881#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Report to Deviling with your findings. Help him decide what gift to give!#
+#
+62882#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling give a chocolate box to Angeling to show his feelings! Find Master Chocolatier Kevin for assistance! #
+#
+62883#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Collect 10 Candy and 50 Apple. Return to Master Chocolatier Kevin to make a chocolate box.#
+#
+62884#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help deviling create a beautiful bouquet to give to Angeling! Report to Expert Florist Maya for assistance!#
+#
+62885#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Collect 5 Illusion_Flower and 10 Love Flower in order to make a bouquet. Return to Expert Florist Maya to make bouquet.#
+#
+62886#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling create a Valentine's Card to give to Angeling! Seek out Master Artist Bruno for assistance!#
+#
+62887#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Kill to collect 5 Burning Heartss and 10 Slick Paper in order to make the card.#
+#
+62888#Deviling's Love#SG_FEEL#QUE_NOIMAGE#
+Help Deviling talk to Angeling!#
+#
+
+
+9335#Search for shards of Gigantes#SG_FEEL#QUE_NOIMAGE#
+Message from ^8B4513Professor Bernhard ^000000: I ask that you enter the ^0000FF fissure of time^000000 and bring back shards of Gigantes.#
+Obtained shard from Ancient Gigantes. #
+
+9336#Go back to Professor Bernhard#SG_FEEL#QUE_NOIMAGE#
+Message from ^8B4513 Professor Bernhard^000000: I don't have enough shards to create powerful weapons, come back when there is enough energy to open the dimensional door.#
+Reunited after 7 days.#
+
+9337#Wrapping up the Adventure#SG_FEEL#QUE_NOIMAGE#
+Talk to ^8B4513Fenrir^000000 and go back to time fissure Professor Bernhard.. #
+Reunite with Professor Bernhard.#
+
+15050#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Entry to dungeon is prohibited after 23 hours of entry. Entry is possible after the deadline written below.#
+Reentry within 23 hours is not permitted#
+
+15051#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Reentry is possible for 5 minutes after entering dungeon. Entry is possible starting from the deadline written below.#
+Reentry possible within 5 minutes after entry#
+
+15052#Memorial Dungeon: Airship Assault#SG_FEEL#QUE_NOIMAGE#
+Dungeon has been cleared within 5 minutes of entry so entry to dungeon is prohibited for 23 hours.#
+Reentry within 23 hours is not permitted#
+
+
+62890#Bounty Board Cursed Box#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62891#Bounty Board Cursed Book#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62892#Bounty Board Big Bell#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62893#Bounty Board Big Ben#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+62894#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the monster below and return to the Bounty Board at Aldebaran#
+#
+
+
+11471#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Deliver ^0000ff20 empty test tubes, 50 empty potion, 1 fire scroll, 5 holy water^000000to Boxter.#
+Delivery goods to Boxter#
+
+11472#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Run all they way to ^0000ffNortheast of Izlude Wharf^000000 and test the effectiveness of the potion.#
+Travel to Izlude Wharf#
+
+11473#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Confirmed the effectiveness of the potion. Go back to Boxter and report.#
+Talk to Boxter again#
+
+11474#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Boxter looks too satisfied with the effectiveness of the potion and might have forgotten the purpose. Acquire ^0000ff25 Wings of Red Bat, 25 Claw of Rat, 25 Sweet Potatoes^000000 from field located 11 o' clock North of Payon and talk to Boxter again.#
+To the Payon Forest#
+
+11475#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Eliminate 50 Sohee while Boxter formulate the potion.#
+Eliminate 50 Sohee#
+
+11476#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Talk to Suspicious Man near Phrontera Library about potion distribution.#
+Talk to Suspicious Man#
+
+11477#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Suspicious Man is willing to purchase every potion from Granpa Boxter. Let's go back to Boxter.#
+To Boxter once again#
+
+11478#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Gang members of Lightalzen appears and begun to cause a mess. Let's get rid of atleast 2 Gang members and talk to Boxter.#
+Clear out Gang Members#
+
+11479#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+After getting rid of the gang members, Granny Boxter appears and disagrees with work of Grandpa Boxter. Go meet the Suspicious Man by the Phrontera Library again.#
+Talk with a Suspicious Man#
+
+11480#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Heard from the Suspicious Man that Boxter's were taken and headed towards Phrontera Inn.#
+Rescue the Boxter's#
+
+11481#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Granpa Boxter and his wife were taken and threatened by Lekenvere personnel so he decided to close down the laboratory. He wants to go to South field of Payon.#
+To Payon Forest#
+
+11482#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+You have secured and kicked out Lekenvere personnel from the lab. Go back to Izlude and acquire hidden away potion from Boxter.#
+To Boxter at Izlude#
+
+11483#The Fast & The Old man#SG_FEEL#QUE_NOIMAGE#
+Granpa Boxter's favor is done. Bit tired. Don't you think the rest is in order?#
+Rest if tired#
+
+
+

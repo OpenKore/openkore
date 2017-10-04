@@ -53723,3 +53723,3009 @@ Job : ^777777All^000000
 #
 2904#
 ABCDEFG!
+
+
+
+//NINJA UPDATE
+2171#
+Armguard with a charming fox drawing. You feel swift when wearing this.
+FLEE + 5.
+Class : ^777777Shield^000000    Defense : ^77777745^000000
+Weight : ^77777720^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+2172#
+Armguard with a threatening wolf drawing. You feel indiscriminating wild instincts when wearing this.
+ATK +100, FLEE -50 for 5 seconds with Physical Atk.
+Class : ^777777Shield^000000    Defense : ^77777770^000000
+Weight : ^77777725^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+2173#
+Armguard with a glowing crescent moon drawing. You feel a sense of mystical fullness when wearing this.
+Reduces delay by 2% per 1 Refine after skill is used.
+Class : ^777777Shield^000000    Defense : ^77777745^000000
+Weight : ^77777725^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+6493#
+Metal piece with sharp needles. Would be painful if stepped on. Will be useful to evade pursuers by throwing on the ground in emergencies.
+Weight : ^7777770.1^000000
+#
+6512#
+A charm ninjas carry to protect themselves from harm. Skilled ninjas can use this periapt to cast various spells.
+Weight : ^7777770.1^000000
+#
+6513#
+A charm ninjas carry to protect themselves from harm. Skilled ninjas can use this periapt to cast various spells.
+Weight : ^7777770.1^000000
+#
+6514#
+A charm ninjas carry to protect themselves from harm. Skilled ninjas can use this periapt to cast various spells.
+Weight : ^7777770.1^000000
+#
+6515#
+A charm ninjas carry to protect themselves from harm. Skilled ninjas can use this periapt to cast various spells.
+Weight : ^7777770.1^000000
+#
+13074#
+^ff0000Cannot trade this item with other players.^000000
+Prototype Ninja Dagger being prepared by the Ninja Association.
+Still at the early stages of development and will have to wait a while for actual commercial sales to start.
+Class : ^777777Dagger^000000 Atk : ^7777770^000000
+Weight : ^7777770^000000
+Weapon lvl : ^7777774^000000
+Require Level : ^77777799^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13075#
+New red dagger released by the Ninja Association. Named for its beautiful but ghastly color.
+INT + 3.
+Class : ^777777Dagger^000000 Atk : ^777777130^000000
+Weight : ^77777770^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^77777799^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13076#
+Only several skilled ninjas can handle this dagger. Favorite among high ranking ninjas for its amazing performance which exceeds the Asura.
+INT + 3, MATK + 100.
+Class : ^777777Dagger^000000 Atk : ^777777120^000000
+Weight : ^77777760^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^777777110^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13077#
+Dagger named ''Shadow Slash''. Named after a legendary ninja known for his excellent swordsmanship who was able to slice even shadows of the dark.
+Class : ^777777Dagger^000000 Atk : ^77777750^000000
+Weight : ^77777760^000000
+Weapon lvl : ^7777774^000000
+Require lvl : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13078#
+Dagger named for its crescent shaped blade. Flows with abundant energy of the crescent moon.
+MATK + 120.
+Reduces consumption SP and variable casting by 5% when skill is used.
+Class : ^777777Dagger^000000 Atk : ^77777750^000000
+Weight : ^77777760^000000
+Weapon lvl : ^7777774^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13294#
+Special Kunai designed to hold gunpowder in the handle for explosion on target and surroundings. Careful handling is required!
+Class : ^777777Throwing Weapon^000000
+Atk : ^77777750^000000
+Weight : ^7777773^000000      Property : ^777777Neutral^000000
+Level Limit : ^777777100^000000
+#
+13311#
+Huuma Shuriken recently released by the Ninja Association. Carries a nickname of Shadow for the special metal it was made from which doesnӴ reflect moonlight.
+STR+ 3.
+Class : ^777777Huuma Shuriken^000000 Atk : ^777777170^000000
+Weight : ^777777150^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^77777799^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13312#
+^ff0000Cannot trade this item with other players.^000000
+Prototype Huuma Shuriken being prepared by the Ninja Association.
+Still at the early stages of development and will have to wait a while for actual commercial sales to start.
+Class : ^777777Huuma Shuriken^000000 Atk : ^7777770^000000
+Weight : ^777777300^000000
+Weapon lvl : ^7777774^000000
+Require Level : ^77777799^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13313#
+Shuriken named after fluttering petals. They say it feels like you are surrounded by a cloud of petals when using this weapon.
+MATK + 50.
+Increases Swirling Petal damage by 20%.
+Class : ^777777Huuma Shuriken^000000 Atk : ^777777150^000000
+Weight : ^777777150^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^777777110^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13314#
+Shuriken with water property. Snowstorm occurs when in use.
+MATK + 50.
+Auto-spell Snow Flake Draft 1Lv is activated by a low rate in close range physical attacks. (at the level learned)
+Class : ^777777Huuma Shuriken^000000 Atk : ^777777200^000000
+Weight : ^777777150^000000     Property : ^777777Water^000000
+Weapon lvl : ^7777774^000000
+Require Level : ^777777110^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13315#
+Shuriken with wind property. Blinds enemies' sight with rain and wind.
+MATK + 50.
+Darkness and auto-spell Lightning Jolt 1Lv is activated by a low rate in close range physical attacks. (at the level learned)
+Class : ^777777Huuma Shuriken^000000 Atk : ^777777200^000000
+Weight : ^777777150^000000     Property : ^777777Wind^000000
+Weapon lvl : ^7777774^000000
+Require Level : ^777777110^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13316#
+Shuriken coated with Oridecon and Gold mixed at a golden ratio.
+Indestructible.
+Increases ATK +10 / MATK +5, and long range Physical Atk by 1% per Refine level.
+Character Level 70+ : ATK increases additional +5 for every BaseLv increase of 10.
+Class : ^777777Huuma Shuriken^000000 Atk : ^77777755^000000
+Weight : ^777777150^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^7777771^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15053#
+Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
+AGI +1 and increases AGI 1 per 3 Refine.
+Additional AGI +2 with Applicable Job and For Armguard.
+Class : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^777777120^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15054#
+Scale Armor told to be worn by a legendary ninja who used unique ninja skills. Specialized for close range Atk.
+MHP + 15%, MSP - 30%.
+Additional ATK +10%, STR +2 with Applicable Job and Wolf Armguard.
+Class : ^777777Armor^000000    Defense : ^77777790^000000
+Weight : ^777777180^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15055#
+Armor specially made to protect high ranking officials from Ninja assassins. Armor creates a clone of the user when under Atk to trick the enemy.
+Additional AGI + 1.
+Illusion-Shadow Lv 1 activated at a certain rate when under physical attack.
+Additional Total Flee +1, FLEE +10 with Applicable Job and Crescent Armguard.
+Class : ^777777Armor^000000    Defense : ^77777760^000000
+Weight : ^777777150^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15056#
+Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
+AGI + 1. Increases AGI 1 per 3 Refine.
+Additional AGI +2 with Applicable Job and For Armguard.
+Class : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^777777120^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+13316#
+Shuriken coated with Oridecon and Gold mixed at a golden ratio.
+Indestructible.
+Increases ATK +10 / MATK +5, and long range Physical Atk by 1% per Refine level.
+Character Level 70+ : ATK increases additional +5 for every BaseLv increase of 10.
+Class : ^777777Huuma Shuriken^000000 Atk : ^77777755^000000
+Weight : ^777777150^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^7777771^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15053#
+Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
+AGI +1 and increases AGI 1 per 3 Refine.
+Additional AGI +2 with Applicable Job and For Armguard.
+Class : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^777777120^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15054#
+Scale Armor told to be worn by a legendary ninja who used unique ninja skills. Specialized for close range Atk.
+MHP + 15%, MSP - 30%.
+Additional ATK +10%, STR +2 with Applicable Job and Wolf Armguard.
+Class : ^777777Armor^000000    Defense : ^77777790^000000
+Weight : ^777777180^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15055#
+Armor specially made to protect high ranking officials from Ninja assassins. Armor creates a clone of the user when under Atk to trick the enemy.
+Additional AGI + 1.
+Illusion-Shadow Lv 1 activated at a certain rate when under physical attack.
+Additional Total Flee +1, FLEE +10 with Applicable Job and Crescent Armguard.
+Class : ^777777Armor^000000    Defense : ^77777760^000000
+Weight : ^777777150^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+15056#
+Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
+AGI + 1. Increases AGI 1 per 3 Refine.
+Additional AGI +2 with Applicable Job and For Armguard.
+Class : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^777777120^000000
+Require Level : ^777777100^000000
+Applicable Job : ^777777Ninja Class^000000
+#
+17155#
+^ff0000Cannot trade this item with other players.^000000
+Box with 1 Refined Shuriken inside.
+^ffffff_^000000
+Shuriken coated with Oridecon and Gold mixed at a golden ratio.
+Indestructible.
+Increases ATK +10 / MATK +5, and long range Physical Atk by 1% per Refine level.
+Character Level 70+ : ATK increases additional +5 for every BaseLv increase of 10.
+Class : ^777777Huuma Shuriken^000000 Atk : ^77777755^000000
+Weight : ^777777150^000000
+Weapon lvl : ^7777773^000000
+Require Level : ^7777771^000000
+Applicable Job : ^777777Ninja Class^000000
+^ffffff_^000000
+^ff0000This item will be excluded from refunds once opened.^000000
+#
+
+//-------------- woe te
+1299#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Bleeding chance.
+Class: ^777777Katar^000000 Atk: ^777777120^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Assassin Classes^000000
+#
+1319#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+Indestructible.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Freezing chance.
+Class: ^777777One-handed Axe^000000 Atk : ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Novice/Swordsman Classes/Merchant Classes/Thief Classes^000000
+#
+1399#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+Indestructible.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Stunning chance.
+Class : ^777777Two-handed Axe^000000 Atk : ^777777150^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Swordsman Classes/Merchant Classes^000000
+#
+1437#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Cursing chance.
+Class: ^777777One-handed Spear^000000 Atk : ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Swordsman Classes^000000
+#
+1495#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Blinding chance.
+Class: ^777777Two-handed Spear^000000 Atk : ^777777150^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Swordsman Classes^000000
+#
+1591#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Magic Attack Power +5% for player characters.
+Physical attacks have a high Blinding chance.
+Heal Amount +5%.
+Class: ^777777Book^000000 Atk: ^777777120^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Priest Classes/Sage Classes/Taekwon Master^000000
+#
+1667#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MATK + 100.
+** Extra option available in WoE TE area
+Magic Attack Power +10% for player characters.
+Magic attacks have a high Blinding chance.
+Heal Amount +5%.
+Class: ^777777One-handed Staff^000000 Atk: ^77777750^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+1834#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Freezing chance.
+Class: ^777777Knuckle^000000 Atk : ^777777150^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Priest Classes/Monk Classes^000000
+#
+1932#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Poisoning chance.
+Class: ^777777Musical Instrument^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Bard Classes^000000
+#
+1987#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Blinding chance.
+Class: ^777777Whip^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Dancer Classes^000000
+#
+2019#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MATK + 130.
+** Extra option available in WoE TE area
+Magic Attack Power 20% for player characters.
+Magic attacks have a high Stunning chance.
+Heal Amount +5%.
+Class : ^777777Two-handed Staff^000000 Atk : ^77777750^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+2020#
+Aside from the potent mana in it, this staff named after Jormungand is famous for its ability to poison the enemy. 
+MATK + 280, INT + 20.
+Magical attacks have a chance of causing Poison on the enemy.
+Melee Physical attacks have a chance of casting Deadly Poison on the enemy.
+Cannot be Upgraded.
+Indestructible.
+Class : ^777777Two-handed Staff^000000 Atk : ^777777200^000000
+Weight: ^777777300^000000 Attribute: ^777777Poison^000000
+Item level : ^7777774^000000
+Require level : ^77777790^000000
+Job: ^777777Wizard Classes/Sage Classes/Soul Linker^000000
+#
+2021#
+Aside from the potent mana in it, this staff is famous for its ability to Mute the enemy, preventing them from casting spells.
+MATK + 320, INT + 25, DEX + 25.
+Magic attacks have a chance of Poisoning the enemy or casting Level 1 Silentium.
+When you receive Melee Physical damage, this item creates a chance of causing Silence on your attacker.
+Cannot be Upgraded.
+Indestructible.
+Class: ^777777Two-handed Staff^000000 Atk: ^777777100^000000
+Weight : ^777777200^000000
+Item level : ^7777774^000000
+Require level : ^777777100^000000
+Job: ^777777Warlock^000000
+#
+2178#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 15.
+** Extra option available in WoE TE area
+MAXHP + 100, MAXSP + 100.
+-15% damage received from player characters.
+Class : ^777777Shield^000000 Def : ^77777715^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+2179#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+MAXHP + 200.
+-20% damage from player characters.
+Class : ^777777Shield^000000 Def : ^77777725^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Swordsman Classes/Merchant Classes^000000
+#
+2180#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 25.
+** Extra option available in WoE TE area
+MAXSP + 200.
+-10% damage received from player characters.
+Class : ^777777Shield^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+2181#
+A shield named after Hervor, the valkyrie who ensures victory for her warriors.
+MDEF + 5.
+-30% damage received from player characters.
+Cannot be Upgraded.
+Indestructible.
+Class: ^777777Shield^000000 Def: ^777777100^000000
+Weight : ^777777150^000000
+Require level : ^77777790^000000
+Job : ^777777All^000000
+#
+2182#
+A shield named after Hervor, the valkyrie who ensures victory for her warriors. It's now endowed with greater power.
+VIT + 20, MDEF + 10.
+-30% damage received from player characters.
+When you receive Melee Physical damage, this item creates a chance of casting Protective Light.
+Protective Light immediately cancels Stun, Sleep, Curse, Petrification, Poison, Blind, Silence, Bleeding, Chaos, and Frost, and protects the user against such effects for a set duration.
+Cannot be Upgraded.
+Indestructible.
+Class : ^777777Shield^000000 Def : ^777777150^000000
+Weight : ^777777300^000000
+Require level : ^777777100^000000
+Job: ^7777773rd Classes^000000
+#
+2496#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+MAXHP + 150, MAXSP + 150.
+Physical/Magic Attack Power +5% for player characters.
+Frost Resistance +25%.
+Class : ^777777Shoes^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+2497#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+MAXHP + 200, MAXSP + 100.
+Physical Attack Power 10% for player characters.
+Frost Resistance +25%.
+Class : ^777777Shoes^000000 Def : ^77777710^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Swordsman Classes/Merchant Classes^000000
+#
+2498#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+MAXHP + 100, MAXSP + 200.
+Magic Attack Power +5% for player characters.
+Frost Resistance +25%.
+Class : ^777777Shoes^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+2944#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+MAXHP + 100.
+-5% damage received from player characters.
+Class: ^777777Accessory^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+2945#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical/Magic Attack Power +5% for player characters.
+Class: ^777777Accessory^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+2946#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+-5% damage received from player characters.
+Class: ^777777Accessory^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+6592#
+A small wooden box that was discovered in a guild stronghold. It contains something very precious for someone.
+Weight : ^7777771^000000
+#
+6594#
+A bronze ingot that is imbued with powerful rune magic.
+Weight : ^777777100^000000
+#
+6595#
+Blacksmith Velund's hammer.
+It shows a lot of wear and tear.
+Weight : ^77777750^000000
+#
+6596#
+Blacksmith Velund's anvil.
+All the legendary weapons and armor made by Velund were hammered on this anvil.
+Weight : ^777777200^000000
+#
+6597#
+Velund made this exquisite bracelet for his loving wife.
+Weight : ^77777750^000000
+#
+6598#
+This rib extracted from the giant snake, Jormungand, boasts incredible size and durability.
+Weight : ^7777771000^000000
+#
+6599#
+The spirit of Hugin, Odin's familiar crow that governs memories, is given shape and form.
+This has the ability to suppress Jormungand's magical force.
+Weight : ^77777710^000000
+#
+6600#
+The spirit of Munin, Odin's familiar crow that governs memories, is given shape and form.
+This has the ability to suppress Jormungand's magical force.
+Weight : ^77777710^000000
+#
+6601#
+This chisel can carve and shape even the strongest rock. It's just too big for hands smaller than a Giant's.
+Weight : ^777777100^000000
+#
+6602#
+This old book is filled with various rune spells that call upon Odin.
+Weight : ^77777710^000000
+#
+6603#
+A scrap of thick fur that is severed from a monstrous bird.
+This has the ability to suppress Jormungand's magical force.
+Weight : ^77777750^000000
+#
+6604#
+The essence of rune mana that is extracted from rune stones.
+Only a gifted gemcutter can bring out its pure power.
+Weight : ^7777770^000000
+#
+6605#
+Midgard's strongest minerals are purified and fused into this substance.
+It's highly resistant to flames, but extremely difficult to process.
+Weight : ^7777770^000000
+#
+7056#
+Kafra employee's paycheck stub.
+Weight : ^7777775^000000
+#
+11557#
+Only available to use in the TE Siege zone.
+A health potion that is made up of ground white herbs. Restores ^000088325 HP^000000.
+^ffffff_^000000
+Weight : ^77777730^000000
+#
+11558#
+Only available to use in the TE Siege zone.
+Provides the same effects as TE White Potion, but this potion is lighter in weight.
+^ffffff_^000000
+Weight : ^77777710^000000
+#
+13083#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MATK + 100.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Silencing chance.
+Class: ^777777Dagger^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
+#
+13117#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Cursing chance.
+Class: ^777777Gun^000000 Atk: ^77777760^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Gunslinger^000000
+#
+13184#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Silencing chance.
+Class: ^777777Rifle^000000 Atk: ^77777780^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Gunslinger^000000
+#
+13185#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Stunning chance.
+Class: ^777777Gatling Gun^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Gunslinger^000000
+#
+13186#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Poisoning chance.
+Class: ^777777Shotgun^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Gunslinger^000000
+#
+13187#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Blinding chance.
+Class: ^777777Grenade Launcher^000000 Atk: ^777777100^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Gunslinger^000000
+#
+13317#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MATK + 100.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Bleeding chance.
+Class: ^777777Magic Shuriken^000000 Atk: ^77777780^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Ninja^000000
+#
+13439#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MATK + 100.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Poisoning chance.
+Class: ^777777Sword^000000 Atk: ^777777120^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Novice/Swordsman Classes/Merchant Classes/Thief Classes^000000
+#
+15062#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 15.
+** Extra option available in WoE TE area
+MAXHP + 250, MAXSP + 250.
+-10% damage received from player characters.
+Frost Resistance +25%.
+Class : ^777777Armor^000000 Def : ^77777715^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+15063#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+MAXHP + 450, MAXSP + 50.
+-15% damage received from player characters.
+Frost Resistance +25%.
+Class : ^777777Armor^000000 Def : ^77777725^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Swordsman Classes/Merchant Classes^000000
+#
+15064#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 25.
+** Extra option available in WoE TE area
+MAXHP + 200, MAXSP + 300.
+-5% damage received from player characters.
+Frost Resistance +25%.
+Class : ^777777Armor^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+16025#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+Indestructible.
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Freezing chance.
+Heal Amount +5%.
+Class : ^7777777Blunt Weapon^^000000 Atk : ^777777120^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Novice/Swordsman Classes/Acolyte Classes/Merchant Classes^000000
+#
+18118#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Cursing chance.
+Class: ^777777Bow^000000 Atk: ^777777120^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job: ^777777Archer Classes/Thief/Rogue Classes^000000
+#
+18732#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Additional TE Siege options
+ATK + 5, MATK + 5.
+Physical/Magic Attack Power +10% for player characters.
+Frost Resistance +25%.
+Class : ^777777Helm^000000 Def : ^7777775^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+18733#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+**Additional TE Siege options
+ATK + 10.
+Physical Attack Power +20% for player characters.
+Frost Resistance +25%.
+Class : ^777777Helm^000000 Def : ^77777710^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Swordsman Classes/Merchant Classes^000000
+#
+18734#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+MATK + 10.
+Magic Attack Power 20% for player characters.
+Frost Resistance +25%.
+Class : ^777777Helm^000000 Def : ^7777775^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+18736#
+The eyes are covered in black to conceal the person's identity.
+Class: ^777777Helm^000000    Def: ^7777770^000000
+Location: ^777777Middle^000000    Weight: ^77777710^000000
+Job : ^777777All^000000
+#
+20702#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+Physical/Magic Attack Power +5% for player characters.
+Frost Resistance +25%.
+Class : ^777777Garment^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777All^000000
+#
+20703#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power 10% for player characters.
+Frost Resistance +25%.
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Swordsman Classes/Merchant Classes^000000
+#
+20704#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+MDEF + 5.
+** Extra option available in WoE TE area
+Magic Attack Power +10% for player characters.
+Frost Resistance +25%.
+Class : ^777777Garment^000000 Def : ^7777775^000000
+Weight : ^7777770^000000
+Require level : ^77777740^000000
+Job : ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+21006#
+^ff0000Cannot be traded with others.^000000
+^000088Rental Item^000000
+** Extra option available in WoE TE area
+Physical Attack Power +40% for player characters.
+Physical attacks have a high Bleeding chance.
+Class: ^777777Two-handed Sword^000000 Atk: ^777777150^000000
+Weight : ^7777770^000000
+Item level : ^7777773^000000
+Require level : ^77777740^000000
+Job : ^777777Swordman/Knight/Crusader^000000
+#
+2950#
+^000088Rental Item^000000
+^ff0000Cannot be traded with others.^000000
+Specially made to help the members of guilds to grow, this ring generates special waves and increases your EXP reward from monsters by 10%.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^7777771^000000
+Level Limit : ^777777100^000000
+Job : ^777777All^000000
+#
+2951#
+Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
+MSP + 30.
+Lets you use Level 1 Snow Flip.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777710^000000
+Require level : ^7777771^000000
+Job : ^777777All^000000
+#
+2952#
+Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
+MSP + 30.
+Lets you use Level 1 Peony Mommy.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777710^000000
+Require level : ^7777771^000000
+Job : ^777777All^000000
+#
+2953#
+Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
+MHP + 100.
+Lets you use Level 1 Sada Ear.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777710^000000
+Require level : ^7777771^000000
+Job : ^777777All^000000
+#
+2954#
+Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
+MHP + 100.
+Let you use Level 1 Dust of Galaxy.
+Class: ^777777Accessory^000000 Def: ^7777770^000000
+Weight : ^77777710^000000
+Require level : ^7777771^000000
+Job : ^777777All^000000
+#
+6615#
+This coin is made to commemorate every achievement of the guilds that own castles in the Midgard Continent.
+Collect this coin and exchange with special prizes.
+Weight : ^7777771^000000
+#
+12873#
+^ff0000Cannot be traded with others.^000000
+Contains 10 TE White Slim Potion.
+"^ff0000Warning: The contents can disappear if you exceed the weight limit or item quantity limit at the time this box is opened.^000000"
+Weight : ^77777710^000000
+#
+12874#
+Developed by the Alchemy Union of the Three Countries, this new medicine endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, increases your Physical/Magic damage on player enemies by 100% for 10 seconds.
+Weight : ^77777710^000000
+Require level : ^77777780^000000
+#
+12875#
+Developed by the Alchemy Union of the Three Countries,  Endows superhuman strength, though it's only temporary.
+Instantly consumes 300 of your SP  and in return, decreases 50% damage received from player characters for 10 seconds.
+Weight : ^7777771^000000
+Require level : ^77777780^000000
+#
+12876#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Stun for 10 seconds.
+Weight : ^7777771^000000
+#
+12877#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Petrification for 10 seconds.
+Weight : ^7777771^000000
+#
+12878#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Frost for 10 seconds.
+Weight : ^7777771^000000
+#
+12879#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Sleep for 10 seconds.
+Weight : ^7777771^000000
+#
+12880#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Curse for 10 seconds.
+Weight : ^7777771^000000
+#
+12881#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Silence for 10 seconds.
+Weight : ^7777771^000000
+#
+12882#
+The first-class pharmacist Vincent has created this potion.
+Endows superhuman strength, though it's only temporary.
+Instantly consumes 3,000 of your HP and in return, immunizes you against Blind for 10 seconds.
+Weight : ^7777771^000000
+#
+12888#
+^ff0000Cannot be traded with others.^000000
+This box randomly generates a variety of useful guild supplies.
+"^ff0000Warning: The contents can disappear if you exceed the weight limit or item quantity limit at the time this box is opened.^000000"
+Weight : ^77777710^000000
+#
+15067#
+^000088Rental Item^000000
+^ff0000Cannot be traded with others.^000000
+Specially made to help the members of guilds to grow, this formal suit generates special waves and increases your EXP reward from monsters by 10%.
+When equipped with a set of Rune Ring, Rune Suit, Mana Manteau, and Mana Boots, you can gain 30% more EXP from monsters. 
+Class: ^777777Armor^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^7777771^000000
+Level Limit : ^777777100^000000
+Job : ^777777All^000000
+#
+18755#
+A premium-grade hat that offers a great fit. The feather decoration nicely complements the sky blue color.
+MDEF +1. -10% damage received from Human monsters.
+Class : ^777777Helm^000000    Def : ^7777771^000000
+Location : ^777777Upper^000000    Weight : ^77777760^000000
+Job: ^777777All except Novice Classes^000000
+#
+19585#
+A premium-grade hat that offers a great fit. The feather decoration nicely complements the sky blue color.
+Class: ^777777Costume Equipment^000000
+Location: ^777777Upper^000000 Weight: ^7777770^000000
+Require level : ^7777771^000000
+Job : ^777777All^000000
+#
+20709#
+^000088Rental Item^000000
+^ff0000Cannot be traded with others.^000000
+Specially made to help the members of guilds to grow, this formal suit generates special waves and increases your EXP reward from monsters by 10%.
+Class: ^777777Garment^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^7777771^000000
+Level Limit : ^777777100^000000
+Job : ^777777All^000000
+#
+22012#
+^000088Rental Item^000000
+^ff0000Cannot be traded with others.^000000
+Specially made to help the members of guilds to grow, this formal suit generates special waves and increases your EXP reward from monsters by 10%.
+Class: ^777777Shoes^000000 Def: ^7777770^000000
+Weight : ^7777770^000000
+Require level : ^7777771^000000
+Level Limit : ^777777100^000000
+Job : ^777777All^000000
+#
+12399#
+A beautiful treasure box. It is very heavy as if there is a lot of money in it.
+Weight : ^777777100^000000
+#
+
+5414#
+Romantic camping item! Campfire hat!
+Increase 10% of resistance to fire type attacks.
+When performing physical attack, activate auto spell fireball 5 lvl for certain chance.
+
+Class : ^777777Headgear^000000 Def : ^7777774^000000
+Location : ^777777Upper ^000000 Weight : ^77777730^000000
+Required lvl : ^77777780^000000
+Job : ^777777All^000000
+#
+5675#
+Cute little letter decorated with poring sticker.
+Class: ^777777Headgear^000000
+Defense: ^7777770^000000
+Location: ^777777Lower^000000
+Weight: ^77777710^000000
+Required Level: ^77777710^000000
+Job : ^777777All^000000
+#
+2462#
+Named after Odin's trusty steed, these shoes also
+mimic Sleipnir's powers. Increase Movement Speed.
+SP Recovery +15%
+Max HP/SP +20%
+MDEF +10
+Class : ^777777Footwear^000000
+Defense : ^7777775^000000
+Weight : ^777777350^000000
+Required Level : ^77777794^000000
+Job : ^777777All^000000
+#
+2830#
+A reproduction of the girdle of might that
+Thor wore to enhance his prodigious strength. Str +40, MDEF +7
+Class : ^777777Accessory^000000
+Defense : ^7777772^000000
+Weight : ^777777800^000000
+Required Level : ^77777794^000000
+Job : ^777777All^000000
+#
+2831#
+An imitation of the
+necklace worn by the
+beautiful goddess Freya. Str +6, Agi +6, Int +6
+Vit +6, Luk +10
+Class : ^777777Accessory^000000
+Defense : ^7777771^000000
+Weight : ^777777150^000000
+Required Level : ^77777794^000000
+Job : ^777777All^000000
+#
+16007#
+A facsimile of the mighty hammer wielded
+by Thor, god of thunder. Increases Attack Speed.
+Dex +50 , Str +20
+Class : ^777777Mace^000000
+Property:^777777Wind^000000
+Attack Strength: ^777777350^000000
+Weight : ^777777600^000000
+Weapon Level: ^7777774^000000
+Required Level : ^77777795^000000
+Job : ^777777Swordman and
+Merchant Classes^000000
+#
+15023#
+^000088Rental Item^000000
+Brynhild is one of the valiant valkyries, meaning 'The warrior's armor'.
+Base level*20 MHP increase. Base Lv*5 MSP increase.
+Physical attack power +5%, 
+Magic attack power +5%.
+MDEF + 5
+Cannot be knocked back.
+Cannot be refined, or destroyed.
+Class : ^777777Armor^000000    Defense : ^77777760^000000
+Weight : ^7777770^000000
+Required Lv : ^77777747^000000
+Job : ^777777all jobs^000000
+#
+2566#
+^000088Rental Item^000000
+A wing made of all lights that exist in the world. It's name means 'Light of the gods'.
+15% immunity from physicall attacks of all attributes.
+FLEE + 15, MDEF + 2.
+Enables use of the skill ^FF0000Teleport Lv1^000000.
+Can not be refined and destroyed.
+Class : ^777777Garment^000000    Defense : ^77777720^000000
+Weight : ^7777770^000000
+Required Lv : ^77777747^000000
+Job : ^777777All Jobs^000000
+#
+
+
+//---------------2016 1Q
+
+4505#
+MATK + 20, MSP - 1%.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4506#
+DEX + 2, If you are an Archer class, increase addtional DEX + 1 per 3 refine levelS.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4507#
+Additional 30% damage to Scaraba monsters.
+When defeat the enemy, Drop the ticket of Scaraba.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4508#
+ATK + 20, MHP - 1%.
+Class : ^777777Card^000000
+Compound on : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4509#
+INT + 3.
+Decrease Damage from Insect ememies by 10%, when refine Lv +9, damage decreases an additional 5%.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4510#
+When short distance attacking, has a chance of inflicting deep sleep to enemies with certain rate.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4511#
+Magic attacks have a chance of silencing enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4512#
+Heal effectiveness +3%
+If used by Acolyte type, each 2 refine adds 1% heal effectiveness.
+Class :^777777Card^000000
+Compound on : ^777777HeadGear^000000
+Weight : ^7777771^000000
+#
+4513#
+Increase Critical damage by 2%.
+If Thief class, Increase additionally 1% per 2 refine.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4514#
+Increase damage against Undead type monsters by 20%
+Class :^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4515#
+Reduce damage from Plant type enemies by 30%.
+Class : ^777777Card^000000
+Compound on : ^777777Shield^00000000
+Weight : ^7777771^000000
+#
+4516#
+DEF + 50, FLEE - 25.
+Class : ^777777Card^000000
+Compound on : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4517#
+INT+2
+If used by Mages type, each 3 refine adds INT+1
+Class :^777777Card^000000
+Compound on : ^777777HeadGear^000000
+Weight : ^7777771^000000
+#
+4518#
+Physical and Ranged Attacks have a chance of inflicting the burning status to enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4519#
+Increase damage against Angel type monsters by 20%
+Class :^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4520#
+STR+3
+Chance of causing Confusion on target enemy when hiy by magic damage.
+Class :^777777Card^000000
+Compound on : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4521#
+Increase critical attacks by 15%.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+4545#
+LUK + 1.
+Gives extra ATK + 5, MATK + 5 when equipping with Criatura Academy Hat.
+Class : ^777777Card^000000
+Job : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+12210#
+Sweet, tasty bubble gum. Item drop rate increases by 100% for 30 minutes.
+^ffffff_^000000
+Weight: ^7777771^000000
+#
+
+22540#
+^ff0000Untradable with other accounts.^000000
+Share one of the powers of Runestone belonging to the caster by exploding it with party members within 7x7 cells from him/herself.
+[List of Rune Buff able to be shared]
+Buff Duration : 60 secondes
+Millenium Shield / Refresh / Giant Gross / Stone Hard Skin / Vitality Activation / Abundance
+Weight : ^77777710^000000
+#
+18773#
+Known for a fish's fins looking helm protecting swordsmen, but keep in mind that you cannot breathe in water even if you equip it.
+MHP +300, additional MHP increases based on Base Level.
+Type : ^777777Head Gear^000000
+Defense : ^7777775^000000
+Position : ^777777Middle ^000000
+Weight : ^77777730^000000
+Rq Lvl : ^77777765^000000
+Job : ^777777Swordman^000000
+#
+
+//---------Heroes' trail------------
+6648#
+An old, dented crown that is missing gemstones. At least it's made of pure gold.
+It can be sold to a Collectible Merchant for some good money.
+Weight: ^7777771^000000
+#
+6649#
+A broken and bent singlehorn. It's not worth any reward money.
+Weight: ^7777771^000000
+#
+6650#
+The tiny text inscribed on the inside of this ring is rubbed out and illegible.
+Weight: ^7777771^000000
+#
+6651#
+A rusty and discolored bracelet. It has tiny initials inscribed on it.
+Weight: ^7777771^000000
+#
+6652#
+An old, dirty photo album. Only a few pictures are left inside.
+Weight: ^7777771^000000
+#
+6653#
+This pill covered with black fungi is carefully wrapped in a package along with the memo: "Ingest when you have any breathing problems."
+Weight: ^7777771^000000
+#
+13089#
+A broken razor-like leg that is severed from a Face Worm. It's sustained with potent time-warping energy. 
+MATK +50.
+Creates a high chance of casting the illusion of Face Worm while you are attacking.
+Class: ^777777Dagger^000000 ATK: ^777777110^000000
+Weight: ^77777750^000000  Attribute: ^777777Poison^000000
+Weapon Level: ^7777773^000000
+Required Level: ^77777724^000000
+Equip To: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
+#
+13090#
+A broken razor-like leg that is severed from a Face Worm. It's sustained with potent time-warping energy.
+INT + 3, MATK + 120.
+Creates a low chance of casting the illusion of Face Worm Queen while you are attacking.
+Class: ^777777Dagger^000000 ATK: ^777777180^000000
+Weight: ^77777750^000000  Attribute: ^777777Neutral^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
+#
+20717#
+The scalp of a Face Worm that you defeated in the distorted Crack of Time. Face Worms once were called Jormungand's reincarnates.
+MDEF +10.
+This manteau resonates with all types of high-graded Time Boots.
+MHP + 15% and MSP + 5% when equipped with eligible Time Boots.
+Class: ^777777Hood^000000 DEF: ^77777738^000000
+Weight: ^77777740^000000
+Required Level: ^7777771^000000
+Equip To: ^777777All Classes^000000
+#
+20718#
+The scalp of a Face Worm that was once called Jormungand's reincarnate.
+MDEF +10.
+This manteau resonates with all types of high-graded Time Boots.
+MHP + 15% and MSP + 5% when equipped with eligible Time Boots.
+Class: ^777777Hood^000000 DEF: ^77777738^000000
+Weight: ^77777740^000000
+Required Level: ^7777771^000000
+Equip To: ^777777All Classes^000000
+#
+22507#
+This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
+Weight: ^7777771^000000
+#
+
+22508#
+^ff0000Cannot be tradable with other accounts.^000000
+Emblem only for Paradise team member. it is made to be easy to carry.
+When using this by upgrading the function, it is possible to go back to the town.
+Reuse waiting time: 120min
+Weight : ^7777770^000000
+#
+6549#
+^ff0000Cannot be tradable with other accounts.^000000
+Paper coupon which has a cute painting and letters which is drawn... we should respect the preference.
+Weight : ^7777770^000000
+#
+
+2473#
+Boots that are provided only for members of the Eden Group.
+These are designed to fit comfortably throughout long-walks.
+HP recovery   +28%
+SP recovery +12%
+Vit +1, Agi +1
+Cannot be upgraded.
+Class : ^777777Footwear^000000
+Defense : ^77777720^000000
+Weight : ^7777770^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+2571#
+A manteau which is only for Eden Group members.
+It is designed to flatter anyone's backside.
+Increases tolerance to neutral property by 10%.
+FLEE +12
+Cannot be upgraded.
+Class : ^777777Garment^000000
+Defense : ^77777718^000000
+Weight : ^7777770^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+15031#
+Armor that is only provided for members of the Eden Group.
+There are various sizes so tall people don't have to worry about it. 
+MaxHP +500, MaxSP  +50,
+Str +1, Int +1, Dex +1
+Mdef +5.
+Cannot be upgraded.
+Class : ^777777Armor^000000
+Defense : ^77777770^000000
+Weight : ^7777770^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+18514#
+A hat that is provided only for members of the Eden Group.
+It's designed to go well with a suit.
+Has a chance of adding 10 Atk or 10 Matk power for 5 seconds while doing physical or magic damage.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^77777760^000000
+Jobs : ^777777All Jobs^000000
+#
+1197#
+A two-handed sword that is made by the Eden Group. It is suitable for those who have more advanced experience handling two-handed swords.
+Cannot be upgraded.
+Class : ^777777Two-handed Sword^000000
+Attack : ^777777200^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Swordman Class^000000
+#
+1289#
+A katar that is made by the Eden Group. It is suitable for those who have more advanced experience handling katars.
+Cannot be upgraded.
+Class : ^777777Katar^000000
+Attack : ^777777155^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs: ^777777Assassin^000000
+#
+1391#
+An axe that is made by the Eden Group. It is suitable for those who have more advanced experience handling two-handed axes.
+Cannot be upgraded.
+Class : ^777777Two-Handed Axe^000000
+Attack : ^777777195^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Job : ^777777Swordman Class / Merchant Class^000000
+#
+13310#
+A Huuma Shuriken that is made by the Eden Group.
+It is suitable for experienced Ninjas only.
+Class : ^777777Huuma^000000
+Attack : ^777777150^000000
+Weight : ^7777770^000000
+Weapon Level: ^7777773^000000
+Required Level : ^77777760^000000
+Jobs :^777777Ninja^000000
+#
+18106#
+A rich bow that is made by the Eden Group. It is suitable for advanced level adventurers who know how to handle a bow.
+Cannot be upgraded.
+Class : ^777777Bow^000000
+Attack : ^777777140^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Archer Class / Thief / Rogue^000000
+#
+13114#
+A revolver that is made by the Eden Group. It's suitable for an advanced gun handler.
+Hit -5.
+Cannot be upgraded.
+Class : ^777777Pistol^000000
+Attack : ^77777776^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Gunslinger^000000
+#
+1434#
+A spear that is made by the Eden Group. It is suitable for those who have more advanced experience handling spears.
+Cannot be upgraded.
+Class : ^777777Spear^000000
+Attack : ^777777165^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Job : ^777777Swordman Class^000000
+#
+1583#
+A book that is made by the Eden Group. It is suitable for those who have more advanced experience handling magic books.
+Matk +110
+Cannot be upgraded.
+Class : ^777777Book^000000
+Attack : ^777777135^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Job : ^777777Priest / Sage / Taekwon Master^000000
+#
+1658#
+A staff that is made by the Eden Group. An advanced item for an experienced magic practitioner.
+Int +4 , Matk +170
+Cannot be upgraded.
+Class : ^777777Staff^000000
+Attack : ^77777760^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Mage Class/Acolyte Class^000000
+#
+1831#
+A clas that is made by the Eden Group. It is suitable for those who have more advanced experience as Champions.
+Class : ^777777Claw^000000
+Attack : ^777777120^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs: ^777777Priest and Monk Classes^000000
+#
+1931#
+An instrument that is made by the Eden Group. It is suitable for those who have more advanced experience as Bards.
+Class : ^777777Musical Instrument^000000
+Attack : ^777777125^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Job : ^777777Bard^000000
+#
+1986#
+A whip that is made by the Eden Group. It is suitable for those who have more advanced experience as Dancers.
+Class : ^777777Whip^000000
+Attack : ^777777125^000000
+Weight : ^7777770^000000
+Weapon Level: ^7777773^000000
+Required Level : ^77777760^000000
+Jobs: ^777777Dancer^000000
+#
+13066#
+A practical dagger that is made by the Eden Group.
+It's suitable for those who have experience handling daggers.
+Matk +80
+Cannot be upgraded.
+Class : ^777777Dagger^000000
+Attack : ^777777165^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Novice / Swordman / Mage / Archer / Merchant / Thief / Soul Linker / Ninja^000000
+#
+13434#
+A one-handed sword that is made by the Eden Group. It's suitable for an experienced sword handler.
+Cannot be upgraded.
+Class : ^777777Sword^000000
+Attack : ^777777185^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Swordman / Merchant / Thief Class^000000
+#
+16014#
+A mace that is made by the Eden Group. It's suitable for an experienced mace wielder.
+Cannot be upgraded.
+Class : ^777777Mace^000000
+Attack : ^777777172^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777773^000000
+Required Level : ^77777760^000000
+Jobs : ^777777Swordman / Acolyte / Merchant Class^000000
+#
+4853#
+Str +1
+If refined to +8 or higher, additional Str +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+4854#
+Agi +1
+If refined to +8 or higher, additional Agi +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+4855#
+Vit +1
+If refined to +8 or higher, additional Vit +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+4856#
+Int +1
+If refined to +8 or higher, additional Int +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+4857#
+Dex +1
+If refined to +8 or higher, additional Dex +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+4858#
+Luk +1
+If refined to +8 or higher, additional Luk +3
+If refined to +9 or higher, Atk +1 to all monster sizes
+If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+#
+2022#
+It seems to be old because there's dust on it. But we could feel the wave of huge magic power. Some words and seals are carved in the groove space.
+"Big magician of Gefen Tower, Heine.F.Catherine would be given this."
+INT + 20, MATK + 300.
+Class : ^777777Two Hands  Staff^000000  Attack : ^777777100^000000
+Weight : ^777777100^000000
+Weapon Lv. : ^7777771^000000
+Required Lv. : ^777777150^000000
+Jobs : ^777777HighWizardClass^000000
+#
+2499#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10 .
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777710^000000
+Jobs : ^777777All^000000
+#
+2949#
+Mysterious bracelet that very similar to Temporal bracelet.
+All State + 1, MDEF + 3.
+"Spell Breaker" 5Lv is usable.
+Class : ^777777accessory^000000 Defense : ^7777773^000000
+Weight : ^77777710^000000
+Required Lv. : ^77777760^000000
+Jobs : ^777777All except Novice^000000
+#
+4869#
+Increase Attack Speed.(4% After attack delay reduce)
+#
+4872#
+Increase Attack Speed.(6%After attack delay reduce)
+#
+4873#
+Increase Attack Speed.(8%After attack delay reduce)
+#
+4875#
+When be attacked, the power of hungry bear would be gained for 5 sec in a low chance, but you could lose HP 500 per a second.
+#
+4876#
+You can earn "Runaway Magic" energy for 10 sec in a low chance when you do magic attack, but you could lose SP 200 per seconds.
+#
+4877#
+When you Physical attack, you could move like "Speed of Light" for 5 sec in a low chance, but you could lose HP 400, SP 50 per second.
+#
+4878#
+When be physical attacked, you could be "Muscle Fool" for 5 sec to get powerful defense, but Atk and Matk could be decreased 50%. 
+#
+4879#
+When you attack, you can concentrate from "Hawkeye" for 5 sec in a low chance, but you could lose SP 50.
+#
+4880#
+For all attack, you could be "Lucky day" for 5 sec in a low chance, you would feel that you are so lucky for all things.
+#
+4881#
+Increase Attack Speed. (Attack delay decreased 10%)
+#
+6607#
+The crystal that very rare and tiny from the time distorted place. It is just like the crystal of running time that shaped by magic.
+Weight : ^7777771^000000
+#
+6608#
+This thing is generated by the spell that can cross the time and it's soft.
+Weight : ^7777771^000000
+#
+6609#
+Clean nails from dead that changed undead suddenly. It's very worthy for traders.
+Weight : ^7777771^000000
+#
+6610#
+Clean teeth from dead that changed undead suddenly. It's very worthy for traders.
+Weight : ^7777771^000000
+#
+6611#
+Gold key decorated detailedly and splendidly. We don't know this key is for which door but it looks very worthy.
+Weight : ^7777771^000000
+#
+6612#
+The basket that full of Gold coins. It is old but looks like real gold!
+The eagle and 2 spears are sculptured in the coins.
+"A.W 669 marquis Wigner.F.Evene"
+Weight : ^77777720^000000
+#
+6613#
+The big and beutiful brooch. It still shines beautifully even it has a lot of dust and have no pins. The small word is in the back of it.
+"Happy 10th birthday of Lowenburg. F. Earich"
+Weight : ^7777771^000000
+#
+7228#
+The Squar shaped pure gold from the gold ores. This could be used as money because it is very flexible and permanent.
+Weight : ^77777730^000000
+#
+7229#
+The Squar shaped pure silver from the silver ores. This could be used as money because it is very flexible and kind of precious metals.
+Weight : ^77777730^000000
+#
+7230#
+The color is white and well-trimed. It is more worrhy than gold.
+Weight : ^77777730^000000
+#
+13086#
+Splendid Dagger decorated by Gold. It looks so old that hardly read the letter on it.
+The small letter is on the sword.
+"Forever prosperity for Geoburg royal family."
+MATK + 25
+Class : ^777777Dagger^000000 Attack : ^77777735^000000
+Weight : ^77777750^000000
+Weapon Lv. : ^7777771^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777Swordmen/Magicians/Merchants/Thieves/Soul Linker/Ninja^000000
+#
+13440#
+Too beautiful sword to use in real combat, it seems like a ceremonial sword for high class nobles.
+The small letter is carved but not be seen clearly.
+"Celebrate the wedding with beautiful sister, Nerious.R.Raina - Nerious.R.Rauven -"
+Class : ^777777Sword^000000 Attack : ^77777760^000000
+Weight : ^77777750^000000  attribute : ^777777Saint^000000
+Weapon Lv. : ^7777771^000000
+Required Lv. : ^7777771^000000
+Jobs : ^777777Novice/Swordmen/Magicians/Merchants/Thieves/^000000
+#
+15066#
+Armor that peridot is carved in detail. It seems good only with some dust.
+"Twilight Knightage, Walter.R.Stern"
+MDEF + 25.
+Class : ^777777Armor^000000 Defense : ^777777120^000000
+Weight : ^777777300^000000
+Required Lv. : ^777777150^000000
+Jobs : ^777777Swordman class^000000
+#
+21003#
+Sword named by the famous potter. It called "Yodo" but the power is great.
+Critical Chance + 30%
+Attack speed incrased.(attack delay decreased. 8%)
+Curse oneself in a low chance.
+Class : ^777777Two Hands Sword^000000  Attack : ^777777155^000000
+Weight : ^777777100^000000
+Weapon Lv : ^7777774^000000
+Required Lv : ^77777748^000000
+Jobs : ^777777Swordman class^000000
+#
+21007#
+Long size sword with small cracks. It must be worked in the war long time before.
+Clean letter is left.
+"-The sword of Richard.R.Grants- It would be remebered with many heros."
+STR + 20.
+Class : ^777777Two Hands Sword^000000 Attack : ^777777330^000000
+Weight : ^777777250^000000
+Weapon Lv. : ^7777771^000000
+Required Lv. : ^777777150^000000
+Jobs : ^777777Knight/Crusader class^000000
+#
+22000#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, ATK + 7 .
+In case the original STR is more than 120,ATK + 50.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22001#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, MATK + 10 .
+In case the original INT is mre thatn 120 MATK + 60 
+MDEF + 5.
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22002#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, attack speed 3%(attack delay decreased 3%) .
+In case the original AGI is more than 120,ASPD + 1.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22003#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 300, MSP + 10 .
+In case the original VIT is more than 120,MHP + 8%.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22004#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, DEX + 3 .
+In case the original DEX is more than 120, fixed casting decreased 0.5sec, long distance attack power + 5%.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22005#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, critical damage2% .
+In case the original LUK is more than 120,critical damage30%.
+MDEF + 5.
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22006#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, ATK + 7 .
+In case the original STR is more than 120,ATK + 50 .
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22007#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 300, MSP + 10 .
+In case the original VIT is more than 120,MHP + 8%.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22008#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, DEX + 3 .
+In case the originalDEX is more than 120, fixed casting - 0.5 sec, long distance attack power + 5%.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22009#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, MATK + 10 .
+In case the original INT is mre thatn 120 MATK + 60 
+MDEF + 5.
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22010#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, attack speed 3%(attack delay 3% reduce) .
+In case the original AGI is more than 120, ASPD + 1.
+Class : ^777777Shoes^000000 Defense : ^77777725^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+22011#
+The amazing boots that must be created very long time ago, but never worn out.
+MHP + 300, MSP + 30.
+For each of 3 refine success, MHP + 100, MSP + 10, critical damage2% .
+In case the original LUK is more than 120, critical damage + 30%.
+MDEF + 5.
+Class : ^777777Shoes^000000 Defense : ^77777720^000000
+Weight : ^77777760^000000
+Required Lv. : ^77777799^000000
+Jobs : ^777777Only 3rd class^000000
+#
+
+2971#
+Silver watch with the chain connected.
+15% HP, SP recovery speed increase, MATK + 7% when equpping with Monocular Glass, Monocular Glass[1], Memorize Book, and Memorize Book[1]. 
+Class : ^777777Accessary^000000
+Def : ^7777771^000000      Weight : ^77777720^000000
+Req LvL : ^77777780^000000
+Job : ^777777Wizard/Soul Linker^000000
+#
+15089#
+The suit usualy worn by Gentleman. Time adjusting ability due to the curse of twisted time.
+Atk speed increase (3% after Atk delay reduce), 3% after skill delay reduce, 3% sub casing time reduce.
+Atk speed increase (2% after Atk delay reduce) when refine level gets 7, 2% after skill delay reduce, 2% sub casing time reduce.
+Class : ^777777Armour^000000 Def : ^77777740^000000
+Weight : ^77777730^000000
+Req LvL : ^77777780^000000
+Job : ^777777All except Novice^000000
+#
+18874#
+A glass for one eye only. Made for style rather than practicality.
+Class : ^777777Helm^000000    Def : ^7777770^000000
+Location : ^777777Middle^000000    Weight : ^77777710^000000
+Job : ^777777All^000000
+#
+1668#
+A stick wand used as an accessary of gentleman. Sharp knife inside can be used for self protection.
+MATK + 150, Increase Atk speed (10% After attack delay reduce)
+10% after skill delay reduce, 1% additional after skill delay reduce (Max up to 10 refine level) when equipped with Lounge Suit.
+Class : ^777777One hand Wand^000000 Atk : ^777777120^000000
+Weight : ^77777750^000000
+Weapon LvL : ^7777774^000000
+Req LvL : ^77777780^000000
+Job : ^777777Wizard/Soul Linker^000000
+#
+16024#
+A powerful blunt with enormous steel head.
+10% damage increase to Undead, Human, Earth element monsters.
+Class : ^777777Blunt^000000   Atk : ^777777165^000000
+Weight : ^77777790^000000
+Weapon LvL : ^7777774^000000
+Req LvL : ^77777740^000000
+Job : ^777777Acolyte^000000
+#
+22515#
+A key curssed by time keeper's twisted time spell. Curses the time to go slower.
+Cool time : 60 seconds
+Req LvL : 100
+Weight : ^77777730^000000
+#
+18752#
+A cursed magic book absorbing target's life and mental energy.
+When physical attacked, 4% chance of absorbing 4% damage as HP. (1% additional HP absorbing for each 2 refine level)
+When physical attacked, 1% chance of absorbing 1% damage as SP. (1% additional SP absorbing for each 3 refine level)
+When equipped, drains refine level amount of HP per each 5 seconds.
+Class : ^777777Helm^000000 Def : ^7777773^000000
+Location : ^777777Upper ^000000Weight : ^77777730^000000
+Req LvL : ^77777799^000000
+Job : ^777777All 2nd job class except Novice^000000
+#
+
+4626#
+Increase magical damage against Formless and Demon races by 5%
+When equipped with a shield compounded to Neo Punk Card,
+ignores 50% of Formless and Demon monster's Magic Defense Rate.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4629#
+Increase resistance against Neutral property attack by 15%
+Increases damage of Earth property magic by 3% per refine.
+When equipped with a shoes compounded to Time Keeper Card
+further increase resistance against Neutral property attack by 5%
+Class : ^777777Card^000000
+Location : ^777777Garment^000000
+Weight : ^7777771^000000
+#
+4627#
+Increase physical damage against Formless and Demon races by 10%.
+Ignores 50% of Formless and Demon monster's Defense Rate. When equipped with a shield compounded to Neo Punk Card
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4628#
+Reduce damage taken from Formless and Demon races by 20%
+When equipped with a weapon compounded to Big Ben Card
+further reduce damage taken from Formless and Demon races by 5%.
+When equipped with a weapon compounded to Big Bell Card
+further reduce damage taken from Formless and Demon races by 5%
+Class : ^777777Card^000000
+Location : ^777777Shield^000000
+Weight : ^7777771^000000
+#
+4632#
+Add a chance of auto casting Level 1 Whirlwind when dealing physical attack.
+If the user has mastered the skill at Level 5, it will cast Level 5 instead.
+When equipped with an accessory compounded to Owl Viscount Card
+add a chance of auto casting level 1 Lord of Vermilion when dealing physical attack.
+Class : ^777777Card^000000
+Location : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4631#
+ASPD +3%
+Class : ^777777Card^000000
+Location : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+4630#
+chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attacked.
+The chance is further increased when equipped with a garment compounded with Arc Elder Card,
+Class : ^777777Card^000000
+Location : ^777777Shoes^000000
+Weight : ^7777771^000000
+#
+4625#
+MATK+ 20%.
+Increase SP consumption of skills by 10%.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+6155#
+Une recette pour faire des 
+friandises avec la machine 
+^ff0000KitchenMade^000000.
+#
+31132#
+A Wreath made by sprig of holy.
+I can hear bell ringing somewhere.
+During the event period(2016-Dec-07 ~ 2016-Dec-28), while doing physical/magical attacks,
+activating [Blessing of Christmas] for 7 seconds with certain chance.
+Recovers 1225HP and 25SP per second while activating [Blessing of Christmas].
+Type : ^777777Costume equipment^000000 DEF : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Lv. req. : ^7777771^000000
+Class : ^777777All classes^000000
+#
+25251#
+Well fermented and sweet smelling grape juice.
+This item will be deleted when the event period ends.
+Weight : ^7777770^000000
+#
+25252#
+^ff0000Untradable with other accounts.^000000
+A sprig that exudes Christmas.
+This item will be deleted when the event period ends.
+Weight : ^7777770^000000
+#
+25253#
+^ff0000Untradable with other accounts.^000000
+A box containing sugar which must be delivered to Ballely.
+This item will be deleted when the event period ends.
+Weight : ^7777770^000000
+#
+25254#
+^ff0000Untradable with other accounts.^000000
+Well dried wood. It looks burn well.
+This item will be deleted when the event period ends.
+Weight : ^7777770^000000
+#
+23202#
+^ff0000Untradable with other accounts.^000000
+A health drink to prevent flu.
+Recovering 7% SP.
+This item will be deleted when the event period ends.
+Weight : ^7777774^000000
+#
+
+4560#
+Enables Level 10 Magic Strings (if equipped with a Musical Instrument/Whip).
+FLEE +20. If VIT 110 or greater, additional FLEE +20.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4561#
+Magic attacks from enemies create a high chance of auto-casting Level 5 Magnetic Earth.
+MATK +7%. If DEX 110 or greater, additional MATK +7%.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4562#
+Physical attacks from enemies create a high chance of auto-casting Level 5 Occult Impaction.
+ATK +7%. If AGI 110 or greater, additional ATK +7%.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4563#
+Physical attacks from enemies create a high chance of auto-casting Level 5 Acid Terror. (Requires Acid Bottles.)
+CRI +20. If STR 110 or greater, additional CRI +20.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4564#
+Physical attacks from enemies create a high chance of auto-casting Level 1 Full Divestment.
+HIT + 20. If LUK 110 or greater, additional HIT +20.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4565#
+Magic attacks from enemies create a high chance of auto-casting Level 10 Grand Cross.
+MHP + 10%. If INT 110 or greater, additional MHP +10%.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4566#
+Enables Level 10 Lady Luck (if equipped with a Musical Instrument/Whip).
+FLEE +20. If VIT 110 or greater, additional FLEE +20.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4567#
+FLEE +10.
+(For Bard classes) MHP +10%, MSP +5%.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4568#
+FLEE +10.
+Enables Level 1 Hocus Pocus.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4569#
+FLEE +10.
+Enables Level 2 Summon Spirit Sphere.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4570#
+FLEE +10.
+Red/Yellow/Condensed White Potions effectiveness +200%.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4571#
+FLEE +10.
+Enables Level 1 Close Confine.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4572#
+FLEE +10.
+Enables Level 3 Guard.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4573#
+FLEE +10.
+(For Dancer classes) MHP +10%, MSP +5%.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4574#
+One/two-handed Swords ATK +100.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4575#
+ATK + 10.
+(For Daggers) ASPD +1 when Upgraded to +10 and above, additional ASPD +1 when Upgraded to +14 and above.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4576#
+Wind/Ghost Magic damage +100%.
+All elemental resistances -30%.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4577#
+Wind/Ghost Magic damage +20%.
+Class: ^777777Card^000000
+Compound on: ^777777Accessory^000000
+Weight: ^7777771^000000
+#
+4578#
+Critical damage +30%.
+Damage from all monster types +10%.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4579#
+(For Maces) ATK + 20, CRI + 10.
+Additional ATK +1/CRI +1 depending on the Upgrade levels.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4580#
+Fire/Water/Earth/Wind/Shadow/Undead Resistances +50%.
+Ghost/Holy damage from enemies +100%.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4581#
+Physical attacks from enemies create a chance of increasing Attack Speed for 3 seconds, increasing AGI +44, and casting Endure at the cost of 40 SP.
+Class: ^777777Card^000000
+Compound on: ^777777Shoes^000000
+Weight: ^7777771^000000
+#
+4582#
+MaxHP +1% every 2 Upgrade levels.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4583#
++30% Damage on Poison monsters.
+Ignores 30% Defense of Plant monsters.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4584#
+Each attack on enemies restores 1 SP.
+MSP -1%.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4585#
+MaxSP +10%
+Each kill consumes 666 of your HP.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4586#
+MATK +10. Wind Magic damage +5%.
+Additional Wind Magic damage +5% when Upgraded to +9 or above.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4587#
++12 Critical damage on Human/Animal/Fish monsters.
+Class: ^777777Card^000000
+Compound on: ^777777Accessory^000000
+Weight: ^7777771^000000
+#
+4588#
+ATK +5 every 10 pure STR.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4589#
+MHP +200 every 10 pure VIT.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4590#
+INT + 4. Magic attacks from enemies create a high chance of casting Sleep on enemies within a 23x23 cell area around you.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4591#
+STR + 4. Physical attacks from enemies create a high chance of casting Bleeding on enemies within a 23x23 cell area around you.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4592#
+VIT + 4. Magic attacks from enemies create a high chance of casting Petrification on enemies within a 23x23 cell area around you.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4593#
+Long-ranged Attack Strength +1% for every 10 pure DEX.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4594#
+Critical damage +2% for every 10 pure LUK.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4595#
+Bonus on Attack Speed for every 10 pure AGI. (-2% post-attack delay)
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4596#
+MATK +5 every 10 pure INT.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4597#
+MATK +10. Water Magic damage +5%.
+Additional Water Magic damage +5% when Upgraded to +9 or above.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4598#
+MATK +10. Ghost Magic damage +5%.
+Additional Ghost Magic damage +5% when Upgraded to +9 or above.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4599#
+MATK +10. Fire Magic damage +5%.
+Additional Fire Magic damage +5% when Upgraded to +9 or above.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4600#
+MATK +10. Earth Magic damage +5%.
+Additional Earth Magic damage +5% when Upgraded to +9 or above.
+Class: ^777777Card^000000
+Compound on: ^777777Helm^000000
+Weight: ^7777771^000000
+#
+4601#
+ATK +15%, MATK +15%.
+-666 HP and -66 SP every 4 seconds.
+-6,666 HP and -666 HP when unequipped.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4602#
+ATK +20%, MATK +20%.
+-666 HP and -66 SP every 6 seconds.
+-6,666 HP and -666 HP when unequipped.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4603#
+ATK +20.
+Melee Physical attacks create a high chance of casting Petrification, Sleep, and Curse on all monsters within a 5x5 cell area around you.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4604#
+ATK +30.
+Melee Physical attacks create a high chance of casting Petrification, Sleep, and Curse on all monsters within a 11x11 cell area around you.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+4605#
+MHP -44%
+If a Melee Physical attack finishes a monster, HP +200. (Additional HP +10 every Upgrade level)
+-4,444 HP when unequipped.
+Neutral Resistance +20%, FLEE +20, HP -100 and SP -6 every 6 seconds when equipped with Undead Knight (F) Card.
+Class: ^777777Card^000000
+Compound on: ^777777Armor^000000
+Weight: ^7777771^000000
+#
+4606#
+MSP -44%.
+If a Melee Physical attack finishes a monster, SP +20. (Additional SP +1 every 2 Upgrade levels)
+SP -444 when unequipped.
+Neutral Resistance +20%, FLEE +20, HP -100, and SP -6 every 6 seconds when equipped with Undead Knight (M) Card.
+Class: ^777777Card^000000
+Compound on: ^777777Garment^000000
+Weight: ^7777771^000000
+#
+4607#
+ATK +5, MATK +5.
+(For Books) ATK + 20 and MATK + 20 when Upgraded to +10 and above. ATK + 20, MATK + 20 when Upgraded to +14 and above.
+Class: ^777777Card^000000
+Compound on: ^777777Weapon^000000
+Weight: ^7777771^000000
+#
+
+
+
+//--------14.3-----------
+
+22035#
+Made of Nepenthes leaves, a known muscle relaxant, these shoes help you cast skills quickly. 
+Floating Casting Time -10%.
+Additional -5% when Upgraded to +8. After that, additional -1% every Upgrade level.
+Additional -3% when Upgraded to +11. After that, additional -3% every Upgrade level (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777710^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+22036#
+These Silver Fox leather shoes provide optimum friction, facilitating safe movement.
+Ranged Attack Strength +5%.
+Additional Ranged Attack Strength +1% when upgraded to +8 and above (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777715^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+22037#
+Dyed with Ungoliant body fluid that promotes clarity of mind, these boots help you focus.
+Skills consume -5% SP.
+Skills consume an additional -1% SP when upgraded to +8 and every Upgrade level after that (up to +13).
+Class: ^777777Shoes^000000 DEF: ^77777710^000000
+Weight: ^77777730^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+2981#
+A ring made for warriors on the quest to defeat Morroc.
+When Enchanted, it lends its owner the power to confront Morroc.
+^ff0000Cannot be traded to another game account.^000000
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^777777All Classes^000000
+#
+2988#
+Newoz's winged ring.
+Decreases Floating Casting Time for all skills by 25%.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+2989#
+IGU's flower bracelet.
+Decreases Floating Casting Time for all skills by 25%.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+2990#
+Pendant of Harmony.
+MATK +6%
+HP recovery +50%, SP recovery +50%.
+Holy Resistance +5%.
+Physical attacks cast Level 1 Auto Spell Renovatio.
+Physical attacks from enemies cast Level 3 Sanctuary.
+STR -5.
+All Stats +5 when equipped with Pendant of Chaos.
+Magic attacks from enemies cast Level 1 Auto Spell Maelstrom.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+2991#
+Pendant of Chaos.
+ATK +6%
+Shadow Resistance +5%.
+Never affected by the Chaos effect.
+Physical attacks add a chance of casting Chaos on targets.
+Physical attacks from enemies create a chance of casting Chaos on all enemies in an 11*11 cell area around you.
+INT -5.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+2992#
+Pendant of Maelstrom.
+ATK +6%, MATK +6%.
+All stats +1.
+Magic attacks from enemies cast Level 1 Auto Spell Maelstrom.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15100#
+A frozen breastplate that creates a cold steam.
+The armor is perpetually endowed with Water Property.
+Class: ^777777Armor^000000 DEF: ^77777720^000000
+Weight: ^777777150^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15101#
+A stiff breastplate that emanates unshakeable strength.
+The armor is perpetually endowed with Earth Property.
+Class: ^777777Armor^000000 DEF: ^77777720^000000
+Weight: ^777777150^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Classes^000000
+#
+15093#
+MDEF + 5.
+Max HP/SP +5%.
+ATK +10, MATK +10, HIT +10, FLEE +10.
+Banishing Point damage +10%.
+Storm Blast damage +10%.
+Physical attacks add a chance of auto-casting Level 10 Auto Spell Healing/Storm Gust.
+The casting chance increases according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^777777120^000000
+Weight: ^777777400^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Swordsman Classes^000000
+#
+15094#
+Max HP/SP +5%.
+MATK +10, FLEE +10.
+Crimson Rock and Psychic Wave damage +10%.
+Odd numbered Upgrade levels increase Floating Casting Time +20% and prevent casting interruption.
+Even numbered Upgrade levels increase MDEF + 1 and reduce Floating Casting Time -1%.
+Class: ^777777Armor^000000 DEF: ^77777750^000000
+Weight: ^77777780^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Mage Classes^000000
+#
+15095#
+Max HP/SP +5%.
+ATK +10, MATK +10, HIT +10, FLEE +10.
+Dragon Combo, Sky Blow, and Earth Shaker damage +10%.
+Judex and Adoramus damage +10%.
+Magic attacks add a chance of auto-casting Level 1 Lex Aeterna.
+Physical attacks add a chance of auto-casting Level 10 Kyrie Eleison.
+The auto-casting chances increase according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777777^000000
+Weight: ^77777750^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Acolyte Classes^000000
+#
+15096#
+MDEF +5.
+Max HP/SP +5%, ATK + 10, MATK + 10.
+If pure STR is 90 or greater, then STR +1 every 2 Upgrade levels.
+If pure INT is 90 or greater, then INT +1 every 2 Upgrade levels.
+If pure VIT is 90 or greater, then VIT +1 every 2 Upgrade levels.
+If pure AGI is 90 or greater, then AGI +1 every 2 Upgrade levels.
+If pure DEX is 90 or greater, then DEX +1 every 2 Upgrade levels.
+If pure LUK is 90 or greater, then LUK +1 every 2 Upgrade levels.
+Melee Physical attacks add a chance of casting Stun, Poison, Silence, and Curse.
+The casting chance upgrades according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^777777100^000000
+Weight: ^77777750^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Merchant Classes^000000
+#
+15097#
+Max HP/SP +5%.
+Fatal Menace and Triangle Shot damages +10%.
+Cross Impact and Cross Ripper Slasher damage +10%.
+Successful Physical attacks add a chance of CRI +20, FLEE +20, ATK +10%, and MATK + 10% for 10 seconds. 
+The casting chance upgrades according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777770^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Thief Classes^000000
+#
+15098#
+Max HP/SP +5%.
+All Stats +1, Ranged Physical Attack Strength +3%, ASPD +1.
+When physical attacks, low chance of activating Level 10 Concentration improvement skill.
+When range attacks low chance of activating Level 10 Double Strafe skill.
+The casting chance increases according to the Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777760^000000
+Weight: ^77777720^000000
+Required Level: ^777777160^000000
+Equip To: ^7777773rd Archer Classes^000000
+#
+18122#
+An oversized bow with slow shooting speed and poor accuracy. Each and every arrow it shoots, though, is powerful enough to kill their victims at once. 
+Ranged Physical Attack Strength -40%.
+Decreases Attack Speed (+15% post-attack delay).
+Hit -50.
+Class: ^777777Bow^000000 ATK: ^777777195^000000
+Weight: ^777777300^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Ranger^000000
+#
+18123#
+The power of a storm given form.
+Ranged Physical Attack Strength +30%.
+Severe Rainstorm cooldown -2 seconds.
+Severe Rainstorm consumes +15 SP.
+Class: ^777777Bow^000000 ATK: ^777777160^000000
+Weight: ^777777150^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^7777773rd Archer Classes^000000
+#
+4890#
+MDEF + 1
+#
+4891#
+MDEF + 3
+#
+4892#
+MDEF + 5
+#
+4893#
+DEF + 15
+#
+4894#
+ATK + 4%.
+#
+4895#
+ATK + 5%.
+#
+4896#
+MATK + 2%.
+#
+4897#
+MATK + 3%.
+#
+4898#
+MATK + 4%.
+#
+4899#
+MATK + 5%.
+#
+4900#
+MHP + 5%.
+#
+4908#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 1
+ATK + 3
+INT - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4909#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 2
+ATK + 6
+INT - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4910#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+STR + 4
+ATK + 12
+INT - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4911#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 1
+MATK + 3
+STR - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4912#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 2
+MATK + 6
+STR - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4901#
+MDEF + 7
+#
+4913#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+INT + 4
+MATK + 12
+STR - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4902#
+DEF + 18
+#
+4914#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 1
+Evade + 2
+VIT - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4903#
+DEF + 21
+#
+4915#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 2
+Evade + 4
+VIT - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4904#
+ATK + 6%.
+#
+4916#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+AGI + 4
+Evade + 8
+VIT - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4905#
+ATK + 7%.
+#
+4917#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 1
+DEF + 3
+MDEF + 2
+AGI - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4906#
+MATK + 6%.
+#
+4918#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 2
+DEF + 6
+MDEF + 4
+AGI - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4907#
+MATK + 7%.
+#
+4919#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+VIT + 4
+DEF + 12
+MDEF + 8
+AGI - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4920#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 1
+Hit + 2
+LUK - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4921#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 2
+Hit + 4
+LUK - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4922#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+DEX + 4
+Hit + 8
+LUK - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4923#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 1
+Critical + 1
+DEX - 1
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4924#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 2
+Critical + 2
+DEX - 2
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4925#
+An essence of Dark Lord Morocc. Contains part of Morroc's ability.
+LUK + 4
+Critical + 4
+DEX - 4
+^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
+Location : ^777777All slot^000000
+Weight : ^7777771^000000
+#
+4559#
+ASPD + 1
+MSP - 10%
+Class : ^777777Card^000000
+Location : ^777777Shoes^000000
+Weight : ^7777771^000000
+#
+4882#
+ATK + 1%.
+#
+4883#
+MATK + 1%.
+#
+6684#
+Certifies its bearer as a distinguished warrior.
+Weight: ^7777770^000000
+#
+6713#
+Dark tribe Ahat's soul created by Morocc.
+You need this to open the true gate of the war against Dark lord.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777770^000000
+#
+6714#
+Dark tribe Shnaim's soul created by Morocc.
+You need this to open the true gate of the war against Dark lord.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777770^000000
+#
+6715#
+Dark Lord's soul piece.
+Feel the power of the Great Dark Lord Morocc.
+^ff0000This item cannot be traded with other account.^000000
+Weight : ^7777771^000000
+#
+6708#
+This crystallized mana
+is extracted from evil Demons, but its energy is untainted.
+#
+6719#
+A tooth pulled from the monster piano, Jitterbug. It's shaped like a piano key.
+^ffffff_^000000
+Weight: ^77777710^000000
+#
+22535#
+A scroll that summons a worker.
+Take the worker to a construction site suited to his skills. 
+^ff0000Cannot be traded to another game account.^000000
+Weight: ^7777771^000000
+#
+22536#
+A scroll that summons a worker.
+Take the worker to a construction site suited to his skills.
+^ff0000Cannot be traded to another game account.^000000
+Weight : ^7777771^000000
+#
+22537#
+Rewarded to warriors on the quest to defeat Morroc.
+Weight: ^77777710^000000
+#
+22566#
+A frost from the beginning. The melting never happened after the begin of the World.
+Creepy cold wakes you up so good.
+Clear burn damage effect
+Weight : ^7777770^000000
+#
+22567#
+A prize box for Morocc adventure troops.
+Weight : ^77777710^000000
+#
+22568#
+A spell scroll summoning Nydhogg
+#
+1934#
+The largest bowed string instrument of the viol family is also known as a double bass. Its giant frame and heavy weight make it a deadly weapon.
+MATK +120.
+Improvised Song cooldown -2 seconds.
+Class: ^777777Musical Instrument^000000 ATK: ^777777180^000000
+Weight: ^77777725^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+1989#
+A component of rhythmic gymnastics.
+MATK +120.
+Increases Attack Speed. (-20% post-attack delay)
+Class: ^777777Whip^000000 ATK: ^777777150^000000
+Weight: ^77777730^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+1935#
+Newoz's ukulele in a color that complements his clothes.
+Windmill Rush consumes -SP 20.
+Arrow Vulcan damage +200% when equipped with Newoz's Winged Ring.
+Arrow Vulcan consumes -SP 50.
+Class: ^777777Musical Instrument^000000 ATK: ^777777160^000000
+Weight: ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Minstrel^000000
+#
+1990#
+IGU's whip plus microphone. It looks a bit menacing.
+Moonlit Serenade consumes -SP 20.
+Arrow Vulcan damage +200% when equipped with IGU's Floral Bracelet.
+Class: ^777777Whip^000000 ATK: ^777777160^000000
+Weight: ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777130^000000
+Equip To: ^777777Wanderer^000000
+#
+12530#
+A box containing the essence of Mastela Fruit. Be careful when opening.
+Weight : ^7777770^000000
+"^ff0000Caution - Item can be lost if you are possessing more than weight or quantity limit when opening the box!^000000"
+#
+6685#
+A certificate given to people who rebuild the Morocc
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+22535#
+A scroll which can summon a worker
+Take him to set location
+It cannot be traded with other accounts.^000000
+Weight : ^7777771^000000
+#
+22536#
+A scroll which can summon a worker
+Take him to set location
+It cannot be traded with other accounts.^000000
+Weight : ^7777771^000000
+#
+6686#
+Building material for rebuilding Morocc
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6687#
+Building material for rebuilding Morocc^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6688#
+Building material for rebuilding Morocc^ff0000It cannot be traded with other accounts.^000000
+Weight : ^777777200^000000
+#
+6689#
+Very hot worm shell. it is popular to use substitude to keep warm the body. 
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+6690#
+A Primeval plant stem. it is warm.
+Even the taste is good!
+^ff0000It cannot be traded with other accounts.^000000
+Weight : ^7777770^000000
+#
+6691#
+A feather of Condor. the fire from the feather moves to other places, it damages alot.
+Weight : ^7777770^000000
+#
+6692#
+Patrol log of Flame Basin.
+It doesn't look written in detail
+Weight : ^7777770.1^000000
+#
+6693#
+Body part of Gorem. it looks ugly.
+Weight : ^7777771^000000
+#
+6694#
+Blood of Monsters in Flame Basin. you will never know if it is good or bad for you.
+Weight : ^7777771^000000
+#
+6695#
+Tooth of Flame Golem.
+Heavy but sharp at the edge.
+Weight : ^77777710^000000
+#
+6696#
+Neck of Filldora the Flame.
+Weight : ^7777771^000000
+#
+6698#
+A simple Axe that Lamberjacks use. Do not expect too much on it.
+Weight : ^777777100^000000
+#
