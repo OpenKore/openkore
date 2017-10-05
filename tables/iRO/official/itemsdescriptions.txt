@@ -520,13 +520,12 @@ Weight: 10
 Restores ^008000142^000000 to ^008000274^000000 HP.
 #
 566#
-^808080A type of soup which is regarded as one of the three famous soups in the world. It has a spicy, sweet and sour taste with shrimp, lemons and chiles.^000000
-^FFFFFF_^000000
-Type: Consumable
+^808080A type of soup which is regarded as one of the three famous soups in the world. It has a spicy, sweet and sour taste with shrimp, lemons and chilies.^000000
 Class: Recovery
 Weight: 15
-^FFFFFF_^000000
-Restores ^008000142^000000 to ^008000274^000000 HP and ^00800010^000000 to ^00800030^000000 SP.
+Restores ^008000244^000000 to ^008000350^000000 HP.
+Restores ^00800010^000000 to ^00800030^000000 SP.
+Cures ^008000Blind^000000, ^008000Chaos^000000, ^008000Curse^000000, ^008000Poison^000000, ^008000Silence^000000.
 #
 567#
 ^808080A shellfish which has a long tail and many legs. When cooked, the color of the body turns red and its flesh is very tasty with a unique scent.^000000
@@ -37884,16 +37883,13 @@ Jobs: All^000000
 #
 5916#
 ^808080Custom made sunglasses to use during exorcisms. You can see if it's a human or not.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Headgear
 Position: Middle
 Defense: 1
 Weight: 20
 Required Level: 10
 Required Jobs: All Jobs
-^FFFFFF_^000000
-Increases physical and magical damage on Demon race targets by 5%.
+Increases physical damage on Demon race targets by 5%.
 Reduces damage taken from Demon race enemies by 5%.
 #
 5921#
@@ -37948,15 +37944,13 @@ Increases long-ranged damage on targets by an additional 1%.
 #
 5937#
 ^808080A hat which will help you to see things that are far away while you are in the air. It will also help you sense danger more quicker.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Headgear
 Position: Upper
 Defense: 5
 Weight: 30
 Required Level: 20
 Required Jobs: All Jobs
-^FFFFFF_^000000
+Mdef + 5
 Restores 100 HP to the user when a monster is killed by a short-ranged attack.
 Restores 5 SP to the user when a Dragon race monster is killed by a short-ranged attack.
 If upgrade level is +5 or higher,
@@ -60917,15 +60911,13 @@ Increases physical and magical damage on Formless race targets by an additional 
 #
 15108#
 ^808080An armor made out of a urn which contained all kinds of venomous snakes and insects.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Armor
 Defense: 55
 Property: Poison
 Weight: 50
 Required Level: 70
 Required Jobs: All Jobs
-^FFFFFF_^000000
+Mdef + 5
 Increases physical damage on Poison property targets by 10%.
 #
 15110#
@@ -72657,28 +72649,25 @@ Reduces damage taken from Small, Medium and Large size attackers an additional b
 #
 19125#
 ^808080Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Headgear
 Position: Upper
 Defense: 12
 Weight: 30
 Required Level: 90
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Str + 5
 Int + 5
 Reduces the variable casting time of ^0000FFCart Cannon^000000 by 100%.
 Reduces the SP cost of ^0000FFCart Cannon^000000 by 30.
 Reduces the SP cost of ^0000FFCart Tornado^000000 by 5.
-Increases the skill damage bonus of ^0000FFCart Cannon^000000 by 100%.
-Increases the skill damage bonus of ^0000FFCart Tornado^000000 by 5%.
+Increases the damage of ^0000FFCart Cannon^000000 by 10%.
+Increases the damage of ^0000FFCart Tornado^000000 by 5%.
 If upgrade level is +5 or higher,
-Increases the skill damage bonus of ^0000FFCart Cannon^000000 by an additional 200%.
-Increases the skill damage bonus of ^0000FFCart Tornado^000000 by an additional 10%.
+Increases the damage of ^0000FFCart Cannon^000000 by an additional 20%.
+Increases the damage of ^0000FFCart Tornado^000000 by an additional 10%.
 If upgrade level is +7 or higher,
-Increases the skill damage bonus of ^0000FFCart Cannon^000000 by an additional 300%.
-Increases the skill damage bonus of ^0000FFCart Tornado^000000 by an additional 20%.
+Increases the damage of ^0000FFCart Cannon^000000 by an additional 30%.
+Increases the damage of ^0000FFCart Tornado^000000 by an additional 20%.
 #
 19137#
 ^808080At first glance it doesn't seem all that practical, but there is clearly more than meets the eye with this fruity mouth guard.^000000
@@ -79763,15 +79752,13 @@ Equip To: ^777777All Classes^000000
 #
 22042#
 ^808080The legendary shoes Hermes gave to Perseus when he went to fight Medusa.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Shoes
 Defense: 15
 Weight: 30
 Required Level: 50
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Agi + 2
+Mdef + 5
 Aspd + 1
 #
 22043#
@@ -81114,6 +81101,24 @@ Costume Persica
 Costume Royal Rabbit Crown
 Costume Weird Beard
 Costume Wrapping Ribbon
+#
+23507#
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened, gives one of the following at random:
+
+Costume Long Twin (White)
+Costume Low Pony (White)
+Costume: Ponytail (White)
+Costume Side Pigtail (White)
+Costume: Twin Ponytail (White)
+Costume: Cowlick (White)
+Costume Hair Buns (White)
+#
+23508#
+Class: Item Giver
+Weight: 1
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -83460,24 +83465,19 @@ Reduces the SP cost of ^0000FFZen^000000 by 5.
 #
 28394#
 ^808080This ring contains the power of the Spirit King.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Accessory
-Defense: 0
 Weight: 20
 Required Level: 50
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Vit + 5
 Reduces the variable casting time of ^0000FFVaretyr Spear^000000 by 1.5 seconds.
 Reduces the variable casting time of ^0000FFWarmer^000000 by 50%.
-Reduces the skill usage delay of skills by 5%.
-Reduces the cooldown of ^0000FFDiamond Dust^000000 by 2 seconds.
-Reduces the cooldown of ^0000FFEarth Grave^000000 by 2 seconds.
+Reduces the fixed casting time of ^0000FFWarmer^000000 by 50%.
+Reduces the cast delay of skills by 5%.
+Reduces the cooldown of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000 by 2 seconds.
 Reduces the cooldown of ^0000FFVaretyr Spear^000000 by 0.5 seconds.
 Reduces the cooldown of ^0000FFWarmer^000000 by 15 seconds.
-Increases the damage of ^0000FFDiamond Dust^000000 by 1% for every 8 base levels.
-Increases the damage of ^0000FFEarth Grave^000000 by 1% for every 8 base levels.
+Increases the damage of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000 by 1% for every 8 base levels.
 #
 28410#
 ^808080A sapphire bracelet which was designed with the collective knowledge of the geneticist community.^000000
@@ -85427,6 +85427,214 @@ Required Jobs: All Jobs
 ^808080A mask that resembles a fearsome monster who once had a secret group of followers. Some say he still does...^000000
 Class: Costume
 Position: Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31208#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31209#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31210#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31211#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31212#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31213#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31214#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31215#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31216#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31217#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31218#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31219#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31220#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31221#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31222#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31223#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31224#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31225#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31226#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31227#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31228#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31229#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31230#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31231#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31232#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31233#
+^808080You will feel and look brand new once you attach this to your hair.^000000
+Class: Costume
+Position: Lower
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
