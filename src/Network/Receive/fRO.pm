@@ -15,7 +15,7 @@
 package Network::Receive::fRO;
 
 use strict;
-use base 'Network::Receive::ServerType0';
+use base qw(Network::Receive::ServerType0);
 
 sub new {
 	my ($class) = @_;
