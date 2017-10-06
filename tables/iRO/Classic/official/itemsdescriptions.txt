@@ -70935,3 +70935,18 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19983#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Amistr Cap!
+300 Fluff
+200 Animal Skins
+2 Evil Horn
+1 Ice Titan Card
+1000 Zeny
+1 Amistr Cap Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
