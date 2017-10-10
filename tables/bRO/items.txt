@@ -7842,4 +7842,14 @@
 //------------Aplicar em 2017-09-26--------------------
 //*****************************************************
 31180#Faixa do Shurão da Preula#
+//*****************************************************
+//------------Aplicar em 2017-10-10--------------------
+//*****************************************************
+20027#Chapéu da Mimosa Rosa#
+31134#Maritaca Faladeira#
+20381#Cartola Steampunk#
+19244#Rosário Dourado#
+20904#Bata de Etran#
+28944#Escudo de Sleiporing#
+5931#Niflheim Bunny Hat#
 //file end

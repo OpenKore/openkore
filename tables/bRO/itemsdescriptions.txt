@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 25/09, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 26/09. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 23/10, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 24/10. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -2038,37 +2038,40 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1165#
 Espada oriental, a grande obra-prima do maior artesão japonês.
-^0000ffTaxa de esquiva +30, Velocidade de Ataque +2 e FOR -5.^000000
-^0000ffDefesa do usuário é diminuída em mais de 75%.^000000
-Classe: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
+^0000ffFOR -5.^000000
+^0000ffDEF -75%.^000000
+^0000ffEsquiva +30.^000000
+^0000ffVelocidade de ataque +2.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1166#
 Espada gigantesca. Dizem que é feita do dente canino de um dragão. É capaz de cortar as duras escamas de um dragão sem dificuldade.
-^0000ffIgnora a defesa de monstros da raça Dragão.^000000
-^0000ffDano contra a raça Dragão +15%.^000000
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777150^000000
+^0000ffIgnora 100% da DEF da raça Dragão.^000000
+^0000ffDano físico contra a raça Dragão +15%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777150^000000
 Peso: ^777777130^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1167#
 Sabre de aparência solene com a propriedade do vento.
-^0000ffPequena chance de auto-conjurar a habilidade "Relâmpago" em nível 3.^000000
 ^0000ffDEF +1.^000000
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777160^000000
-Peso: ^777777160^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Relâmpago] nv. 3.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777160^000000
 Propriedade: ^777777Vento^000000
+Peso: ^777777160^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1168#
 Espada de duas mãos gigantesca e pesada.
@@ -2082,16 +2085,16 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1169#
 Espada usada para executar a pena de morte.
-^0000ffCausa dano adicional de 20% aos monstros Humanoides.^000000
-^0000ffRecebe dano adicional de 10% de monstros Humanoides.^000000
-^0000ffIgnora a defesa de monstros da raça Humanoide.^000000
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777155^000000
-Peso: ^777777220^000000
+^0000ffIgnora 100% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +20%.^000000
+^0000ffResistência a ataques de oponentes da raça Humanoide -10%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777155^000000
 Propriedade: ^777777Sombrio^000000
+Peso: ^777777220^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1170#
 Espada batizada com o nome "combate", em alemão. Tem uma empunhadura em forma de "s" única.
@@ -6571,10 +6574,10 @@ Combina com: ^777777Vestimenta^000000
 Peso: ^7777771^000000
 #
 4102#
-^0000ffTaxa de Esquiva +20. Aumenta em 50% o dano causado por ataques da propriedade Fantasma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+^0000ffEsquiva +20.^000000
+^0000ffResistência a propriedade Fantasma -50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4103#
@@ -6731,10 +6734,9 @@ Combina com:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4125#
-^0000ffAdiciona 7% ao dano causado em monstros das raças Humanoide, Bruto, Planta e Inseto.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+^0000ffDano físico contra as raças Humanoide, Bruto, Planta e Inseto +7%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4126#
@@ -11219,11 +11221,10 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4174#
-^0000ffAdiciona 50% a mais de tolerância contra ataques de propriedade Neutra.
-Recebe 50% a mais de dano de ataques de outras propriedades. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffResistência a propriedade Neutro +50%.^000000
+^0000ffResistência as propriedades Fogo, Água, Terra, Vento, Maldito, Fantasma, Sombrio, Sagrado e Veneno -50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4175#
@@ -13395,10 +13396,10 @@ Um escudo usado por Gna, mensageira de Freyja, quando ela serviu como uma Valqu�
 ^0000ffDEFM +5.^000000
 ^0000ffResistência as propriedades Fogo, Água, Maldito e Sombrio +20%.^000000
 Tipo: ^777777Escudo^000000
-Defesa: ^77777780^000000
+Defesa ^77777780^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777765^000000
-Classes: ^777777Classes 3 e Transclasses, exceto Aprendizes^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2116#
 Anjo Guardião do Superaprendiz. Escudo que contém poder sagrado, anulando o mal.
@@ -21126,15 +21127,16 @@ Classes que utilizam: ^777777Somente Atiradores de Elite^000000
 #
 
 2423#
-Sapatos que parecem ter algo errado. O fabricante tinha a intenção de corrigir os sapatos, mas não conseguiu.
-Aumento de 20% no HP e SP máximos.
-HP e SP máximos reduzidos dependendo do nível de refinamento
-Aumento adicional na DEF, dependendo do nível de refinamento
-Tipo de Item: ^777777Calçado^000000
+Sapatos que parecem ter algo errado. O fabricante tinha a intenção
+de corrigir os sapatos, mas não conseguiu.
+^0000ffHP e SP máx. +20%.^000000
+A cada 2 refinos:
+^0000ffDEF +1.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^77777713^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777785^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2424#
@@ -21280,24 +21282,27 @@ Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes
 #
 1175#
 Uma espada maciça usada pelo Atroce. Ela parece ser grande demais para pessoas comuns.
-Crítico + 10
-Destrói a armadura do inimigo se o usuário tiver FOR 80 ou mais
-Tipo de Item: ^777777Espada de Duas Mãos^000000
-Força de ataque: ^777777200^000000
+^0000ffCRIT +10.^000000
+FOR base 80 ou mais:
+^0000ffAo realizar ataques físicos, 5% de chance de quebrar a armadura do oponente.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^777777350^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1176#
 Uma arma para cortar facilmente os músculos de monstros selvagens.
-Há chance de causar Sangramento e lançar automaticamente Diminuir Agilidade Nv. 1 ao atacar o inimigo.
-Tipo de Item: ^777777Espada de Duas Mãos^000000
-Força de ataque: ^777777160^000000
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+^0000ff8% de chance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777160^000000
 Peso: ^777777220^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1268#
 Um Katar feito da garra de uma fera selvagem. O inimigo atingido não consegue se recuperar do dano.
@@ -23700,40 +23705,41 @@ Nível necessário: ^77777748^000000
 Classe Aplicável: ^777777Espadachim^000000
 #
 1180#
-Espada gigante; dizem que foi feita com um canino de dragão. Ela pode cortar sem dificuldade as escamas duras de um dragão.
-^0000ffIgnora a defesa de monstros da raça Dragão.^000000
+Espada gigantesca. Dizem que é feita do dente canino de um dragão. É capaz de cortar as duras escamas de um dragão sem dificuldade.
+^0000ffIgnora 100% da DEF da raça Dragão.^000000
 ^0000ffDano físico contra a raça Dragão +15%.^000000
-Tipo de Arma: ^777777Espada de Duas Mãos^000000
-Força de Ataque: ^777777150^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777150^000000
 Peso: ^777777130^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classe Aplicável: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1178#
-Um sabre formal com a propriedade Vento.
-Há chance de lançar automaticamente ^008800Relâmpago nv. 3^000000.
-DEF +1
-Tipo de Arma: ^777777Espada de Duas Mãos^000000
-Força de Ataque: ^777777160^000000
-Peso: ^777777160^000000
+Sabre de aparência solene com a propriedade do vento.
+^0000ffDEF +1.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Relâmpago] nv. 3.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777160^000000
 Propriedade: ^777777Vento^000000
-Nível da Arma: ^7777774^000000
+Peso: ^777777160^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classe Aplicável: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1179#
-Espada usada para aplicar a pena de morte através de um antigo ritual de decapitação.
-Ignora a defesa de monstros Humanoides.
-20% de dano adicional contra monstros Humanoides.
-Recebe 10% a mais de dano de monstros Humanoides.
-Tipo de Arma: ^777777Espada de Duas Mãos^000000
-Força de Ataque: ^777777155^000000
-Peso: ^777777220^000000
+Espada usada para executar a pena de morte.
+^0000ffIgnora 100% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +20%.^000000
+^0000ffResistência a ataques de oponentes da raça Humanoide -10%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777155^000000
 Propriedade: ^777777Sombrio^000000
-Nível da Arma: ^7777774^000000
+Peso: ^777777220^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classe Aplicável: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 13031#
 Uma faca com uma lâmina tão forte que tem uma pequena chance de destruir a arma do inimigo.
@@ -24260,29 +24266,29 @@ Classes que utilizam: ^777777Sacerdote, Monge e evoluções^000000
 #
 1183#
 Uma espada de duas mãos criada especialmente para lutar contra Humanoides.
-FOR + 2
-Aumenta o Ataque Físico contra Humanoides em 55%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffFOR +2.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +55%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Espadachim e evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1184#
 Uma espada de duas mãos criada especialmente para lutar contra Humanoides.
-Crítico + 20
-Aumenta o Ataque Físico contra Humanoides em 55%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffCRIT +20.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +55%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Espadachim e evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1482#
 Lança de duas mãos criada para atacar inimigos no campo de batalha.
@@ -24747,15 +24753,22 @@ Nível necessário: ^77777775^000000
 Classes: ^777777Transcendentais de Noviços, Magos e evoluções^000000
 #
 1185#
-Uma arma de duas mãos violeta criada a partir das lâminas gêmeas do Naght Sieger.
-Chance de ignorar a DEF do alvo sempre que causar um dano físico.
-Chance de usar as habilidades 'Chuva de Meteoros' Nv. 3 e 'Congelar' Nv. 5 sempre que causar dano físico.
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777275^000000
+Uma arma de duas mãos violeta criada a partir das lâminas gêmeas
+do Naght Sieger.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de autoconjurar [Chuva de Meteoros] nv.
+3.^000000
+^0000ff5% de chance de autoconjurar [Congelar] nv. 5.^000000
+^0000ff5% de chance de ativar um efeito por 5 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffIgnora 100% da DEF de monstros normais e
+personagens.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777275^000000
 Peso: ^777777220^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Espadachim T. e evoluções^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 2542#
 Manteau criado das chamas e usado por Naght Sieger.
@@ -25086,31 +25099,37 @@ Classes: ^777777Sacerdotes, Monges e evoluções^000000
 #
 1181#
 Arma sagrada de um guerreiro do oriente.
-^0000ffEsquiva Perfeita +10.^000000
-Se o nível de classe for 70 (ou 50 para terceiras classes):
-^0000ffChance de ativar ATQ +50 por 10 segundos ao atacar fisicamente.^000000
-Se refinado em +9 ou mais:
-^0000ffConsumo de SP por habilidades -20%.^000000
-^0000ffTempo de pós-conjuração -20%.^000000
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777250^000000
+^0000ffEsquiva perfeita +10.^000000
+Refino +9 ou mais:
+^0000ffPós-conjuração -20%.^000000
+^0000ffCusto de SP das habilidades -20%.^000000
+^FF6347Lordes e Paladinos:^000000
+Nv. de classe 70 ou mais:
+^0000ffAo realizar ataques físicos, 1% de chance de ativar [ATQ +50] por 10 segundos.^000000
+^FF6347Cavaleiros Rúnicos:^000000
+Nv. de classe 50 ou mais:
+^0000ffAo realizar ataques físicos, 1% de chance de ativar [ATQ +50] por 10 segundos.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777250^000000
 Peso: ^777777200^000000
-Propriedade: ^777777Neutra^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777790^000000
-Classes que utilizam: ^777777Espadachim T e evoluções^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1182#
 Uma espada mágica que possui uma aura negra.
-Adiciona a chance de ativar Crítico + 100 e ATQ + 50 durante 5 segundos quando atacar fisicamente.
-Recupera 100 HP ao derrotar um monstro.
-Tipo: ^777777Espada de duas mãos^000000
-Força de Ataque: ^777777200^000000
-Peso: ^777777120^000000
+^0000ffRecupera 100 de HP ao derrotar monstros.^000000
+Ao realizar ataques físicos:
+^0000ff0,1% de chance de ativar um [efeito] por 5 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffATQ +50. CRIT +100.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777200^000000
 Propriedade: ^777777Fantasma^000000
-Nível da Arma: ^7777774^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Espadachim T e evoluções^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1736#
 Um arco level especializado em ataque duplo.
@@ -25603,17 +25622,19 @@ Classes que utilizam:  ^7777772a. Classe Transcendental^000000
 #
 1186#
 Uma arma amaldiçoada que existe somente para destruir todos os seres vivos. A maldição desta espada afeta o usuário até deixá-lo na miséria.
-FOR + 5, AGI + 2
-Esquiva Perfeita + 20
-Ao dar ataque físico, há chance de causar status anormal.
-Ao dar ataque físico, há uma chance de causar 100% de dano a todos os monstros dentro da área de 11x11 células ao redor do usuário.
-Se o refinamento for acima de 9, o poder afeta monstros na área de 15x15 células, e causa 200% de dano.
+^0000ffFOR +5. AGI +2.^000000
+^0000ffEsquiva perfeita +20.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de receber [Poder Infernal] nv. 1.^000000
+^0000ff2% de chance de autoconjurar [Beijo do Vampiro] nv. 1.^000000
+Refino +9 ou mais:
+^0000ffNível autoconjurado de [Beijo do Vampiro] +1.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777200^000000
 Peso: ^777777200^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Lordes, Paladinos e evoluções^000000
 #
 1483#
 Lança de duas mãos, feita com o marfim do Mamute. É muito difícil de fabricar por causa da solidez do material, mas sua ponta afiada é perfeita para perfurar.
@@ -29746,13 +29767,14 @@ Classes que utilizam:  ^777777Evoluções de Gatuno T., Espadachim T. e Mercador
 // -----------  Ep 13.2 additional equipment items ------------
 1189#
 Espada forte, que lembra a Claymore. Sua empunhadura é decorada na cor vermelha para o Cavaleiro Renascido.
-Se a FOR for maior que 95, ATQ + 20.
+^0000ffFOR base 95 ou mais:^000000
+^0000ffATQ +20.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
-Nível da arma: ^7777772^000000
 Ataque: ^777777200^000000
 Peso: ^777777380^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1284#
 Uma Katar decorada na cor preta. Requer grande força para ser brandida.
@@ -32014,13 +32036,14 @@ Peso: ^7777771^000000
 #
 1191#
 Uma espada de duas mãos avermelhada.
-Aumenta a Vel. de ATQ em +1 a cada 2 níveis de aprimoramento.
-Classe: ^777777Espada de Duas Mãos^000000
-Força de Ataque: ^777777280^000000
+^0000ffA cada 2 refinos:^000000
+^0000ffVelocidade de ataque +1.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777280^000000
 Peso: ^777777340^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^777777100^000000
-Classes que utilizam: ^777777Classes 3 de Espadachins^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1287#
 Uma Katar desenhada para grandes velocidades de ataque.
@@ -32363,50 +32386,50 @@ Nível necessário: ^777777100^000000
 Classes que utilizam: ^777777Classes 3 de Espadachim^000000
 #
 4442#
-Reduz o dano de monstros da propriedade Neutra em 20%.
-Aumenta dano contra monstros da propriedade Neutra em 5%.
+^0000ffResistência a oponentes de propriedade Neutro +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Neutro +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4443#
-Reduz o dano de monstros da propriedade Água em 20%.
-Aumenta dano contra monstros da propriedade Água em 5%.
+^0000ffResistência a oponentes de propriedade Água +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Água +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4444#
-Reduz o dano de monstros da propriedade Terra em 20%.
-Aumenta dano contra monstros da propriedade Terra em 5%.
+^0000ffResistência a oponentes de propriedade Terra +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Terra +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4445#
-Reduz o dano de monstros da propriedade Vento em 20%.
-Aumenta dano contra monstros da propriedade Vento em 5%.
+^0000ffResistência a oponentes de propriedade Vento +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Vento +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4447#
-Reduz o dano de monstros da propriedade Veneno em 20%.
-Aumenta dano contra monstros da propriedade Veneno em 5%.
+^0000ffResistência a oponentes de propriedade Veneno +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Veneno +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4448#
-Reduz o dano de monstros da propriedade Sagrado em 20%.
-Aumenta dano contra monstros da propriedade Sagrado em 5%.
+^0000ffResistência a oponentes de propriedade Sagrado +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Sagrado +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4449#
-Reduz o dano de monstros da propriedade Fantasma em 20%.
-Aumenta dano contra monstros da propriedade Fantasma em 5%.
+^0000ffResistência a oponentes de propriedade Sombrio +20%.^000000
+^0000ffDano físico contra oponentes de propriedade Sombrio +5%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
@@ -36171,11 +36194,13 @@ Classes: ^777777Todas^000000
 #
 2573#
 Lindas Asas de Arcanjo. Brancas como a neve e leves feito plumas.
-Tipo: ^777777Capa^000000
+^008080Exibe o visual nas costas do personagem.^000000
+^FF6347Recebe encantamentos no Mestre Arcanjo (prontera 100, 63)^000000
+Tipo: ^777777Capa ^000000
 Defesa: ^77777718^000000
-Peso : ^77777720^000000
-Nível Necessário : ^7777771^000000
-Classe : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 
 
@@ -37614,7 +37639,8 @@ Refino +12 ou mais:
 Aumento da efetividade de Cura em 12%. Custo de SP aumentado em 10%
 #
 4850#
-Aumento da efetividade de Cura em 6%. Custo de SP aumentado em 5%
+Efetividade de cura +6%.
+Custo de SP das habilidades +5%.
 #
 4817#
 Crítico +9, Precisão +3
@@ -37665,34 +37691,35 @@ Classes : ^777777Todas as classes exceto Aprendiz e Evoluções^000000
 
 2576#
 Uma pequena e simpática mochila cheia de acessórios e compartimentos especiais. Você não vê a hora de sair por Rune-Midgard catando tudo o que vê pelo chão para deixá-la bem cheia! Ela possui encantamentos especiais para cada um de seus atributos. Nove entre dez exploradores recomendam: 'nunca saia de casa sem ela'!
+^008080Exibe o visual nas costas do personagem.^000000
 ^0000ffHabilita [Ganância] nv. 1.^000000
-Refino +7 ou mais:
-^0000ffFOR base 90 ou mais:^000000
+^FF6347Refino +7 ou mais:^000000
+FOR base 90 ou mais:
 ^0000ffATQ +20.^000000
-^0000ffAGI base 90 ou mais:^000000
+AGI base 90 ou mais:
 ^0000ffVelocidade de ataque +8%.^000000
-^0000ffVIT base 90 ou mais:^000000
+VIT base 90 ou mais:
 ^0000ffResistência a propriedade Neutro +5%.^000000
-^0000ffINT base 90 ou mais:^000000
+INT base 90 ou mais:
 ^0000ffATQM +30.^000000
-^0000ffDES base 90 ou mais:^000000
+DES base 90 ou mais:
 ^0000ffDano físico a distância +5%.^000000
-^0000ffSOR base 90 ou mais:^000000
+SOR base 90 ou mais:
 ^0000ffDano crítico +10%.^000000
-Refino +9 ou mais:
-^0000ffFOR base 90 ou mais:^000000
+^FF6347Refino +9 ou mais:^000000
+FOR base 90 ou mais:
 ^0000ffATQ +10 adicional.^000000
-^0000ffAGI base 90 ou mais:^000000
+AGI base 90 ou mais:
 ^0000ffVelocidade de ataque +1.^000000
-^0000ffVIT base 90 ou mais:^000000
+VIT base 90 ou mais:
 ^0000ffResistência a propriedade Neutro +5% adicional.^000000
-^0000ffINT base 90 ou mais:^000000
+INT base 90 ou mais:
 ^0000ffATQM +20 adicional.^000000
-^0000ffDES base 90 ou mais:^000000
+DES base 90 ou mais:
 ^0000ffDano físico a distância +5% adicional.^000000
-^0000ffSOR base 90 ou mais:^000000
+SOR base 90 ou mais:
 ^0000ffDano crítico +5% adicional.^000000
-Tipo: ^777777Capa^000000
+Tipo: ^777777Capa ^000000
 Defesa: ^77777720^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
@@ -38558,13 +38585,13 @@ Classes :  ^777777Todas^000000
 #
 18679#
 Um antigo instrumento usado para fazer cálculos. Alguns mercadores novatos costumam usar para evitar prejuízos.
-Permite o uso da habilidade "Identificar Item nv. 1".
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffHabilita [Identificar Item] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Baixo^000000
-Peso : ^77777720^000000
-Nível Necessário : ^77777720^000000
-Classes :  ^777777Todas exceto Aprendiz^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 4497#
 Chance de invocar a habilidade “Nevasca nv. 1” toda vez que atacar um alvo fisicamente a curta distância.
@@ -39283,13 +39310,13 @@ HP +400
 HP +500
 #
 4803#
-Reduz em 3 segundos o tempo de 'recarga' de Curatio.
+Tempo de recarga de [Curatio] -3 segundos.
 #
 4804#
-Reduz em 30 pontos o custo de SP de 'Sopro Divino'.
+Custo de SP de [Sopro Divino] -30.
 #
 4805#
-Aumenta em 3% a eficiência das habilidades de cura.
+Efetividade de cura +3%.
 #
 11519#
 Um aperitivo exclusivo da Vila de Mora. É um sanduíche com dois hambúrgueres e vegetais e frutas no meio. A folha que o envolve dá um toque refrescante.
@@ -40069,16 +40096,20 @@ Peso : ^7777771^000000
 
 //------------------2013 ep14.1 malangdo---------------------------
 1198#
-^000088Item de Aluguel^000000
-O arenque é um  peixe oceânico. É muito conhecido e usado na culinária há milênios. Está ultracongelado.
-Crítico + 20, dano crítico com 50% de aumento.
-Durante o ataque, ele dá uma carga de congelamento de fluxo normal.
-Se o nível de base for mais de 100, + 50 de ATQ.
-Tipo: ^777777Espada de Duas Mãos^000000: ^777777220^000000
+^000088Item de aluguel^000000
+O arenque é um peixe oceânico. É muito conhecido e usado na culinária há milênios. Está ultracongelado.
+^0000ffCRIT +20.^000000
+^0000ffDano crítico +50%.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de infligir [Cristalização] no oponente.^000000
+Nv. base 100 ou mais:
+^0000ffATQ +50.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777220^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classe: ^777777Espadachim e evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1489#
 ^000088Item de Aluguel^000000
@@ -42442,6 +42473,7 @@ Peso: ^7777771^000000
 #
 2589#
 Largas asas negras de um arcanjo expulso do céu.
+^008080Exibe o visual nas costas do personagem.^000000
 ^0000ffTodos os atributos +1.^000000
 A cada 20 de FOR base:
 ^0000ffATQ +1.^000000
@@ -42455,8 +42487,9 @@ A cada 20 de DES base:
 ^0000ffDano físico a distância +1%.^000000
 A cada 20 de SOR base:
 ^0000ffDano crítico +1%.^000000
-^FF6347Recebe encantamentos da Valquíria Obscura (geffen 136, 55)^000000
-Tipo: ^777777Capa^000000
+^FF6347Recebe encantamentos na Valquíria Obscura (geffen
+136, 55)^000000
+Tipo: ^777777Capa ^000000
 Defesa: ^77777718^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
@@ -44038,14 +44071,15 @@ Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
 #
 20706#
-Uma carismática mochila feita com um bonequinho de pelúcia do homúnculo Amistr. Até mesmo a filhinha levada de um cara malvado diria que “É TÃO FOFINHO!”
-Todos os atributos +1.
-Resistência contra todas as propriedades +5%.
-Tipo: Capa
-Defesa 18
-Nível Necessário: 1
-Peso: 50
-Classes que Utilizam: Todas
+Uma carismática mochila feita com um bonequinho de pelúcia do homúnculo Amistr. Até mesmo a filhinha levada de um cara malvado diria que 'É TÃO FOFINHO! '
+^008080Exibe o visual nas costas do personagem.^000000
+^0000ffTodos os atributos +1.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+Tipo: ^777777Capa ^000000
+Defesa: ^77777718^000000
+Peso: ^77777750^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 //----------------------------------------------------------
 //--Aplicar em 28-07-2014 - Todos os servidores
@@ -44297,55 +44331,67 @@ Classes que Utilizam: ^777777Todas^000000
 //----------------------------------------------------------
 18816#
 Parabéns, então você foi um estudante nota 10 da Academia de Juno! É por isso que hoje tantos alunos querem ser um aventureiro de sucesso como você!
-^FF0000VIT+2, INT+2, SOR+1. ^000000
-Se equipado em conjunto com os itens Lápis Vermelho Mordido e o Uniforme Escolar [1], aumento do ATQM de acordo com o Nível de Base, (1/3 de Base, nível máximo 150), +5% de experiência de todos os monstros.
+^0000ffVIT +2. INT +2. SOR +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Uniforme Escolar]^000000
+^FF6347[Lápis Vermelho Mordido]^000000
+^0000ffEXP adquirida ao derrotar monstros +5%.^000000
+A cada 3 níveis de base:
+^0000ffATQM +1.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777774 ^000000
 Equipa em: ^777777Topo^000000
-Peso: ^77777710 ^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas exceto Aprendiz^000000
+Defesa: ^7777774^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 18817#
-Viu só no que deu não prestar atenção nas aulas e ter sido um mal aluno na Academia de Juno? Nem percebeu  que “mau” estava escrito errado ali atrás.
-^FF0000VIT+2, FOR+2, SOR+1. ^000000
-Se equipado em conjunto com o item Lápis Azul Mordido e o Uniforme Escolar [1], aumento do ATQ de acordo com o Nível de Base (Base 1/3, nível máximo 150), +5% de experiência de todos os monstros.^000000
+Viu só no que deu não prestar atenção nas aulas e ter sido um mal aluno na Academia de Juno? Nem percebeu que 'mau ' estava escrito errado ali atrás.
+^0000ffVIT +2. FOR +2. SOR +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Uniforme Escolar]^000000
+^FF6347[Lápis Azul Mordido]^000000
+^0000ffEXP adquirida ao derrotar monstros +5%.^000000
+A cada 3 níveis de base:
+^0000ffATQ +1.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777774 ^000000
 Equipa em: ^777777Topo^000000
-Peso: ^77777710 ^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas exceto Aprendiz^000000
+Defesa: ^7777774^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 18818#
 Isso faz você se lembrar como aquela prova final estava difícil. Que bom que no final você tirou 10 mesmo sem ter estudado direito!
-^FF0000Precisão +3. ^000000
+^0000ffPrecisão +3.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
-Peso: ^77777710 ^000000
-Nível Necessário: ^7777771 ^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 18819#
 Isso faz você se lembrar como aquela prova final estava difícil. E o pior é que ninguém quis te passar cola e você ficou de recuperação...
-^FF0000Precisão +3. ^000000
+^0000ffPrecisão +3.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
-Peso: ^77777710 ^000000
-Nível Necessário: ^7777771 ^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 15088#
-Minha nossa, seu uniforme ainda serve em você! Que bom que a vida de aventuras ajuda a não deixar aquela barriguinha de hidromel crescer.
-^FF0000AGI+2, SOR+1.
-HP Máximo aumentado de acordo com o Nível de Base (x3)
-SP Máximo aumentado de acordo com o Nível de Base (x1/2) ^000000
-Tipo: ^777777Vestimenta^000000
-Defesa: ^77777725 ^000000
-Peso: ^77777750 ^000000
-Nível Necessário: ^7777771 ^000000
+Minha nossa, seu uniforme ainda serve em você! Que bom que a vida de aventuras ajuda a não deixar aquela barriguinha de churrasco crescer.
+^0000ffAGI +2. SOR +1.^000000
+A cada nível de base:
+^0000ffHP máx. +3.^000000
+A cada 2 níveis de base:
+^0000ffSP máx. +1.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777725^000000
+Peso: ^77777750^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //----------------------------------------------------------
@@ -44594,15 +44640,16 @@ Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
 #
 18770#
-Chapéu típico de Louyang.
-Esta é a versão mais usada por garotos, mas podemos vê-lo na cabeça de garotas mais fashion.
-Reduz em 10% o dano de monstros da raça Demônio.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa : ^7777775^000000
-Equipa em : ^777777Topo Meio Baixo ^000000
-Peso : ^77777730^000000
-Nível Necessário : ^7777771^000000
-Classe : ^777777Todas^000000
+Chapéu típico de Louyang. Esta é a versão mais usada por garotos, mas podemos vê-lo na cabeça de garotas mais fashion.
+^0000ffResistência a raça Demônio +10%.^000000
+Refino +7 ou mais:
+^0000ffDano físico contra a raça Demônio +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Defesa: ^7777775^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classe: ^777777Todas^000000
 #
 18771#
 Uma máscara utilizada pelo protagonista de uma história de amor muito triste. Se você olhar atentamente através dos olhos da mascara, poderá ver sua tristesa e ouvir sua voz sua bela voz ecoando em sua cabeça.
@@ -44677,13 +44724,14 @@ Classe : ^777777Aprendiz/Super Aprendiz/Super Aprendiz EX^000000
 #
 22014#
 Sapatos que antes estavam errados e agora foram consertados. Ainda há algo de estranho neles...
-Aumenta em 12% o HP Máximo/SP Máximo
-DEF/DEFM adicionais baseado no nível de refinamento.
-Tipo : ^777777Calçado^000000
-Defesa : ^77777713^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777785^000000
-Classe : ^777777Segundas classes e evoluções/Mestre Taekwon/Espiritualista/Kagerou/Oboro^000000
+^0000ffHP e SP máx. +12%.^000000
+A cada refino:
+^0000ffDEF e DEFM +1.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777713^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777785^000000
+Classes: ^777777Kagerou, Oboro, Mestres Taekwons, Espiritualistas, Classes 2 e evoluções^000000
 #
 22015#
 Sandálias divinas usadas pelo Arcanjo Guardião dos Super Aprendizes mais poderosos.
@@ -45303,35 +45351,43 @@ Classe : ^777777Sentinela^000000
 #
 15042#
 Vestimenta decorada com plumas brancas.
-^0000ffDano a distância +2% por refino.^000000
 ^0000ffEsquiva +1 por refino.^000000
-^3CB371Conjunto da Luz:^000000
-Velocidade de Ataque +2.
-Dano a distância +30%.
-Dano de [Tempestade de Flechas] +50%.
-Consumo de SP +10%.
-Chance de autoconjurar [Rajada de Flechas] no nível aprendido em ataques físicos a distância.
-Tipo : ^777777Armadura^000000
-Defesa : ^77777745^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Sentinela^000000
+A cada 2 refinos:
+^0000ffDano físico a distância +2%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sapatos da Luz]^000000
+^FF6347[Broche da Luz]^000000
+^FF6347[Sobrepeliz da Luz]^000000
+^0000ffVelocidade de ataque +2.^000000
+^0000ffDano físico a distância +30%.^000000
+^0000ffDano de [Tempestade de Flechas] +50%.^000000
+Ao realizar ataques físicos a distância:
+^0000ff2% de chance de autoconjurar [Rajada de Flechas] nv. 3 ou no maior nível aprendido.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777745^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sentinelas^000000
 #
 15043#
-Malha decorada com plumas pretas.
+Vestimenta decorada com plumas pretas.
 ^0000ffINT +2.^000000
-^0000ffATQ +3 a cada refino.^000000
-^3CB371Conjunto das Sombras:^000000
-HP Máx. +15%.
-Esquiva Perfeita +20.
-Dano de [Bomba Relógio] +20%.
-Dano a distância -30%.
-Velocidade de Ataque -7.
-Tipo : ^777777Armadura^000000
-Defesa : ^77777745^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Sentinela^000000
+A cada refino:
+^0000ffATQ +3.^000000
+^FF6347Conjunto^000000
+^FF6347[Sapatos das Sombras]^000000
+^FF6347[Broche das Sombras]^000000
+^FF6347[Sobrepeliz das Sombras]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffEsquiva perfeita +20.^000000
+^0000ffVelocidade de ataque -7.^000000
+^0000ffDano físico a distância -30%.^000000
+^0000ffDano de [Bomba Relógio] +20%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777745^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sentinelas^000000
 #
 2890#
 Broche decorado com plumas brancas.
@@ -45393,31 +45449,41 @@ Classe : ^777777Sicário^000000
 15038#
 Vestimenta que parece ser do Novo Mundo.
 ^0000ffSOR +3.^000000
-^0000ffChance de autoconjurar [Impacto Meteoro] no nível aprendido ao atacar fisicamente.^000000
-^3CB371Conjunto dos Manuks:^000000
-Esquiva +10. CRIT +15.
-Dano crítico +40%.
-Dano de [Lâminas Retalhadoras] +20%.
-Consumo de SP +10%.
-Tipo : ^777777Armadura^000000
-Defesa : ^77777745^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Sicário^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Impacto Meteoro] nv. 1 ou no nível aprendido.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas dos Manuks]^000000
+^FF6347[Capuz dos Manuks]^000000
+^FF6347[Anel dos Manuks]^000000
+^0000ffCRIT +15.^000000
+^0000ffEsquiva +10.^000000
+^0000ffDano crítico  +40%.^000000
+^0000ffCusto de SP de habilidades +10%.^000000
+^0000ffDano de [Lâminas Retalhadoras] +20%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777745^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sicários^000000
 #
 15039#
 Vestimenta de um lendário assassino.
 ^0000ffFOR +2. INT +2.^000000
-^3CB371Conjunto de Nab:^000000
-ATQ e ATQM +10%.
-CRIT -20.
-Se FOR base 120 ou maior, ATQ +30.
-Chance de autoconjurar [Destruidor de Almas] no nível aprendido em ataques físicos.
-Tipo : ^777777Armadura^000000
-Defesa : ^77777745^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Sicário^000000
+^FF6347Conjunto^000000
+^FF6347[Botas de Nab]^000000
+^FF6347[Capuz de Nab]^000000
+^FF6347[Anel de Nab]^000000
+^0000ffCRIT -20.^000000
+^0000ffDano físico e mágico +10%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Destruidor de Almas] nv. 1 ou no nível aprendido.^000000
+FOR base 120 ou mais:
+^0000ffATQ +30.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777745^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sicários^000000
 #
 2886#
 Anel que parece ser do Novo Mundo.
@@ -45480,34 +45546,44 @@ Classe : ^777777Cavaleiro Rúnico^000000
 15036#
 Armadura criada ao purificar uma Runa Ur.
 ^0000ffDEFM +10.^000000
-^0000ffHP +1% por refino.^000000
-^0000ffResistência a Humanoide e Neutro +5%.^000000
-^3CB371Conjunto de Ur:^000000
-HP Máx. +14%.
-Consumo de SP +10%.
-Resistência a propriedade Neutro +10%.
-Dano de [Lança das Mil Pontas] +50%.
-Habilita [Bloqueio] nv. 1.
-Tipo : ^777777Armadura^000000
-Defesa : ^777777110^000000
-Peso : ^777777300^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Cavaleiro Rúnico^000000
+^0000ffResistência as raças Amorfo e Humanoide +5%.^000000
+A cada refino:
+^0000ffHP máx. +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Grevas de Ur]^000000
+^FF6347[Manteau de Ur]^000000
+^FF6347[Selo de Ur]^000000
+^0000ffHP máx. +14%.^000000
+^0000ffHabilita [Bloqueio] nv. 1.^000000
+^0000ffCusto de SP de habilidades +10%.^000000
+^0000ffDano de [Lança das Mil Pontas] +50%.^000000
+^0000ffResistência a propriedade Neutro +10%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777110^000000
+Peso: ^777777300^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
 #
 15037#
 Armadura criada ao purificar uma Runa Peuz.
-^0000ffDEFM +10. ATQ +20. Esquiva +17.^000000
-^3CB371Conjunto de Peuz:^000000
-ATQ +10%.
-Consumo de SP das habilidades +10.
-Dano de [Vento Cortante] e [Onda de Choque] +100%.
-Chance de autoconjurar [Explosão Rúnica] ao atacar fisicamente.
-Velocidade de Ataque +2 por 10 segundos ao usar [Dedicação].
-Tipo : ^777777Armadura^000000
-Defesa : ^777777110^000000
-Peso : ^777777300^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Cavaleiro Rúnico^000000
+^0000ffATQ +20.^000000
+^0000ffDEFM +10.^000000
+^0000ffEsquiva +17.^000000
+^FF6347Conjunto^000000
+^FF6347[Grevas de Peuz]^000000
+^FF6347[Manteau de Peuz]^000000
+^FF6347[Selo de Peuz]^000000
+^0000ffDano físico +10%.^000000
+^0000ffDano de [Vento Cortante] e [Onda de Choque] +100%.^000000
+Ao usar [Dedicação]:
+^0000ffAtiva [velocidade de ataque +2] por 10 segundos.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Explosão Rúnica] nv. 1.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777110^000000
+Peso: ^777777300^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
 #
 2883#
 Selo criado ao purificar uma Runa Ur.
@@ -47016,16 +47092,18 @@ Nível necessário: ^77777740^000000
 Classes: ^777777Aprendizes, Superaprendizes, Magos, Espiritualistas, Noviços e evoluções^000000
 #
 21006#
-^ff0000Não pode ser negociado.^000000
 ^000088Item de aluguel^000000
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Sangramento ao atacar fisicamente.
-Tipo: ^777777Espada de Duas Mãos^000000 Ataque: ^777777150^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes : ^777777Espadachim e Evoluções^000000
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +40%.^000000
+Ao realizar ataques físicos:
+^0000ffAlta chance de infligir Sangramento no oponente.^000000
+^ff0000Não pode ser negociado.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777150^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 2950#
 ^000088Item de aluguel^000000
@@ -50091,7 +50169,7 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
-Classes: ^777777Todas^000000
+Classes: ^777777Todas^000000	
 #
 19602#
 Um chapéu banhado em uma tintura mágica, invisível aos olhos dos mortais. A tinta invisível é tão forte que faz com que o item equipado no mesmo local também fique invisível.
@@ -52282,21 +52360,23 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 //------------Aplicar em 2017-05-16--------------------
 //*****************************************************
 20746#
-Essas belas asas visuais reproduzem as asas flamejantes de uma fênix. Mas não se preocupe, elas não estão pegando fogo de verdade! Ainda assim, enquanto usá-las, você também poderá renascer das cinzas da morte como uma verdadeira fênix. Basta retornar pra Kafra ou pedir para um amigo com Folha de Ygg ou um sacerdote te “ressar”.
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
+Essas belas asas visuais reproduzem as asas flamejantes de uma fênix. Mas não se preocupe, elas não estão pegando fogo de verdade! Ainda assim, enquanto usá-las, você também poderá renascer das cinzas da morte como uma verdadeira fênix. Basta retornar pra Kafra ou pedir para um amigo com Folha de Ygg ou um sacerdote te 'ressar'.
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20761#
 Você foi abençoado pelos Esplêndidos e agora pode usar essas belíssimas asas coloridas, feitas na dimensão de Alfheim. Apesar de não possuírem nenhuma habilidade especial, elas possuem uma beleza quase sobrenatural e são feitas de um material misterioso que não existe em Midgard.
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19614#
@@ -52460,11 +52540,12 @@ Classes: ^777777Todas^000000
 #
 20727#
 Essas eram as famosas asas da armadura do Cavaleiro Zodiacal de Sagitário, o lendário herói Grególios. Dizem que foi seu espírito que guiou quatro jovens cavaleiros e seu irmão mais novo, Grególia, para salvar a princesa Minerva e restaurar sua honra, após ter sido falsamente acusado de traição pelo Mestre Secretário. Agora suas belas asas estão guiando você em sua nova jornada!
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19106#
@@ -52644,11 +52725,12 @@ Classes: ^777777Todas^000000
 #
 20764#
 A versão visual das asas negras do arcanjo que foi expulso do paraíso. Este imponente item visual fará com que você seja respeitado por todos.
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //*****************************************************
@@ -52696,11 +52778,12 @@ Classes: ^777777Todas^000000
 //*****************************************************
 20507#
 Só tem mesmo um jeito de você não se importar quando um poring catar e guardar em seu interior tudo o que for importante pra você, das suas Cartas ao seu material escolar, sem que você precise transformá-lo num punhado de jellopys pra ter suas coisas de volta: usando essa simpática mochila!
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20133#
@@ -53372,7 +53455,7 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 21007#
 Espada grande usada na guerra há muito tempo atrás. Tem uma mensagem encravada na lâmina.
-'A espada de Grants Richard será lembrada por muitos heróis.
+'A espada de Grants Richard será lembrada por muitos heróis.'
 ^0000ffFOR +20.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777330^000000
@@ -54708,6 +54791,93 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-10-10--------------------
+//*****************************************************
+20027#
+Um chapéu muito bonitinho, feito em homenagem à Mimosa Rosa, a famosa vaquinha rosada que é mascote da marca de achocolatados Muuscau, fabricados na cidade de Hugel.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31134#
+Em sua última viagem à Brasilis, você acabou sendo escolhido como companheiro por essa bela ave multicolorida. O que você não podia imaginar é que esse pássaro inteligente fosse capaz de falar. E falar e falar e falar sem parar, sempre pedindo bolachas, dando o pezinho e contando piadas de papagaio. Pelo menos as piadas dela são melhores que as dos bardos!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20381#
+Essa cartola representa mais do que um visual típico da República de Schwartzwald. Ela representa um estilo de vida, de aventureiros que buscam por um futuro mais tecnológico usando a tecnologia à vapor que surgiu em Einbroch. Você faz parte desse grupo, tanto que batizou seu Ursinho com o nome do escritor mecânico mais famoso de todos: Júlio Verme, o autor de obras como 2 Mil Léguas Sob Byalan, Viagem ao Centro da Yggdrasil ou A Volta ao Mundo em Oitenta Mapas.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19244#
+Esse magnífico Rosário dourado é feito do cristal de emperium e usado tanto pela Igreja de Prontera quanto pela Igreja de Freya para canalizar o poder divino. Tanto que os seguidores que os utilizam são reconhecidos por canalizarem melhor a força da sua fé na hora de curar os necessitados.
+^0000ffEfetividade de cura +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Luz da Recuperação]^000000
+A cada 2 refinos:
+^0000ffPós-conjuração -3%.^000000
+A cada refino:
+^0000ffCusto de SP de [Curar] -10.^000000
+^0000ffCusto de SP de [Sopro Divino] -12.^000000
+^0000ffCusto de SP de [Curatio] -14.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^77777712^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20904#
+Uma bata que pertenceu a Etran, um antigo esplêndido, cuja pesquisa salvou Yggdrasil da desgraça. O encanto na bata é antigo, mas ainda se encontra forte e eficiente.
+^0000ffHP máx. +2%.^000000
+Refino +6 ou mais:
+^0000ffHP máx. +6% adicional.^000000
+Refino +8 ou mais:
+^0000ffHP máx. +8% adicional.^000000
+Refino +10 ou mais:
+^0000ffO usuário não pode ser empurrado.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Deviling]^000000
+Refino +12 ou mais:
+^0000ffResistência as propriedades Fogo, Água, Terra, Vento, Maldito, Fantasma, Sombrio, Sagrado e Veneno +50%.^000000
+^FF6347Conjunto^000000
+^FF6347[Roupa de Baixo]^000000
+^0000ffINT +15.^000000
+^0000ffHP e SP máx. +5% adicional.^000000
+Roupa de Baixo +9 ou mais:
+^0000ffA conjuração não pode ser interrompida.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^77777715^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28944#
+Um antigo escudo que pertenceu a uma clássica ordem de guerreiros, os Legionários de Sleiporing. A formação tartaruga, utilizada com estes escudos, recebeu seu nome devido ao árduo treinamento dos soldados na ilha das tartarugas.
+^0000ffEsquiva +5.^000000
+^0000ffEsquiva perfeita +1.^000000
+A cada 4 refinos:
+^0000ffEsquiva perfeita +2.^000000
+Refino +12 ou mais:
+^0000ffHP e SP máx. +10%.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^7777771^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
 //file end
