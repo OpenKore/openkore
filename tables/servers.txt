@@ -55,7 +55,7 @@ dead_message euRO was closed on September 30, 2010. There used to be transfers t
 ## http://www.ragnarokeurope.com/
 [France - fRO]
 title France - fRO (ragnarokeurope.com): Chaos
-ip 164.132.152.34
+ip 54.36.76.129
 port 6900
 master_version 31
 version 1
