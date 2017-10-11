@@ -4495,7 +4495,7 @@ sub openShop {
 	@shopnames = split(/;;/, $shop{title_line});
 	$shop{title} = $shopnames[int rand($#shopnames + 1)];
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
-	Plugins::callHook ('open_shop', \@items);
+	Plugins::callHook ('open_shop', {title => $shop{title}, items => \@items});
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	message T("Trying to set up shop...\n"), "vending";
 	$shopstarted = 1;
