@@ -466,8 +466,8 @@ sub new {
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		'07E3' => ['skill_exchange_item', 'V', [qw(type)]], #TODO: PACKET_ZC_ITEMLISTWIN_OPEN
 		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
+		'07E3' => ['skill_exchange_item', 'V2', [qw(type val)]], # 8
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5

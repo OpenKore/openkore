@@ -238,7 +238,11 @@ sub initHandlers {
 	northwest			=> \&cmdManualMove,
 	southeast			=> \&cmdManualMove,
 	southwest			=> \&cmdManualMove,
-	captcha			   => \&cmdAnswerCaptcha
+	captcha			   => \&cmdAnswerCaptcha,
+
+	# Skill Exchange Item
+	cm					=> \&cmdExchangeItem,
+	analysis			=> \&cmdExchangeItem,
 	);
 }
 
@@ -6615,6 +6619,89 @@ sub cmdCancelTransaction {
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
 	}
+}
+
+##
+# 'cm' for Change Material (Genetic)
+# 'analysis' for Four Spirit Analysis (Sorcerer) [Untested yet]
+# @author [Cydh]
+##
+sub cmdExchangeItem {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my ($switch, $args) = @_;
+	my $type;
+	my $typename;
+
+	if ($switch eq "cm") {
+		if ($skillExchangeItem != 1) { # Change Material (2494)
+			error T("This command only available after using 'Change Material' skill!\n");
+			return;
+		}
+		$typename = "Change Material";
+	} elsif ($switch eq "analysis") {
+		if ($skillExchangeItem != 2 && $skillExchangeItem != 3) { # Four Spirit Analysis (2462)
+			error T("This command only available after using 'Four Spirit Analysis' skill!\n");
+			return;
+		}
+		$typename = "Four Spirit Analysis";
+	} else {
+		error T("Invalid usage!\n");
+		return;
+	}
+
+	if ($args eq "cancel" || $args eq "end" || $args eq "no") {
+		my @items = ();
+		message TF("Item Exchange %s is canceled.\n", $typename), "info";
+		undef $skillExchangeItem;
+		$messageSender->sendItemListWindowSelected(0, $type, 0, \@items); # Cancel: 0
+		return;
+	}
+	$type = $skillExchangeItem-1;
+
+	my ($item1, $amt1) = $args =~ /^(\d+) (\d+)/;
+
+	if ($item1 >= 0 and $amt1 > 0) {
+		my @list = split(/,/, $args);
+		my @items = ();
+
+		@list = grep(!/^$/, @list); # Remove empty entries
+		foreach (@list) {
+			my ($invIndex, $amt) = $_ =~ /^(\d+) (\d+)/;
+			my $item = $char->inventory->get($invIndex);
+			if ($item) {
+				if ($item->{amount} < $amt) {
+					warning TF("Invalid amount! Only have %dx %s (%d).\n", $item->{amount}, $item->{name}, $invIndex);
+				} elsif ($item->{equipped} != 0) {
+					warning TF("Equipped item was selected %s (%d)!\n", $item->{name}, $invIndex);
+				} else {
+					#message TF("Selected: %dx %s\n", $amt, $item->{name});
+					push(@items,{itemIndex => $item->{index}, amount => $amt, itemName => $item->{name}});
+				}
+			} else {
+				warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			}
+		}
+		if (@items > 0) {
+			my $num = scalar @items;
+			message TF("Number of selected items for %s: %d\n", $typename, $num), "info";
+			message T("======== Exchange Item List ========\n");
+			map {message "$_->{itemName} $_->{amount}x\n"} @items;
+			message "==============================\n";
+			undef $skillExchangeItem;
+			$messageSender->sendItemListWindowSelected($num, $type, 1, \@items); # Process: 1
+			return;
+		} else {
+			error T("No item was selected.\n");
+		}
+	}
+
+	error TF("Syntax Error in function '%s'. Usages:\n".
+			"Single Item: %s <item #> <amount>\n".
+			"Combination: %s <item #> <amount>,<item #> <amount>,<item #> <amount>\n", $switch, $switch, $switch);
 }
 
 1;
