@@ -6,7 +6,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
-	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
+	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
 	getStorageAmountbyID getCartAmountbyID getQuestStatus);
@@ -268,6 +268,22 @@ sub getInventoryIDs {
 	foreach my $item (@{$char->inventory->getItems}) {
 		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
 	}
+	unless (@ids) {push @ids, -1}
+	return @ids
+}
+
+# get inventory item type ids
+# checked and ok
+sub getInventoryTypeIDs {
+	return unless $char->inventory->isReady();
+	my $find = lc($_[0]);
+	my @ids;
+	foreach my $item (@{$char->inventory->getItems}) {
+        if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
+        if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
+        if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
+        if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
+    }
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
