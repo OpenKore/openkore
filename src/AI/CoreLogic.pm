@@ -685,10 +685,11 @@ sub processSkillUse {
 				stand();
 
 			# Use skill if we haven't done so yet
-			} elsif (!$args->{skill_used}) {
+			} elsif (!$args->{skill_used}) {				
+				my ($target, $actorList, $skill, $level) = @_;
 				my $handle = $args->{skillHandle};
 				if (!defined $args->{skillID}) {
-					my $skill = new Skill(handle => $handle);
+					$skill = new Skill(auto => $handle, level => $args->{lv});
 					$args->{skillID} = $skill->getIDN();
 				}
 				my $skillID = $args->{skillID};
@@ -712,22 +713,37 @@ sub processSkillUse {
 					#$char->stopAttack();
 				}
 
-				# Give an error if we don't actually possess this skill
-				my $skill = new Skill(handle => $handle);
+				# Give an error if we don't actually possess this skill				
 				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->getHandle() ne $handle)) {
 					debug "Attempted to use skill (".$skill->getName().") which you do not have.\n";
 				}
-
-				$args->{maxCastTime}{time} = time;
+				
 				if ($skillsArea{$handle} == 2) {
-					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
+					$target = $accountID;
 				} elsif ($args->{x} ne "") {
-					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
+					$target = { x => $args->{x}, y => $args->{y} };					
+				} elsif(!$args->{target}) {
+						AI::dequeue;
+						return;
 				} else {
-					$messageSender->sendSkillUse($skillID, $args->{lv}, $args->{target});
+					$actorList = $monstersList;
+					$target = $monstersList->getByID($args->{target});
 				}
+				
 				undef $char->{permitSkill};
-				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
+				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};				
+				$args->{maxCastTime}{time} = time;				
+				
+				my $skillTask = new Task::UseSkill(
+					actor => $skill->getOwner,
+					target => $target,
+					actorList => $actorList,
+					skill => $skill,
+					priority => Task::USER_PRIORITY
+				);
+								
+				my $task = new Task::ErrorReport(task => $skillTask);
+				$taskManager->add($task);				
 
 				delete $char->{cast_cancelled};
 
