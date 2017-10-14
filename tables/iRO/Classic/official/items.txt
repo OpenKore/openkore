@@ -6923,3 +6923,4 @@
 19981#Taurus_Diadem_Certificate#
 19982#Blue_Drooping_Cat_Certificate#
 19983#Amistr_Cap_Certificate#
+19984#Pizza_Hat_Certificate#

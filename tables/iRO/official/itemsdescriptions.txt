@@ -1234,10 +1234,19 @@ Weight: 2
 Gives 1000 to 10000 zeny when used.
 #
 669#
+^808080A soup made with pieces of rice cake.
+It is said that having a bowl of this soup on New Year's Day will make you one year older. Young children would abuse this custom to reach legal driving age until the law was changed.
+^ffffff_^000000
+Weight: ^77777710^000000
 A soup made with pieces of rice cake.
 It is said that having a bowl of this soup on New Year's Day will make you one year older. Young children would abuse this custom to reach legal driving age until the law was changed.
 ^ffffff_^000000
 Weight : ^77777710^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 670#
 Unimplimented Item
@@ -5293,6 +5302,13 @@ If upgrade level is +9 or higher,
 ^0000FFLevel 2 Wide Bleed^000000 will be cast instead.
 #
 1273#
+^808080If it is wet by, blood will be screaming so called as Bloody Roar. It has great affect to Human class enemy.
+Ignore defense of human class' enemy. Recover HP 3 in every 5 seconds.
+Weapon Class: ^777777Katar^000000   Attack Strength : ^777777148^000000
+Weight : ^7777770^000000
+Weapon Level : ^7777774^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Assassin^000000
 ^808080If it is wet by, blood will be screaming so called as Bloody Roar. It has great affect to Human class enemy.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -5313,8 +5329,29 @@ Weight : ^7777770^000000
 Weapon Level : ^7777774^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Assassin^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1274#
+^808080^000088Rental Item^000000
+When dealing a melee physical attack there is a 50% chance to cause [Blind] status on the opponent.
+Class : ^777777Katar^000000
+Attack Strength: ^777777179^000000
+Weight : ^7777770^000000
+Weapon Level: ^7777774^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Assassin^000000
+^000088Rental Item^000000
+When dealing a melee physical attack there is a 50% chance to cause [Blind] status on the opponent.
+Class : ^777777Katar^000000
+Attack Strength: ^777777179^000000
+Weight : ^7777770^000000
+Weapon Level: ^7777774^000000
+Required Level : ^7777771^000000
+Jobs : ^777777Assassin^000000
 ^FF0000Account Bound^000000
 ^FF0000Rental Item^000000
 ^FFFFFF_^000000
@@ -5328,6 +5365,11 @@ Required Level: 1
 Required Job: Assassin Jobs
 ^FFFFFF_^000000
 Adds a 5% chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1275#
 ^808080A Katar fashioned from a cold, sharp icicle.^000000
@@ -5891,6 +5933,13 @@ Required level : ^77777740^000000
 Job: ^777777Novice/Swordsman Classes/Merchant Classes/Thief Classes^000000
 #
 1322#
+^808080A blue axe with huge power.
+STR +5, INT +5.
+Class : ^777777One handed axe^000000 Attack : ^777777180^000000
+Weight : ^777777180^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Generic Class^000000
 ^808080A blue axe with huge power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -5912,8 +5961,20 @@ Weight : ^777777180^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777100^000000
 Job : ^777777Generic Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1323#
+^808080A golden axe with brutal power.
+STR +8, INT +8.
+Class : ^777777One handed axe^000000 Attack : ^777777180^000000
+Weight : ^777777180^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Generic Class^000000
 ^808080A golden axe with brutal power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -5935,6 +5996,11 @@ Weight : ^777777180^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777120^000000
 Job : ^777777Generic Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1351#
 ^808080A sturdy Two-Handed Axe useful for defeating many foes.^000000
@@ -7188,6 +7254,13 @@ Required Level : ^777777120^000000
 Job : ^777777Swordsman Classes^000000
 #
 1441#
+^808080A blue spear with huge power.
+STR +5, AGI +5.
+Class : ^777777Spear^000000 Attack : ^777777180^000000
+Weight : ^777777120^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Royal Guard Class^000000
 ^808080A blue spear with huge power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -7208,8 +7281,20 @@ Weight : ^777777120^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777100^000000
 Job : ^777777Royal Guard Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1442#
+^808080A golden spear with brutal power.
+STR +8, AGI +8.
+Class : ^777777Spear^000000 Attack : ^777777180^000000
+Weight : ^777777120^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Royal Guard Class^000000
 ^808080A golden spear with brutal power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -7230,6 +7315,11 @@ Weight : ^777777120^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777120^000000
 Job : ^777777Royal Guard Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1443#
 ^FF0000This item requires translation.^000000
@@ -9155,6 +9245,21 @@ Weapon level : ^7777773^000000
 Required level : ^77777740^000000
 Job: ^777777Priest Classes/Sage Classes/Taekwon Master^000000
 #
+1593#
+^808080A book containing information on how to handle future misfortunes.^000000
+Class: Book
+Attack: 90
+Property: Neutral
+Weight: 40
+Weapon Level: 4
+Required Level: 24
+Required Jobs: Priest, Sage, High Priest, Scholar, Taekwon Master
+Luk + 5
+Matk + 90
+Perfect Dodge + 15
+If upgrade level is +7 or higher,
+Additional Perfect Dodge + 5
+#
 1596#
 ^808080A book that is sealed with the power of Earth.^000000
 ^FFFFFF_^000000
@@ -10406,6 +10511,14 @@ Required LV : ^77777780^000000
 Jobs : ^777777Magician, Acolyte, Soul Linker^000000
 #
 1677#
+^808080A blue wand with huge power.
+DEX +5, INT +5.
+MATK + 170
+Class : ^777777Wand^000000 Attack : ^77777750^000000
+Weight : ^7777770^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Warlock Class^000000
 ^808080A blue wand with huge power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -10428,8 +10541,21 @@ Weight : ^7777770^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777100^000000
 Job : ^777777Warlock Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1678#
+^808080A golden wand with brutal power.
+DEX +8, INT +8.
+MATK + 170
+Class : ^777777Wand^000000 Attack : ^77777750^000000
+Weight : ^7777770^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Warlock Class^000000
 ^808080A golden wand with brutal power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -10452,6 +10578,11 @@ Weight : ^7777770^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777120^000000
 Job : ^777777Warlock Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1680#
 ^FF0000This item requires translation.^000000
@@ -12889,6 +13020,13 @@ Required Level: ^777777130^000000
 Equip To: ^777777Maestro^000000
 #
 1936#
+^808080A blue violin with huge power.
+DEX +5, VIT +5.
+Class : ^777777Musical Instrument^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Minstrel Class^000000
 ^808080A blue violin with huge power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -12909,8 +13047,20 @@ Weight : ^777777150^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777100^000000
 Job : ^777777Minstrel Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1937#
+^808080A golden violin with brutal power.
+DEX +8, VIT +8.
+Class : ^777777Musical Instrument^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Minstrel Class^000000
 ^808080A golden violin with brutal power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -12931,6 +13081,11 @@ Weight : ^777777150^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777120^000000
 Job : ^777777Minstrel Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1939#
 ^FF0000This item requires translation.^000000
@@ -13575,6 +13730,13 @@ Required Level: ^777777130^000000
 Equip To: ^777777Wanderer^000000
 #
 1991#
+^808080A blue whip with huge power.
+DEX +5, VIT +5.
+Class : ^777777Whip^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777100^000000
+Job : ^777777Wanderer Class^000000
 ^808080A blue whip with huge power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -13595,8 +13757,20 @@ Weight : ^777777150^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777100^000000
 Job : ^777777Wanderer Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1992#
+^808080A golden whip with brutal power.
+DEX +8, VIT +8.
+Class : ^777777Whip^000000 Attack : ^777777180^000000
+Weight : ^777777150^000000
+Weapon LV: ^7777773^000000
+Required LV : ^777777120^000000
+Job : ^777777Wanderer Class^000000
 ^808080A golden whip with brutal power.^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -13617,6 +13791,11 @@ Weight : ^777777150^000000
 Weapon LV: ^7777773^000000
 Required LV : ^777777120^000000
 Job : ^777777Wanderer Class^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 1995#
 ^FF0000This item requires translation.^000000
@@ -14934,6 +15113,18 @@ Required Level: 100
 Required Jobs: All Jobs
 ^FFFFFF_^000000
 Adds a 15% chance of casting ^0000FFLevel 6 Magic Mirror^000000 on the user when receiving a magical attack that lasts for 2 seconds.
+#
+2197#
+^808080Enormously large and heavy shield. Endures impacts extremely well. However, it will slow you down due to it's weight.^000000
+Class: Shield
+Defense: 80
+Weight: 280
+Required Level: 90
+Required Jobs: All Jobs
+Aspd - 3%
+This item is indestructible in battle.
+If upgrade level is +8 or higher,
+Prevents the user from being knocked back.
 #
 2198#
 ^808080A shield of the Laphine tribe that has mysterious powers.^000000
@@ -27476,21 +27667,48 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4480#
+^808080룰뗧 붺얳샇 죄 뗴랹샌낡 15% 남볒쟑듙.
+15솦럃 샌믳 뷃 뷃샼 죄 뗴랹샌 5% 쏟낡 남볒.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
 After cast delay reduced by 15%
 If this card is slotted into a headgear refined to +15 or higher, reduces after-cast delay by 5% more.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4481#
+^808080좭볓벺 룳붺엍뾡냔 린뢮 떥만쇶 25% 쏟낡.
+린뢮, 뢶맽 떥만쇶뢦 샔뻺삻 뚧 샏솤 좮럼럎 뿀엤붺웧 쟁럎붺욮 돫맙 Lv10 맟떿.
+15솦럃 샌믳샏 냦뿬 좭볓벺 룳붺엍뾡냔 린뢮 떥만쇶 10% 쏟낡쇵낡.
+Class : ^777777Card^000000
+Compound on : ^777777납뿊^000000
+Weight : ^7777771^000000
 Increases damage to Fire Property monsters by 25%.
 Has a low chance of auto-casting Frost Nova while being attacked.
 If this card is slotted into an armor refined to +15 or higher, increases damage to Fire Property monsters by 10% more.
 Class : ^777777Card^000000
 Compound on : ^777777Armor^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4482#
+^80808015쏊뢶듙 50샇 HP, 10샇 Sp 좸몹.
+MHP뿍 MSP낡 5% 쇵낡쟑듙.
+15솦럃 샌믳 샏 냦뿬 HP, SP좸몹볓떵 10쏊럎 드쏠, MHP, MSP낡 2% 쏟낡 쇵낡.
+Class : ^777777Card^000000
+Compound on : ^777777뷅맟^000000
+Weight : ^7777771^000000
 MaxHP +7%
 MaxSP +7%
 Every 15 seconds, you recover 50 HP and 10 SP.
@@ -27498,74 +27716,203 @@ If this card is slotted into shoes refined to +15 or higher, every 10 seconds, y
 Class : ^777777Card^000000
 Compound on : ^777777Shoes^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4483#
+^808080샏솤좮럼(5%)럎 샻뾡냔 쇘 듫만쇶샇 5% 뢦 샚뷅샇 SP럎 죭볶 쟑듙. 15솦럃 샌믳샏 냦뿬 죭볶쟒 좮럼샌 7%럎 쇵낡.
+Class : ^777777Card^000000
+Compound on : ^777777릫뇢^000000
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4484#
+^808080솪붺엦삻 볒룰쟏듂 뢶맽뗩삻 볒룰뻸샌 믧뿫낡듉쟏냔 쟑듙.
+붺얳 믧뿫뷃 SP볒룰랮샌 50% 쇵낡쟑듙.
+15솦럃 샌믳 샏 냦뿬 붺얳 믧뿫뷃 SP볒룰랮샌 35% 쇵낡.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4485#
+^808080벺볓벺, 뻏볓벺, 쎵믧쟼, 뻇뢶쟼 룳붺엍뾡냔 린뢮 떥만쇶 20% 쏟낡.
+15솦럃 샌믳샏 냦뿬, 벺볓벺, 뻏볓벺, 쎵믧쟼, 뻇뢶쟼 룳붺엍뾡냔 린뢮 떥만쇶 10% 쏟낡 쇵낡.
+Class : ^777777Card^000000
+Compound on : ^777777납뿊^000000
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4486#
+^808080Reduce Floating Cast Time by 15%.
+Series : ^777777Card ^000000
+Compound : ^777777Accessory^000000
+Weight : ^7777771^000000
 Reduce Floating Cast Time by 15%.
 Series : ^777777Card ^000000
 Compound : ^777777Accessory^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4487#
+^808080ATK, CRI, HIT is increased depending on the 50% of wearer's job level divided by 10. Autospell Earthquaker Lv2 by a certain chance when receiving physical attack.
+Series : ^777777Card ^000000
+Compound : ^777777Accessory^000000
+Weight : ^7777771^000000
 ATK, CRI, HIT is increased depending on the 50% of wearer's job level divided by 10. Autospell Earthquaker Lv2 by a certain chance when receiving physical attack.
 Series : ^777777Card ^000000
 Compound : ^777777Accessory^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4488#
+^808080When character receives damage, there will be certain rate of activating Auto Spell to cast Level5 skill of Meteor Storm.
+Series : ^777777Card ^000000
+Compound : ^777777Shoe^000000
+Weight : ^7777771^000000
 When character receives damage, there will be certain rate of activating Auto Spell to cast Level5 skill of Meteor Storm.
 Series : ^777777Card ^000000
 Compound : ^777777Shoe^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4489#
+^808080Reduce 15% of normal SP amount required to perform the skill.
+Series : ^777777Card ^000000
+Device : ^777777Helmet^000000
+Weight : ^7777771^000000
 Reduce 15% of normal SP amount required to perform the skill.
 Series : ^777777Card ^000000
 Device : ^777777Helmet^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4490#
+^808080increase agility 1 lv availabe.
+if refine over 15 lv, agi 5lv available
+Class : ^777777Card^000000
+Jobs : ^777777shoes^000000
+weight : ^7777771^000000
 increase agility 1 lv availabe.
 if refine over 15 lv, agi 5lv available
 Class : ^777777Card^000000
 Jobs : ^777777shoes^000000
 weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4491#
+^808080Adds 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP, but also reduces HP Recovery by 100%.
+If compounded equipment is refined to +15 and above, 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP,
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
 Adds 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP, but also reduces HP Recovery by 100%.
 If compounded equipment is refined to +15 and above, 5% chance of absorbing 10% of the physical damage inflicted on an enemy by the wearer as HP,
 Series : ^777777Card ^000000
 Compound : ^777777Weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4492#
+^808080increase resistance 40%. VIT + 3.
+additional 20% of resistance stun if refine is over 15 lv
+Class : ^777777Card^000000
+Jobs : ^777777Headgear^000000
+weight : ^7777771^000000
 increase resistance 40%. VIT + 3.
 additional 20% of resistance stun if refine is over 15 lv
 Class : ^777777Card^000000
 Jobs : ^777777Headgear^000000
 weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4493#
+^808080MaxHP + 50%, DEF, MDEF - 50.
+if refine is over 15, MaxHP + 75%, DEF,  MDEF - 50.
+Class : ^777777Card^000000
+Location : ^777777armor^000000
+weight : ^7777771^000000
 MaxHP + 50%, DEF, MDEF - 50.
 if refine is over 15, MaxHP + 75%, DEF,  MDEF - 50.
 Class : ^777777Card^000000
 Location : ^777777armor^000000
 weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4494#
+^808080attack increase 10%
+auto spell magnum break cast Lv10 at regular rate
+if refine is ver level15, additional attck increase 5%
+Class : ^777777Card^000000
+Jobs : ^777777weapon^000000
+Weight : ^7777771^000000
 attack increase 10%
 auto spell magnum break cast Lv10 at regular rate
 if refine is ver level15, additional attck increase 5%
 Class : ^777777Card^000000
 Jobs : ^777777weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4495#
+^808080all status  + 1,
+when having physical damage, cast L raison Lv5
+if over INT 99, you can more opportunity for casting
+if refine is over 15, cast Giriae L raison Lv8
+Class : ^777777Card^000000
+Jobs : ^777777Shoe^000000
+Weight : ^7777771^000000
 all status  + 1,
 when having physical damage, cast L raison Lv5
 if over INT 99, you can more opportunity for casting
@@ -27573,31 +27920,75 @@ if refine is over 15, cast Giriae L raison Lv8
 Class : ^777777Card^000000
 Jobs : ^777777Shoe^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4496#
+^80808050% damage to small, mid, big monster.
+if upgrade LV 15, 75% damage to small, mid, big monster.
+Class : ^777777Card^000000
+Location : ^777777Armor^000000
+Weight : ^7777771^000000
 50% damage to small, mid, big monster.
 if upgrade LV 15, 75% damage to small, mid, big monster.
 Class : ^777777Card^000000
 Location : ^777777Armor^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4497#
+^808080when physical attack, cast storm gast Lv1
+when attack near and far , can cast ice move.
+if refine is over 15, more chance
+Class : ^777777Card^000000
+Jobs : ^777777weapon^000000
+Weight : ^7777771^000000
 when physical attack, cast storm gast Lv1
 when attack near and far , can cast ice move.
 if refine is over 15, more chance
 Class : ^777777Card^000000
 Jobs : ^777777weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4498#
+^808080MHP -60%, MSP +50%.
+when hunting monster, can get banana and its recovery rate is 50%.
+if refine is over 15 , MHP -50%, MSP +50%, can get banan and its recovery rate is added 30%
+Class : ^777777Card^000000
+Jobs : ^777777Shoe^000000
+Weight : ^7777771^000000
 MHP -60%, MSP +50%.
 when hunting monster, can get banana and its recovery rate is 50%.
 if refine is over 15 , MHP -50%, MSP +50%, can get banan and its recovery rate is added 30%
 Class : ^777777Card^000000
 Jobs : ^777777Shoe^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4499#
+^808080Pierce Defense of normal monsters.
+HP of wearer will not recover automatically and losses 888 HP every 5 seconds.
+When equipped, wearers will losses 999 HP.
+If compounded equipment is refined to +15 and above, wearer will losses 777 HP every 8 seconds.
+Series : ^777777Card^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
 Pierce Defense of normal monsters.
 HP of wearer will not recover automatically and losses 888 HP every 5 seconds.
 When equipped, wearers will losses 999 HP.
@@ -27605,43 +27996,100 @@ If compounded equipment is refined to +15 and above, wearer will losses 777 HP e
 Series : ^777777Card^000000
 Compound : ^777777Weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4500#
+^808080Can reflex 15% damage to enemies when being physically attacked in short range.
+If compounded equipment is refined to +15 and above, can reflex 25% damage to enemies.
+Series : ^777777Card ^000000
+Compound : ^777777Armor^000000
+Weight : ^7777771^000000
 Can reflex 15% damage to enemies when being physically attacked in short range.
 If compounded equipment is refined to +15 and above, can reflex 25% damage to enemies.
 Series : ^777777Card ^000000
 Compound : ^777777Armor^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4501#
+^808080Adds a chance of autocasting Lv.1 Assumptio on the wearer each time the wearer is physically or magically attacked.
+If compounded equipment is refined to +15 and above, it has higher chance to autocast the skill.
+Series : ^777777Card ^000000
+Compound : ^777777Armor^000000
+Weight : ^7777771^000000
 Adds a chance of autocasting Lv.1 Assumptio on the wearer each time the wearer is physically or magically attacked.
 If compounded equipment is refined to +15 and above, it has higher chance to autocast the skill.
 Series : ^777777Card ^000000
 Compound : ^777777Armor^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4502#
+^808080Adds a 5% chance of destroying an enemy's weapo and a 4% chance of destroying its armor each time the wearer physically attacks.
+If compounded equipment is refined to +15 and above, has a 8% chance of destroying an enemy's weapo and a 6% chance of destroying its armor each time the wearer physically attacks.
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
 Adds a 5% chance of destroying an enemy's weapo and a 4% chance of destroying its armor each time the wearer physically attacks.
 If compounded equipment is refined to +15 and above, has a 8% chance of destroying an enemy's weapo and a 6% chance of destroying its armor each time the wearer physically attacks.
 Series : ^777777Card ^000000
 Compound : ^777777Weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4503#
+^808080Ignores 15% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
+If compounded equipment is refined to +15 and above, Ignores 25% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
+Dex + 2
+Series : ^777777Card ^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
 Ignores 15% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
 If compounded equipment is refined to +15 and above, Ignores 25% of Boss Monster's Magic Defense Rate when inflicting magic attacks againts them.
 Dex + 2
 Series : ^777777Card ^000000
 Compound : ^777777Headgear^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4504#
+^808080Unlimited use of [Endure] skill.
+Reduces 50% MaxHP,
+If compounded equipment is refined to +15 and above, Reduces 35% MaxHP.
+Series : ^777777Card ^000000
+Compound : ^777777Shoes^000000
+Weight : ^7777771^000000
 Unlimited use of [Endure] skill.
 Reduces 50% MaxHP,
 If compounded equipment is refined to +15 and above, Reduces 35% MaxHP.
 Series : ^777777Card ^000000
 Compound : ^777777Shoes^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4505#
 MATK + 20, MSP - 1%.
@@ -27917,28 +28365,67 @@ Location : ^777777armor^000000
 Weight : ^7777771^000000
 #
 4536#
+^808080ATK + 15.
+When physical attack, 50% attack speed increased during 10 second.
+When more than 15 refine, ATK + 25. 75% physical attack speed increased during 10 second.
+Class : ^777777card^000000
+Equip : ^777777weapon^000000
+Weight : ^7777771^000000
 ATK + 15.
 When physical attack, 50% attack speed increased during 10 second.
 When more than 15 refine, ATK + 25. 75% physical attack speed increased during 10 second.
 Class : ^777777card^000000
 Equip : ^777777weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4537#
+^808080accuracy rate   + 50.
+if refine is over15, accuracy rate   + 75.
+Class : ^777777Card^000000
+Jobs : ^777777Weapon^000000
+weight : ^7777771^000000
 accuracy rate   + 50.
 if refine is over15, accuracy rate   + 75.
 Class : ^777777Card^000000
 Jobs : ^777777Weapon^000000
 weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4538#
+^808080Increases the effect of the Heal, Santuary and Potion Pitcher skills by 15% when they are cast by the wearer, but also increases SP Comsumption by 30%.
+If compounded equipment is refined to +15 and above, increases the effect of the Heal, Santuary and Potion Pitcher skills by 25% when they are cast by the wearer, but also increases SP Comsumption by 20%.
+Series : ^777777Card^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
 Increases the effect of the Heal, Santuary and Potion Pitcher skills by 15% when they are cast by the wearer, but also increases SP Comsumption by 30%.
 If compounded equipment is refined to +15 and above, increases the effect of the Heal, Santuary and Potion Pitcher skills by 25% when they are cast by the wearer, but also increases SP Comsumption by 20%.
 Series : ^777777Card^000000
 Compound : ^777777Headgear^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4539#
+^808080MATK+5%, MaxSP-50%.
+Increases magic damage to Demihuman and Angel monsters by 25%.
+If compounded equipment is refined to +15 and above,
+MATK+8%, MaxSP-50%.
+Increases magic damage to Demihuman and Angel monsters by 33%.
+Series : ^777777Card^000000
+Compound : ^777777Shoe^000000
+Weight : ^7777771^000000
 MATK+5%, MaxSP-50%.
 Increases magic damage to Demihuman and Angel monsters by 25%.
 If compounded equipment is refined to +15 and above,
@@ -27947,24 +28434,58 @@ Increases magic damage to Demihuman and Angel monsters by 33%.
 Series : ^777777Card^000000
 Compound : ^777777Shoe^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4540#
+^808080There is a certain rate to inflict Coma status on enemies,
+There is a certain rate to inflict Stunned, Cursed, Silence, Poisoned, Wound status in melee combat.
+If compounded equipment is refined to +15 and above, the rate to inflict the status above is increased.
+Series : ^777777Card ^000000
+Compound : ^777777Weapon^000000
+Weight : ^7777771^000000
 There is a certain rate to inflict Coma status on enemies,
 There is a certain rate to inflict Stunned, Cursed, Silence, Poisoned, Wound status in melee combat.
 If compounded equipment is refined to +15 and above, the rate to inflict the status above is increased.
 Series : ^777777Card ^000000
 Compound : ^777777Weapon^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4541#
+^808080The wearer's attack will ignore the MDEF of regular monsters,
+Increase Floating Casting Time by 150% and reduces SP Recovery by 150%, drains 3000 SP when the compounded headgear is unequipped.
+If compounded equipment is refined to +15 and above, increase Floating Casting Time by 120%, reduces SP Recovery by 120%, drains 2000 SP when the compounded headgear is unequipped.
+Series : ^777777Card ^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
 The wearer's attack will ignore the MDEF of regular monsters,
 Increase Floating Casting Time by 150% and reduces SP Recovery by 150%, drains 3000 SP when the compounded headgear is unequipped.
 If compounded equipment is refined to +15 and above, increase Floating Casting Time by 120%, reduces SP Recovery by 120%, drains 2000 SP when the compounded headgear is unequipped.
 Series : ^777777Card ^000000
 Compound : ^777777Headgear^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4542#
+^808080resistance 40% against ICING.
+when dealing magical attack, land protection 1LV cast
+MDEF - 20.
+if upgrade 15 LV, resistance 60^ against ICING.
+Class : ^777777Card^000000
+Location : ^777777Armor^000000
+Weight : ^7777771^000000
 resistance 40% against ICING.
 when dealing magical attack, land protection 1LV cast
 MDEF - 20.
@@ -27972,8 +28493,23 @@ if upgrade 15 LV, resistance 60^ against ICING.
 Class : ^777777Card^000000
 Location : ^777777Armor^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4543#
+^808080cast Freeze at 25% when receiving physical damage.
+when refine 15 lv, cast 40% of freeze
+Class : ^777777Card^000000
+Jobs : ^777777armor^000000
+weight : ^7777771^000000
+cast Freeze at 25% when receiving physical damage.
+when refine 15 lv, cast 40% of freeze
+Class : ^777777Card^000000
+Jobs : ^777777armor^000000
+weight : ^7777771^000000
 cast Freeze at 25% when receiving physical damage.
 when refine 15 lv, cast 40% of freeze
 Class : ^777777Card^000000
@@ -27984,14 +28520,30 @@ when refine 15 lv, cast 40% of freeze
 Class : ^777777Card^000000
 Jobs : ^777777armor^000000
 weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4544#
+^808080INT+3.
+Have chance resist to Darkness and Curse.
+If compounded equipment is refined to +15 and above, have higher chance resist to Darkness and Curse.
+Series : ^777777Card^000000
+Compound : ^777777Headgear^000000
+Weight : ^7777771^000000
 INT+3.
 Have chance resist to Darkness and Curse.
 If compounded equipment is refined to +15 and above, have higher chance resist to Darkness and Curse.
 Series : ^777777Card^000000
 Compound : ^777777Headgear^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 4545#
 LUK + 1.
@@ -37874,12 +38426,12 @@ Required Lv. : ^777777100^000000
 Job : ^777777Mechanic only^000000
 #
 5912#
-Imitated by Loyal servant Devilring. Always be on standby to serve his master.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: All^000000
+^808080Deviling is your loyal servant who will always stand by your side.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 5916#
 ^808080Custom made sunglasses to use during exorcisms. You can see if it's a human or not.^000000
@@ -37977,6 +38529,32 @@ Increases MATK by a % equal to the refine level of the item.
 If refined to greater than +6 Increases the damage of Reverbration by 30% and subtracts 18 from the SP Cost
 If refined to greater than +9 decreases the after cast delay of Metallic Sound
 Weight : ^7777771^000000
+#
+5968#
+^808080A hat worn by a nurse who took care of people who were hurt everyday.^000000
+Class: Headgear
+Position: Upper
+Defense: 0
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+Increases the recovery rate of recovery skills by 3%.
+The users casting cannot be interrupted outside of WoE.
+If upgrade level is +5 or higher,
+Increases the recovery rate of recovery skills by an additional 6%.
+If upgrade level is +7 or higher,
+Increases the recovery rate of recovery skills by an additional 9%.
+If upgrade level is +9 or higher,
+Increases the recovery rate of recovery skills by an additional 12%.
+^800080Set Bonus^000000
+^008080Clergy Nurse Cap^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge + 1 per upgrade level of ^008080Clergy Nurse Cap^000000.
+Increases the recovery rate of recovery skills by 2% per upgrade level of ^008080Clergy Nurse Cap^000000.
+^800080Set Bonus^000000
+^008080Clergy Nurse Cap^000000
+^008080Croce Staff^000000
+Increases the recovery rate of recovery skills by 4% per upgrade level of ^008080Croce Staff^000000.
 #
 5971#
 ^808080An eyepatch containing the great powers of Hatii.^000000
@@ -47118,9 +47696,15 @@ Weight: 1
 Restores ^008000325^000000 to ^008000405^000000 HP.
 #
 11607#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080Fresh fruit and whip cream wrapped with thin dough. Recovers various status damage(Poison, Curse, Silence, Confusion, Darkness, Hallucination). Weight : ^77777710^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
+^000000
 Attack: 0
 Property: N/A
 Weight: 0
@@ -50096,6 +50680,13 @@ Warning: If no town is selected, the item will disappear.
 Weight: ^7777771^000000
 #
 12514#
+^808080An abrasive that
+adds sharpness to
+a weapon. Increases
+Critical Rate by 30
+for 5 minutes.
+^ffffff_^000000
+Weight: ^7777771^000000
 An abrasive that
 adds sharpness to
 a weapon. Increases
@@ -50105,6 +50696,11 @@ If you are incapacitated,
 the item effect will disappear.
 ^ffffff_^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 12530#
 A box containing the essence of Mastela Fruit. Be careful when opening.
@@ -50875,11 +51471,23 @@ Weight : ^7777770^000000
 12801#
 #
 12806#
+^808080A rolled up piece
+of parchment, now
+brittle with age, on
+which faded text can
+scarcely be read.
+^ffffff_^000000
+Weight: ^7777772^000000
 ^808080A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read.^000000
 ^FFFFFF_^000000
 Type: Consumable
 Class: General
 Weight: 2
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 12812#
 A Snow White Leaf that is cold to the touch. Caution : This really is colder than snow.
@@ -50906,11 +51514,22 @@ Cures effect of ^000088Stone, Dark, Curse, Poison, Decrease Agility, Reverse Orc
 Weight : ^7777771^000000
 #
 12817#
+^808080An antique album in
+which the power of a
+mysterious Card item
+is contained...
+^ffffff_^000000
+Weight: ^7777775^000000
 ^808080An antique album in which the power of a mysterious Card item is contained...^000000
 ^FFFFFF_^000000
 Type: Consumable
 Class: Item Producer
 Weight: 5
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 12822#
 #
@@ -53175,10 +53794,22 @@ Required Level : ^777777100^000000
 Job : ^777777Novice, Swordsman, Mage, Archer, Merchant, Thief, Soul Linker,  and Ninja^000000
 #
 13097#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13098#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13099#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13100#
 A six chambered
@@ -54610,6 +55241,10 @@ Weight : ^7777771^000000
 Property : ^777777Neutral^000000
 #
 13269#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13270#
 Slightly remodeled Full SwingK enabled for throwing. Increases Atk.
@@ -55433,8 +56068,16 @@ Job : ^777777Swordman/Merchant/Thief^000000
 13449#
 #
 13451#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13452#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 13454#
 ^808080A one-handed sword with a reddish radiance.^000000
@@ -60856,6 +61499,17 @@ Weight: ^777777150^000000
 Required Level: ^777777130^000000
 Equip To: ^7777773rd Classes^000000
 #
+15102#
+^808080Armor worn by a hunter while they make a living.^000000
+Class: Armor
+Defense: 30
+Property: Neutral
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+Increases physical and magical damage on Brute race targets by 3%.
+Increases physical and magical damage on Brute race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
+#
 15103#
 ^808080An armor containing the soul of the legendary Kirin.^000000
 Class: Armor
@@ -61162,6 +61816,20 @@ Weight : ^777777160^000000
 Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
+15139#
+^808080Ritualistic clothing that appears to offend animals far and wide.
+^000000
+Class: Armor
+Defense: 30
+Property: Neutral
+Weight: 120
+Required Level: 70
+Required Jobs: All Jobs
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Brute race enemies by 5%.
+Reduces damage taken from Brute race enemies by an additional 1% per upgrade level of the item.
+#
 15140#
 ^808080Natural clothes for the natural adventurer.^000000
 ^FFFFFF_^000000
@@ -61333,6 +62001,26 @@ Max HP + 4000
 Reduces the fixed casting time of skills by 25%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
+#
+15166#
+^808080The holy rosary which has received its powers from the apostle of God. It's filled with mysterious powers.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 30
+Required Level: 60
+Required Jobs: All Jobs
+Perfect Dodge + 2
+Increases the recovery rate of recovery skills by 3%.
+^800080Set Bonus^000000
+^008080Clergy Nurse Cap^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge + 1 per upgrade level of ^008080Clergy Nurse Cap^000000.
+Increases the recovery rate of recovery skills by 2% per upgrade level of ^008080Clergy Nurse Cap^000000.
+^800080Set Bonus^000000
+^008080Croce Staff^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge + 2 per upgrade level of ^008080Croce Staff^000000.
 #
 15169#
 ^808080A magical robe worn by the king of the Laphine tribe.^000000
@@ -61936,8 +62624,16 @@ CRIT + 20
 This item is indestructible in battle.
 #
 16036#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 16037#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 16039#
 ^808080The cursed spoon... so the legends were true!^000000
@@ -62977,6 +63673,12 @@ Weight : ^7777771^000000
 16465#
 #
 16483#
+^808080A box that contains 10 Abrasives.
+Each Abrasive increases Critical Rate by 30 for a 5 minute duration.
+^ff0000This item is excluded from subspscription withdrawal or refund.^000000
+When a character is incapable of combat, the effect of item disappears.
+^ffffff_^000000
+Weight : ^7777771^000000
 A box that contains
 10 Abrasives. Each
 Abrasive increases
@@ -62985,8 +63687,19 @@ If you are incapacitated,
 the item effect will disappear.
 ^ffffff_^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 16504#
+^808080A box containing 10 Bubble Gums.
+^ffffff_^000000
+Bubble Gum - Increase item drop rate by 100% for 30 minutes.
+^ff0000This item is excluded from subspscription withdrawal or refund.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
 A box containing
 10 Bubble Gums.
 ^ffffff_^000000
@@ -62996,6 +63709,11 @@ rate by 100% for
 30 minutes.
 ^ffffff_^000000
 Weight : ^7777771^000000
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 16543#
 A box containing 1 snow man hat.
@@ -67184,6 +67902,7 @@ Class: Item Giver
 Weight: 1
 #
 17790#
+^808080^808080A care package from jRO.^000000
 ^808080A care package from jRO.^000000
 ^FFFFFF_^000000
 Type: Consumable
@@ -67208,6 +67927,11 @@ Fallen Angel Wing
 (5) Bloody Branch
 (6) Battle Manual X3
 (6) HE Bubble Gum
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 17801#
 ^808080^000000
@@ -67400,6 +68124,33 @@ Costume Umbala Spirit
 Costume Black Shiba Inu Hat
 Costume Quati Hat
 #
+17859#
+^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 0
+Required Jobs: All Jobs
+When opened gives one of the following;
+Costume Cat Eye
+Costume Floating Ghost
+Costume Red Subject Aura
+Costume Loyal Servant of Morocc
+Costume Gram Peony
+Costume Dwarf Beard
+Costume Servant Devilring
+Costume Magic Eyes
+
+#
+17876#
+Class: Item Giver
+Weight: 0
+When opened gives one of the following;
+
+Costume: Archangel Wing
+Costume: Rudra's Grace
+Costume: Happiness Wings
+Costume: Amistr Bag
+#
 17877#
 ^FF0000Account Bound^000000
 Class: Item Giver
@@ -67445,6 +68196,27 @@ Wing of Beezlebub Box
 (8) Job Battle Manual
 (2) Safe to 10 Certificate
 
+#
+17893#
+Type: Miscellaneous
+Class: Item Giver
+Weight: 0
+When opened gives one of the following,
+Shepherd's Cloth
+Celine's Brooch
+Anemos Shield
+Malach's Skin
+Hunter Mail
+Fairy Leaf Powder
+Rosary's Necklace
+Gardener Shoes
+Hibram's Gloves
+Clergy Nurse Cap
+Maero Mask
+Bloody Dead Branch x 5
+Battle Manual X3 x 6
+Safe to 7 Chance Box x 4
+HE Bubble Gum x 8
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -67665,8 +68437,16 @@ Equip To: ^7777773rd Archer Classes^000000
 18125#
 #
 18126#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 18127#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 18129#
 ^808080A beautiful bow shaped as a pair of pure white wings.^000000
@@ -70673,8 +71453,14 @@ Required Level : ^77777750^000000
 Job : ^777777All^000000
 #
 18880#
+^808080placeholder
 A perfectly balanced hat worn by the Evil Snake Lord.
 The yin yang symbol and magic orbs harness the balance necessary to wear this hat.
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 18882#
 A headgear that is shaped like a gourd bowl used for drawing water.
@@ -72685,6 +73471,20 @@ Max HP + 200
 If the users base level is 100 or higher,
 Max HP + 2000
 #
+19141#
+^808080A mask filled with the sorrow of Thanatos. It looks cute but it is very durable.^000000
+Class: Headgear
+Position: Middle, Lower
+Defense: 6
+Weight: 20
+Required Level: 100
+Required Jobs: All Jobs
+All Stats + 1
+Mdef + 6
+Reduces damage taken from players by 1%.
+Reduces damage taken from Water, Earth, Fire and Wind property attacks by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
+#
 19156#
 ^808080A beautiful moon rainbow which is caused by the moonlight.^000000
 ^FF0000A +10 version of this hat will casts a level 10 skill at 10% chance.^000000
@@ -73803,12 +74603,13 @@ Required LV : ^7777771^000000
 Job : ^777777All^000000
 #
 19597#
-A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-All^000000
+^808080A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+^000000
+Class: Costume
+Position: Upper
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
 #
 19598#
 Can feel a high dignity of the Northern Wolf Tribe.
@@ -75382,13 +76183,12 @@ Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 19912#
-Meow~ change to mischievous cat's eye~
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+^808080Meow~ change your eyes to that of a mischievous cat~^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19914#
 ^808080Airship Captain Felrock‘s Hat^000000
@@ -75498,13 +76298,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 19929#
-Classically designed ribbon costume.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080A classic ribbon.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19930#
 Cute hat with angel wings on top!
@@ -76207,6 +77006,12 @@ Job : ^777777All Jobs^000000
 A costume of the Volumne FHat Item! Wear it with pride.
 #
 20106#
+^808080A classic hat.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20113#
 ^808080.^000000
@@ -76827,11 +77632,12 @@ Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
 20183#
-Although it does not change anything, wearing it gives somehow creepy feeling.
-Class : ^777777Defense : ^7777770^000000
-Location : ^777777Mid-upper ^000000Weight : ^7777770^000000
-Req Lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080Although it does not change anything, wearing it gives off a creepy vibe.^000000
+Class: Costume
+Position: Upper, Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20190#
 #
@@ -76920,12 +77726,12 @@ Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 20222#
-A double-pommed Blue Christmas Cap
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Job: All^000000
+^808080A double-pommed cap dyed blue designed with the spirit of Christmas in mind.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20227#
 ^ff0000Cannot trade with other accounts.^000000
@@ -77314,8 +78120,13 @@ Required Level: 1
 Required Job: All Jobs
 #
 20306#
-A strange hat that seems to be attracted to people skilled in the arts...
-Weight : ^7777771^000000
+^808080A strange hat that seems to be attracted to people skilled in the arts...^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+^67CDC9Concept by WarlockFier.^000000
 #
 20311#
 ^808080A tool amplifying the wearer's magical ability by controlling brainwave. It also has a voice recognition function and is said to resonate some types of equipment.^000000
@@ -77845,12 +78656,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20363#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080Stylish Wig. An extended ponytail that comes in different colors.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20364#
 Stylish Wig.
@@ -77901,12 +78712,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20370#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080Stylish Wig. A hair extension that looks like a wavy twin tail.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20371#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
@@ -78099,19 +78910,20 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20407#
-Unknown aura that wrapped your body.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: All^000000
+^808080A mysterious aura that shrouds the body.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20430#
-A costume that imitating the protection aura of Devil Morocc.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^808080A costume that imitates the protection aura of Morroc.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20434#
 This gunslinger doll perches on your head.
@@ -78169,13 +78981,12 @@ Lv. req. : ^7777771^000000
 Class : ^777777All classes^000000
 #
 20468#
-The meaning of this mask is: He was one of us.
-This mask has been made to approach classes who are easily frightened by other classes.
-It doesn't have much effect though.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper Middle Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+^808080The meaning of this mask is: He was one of us.^000000
+Class: Costume
+Position: Upper, Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20470#
 Show your dominance over loved ones with this new costume!
@@ -78217,13 +79028,12 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 20500#
-White wings of a holy Archangel.
-Bring this to [Lace La Zard] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Costume^000000
-Defense : ^77777718^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^808080White wings of a holy Archangel.^000000
+Class: Costume
+Position: Garment
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -78560,14 +79370,12 @@ Required LV : ^77777771^000000
 Job : ^777777All^000000
 #
 20746#
-Angel's burning wings.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Lace La Zard] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Location : ^777777Garment^000000
-Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080These angelic wings burn with holy energy.^000000
+Class: Costume
+Position: Garment
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20747#
 ^000088Rental Item^000000
@@ -78749,16 +79557,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20763#
-Until August 5th, 2016 Costume Amistr Bag will have the following effects:
-SP + 10
-HP + 150
-HP Recovery + 5
-SP Recovery + 3
-Class : ^777777Costume^000000
-Location : ^777777Garment ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^808080An adorable backpack that looks like a cute Amistr hitched a ride on top of you!^000000
+Class: Costume
+Position: Garment
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 20778#
 ^808080A reddish cloak invented by a guild of magicians to extend the wearer's magical power.^000000
@@ -79307,6 +80111,24 @@ Reduces the variable casting time of skills by 2% for every 20 base Agi/Vit.
 If upgrade level is +9 or higher,
 Enables ^0000FFLevel 1 Cloaking^000000.
 #
+20845#
+^808080The skin of a dragon which has a mouth large enough to swallow an entire human.^000000
+Class: Garment
+Defense: 15
+Weight: 60
+Required Level: 100
+Required Jobs: All Jobs
+Str + 5
+Luk + 5
+Reduces damage taken from Holy and Ghost property attacks by 5%.
+Reduces damage taken from Formless and Angel race enemies by 5%.
+If upgrade level is +7 or higher,
+Increases critical damage on targets by 5%.
+If upgrade level is +8 or higher,
+Aspd + 1% for every combined sum of 20 base Str and Luk.
+If upgrade level is +9 or higher,
+Increases critical damage on targets by an additional 5%.
+#
 20846#
 ^808080A cape that has been made long time ago but it still looks brand new.^000000
 Class: Garment
@@ -79823,6 +80645,16 @@ Type : ^777777Shoes^000000    Defense : ^77777713^000000
 Weight : ^77777725^000000
 Required Level : ^777777125^000000
 Job : ^777777All^000000
+#
+22050#
+^808080These shoes were worn by a man who made a living out of tending to fauna. They contain the man's many years of experience.^000000
+Class: Shoes
+Defense: 10
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+Increases the experience given from Plant race monsters by 5%.
+Increases the experience given from Plant race monsters by an additional 1% per upgrade level of the item.
 #
 22052#
 ^808080These shoes were worn by a man who made a living out of taking care of cemetery's. These shoes contains the man’s many years of experience.^000000
@@ -80964,6 +81796,7 @@ Class: Item Producer
 Weight: 0
 #
 23259#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080A cupcake made with fresh strawberry above soft whip cream. 5% SP recovery when using the item. Level 5 blessing effect to character. Weight : ^77777710^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -80971,8 +81804,14 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 23260#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080Fresh fruit and whip cream wrapped with thin dough. Recovers various status damage(Poison, Curse, Silence, Confusion, Darkness, Hallucination). Weight : ^77777710^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -80980,11 +81819,22 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 23261#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080Small round meringue crust cookie with jam and cream inside. Crispy outside, soft and moist inside. 5% HP recovery when using the item. Level 5 Angelus skill to userself. Weight : ^77777710^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
+^000000
 Attack: 0
 Property: N/A
 Weight: 0
@@ -82622,6 +83472,7 @@ Weight: 1
 Weight: 1
 #
 25290#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080Celebration coin for Sweets Festival. Can exchange with sweet treats from Sweets Shop. Item will be removed after the event Period(1st Feb 2017~28th Feb 2017). Weight : ^7777770^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -82629,8 +83480,14 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 25291#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080^ff0000This item cannot be traded with others.^000000 Factory made chocolate using cocoa bean. Need to deliver this to Sweets Shop. Item will be removed after the event Period(1st Feb 2017~28th Feb 2017). Weight : ^7777770^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
@@ -82638,11 +83495,22 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+^000000
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 25292#
+^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
 ^808080Dried product of fermented cocoa seed. Needed from Charles' chocolate factory. Item will be removed after the event Period(1st Feb 2017~28th Feb 2017). Weight : ^7777770^000000 ^000000
 ^FFFFFF_^000000
 Type: Weapon
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
+^000000
 Attack: 0
 Property: N/A
 Weight: 0
@@ -82847,8 +83715,16 @@ Required Level : ^777777100^000000
 Job : ^777777Assassin Classes^000000
 #
 28005#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28006#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28007#
 ^808080A katar emitting a red aura.^000000
@@ -82924,8 +83800,16 @@ Required Jobs: Rune Knight, Mechanic, Royal Guard, Geneticist
 Reduces the cooldown of ^0000FFAxe Tornado^000000 by 1 second.
 #
 28103#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28104#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28106#
 ^808080A two-handed axe emitting a red aura.^000000
@@ -83087,6 +83971,10 @@ Required Job: All classes
 Enables to use skill Teleport Lv.1.
 #
 28319#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28320#
 ^808080A sculpture expressing the despair of an assassin who had to kill his beloved one.^000000
@@ -83876,6 +84764,52 @@ Enables ^0000FFLevel 1 Spiritual Sphere Absorption^000000.
 If the users base Str is 100 or higher,
 Additional Atk + 5%
 #
+28437#
+^808080Gloves worn by an arch bishop who couldn't resist the devil's temptations. It contains high evil magic.^000000
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+Int + 2
+Matk + 2%
+Enables ^0000FFLevel 3 Heal^000000.
+Reduces the SP cost of skills by 5%.
+If the users base Int is 100 or higher,
+Matk + 5%
+^800080Set Bonus^000000
+^008080Hibram's Gloves^000000
+^008080Spell1^000000
+Reduces the variable casting time of skills by 5%.
+Increases magical damage on all race targets by 5%.
+^800080Set Bonus^000000
+^008080Hibram's Gloves^000000
+^008080Spell2^000000
+Reduces the variable casting time of skills by 5%.
+Increases magical damage on all race targets by 5%.
+#
+28438#
+^808080Powder made from a fairy leaf tree. The quality of the powder is fantastic.^000000
+Class: Accessory
+Weight: 40
+Required Level: 90
+Required Jobs: All Jobs
+Dex + 2
+Reduces the cast delay of skills by 5%.
+Increases long-ranged damage on targets by 2%.
+Enables ^0000FFLevel 3 Magnum Break^000000.
+If the users base Dex is 100 or higher,
+Increases long-ranged damage on targets by an additional 5%.
+^800080Set Bonus^000000
+^008080Expert Archer1^000000
+^008080Fairy Leaf Power^000000
+Reduces the cast delay of skills by 5%.
+Increases long-ranged damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Expert Archer2^000000
+^008080Fairy Leaf Power^000000
+Reduces the cast delay of skills by 5%.
+Increases long-ranged damage on targets by 5%.
+#
 28441#
 ^808080A badge worn by members of a vigilante group that once existed to stop criminals.^000000
 Class: Accessory
@@ -84071,9 +85005,57 @@ Reduces the variable casting time of skills by 10%.
 Increases the damage of Water, Earth, Fire, Wind and Ghost property magical attacks on targets by 5%
 Bypass 50% of Mdef of Normal and Boss targets when performing a magical attack. ^FF0000This effect does not work on other players.^000000
 #
+28513#
+^808080A high quality brooch that is made by one of the best craftsman in the world. It has been together with Celine since she was created.^000000
+Class: Accessory
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+Max HP + 500
+Max SP + 250
+Matk + 5%
+Aspd + 1
+Reduces the variable casting time of skills by 10%.
+^800080Set Bonus^000000
+^008080Celine's Brooch^000000
+^008080Celine's Ribbon^000000
+All Stats + 1 per upgrade level of ^008080Celine's Ribbon^000000 up to a maximum upgrade level of 10.
+Reduces the fixed casting time of skills by 50%.
+If upgrade level is +7 or higher,
+Increases magical damage on boss monster targets by 20%.
+Reduces damage taken from Demi-Human race enemies by 10%.
+If upgrade level is +9 or higher,
+Increases magical damage on boss monster targets by an additional 20%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+^800080Set Bonus^000000
+^008080Celine's Brooch^000000
+^008080Evil Spirit Glove^000000
+Atk + 50
+Matk + 50
+Aspd + 2
+Adds a X% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
+Adds a X% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
+Adds a X% chance of casting ^0000FFLevel 1 Reading Spell Book^000000 on the user when performing a magical attack.
+Adds a X% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the attacker when receiving a physical or magical attack.
+^800080Set Bonus^000000
+^008080Celine's Brooch^000000
+^008080Lush Rose^000000
+All Stats + 1 per upgrade level of ^008080Lush Rose^000000 up to a maximum upgrade level of 10.
+Reduces the fixed casting time of skills by 50%.
+If upgrade level is +7 or higher,
+Increases magical damage on boss monster targets by 20%.
+#
 28600#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28601#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28604#
 ^808080A book with a reddish radiance.^000000
@@ -84133,10 +85115,22 @@ Adds a 5% chance of casting ^0000FFLevel 5 Fire Ball^000000 on the target when p
 Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
 #
 28700#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28701#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28702#
+Attack: 0
+Property: N/A
+Weight: 0
+Weapon Level: 0
 #
 28705#
 ^808080A dagger with a reddish radiance.^000000
@@ -84335,6 +85329,34 @@ Reduces damage taken from long-ranged attacks by an additional 15%.
 ^008080Imuke Upper Shield^000000
 ^008080Horn Card^000000
 Increases damage taken from long-ranged attacks by 35%.
+#
+28921#
+^808080A shield that contains the power of the wind.^000000
+Class: Shield
+Defense: 150
+Weight: 350
+Required Level: 90
+Required Jobs: All Jobs
+Mdef + 15
+Increases physical and magical damage on Wind property targets by 5%.
+Reduces damage taken from Wind property attacks by 10%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Increases physical and magical damage on Wind property targets by an additional 10%.
+Reduces damage taken from Wind property attacks by an additional 15%.
+If upgrade level is +8 or higher,
+If the users base Str is 90 or higher,
+Atk + 50
+If the users base Agi is 90 or higher,
+Matk + 30
+If the users base Vit is 90 or higher,
+Aspd + 5%
+If the users base Int is 90 or higher,
+Increases the recovery rate of recovery items by 10%.
+If the users base Dex is 90 or higher,
+Reduces/Increases the variable casting time of skills by 5%.
+If the users base Luk is 90 or higher,
+Increases critical damage on targets by 5%.
 #
 29000#
 Type: Miscellaneous
@@ -85257,15 +86279,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31172#
-A strange looking rooster hat.
-Let's all celebrate the year of Rooster by wearing this hat!
-
-HP Recovery by Grain increase by 2017% during event period (2017/1/26 ~ 2017/02/23).
-
-Class : ^777777Costume^000000 Defense :^7777770^000000
-Location :^777777UpperMiddleLower ^000000Weight : ^7777770^000000
-Required Level :^7777771^000000
-Jobs : ^777777All Jobs^000000
+^808080A strange looking rooster hat. Let's all celebrate the year of Rooster by wearing this hat!^000000
+Class: Costume
+Position: Upper, Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 31181#
 ^808080The necklace of the Holy Rosary, who received powers from the apostle of God. It's filled with mystical powers. ^000000

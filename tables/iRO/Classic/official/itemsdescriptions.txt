@@ -70950,3 +70950,18 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19984#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pizza Hat!
+300 Bread
+200 Cheese
+100 Rotten Meat
+10 Red Chiles
+1000 Zeny
+1 Pizza Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
