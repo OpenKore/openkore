@@ -16,8 +16,10 @@ use Base::Server;
 use Bus::MessageParser;
 use Bus::Messages qw(serialize);
 use Poseidon::RagnarokServer;
+use Poseidon::Config;
 use base qw(Base::Server);
 use Plugins;
+use Misc;
 
 my $CLASS = "Poseidon::QueryServer";
 
@@ -130,6 +132,7 @@ sub iterate {
 			my ($data, %args);
 
 			$args{packet} = $server->readResponse();
+			visualDump($args{packet}) if ($config{debug});
 			$data = serialize("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
