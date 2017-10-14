@@ -16,7 +16,7 @@ use List::Util qw(max min sum);
 use eventMacro::Data;
 use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
-use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
+use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index getQuestStatus);
 use eventMacro::Automacro;
@@ -1805,6 +1805,9 @@ sub parse_command {
 			
 		} elsif ($keyword eq 'Inventory') {
 			$result = join ',', getInventoryIDs($parsed);
+			
+		} elsif ($keyword eq 'InventoryType') {
+			$result = join ',', getInventoryTypeIDs($parsed);
 			
 		} elsif ($keyword eq 'store') {
 			$result = (getItemIDs($parsed, $storeList))[0];

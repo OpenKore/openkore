@@ -59,7 +59,7 @@ our $macroKeywords = join '|', qw(
 	monster
 	vender venderitem venderprice venderamount
 	random rand
-	invamount inventory Inventory
+	invamount inventory Inventory InventoryType
 	cartamount cart Cart
 	storamount storage Storage
 	shopamount
