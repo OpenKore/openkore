@@ -26,22 +26,49 @@ our @EXPORT=qw(%config);
 our %config = ();
  
 # Function to Parse the Environment Variables
-sub parse_config_file 
-{
-    my ($config_line, $Name, $Value, $Config);
-    my ($File, $Config) = @_;
-    open (CONFIG, "../../control/$File") or open (CONFIG, "./control/$File") or die "ERROR: Config file not found : $File\n";
-    while (<CONFIG>) {
-        $config_line=$_;
-        chomp ($config_line);											# Remove trailling \n
-        $config_line =~ s/^\s*//;										# Remove spaces at the start of the line
-        $config_line =~ s/\s*$//;     									# Remove spaces at the end of the line
-        if ( ($config_line !~ /^#/) && ($config_line ne "") ){  		# Ignore lines starting with # and blank lines
-            ($Name, $Value) = split (/=/, $config_line);        		# Split each line into name value pairs
-            $$Config{$Name} = $Value;                           		# Create a hash of the name value pairs
+sub parse_config_file {
+    my $File = shift;
+	my ($Key, $Value);
+	
+	# Return early to avoid loading poseidon.txt (which might not exist at this point)
+	if ($config{ragnarokserver_ip} ne "" && $config{ragnarokserver_port} ne "" && $config{queryserver_ip} ne "" && $config{debug} ne ""
+		&& $config{queryserver_port} ne "" && $config{queryserver_ip} ne "" && $config{server_type} ne "") {
+		print "\t[debug] Skipping config file\n" if $config{debug};
+		return;
+	}
+	
+    open (CONFIG, "<", "../../control/".$File) or open (CONFIG, "<", "./control/".$File) or open (CONFIG, "<", $File) or die "ERROR: Config file not found : ".$File;
+	
+    while (my $line = <CONFIG>) {
+        chomp ($line);																		# Remove trailling \n
+        $line =~ s/^\s*//;																	# Remove spaces at the start of the line
+        $line =~ s/\s*$//;     																# Remove spaces at the end of the line
+        if ($line !~ /^#/ && $line ne "") {  												# Ignore lines starting with # and blank lines
+            ($Key, $Value) = split (/=/, $line);											# Split each line into name value pairs
+			if ($config{$Key} ne "") {														# Skip key if we already know it from command line arguments
+				print "\t[debug] Skipping ".$Key." key in config file\n" if $config{debug};	# Will only work with command line --debug=1 argument, unless debug key is moved to the top of poseidon.txt
+				next;
+			}
+            $config{$Key} = $Value;															# Create a hash of the name value pairs
         }
     }
+	
     close(CONFIG);
+}
+
+sub parseArguments {
+	use Getopt::Long;
+	GetOptions(
+		'file=s',					\$config{file},
+		'ragnarokserver_ip=s',		\$config{ragnarokserver_ip},
+		'ragnarokserver_port=s',	\$config{ragnarokserver_port},
+		'queryserver_ip=s',			\$config{queryserver_ip},
+		'queryserver_port=s',		\$config{queryserver_port},
+		'server_type=s',			\$config{server_type},
+		'debug=s',					\$config{debug},
+	);
+	
+	$config{file} = "poseidon.txt" if ($config{file} eq "");
 }
 
 1;
