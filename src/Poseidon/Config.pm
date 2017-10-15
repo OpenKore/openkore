@@ -33,7 +33,7 @@ sub parse_config_file
     open (CONFIG, "../../control/$File") or open (CONFIG, "./control/$File") or die "ERROR: Config file not found : $File\n";
     while (<CONFIG>) {
         $config_line=$_;
-        chop ($config_line);											# Remove trailling \n
+        chomp ($config_line);											# Remove trailling \n
         $config_line =~ s/^\s*//;										# Remove spaces at the start of the line
         $config_line =~ s/\s*$//;     									# Remove spaces at the end of the line
         if ( ($config_line !~ /^#/) && ($config_line ne "") ){  		# Ignore lines starting with # and blank lines
