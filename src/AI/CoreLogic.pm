@@ -719,8 +719,8 @@ sub processSkillUse {
 				}
 				
 				if ($skillsArea{$handle} == 2) {
-					$target = $accountID;
-				} elsif ($args->{x} ne "") {
+					$target = Actor::get($accountID);
+				} elsif ($args->{x} && $args->{y}) {
 					$target = { x => $args->{x}, y => $args->{y} };					
 				} elsif(!$args->{target}) {
 						AI::dequeue;
@@ -728,11 +728,14 @@ sub processSkillUse {
 				} else {
 					$actorList = $monstersList;
 					$target = $monstersList->getByID($args->{target});
+					if (!$target) {
+						$target = Actor::get($accountID);
+					}
 				}
 				
 				undef $char->{permitSkill};
 				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};				
-				$args->{maxCastTime}{time} = time;				
+				$args->{maxCastTime}{time} = time;
 				
 				my $skillTask = new Task::UseSkill(
 					actor => $skill->getOwner,
