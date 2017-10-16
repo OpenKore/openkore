@@ -685,11 +685,10 @@ sub processSkillUse {
 				stand();
 
 			# Use skill if we haven't done so yet
-			} elsif (!$args->{skill_used}) {				
-				my ($target, $actorList, $skill, $level) = @_;
+			} elsif (!$args->{skill_used}) {
 				my $handle = $args->{skillHandle};
 				if (!defined $args->{skillID}) {
-					$skill = new Skill(auto => $handle, level => $args->{lv});
+					my $skill = new Skill(handle => $handle);
 					$args->{skillID} = $skill->getIDN();
 				}
 				my $skillID = $args->{skillID};
@@ -713,40 +712,22 @@ sub processSkillUse {
 					#$char->stopAttack();
 				}
 
-				# Give an error if we don't actually possess this skill				
+				# Give an error if we don't actually possess this skill
+				my $skill = new Skill(handle => $handle);
 				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->getHandle() ne $handle)) {
 					debug "Attempted to use skill (".$skill->getName().") which you do not have.\n";
 				}
-				
-				if ($skillsArea{$handle} == 2) {
-					$target = Actor::get($accountID);
-				} elsif ($args->{x} && $args->{y}) {
-					$target = { x => $args->{x}, y => $args->{y} };					
-				} elsif(!$args->{target}) {
-						AI::dequeue;
-						return;
-				} else {
-					$actorList = $monstersList;
-					$target = $monstersList->getByID($args->{target});
-					if (!$target) {
-						$target = Actor::get($accountID);
-					}
-				}
-				
-				undef $char->{permitSkill};
-				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};				
+
 				$args->{maxCastTime}{time} = time;
-				
-				my $skillTask = new Task::UseSkill(
-					actor => $skill->getOwner,
-					target => $target,
-					actorList => $actorList,
-					skill => $skill,
-					priority => Task::USER_PRIORITY
-				);
-								
-				my $task = new Task::ErrorReport(task => $skillTask);
-				$taskManager->add($task);				
+				if ($skillsArea{$handle} == 2) {
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
+				} elsif ($args->{x} ne "") {
+					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
+				} else {
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $args->{target});
+				}
+				undef $char->{permitSkill};
+				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
 
 				delete $char->{cast_cancelled};
 
