@@ -17,9 +17,9 @@ queryserver_port=24390
 # You should modify this if you're having problems with char list.
 server_type=bRO_2016-11-08a
 
-# Char Block Size
+# Char Block Size (Embed Server)
 # Here you can specify the desired CharBlockSize your client requires
 # The available block sizes are : 106, 108, 112, 116, 128, 132 and 136
 CharBlockSize=116
 
-debug=0
+debug=1
