@@ -354,6 +354,7 @@ sub new {
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 	};
 
 	# Item RECORD Struct's
