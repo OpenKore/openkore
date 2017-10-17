@@ -7852,4 +7852,12 @@
 20904#Bata de Etran#
 28944#Escudo de Sleiporing#
 5931#Niflheim Bunny Hat#
+//*****************************************************
+//------------Aplicar em 2017-10-17--------------------
+//*****************************************************
+5931#Chapéu de Poltergeist#
+20853#Asas de Rudo#
+19101#Familiar de Combate#
+20398#Chapéu de Coelho Maldito#
+31120#Orelhas de Vampiro#
 //file end
