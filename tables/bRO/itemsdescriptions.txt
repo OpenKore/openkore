@@ -35314,18 +35314,20 @@ Peso : ^77777710^000000
 Nível necessário : ^77777730^000000
 Classe : ^777777Todas as classes^000000
 #
-
 18538#
-“Confeccionado” em Niflheim, esse pequeno espírito travesso está pronto para fazer sua cabeça e possuir seu cor... quer dizer, dar ótimos conselhos! Enquanto estiver controla... err... aconselhado por este simpático ser do além, o bem e o mal serão conceitos sem importância.
-DEFM + 3.
-+ 1% de resistência contra monstros do tipo Anjo e do tipo Demônio.
-Pequena chance de dropar 'Água Benta' ao derrotar monstros do tipo Anjo.
-Pequena chance de dropar 'Água Amaldiçoada' ao derrotar monstros do tipo Demônio.
-Tipo : ^777777Equipamento para cabeça^000000
+'Confeccionado' em Niflheim, esse pequeno espírito travesso está pronto para fazer sua cabeça e possuir seu cor... quer dizer, dar ótimos conselhos! Enquanto estiver controla... err... aconselhado por este simpático ser do além, o bem e o mal serão conceitos sem importância.
+^0000ffDEFM +1.^000000
+^0000ffResistência as raças Anjo e Demônio +1%.^000000
+Ao derrotar monstros da raça Anjo:
+^0000ff4% de chance de derrubar [Água Benta].^000000
+Ao derrotar monstros da raça Demônio:
+^0000ff4% de chance de derrubar [Água Amaldiçoada].^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777773^000000
-Equipa em : ^777777Centro^000000
-Peso : ^77777730^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 15040#
 Uma das partes do uniforme utilizado por prisioneiros.
@@ -50169,7 +50171,7 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
-Classes: ^777777Todas^000000	
+Classes: ^777777Todas^000000
 #
 19602#
 Um chapéu banhado em uma tintura mágica, invisível aos olhos dos mortais. A tinta invisível é tão forte que faz com que o item equipado no mesmo local também fique invisível.
@@ -54878,6 +54880,77 @@ Tipo: ^777777Escudo^000000
 Defesa: ^7777771^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-10-17--------------------
+//*****************************************************
+5931#
+Um chapéu resgatado dos escombros de uma mansão em Nifflheim. Dizem que o espírito de um travesso Poltergeist está aprisionado neste chapéu. Ao tocá-lo, você sente os pelos de sua nuca se arrepiarem.
+^0000ffHabilita [Para Nifflheim] nv. 1.^000000
+^0000ffDano físico e mágico contra Espíritos +5%.^000000
+Ao sofrer danos físicos ou mágicos:
+^0000ff0,5% de chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1.^000000
+A cada refino:
+^0000ffChance de autoconjurar [Espírito dos Amaldiçoados] +0,1%.^000000
+Refino +5 ou mais:
+^0000ffDano físico e mágico contra Espíritos +5% adicional.^000000
+Refino +7 ou mais:
+^0000ffDano físico e mágico contra Espíritos +10% adicional.^000000
+Refino +9 ou mais:
+^0000ffDano físico e mágico contra Espíritos +20% adicional.^000000
+Espíritos afetados:
+^0000ffQuve, Lude, Dullahan, Mascarado, Árvore Maldita, Loli Ruri, Serial Killer, Poltergeist e Senhor dos Mortos.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777712^000000
+Peso: ^77777780^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20853#
+Agora você pode se equipar com asinhas iguais às das Rudos, as anjinhas higiênicas e espalhar a sua mania de limpeza por toda Rune-Midgard! Sua obsessão por esterilizar tudo e destruir todo tipo de germe agora conta com o reforço abençoado dessas estranhas asas, que se tornam ainda mais eficientes, se usadas juntas do Escudo Higiênico. Está na hora de limpar o mal do mundo!
+^FF0000Atenção! Este equipamento não altera o visual do personagem.^000000
+^0000ffVelocidade de ataque +1.^000000
+A cada 2 refinos:
+^0000ffDano mágico +3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Escudo Higiênico]^000000
+A cada refino do Escudo:
+^0000ffResistência a propriedade Sagrado +3%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^7777776^000000
+Peso: ^77777760^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Todas^000000
+#
+19101#
+Tudo começou quando um sombrio Caçador da família Belo Monte, chamado Ricardo, resolveu que ia dedicar sua vida à caçar os seres da noite. Para isso dar certo, no lugar de treinar um falcão, ele escolheu treinar um Familiar, já que só iria se aventurar à noite. A ideia parece ter dado certo, já que hoje em dia é comum as pessoas andarem com familiars de combate adestrados como o seu amiguinho aqui.
+^0000ffPós-conjuração -5%.^000000
+^0000ffDano físico contra todas as raças +2%.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+20398#
+Um chapéu visual perfeito para você comemorar o Dia das Bruxas sem se preocupar com todos os bônus de equipamento do Chapéu de Poltergeist. Seu visual ficou tão legal que bastou vesti-lo para chamar a atenção de uma garotinha loira que ficou sorrindo, olhando pra você. Seu nome era Carolina e ela riu pra você, se virou e sumiu nas sombras... Espera... Não! Volte! Vá pra luz, Carolina! Vá para a luz!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31120#
+Você se descuidou e acabou sendo mordido pelo Drácula! Mas veja pelo lado positivo: agora que você é um vampiro imortal, está aprendendo a se transformar em morcego pra sair voando por aí. Em troca, vai ter que beber sangue e perder sua humanidade. Mas afinal, o que é um humano? Apenas uma pequena pilha miserável de segredos.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //file end
