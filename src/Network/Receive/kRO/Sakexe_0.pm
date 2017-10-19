@@ -355,6 +355,10 @@ sub new {
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		
+
 	};
 
 	# Item RECORD Struct's
