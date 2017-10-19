@@ -6552,3 +6552,74 @@
 6695#Golem's_Fiery_Stone_Tooth#
 6696#Frilldora's_Fiery_Nape#
 6698#Hatchet#
+
+1438#Thanatos_Spear#
+1496#Thanatos_Long_Spear#
+1669#Thanatos_Staff#
+1671#Evil_Slayer_Vanquisher_Staff#
+1836#Thanatos_Knuckle#
+1933#Thanatos_Violin#
+1988#Thanatos_Whip#
+2023#Thanatos_Two-handed_Staff#
+2185#Magic_Reflector#
+2186#Revised_Encyclopedia#
+2187#Shield_Of_Gray#
+2963#Physical_Enhancer_Ring#
+2964#Magic_Intensifier_Ring#
+4556#Fenrir_Card#
+4557#Weakened_Fenrir_Card#
+4885#Conjure1#
+4886#Conjure2#
+4887#Conjure3#
+4888#Conjure4#
+4889#Conjure5#
+6671#Geffen_Magic_Contest_Coin#
+6672#Gray_Shard#
+7641#Cure_Box#
+13093#Thanatos_Dagger#
+13094#Evil_Slayer_Stabber_Dagger#
+13441#Thanatos_Sword#
+15073#Anti-magic_Suit#
+15074#Geffen_Magic_Robe#
+15090#Armor_Of_Gray#
+15091#Gray_Robe#
+16027#Evil_Slayer_Destroyer_Hammer#
+16028#Thanatos_Hammer#
+18119#Thanatos_Bow#
+18120#Evil_Slayer_Piercer_Bow#
+18820#Gray_Helmet#
+20721#Cloak_Of_Gray#
+21009#Thanatos_Great_Sword#
+21010#Evil_Slayer_Slasher_Sword#
+22033#Boots_Of_Gray#
+22511#Fenrir_Card#
+22517#Loki_Summon_Scroll#
+28000#Thanatos_Katar#
+28001#Evil_Slayer_Ripper_Katar#
+28100#Thanatos_Axe#
+
+28310#Sarah's Left Earring#
+28311#Sarah's Right Earring#
+15121#Sarah's Battle Robe#
+4610#Sarah Card#
+4939#CRI Lv2#
+4940#CRI Lv3#
+4941#CRI Lv4#
+4942#Parrying Lv1#
+4943#Parrying Lv2#
+4944#Parrying Lv3#
+4945#Economy Lv1#
+4946#Economy Lv2#
+4947#Economy Lv3#
+4948#Delay After Skill Lv1#
+4949#Delay After Skill Lv2#
+4950#Delay After Skill Lv3#
+6803#Piece of Gigantes#
+
+19914#Felrock's_Hat#
+15116#Airship's_Armor#
+20743#Airship's_Cloak#
+22046#Airship's_Boots#
+15117#Felrock's_Armor#
+20744#Felrock's_Cloak#
+22047#Felrock's_Boots#
