@@ -894,3 +894,8 @@ moro_cav.rsw#Flame Cave#
 1@rev.rsw#Morse Cave#
 1@eom.rsw#Dark Lord Temple#
 1@jtb.rsw#Nightmare Jitterbug#
+
+//Hero Trail Part3
+1@glast.rsw#Old Glast Heim#
+1@air1.rsw#Airship#
+1@air2.rsw#Airship#
