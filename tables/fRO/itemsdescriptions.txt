@@ -56729,3 +56729,618 @@ Weight : ^7777771^000000
 A simple Axe that Lamberjacks use. Do not expect too much on it.
 Weight : ^777777100^000000
 #
+
+//Hero's trailor Part2
+1438#
+This magic spear, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +100.
+Class: ^777777One-handed Spear^000000
+ATK: ^777777150^000000
+Weight: ^777777300^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes^000000
+#
+1496#
+This two-handed magic spear, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +50.
+Class: Two-handed Spear
+ATK: 250
+Weight: 375
+Weapon Level: 4
+Required Level: 120
+Equip To: Swordsman Classes
+#
+1669#
+This magic staff, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
++15% Healing effectiveness.
+Creates a chance of recovering HP and SP while you are Magically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +200.
+Class: ^777777One-handed Staff^000000
+ATK: ^777777100^000000
+Weight: ^777777100^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Mage/Acolyte Classes^000000
+#
+1671#
+This staff was once used for vanquishing an evil slayer and his followers.
++10% ATK/MATK against Demon/Undead monsters.
+MATK +5% when upgraded to +9. MATK +7% when upgraded to +12.
+MATK +155.
+Class: ^777777One-handed Staff^000000 ATK: ^77777730^000000
+Weight: ^77777780^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Novice Classes/Mage Classes/Acolyte Classes/Soul Linker^000000
+#
+1836#
+This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT + 6. VIT + 6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +100.
+Class: ^777777Knuckle^000000
+ATK: ^777777160^000000
+Weight: ^77777760^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Sura^000000
+#
+1933#
+This magic violin, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT + 6. VIT + 6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
++20% Ranged Physical damage.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +130.
+Class: ^777777Musical Instrument^000000
+ATK: ^777777200^000000
+Weight: ^777777200^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Minstrel^000000
+#
+1988#
+This whip, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
++20% Ranged Physical damage.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +130.
+Class: ^777777Whip^000000
+ATK: ^777777200^000000
+Weight: ^777777220^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Wanderer^000000
+#
+2023#
+This magic staff, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
++18 % Healing effectiveness.
+Creates a chance of recovering HP and SP while you are Magically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK+ 250.
+Class: ^777777Two-handed Staff^000000
+ATK: ^777777120^000000
+Weight: ^777777140^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Mage/Acolyte Classes^000000
+#
+2185#
+This anti-magic shield effectively reflects magic.
+MDEF +10.
+Creates a 3% chance of reflecting single-target attack spells.
+Additional +3% magic-reflecting chance when upgraded to +7. Additional +3% magic-reflecting chance when upgraded to +9.
+Class: ^777777Shield^000000 DEF: ^77777750^000000
+Weight: ^777777100^000000
+Required Level: ^77777799^000000
+Equip To: ^777777All Classes^000000
+#
+2186#
+A revised edition of an encyclopedia that is printed by a Prontera publisher. Thick and sharp-edged, this book is popularly used as a weapon.
+MATK +5. INT +3. DEX +2. CRI +3.
+CRI +2 when upgraded to +7. MATK +5 when upgraded to +9.
+Increases Attack Speed when equipped with Encyclopedia [2]. (Also -1% post attack delay as per Encyclopedia [2]'s Upgrade level.) 
+Increases Attack Speed when equipped with Encyclopedia (Rented). (Also -1% post attack delay as per Encyclopedia (Rented)'s Upgrade level.)
+Class: ^777777Shield^000000 DEF: ^77777750^000000
+Weight: ^77777720^000000
+Required Level: ^77777799^000000
+Equip To: ^777777Priest Classes/Sage Classes/Taekwon Master^000000
+#
+2187#
+This shield surrounded by a dark aura
+has the ability to resist holiness.
+Holy Resistance +30%. MDEF +10.
+Additional Holy Resistance +1% per Upgrade level.
+MDEF +1 per 3 Upgrade levels.
+Class: Armor
+DEF: 75
+Location: Shield
+Weight: 200
+Required Level: 120
+Equip To: 3rd Classes
+#
+2963#
+This magic ring developed in Geffen enhances its wearer's physical abilities.
+ATK +5%.
+Increases Attack Speed (-5% post attack delay) when equipped with Anti-magic Suit.
+Decreases post skill delay by 5% when equipped with Geffen Magic Robe. -5% damage received from Human monsters.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^77777790^000000
+Equip To: ^777777All Classes^000000
+#
+2964#
+This magic ring developed in Geffen enhances its wearer's magical abilities.
+MATK +5%.
+-5% Floating Casting when equipped with Geffen Magic Robe.
+-5% post skill delay when equipped with Anti-magic Suit. -5% damage received from Human monsters.
+Class: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Required Level: ^77777790^000000
+Equip To: ^777777All Classes^000000
+#
+4556#
+MATK +50. Additional MATK +5 per each Upgrade level.
+-70% Fixed Casting.
+Class: ^777777Card^000000
+Equip To: ^777777Helms^000000
+Weight: ^7777771^000000
+#
+4557#
+MATK +25.
+Class: ^777777Card^000000
+Equip To: ^777777Helms^000000
+Weight: ^7777771^000000
+#
+4885#
+MATK +5. -3% Floating Casting.
+#
+4886#
+MATK +10. -3% Floating Casting.
+#
+4887#
+MATK +15. -3% Floating Casting.
+#
+4888#
+MATK +20. -3% Floating Casting.
+#
+4889#
+MATK + 30. -5% Floating Casting.
+#
+6671#
+^ff0000Cannot be traded to another game account.^000000
+This coin, given to the participants of the Geffen Magic Contest, can be exchanged with prizes.
+Weight: ^7777770^000000
+#
+6672#
+^ff0000Cannot be traded to another game account.^000000
+This shard is sustained with Sakray's old, abandoned memories that have the ability to resist Cursed Knight.
+#
+7641#
+A first-aid kit. It also comes with a simple, easy-to-follow manual.
+#
+13093#
+This dagger, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +130.
+Class: ^777777Dagger^000000
+ATK: ^777777100^000000
+Weight: ^77777780^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes/Archer Classes/Merchant Classes/Thief Classes^000000
+#
+13094#
+This dagger was once used for vanquishing an evil slayer and his followers.
++10% ATK against Demon/Undead monsters.
+ATK +5% when upgraded to +9. ATK +7% when upgraded to +12.
+Class: ^777777Dagger^000000 ATK: ^777777120^000000
+Weight: ^77777790^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
+#
+13441#
+This sword, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK 100.
+Class: ^777777Sword^000000
+ATK: ^777777150^000000
+Weight: ^77777770^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes^000000
+#
+15073#
+This suit, developed in Geffen over a long period of time, effectively protects its wearer against potent magic.
+MHP +5%. MDEF +10.
+MDEF +5 when upgraded to +7. MHP +2% when upgraded to +9.
+Class: ^777777Armor^000000 DEF: ^77777750^000000
+Weight: ^777777150^000000
+Required Level: ^77777799^000000
+Equip To: ^777777All Classes^000000
+#
+15074#
+This uniform worn by the Geffen Mages enhances its wearer's concentration while he casts spells. 
+-10% SP consumption.
++15% Floating Casting. Casting cannot be interrupted.
+Additional +5% SP consumption when upgraded to +7. Floating Casting -5% when upgraded to +9.
+Class: ^777777Armor^000000 DEF: ^77777740^000000
+Weight: ^777777100^000000
+Required Level: ^77777799^000000
+Equip To: ^777777All Classes^000000
+#
+15090#
+Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, this armor protects its wearer against holiness and fear.
+Holy Resistance +10%.
+Additional Holy Resistance +2 % per Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777790^000000
+Weight: ^777777240^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes/Archer Classes/Merchant Classes/Thief Classes^000000
+#
+15091#
+Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, this robe protects its wearer against holiness and fear.
+Holy Resistance +10 %.
+Additional Holy Resistance +2 % per Upgrade level.
+Class: ^777777Armor^000000 DEF: ^77777755^000000
+Weight: ^777777130^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Mage/Acolyte Classes^000000
+#
+16027#
+This hammer was once used for vanquishing an evil slayer and his followers.
++10% ATK against Demon/Undead monsters.
+ATK +5% when upgraded to +9. ATK +7% when upgraded to +12.
+Class: ^777777Blunt Weapon^000000 ATK: ^777777125^000000
+Weight: ^777777135^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Novice/Swordsman Classes/Acolyte Classes/Merchant Classes^000000
+#
+16028#
+This hammer, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +120.
+Class: ^777777Blunt Weapon^000000
+ATK: ^777777180^000000
+Weight: ^777777300^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Swordsman/Merchant/Acolyte Classes^000000
+#
+18119#
+This bow, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +110.
+Class: ^777777Bow^000000
+ATK: ^777777180^000000
+Weight: ^777777130^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Archer Classes^000000
+#
+18120#
+This bow was once used for vanquishing an evil slayer and his followers.
++10% ATK against Demon/Undead monsters.
+ATK +5% when upgraded to +9. ATK +7% when upgraded to +12.
+Class: ^777777Bow^000000 ATK: ^777777115^000000
+Weight: ^777777135^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Archer Classes/Rogue Classes^000000
+#
+18820#
+Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, this helm protects its wearer against holiness and fear.
+Holy Resistance 3%.
+Additional Holy Resistance +1% per 2 Upgrade levels.
+Class: ^777777Helm^000000 DEF: ^77777735^000000
+Location: ^777777Upper^000000 Weight: ^77777745^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Classes^000000
+#
+20721#
+Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, this manteau protects its wearer against holiness and fear.
+Holy Resistance 5 %.
+Additional Holy Resistance +1% per 2 Upgrade levels.
++15% Neutral Resistance when equipped with Armor Of Gray, Gray Helmet, and Boots Of Gray. Lets you respond to Melee Physical damage with a chance of casting Level 3 Drain Life.
++15% Neutral Resistance when equipped with Gray Robe, Gray Helmet, and Boots Of Gray. +15% MHP/MSP. +10% MATK.
+Class: ^777777Armor^000000
+DEF: ^77777745^000000
+Location: ^777777Hood^000000
+Weight: ^77777760^000000
+Required Level: ^777777120^000000
+Equip To: ^7777773rd Classes^000000
+#
+21009#
+This great sword, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +120.
+Class: ^777777Two-handed Sword^000000
+ATK: ^777777280^000000
+Weight: ^777777130^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes^000000
+#
+21010#
+This two-handed sword was once used for vanquishing an evil slayer and his followers.
++10% ATK against Demon/Undead monsters.
+ATK +5% when upgraded to +9. ATK +7% when upgraded to +12.
+Class: ^777777Two-handed Sword^000000 ATK: ^777777225^000000
+Weight: ^777777200^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Knight Classes/Crusader Classes^000000
+#
+22033#
+Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, these shoes protect their wearer against holiness and fear.
+Holy Resistance 2%.
+Additional Holy Resistance +1% per 3 Upgrade levels.
+Class: Armor
+DEF: 25
+Location: Footwear
+Weight: 40
+Required Level: 120
+Equip To: 3rd Classes
+#
+22511#
+^ff0000Cannot be traded to another game account.^000000
+It temporarily endows its user with Fenrir's power.
+MATK +25. -50% Fixed Casting.
+Lasts for 5 minutes.
+Weight: ^7777771^000000
+#
+22517#
+A scroll that summons Loki.
+#
+28000#
+This katar, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +80.
+Class: ^777777Katar^000000
+ATK: ^777777220^000000
+Weight: ^777777180^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Guillotine Cross^000000
+#
+28001#
+This katar was once used for vanquishing an evil slayer and his followers.
++10% ATK against Demon/Undead monsters.
+ATK +5% when upgraded to +9. ATK +7% when upgraded to +12.
+Class: ^777777Katar^000000 ATK: ^777777120^000000
+Weight: ^777777120^000000
+Weapon Level: ^7777773^000000
+Required Level: ^777777100^000000
+Equip To: ^777777Assassin Classes^000000
+#
+28100#
+This two-handed axe, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
+It offers incredible power and mana at a great cost.
+INT +6. VIT +6. LUK -6.
+Creates a low chance of regaining HP and SP from 5% of your damage received while you are Physically attacking.
+Consumes 100 HP every 10 seconds.
+Consumes 1,000 HP when unequipped.
+MATK +80.
+Class: ^777777Two-handed Axe^000000
+ATK: ^777777300^000000
+Weight: ^777777400^000000
+Weapon Level: ^7777774^000000
+Required Level: ^777777120^000000
+Equip To: ^777777Swordsman Classes/Merchant Classes^000000
+#
+
+//Hero's trailor Part3
+28310#
+Sarah's left earring. It might help you to use Sarah's power if worn.
+Enables to use skill Heal Lv.1
+^ff0000Trade impossible.^000000
+Class : ^777777Accessory^000000 DEF : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^777777145^000000
+Location : ^777777All Classes^000000
+#
+28311#
+Sarah's right earring. It might help you to use Sarah's power if worn.
+Enables to use skill Teleport Lv.1
+^ff0000Trade impossible.^000000
+Class : ^777777Accessory^000000 DEF : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^777777145^000000
+Location : ^777777All Classes^000000
+#
+15121#
+The robe once worn by Sarah, enstilling mystical power.
+When using magic attacks has a small chance of increasing mATK by 8*the refine level of the robe for a short period of time.
+Class : ^777777Armor^000000 DEF : ^77777735^000000
+Weight : ^77777780^000000
+Required Level : ^777777145^000000
+Location : ^777777All Classes^000000
+#
+4610#
+If the user receives damage greater than their current maximum HP amount, this card will decrease the damage received by a large amount.
+Class : ^777777Card^000000
+Location : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+4939#
+CRI +2
+#
+4940#
+CRI +4
+#
+4941#
+CRI +6
+#
+4942#
+Perfect Dodge +3
+#
+4943#
+Perfect Dodge +4
+#
+4944#
+Perfect Dodge +5
+#
+4945#
+SP Cost -2%
+#
+4946#
+SP Cost -4%
+#
+4947#
+SP Cost -6%
+#
+4948#
+Delay after Skill -2%
+#
+4949#
+Delay after Skill -4%
+#
+4950#
+Delay after Skill -6%
+#
+6803#
+Piece of Ancient Gigantes type monster. Maybe a researcher of some kind would see value in it.
+Weight : ^7777771^000000
+#
+19914#
+Airship Captain Felrockҳ Hat
+It is a different color from normally worn hats.
+Type : ^777777Costume^000000
+Location : ^777777Top^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+15116#
+Armor worn by traveler riding the Airship.
+It is an object robbed by monsters during the Airship attack incident.
+MaxHP + 1000, MaxSP + 100, MDEF + 10.
+All State + 1.
+Smelting impossible, Trade impossible.
+If equipped together with Airship armor, Airship cloak, Airship boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration.
+Type : ^777777Armor^000000    Defense : ^777777100^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+20743#
+Cloak worn by traveler riding the Airship.
+It is an object robbed by monsters during the Airship attack incident.
+Nothing tolerance 10% increase, Flee + 20, Floating Casting 20% decrease.
+Smelting impossible, Trade impossible.
+Type : ^777777Robe^000000  Defense : ^77777725^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+22046#
+Boots worn by traveler riding the Airship.
+It is an object robbed by monsters during the Airship attack incident.
+AGI + 1.
+Attack rate increase (Delay after attack 10% reduction).
+Smelting impossible, Trade impossible.
+Type : ^777777Shoes^000000  Defense : ^77777726^000000
+Weight : ^7777770^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+15117#
+Airship captain Felrockҳ possessions.
+Resolved the airship attack incident and acquired as a trophy.
+MaxHP + 500, MaxSP + 50, MDEF + 10.
+All State + 1.
+If 7 smelting, MaxHP + 500, MaxSP + 50.
+If 9 smelting, MaxHP + 200, MaxSP + 20.
+If 12 smelting, MaxHP + 300, MaxSP + 30.
+If equipped together with Felrockҳ Armor, Felrockҳ Cloak, Felrockҳ Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total smelting is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
+Type : ^777777Armor^000000    Defense : ^77777770^000000
+Weight : ^77777775^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+20744#
+Airship captain Felrockҳ possessions.
+Resolved the airship attack incident and acquired as a trophy.
+Nothing tolerance 10% increase, Flee + 20.
+Floating Casting 10% decrease.
+If 7 smelting, Floating Casting extra 10% decrease.
+If 9 smelting, Floating Casting extra 10% decrease.
+If 12 smelting, Floating Casting extra 5% decrease.
+Type : ^777777Robe^000000    Defense : ^77777712^000000
+Weight : ^77777740^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+22047#
+Airship captain Felrockҳ possessions.
+Resolved the airship attack incident and acquired as a trophy.
+AGI + 1, Attack rate increase (Delay after attack 5% reduction).
+If 7 smelting, AGI + 1, Delay after attack extra 5% decrease
+If 9 smelting, AGI + 1, Delay after attack extra 5% decrease
+If 12 smelting, ASPD + 1.
+Type : ^777777Shoes^000000    Defense : ^77777713^000000
+Weight : ^77777725^000000
+Required Level : ^777777125^000000
+Job : ^777777All^000000
+#
+682#
+A magical drink which increase attack strength when it is taken.
+ATK+30 for 1 minute.
+Weight : ^77777710^000000
+#
+683#
+An enchanted herb which increases magical attack strength when eatenn.
+MATK+30 for 1 minute
+Weight : ^7777775^000000
+#
