@@ -1182,6 +1182,9 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$timeout{'ai'}{'time'} = time;
 		our $quest_generation++;
+
+		$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 	}
 
 	$char->{pos} = {};
@@ -1189,9 +1192,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-	$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
-	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
+	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});	
 }
 
 sub actor_look_at {
@@ -2801,6 +2802,8 @@ sub private_message_sent {
 sub sync_received_characters {
 	my ($self, $args) = @_;
 
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+
 	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
 
 	unless ($net->clientAlive) {
@@ -2893,10 +2896,10 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO ))
 	) {
 		$net->setState(1.5);
-		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 			$charSvrSet{sync_CountDown}--;
 		}
