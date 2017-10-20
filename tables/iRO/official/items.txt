@@ -5032,6 +5032,7 @@
 9062#Novice_Poring_Egg#
 9099#Teddy_Bear_Egg#
 9101#Portable_cage_for_Scatleton#
+9113#Skelion_Egg#
 10001#Skull_Helm#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -5153,6 +5154,7 @@
 11607#Sweet_Crepe#
 11608#Chocolate_Egg#
 11609#Tasty_Cookie_Egg#
+11616#Yummy_Meat#
 11701#(null)#
 11706#Steak#
 11707#Roast_Beef#

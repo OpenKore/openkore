@@ -46994,6 +46994,10 @@ Food Required: ITEM
 ^800080While Summoned^000000
 Increases the recovery rate of ^008080ITEM^000000 consumables by 1031%.
 #
+9113#
+An egg in which a Skelion Cute Pet rests. Can be hatched by using a [Pet Incubator].
+Type : ^777777Monster Egg^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class : ^777777Cute Pet Armor^000000
@@ -47727,6 +47731,10 @@ Class: Recovery
 Weight: 5
 ^FFFFFF_^000000
 Restores ^00800060^000000 SP.
+#
+11616#
+Skelion’s favourite piece of meat. Pet Food Merchant sells this item.
+Weight : ^7777775^000000
 #
 11701#
 #
