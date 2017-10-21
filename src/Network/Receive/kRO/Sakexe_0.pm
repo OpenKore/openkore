@@ -2452,7 +2452,7 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	 {
-		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 			$charSvrSet{sync_CountDown}--;
 		}
