@@ -230,13 +230,13 @@ sub sendCharInfo {
 		my $index = -1;
 		foreach my $char ($self->getCharacters($session)) {
 			$index++;
-			
-			my $sex = "";
-			my $map = $field->baseName.".gat";
-			if($masterServer->{charBlockSize} == 145 && $masterServer->{serverType} =~ /^iRO/) {			
+
+			my $sex;
+
+			if($masterServer->{charBlockSize} == 145 && $masterServer->{serverType} =~ /^iRO/) {
 				$sex = $char->{sex};
 			}
-			
+
 			next if (!$char);
 			$output .= pack(
 				$self->{recvPacketParser}->received_characters_unpackString,
@@ -274,11 +274,11 @@ sub sendCharInfo {
 				$char->{int},
 				$char->{dex},
 				$char->{luk},
-				0, 
-				0, 
 				0,
-				$map,
-				0, 
+				0,
+				0,
+				$field->baseName.".gat",
+				0,
 				$sex,
 			);
 		}
