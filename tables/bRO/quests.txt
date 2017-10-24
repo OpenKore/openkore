@@ -11657,3 +11657,127 @@ Capture 10 Fadas.#
 7775#Mudança de Classe: Bioquímicos#SG_FEEL#QUE_NOIMAGE#
 A melhor maneira de treinar habilidades com o carrinho é usá-lo contra alguma coisa. Eu lembro de ter visto um monte de Esporos Venenosos em uma jaula...#
 Elimite 100 Esporos Venenosos na jaula da Guilda#
+
+11498#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você foi acordado pelas vozes sussurrantes de fantasmas. Você se encontra em Niflheim, a cidade dos mortos. Vamos ouvir o que os fantasmas tem a dizer.#
+Fale com Hororong#
+
+11499#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Eles disseram que o Jakk da praça pode saber de algo. Vamos perguntar para o Jakk da praça.#
+Fale com Jakk#
+
+11500#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você ouviu sobre o lugar onde Jakk costumava ficar. Vamos voltar para Hooroorong.#
+Fale com Hooroorong#
+
+11501#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Limpos e Secos para Hororong. Eles são pegos ao capturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11502#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você trouxe Jakks para Niflheim. De acordo com os fantasmas, ramos de Jakk nascem se ele ficar no mundo dos vivos por um longo período. Deixe-o descansar.#
+Descanso de Jakk#
+
+11503#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororing. Eles são pegos ao caprturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11504#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+É difícil de entender, mas parece que você precisa pegar Ramo Branco Fino e voltar até Jakk.#
+Colete um Ramo Branco Fino#
+
+11505#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gatinho assustado fugiu quando Jakk foi capturado. Pergunte a  Harorong, quem estava com Jakk.#
+Fale com Harorong#
+
+11506#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Nibble na entrada pode ter visto o bichano. Fale com Nibble na entrada oeste de Niflheim.#
+Nibble no oeste de Niflheim#
+
+11507#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Um pequeno, e branco objeto foi avistado na entrada pouco tempo atrás. Eles não tem certeza se era um gato. Vamos perguntar para alguém fora da entrada.#
+Fale com Jakk Aterrorizado#
+
+11508#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o gato de Jakk foi ali. Vamos falar com o Jakk que está tentando encontrar o gato.#
+Fale com Jakk#
+
+11509#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gato de Jakk foi para Midgard através de uma raiz da Yggdrasil. Ele provavelmente foi por Umbala. Vamos investigar.#
+Investigação na entrada Norte de Umbala#
+
+11510#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O pesquisador disse que ele explicou para o gatinho como chegar até Morroc. Vamos investigar perto da entrada Norte de Morroc.#
+Investigação na entrada Norte de Morroc#
+
+11511#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O mercador disse que ele contou a alguém como chegar até Alberta. Vamos investigar perto da entrada Norte de Alberta.#
+Investigação na entrada de Alberta#
+
+11512#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Se você for até o porto, você encontrará muitos gatos que querem roubar seus peixes. Vamos investigar perto do porto.#
+Invesgitação no porto de Alberta#
+
+11513#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Você achou um gato branco, mas não parece ser o gato de Jakk. O monte de areia é suspeito. Vamos investigar.#
+Investigação no Monte de Areia#
+
+11514#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+No monte de areia, você encontrou ossos que parecem vir de um animal pequeno. Você também encontrou uma coleira vermelha com um sino. Vamos voltar até Jakk.#
+Fale com Jakk em Niflheim#
+
+11515#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o Gatinho não está bem. Encontre o Gatinho ao Sul de Jakk.#
+Converse com o Gatinho#
+
+11516#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Gatinho mudou para o Zumbichano de Juba devido à aventura. Conte ao Jakk que ele não pode voltar a ser quem era, pois muito foi mudado.#
+Converse com Jakk#
+
+11517#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Existem diversos gatos no meio do Vale de Gyoll. Tente encontrar o gatinho ali.#
+Procure pelo Gato#
+
+11518#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você encontrou diversos zumbichanos no meio do Vale de Gyoll, mas eles não parecem bem. Colete ^ff00005 Pelugens Negras^000000 para esquentar o Zumbichano.#
+5 Pelugens Negras#
+
+11519#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano ficou muito triste para continuar conversando. Volte até Jakk.#
+Converse com Jakk#
+
+11520#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk ama seu gato demais para ter outro gato em seu lugar. Converse com Zumbichano de Juba novamente.#
+Converse com o Zumbichano de Juba#
+
+11521#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano de Juba não quer mais conversar. Volte até Jakk.#
+Converse com Jakk#
+
+11522#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que esperaria pelo Gatinho e pediu que você cuidasse dos outros gatos. Ajude zumbichanos no Vale de Gyoll ao coletar ^ff000010 Ramos Brancos Finos^000000.#
+Para o Vale de Gyoll#
+
+11523#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Ao se recuperar, Zumbichano ficou com fome. Colete ^ff000010 Peixes Frescos^000000.#
+10 Peixes Frescos#
+
+11524#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano pediu por mais ^ff000020 Ramos Brancos Finos^000000. Colete-os.#
+20 Ramos Brancos Finos#
+
+11525#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano parece estar com o mesmo vigor que o Zumbichano de Juba. Pergunte ao Zumbichano de Juba sobre isso.#
+Converse com Zumbichano de Juba#
+
+11526#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano de Juba também estará partindo em uma nova jornada. Converse com Jakk sobre isso.#
+Conte ao Jakk#
+
+11527#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk deve estar cansado. Volte a falar com ele após as 4 da manhã.#
+Até amanhã, Jakk!#
+
+11528#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Permite pegar Pelugens Negras dos monstros do Vale de Gyoll.#
+Coletor de Pelugens Negras#

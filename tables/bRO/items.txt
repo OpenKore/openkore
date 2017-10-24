@@ -7314,7 +7314,7 @@
 25133#Ramo Branco Seco#
 11605#Biscoito de Morcego#
 11550#Bolo de Abóbora#
-25132#Decoração de Abóbora#
+25132#Abóbora de Decoração#
 20430#Crânios Etéreos de Morroc#
 20130#Cartola Sussurrante#
 20174#Chapéu de Bruxa Laranja#
@@ -7860,4 +7860,22 @@
 19101#Familiar de Combate#
 20398#Chapéu de Coelho Maldito#
 31120#Orelhas de Vampiro#
+//*****************************************************
+//------------Aplicar em 2017-10-17--------------------
+//*****************************************************
+28739#Lacma#
+20452#Coroa do Príncipe Moranguinho#
+18744#Gotas da Via Láctea#
+16074#Martelo Cósmico#
+//*****************************************************
+//------------Halloween 2017-10-31--------------------
+//*****************************************************
+31387#Jakk Aventureiro#
+9113#Ovo de Esqueleão#
+10042#Juba Negra#
+25408#Memória de Gyoll#
+25421#Decoração de Abóbora#
+25422#Ramo Branco Fino#
+25401#Pelugem Negra#
+11616#Porco Defumado#
 //file end

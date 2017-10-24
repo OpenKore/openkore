@@ -18324,15 +18324,17 @@ Classes que utilizam: ^777777Todas^000000
 #
 5293#
 Um macarrão instantâneo recém preparado que, por algum motivo, você resolveu colocar na cabeça. Por exigir um nível de concentração e equilíbrio imenso (oras, ele está quente e pode cair em você!), aumenta gradativamente sua destreza. Se cair em cima de seus inimigos, é queimadura de terceiro grau na certa!
-DES + 4. Não pode ser aprimorado. Chance de conjurar a habilidade “Diminuir Agilidade” nível 1 sempre que o usuário receber dano físico.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+^a400cdNão pode ser refinado.^000000
+^0000ffDES +4.^000000
+Ao receber danos físicos:
+^0000ff0,3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+Tipo: ^777777Equipamento para Cabeça ^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
 Peso: ^77777750^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
-
 // --------------- ??? 3?? ??? ?? --------------------
 5318#
 Um chapéu feito exclusivamente para o terceiro aniversário de Ragnarök Online no Brasil. Vai dizer que você nunca quis ter um Poring de verdade em sua cabeça?
@@ -21127,9 +21129,10 @@ Classes que utilizam: ^777777Somente Atiradores de Elite^000000
 #
 
 2423#
-Sapatos que parecem ter algo errado. O fabricante tinha a intenção
-de corrigir os sapatos, mas não conseguiu.
+Sapatos que parecem ter algo errado. O fabricante tinha a intenção de corrigir os sapatos, mas não conseguiu.
 ^0000ffHP e SP máx. +20%.^000000
+A cada refino:
+^0000ffHP e SP máx. -1%.^000000
 A cada 2 refinos:
 ^0000ffDEF +1.^000000
 Tipo: ^777777Calçado^000000
@@ -26035,7 +26038,7 @@ Uma adaga projetada especialmente para cortar.
 Não é possível refinar.
 Tipo: ^777777Adaga^000000
 Ataque: ^77777750^000000
-Peso: ^7777770^000000
+Peso: ^7777770.1^000000
 Nível da Arma: ^7777771^000000
 Classes que utilizam:  ^777777Aprendiz / Espadachim / Bruxo / Arqueiro / Mercador / Gatuno / Espiritualista / Ninja^000000
 #
@@ -37834,14 +37837,20 @@ Classe : ^777777Todas as classes^000000
 
 18631#
 Um laço que se tornou famoso por ser muito usado pela famosa cozinheira Sanja. Dizem que carrega um encantamento especial que melhora a destreza de seu usuário na cozinha, assim como também dá um pouco de sorte para que suas receitas sempre se tornem pratos deliciosos.
-DES+ 3, SOR+ 1.
-Caso refinado em +7 adiante, possui a pequena chance de obter Kit de Culinária Portátil, Kit de Culinária Caseiro, Kit de Culinária Profissional, Kit de Culinária Real e Kit de Culinária Fantástico ao derrotar monstros.
-Tipo : ^777777Equipamento para cabeça^000000
+^0000ffDES +3. SOR +1.^000000
+Refino +7 ou mais:
+^0000ffAo derrotar monstros, chances de derrubar os Kits de Culinária:^000000
+^0000ffPortátil, 5% de chance.^000000
+^0000ffCaseiro, 5% de chance.^000000
+^0000ffProfissional, 4% de chance.^000000
+^0000ffReal, 3% de chance.^000000
+^0000ffFantástico, 2% de chance.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível Necessário : ^77777770^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
 #
 
 18645#
@@ -40620,8 +40629,9 @@ Peso: ^7777775^000000
 #
 12633#
 Produção especial de Malangdo, enlatado para que você possa guardar com facilidade. É conhecida estranhamente por dar poderes às pessoas.
-Aumenta a experiência base e experiência de classe em 10% por 20 min. (pode sobrepor outros itens de experiência e são válidos apenas para a caça de monstros)
-Aumenta em 20% a taxa de itens derrubados por monstros por 20 min.
+^0000ffEXP adquirida por monstros +10%.^000000
+^0000ffTaxa de DROP +20%.^000000
+Duração: ^77777720 minutos^000000
 Peso: ^7777775^000000
 #
 12636#
@@ -54905,7 +54915,7 @@ Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^77777712^000000
 Peso: ^77777780^000000
-Nível necessário: ^7777771^000000
+Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
 20853#
@@ -54952,5 +54962,131 @@ Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-10-24--------------------
+//*****************************************************
+28739#
+Uma adaga cerimonial toda decorada em ouro e gemas. Os dentes em sua lâmina
+fazem um estrago nos inimigos. Alguns a comparam com um abridor de latas, mas no
+caso desta adaga, um abridor de barrigas. É extremamente afiada e deve ser
+manuseada com muito cuidado.
+^0000ffRecupera 2 de SP a cada ataque físico.^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +40.^000000
+Refino +6 ou mais:
+^0000ffDano físico contra oponentes de tamanho Médio +10%.^000000
+^0000ffAo realizar ataques físicos, 2% de chance de [anular a penalidade de tamanho da arma] por 5 segundos.^000000
+Refino +9 ou mais:
+^0000ffDano físico contra oponentes de tamanho Médio +20% adicional.^000000
+Refino +12 ou mais:
+^0000ffAnula a penalidade de tamanho da arma.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777745^000000
+Peso: ^77777765^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Arqueiros, Gatunos, Mercadores, Ninjas, Magos, Espiritualistas e evoluções^000000
+#
+20452#
+Extravagante como só ele consegue ser, esse item adorna sua cabeça com grandes
+morangos silvestres colhidos da Floresta Encantada. Dizem que o príncipe e sua corte
+estão tão escondidos na floresta quanto os morangos silvestres que plantam.
+Saia exibindo esse presente da realeza, mas controle-se para não devorar a coroa
+inteira!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+18744#
+Qualquer um vai poder brilhar como um diamante com esta pequena amostra do brilho da galáxia. Vindas direto da Via Láctea para mostrar que você não precisa de joias para brilhar, esses pedacinhos do Universo são meramente visuais, mas vão te dar aquele merecido banho de glamour!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+16074#
+Feito para os Superaprendizes mais brutos e contendo a força de um meteoro, esse martelo pesado é perfeito para a pancadaria! Não se esqueça de aumentar seus níveis de habilidade para que seus inimigos descubram  qual é o verdadeiro impacto de uma explosão cósmica!
+^0000ffA cada refino até o +10:^000000
+^0000ffATQ +10.^000000
+FOR base 108 ou mais:
+^0000ffCusto de SP das habilidades -10%.^000000
+FOR base 120 ou mais:
+^0000ffCusto de SP das habilidades -20% adicional.^000000
+A cada nível de [Perícia em Armamento]:
+^0000ffATQ +5.^000000
+A cada nível de [Perícia com Machado e Espada]:
+^0000ffATQ +7.^000000
+^0000ffPrecisão +5.^000000
+A cada nível de [Punho de Ferro]:
+^0000ffATQ +30.^000000
+Ao aprender [Usar Carrinho] nv. 10:
+^0000ffHabilita [Cavalo-de-Pau] nv. 1.^000000
+Ao aprender [Perícia com Espada] nv. 1:
+^0000ffHabilita [Impacto de Tyr] nv. 1.^000000
+A cada nível de [Perícia com Espada]:
+^0000ffNível de [Impacto de Tyr] +1.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^7777771^000000
+Peso: ^7777772.000^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Superaprendizes^000000
+#
+//*****************************************************
+//------------Halloween 2017-10-31--------------------
+//*****************************************************
+31387#
+É o Jakk com um corpo pouco desenvolvido.
+Ele não consegue se mover, mas isso não impede que ele te acompanhe nas suas aventuras.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+9113#
+Um ovo contendo um Esqueleão de estimação. Deve ser chocado por uma [Incubadora].
+Tipo: ^777777Ovo de Mascote^000000
+Peso: ^7777770^000000
+#
+10042#
+Uma juba negra maneira que vai fazer com que seu bichinho se sinta como um verdadeiro Rei.
+Tipo: ^777777Acessório de Mascote^000000
+Mascote: ^777777Esqueleão^000000
+Peso: ^7777770^000000
+#
+25408#
+Memórias de Gyoll. Contém informações essenciais do passado. Manuseie com cuidado.
+^0000ffItem de evolução do Zumbichano.^000000
+^ff0000Intransferível.^000000
+Peso: ^7777770^000000
+#
+25421#
+A decoração mais importante do Halloween!
+A vela em seu interior é o toque especial do clima de Halloween.
+^ff0000Intransferível.^000000
+Peso: ^7777770^000000
+#
+25422#
+Um Ramo Branco Fino.
+Pode ser utilizado como decoração de Halloween.
+^ff0000Intransferível.^000000
+Peso: ^7777770^000000
+#
+25401#
+Pelugem negra decomposta. O cheiro é insuportável.
+^ff0000Intransferível.^000000
+Peso: ^7777770^000000
+#
+11616#
+A comida favorita do Esqueleão. Pode ser comprada com o Adestrador.
+Peso: ^7777775^000000
 #
 //file end
