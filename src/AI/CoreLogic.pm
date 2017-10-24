@@ -1682,6 +1682,7 @@ sub processAutoSell {
 
 			$args->{sentSellPacket_time} = time;
 			
+			Plugins::callHook('AI_sell_auto_done');
 		}
 	}
 }
@@ -1730,6 +1731,7 @@ sub processAutoBuy {
 		# buyAuto finished
 		$ai_v{'temp'}{'var'} = AI::args->{'forcedBySell'};
 		$ai_v{'temp'}{'var2'} = AI::args->{'forcedByStorage'};
+		Plugins::callHook('AI_buy_auto_done');
 		AI::dequeue;
 
 		if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
@@ -1739,6 +1741,7 @@ sub processAutoBuy {
 		}
 
 	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait})) {
+		Plugins::callHook('AI_buy_auto');
 		my $args = AI::args;
 		
 		if (exists $args->{sentBuyPacket_time} && exists $args->{index_failed}{$args->{lastIndex}}) {
