@@ -1,5 +1,6 @@
 # see kRO client: luafiles514\lua files\stateicon\EFSTIDs.lub
 # example: https://github.com/conan513/ClientSide/blob/master/Lua_Project/lua%20files/stateicon/efstids.lua
+#https://github.com/zackdreaver/ROenglishRE/blob/master/data/luafiles514/lua%20files/stateicon/efstids.lub
 0 EFST_PROVOKE
 1 EFST_ENDURE
 2 EFST_TWOHANDQUICKEN
@@ -901,7 +902,6 @@
 935 EFST_DORAM_BUF_01
 936 EFST_DORAM_BUF_02
 937 EFST_SPRITEMABLE
-#https://github.com/zackdreaver/ROenglishRE/blob/master/data/luafiles514/lua%20files/stateicon/efstids.lub
 938 EFST_AID_PERIOD_RECEIVEITEM
 939 EFST_AID_PERIOD_PLUSEXP 
 940 EFST_AID_PERIOD_PLUSJOBEXP 
@@ -928,7 +928,7 @@
 989 EFST_PHARAOH_CARD
 990 EFST_KIEL_CARD
 992 EFST_CHEERUP
-995	EFST_S_MANAPOTION
+995 EFST_S_MANAPOTION
 996 EFST_M_DEFSCROLL
 1000 EFST_AS_RAGGED_GOLEM_CARD
 1001 EFST_LHZ_DUN_N1
