@@ -354,6 +354,11 @@ sub new {
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		
+
 	};
 
 	# Item RECORD Struct's
@@ -2413,6 +2418,7 @@ sub received_characters {
 		$chars[$slot]{zeny} = $zeny;
 		$chars[$slot]{exp_job} = $jobExp;
 		$chars[$slot]{lv_job} = $jobLevel;
+		$chars[$slot]{lastJobLvl} = $jobLevel;#This is for counting exp
 		$chars[$slot]{hp} = $hp;
 		$chars[$slot]{hp_max} = $maxHp;
 		$chars[$slot]{sp} = $sp;
@@ -2420,6 +2426,7 @@ sub received_characters {
 		$chars[$slot]{jobID} = $jobId;
 		$chars[$slot]{hair_style} = $hairstyle;
 		$chars[$slot]{lv} = $level;
+		$chars[$slot]{lastBaseLvl} = $level;#This is for counting exp
 		$chars[$slot]{headgear}{low} = $headLow;
 		$chars[$slot]{headgear}{top} = $headTop;
 		$chars[$slot]{headgear}{mid} = $headMid;
@@ -2432,15 +2439,33 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = $accountSex2;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} == 145 && $masterServer->{serverType} =~ /^iRO/) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
 
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
+		$chars[$slot]{map_name} = $mapname;
+		$chars[$slot]{map_name} =~ s/\.gat//g;
+	}
+
+	# FIXME better support for multiple received_characters packets
+	## Note to devs: If other official servers support > 3 characters, then
+	## you should add these other serverTypes to the list compared here:
+	 {
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+			$charSvrSet{sync_CountDown}--;
+		}
+		return;
 	}
 
 	message T("Received characters from Character Server\n"), "connection";
 
+	# gradeA says it's supposed to send this packet here, but
+	# it doesn't work...
+	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
+	
 	if ($masterServer->{pinCode}) {
 		message T("Waiting for PIN code request\n"), "connection";
 		$timeout{'charlogin'}{'time'} = time;
