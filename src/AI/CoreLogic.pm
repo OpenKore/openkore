@@ -1682,7 +1682,7 @@ sub processAutoSell {
 
 			$args->{sentSellPacket_time} = time;
 			
-			Plugins::callHook('AI_sell_auto_complete');
+			Plugins::callHook('AI_sell_auto_done');
 		}
 	}
 }
