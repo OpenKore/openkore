@@ -81,12 +81,9 @@ sub new {
 		$self->{packetPending} = '';
 		$clientBuffer = '';
 	}
-	
-	$packetParser = Network::Receive->create($self, $masterServer->{serverType});
-	$messageSender = Network::Send->create($self, $masterServer->{serverType});
+
 	$self->{tokenizer} = new Network::MessageTokenizer($self->getRecvPackets());
-	$clientPacketHandler = Network::ClientReceive->new;
-	
+
 	message T("X-Kore mode intialized.\n"), "startup";
 	
 	return $self;
@@ -367,6 +364,11 @@ sub checkServer {
 			$self->{nextIp} = $master->{ip};
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
+			eval {
+				$clientPacketHandler = Network::ClientReceive->new;
+				$packetParser = Network::Receive->create($self, $masterServer->{serverType});
+				$messageSender = Network::Send->create($self, $masterServer->{serverType});
+			};
 			if (my $e = caught('Exception::Class::Base')) {
 				$interface->errorDialog($e->message());
 				$quit = 1;
