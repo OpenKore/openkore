@@ -21985,3 +21985,7 @@ Hunt the Dream Demon.#
 62960#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
 You can try again tomorrow.#
 #
+
+62961#Trick or Treat#SG_FEEL#QUE_NOIMAGE#
+Give candy away again.#
+#
