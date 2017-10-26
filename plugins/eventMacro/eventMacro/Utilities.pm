@@ -529,6 +529,8 @@ sub find_accessed_variable {
 		my $name = $1;
 		my $open_bracket = $2;
 		my $complement = $3;
+		$complement =~ s/^\s+//;
+		$complement =~ s/\s+$//;
 		return if (!defined $complement || $complement eq '');
 		my $close_bracket = $4;
 		
@@ -543,7 +545,7 @@ sub find_accessed_variable {
 			return if ($complement !~ /^\d+$/ && !find_variable($complement));
 			
 		} elsif ($type eq 'accessed_hash') {
-			return if ($complement !~ /^[a-zA-Z\d]+$/ && !find_variable($complement));
+			return if ($complement !~ /^[a-zA-Z\d ]+$/ && !find_variable($complement));
 		}
 		
 		my $original_name = ('$'.$name.$open_bracket.$complement.$close_bracket);
