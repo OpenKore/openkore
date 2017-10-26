@@ -1562,7 +1562,7 @@
 2569#Shawl_Of_Affection#
 2570#Shawl_Of_Judgement#
 2571#Eden_Group_Manteau_II#
-2573#Archangel_Wing#
+2573#Archangel_Wings#
 2574#Ur's_Manteau#
 2575#Peuz's_Manteau#
 2576#Heroic_Backpack#
@@ -1574,7 +1574,7 @@
 2582#Salvage_Cape#
 2586#WoE_Manteau#
 2587#WoE_Muffler#
-2589#Fallen_Angel_Wing#
+2589#Fallen_Angel_Wings#
 2590#Buwaya_Sack_Cloth#
 2591#Buwaya_Sack_Cloth(Bayani)#
 2596#Sharel_Manteau#
@@ -5072,6 +5072,7 @@
 10038#Horn_Barrier#
 10039#placeholder#
 10040#Red_Bell_Necklace#
+10042#Dark_Mane#
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
 11002#Chef_King_Orleans_Vol.1#
@@ -7480,7 +7481,7 @@
 17380#Satanic_Shield_Shadow_Box#
 17381#Lucky_Care_Package_Remix#
 17382#Overseas_Care_Package_IX#
-17383#Cadi_Shield_Shadow_Box#
+17383#Blast_from_the_Past_Box#
 17384#Bloody_Shoes_Shadow_Box#
 17385#Liberation_Shoes_Shadow_Box#
 17386#Chemical_Shoes_Shadow_Box#
@@ -7750,7 +7751,7 @@
 18663#Sunglasses_Baseball_Hat#
 18664#Stunner_Shades#
 18665#Orange_In_Mouth#
-18666#CD_In_Mouth#
+18666#CD_in_Mouth#
 18667#Cat_Lace_Hairband#
 18668#Droopy_Turtle_Hat#
 18669#Cowhide_Hat#
