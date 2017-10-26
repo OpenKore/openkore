@@ -3490,7 +3490,7 @@ sub skillUse_string {
 		$source->nameString(),
 		$source->verb(T('use'), T('uses')),
 		$skillName,
-		($level != 65535) ? ' ' . TF("(Lv: %s)", $level) : '',
+		($level != 65535 && $level != 4294967295) ? ' ' . TF("(Lv: %s)", $level) : '',
 		T('on'),
 		$target->nameString($source),
 		($damage != -30000) ? ' ' . TF("(Dmg: %s)", $damage || T('Miss')) : '',
@@ -3505,7 +3505,7 @@ sub skillUseLocation_string {
 		$source->nameString(),
 		$source->verb(T('use'), T('uses')),
 		$skillName,
-		($args->{lv} != 65535) ? ' ' . TF("(Lv: %s)", $args->{lv}) : '',
+		($args->{lv} != 65535 && $args->{lv} != 4294967295) ? ' ' . TF("(Lv: %s)", $args->{lv}) : '',
 		T('on location'),
 		$args->{x},
 		$args->{y});
