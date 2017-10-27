@@ -6831,7 +6831,7 @@
 19891#Rideword_Hat_Certificate#
 19892#Lunatic_Hat_Certificate#
 19894#Bronze_Key#
-19893#Takius_Blindfold_Certificate#
+19893#Takius'_Blindfold_[0]_Certificate#
 19895#Tier_1_Treasure_Cache#
 19898#Evil_Marching_Hat_Certificate#
 19899#Skull_Cap_Certificate#
@@ -6925,3 +6925,4 @@
 19983#Amistr_Cap_Certificate#
 19984#Pizza_Hat_Certificate#
 19985#Filir's_Pinions_Certificate#
+19986#Takius'_Blindfold_[1]_Certificate#

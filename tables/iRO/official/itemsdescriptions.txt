@@ -15149,46 +15149,42 @@ Reduces the variable casting time of skills by 10%.
 '^339999The Shield of all Shields^000000
 #
 2201#
-Glasses with special,
-darkened lenses that
-block ultraviolet light. Increases resistance
-to Blind status by 5%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+^808080Glasses with special, darkened lenses that block ultraviolet light.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+Increases resistance to ^800000Blind^000000 by 5%.
 #
 2202#
-Glasses with special,
-darkened lenses that
-block ultraviolet light. Increases resistance
-to Blind status by 5%.
-^ff0000These will all be made unable to refine during the 1/6 maintenance and returned to +0 refine.^000000
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+^808080Glasses with special, darkened lenses that block ultraviolet light.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+Increases resistance to ^800000Blind^000000 by 5%.
 #
 2203#
-Prescription glasses
-worn to compensate
-for defects in vision.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+^808080A pair of prescription glasses worn to compensate for defects in vision.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
 #
 2204#
-Prescription glasses
-worn to compensate
-for defects in vision.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^FFFFFF                ^000000 Jobs: ^777777All^000000
+^808080A pair of prescription glasses worn to compensate for defects in vision.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
 #
 2205#
 Sturdy goggles
@@ -19127,13 +19123,12 @@ Required Level : ^77777760^000000
 Jobs : ^777777All Jobs^000000
 #
 2573#
-White wings of a holy Archangel.
-Slot : ^7777771^000000
-Class : ^777777Garment^000000
-Defense : ^77777718^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^808080A pair of white wings from an archangel.^000000
+Class: Garment
+Defense: 18
+Weight: 20
+Required Level: 1
+Required Jobs: All Jobs
 #
 2574#
 A manteau created by Ur Runestones
@@ -19154,28 +19149,27 @@ Required Level : ^777777100^000000
 Job : ^777777Rune Knight^000000
 #
 2576#
-A backpack befitting of any hero.
-Enables the use of level 1 Greed
-If refined to +7 or higher and base stats (without modifiers) is equal to 90 or higher,
--Str -> Attack +20
--Int -> Magic Attack +30
--Vit -> Tolerance to Neutral Property +5
--Agi -> Aspd +8%
--Dex -> Ranged Attack +5
--Luk -> Inflict 10% more critical attack.
-^660000OR^000000
-If refined to +9 or higher and base stats (without modifiers) is equal to 90 or higher,
--Str -> Attack +30
--Int -> Magic Attack +50
--Vit -> Tolerance to Neutral Property +10
--Agi -> Aspd +8% & Aspd +1
--Dex -> Ranged Attack +10
--Luk -> Inflict 15% more critical attack.
-Class : ^777777Garment^000000
-Defense: ^77777720^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+^808080A backpack befitting of any hero.^000000
+Class: Garment
+Defense: 20
+Weight: 20
+Required Level: 1
+Required Jobs: All Jobs
+Enables ^0000FFLevel 1 Greed^000000.
+If upgrade level is +7 or higher,
+Atk + 20 if the users base Str is 90 or higher.
+Matk + 20 if the users base Int is 90 or higher.
+Aspd + 8% if the users base Agi is 90 or higher.
+Increases long-ranged damage on targets by 5% if the users base Dex is 90 or higher.
+Increases critical damage on targets by 10% if the users base Luk is 90 or higher.
+Reduces damage taken from Neutral property attacks by 5% if the users base Vit is 90 or higher.
+If upgrade level is +9 or higher,
+Additional Atk + 10 if the users base Str is 90 or higher.
+Additional Matk + 10 if the users base Int is 90 or higher.
+Aspd + 1 if the users base Agi is 90 or higher.
+Increases long-ranged damage on targets by an additional 5% if the users base Dex is 90 or higher.
+Increases critical damage on targets by an additional 5% if the users base Luk is 90 or higher.
+Reduces damage taken from Neutral property attacks by an additional 5% if the users base Vit is 90 or higher.
 #
 2577#
 A manteau that contains the reliquery remains of an ancient Assassin
@@ -19260,7 +19254,7 @@ Required Level : ^77777795^000000
 Jobs : ^777777All^000000
 #
 2589#
-^808080Large, black wings of a fallen angel.^000000
+^808080A pair of black wings from a fallen angel.^000000
 Class: Garment
 Defense: 18
 Weight: 20
@@ -34525,16 +34519,16 @@ Required Level : ^77777760^000000
 Jobs : ^777777All^000000
 #
 5360#
-Wickebine's black cat ears
-Increases critical attack damage by 10%.
-Adds 5% chance magical defense ignored for 5 seconds when dealing magical damage.
-FLEE + 10
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^77777745^000000
-Jobs : ^777777All Except Novice^000000
+^808080A pair of cute black cat ears used by Wickebine.^000000
+Class: Headgear
+Position: Upper
+Defense: 4
+Weight: 20
+Required Level: 45
+Required Jobs: All Jobs except Novice Jobs
+Flee + 10
+Increases critical damage on targets by 10%.
+Adds a 5% chance to bypass 25% of magical defense on normal monsters and players for 5 seconds when performing a magical attack.
 #
 5361#
 A gangster's red scarf.
@@ -36195,25 +36189,25 @@ Required Level : ^7777770^000000
 Jobs : ^777777All^000000
 #
 5564#
-A deceptive crown that was once used to summon monsters.
-^FFFFFF_^000000
-^FF0000Concept created during the Summer 2008 Create a headgear Contest.
-Created by Areitus^000000
-^FFFFFF_^000000
-Int + 4, Mdef +10,
-Cast-time reduced by 10%.
-If refined to +7 or higher,
-Def +2, Matk +5%
-additional Cast-time reduced by 5%.
-If refined to +9 or higher,
-additional Mdef +5 and Matk +5%,
-additional Cast-time and after-cast delay reduced by 5%.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper & Middle ^000000
-Weight : ^77777730^000000
-Level : ^77777785^000000
-Job : ^777777All Jobs^000000
+^808080A deceptive crown that was once used to summon monsters.^000000
+Class: Headgear
+Position: Upper, Middle
+Defense: 3
+Weight: 30
+Required Level: 85
+Required Jobs: All Jobs
+Int + 4
+Mdef + 10
+Reduces the variable casting time of skills by 10%.
+If upgrade level is +7 or higher,
+Def + 2
+Matk + 5%
+Reduces the variable casting time of skills by an additional 5%.
+If upgrade level is +9 or higher,
+Additional Matk + 5%
+Additional Mdef + 5
+Reduces the variable casting time of skills by an additional 5%.
+^67CDC9Concept by Areitus.^000000
 #
 5567#
 A hat to commemorate the Sinulog Festival, you felt stronger while wearing it.
@@ -47210,6 +47204,12 @@ Applicable Pet: ^777777Imp^000000
 Type: Pet Equipment
 Weight: 0
 Required Monster: Scatleton
+#
+10042#
+A cool looking dark mane, you will feel like a true king.
+Type : ^777777Pet Equipment^000000
+Job : ^777777Skelion^000000
+
 #
 11000#
 A book documenting the history of Prontera. There's a whole chapter dedicated to Tristam III.
@@ -66925,6 +66925,25 @@ Wing of Beezlebub Box
 (4) Safe to 7 Random Boxes
 #
 17383#
+^FF0000Account Bound^000000
+^FF00001^000000
+Class: Item Giver
+Weight: 0
+When opened gives one of the following,
+Heroic Backpack [1]
+Fallen Angel Wing [1]
+Archangel Wing [1]
+White Drooping Eddga Hat
+Wickebine's Black Cat Ears
+Glasses [1]
+Sunglasses [1]
+CD In Mouth
+Little Feather Hat [1]
+Crown of Deceit [1]
+Aqua Bunny Band
+Maroon Bunny Band
+Amistr Bag
+
 #
 17384#
 #
@@ -68728,18 +68747,26 @@ Required Level : ^77777710^000000
 Job : ^777777All^000000
 #
 18541#
-A soft feathered archer's cap that gives you that dash of Errol Flynn flair.
-Dex +2.
-Critical Damage +10%.
-Special Effect:
-If equipped with 'Sharp Arrow's, adds an additional Critical Damage +5%. If equipped with a +7 Little Feather Hat[1] or higher, adds an additional Critical Damage +5% with 'Sharp Arrow's.
-When equipped with the bow +10 Falken Blitz[2], the cast time of [Focus Arrow Strike] is reduced by 50%.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777730^000000
-Job : ^777777All^000000
+^808080A soft feathered archer's cap that gives you that dash of Errol Flynn flair.^000000
+Class: Headgear
+Position: Upper
+Defense: 1
+Weight: 50
+Required Level: 30
+Required Jobs: All Jobs
+Dex + 2
+Increases critical damage on targets by 10%.
+^800080Set Bonus^000000
+^008080Falken Blitz^000000
+^008080Little Feather Hat^000000
+If ^008080Falken Blitz^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of ^0000FFFocused Arrow Strike^000000 by 50%.
+^800080Set Bonus^000000
+^008080Little Feather Hat^000000
+^008080Sharp Arrow^000000
+Increases critical damage on targets by 5%.
+If ^008080Little Feather Hat^000000 upgrade level is +7 or higher,
+Increases critical damage on targets by an additional 5%.
 #
 18542#
 A headdress worn by high level members of warrior clergy members.
@@ -69734,14 +69761,14 @@ Required Level : ^77777720^000000
 Jobs : ^777777All class except novice^000000
 #
 18666#
-Burn away as you hold this CD in our mouth.
-While attacking has a 6% chance of activating for 5 seconds a random level 1-5 [Fire Bolt] [Cold Bolt] [Lightning Bolt] [Earth Spike] or [Soul Strike] on your target.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777720^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All class except novice^000000
+^808080Burn away as you hold this CD in your mouth.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 20
+Required Level: 20
+Required Jobs: All Jobs except Novice Jobs
+Adds a 6% chance of buffing the user for 5 seconds when performing a physical or magical attack; Adds a 100% chance of casting a random level 1 to 5 ^0000FFCold Bolt^000000, ^0000FFEarth Spike^000000, ^0000FFFire Bolt^000000, ^0000FFLightning Bolt^000000 or ^0000FFSoul Strike^000000 on the target when performing a physical or magical attack.
 #
 18667#
 Laced hairband decorated with two kitten figures.
@@ -71511,28 +71538,41 @@ Required LV : ^7777771^000000
 Jobs : ^777777All^000000
 #
 18887#
-A hairband that attracts individuals.
-You can wear it when you want to look sexy.
-Sexiness increases by 100%
-VIT + 3, MDEF + 5, MATK + 2%
-If refined to 9, MDEF + 5 and MATK 4%
-If refined to 12, reduce fix casting time by 10%
-Type : ^777777Headgear^000000 Defense : ^7777772^000000
-Location : ^777777Upper ^000000Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A hairband that attracts individuals. You can wear it when you want to look sexy.^000000
+Class: Headgear
+Position: Upper
+Defense: 2
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+Vit + 3
+Matk + 2%
+Mdef + 2
+Increases sexiness by 100%.
+If upgrade level is +9 or higher,
+Additional Matk + 4%
+Additional Mdef + 5
+If upgrade level is +12 or higher,
+Reduces the fixed casting time of skills by 10%.
 #
 18888#
-A hairband that attracts individuals.
-You can wear it when you want to look sexy.
-Sexiness increases by 100%
-INT +5  LUK + 5 ATK +2%  MATK + 5%
-If refined to 9,  increase ATK and MATK by 4%
-If refined to 12, reduce fix casting time by 10%
-Type : ^777777Headgear^000000 Defense : ^7777772^000000
-Location : ^777777Upper ^000000Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^808080A hairband that attracts individuals. You can wear it when you want to look sexy.^000000
+Class: Headgear
+Position: Upper
+Defense: 2
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+Int + 5
+Luk + 5
+Atk + 2%
+Matk + 5%
+Increases sexiness by 100%.
+If upgrade level is +9 or higher,
+Additional Atk + 4%
+Additional Matk + 4%
+If upgrade level is +12 or higher,
+Reduces the fixed casting time of skills by 10%.
 #
 18889#
 A hairband that attracts individuals.
@@ -79102,13 +79142,14 @@ Required Level : ^77777765^000000
 Job : ^777777All^000000
 #
 20706#
-Bag that mimics the "Amistr" Oh homunculus.
-ALL Status + 1.
-Tolerance + 5% for the attribute all attacks.
-class : ^777777clothes^000000 Def: ^77777718^000000
-Weight: ^77777750 ^000000
-Req LV: ^7777771 ^000000
-jobs: ^777777All Jobs ^000000
+^808080A bag that resembles the homunculus, Amistr.^000000
+Class: Garment
+Defense: 18
+Weight: 50
+Required Level: 1
+Required Jobs: All Jobs
+All Stats + 1
+Reduces damage taken from Neutral property attacks by 5%.
 #
 20707#
 Wings made from a legendary mythical beast of an East Asian culture.
@@ -84952,7 +84993,7 @@ Aspd + 1
 Aspd + 1
 #
 28502#
-^808080A scarf that is amazing to wear during riots.^000000
+^808080A scarf worn during a revolt. It gives the user the courage they need to never yield to anyone!^000000
 Class: Headgear
 Position: Lower
 Defense: 0
@@ -84961,21 +85002,8 @@ Required Level: 100
 Required Jobs: All Jobs
 Enables ^0000FFLevel 2 Spell Breaker^000000.
 ^800080Set Bonus^000000
-^008080Glasses^000000
+^008080Glasses^000000 or ^008080Sunglasses^000000
 ^008080Mob Scarf^000000
-Max HP + 5% for every combined sum of 80 base Agi and Vit.
-Atk + 6% for every combined sum of 80 base Str and Luk.
-Matk + 120 for every combined sum of 80 base Int and Dex.
-Crit + 5 for every combined sum of 80 base Str and Luk.
-Aspd + 5% for every combined sum of 80 base Agi and Vit.
-Reduces the variable casting time of skills by 3% for every combined sum of 80 base Int and Dex.
-Increases critical damage on targets by 10% for every combined sum of 80 base Str and Luk.
-Reduces damage taken from Demi-Human race enemies by 2%.
-Reduces damage taken from Demi-Human race enemies by an additional 2% for every combined sum of 80 base Agi and Vit.
-Increases the recovery rate of recovery skills by 10% for every combined sum of 80 base Int and Dex.
-^800080Set Bonus^000000
-^008080Mob Scarf^000000
-^008080Sunglasses^000000
 Max HP + 5% for every combined sum of 80 base Agi and Vit.
 Atk + 6% for every combined sum of 80 base Str and Luk.
 Matk + 120 for every combined sum of 80 base Int and Dex.
@@ -85028,9 +85056,10 @@ Reduces the variable casting time of skills by 10%.
 ^008080Celine's Brooch^000000
 ^008080Celine's Ribbon^000000
 All Stats + 1 per upgrade level of ^008080Celine's Ribbon^000000 up to a maximum upgrade level of 10.
+Increases magical damage on boss monster targets by 10%.
 Reduces the fixed casting time of skills by 50%.
 If upgrade level is +7 or higher,
-Increases magical damage on boss monster targets by 20%.
+Increases magical damage on boss monster targets by an additional 20%.
 Reduces damage taken from Demi-Human race enemies by 10%.
 If upgrade level is +9 or higher,
 Increases magical damage on boss monster targets by an additional 20%.
@@ -85043,7 +85072,7 @@ Matk + 50
 Aspd + 2
 Adds a X% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
 Adds a X% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
-Adds a X% chance of casting ^0000FFLevel 1 Reading Spell Book^000000 on the user when performing a magical attack.
+Adds a X% chance of casting ^0000FFLevel 1 Recognized Spell^000000 on the user when performing a magical attack.
 Adds a X% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the attacker when receiving a physical or magical attack.
 ^800080Set Bonus^000000
 ^008080Celine's Brooch^000000
@@ -85356,13 +85385,13 @@ If upgrade level is +8 or higher,
 If the users base Str is 90 or higher,
 Atk + 50
 If the users base Agi is 90 or higher,
-Matk + 30
-If the users base Vit is 90 or higher,
 Aspd + 5%
-If the users base Int is 90 or higher,
+If the users base Vit is 90 or higher,
 Increases the recovery rate of recovery items by 10%.
+If the users base Int is 90 or higher,
+Matk + 30
 If the users base Dex is 90 or higher,
-Reduces/Increases the variable casting time of skills by 5%.
+Reduces the variable casting time of skills by 5%.
 If the users base Luk is 90 or higher,
 Increases critical damage on targets by 5%.
 #
