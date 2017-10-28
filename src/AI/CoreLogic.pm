@@ -1731,8 +1731,8 @@ sub processAutoBuy {
 		# buyAuto finished
 		$ai_v{'temp'}{'var'} = AI::args->{'forcedBySell'};
 		$ai_v{'temp'}{'var2'} = AI::args->{'forcedByStorage'};
-		Plugins::callHook('AI_buy_auto_done');
 		AI::dequeue;
+		Plugins::callHook('AI_buy_auto_done');
 
 		if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
 			AI::queue("storageAuto", {forcedBySell => 1});
