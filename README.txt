@@ -92,7 +92,7 @@ Fixes:
 - Feature: additional "label" parameter "block" to change config block header. (thanks to vit).
   	Syntax:
 		conf <label_name>.(<block_param> | block) [new_value]
-  	Examle:
+  	Example:
 		conf applesEtc.block Meat
 - Feature: route_avoidWalls config option.
 - Fixed: Pets are no longer being seen as monsters, support for extended pet packet(Technology)
