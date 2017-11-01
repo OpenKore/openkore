@@ -2198,6 +2198,10 @@ sub mvp_item {
 	my $display = itemNameSimple($args->{itemID});
 	message TF("Get MVP item %s\n", $display);
 	chatLog("k", TF("Get MVP item %s\n", $display));
+	
+	Plugins::callHook('packet_mvp_item', {
+		display => $display
+	});	
 }
 
 sub mvp_other {
@@ -2205,6 +2209,10 @@ sub mvp_other {
 	my $display = Actor::get($args->{ID});
 	message TF("%s become MVP!\n", $display);
 	chatLog("k", TF("%s become MVP!\n", $display));
+	
+	Plugins::callHook('packet_mvp_other', {
+		display => $display
+	});	
 }
 
 sub mvp_you {
@@ -2212,6 +2220,9 @@ sub mvp_you {
 	my $msg = TF("Congratulations, you are the MVP! Your reward is %s exp!\n", $args->{expAmount});
 	message $msg;
 	chatLog("k", $msg);
+	
+	Plugins::callHook('packet_mvp_you', {
+		msg => $msg	
 }
 
 sub npc_sell_list {
