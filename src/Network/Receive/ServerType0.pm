@@ -2662,6 +2662,7 @@ sub pet_info2 {
 	#	delete $monsters{$ID};
 	#}
 
+	return if ($pet{ID} && ($pet{ID} ne $ID));
 	if ($type == 0) {
 		# You own pet with this ID
 		$pet{ID} = $ID;
