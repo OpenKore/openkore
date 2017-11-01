@@ -4139,4 +4139,22 @@ sub deal_add_you {
 	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
 }
 
+sub skill_exchange_item {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+		message T("Change Material is ready. Use command 'cm' to continue.\n"), "info";
+	} else {
+		message T("Four Spirit Analysis is ready. Use command 'analysis' to continue.\n"), "info";
+	}
+	##
+	# $args->{type} : Type
+	#                 0: Change Material         -> 1
+	#                 1: Elemental Analysis Lv 1 -> 2
+	#                 2: Elemental Analysis Lv 2 -> 3
+	#                 This value will be added +1 for simple check later
+	# $args->{val} : ????
+	##
+	$skillExchangeItem = $args->{type} + 1;
+}
+
 1;

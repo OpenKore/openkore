@@ -12,7 +12,7 @@
 # bRO (Brazil)
 package Network::Send::bRO;
 use strict;
-use base 'Network::Send::ServerType0';
+use base qw(Network::Send::ServerType0);
 use Log qw(debug);
 use Translation qw(T TF);
 

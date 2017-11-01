@@ -226,6 +226,7 @@
 0238 PK Top 10 Ranking
 02AE Initialize Message ID Encryption
 0A3B Hat Effect Info
+07E3 Skill Exchange Item
 
 [Send]
 0064 Account Server Login
@@ -338,3 +339,4 @@
 0829 Char Delete Accept
 098F Char Delete Accept
 082B Char Delete Cancel
+07E4 Item List Window Selected

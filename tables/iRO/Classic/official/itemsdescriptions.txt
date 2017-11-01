@@ -69886,11 +69886,11 @@ Character Bound
 #
 
 19893#
-Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Takius Blindfold!
-Black Dyestuff x 2
-Frabric x 200
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Takius' Blindfold [0]!
+Black Dyestuff x 1
+Frabric x 150
 Ribbon[0]
-1 Takius Blindfold Certificate
+1 Takius' Blindfold [0] Certificate
 Shadowy rumors say the following about this certificate:
 It is Tier 2
 It is worth 1 Forgery Token
@@ -70914,6 +70914,79 @@ Return this certificate and the following items to Frank, the owner of the Laure
 100 Emeralds
 1000 Zeny
 1 Taurus Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19982#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Blue Drooping Cat!
+300 Blue Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Blue Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19983#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Amistr Cap!
+300 Fluff
+200 Animal Skins
+2 Evil Horn
+1 Ice Titan Card
+1000 Zeny
+1 Amistr Cap Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19984#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pizza Hat!
+300 Bread
+200 Cheese
+100 Rotten Meat
+10 Red Chiles
+1000 Zeny
+1 Pizza Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19985#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Filir's Pinions!
+300 Steel
+200 Feathers
+10 Aquamarines
+1 Blue Bijou
+1000 Zeny
+1 Filir's Pinions Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19986#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Takius' Blindfold [1]!
+Black Dyestuff x 2
+Frabric x 300
+Ribbon[0]
+1 Takius' Blindfold [1] Certificate
 Shadowy rumors say the following about this certificate:
 It is Tier 3
 It is worth 2 Forgery Tokens

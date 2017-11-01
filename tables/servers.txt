@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x72835543, 0x28DE13E7, 0x00C96C79
+sendCryptKeys 0x0F9C081C, 0x501C501C, 0x501C501C
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x72835543, 0x28DE13E7, 0x00C96C79
+sendCryptKeys 0x0F9C081C, 0x501C501C, 0x501C501C
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -55,7 +55,7 @@ dead_message euRO was closed on September 30, 2010. There used to be transfers t
 ## http://www.ragnarokeurope.com/
 [France - fRO]
 title France - fRO (ragnarokeurope.com): Chaos
-ip 164.132.152.34
+ip 54.36.76.129
 port 6900
 master_version 31
 version 1
@@ -97,7 +97,7 @@ patchpath /patch02
 addTableFolders iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x54B63C85, 0x3BD55046, 0x4060068C
+sendCryptKeys 0x74346962, 0x44AC13F2, 0x4B780F8A
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -140,7 +140,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x54B63C85, 0x3BD55046, 0x4060068C
+sendCryptKeys 0x74346962, 0x44AC13F2, 0x4B780F8A
 
 
 

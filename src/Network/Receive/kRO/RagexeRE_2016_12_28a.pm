@@ -14,7 +14,7 @@
 package Network::Receive::kRO::RagexeRE_2016_12_28a;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2016_02_03a);
+use base qw(Network::Receive::kRO::RagexeRE_2016_12_07e);
 
 1;
 =pod

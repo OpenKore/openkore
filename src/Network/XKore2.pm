@@ -136,7 +136,7 @@ sub stateChanged {
 
 sub clientAlive {
 	my (undef, $args) = @_;
-	$args->{return} = @{$mapServer->clients} > 0;
+	$args->{return} = @{$mapServer->clients} > 0 && $args->{net}->getState() == Network::IN_GAME;
 }
 
 sub clientSend {

@@ -2101,3 +2101,8 @@ emoc_pryd6h.rsw#moc_pryd06.rsw#
 2@mir.gat#2@mir.gat#
 2@mir.rsw#2@mir.rsw#
 삯샺샎엍웤샌붺\map\2@mir.bmp#삯샺샎엍웤샌붺\map\2@mir.bmp#
+
+e_niflheim.gnd#niflheim.gnd#
+e_niflheim.gat#niflheim.gat#
+e_niflheim.rsw#niflheim.rsw#
+삯샺샎엍웤샌붺\map\e_niflheim.bmp#삯샺샎엍웤샌붺\map\niflheim.bmp#
