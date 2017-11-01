@@ -2663,8 +2663,8 @@ sub pet_info2 {
 	#}
 
 	if ($type == 0) {
-		# You own no pet.
-		undef $pet{ID};
+		# You own pet with this ID
+		$pet{ID} = $ID;
 
 	} elsif ($type == 1) {
 		$pet{friendly} = $value;
@@ -2684,8 +2684,8 @@ sub pet_info2 {
 		#debug "Pet performance info: $value\n";
 
 	} elsif ($type == 5) {
-		# You own pet with this ID
-		$pet{ID} = $ID;
+		# You own no pet.
+		undef $pet{ID} unless ($pet{ID} && ($pet{ID} eq $ID));
 	}
 }
 
