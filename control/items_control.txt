@@ -44,18 +44,18 @@ all 0 1 0
 ##### HEAL/SUPPORT ITEMS #####
 # Adjust these to your needs
 
-Butterfly Wing 10 1 0
-Fly Wing 100 1 0
+602 10 1 0 # Butterfly Wing
+601 100 1 0 # Fly Wing
 
-Blue Potion 0 1 0
-Condensed Red Potion 50 1 0
-Condensed White Potion 50 1 0
-Condensed Yellow Potion 50 1 0
-Green Potion 0 1 0
-Red Potion 25 1 0
-Orange Potion 25 1 0
-White Potion 25 1 0
-Yellow potion 25 1 0
+505 0 1 0 # Blue Potion
+545 50 1 0 # Condensed Red Potion
+547 50 1 0 # Condensed White Potion
+546 50 1 0 # Condensed Yellow Potion
+506 0 1 0 # Green Potion
+501 25 1 0 # Red Potion
+502 25 1 0 # Orange Potion
+504 25 1 0 # White Potion
+503 25 1 0 # Yellow potion
 
 ##### ARROWS #####
 # You may want to modify these if you're an archer/hunter
@@ -72,65 +72,65 @@ Arrow 3000 1 0
 ##### WORTHLESS GEARS #####
 # Worthless gears which are sold by default
 
-Adventurer's Suit 0 0 1
-Bandana 0 0 1
-Biretta 0 0 1
-Boots 0 0 1
-Buckler 0 0 1
-Cap 0 0 1
-Chain Mail 0 0 1
-Circlet 0 0 1
-Coat 0 0 1
+2306 0 0 1 # Adventurer's Suit
+2211 0 0 1 # Bandana
+2217 0 0 1 # Biretta
+2406 0 0 1 # Boots
+2104 0 0 1 # Buckler
+2227 0 0 1 # Cap
+2315 0 0 1 # Chain Mail
+2233 0 0 1 # Circlet
+2310 0 0 1 # Coat
 Coat [1] 0 0 1
-Cotton Shirt 0 0 1
+2302 0 0 1 # Cotton Shirt
 Cotton Shirt [1] 0 0 1
 #Crystal Pumps 0 0 1
-Diamond Ring 0 0 1
-Diver Goggles 0 0 1
-Eye Patch 0 0 1
-Flower Ring 0 0 1
-Flu Mask 0 0 1
-Full Plate 0 0 1
-Gangster Mask 0 0 1
-Gemmed Sallet 0 0 1
-Glasses 0 0 1
-Gold Ring 0 0 1
-Guard 0 0 1
-Hair Band 0 0 1
-Hat 0 0 1
-Helm 0 0 1
-High Heels 0 0 1
-Hood 0 0 1
+2613 0 0 1 # Diamond Ring
+2205 0 0 1 # Diver Goggles
+2212 0 0 1 # Eye Patch
+2612 0 0 1 # Flower Ring
+2219 0 0 1 # Flu Mask
+2317 0 0 1 # Full Plate
+2265 0 0 1 # Gangster Mask
+2231 0 0 1 # Gemmed Sallet
+2204 0 0 1 # Glasses
+2610 0 0 1 # Gold Ring
+2102 0 0 1 # Guard
+2210 0 0 1 # Hair Band
+2221 0 0 1 # Hat
+2229 0 0 1 # Helm
+2409 0 0 1 # High Heels
+2502 0 0 1 # Hood
 Hood [1] 0 0 1
-Jacket 0 0 1
+2304 0 0 1 # Jacket
 Jacket [1] 0 0 1
-Manteau 0 0 1
-Mantle 0 0 1
+2506 0 0 1 # Manteau
+2308 0 0 1 # Mantle
 Mantle [1] 0 0 1
-Mirror Shield 0 0 1
-Mr. Smile 0 0 1
-Muffler 0 0 1
-Padded Armor 0 0 1
-Pantie 0 0 1
-Ribbon 0 0 1
+2108 0 0 1 # Mirror Shield
+2278 0 0 1 # Mr. Smile
+2504 0 0 1 # Muffler
+2313 0 0 1 # Padded Armor
+2371 0 0 1 # Pantie
+2209 0 0 1 # Ribbon
 Ribbon [1] 0 0 1
-Rosary 0 0 1
-Saint's Robe 0 0 1
-Sandals 0 0 1
+2840 0 0 1 # Rosary
+2326 0 0 1 # Saint's Robe
+2402 0 0 1 # Sandals
 Sandals [1] 0 0 1
-Scapulare 0 0 1
-Shackles 0 0 1
-Shield 0 0 1
-Shoes 0 0 1
-Silk Robe 0 0 1
-Silver Ring 0 0 1
-Silver Robe 0 0 1
+2324 0 0 1 # Scapulare
+2408 0 0 1 # Shackles
+2106 0 0 1 # Shield
+2404 0 0 1 # Shoes
+2322 0 0 1 # Silk Robe
+2611 0 0 1 # Silver Ring
+2333 0 0 1 # Silver Robe
 Silver Robe [1] 0 0 1
-Skull Ring 0 0 1
-Thief Clothes 0 0 1
-Tights 0 0 1
-Turban 0 0 1
-Wooden Mail 0 0 1
+2715 0 0 1 # Skull Ring
+2336 0 0 1 # Thief Clothes
+2331 0 0 1 # Tights
+2223 0 0 1 # Turban
+2329 0 0 1 # Wooden Mail
 Wooden Mail [1] 0 0 1
 
 
@@ -138,105 +138,105 @@ Wooden Mail [1] 0 0 1
 # Worthless weapons which are sold by default
 
 Arbalest Bow [1] 0 0 1
-Arc Wand 0 0 1
+1612 0 0 1 # Arc Wand
 Arc Wand [1] 0 0 1
-Axe 0 0 1
+1303 0 0 1 # Axe
 Axe [3] 0 0 1
 Axe [4] 0 0 1
-Bastard Sword 0 0 1
+1156 0 0 1 # Bastard Sword
 Bastard Sword [2] 0 0 1
-Battle Axe 0 0 1
+1353 0 0 1 # Battle Axe
 Battle Axe [3] 0 0 1
 Battle Axe [4] 0 0 1
 Belt [1] 0 0 1
 #Bible [2] 0 0 1
-Bill Guisarme 0 0 1
-Blade 0 0 1
+1467 0 0 1 # Bill Guisarme
+1109 0 0 1 # Blade
 Blade [3] 0 0 1
 Blade [4] 0 0 1
-Bow 0 0 1
+1703 0 0 1 # Bow
 Bow [3] 0 0 1
 Bow [4] 0 0 1
 Broad Sword [1] 0 0 1
-Buster 0 0 1
+1359 0 0 1 # Buster
 Buster [1] 0 0 1
 Chain [2] 0 0 1
 #Chemeti Whip 0 0 1
 Claw [1] 0 0 1
 Claw [2] 0 0 1
-Claymore 0 0 1
-Club 0 0 1
+1172 0 0 1 # Claymore
+1503 0 0 1 # Club
 Club [3] 0 0 1
 Club [4] 0 0 1
-Composite Bow 0 0 1
+1706 0 0 1 # Composite Bow
 Composite Bow [3] 0 0 1
-Cross Bow 0 0 1
+1712 0 0 1 # Cross Bow
 Cross Bow [2] 0 0 1
-Cutter 0 0 1
+1206 0 0 1 # Cutter
 Cutter [3] 0 0 1
 Cutter [4] 0 0 1
-Dagger 0 0 1
+1215 0 0 1 # Dagger
 Dagger [2] 0 0 1
 Dagger [3] 0 0 1
 Damascus [1] 0 0 1
-Dirk 0 0 1
+1212 0 0 1 # Dirk
 Dirk [2] 0 0 1
 Dirk [3] 0 0 1
-Falchion 0 0 1
+1106 0 0 1 # Falchion
 Falchion [3] 0 0 1
 Finger [1] 0 0 1
 Finger [2] 0 0 1
-Fist 0 0 1
+1808 0 0 1 # Fist
 Fist [1] 0 0 1
 Flail [2] 0 0 1
 Flail [3] 0 0 1
-Flamberge 0 0 1
+1149 0 0 1 # Flamberge
 Gakkung Bow [1] 0 0 1
 #Girl's Diary [1] 0 0 1
-Gladius 0 0 1
+1221 0 0 1 # Gladius
 Gladius [2] 0 0 1
-Glaive 0 0 1
+1456 0 0 1 # Glaive
 Glaive [2] 0 0 1
 Glaive [3] 0 0 1
-Great Bow 0 0 1
+1709 0 0 1 # Great Bow
 Great Bow [2] 0 0 1
 Great Bow [3] 0 0 1
-Guisarme 0 0 1
+1453 0 0 1 # Guisarme
 Guisarme [2] 0 0 1
-Guitar 0 0 1
+1908 0 0 1 # Guitar
 Guitar [1] 0 0 1
 Gumoongoh [1] 0 0 1
 Gumoongoh [2] 0 0 1
 Haedonggum [1] 0 0 1
 Hallberd [1] 0 0 1
 Hallberd [2] 0 0 1
-Hammer 0 0 1
+1356 0 0 1 # Hammer
 Hammer [2] 0 0 1
 Hammer [3] 0 0 1
 Harp [1] 0 0 1
 Harp [2] 0 0 1
-Jamadhar 0 0 1
-Javelin 0 0 1
+1255 0 0 1 # Jamadhar
+1403 0 0 1 # Javelin
 Javelin [3] 0 0 1
 Javelin [4] 0 0 1
 Jur [2] 0 0 1
-Katana 0 0 1
+1118 0 0 1 # Katana
 Katana [3] 0 0 1
 Katana [4] 0 0 1
 Katar [1] 0 0 1
-Knife 0 0 1
+1203 0 0 1 # Knife
 Knife [3] 0 0 1
 Knife [4] 0 0 1
 Knuckle Dusters [2] 0 0 1
 Knuckle Dusters [3] 0 0 1
-Lance 0 0 1
+1412 0 0 1 # Lance
 #Lariat Whip 0 0 1
 Lute [2] 0 0 1
 Lute [3] 0 0 1
-Mace 0 0 1
+1506 0 0 1 # Mace
 Mace [3] 0 0 1
 #Mace [4] 0 0 1
-Main Gauche 0 0 1
+1209 0 0 1 # Main Gauche
 Main Gauche [3] 0 0 1
 Mandolin [2] 0 0 1
 Mandolin [3] 0 0 1
@@ -244,21 +244,21 @@ Morning Star [1] 0 0 1
 Morning Star [2] 0 0 1
 Novice Armlet [1] 0 0 1
 Novice Breastplate [1] 0 0 1
-Orcish Axe 0 0 1
-Orcish Sword 0 0 1
-Partizan 0 0 1
+1309 0 0 1 # Orcish Axe
+1124 0 0 1 # Orcish Sword
+1459 0 0 1 # Partizan
 Partizan [1] 0 0 1
 Partizan [2] 0 0 1
-Pike 0 0 1
+1409 0 0 1 # Pike
 Pike [3] 0 0 1
-Rante Whip 0 0 1
+1957 0 0 1 # Rante Whip
 Rante Whip [1] 0 0 1
-Rapier 0 0 1
+1112 0 0 1 # Rapier
 Rapier [2] 0 0 1
 Rapier [3] 0 0 1
 Repeating Crossbow [1] 0 0 1
 Ring Pommel Saber [2] 0 0 1
-Rod 0 0 1
+1603 0 0 1 # Rod
 Rod [3] 0 0 1
 #Rod [4] 0 0 1
 Rope [3] 0 0 1
@@ -266,41 +266,41 @@ Rope [3] 0 0 1
 Saber [2] 0 0 1
 Scimiter [2] 0 0 1
 Scimiter [3] 0 0 1
-Slayer 0 0 1
+1153 0 0 1 # Slayer
 Slayer [2] 0 0 1
 Slayer [3] 0 0 1
 Smasher [2] 0 0 1
 Smasher [3] 0 0 1
-Spear 0 0 1
+1406 0 0 1 # Spear
 Spear [3] 0 0 1
 Spear [4] 0 0 1
-Staff 0 0 1
+1609 0 0 1 # Staff
 Staff [2] 0 0 1
-Stiletto 0 0 1
+1218 0 0 1 # Stiletto
 Stiletto [2] 0 0 1
 Stiletto [3] 0 0 1
 Studded Knuckles [2] 0 0 1
 Studded Knuckles [3] 0 0 1
-Sword 0 0 1
+1103 0 0 1 # Sword
 Sword [3] 0 0 1
 Sword [4] 0 0 1
-Sword Mace 0 0 1
+1518 0 0 1 # Sword Mace
 Tail Whip [1] 0 0 1
 Tail Whip [2] 0 0 1
-Trident 0 0 1
+1462 0 0 1 # Trident
 Trident [2] 0 0 1
-Tsurugi 0 0 1
+1121 0 0 1 # Tsurugi
 Tsurugi [1] 0 0 1
 Tsurugi [2] 0 0 1
-Two-handed Axe 0 0 1
+1362 0 0 1 # Two-handed Axe
 Two-handed Axe [1] 0 0 1
-Two-handed Sword 0 0 1
+1159 0 0 1 # Two-handed Sword
 Two-handed Sword [1] 0 0 1
 Violin [3] 0 0 1
 #Violin [4] 0 0 1
 Waghnak [3] 0 0 1
 Waghnak [4] 0 0 1
-Wand 0 0 1
+1606 0 0 1 # Wand
 Wand [2] 0 0 1
 Wand [3] 0 0 1
 #War Axe [1] 0 0 1
@@ -314,254 +314,254 @@ Wire Whip [3] 0 0 1
 ##### STANDARD LOOT #####
 # Useless items that are sold by default
 
-Acorn 0 0 1
-Ancient Lips 0 0 1
-Ancient Tooth 0 0 1
+1026 0 0 1 # Acorn
+1054 0 0 1 # Ancient Lips
+1053 0 0 1 # Ancient Tooth
 Animal Poop 0 0 1
-Animal Skin 0 0 1
-Anolian Skin 0 0 1
-Antelope Horn 0 0 1
-Antelope Skin 0 0 1
-Ant Jaw 0 0 1
-Apple 0 0 1
-Apple Juice 0 0 1
-Bacillus 0 0 1
-Banana 0 0 1
-Banana Juice 0 0 1
-Barren Trunk 0 0 1
-Bear's Footskin 0 0 1
-Bee Sting 0 0 1
-Bill of Birds 0 0 1
-Black Hair 0 0 1
-Black Ladle 0 0 1
-Blue Hair 0 0 1
-Bouquet 0 0 1
-Brigan 0 0 1
-Broken Liquor Jar 0 0 1
-Broken Shell 0 0 1
-Broken Shuriken 0 0 1
-Broken Sword 0 0 1
-Broken Turtle Shell 0 0 1
-Bug Leg 0 0 1
-Burning Hair 0 0 1
-Burning Heart 0 0 1
-Burning Horseshoe 0 0 1
-Burnt Tree 0 0 1
-Cactus Needle 0 0 1
-Carrot 0 0 1
-Carrot Juice 0 0 1
-Cheese 0 0 1
-China 0 0 1
-Chonchon Doll 0 0 1
-Chrysalis 0 0 1
-Chung Jah 0 0 1
-Clam Flesh 0 0 1
-Clam Shell 0 0 1
-Claw of Desert Wolf 0 0 1
-Claw of Monkey 0 0 1
-Claw of Rat 0 0 1
-Clover 0 0 1
-Cobweb 0 0 1
-Cogwheel 0 0 1
-Conch 0 0 1
-Coral Reef 0 0 1
-Cotton Mat 0 0 1
-Coupon 0 0 1
-Crab Shell 0 0 1
-Crystal Mirror 0 0 1
-Cultish Masque 0 0 1
-Cyfar 0 0 1
-Daenggie 0 0 1
-Dark Mask 0 0 1
-Dead Medusa 0 0 1
-Decayed Nail 0 0 1
-Destroyed Armor 0 0 1
-Detonator 0 0 1
-Dokebi Horn 0 0 1
-Dragon Canine 0 0 1
-Dragon Scale 0 0 1
-Dragon Skin 0 0 1
-Dragon Tail 0 0 1
-Earthworm Peeling 0 0 1
-Elder Pixie's Moustache 0 0 1
-Emveretarcon 0 0 1
-Fabric 0 0 1
-Falcon Food 0 0 1
-Fang 0 0 1
-Feather 0 0 1
-Feather of Birds 0 0 1
-Fin 0 0 1
-Fine-grained Trunk 0 0 1
-Fine Grit 0 0 1
-Fine Sand 0 0 1
-Fish Tail 0 0 1
-Flower 0 0 1
-Fluff 0 0 1
-Fragment 0 0 1
-Frill 0 0 1
-Frozen Rose 0 0 1
+919 0 0 1 # Animal Skin
+7003 0 0 1 # Anolian Skin
+7106 0 0 1 # Antelope Horn
+7107 0 0 1 # Antelope Skin
+1014 0 0 1 # Ant Jaw
+512 0 0 1 # Apple
+531 0 0 1 # Apple Juice
+7119 0 0 1 # Bacillus
+513 0 0 1 # Banana
+532 0 0 1 # Banana Juice
+1068 0 0 1 # Barren Trunk
+948 0 0 1 # Bear's Footskin
+939 0 0 1 # Bee Sting
+925 0 0 1 # Bill of Birds
+1020 0 0 1 # Black Hair
+737 0 0 1 # Black Ladle
+1034 0 0 1 # Blue Hair
+744 0 0 1 # Bouquet
+7054 0 0 1 # Brigan
+7158 0 0 1 # Broken Liquor Jar
+7070 0 0 1 # Broken Shell
+7156 0 0 1 # Broken Shuriken
+7110 0 0 1 # Broken Sword
+7062 0 0 1 # Broken Turtle Shell
+1042 0 0 1 # Bug Leg
+7122 0 0 1 # Burning Hair
+7097 0 0 1 # Burning Heart
+7120 0 0 1 # Burning Horseshoe
+7068 0 0 1 # Burnt Tree
+952 0 0 1 # Cactus Needle
+515 0 0 1 # Carrot
+534 0 0 1 # Carrot Juice
+548 0 0 1 # Cheese
+736 0 0 1 # China
+742 0 0 1 # Chonchon Doll
+915 0 0 1 # Chrysalis
+735 0 0 1 # Chung Jah
+966 0 0 1 # Clam Flesh
+965 0 0 1 # Clam Shell
+7030 0 0 1 # Claw of Desert Wolf
+7011 0 0 1 # Claw of Monkey
+7007 0 0 1 # Claw of Rat
+705 0 0 1 # Clover
+1025 0 0 1 # Cobweb
+7093 0 0 1 # Cogwheel
+961 0 0 1 # Conch
+7013 0 0 1 # Coral Reef
+7050 0 0 1 # Cotton Mat
+7037 0 0 1 # Coupon
+964 0 0 1 # Crab Shell
+747 0 0 1 # Crystal Mirror
+1045 0 0 1 # Cultish Masque
+7053 0 0 1 # Cyfar
+901 0 0 1 # Daenggie
+7157 0 0 1 # Dark Mask
+1047 0 0 1 # Dead Medusa
+957 0 0 1 # Decayed Nail
+7069 0 0 1 # Destroyed Armor
+1051 0 0 1 # Detonator
+1021 0 0 1 # Dokebi Horn
+1035 0 0 1 # Dragon Canine
+1036 0 0 1 # Dragon Scale
+7123 0 0 1 # Dragon Skin
+1037 0 0 1 # Dragon Tail
+1055 0 0 1 # Earthworm Peeling
+1040 0 0 1 # Elder Pixie's Moustache
+1011 0 0 1 # Emveretarcon
+1059 0 0 1 # Fabric
+540 0 0 1 # Falcon Food
+1063 0 0 1 # Fang
+949 0 0 1 # Feather
+916 0 0 1 # Feather of Birds
+951 0 0 1 # Fin
+1066 0 0 1 # Fine-grained Trunk
+7041 0 0 1 # Fine Grit
+7043 0 0 1 # Fine Sand
+1023 0 0 1 # Fish Tail
+712 0 0 1 # Flower
+914 0 0 1 # Fluff
+7094 0 0 1 # Fragment
+1012 0 0 1 # Frill
+749 0 0 1 # Frozen Rose
 #Garlet 0 0 1
-Gill 0 0 1
-Glass Bead 0 0 1
-Glitter Shell 0 0 1
-Glossy Hair 0 0 1
-Golden Hair 0 0 1
-Grasshopper's Leg 0 0 1
-Grit 0 0 1
-Harpy Feather 0 0 1
-Harpy Talon 0 0 1
-Heart of Mermaid 0 0 1
-Horn 0 0 1
-Horrendous Hair 0 0 1
-Horrendous Mouth 0 0 1
-Horseshoe 0 0 1
-Ice Cubic 0 0 1
-Immortal Heart 0 0 1
-Insect Feeler 0 0 1
-Invite for Duel 0 0 1
-Jack o' Pumpkin 0 0 1
-Jasmine 0 0 1
-Jellopy 0 0 1
-Lantern 0 0 1
-Large Jellopy 0 0 1
-Lava 0 0 1
-Live Coal 0 0 1
-Manacles 0 0 1
-Mane 0 0 1
-Maneater Blossom 0 0 1
-Maneater Root 0 0 1
-Mantis Scythe 0 0 1
-Matchstick 0 0 1
-Meat 0 0 1
-Memento 0 0 1
-Metal Fragment 0 0 1
-Milk 0 0 1
-Mould Powder 0 0 1
-Mole Claw 0 0 1
-Mole Whiskers 0 0 1
-Monster's Feed 0 0 1
-Moth Dust 0 0 1
-Mother's Letter 0 0 1
-Moth Wings 0 0 1
-Mud Lump 0 0 1
-Mushroom Spore 0 0 1
-Needle of Alarm 0 0 1
-Nightmare 0 0 1
-Nine Tails 0 0 1
-Nipper 0 0 1
-Nose Ring 0 0 1
-Nut Shell 0 0 1
-Ogre Tooth 0 0 1
-Oil Paper 0 0 1
-Old Frying Pan 0 0 1
-Old Shuriken 0 0 1
-Orc Claw 0 0 1
-Orcish Voucher 0 0 1
-Orc's Fang 0 0 1
-Osiris Doll 0 0 1
-PecoPeco Feather 0 0 1
-PecoPeco Food 0 0 1
-Pencil Case 0 0 1
-Phracon 0 0 1
-Piece of Bamboo 0 0 1
-Piece of Egg Shell 0 0 1
-Piece of Shield 0 0 1
-Pointed Scale 0 0 1
-Poisonous Powder 0 0 1
-Poisonous Toad Skin 0 0 1
-Poison Spore 0 0 1
-Porcupine Quill 0 0 1
-Poring Doll 0 0 1
-Powder of Butterfly 0 0 1
-Pumpkin 0 0 1
-Puppet 0 0 1
-Raccoon Leaf 0 0 1
-Racoon Doll 0 0 1
-Ragnarok T-shirt 0 0 1
-Rainbow Shell 0 0 1
-Rat Tail 0 0 1
-Raw Fish 0 0 1
-Red Frame 0 0 1
+956 0 0 1 # Gill
+746 0 0 1 # Glass Bead
+7009 0 0 1 # Glitter Shell
+7152 0 0 1 # Glossy Hair
+1060 0 0 1 # Golden Hair
+940 0 0 1 # Grasshopper's Leg
+1056 0 0 1 # Grit
+7115 0 0 1 # Harpy Feather
+7116 0 0 1 # Harpy Talon
+950 0 0 1 # Heart of Mermaid
+947 0 0 1 # Horn
+1048 0 0 1 # Horrendous Hair
+958 0 0 1 # Horrendous Mouth
+944 0 0 1 # Horseshoe
+7066 0 0 1 # Ice Cubic
+929 0 0 1 # Immortal Heart
+928 0 0 1 # Insect Feeler
+7028 0 0 1 # Invite for Duel
+1062 0 0 1 # Jack o' Pumpkin
+7147 0 0 1 # Jasmine
+909 0 0 1 # Jellopy
+1041 0 0 1 # Lantern
+7126 0 0 1 # Large Jellopy
+7096 0 0 1 # Lava
+7098 0 0 1 # Live Coal
+1098 0 0 1 # Manacles
+1028 0 0 1 # Mane
+1032 0 0 1 # Maneater Blossom
+1033 0 0 1 # Maneater Root
+1031 0 0 1 # Mantis Scythe
+7035 0 0 1 # Matchstick
+517 0 0 1 # Meat
+934 0 0 1 # Memento
+7497 0 0 1 # Metal Fragment
+519 0 0 1 # Milk
+7001 0 0 1 # Mould Powder
+1018 0 0 1 # Mole Claw
+1017 0 0 1 # Mole Whiskers
+528 0 0 1 # Monster's Feed
+1057 0 0 1 # Moth Dust
+7148 0 0 1 # Mother's Letter
+1058 0 0 1 # Moth Wings
+7004 0 0 1 # Mud Lump
+921 0 0 1 # Mushroom Spore
+1095 0 0 1 # Needle of Alarm
+7102 0 0 1 # Nightmare
+1022 0 0 1 # Nine Tails
+960 0 0 1 # Nipper
+941 0 0 1 # Nose Ring
+5037 0 0 1 # Nut Shell
+7002 0 0 1 # Ogre Tooth
+7151 0 0 1 # Oil Paper
+7031 0 0 1 # Old Frying Pan
+7072 0 0 1 # Old Shuriken
+1043 0 0 1 # Orc Claw
+931 0 0 1 # Orcish Voucher
+922 0 0 1 # Orc's Fang
+751 0 0 1 # Osiris Doll
+7101 0 0 1 # PecoPeco Feather
+541 0 0 1 # PecoPeco Food
+738 0 0 1 # Pencil Case
+1010 0 0 1 # Phracon
+7150 0 0 1 # Piece of Bamboo
+7032 0 0 1 # Piece of Egg Shell
+7108 0 0 1 # Piece of Shield
+906 0 0 1 # Pointed Scale
+7154 0 0 1 # Poisonous Powder
+7155 0 0 1 # Poisonous Toad Skin
+7033 0 0 1 # Poison Spore
+1027 0 0 1 # Porcupine Quill
+741 0 0 1 # Poring Doll
+924 0 0 1 # Powder of Butterfly
+535 0 0 1 # Pumpkin
+740 0 0 1 # Puppet
+945 0 0 1 # Raccoon Leaf
+754 0 0 1 # Racoon Doll
+7145 0 0 1 # Ragnarok T-shirt
+1013 0 0 1 # Rainbow Shell
+1016 0 0 1 # Rat Tail
+544 0 0 1 # Raw Fish
+734 0 0 1 # Red Frame
 #Red Stocking 0 0 1
-Reins 0 0 1
-Reptile Tongue 0 0 1
-Resin 0 0 1
-Rice Cake 0 0 1
-Rocker Doll 0 0 1
-Root of Stone 0 0 1
-Rotten Bandage 0 0 1
-Rouge 0 0 1
-Round Shell 0 0 1
-Sand Clump 0 0 1
-Scale Shell 0 0 1
+1064 0 0 1 # Reins
+903 0 0 1 # Reptile Tongue
+907 0 0 1 # Resin
+550 0 0 1 # Rice Cake
+752 0 0 1 # Rocker Doll
+7082 0 0 1 # Root of Stone
+930 0 0 1 # Rotten Bandage
+739 0 0 1 # Rouge
+1096 0 0 1 # Round Shell
+7124 0 0 1 # Sand Clump
+936 0 0 1 # Scale Shell
 #Scell 0 0 1
-Scorpion Claw 0 0 1
-Scorpion Nipper 0 0 1
-Scorpion Tail 0 0 1
-Sea-otter Fur 0 0 1
-Sharp Leaf 0 0 1
-Sharp Paper 0 0 1
+7125 0 0 1 # Scorpion Claw
+1046 0 0 1 # Scorpion Nipper
+904 0 0 1 # Scorpion Tail
+7065 0 0 1 # Sea-otter Fur
+7100 0 0 1 # Sharp Leaf
+7112 0 0 1 # Sharp Paper
 Sharp scale 0 0 1
-Shell 0 0 1
-Shining Scale 0 0 1
-Shining Spear Blade 0 0 1
-Shoot 0 0 1
-Short Daenggie 0 0 1
-Silk Mat 0 0 1
-Single Cell 0 0 1
-Skel-Bone 0 0 1
-Skull 0 0 1
-Slick Paper 0 0 1
-Snail's Shell 0 0 1
-Snake Scale 0 0 1
-Soft Apron 0 0 1
-Solid Shell 0 0 1
-Solid Trunk 0 0 1
+935 0 0 1 # Shell
+954 0 0 1 # Shining Scale
+7109 0 0 1 # Shining Spear Blade
+711 0 0 1 # Shoot
+1094 0 0 1 # Short Daenggie
+7051 0 0 1 # Silk Mat
+1052 0 0 1 # Single Cell
+932 0 0 1 # Skel-Bone
+7420 0 0 1 # Skull
+7111 0 0 1 # Slick Paper
+946 0 0 1 # Snail's Shell
+926 0 0 1 # Snake Scale
+661 0 0 1 # Soft Apron
+943 0 0 1 # Solid Shell
+1067 0 0 1 # Solid Trunk
 Songpyun 0 0 1
-Spawn 0 0 1
-Spoon Stub 0 0 1
-Spore Doll 0 0 1
-Squid Ink 0 0 1
-Stem 0 0 1
-Sticky Mucus 0 0 1
-Sticky Webfoot 0 0 1
-Stiff Horn 0 0 1
-Stinky Scale 0 0 1
-Stone 0 0 1
-Stone Fragment 0 0 1
-Stone Heart 0 0 1
-Sushi 0 0 1
-Tail of Steel Scorpion 0 0 1
-Talon 0 0 1
-Tattered Clothes 0 0 1
-Tendon 0 0 1
-Tengu Nose 0 0 1
-Tentacle 0 0 1
-Tiger Skin 0 0 1
-Tongue 0 0 1
-Tooth of Bat 0 0 1
-Tough Scalelike Stem 0 0 1
-Tree Root 0 0 1
+908 0 0 1 # Spawn
+7016 0 0 1 # Spoon Stub
+743 0 0 1 # Spore Doll
+1024 0 0 1 # Squid Ink
+905 0 0 1 # Stem
+938 0 0 1 # Sticky Mucus
+918 0 0 1 # Sticky Webfoot
+7008 0 0 1 # Stiff Horn
+959 0 0 1 # Stinky Scale
+7049 0 0 1 # Stone
+7067 0 0 1 # Stone Fragment
+953 0 0 1 # Stone Heart
+551 0 0 1 # Sushi
+7010 0 0 1 # Tail of Steel Scorpion
+917 0 0 1 # Talon
+7071 0 0 1 # Tattered Clothes
+1050 0 0 1 # Tendon
+7159 0 0 1 # Tengu Nose
+962 0 0 1 # Tentacle
+1029 0 0 1 # Tiger Skin
+1015 0 0 1 # Tongue
+913 0 0 1 # Tooth of Bat
+7012 0 0 1 # Tough Scalelike Stem
+902 0 0 1 # Tree Root
 #Tribal Solidarity 0 0 1
-Turtle Shell 0 0 1
-Venom Canine 0 0 1
-Wedding Bouquet 0 0 1
-Wing of Dragonfly 0 0 1
-Wing of Red Bat 0 0 1
-Witherless Rose 0 0 1
-Wolf Claw 0 0 1
-Worm Peeling 0 0 1
-Worn-out Kimono 0 0 1
-Worn Out Page 0 0 1
-Worn-out Prison Uniform 0 0 1
-Yam 0 0 1
-Yarn 0 0 1
-Yellow Plate 0 0 1
-Young Twig 0 0 1
-Yoyo Doll 0 0 1
-Yoyo Tail 0 0 1
+967 0 0 1 # Turtle Shell
+937 0 0 1 # Venom Canine
+745 0 0 1 # Wedding Bouquet
+7064 0 0 1 # Wing of Dragonfly
+7006 0 0 1 # Wing of Red Bat
+748 0 0 1 # Witherless Rose
+920 0 0 1 # Wolf Claw
+955 0 0 1 # Worm Peeling
+7153 0 0 1 # Worn-out Kimono
+1097 0 0 1 # Worn Out Page
+1099 0 0 1 # Worn-out Prison Uniform
+549 0 0 1 # Yam
+7038 0 0 1 # Yarn
+7149 0 0 1 # Yellow Plate
+7018 0 0 1 # Young Twig
+753 0 0 1 # Yoyo Doll
+942 0 0 1 # Yoyo Tail
 #Zargon 0 0 1
-Zenorc's Fang 0 0 1
+1044 0 0 1 # Zenorc's Fang
 
 ##### UNSTORAGEABLE ITEMS #####
 

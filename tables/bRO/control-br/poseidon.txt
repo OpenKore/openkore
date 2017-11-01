@@ -27,3 +27,5 @@ server_type=bRO_2016-11-08a
 # Aqui você pode especificar o CharBlockSize desejado no seu cliente.
 # Os tamanhos de bloco disponíveis são: 106, 108, 112, 116, 128, 132 e 136
 CharBlockSize=116
+
+debug=0

@@ -230,8 +230,14 @@ sub sendCharInfo {
 		my $index = -1;
 		foreach my $char ($self->getCharacters($session)) {
 			$index++;
+
+			my $sex;
+
+			if($masterServer->{charBlockSize} == 145 && $masterServer->{serverType} =~ /^iRO/) {
+				$sex = $char->{sex};
+			}
+
 			next if (!$char);
-	
 			$output .= pack(
 				$self->{recvPacketParser}->received_characters_unpackString,
 				$char->{charID},	# character ID
@@ -268,9 +274,12 @@ sub sendCharInfo {
 				$char->{int},
 				$char->{dex},
 				$char->{luk},
-				0, 0, 0,
-				$field->baseName,
 				0,
+				0,
+				0,
+				$field->baseName.".gat",
+				0,
+				$sex,
 			);
 		}
 		# FIXME

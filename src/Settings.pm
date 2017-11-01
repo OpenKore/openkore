@@ -387,7 +387,7 @@ sub getTablesFolders {
 # undef if there is folder(s) specified in --tables, otherwise tables path
 # TODO: way to reconfigure only that path? (by now it's always 'tables')
 sub getTablepackFolder {
-	!$options{tables} && @tablesFolders[@tablesFolders-1]
+	return $tablesFolders[$#tablesFolders];
 }
 
 ##

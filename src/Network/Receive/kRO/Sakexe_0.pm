@@ -3125,7 +3125,7 @@ sub skill_used_no_damage {
 	if ($args->{skillID} == 28) {
 		$extra = ": $args->{amount} hp gained";
 		updateDamageTables($args->{sourceID}, $args->{targetID}, -$args->{amount});
-	} elsif ($args->{amount} != 65535) {
+	} elsif ($args->{amount} != 65535 && $args->{amount} != 4294967295) {
 		$extra = ": Lv $args->{amount}";
 	}
 

@@ -31,25 +31,6 @@ Features:
 - Protect actor hashes from autovivification (kLabMouse, EternalHarvest)
 - Local SCons update (kLabMouse)
 
-Translation updates by:
-- Indonesian: h4rry_84
-- Traditional Chinese: littlewens
-- Portuguese: Mushroom
-- Russian: DeniZka, manticora
-
-Ongoing updates for supported servers by:
--  bRO: Mushroom, dejaime
-- euRO: EternalHarvest
--  fRO: MiDaM
-- idRO: h4rry_84
--  iRO: twist3d, Motivus, EternalHarvest
--  kRO: Technology
--  mRO: help_us
--  pRO: midnytblu
--  rRO: kLabMouse, 4epT, EternalHarvest
--  tRO: UltimaWeapon
-- twRO: littlewens
-
 Fixes:
 - help console command output (manticora)
 - Allow lvl to be optional in useSelf_skill (EternalHarvest)
@@ -111,7 +92,7 @@ Fixes:
 - Feature: additional "label" parameter "block" to change config block header. (thanks to vit).
   	Syntax:
 		conf <label_name>.(<block_param> | block) [new_value]
-  	Examle:
+  	Example:
 		conf applesEtc.block Meat
 - Feature: route_avoidWalls config option.
 - Fixed: Pets are no longer being seen as monsters, support for extended pet packet(Technology)

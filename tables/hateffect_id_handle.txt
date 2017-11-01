@@ -49,3 +49,6 @@
 49 HAT_EF_WHITEBODY
 50 HAT_EF_WATER_BELOW2
 51 HAT_EF_firework
+52 HAT_EF_Return_TW_1st_Hat
+53 HAT_EF_C_FlutterButterfly_BL
+54 HAT_EF_Qscaraba

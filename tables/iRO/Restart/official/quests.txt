@@ -21902,3 +21902,90 @@ Come back later for another buff#
 62948#Silvervine Stat Reset#SG_FEEL#QUE_NOIMAGE#
 You can reset 5 of your stat points once a week. Please come back next week if you'd like to reset your stats again.#
 Come back next week if you'd like another stat reset#
+
+
+
+
+// A Bed Of Honor
+
+14683#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+You can see the device of great crystal shape if you look around where you arrive. Close in with it so that you could use the device.#
+Mysterious Device#
+
+14684#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14685#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14686#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14687#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+
+62949#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+You have been sent into a dream state Maybe someone can help you..#
+#
+
+62950#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Find others stuck here and get their help.#
+#
+
+62951#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Lenn has asked you to bring him Ectoplasm.#
+#
+
+62952#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Talk to Lenn.#
+#
+
+
+62953#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+DREAM ESSENCE.#
+#
+
+62954#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Bring Claud Rusty Kitchen Knives#
+#
+
+62955#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+MYSTERIOUS HATCHET#
+#
+
+62956#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Check on Gina Crey#
+#
+
+62957#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+It is time to leave return to the one who brought you here.#
+#
+
+62958#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dream Demon.#
+#
+
+62959#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dream Demon.#
+#
+
+62960#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+You can try again tomorrow.#
+#
+
+62961#Trick or Treat#SG_FEEL#QUE_NOIMAGE#
+Give candy away again.#
+#

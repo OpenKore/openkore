@@ -38,6 +38,14 @@ sub new {
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
+	
+	my %handlers = qw(
+		received_characters 099D
+		received_characters_info 082D
+		sync_received_characters 09A0
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
     # Version 2 of the 0800 vender items packet (with options).
 	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';

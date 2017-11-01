@@ -15,7 +15,7 @@
 package Network::Send::fRO;
 use strict;
 
-use base 'Network::Send::ServerType0';
+use base qw(Network::Send::ServerType0);
 
 sub new {
 	my ($class) = @_;

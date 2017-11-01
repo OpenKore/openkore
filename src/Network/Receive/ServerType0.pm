@@ -466,8 +466,8 @@ sub new {
 		'07D9' => ['hotkeys'], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		'07E3' => ['skill_exchange_item', 'V', [qw(type)]], #TODO: PACKET_ZC_ITEMLISTWIN_OPEN
 		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
+		'07E3' => ['skill_exchange_item', 'V2', [qw(type val)]], # 8
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
@@ -3640,7 +3640,7 @@ sub skill_used_no_damage {
 	if ($args->{skillID} == 28) {
 		$extra = ": $args->{amount} hp gained";
 		updateDamageTables($args->{sourceID}, $args->{targetID}, -$args->{amount});
-	} elsif ($args->{amount} != 65535) {
+	} elsif ($args->{amount} != 65535 && $args->{amount} != 4294967295) {
 		$extra = ": Lv $args->{amount}";
 	}
 
@@ -4748,9 +4748,9 @@ sub rates_info {
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
 	message T("=========================== Server Infos ===========================\n"), "info";
-	message TF("EXP Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
-	message TF("Drop Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
-	message TF("Death Penalty: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
+	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
+	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
+	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
 	message "=====================================================================\n", "info";
 }
 
@@ -4788,9 +4788,9 @@ sub rates_info2 {
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
 	message T("=========================== Server Infos ===========================\n"), "info";
-	message TF("EXP Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
-	message TF("Drop Rates: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
-	message TF("Death Penalty: %s\% (Base %s\% + Premium %s\% + Server %s\% + Plus %s\%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
+	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
+	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
+	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
 	message "=====================================================================\n", "info";
 }
 

@@ -545,8 +545,14 @@ sub iterate {
 				
 			# Click the cancel button in a shop.
 			} elsif ($step =~ /^e$/i) {
+				cancelNpcBuySell();
 				$ai_v{'npc_talk'}{'talk'} = 'close';
-				$self->conversation_end;
+				
+				if ($self->noMoreSteps) {
+					$self->conversation_end;
+				} else {
+					$self->{time} = time + 2;
+				}
 			
 			# Wrong sequence
 			} else {
@@ -573,17 +579,29 @@ sub iterate {
 					shift @{$self->{steps}};
 				}
 				completeNpcBuy(\@bulkitemlist);
-				$ai_v{'npc_talk'}{'talk'} = 'close' if !$self->{steps}[0];
 				# We give some time to get inventory_item_added packet from server.
 				# And skip this itteration.
-				$ai_v{'npc_talk'}{'time'} = time + 0.2;
-				$self->{time} = time + 0.2;
+				if ($self->noMoreSteps) {
+					$self->conversation_end;
+				} else {
+					$ai_v{'npc_talk'}{'talk'} = 'close';
+					$self->{time} = time + 2;
+				}
 				return;
 				
 			# Click the cancel button in a shop.
 			} elsif ($step =~ /^e$/i) {
-				$ai_v{'npc_talk'}{'talk'} = 'close';
-				$self->conversation_end;
+				my @bulkitemlist;
+				completeNpcBuy(\@bulkitemlist);
+				
+				if ($self->noMoreSteps) {
+					$self->conversation_end;
+				} else {
+					$ai_v{'npc_talk'}{'talk'} = 'close';
+					$self->{time} = time + 2;
+				}
+				
+				return;
 				
 			# Wrong sequence
 			} else {
