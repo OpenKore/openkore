@@ -7878,4 +7878,11 @@
 25422#Ramo Branco Fino#
 25401#Pelugem Negra#
 11616#Porco Defumado#
+//*****************************************************
+//------------Aplicar em 2017-10-31--------------------
+//*****************************************************
+31329#Peruca de Alice#
+15248#Traje de Wickebine#
+20815#Capa do Serafim Caído#
+28410#Bracelete Safira#
 //file end

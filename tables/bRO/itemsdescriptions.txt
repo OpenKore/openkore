@@ -22037,7 +22037,7 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4426#
-ATQ + 10% e ATQM + 10% se o usuário for Arruaceiro ou Desordeiro.
+ATQ + 10% e ATQM + 10% se o usuário for Arruaceiro, Desordeiro ou Renegado.
 Tipo de Item: ^777777Carta^000000
 Classe: ^777777Armadura^000000
 Peso: ^7777771^000000
@@ -50852,7 +50852,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 31040#
 Uma tiara com plumas que pertenceu a uma lendária garota mágica. Alguns acreditam que sua dona original era a poderosa maga Sarakura Dropa-Cartas, outros que era a garota Maloka Magika. Aparentemente, um Noviço que era apaixonado por ela encantou a tiara para realizar seu desejo e agora sempre que seu usuário precisa de ajuda, a garota mágica e seu báculo são conjurados.
-^FF0000ATENÇÃO:Toda vez que a habilidade [Primeiros Socorros] for utilizada, o personagem se transformará em uma garota mágica por 10 segundos.^000000
+^FF0000ATENÇÃO! O funcionamento a seguir está temporariamente desativado: Toda vez que a habilidade [Primeiros Socorros] for utilizada, o personagem se transformará em uma garota mágica por 10 segundos.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -51237,7 +51237,7 @@ Classes: ^777777Aprendizes, Superaprendizes, Mercadores, Espadachins, Noviços e
 Uma tiara dada à Lucya, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Lucya utilizou esta tiara para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta tiara foi encantada pela Valquíria Lexus, e possui o poder da transformação.
 ^0000ffDano mágico contra as propriedades Veneno, Sagrado, Sombrio, Fantasma e Maldito +5%.^000000
 ^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Luz Divina] nv. 1.^000000
-^0000ffAo usar [Primeiros Socorros], se transforma em Nasarin por 10 segundos.^000000
+^0000ffAtenção! O funcionamento a seguir está temporariamente desativado: Ao usar [Primeiros Socorros], se transforma em Nasarin por 10 segundos.^000000
 A cada nível aprendido de [Impositio Manus]:
 ^0000ffDano de [Luz Divina] +80%.^000000
 ^0000ffCusto de SP de [Luz Divina] +15.^000000
@@ -53792,7 +53792,7 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 28537#
-Este colar é mais uma criação do misterioso gênio científico conhecido como Arquien. Ele mescla energia arcana com a estranha tecnologia ancestral encontrada nas Ruínas de Juperos. Mecânicos parecem se interessar muito pelas propriedades deste colar, que inclusive é usado como um reator de arco pelo gênio bilionário playboy filantropo, Antônio Esterco.
+Este colar é mais uma criação da misteriosa gênia científica conhecida como Arquien. Ele mescla energia arcana com a estranha tecnologia ancestral encontrada nas Ruínas de Juperos. Mecânicos parecem se interessar muito pelas propriedades deste colar, que inclusive é usado como um reator de arco pelo gênio bilionário playboy filantropo, Antônio Esterco.
 ^0000ffCusto de SP de [Brandir Machado] -2.^000000
 ^0000ffRecuperação de HP da Bala e Bengala Doce +100%.^000000
 Ao derrotar monstros:
@@ -55088,5 +55088,70 @@ Peso: ^7777770^000000
 11616#
 A comida favorita do Esqueleão. Pode ser comprada com o Adestrador.
 Peso: ^7777775^000000
+#
+//*****************************************************
+//------------Itens 2017-10-31--------------------
+//*****************************************************
+31329#
+Uma peruca que simula perfeitamente os cabelos do monstro Alice. Não se preocupe, nenhuma Alice foi ferida para a confecção desta peruca. É o disfarce perfeito para entrar escondido na Fábrica de Robôs da Academia Kiel Hyre e se misturar com as outras Alices.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15248#
+A indumentária utilizada pela famosa mercenária residente de Morroc, Wickebine. Ela é bem conhecida por suas madeixas loiras, suas orelhinhas de gatinho, e por sua personalidade provocante.
+^0000ffAo realizar ataques físicos em monstros do tipo Anjo e Humanoide, 10% de chance de autoconjurar [Piscadela] nv. 1.^000000
+Refino +7 ou mais:
+^0000ffDano crítico +4%.^000000
+Refino +9 ou mais:
+^0000ffDano crítico +6% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Durga]^000000
+Durga com refino +7 ou mais:
+^0000ffAo realizar ataques físicos, 7% de chance de ativar um [efeito] por 3 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffIgnora 100% da DEF de monstros normais e personagens.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777756^000000
+Peso: ^77777790^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Sicários^000000
+#
+20815#
+Uma capa encantada que pertenceu ao poderoso líder de um grupo religioso. O sumo sacerdote se corrompeu com as falsas promessas de um demônio e profanou os templos dos deuses, sendo amaldiçoado a viver eternamente vagando por Niflheim.
+^0000ffDEFM +10.^000000
+^0000ffINT +5. DES +5.^000000
+^0000ffHP máx. +10%.^000000
+^0000ffDano mágico de propriedade Neutro +5%.^000000
+A cada nível de [Fé]:
+^0000ffResistência a propriedade Sagrado -3%.^000000
+Refino +7 ou mais:
+^0000ffDano mágico de propriedade Neutro +10% adicional.^000000
+^0000ffResistência as propriedades Sombrio e Sagrado +20%.^000000
+Refino +9 ou mais:
+^0000ffConjuração variável -5%.^000000
+^0000ffResistência as propriedades Sombrio e Sagrado +10% adicional.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777718^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28410#
+Um bracelete azulado que foi projetado por gênios da comunidade bioquímica de Lighthalzen. Com diversos acessórios multiuso, o bracelete possui compartimentos que facilitam muito o dia a dia de qualquer Bioquímico.
+^0000ffDES +5. SOR +5. INT +5.^000000
+A cada 2 níveis de [Arremessar Poção Compacta]:
+^0000ffATQM +20.^000000
+^0000ffDES, SOR e INT +1 adicional.^000000
+A cada 20 níveis de base:
+^0000ffDano de [Esporo Explosivo] +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777773^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 //file end
