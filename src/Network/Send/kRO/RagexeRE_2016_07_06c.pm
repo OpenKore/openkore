@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 #bysctnightcore
-package Network::Send::kRO::RagexeRE_2016_07_06b;
+package Network::Send::kRO::RagexeRE_2016_07_06c;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2016_02_03a);
