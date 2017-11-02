@@ -54,7 +54,7 @@ all 0 1 0
 506 0 1 0 # Green Potion
 501 25 1 0 # Red Potion
 502 25 1 0 # Orange Potion
-504 25 1 0 # White Potion
+504 25 1 0  # White Potion
 503 25 1 0 # Yellow potion
 
 ##### ARROWS #####
@@ -81,7 +81,7 @@ Arrow 3000 1 0
 2315 0 0 1 # Chain Mail
 2233 0 0 1 # Circlet
 2310 0 0 1 # Coat
-Coat [1] 0 0 1
+2310 0 0 1 # Coat [1]
 2302 0 0 1 # Cotton Shirt
 Cotton Shirt [1] 0 0 1
 #Crystal Pumps 0 0 1
@@ -101,23 +101,23 @@ Cotton Shirt [1] 0 0 1
 2229 0 0 1 # Helm
 2409 0 0 1 # High Heels
 2502 0 0 1 # Hood
-Hood [1] 0 0 1
+2502 0 0 1 # Hood [1]
 2304 0 0 1 # Jacket
-Jacket [1] 0 0 1
+2304 0 0 1 # Jacket [1]
 2506 0 0 1 # Manteau
 2308 0 0 1 # Mantle
-Mantle [1] 0 0 1
+2308 0 0 1 # Mantle [1]
 2108 0 0 1 # Mirror Shield
 2278 0 0 1 # Mr. Smile
 2504 0 0 1 # Muffler
 2313 0 0 1 # Padded Armor
 2371 0 0 1 # Pantie
 2209 0 0 1 # Ribbon
-Ribbon [1] 0 0 1
+2209 0 0 1 # Ribbon [1]
 2840 0 0 1 # Rosary
 2326 0 0 1 # Saint's Robe
 2402 0 0 1 # Sandals
-Sandals [1] 0 0 1
+2402 0 0 1 # Sandals [1]
 2324 0 0 1 # Scapulare
 2408 0 0 1 # Shackles
 2106 0 0 1 # Shield
@@ -125,13 +125,13 @@ Sandals [1] 0 0 1
 2322 0 0 1 # Silk Robe
 2611 0 0 1 # Silver Ring
 2333 0 0 1 # Silver Robe
-Silver Robe [1] 0 0 1
+2333 0 0 1 # Silver Robe [1]
 2715 0 0 1 # Skull Ring
 2336 0 0 1 # Thief Clothes
 2331 0 0 1 # Tights
 2223 0 0 1 # Turban
 2329 0 0 1 # Wooden Mail
-Wooden Mail [1] 0 0 1
+2329 0 0 1 # Wooden Mail [1]
 
 
 ##### WORTHLESS WEAPONS #####
@@ -139,176 +139,176 @@ Wooden Mail [1] 0 0 1
 
 Arbalest Bow [1] 0 0 1
 1612 0 0 1 # Arc Wand
-Arc Wand [1] 0 0 1
+1610 0 0 1 # Arc Wand [1]
 1303 0 0 1 # Axe
-Axe [3] 0 0 1
-Axe [4] 0 0 1
+1301 0 0 1 # Axe [3]
+1302 0 0 1 # Axe [4]
 1156 0 0 1 # Bastard Sword
-Bastard Sword [2] 0 0 1
+1154 0 0 1 # Bastard Sword [2]
 1353 0 0 1 # Battle Axe
-Battle Axe [3] 0 0 1
-Battle Axe [4] 0 0 1
-Belt [1] 0 0 1
+1351 0 0 1 # Battle Axe [3]
+1352 0 0 1 # Battle Axe [4]
+2627 0 0 1 # Belt [1]
 #Bible [2] 0 0 1
 1467 0 0 1 # Bill Guisarme
 1109 0 0 1 # Blade
-Blade [3] 0 0 1
-Blade [4] 0 0 1
+1107 0 0 1 # Blade [3]
+1108 0 0 1 # Blade [4]
 1703 0 0 1 # Bow
-Bow [3] 0 0 1
-Bow [4] 0 0 1
-Broad Sword [1] 0 0 1
+1701 0 0 1 # Bow [3]
+1702 0 0 1 # Bow [4]
+1160 0 0 1 # Broad Sword [1]
 1359 0 0 1 # Buster
-Buster [1] 0 0 1
-Chain [2] 0 0 1
+1357 0 0 1 # Buster [1]
+1519 0 0 1 # Chain [2]
 #Chemeti Whip 0 0 1
-Claw [1] 0 0 1
-Claw [2] 0 0 1
+1809 0 0 1 # Claw [1]
+1810 0 0 1 # Claw [2]
 1172 0 0 1 # Claymore
 1503 0 0 1 # Club
-Club [3] 0 0 1
-Club [4] 0 0 1
+1501 0 0 1 # Club [3]
+1502 0 0 1 # Club [4]
 1706 0 0 1 # Composite Bow
-Composite Bow [3] 0 0 1
+1704 0 0 1 # Composite Bow [3]
 1712 0 0 1 # Cross Bow
 Cross Bow [2] 0 0 1
 1206 0 0 1 # Cutter
-Cutter [3] 0 0 1
-Cutter [4] 0 0 1
+1204 0 0 1 # Cutter [3]
+1205 0 0 1 # Cutter [4]
 1215 0 0 1 # Dagger
-Dagger [2] 0 0 1
-Dagger [3] 0 0 1
-Damascus [1] 0 0 1
+1213 0 0 1 # Dagger [2]
+1214 0 0 1 # Dagger [3]
+1222 0 0 1 # Damascus [1]
 1212 0 0 1 # Dirk
-Dirk [2] 0 0 1
-Dirk [3] 0 0 1
+1210 0 0 1 # Dirk [2]
+1211 0 0 1 # Dirk [3]
 1106 0 0 1 # Falchion
-Falchion [3] 0 0 1
-Finger [1] 0 0 1
-Finger [2] 0 0 1
+1104 0 0 1 # Falchion [3]
+1811 0 0 1 # Finger [1]
+1812 0 0 1 # Finger [2]
 1808 0 0 1 # Fist
-Fist [1] 0 0 1
-Flail [2] 0 0 1
-Flail [3] 0 0 1
+1808 0 0 1 # Fist [1]
+1510 0 0 1 # Flail [2]
+1511 0 0 1 # Flail [3]
 1149 0 0 1 # Flamberge
-Gakkung Bow [1] 0 0 1
+1714 0 0 1 # Gakkung Bow [1]
 #Girl's Diary [1] 0 0 1
 1221 0 0 1 # Gladius
-Gladius [2] 0 0 1
+1219 0 0 1 # Gladius [2]
 1456 0 0 1 # Glaive
-Glaive [2] 0 0 1
-Glaive [3] 0 0 1
+1454 0 0 1 # Glaive [2]
+1455 0 0 1 # Glaive [3]
 1709 0 0 1 # Great Bow
-Great Bow [2] 0 0 1
-Great Bow [3] 0 0 1
+1707 0 0 1 # Great Bow [2]
+1708 0 0 1 # Great Bow [3]
 1453 0 0 1 # Guisarme
-Guisarme [2] 0 0 1
+1451 0 0 1 # Guisarme [2]
 1908 0 0 1 # Guitar
-Guitar [1] 0 0 1
-Gumoongoh [1] 0 0 1
-Gumoongoh [2] 0 0 1
-Haedonggum [1] 0 0 1
+1908 0 0 1 # Guitar [1]
+1911 0 0 1 # Gumoongoh [1]
+1912 0 0 1 # Gumoongoh [2]
+1123 0 0 1 # Haedonggum [1]
 Hallberd [1] 0 0 1
 Hallberd [2] 0 0 1
 1356 0 0 1 # Hammer
-Hammer [2] 0 0 1
-Hammer [3] 0 0 1
-Harp [1] 0 0 1
-Harp [2] 0 0 1
+1354 0 0 1 # Hammer [2]
+1355 0 0 1 # Hammer [3]
+1909 0 0 1 # Harp [1]
+1910 0 0 1 # Harp [2]
 1255 0 0 1 # Jamadhar
 1403 0 0 1 # Javelin
-Javelin [3] 0 0 1
-Javelin [4] 0 0 1
-Jur [2] 0 0 1
+1401 0 0 1 # Javelin [3]
+1402 0 0 1 # Javelin [4]
+1250 0 0 1 # Jur [2]
 1118 0 0 1 # Katana
-Katana [3] 0 0 1
-Katana [4] 0 0 1
-Katar [1] 0 0 1
+1116 0 0 1 # Katana [3]
+1117 0 0 1 # Katana [4]
+1252 0 0 1 # Katar [1]
 1203 0 0 1 # Knife
-Knife [3] 0 0 1
-Knife [4] 0 0 1
-Knuckle Dusters [2] 0 0 1
-Knuckle Dusters [3] 0 0 1
+1201 0 0 1 # Knife [3]
+1202 0 0 1 # Knife [4]
+1803 0 0 1 # Knuckle Dusters [2]
+1804 0 0 1 # Knuckle Dusters [3]
 1412 0 0 1 # Lance
 #Lariat Whip 0 0 1
-Lute [2] 0 0 1
-Lute [3] 0 0 1
+1905 0 0 1 # Lute [2]
+1906 0 0 1 # Lute [3]
 1506 0 0 1 # Mace
-Mace [3] 0 0 1
+1504 0 0 1 # Mace [3]
 #Mace [4] 0 0 1
 1209 0 0 1 # Main Gauche
-Main Gauche [3] 0 0 1
-Mandolin [2] 0 0 1
-Mandolin [3] 0 0 1
-Morning Star [1] 0 0 1
-Morning Star [2] 0 0 1
-Novice Armlet [1] 0 0 1
-Novice Breastplate [1] 0 0 1
+1207 0 0 1 # Main Gauche [3]
+1903 0 0 1 # Mandolin [2]
+1904 0 0 1 # Mandolin [3]
+1513 0 0 1 # Morning Star [1]
+1514 0 0 1 # Morning Star [2]
+2628 0 0 1 # Novice Armlet [1]
+2340 0 0 1 # Novice Breastplate [1]
 1309 0 0 1 # Orcish Axe
 1124 0 0 1 # Orcish Sword
 1459 0 0 1 # Partizan
-Partizan [1] 0 0 1
-Partizan [2] 0 0 1
+1457 0 0 1 # Partizan [1]
+1458 0 0 1 # Partizan [2]
 1409 0 0 1 # Pike
-Pike [3] 0 0 1
+1407 0 0 1 # Pike [3]
 1957 0 0 1 # Rante Whip
-Rante Whip [1] 0 0 1
+1957 0 0 1 # Rante Whip [1]
 1112 0 0 1 # Rapier
-Rapier [2] 0 0 1
-Rapier [3] 0 0 1
-Repeating Crossbow [1] 0 0 1
-Ring Pommel Saber [2] 0 0 1
+1110 0 0 1 # Rapier [2]
+1111 0 0 1 # Rapier [3]
+1721 0 0 1 # Repeating Crossbow [1]
+1122 0 0 1 # Ring Pommel Saber [2]
 1603 0 0 1 # Rod
-Rod [3] 0 0 1
+1601 0 0 1 # Rod [3]
 #Rod [4] 0 0 1
-Rope [3] 0 0 1
+1950 0 0 1 # Rope [3]
 #Rope [4] 0 0 1
-Saber [2] 0 0 1
+1126 0 0 1 # Saber [2]
 Scimiter [2] 0 0 1
 Scimiter [3] 0 0 1
 1153 0 0 1 # Slayer
-Slayer [2] 0 0 1
-Slayer [3] 0 0 1
-Smasher [2] 0 0 1
-Smasher [3] 0 0 1
+1151 0 0 1 # Slayer [2]
+1152 0 0 1 # Slayer [3]
+1507 0 0 1 # Smasher [2]
+1508 0 0 1 # Smasher [3]
 1406 0 0 1 # Spear
-Spear [3] 0 0 1
-Spear [4] 0 0 1
+1404 0 0 1 # Spear [3]
+1405 0 0 1 # Spear [4]
 1609 0 0 1 # Staff
-Staff [2] 0 0 1
+1607 0 0 1 # Staff [2]
 1218 0 0 1 # Stiletto
-Stiletto [2] 0 0 1
-Stiletto [3] 0 0 1
-Studded Knuckles [2] 0 0 1
-Studded Knuckles [3] 0 0 1
+1216 0 0 1 # Stiletto [2]
+1217 0 0 1 # Stiletto [3]
+1805 0 0 1 # Studded Knuckles [2]
+1806 0 0 1 # Studded Knuckles [3]
 1103 0 0 1 # Sword
-Sword [3] 0 0 1
-Sword [4] 0 0 1
+1101 0 0 1 # Sword [3]
+1102 0 0 1 # Sword [4]
 1518 0 0 1 # Sword Mace
-Tail Whip [1] 0 0 1
-Tail Whip [2] 0 0 1
+1958 0 0 1 # Tail Whip [1]
+1959 0 0 1 # Tail Whip [2]
 1462 0 0 1 # Trident
-Trident [2] 0 0 1
+1460 0 0 1 # Trident [2]
 1121 0 0 1 # Tsurugi
-Tsurugi [1] 0 0 1
-Tsurugi [2] 0 0 1
+1119 0 0 1 # Tsurugi [1]
+1120 0 0 1 # Tsurugi [2]
 1362 0 0 1 # Two-handed Axe
 Two-handed Axe [1] 0 0 1
 1159 0 0 1 # Two-handed Sword
 Two-handed Sword [1] 0 0 1
-Violin [3] 0 0 1
+1901 0 0 1 # Violin [3]
 #Violin [4] 0 0 1
-Waghnak [3] 0 0 1
-Waghnak [4] 0 0 1
+1801 0 0 1 # Waghnak [3]
+1802 0 0 1 # Waghnak [4]
 1606 0 0 1 # Wand
-Wand [2] 0 0 1
-Wand [3] 0 0 1
+1604 0 0 1 # Wand [2]
+1605 0 0 1 # Wand [3]
 #War Axe [1] 0 0 1
-Whip [1] 0 0 1
-Whip [2] 0 0 1
-Whip [3] 0 0 1
-Wire Whip [2] 0 0 1
-Wire Whip [3] 0 0 1
+1960 0 0 1 # Whip [1]
+1961 0 0 1 # Whip [2]
+1953 0 0 1 # Whip [3]
+1954 0 0 1 # Wire Whip [2]
+1955 0 0 1 # Wire Whip [3]
 
 
 ##### STANDARD LOOT #####
