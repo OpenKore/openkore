@@ -7581,6 +7581,7 @@
 17851#Box_of_Rusty_Quivers#
 17852#Costume_Box_I_Feline_Fine#
 17859#Costume_Box_VIII_Spoopy_Spectre#
+17860#Costume_Box:_Spooptacular#
 17876#Costume_Box:_Garment_Edition#
 17877#RESTARTer_Pack#
 17878#RESTARTer_Pack_Plus#
@@ -8909,6 +8910,7 @@
 23477#September_Costume_Box#
 23507#October_Costume_Box#
 23508#iRO_2017_Oct_CosBox2#
+23516#November_Costume_Box_Ani_Maul#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9302,6 +9304,7 @@
 31140#Costume_Black_Cowboy_Hat#
 31141#Costume_Cactus_Flower_Corsage#
 31144#Costume_Native_Feather_Headband#
+31158#Costume_Squirrel_Ear_Hat#
 31160#Costume_Rune_Helm#
 31161#Costume_Tiger_Mask#
 31162#Costume_Shaving_Foam#
@@ -9312,6 +9315,7 @@
 31167#Costume_Happy_Droopy_Lunatic_Ears_(Black)#
 31168#Costume_Mouton_Life_(Blue)#
 31172#Costume_Los_Pollos_Locos#
+31179#Costume_Wolf_Masquerade#
 31181#Costume_Rosary's_Necklace#
 31182#Costume_Side_Cap#
 31183#Costume_Fallen_Angel's_Blessing#
@@ -9358,3 +9362,11 @@
 31232#Costume_Long_Twin_(Brown)#
 31233#Costume_Long_Twin_(Purple)#
 31234#Costume_Persica#
+31246#Costume_Humming_Bird#
+31247#Costume_Hippo_Hat#
+31248#Costume_Isabella_Red_Ears#
+31249#Costume_Hopping_Rabbit#
+31250#Costume_Wonderful_Beast_Ears#
+31251#Costume_Cat's_Mouth#
+31252#Costume_White_Cat_Ears_Hat#
+31256#Costume_Jaguar_Mask#
