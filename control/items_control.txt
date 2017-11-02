@@ -54,7 +54,7 @@ all 0 1 0
 506 0 1 0 # Green Potion
 501 25 1 0 # Red Potion
 502 25 1 0 # Orange Potion
-504 0 1 0  # White Potion
+504 25 1 0  # White Potion
 503 25 1 0 # Yellow potion
 
 ##### ARROWS #####
