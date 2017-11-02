@@ -8,7 +8,7 @@ package OpenKore::Plugins::reconnect;
 
 use strict;
 
-use Globals qw( %config %masterServers %timeout );
+use Globals qw( %config %masterServers %timeout $net );
 use Log qw( &message );
 use Plugins;
 use Utils qw( &min );
@@ -30,7 +30,7 @@ sub unload {
 
 sub trying_to_connect {
 	my ( undef, $params ) = @_;
-
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
 	# Only trigger if we're connecting to the login server.
 	next if $masterServers{ $config{master} }->{ip} ne $params->{host};
 	next if $masterServers{ $config{master} }->{port} ne $params->{port};
