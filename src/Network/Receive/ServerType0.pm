@@ -2665,8 +2665,12 @@ sub pet_info2 {
 	if ($type == 0) {
 		# You own pet with this ID
 		$pet{ID} = $ID;
+	} elsif ($type == 5) {
+		# You own no pet.
+		return unless ($pet{ID} && ($pet{ID} eq $ID));
+	}
 
-	} elsif ($type == 1) {
+	if ($type == 1) {
 		$pet{friendly} = $value;
 		debug "Pet friendly: $value\n";
 
@@ -2683,9 +2687,6 @@ sub pet_info2 {
 		# performance info for any pet in range
 		#debug "Pet performance info: $value\n";
 
-	} elsif ($type == 5) {
-		# You own no pet.
-		undef $pet{ID} unless ($pet{ID} && ($pet{ID} eq $ID));
 	}
 }
 
