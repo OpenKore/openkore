@@ -246,10 +246,10 @@ sub send_pet {
 	my $data = undef;
 	if (defined $pet{ID}) {
 		$data  = pack('C2 C a4 V', 0xA4, 0x01, 0, $pet{ID}, 0);
-		$data .= pack('C2 C a4 V', 0xA4, 0x01, 5, $pet{ID}, 0x64);
+		$data .= pack('C2 C a4 V', 0xA4, 0x01, 5, $pet{ID}, 0x64);#<20171102>on iRO, this one only happen when hatch 
 		$data .= pack('C2 Z24 C v4', 0xA2, 0x01,
 			stringToBytes($pet{name}), $pet{renameflag}, $pet{level},
-			$pet{hungry}, $pet{friendly}, $pet{accessory});
+			$pet{hungry}, $pet{friendly}, $pet{accessory}, $pet{type});
 		$client->send($data);
 	}
 }
