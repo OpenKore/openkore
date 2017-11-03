@@ -70993,3 +70993,17 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19987#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brazil Beret!
+300 Fabric
+10 Yellow Bijou
+10 Green Bijou
+1 Cap [0]
+1 Brazil Beret Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
