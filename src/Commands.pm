@@ -4640,7 +4640,7 @@ sub cmdStorage {
 			cmdStorage_log();
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
-		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && $items) || $switch eq 'close') {
+		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && ($items || $args =~ /$switch 0/)) || $switch eq 'close') {
 			if ($char->storage->isReady()) {
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
