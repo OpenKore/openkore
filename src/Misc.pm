@@ -2306,9 +2306,21 @@ sub mon_control {
 # Returns the pickupitems.txt settings for item name $name.
 # If $name has no specific settings, use 'all'.
 sub pickupitems {
-	my ($name) = @_;
+   my $name = lc shift;
 
-	return ($pickupitems{lc($name)} ne '') ? $pickupitems{lc($name)} : $pickupitems{all};
+   return $pickupitems{$name} if exists $pickupitems{$name} and $pickupitems{$name} ne '';
+   
+   my $result = $pickupitems{all} || {};
+   
+   foreach my $key (keys %pickupitems) {
+      next unless $key =~ m!^/(.*)/$!;
+      my $regex = $1;
+      if ($name =~ /$regex/) {
+         $result = $pickupitems{$key};
+      }
+   }
+   
+   return $pickupitems{$name} = $result;
 }
 
 sub positionNearPlayer {
