@@ -256,7 +256,7 @@ prt_church.rsw#Catedral#
 izlude.rsw#Izlude#
 izlude_in.rsw#Casa em Izlude#
 izlu2dun.rsw#Ilha Byalan#
-monk_in.rsw#Dentro de St. Abbey#
+monk_in.rsw#Dentro da Abadia#
 
 glast_01.rsw#Glast Heim#
 alde_dun01.rsw#Torre do Relógio (s1)#
@@ -881,12 +881,12 @@ moc_para01.rsw#Grupo do Éden#
 
 //EP.14.3
 moro_vol.rsw#Círculo de Fogo#
-moro_cav.rsw#Flame Cave#
+moro_cav.rsw#Cavena de Fogo#
 1@dth1.rsw#Ilha Bios (1)#
 1@dth2.rsw#Ilha Bios (2)#
 1@dth3.rsw#Ilha Bios (3)#
-1@rev.rsw#Morse's Cave#
-1@eom.rsw#Demon God War#
+1@rev.rsw#Caverna#
+1@eom.rsw#Templo do Demônio Rei#
 1@jtb.rsw#Pesadelo Musical#
 
 //Hero's Trail pt.1, 2
@@ -896,7 +896,7 @@ dali02.rsw#Fissura Dimensional (2)#
 1@sara.rsw#Memórias de Sara#
 1@tnm1.rsw#Andar Superior da Torre do Demonio#
 1@tnm2.rsw#Topo da Torre do Demonio#
-1@tnm3.rsw#Subterrâneo da Torre do Demonio#
+1@tnm3.rsw#Subterrâneo do Castelo de Morroc#
 1@ge_st.rsw#Torneio de Magia#
 1@gef.rsw#Torneio de Magia#
 1@gef_in.rsw#Torneio de Magia#
@@ -907,3 +907,20 @@ gl_cas02_.rsw#Castelo Amaldiçoado#
 gl_chyard_.rsw#Cemitério Amaldiçoado#
 2@gl_k.rsw#Ordem dos Cavaleiros 2º Andar#
 1@gl_k.rsw#Ordem dos Cavaleiros 1º Andar#
+
+// ep15.1 Phantasmagorika
+ver_eju.rsw#Ruínas de Juperos (Oeste)#
+ver_tunn.rsw#Túnel de Verus#
+verus04.rsw#Centro de Verus#
+verus03.rsw#Praça Central de Verus#
+
+1@mcd.rsw#Fábrica de Charlestons#
+
+// ep15.2 Phantasmagorika
+verus01.rsw#Laboratório OPTATIO de Experimentos#
+verus02.rsw#Instituto WISH de Pesquisa#
+un_bk_q.rsw#Abrigo Subterrâneo#
+un_bunker.rsw#Abrigo Subterrâneo#
+un_myst.rsw#Túnel do Abrigo#
+1@uns.rsw#Sala Final#
+1@lab.rsw#Laboratório Central#
