@@ -11671,7 +11671,7 @@ Você ouviu sobre o lugar onde Jakk costumava ficar. Vamos voltar para Hoorooron
 Fale com Hooroorong#
 
 11501#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
-Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Limpos e Secos para Hororong. Eles são pegos ao capturar os Jakks.#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororong. Eles são pegos ao capturar os Jakks.#
 Leve Jakks para Niflheim#
 
 11502#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
@@ -11781,3 +11781,565 @@ Até amanhã, Jakk!#
 11528#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
 Permite pegar Pelugens Negras dos monstros do Vale de Gyoll.#
 Coletor de Pelugens Negras#
+
+
+//ep15.1
+4295#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Você conheceu um bardo andarilho nas escavações de Verus.#
+Termine de falar com o Bardo.#
+
+4296#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+O bardo errante parece não estar mais interessado em saber das suas aventuras.#
+Volte amanhã.#
+
+4297#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre uma Corporação muito famosa na República de Schwartzwald!#
+Complete a missão ^CD3278A Empresa^000000 e retorne ao Bardo.#
+
+4298#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre o Presidente da República de Schwartwald!#
+Complete a missão ^CD3278O Presidente^000000 e retorne ao Bardo.#
+
+4299#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre uma Professora que estuda as Ruínas de Juperos!#
+Complete a missão ^CD3278Explorando Juperos^000000 e retorne ao Bardo.#
+
+4300#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre um cientista louco em Juno!#
+Complete a missão ^CD3278Cientista Maluco^000000 e retorne ao Bardo.#
+
+4301#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um curioso bardo deseja saber mais a respeito de uma pesquisa sobre armas biológicas!#
+Complete a missão ^CD3278A Biopesquisa^000000 e retorne ao Bardo.#
+
+4302#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um curioso bardo deseja saber mais a respeito de uma escavação no Templo de Odin!#
+Complete a missão ^CD3278Inspeção no Templo de Odin^000000 e retorne ao Bardo.#
+
+// Episode 15.1 Phantasmagorika
+5304#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Apesar de ser um sítio arqueológico, Verus também precisa de ajuda da polícia! Os ^CD3278Adoradores do Infortúnio^000000 estão importunando as pessoas que estão explorando a cidade e os policiais dependem de você para dar uma lição neles!#
+Ajude o Chefe de Polícia Kesler.#
+
+5305#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Salgran pela primeira vez.#
+Fale com o Policial Salgran#
+
+5306#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Gerev pela primeira vez.#
+Fale com o Policial Gerev#
+
+5307#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Seiden pela primeira vez.#
+Fale com o Policial Seiden#
+
+5308#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Piffs pela primeira vez.#
+Fale com o Policial Piffs#
+
+5309#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O Chefe de Polícia quer saber se seus colegas estão com problemas. Você pode encontrar os policiais Salgran, Gerev e Seiden na Praça Central de Verus. O policial Piffs encontra-se próximo ao Chefe Kesler.#
+Ajude os policiais.#
+
+5310#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Salgran parece ter um pequeno problema com as Propagandas Ilegais.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5311#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Gerev parece ter um pequeno problema com as Armadilhas.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5312#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Seiden parece ter um pequeno problema com as Pedras.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5313#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Piffs parece ter um pequeno problema com as Ervas.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5314#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os ^CD3278Adoradores do Infortúnio^000000 estão sujando a praça central de Verus com Propagandas Ilegais! É melhor você remover esses panfletos imediatamente antes que eles fiquem colados no chão permanentemente.#
+Elimine 10 Propagandas Ilegais.#
+
+5315#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Alguns viajantes e historiadores estão sendo vítimas das armadilhas colocadas pelos ^CD3278Adoradores do Infortúnio^000000! É melhor você removê-las antes que causem mais problemas!#
+Desarme 10 armadilhas.#
+
+5316#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os destroços da cidade estão servindo como pedra para os ^CD3278Adoradores do Infortúnio^000000 atirarem contra os policiais! Recolha essas pedras do chão para garantir que os Adoradores não as peguem primeiro!#
+Recolha 10 pedras grandes.#
+
+5317#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os policiais se machucam constantemente ao enfrentar os ^CD3278Adoradores do Infortúnio^000000. A sugestão dos médicos é realizar o tratamento com ervas colhidas nos matagais espalhados pelo sítio arqueológico.#
+Recolha 10 ervas.#
+
+5318#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você concluiu todos os trabalhos das outras unidades policiais e pode finalmente descansar! Quem sabe amanhã o Chefe de Polícia Kesler queira a sua ajuda novamente?#
+Volte amanhã.#
+
+// Verus City
+7606#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Foi descoberta uma passagem secreta nas ruínas de Juperos! A Corporação Rekenber e o Grupo do Éden estão recrutando aventureiros e viajantes para trabalhar na escavação!#
+Junte-se ao time de escavação.#
+
+7607#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+A líder do Grupo do Éden quer fazer com você a respeito do projeto de escavação chamado 'Fantasmagórica'. Vá até o segundo andar do Grupo do Éden e dirija-se até a terceira porta, no final do salão.#
+Fale com a Líder do Grupo do Éden.#
+
+7608#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Para se inscrever no projeto de escavação 'Fantasmagórica', você precisará registrar-se com Lenore, na sala ao lado.#
+Fale com a Secretária Lenore.#
+
+7609#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você deve dirijir-se às ruínas de Juperos e entrar na passagem recém-descoberta! Fale com os guias no local para que eles possam te indicar o caminho até o sítio arqueológico. Chegando lá, fale com a Recepcionista Nara para confirmar o registro.#
+Registre-se como um membro do time de escavação de ^CD3278Atnad^000000.#
+
+7610#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você é um membro oficial do time de escavação de ^CD3278Atnad^000000 e pode participar do projeto 'Fantasmagórica'.#
+Parabéns!#
+
+7611#Limpando o Caminho#SG_FEEL#QUE_NOIMAGE#
+Nem todo mundo que explora essa área é um aventureiro... cientistas, historiadores e até pessoas comuns estão se machucando por causa desses robôs que estão invadindo o túnel.#
+Elimine 10 Robôs de Reconhecimento.#
+
+7612#Limpando o Caminho#SG_FEEL#QUE_NOIMAGE#
+Muito obrigado pela sua ajuda! Você deveria descansar, outros aventureiros podem cuidar dos monstros no túnel por enquanto.#
+Volte amanhã.#
+
+7613#Eliminando Robôs#SG_FEEL#QUE_NOIMAGE#
+A praça central de Verus está infestada com criaturas estranhas que parecem viver aqui muito antes de nós... Acontece que eles atrapalham o avanço de outras equipes de escavação. Por favor, dê um jeito neles.#
+Elimine 15 Robôs de Reparo e 15 Robôs de Exploração.#
+
+7614#Eliminando Robôs#SG_FEEL#QUE_NOIMAGE#
+Você conseguiu dar um jeito nos robôs da praça central de Verus!#
+Volte amanhã.#
+
+7615#Relatório Diário de Núcleos#SG_FEEL#QUE_NOIMAGE#
+Esses robôs de Verus podem ser a chave para uma civilização muito avançada. Você pode conseguir Núcleos de Energia destruindo qualquer Robô de Reconhecimento, Robô Reparor e Robô Explorador.#
+Colete 20 Núcleos de Energia.#
+
+7616#Relatório Diário de Núcleos#SG_FEEL#QUE_NOIMAGE#
+O time de escavação está focando em estudar os Núcleos de Energia. Você deveria descansar enquanto isso.#
+Volte amanhã.#
+
+7617#Relatório Diário#SG_FEEL#QUE_NOIMAGE#
+Leve o ^CD3278Relatório da Escavação^000000 para o Comandante Louis na Central de Comando. Depois disso, seu trabalho por hoje acabou!#
+Entregue o relatório para o Comandante Louis.#
+
+7618#Relatório Diário#SG_FEEL#QUE_NOIMAGE#
+Você já entregou o ^CD3278Relatório da Escavação^000000 hoje. É necessário que outro relatóro seja escrito para você entregá-lo novamente#
+Volte amanhã.#
+
+7619#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você é um membro oficial do time de escavação de ^CD3278Atnad^000000 e pode participar do projeto 'Fantasmagórica'.#
+Fale com Aureth.#
+
+7620#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+O Arqueologista Aureth te pediu para ir até Lloyd e Luke na Praça Central Verus.#
+Fale com o Maquinista Lloyd.#
+
+7621#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+O Maquinista Lloyd pediu ajuda para sua pesquisa sobre as energias dos robôs quebrados. Para coletar essas energias, será necessário usar 1 Garrafa Vazia em cada 'Resto de Máquina' espalhado por toda Verus. Como ele quer 10 energias, leve ^4d4dff10 Garrafas Vazias^000000.#
+Colete 10 Energias Condensadas para Lloyd.#
+
+7622#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Informe os resultados da pesquisa de Lloyd para Aureth.#
+Fale com Aureth.#
+
+7623#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Parece que o velho Atnad está chamando você.#
+Fale com Ian Atnad.#
+
+7624#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Ian Atnad quer que você encontre algo para comer que seja delicioso e refrescante. É melhor você falar com Aureth pra saber quem saberia que tipo de iguaria é esta.#
+Fale com Aureth.#
+
+7625#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Luke vai cozinhar algo para o velho Ian se você trouxer 2 Carnes, 1 Manga de Mora e 1 Banana.#
+Entregue os itens para Luke.#
+
+7626#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Você conseguiu a Torrada de Carne com as habilidades de cozinha do Luke!#
+Entregue a Torrada de Carne para Ian Atnad.#
+
+7627#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora que você fez o favor para Ian, está na hora de saber sobre a última exploração!#
+Converse com Ian Atnad.#
+
+7628#Relatório Diário de Energia#SG_FEEL#QUE_NOIMAGE#
+O Maquinista Lloyd pediu ajuda para sua pesquisa sobre as energias dos robôs quebrados. Para coletar essas energias, será necessário usar 1 Garrafa Vazia em cada 'Resto de Máquina' espalhado por toda Verus. Como ele quer 10 energias, leve ^4d4dff10 Garrafas Vazias^000000.#
+Colete 10 Energias Condensadas para Lloyd.#
+
+7629#Relatório Diário de Energia#SG_FEEL#QUE_NOIMAGE#
+Você ajudou o Maquinista Lloyd na pesquisa sobre energias condensadas.#
+Volte amanhã.#
+
+// ep 15.1
+11363#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que você precisa ter acesso ao elevador antes de usá-lo. Dirija-se ao Quartal General da Corporação Rekenber em Lighthalzen e converse com Leitner na mesa à esquerda do hall de entrada.#
+Registre-se com Leitner.#
+
+11364#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Registro concluído! Retorne ao Planalto de El Mes para usar o elevador que leva direto para Verus.#
+Fale com Elisha.#
+
+11365#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Procure pela Guia Scarlet no centro da cidade de Verus, próxima a uma fonte.#
+Fale com Scarlet.#
+
+11366#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Algo parece ter dado errado com o elevador! Colete 30 Placas de Ferro Usadas para resolver esse problema!#
+Traga 30 ^CD3278Placas de Ferro Usadas^000000.#
+
+11367#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Du Lian parece ter se impressionado com essa estranha Fonte no meio de Verus...#
+Investigue a Fonte.#
+
+11368#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Você não encontrou nada na fonte. Verifique as miudezas ali perto.#
+Investigue as Miudezas.#
+
+11369#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Esse ambiente é propício para a criação de plantas? Verifique a árvore ali perto.#
+Investigue a Árvore.#
+
+11370#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Aquela casa estranha tem uma placa de aviso bem peculiar pendurado na porta.#
+Examine o Aviso.#
+
+11371#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Tem um caminho atrás da casa! Entre naquele portal e siga para a próxima área.#
+Fale com Du Lian nessa nova área.#
+
+11372#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Existe uma fonte mais ao norte, ela é igual a outra fonte que encontramos.#
+Investigue a Fonte.#
+
+11373#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Mark vai até o norte desse lugar, será que ele vai muito longe?#
+Fale com Mark ao norte.#
+
+11374#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O caminho parece estar bloqueado.#
+Fale com Tamarin que está logo ali adiante.#
+
+11375#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Magi está investigando a entrada da área destruída, ela está um pouco mais afastada do portal.#
+Fale com Maggi.#
+
+11376#Perigo no Elevador#SG_FEEL#QUE_NOIMAGE#
+De repente, o elevador parou de se mover, mas não parece estar quebrado. Desça e dê uma olhada.#
+Verifique o elevador.#
+
+11377#Perigo no Elevador#SG_FEEL#QUE_NOIMAGE#
+Você ajudou o homem que estava preso na porta do elevador.#
+Parabéns!#
+
+13184#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+A Charleston parece estar com problemas. Porque você não entra na fábrica e traz os componentes que ela quer?#
+Entre na Fábrica de Charlestons.#
+
+13185#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+Você entrou na Fábrica de Charlestons, haverá um tempo de espera para retornar a ela.#
+Volte amanhã.#
+
+13186#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+Você entrou na Fábrica de Charlestons, haverá um tempo de espera para retornar a ela.#
+Volte amanhã.#
+
+13187#Limpeza de Disco#SG_FEEL#QUE_NOIMAGE#
+Elimine os Roborings na Fábrica de Charlestons.#
+Elimine 50 Roboring.#
+
+13188#Limpeza de Disco#SG_FEEL#QUE_NOIMAGE#
+Limpeza de disco concluída!#
+Volte amanhã.#
+
+// ep 15.2
+7641#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+A partir de agora, você tem acesso liberado para as outras áreas de Verus. Para garantir o acesso, é necessário falar com um dos Guardas da entrada e confirmar a sua equipe de escavação!#
+Fale com Damhwa.#
+
+7642#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Investigue a área do Instituto WISH de Pesquisa ao norte da Praça Central de Verus. Qualquer descoberta pequena será importante para reportar ao time de escavação de Atnad.#
+Verifique os Papéis espalhados.#
+
+7643#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um tipo de peça misteriosa no Instituto WISH de Pesquisa. É bom reportar a descoberta para o time de escavação de Atnad.#
+Fale com Ian Atnad.#
+
+7644#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+O registro de memória só funciona com o reprodutor em posse da Capitã Arquien. Dirija-se até a sede do Grupo do Éden e peça pelo ^CD3278Reprodutor de Registro^000000.#
+Fale com a Capitã Arquien no Grupo do Éden.#
+
+7645#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você precisará coletar 5 registros de memória para preencher todo o conteúdo do Reprodutor. Os registros de memória podem ser encontrados vasculhando os papéis espalhados no Instituto WISH de Pesquisa. Leve todos os registros de memória para a Capitã Arquien, em Verus.#
+Traga 5 Registros de Memórias do Instituto.#
+
+7646#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Ouça o conteúdo do registro de memórias no Reprodutor ao lado da Capitã Arquien, não esqueça de conversar com ela depois.#
+Clique no Reprodutor.#
+
+7647#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Reporte suas descobertas ao arqueólogo Ian Atnad.#
+Fale com Ian Atnad.#
+
+7648#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Dirija-se ao abrigo subterrâneo no Laboratório OPTATIO de Experimentos e colete 5 Registros de Memórias para a Capitã Arquien.#
+Traga 5 Registros de Memórias do Abrigo.#
+
+7649#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Informe para Ian Atnad sobre o conteúdo dos Registros de Memórias do Abrigo.#
+Fale com Ian Atnad sobre os registros.#
+
+7650#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Retorne ao Instituto WISH de Pesquisa e colete 5 Registros de Memórias para a Capitã Arquien decifrar o conteúdo.#
+Traga 5 Registros de Memórias do Instituto.#
+
+7651#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Você já ouviu o conteúdo do registro de memória do instituto. Encontre Arquien no horário combinado.#
+Volte amanhã.#
+
+7652#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Retorne ao abrigo subterrâneo no Laboratório OPTATIO de Experimentos e colete 5 Registros de Memórias do Abrigo para a Capitã Arquien decifrar o conteúdo.#
+Traga 5 Registros de Memórias do Abrigo.#
+
+7653#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Você já ouviu o conteúdo do registro de memória do abrigo. Encontre Arquien no horário combinado.#
+Volte amanhã.#
+
+7654#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Descubra o conteúdo ouvindo o reprodutor de registro.#
+Use o Reprodutor.#
+
+7655#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Descubra o conteúdo ouvindo o reprodutor de registro.#
+Use o Reprodutor.#
+
+7656#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Após 5 dias de trabalho contínuo, a Corporação Rekenber finalmente notou seus esforços e te convidou para ir até a sala do Presidente, na Sede em Lighthalzen.#
+Converse com Tatio.#
+
+11379#Sala Final#SG_FEEL#QUE_NOIMAGE#
+Você já investigou a sala final do abrigo subterrâneo! O cheiro fedido dos zumbis impedirão você de entrar nela por um bom tempo...#
+Volte amanhã.#
+
+11380#Sala Final#SG_FEEL#QUE_NOIMAGE#
+O grupo descobriu a última sala do abrigo subterrâneo! Quais segredos você encontrará por aqui? O que você descobrir, conte para Fruit lá fora... isso se você conseguir sobreviver!#
+Elimine T_W_O.#
+
+11381#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Os arqueólogos de Verus disseram que existe um abrigo subterrâneo no centro desse lugar. É melhor investigarmos.#
+Fale com Fruit.#
+
+11382#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Fruit quer que você investigue o abrigo subterrâneo. Parece que alguém ficará encarregado de te guiar pelo lugar!#
+Fale com Verity.#
+
+11383#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O lugar é fedido e cheio de zumbis, mas é melhor se acalmar e investigar o abrigo para saber se existe algo que valha a pena recuperar.#
+Fale com Alp.#
+
+11384#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O grupo encontrou a guia... e também uma sala com energia peculiar...#
+Fale com Alp.#
+
+11385#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que a porta da sala leva para um túnel subterrâneo do abrigo. É melhor seguir as orientações da guia.#
+Fale com Verity.#
+
+11386#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que existe mais uma porta para outra sala, vamos investigar.#
+Entre no portal.#
+
+11387#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+A misteriosa porta está te levando para mais uma sala... quantas salas existem afinal?#
+Converse com Du Lian.#
+
+11388#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+A porta para voltar ao abrigo está travada... e agora? O jeito é seguir o conselho da guia Verity e adentrar-se cada vez mais nas salas desse lugar misterioso...#
+Continue entrando nos portais.#
+
+11389#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O grupo encontrou uma mensagem que parece ter sido deixada aqui por um bom tempo... de quem será?#
+Continue entrando nos portais.#
+
+12346#Laboratório Central#SG_FEEL#QUE_NOIMAGE#
+O pesquisador está curioso em saber das tecnologias citadas em sua pesquisa.#
+Acesse o Laboratório Central.#
+
+12347#Laboratório Central#SG_FEEL#QUE_NOIMAGE#
+Você já investigou o Laboratório Central por hoje.#
+Volte amanhã.#
+
+13195#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com seu estagiário, é melhor procurar por ele!#
+Fale com o Jornalista Bobão, Trapp.#
+
+13196#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com sua Fotógrafa, é melhor procurar por ela!#
+Fale com a Fotógrafa Jornalista, Sunny Kim.#
+
+13197#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com seu Repórter de Sobrevivência, é melhor procurar por ela!#
+Fale com o Jornalista Exausto, Grizzly Grylls.#
+
+13198#Brigan Mensal: Krotzel#SG_FEEL#QUE_NOIMAGE#
+Krotzel que saber como estão seus outros colegas jornalistas.#
+Fale com todos os repórteres.#
+
+13199#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Você encontrou todos os jornalistas da revista Brigan Mensal!#
+Volte amanhã.#
+
+13200#Brigan Mensal: Estagiário#SG_FEEL#QUE_NOIMAGE#
+Trapp quer ser um reporter de sobrevivência quando crescer, mas ele está tendo problemas com os monstros das ruínas de Verus!#
+Elimine 30 Fumaças Verdes.#
+
+13201#Brigan Mensal: Estagiário#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Trapp no trabalho de estagiário por hoje.#
+Volte amanhã.#
+
+13202#Brigan Mensal: Fotografia#SG_FEEL#QUE_NOIMAGE#
+Sunny Kim quer tirar fotos de aventureiros enfrentando os robôs da área. Enfrente alguns deles para ajudá-la nessa tarefa!#
+Elimine 30 Robôs de Reparo Turbo.#
+
+13203#Brigan Mensal: Fotografia#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Sunny Kim no trabalho de fotografia por hoje.#
+Volte amanhã.#
+
+13204#Brigan Mensal: Sobrevivência#SG_FEEL#QUE_NOIMAGE#
+Parece que Grizzly Grylls está com vontade de experimentar esse famoso inseto que devora metais! Alguns robôs daqui parecem estar cheios deles!#
+Colete 30 Isopteros.#
+
+13205#Brigan Mensal: Sobrevivência#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Grizzly Grylls no trabalho de sobrevivência por hoje.#
+Volte amanhã.#
+
+
+
+// EP15_2 Memory record
+5341#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5342#Sobrevivendo no Abrigo: Dia 1#SG_FEEL#QUE_NOIMAGE#
+Após a grande explosão, muitas pessoas correram para o abrigo subterrâneo e estão precisando de ajuda.#
+Fale com a Dra. Fresa.#
+
+5343#Sobrevivendo no Abrigo: Dia 1#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFBioengenheiros^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Bioengenheiro Touring.#
+
+5344#Dia 1 no Abrigo: Mecânicos#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFMecânicos^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Mecânico Al.#
+
+5345#Dia 1 no Abrigo: Gerentes#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFGerentes de Instalações Remodeling^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Gerente de Instalações Remodeling.#
+
+5346#Dia 1 no Abrigo: Especialistas#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFEspecialistas em Substâncias Químicas^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com Karsten.#
+
+5347#Dia 1 no Abrigo: Bioengenheiros#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFBioengenheiros^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5348#Dia 1 no Abrigo: Mecânicos#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFMecânicos^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5349#Dia 1 no Abrigo: Gerentes#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFGerentes de Instalações Remodeling^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5350#Dia 1 no Abrigo: Especialistas#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFEspecialistas em Substâncias Químicas^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5351#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5352#Sobrevivendo no Abrigo: Dia 30#SG_FEEL#QUE_NOIMAGE#
+Você precisa carregar até 5 Caixas de Purificador de Ar para os Gerentes de Zona. Você pode carregar 1 por vez ou as 5 de uma vez, se conseguir! As zonas dos gerentes são: ^0000FFC-O^000000, ^0000FFF-1^000000, ^0000FFF-2^000000, ^0000FFI-0^000000 e ^0000FFZ-0^000000.#
+Leve as caixas do Mecânico Mugeosi.#
+
+5353#Dia 30 no Abrigo: Zona C-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona C-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5354#Dia 30 no Abrigo: Zona F-1#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona F-1.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5355#Dia 30 no Abrigo: Zona F-2#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona F-2.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5356#Dia 30 no Abrigo: Zona I-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona I-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5357#Dia 30 no Abrigo: Zona Z-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona Z-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5358#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5359#Sobrevivendo no Abrigo: Dia 32#SG_FEEL#QUE_NOIMAGE#
+Nessa estufa existem plantações de uva que aparecerão periodicamente. Basta andar pela área até encontrar ^CD3278Uvas Frescas^000000 pelo chão.#
+Traga 30 Uvas Frescas para Ebrik.#
+
+5360#Dia 32 no Abrigo: Mecânico#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com o Mecânico Al.#
+
+5361#Dia 32 no Abrigo: Gerente#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com o Gerente de Instalações Remodeling.#
+
+5362#Dia 32 no Abrigo: Especialista#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com Karsten.#
+
+5363#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5364#Sobrevivendo no Abrigo: Dia 40#SG_FEEL#QUE_NOIMAGE#
+Alguns sobreviventes do abrigo subterrâneo estão apresentando sintomas de convulsão. Sua tarefa é 'cuidar' dos pacientes que aparecem descontrolados na clínica temporária. A Enfermeira Lapplad vai te dizer quando for o bastante.#
+'Cuide' dos Pacientes Convulsionando.#
+
+5365#Dia 40 no Abrigo: Urgência!#SG_FEEL#QUE_NOIMAGE#
+Está acontecendo um aumento drástico no número de sobreviventes convulsionando! O infectante está se espalhando rapidamente pelo abrigo e é necessário dar essa notícia urgente para a Dra. Fresa!!#
+Fale com a Dra. Fresa.#
+
+5366#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5367#Sobrevivendo no Abrigo: Dia 50#SG_FEEL#QUE_NOIMAGE#
+Você tem duas tarefas! Falar com Avrandi na Zona Z-2 sobre os Bens requisitados e entregar uma mensagem para o Mecânico Al dizendo: ^CD3278Não temos materiais, parem de construir mais máquinas!^000000.#
+Fale com Avrandi e com o Mecânico Al.#
+
+5368#Dia 50 no Abrigo: Entrega completa!#SG_FEEL#QUE_NOIMAGE#
+Você entregou os Bens requisitados para o Chefe de Distribuição!#
+Retorne a Ernon.#
+
+5369#Dia 50 no Abrigo: Mensagem entregue!#SG_FEEL#QUE_NOIMAGE#
+Você entregou a mensagem para o Mecânico Al!#
+Retorne a Ernon.#
+
+5370#Volte ao Presente!#SG_FEEL#QUE_NOIMAGE#
+Você completou com sucesso a tarefa requisitada! Está na hora de voltar à sua época atual, pois viagens no tempo podem causar instabilidades.#
+Use o Transportador para sair.#
+
+//Verus
+12368#Operação Sucata#SG_FEEL#QUE_NOIMAGE#
+A pilha de sucatas na sua frente é, na verdade, um Robô da Fábrica Ferdinando. Apesar de velho, parece que ele está funcionando, basta trazer 1 Tanque Velho para reiniciá-lo.#
+Traga 1 Tanque Velho.#
