@@ -7885,4 +7885,144 @@
 15248#Traje de Wickebine#
 20815#Capa do Serafim Caído#
 28410#Bracelete Safira#
+//*****************************************************
+//------------------Verus 15.1--------------------
+//*****************************************************
+15110#Peça de FOR Suplementar#
+2995#Peça de DES Suplementar#
+20732#Peça de VIT Suplementar#
+22043#Peça de AGI Suplementar#
+15111#Autopeça - Carburador#
+2996#Autopeça - Exaustor#
+20733#Autopeça - Motor#
+22044#Autopeça - Acelerador#
+28101#Tufão#
+21011#Lâmina Gigante#
+4933#Neutralidade 1#
+4934#Neutralidade 2#
+4935#Neutralidade 3#
+6748#Relatório da Escavação#
+6749#Núcleo de Energia#
+6750#Motor Quebrado#
+6751#Placa de Ferro Amassada#
+6752#Componente de Charleston#
+6753#Amuleto do Infortúnio#
+6754#Erva Colhida#
+22611#Envelope Surpresa#
+16030#Bate-Estacas S#
+16031#Bate-Estacas P#
+16032#Bate-Estacas T#
+16033#Braço Robótico#
+6756#Energia Condensada#
+6757#Registro de Memórias do Instituto#
+//*****************************************************
+//------------------Verus 15.2--------------------
+//*****************************************************
+18997#Chip Fugitivo#
+28326#Chip Quebrado 01#
+28327#Chip Quebrado 02#
+6824#Registro de Memórias do Abrigo#
+6825#Caixa de Purificador de Ar#
+6826#Uva Fresca#
+6827#Peça Intacta#
+6828#Aparelho Gravitacional#
+6832#Peça Misteriosa#
+11597#Isoptero#
+22691#Registro do 1º dia#
+22692#Registro do 30º dia#
+22693#Registro do 32º dia#
+22694#Registro do 40º dia#
+22695#Registro do 50º dia#
+22699#Reagente de Teste#
+//*****************************************************
+//---------Verus City Additional----------
+//*****************************************************
+15128#Colete E.X.C.#
+20773#Motor E.X.C.#
+4970#E-Fogo#
+4971#E-Água#
+4972#E-Terra#
+4973#E-Vento#
+4974#R-Fogo#
+4975#R-Água#
+4976#R-Terra#
+4977#R-Vento#
+4978#C-Corpo#
+4979#C-Alma#
+4980#C-Físico#
+4981#C-Mental#
+4982#A-FOR#
+4983#A-INT#
+4984#A-DEF#
+4985#A-ESQV#
+4986#A-ATQ#
+4987#A-ATQM#
+4988#A-HP#
+4989#A-SP#
+4990#I-Gelo#
+4991#A-VdA#
+6961#Bloco de Sucata#
+6962#Tanque Velho#
+6965#Diagrama de E-Fogo#
+6966#Diagrama de E-Água#
+6967#Diagrama de E-Terra#
+6968#Diagrama de E-Vento#
+6969#Diagrama de R-Fogo#
+6970#Diagrama de R-Água#
+6971#Diagrama de R-Terra#
+6972#Diagrama de R-Vento#
+6973#Diagrama de C-Corpo#
+6974#Diagrama de C-Alma#
+6975#Diagrama de C-Físico#
+6976#Diagrama de C-Mental#
+6977#Diagrama de A-FOR#
+6978#Diagrama de A-INT#
+6979#Diagrama de A-DEF#
+6980#Diagrama de A-ESQV#
+6981#Diagrama de A-ATQ#
+6982#Diagrama de A-ATQM#
+6983#Diagrama de A-HP#
+6984#Diagrama de A-SP#
+6985#Diagrama de I-Gelo#
+6986#Diagrama de A-VdA#
+//*****************************************************
+//--------------------EP 15 Cards----------------------
+//*****************************************************
+27012#Carta Transistor#
+27013#Carta Mecha v1.6#
+27014#Carta Fumaça Verde#
+27015#Carta Robô Reparador Turbo#
+27016#Carta Robô Explorador Turbo#
+27017#Carta Robô de Sucata#
+27018#Carta GC109#
+27019#Carta DR815#
+27020#Carta T_W_O#
+4697#Carta Charleston 03#
+4698#Carta Roboring#
+4699#Carta Mecha v2.0#
+22508#Emblema do Éden#
+//*****************************************************
+//------------Aplicar em 2017-11-07--------------------
+//*****************************************************
+2047#Cajado da Bruxa#
+20908#Manto da Bruxa#
+19292#Boina Selvagem#
+31312#Elmo de Hades#
+31178#Cachecol em Chamas#
+19315#Chapéu do Éden#
+19291#Doge Fofinho#
+20909#Haori de Batalha#
+20514#Espada de Thanatos#
+15254#Vestido Abissal#
+
+19296#Nice_Feather_Hat#
+19316#Squirrel_Ear_Hat#
+31152#Costume_Piamet's_Red_Bow_Tie#
+19317#Rune_Helm#
+19318#Royal_Guard_Necklace#
+19319#Beelzebub_Hat#
+31331#Costume_Blue_Maiden's_Shinyon_Cap#
+31264#Costume_Guardian's_Wings#
+31289#Costume_Guardian's_Black_Wings#
+19915#Costume_Little_Devil's_Small_Horn#
 //file end

@@ -55154,4 +55154,890 @@ Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
 Classes: ^777777Todas^000000
 #
+//*****************************************************
+//------------Episódio 15.1--------------------
+//*****************************************************
+15110#
+Este dispositivo mecânico usa a energia da ciência para melhorar a sua força. Você pode combiná-lo por outras variações para um efeito sinergético.
+^0000ffDano físico +5%.^000000
+A cada 4 refinos:
+^0000ffDano físico +1%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777780^000000
+Peso: ^777777200^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+2995#
+Este dispositivo mecânico promove a execução de tarefas com precisão e no tempo certo.
+^0000ffPós-conjuração -10%.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffCusto de SP das habilidades -10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Peça de FOR Suplementar]^000000
+Arremesso de Machado:
+^0000ffDano +100%.^000000
+^0000ffTempo de recarga -2 segundos.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+20732#
+Este dispositivo mecânico cura ferimentos e rejuvenesce o seu corpo.
+^0000ffHP máx. +6%.^000000
+A cada 2 refinos:
+^0000ffHP máx. +1%.^000000
+Refino +9 ou mais:
+^0000ffRegeneração natural de HP +50%.^000000
+^FF6347Conjunto^000000
+^FF6347[Peça de FOR Suplementar]^000000
+^0000ffDano de [Fúria do Furacão] +25%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777720^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Mecânicos^000000
+#
+22043#
+Botas mecânicas que dão leveza aos seus pés. Elas são muito mais leves do que aparentam.
+^0000ffVelocidade de ataque +5%.^000000
+A cada 4 refinos:
+^0000ffVelocidade de ataque +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Peça de FOR Suplementar]^000000
+^0000ffATQ +30.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777735^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Mecânicos^000000
+#
+15111#
+Peça automotiva de um M.E.C.H.A. Pode ser montado e desmontado com facilidade.
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a oponentes de tamanho Pequeno e Médio +10%.^000000
+Refino +7 ou mais:
+^0000ffResistência a oponentes de tamanho Grande +10%.^000000
+Refino +9 ou mais:
+^0000ffResistência a oponentes de tamanho Pequeno e Médio +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Autopeça - Motor]^000000
+^FF6347[Autopeça - Acelerador]^000000
+^FF6347[Autopeça - Exaustor]^000000
+^0000ffDano de [Canhão] +50%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777110^000000
+Peso: ^777777300^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+2996#
+Peça automotiva de um M.E.C.H.A. Pode ser montado e desmontado com facilidade.
+^0000ffDano físico +4%.^000000
+^0000ffPrecisão +10.^000000
+^0000ffDano de [Punho Foguete] +25%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+20733#
+Peça automotiva de um M.E.C.H.A. Pode ser montado e desmontado com facilidade.
+^0000ffPós-conjuração -10%.^000000
+Refino +7 ou mais:
+^0000ffResistência a propriedade Neutro +10%.^000000
+Refino +9 ou mais:
+^0000ffPós-conjuração -10% adicional.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777725^000000
+Peso: ^777777150^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+22044#
+Peça automotiva de um M.E.C.H.A. Pode ser montado e desmontado com facilidade.
+^0000ffCusto de SP de [Planar] -15.^000000
+Refino +7 ou mais:
+^0000ffCusto de SP de [Aceleração] -20.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777723^000000
+Peso: ^777777100^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Mecânicos^000000
+#
+28101#
+Machado com lâminas que lembram o giro de um tornado.
+^0000ffTempo de recarga de [Fúria do Furacão] -1 segundo.^000000
+Tipo: ^777777Machado^000000
+Ataque: ^777777320^000000
+Propriedade: ^777777Vento^000000
+Peso: ^777777400^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Espadachins, Mercadores e evoluções^000000
+#
+21011#
+Uma espada gigante com uma empunhadura feita à mão.
+^a400cdIndestrutível em batalha.^000000
+^0000ffVelocidade de ataque -15%.^000000
+A cada refino:
+^0000ffDano crítico +1%.^000000
+FOR base até 109:
+^0000ffATQ -250.^000000
+Tipo:  ^777777Espada de Duas Mãos^000000
+Ataque: ^777777300^000000
+Peso: ^777777500^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
+4933#
+Resistência a propriedade Neutro +1%.
+#
+4934#
+Resistência a propriedade Neutro +2%.
+#
+4935#
+Resistência a propriedade Neutro +3%.
+#
+6748#
+^ff0000Intransferível.^000000
+Relatório diário sobre as pesquisas do sítio arqueológico do projeto [Fantasmagórica]. Os reportes foram escritos pela equipe de escavação de Atnad.
+Peso: ^7777770^000000
+#
+6749#
+^ff0000Intransferível.^000000
+Todas as máquinas encontradas em Verus têm este componente instalado no centro de seus mecanismos. A Equipe de Escavação o chamou de Dispositivo de Energia.
+Peso: ^7777770^000000
+#
+6750#
+Um motor quebrado. Será que pode ser reparado?
+Peso: ^7777771^000000
+#
+6751#
+Uma placa de ferro amassada. Talvez possa ser desamassada e reutilizada.
+Peso: ^7777771^000000
+#
+6752#
+^ff0000Intransferível.^000000
+Uma peça queimada de Charleston. Talvez algumas partes possam ser reaproveitadas se você a entregar para Charleston.
+Peso: ^7777770^000000
+#
+6753#
+^ff0000Intransferível.^000000
+Um objeto usado pelos Adoradores do Infortúnio como amuleto.
+Peso: ^7777770^000000
+#
+6754#
+^ff0000Intransferível.^000000
+Uma erva com propriedades curativas.
+Peso: ^7777770^000000
+#
+22611#
+Um envelope facilmente encontrado no sítio arqueológico.
+^0000ffConcede um bônus aleatório.^000000
+Duração: ^77777730 segundos^000000
+Peso: ^7777771^000000
+#
+16030#
+Esta versão aprimorada do Bate-Estacas é mais leve, permitindo que o usuário se movimente mais rápido.
+^a400cdIndestrutível em batalha.^000000
+A cada 2 refinos:
+^0000ffVelocidade de ataque +1%.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^777777400^000000
+Peso: ^777777300^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classe: ^777777Mecânicos^000000
+#
+16031#
+Esta versão aprimorada do Bate-Estacas fornece um poder destrutivo maior.
+^a400cdIndestrutível em batalha.^000000
+A cada refino:
+^0000ffATQ +5.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^777777450^000000
+Peso: ^777777400^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classe: ^777777Mecânicos^000000
+#
+16032#
+Esta versão atualizada do Bate-Estacas facilita o uso de habilidades Especiais.
+^a400cdIndestrutível em batalha.^000000
+A cada refino:
+^0000ffCusto de SP das habilidades -1%.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^777777400^000000
+Peso: ^777777350^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classe: ^777777Mecânicos^000000
+#
+16033#
+Um braço danificado de robô que funciona tão efetivamente quanto qualquer arma comum.
+^a400cdIndestrutível em batalha.^000000
+^0000ffCRIT +20.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^777777195^000000
+Peso: ^777777300^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classe: ^777777Espadachins, Mercadores, Noviços e evoluções^000000
+#
+6756#
+Energia especial encontrada nas partes mecânicas que sobraram dos restos dos robôs. Isso pode ser uma pista da fonte de energia da cidade de Verus?
+Peso: ^7777770^000000
+#
+6757#
+Um registro peculiar encontrado nas ruínas de Verus. Você pode escutar parte da vida ou os incidentes da cidade.
+Peso: ^7777770^000000
+#
+//*****************************************************
+//------------------Episódio 15.2--------------------
+//*****************************************************
+18997#
+É como ser controlado por uma máquina desconhecida.
+^0000ffSP máx. -50%.^000000
+^0000ffPrecisão +50.^000000
+^0000ffEsquiva +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Chip Quebrado 01]^000000
+^FF6347[Chip Quebrado 02]^000000
+^0000ffATQ e ATQM +50.^000000
+^0000ffAumenta a velocidade de movimento.^000000
+Refino +9 ou mais:
+^0000ffHP máx. +10%.^000000
+^0000ffSP máx. +50%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo ^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Todas^000000
+#
+28326#
+Parece ter sido partido ao meio durante um tumulto.
+^0000ffFOR +4.^000000
+^FF6347Conjunto^000000
+^FF6347[Chip Quebrado 02]^000000
+^0000ffFOR +8 adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Todas^000000
+#
+28327#
+Parece ter sido partido ao meio durante um tumulto.
+^0000ffINT +4.^000000
+^FF6347Conjunto^000000
+^FF6347[Chip Quebrado 01]^000000
+^0000ffINT +8 adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classe: ^777777Todas^000000
+#
+6824#
+^ff0000Instransferível.^000000
+Meio de gravação encontrado no abrigo subterrâneo. Contém várias informações sobre a situação e os eventos daquela época.
+Peso: ^7777770^000000
+#
+6825#
+^ff0000Instransferível.^000000
+Unidade purificadora de ar, uma obra-prima dos técnicos do abrigo subterrâneo. Como um produto completo, é muito pesada.
+Peso: ^7777771000^000000
+#
+6826#
+^ff0000Instransferível.^000000
+Uvas frescas recém-colhidas.
+Peso: ^77777710^000000
+#
+6827#
+^ff0000Instransferível.^000000
+Componente de máquina encontrado na sala final do abrigo. Leve-o até Fruit para descobrir o que é.
+Peso: ^7777770^000000
+#
+6828#
+Um dispositivo gravitacional criado por Fruit. Se você entregá-lo para 'aquela pessoa' você poderá chegar até a última sala do abrigo subterrâneo sem problemas... mas mesmo assim dá medo.
+Peso: ^77777710^000000
+#
+6832#
+Componente com uma forma estranha. Deve valer muito porque, segundo os boatos, contém uma pequena quantidade de ouro dentro.
+Peso: ^7777771^000000
+#
+11597#
+Um inseto medonho que come objetos metálicos. Entretanto, é uma boa fonte de proteína.
+Peso: ^7777771^000000
+#
+22691#
+Um pedaço de registro do primeiro dia no abrigo. O registro de memória foi quebrado após ser decodificado.
+^0000ffUse-o para iniciar uma missão.^000000
+Peso: ^7777770^000000
+#
+22692#
+Um pedaço de registro do trigésimo dia no abrigo. O registro de memória foi quebrado após ser decodificado.
+^0000ffUse-o para iniciar uma missão.^000000
+Peso: ^7777770^000000
+#
+22693#
+Um pedaço de registro do trigésimo segundo dia no abrigo. O registro de memória foi quebrado após ser decodificado.
+^0000ffUse-o para iniciar uma missão.^000000
+Peso: ^7777770^000000
+#
+22694#
+Um pedaço de registro do quadragésimo dia no abrigo. O registro de memória foi quebrado após ser decodificado.
+^0000ffUse-o para iniciar uma missão.^000000
+Peso: ^7777770^000000
+#
+22695#
+Um pedaço de registro do quinquagésimo dia no abrigo. O registro de memória foi quebrado após ser decodificado.
+^0000ffUse-o para iniciar uma missão.^000000
+Peso: ^7777770^000000
+#
+22699#
+Reagente para testes que ainda não foi aprovado pelos estudos clínicos. Leia a bula.
+^0000ffAumenta o reflexo corporal, podendo perder a visão como efeito colateral.^000000
+Duração: ^7777775 segundos^000000
+Peso: ^7777773^000000
+#
+//*****************************************************
+//---------Verus----------
+//*****************************************************
+15128#
+Vestimenta de excelência criada pela exinta tecnologia das ruínas de Verus.
+^0000ffVIT +6.^000000
+A cada 3 refinos:
+^0000ffHP máx. +4%.^000000
+Nv. base 130 ou mais:
+^0000ffVIT +4 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Motor E.X.C.]^000000
+^0000ffPós-conjuração -10%.^000000
+Nv. base 130 ou mais:
+^0000ffPós-conjuração -10% adicional.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777100^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+20773#
+Capa de excelência criada pela exinta tecnologia das ruínas de Verus.
+^0000ffEsquiva perfeita +8.^000000
+A cada refino:
+^0000ffEsquiva +2.^000000
+Nv. base 130 ou mais:
+^0000ffEsquiva perfeita +2 adicional.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777740^000000
+Peso: ^77777790^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+4970#
+Encanta a armadura com a propriedade Fogo.
+#
+4971#
+Encanta a armadura com a propriedade Água.
+#
+4972#
+Encanta a armadura com a propriedade Terra.
+#
+4973#
+Encanta a armadura com a propriedade Vento.
+#
+4974#
+Resistência a propriedade Fogo +25%.
+Resistência a propriedade Água -25%.
+#
+4975#
+Resistência a propriedade Água +25%.
+Resistência a propriedade Vento -25%.
+#
+4976#
+Resistência a propriedade Terra +25%.
+Resistência a propriedade Fogo -25%.
+#
+4977#
+Resistência a propriedade Vento +25%.
+Resistência a propriedade Terra -25%.
+#
+4978#
+A cada 5 segundos:
+^0000ffRegenera 50 de HP.^000000
+Refino +7 ou mais:
+^0000ffRegenera 50 de HP adicional.^000000
+#
+4979#
+A cada 5 segundos:
+^0000ffRegenera 3 de SP.^000000
+Refino +7 ou mais:
+^0000ffRegenera 2 de SP adicional.^000000
+#
+4980#
+^0000ffRegeneração natural de HP +50%.^000000
+Refino +7 ou mais:
+^0000ffRegeneração natural de HP +50% adicional.^000000
+#
+4981#
+^0000ffRegeneração natural de SP +50%.^000000
+Refino +7 ou mais:
+^0000ffRegeneração natural de SP +50% adicional.^000000
+#
+4982#
+Cada 10 de FOR base:
+^0000ffATQ +5.^000000
+Refino +7 ou mais:
+^0000ffATQ +10.^000000
+#
+4983#
+Cada 10 de INT base:
+^0000ffATQM +5.^000000
+Refino +7 ou mais:
+^0000ffATQM +10.^000000
+#
+4984#
+DEF +100.
+#
+4985#
+Esquiva perfeita +3.
+#
+4986#
+ATQ +20.
+#
+4987#
+ATQM +20.
+#
+4988#
+HP máx. +5%.
+#
+4989#
+SP máx. +3%.
+#
+4990#
+Tolerância a [Congelamento] +100%.
+#
+4991#
+Velocidade de ataque +1.
+#
+6961#
+Um enorme bloco de sucata que pode ser útil em algum lugar... talvez algum robô o queira.
+Peso: ^777777100^000000
+#
+6962#
+Apesar do recipiente estar gasto, o combustível ainda parece útil.
+Peso: ^77777710^000000
+#
+6965#
+Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Fogo.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Peso: ^7777771^000000
+#
+6966#
+Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Água.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Peso: ^7777771^000000
+#
+6967#
+Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Terra.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Peso: ^7777771^000000
+#
+6968#
+Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Vento.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Peso: ^7777771^000000
+#
+6969#
+Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Fogo.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6970#
+Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Água.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6971#
+Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Terra.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6972#
+Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Vento.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6973#
+Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Corpo.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6974#
+Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Alma.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6975#
+Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Físico.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6976#
+Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Mental.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6977#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo FOR.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6978#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo INT.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6979#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo DEF.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6980#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ESQV.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6981#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ATQ.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6982#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ATQM.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6983#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo HP.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6984#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo SP.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6985#
+Um 'blueprint' de um reator da categoria I, sendo do sub-tipo Gelo.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+6986#
+Um 'blueprint' de um reator da categoria A, sendo do sub-tipo VdA.
+Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Peso: ^7777771^000000
+#
+//*****************************************************
+//---------------------Cartas--------------------------
+//*****************************************************
+27012#
+^0000ffHP máx. +8%.^000000
+^FF6347Mecânicos:^000000
+^0000ffResistência a danos físicos a distância +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+27013#
+^0000ffDano de [Metralhadora] +50%.^000000
+Refino +10 ou mais:
+^0000ffDano de [Metralhadora] +20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Transistor]^000000
+^0000ffAnula o consumo de Combustível Diferenciado Leve.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+27014#
+^0000ffHP máx. +2%.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff0,2% de chance de ativar um [efeito] por 5 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffRecupera 1.000 de HP por segundo.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27015#
+^0000ffRegeneração natural de HP e SP +25%.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+Refino +7 ou mais:
+^0000ffRecupera 10 de HP e 1 de SP adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso: ^7777771^000000
+#
+27016#
+^0000ffCRIT +30 em oponentes da raça Amorfo.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Robô Reparador Turbo]^000000
+^0000ffDano crítico +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+27017#
+^0000ffResistência a raça Amorfo +10%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Amorfo +5% adicional.^000000
+^0000ffAo derrotar monstros, pequena chance de derrubar Parafuso Enferrujado, Ferro, Placa de Ferro Amassada e Placa de Ferro Usada.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+27018#
+^0000ffVelocidade de ataque +1%.^000000
+Nv. base 90 ou mais:
+^0000ffVelocidade de ataque +1% adicional.^000000
+Nv. base 120 ou mais:
+^0000ffVelocidade de ataque +1% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27019#
+^0000ffPrecisão +1.^000000
+Nv. base 90 ou mais:
+^0000ffPrecisão +1 adicional.^000000
+Nv. base 120 ou mais:
+^0000ffPrecisão +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta GC109]^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de ativar um efeito por 5 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffVelocidade de ataque +5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27020#
+^0000ffDano físico +10%.^000000
+Ao realizar ataques físicos:
+^0000ff0,5% de chance de autoconjurar [Drenar SP] nv. 2.^000000
+A cada 3 refinos:
+^0000ffChance de autoconjurar [Drenar SP] +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4697#
+^0000ffSP máx. -300.^000000
+Ao realizar ataques físicos:
+^0000ff50% de chance de quebrar a armadura do oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Transistor]^000000
+^0000ffAnula o consumo de Combustível Diferenciado Leve.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4698#
+^0000ffDano de [Arremesso de Machado] +30%.^000000
+Refino +10 ou mais:
+^0000ffDano de [Arremesso de Machado] +30% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4699#
+^0000ffDano de [Canhão] +20%.^000000
+Refino +10 ou mais:
+^0000ffDano de [Canhão] +20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Transistor]^000000
+^0000ffAnula o consumo de Combustível Diferenciado Leve.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+22508#
+Amuleto dado aos membros do Grupo do Éden.
+^0000ffTeleporta o usuário para a sede do grupo.^000000
+Recarga: ^77777720 minutos^000000
+Peso: ^7777770^000000
+#
+//*****************************************************
+//---------------------Loja 07/11--------------------------
+//*****************************************************
+2047#
+Um cajado raríssimo usado pela Bruxa Jiranto, uma criatura que utiliza os elementos de Fogo e Vento para envolver seus inimigos nos mais tenebrosos feitiços e maldições. Uma serpente mantém-se enrolada no corpo do cajado, ampliando os poderes dele.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +350.^000000
+^0000ffINT +5. DES +10.^000000
+^0000ffConjuração variável -30%.^000000
+A cada nível de [Passos de Salamandra]:
+^0000ffDano mágico de propriedade Fogo +10%.^000000
+A cada nível de [Passos de Sílfide]:
+^0000ffDano mágico de propriedade Vento +10%.^000000
+A cada 2 refinos:
+^0000ffIgnora 5% da DEFM.^000000
+^0000ffDano mágico de propriedade Fogo e Vento +5%.^000000
+^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +30%.^000000
+Refino +9 ou mais:
+^0000ffAo atacar com [Passos de Sílfide], 100% de chance de infligir Silêncio no alvo.^000000
+^0000ffAo atacar com [Passos de Salamandra], 100% de chance de infligir Maldição no alvo.^000000
+Refino +11 ou mais:
+^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +100%.^000000
+Refino +12 ou mais:
+^0000ffConjuração fixa -70%.^000000
+Tipo: ^777777Cajado de Duas Mãos^000000
+Ataque: ^77777720^000000
+Peso: ^777777270^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Feiticeiros^000000
+#
+20908#
+Um manto usado pela Bruxa Jiranto que não se trata só de estilo: junto do Cajado da Bruxa, sua resistência a fogo e vento se torna ainda maior. Mas não se engane, apesar da cor vermelha e do seu caráter mágico, ela não tem vontade própria.
+^0000ffA cada 2 refinos:^000000
+^0000ffResistência as propriedades Fogo e Vento +5%.^000000
+Refino +5 ou mais:
+^0000ffDano mágico +5%.^000000
+^0000ffConjuração variável -5%.^000000
+Refino +7 ou mais:
+^0000ffDano mágico +5% adicional.^000000
+^0000ffConjuração variável -5% adicional.^000000
+Refino +15 ou mais:
+^0000ffMantém [Vigor] ativo.^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado da Bruxa]^000000
+^0000ffDano mágico +5% adicional.^000000
+^0000ffResistência as propriedades Fogo e Vento +10%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777716^000000
+Peso: ^777777100^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Todas^000000
+#
+20909#
+Réplica de uma Haori usada por um antigo lorde do castelo de Amatsu. Estas Haori são muito utilizadas por diversos mestres de artes marciais de toda Rune-Midgard.
+^0000ffEsquiva +10.^000000
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHabilita [Ataque Duplo] nv. 3.^000000
+^0000ffHabilita [Combo Triplo] nv. 3.^000000
+Refino +8 ou mais:
+^0000ffEsquiva +10 adicional.^000000
+^0000ffVelocidade de ataque +3% adicional.^000000
+^0000ffHabilita [Ataque Duplo] nv. 5.^000000
+^0000ffHabilita [Combo Triplo] nv. 5.^000000
+Refino +11 ou mais:
+^0000ffEsquiva +10 adicional.^000000
+^0000ffVelocidade de ataque +3% adicional.^000000
+^0000ffHabilita [Ataque Duplo] nv. 10.^000000
+^0000ffHabilita [Combo Triplo] nv. 10.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777710^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
+19315#
+Este extravagante chapéu adorna sua cabeça com um pedaço do Paraíso.  Encantado com a dádiva dos mais altos anjos, este chapéu é um verdadeiro presente do paraíso.
+^0000ffINT +5. DES +5.^000000
+^0000ffDano mágico de todas as propriedades +15%.^000000
+Refino +8 ou mais:
+^0000ffConjuração variável -15%.^000000
+Refino +11 ou mais:
+^0000ffDano mágico de todas as propriedades +20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Arquimaga Kathryne]^000000
+^0000ffTempo de recarga de [Telecinesia] -120 segundos.^000000
+^0000ffDesequipar o item remove a [Telecinesia] ativada.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+15254#
+Um longo vestido preto adornado com delicadas fitas rosa, confeccionado para manter longe os demônios e mortos-vivos. Este item da alta-costura ainda é perfeito para um funeral, ou até mesmo uma sessão de exorcismo.
+^0000ffImpede o usuário de ser empurrado.^000000
+Refino +7 ou mais:
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +10%.^000000
+^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +10%.^000000
+Refino +9 ou mais:
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +15% adicional.^000000
+^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +15% adicional.^000000
+Refino +11 ou mais:
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +15% adicional.^000000
+^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +15% adicional.^000000
+Tipo: ^777777Armadura^000000
+Propriedade: ^777777Sombrio^000000
+Defesa: ^777777120^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19292#
+Uma boina cheia de estilo e fofura para completar seu visual! Seu diferencial é a cauda de um gato selvagem, além de um dos botões do chapéu da Sedora.  Ou seja, o equilíbrio perfeito entre selvageria e delicadeza!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31312#
+Um elmo que simboliza o crânio do Líder do Submundo. Feito para aqueles que preferem um visual mais sombrio e sobrenatural, esse elmo vai espantar qualquer um ao seu redor, esteja ele vivo ou morto.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31178#
+Este cachecol vai deixar seu visual pegando fogo de tão extravagante. Mas logo você aprende a ajustar a temperatura, e vai poder sair por aí quentinho e aconchegante (e cheio de estilo!).
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19291#
+Um doge super fofinho para te acompanhar aonde quer que você vá. Tão melhor amigo. Muita fofura. Uau.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20514#
+A lendária espada que selou o Imperador Morroc no passado distante, e que foi brandida por um inesquecível herói. Só a visão da espada já é capaz de colocar medo no coração de seus inimigos.
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 //file end
