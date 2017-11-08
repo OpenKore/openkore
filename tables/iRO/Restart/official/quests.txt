@@ -21989,3 +21989,11 @@ You can try again tomorrow.#
 62961#Trick or Treat#SG_FEEL#QUE_NOIMAGE#
 Give candy away again.#
 #
+
+62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Hunt the following monsters for Norman.#
+#
+
+62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Norman can't make another bag until hes had a chance to rest.#
+#
