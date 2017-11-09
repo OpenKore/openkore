@@ -1,8 +1,8 @@
-//[Packet_Keys]
-//1 = 0x2CC4749A
-//2 = 0x1FA954DC
-//3 = 0x72276857
-//get from peek by #sctnightcore 
+#[Packet_Keys]
+#1 = 0x2CC4749A
+#2 = 0x1FA954DC
+#3 = 0x72276857
+#get from peek by #sctnightcore 
 
 0064 55
 0065 17
