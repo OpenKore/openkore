@@ -14,22 +14,9 @@
 package Network::Receive::kRO::RagexeRE_2017_05_17a;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2017_01_25a);
+use base qw(Network::Receive::kRO::RagexeRE_2017_04_26d);
 
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	my %packets = (
-		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
-		'0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]], # 12
-		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
-	);
 
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
-
-	return $self;
-}
 1;
 =pod
 // 2017-05-17aRagexeRE
