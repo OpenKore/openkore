@@ -65,6 +65,7 @@ sub new {
 	$clientPacketHandler = Network::ClientReceive->new;
 
 	$self->{tokenizer} = new Network::MessageTokenizer($self->getRecvPackets());
+	$self->{kore_map_changed_hook} = Plugins::addHook('packet/map_changed', \&kore_map_changed, $self);
 
 	Plugins::addHook("Network::Receive/willMangle", \&willMangle);
 	Plugins::addHook("Network::Receive/mangle", \&mangle);
@@ -647,6 +648,15 @@ sub decryptMessageID {
 
 sub getRecvPackets {
 	return \%rpackets;
+}
+
+sub kore_map_changed {
+	# Reset CryptKey when mapserver change
+	if($currentClientKey && $messageSender->{encryption}->{crypt_key}) {
+		debug (sprintf("Reseting Key in Map-Change: [0x%04X]->[0x%04X]\n", $currentClientKey, $messageSender->{encryption}->{crypt_key_1}));
+		$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+		$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
+	}
 }
 
 return 1;
