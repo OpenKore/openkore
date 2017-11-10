@@ -24,7 +24,7 @@ use Exception::Class ('Network::XKore::CannotStart');
 
 use Modules 'register';
 use Globals;
-use Log qw(message error);
+use Log qw(message error debug);
 use Utils::Win32;
 use Network;
 use Network::Send ();
