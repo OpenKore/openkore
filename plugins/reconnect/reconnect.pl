@@ -8,7 +8,7 @@ package OpenKore::Plugins::reconnect;
 
 use strict;
 
-use Globals qw( %config %masterServers %timeout $net );
+use Globals qw( %config %masterServers %timeout );
 use Log qw( &message );
 use Plugins;
 use Utils qw( &min );
