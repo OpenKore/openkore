@@ -2133,6 +2133,8 @@ sub area_spell_multiple3 {
 sub sync_request_ex {
 	my ($self, $args) = @_;
 	
+	return if($config{XKore} eq 1 || $config{XKore} eq 3); # let the clien hanle this
+	
 	# Debug Log
 	# message "Received Sync Ex : 0x" . $args->{switch} . "\n";
 	

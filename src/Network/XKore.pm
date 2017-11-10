@@ -622,7 +622,7 @@ sub onClientData {
 sub decryptMessageID {
 	my ($self, $r_message) = @_;
 
-	if(!$currentClientKey && !$messageSender->{encryption}->{crypt_key} && $messageSender->{encryption}->{crypt_key_3}) {
+	if(!$messageSender->{encryption}->{crypt_key} && $messageSender->{encryption}->{crypt_key_3}) {
 		$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
 	} elsif(!$currentClientKey) {
 		return;
