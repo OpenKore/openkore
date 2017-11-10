@@ -1834,6 +1834,12 @@ sub marriage_partner_name {
 sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
+
+	if($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
+		$timeout{master}{time} = time;
+		return;
+	}
+
 	# flags:
 	# 0 - correct
 	# 1 - requested (already defined)
@@ -2126,6 +2132,8 @@ sub area_spell_multiple3 {
 
 sub sync_request_ex {
 	my ($self, $args) = @_;
+	
+	return if($config{XKore} eq 1 || $config{XKore} eq 3); # let the clien hanle this
 	
 	# Debug Log
 	# message "Received Sync Ex : 0x" . $args->{switch} . "\n";
