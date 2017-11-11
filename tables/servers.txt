@@ -94,7 +94,7 @@ serverType iRO
 serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
-addTableFolders iRO
+addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
 sendCryptKeys 0x1B426AB7, 0x5ECD7AF9, 0x180B4482
