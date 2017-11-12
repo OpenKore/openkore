@@ -3558,7 +3558,7 @@ sub cmdParty {
 		}
 	# party leader specific commands
 	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
-		if ($arg2 eq "0" || $arg2 eq "1") {
+		if ($arg2 ne "" && $arg2 ne "0") {
 			my $party_admin;
 			# check if we are the party leader before using leader specific commands.
 			for (my $i = 0; $i < @partyUsersID; $i++) {
