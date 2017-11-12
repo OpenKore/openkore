@@ -3468,11 +3468,7 @@ sub cmdParty {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"Party info not available yet\n");
 	} elsif (!$char->{party} || !%{$char->{party}}) {
-		if ($arg1 eq "leave" || $arg1 eq "" || $arg1 eq "info" || $arg1 eq "request" || $arg1 eq "share" || $arg1 eq "shareitem" ||
-			$arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
-			error T("Error in function 'party' (Party Functions)\n" .
-				"You're not in a party.\n");
-		} elsif ($arg1 eq "create") {
+		if ($arg1 eq "create") {
 			if ($arg2 eq "") {
 				error T("Syntax Error in function 'party create' (Organize Party)\n" .
 					"Usage: party create <party name>\n");
@@ -3494,6 +3490,9 @@ sub cmdParty {
 				}
 				undef %incomingParty;
 			}
+		} else {
+			error T("Error in function 'party' (Party Functions)\n" .
+				"You're not in a party.\n");
 		}
 	} elsif ($char->{party} && %{$char->{party}} && ($arg1 eq "create" || $arg1 eq "join")) {
 		error T("Error in function 'party' (Party Functions)\n" .
@@ -3544,21 +3543,9 @@ sub cmdParty {
 
 	} elsif ($arg1 eq "leave") {
 		$messageSender->sendPartyLeave();
-	} elsif ($arg1 eq "request") {
-		if ($arg2 =~ /\D/ || $args =~ /".*"/) {
-			message TF("Requesting player %s to join your party.\n", $arg2);
-			$messageSender->sendPartyJoinRequestByName($arg2);
-		} else {
-			if ($playersID[$arg2] eq "") {
-				error TF("Error in function 'party request' (Request to Join Party)\n" .
-					"Can't request to join party - player %s does not exist.\n", $arg2);
-			} else {
-				$messageSender->sendPartyJoinRequest($playersID[$arg2]);
-			}
-		}
 	# party leader specific commands
-	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
-		if ($arg2 ne "" && $arg2 ne "0") {
+	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader" || $arg1 eq "request") {
+		if ($arg2 ne "") {
 			my $party_admin;
 			# check if we are the party leader before using leader specific commands.
 			for (my $i = 0; $i < @partyUsersID; $i++) {
@@ -3576,7 +3563,19 @@ sub cmdParty {
 			}
 		}
 		
-		if ($arg1 eq "share"){
+		if ($arg1 eq "request") {
+			if ($arg2 =~ /\D/ || $args =~ /".*"/) {
+				message TF("Requesting player %s to join your party.\n", $arg2);
+				$messageSender->sendPartyJoinRequestByName($arg2);
+			} else {
+				if ($playersID[$arg2] eq "") {
+					error TF("Error in function 'party request' (Request to Join Party)\n" .
+						"Can't request to join party - player %s does not exist.\n", $arg2);
+				} else {
+					$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+				}
+			}
+		} elsif ($arg1 eq "share"){
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
 					message T ("Party EXP is set to " . (($char->{party}{share}) ? T("Even") : T("Individual")) . " Take\n");
@@ -3670,7 +3669,7 @@ sub cmdParty {
 		}
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n");
+			"Usage: party [<info|create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n");
 	}
 }
 
