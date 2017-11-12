@@ -1439,7 +1439,7 @@ sub cmdConf {
 
 sub cmdxConf {
 	my ($cmd, $args) = @_;
-	my ($file,$file2,$found,$key,$oldval,$shopname,$type,$value, $name, %inf_hash, %ctrl_hash);
+	my ($file,$file2,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash);
 	if ($cmd eq 'sconf') {
 		($key, $value) = $args =~ /(name)(?:\s)(.*)/;
 		$shopname = 1 if $key eq 'name';
@@ -1454,26 +1454,26 @@ sub cmdxConf {
 		return;
 	}
 	if ($cmd eq 'iconf') {
-		%inf_hash  = %items_lut;
-		%ctrl_hash = %items_control;
+		$inf_hash  = \%items_lut;
+		$ctrl_hash = \%items_control;
 		$file = 'items_control.txt';
 		$file2 = 'tables\..\items.txt';
 		$type = 'Item';
 	} elsif ($cmd eq 'mconf') {
-		%inf_hash  = %monsters_lut;
-		%ctrl_hash = %mon_control;
+		$inf_hash  = \%monsters_lut;
+		$ctrl_hash = \%mon_control;
 		$file = 'mon_control.txt';
 		$file2 = 'tables\..\monsters.txt';
 		$type = 'Monster';
 	} elsif ($cmd eq 'pconf') {
-		%inf_hash  = %items_lut;
-		%ctrl_hash = %pickupitems;
+		$inf_hash  = \%items_lut;
+		$ctrl_hash = \%pickupitems;
 		$file = 'pickupitems.txt';
 		$file2 = 'tables\..\items.txt';
 		$type = 'Item';
 	} elsif ($cmd eq 'sconf') {
-		%inf_hash = %items_lut;
-		%ctrl_hash = %shop;
+		$inf_hash = \%items_lut;
+		$ctrl_hash = \%shop;
 		$file = 'shop.txt';
 		$file2 = 'tables\..\items.txt';
 		$type = 'Item';
@@ -1493,22 +1493,22 @@ sub cmdxConf {
 	if ($key ne "all") {
 
 		#key is an ID, have to find the name of the item/monster
-		if ($inf_hash{$key}) {
-			debug "key is an ID, $type '$inf_hash{$key}' ID: $key is found in file '$file2'.\n";
+		if ($inf_hash->{$key}) {
+			debug "key is an ID, $type '$inf_hash->{$key}' ID: $key is found in file '$file2'.\n";
 			$found = 1;
 			if ($cmd eq 'iconf' && $itemSlotCount_lut{$key}) {
-				$name = $inf_hash{$key}." [".$itemSlotCount_lut{$key}."]";
+				$name = $inf_hash->{$key}." [".$itemSlotCount_lut{$key}."]";
 			} else {
-				$name = $inf_hash{$key};
+				$name = $inf_hash->{$key};
 			}
 
 		#key is a name, have to find ID of the item/monster
 		} else {
-			foreach (values %inf_hash) {
+			foreach (values %{$inf_hash}) {
 				if ((lc($key) eq lc($_))) {
 					$name = $_;
-					foreach my $ID (keys %inf_hash) {
-						if ($inf_hash{$ID} eq $name) {
+					foreach my $ID (keys %{$inf_hash}) {
+						if ($inf_hash->{$ID} eq $name) {
 							$key = $ID;
 							$found = 1;
 							debug "$type '$name' found in file '$file2'.\n";
@@ -1519,6 +1519,9 @@ sub cmdxConf {
 				}
 			}
 		}
+
+		#at this point, $key is always the ID of the item/monster
+		#and the name is stored on $name
 
 		debug "Id: '$key', name: '$name', value: $value\n";
 		if (!$found and !$shopname) {
@@ -1532,32 +1535,44 @@ sub cmdxConf {
 	}
 	if ($cmd eq 'iconf') {
 		$oldval =
-			"$items_control{$key}{keep} ".
-			"$items_control{$key}{storage} ".
-			"$items_control{$key}{sell} ".
-			"$items_control{$key}{cart_add} ".
-			"$items_control{$key}{cart_get}";
+			"$ctrl_hash->{$key}{keep} ".
+			"$ctrl_hash->{$key}{storage} ".
+			"$ctrl_hash->{$key}{sell} ".
+			"$ctrl_hash->{$key}{cart_add} ".
+			"$ctrl_hash->{$key}{cart_get}";
+
 		$oldval =
-			"$items_control{lc($name)}{keep} ".
-			"$items_control{lc($name)}{storage} ".
-			"$items_control{lc($name)}{sell} ".
-			"$items_control{lc($name)}{cart_add} ".
-			"$items_control{lc($name)}{cart_get}" if $oldval eq "";
+			"$ctrl_hash->{lc($name)}{keep} ".
+			"$ctrl_hash->{lc($name)}{storage} ".
+			"$ctrl_hash->{lc($name)}{sell} ".
+			"$ctrl_hash->{lc($name)}{cart_add} ".
+			"$ctrl_hash->{lc($name)}{cart_get}" if $oldval eq "";
 	}
 	if ($cmd eq 'mconf') {
 		$oldval =
-			"$ctrl_hash{lc($name)}{attack_auto} ".
-			"$ctrl_hash{lc($name)}{teleport_auto} ".
-			"$ctrl_hash{lc($name)}{teleport_search} ".
-			"$ctrl_hash{lc($name)}{skillcancel_auto} ".
-			"$ctrl_hash{lc($name)}{attack_lvl} ".
-			"$ctrl_hash{lc($name)}{attack_jlvl} ".
-			"$ctrl_hash{lc($name)}{attack_hp} ".
-			"$ctrl_hash{lc($name)}{attack_sp} ".
-			"$ctrl_hash{lc($name)}{weight}";
+			"$ctrl_hash->{$key}{attack_auto} ".
+			"$ctrl_hash->{$key}{teleport_auto} ".
+			"$ctrl_hash->{$key}{teleport_search} ".
+			"$ctrl_hash->{$key}{skillcancel_auto} ".
+			"$ctrl_hash->{$key}{attack_lvl} ".
+			"$ctrl_hash->{$key}{attack_jlvl} ".
+			"$ctrl_hash->{$key}{attack_hp} ".
+			"$ctrl_hash->{$key}{attack_sp} ".
+			"$ctrl_hash->{$key}{weight}}";
+
+		$oldval =
+			"$ctrl_hash->{lc($name)}{attack_auto} ".
+			"$ctrl_hash->{lc($name)}{teleport_auto} ".
+			"$ctrl_hash->{lc($name)}{teleport_search} ".
+			"$ctrl_hash->{lc($name)}{skillcancel_auto} ".
+			"$ctrl_hash->{lc($name)}{attack_lvl} ".
+			"$ctrl_hash->{lc($name)}{attack_jlvl} ".
+			"$ctrl_hash->{lc($name)}{attack_hp} ".
+			"$ctrl_hash->{lc($name)}{attack_sp} ".
+			"$ctrl_hash->{lc($name)}{weight}" if $oldval eq "";
 	}
 	if ($cmd eq 'pconf') {
-		$oldval = $pickupitems{lc($key)}
+		$oldval = $pickupitems{lc($key)};
 	}
 	if ($cmd eq 'sconf') {
 		if ($shopname) {
@@ -1682,7 +1697,7 @@ sub filewrite {
 	open(WRITE, ">:utf8", $controlfile);
 	print WRITE join ("\n", @lines);
 	close(WRITE);
-	message "$file: '$key' set to @value (was $oldval)\n", 'info';
+	message "$file: '$name' set to @value (was $oldval)\n", 'info';
 	Commands::run("reload $file")
 }
 
