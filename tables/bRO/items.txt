@@ -7228,7 +7228,7 @@
 4923#Essência de Morroc SOR1#
 4924#Essência de Morroc SOR2#
 4925#Essência de Morroc SOR3#
-4559#Carta do Satan Morroc#
+4559#Carta do Rei Morroc#
 4882#ATQ +1%#
 4883#ATQM +1%#
 6684#Marca do Herói#
@@ -8014,15 +8014,11 @@
 20909#Haori de Batalha#
 20514#Espada de Thanatos#
 15254#Vestido Abissal#
-
-19296#Nice_Feather_Hat#
-19316#Squirrel_Ear_Hat#
-31152#Costume_Piamet's_Red_Bow_Tie#
-19317#Rune_Helm#
-19318#Royal_Guard_Necklace#
-19319#Beelzebub_Hat#
-31331#Costume_Blue_Maiden's_Shinyon_Cap#
-31264#Costume_Guardian's_Wings#
-31289#Costume_Guardian's_Black_Wings#
-19915#Costume_Little_Devil's_Small_Horn#
+//*****************************************************
+//------------Aplicar em 2017-11-10--------------------
+//*****************************************************
+20806#Mochila de Amistr Explosiva#
+19318#Rosário da Guarda Real#
+31152#Lacinho Vermelho da Piamette#
+31331#Bao-Bao da Donzela Verde#
 //file end
