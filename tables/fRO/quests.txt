@@ -12899,4 +12899,128 @@ See you tomorrow, Jack!#
 11528#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
 Enable to get black fur from the monsters in Valley of Gyoll.#
 A black fur collector#
+// Halloween 2017
 
+11498#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Arrived in Niflheim, the town of the dead when I woke up due to the murmur of ghosts. Listen to the ghosts' stories.#
+Talk to Hororong#
+
+11499#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Jack in the square might know something. Inquire Jack in the square.#
+Talk to Jack#
+
+11500#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Heard of the place where Jack once was. Go back to Hururong.#
+Talk to Hururong#
+
+11501#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 Fleeing Jack in the fields and dungeons and collect 10 Decorating Pumpkins and 20 White Thin Stems to Hororong.#
+Send Jack to Niflheim#
+
+11502#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Brought Jack to Niflheim. According to ghosts, Jack will take root in the ground if he stays too long in the land of the living. Let him rest.#
+Jack's rest#
+
+11503#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Hunt 10 Fleeing Jack in the fields and dungeons and collect 10 Decorating Pumpkins and 20 White Thin Stems to Hororing.#
+Send Jack to Nifleheim#
+
+11504#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+It is hard to understand, but it feels like to get a White Thin Stem and come back to Jack.#
+Collect a White Thin Stem#
+
+11505#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+When Jack was caught, Meow was spooked and ran away. Inquire Harorong who were with Jack.#
+Talk to Harorong#
+
+11506#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Heard Neable at the entrance could have seen Meow. Talk to Neable in the western entrance of Niflheim.#
+Neable in the west Niflheim#
+
+11507#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Whether a cat or not, a small and white thing has passed the entrance very fast. Inquire the one out of the entrance about it.#
+Talk to Nevervous Jack#
+
+11508#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+It is said Jack's Meow went to THERE. Tell Jack about it.#
+Talk to Jack#
+
+11509#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Jack's Meow seemed to go to Midgard through the stems of Yggdrasil. It must pass Umbala, so examine there first.#
+Examine the northern entrance of Umbala#
+
+11510#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Researcher said he informed a small and white thing the way to Morocc. Examine the nothern entrance area of Morocc.#
+Examine the entrance of Morocc#
+
+11511#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Merchant said he guided someone to get to Alberta. Examine the northern entrance of Alberta.#
+Examine the Entrance of Alberta#
+
+11512#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+It is said that there are many cats begging fish at the port. Examine the port area.#
+Examin the Alberta port#
+
+11513#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Found a white cat, but it was not Jack's. Examine the suspicious sand pile at its rear.#
+Examine the sand pile#
+
+11514#Jack and Jack's Cat#SG_FEEL#QUE_NOIMAGE#
+Found the bones of a small animal and a red ribbon with a bell. Go back to Jack.#
+Talk to Jack in Niflheim#
+
+11515#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Jack said Meow was not okay. Meet Meow in the south of Jack. #
+Talk to Meow#
+
+11516#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Meow has evolved as Scholarton due to the adventure, Tell Jack that it cannot go back to how he was because it changed a lot.#
+Talk to Jack#
+
+11517#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+There are lots of cats in the middle of Valley of Gyoll. Try to find Meow there.#
+Search for Meow#
+
+11518#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Found several Scatletons in the middle of Valley of Gyoll, but they don't seem so good. Collect ^ff00005 Black Fur^000000 to warm Scatleton.#
+5 Black Fur#
+
+11519#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scatleton was too upset to have further conversations. Go back to Jack.#
+Talk to Jack#
+
+11520#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Jack loves his cat rather than any other cats. Talk to Scholarton again.#
+Talk to Scholarton#
+
+11521#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scholarton doesn't want to talk anymore. Go back to Jack.#
+Talk to Jack#
+
+11522#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Jack said he would wait for Meow and asked to take care of other cats. Help Scatletons in the valley of Gyoll by collecting ^ff000010 White Thin Stems^000000.#
+To Valley of Gyoll#
+
+11523#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scatleton seems hungry when he is getting recovered. Collect ^ff000010 Delicious Fish^000000.#
+10 Delicious Fish#
+
+11524#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scatleton asked ^ff000020 more White Thin Stems^000000. Collect them.#
+20 White Thin Stems#
+
+11525#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scatleton seems to have the same vigor as Scholarton has. Inquire Scholarton about it.#
+Talk to Scholarton#
+
+11526#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Scholarton is also going to set out the journey. Talk to Jack about it.#
+Talk to Jack#
+
+11527#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Jack must be tired. Come back him after 4 in the morning.#
+See you tomorrow, Jack!#
+
+11528#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
+Enable to get black fur from the monsters in Valley of Gyoll.#
+A black fur collector#
