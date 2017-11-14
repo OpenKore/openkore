@@ -4359,10 +4359,10 @@ sub checkMonsterCondition {
 			} else {
 				return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
 			}
-		}
+		};
 		if ($@) {
 			error T("Target HP not available, returning false\n");
-			debug $@ . "\n",2;
+			debug $@ . "\n", 2;
 			return 0;
 		}
 	}
