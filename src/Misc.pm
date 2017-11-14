@@ -4353,11 +4353,17 @@ sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
 
 	if ($config{$prefix . "_hp"}) {
-		return 0 if (!$monster->{hp});
-		if ($config{$prefix . "_hp"} =~ /^(.*)\%$/) {
-			return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $1)); 
-		} else {
-			return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
+		eval {
+			if ($config{$prefix . "_hp"} =~ /^(.*)%$/) {
+				return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $1)); 
+			} else {
+				return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
+			}
+		}
+		if ($@) {
+			error T("Target HP not available, returning false\n");
+			debug $@ . "\n",2;
+			return 0;
 		}
 	}
 	
