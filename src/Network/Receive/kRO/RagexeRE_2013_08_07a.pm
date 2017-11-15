@@ -25,7 +25,7 @@ sub new {
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v2 v a4 a4 C', [qw(skillID lv amount targetID sourceID success)]], # 17
 		#'09CB' => ['skill_used_no_damage', 'v v x2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],  #16
-
+		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
