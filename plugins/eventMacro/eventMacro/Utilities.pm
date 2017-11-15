@@ -266,7 +266,7 @@ sub getInventoryIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
+		if (lc($item->name) eq $find || $item->{nameID} == $find) {push @ids, $item->{binID}}
 	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -292,7 +292,7 @@ sub getInventoryTypeIDs {
 sub getItemIDs {
 	my ($item, $pool) = (lc($_[0]), $_[1]);
 	return if !$pool->isReady;
-	my @ids = map { $_->{binID} } grep { $item eq lc $_->name } @$pool;
+	my @ids = map { $_->{binID} } grep { $item eq lc $_->name || $item == $_->{nameID} } @$pool;
 	push @ids, -1 if !@ids;
 	@ids;
 }
@@ -314,7 +314,7 @@ sub getStorageIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
+		if (lc($item->name) eq $find|| $item->{nameID} == $find) {push @ids, $item->{binID}}
   	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -337,7 +337,7 @@ sub getInventoryAmount {
 	return -1 unless ($char->inventory->isReady());
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
 	}
 	return $amount
 }
@@ -361,7 +361,7 @@ sub getCartAmount {
 	return -1 unless ($char->cart->isReady());
 	my $amount = 0;
 	foreach my $item (@{$char->cart->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
   	}
 	return $amount
 }
@@ -385,7 +385,7 @@ sub getShopAmount {
 	my $amount = 0;
 	foreach my $aitem (@::articles) {
 		next unless $aitem;
-		if (lc($aitem->{name}) eq $arg) {$amount += $aitem->{quantity}}
+		if (lc($aitem->{name}) eq $arg || $aitem->{nameID} == $arg) {$amount += $aitem->{quantity}}
 	}
 	return $amount
 }
@@ -397,7 +397,7 @@ sub getStorageAmount {
 	return -1 unless ($char->storage->wasOpenedThisSession());
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg ) {$amount += $item->{amount}}
   	}
 	return $amount
 }
