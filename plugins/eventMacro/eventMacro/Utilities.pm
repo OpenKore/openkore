@@ -397,7 +397,7 @@ sub getStorageAmount {
 	return -1 unless ($char->storage->wasOpenedThisSession());
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg ) {$amount += $item->{amount}}
   	}
 	return $amount
 }
