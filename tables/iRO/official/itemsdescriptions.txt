@@ -14782,6 +14782,26 @@ Weight : ^777777130^000000
 Req Lev : ^77777765^000000
 Job : ^777777all jobs^000000
 #
+2165#
+^808080A magical shield endowed with the power of earth.^000000
+Class: Shield
+Defense: 50
+Weight: 130
+Required Level: 65
+Required Jobs: All Jobs
+Reduces damage taken from Earth property enemies by 5%.
+Increases damage taken from Plant race enemies by 5%.
+^800080Set Bonus^000000
+^008080Sol Manteau^000000
+^008080Sol Shield^000000
+Increases physical damage on Earth property targets by 1% per upgrade level of ^008080Sol Shield^000000.
+Reduces damage taken from Fish race enemies by 1% per upgrade level of ^008080Sol Manteau^000000.
+^800080Set Bonus^000000
+^008080Sol Shield^000000
+^008080Sol Shoes^000000
+Reduces damage taken from Earth property attacks by 5%.
+Reduces damage taken from Earth property attacks by an additional 2% per upgrade level of ^008080Sol Shield^000000.
+#
 2168#
 Very unique, square formed shield with a special jewel on it which protects from physical power.
 If upgraded to +5 or higher, increases 1% of tolerance against Neutral attack. (The tolerance increase is limited to refine level 12) per refine level.
@@ -16202,17 +16222,14 @@ Weight : ^77777710^000000
 Jobs: ^777777All^000000
 #
 2295#
-A face mask that is
-worn by those who
-have trouble sleeping.
-Adds resistance to
-the ^880000Blind^000000 status.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+^808080A face mask that is worn by those who have trouble sleeping.^000000
+Class: Headgear
+Position: Middle
+Defense: 0
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs except Novice Jobs
+Immune to ^800000Blind^000000.
 #
 2296#
 A special optical
@@ -17414,13 +17431,12 @@ Weight : ^77777710^000000
 Jobs: ^777777All except Novice Job^000000
 #
 2408#
-These steel shackles
-were clamped on the
-ankles to prevent some
-prisoner from escaping.
-Class : ^777777Footwear^000000
-Defense : ^77777718^000000
-Weight : ^777777300^000000 Jobs: ^777777All^000000
+^808080These steel shackles were clamped on the ankles to prevent some prisoner from escaping.^000000
+Class: Shoes
+Defense: 18
+Weight: 300
+Required Level: 1
+Required Jobs: All Jobs
 #
 2409#
 Striped high heeled
@@ -19911,26 +19927,16 @@ Required Level : ^77777730^000000
 Jobs: ^777777Thief Class and Ninja^000000
 #
 2655#
-A heavy steel ball
-attached to a shackle
-that was supposed to
-keep prisoners from
-escaping in an earlier
-era. However, prisoners outfitted with this ball
-managed to use it as
-a weapon. If Shackle
-is also equipped, this
-Accessory adds ATK
-+50 and will reduce
-damage by 20% but
-only when fighting
-Zombie Prisoners
-and Skel Prisoners.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^777777400^000000
-Jobs: ^777777All except
-Novice Class^000000
+^808080A heavy steel ball attached to a shackle that was supposed to keep prisoners from escaping in an earlier era. However, prisoners outfitted with this ball managed to use it as a weapon.^000000
+Class: Accessory
+Weight: 300
+Required Level: 1
+Required Jobs: All Jobs except Novice Jobs
+^800080Set Bonus^000000
+^008080Bloodied Shackle Ball^000000
+^008080Shackles^000000
+Atk + 50
+Reduces damage taken from Skel Prisoners and Zombie Prisoners by 20%.
 #
 2656#
 A mysterious, ancient
@@ -21927,6 +21933,30 @@ Class : ^777777Accessory^000000
 Defense : ^7777770^000000
 Weight : ^77777710^000000
 Jobs : ^777777All Jobs^000000
+#
+2913#
+^808080Handcuffs designed to chain the greater thieves. It's very solid so it can't broken.^000000
+Class: Accessory
+Weight: 240
+Required Level: 10
+Required Jobs: All Jobs
+Atk + 5
+^800080Set Bonus^000000
+^008080Blinker^000000
+^008080Thief Handcuffs^000000
+Atk + 10
+^800080Set Bonus^000000
+^008080Bloodied Shackle Ball^000000
+^008080Thief Handcuffs^000000
+Atk + 10
+^800080Set Bonus^000000
+^008080Prisoner's Uniform^000000
+^008080Thief Handcuffs^000000
+Atk + 2 per upgrade level of ^008080Prison Uniform^000000 up to a maximum upgrade level of 10.
+^800080Set Bonus^000000
+^008080Shackles^000000
+^008080Thief Handcuffs^000000
+Atk + 1 per upgrade level of ^008080Shackles^000000 up to a maximum upgrade level of 10.
 #
 2914#
 a legend eye that had lost all knowledge and magic instead.
@@ -38452,6 +38482,17 @@ Required Jobs: All Jobs
 Increases physical damage on Fish race targets by 5%.
 Reduces damage taken from Fish race enemies by 5%.
 #
+5924#
+^808080An eye patch worn by professional dragon knights.^000000
+Class: Headgear
+Position: Middle
+Defense: 1
+Weight: 20
+Required Level: 10
+Required Jobs: All Jobs
+Increases physical damage on Dragon race targets by 5%.
+Reduces damage taken from Dragon race enemies by 5%.
+#
 5933#
 ^808080The mask carries the grudge of its previous owner.^000000
 ^FFFFFF_^000000
@@ -38503,6 +38544,28 @@ If upgrade level is +5 or higher,
 Reduces damage taken from Dragon race enemies by 5%.
 If upgrade level is +7 or higher,
 Reduces damage taken from Dragon race enemies by an additional 5%.
+#
+5938#
+^808080A funny looking octopus wearing a gentleman's hat. You will feel like being teased just by looking at it.^000000
+Class: Headgear
+Position: Upper
+Defense: 8
+Weight: 88
+Required Level: 60
+Required Jobs: All Jobs
+Mdef + 8
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 50%.
+Increases the recovery rate of ^008080Raw Fish^000000 and ^008080Sushi^000000 consumables by 125%.
+If upgrade level is +5 or higher,
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by an additional 50%.
+Increases the recovery rate of ^008080Raw Fish^000000 and ^008080Sushi^000000 consumables by an additional 125%.
+If upgrade level is +6 or higher,
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by an additional 50%.
+Increases the recovery rate of ^008080Raw Fish^000000 and ^008080Sushi^000000 consumables by an additional 125%.
+If upgrade level is +7 or higher,
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by an additional 50%.
+Increases the recovery rate of ^008080Raw Fish^000000 and ^008080Sushi^000000 consumables by an additional 125%.
+This item is indestructible in battle.
 #
 5948#
 A mask for Assassins
@@ -54872,6 +54935,13 @@ when attacking, stuns enemies at a regular rate
 Class : ^777777bullet^000000 Attack : ^77777750^000000
 Weight : ^7777770.5^000000 Property : ^777777none^000000
 #
+13209#
+^808080Full metal jacket, known as FMJ. Penetration will be maximized to give high damage.^000000
+Class: Bullet
+Attack: 120
+Property: Neutral
+Weight: 0.2
+#
 13210#
 ^808080A bullet that is made for the Slug Shot skill. It can be used as normal shot but does not give high damage. It's considerably light as a slug bullet but gives low damage.^000000
 ^FFFFFF_^000000
@@ -61086,6 +61156,20 @@ Required Level : ^777777100^000000
 Job : ^777777Guillotine Cross^000000
 #
 15040#
+^808080A striped uniform that any prisoner will wear. There are some blood spots here and there, but they are old and faded.^000000
+Class: Armor
+Defense: 5
+Property: Neutral
+Weight: 150
+Required Level: 50
+Required Jobs: All Jobs
+Hit + 1 per upgrade level of the item.
+Flee + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Prisoner's Uniform^000000
+^008080Shackles^000000
+Atk + 5
+Additional Atk + 1 per upgrade level of ^008080Shackles^000000.
 #
 15041#
 The armor that made by power of mythic creature, Boitata
@@ -61812,6 +61896,30 @@ Reduces the fixed casting time of skills by 20%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Luxurious Doram Suit^000000, ^008080Luxurious Doram Manteau^000000, ^008080Luxurious Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
+15130#
+^808080Armor worn by warriors to protect themselves from gigantic dragons.^000000
+Class: Armor
+Defense: 30
+Property: Neutral
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+Increases physical and magical damage on Dragon race targets by 3%.
+Increases physical and magical damage on Dragon race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
+#
+15135#
+^808080Ritualistic clothing that appears to offend dragons far and wide.^000000
+Class: Armor
+Defense: 30
+Property: Neutral
+Weight: 120
+Required Level: 70
+Required Jobs: All Jobs
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Dragon race enemies by 5%.
+Reduces damage taken from Dragon race enemies by an additional 1% per upgrade level of the item.
+#
 15138#
 Egir, the God of Sea's Armor. It has a shape of a beautiful mermaid and seems to enable wearer swim in the water.
 MHP + 500.
@@ -61825,8 +61933,7 @@ Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
 15139#
-^808080Ritualistic clothing that appears to offend animals far and wide.
-^000000
+^808080Ritualistic clothing that appears to offend animals far and wide.^000000
 Class: Armor
 Defense: 30
 Property: Neutral
@@ -68261,6 +68368,30 @@ Battle Manual X3 x 6
 Safe to 7 Chance Box x 4
 HE Bubble Gum x 8
 #
+17900#
+Weight: 0
+When opened gives one of the following
+Egir Ring [1]
+Giant's Protection [1]
+Octopus Hat [1]
+Sol Shield [1]
+Gaia Shield [1]
+Sol Shoes [1]
+Dragon Mail [1]
+Thief Handcuffs [1]
+Dragon Knight Eye Patch
+Dragon Cloth [1]
+Critical Anklet [1]
+Skin of Gwiber [1]
+Sol Manteau [1]
+Imperial Ring [1]
+Happy Flapping Angel Wings [1]
+Beelzebub Wing Box
+(8) Blacksmith Blessing
+(6) Battle Manual X3
+(8) Job Battle Manual
+
+#
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
 Class : ^777777Cannonball^000000
@@ -73713,6 +73844,29 @@ If upgrade level is +9 or higher,
 Increases physical and magical damage on Malangdo monsters by an additional 20%.
 Reduces damage taken from Malangdo monsters by an additional 20%.
 #
+19269#
+^808080A headgear that looks like flapping wings of the angel of happiness. It makes you feel might lighter when you wear it.^000000
+Class: Headgear
+Position: Upper
+Defense: 2
+Weight: 50
+Required Level: 30
+Required Jobs: All Jobs
+Increases physical and magical damage on Clock Tower and Nightmare Clock Tower monsters by 5%.
+Reduces damage taken from Clock Tower and Nightmare Clock Tower monsters by 5%.
+Adds a chance of gaining ^008080Witch Starsand^000000 when a Clock Tower or Nightmare Clock Tower monster is killed.
+If upgrade level is +5 or higher,
+Increases physical and magical damage on Clock Tower and Nightmare Clock Tower monsters by an additional 10%.
+Reduces damage taken from Clock Tower and Nightmare Clock Tower monsters by an additional 10%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Clock Tower and Nightmare Clock Tower monsters by an additional 15%.
+Reduces damage taken from Clock Tower and Nightmare Clock Tower monsters by an additional 15%.
+If upgrade level is +8 or higher,
+Immune to ^800000Stone Curse^000000.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Clock Tower and Nightmare Clock Tower monsters by an additional 20%.
+Reduces damage taken from Clock Tower and Nightmare Clock Tower monsters by an additional 20%.
+#
 19377#
 A marinated beef dish
 whose spendorous
@@ -79111,6 +79265,27 @@ weight : ^77777730^000000
 Required Lv : ^777777110^000000
 Jobs : ^777777All^000000
 #
+20701#
+^808080A magical manteau endowed with the power of earth.^000000
+Class: Garment
+Defense: 20
+Weight: 70
+Required Level: 65
+Required Jobs: All Jobs
+Reduces damage taken from Earth property enemies by 5%.
+Increases damage taken from Fish race enemies by 5%.
+^800080Set Bonus^000000
+^008080Sol Manteau^000000
+^008080Sol Shield^000000
+Increases damage on Earth property targets by 1% per upgrade level of ^008080Sol Shield^000000.
+Reduces damage taken from Fish race enemies by 1% per upgrade level of ^008080Sol Manteau^000000.
+^800080Set Bonus^000000
+^008080Sol Manteau^000000
+^008080Sol Shoes^000000
+Max HP + 1% per upgrade level of ^008080Sol Manteau^000000.
+Max SP + 1% per upgrade level of ^008080Sol Manteau^000000.
+Increases damage on Earth property targets by 5%.
+#
 20702#
 ^ff0000Cannot be traded.^000000
 ^000088Rental Item^000000
@@ -80166,15 +80341,36 @@ Required Level: 100
 Required Jobs: All Jobs
 Agi + 5
 Vit + 5
+Mdef + 10
 Reduces damage taken from Water and Fire property attacks by 5%.
 Reduces damage taken from Demi-Human and Dragon race enemies by 5%.
 If upgrade level is +7 or higher,
 Enables ^0000FFLevel 1 Hiding^000000.
 If upgrade level is +8 or higher,
-Max HP + 1% for every 20 base Agi/Vit.
-Reduces the variable casting time of skills by 2% for every 20 base Agi/Vit.
+Max HP + 1% for every 20 base Agi and Vit.
+Reduces the variable casting time of skills by 2% for every 20 base Agi and Vit.
 If upgrade level is +9 or higher,
 Enables ^0000FFLevel 1 Cloaking^000000.
+#
+20837#
+^808080The skin of a dragon whose scales were as white as snow, but light as a feather.^000000
+Class: Garment
+Defense: 15
+Weight: 60
+Required Level: 100
+Required Jobs: All Jobs
+Int + 5
+Dex + 5
+Mdef + 10
+Reduces damage taken from Shadow and Undead property attacks by 5%.
+Reduces damage taken from Demon and Undead race enemies by 5%.
+If upgrade level is +7 or higher,
+Restores 10 SP to the user when a monster is killed by a physical attack.
+If upgrade level is +8 or higher,
+Atk + 5 for every 20 base Int and Dex.
+Reduces the cast delay of skills by 2% for every 20 base Int and Dex.
+If upgrade level is +9 or higher,
+Restores an additional 10 SP to the user when a monster is killed by a physical attack.
 #
 20845#
 ^808080The skin of a dragon which has a mouth large enough to swallow an entire human.^000000
@@ -80711,6 +80907,30 @@ Weight : ^77777725^000000
 Required Level : ^777777125^000000
 Job : ^777777All^000000
 #
+22049#
+^808080A pair of magical shoes endowed with the power of earth.^000000
+Class: Shoes
+Defense: 12
+Weight: 25
+Required Level: 90
+Required Jobs: All Jobs
+Max HP + 1% per upgrade level of the item.
+Max SP + 1% per upgrade level of the item.
+Mdef + 3
+Reduces damage taken from Earth property attacks by 5%.
+Increases the drop rate of items by 10% if the user has active vip.
+^800080Set Bonus^000000
+^008080Sol Manteau^000000
+^008080Sol Shoes^000000
+Max HP + 1% per upgrade level of ^008080Sol Manteau^000000.
+Max SP + 1% per upgrade level of ^008080Sol Manteau^000000.
+Increases physical damage on Earth property targets by 5%.
+^800080Set Bonus^000000
+^008080Sol Shield^000000
+^008080Sol Shoes^000000
+Reduces damage taken from Earth property attacks by 5%.
+Reduces damage taken from Earth property attacks by an additional 2% per upgrade level of ^008080Sol Shield^000000.
+#
 22050#
 ^808080These shoes were worn by a man who made a living out of tending to fauna. They contain the man's many years of experience.^000000
 Class: Shoes
@@ -81020,6 +81240,248 @@ Bypass 5% of Mdef of Normal, Boss targets when performing a magical attack per l
 Increases the damage of ^0000FFWater Ball^000000 by 30% per level of ^0000FFWater Ball^000000 known.
 Increases the damage of ^0000FFWater Ball^000000 by an additional 20% per upgrade level of ^008080La'cryma Stick^000000.
 #
+22107#
+^808080These shoes are made a long long time ago, but strangely they look brand new.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Atk + 7 per 3 upgrade levels of the item.
+If the users base Str is 120 or higher,
+Additional Atk + 50
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22108#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 20
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Matk + 10 per 3 upgrade levels of the item.
+If the users base Int is 120 or higher,
+Additional Matk + 60
+Mdef + 5
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Int Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22109#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Aspd + 3% per 3 upgrade levels of the item.
+If the users base Agi is 120 or higher,
+Aspd + 1
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22110#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 300 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+If the users base Vit is 120 or higher,
+Max HP + 8%
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22111#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Dex + 3 per 3 upgrade levels of the item.
+If the users base Dex is 120 or higher,
+Reduces the fixed casting time of skills by 0.5 seconds.
+Increases long-ranged damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22112#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 20
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Increases critical damage on targets by 2% per 3 upgrade levels of the item.
+If the users base Luk is 120 or higher,
+Increases critical damage on targets by an additional 30%.
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22113#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Atk + 7 per 3 upgrade levels of the item.
+If the users base Str is 120 or higher,
+Additional Atk + 50
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22114#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 20
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Matk + 10 per 3 upgrade levels of the item.
+If the users base Int is 120 or higher,
+Additional Matk + 60
+Mdef + 5
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22115#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Aspd + 3% per 3 upgrade levels of the item.
+If the users base Agi is 120 or higher,
+Aspd + 1
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22116#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 300 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+If the users base Vit is 120 or higher,
+Max HP + 8%
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22117#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 25
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Dex + 3 per 3 upgrade levels of the item.
+If the users base Dex is 120 or higher,
+Reduces the fixed casting time of skills by 0.5 seconds.
+Increases long-ranged damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
+22118#
+^808080These boots are obviously old but they show no signs of wear and tear.^000000
+Class: Shoes
+Defense: 20
+Weight: 60
+Required Level: 99
+Required Jobs: Kagerou/Oboro, Rebel
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Increases critical damage on targets by 2% per 3 upgrade levels of the item.
+If the users base Luk is 120 or higher,
+Increases critical damage on targets by an additional 30%.
+^800080Set Bonus^000000
+^008080Giant Faceworm Snake Skin^000000
+^008080Modified Str Boots^000000
+Max HP + 15%
+Max SP + 5%
+#
 22131#
 ^808080Boots worn by horse-riding shepherds.^000000
 Class: Shoes
@@ -81098,6 +81560,9 @@ Contains one of the following:
 Weight : ^7777771^000000
 #
 22514#
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 22515#
 A key cursed by time keeper's twisted time spell. Curses time to go slower.
@@ -82048,6 +82513,26 @@ Costume Isabella Red Ears
 Costume Hopping Rabbit
 Costume Hippo Hat
 Costume Cat's Mouth
+#
+23600#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
+23601#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
+23602#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
+23603#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -83449,6 +83934,10 @@ Type: Miscellaneous
 Weight: 0
 ^FFFFFF_^000000
 #
+25187#
+^808080A bullet that is made for the Slug Shot skill. It can be used as a normal shot but does not give high damage. It's expensive and very heavy... just what is this thing made of?^000000
+Weight: 120
+#
 25233#
 ^808080Necessity for making dolls and teddy bears.^000000
 ^FFFFFF_^000000
@@ -84156,6 +84645,14 @@ Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+28342#
+Class: Accessory
+Weight: 20
+Required Level: 50
+Required Jobs: All Jobs
+Mdef + 3
+Crit + 5
+#
 28353#
 ^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
 ^FFFFFF_^000000
@@ -84238,6 +84735,25 @@ Hit +10
 ^008080Vesper Gear 04^000000
 Dex + 1 for every 20 base levels.
 Reduces the variable casting time of skills by 5%.
+#
+28372#
+^808080A beautiful ring engraved with the patterns of the Rune Kingdom.^000000
+Class: Accessory
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+Str + 1
+Int + 1
+Max HP + 3%
+Max SP + 3%
+^800080Set Bonus^000000
+^008080Imperial Guard^000000
+^008080Imperial Ring^000000
+Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
+^800080Set Bonus^000000
+^008080Imperial Ring^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
 #
 28374#
 ^808080A small and cute foxtail-shaped ring. But you can feel a great power emanating from inside it.^000000
@@ -85112,6 +85628,38 @@ Reduces the fixed casting time of skills by 50%.
 If upgrade level is +7 or higher,
 Increases magical damage on boss monster targets by 20%.
 #
+28520#
+^808080Egir, the God of Sea's Ring. It has the power to see all things.^000000
+Class: Accessory
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+Atk + 5%
+Matk + 5%
+Reduces damage taken from Water property attacks by 10%.
+#
+28521#
+^808080A ring worn by the giant who was the protector of ancient temples.^000000
+Class: Accessory
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+Max HP + 5% if the users base Str is 120 or higher.
+Max SP + 5% if the users base Str is 120 or higher.
+Atk + 50 if the users base Str is 120 or higher.
+Atk + 5%
+^800080Set Bonus^000000
+^008080Giant Axe^000000
+^008080Giant's Protection^000000
+Reduces damage taken from Demi-Human race enemies by 3%.
+If ^008080Giant Axe^000000 upgrade level is +7 or higher,
+Increases physical damage on boss monsters by 5%.
+Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by 5%.
+If ^008080Giant Axe^000000 upgrade level is +9 or higher,
+Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by an additional 10%.
+Increases physical damage on boss monsters by an additional 10%.
+
+#
 28600#
 Attack: 0
 Property: N/A
@@ -85396,6 +85944,34 @@ Reduces damage taken from long-ranged attacks by an additional 15%.
 ^008080Imuke Upper Shield^000000
 ^008080Horn Card^000000
 Increases damage taken from long-ranged attacks by 35%.
+#
+28916#
+^808080A shield that contains the power of the earth.^000000
+Class: Shield
+Defense: 150
+Weight: 200
+Required Level: 90
+Required Jobs: All Jobs
+Mdef + 15
+Increases physical and magical damage on Earth property targets by 5%.
+Reduces damage taken from Earth property attacks by 10%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Increases physical and magical damage on Earth property targets by an additional 10%.
+Reduces damage taken from Earth property attacks by an additional 15%.
+If upgrade level is +8 or higher,
+If the users base Str is 90 or higher,
+Atk + 50
+If the users base Agi is 90 or higher,
+Aspd + 5%
+If the users base Vit is 90 or higher,
+Increases the recovery rate of recovery items by 10%.
+If the users base Int is 90 or higher,
+Matk + 30
+If the users base Dex is 90 or higher,
+Reduces the variable casting time of skills by 5%.
+If the users base Luk is 90 or higher,
+Increases critical damage on targets by 5%.
 #
 28921#
 ^808080A shield that contains the power of the wind.^000000
@@ -86478,7 +87054,7 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31198#
-^808080Wear this octopus wearing a hat as a hat. Is it just me, or does it seem to be mocking you?^000000
+^808080A funny looking octopus wearing a gentleman's hat. You will feel like being teased just by looking at it.^000000
 Class: Costume
 Position: Upper
 Weight: 0
