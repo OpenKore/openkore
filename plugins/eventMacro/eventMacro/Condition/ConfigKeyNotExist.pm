@@ -39,6 +39,9 @@ sub _parse_syntax {
 				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 		} else {
+			if (get_real_key($member)) {
+				$member = get_real_key($member);
+			}
 			$self->{members_array}->[$member_index] = $member;
 		}
 	}
@@ -70,7 +73,9 @@ sub validate_condition {
 			$self->{fulfilled_member_index} = undef;
 			foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 				my $key = $self->{members_array}->[$member_index];
+				$key = get_real_key($key) if get_real_key($key);
 				next unless (defined $key);
+				next if (get_real_key($key)); #if it is defined, then the config exists
 				next if (exists $config{$key} || $key eq $args->{key});
 				$self->{fulfilled_key} = $key;
 				$self->{fulfilled_member_index} = $member_index;
@@ -94,6 +99,7 @@ sub check_keys {
 	$self->{fulfilled_member_index} = undef;
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 		my $key = $self->{members_array}->[$member_index];
+		$key = get_real_key($key) if (get_real_key($key));
 		next unless (defined $key);
 		next if (exists $config{$key});
 		$self->{fulfilled_key} = $key;
@@ -101,6 +107,26 @@ sub check_keys {
 		last;
 	}
 }
+
+sub get_real_key {
+	$_[0] =~ s/\.+/\./; # Filter Out Unnececary dot's
+	my ($label, $param) = split /\./, $_[0], 2; # Split the label form parameter
+	foreach (%::config) {
+		if ($_ =~ /_\d+_label/){ # we only need those blocks witch have labels
+			if ($::config{$_} eq $label) {
+				my ($real_key, undef) = split /_label/, $_, 2;
+				# "<label>.block" param support. Thanks to "vit"
+				if ($param ne "block") {
+					$real_key .= "_";
+					$real_key .= $param;
+				}
+				return $real_key;
+				last;
+			};
+		};
+	};
+}
+
 
 sub get_new_variable_list {
 	my ($self) = @_;
