@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # Servertype overview: http://wiki.openkore.com/index.php/ServerType
-package Network::Send::iRO::Renewal;
+package Network::Send::idRO::Renewal;
 
 use strict;
 use base qw(Network::Send::idRO);
