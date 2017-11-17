@@ -6841,3 +6841,98 @@
 20173#Kostum_Lude_Hood#
 20174#Kostum_Halloween_Hat_Orange#
 20175#Kostum_Diabolic_Headphone#
+
+
+//--------------- Update 17 Oktober 2017--------------
+6243#Token_of_Luck#
+7361#Kupon_Undian_Headset#
+7362#Kupon_Undian_Keyboard#
+7363#Kupon_Undian_Mouse#
+7364#Kupon_Undian_Hoodie#
+7365#Kupon_Undian_T-Shirt#
+7366#Voucher_RO-Cash_500K#
+7367#Voucher_RO-Cash_175K#
+7368#Voucher_RO-Cash_65K#
+7369#Voucher_RO-Cash_35K#
+7370#Voucher_RO-Cash_20K#
+7371#Voucher_RO-Cash_10K#
+19115#C_Red_Baby_Dragon#
+16626#Half_Asprika_Box30#
+32076#Garuda_Hat_Box#
+32010#Mental_Potion_Box#
+14600#Mental_Potion#
+32067#Rookie_Armlet#
+2766#Swordman_Figure#
+2767#Acolyte_Figure#
+2768#Mage_Figure#
+2769#Archer_Figure#
+2770#Thief_Figure#
+2771#Merchant_Figure#
+
+//--------------- Update 18 Oktober 2017--------------
+12515#Medium_Life_Potion#
+12495#Battle_Manual#
+12523#LV10_Agil_Scroll#
+12522#LV10_Blessing_Scroll#
+16627#HF Brynhild_box_7_Hari#
+//--------------- Update 24 Oktober 2017--------------
+20510#C_Sword_Wing#
+20761#C_Wing_Of_Happiness#
+20762#C_Great_Devil_Wing#
+//--------------- Update 7 November 2017--------------
+2149#Upg_Guard#
+15021#Upg_Formal_Dress#
+2563#Upg_Manteau#
+2459#Upg_Shoes#
+18892#Ufo_Poring_Hat#
+20249#C_Red_Hair_of_the_Strong#
+14615#All_Dish_Box_15#
+13802#Bloody_Iron_Ball_Box#
+13718#Abrasive_Box_10#
+13720#Regeneration_Box_10#
+32114#Golden_Armor_Box#
+32125#Valhalla_Costume_Box_1#
+32126#Valhalla_Costume_Box_2#
+12441#RO_Fest_Bubble_Gum#
+12439#RO_Fest_Battle_Manual#
+32113#Valhalla_Coupon#
+32127#Costume Unidentified Flying Orb#32127
+31300#Warm_Cat_Muffler#
+
+//=================== UPDATE Ragnarok Festival 2017 =======================
+32159#RSK01#
+32160#RSK02#
+32161#RSK03#
+32162#RSK04#
+32163#RSK05#
+32164#RSK06#
+32165#RSK07#
+32166#RSK08#
+32167#RSK09#
+18914#Costume Servant Devilring#
+31179#Costume Wolf Musketeer#
+20234#Costume Baphomet Hat#
+18610#Costume Cat ears Beret#
+31254#Costume Horse King#
+14072#Bloody Iron Ball Box 30 Hari#
+17153#Brave Pendant Box (30 Hari)#
+32158#Boss Card Box#
+13803#Spritual Ring Box & Hari#
+14391#Eternal Eye Box (7 hari)#
+2908#Eternal Eye#
+5975#Costume Flying Galapago#
+5977#Costume Blank Eyes#
+32168#Buwaya_Agimat_Box (30 Hari)#
+32169#Godly_Material_Box#
+5976#RO Festival Hat#
+32059#Costume Wandering Wolf Helm#
+31186#Costume Black Cat#
+31178#Costume Flame Muffler#
+31120#Costume Vampire Familiar#
+31165#Costume Piggyback#
+31329#Costume Alice Wig#
+31149#Costume Nydhog Wig#
+31062#Costume Eleanor Wig#
+20255#Costume Love Cheek#
+32077#Hyper_Pendant_Box#
+32069#Hyper Pendant#
