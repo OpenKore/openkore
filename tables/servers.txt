@@ -64,14 +64,14 @@ serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
 
-[Indonesia - idRO: Midgard]
-ip 202.43.167.67
+[Indonesia - idRO: Midgard,Asgard ,Valhalla]
+ip 202.93.25.131
 port 6900
 master_version 12
 version 2
 patchserver wpatch.ragnarok.co.id
 patchpath /patch02
-serverType idRO
+serverType idRO_Renewal
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
