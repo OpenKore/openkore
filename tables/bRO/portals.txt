@@ -2919,3 +2919,7 @@ dic_dun01 165 227 dic_dun01 87 212
 dic_dun01 87 212 dic_dun01 169 227
 dic_dun01 28 156 dic_dun01 371 228
 dic_dun01 371 228 dic_dun01 32 156
+moc_prydb1 103 54 moc_prydn1 93 96 5000 c r0 c c r0 c c r0 c c r0 c
+moc_prydn1 94 98 moc_prydb1 100 57 0 c r0 c
+moc_prydn1 223 9 moc_prydn2 192 8
+moc_prydn2 195 8 moc_prydn1 220 9
