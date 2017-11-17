@@ -24,7 +24,7 @@ sub new {
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 	);
 
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		master_login 02B0
@@ -71,12 +71,11 @@ sub sendTop10PK {
 	sendTop10(shift, 0x3);
 }
 
-sub sendCharDelete2Accept {
-	my ($self, $charID, $code) = @_;
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
 	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	my $length = 8 + length($code);
-	$self->sendToServer($self->reconstruct({switch => 'char_delete2_accept', length => $length, charID => $charID, code => $code}));
-	debug "Sent sendCharDelete2Accept. CharID: $charID, Code: $code, Length: $length\n", "sendPacket", 2;
+	$args->{length} = 8 + length($args->{code});
+	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 1;
