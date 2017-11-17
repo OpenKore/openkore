@@ -1329,7 +1329,7 @@ sub charSelectScreen {
 					message TF("Canceling delete request for character %s...\n", $chars[$charIndex]{name}), "connection";
 					$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
 				} elsif ($confirm == 2 && int(time) > $chars[$charIndex]{deleteDateTimestamp}) {
-					my $code = $interface->query("Enter your birthdate or deletion code.");
+					my $code = $interface->query("Enter your birthdate, deletion code or e-mail.");
 					if (!defined($code)) {
 						goto TOP;
 					}

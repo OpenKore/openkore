@@ -71,11 +71,12 @@ sub sendTop10PK {
 	sendTop10(shift, 0x3);
 }
 
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
+sub sendCharDelete2Accept {
+	my ($self, $charID, $code) = @_;
 	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
+	my $length = 8 + length($code);
+	$self->sendToServer($self->reconstruct({switch => 'char_delete2_accept', length => $length, charID => $charID, code => $code}));
+	debug "Sent sendCharDelete2Accept. CharID: $charID, Code: $code, Length: $length\n", "sendPacket", 2;
 }
 
 1;
