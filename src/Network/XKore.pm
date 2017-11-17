@@ -24,13 +24,16 @@ use Exception::Class ('Network::XKore::CannotStart');
 
 use Modules 'register';
 use Globals;
-use Log qw(message error);
+use Log qw(message error debug);
 use Utils::Win32;
 use Network;
 use Network::Send ();
 use Utils qw(dataWaiting timeOut);
 use Translation;
 use Misc qw(chatLog);
+use Network::MessageTokenizer;
+
+my $currentClientKey = 0;
 
 ##
 # Network::XKore->new()
@@ -59,7 +62,11 @@ sub new {
 	$masterServer = $masterServers{$config{master}};
 	$packetParser = Network::Receive->create($self, $masterServer->{serverType});
 	$messageSender = Network::Send->create($self, $masterServer->{serverType});
-	
+	$clientPacketHandler = Network::ClientReceive->new;
+
+	$self->{tokenizer} = new Network::MessageTokenizer($self->getRecvPackets());
+	$self->{kore_map_changed_hook} = Plugins::addHook('packet/map_changed', \&kore_map_changed, $self);
+
 	Plugins::addHook("Network::Receive/willMangle", \&willMangle);
 	Plugins::addHook("Network::Receive/mangle", \&mangle);
 
@@ -416,9 +423,18 @@ sub recv {
 			: "";
 		if ($type eq "R") {
 			# Client-bound (or "from server") packets
+			my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+			if (($switch eq "0071" || $switch eq "0092") && $currentClientKey && $messageSender->{encryption}->{crypt_key}) {
+				$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+				$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
+			}
 			$self->{serverPackets} .= $msg;
 		} elsif ($type eq "S") {
 			# Server-bound (or "to server") packets
+			if($self->getState() eq Network::IN_GAME || $self->getState() eq Network::CONNECTED_TO_CHAR_SERVER) {
+				$self->onClientData($msg);
+				return undef;
+			}
 			$self->{clientPackets} .= $msg;
 		} elsif ($type eq "K") {
 			# Keep-alive... useless.
@@ -579,5 +595,68 @@ sub hackClient {
 #	$message =~ s/\n/\\n/g;
 #	main::sendMessage($messageSender, "k", $message);
 #}
+sub onClientData {
+	my ($self, $msg) = @_;
+	my $additional_data;
+	my $type;
+
+	while (my $message = $self->{tokenizer}->readNext(\$type)) {
+		$msg .= $message;
+	}
+	$self->decryptMessageID(\$msg);
+
+	$msg = $self->{tokenizer}->slicePacket($msg, \$additional_data); # slice packet if needed
+
+	$self->{tokenizer}->add($msg, 1);
+
+	$messageSender->sendToServer($_) for $messageSender->process(
+		$self->{tokenizer}, $clientPacketHandler
+	);
+
+	$self->{tokenizer}->clear();
+
+	if($additional_data) {
+		$self->onClientData($additional_data);
+	}
+}
+
+sub decryptMessageID {
+	my ($self, $r_message) = @_;
+
+	if(!$messageSender->{encryption}->{crypt_key} && $messageSender->{encryption}->{crypt_key_3}) {
+		$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+	} elsif(!$currentClientKey) {
+		return;
+	}
+
+	my $messageID = unpack("v", $$r_message);
+
+	# Saving Last Informations for Debug Log
+	my $oldMID = $messageID;
+	my $oldKey = ($currentClientKey >> 16) & 0x7FFF;
+
+	# Calculating the Encryption Key
+	$currentClientKey = ($currentClientKey * $messageSender->{encryption}->{crypt_key_3} + $messageSender->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
+
+	# Xoring the Message ID
+	$messageID = ($messageID ^ (($currentClientKey >> 16) & 0x7FFF)) & 0xFFFF;
+	$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+
+	# Debug Log
+	debug (sprintf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($currentClientKey >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
+}
+
+sub getRecvPackets {
+	return \%rpackets;
+}
+
+sub kore_map_changed {
+	# Reset CryptKey when mapserver change
+	if($currentClientKey && $messageSender->{encryption}->{crypt_key}) {
+		debug (sprintf("Reseting Key in Map-Change: [0x%04X]->[0x%04X]\n", $currentClientKey, $messageSender->{encryption}->{crypt_key_1}));
+		$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+		$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
+	}
+}
 
 return 1;
