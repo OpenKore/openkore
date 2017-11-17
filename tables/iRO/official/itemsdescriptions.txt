@@ -80367,8 +80367,8 @@ Reduces damage taken from Demon and Undead race enemies by 5%.
 If upgrade level is +7 or higher,
 Restores 10 SP to the user when a monster is killed by a physical attack.
 If upgrade level is +8 or higher,
-Atk + 5 for every 20 base Int and Dex.
-Reduces the cast delay of skills by 2% for every 20 base Int and Dex.
+Atk + 5 for every combined sum of 20 base Int and Dex.
+Reduces the cast delay of skills by 1% for every combined sum of 20 base Int and Dex.
 If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a physical attack.
 #
