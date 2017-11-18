@@ -2491,11 +2491,12 @@ sub party_join {
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
-	if (!$char->{party} || !%{$char->{party}} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
+	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
 			$char->{party} = {};
+			$char->{party}{joined} = 1;
 			Plugins::callHook('packet_partyJoin', { partyName => $name });
 		} else {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
@@ -2531,6 +2532,7 @@ sub party_leave {
 		$actor = $char;
 		delete $char->{party};
 		undef @partyUsersID;
+		$char->{party}{joined} = 0;
 	}
 
 	if ($args->{result} == GROUPMEMBER_DELETE_LEAVE) {

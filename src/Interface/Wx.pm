@@ -938,7 +938,7 @@ sub updateMapViewer {
 	}
 	
 	$map->setPlayers ([values %players]);
-	$map->setParty ([values %{$char->{party}{users}}]) if $char->{party} && $char->{party}{users};
+	$map->setParty ([values %{$char->{party}{users}}]) if $char->{party}{joined} && $char->{party}{users};
 	$map->setMonsters ([values %monsters]);
 	$map->setNPCs ([values %npcs]);
 	$map->setSlaves ([values %slaves]);

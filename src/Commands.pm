@@ -3467,7 +3467,7 @@ sub cmdParty {
 	} elsif (!$char) {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"Party info not available yet\n");
-	} elsif (!$char->{party} || !%{$char->{party}}) {
+	} elsif (!$char->{party}{joined}) {
 		if ($arg1 eq "create") {
 			if ($arg2 eq "") {
 				error T("Syntax Error in function 'party create' (Organize Party)\n" .
@@ -3494,7 +3494,7 @@ sub cmdParty {
 			error T("Error in function 'party' (Party Functions)\n" .
 				"You're not in a party.\n");
 		}
-	} elsif ($char->{party} && %{$char->{party}} && ($arg1 eq "create" || $arg1 eq "join")) {
+	} elsif ($char->{party}{joined} && ($arg1 eq "create" || $arg1 eq "join")) {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"You're already in a party.\n");
 	} elsif ($arg1 eq "" || $arg1 eq "info") {
