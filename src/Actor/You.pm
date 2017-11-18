@@ -201,7 +201,7 @@ sub master {
 	}
 
 	# Stop if we have no party
-	return unless $char->{party} && %{$char->{party}};
+	return unless $char->{party}{joined};
 
 	# Search through party members
 	keys %{$char->{party}{users}};

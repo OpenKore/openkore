@@ -2069,11 +2069,12 @@ sub party_join {
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
-	if (!$char->{party} || !%{$char->{party}} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
+	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
 			$char->{party} = {};
+			$char->{party}{joined} = 1;
 		} else {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
@@ -2109,7 +2110,7 @@ sub party_join {
 	$char->{party}{users}{$ID}->{ID} = $ID;
 =cut
 
-	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
+	if ($config{partyAutoShare} && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyOption(1, 0);
 	}
 }
@@ -2124,6 +2125,7 @@ sub party_leave {
 		message T("You left the party\n");
 		delete $char->{party};
 		undef @partyUsersID;
+		$char->{party}{joined} = 0;
 	} else {
 		message TF("%s left the party\n", bytesToString($args->{name}));
 	}
@@ -2171,7 +2173,7 @@ sub party_users_info {
 		$char->{party}{users}{$ID}->{ID} = $ID;
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && $char->{party}{users}{$accountID}{admin}) {
+	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
 		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 	}
 }
