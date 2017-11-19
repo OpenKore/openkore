@@ -2495,7 +2495,9 @@ sub party_join {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
-			$char->{party} = {};
+			# Some servers receive party_users_info before party_join when logging in
+			# This is to prevent clearing info already in $char->{party}
+			$char->{party} = {} unless ref($char->{party}) eq "HASH";
 			$char->{party}{joined} = 1;
 			Plugins::callHook('packet_partyJoin', { partyName => $name });
 		} else {
