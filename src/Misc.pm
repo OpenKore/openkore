@@ -4357,7 +4357,7 @@ sub checkMonsterCondition {
 			if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
 				if($monster->{hp} && $monster->{hp_max}) {
 					return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $config{$prefix . "_hp"}));
-				} elsif($monster->{hp_percent}) {					
+				} elsif($monster->{hp_percent}) {
 					return 0 unless (inRange($monster->{hp_percent}, $config{$prefix . "_hp"}));
 				} else {
 					return 0;
@@ -4369,7 +4369,6 @@ sub checkMonsterCondition {
 					return 0;
 				}
 			} else {
-				warning TF("%s is wrong configured.\n", $prefix . "_hp");
 				return 0;
 			}
 		};
