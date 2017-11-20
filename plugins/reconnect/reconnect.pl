@@ -30,7 +30,7 @@ sub unload {
 
 sub trying_to_connect {
 	my ( undef, $params ) = @_;
-
+	return if($config{XKore} eq 1 || $config{XKore} eq 3);
 	# Only trigger if we're connecting to the login server.
 	next if $masterServers{ $config{master} }->{ip} ne $params->{host};
 	next if $masterServers{ $config{master} }->{port} ne $params->{port};
@@ -46,6 +46,7 @@ sub trying_to_connect {
 }
 
 sub connected {
+	return if($config{XKore} eq 1 || $config{XKore} eq 3);
 	$counter = 0;
 	$timeout{reconnect} = { timeout => timeout() };
 }

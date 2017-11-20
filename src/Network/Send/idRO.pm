@@ -14,25 +14,13 @@
 package Network::Send::idRO;
 
 use strict;
-use Globals;
 use Network::Send::ServerType0;
+
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-
-	my %packets = (
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'035F' => ['character_move','a4', [qw(coordString)]],#5
-	);
-
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
 
 	my %handlers = qw(
 		send_equip 00A9
@@ -48,18 +36,10 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_delete2_accept 098f
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 1;

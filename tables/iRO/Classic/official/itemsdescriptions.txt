@@ -70993,3 +70993,44 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19987#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brazil Beret!
+300 Fabric
+10 Yellow Bijou
+10 Green Bijou
+1 Cap [0]
+1 Brazil Beret Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19988#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Marvelous Wig!
+100 Coral Reef
+10 Amethysts
+10 Pearls
+1 Wig
+1 Marvelous Wig Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19989#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 4Leaf Clover In Mouth!
+200 Huge Leaf
+100 Stem
+1 Four Leaf Clover
+1 4Leaf Clover In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#

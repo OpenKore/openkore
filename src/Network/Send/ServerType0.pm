@@ -189,6 +189,9 @@ sub shuffle {
 	foreach ( sort keys %shuffle ) {
 		# We can only patch packets we know about.
 		next if !$self->{packet_list}->{$_};
+		# Ignore changes to packets which aren't used by this server.
+		my $handler = $self->{packet_list}->{$_}->[0];
+		next if $self->{packet_lut}->{$handler} && $self->{packet_lut}->{$handler} ne $_;
 		$new->{ $shuffle{$_} } = $self->{packet_list}->{$_};
 	}
 

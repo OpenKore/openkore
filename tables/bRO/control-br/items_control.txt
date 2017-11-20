@@ -1,4 +1,4 @@
-#############################################################################################
+﻿#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -50,23 +50,23 @@ all 0 1 0
 ##### ITENS DE SUPORTE E CURA #####
 # Configure-os conforme sua necessidade.
 
-Asas de Borboleta 10 1 0
-Asas de Mosca 100 1 0
+602 10 1 0 # Asa_de_Borboleta
+601 100 1 0 # Asa_de_Mosca
 
-Poção Azul 0 1 0
-Poção Vermelha Compacta 50 1 0
-Poção Branca Compacta 50 1 0
-Poção Amarela Compacta 50 1 0
-Poção Verde 0 1 0
-Poção Vermelha 25 1 0
-Poção Laranja 25 1 0
-Poção Branca 25 1 0
-Poção Amarela 25 1 0
+505 0 1 0 # Poção_Azul
+545 50 1 0 # Poção_Vermelha_Compacta
+547 50 1 0 # Poção_Branca_Compacta
+546 50 1 0 # Poção_Amarela_Compacta
+506 0 1 0 # Poção_Verde
+501 25 1 0 # Poção_Vermelha
+502 25 1 0 # Poção_Laranja
+504 25 1 0 # Poção_Branca
+503 25 1 0 # Poção_Amarela
 
 ##### FLECHAS #####
-# Você pode precisar modificar esta linha se você é um arqueiro/caçador.
+# You may want to modify these if you're an archer/hunter
 
-Flecha 3000 1 0
+Arrow 3000 1 0
 
 
 
@@ -78,583 +78,838 @@ Flecha 3000 1 0
 ##### EQUIPAMENTOS INÚTEIS #####
 # Equipamentos inúteis que serão vendidos por padrão.
 
-Anel de Caveira 0 0 1
-Anel de Diamante 0 0 1
-Anel de Flor 0 0 1
-Anel de Ouro 0 0 1
-Anel de Prata 0 0 1
-Armadura Acolchoada 0 0 1
-Armadura de Madeira [1] 0 0 1
-Armadura de Madeira 0 0 1
-Armadura Metálica 0 0 1
-Bandana 0 0 1
-Barrete 0 0 1
-Botas 0 0 1
-Broquel 0 0 1
-Camisa de Algodão [1] 0 0 1
-Camisa de Algodão 0 0 1
-Capacete de Schallern 0 0 1
-Capote [1] 0 0 1
-Capote 0 0 1
-Capuz [1] 0 0 1
-Capuz 0 0 1
-Casaco [1] 0 0 1
-Casaco 0 0 1
-Chapéu 0 0 1
-Cota de Malha 0 0 1
-Elmo 0 0 1
-Escapulário 0 0 1
-Escudo 0 0 1
-Escudo Espelhado 0 0 1
-Faixa de Cabelo 0 0 1
-Gibão [1] 0 0 1
-Gibão 0 0 1
-Grilhões 0 0 1
-Laço [1] 0 0 1
-Laço 0 0 1
-Malha 0 0 1
-Manteau 0 0 1
-Manto de Seda 0 0 1
-Manto Prateado [1] 0 0 1
-Manto Prateado 0 0 1
-Manto Sagrado 0 0 1
-Máscara Cirúrgica 0 0 1
-Máscara Feliz 0 0 1
-Máscara X 0 0 1
-Óculos de Mergulho 0 0 1
-Óculos Escuros 0 0 1
-Rosário 0 0 1
-Rouba de Baixo 0 0 1
-Salto Alto 0 0 1
-Sandálias [1] 0 0 1
-Sandálias 0 0 1
-#Sapatilha de Cristal 0 0 1
-Sapatos 0 0 1
-Sobrepeliz 0 0 1
-Solidéu 0 0 1
-Tapa-Olho 0 0 1
-Tiara 0 0 1
-Traje de Gatuno 0 0 1
-Túnica 0 0 1
-Turbante 0 0 1
-Vembrassa 0 0 1
+2306 0 0 1 # Túnica
+2211 0 0 1 # Bandana
+2217 0 0 1 # Solidéu
+2406 0 0 1 # Botas
+2104 0 0 1 # Broquel
+2227 0 0 1 # Barrete
+2315 0 0 1 # Cota_de_Malha
+2233 0 0 1 # Tiara
+2310 0 0 1 # Casaco
+2310 0 0 1 # Casaco
+2302 0 0 1 # Camisa_de_Algodão
+Cotton Shirt [1] 0 0 1
+#Crystal Pumps 0 0 1
+2613 0 0 1 # Anel_de_Diamante
+2205 0 0 1 # Óculos_de_Mergulho
+2212 0 0 1 # Tapa-Olho
+2612 0 0 1 # Anel_de_Flor
+2219 0 0 1 # Máscara_Cirúrgica
+2317 0 0 1 # Armadura_Metálica
+2265 0 0 1 # Máscara_X
+2231 0 0 1 # Capacete_de_Schallern
+2204 0 0 1 # Óculos
+2610 0 0 1 # Anel_de_Ouro
+2102 0 0 1 # Vembrassa
+2210 0 0 1 # Faixa_de_Cabelo
+2221 0 0 1 # Chapéu
+2229 0 0 1 # Elmo
+2409 0 0 1 # Salto_Alto
+2502 0 0 1 # Capuz
+2502 0 0 1 # Capuz
+2304 0 0 1 # Gibão
+2304 0 0 1 # Gibão
+2506 0 0 1 # Manteau
+2308 0 0 1 # Capote
+2308 0 0 1 # Capote
+2108 0 0 1 # Escudo_Espelhado
+2278 0 0 1 # Máscara_Feliz
+2504 0 0 1 # Sobrepeliz
+2313 0 0 1 # Armadura_Acolchoada
+2371 0 0 1 # Roupa de Baixo
+2209 0 0 1 # Laço
+2209 0 0 1 # Laço
+2840 0 0 1 # Rosary
+2326 0 0 1 # Manto_Sagrado
+2402 0 0 1 # Sandálias
+2402 0 0 1 # Sandálias
+2324 0 0 1 # Escapulário
+2408 0 0 1 # Grilhões
+2106 0 0 1 # Escudo
+2404 0 0 1 # Sapatos
+2322 0 0 1 # Manto_de_Seda
+2611 0 0 1 # Anel_de_Prata
+2333 0 0 1 # Manto_Prateado
+2333 0 0 1 # Manto_Prateado
+2715 0 0 1 # Anel de Caveira
+2336 0 0 1 # Traje_de_Gatuno
+2331 0 0 1 # Malha
+2223 0 0 1 # Turbante
+2329 0 0 1 # Armadura_de_Madeira
+2329 0 0 1 # Armadura_de_Madeira
 
 
 ##### ARMAS INÚTEIS #####
 # Armas inúteis que serão vendidas por padrão.
 
-Açoite [2] 0 0 1
-Açoite [3] 0 0 1
-Adaga [2] 0 0 1
-Adaga [3] 0 0 1
-Adaga 0 0 1
-Alabarda [1] 0 0 1
-Alabarda [2] 0 0 1
-Alaúde [2] 0 0 1
-Alaúde [3] 0 0 1
-Alfanje [3] 0 0 1
-Alfanje 0 0 1
-Arbaleste [1] 0 0 1
-Arco [3] 0 0 1
-Arco [4] 0 0 1
-Arco 0 0 1
-Arco Composto [3] 0 0 1
-Arco Composto 0 0 1
-Arco Grande [2] 0 0 1
-Arco Grande [3] 0 0 1
-Arco Grande 0 0 1
-Armadura de Aprendiz [1] 0 0 1
-Azagaia [3] 0 0 1
-Azagaia [4] 0 0 1
-Azagaia 0 0 1
-Azorrague [1] 0 0 1
-Azorrague 0 0 1
-Bandolin [2] 0 0 1
-Bandolin [3] 0 0 1
-Bastão [3] 0 0 1
-#Bastão [4] 0 0 1
-Bastão 0 0 1
-Besta [2] 0 0 1
-Besta 0 0 1
-Besta de Rebetição [1] 0 0 1
-#Bíblia [2] 0 0 1
-Bracelete de Aprendiz [1] 0 0 1
-Cajado [2] 0 0 1
-Cajado 0 0 1
-Cetro [1] 0 0 1
-Cetro 0 0 1
-#Chemeti 0 0 1
-Chibata [1] 0 0 1
-Chibata [2] 0 0 1
-Cimitarra [2] 0 0 1
-Cimitarra [3] 0 0 1
-Cinto [1] 0 0 1
-Clava [3] 0 0 1
-Clava [4] 0 0 1
-Clava 0 0 1
-Claymore 0 0 1
-Cordame [1] 0 0 1
-Cordame [2] 0 0 1
-Cordame [3] 0 0 1
-Cordel [3] 0 0 1
-#Cordel [4] 0 0 1
-Damascus [1] 0 0 1
-Dedos Afiados [1] 0 0 1
-Dedos Afiados [2] 0 0 1
-Demolidor [1] 0 0 1
-Demolidor 0 0 1
-#Diário de Menina [1] 0 0 1
-Dilaceradora [3] 0 0 1
-Dilaceradora [4] 0 0 1
-Dilaceradora 0 0 1
-Esmagador [2] 0 0 1
-Esmagador [3] 0 0 1
-Espada [3] 0 0 1
-Espada [4] 0 0 1
-Espada 0 0 1
-Espada Bastarda [2] 0 0 1
-Espada Bastarda 0 0 1
-Espada de Duas Mãos [1] 0 0 1
-Espada de Duas Mãos 0 0 1
-Espada Larga [1] 0 0 1
-Espada Matadora [2] 0 0 1
-Espada Matadora [3] 0 0 1
-Espada Matadora 0 0 1
-Espada Orc 0 0 1
-Faca [3] 0 0 1
-Faca [4] 0 0 1
-Faca 0 0 1
-Faca Escoscesa [2] 0 0 1
-Faca Escoscesa [3] 0 0 1
-Faca Escoscesa 0 0 1
-Flamberge 0 0 1
-Florete [2] 0 0 1
-Florete [3] 0 0 1
-Florete 0 0 1
-Gakkung [1] 0 0 1
-Garra [1] 0 0 1
-Garra [2] 0 0 1
-Gladius [2] 0 0 1
-Gladius 0 0 1
-Glaive [2] 0 0 1
-Glaive [3] 0 0 1
-Glaive 0 0 1
-Guerrilheira [1] 0 0 1
-Guerrilheira [2] 0 0 1
-Guerrilheira 0 0 1
-Guisarme [2] 0 0 1
-Guisarme 0 0 1
-Guisarme-Bico 0 0 1
-Gumoongoh [1] 0 0 1
-Gumoongoh [2] 0 0 1
-Haedonggum [1] 0 0 1
-Harpa [1] 0 0 1
-Harpa [2] 0 0 1
-Jamadhar 0 0 1
-Jur [2] 0 0 1
-Kataná [3] 0 0 1
-Kataná [4] 0 0 1
-Kataná 0 0 1
-Katar [1] 0 0 1
-Lâmina [3] 0 0 1
-Lâmina [4] 0 0 1
-Lâmina 0 0 1
-Lança 0 0 1
-Maça [3] 0 0 1
-#Maça [4] 0 0 1
-Maça 0 0 1
-Maça de Guerra [1] 0 0 1
-Maça de Guerra [2] 0 0 1
-Maça Espada 0 0 1
-Machado [3] 0 0 1
-Machado [4] 0 0 1
-Machado 0 0 1
-Machado de Batalha [3] 0 0 1
-Machado de Batalha [4] 0 0 1
-Machado de Batalha 0 0 1
-#Machado de Combate [1] 0 0 1
-Machado de Duas Mãos [1] 0 0 1
-Machado de Duas Mãos 0 0 1
-Machado dos Orcs 0 0 1
-Main Gauche [3] 0 0 1
-Main Gauche 0 0 1
-Mangual [2] 0 0 1
-Mangual [3] 0 0 1
-Mangual Pesado [2] 0 0 1
-Marreta [2] 0 0 1
-Marreta [3] 0 0 1
-Marreta 0 0 1
-Pique [3] 0 0 1
-Pique 0 0 1
-Punho [1] 0 0 1
-Punho 0 0 1
-Ranseur [3] 0 0 1
-Ranseur [4] 0 0 1
-Ranseur 0 0 1
-Sabre [2] 0 0 1
-Sabre de Impacto [2] 0 0 1
-#Serpente 0 0 1
-Soco Inglês [2] 0 0 1
-Soco Inglês [3] 0 0 1
-Soqueira [2] 0 0 1
-Soqueira [3] 0 0 1
-Stiletto [2] 0 0 1
-Stiletto [3] 0 0 1
-Stiletto 0 0 1
-Tridente [2] 0 0 1
-Tridente 0 0 1
-Tsurugi [1] 0 0 1
-Tsurugi [2] 0 0 1
-Tsurugi 0 0 1
-Vareta [2] 0 0 1
-Vareta [3] 0 0 1
-Vareta 0 0 1
-Violão [1] 0 0 1
-Violão 0 0 1
-Violino [3] 0 0 1
-#Violino [4] 0 0 1
-Waghnak [3] 0 0 1
-Waghnak [4] 0 0 1
+Arbalest Bow [1] 0 0 1
+1612 0 0 1 # Vara_Mestra
+1610 0 0 1 # Cetro
+1303 0 0 1 # Machado
+1301 0 0 1 # Machado
+1302 0 0 1 # Machado
+1156 0 0 1 # Espada_Bastarda
+1154 0 0 1 # Espada_Bastarda
+1353 0 0 1 # Machado_de_Batalha
+1351 0 0 1 # Machado_de_Batalha
+1352 0 0 1 # Machado_de_Batalha
+2627 0 0 1 # Cinto
+#Bible [2] 0 0 1
+1467 0 0 1 # Guisarme-Bico
+1109 0 0 1 # Lâmina
+1107 0 0 1 # Lâmina
+1108 0 0 1 # Lâmina
+1703 0 0 1 # Arco
+1701 0 0 1 # Arco
+1702 0 0 1 # Arco
+1160 0 0 1 # Espada_Larga
+1359 0 0 1 # Demolidor
+1357 0 0 1 # Demolidor
+1519 0 0 1 # Mangual_Pesado
+#Chemeti Whip 0 0 1
+1809 0 0 1 # Garra
+1810 0 0 1 # Garra
+1172 0 0 1 # Claymore
+1503 0 0 1 # Clava
+1501 0 0 1 # Clava
+1502 0 0 1 # Clava
+1706 0 0 1 # Arco_Composto
+1704 0 0 1 # Arco_Composto
+1712 0 0 1 # Besta
+Cross Bow [2] 0 0 1
+1206 0 0 1 # Punhal
+1204 0 0 1 # Punhal
+1205 0 0 1 # Punhal
+1215 0 0 1 # Adaga
+1213 0 0 1 # Adaga
+1214 0 0 1 # Adaga
+1222 0 0 1 # Damascus
+1212 0 0 1 # Punhal
+1210 0 0 1 # Faca_Escocesa
+1211 0 0 1 # Punhal
+1106 0 0 1 # Alfanje
+1104 0 0 1 # Alfanje
+1811 0 0 1 # Dedos_Afiados
+1812 0 0 1 # Dedos_Afiados
+1808 0 0 1 # Punho
+1808 0 0 1 # Punho
+1510 0 0 1 # Mangual
+1511 0 0 1 # Mangual
+1149 0 0 1 # Flamberge
+1714 0 0 1 # Gakkung
+#Girl's Diary [1] 0 0 1
+1221 0 0 1 # Gladius
+1219 0 0 1 # Gladius
+1456 0 0 1 # Glaive
+1454 0 0 1 # Glaive
+1455 0 0 1 # Glaive
+1709 0 0 1 # Arco_Grande
+1707 0 0 1 # Arco_Grande
+1708 0 0 1 # Arco_Grande
+1453 0 0 1 # Guisarme
+1451 0 0 1 # Guisarme
+1908 0 0 1 # Violão
+1908 0 0 1 # Violão
+1911 0 0 1 # Gumoongoh
+1912 0 0 1 # Gumoongoh
+1123 0 0 1 # Haedonggum
+Hallberd [1] 0 0 1
+Hallberd [2] 0 0 1
+1356 0 0 1 # Marreta
+1354 0 0 1 # Marreta
+1355 0 0 1 # Marreta
+1909 0 0 1 # Harpa
+1910 0 0 1 # Harpa
+1255 0 0 1 # Jamadhar
+1403 0 0 1 # Azagaia
+1401 0 0 1 # Azagaia
+1402 0 0 1 # Azagaia
+1250 0 0 1 # Jur
+1118 0 0 1 # Kataná
+1116 0 0 1 # Kataná
+1117 0 0 1 # Kataná
+1252 0 0 1 # Katar
+1203 0 0 1 # Faca
+1201 0 0 1 # Faca
+1202 0 0 1 # Faca
+1803 0 0 1 # Soqueira
+1804 0 0 1 # Soqueira
+1412 0 0 1 # Lança
+#Lariat Whip 0 0 1
+1905 0 0 1 # Alaúde
+1906 0 0 1 # Alaúde
+1506 0 0 1 # Maça
+1504 0 0 1 # Maça
+#Mace [4] 0 0 1
+1209 0 0 1 # Main_Gauche
+1207 0 0 1 # Main_Gauche
+1903 0 0 1 # Bandolin
+1904 0 0 1 # Bandolin
+1513 0 0 1 # Maça_de_Guerra
+1514 0 0 1 # Maça_de_Guerra
+2628 0 0 1 # Bracelete_de_Aprendiz
+2340 0 0 1 # Armadura_de_Aprendiz
+1309 0 0 1 # Machado dos Orcs
+1124 0 0 1 # Espada_Orc
+1459 0 0 1 # Guerrilheira
+1457 0 0 1 # Guerrilheira
+1458 0 0 1 # Guerrilheira
+1409 0 0 1 # Pique
+1407 0 0 1 # Pique
+1957 0 0 1 # Azorrague
+1957 0 0 1 # Azorrague
+1112 0 0 1 # Florete
+1110 0 0 1 # Florete
+1111 0 0 1 # Florete
+1721 0 0 1 # Besta_de_Repetição
+1122 0 0 1 # Sabre_de_Impacto
+1603 0 0 1 # Bastão
+1601 0 0 1 # Bastão
+#Rod [4] 0 0 1
+1950 0 0 1 # Cordel
+#Rope [4] 0 0 1
+1126 0 0 1 # Sabre
+Scimiter [2] 0 0 1
+Scimiter [3] 0 0 1
+1153 0 0 1 # Espada_Matadora
+1151 0 0 1 # Espada_Matadora
+1152 0 0 1 # Espada_Matadora
+1507 0 0 1 # Esmagador
+1508 0 0 1 # Esmagador
+1406 0 0 1 # Ranseur
+1404 0 0 1 # Ranseur
+1405 0 0 1 # Ranseur
+1609 0 0 1 # Cajado
+1607 0 0 1 # Cajado
+1218 0 0 1 # Stiletto
+1216 0 0 1 # Stiletto
+1217 0 0 1 # Stiletto
+1805 0 0 1 # Soco_Inglês
+1806 0 0 1 # Soco_Inglês
+1103 0 0 1 # Espada
+1101 0 0 1 # Espada
+1102 0 0 1 # Espada
+1518 0 0 1 # Maça_Espada
+1958 0 0 1 # Chibata
+1959 0 0 1 # Chibata
+1462 0 0 1 # Tridente
+1460 0 0 1 # Tridente
+1121 0 0 1 # Tsurugi
+1119 0 0 1 # Tsurugi
+1120 0 0 1 # Tsurugi
+1362 0 0 1 # Machado_de_Duas_Mãos
+Two-handed Axe [1] 0 0 1
+1159 0 0 1 # Espada_de_Duas_Mãos
+Two-handed Sword [1] 0 0 1
+1901 0 0 1 # Violino
+#Violin [4] 0 0 1
+1801 0 0 1 # Waghnak
+1802 0 0 1 # Waghnak
+1606 0 0 1 # Vareta
+1604 0 0 1 # Vareta
+1605 0 0 1 # Vareta
+#War Axe [1] 0 0 1
+1960 0 0 1 # Chicote
+1961 0 0 1 # Chicote
+1953 0 0 1 # Cordame
+1954 0 0 1 # Açoite
+1955 0 0 1 # Açoite
+
+
+##### LOOT PADRÃO #####
+# ITENS INÚTEIS QUE SÃO VENDIDOS POR PADRÃO
+
+1026 0 0 1 # Avelã 
+1054 0 0 1 # Lábios_Fossilizados
+1053 0 0 1 # Dente_Fossilizado
+Animal Poop 0 0 1
+919 0 0 1 # Couro_de_Animal
+7003 0 0 1 # Pele_de_Anolian
+7106 0 0 1 # Chifre_de_Bode
+7107 0 0 1 # Pele_de_Bode
+1014 0 0 1 # Mandíbula_de_Formiga
+512 0 0 1 # Maçã
+531 0 0 1 # Suco_de_Maçã
+7119 0 0 1 # Bactérias
+513 0 0 1 # Banana
+532 0 0 1 # Suco_de_Banana
+1068 0 0 1 # Tronco_Estéril
+948 0 0 1 # Pata_de_Urso
+939 0 0 1 # Ferrão_de_Abelha
+925 0 0 1 # Bico_de_Ave
+1020 0 0 1 # Cabelos_Morenos
+737 0 0 1 # Concha_Preta
+1034 0 0 1 # Cabelo_Azul
+744 0 0 1 # Buquê
+7054 0 0 1 # Brigan
+7158 0 0 1 # Jarro_de_Saquê
+7070 0 0 1 # Casca_Quebrada
+7156 0 0 1 # Shuriken_Despedaçado
+7110 0 0 1 # Espada_Chanfrada
+7062 0 0 1 # Casca_de_Tartaruga
+1042 0 0 1 # Pata_de_Inseto
+7122 0 0 1 # Pelugem_Incandescente
+7097 0 0 1 # Coração_Incandescente
+7120 0 0 1 # Ferradura_em_Chamas
+7068 0 0 1 # Madeira_Queimada
+952 0 0 1 # Espinho_de_Cacto
+515 0 0 1 # Cenoura
+534 0 0 1 # Suco_de_Cenoura
+548 0 0 1 # Queijo
+736 0 0 1 # Prato_de_Porcelana
+742 0 0 1 # Boneco_de_Chonchon
+915 0 0 1 # Crisálida
+735 0 0 1 # Chung_Jah
+966 0 0 1 # Carne_de_Ostra
+965 0 0 1 # Casco_de_Ostra
+7030 0 0 1 # Garra_de_Lobo_do_Deserto 
+7011 0 0 1 # Garra_de_Macaco
+7007 0 0 1 # Garra_de_Rato 
+705 0 0 1 # Trevo
+1025 0 0 1 # Teia_de_Aranha
+7093 0 0 1 # Engrenagem
+961 0 0 1 # Concha
+7013 0 0 1 # Coral
+7050 0 0 1 # Tapete_de_Algodão
+7037 0 0 1 # Cupom
+964 0 0 1 # Casco_de_Caranguejo
+747 0 0 1 # Espelho_de_Cristal
+1045 0 0 1 # Máscara_Ritualística
+7053 0 0 1 # Cyfar
+901 0 0 1 # Trança
+7157 0 0 1 # Máscara_Ninja
+1047 0 0 1 # Cabeça_de_Medusa
+957 0 0 1 # Unha_Apodrecida
+7069 0 0 1 # Armadura_Destruída
+1051 0 0 1 # Neurônio
+1021 0 0 1 # Chifre_de_Dokebi
+1035 0 0 1 # Canino_de_Dragão
+1036 0 0 1 # Escama_de_Dragão
+7123 0 0 1 # Pele_de_Dragão
+1037 0 0 1 # Cauda_de_Dragão
+1055 0 0 1 # Pele_de_Minhoca
+1040 0 0 1 # Bigode_de_Anão_Ancião
+1011 0 0 1 # Emveretarcon
+1059 0 0 1 # Tecido
+540 0 0 1 # Ração_para_Falcão
+1063 0 0 1 # Presa
+949 0 0 1 # Pluma
+916 0 0 1 # Plumas_de_Ave
+951 0 0 1 # Nadadeira
+1066 0 0 1 # Tronco_de_Alta_Qualidade
+7041 0 0 1 # Torrão_de_Areia_Fina
+7043 0 0 1 # Areia_Fina
+1023 0 0 1 # Cauda_de_Peixe
+712 0 0 1 # Flor
+914 0 0 1 # Felpa
+7094 0 0 1 # Fragmento_Misterioso
+1012 0 0 1 # Brasão
+749 0 0 1 # Rosa_de_Gelo
+#Garlet 0 0 1
+956 0 0 1 # Guelra
+746 0 0 1 # Bolinha_de_Gude
+7009 0 0 1 # Casca_Brilhante
+7152 0 0 1 # Cabelos_Perfumados
+1060 0 0 1 # Cabelos_Dourados
+940 0 0 1 # Perna_de_Gafanhoto
+1056 0 0 1 # Torrão_de_Areia
+7115 0 0 1 # Pena_de_Harpia
+7116 0 0 1 # Garra_de_Harpia
+950 0 0 1 # Coração_de_Sereia
+947 0 0 1 # Chifre
+1048 0 0 1 # Cabelo_Horrendo
+958 0 0 1 # Mandíbula_Horrenda
+944 0 0 1 # Ferradura
+7066 0 0 1 # Cubo_de_Gelo
+929 0 0 1 # Coração_Imortal
+928 0 0 1 # Antenas_de_Inseto
+7028 0 0 1 # Convite_para_Duelo
+1062 0 0 1 # Zé-Lanterna
+7147 0 0 1 # Jasmim
+909 0 0 1 # Jellopy
+1041 0 0 1 # Lampião
+7126 0 0 1 # Jellopy_Tamanho_Família
+7096 0 0 1 # Pedra_Pome
+7098 0 0 1 # Lenha_em_Brasa
+1098 0 0 1 # Algemas
+1028 0 0 1 # Crina
+1032 0 0 1 # Flor_de_Planta_Carnívora
+1033 0 0 1 # Raiz_de_Planta_Carnívora
+1031 0 0 1 # Foice_de_Louva-a-Deus
+7035 0 0 1 # Palito_de_Fósforo
+517 0 0 1 # Carne
+934 0 0 1 # Espólio
+7497 0 0 1 # Fragmento de Metal
+519 0 0 1 # Leite
+7001 0 0 1 # Pó_de_Bolor
+1018 0 0 1 # Garras_de_Toupeira
+1017 0 0 1 # Bigodes_de_Toupeira
+528 0 0 1 # Ração_para_Monstros
+1057 0 0 1 # Pó_de_Traça
+7148 0 0 1 # Carta_da_Mamãe
+1058 0 0 1 # Asas_de_Traça
+7004 0 0 1 # Monte_de_Lama
+921 0 0 1 # Esporo_de_Cogumelo
+1095 0 0 1 # Ponteiro
+7102 0 0 1 # Pedra_do_Pesadelo
+1022 0 0 1 # Nove-Caudas
+960 0 0 1 # Garra_de_Crustáceo
+941 0 0 1 # Argola
+5037 0 0 1 # Casca_de_Maçã
+7002 0 0 1 # Dente_de_Ogro
+7151 0 0 1 # Papel_Amarelado
+7031 0 0 1 # Frigideira_Velha
+7072 0 0 1 # Shuriken_Gasto
+1043 0 0 1 # Garra_de_Orc
+931 0 0 1 # Amuleto_dos_Orcs
+922 0 0 1 # Presa_de_Orc
+751 0 0 1 # Boneco_de_Osíris
+7101 0 0 1 # Pena_de_Grand_Peco
+541 0 0 1 # Ração_para_PecoPeco
+738 0 0 1 # Estojo_de_Lápis
+1010 0 0 1 # Fracon
+7150 0 0 1 # Pedaço_de_Bambu
+7032 0 0 1 # Pedaço_de_Casca_de_Ovo
+7108 0 0 1 # Pedaço_de_Escudo_Colossal
+906 0 0 1 # Escama_Afiada
+7154 0 0 1 # Poeira_Venenosa
+7155 0 0 1 # Pele_de_Sapo
+7033 0 0 1 # Esporo_Venenoso
+1027 0 0 1 # Espinho_de_Porco-Espinho
+741 0 0 1 # Boneco_de_Poring
+924 0 0 1 # Pó_de_Borboleta
+535 0 0 1 # Abóbora
+740 0 0 1 # Boneco_de_Pelúcia
+945 0 0 1 # Folha_de_Fumacento
+754 0 0 1 # Boneco_de_Fumacento
+7145 0 0 1 # Camiseta_de_Corrida
+1013 0 0 1 # Casco_Arco-Íris
+1016 0 0 1 # Cauda_de_Rato
+544 0 0 1 # Peixe_Cru
+734 0 0 1 # Moldura_Vermelha
+#Red Stocking 0 0 1
+1064 0 0 1 # Rédeas
+903 0 0 1 # Língua_de_Réptil
+907 0 0 1 # Resina
+550 0 0 1 # Bolinhos_de_Arroz
+752 0 0 1 # Boneco_de_Rocker
+7082 0 0 1 # Raiz_de_Montanha
+930 0 0 1 # Bandagem_Estragada
+739 0 0 1 # Batom
+1096 0 0 1 # Casca_Arredondada
+7124 0 0 1 # Areia_Molhada
+936 0 0 1 # Casca_Escamada
+#Scell 0 0 1
+7125 0 0 1 # Pinças_de_Escorpião
+1046 0 0 1 # Garra_de_Escorpião
+904 0 0 1 # Cauda_de_Escorpião
+7065 0 0 1 # Pele_de_Lontra
+7100 0 0 1 # Folha_Afiada
+7112 0 0 1 # Lâmina_de_Papel
+Sharp scale 0 0 1
+935 0 0 1 # Casca
+954 0 0 1 # Escama_Brilhante
+7109 0 0 1 # Lâmina_de_Lança_Colossal
+711 0 0 1 # Broto
+1094 0 0 1 # Trança_Curta
+7051 0 0 1 # Tapete_de_Seda
+1052 0 0 1 # Célula_Única
+932 0 0 1 # Osso
+7420 0 0 1 # Caveira
+7111 0 0 1 # Pedaço_de_Papel
+946 0 0 1 # Casco_de_Caramujo
+926 0 0 1 # Escamas_de_Cobra
+661 0 0 1 # Avental_Elegante
+943 0 0 1 # Casca_Rija
+1067 0 0 1 # Tronco Sólido
+Songpyun 0 0 1
+908 0 0 1 # Ova_de_Sapo
+7016 0 0 1 # Colher_Entortada
+743 0 0 1 # Boneco_de_Esporo
+1024 0 0 1 # Tinta_de_Polvo
+905 0 0 1 # Caule
+938 0 0 1 # Muco_Pegajoso
+918 0 0 1 # Pata_Pegajosa
+7008 0 0 1 # Chifre_Firme
+959 0 0 1 # Escama_Fétida
+7049 0 0 1 # Pedra
+7067 0 0 1 # Pedaço_de_Pedra
+953 0 0 1 # Coração_de_Pedra
+551 0 0 1 # Sushi
+7010 0 0 1 # Cauda_de_Escorpião_de_Aço
+917 0 0 1 # Garra_de_Ave
+7071 0 0 1 # Farrapos
+1050 0 0 1 # Tendões
+7159 0 0 1 # Nariz_de_Tengu
+962 0 0 1 # Tentáculo
+1029 0 0 1 # Pele_de_Tigre
+1015 0 0 1 # Língua
+913 0 0 1 # Dente_de_Morcego
+7012 0 0 1 # Pedaço_de_Escama_Dura
+902 0 0 1 # Raiz_de_Árvore
+#Tribal Solidarity 0 0 1
+967 0 0 1 # Casco_de_Tartaruga
+937 0 0 1 # Canino_Venenoso
+745 0 0 1 # Buquê_de_Casamento
+7064 0 0 1 # Asas_de_Libélula
+7006 0 0 1 # Asa_de_Morcego_Vermelho
+748 0 0 1 # Rosa_Eterna
+920 0 0 1 # Garra_de_Lobo
+955 0 0 1 # Pele_de_Verme
+7153 0 0 1 # Velho_Obi
+1097 0 0 1 # Página_Deteriorada
+1099 0 0 1 # Uniforme_Velho_de_Presidiário
+549 0 0 1 # Batata_Doce_Assada
+7038 0 0 1 # Novelo
+7149 0 0 1 # Prato_Amarelado
+7018 0 0 1 # Graveto_de_Visco
+753 0 0 1 # Boneco_de_Yoyo
+942 0 0 1 # Cauda_de_Yoyo
+#Zargon 0 0 1
+1044 0 0 1 # Presa_de_Zenorc
+
 
 ##### ITENS NÃO-ARMAZENÁVEIS #####
 # Não fazer nada com os seguintes itens
 
-671 0 0 0 0 0 # Gold_Coin
-675 0 0 0 0 0 # Silver_Coin
-1173 0 0 0 0 0 # Muramasa_C
+
+671 0 0 0 0 0 # Moeda de Ouro
+675 0 0 0 0 0 # Moeda de Prata
+1173 0 0 0 0 0 # Muramasa_[A]
 1174 0 0 0 0 0 # Executioner_C
-1183 0 0 0 0 0 # BF_Two_Handed_Sword1
-1184 0 0 0 0 0 # BF_Two_Handed_Sword2
-1187 0 0 0 0 0 # Krieger_Twohand_Sword1
+1183 0 0 0 0 0 # Katzbalger de Assalto A
+1184 0 0 0 0 0 # Katzbalger de Assalto B
+1187 0 0 0 0 0 # Claymore Gloriosa
 1190 0 0 0 0 0 # Claymore_C
-1192 0 0 0 0 0 # P_Slayer1
-1193 0 0 0 0 0 # P_Slayer2
-1197 0 0 0 0 0 # P_Slayer3
-1198 0 0 0 0 0 # Hairtail
-1243 0 0 0 0 0 # Novice_Knife
-1267 0 0 0 0 0 # Infiltrator_C
-1273 0 0 0 0 0 # Bloody_Roar_C
+1192 0 0 0 0 0 # Espada Valhalla Iniciante
+1193 0 0 0 0 0 # Espada Valhalla Intermediária
+1197 0 0 0 0 0 # Espada_Matadora_III_do_Éden
+1198 0 0 0 0 0 # Arenque
+1243 0 0 0 0 0 # Adaga_do_Aprendiz
+1267 0 0 0 0 0 # Infiltrador_[A]
+1273 0 0 0 0 0 # Rugido Sangrento [A]
 1274 0 0 0 0 0 # Unholy_Touch_C
-1279 0 0 0 0 0 # BF_Katar1
-1280 0 0 0 0 0 # BF_Katar2
-1281 0 0 0 0 0 # Krieger_Katar1
-1282 0 0 0 0 0 # Krieger_Katar2
+1279 0 0 0 0 0 # Katar da Carnificina A
+1280 0 0 0 0 0 # Katar da Carnificina B
+1281 0 0 0 0 0 # Rugido Sangrento Glorioso
+1282 0 0 0 0 0 # Jamadhar Glorioso
 1283 0 0 0 0 0 # Katar_Of_Speed
 1286 0 0 0 0 0 # Jamadhar_C
 1288 0 0 0 0 0 # Bloody_Fear_C
-1289 0 0 0 0 0 # P_Katar1
+1289 0 0 0 0 0 # Katar_I_do_Grupo_Éden
 1296 0 0 0 0 0 # Metal_Katar
-1299 0 0 0 0 0 # TE_Woe_Katar
-1310 0 0 0 0 0 # Krieger_Onehand_Axe1
+1299 0 0 0 0 0 # Katar TE
+1310 0 0 0 0 0 # Retalhador Glorioso
 1312 0 0 0 0 0 # Orcish_Axe_C
 1313 0 0 0 0 0 # Tourist_Axe
-1319 0 0 0 0 0 # TE_Woe_Axe
-1372 0 0 0 0 0 # Right_Epsilon_C
+1319 0 0 0 0 0 # Machado TE
+1372 0 0 0 0 0 # Cruz_Impiedosa_[A]
 1373 0 0 0 0 0 # Brood_Axe_C
 1374 0 0 0 0 0 # Tomahawk_C
 1378 0 0 0 0 0 # Great_Axe_C
-1379 0 0 0 0 0 # BF_Two_Handed_Axe1
-1380 0 0 0 0 0 # BF_Two_Handed_Axe2
-1382 0 0 0 0 0 # Krieger_Twohand_Axe1
+1379 0 0 0 0 0 # Machado de Batalha Insana A
+1380 0 0 0 0 0 # Machado de Batalha Insana B
+1382 0 0 0 0 0 # Machado de Duas Mãos Glorioso
 1386 0 0 0 0 0 # Doom_Slayer_I
 1388 0 0 0 0 0 # Two_Handed_Axe_C
-1391 0 0 0 0 0 # P_Two_Handed_Axe1
+1391 0 0 0 0 0 # Machado_de_2_Mãos_I_do_Éden
 1398 0 0 0 0 0 # Metal_Two_Handed_Axe
-1399 0 0 0 0 0 # TE_Woe_Two_Handed_Axe
-1419 0 0 0 0 0 # Pole_Axe_C
+1399 0 0 0 0 0 # Machado de Duas Mãos TE
+1419 0 0 0 0 0 # Bardiche_[A]
 1424 0 0 0 0 0 # Skewer_C
-1425 0 0 0 0 0 # BF_Spear1
-1426 0 0 0 0 0 # Krieger_Onehand_Spear1
+1425 0 0 0 0 0 # Lança de Assalto
+1426 0 0 0 0 0 # Lança Gloriosa
 1427 0 0 0 0 0 # Spear_Of_Excellent
 1430 0 0 0 0 0 # Pike_C
-1434 0 0 0 0 0 # P_Spear1
-1437 0 0 0 0 0 # TE_Woe_Pike
-1482 0 0 0 0 0 # BF_Lance1
-1486 0 0 0 0 0 # Krieger_Twohand_Spear1
+1434 0 0 0 0 0 # Lança_I_do_Grupo_Éden
+1437 0 0 0 0 0 # Pique TE
+1482 0 0 0 0 0 # Lança de Assalto de Duas Mãos
+1486 0 0 0 0 0 # Lança de Duas Mãos Gloriosa
 1487 0 0 0 0 0 # Lance_C
 1488 0 0 0 0 0 # Ahlspiess_C
-1489 0 0 0 0 0 # Spearfish_
+1489 0 0 0 0 0 # Agulhão
 1493 0 0 0 0 0 # Metal_Lance
-1495 0 0 0 0 0 # TE_Woe_Lance
+1495 0 0 0 0 0 # Lança TE
 1533 0 0 0 0 0 # Warrior_Balmung
 1534 0 0 0 0 0 # Spanner_C
 1537 0 0 0 0 0 # Quadrille_C
-1542 0 0 0 0 0 # BF_Morning_Star1
-1543 0 0 0 0 0 # BF_Morning_Star2
-1546 0 0 0 0 0 # Krieger_Onehand_Mace1
+1542 0 0 0 0 0 # Maça de Campo de Batalha A
+1543 0 0 0 0 0 # Maça de Campo de Batalha B
+1546 0 0 0 0 0 # Maça de Guerra Gloriosa
 1547 0 0 0 0 0 # Mace_Of_Madness
-1563 0 0 0 0 0 # Diary_Of_Great_Sage_C
+1563 0 0 0 0 0 # Diário_do_Sábio_[A]
 1567 0 0 0 0 0 # Hardback_C
-1574 0 0 0 0 0 # BF_Book1
-1575 0 0 0 0 0 # BF_Book2
-1576 0 0 0 0 0 # Krieger_Book1
-1577 0 0 0 0 0 # Krieger_Book2
+1574 0 0 0 0 0 # Livro de Estratégia de Batalha A
+1575 0 0 0 0 0 # Livro de Estratégia de Batalha B
+1576 0 0 0 0 0 # Tábula Gloriosa
+1577 0 0 0 0 0 # Livro do Apocalipse Glorioso
 1578 0 0 0 0 0 # Book_Of_Prayer
 1580 0 0 0 0 0 # Encyclopedia_C
-1583 0 0 0 0 0 # P_Book1
+1583 0 0 0 0 0 # Dicionário_I_do_Grupo_Éden
 1588 0 0 0 0 0 # Metal_Book
-1591 0 0 0 0 0 # TE_Woe_Book
-1623 0 0 0 0 0 # Mighty_Staff_C
+1591 0 0 0 0 0 # Livro TE
+1623 0 0 0 0 0 # Cajado_do_Poder_[A]
 1628 0 0 0 0 0 # Survival_Rod_C
-1632 0 0 0 0 0 # BF_Staff1
-1633 0 0 0 0 0 # BF_Staff2
-1634 0 0 0 0 0 # BF_Staff3
-1635 0 0 0 0 0 # BF_Staff4
+1632 0 0 0 0 0 # Varinha Mágica do Feiticeiro
+1633 0 0 0 0 0 # Varinha de Batalha do Feiticeiro
+1634 0 0 0 0 0 # Varinha da Recuperação Forte
+1635 0 0 0 0 0 # Varinha da Recuperação Rápida
 1638 0 0 0 0 0 # Healing_Staff_C
-1640 0 0 0 0 0 # Krieger_Onehand_Staff1
-1641 0 0 0 0 0 # Krieger_Onehand_Staff2
+1640 0 0 0 0 0 # Cetro Glorioso
+1641 0 0 0 0 0 # Varinha Gloriosa de Cura
 1642 0 0 0 0 0 # Staff_Of_Darkness
-1650 0 0 0 0 0 # P_Staff1
-1651 0 0 0 0 0 # P_Staff2
+1650 0 0 0 0 0 # Cajado Valhalla Iniciante
+1651 0 0 0 0 0 # Cajado Valhalla Intermediário
 1652 0 0 0 0 0 # Tourist_Staff
 1653 0 0 0 0 0 # Staff_Of_Healing_C
-1658 0 0 0 0 0 # P_Staff3
-1667 0 0 0 0 0 # TE_Woe_Staff
+1658 0 0 0 0 0 # Cajado_III_do_Grupo_Éden
+1667 0 0 0 0 0 # Cajado TE
 1699 0 0 0 0 0 # Paradise_Foxtail_Staff_I
-1703 0 0 0 0 0 # Bow__
-1728 0 0 0 0 0 # Balistar_C
+1703 0 0 0 0 0 # Arco
+1728 0 0 0 0 0 # Balista_[A]
 1729 0 0 0 0 0 # Bow_Of_Rudra_C
-1738 0 0 0 0 0 # BF_Bow1
-1739 0 0 0 0 0 # BF_Bow2
-1743 0 0 0 0 0 # Krieger_Bow1
+1738 0 0 0 0 0 # Besta de Batalha A
+1739 0 0 0 0 0 # Besta de Batalha B
+1743 0 0 0 0 0 # Arco de Caça Glorioso
 1744 0 0 0 0 0 # Bow_Of_Evil
-1747 0 0 0 0 0 # P_Bow1
-1748 0 0 0 0 0 # P_Bow2
+1747 0 0 0 0 0 # Arco Valhalla Iniciante
+1748 0 0 0 0 0 # Arco Valhalla Intermediário
 1749 0 0 0 0 0 # Tourist_Bow
-1817 0 0 0 0 0 # Kaiser_Knuckle_C
-1823 0 0 0 0 0 # BF_Knuckle1
-1824 0 0 0 0 0 # BF_Knuckle2
-1826 0 0 0 0 0 # Krieger_Knuckle1
-1827 0 0 0 0 0 # Krieger_Knuckle2
+1817 0 0 0 0 0 # Punho_do_Kaiser_[A]
+1823 0 0 0 0 0 # Punho de Batalha A
+1824 0 0 0 0 0 # Punho de Batalha B
+1826 0 0 0 0 0 # Garra Gloriosa
+1827 0 0 0 0 0 # Punho Glorioso
 1828 0 0 0 0 0 # Monk_Knuckle
 1829 0 0 0 0 0 # Fist_C
-1831 0 0 0 0 0 # P_Knuckle1
-1834 0 0 0 0 0 # TE_Woe_Fist
-1923 0 0 0 0 0 # BF_Instrument1
-1924 0 0 0 0 0 # BF_Instrument2
-1927 0 0 0 0 0 # Krieger_Instrument1
+1831 0 0 0 0 0 # Garra_I_do_Grupo_Éden
+1834 0 0 0 0 0 # Punho TE
+1923 0 0 0 0 0 # Guitarra de Batalha A
+1924 0 0 0 0 0 # Guitarra de Batalha B
+1927 0 0 0 0 0 # Guitarra Gloriosa
 1928 0 0 0 0 0 # Berserk_Guitar_I
 1929 0 0 0 0 0 # Guitar_C
-1931 0 0 0 0 0 # P_Guitar1
-1932 0 0 0 0 0 # TE_Woe_Guitar
-1977 0 0 0 0 0 # BF_Whip1
-1978 0 0 0 0 0 # BF_Whip2
-1981 0 0 0 0 0 # Krieger_Whip1
+1931 0 0 0 0 0 # Guitarra_I_do_Grupo_Éden
+1932 0 0 0 0 0 # Violão TE
+1977 0 0 0 0 0 # Serpente de Batalha A
+1978 0 0 0 0 0 # Serpente de Batalha B
+1981 0 0 0 0 0 # Chicote Glorioso
 1982 0 0 0 0 0 # Phenomena_Whip
 1983 0 0 0 0 0 # Rante_C
-1986 0 0 0 0 0 # P_Tail1
-1987 0 0 0 0 0 # TE_Woe_Rope
-2002 0 0 0 0 0 # Krieger_Twohand_Staff1
+1986 0 0 0 0 0 # Chicote_I_do_Grupo_Éden
+1987 0 0 0 0 0 # Chicote TE
+2002 0 0 0 0 0 # Cajado Glorioso da Destruição
 2018 0 0 0 0 0 # Metal_Staff
-2019 0 0 0 0 0 # TE_Woe_Two_Hand_Staff
-2112 0 0 0 0 0 # Novice_Guard
-2132 0 0 0 0 0 # Shelter_Resistance
+2019 0 0 0 0 0 # Cajado de Duas Mãos TE
+2112 0 0 0 0 0 # Vembrassa_do_Aprendiz
+2132 0 0 0 0 0 # Escudo de Força [A]
 2136 0 0 0 0 0 # Cracked_Buckler
 2137 0 0 0 0 0 # Valkyrja
-2140 0 0 0 0 0 # Energy_Rune_Guard
+2140 0 0 0 0 0 # Escudo Espiritual
 2152 0 0 0 0 0 # Anti_Demon_Shield_C
-2178 0 0 0 0 0 # TE_Woe_Buckler
-2179 0 0 0 0 0 # TE_Woe_Shield
-2180 0 0 0 0 0 # TE_Woe_Magic_Guard
-2352 0 0 0 0 0 # Novice_Plate
+2178 0 0 0 0 0 # Broquel TE
+2179 0 0 0 0 0 # Escudo TE
+2180 0 0 0 0 0 # Vembrassa Mágica TE
+2352 0 0 0 0 0 # Traje_do_Aprendiz
 2369 0 0 0 0 0 # Freyja_Overcoat
-2376 0 0 0 0 0 # Assaulter_Plate
-2377 0 0 0 0 0 # Elite_Engineer_Armor
-2378 0 0 0 0 0 # Assassin_Robe
-2379 0 0 0 0 0 # Warlock_Battle_Robe
-2380 0 0 0 0 0 # Medic_Robe
-2381 0 0 0 0 0 # Elite_Archer_Suit
-2382 0 0 0 0 0 # Elite_Shooter_Suit
-2384 0 0 0 0 0 # Spritual_Tunic
-2385 0 0 0 0 0 # Recuperative_Armor
+2376 0 0 0 0 0 # Armadura de Assalto
+2377 0 0 0 0 0 # Armadura de Elite
+2378 0 0 0 0 0 # Manto do Mercenário
+2379 0 0 0 0 0 # Manto de Batalha do Feiticeiro
+2380 0 0 0 0 0 # Manto do Médico
+2381 0 0 0 0 0 # Túnica do Arqueiro de Elite
+2382 0 0 0 0 0 # Túnica do Artilheiro de Elite
+2384 0 0 0 0 0 # Túnica Espiritual [A]
+2385 0 0 0 0 0 # Armadura Vampira [A]
 2392 0 0 0 0 0 # Old_Pant
-2393 0 0 0 0 0 # N_Adventurer
-2394 0 0 0 0 0 # Krieger_Suit1
-2395 0 0 0 0 0 # Krieger_Suit2
-2396 0 0 0 0 0 # Krieger_Suit3
-2414 0 0 0 0 0 # Novice_Boots
+2393 0 0 0 0 0 # Túnica de Iniciante
+2394 0 0 0 0 0 # Túnica Gloriosa
+2395 0 0 0 0 0 # Túnica Gloriosa Industrializada
+2396 0 0 0 0 0 # Túnica Gloriosa Barata
+2414 0 0 0 0 0 # Sandálias_do_Aprendiz
 2428 0 0 0 0 0 # Freyja_Boots
-2429 0 0 0 0 0 # Iron_Boots01
-2430 0 0 0 0 0 # Iron_Boots02
-2435 0 0 0 0 0 # Battle_Greave
-2436 0 0 0 0 0 # Combat_Boots
-2437 0 0 0 0 0 # Battle_Boots
-2439 0 0 0 0 0 # Refresh_Shoes
+2429 0 0 0 0 0 # Botas de Ferro
+2430 0 0 0 0 0 # Botas de Ferro
+2435 0 0 0 0 0 # Grevas de Batalha
+2436 0 0 0 0 0 # Botas de Combate
+2437 0 0 0 0 0 # Botas de Batalha
+2439 0 0 0 0 0 # Sapatos Refrescantes [A]
 2442 0 0 0 0 0 # Boots_Perforated
-2443 0 0 0 0 0 # Fish_Shoes
-2444 0 0 0 0 0 # Krieger_Shoes1
-2445 0 0 0 0 0 # Krieger_Shoes2
-2446 0 0 0 0 0 # Krieger_Shoes3
-2456 0 0 0 0 0 # Para_Team_Boots1
-2457 0 0 0 0 0 # Para_Team_Boots2
-2458 0 0 0 0 0 # Para_Team_Boots3
-2463 0 0 0 0 0 # Feral_Boots
-2473 0 0 0 0 0 # Para_Team_Boots4
-2496 0 0 0 0 0 # TE_Woe_Shoes
-2497 0 0 0 0 0 # TE_Woe_Boots
-2498 0 0 0 0 0 # TE_Woe_Magic_Sandal
-2510 0 0 0 0 0 # Novice_Hood
+2443 0 0 0 0 0 # Botas de Pescador
+2444 0 0 0 0 0 # Sapatos Gloriosos
+2445 0 0 0 0 0 # Sapatos Gloriosos Industrializados
+2446 0 0 0 0 0 # Sapatos Gloriosos Baratos
+2456 0 0 0 0 0 # Botas Valhalla Iniciantes
+2457 0 0 0 0 0 # Botas Valhalla Intermediárias
+2458 0 0 0 0 0 # Botas Valhalla Avançadas
+2463 0 0 0 0 0 # Botas_Ferais
+2473 0 0 0 0 0 # Botas_IV_do_Grupo_Éden
+2496 0 0 0 0 0 # Sapatos TE
+2497 0 0 0 0 0 # Botas TE
+2498 0 0 0 0 0 # Sandálias Mágicas TE
+2510 0 0 0 0 0 # Capuz_do_Aprendiz
 2533 0 0 0 0 0 # Freyja_Cape
 2535 0 0 0 0 0 # Cloak_Of_Survival_C
-2538 0 0 0 0 0 # Commander_Manteau
-2539 0 0 0 0 0 # Commander_Manteau_
-2540 0 0 0 0 0 # Sheriff_Manteau
-2543 0 0 0 0 0 # Sylphid_Manteau
+2538 0 0 0 0 0 # Manteau do Capitão
+2539 0 0 0 0 0 # Manteau do Comandante
+2540 0 0 0 0 0 # Manteau do Xerife
+2543 0 0 0 0 0 # Manteau das Sílfides [A]
 2547 0 0 0 0 0 # Cheap_Running_Shirts
 2548 0 0 0 0 0 # Muffler_C
-2549 0 0 0 0 0 # Krieger_Muffler1
-2560 0 0 0 0 0 # Para_Team_Manteau1
-2564 0 0 0 0 0 # Feral_Tail
+2549 0 0 0 0 0 # Sobrepeliz Gloriosa
+2560 0 0 0 0 0 # Capa Valhalla
+2564 0 0 0 0 0 # Cauda_Feral
 2566 0 0 0 0 0 # Half_Asprika
-2571 0 0 0 0 0 # Para_Team_Manteau2
-2634 0 0 0 0 0 # Bridegroom_Ring
-2635 0 0 0 0 0 # Bride_Ring
-2642 0 0 0 0 0 # Serin
-2644 0 0 0 0 0 # The_Sign_
-2647 0 0 0 0 0 # Nile_Rose
+2571 0 0 0 0 0 # Capa_II_do_Grupo_Éden
+2634 0 0 0 0 0 # Anel_do_Noivo
+2635 0 0 0 0 0 # Anel_da_Noiva
+2642 0 0 0 0 0 # Anel_de_Ouro_de_Serin
+2644 0 0 0 0 0 # O_Sinal
+2647 0 0 0 0 0 # Rosa do Nilo
 2668 0 0 0 0 0 # Women
 2673 0 0 0 0 0 # Shining_Ring
 2674 0 0 0 0 0 # Honor_Ring
 2676 0 0 0 0 0 # Hunter_Earring
 2681 0 0 0 0 0 # Republic_Ring
-2686 0 0 0 0 0 # Elven_Ears_C
-2687 0 0 0 0 0 # Steel_Flower_C
-2688 0 0 0 0 0 # Critical_Ring_C
-2689 0 0 0 0 0 # Earring_C
-2690 0 0 0 0 0 # Ring_C
-2691 0 0 0 0 0 # Necklace_C
-2692 0 0 0 0 0 # Glove_C
-2693 0 0 0 0 0 # Brooch_C
-2694 0 0 0 0 0 # Rosary_C
-2695 0 0 0 0 0 # Safety_Ring_C
-2696 0 0 0 0 0 # Vesper_Core01_C
-2697 0 0 0 0 0 # Vesper_Core02_C
-2698 0 0 0 0 0 # Vesper_Core03_C
-2699 0 0 0 0 0 # Vesper_Core04_C
+2686 0 0 0 0 0 # Orelhas_de_Elfo_[A]
+2687 0 0 0 0 0 # Florzinha_[A]
+2688 0 0 0 0 0 # Anel_Certeiro_[A]
+2689 0 0 0 0 0 # Brinco_[A]
+2690 0 0 0 0 0 # Anel_[A]
+2691 0 0 0 0 0 # Colar_[A]
+2692 0 0 0 0 0 # Luvas_[A]
+2693 0 0 0 0 0 # Broche_[A]
+2694 0 0 0 0 0 # Rosário_[A]
+2695 0 0 0 0 0 # Anel_de_Defesa_[A]
+2696 0 0 0 0 0 # Núcleo_Vesper_01_[A]
+2697 0 0 0 0 0 # Núcleo_Vesper_02_[A]
+2698 0 0 0 0 0 # Núcleo_Vesper_03_[A]
+2699 0 0 0 0 0 # Núcleo_Vesper_04_[A]
 2706 0 0 0 0 0 # Handcuff
 2709 0 0 0 0 0 # 5_Anniversary_Coin
-2710 0 0 0 0 0 # Bloody_Iron_Ball_C
+2710 0 0 0 0 0 # Bola de Ferro Ensangüentada [A]
 2711 0 0 0 0 0 # Spiritual_Ring_C
 2713 0 0 0 0 0 # Certificate_TW
-2720 0 0 0 0 0 # Medal_Swordman
-2721 0 0 0 0 0 # Medal_Thief
-2722 0 0 0 0 0 # Medal_Acolyte
-2723 0 0 0 0 0 # Medal_Mage
-2724 0 0 0 0 0 # Medal_Archer
-2725 0 0 0 0 0 # Medal_Merchant
-2733 0 0 0 0 0 # Medal_Gunner
-2734 0 0 0 0 0 # Directive_A
-2735 0 0 0 0 0 # Directive_B
+2720 0 0 0 0 0 # Medalha de Honra
+2721 0 0 0 0 0 # Medalha de Honra
+2722 0 0 0 0 0 # Medalha de Honra
+2723 0 0 0 0 0 # Medalha de Honra
+2724 0 0 0 0 0 # Medalha de Honra
+2725 0 0 0 0 0 # Medalha de Honra
+2733 0 0 0 0 0 # Estrela de Xerife
+2734 0 0 0 0 0 # Ordem Oficial A
+2735 0 0 0 0 0 # Ordem Oficial B
 2738 0 0 0 0 0 # Shiny_Coin
 2739 0 0 0 0 0 # Ordinary_Coin
 2740 0 0 0 0 0 # Rusty_Coin
-2741 0 0 0 0 0 # All_In_One_Ring
+2741 0 0 0 0 0 # O_Zero_Anel_[A]
 2742 0 0 0 0 0 # Lucky_Clip
 2750 0 0 0 0 0 # Summer_Night_Dream
 2752 0 0 0 0 0 # Praxinus_C
-2753 0 0 0 0 0 # Beholder_Ring
-2754 0 0 0 0 0 # Hallow_Ring
-2755 0 0 0 0 0 # Clamorous_Ring
-2756 0 0 0 0 0 # Chemical_Ring
-2757 0 0 0 0 0 # Insecticide_Ring
-2758 0 0 0 0 0 # Fisher_Ring
-2759 0 0 0 0 0 # Decussate_Ring
-2760 0 0 0 0 0 # Bloody_Ring
-2761 0 0 0 0 0 # Satanic_Ring
-2762 0 0 0 0 0 # Dragoon_Ring
+2753 0 0 0 0 0 # Anel do Caçador Veterano [A]
+2754 0 0 0 0 0 # Anel Caçador de Morto-Vivo[A]
+2755 0 0 0 0 0 # Anel do Ganhador [A]
+2756 0 0 0 0 0 # Anel do Devastador [A]
+2757 0 0 0 0 0 # Anel do Colecionador de Insetos [A]
+2758 0 0 0 0 0 # Anel do Pescador [A]
+2759 0 0 0 0 0 # Anel do Exorcista [A]
+2760 0 0 0 0 0 # Anel do Açougueiro [A]
+2761 0 0 0 0 0 # Anel do Anjo Caído [A]
+2762 0 0 0 0 0 # Anel do Caçador de Dragões [A]
 2763 0 0 0 0 0 # Skul_Ring_C
-2766 0 0 0 0 0 # Swordman_Figure
-2767 0 0 0 0 0 # Acolyte_Figure
-2768 0 0 0 0 0 # Mage_Figure
-2769 0 0 0 0 0 # Archer_Figure
-2770 0 0 0 0 0 # Thief_Figure
-2771 0 0 0 0 0 # Merchant_Figure
-2772 0 0 0 0 0 # Krieger_Ring1
-2773 0 0 0 0 0 # Krieger_Ring2
-2774 0 0 0 0 0 # Krieger_Ring3
+2766 0 0 0 0 0 # Estatueta de Espadachin
+2767 0 0 0 0 0 # Estatueta de Noviço
+2768 0 0 0 0 0 # Estatueta de Mago
+2769 0 0 0 0 0 # Estatueta de Arqueiro
+2770 0 0 0 0 0 # Estatueta de Gatuno
+2771 0 0 0 0 0 # Estatueta de Mercador
+2772 0 0 0 0 0 # Anel Glorioso
+2773 0 0 0 0 0 # Anel Glorioso Industrializado
+2774 0 0 0 0 0 # Anel Glorioso Barato
 2792 0 0 0 0 0 # Ring_Of_Flame_Lord_I
 2793 0 0 0 0 0 # Ring_Of_Resonance_I
-2794 0 0 0 0 0 # Magic_Stone_Ring
-2795 0 0 0 0 0 # Green_Apple_Ring
-2796 0 0 0 0 0 # Magical_Stone
-2797 0 0 0 0 0 # Magical_Stone_
-2798 0 0 0 0 0 # Will_Of_Exhausted_Angel
+2794 0 0 0 0 0 # Anel de Runa Mágica
+2795 0 0 0 0 0 # Anel de Maçã Verde
+2796 0 0 0 0 0 # Rocha Mágica
+2797 0 0 0 0 0 # Rocha Mágica
+2798 0 0 0 0 0 # Desejo do Arcanjo
 2816 0 0 0 0 0 # Radar_Ring1
 2817 0 0 0 0 0 # Radar_Ring2
 2818 0 0 0 0 0 # Radar_Ring3
-2819 0 0 0 0 0 # Swordman_Manual
-2820 0 0 0 0 0 # Thief_Manual
-2821 0 0 0 0 0 # Acolyte_Manual
-2822 0 0 0 0 0 # Archer_Manual
-2823 0 0 0 0 0 # Merchant_Manual
-2823 0 0 0 0 0 # Merchant_Manual
-2824 0 0 0 0 0 # Mage_Manual
+2819 0 0 0 0 0 # Manual_do_Espadachim
+2820 0 0 0 0 0 # Manual_do_Gatuno
+2821 0 0 0 0 0 # Manual_do_Noviço
+2822 0 0 0 0 0 # Manual_do_Arqueiro
+2823 0 0 0 0 0 # Manual_do_Mercador
+2823 0 0 0 0 0 # Manual_do_Mercador
+2824 0 0 0 0 0 # Manual_do_Mago
 2832 0 0 0 0 0 # Freyja_Ring
 2841 0 0 0 0 0 # Caracas_Ring
-2843 0 0 0 0 0 # Gold_Trickle
+2843 0 0 0 0 0 # Colar_com_Sino_Dourado
 2856 0 0 0 0 0 # Half_Megin
 2857 0 0 0 0 0 # Half_Brysing
 2863 0 0 0 0 0 # Ring_Of_Valkyrie
-2864 0 0 0 0 0 # Light_Of_Cure
-2865 0 0 0 0 0 # Seal_Of_Cathedral
-2866 0 0 0 0 0 # Ring_Of_Archbishop
+2864 0 0 0 0 0 # Luz_da_Cura
+2865 0 0 0 0 0 # Selo_da_Catedral
+2866 0 0 0 0 0 # Anel_do_Arcebispo
 2885 0 0 0 0 0 # Mother_Heart
 2885 0 0 0 0 0 # Mother_Heart
 2940 0 0 0 0 0 # Ninja_Manual
 2941 0 0 0 0 0 # Gunslinger_Manual
 2942 0 0 0 0 0 # Taekwon_Manual
-2944 0 0 0 0 0 # TE_Ring_Of_Protection
-2945 0 0 0 0 0 # TE_Ring_Of_Rage
-2946 0 0 0 0 0 # TE_Ring_Of_Defiance
-2950 0 0 0 0 0 # Rune_Ring
-5147 0 0 0 0 0 # Baseball_Cap
-5149 0 0 0 0 0 # Silver_Tiara
-5179 0 0 0 0 0 # Gold_Tiara
-5265 0 0 0 0 0 # Apple_Of_Archer_C
-5266 0 0 0 0 0 # Bunny_Band_C
-5267 0 0 0 0 0 # Sahkkat_C
-5268 0 0 0 0 0 # Lord_Circlet_C
+2944 0 0 0 0 0 # Anel de Proteção TE
+2945 0 0 0 0 0 # Anel da Fúria TE
+2946 0 0 0 0 0 # Anel do Desafio TE
+2950 0 0 0 0 0 # Anel de Rune
+5147 0 0 0 0 0 # Boné
+5149 0 0 0 0 0 # Tiara_de_Prata
+5179 0 0 0 0 0 # Tiara_Dourada
+5265 0 0 0 0 0 # Maçã_de_Guilherme_Tell_[A]
+5266 0 0 0 0 0 # Orelhas_de_Coelho_[A]
+5267 0 0 0 0 0 # Chapéu_Chinês_[A]
+5268 0 0 0 0 0 # Coroa_do_Líder_[A]
 5269 0 0 0 0 0 # Flying_Angel_
 5279 0 0 0 0 0 # Drooping_Kitty_C
 5280 0 0 0 0 0 # Magestic_Goat_C
 5281 0 0 0 0 0 # Deviruchi_Cap_C
-5286 0 0 0 0 0 # Pecopeco_Hairband
-5288 0 0 0 0 0 # Red_Glasses
-5293 0 0 0 0 0 # Ramen_Hat
-5294 0 0 0 0 0 # Whisper_Mask
-5306 0 0 0 0 0 # Freyja_Crown
-5314 0 0 0 0 0 # Hockey_Mask
-5315 0 0 0 0 0 # Observer
+5286 0 0 0 0 0 # Asas_de_PecoPeco
+5288 0 0 0 0 0 # Óculos_Vermelhos
+5293 0 0 0 0 0 # Chapéu_de_Lamen
+5294 0 0 0 0 0 # Capuz_de_Sussurro
+5306 0 0 0 0 0 # Coroa de Freya [A]
+5314 0 0 0 0 0 # Máscara_do_Mason
+5315 0 0 0 0 0 # Rastreador_GZ
 5326 0 0 0 0 0 # Masquerade_C
 5327 0 0 0 0 0 # Orc_Hero_Helm_C
-5328 0 0 0 0 0 # Evil_Wing_Ears_C
-5329 0 0 0 0 0 # Dark_Blindfold_C
+5328 0 0 0 0 0 # Asas Malignas [A]
+5329 0 0 0 0 0 # Venda Legítima da Takius
 5330 0 0 0 0 0 # kRO_Drooping_Kitty_C
-5331 0 0 0 0 0 # Corsair_C
-5336 0 0 0 0 0 # Guildsman_Recruiter
-5337 0 0 0 0 0 # Party_Recruiter_Hat
-5338 0 0 0 0 0 # Bf_Recruiter_Hat
-5339 0 0 0 0 0 # Friend_Recruiter_Hat
-5346 0 0 0 0 0 # Gf_Recruiter_Hat
-5391 0 0 0 0 0 # Toast_C
+5331 0 0 0 0 0 # Chapéu de Corsário [A]
+5336 0 0 0 0 0 # Guildsman_Wanted
+5337 0 0 0 0 0 # Party_Wanted
+5338 0 0 0 0 0 # Boy_Friend_Wanted
+5339 0 0 0 0 0 # Friend_Wanted
+5346 0 0 0 0 0 # Girl_Friend_Wanted
+5391 0 0 0 0 0 # Crunch Toast
 5394 0 0 0 0 0 # Bubblegum_Lower
 5408 0 0 0 0 0 # Old_Bandanna
-5410 0 0 0 0 0 # Bread_Bag2
+5410 0 0 0 0 0 # Máscara de Saco de Papel
 5460 0 0 0 0 0 # Adv_Dragon_Skull
 5461 0 0 0 0 0 # Adv_Whisper_Mask
-5462 0 0 0 0 0 # Spiked_Scarf
-5463 0 0 0 0 0 # Rainbow_Scarf
+5462 0 0 0 0 0 # Máscara do Exterminador
+5463 0 0 0 0 0 # Máscara Colorida
 5492 0 0 0 0 0 # Boy
 5493 0 0 0 0 0 # Ulle_Cap_I
 5494 0 0 0 0 0 # Spinx_Helm_I
 5521 0 0 0 0 0 # Angry_Mouth_C
 5536 0 0 0 0 0 # Spare_Card
 5551 0 0 0 0 0 # Holy_Egg_Hat
-5583 0 0 0 0 0 # Para_Team_Hat1
-5587 0 0 0 0 0 # Mosquito_Coil_1Use
+5583 0 0 0 0 0 # Chapéu Valhalla
+5587 0 0 0 0 0 # Chapéu Repelente Descartável
 5596 0 0 0 0 0 # 4Leaf_Clover_In_Mouth
 5597 0 0 0 0 0 # Bubble_Gum_In_Mouth
-5668 0 0 0 0 0 # Weird_Pumpkin_Hat
+5668 0 0 0 0 0 # Estranho Chapéu de Abóbora
 5793 0 0 0 0 0 # Ribbon_Of_Life
 5794 0 0 0 0 0 # 3D_Glasses_
 5796 0 0 0 0 0 # Cheer_Scarf
@@ -663,106 +918,106 @@ Waghnak [4] 0 0 1
 5799 0 0 0 0 0 # Cheer_Scarf4
 5812 0 0 0 0 0 # Hat_Of_Expert
 5814 0 0 0 0 0 # Ati_Atihan_Hat3
-5817 0 0 0 0 0 # Valentine_Pledge
-5818 0 0 0 0 0 # Carnival_Hat
-5819 0 0 0 0 0 # Carnival_Circlet
-5822 0 0 0 0 0 # Love_Chick_Hat
+5817 0 0 0 0 0 # Anel do Dia dos Namorados
+5818 0 0 0 0 0 # Chapéu do Mestre Sala
+5819 0 0 0 0 0 # Tiara da Porta Bandeira
+5822 0 0 0 0 0 # Chapéu de Pintinho Avermelhado
 5855 0 0 0 0 0 # Fishing_Rod
 6006 0 0 0 0 0 # Rice_Cake_Delivery_Box
 6007 0 0 0 0 0 # New_Year_Rice_Cake_Soup
-6009 0 0 0 0 0 # Large_Magical_Fan
+6009 0 0 0 0 0 # Grande Leque Mágico
 6025 0 0 0 0 0 # Towel_Of_Memory
-6027 0 0 0 0 0 # Crystal_Of_Feardoom
-6028 0 0 0 0 0 # Seal_Scroll
-6029 0 0 0 0 0 # Morocc_Tracing_Log
-6034 0 0 0 0 0 # Weird_Part
-6035 0 0 0 0 0 # Decaying_Stem
-6036 0 0 0 0 0 # Invite_To_Meeting
-6037 0 0 0 0 0 # Rough_File
-6038 0 0 0 0 0 # Neat_Report
-6039 0 0 0 0 0 # Piece_Of_Fish
-6040 0 0 0 0 0 # Some_Of_Report
-6042 0 0 0 0 0 # Ordinary_Branch
-6043 0 0 0 0 0 # Letter_From_Lugen
-6044 0 0 0 0 0 # Letter_From_Otto
-6045 0 0 0 0 0 # Supply_Box
-6048 0 0 0 0 0 # Unidentified_Mineral
+6027 0 0 0 0 0 # Cristal Sangrento da Escuridão
+6028 0 0 0 0 0 # Pergaminho Selado
+6029 0 0 0 0 0 # Registro da Perseguição
+6034 0 0 0 0 0 # Peça Estranha
+6035 0 0 0 0 0 # Caule Murcho
+6036 0 0 0 0 0 # Convite para Reunião
+6037 0 0 0 0 0 # Arquivo Estragado
+6038 0 0 0 0 0 # Arquivo Limpo
+6039 0 0 0 0 0 # Pedaço de Peixe
+6040 0 0 0 0 0 # Parte de Relatório
+6042 0 0 0 0 0 # Galho
+6043 0 0 0 0 0 # Carta de Lugen
+6044 0 0 0 0 0 # Carta de Otto
+6045 0 0 0 0 0 # Caixa de Suprimentos
+6048 0 0 0 0 0 # Mineral Não Identificado
 6049 0 0 0 0 0 # Marlin
-6051 0 0 0 0 0 # Gray_Hollow
-6052 0 0 0 0 0 # Ornamental_Hairpin
-6060 0 0 0 0 0 # Moon_Admin_Ticket
-6074 0 0 0 0 0 # Bazett
-6076 0 0 0 0 0 # Portable_Toolbox
-6077 0 0 0 0 0 # Rough_Mineral
-6078 0 0 0 0 0 # Stone_Fragments
-6079 0 0 0 0 0 # Flower_Of_Alfheim
-6080 0 0 0 0 0 # Manuk_Coin
-6081 0 0 0 0 0 # Splendide_Coin
-6082 0 0 0 0 0 # Spirit_Of_Alfheim
-6084 0 0 0 0 0 # Bradium_Fragments
-6085 0 0 0 0 0 # Shaggy_Muffler
-6093 0 0 0 0 0 # Egg_Of_Draco
-6101 0 0 0 0 0 # Attendance_Card
-6102 0 0 0 0 0 # Report_On_Splendide
-6103 0 0 0 0 0 # Report_On_Manuk
-6116 0 0 0 0 0 # Succu_Pet_Coupon
-6117 0 0 0 0 0 # Imp_Pet_Coupon
-6118 0 0 0 0 0 # Chung_E_Pet_Coupon
-6121 0 0 0 0 0 # Makeover_Brush
-6122 0 0 0 0 0 # Paint_Brush
-6124 0 0 0 0 0 # Wolf
-6125 0 0 0 0 0 # Lucky_Box
+6051 0 0 0 0 0 # Mineral Cinza
+6052 0 0 0 0 0 # Presilha Ornamental
+6060 0 0 0 0 0 # Ticket de Kafra
+6074 0 0 0 0 0 # Caderno de Bazett
+6076 0 0 0 0 0 # Caixa de Ferramentas Portátil
+6077 0 0 0 0 0 # Mineral Bruto
+6078 0 0 0 0 0 # Fragmento de Pedra
+6079 0 0 0 0 0 # Flor de Alfheim
+6080 0 0 0 0 0 # Moeda Manuk
+6081 0 0 0 0 0 # Moeda Esplendor
+6082 0 0 0 0 0 # Espírito de Alfheim
+6084 0 0 0 0 0 # Fragmentos de Bradium
+6085 0 0 0 0 0 # Sobrepeliz Amarrotado
+6093 0 0 0 0 0 # Ovo de Dragão
+6101 0 0 0 0 0 # Cartão de Presença
+6102 0 0 0 0 0 # Relatório do Esplendor
+6103 0 0 0 0 0 # Relatório de Manuk
+6116 0 0 0 0 0 # Cupom_de_Succubus
+6117 0 0 0 0 0 # Cupom_de_Imp
+6118 0 0 0 0 0 # Cupom_de_Donzela_Verde
+6121 0 0 0 0 0 # Pincel de Maquiagem
+6122 0 0 0 0 0 # Pincel de Grafite
+6124 0 0 0 0 0 # Flauta Uivante
+6125 0 0 0 0 0 # Caixa de Surpresas
 6126 0 0 0 0 0 # Happy_Box
 6127 0 0 0 0 0 # Purification_Stone
-6129 0 0 0 0 0 # Ticket_Nightmare
-6130 0 0 0 0 0 # Ticket_Loli_Ruri
+6129 0 0 0 0 0 # Ticket do Pesadelo
+6130 0 0 0 0 0 # Ticket de Loli Ruri
 6132 0 0 0 0 0 # Ticket_Incubus
-6133 0 0 0 0 0 # Ticket_Miyabi_Ningyo
+6133 0 0 0 0 0 # Ticket de Miyabi Ningyo
 6134 0 0 0 0 0 # Ticket_Whisper
-6135 0 0 0 0 0 # Ticket_Wicked_Nymph
-6136 0 0 0 0 0 # Ticket_Medusa
-6137 0 0 0 0 0 # Ticket_Stoneshooter
+6135 0 0 0 0 0 # Ticket de Ninfa Perversa
+6136 0 0 0 0 0 # Ticket de Medusa
+6137 0 0 0 0 0 # Ticket_do_Atirador_de_Pedras
 6138 0 0 0 0 0 # Ticket_Marionette
-6139 0 0 0 0 0 # Ticket_Leafcat
-6140 0 0 0 0 0 # Ticket_Dullahan
-6141 0 0 0 0 0 # Ticket_Shinobi
-6142 0 0 0 0 0 # Ticket_Golem
-6143 0 0 0 0 0 # Ticket_Civil_Servant
+6139 0 0 0 0 0 # Ticket de Gato de Folha
+6140 0 0 0 0 0 # Ticket de Dullahan
+6141 0 0 0 0 0 # Ticket do Shinobi
+6142 0 0 0 0 0 # Ticket do Golem
+6143 0 0 0 0 0 # Ticket de Mao Guai
 6148 0 0 0 0 0 # Chocolate_Of_Eternity
 6149 0 0 0 0 0 # Plain_Chocolate
-6150 0 0 0 0 0 # Key_Of_The_Mansion
-6151 0 0 0 0 0 # Peice_Of_Great_Bradium
-6152 0 0 0 0 0 # Glittering_Crystal
-6153 0 0 0 0 0 # Special_Exchange_Coupon
-6154 0 0 0 0 0 # Broken_Horn_Pipe
-6156 0 0 0 0 0 # Approval_Report
+6150 0 0 0 0 0 # Chave da Mansão
+6151 0 0 0 0 0 # Pedaço de Bradium
+6152 0 0 0 0 0 # Cristal Brilhante
+6153 0 0 0 0 0 # Ticket de Troca Especial
+6154 0 0 0 0 0 # Pedaço de Chifre
+6156 0 0 0 0 0 # Relatório de Aprovação
 6206 0 0 0 0 0 # I_Love_You
 6207 0 0 0 0 0 # Thank_You
 6208 0 0 0 0 0 # I_Respect_You
-6218 0 0 0 0 0 # Disin_Delivery_Box
-6219 0 0 0 0 0 # Para_Team_Mark
+6218 0 0 0 0 0 # Entrega_do_Dieshin
+6219 0 0 0 0 0 # Emblema do Grupo Valhalla
 6236 0 0 0 0 0 # Blue_Card_7
-6237 0 0 0 0 0 # Guarana_Fruit
-6266 0 0 0 0 0 # Cheat_Key
-6267 0 0 0 0 0 # Virtual_Key
-6268 0 0 0 0 0 # Mirth_Key
-6269 0 0 0 0 0 # Master_Brush
-6270 0 0 0 0 0 # Mins_Picture
-6271 0 0 0 0 0 # Mins_Receipt
-6272 0 0 0 0 0 # Experiment_Seed
-6273 0 0 0 0 0 # Altered_Seed
-6274 0 0 0 0 0 # Saint_Cloth_Piece
-6275 0 0 0 0 0 # King_Shield
-6276 0 0 0 0 0 # Clear_Reagent
-6277 0 0 0 0 0 # Red_Reagent
-6278 0 0 0 0 0 # Black_Reagent
+6237 0 0 0 0 0 # Guaraná
+6266 0 0 0 0 0 # Chave da Decepção
+6267 0 0 0 0 0 # Chave da Ilusão
+6268 0 0 0 0 0 # Chave da Diversão
+6269 0 0 0 0 0 # Pincel Mágico
+6270 0 0 0 0 0 # Foto de Mello Dias
+6271 0 0 0 0 0 # Recibo de Loja
+6272 0 0 0 0 0 # Semente para Experimento
+6273 0 0 0 0 0 # Semente para Experimento
+6274 0 0 0 0 0 # Trajes do Santo
+6275 0 0 0 0 0 # Escudo do Rei
+6276 0 0 0 0 0 # Reagente Puro
+6277 0 0 0 0 0 # Reagente Vermelho
+6278 0 0 0 0 0 # Reagente Preto
 6296 0 0 0 0 0 # RF_Taining_Notice
-6298 0 0 0 0 0 # Pumpkin_Head_Crushed
-6299 0 0 0 0 0 # Worn_Cloth_Piece
-6305 0 0 0 0 0 # Frozen_Skin_Piece
-6306 0 0 0 0 0 # Solid_Bloodstain
-6307 0 0 0 0 0 # Suspicious_Magic_Stone
-6345 0 0 0 0 0 # Love_Ball
+6298 0 0 0 0 0 # Abóbora Esmagada
+6299 0 0 0 0 0 # Tecido Velho
+6305 0 0 0 0 0 # Pedaço_de_Pele_Congelada
+6306 0 0 0 0 0 # Sangue_Pisado
+6307 0 0 0 0 0 # Estranha_Pedra_Mágica
+6345 0 0 0 0 0 # Amor_Demais
 6347 0 0 0 0 0 # Bless_Word_Paper1
 6348 0 0 0 0 0 # Bless_Word_Paper2
 6349 0 0 0 0 0 # Bless_Word_Paper3
@@ -777,93 +1032,93 @@ Waghnak [4] 0 0 1
 6358 0 0 0 0 0 # Free_Cash_Coupon
 6359 0 0 0 0 0 # Guidebook_Exchange
 6378 0 0 0 0 0 # Winning_Mark
-6383 0 0 0 0 0 # Clue_Of_Lope
-6384 0 0 0 0 0 # Ring_Of_Lope
-6385 0 0 0 0 0 # Research_Tool_Bag
-6386 0 0 0 0 0 # Bathtub_R_Sample
-6387 0 0 0 0 0 # Teeth_Sample
-6388 0 0 0 0 0 # Scale_Sample
-6389 0 0 0 0 0 # Puddle_R_Sample
-6390 0 0 0 0 0 # Small_Pocket
-6391 0 0 0 0 0 # Splendid_Supply_Kit
-6392 0 0 0 0 0 # Bradium_Box
+6383 0 0 0 0 0 # Pista_sobre_Lope
+6384 0 0 0 0 0 # Anel_de_Lope
+6385 0 0 0 0 0 # Bolsa_de_Ferramentas_de_Pesquisa
+6386 0 0 0 0 0 # Amostra_da_Água_do_Banho
+6387 0 0 0 0 0 # Dente_Quebrado
+6388 0 0 0 0 0 # Escama
+6389 0 0 0 0 0 # Amostra_da_Poça_para_Pesquisa
+6390 0 0 0 0 0 # Saco_Pequeno
+6391 0 0 0 0 0 # Kit_de_Suprimentos_Esplêndido
+6392 0 0 0 0 0 # Caixa_de_Bradium
 6397 0 0 0 0 0 # PR_Team_Ticket
 6398 0 0 0 0 0 # Develop_Team_Ticket
 6399 0 0 0 0 0 # Marketing_Team_Ticket
 6400 0 0 0 0 0 # Operating_Team_Ticket
-6401 0 0 0 0 0 # Palm_O
-6402 0 0 0 0 0 # Oil_Palm_F
+6401 0 0 0 0 0 # Óleo_de_Palmeira
+6402 0 0 0 0 0 # Fruto_da_palmeira
 6411 0 0 0 0 0 # Ripe_Watermelon
 6412 0 0 0 0 0 # Special_Medal
-6415 0 0 0 0 0 # Strange_Embryo
+6415 0 0 0 0 0 # Embrião_Estranho
 6416 0 0 0 0 0 # Pet_Exchange
-6418 0 0 0 0 0 # Agrade_Coin
-6419 0 0 0 0 0 # Bgrade_Coin
-6420 0 0 0 0 0 # Cgrade_Coin
-6421 0 0 0 0 0 # Dgrade_Coin
-6422 0 0 0 0 0 # Egrade_Coin
-6424 0 0 0 0 0 # Halloween_Fragment
-6425 0 0 0 0 0 # Halloween_Certificate
-6426 0 0 0 0 0 # Bad_Can
-6427 0 0 0 0 0 # Bad_Can_Sack
-6428 0 0 0 0 0 # Bravery_Card_A
-6429 0 0 0 0 0 # Bravery_Card_B
-6430 0 0 0 0 0 # Picture_Piece
-6431 0 0 0 0 0 # Bucket
-6432 0 0 0 0 0 # Full_Bucket
-6433 0 0 0 0 0 # Clean_Brush
-6434 0 0 0 0 0 # Fix_Kit
-6435 0 0 0 0 0 # Fresh_Fruit
-6436 0 0 0 0 0 # Ptotection_Seagod
-6442 0 0 0 0 0 # Octopus_Hunt_Stick
-6446 0 0 0 0 0 # Green_Paper
-6447 0 0 0 0 0 # Red_Paper
-6448 0 0 0 0 0 # White_Paper
-6449 0 0 0 0 0 # Casual_Diary
-6450 0 0 0 0 0 # Honest_Diary
-6451 0 0 0 0 0 # Unknown_Fish
+6418 0 0 0 0 0 # Moeda Classe A
+6419 0 0 0 0 0 # Moeda Classe B
+6420 0 0 0 0 0 # Moeda Classe C
+6421 0 0 0 0 0 # Moeda Classe D
+6422 0 0 0 0 0 # Moeda Classe E
+6424 0 0 0 0 0 # Cristal Espiritual
+6425 0 0 0 0 0 # Certificado Espiritual
+6426 0 0 0 0 0 # Lata Vencida
+6427 0 0 0 0 0 # Pilha de Latas Vencidas
+6428 0 0 0 0 0 # Cartão da Aventura A
+6429 0 0 0 0 0 # Cartão da Aventura B
+6430 0 0 0 0 0 # Pedaço de Pintura
+6431 0 0 0 0 0 # Balde
+6432 0 0 0 0 0 # Balde Cheio
+6433 0 0 0 0 0 # Apagador
+6434 0 0 0 0 0 # Kit de Reparo
+6435 0 0 0 0 0 # Fruto de Yggdrasil Fresco
+6436 0 0 0 0 0 # Proteção do Deus do Mar
+6442 0 0 0 0 0 # Arpão de Caçar Polvos
+6446 0 0 0 0 0 # Papel de Presente Verde
+6447 0 0 0 0 0 # Papel de Presente Vermelho
+6448 0 0 0 0 0 # Papel de Presente Branco
+6449 0 0 0 0 0 # Diário Casual
+6450 0 0 0 0 0 # Diário Sincero
+6451 0 0 0 0 0 # Peixe Desconhecido
 6452 0 0 0 0 0 # Etoile_Ring
-6464 0 0 0 0 0 # Hate_Bundle
-6480 0 0 0 0 0 # Event_coin
-6500 0 0 0 0 0 # Sharp_Bamboo
-6501 0 0 0 0 0 # Salt_Bag
-6502 0 0 0 0 0 # Silver_Cross
-6504 0 0 0 0 0 # Cast_Iron_Caldron
-6505 0 0 0 0 0 # Purified_Bone
-6506 0 0 0 0 0 # Memorial_Bouquet
-6507 0 0 0 0 0 # Evil_Bone
-6539 0 0 0 0 0 # Old_Left_Lapine
-6540 0 0 0 0 0 # Golden_Leaf
-6541 0 0 0 0 0 # Avant_Research_Data
+6464 0 0 0 0 0 # Ódio_Demais
+6480 0 0 0 0 0 # Moeda do Rei Poring
+6500 0 0 0 0 0 # Bambu Afiado
+6501 0 0 0 0 0 # Sacola de Sal
+6502 0 0 0 0 0 # Cruz de Prata
+6504 0 0 0 0 0 # Caldeirão de Ferro Fundido
+6505 0 0 0 0 0 # Osso Purificado de Espírito
+6506 0 0 0 0 0 # Buquê de Oferenda
+6507 0 0 0 0 0 # Osso Maligno de Espírito
+6539 0 0 0 0 0 # Antiga Jóia dos Esplêndidos
+6540 0 0 0 0 0 # Folha Dourada
+6541 0 0 0 0 0 # Pesquisa de Avant
 6543 0 0 0 0 0 # Lv110_Achieved_Coin
 6544 0 0 0 0 0 # Lv120_Achieved_Coin
-6545 0 0 0 0 0 # Firm_Hair
-6546 0 0 0 0 0 # Younger_Bro_Letter
-6547 0 0 0 0 0 # Stained_Research_Book
-6548 0 0 0 0 0 # Piece_Of_Lapine_Wing
+6545 0 0 0 0 0 # Cabelo Seco
+6546 0 0 0 0 0 # Carta do Irmão
+6547 0 0 0 0 0 # Livro Manchado de Pesquisas
+6548 0 0 0 0 0 # Pedaço de Asa dos Esplêndidos
 6549 0 0 0 0 0 # Courtesy_Ticket
-6552 0 0 0 0 0 # Mail_Package
-6553 0 0 0 0 0 # Leaf_Made_Wood
-6554 0 0 0 0 0 # Seed_Box
-6555 0 0 0 0 0 # Birthday_Candle
+6552 0 0 0 0 0 # Pacote de Correio
+6553 0 0 0 0 0 # Pedaço da Ponte de Folhas
+6554 0 0 0 0 0 # Caixa de Sementes
+6555 0 0 0 0 0 # Vela de Aniversário
 6556 0 0 0 0 0 # Nespresso_Ticket
-6562 0 0 0 0 0 # Tiny_Mouse_Tail
-6563 0 0 0 0 0 # Weeds
+6562 0 0 0 0 0 # Cauda de Camundongo
+6563 0 0 0 0 0 # Ervas
 6566 0 0 0 0 0 # Cacao99_Recipe
 6567 0 0 0 0 0 # Choco_Drink_Recipe
 6593 0 0 0 0 0 # Cryptura_Hair_Coupon
-6654 0 0 0 0 0 # Needle_And_Thread
-6655 0 0 0 0 0 # Firm_Pumpkin
-6656 0 0 0 0 0 # Goast_Free_Charm
-6657 0 0 0 0 0 # Memory_Of_Jack
+6654 0 0 0 0 0 # Agulha e Linha
+6655 0 0 0 0 0 # Abóbora Firme
+6656 0 0 0 0 0 # Amuleto do Fantasma Livre
+6657 0 0 0 0 0 # Memória de Jack
 6673 0 0 0 0 0 # Bossnia_Tickets
 6674 0 0 0 0 0 # GM_Coin
-6682 0 0 0 0 0 # Bag_Of_Selling_Goods
-6685 0 0 0 0 0 # Morocc_Certification
-6686 0 0 0 0 0 # Brick
-6687 0 0 0 0 0 # Rope
-6688 0 0 0 0 0 # Wood
-6698 0 0 0 0 0 # Wooden_Axe
+6682 0 0 0 0 0 # Sacola de Itens Negociáveis
+6685 0 0 0 0 0 # Recibo de Morroc
+6686 0 0 0 0 0 # Tijolo
+6687 0 0 0 0 0 # Corda
+6688 0 0 0 0 0 # Madeira
+6698 0 0 0 0 0 # Machado de Madeira
 6699 0 0 0 0 0 # Faith_Silence
 6700 0 0 0 0 0 # White_Snake_Scale
 6701 0 0 0 0 0 # Treasure_Dwarf
@@ -872,11 +1127,11 @@ Waghnak [4] 0 0 1
 6704 0 0 0 0 0 # Warrior_Anger
 6705 0 0 0 0 0 # Warrior_Certificate
 6706 0 0 0 0 0 # Guardian_Flowers
-6708 0 0 0 0 0 # Magic_Crystal
+6708 0 0 0 0 0 # Cristal de Mana
 6709 0 0 0 0 0 # Crisp_Silk
 6710 0 0 0 0 0 # Tied_Snake
-6713 0 0 0 0 0 # Heart_of_Soul
-6714 0 0 0 0 0 # Sheenas_Soul
+6713 0 0 0 0 0 # Alma de Ahat
+6714 0 0 0 0 0 # Alma de Shenime
 6720 0 0 0 0 0 # Status_Reset_Coupon
 6721 0 0 0 0 0 # Status_Reset_Coupon_
 6722 0 0 0 0 0 # Delicious_Clam_Flesh
@@ -938,9 +1193,9 @@ Waghnak [4] 0 0 1
 6904 0 0 0 0 0 # Piece_Of_Soul_Snake
 6907 0 0 0 0 0 # Piece_Of_Soul_Horse
 6912 0 0 0 0 0 # Piece_Of_Soul_Sheep
-6913 0 0 0 0 0 # Holy_Rosary
-6914 0 0 0 0 0 # Black_Horn
-6915 0 0 0 0 0 # Captured_Soul
+6913 0 0 0 0 0 # Rosário Sagrado
+6914 0 0 0 0 0 # Alma Sombria
+6915 0 0 0 0 0 # Alma Capturada
 6916 0 0 0 0 0 # Piece_Of_Soul_Monkey
 6917 0 0 0 0 0 # Piece_Of_Soul_Chicken
 6919 0 0 0 0 0 # Honor_Proof
@@ -958,160 +1213,160 @@ Waghnak [4] 0 0 1
 6935 0 0 0 0 0 # Advanced_Dish
 6954 0 0 0 0 0 # Piece_Of_Soul_Dog
 6955 0 0 0 0 0 # Piece_Of_Soul_Pig
-6956 0 0 0 0 0 # Captured_Sheep
-6957 0 0 0 0 0 # Lamb_Fleece
-7059 0 0 0 0 0 # Cargo_Free_Ticket
-7060 0 0 0 0 0 # Warp_Free_Ticket
-7061 0 0 0 0 0 # Cart_Free_Ticket
-7177 0 0 0 0 0 # Part_Of_Star
-7178 0 0 0 0 0 # Star
-7275 0 0 0 0 0 # Ancient_Document
-7276 0 0 0 0 0 # Picture_Letter
-7304 0 0 0 0 0 # Witch
-7305 0 0 0 0 0 # Authority_Of_Nine_World
-7306 0 0 0 0 0 # Fragment_Of_Soul
-7307 0 0 0 0 0 # Whisper_Of_Soul
-7308 0 0 0 0 0 # Witch
-7309 0 0 0 0 0 # Wing_Of_Crow
-7314 0 0 0 0 0 # The_Sign
-7332 0 0 0 0 0 # Slate
-7333 0 0 0 0 0 # Piece_Of_Slate_1
-7334 0 0 0 0 0 # Piece_Of_Slate_2
-7335 0 0 0 0 0 # Piece_Of_Slate_3
-7336 0 0 0 0 0 # Piece_Of_Slate_4
-7339 0 0 0 0 0 # RO_Transportation_Card_
-7341 0 0 0 0 0 # Worn_Out_Pendant
-7342 0 0 0 0 0 # File01
-7343 0 0 0 0 0 # File02
-7344 0 0 0 0 0 # File03
-7346 0 0 0 0 0 # Pile_Of_Ymir_Heart
-7349 0 0 0 0 0 # Indication_Of_Member02
-7351 0 0 0 0 0 # Friend
+6956 0 0 0 0 0 # Carneiro Capturado
+6957 0 0 0 0 0 # Lã Macia
+7059 0 0 0 0 0 # Vale-Armazém
+7060 0 0 0 0 0 # Vale-Teletransporte
+7061 0 0 0 0 0 # Vale-Carrinho
+7177 0 0 0 0 0 # Fragmento_de_Luz_Estelar
+7178 0 0 0 0 0 # Gema_de_Luz_Estelar
+7275 0 0 0 0 0 # Registro_de_Língua_Antiga
+7276 0 0 0 0 0 # Mensagem_Rabiscada
+7304 0 0 0 0 0 # Pergaminho_da_Bruxa
+7305 0 0 0 0 0 # Símbolo_dos_Nove_Reinos
+7306 0 0 0 0 0 # Fragmento_de_Espírito
+7307 0 0 0 0 0 # Sussurros_Espirituais
+7308 0 0 0 0 0 # Tônico_da_Bruxa
+7309 0 0 0 0 0 # Asa_de_Corvo
+7314 0 0 0 0 0 # O_Sinal
+7332 0 0 0 0 0 # Tábula Completa
+7333 0 0 0 0 0 # Tábula de Prontera
+7334 0 0 0 0 0 # Tábula de Payon
+7335 0 0 0 0 0 # Tábula de Morroc
+7336 0 0 0 0 0 # Tábula de Geffen
+7339 0 0 0 0 0 # Cartão de Viagem Comemorativo
+7341 0 0 0 0 0 # Pingente Velho
+7342 0 0 0 0 0 # Pasta de Arquivos
+7343 0 0 0 0 0 # Pasta de Arquivos Selada
+7344 0 0 0 0 0 # Arquivo do Caso Shinokas
+7346 0 0 0 0 0 # Pedaço do Coração de Ymir
+7349 0 0 0 0 0 # Autorização para o Arquivo
+7351 0 0 0 0 0 # Diário do Amigo
 7368 0 0 0 0 0 # Lotto08
-7420 0 0 0 0 0 # Skull_
-7421 0 0 0 0 0 # Key_Red
-7422 0 0 0 0 0 # Key_Yellow
-7423 0 0 0 0 0 # Key_Blue
-7424 0 0 0 0 0 # Key_Green
-7425 0 0 0 0 0 # Key_Black
-7426 0 0 0 0 0 # Magic_Gem_Red
-7427 0 0 0 0 0 # Magic_Gem_Yellow
-7428 0 0 0 0 0 # Magic_Gem_Blue
-7429 0 0 0 0 0 # Magic_Gem_Green
-7430 0 0 0 0 0 # Magic_Gem_Black
-7431 0 0 0 0 0 # Several_Books
-7432 0 0 0 0 0 # Leather_Pouch
-7484 0 0 0 0 0 # Warrior_Symbol
+7420 0 0 0 0 0 # Caveira
+7421 0 0 0 0 0 # Chave Vermelha
+7422 0 0 0 0 0 # Chave Amarela
+7423 0 0 0 0 0 # Chave Azul
+7424 0 0 0 0 0 # Chave Verde
+7425 0 0 0 0 0 # Chave Preta
+7426 0 0 0 0 0 # Pedra Encantada Vermelha
+7427 0 0 0 0 0 # Pedra Encantada Amarela
+7428 0 0 0 0 0 # Pedra Encantada Azul
+7429 0 0 0 0 0 # Pedra Encantada Verde
+7430 0 0 0 0 0 # Pedra Encantada Preta
+7431 0 0 0 0 0 # Pilha de Livros
+7432 0 0 0 0 0 # Bolsa de Couro
+7484 0 0 0 0 0 # Símbolo do Guerreiro
 7485 0 0 0 0 0 # 2nd_Floor_Pass
-7486 0 0 0 0 0 # 3rd_Floor_Pass
-7487 0 0 0 0 0 # Tavern_Wine
-7488 0 0 0 0 0 # Delivery_Box
-7489 0 0 0 0 0 # Villa_Spare_Key
-7490 0 0 0 0 0 # Kyll_Hire_Letter
-7491 0 0 0 0 0 # Iron_Box
-7492 0 0 0 0 0 # Yellow_Key_Card
-7493 0 0 0 0 0 # Golden_Key
-7494 0 0 0 0 0 # Kiel_Button
-7495 0 0 0 0 0 # Blue_Key_Card
-7496 0 0 0 0 0 # Red_Key_Card
-7497 0 0 0 0 0 # Steel_Piece
-7498 0 0 0 0 0 # Rosimier_Key
-7499 0 0 0 0 0 # Family_Portrait
-7500 0 0 0 0 0 # Elysia_Portrait
-7501 0 0 0 0 0 # Kyll_Hire_Letter2
-7502 0 0 0 0 0 # Piece_Memo_Of_James
-7503 0 0 0 0 0 # Man_Portrait
-7504 0 0 0 0 0 # Toy_Motor
-7505 0 0 0 0 0 # Toy_Key
-7506 0 0 0 0 0 # Black_Key_Card
-7508 0 0 0 0 0 # Elysia_Ring
-7515 0 0 0 0 0 # Marvelous_Medal
-7516 0 0 0 0 0 # Green_Key_Card
+7486 0 0 0 0 0 # Passe para o 3º Andar
+7487 0 0 0 0 0 # Vinho para Culinária
+7488 0 0 0 0 0 # Pacote de Entregas
+7489 0 0 0 0 0 # Chave da Cabana
+7490 0 0 0 0 0 # Carta para Elly
+7491 0 0 0 0 0 # Caixa de Aço
+7492 0 0 0 0 0 # Cartão de Acesso Amarelo
+7493 0 0 0 0 0 # Chave Dourada
+7494 0 0 0 0 0 # Broche Luxuoso
+7495 0 0 0 0 0 # Cartão de Acesso Azul
+7496 0 0 0 0 0 # Cartão de Acesso Vermelho
+7497 0 0 0 0 0 # Fragmento de Metal
+7498 0 0 0 0 0 # Chaves da Mansão Rosimier
+7499 0 0 0 0 0 # Retrato de Família
+7500 0 0 0 0 0 # Retrato de Uma Mulher
+7501 0 0 0 0 0 # Carta de K.H.
+7502 0 0 0 0 0 # Bilhete do James
+7503 0 0 0 0 0 # Retrato de Um Homem
+7504 0 0 0 0 0 # Dispositivo de Energia
+7505 0 0 0 0 0 # Cartão de Acesso de Brinquedo
+7506 0 0 0 0 0 # Cartão de Acesso Preto
+7508 0 0 0 0 0 # Anel da Allysia
+7515 0 0 0 0 0 # Medalha Maravilhosa
+7516 0 0 0 0 0 # Cartão de Acesso Verde
 7518 0 0 0 0 0 # Women
 7527 0 0 0 0 0 # Life_Book
-7530 0 0 0 0 0 # Travel_Brochure_01
-7531 0 0 0 0 0 # Travel_Brochure_02
-7532 0 0 0 0 0 # Travel_Brochure_03
-7533 0 0 0 0 0 # Travel_Brochure_04
-7534 0 0 0 0 0 # Photo_Album_01
-7535 0 0 0 0 0 # Photo_Album_02
-7536 0 0 0 0 0 # Photo_Album_03
-7537 0 0 0 0 0 # Photo_Album_04
+7530 0 0 0 0 0 # Folheto_de_Viagens:_Amatsu
+7531 0 0 0 0 0 # Folheto_de_Viagens:_Kunlun
+7532 0 0 0 0 0 # Folheto_de_Viagens:_Louyang
+7533 0 0 0 0 0 # Folheto_de_Viagens:_Ayothaya
+7534 0 0 0 0 0 # Álbum_de_Fotos_de_Amatsu
+7535 0 0 0 0 0 # Álbum_de_Fotos_de_Kunlun
+7536 0 0 0 0 0 # Álbum_de_Fotos_de_Louyang
+7537 0 0 0 0 0 # Álbum_de_Fotos_de_Ayothaya
 7538 0 0 0 0 0 # Sifted_Sand
-7539 0 0 0 0 0 # Poring_Coin
-7547 0 0 0 0 0 # Soccer_Ball
-7548 0 0 0 0 0 # Soccer_Shoes
-7549 0 0 0 0 0 # Brazilian_Flag
-7550 0 0 0 0 0 # Ticket01
-7551 0 0 0 0 0 # Ticket02
-7552 0 0 0 0 0 # Ticket03
-7553 0 0 0 0 0 # Lotus_Flower
+7539 0 0 0 0 0 # Moeda Poring
+7547 0 0 0 0 0 # Bola_de_Futebol
+7548 0 0 0 0 0 # Chuteiras
+7549 0 0 0 0 0 # Bandeira_Nacional
+7550 0 0 0 0 0 # Ticket de Contribuição
+7551 0 0 0 0 0 # Ticket de Segunda Profissão
+7552 0 0 0 0 0 # Nota_com_Horários_dos_Jogos
+7553 0 0 0 0 0 # Flor de Vitória-Régia
 7554 0 0 0 0 0 # Striped_Candle
 7555 0 0 0 0 0 # Green_Incense
-7575 0 0 0 0 0 # Red_Jewel_
-7575 0 0 0 0 0 # Red_Jewel_
-7576 0 0 0 0 0 # Blue_Jewel_
-7576 0 0 0 0 0 # Blue_Jewel_
-7577 0 0 0 0 0 # Golden_Jewel_
+7575 0 0 0 0 0 # Jóia Vermelha
+7575 0 0 0 0 0 # Jóia Vermelha
+7576 0 0 0 0 0 # Jóia Azul
+7576 0 0 0 0 0 # Jóia Azul
+7577 0 0 0 0 0 # Jóia Dourada
 7579 0 0 0 0 0 # Silk_Handkerchief
 7580 0 0 0 0 0 # Black_Bead
-7583 0 0 0 0 0 # Evil_Mind
+7583 0 0 0 0 0 # Mente Maligna
 7584 0 0 0 0 0 # Proof_Of_Guard1
 7585 0 0 0 0 0 # Proof_Of_Guard2
 7586 0 0 0 0 0 # Proof_Of_Guard3
 7587 0 0 0 0 0 # Proof_Of_Guard4
 7588 0 0 0 0 0 # IPOD_Ticker
-7603 0 0 0 0 0 # RO_Party_Ticket
+7603 0 0 0 0 0 # Convite_de_Festa
 7614 0 0 0 0 0 # Special_Packing_Paper
 7618 0 0 0 0 0 # Monster_Crystal
-7623 0 0 0 0 0 # Name_Change_Coupon
+7623 0 0 0 0 0 # Cupom_de_Mudança_de_Nome
 7625 0 0 0 0 0 # Registration_Ticket
-7630 0 0 0 0 0 # Clean_Beach_Brush
-7631 0 0 0 0 0 # Trash_Debris
-7641 0 0 0 0 0 # Medical_Cure_Box
-7701 0 0 0 0 0 # Dragon_Spirit
-7704 0 0 0 0 0 # Broken_Thermometer
-7705 0 0 0 0 0 # Note_Of_Geologist
-7715 0 0 0 0 0 # Handmade_Choco_Recipe
-7716 0 0 0 0 0 # Strawberry_Choco_Recipe
-7717 0 0 0 0 0 # Choco_Tart_Recipe
-7722 0 0 0 0 0 # Debt_Note
-7723 0 0 0 0 0 # Diamond_Of_Ruin
-7724 0 0 0 0 0 # Forbidden_Secret_Art
-7725 0 0 0 0 0 # Unlucky_Emerald
-7726 0 0 0 0 0 # Token_Of_King
-7727 0 0 0 0 0 # HP_Doctor_Ticket
-7728 0 0 0 0 0 # SP_Doctor_Ticket
+7630 0 0 0 0 0 # Vassoura de Praia
+7631 0 0 0 0 0 # Restos de Lixo
+7641 0 0 0 0 0 # Caixa com Primeiros Socorros
+7701 0 0 0 0 0 # Espírito de Dragão
+7704 0 0 0 0 0 # Termômetro_Quebrado
+7705 0 0 0 0 0 # Nota_do_Geólogo
+7715 0 0 0 0 0 # Receita_de_Chocolate_Caseiro
+7716 0 0 0 0 0 # Receita_de_Chocolate_Com_Morango
+7717 0 0 0 0 0 # Receita_de_Torta_de_Chocolate
+7722 0 0 0 0 0 # Lista_de_Débitos
+7723 0 0 0 0 0 # Diamante_da_Ruína
+7724 0 0 0 0 0 # Esquecida_Arte_Secreta
+7725 0 0 0 0 0 # Esmeralda_dos_Azarados
+7726 0 0 0 0 0 # Recordação_do_Rei
+7727 0 0 0 0 0 # Vale_de_HP
+7728 0 0 0 0 0 # Vale_de_SP
 7729 0 0 0 0 0 # Rok_Star_Badge
-7755 0 0 0 0 0 # Research_Note
+7755 0 0 0 0 0 # Bloco_de_Pesquisa
 7759 0 0 0 0 0 # Geology_Report
-7763 0 0 0 0 0 # Sticky_Herb
-7764 0 0 0 0 0 # High_Strength_Adhesive
-7765 0 0 0 0 0 # Yaga_Secret_Medicine
-7773 0 0 0 0 0 # War_Badge
-7801 0 0 0 0 0 # Girl_Fan_Letter
-7802 0 0 0 0 0 # Autograph_Book
-7820 0 0 0 0 0 # Morroc_Skin
-7826 0 0 0 0 0 # Continental_Guard_Paper
+7763 0 0 0 0 0 # Erva Grudenta
+7764 0 0 0 0 0 # Adesivos Fortes
+7765 0 0 0 0 0 # Remédio de Baba-Yaga
+7773 0 0 0 0 0 # Emblema de Guerra
+7801 0 0 0 0 0 # Fan_Letter
+7802 0 0 0 0 0 # Signature_Notebook
+7820 0 0 0 0 0 # Pele do Imperador Morroc
+7826 0 0 0 0 0 # Papel da Guarda Continental
 7827 0 0 0 0 0 # Mineral_Report
-7828 0 0 0 0 0 # BF_Badge1
-7829 0 0 0 0 0 # BF_Badge2
-7839 0 0 0 0 0 # Crystal_Key
-7840 0 0 0 0 0 # Valkyrie_Gift
+7828 0 0 0 0 0 # Emblema de Bravura
+7829 0 0 0 0 0 # Emblema de Valor
+7839 0 0 0 0 0 # Chave_de_Cristal
+7840 0 0 0 0 0 # Presente_da_Valquíria
 7841 0 0 0 0 0 # Spotted_Paper
 7842 0 0 0 0 0 # Torn_Paper
 7843 0 0 0 0 0 # Old_Paper
 7844 0 0 0 0 0 # Burnt_Paper
 7865 0 0 0 0 0 # Gold_Pouch
 7866 0 0 0 0 0 # Certificate
-7876 0 0 0 0 0 # Gold_Key
-7877 0 0 0 0 0 # Red_Ring
-7878 0 0 0 0 0 # Lusalka_Hair
-7879 0 0 0 0 0 # Golden_Thread
-7880 0 0 0 0 0 # Babayaga_Silver_Spoon
-7881 0 0 0 0 0 # Book_Of_Magic
-7882 0 0 0 0 0 # Pointed_Branch
-7883 0 0 0 0 0 # Pointed_Wooden_Flute
+7876 0 0 0 0 0 # Chave Dourada
+7877 0 0 0 0 0 # Anel Vermelho
+7878 0 0 0 0 0 # Cabelo de Lusalka
+7879 0 0 0 0 0 # Fio Dourado
+7880 0 0 0 0 0 # Colher de Prata de Babayaga
+7881 0 0 0 0 0 # Livro Mágico Misterioso
+7882 0 0 0 0 0 # Ramo Afiado
+7883 0 0 0 0 0 # Flauta de Madeira
 7895 0 0 0 0 0 # TRO_Memory_Book01
 7896 0 0 0 0 0 # TRO_Memory_Book02
 7897 0 0 0 0 0 # TRO_Memory_Book03
@@ -1124,19 +1379,19 @@ Waghnak [4] 0 0 1
 7904 0 0 0 0 0 # Piano_Key
 7906 0 0 0 0 0 # Poppy_Wreath
 7907 0 0 0 0 0 # Bobbin_Of_Goddess
-7909 0 0 0 0 0 # Stolen_Cookie
-7910 0 0 0 0 0 # Stolen_Candy
+7909 0 0 0 0 0 # Biscoito Roubado
+7910 0 0 0 0 0 # Doce Roubado
 7912 0 0 0 0 0 # Portable_Snowman
 7913 0 0 0 0 0 # Test_Certificate
 7914 0 0 0 0 0 # Ancient_Document_TW
 7917 0 0 0 0 0 # Magic_Potion
-7919 0 0 0 0 0 # Festival_Ticket
+7919 0 0 0 0 0 # Ticket do Festival
 7920 0 0 0 0 0 # Hero
-7923 0 0 0 0 0 # KRATHONG_
-7928 0 0 0 0 0 # Brazilian_Flag_
-7929 0 0 0 0 0 # Golden_Coin_
+7923 0 0 0 0 0 # Krathong
+7928 0 0 0 0 0 # Bandeira_Nacional
+7929 0 0 0 0 0 # Moeda de Ouro
 7930 0 0 0 0 0 # Cowking
-7949 0 0 0 0 0 # Woven_Wool
+7949 0 0 0 0 0 # Seda de Felpa
 7950 0 0 0 0 0 # Ayothaya_Ticket
 7951 0 0 0 0 0 # Gold_Tulip
 7952 0 0 0 0 0 # Gift_From_Romiros
@@ -1151,58 +1406,58 @@ Waghnak [4] 0 0 1
 7967 0 0 0 0 0 # Weird_Parchment2
 7968 0 0 0 0 0 # Weird_Parchment3
 7969 0 0 0 0 0 # Weird_Parchment4
-11011 0 0 0 0 0 # Barmund_Note
-11012 0 0 0 0 0 # Expedition_Report
-11013 0 0 0 0 0 # Expedition_Report_Vol1
-11014 0 0 0 0 0 # Expedition_Report_Vol2
-11015 0 0 0 0 0 # Expedition_Report_Vol3
-11016 0 0 0 0 0 # Expedition_Report_Vol4
+11011 0 0 0 0 0 # Caderno de Varmunt
+11012 0 0 0 0 0 # Relatório da Expedição
+11013 0 0 0 0 0 # Relatório da Expedição Vol. 1
+11014 0 0 0 0 0 # Relatório da Expedição Vol. 2
+11015 0 0 0 0 0 # Relatório da Expedição Vol. 3
+11016 0 0 0 0 0 # Relatório da Expedição Vol. 4
 11551 0 0 0 0 0 # Savory_Herb_Salad
 11552 0 0 0 0 0 # Apple_Carrot_Salad
 11553 0 0 0 0 0 # Casual_Stew
 11554 0 0 0 0 0 # Golden_Roasted_Apple
 12142 0 0 0 0 0 # Magic_Book
-12153 0 0 0 0 0 # Bow_Mercenary_Scroll1
-12154 0 0 0 0 0 # Bow_Mercenary_Scroll2
-12155 0 0 0 0 0 # Bow_Mercenary_Scroll3
-12156 0 0 0 0 0 # Bow_Mercenary_Scroll4
-12157 0 0 0 0 0 # Bow_Mercenary_Scroll5
-12158 0 0 0 0 0 # Bow_Mercenary_Scroll6
-12159 0 0 0 0 0 # Bow_Mercenary_Scroll7
-12160 0 0 0 0 0 # Bow_Mercenary_Scroll8
-12161 0 0 0 0 0 # Bow_Mercenary_Scroll9
-12162 0 0 0 0 0 # Bow_Mercenary_Scroll10
-12163 0 0 0 0 0 # SwordMercenary_Scroll1
-12164 0 0 0 0 0 # SwordMercenary_Scroll2
-12165 0 0 0 0 0 # SwordMercenary_Scroll3
-12166 0 0 0 0 0 # SwordMercenary_Scroll4
-12167 0 0 0 0 0 # SwordMercenary_Scroll5
-12168 0 0 0 0 0 # SwordMercenary_Scroll6
-12169 0 0 0 0 0 # SwordMercenary_Scroll7
-12170 0 0 0 0 0 # SwordMercenary_Scroll8
-12171 0 0 0 0 0 # SwordMercenary_Scroll9
-12172 0 0 0 0 0 # SwordMercenary_Scroll10
-12173 0 0 0 0 0 # SpearMercenary_Scroll1
-12174 0 0 0 0 0 # SpearMercenary_Scroll2
-12175 0 0 0 0 0 # SpearMercenary_Scroll3
-12176 0 0 0 0 0 # SpearMercenary_Scroll4
-12177 0 0 0 0 0 # SpearMercenary_Scroll5
-12178 0 0 0 0 0 # SpearMercenary_Scroll6
-12179 0 0 0 0 0 # SpearMercenary_Scroll7
-12180 0 0 0 0 0 # SpearMercenary_Scroll8
-12181 0 0 0 0 0 # SpearMercenary_Scroll9
-12182 0 0 0 0 0 # SpearMercenary_Scroll10
+12153 0 0 0 0 0 # Pergaminho_de_Arqueiro_1
+12154 0 0 0 0 0 # Pergaminho_de_Arqueiro_2
+12155 0 0 0 0 0 # Pergaminho_de_Arqueiro_3
+12156 0 0 0 0 0 # Pergaminho_de_Arqueiro_4
+12157 0 0 0 0 0 # Pergaminho_de_Arqueiro_5
+12158 0 0 0 0 0 # Pergaminho_de_Arqueiro_6
+12159 0 0 0 0 0 # Pergaminho_de_Arqueiro_7
+12160 0 0 0 0 0 # Pergaminho_de_Arqueiro_8
+12161 0 0 0 0 0 # Pergaminho_de_Arqueiro_9
+12162 0 0 0 0 0 # Pergaminho_de_Arqueiro_10
+12163 0 0 0 0 0 # Pergaminho_de_Espadachim_1
+12164 0 0 0 0 0 # Pergaminho_de_Espadachim_2
+12165 0 0 0 0 0 # Pergaminho_de_Espadachim_3
+12166 0 0 0 0 0 # Pergaminho_de_Espadachim_4
+12167 0 0 0 0 0 # Pergaminho_de_Espadachim_5
+12168 0 0 0 0 0 # Pergaminho_de_Espadachim_6
+12169 0 0 0 0 0 # Pergaminho_de_Espadachim_7
+12170 0 0 0 0 0 # Pergaminho_de_Espadachim_8
+12171 0 0 0 0 0 # Pergaminho_de_Espadachim_9
+12172 0 0 0 0 0 # Pergaminho_de_Espadachim_10
+12173 0 0 0 0 0 # Pergaminho_de_Lanceiro_1
+12174 0 0 0 0 0 # Pergaminho_de_Lanceiro_2
+12175 0 0 0 0 0 # Pergaminho_de_Lanceiro_3
+12176 0 0 0 0 0 # Pergaminho_de_Lanceiro_4
+12177 0 0 0 0 0 # Pergaminho_de_Lanceiro_5
+12178 0 0 0 0 0 # Pergaminho_de_Lanceiro_6
+12179 0 0 0 0 0 # Pergaminho_de_Lanceiro_7
+12180 0 0 0 0 0 # Pergaminho_de_Lanceiro_8
+12181 0 0 0 0 0 # Pergaminho_de_Lanceiro_9
+12182 0 0 0 0 0 # Pergaminho_de_Lanceiro_10
 12199 0 0 0 0 0 # Rice_Scroll
-12258 0 0 0 0 0 # Bombring_Box
-12259 0 0 0 0 0 # Miracle_Medicine
-12261 0 0 0 0 0 # Secret_Medicine
+12258 0 0 0 0 0 # Capsula de Bombardeio
+12259 0 0 0 0 0 # Medicina Milagrosa
+12261 0 0 0 0 0 # Medicina Secreta
 12262 0 0 0 0 0 # Inspector_Certificate_
-12263 0 0 0 0 0 # Comp_Battle_Manual
-12266 0 0 0 0 0 # Sesame_Pastry_
+12263 0 0 0 0 0 # Manual de Campo
+12266 0 0 0 0 0 # Doces Freegells
 12267 0 0 0 0 0 # Honey_Pastry_
 12268 0 0 0 0 0 # Rainbow_Cake_
-12274 0 0 0 0 0 # Gold_Pill_1
-12275 0 0 0 0 0 # Gold_Pill_2
+12274 0 0 0 0 0 # Pílula de HP
+12275 0 0 0 0 0 # Pílula de SP
 12287 0 0 0 0 0 # Love_Angel
 12288 0 0 0 0 0 # Squirrel
 12289 0 0 0 0 0 # Gogo
@@ -1210,11 +1465,11 @@ Waghnak [4] 0 0 1
 12295 0 0 0 0 0 # PC_Bang_Coin_Box2
 12296 0 0 0 0 0 # PC_Bang_Coin_Box3
 12297 0 0 0 0 0 # PC_Bang_Coin_Box4
-12298 0 0 0 0 0 # SP_Potion
-12299 0 0 0 0 0 # Mega_Resist_Potion
-12300 0 0 0 0 0 # Wild_Rose_Scroll
-12301 0 0 0 0 0 # Doppelganger_Scroll
-12302 0 0 0 0 0 # Ygnizem_Scroll
+12298 0 0 0 0 0 # Suco de Gato
+12299 0 0 0 0 0 # Poção de Mega Resistência
+12300 0 0 0 0 0 # Pergaminho de Rosa Selvagem
+12301 0 0 0 0 0 # Pergaminho de Doppelganger
+12302 0 0 0 0 0 # Pergaminho de Egnigem Cenia
 12304 0 0 0 0 0 # Picture_Diary
 12305 0 0 0 0 0 # Mini_Heart
 12306 0 0 0 0 0 # Newcomer
@@ -1223,21 +1478,21 @@ Waghnak [4] 0 0 1
 12309 0 0 0 0 0 # Bulging_Head
 12313 0 0 0 0 0 # Protection_Of_Angel
 12314 0 0 0 0 0 # Noive_Box
-12322 0 0 0 0 0 # Chocolate_Pie
-12323 0 0 0 0 0 # N_Fly_Wing
-12324 0 0 0 0 0 # N_Butterfly_Wing
-12325 0 0 0 0 0 # N_Magnifier
+12322 0 0 0 0 0 # Chocolate Puro
+12323 0 0 0 0 0 # Asa de Mosca de Iniciante
+12324 0 0 0 0 0 # Asa de Borboleta de Iniciante
+12325 0 0 0 0 0 # Lupa de Iniciante
 12331 0 0 0 0 0 # Ginseng
-12333 0 0 0 0 0 # Ansila
-12333 0 0 0 0 0 # Ansila
+12333 0 0 0 0 0 # Ancilla
+12333 0 0 0 0 0 # Ancilla
 12340 0 0 0 0 0 # Mysterious_Rice_Powder
-12384 0 0 0 0 0 # Rainbow_Ruby_Water
-12385 0 0 0 0 0 # Rainbow_Ruby_Fire
-12386 0 0 0 0 0 # Rainbow_Ruby_Wind
-12387 0 0 0 0 0 # Rainbow_Ruby_Earth
-12388 0 0 0 0 0 # Runstone_Crush
-12389 0 0 0 0 0 # Runstone_Storm
-12390 0 0 0 0 0 # Runstone_Millennium
+12384 0 0 0 0 0 # Rubi Arco-Íris
+12385 0 0 0 0 0 # Rubi Arco-Íris
+12386 0 0 0 0 0 # Rubi Arco-Íris
+12387 0 0 0 0 0 # Rubi Arco-Íris
+12388 0 0 0 0 0 # Runa Raido para Iniciantes
+12389 0 0 0 0 0 # Runa Wyrd para Iniciantes
+12390 0 0 0 0 0 # Runa Berkana para Iniciantes
 12398 0 0 0 0 0 # PCBang_Gift_Box
 12478 0 0 0 0 0 # Chance_Box
 12479 0 0 0 0 0 # Caracas_Ring_Box
@@ -1263,7 +1518,7 @@ Waghnak [4] 0 0 1
 12589 0 0 0 0 0 # Summer_Night_box3
 12600 0 0 0 0 0 # Treasure_Box_Scroll
 12607 0 0 0 0 0 # Lolli_Pop_Box
-12622 0 0 0 0 0 # Boarding_Halter
+12622 0 0 0 0 0 # Rédea
 12649 0 0 0 0 0 # Lv70_Imperial_Gift
 12650 0 0 0 0 0 # Lv90_Imperial_Gift
 12651 0 0 0 0 0 # Lv110_Imperial_Gift
@@ -1273,8 +1528,8 @@ Waghnak [4] 0 0 1
 12715 0 0 0 0 0 # Black_Treasure_Box
 12740 0 0 0 0 0 # Inc_Str_Scroll
 12741 0 0 0 0 0 # Inc_Int_Scroll
-12745 0 0 0 0 0 # Skull_Scroll
-12766 0 0 0 0 0 # Reward_Job_BM25
+12745 0 0 0 0 0 # Anotação Vívida
+12766 0 0 0 0 0 # Manual de Campo de Classe
 12802 0 0 0 0 0 # Time_Guardian_Box
 12803 0 0 0 0 0 # Beginner_Kit_Box
 12807 0 0 0 0 0 # Mercenary_Casting_
@@ -1290,145 +1545,145 @@ Waghnak [4] 0 0 1
 12884 0 0 0 0 0 # Infinite_Concentration_Potion
 12885 0 0 0 0 0 # Infinite_Awakening_Potion
 12886 0 0 0 0 0 # Infinite_Berserk_Potion
-12887 0 0 0 0 0 # C_Wing_Of_Fly
-12888 0 0 0 0 0 # Siege_Kit_Box
+12887 0 0 0 0 0 # Asa de Mosca Ilimitada
+12888 0 0 0 0 0 # Caixa de Suprimentos TE
 13020 0 0 0 0 0 # Warrior_Balmung_
-13021 0 0 0 0 0 # Combat_Knife_C
-13022 0 0 0 0 0 # Counter_Dagger_C
-13023 0 0 0 0 0 # Asura_C
+13021 0 0 0 0 0 # Faca_de_Combate_[A]
+13022 0 0 0 0 0 # Adaga_Certeira_[A]
+13023 0 0 0 0 0 # Asura_[A]
 13024 0 0 0 0 0 # Sword_Breaker_C
 13025 0 0 0 0 0 # Mail_Breaker_C
 13026 0 0 0 0 0 # Moonlight_Sword_C
-13036 0 0 0 0 0 # BF_Dagger1
-13037 0 0 0 0 0 # BF_Dagger2
-13042 0 0 0 0 0 # Krieger_Dagger1
+13036 0 0 0 0 0 # Damascus Mercenária A
+13037 0 0 0 0 0 # Damascus Mercenária B
+13042 0 0 0 0 0 # Gladius Glorioso
 13043 0 0 0 0 0 # Fortune_Sword_I
 13044 0 0 0 0 0 # House_Auger_I
 13045 0 0 0 0 0 # Kamaitachi_I
 13048 0 0 0 0 0 # Damascus_C
-13050 0 0 0 0 0 # P_Dagger1
-13051 0 0 0 0 0 # P_Dagger2
+13050 0 0 0 0 0 # Adaga Valhalla Iniciante
+13051 0 0 0 0 0 # Adaga Valhalla Intermediária
 13052 0 0 0 0 0 # Tourist_Dagger
-13066 0 0 0 0 0 # P_Dagger3
-13068 0 0 0 0 0 # Saurel
-13074 0 0 0 0 0 # Ninja_Cutter
+13066 0 0 0 0 0 # Adaga_III_do_Grupo_Éden
+13068 0 0 0 0 0 # Manjuba
+13074 0 0 0 0 0 # Adaga Ninja
 13079 0 0 0 0 0 # Metal_Dagger
-13083 0 0 0 0 0 # TE_Woe_Knife
-13108 0 0 0 0 0 # BF_Pistol1
-13109 0 0 0 0 0 # Wasteland_Outlaw_C
-13110 0 0 0 0 0 # Krieger_Pistol1
+13083 0 0 0 0 0 # Adaga TE
+13108 0 0 0 0 0 # Revólver do Soldado
+13109 0 0 0 0 0 # Outlaw of the Plains
+13110 0 0 0 0 0 # Pistola Gloriosa
 13111 0 0 0 0 0 # Sharpshooter_Revolver
-13112 0 0 0 0 0 # P_Revolver1
-13113 0 0 0 0 0 # P_Revolver2
-13114 0 0 0 0 0 # P_Revolver3
-13117 0 0 0 0 0 # TE_Woe_Pistol
+13112 0 0 0 0 0 # Revólver Valhalla Iniciante
+13113 0 0 0 0 0 # Revólver Valhalla Intermediário
+13114 0 0 0 0 0 # Revólver_III_do_Grupo_Éden
+13117 0 0 0 0 0 # Pistola TE
 13118 0 0 0 0 0 # Spark_Light
 13125 0 0 0 0 0 # Metal_Revolver
-13171 0 0 0 0 0 # BF_Rifle1
-13172 0 0 0 0 0 # BF_Gatling_Gun1
-13173 0 0 0 0 0 # BF_Shotgun1
-13174 0 0 0 0 0 # BF_Launcher1
-13175 0 0 0 0 0 # Lever_Action_Rifle_C
-13176 0 0 0 0 0 # Krieger_Rifle1
-13177 0 0 0 0 0 # Krieger_Gatling1
-13178 0 0 0 0 0 # Krieger_Shotgun1
-13179 0 0 0 0 0 # Krieger_Launcher1
-13184 0 0 0 0 0 # TE_Woe_Rifle
-13185 0 0 0 0 0 # TE_Woe_Gatling
-13186 0 0 0 0 0 # TE_Woe_Shotgun
-13187 0 0 0 0 0 # TE_Woe_Grenade
+13171 0 0 0 0 0 # Rifle do Soldado
+13172 0 0 0 0 0 # Metralhadora Gatling do Soldado
+13173 0 0 0 0 0 # Espingarda do Soldado
+13174 0 0 0 0 0 # Lança-Granadas do Soldado
+13175 0 0 0 0 0 # Lever Action Rifle
+13176 0 0 0 0 0 # Rifle Glorioso
+13177 0 0 0 0 0 # Metralhadora Gatling Gloriosa
+13178 0 0 0 0 0 # Espingarda Gloriosa
+13179 0 0 0 0 0 # Lança-Granadas Glorioso
+13184 0 0 0 0 0 # Rifle TE
+13185 0 0 0 0 0 # Metralhadora TE
+13186 0 0 0 0 0 # Espingarda TE
+13187 0 0 0 0 0 # Lança Granadas TE
 13295 0 0 0 0 0 # Light_Shuriken
-13305 0 0 0 0 0 # BF_Huuma_Shuriken1
-13306 0 0 0 0 0 # BF_Huuma_Shuriken2
-13307 0 0 0 0 0 # Krieger_Huuma_Shuriken1
+13305 0 0 0 0 0 # Shuriken Huuma Frontal A
+13306 0 0 0 0 0 # Shuriken Huuma Frontal B
+13307 0 0 0 0 0 # Shuriken Glorioso
 13308 0 0 0 0 0 # Huuma_Blaze_I
 13309 0 0 0 0 0 # Huuma_Giant_Wheel_C
-13310 0 0 0 0 0 # P_Huuma_Suriken1
-13312 0 0 0 0 0 # Huuma_Job_Test
-13317 0 0 0 0 0 # TE_Woe_Huuma
+13310 0 0 0 0 0 # Shuriken_Huuma_I_do_Éden
+13312 0 0 0 0 0 # Huuma Ninja
+13317 0 0 0 0 0 # Shuriken Huuma TE
 13322 0 0 0 0 0 # Huuma_Metal_Shuriken
-13401 0 0 0 0 0 # Excalibur_C
+13401 0 0 0 0 0 # Excalibur_[A]
 13402 0 0 0 0 0 # Cutlas_C
 13403 0 0 0 0 0 # Solar_Sword_C
-13407 0 0 0 0 0 # Nagan_C
+13407 0 0 0 0 0 # Nagan [A]
 13408 0 0 0 0 0 # Fire_Brand_C
 13409 0 0 0 0 0 # Immaterial_Sword_C
-13410 0 0 0 0 0 # BF_Sword1
-13411 0 0 0 0 0 # BF_Sword2
-13416 0 0 0 0 0 # Krieger_Onehand_Sword1
-13417 0 0 0 0 0 # Krieger_Onehand_Sword2
-13418 0 0 0 0 0 # Krieger_Onehand_Sword3
+13410 0 0 0 0 0 # Lâmina Gladiadora A
+13411 0 0 0 0 0 # Lâmina Gladiadora B
+13416 0 0 0 0 0 # Flamberge Gloriosa
+13417 0 0 0 0 0 # Florete Glorioso
+13418 0 0 0 0 0 # Vingadora Sagrada Gloriosa
 13419 0 0 0 0 0 # Holy_Saber
 13422 0 0 0 0 0 # Flamberge_C
-13423 0 0 0 0 0 # P_Sabre1
-13424 0 0 0 0 0 # P_Sabre2
+13423 0 0 0 0 0 # Sabre Valhalla Iniciante
+13424 0 0 0 0 0 # Sabre Valhalla Intermediário
 13425 0 0 0 0 0 # Tourist_Sword
-13434 0 0 0 0 0 # P_Saber3
-13439 0 0 0 0 0 # TE_Woe_Sword
+13434 0 0 0 0 0 # Sabre_III_do_Grupo_Éden
+13439 0 0 0 0 0 # Espada TE
 13763 0 0 0 0 0 # 5_Anniversary_Coin_Box
 13765 0 0 0 0 0 # Certificate_TW_Box
-13859 0 0 0 0 0 # Directive_A_Envelope
-13860 0 0 0 0 0 # Directive_B_Envelope
+13859 0 0 0 0 0 # Envelope de Ordem Oficial A
+13860 0 0 0 0 0 # Envelope de Ordem Oficial B
 14505 0 0 0 0 0 # Dungeon_1_hour_Ticket
 14506 0 0 0 0 0 # Dungeon_Ticket
-14529 0 0 0 0 0 # Greed_Scroll
-14595 0 0 0 0 0 # Unsealed_Magic_Spell
+14529 0 0 0 0 0 # Pergaminho de Ganância
+14595 0 0 0 0 0 # Pergaminho Mágico Aberto
 15001 0 0 0 0 0 # Odin
-15002 0 0 0 0 0 # Rune_Plate
-15009 0 0 0 0 0 # Para_Team_Uniform1
-15010 0 0 0 0 0 # Para_Team_Uniform2
-15011 0 0 0 0 0 # Para_Team_Uniform3
+15002 0 0 0 0 0 # Armadura Rúnica
+15009 0 0 0 0 0 # Uniforme Valhalla Iniciante
+15010 0 0 0 0 0 # Uniforme Valhalla Intermediário
+15011 0 0 0 0 0 # Uniforme Valhalla Avançado
 15023 0 0 0 0 0 # Half_Brynhild
-15031 0 0 0 0 0 # Para_Team_Armor
-15033 0 0 0 0 0 # Tutorial_Mattle
-15034 0 0 0 0 0 # Tutorial_Mattle_
-15062 0 0 0 0 0 # TE_Woe_Coat
-15063 0 0 0 0 0 # TE_Woe_Chain_Mail
-15064 0 0 0 0 0 # TE_Woe_Mage_Coat
-15067 0 0 0 0 0 # Rune_Suit
+15031 0 0 0 0 0 # Armadura_do_Grupo_Éden
+15033 0 0 0 0 0 # Capote_do_Tutorial
+15034 0 0 0 0 0 # Capote_do_Tutorial
+15062 0 0 0 0 0 # Casaco TE
+15063 0 0 0 0 0 # Cota de Malha TE
+15064 0 0 0 0 0 # Casaco Mágico TE
+15067 0 0 0 0 0 # Manto de Rune
 16002 0 0 0 0 0 # Stunner_C
-16004 0 0 0 0 0 # P_Mace1
-16005 0 0 0 0 0 # P_Mace2
+16004 0 0 0 0 0 # Maça Valhalla Iniciante
+16005 0 0 0 0 0 # Maça Valhalla Intermediária
 16006 0 0 0 0 0 # Tourist_Mace
-16014 0 0 0 0 0 # P_Mace3
-16016 0 0 0 0 0 # Tuna
+16014 0 0 0 0 0 # Maça_III_do_Grupo_Éden
+16016 0 0 0 0 0 # Atum
 16023 0 0 0 0 0 # Metal_Mace
-16025 0 0 0 0 0 # TE_Woe_Mace
+16025 0 0 0 0 0 # Maça TE
 16405 0 0 0 0 0 # Midgard_Coin_Box
 16406 0 0 0 0 0 # FMidgard_Coin_Box
 18100 0 0 0 0 0 # Shooting_Star_C
-18106 0 0 0 0 0 # P_Bow3
-18107 0 0 0 0 0 # Malang_Snow_Crab
-18108 0 0 0 0 0 # Brindle_Eel
+18106 0 0 0 0 0 # Arco_III_do_Grupo_Éden
+18107 0 0 0 0 0 # Caranguejo Malangdo
+18108 0 0 0 0 0 # Enguia Malhada
 18116 0 0 0 0 0 # Metal_Bow
 18500 0 0 0 0 0 # Cheer_Scarf6
 18501 0 0 0 0 0 # Cheer_Scarf8
 18502 0 0 0 0 0 # Cheer_Scarf10
-18505 0 0 0 0 0 # Umbala_Spirit
-18514 0 0 0 0 0 # Para_Team_Hat2
+18505 0 0 0 0 0 # Piercing de Umbala
+18514 0 0 0 0 0 # Chapéu_II_do_Grupo_Éden
 18526 0 0 0 0 0 # Yummy_Lollipop
-18556 0 0 0 0 0 # Angel_Helmet
-18557 0 0 0 0 0 # Devil_Helmet
+18556 0 0 0 0 0 # Símbolo do Anjo
+18557 0 0 0 0 0 # Símbolo_do_Demônio
 18566 0 0 0 0 0 # Nut_Donut_In_Mouth
 19052 0 0 0 0 0 # Sigruns_Wing
 19853 0 0 0 0 0 # C_Filir
-20135 0 0 0 0 0 # C_12_Anniversary_Crown_Of_Saint
-20136 0 0 0 0 0 # C_12_Anniversary_Elf_Ears
+20135 0 0 0 0 0 # Coroa dos 11 Anos e um Segredo
+20136 0 0 0 0 0 # Orelhas dos 11 Anos e um Segredo
 21005 0 0 0 0 0 # Metal_Two_Hand_Sword
 22508 0 0 0 0 0 # Para_Team_Mark_
 22513 0 0 0 0 0 # King_of_Gift_Box
-22517 0 0 0 0 0 # Rocker_Summoning_Scroll
-22521 0 0 0 0 0 # Level_Up_Box
-22522 0 0 0 0 0 # Level_Up_Box100
-22523 0 0 0 0 0 # Level_Up_Box120
-22524 0 0 0 0 0 # Level_Up_Box130
-22525 0 0 0 0 0 # Level_Up_Box140
-22526 0 0 0 0 0 # Level_Up_Box150
+22517 0 0 0 0 0 # Pergaminho de Loki
+22521 0 0 0 0 0 # Caixa de Jornada Nv80
+22522 0 0 0 0 0 # Caixa de Jornada Nv100
+22523 0 0 0 0 0 # Caixa de Jornada Nv120
+22524 0 0 0 0 0 # Caixa de Jornada Nv130
+22525 0 0 0 0 0 # Caixa de Jornada Nv140
+22526 0 0 0 0 0 # Caixa de Jornada Nv150
 22527 0 0 0 0 0 # Level_Up_Box160
 22533 0 0 0 0 0 # New_Year_Gift_Box
-22535 0 0 0 0 0 # Scroll_Summoning_Workers
-22536 0 0 0 0 0 # Scroll_Summoning_Workers
-22566 0 0 0 0 0 # Last_Years_Frost
+22535 0 0 0 0 0 # Pergaminho do Construtor
+22536 0 0 0 0 0 # Pergaminho da Construtora
+22566 0 0 0 0 0 # Cristal Congelado
 22569 0 0 0 0 0 # Gift_New_start
 22589 0 0 0 0 0 # Savage_Ora_Ora
 22590 0 0 0 0 0 # Grand_Peco_Ora_Ora
@@ -1455,7 +1710,7 @@ Waghnak [4] 0 0 1
 22762 0 0 0 0 0 # Centipede_Transportin
 22837 0 0 0 0 0 # Integer_Time
 22869 0 0 0 0 0 # Lucky_Roulette_Tickets
-22881 0 0 0 0 0 # Rope_Gallows
+22881 0 0 0 0 0 # Corda de Caça
 22887 0 0 0 0 0 # PC
 22894 0 0 0 0 0
 22895 0 0 0 0 0
@@ -1467,15 +1722,15 @@ Waghnak [4] 0 0 1
 25047 0 0 0 0 0 # Kahlunac
 25048 0 0 0 0 0 # Hearty_Lunchbox
 25049 0 0 0 0 0 # Basilac_Clam
-25132 0 0 0 0 0 # Pumpkin_Deco
-25133 0 0 0 0 0 # Dried_White_Stem
-25143 0 0 0 0 0 # Gift_Stuffed_Doll
-25144 0 0 0 0 0 # Bridge_Postured_Doll
-25145 0 0 0 0 0 # Burnt_Spector_Doll
-25146 0 0 0 0 0 # Cold_Blooded_Queen_Doll
-25147 0 0 0 0 0 # Well_Eatenl_Rabbit_Doll
-25148 0 0 0 0 0 # Cute_Starved_Demon_Doll
-25149 0 0 0 0 0 # Doll_With_Warm_Scarf
-25150 0 0 0 0 0 # Hugging_Alice_Pilow
+25132 0 0 0 0 0 # Decoração de Abóbora
+25133 0 0 0 0 0 # Ramo Branco Seco
+25143 0 0 0 0 0 # Pelúcia de Coelhinho
+25144 0 0 0 0 0 # Boneca Fofura Contorcionista
+25145 0 0 0 0 0 # Bonequinho Faminto
+25146 0 0 0 0 0 # Bonequinha da Jirtas
+25147 0 0 0 0 0 # Pelúcia de Coelhinho Darko
+25148 0 0 0 0 0 # Boneca Queimada da Baba Yaga
+25149 0 0 0 0 0 # Barbe Jogo da Forca
+25150 0 0 0 0 0 # Travesseiro Moe da Alice
 26100 0 0 0 0 0 # Paradise_Foxtail_Staff_II
 26101 0 0 0 0 0 # Paradise_Foxtail_Staff_III

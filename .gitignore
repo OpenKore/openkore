@@ -55,3 +55,4 @@ tables/iRO/Restart/skillnametable-custom.txt
 tables/**/portalsLOS.txt
 tables/**/npcs.txt
 tables/**/monsters.txt
+*.xpm

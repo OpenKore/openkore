@@ -1,6 +1,6 @@
-//PACKET KEY ! :0x7A645935,0x1DA05062,0x5A7A4C43;
-//Date:RagexeRE_2017_09_13b;
-//by sctnightcore
+#PACKET KEY ! :0x7A645935,0x1DA05062,0x5A7A4C43;
+#Date:RagexeRE_2017_09_13b;
+#by sctnightcore
 0064 55
 0065 17
 0066 3

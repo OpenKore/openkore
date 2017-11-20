@@ -24,6 +24,8 @@ package xConf;
 use strict;
 use Plugins;
 use Globals;
+use utf8;
+
 use Log qw(message error debug warning);
 
 Plugins::register('xConf', 'commands for change items_control, mon_control, pickupitems, priority', \&Unload, \&Unload);
@@ -280,7 +282,6 @@ sub priconf {
 	open(my $file,"<:utf8",$controlfile);
 	my @lines;
 	while (my $tmp = <$file>) {
-		$tmp =~ s/\x{FEFF}//g;
 		push @lines, $tmp if $tmp =~ /^#/;
 	}
 	push @lines, "\n";

@@ -2571,7 +2571,7 @@ sub processPartySkillUse {
 					next if (($char->{slaves}{$ID} ne $slavesList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				} elsif ($playersList->getByID($ID)) {
 					unless ($config{"partySkill_$i"."_notPartyOnly"}) {
-						next unless $char->{party} && $char->{party}{users}{$ID};
+						next unless $char->{party}{joined} && $char->{party}{users}{$ID};
 						
 						# party member should be online, otherwise it's another character on the same account (not in party)
 						next unless $char->{party}{users}{$ID}{online};
@@ -2629,7 +2629,7 @@ sub processPartySkillUse {
 			my $hp_diff;
 			my $modifier = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100);
 			
-			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
+			if ($char->{party}{joined} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
 			} elsif($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
@@ -3316,7 +3316,7 @@ sub processPartyShareAuto {
 	if (timeOut($timeout{ai_partyShareCheck})) {
 		if (!exists($char->{party}{shareTimes})) { $char->{party}{shareTimes} = 1; }
 		
-		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party} && %{$char->{party}} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
+		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party}{joined} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
 			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 			$char->{party}{shareTimes}++;
 			if ($char->{party}{shareTimes} > 5) {
