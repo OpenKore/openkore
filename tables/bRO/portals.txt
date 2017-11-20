@@ -252,20 +252,28 @@ moc_fild11 377 197 moc_fild20 36 177
 moc_fild13 32 171 moc_fild20 349 179
 moc_fild16 124 381 moc_fild20 197 24
 moc_fild16 333 380 moc_fild20 197 24
-moc_fild20 38 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 38 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 189 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 200 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 354 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 354 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 203 336 moc_fild01 86 32 0 c r1 c c c c r2
-moc_fild20 215 336 moc_fild01 86 32 0 c r1 c c c c r2
-moc_fild20 203 336 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 215 336 morocc 160 61 0 c r1 c c c c r1 c c r1
+moc_fild20 38 174 morocc 160 61 0 c r2
+moc_fild20 38 183 morocc 160 61 0 c r2
+moc_fild20 189 21 moc_fild16 124 372 0 c r2
+moc_fild20 200 21 moc_fild16 124 372 0 c r2
+moc_fild20 354 183 moc_fild13 41 171 0 c r2
+moc_fild20 354 174 moc_fild13 41 171 0 c r2
+moc_fild20 203 336 prt_fild10 263 34 0 c r2
+moc_fild20 215 336 prt_fild10 263 34 0 c r2
 morocc 299 207 moc_fild20 36 177
 prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 17 moc_fild20 209 333
 prt_fild10 263 23 moc_fild20 209 333
+moc_fild16 124 381 moc_fild20 208 207 0 c r2
+moc_fild16 124 381 moc_fild13 41 171 0 c r3
+moc_fild13 32 171 moc_fild16 124 372 0 c r4
+moc_fild13 32 171 morocc 160 61 0 c r3
+moc_fild13 32 171 moc_fild20 208 207 0 c r2
+prt_fild10 263 23 moc_fild07 337 209 0 c r4
+prt_fild10 263 23 morocc 160 61 0 c r3
+prt_fild10 263 23 moc_fild20 208 207 0 c r2
+moc_fild07 380 202 prt_fild10 263 34 c r3
+moc_fild07 380 202 moc_fild20 208 207 c r2
 
 # Dimensional Gorge (Episode 12)
 # moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
@@ -2911,3 +2919,7 @@ dic_dun01 165 227 dic_dun01 87 212
 dic_dun01 87 212 dic_dun01 169 227
 dic_dun01 28 156 dic_dun01 371 228
 dic_dun01 371 228 dic_dun01 32 156
+moc_prydb1 103 54 moc_prydn1 93 96 5000 c r0 c c r0 c c r0 c c r0 c
+moc_prydn1 94 98 moc_prydb1 100 57 0 c r0 c
+moc_prydn1 223 9 moc_prydn2 192 8
+moc_prydn2 195 8 moc_prydn1 220 9

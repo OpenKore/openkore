@@ -1,7 +1,7 @@
-//[Packet_Keys]
-//1 = 0x3E1411AF
-//2 = 0x6C744497
-//3 = 0x7CFA1BDE
+#[Packet_Keys]
+#1 = 0x3E1411AF
+#2 = 0x6C744497
+#3 = 0x7CFA1BDE
 
 
 0064 55

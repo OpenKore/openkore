@@ -593,6 +593,7 @@ sub initConnectVars {
 		delete $char->{muted};
 		delete $char->{party};
 		delete $char->{statuses};
+		$char->{party}{joined} = 0;
 	}
 	undef @skillsID;
 	undef @partyUsersID;
