@@ -5299,10 +5299,10 @@
 2564#Cauda_Feral#
 2843#Colar_com_Sino_Dourado#
 2844#Luz_de_El_Dicastes#
-4760#Pedra da Conjuração 1#
-4761#Pedra da Conjuração 2#
-4762#Pedra de Esquiva +6#
-4763#Pedra de Esquiva +12#
+4760#ATQM +1%#
+4761#ATQM +2%#
+4762#Esquiva +6#
+4763#Esquiva +12#
 4764#CRI+5#
 4765#CRI+7#
 4766#ATQ+2%#
@@ -5355,7 +5355,7 @@
 
 18659#Chapéu_de_Boitatá#
 18529#Rosa_Selvagem_Dorminhoca#
-4786#MDEF+2#
+4786#DEFM +2#
 4791#DEF+3#
 
 4480#Carta_Kiel_Selada#
@@ -5443,7 +5443,7 @@
 4844#Pedra de Crítico 5#
 4812#Pedra de Encantamento 4#
 4826#Pedra de Encantamento 5#
-4806#Pedra da Conjuração 3#
+4806#ATQM +3%#
 9051#Ovo_do_Atirador_de_Pedras#
 10033#Peruca_do_Atirador#
 12369#Óleo_de_Coco#
@@ -5518,16 +5518,16 @@
 4499#Carta_Samurai_Encarnado_Selada#
 4500#Carta_Senhor_dos_Orcs_Selada#
 4848#Redução_Neutra1#
-4849#Redução_Humanóide1#
-4852#Fator_de_Cura5#
+4849#Redução_Humanoide 1#
+4852#Arcebispo 4#
 4853#Super_Força#
 4854#Super_Agilidade#
 4855#Super_Vitalidade#
 4856#Super_Inteligência#
 4857#Super_Destreza#
 4858#Super_Sorte#
-4851#Fator_de_Cura4#
-4850#Fator_de_Cura3#
+4851#Arcebispo 3#
+4850#Arcebispo 2#
 4817#Pedra_de_Crítico_2#
 4816#Pedra_de_Crítico_3#
 4814#Pedra_de_Encantamento 2#
@@ -5623,12 +5623,12 @@
 17254#Caixa Memorável do Colar RWC#
 
 //-------RWC2012 enchant event material-------------
-4797#HP Máximo 3#
-4796#HP Máximo 2#
-4795#HP Máximo 1#
-4800#SP Máximo 2#
-4801#SP Máximo 4#
-4802#SP Máximo 5#
+4797#HP +300#
+4796#HP +200#
+4795#HP +100#
+4800#SP +50#
+4801#SP +100#
+4802#SP +150#
 4807#Vel. Ataque 1#
 4811#Espírito_do_Lutador_1#
 4815#Pedra_de_Encantamento_1#
@@ -5650,12 +5650,12 @@
 4842#Vel. Ataque 2#
 4859#Esquiva +1#
 4860#Esquiva +3#
-4861#HP Máximo 4#
-4862#HP Máximo 5#
-4867#HP Máximo 6#
-4868#HP Máximo 7#
-4870#SP Máximo 1#
-4871#SP Máximo 3#
+4861#HP +1%#
+4862#HP +2%#
+4867#HP +3%#
+4868#HP +4%#
+4870#SP +25#
+4871#SP +75#
 
 //----------2012 halloween---------------
 6654#Agulha e Linha#
@@ -5769,12 +5769,12 @@
 4797#HP + 300#
 4798#HP + 400#
 4799#HP + 500#
-4800#SP Máximo 2#
-4801#SP Máximo 4#
+4800#SP +50#
+4801#SP +100#
 4802#SP + 150#
-4803#Cura Nv. 1#
-4804#Catolicismo Nv. 1#
-4805#Arcebispo Nv. 1#
+4803#Cura 1#
+4804#Catolicismo 1#
+4805#Arcebispo 1#
 11519#Torrada_de_Carne#
 11520#Manga_de_Mora#
 11521#Suco_da_Fruta_da_Pinguicula#
@@ -6191,10 +6191,10 @@
 4869#Anti-Atraso 1#
 4872#Anti-Atraso 2#
 4873#Anti-Atraso 3#
-4863#Crítico 1#
-4864#Crítico 2#
-4865#Crítico 3#
-4866#Crítico 4#
+4863#Fatal 1#
+4864#Fatal 2#
+4865#Fatal 3#
+4866#Fatal 4#
 5873#Elmo de Siegfried#
 
 //XMAS 2013
@@ -7198,11 +7198,11 @@
 4893#DEF +15#
 4894#ATQ +4%#
 4895#ATQ +5%#
-4896#ATQM +2%#
-4897#ATQM +3%#
-4898#ATQM +4%#
-4899#ATQM +5%#
-4900#HPM +5%#
+4896#ATQM 2#
+4897#ATQM 3#
+4898#ATQM 4#
+4899#ATQM 5#
+4900#HP +5%#
 4908#Essência de Morroc FOR1#
 4909#Essência de Morroc FOR2#
 4910#Essência de Morroc FOR3#
@@ -7218,9 +7218,9 @@
 4916#Essência de Morroc AGI3#
 4905#ATQ +7%#
 4917#Essência de Morroc VIT1#
-4906#ATQM +6%#
+4906#ATQM 6#
 4918#Essência de Morroc VIT2#
-4907#ATQM +7%#
+4907#ATQM 7#
 4919#Essência de Morroc VIT3#
 4920#Essência de Morroc DES1#
 4921#Essência de Morroc DES2#
@@ -7230,7 +7230,7 @@
 4925#Essência de Morroc SOR3#
 4559#Carta do Rei Morroc#
 4882#ATQ +1%#
-4883#ATQM +1%#
+4883#ATQM 1#
 6684#Marca do Herói#
 6713#Alma de Ahat#
 6714#Alma de Shenime#
@@ -7851,7 +7851,7 @@
 19244#Rosário Dourado#
 20904#Bata de Etran#
 28944#Escudo de Sleiporing#
-5931#Niflheim Bunny Hat#
+5931#Chapéu de Poltergeist#
 //*****************************************************
 //------------Aplicar em 2017-10-17--------------------
 //*****************************************************
@@ -8021,4 +8021,13 @@
 19318#Rosário da Guarda Real#
 31152#Lacinho Vermelho da Piamette#
 31331#Bao-Bao da Donzela Verde#
+//*****************************************************
+//------------2017-11-21-------------------------------
+//*****************************************************
+28430#Anel do Cardeal#
+31289#Asinhas Estilosas (Baixo)#
+31264#Asinhas Elegantes (Baixo)#
+19296#Chapéu Chique com Pena#
+19316#Capuz de Esquilo#
+31203#Churrasquelmo#
 //file end
