@@ -1182,16 +1182,16 @@ sub map_loaded {
 		Plugins::callHook('in_game');
 		$timeout{'ai'}{'time'} = time;
 		our $quest_generation++;
+
+		$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
+		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
 	}
 
 	$char->{pos} = {};
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-	$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
-	$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 }
 
 sub actor_look_at {
@@ -2491,11 +2491,14 @@ sub party_join {
 	$name = bytesToString($name);
 	$user = bytesToString($user);
 
-	if (!$char->{party} || !%{$char->{party}} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
+	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
 			message TF("You joined party '%s'\n", $name), undef, 1;
-			$char->{party} = {};
+			# Some servers receive party_users_info before party_join when logging in
+			# This is to prevent clearing info already in $char->{party}
+			$char->{party} = {} unless ref($char->{party}) eq "HASH";
+			$char->{party}{joined} = 1;
 			Plugins::callHook('packet_partyJoin', { partyName => $name });
 		} else {
 			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
@@ -2531,6 +2534,7 @@ sub party_leave {
 		$actor = $char;
 		delete $char->{party};
 		undef @partyUsersID;
+		$char->{party}{joined} = 0;
 	}
 
 	if ($args->{result} == GROUPMEMBER_DELETE_LEAVE) {
@@ -2801,6 +2805,8 @@ sub private_message_sent {
 sub sync_received_characters {
 	my ($self, $args) = @_;
 
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+
 	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
 
 	unless ($net->clientAlive) {
@@ -2893,10 +2899,10 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO ))
 	) {
 		$net->setState(1.5);
-		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1') {
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
 			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
 			$charSvrSet{sync_CountDown}--;
 		}

@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x137C10ED, 0x15EF121D, 0x5BA40845
+sendCryptKeys 0x0B631FD0, 0x168603D2, 0x6DA37F6E
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x137C10ED, 0x15EF121D, 0x5BA40845
+sendCryptKeys 0x0B631FD0, 0x168603D2, 0x6DA37F6E
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -64,14 +64,14 @@ serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
 
-[Indonesia - idRO: Midgard]
-ip 202.43.167.67
+[Indonesia - idRO: Midgard,Asgard ,Valhalla]
+ip 202.93.25.131
 port 6900
 master_version 12
 version 2
 patchserver wpatch.ragnarok.co.id
 patchpath /patch02
-serverType idRO
+serverType idRO_Renewal
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -140,7 +140,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x4DE34E60, 0x4A5F4EDA, 0x129471FA
+sendCryptKeys 0x2C086579, 0x5CFD0D69, 0x59D610D1
 
 
 

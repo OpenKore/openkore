@@ -876,7 +876,7 @@ sub sendCharDelete2Accept {
 
 sub reconstruct_char_delete2_accept {
 	my ($self, $args) = @_;
-	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}\n", "sendPacket", 2;
+	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}\n", "sendPacket", 2;
 }
 
 # 0x082B,6

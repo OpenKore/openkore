@@ -37,9 +37,11 @@ use Interface;
 use Network;
 use Network::Send ();
 use Utils::Exceptions;
+use Network::MessageTokenizer;
 
 my $clientBuffer;
 my %flushTimer;
+my $currentClientKey = 0;
 
 # Members:
 #
@@ -66,6 +68,7 @@ sub new {
 	require Network::DirectConnection;
 	$self->{server} = new Network::DirectConnection($self);
 
+	$self->{tokenizer} = new Network::MessageTokenizer($self->getRecvPackets());
 	$self->{publicIP} = $config{XKore_publicIp} || undef;
 	$self->{client_state} = 0;
 	$self->{nextIp} = undef;
@@ -81,12 +84,6 @@ sub new {
 	}
 
 	message T("X-Kore mode intialized.\n"), "startup";
-
-	if (defined($config{gameGuard}) && $config{gameGuard} ne '2') {
-		require Poseidon::EmbedServer;
-		Modules::register("Poseidon::EmbedServer");
-		$self->{poseidon} = new Poseidon::EmbedServer;
-	}
 
 	return $self;
 }
@@ -231,8 +228,7 @@ sub clientFlush {
 }
 
 sub clientRecv {
-	my $self = shift;
-	my $msg;
+	my ($self, $msg) = @_;
 
 	return undef unless ($self->proxyAlive && dataWaiting(\$self->{proxy}));
 
@@ -243,11 +239,38 @@ sub clientRecv {
 		return undef;
 	}
 
-	# return $self->realClientRecv;
-	return $self->modifyPacketOut($msg);
+	if($self->getState() eq Network::IN_GAME || $self->getState() eq Network::CONNECTED_TO_CHAR_SERVER) {
+		$self->onClientData($msg);
+		return undef;
+	}
+
+	return $msg;
 }
 
+sub onClientData {
+	my ($self, $msg) = @_;
+	my $additional_data;
+	my $type;
 
+	while (my $message = $self->{tokenizer}->readNext(\$type)) {
+		$msg .= $message;
+	}
+	$self->decryptMessageID(\$msg);
+
+	$msg = $self->{tokenizer}->slicePacket($msg, \$additional_data); # slice packet if needed
+
+	$self->{tokenizer}->add($msg, 1);
+
+	$messageSender->sendToServer($_) for $messageSender->process(
+		$self->{tokenizer}, $clientPacketHandler
+	);
+
+	$self->{tokenizer}->clear();
+
+	if($additional_data) {
+		$self->onClientData($additional_data);
+	}
+}
 
 sub checkConnection {
 	my $self = shift;
@@ -257,12 +280,6 @@ sub checkConnection {
 
 	# Check server connection
 	$self->checkServer();
-
-	# Check the Poseidon Embed Server
-	if ($self->clientAlive() && $self->getState() == Network::IN_GAME
-	 && defined($config{gameGuard}) && $config{gameGuard} ne '2') {
-		$self->{poseidon}->iterate($self);
-	}
 }
 
 sub checkProxy {
@@ -347,6 +364,7 @@ sub checkServer {
 			$self->{nextPort} = $master->{port};
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 			eval {
+				$clientPacketHandler = Network::ClientReceive->new;
 				$packetParser = Network::Receive->create($self, $masterServer->{serverType});
 				$messageSender = Network::Send->create($self, $masterServer->{serverType});
 			};
@@ -483,6 +501,12 @@ sub modifyPacketIn {
 		$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$self->{nextPort} = $mapPort;
 		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
+		
+		# reset key when change map-server
+		if ($currentClientKey && $messageSender->{encryption}->{crypt_key}) {
+			$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+			$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
+		}
 
 		if ($switch eq "0071") {
 			message T("Closing connection to Character Server\n"), 'connection' if (!$self->{packetReplayTrial});
@@ -515,43 +539,6 @@ sub modifyPacketIn {
 	return $msg;
 }
 
-sub modifyPacketOut {
-	my ($self, $msg) = @_;
-	use bytes; no encoding 'utf8';
-
-	return undef if (length($msg) < 1);
-
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-
-	if (($switch eq "007E" && (
-			$masterServer->{serverType} == 0 ||
-			$masterServer->{serverType} == 1 ||
-			$masterServer->{serverType} == 2 ||
-			$masterServer->{serverType} == 6 )) ||
-		($switch eq "0089" && (
-			$masterServer->{serverType} == 3 ||
-			$masterServer->{serverType} == 5 )) ||
-		($switch eq "0116" &&
-			$masterServer->{serverType} == 4 ) ||
-		($switch eq "00F3" &&
-		  $masterServer->{serverType} == 10)) { #for vRO
-		# Intercept the RO client's sync
-
-		$msg = "";
-		$messageSender->sendSync() if ($messageSender);
-
-	} if ($switch eq "0228" && $self->getState() == Network::IN_GAME && $config{gameGuard} ne '2') {
-		if ($self->{poseidon}->awaitingResponse) {
-			$self->{poseidon}->setResponse($msg);
-			$msg = '';
-		}
-	}
-
-	return $msg;
-}
-
-
-
 sub getMainServer {
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my @servers = sort { lc($a) cmp lc($b) } keys(%masterServers);
@@ -565,6 +552,36 @@ sub getMainServer {
 			configModify('master', $servers[$choice], 1);
 		}
 	}
+}
+
+sub decryptMessageID {
+	my ($self, $r_message) = @_;
+
+	if(!$messageSender->{encryption}->{crypt_key} && $messageSender->{encryption}->{crypt_key_3}) {
+		$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+	} elsif(!$currentClientKey) {
+		return;
+	}
+
+	my $messageID = unpack("v", $$r_message);
+
+	# Saving Last Informations for Debug Log
+	my $oldMID = $messageID;
+	my $oldKey = ($currentClientKey >> 16) & 0x7FFF;
+
+	# Calculating the Encryption Key
+	$currentClientKey = ($currentClientKey * $messageSender->{encryption}->{crypt_key_3} + $messageSender->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
+
+	# Xoring the Message ID
+	$messageID = ($messageID ^ (($currentClientKey >> 16) & 0x7FFF)) & 0xFFFF;
+	$$r_message = pack("v", $messageID) . substr($$r_message, 2);
+
+	# Debug Log
+	debug (sprintf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($currentClientKey >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
+}
+
+sub getRecvPackets {
+	return \%rpackets;
 }
 
 return 1;
