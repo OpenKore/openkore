@@ -67420,6 +67420,12 @@ There are little bit of can in it too.
 ^ff0000It cannot be traded with other accounts.^000000
 Weight : ^7777771^000000
 #
+17517#
+Weight: 0
+Yo, I heard you like boxes
+When opened gives three Overseas Care Packages
+
+#
 17528#
 Just in time for Christmas is our assortment of fun wintertime costume hats! For 300 points you can let it go with this stylish box. Gives one of the following at random when opened
 Costume: Pink Wool Hat
