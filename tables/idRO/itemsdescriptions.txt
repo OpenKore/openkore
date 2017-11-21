@@ -45131,3 +45131,722 @@ Posisi : ^777777Atas ^000000Berat : ^7777770^000000
 Lv Dibutuhkan. : ^7777771^000000
 Job : ^777777Semua Job^000000
 #
+
+//--------------- Update 17 Oktober 2017--------------
+6243#
+Kupon yang bisa ditukarkan menjadi beragam hadiah menarik pada ^000088NPC Staff Penukaran^000000 yang terletak di Prontera.
+
+Berat : ^7777770^000000
+#
+7361#
+Kupon Hadiah untuk undian 
+^ff0000Headset Gaming Steelseries Siberia V3 Prism^000000
+
+Berat : ^7777770^000000
+#
+7362#
+Kupon Hadiah untuk undian 
+^ff0000Keyboard Gaming Steelseries Apex 100^000000
+
+Berat : ^7777770^000000
+#
+7363#
+Kupon Hadiah untuk undian 
+^ff0000Mouse Gaming Steelseries Kinzu V3 White^000000
+
+Berat : ^7777770^000000
+#
+7364#
+Kupon Hadiah untuk undian 
+^ff0000Merchandise RO Jaket Hoodie Angeling - Deviling^000000
+
+Berat : ^7777770^000000
+#
+7365#
+Kupon Hadiah untuk undian 
+^ff0000Merchandise RO T Shirt Job 2-2^000000
+
+Berat : ^7777770^000000
+#
+7366#
+Kupon Hadiah Non-undian
+^000088RO Cash 500.000 ^000000
+
+Berat : ^7777770^000000
+#
+7367#
+Kupon Hadiah Non-undian
+^000088RO Cash 175.000 ^000000
+
+Berat : ^7777770^000000
+#
+7368#
+Kupon Hadiah Non-undian
+^000088RO Cash 65.000 ^000000
+
+Berat : ^7777770^000000
+#
+7369#
+Kupon Hadiah Non-undian
+^000088RO Cash 35.000 ^000000
+
+Berat : ^7777770^000000
+#
+7370#
+Kupon Hadiah Non-undian
+^000088RO Cash 20.000 ^000000
+
+Berat : ^7777770^000000
+#
+7371#
+Kupon Hadiah Non-undian
+^000088RO Cash 10.000 ^000000
+
+Berat : ^7777770^000000
+#
+
+19115#
+Sebuah Costume Naga merah kecil di kepala.
+Series : ^777777Costume Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Top ^000000Weight : ^77777771^000000
+Required Lv.: ^7777771^000000
+Equip : ^777777All class^000000
+#
+16626#
+Sebuah Kotak yang berisikan half Asprika
+dapat digunakan selama 30 hari setelah box di buka
+^000088Rental item^000000
+Sebuah sayap terbuat dari semua cahaya yang ada di dunia.
+Menambah ketahanan serangan fisik semua elemen sebesar 15%
+FLEE + 15, MDEF + 2.
+Memungkinkan penggunaan skill Teleport Lv1
+Tidak dapat ditempa dan dihancurkan.
+Jenis : ^777777Garment^000000    Def : ^77777720^000000
+Berat : ^7777770^000000
+Digunakan Level: ^77777747^000000
+Profesi: ^777777Semua Job^000000
+^ff0000Setelah kamu membukanya,item tidak dapat di kembalikan .^000000
+Berat : ^7777771^000000
+#
+32076#
+Box yang di dalamnya terdapat 1 buah 
+^000088Garuda Hat (15 Hari)^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+32010#
+Box berisi 10 Buah Mental Potion.
+Potion yang penuh dengan semangat.
+Meningkatkan MaxSP +10%. Konsumsi SP - 10%
+Berat : ^7777771^000000
+#
+14600#
+^ff0000Item ini tidak dapat ditransaksikan.^000000
+Potion yang penuh dengan semangat.
+Meningkatkan MaxSP +10%. Konsumsi SP - 10%.
+Berat : ^7777771^000000
+#
+32067#
+Gelang khusus pemula.
+MHP + 1000
+SP + 150
+ATK +15
+MATK +15
+^ff0000Effect tidak berlaku untuk karakter level 70 atau lebih.^000000
+Jenis : ^777777Aksesoris^000000
+DEF : ^7777770^000000      Berat : ^7777770^000000
+Minimum Lv: ^77777730^000000
+Untuk Profesi : ^777777Semua Profesi kecuali Novice^000000
+#
+2766#
+Figur seorang Swordman. Memancarkan aura kehormatan dari job yang mewakilinya.
+Vit + 1, efek tambahan: DEF + 2 saat digunakan oleh job Swordman
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2767#
+Figur seorang Acolyte, memancarkan kekuatan kebijakan dan cahaya.
+Int + 1, efek tambahan: SP + 50 saat digunakan oleh job Acolyte
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2768#
+Figur seorang Mage, memancarkan kekuatan kebijakan dan mistik.
+Int + 1, efek tambahan: Pemulihan SP bertambah sebesar 5% saat digunakan oleh job Mage
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2769#
+Figur seorang Archer, yang membuat pemakainya merasa dapat melihat lebih baik.
+Dex + 1, efek tambahan: ATK + 10 saat digunakan oleh job Archer
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2770#
+Figur seorang Thief, yang mempunyai senyuman licik.
+Agi + 1, efek tambahan: Meningkatkan kecepatan serangan (delay serangan berkurang sebesar 3%) saat digunakan oleh job Thief
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+2771#
+Figur seorang Merchant, yang membuat pemakainya merasa lebih kuat.
+Str + 1, efek tambahan CRI +5 saat digunakan oleh job Merchant
+Class : ^777777Aksesoris^000000
+Defense : ^7777770^000000
+Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+
+//----------------------Update 18 Oktober 2017--------------
+12515#
+Sebuah botol sedang berisi sari buah Yggdrasilberry yang efektif menyembuhkan luka.
+Memberikan regenerasi HP sebesar 7% dari Maksimum HP setiap 4 detik selama 10 menit Tidak dapat digunakan ketika menggunakan Skill Frenzy.
+Efek hilang ketika karakter mati.
+^ffffff_^000000
+Berat: ^7777771^000000
+#
+12495#
+Sebuah panduan tentang efektivitas dari cara sebuah pertarungan.
+Sangat detail dan mudah dimengerti.
+^000088Exp meningkat 50% selama 30 menit.^000000
+^ffffff_^000000
+Berat : ^7777771^000000
+#
+12523#
+Gulungan untuk yang memiliki spesial efek yaitu memberikan level 10 Increase AGI 
+^ffffff_^000000
+Berat : ^7777771^000000
+#
+12522#
+Gulungan untuk yang memiliki spesial efek yaitu memberikan level 10 blessing.
+^ffffff_^000000
+Berat : ^7777771^000000
+#
+16627#
+The box with Half Brynhild
+Dapat digunakan selama 7 Hari
+^000088Rental item^000000
+Brynhild adalah lambang dari keberanian Valkyrie, yang berarti "Pertahanan Kesatria
+Menambah maksimal HP sebesar Base Level*20. Menambah maksimal SP sebesar Base Level*5.
+Kekuatan serangan Fisik meningkat 5%, Kekuatan serangan Magic meningkat 5%
+MDEF + 5.
+Tidak dapat dikembalikan, di transaksikan, di hancurkan.
+Jenis : ^777777Armor^000000    Defense : ^77777760^000000
+Berat: ^7777770^000000
+Digunakan Level : ^77777747^000000
+Profesi : ^777777All Profesis^000000
+^ff0000Setelah di buka Item tidak dapat dikembalikan^000000
+Berat: ^7777771^000000
+#
+
+//--------------- Update 24 Oktober 2017--------------
+20510#
+Sayap permata yang terbuat dari pedang
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Garment Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+20761#
+Sayap pembawa kebahagiaan.
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Garment Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+20762#
+Sayap dari iblis terkuat
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Garment Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+//--------------- Update 7 November 2017--------------
+2149#
+Sebuah Guard yang dibentuk dari campuran Elunium dan emas murni
+MaxHP + 3%
+Jenis : ^777777Perisai^000000    Tk Def : ^77777725^000000
+Berat : ^77777715^000000
+Untuk Profesi : ^777777Semua Profesi^000000
+#
+15021#
+Sebuah pakaian formal yang dibuat dari campuran Elunium dan emas.
+MaxHP +3%
+Jenis : ^777777Armor ^000000    Tk Def : ^77777745^000000
+Berat : ^77777715^000000
+Untuk Profesi : ^777777Semua Profesi^000000
+#
+2563#
+Manteau yang dibentuk dari campuran Elunium dan emas murni.
+Sebuah 
+MaxHP + 3%
+Jenis : ^777777Garment ^000000    Tk Def : ^77777718^000000
+Berat : ^77777730^000000
+Untuk Profesi : ^777777Hanya untuk Class Thief, Merchant & Swordmand^000000
+#
+2459#
+Sepatu yang terbuat dari campuran Elunium dan emas murni.
+MaxHP + 3%
+Jenis : ^777777Alas kaki^000000    Tk Def : ^77777715^000000
+Berat : ^77777720^000000
+Untuk Profesi : ^777777Semua Profesi^000000
+#
+18892#
+[^ff0000^Ragnarok Festival 2017^000000]
+Aku datang dengan damai ! Bawalah aku kepada pemimpinmu, Poring!!!
+MDEF, Kritikal, Flee, Hit, dan Perfect Dodge + 5
+Jika tingkat tempa mencapai +7, akan mengurangi casting time sebesar 5%
+Jika tingkat tempa mencapai +9, akan mengurangi delay skill sebesar 5%
+Jenis : ^777777Pelindung Kepala^000000 Def : ^7777775^000000
+Digunakan di : ^777777Atas ^000000Berat : ^7777770^000000
+Dibutuhkan level : ^77777710^000000
+Profesi : ^777777Semua Job^000000
+#
+20249#
+Sebuah wig yang terinspirasi ketika mereka telah mencapai batas kekuatan mereka.
+Jenis : ^777777Costume^000000
+Tk Def: ^7777770^000000
+Posisi: ^777777Atas^000000
+Berat: ^7777770^000000
+Minimum Lv: ^7777771^000000
+Job: ^777777Semua Profesi^000000
+#
+14615#
+Box yang berisi :
+^00008810 STR Biscuit Stick^000000
+^00008810 AGI Biscuit Stick^000000
+^00008810 VIT Biscuit Stick^000000
+^00008810 INT Biscuit Stick^000000
+^00008810 DEX Biscuit Stick^000000
+^00008810 LUK Biscuit Stick^000000
+
+Berat : ^7777771^000000
+#
+13802#
+Box yang berisi 1 buah Bloody Iron Ball 7 hari
+
+Berat : ^7777771^000000
+#
+13718#
+Box yang berisi 10 buah Abrasive.
+
+Berat : ^7777771^000000
+#
+13720#
+Box yang berisi 10 buah Regeneration Potion.
+
+Berat : ^7777771^000000
+#
+32114#
+Box yang berisi salah satu item dibawah ini secara acak :
+^000088Upg Formal Dress^000000
+^000088Upg Guard^000000
+^000088Upg Manteau^000000
+^000088Upg Shoes^000000
+
+Berat : ^7777771^000000
+#
+32125#
+Box yang berisi salah satu item dibawah ini secara acak :
+^000088C Worg In Mouth^000000
+^000088C Spirit Of Chung E^000000
+^000088C Lightning Speed^000000
+
+Berat : ^7777771^000000
+#
+32126#
+Box yang berisi salah satu item dibawah ini secara acak :
+^000088C Unidentified Flying Object^000000
+^000088C Little Mermaid^000000
+^000088C Subject Aura^000000
+
+Berat : ^7777771^000000
+#
+12441#
+Meningkatkan Drop rate sebesar 100% selama 15 Menit
+
+Berat : ^7777770^000000
+#
+12439#
+Meningkatkan Exp rate sebesar 100% selama 15 Menit
+
+Berat : ^7777770^000000
+#
+32113#
+Kupon yang didapat dari event Valhalla Point Reward yang dapat ditukarkan dengan beragam hadiah Spesial di NPC Staff Event Valhalla.
+
+Berat : ^7777770^000000
+#
+
+32127#
+Sebuah benda unik yang melayang. Tidak banyak yang tau mengenai asal usulnya.
+Jenis : ^777777Costume^000000
+Tk Def : ^7777770^000000
+Dipakai di : ^777777Atas^000000
+Berat : ^7777770^000000
+Level Persyaratan : ^7777771^000000
+Untuk Profesi : ^777777Semua Profesi^000000
+#
+
+31300#
+[^ff0000Limited item Quiz RO Fest 2017^000000]
+Syal hangat yang membuat suasana penuh cinta
+Jenis : ^777777Costume Headgear^000000 Tk Def : ^7777770^000000
+Posisi : ^777777Bawah ^000000 Berat : ^7777770^000000
+Level Persyaratan : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+//=================== UPDATE Ragnarok Festival 2017 =======================
+32159#
+RSK01
+Box berisi Kostum Limited Headgear (Permanen) secara Acak.
+^000088(C. Red Eremes Scarf, C. Firefox Scarf, C. Scratching Cat)^000000
+Berat : ^7777771^000000
+#
+
+32160#
+RSK02
+Box berisi Kostum Limited Headgear (Permanen) secara Acak.
+^000088(C. Love Cheek, C. Vampire Farmiliar, C. Servant Devilring)^000000
+Berat : ^7777771^000000
+#
+
+32161#
+RSK03 - Khusus Member Sedayu One Card
+Box berisi Kostum Limited Headgear (Permanen) secara Acak.
+^000088(C. Wolf Musketeer, C. Baphomet Hat, C. Piggyback)^000000
+Berat : ^7777771^000000
+#
+
+32162#
+RSK04 - Khusus Member Sedayu One Card
+Box berisi Kostum Limited Headgear (Permanen) secara Acak.
+^000088(C. Alice Wig, C. Nydhog Wig, C. Eleanor Wig)^000000
+Berat : ^7777771^000000
+#
+
+32163#
+RSK05
+^000088VALHALLA^000000
+Box berisikan rental item berdurasi 7 hari & Item Consumable
+^000088(1 buah Bloody Shackle Ball, 1 buah Hyper Pendant, 5 buah SP D Potion, 20 buah Medium Life Potion, 20 buah ASPD intensifying Potion)^000000
+
+
+^000088ASGARD & MIDGARD^000000
+Box berisikan Paket equip permanen
+^000088(1 buah Recovery Ring [1] & 1 buah Sigrun's Wing^000000
+Berat : ^7777771^000000
+#
+
+32164#
+RSK06
+^000088VALHALLA^000000
+Box berisikan salah satu Headgear (Permanen) secara Acak
+^000088(1 buah Black Devil Mask, Lovelove Ballon,  Rideword Hat [1], Love Arrow)^000000
+
+^000088ASGARD & MIDGARD^000000
+Box berisikan Paket equip permanen
+^000088(1 buah Talaria Shoes [1] & 1 buah Black Devil Mask [1]^000000
+Berat : ^7777771^000000
+#
+
+32165#
+RSK07
+Box berisikan Paket item sebagai berikut 
+^000088(1 buah Safe to 7 Armor Certificate & 5 buah Blessed Weapon Ore)^000000
+Berat : ^7777771^000000
+#
+
+32166#
+RSK08
+Box berisikan Paket item sebagai berikut 
+^000088(1 buah Safe to 7 Weapon Certificate & 5 buah Blessed Armor Ore)^000000
+Berat : ^7777771^000000
+#
+
+32167#
+RSK09
+Box berisikan Paket item sebagai berikut 
+^000088(1 buah Fallen Angel Wing [1] & 1 buah RWC 2010 Indonesia Cap [1])^000000
+Berat : ^7777771^000000
+#
+
+18914#
+^000088Costume Servant Devilring^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Middle^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31179#
+^000088Costume Wolf Musketeer^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Upper Middle Lower^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+20234#
+^000088Costume Baphomet Hat^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Upper Middle Lower^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+18610#
+^000088Costume Cat ears Beret^000000
+sebuah Costume beret lucu yang membuat kita seolah-olah seperti kucing karena hiasan telinganya.
+
+Jenis : ^777777Costume^000000 
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Upper^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31254#
+^000088Costume Horse King^000000
+
+Jenis : ^777777Costume^000000 
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Upper Middle Lower^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+14072#
+Box yang di dalamnya terdapat 1 buah 
+^000088Bloody Iron Ball 30 Hari^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+17153#
+Box yang di dalamnya terdapat 1 buah 
+^000088Brave Pendant (30 Hari)^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+32158#
+Box Spesial yang berisikan bermacam-macam Kartu Boss dan Kartu Mini Boss yang tersedia pada RO Renewal
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+13803#
+Box yang di dalamnya terdapat 1 buah 
+^000088Spritual Ring (7 hari)^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+14391#
+Box yang di dalamnya terdapat 1 buah 
+^000088Eternal Eye (7 hari)^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+2908#
+^000088Eternal Eye^000000
+ASPD +7%, ATK +7%, Crit +7
+Class : ^777777Aksesoris^000000
+Pertahanan : ^7777770^000000      Berat : ^77777710^000000
+Job : ^777777Semua job^000000
+#
+
+5975#
+^000088C. Flying Galapago^000000
+
+Galapago yang terbang dilangit. Dia bermimipi terbang dengan usahanya sendiri. 
+
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Middle^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+
+5977#
+^000088C. Blank Eyes^000000
+Lensa mata yang unik dan lucu jika kamu memakainya bentuk mata karakter kamu akan seperti mata dalam Ragnarok Battle.
+
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Costume Middle^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+32168#
+Box yang berisi 1 buah 
+^000088Buwaya Agimat Tattoo 7 Hari^000000
+
+Berat : ^7777771^000000
+#
+
+32169#
+Box Spesial yang berisikan 1 buah bahan Godly Item random
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+5976#
+Topi khusus dengan lampu neon di atas, yang didedikasikan untuk merayakan Ragnarok Festival 2017.
+Mengurangi serangan demi-Human 10%
+Max HP+ 3%, ATK/MATK+ 3%
+Jenis : ^777777Headgear^000000 Tk Def : ^7777776^000000
+Posisi : ^777777Atas^000000 Berat : ^77777710^000000
+Level Persyaratan : ^77777715^000000
+Profesi : ^777777Semua job^000000
+#
+
+32059#
+^000088Costume Wandering Wolf Helm^000000
+Costume kebanggaan dari suku serigala utara.
+Dibuat dari bulu Wolf King dan si pemakai akan merasa di kelilingi oleh aura kehormatan pada saat memakainya.
+Jenis : ^777777Costume^000000
+Tk Def : ^7777770^000000  
+Posisi : ^777777Atas-Tengah^000000
+Berat : ^7777770^000000
+Level Persyaratan : ^7777770^000000
+Untuk Profesi : ^777777Semua^000000
+#
+
+31186#
+^000088Costume Black Cat^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Middle Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31178#
+^000088Costume Flame Muffler^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Lower Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31120#
+^000088Costume Vampire Familiar^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Lower Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31165#
+^000088Costume Piggyback^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Upper Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+31329#
+^000088Costume Alice Wig^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Upper Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+31149#
+^000088Costume Nydhog Wig^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Upper Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+31062#
+^000088Costume Eleanor Wig^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Upper Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+20255#
+^000088Costume Love Cheek^000000
+Jenis : ^777777Costume^000000
+Def : ^7777770^000000
+Digunakan di : ^777777Middle Costume^000000
+Berat : ^7777771^000000
+Diperlukan Lv. : ^7777771^000000
+Profesi : ^777777Semua Profesi^000000
+#
+
+32077#
+Box yang di dalamnya terdapat 1 buah 
+^000088Hyper Pendant (7 Hari)^000000
+
+^ff0000Tidak dapat ditransaksikan^000000
+Berat : ^7777771^000000
+#
+
+32069#
+^ff0000Veteran Accessory^000000
+Meningkatkan Max HP dan SP +10%.
+Jika digunakan Class Swordman, maka ATK +10%.
+Jika digunakan Class Acolyte, maka DEF elemen netral +10% dan kekuatan Heal +50%. 
+Jika digunakan Class Merchant, maka ATK +10%.
+Jika digunakan Class Thief, maka ASPD +2 dan tingkat kritikal +10%.
+Jika digunakan Class Archer, maka kekuatan serangan jarak jauh +10%.
+Jika digunakan Class Mage, maka MATK +10%.
+Jenis : ^777777Aksesoris^000000
+DEF : ^7777770^000000      Berat : ^7777770^000000
+Job : ^777777Semua Profesi^000000
+#

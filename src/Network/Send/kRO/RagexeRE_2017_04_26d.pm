@@ -10,10 +10,10 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
 
-package Network::Send::kRO::RagexeRE_2017_04_25d;
+package Network::Send::kRO::RagexeRE_2017_04_26d;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2017_04_19);
+use base qw(Network::Send::kRO::RagexeRE_2017_04_19b);
 
 sub new {
 	my ($class) = @_;

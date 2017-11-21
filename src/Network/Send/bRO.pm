@@ -20,12 +20,19 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
+	my %packets = (
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		master_login 02B0
 		buy_bulk_vender 0801
 		party_setting 07D7
 		send_equip 0998
 		pet_capture 08B5
+		char_delete2_accept 098F
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -62,6 +69,13 @@ sub sendTop10Taekwon {
 
 sub sendTop10PK {
 	sendTop10(shift, 0x3);
+}
+
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
+
+	$args->{length} = 8 + length($args->{code});
+	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 1;

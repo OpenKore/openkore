@@ -1186,6 +1186,7 @@
 2161#Geffenia_Water_Book#
 2162#Bible_of_Promise(2nd_Vol.)#
 2164#Sombre_Shield#
+2165#Sol_Shield#
 2168#Immune_Shield#
 2169#Kalasag#
 2170#Kalasag(Bayani)#
@@ -1841,6 +1842,7 @@
 2907#Buwaya_Agimat_Tattoo#
 2910#Bakonawa_Agimat_Tattoo#
 2911#Bangungot_Agimat_Tattoo#
+2913#Thief_Handcuffs#
 2914#Left_Eye_Of_An_Wizard#
 2915#Ettlang_Keepsake#
 2916#Fairy_Wing#
@@ -3566,8 +3568,10 @@
 5912#Costume_Servant_Deviling#
 5916#Exorcist_Glasses#
 5921#Monster_Fish_Gills#
+5924#Dragon_Knight_Eye_Patch#
 5933#Crow_Tengu_Mask#
 5937#Flying_Helmet#
+5938#Octopus_Hat#
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
@@ -6035,6 +6039,7 @@
 13206#Surplus_Flash_Grenade#
 13207#Surplus_Cryo_Grenade#
 13208#GongBug#
+13209#Full_Metal_Jacket#
 13210#Slug_Shot_L#
 13211#Slug_Shot_M#
 13212#Slug_Shot_H#
@@ -6899,7 +6904,7 @@
 15037#Peuz's_Plate#
 15038#Sapha's_Cloth#
 15039#Nab's_Cloth#
-15040#Prison_Uniform#
+15040#Prisoner's_Uniform#
 15041#Boitata_Armor#
 15042#White_Wing_Suits#
 15043#Black_Wing_Suits#
@@ -6957,6 +6962,8 @@
 15125#Female_Diver's_Suit#
 15126#Doram_Suit#
 15129#Luxurious_Doram_Suit#
+15130#Dragon_Mail#
+15135#Dragon_Cloth#
 15138#Egir_Armour#
 15139#Shepherd_Cloth#
 15140#Natural_Clothes#
@@ -7587,6 +7594,7 @@
 17878#RESTARTer_Pack_Plus#
 17892#Overseas_Care_Package_X#
 17893#Overseas_Care_Package_XI#
+17900#Overseas_Care_Package_XII#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8058,6 +8066,7 @@
 19208#Classic_Small_Life_Potion_10_Box#
 19209#Classic_Giant_Flywing_500_Box#
 19212#Malangdo_Pirate_Hat#
+19269#Happy_Flapping_Angel_Wings#
 19377#Shiny_Marinade_Beef#
 19378#Chile_Shrimp_Gratin#
 19379#Red_Mushroom_Wine#
@@ -8662,6 +8671,7 @@
 20499#Costume_Cat_Ear_Hat#
 20500#Costume:_Archangel_Wing#
 20700#Egir_Manteau#
+20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
 20703#TE_WoE_Cloak#
 20704#TE_WoE_Magic_Cloak#
@@ -8722,6 +8732,7 @@
 20822#Mine_Worker's_Backpack#
 20834#Drifter's_Cape#
 20836#Skin_of_Lindwyrm#
+20837#Skin_of_Gwiber#
 20845#Malach's_Skin#
 20846#Temporal_Manteau#
 21001#Bellum_Claymore#
@@ -8762,6 +8773,7 @@
 22044#Upgrade_Part_-_Booster#
 22046#Airship‘s_Boots#
 22047#Felrock‘s_Boots#
+22049#Sol_Shoes#
 22050#Gardener_Shoes#
 22052#Gravekeeper_Shoes#
 22055#Sharel_Shoes#
@@ -8779,6 +8791,18 @@
 22085#Elegant_Doram_Shoes#
 22103#Excelion_Leg#
 22104#Pororoca_Shoes#
+22107#Modified_Str_Boots#
+22108#Modified_Int_Boots#
+22109#Modified_Agi_Boots#
+22110#Modified_Vit_Boots#
+22111#Modified_Dex_Boots#
+22112#Modified_Luk_Boots#
+22113#Modified_Str_Boots#
+22114#Modified_Int_Boots#
+22115#Modified_Agi_Boots#
+22116#Modified_Vit_Boots#
+22117#Modified_Dex_Boots#
+22118#Modified_Luk_Boots#
 22131#Spurred_Boots#
 22138#Devil_Worshipper_Shoes#
 22507#Old_Scroll#
@@ -8911,6 +8935,10 @@
 23507#October_Costume_Box#
 23508#iRO_2017_Oct_CosBox2#
 23516#November_Costume_Box_Ani_Maul#
+23600#Prisoner_Bundle_A#
+23601#Imperial_Bundle_A#
+23602#Giant_Bundle_A#
+23603#Sol_Bundle_B#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9034,6 +9062,7 @@
 25132#Pumpkin_Decorations#
 25133#Dry_White_Stem#
 25142#Doram_token#
+25187#Slug_Bullet#
 25233#Cotton_Tufts#
 25245#Small_pile_of_bones#
 25246#Juice_Mix_Package#
@@ -9102,12 +9131,14 @@
 28326#Broken_Chip_01#
 28327#Broken_Chip_02#
 28332#Jewerly_Ring#
+28342#Critical_Anklet#
 28353#Vesper_Gear_02#
 28354#City_Map#
 28355#Shining_Holy_Water#
 28356#Prontera_Badge#
 28358#Cursed_Lucky_Clover#
 28359#Vesper_Gear_04#
+28372#Imperial_Ring#
 28374#Foxtail_Ring#
 28377#Magical_Ring#
 28379#Shadow_Ring#
@@ -9147,6 +9178,8 @@
 28503#Keraunos#
 28507#Magician's_Gloves#
 28513#Celine's_Brooch#
+28520#Egir_Ring#
+28521#Giant's_Protection#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
@@ -9164,6 +9197,7 @@
 28902#Mad_Bunny_Special#
 28903#Scutum#
 28910#Imuke_Upper_Shield#
+28916#Gaia_Shield#
 28921#Anemos_Shield#
 29000#Rune_of_Intellect_Lv_1#
 29001#Rune_of_Intellect_Lv_2#

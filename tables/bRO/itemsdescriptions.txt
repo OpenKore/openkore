@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 23/10, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 24/10. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 04/12, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 05/12. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -40631,6 +40631,7 @@ Produção especial de Malangdo, enlatado para que você possa guardar com facil
 ^0000ffEXP adquirida por monstros +10%.^000000
 ^0000ffTaxa de DROP +20%.^000000
 Duração: ^77777720 minutos^000000
+^FF0000Atenção! O item não pode ser negociado, colocado no carrinho, vendido em NPC nem jogado ao chão, mas pode ser colocado na Kafra .^000000
 Peso: ^7777775^000000
 #
 12636#
@@ -56086,7 +56087,7 @@ Classes: ^777777Todas^000000
 19291#
 Um doge super fofinho para te acompanhar aonde quer que você vá. Tão melhor amigo. Muita fofura. Uau.
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Baixo^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
@@ -56150,7 +56151,7 @@ Classes: ^777777Todas^000000
 31152#
 Um lacinho de seda vermelha que foi utilizado pelo coelhinho sangrento do MVP Piamette. Não se preocupe, o lacinho está limpo e cheirosinho, e parece que foi lavado antes de chegar até as suas mãos. Ei, espera aí, isso aqui é uma mancha de sangue?
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Topo^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -56159,6 +56160,144 @@ Classes: ^777777Todas^000000
 Um delicado acessório de algodão, utilizado para prender os cabelos em coques durante as batalhas, e evitar que eles fiquem caindo no seu rosto. Este Bao Bao é uma réplica do mesmo acessório para coques de cabelo que a Donzela Verde utiliza. Muito útil e superestiloso!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------2017-11-21-------------------------------
+//*****************************************************
+28430#
+Um anel que carrega as bênçãos da igreja de Odin. Apesar de abençoarem qualquer tipo de usuário, esses anéis são ainda mais poderosos nas mãos de Arcebispos ou daqueles com poderes sagrados.
+^0000ffSOR +2.^000000
+^0000ffEsquiva perfeita +5.^000000
+^0000ffCusto de SP de habilidades -5%.^000000
+^0000ffEfetividade de cura +15%.^000000
+^0000ffEfetividade de cura recebida +15%.^000000
+^FF6347Conjunto^000000
+^FF6347[Arcebispo 1]^000000
+^0000ffSOR +2 adicional.^000000
+^0000ffEsquiva perfeita +5 adicional.^000000
+^0000ffEfetividade de cura +3% adicional.^000000
+^0000ffCusto de SP de habilidades -5% adicional.^000000
+[Curatio]:
+^0000ffConjuração variável -100%.^000000
+^FF6347Conjunto^000000
+^FF6347[Arcebispo 2]^000000
+^0000ffSOR +2 adicional.^000000
+^0000ffEsquiva perfeita +5 adicional.^000000
+^0000ffEfetividade de cura +3% adicional.^000000
+^0000ffCusto de SP de habilidades -5% adicional.^000000
+[Curatio]:
+^0000ffTempo de recarga -1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Catolicismo 1]^000000
+^0000ffSOR +2 adicional.^000000
+^0000ffEsquiva perfeita +5 adicional.^000000
+^0000ffEfetividade de cura +3% adicional.^000000
+^0000ffCusto de SP de habilidades -5% adicional.^000000
+[Sopro Divino]:
+^0000ffCusto de SP -20.^000000
+^0000ffConjuração variável -100%.^000000
+^FF6347Conjunto^000000
+^FF6347[Cura 1]^000000
+^0000ffSOR +2 adicional.^000000
+^0000ffEsquiva perfeita +5 adicional.^000000
+^0000ffEfetividade de cura +3% adicional.^000000
+^0000ffCusto de SP de habilidades -5% adicional.^000000
+[Epiclesis]
+^0000ffCusto de SP -100.^000000
+^0000ffTempo de recarga -10 segundos.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+31289#
+Belas asas de penas negras decoradas com rosas púrpuras, para um visual mais sóbrio e estiloso para aquecer suas orelhas, mas que são equipadas no slot de baixo do seu rosto.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31264#
+Belas asas decoradas com rosas púrpuras que aquecem suas orelhas, mas são equipadas no slot de baixo do seu rosto.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19296#
+Qualquer um sabe que chapéus com penachos já são naturalmente chiques, tanto que são favoritos de bardos a mosqueteiros. Bastou, então, adicionar um laço e cores mais sóbrias pra conseguir um chapéu realmente elegante.
+^0000ffA cada 2 refinos:^000000
+^0000ffATQ +15.^000000
+Refino +7 ou mais:
+^0000ffDano físico a distância +7%.^000000
+Refino +9 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +11 ou mais:
+^0000ffDano físico a distância +5% adicional.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Couro de Leão de Vinhas]^000000
+A cada 2 refinos da capa:
+^0000ffDano de [Temporal de Mil Flechas] +7%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedaço de Pele do Guardião]^000000
+A cada 2 refinos da capa:
+^0000ffDano de [Tempestade de Flechas] +12%.^000000
+^FF6347Conjunto^000000
+^FF6347[Capa do Marquês]^000000
+A cada 2 refinos da capa:
+^0000ffDano de [Disparo Triplo] +15%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19316#
+Mais do que um simples visual, esse chapéu carrega o verdadeiro poder da super-heroína, Garota Coco. Você pode achar que uma garota capaz de falar com Cocos e mastigar madeira não é lá super poderosa, mas ela já derrotou o maléfico vilão Dhanos sozinha!
+^0000ffCRIT a distância +5.^000000
+^0000ffDano crítico +10%.^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffIgnora 10% da DEF de todas as raças.^000000
+Refino +7 ou mais:
+^0000ffCRIT a distância +10 adicional.^000000
+^0000ffDano crítico +2% adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffIgnora 15% adicional da DEF de todas as raças.^000000
+Refino +9 ou mais:
+^0000ffCRIT a distância +15 adicional.^000000
+^0000ffDano crítico +6% adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffIgnora 20% adicional da DEF de todas as raças.^000000
+Refino +11 ou mais:
+^0000ffCRIT a distância +20 adicional.^000000
+^0000ffDano crítico +12% adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffIgnora 25% adicional da DEF de todas as raças.^000000
+Ao realizar ataques físicos:
+^0000ff7% de chance de ativar um [efeito] por 5 segundos.^000000
+^FF6347Efeito:^000000
+^0000ffDano crítico +100%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+31203#
+Churrasquelmo, o elmo churrasqueira é uma das primeiras e incríveis invenções criadas pela Corporação Rekenber usando a tecnologia futurística de Verus! Perfeito pra quem tem cabeça quente e tá sempre com a cabeça fervendo de ideias.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
