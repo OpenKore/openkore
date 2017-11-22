@@ -7523,6 +7523,7 @@
 17507#Kit_Costume_Box#
 17508#Kitcoin_Purse#
 17509#Kitcoin_40_Box#
+17517#Overseas_Care_Boxception#
 17528#Costama_Frozen_II#
 17569#Sky_Fortress_Ticket_1_Hour_Box#
 17570#Sky_Fortress_Ticket_3_Hour_Box#
