@@ -18,8 +18,7 @@
 package Network::Send::kRO::Sakexe_0;
 
 use strict;
-use base qw(Network::Send::kRO);
-use Network::Send::ServerType0();
+use base qw(Network::Send::ServerType0);
 
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
