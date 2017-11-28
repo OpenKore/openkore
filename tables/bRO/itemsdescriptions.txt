@@ -35320,13 +35320,13 @@ Classe : ^777777Todas as classes^000000
 #
 18538#
 'Confeccionado' em Niflheim, esse pequeno espírito travesso está pronto para fazer sua cabeça e possuir seu cor... quer dizer, dar ótimos conselhos! Enquanto estiver controla... err... aconselhado por este simpático ser do além, o bem e o mal serão conceitos sem importância.
-^0000ffDEFM +1.^000000
+^0000ffDEFM +3.^000000
 ^0000ffResistência as raças Anjo e Demônio +1%.^000000
 Ao derrotar monstros da raça Anjo:
 ^0000ff4% de chance de derrubar [Água Benta].^000000
 Ao derrotar monstros da raça Demônio:
 ^0000ff4% de chance de derrubar [Água Amaldiçoada].^000000
-Tipo: ^777777Equipamento para cabeça^000000
+Tipo: ^777777Equipamento para Cabeça ^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777773^000000
 Peso: ^77777730^000000
@@ -38573,8 +38573,7 @@ Nível Necessário : ^77777720^000000
 Classes : ^777777Todos exceto Aprendiz^000000
 #
 18703#
-Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.
-Aumenta em 20% a tolerância contra o status Veneno.
+Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.Aumenta em 20% a tolerância contra o status Veneno.
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa: ^7777770^000000
 Equipa em : ^777777Baixo^000000
@@ -40089,11 +40088,9 @@ Refino +10 ou mais:
 ^0000ffTodas as magias anteriores passam a ser autoconjuradas em nível 5.^000000
 Tipo : ^777777Espada de uma mão^000000
 Ataque : ^777777165^000000
-
-Peso : ^777777200^000000Nível da Arma : ^7777774^000000
+Peso : ^777777200^000000Nível da Arma : ^7777774^000000
 Nível Requerido : ^777777105^000000
-
-Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
+Classes : ^777777Aprendiz, Espadachim, Mercadores, Gatunos e suas respectivas evoluções.^000000
 #
 4503#
 DES +2.
@@ -40771,8 +40768,7 @@ Criado pela famosa estilista marinha, Leira, este chapéu é uma cópia exata do
 Recuperação usando os itens Sushi e Peixe Cru +50%
 Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000
 Tipo : ^777777Equipamento para Cabeça^000000
-Defesa: ^77777713^000000
-Equipa em : ^777777Topo^000000
+Defesa: ^77777713^000000Equipa em : ^777777Topo^000000
 Peso : ^77777730^000000Nível Necessário : ^77777710^000000
 Classe: ^777777Todas^000000
 #
@@ -49772,7 +49768,7 @@ Classes : ^777777Todas^000000
 //*****************************************************
 9101#
 A gaiola em que o bichinho de estimação Zumbichano está adormecido. Você pode acordá-lo utilizando uma [Incubadora].
-Aumenta a recuperação de HP ao utilizar o item Peixe Fresco em 1031% durante o evento.
+Aumenta a recuperação de HP ao utilizar o item Peixe Fresco em 1031% durante o evento de Halloween 2016.
 Tipo: ^777777Ovo de Bichinho^000000
 #
 10040#
@@ -55846,11 +55842,11 @@ Peso: ^7777771^000000
 #
 27015#
 ^0000ffRegeneração natural de HP e SP +25%.^000000
-Ao derrotar monstros com ataques físicos:
+Ao derrotar monstros com ataques físicos de curta distância:
 ^0000ffRecupera 30 de HP e 3 de SP.^000000
 Refino +7 ou mais:
 ^0000ffRecupera 10 de HP e 1 de SP adicional.^000000
-Tipo: ^777777Carta^000000
+Tipo: ^777777Carta ^000000
 Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
@@ -56264,20 +56260,24 @@ Classes: ^777777Todas^000000
 #
 19316#
 Mais do que um simples visual, esse chapéu carrega o verdadeiro poder da super-heroína, Garota Coco. Você pode achar que uma garota capaz de falar com Cocos e mastigar madeira não é lá super poderosa, mas ela já derrotou o maléfico vilão Dhanos sozinha!
+--------------------------
 ^0000ffCRIT a distância +5.^000000
 ^0000ffDano crítico +10%.^000000
 ^0000ffVelocidade de ataque +1.^000000
 ^0000ffIgnora 10% da DEF de todas as raças.^000000
+--------------------------
 Refino +7 ou mais:
 ^0000ffCRIT a distância +10 adicional.^000000
 ^0000ffDano crítico +2% adicional.^000000
 ^0000ffVelocidade de ataque +1 adicional.^000000
 ^0000ffIgnora 15% adicional da DEF de todas as raças.^000000
+--------------------------
 Refino +9 ou mais:
 ^0000ffCRIT a distância +15 adicional.^000000
 ^0000ffDano crítico +6% adicional.^000000
 ^0000ffVelocidade de ataque +1 adicional.^000000
 ^0000ffIgnora 20% adicional da DEF de todas as raças.^000000
+--------------------------
 Refino +11 ou mais:
 ^0000ffCRIT a distância +20 adicional.^000000
 ^0000ffDano crítico +12% adicional.^000000
@@ -56287,6 +56287,7 @@ Ao realizar ataques físicos:
 ^0000ff7% de chance de ativar um [efeito] por 5 segundos.^000000
 ^FF6347Efeito:^000000
 ^0000ffDano crítico +100%.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
@@ -56296,6 +56297,7 @@ Classes: ^777777Todas^000000
 #
 31203#
 Churrasquelmo, o elmo churrasqueira é uma das primeiras e incríveis invenções criadas pela Corporação Rekenber usando a tecnologia futurística de Verus! Perfeito pra quem tem cabeça quente e tá sempre com a cabeça fervendo de ideias.
+^FF0000Atenção! O item não pode ser negociado, colocado no carrinho, vendido em NPC nem jogado ao chão, mas pode ser colocado na Kafra .^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
