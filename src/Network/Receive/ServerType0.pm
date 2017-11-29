@@ -601,6 +601,26 @@ sub new {
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0A00' => ['hotkeys'],	
+		'09CB' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],
+		'0A14' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A0E' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]],
+		'09E5' => ['shop_sold', 'v2', [qw(number amount)]],
+		'09E6' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
+		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
+		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
+		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
+		'0A27' => ['hp_sp_changed', 'v2', [qw(type amount)]],
+		'09F7' => ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]],
+		'0AA5' => ['guild_members_list'],
+		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
+		'0AC2' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
+		'0A43' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
+		'0A44' => ['party_users_info', 'x2 Z24', [qw(party_name)]],
+		'0ACB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]], 
 	};
 
 	# Item RECORD Struct's
