@@ -481,11 +481,11 @@ version 55
 recvpackets recvpackets_20151104.txt
 serverType kRO_RagexeRE_2015_11_04a
 serverEncoding Western
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 addTableFolders pserver/ggRO
-clientHash c6e777990579e3bd32ffe6c77cb6342c
-sendCryptKeys 0x4C17382A, 0x7ED174C9, 0x29961E4F 
+clientHash fa058c003da60688ef1f8baffa0d3135
+sendCryptKeys 0x4C17382A, 0x7ED174C9, 0x29961E4F
 
 [Localhost]
 ip localhost
