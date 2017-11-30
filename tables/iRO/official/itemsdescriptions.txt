@@ -6284,23 +6284,20 @@ This item is indestructible in battle.
 #
 1370#
 ^808080A gigantic and ridiculously heavy axe that requires great strength to use it properly.^000000
-^FFFFFF_^000000
-Type: Weapon
+^FF00001^000000
 Class: Two-Handed Axe
 Attack: 10
-Property: Neutral
 Weight: 600
 Weapon Level: 4
 Required Level: 80
-Required Job: Swordman Jobs, Merchant Jobs
-^FFFFFF_^000000
+Required Jobs: Swordman, Merchant
 ASPD - 40%
 Increases SP cost of skills by 100%.
 This item is indestructible in battle.
-^FFFFFF_^000000
-If base STR is 95 or higher,
+
+If base STR is 95 or higher
 ATK + 340
-Adds a 5% chance of inflicting ^800000Coma^000000 on Demi-Human race targets when performing a physical attack.
+Adds a 5% chance of  ^800000Breaking Armor^000000 on  targets when performing a physical attack.
 Adds a 30% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
 #
 1371#
@@ -54190,6 +54187,21 @@ Required Jobs: Gunslinger Jobs
 ^FFFFFF_^000000
 Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
 #
+13136#
+^808080A revolver for a rebellion who is now a little used to handling guns.^000000
+^FF0000Account Bound^000000
+Class: Pistol
+Attack: 120
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Rebel
+Atk + 6 for every 10 base levels up to a maximum base level of 160.
+Increases the damage of ^0000FFFire Dance^000000 by 20%.
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by 1% per level of ^0000FFChain Action^000000 known.
+#
 13150#
 A practical firearm
 with a long gun barrel
@@ -79204,6 +79216,14 @@ Weight : ^7777770^000000
 Lv. req. : ^7777771^000000
 Class : ^777777All classes^000000
 #
+20459#
+^808080A headdress worn by a girl during fights in the battlefield. The light protecting the girl shines like a spotlight.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 20468#
 ^808080The meaning of this mask is: He was one of us.^000000
 Class: Costume
@@ -82520,6 +82540,11 @@ Costume Hopping Rabbit
 Costume Hippo Hat
 Costume Cat's Mouth
 #
+23588#
+^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
 23600#
 ^FF0000Account Bound^000000
 Class: Item Giver
@@ -84484,6 +84509,68 @@ Required Job: Rebellion
 ^FFFFFF_^000000
 A 10% chance of casting ^0000FFLevel 1 Cross Slash^000000 on the target when dealing physical attacks.
 A 3% chance of inflicting ^800000Curse^000000 status on the target when dealing physical attacks.
+#
+28215#
+^808080A rifle for a rebellion who is now a little used to handling guns.^000000
+^FF0000Account Bound^000000
+Class: Rifle
+Attack: 200
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Rebel
+Atk + 6 for every 10 base levels up to a maximum base level of 160.
+Hit + 10
+Crit + 20
+Increases the damage of ^0000FFGod's Hammer^000000 by 20%.
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by 1% per level of ^0000FFTracking^000000 known.
+#
+28216#
+^808080A gatling gun for a rebellion who is now a little used to handling guns.^000000
+^FF0000Account Bound^000000
+Class: Gatling Gun
+Attack: 180
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Rebel
+Atk + 6 for every 10 base levels up to a maximum base level of 160.
+Hit - 20
+Crit + 10
+Aspd + 1
+Increases the damage of ^0000FFFire Rain^000000 by 20%.
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by 1% per level of ^0000FFGatling Fever^000000 known.
+#
+28217#
+^808080A grenade launcher for a rebellion who is now a little used to handling guns.^000000
+^FF0000Account Bound^000000
+Class: Grenade Launcher
+Attack: 350
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Rebel
+Atk + 6 for every 10 base levels up to a maximum base level of 160.
+Increases the damage of ^0000FFDragon Tail^000000 by 20%.
+#
+28218#
+^808080A shotgun for a rebellion who is now a little used to handling guns.^000000
+^FF0000Account Bound^000000
+Class: Shotgun
+Attack: 180
+Property: Neutral
+Weight: 0
+Weapon Level: 3
+Required Level: 100
+Required Jobs: Rebel
+Atk + 6 for every 10 base levels up to a maximum base level of 160.
+Hit - 10
+Increases the damage of ^0000FFShattering Storm^000000 by 20%.
 #
 28303#
 ^808080An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.^000000
@@ -86943,6 +87030,14 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31177#
+^808080A hat inspired by the beautiful color palette and elegant look of a simple koi.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 31179#
 ^808080A mask shaped like a noble wolf.^000000
 Class: Costume
@@ -87391,6 +87486,62 @@ Required Jobs: All Jobs
 ^808080The mask of a jaguar. Some say you will be blessed by nature once you wear it.^000000
 Class: Costume
 Position: Middle, Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31295#
+^808080A red driver's hat decorated with white wings.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31296#
+^808080The sweet and delicious strawberry in the mouth.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31298#
+^808080A hat that is provided only for members of the Eden Group. It's designed to go well with a suit.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31299#
+^808080This white rabbit took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31300#
+^808080A warm muffler you want to wear when the weather gets cold. The wiggling tail is just too adorable.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31301#
+^808080The world we live in... one where you must pay to blink!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31302#
+^808080A pair of very long, silky and dark ribbons.^000000
+Class: Costume
+Position: Middle
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
