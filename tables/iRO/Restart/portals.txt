@@ -278,50 +278,13 @@ arena_room 105 93 prt_are_in 60 14 0 c r0
 prt_are_in 54 13 arena_room 100 77
 
 # Anthell
-#anthell01 35 267 moc_fild20 161 144
-#anthell02 171 170 moc_fild20 333 315
-#moc_fild20 156 143 anthell01 35 263
-#moc_fild20 337 315 anthell02 168 170
 anthell01 35 267 cmd_fild08 335 355
 anthell02 171 170 cmd_fild08 344 82
 cmd_fild08 335 355 anthell01 35 263
 cmd_fild08 348 82 anthell02 171 170
 
 # Morroc area (Episode 12)
-#moc_fild01 84 19 moc_fild20 209 333
-#moc_fild07 380 202 moc_fild20 36 177
-#moc_fild11 189 360 moc_fild20 197 24
-#moc_fild11 377 197 moc_fild20 36 177
-#moc_fild13 32 171 moc_fild20 349 179
-#moc_fild16 124 381 moc_fild20 197 24
-#moc_fild16 333 380 moc_fild20 197 24
-#moc_fild20 38 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 38 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 189 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 200 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 354 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 354 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 203 336 moc_fild01 86 32 0 c r1 c c c c r2
-#moc_fild20 215 336 moc_fild01 86 32 0 c r1 c c c c r2
-#moc_fild20 203 336 morocc 160 61 0 c r1 c c c c r1 c c r1
-#moc_fild20 215 336 morocc 160 61 0 c r1 c c c c r1 c c r1
-#morocc 299 207 moc_fild20 36 177
-#prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 16 moc_fild04 92 378
-#prt_fild10 263 23 moc_fild20 209 333
-
-# Dimensional Gorge (Episode 12)
-# moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
-#moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
-#moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
-#moc_fild21 26 196 moc_fild20 349 179
-#moc_fild22 32 196 moc_fild20 349 179
 
 # Battlegrounds (Episode 12)
 aldebaran 146 109 bat_room 154 150 0 c c r0 c
@@ -369,9 +332,6 @@ bat_b02 10 293 bat_room 154 150 0 c
 bat_room 148 121 bat_room
 bat_room  bat_room 154 150
 bat_b02 189 14 bat_room 154 150 0 c
-
-# The New World (Episode 13)
-#mid_camp 213 286 moc_fild20 342 179 0 c c r0
 
 # Battlegrounds (Episode 13)
 # KVM Blue
