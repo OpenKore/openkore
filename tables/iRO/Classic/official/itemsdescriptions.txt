@@ -71048,3 +71048,16 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19991#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ninja Scroll!
+200 Ectoplasm
+100 Oil Paper
+50 Squid Ink
+1 Ninja Scroll Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
