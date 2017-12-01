@@ -18,7 +18,7 @@
 package Network::Receive::kRO::Sakexe_2004_07_05a;
 
 use strict;
-use base qw(Network::Receive::kRO::Sakexe_0);
+use base qw(Network::Receive::ServerType0);
 
 use Log qw(message warning error debug);
 use Utils qw(getTickCount getCoordString);
