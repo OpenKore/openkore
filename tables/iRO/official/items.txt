@@ -5983,6 +5983,7 @@
 13124#Altair_&_Ares#
 13127#Crimson_Revolver#
 13128#Vicious_Mind_Revolver#
+13136#Probation_Revolver#
 13150#Branch#
 13151#Cyclone#
 13152#Cyclone#
@@ -8663,6 +8664,7 @@
 20454#Costume_Crown_of_Ancient_Queen#
 20457#Costume_Fluttering_Feather#
 20458#Costume_Wild_Poring_Rider#
+20459#Costume_Valhalla_Idol#
 20468#Costume_Harum_Beret#
 20470#Costume_Sweet_Chocolate_Hat#
 20495#Costume_Quati_Hat#
@@ -8936,6 +8938,7 @@
 23507#October_Costume_Box#
 23508#iRO_2017_Oct_CosBox2#
 23516#November_Costume_Box_Ani_Maul#
+23588#2017_Dec_Costume_Box#
 23600#Prisoner_Bundle_A#
 23601#Imperial_Bundle_A#
 23602#Giant_Bundle_A#
@@ -9122,6 +9125,10 @@
 28200#End_of_Horizon#
 28201#Southern_Cross#
 28202#Southern_Cross#
+28215#Probation_Rifle#
+28216#Probation_Gatling_Gun#
+28217#Probation_Grenade_Launcher#
+28218#Probation_Shotgun#
 28303#Vesper_Core_02#
 28305#Vesper_Core_04#
 28310#Sarah's_Left_Earring#
@@ -9350,6 +9357,7 @@
 31167#Costume_Happy_Droopy_Lunatic_Ears_(Black)#
 31168#Costume_Mouton_Life_(Blue)#
 31172#Costume_Los_Pollos_Locos#
+31177#Costume_Tail_Hat#
 31179#Costume_Wolf_Masquerade#
 31181#Costume_Rosary's_Necklace#
 31182#Costume_Side_Cap#
@@ -9405,3 +9413,10 @@
 31251#Costume_Cat's_Mouth#
 31252#Costume_White_Cat_Ears_Hat#
 31256#Costume_Jaguar_Mask#
+31295#Costume_Red_Wing_Hat#
+31296#Costume_Strawberry_in_Mouth#
+31298#Costume_Eden_Group_Hat_II#
+31299#Costume_White_Rabbit#
+31300#Costume_Warm_Cat_Muffler#
+31301#Costume_Blinking_Eyes#
+31302#Costume_Black_Magenta_Ribbon#
