@@ -38,6 +38,7 @@ NPC 200
 # que confundem a rota se forem adicionados ao portals(.txt).
 bat_room 10000
 moc_para01 10000
+prt_maze01 10000
 
 # Evita a rota através de prt_fild08a (que nem mesmo existe) a menos que seja inevitável.
 prt_fild08a 10000
