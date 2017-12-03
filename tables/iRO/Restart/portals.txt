@@ -278,50 +278,13 @@ arena_room 105 93 prt_are_in 60 14 0 c r0
 prt_are_in 54 13 arena_room 100 77
 
 # Anthell
-#anthell01 35 267 moc_fild20 161 144
-#anthell02 171 170 moc_fild20 333 315
-#moc_fild20 156 143 anthell01 35 263
-#moc_fild20 337 315 anthell02 168 170
 anthell01 35 267 cmd_fild08 335 355
 anthell02 171 170 cmd_fild08 344 82
 cmd_fild08 335 355 anthell01 35 263
 cmd_fild08 348 82 anthell02 171 170
 
 # Morroc area (Episode 12)
-moc_fild01 84 19 moc_fild20 209 333
-moc_fild07 380 202 moc_fild20 36 177
-moc_fild11 189 360 moc_fild20 197 24
-moc_fild11 377 197 moc_fild20 36 177
-moc_fild13 32 171 moc_fild20 349 179
-moc_fild16 124 381 moc_fild20 197 24
-moc_fild16 333 380 moc_fild20 197 24
-moc_fild20 38 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 38 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 189 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 200 21 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 354 183 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 354 174 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 203 336 moc_fild01 86 32 0 c r1 c c c c r2
-moc_fild20 215 336 moc_fild01 86 32 0 c r1 c c c c r2
-moc_fild20 203 336 morocc 160 61 0 c r1 c c c c r1 c c r1
-moc_fild20 215 336 morocc 160 61 0 c r1 c c c c r1 c c r1
-morocc 299 207 moc_fild20 36 177
-prt_fild09 95 19 moc_fild20 209 333
 prt_fild09 246 16 moc_fild04 92 378
-prt_fild10 263 23 moc_fild20 209 333
-
-# Dimensional Gorge (Episode 12)
-# moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
-moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
-moc_fild21 26 196 moc_fild20 349 179
-moc_fild22 32 196 moc_fild20 349 179
 
 # Battlegrounds (Episode 12)
 aldebaran 146 109 bat_room 154 150 0 c c r0 c
@@ -369,9 +332,6 @@ bat_b02 10 293 bat_room 154 150 0 c
 bat_room 148 121 bat_room
 bat_room  bat_room 154 150
 bat_b02 189 14 bat_room 154 150 0 c
-
-# The New World (Episode 13)
-mid_camp 213 286 moc_fild20 342 179 0 c c r0
 
 # Battlegrounds (Episode 13)
 # KVM Blue
@@ -1282,7 +1242,7 @@ mjolnir_10 265 13 prt_fild01 261 373
 mjolnir_10 384 220 mjolnir_11 20 220
 mjolnir_11 20 220 mjolnir_10 384 220
 mjolnir_11 174 20 prt_fild02 173 382
-mjolnir_12 44 17 prt_maze01 17 115
+mjolnir_12 44 17 prt_maze01 17 111
 mjolnir_12 199 378 aldebaran 138 34
 mjolnir_12 220 26 mjolnir_05 220 382
 moc_castle 94 183 morocc 160 183
@@ -1701,7 +1661,7 @@ prt_fild00 317 18 prt_fild04 323 387
 prt_fild00 383 249 mjolnir_09 30 249
 prt_fild01 20 292 mjolnir_09 373 288
 prt_fild01 66 373 mjolnir_10 66 15
-prt_fild01 136 373 prt_maze01 176 4
+prt_fild01 136 373 prt_maze01 99 31
 prt_fild01 199 24 prt_gld 159 298
 prt_fild01 261 373 mjolnir_10 265 13
 prt_fild01 380 243 prt_fild02 17 242
@@ -1791,132 +1751,132 @@ prt_in 256 131 prt_in 254 113
 prt_in 263 163 prt_in 274 163
 prt_in 274 163 prt_in 263 163
 prt_in 282 179 prontera 84 89
-prt_maze01 100 35 prt_maze01 139 47
-prt_maze01 102 165 prt_maze01 98 151
-prt_maze01 105 115 prt_maze01 175 168
-prt_maze01 105 75 prt_maze01 54 8
-prt_maze01 115 145 prt_maze01 8 186
-prt_maze01 115 21 prt_maze01 167 22
-prt_maze01 115 56 prt_maze01 7 57
-prt_maze01 115 96 prt_maze01 128 105
-prt_maze01 124 105 prt_maze01 111 96
-prt_maze01 124 169 prt_maze01 191 139
-prt_maze01 138 124 prt_maze01 142 111
-prt_maze01 139 44 prt_maze01 100 32
-prt_maze01 14 75 prt_maze01 63 128
-prt_maze01 140 75 prt_maze01 96 47
-prt_maze01 142 115 prt_maze01 138 128
-prt_maze01 155 133 prt_maze01 8 140
-prt_maze01 155 181 prt_maze01 88 145
-prt_maze01 155 21 prt_maze01 87 13
-prt_maze01 164 140 prt_maze01 70 68
-prt_maze01 164 22 prt_maze01 112 21
-prt_maze01 164 93 prt_maze01 72 11
-prt_maze01 17 115 prt_maze01 50 48
-prt_maze01 17 34 prt_maze01 23 128
-prt_maze01 175 164 prt_maze01 105 111
-prt_maze01 176 35 prt_maze01 182 88
-prt_maze01 176 4 prt_fild01 136 368
-prt_maze01 176 44 prt_maze01 18 152
-prt_maze01 18 155 prt_maze01 176 47
-prt_maze01 182 84 prt_maze01 177 31
-prt_maze01 19 195 prt_maze02 94 19
-prt_maze01 195 139 prt_maze01 129 174
-prt_maze01 195 15 prt_maze01 47 105
-prt_maze01 195 174 prt_maze01 47 23
-prt_maze01 195 55 prt_maze01 87 97
-prt_maze01 195 93 prt_maze01 88 55
-prt_maze01 22 84 prt_maze01 55 151
-prt_maze01 23 124 prt_maze01 17 30
-prt_maze01 25 5 prt_maze01 65 113
-prt_maze01 4 140 prt_maze01 151 133
-prt_maze01 4 186 prt_maze01 111 145
-prt_maze01 4 57 prt_maze01 112 56
-prt_maze01 44 105 prt_maze01 192 15
-prt_maze01 44 23 prt_maze01 192 174
-prt_maze01 50 44 prt_maze01 17 111
-prt_maze01 51 195 prt_maze01 63 88
-prt_maze01 54 4 prt_maze01 105 71
-prt_maze01 55 155 prt_maze01 22 88
-prt_maze01 63 124 prt_maze01 14 71
-prt_maze01 63 195 prt_maze01 63 88
-prt_maze01 63 84 prt_maze01 58 192
-prt_maze01 65 116 prt_maze01 23 9
-prt_maze01 70 75 prt_maze01 169 140
-prt_maze01 75 11 prt_maze01 167 93
-prt_maze01 75 66 prt_maze01 169 140
-prt_maze01 75 95 prt_maze01 88 173
-prt_maze01 84 10 prt_maze01 152 25
-prt_maze01 84 145 prt_maze01 151 181
-prt_maze01 84 173 prt_maze01 71 95
-prt_maze01 84 55 prt_maze01 191 93
-prt_maze01 84 97 prt_maze01 192 55
-prt_maze01 96 44 prt_maze01 140 72
-prt_maze01 98 155 prt_maze01 102 169
-prt_maze02 103 15 prt_maze01 22 191
-prt_maze02 108 182 prt_maze03 23 8
-prt_maze02 80 182 prt_maze03 23 8
-prt_maze02 84 15 prt_maze01 22 191
-prt_maze03 100 35 prt_maze03 63 88
-prt_maze03 102 164 prt_maze03 143 111
-prt_maze03 104 115 prt_maze03 22 88
-prt_maze03 105 75 prt_maze03 140 47
-prt_maze03 115 145 prt_maze03 88 173
-prt_maze03 115 21 prt_maze03 128 105
-prt_maze03 115 56 prt_maze03 88 145
-prt_maze03 115 96 prt_maze03 167 22
-prt_maze03 124 105 prt_maze03 111 21
-prt_maze03 124 168 prt_maze03 69 69
-prt_maze03 137 124 prt_maze03 177 32
-prt_maze03 14 75 prt_maze03 54 8
-prt_maze03 140 44 prt_maze03 105 72
-prt_maze03 140 75 prt_maze03 97 48
-prt_maze03 143 115 prt_maze03 102 168
-prt_maze03 155 133 prt_maze03 8 186
-prt_maze03 155 181 prt_maze03 88 56
-prt_maze03 155 21 prt_maze03 48 22
-prt_maze03 164 139 prt_maze03 191 16
-prt_maze03 164 22 prt_maze03 111 95
-prt_maze03 17 115 prt_maze03 49 47
-prt_maze03 175 164 prt_maze03 18 30
-prt_maze03 176 35 prt_maze03 137 127
-prt_maze03 176 44 prt_maze03 55 151
-prt_maze03 178 75 prt_maze03 182 88
-prt_maze03 18 155 prt_maze03 63 128
-prt_maze03 18 34 prt_maze03 175 168
-prt_maze03 182 84 prt_maze03 178 71
-prt_maze03 195 139 prt_maze03 167 22
-prt_maze03 195 16 prt_maze03 168 139
-prt_maze03 195 174 prt_maze03 48 105
-prt_maze03 195 54 prt_maze03 88 96
-prt_maze03 22 195 prt_maze03 65 111
-prt_maze03 22 84 prt_maze03 104 111
-prt_maze03 23 124 prt_maze03 98 151
-prt_maze03 25 4 prt_maze02 95 177
-prt_maze03 4 140 prt_maze03 60 192
-prt_maze03 4 186 prt_maze03 151 133
-prt_maze03 4 57 prt_maze03 71 95
-prt_maze03 44 105 prt_maze03 191 174
-prt_maze03 44 22 prt_maze03 151 25
-prt_maze03 49 44 prt_maze03 17 112
-prt_maze03 53 195 prt_maze03 7 140
-prt_maze03 54 4 prt_maze03 14 71
-prt_maze03 55 155 prt_maze03 176 48
-prt_maze03 63 124 prt_maze03 18 151
-prt_maze03 63 195 prt_maze03 7 140
-prt_maze03 63 84 prt_maze03 100 31
-prt_maze03 65 115 prt_maze03 22 191
-prt_maze03 71 75 prt_maze03 127 173
-prt_maze03 75 12 prt_maze03 88 13
-prt_maze03 75 64 prt_maze03 127 173
-prt_maze03 75 95 prt_maze03 8 57
-prt_maze03 84 10 prt_maze03 71 12
-prt_maze03 84 145 prt_maze03 111 56
-prt_maze03 84 173 prt_maze03 111 145
-prt_maze03 84 56 prt_maze03 151 181
-prt_maze03 84 96 prt_maze03 191 54
-prt_maze03 97 44 prt_maze03 140 71
-prt_maze03 98 155 prt_maze03 23 128
+prt_maze01 22 85 prt_maze01 137 128
+prt_maze01 137 125 prt_maze01 191 139
+prt_maze01 194 139 prt_maze01 22 88
+prt_maze01 17 114 prt_maze01 8 186
+prt_maze01 5 186 prt_maze01 182 88
+prt_maze01 182 85 prt_maze01 58 48
+prt_maze01 52 45 prt_maze01 139 48
+prt_maze01 139 45 prt_maze01 71 11
+prt_maze01 74 12 prt_maze01 58 48
+prt_maze01 74 74 prt_maze01 58 191
+prt_maze01 58 194 prt_maze01 23 128
+prt_maze01 23 125 prt_maze01 151 22
+prt_maze01 154 22 prt_maze01 139 48
+prt_maze01 137 74 prt_maze01 182 88
+prt_maze01 168 94 prt_maze01 191 139
+prt_maze01 166 139 prt_maze01 128 173
+prt_maze01 125 171 prt_maze01 8 186
+prt_maze01 22 194 prt_maze01 16 31
+prt_maze01 16 34 prt_maze01 128 173
+prt_maze01 154 181 prt_maze01 191 175
+prt_maze01 194 175 prt_maze01 23 128
+prt_maze01 5 140 prt_maze01 58 48
+prt_maze01 18 154 prt_maze01 177 71
+prt_maze01 177 74 prt_fild01 136 368
+prt_maze01 99 34 prt_maze01 137 128
+prt_maze01 154 134 prt_maze01 58 191
+prt_maze01 175 45 prt_maze01 58 48
+prt_maze01 194 94 prt_maze01 58 191
+prt_maze01 114 22 prt_maze01 177 71
+prt_maze01 85 13 prt_maze01 22 88
+prt_maze01 175 165 prt_maze01 48 104
+prt_maze01 45 104 prt_maze01 63 128
+prt_maze01 54 154 prt_maze01 191 175
+prt_maze01 63 114 prt_maze01 111 56
+prt_maze01 114 56 prt_maze01 176 8
+prt_maze01 176 5 prt_maze01 137 128
+prt_maze01 194 54 prt_maze01 99 31
+prt_maze01 85 56 prt_maze01 105 111
+prt_maze01 105 114 prt_maze01 111 145
+prt_maze01 98 154 prt_maze01 102 168
+prt_maze01 85 174 prt_maze02 93 20
+prt_maze01 102 165 prt_maze01 99 31
+prt_maze01 45 21 prt_maze01 142 111
+prt_maze01 125 105 prt_maze01 14 48
+prt_maze01 14 74 prt_maze01 151 22
+prt_maze01 63 85 prt_maze01 151 22
+prt_maze01 74 97 prt_maze01 71 11
+prt_maze01 63 125 prt_maze01 182 88
+prt_maze01 23 5 prt_maze01 176 8
+prt_maze01 194 15 prt_maze01 52 48
+prt_maze01 176 34 prt_maze01 8 186
+prt_maze01 96 45 prt_maze01 63 128
+prt_maze01 104 74 prt_maze01 14 48
+prt_maze01 14 45 mjolnir_12 44 20
+prt_maze01 5 58 prt_maze01 48 104
+prt_maze01 114 95 prt_maze01 14 48
+prt_maze01 85 97 prt_maze01 63 128
+prt_maze01 165 22 prt_maze01 63 128
+prt_maze01 142 114 prt_maze01 23 128
+prt_maze01 114 145 prt_maze01 23 128
+prt_maze01 85 146 prt_maze01 142 111
+prt_maze02 18 126 prt_maze02 90 170
+prt_maze02 100 182 prt_maze03 182 85
+prt_maze02 93 16 prt_maze01 102 168
+prt_maze03 182 85 prt_maze02 100 182
+prt_maze03 85 146 prt_maze03 22 88
+prt_maze03 22 85 prt_maze03 88 146
+prt_maze03 98 154 prt_maze03 99 31
+prt_maze03 14 74 prt_maze03 63 111
+prt_maze03 63 114 prt_maze03 14 74
+prt_maze03 14 45 prt_maze03 88 174
+prt_maze03 85 174 prt_maze03 14 48
+prt_maze03 5 58 prt_maze03 191 15
+prt_maze03 194 15 prt_maze03 8 58
+prt_maze03 176 5 prt_maze03 111 95
+prt_maze03 114 95 prt_maze03 176 8
+prt_maze03 165 22 prt_maze03 111 146
+prt_maze03 114 145 prt_maze03 168 22
+prt_maze03 176 34 prt_maze03 88 56
+prt_maze03 137 74 prt_maze03 102 168
+prt_maze03 102 165 prt_maze03 137 74
+prt_maze03 139 45 prt_maze03 88 146
+prt_maze03 194 94 prt_maze03 151 22
+prt_maze03 154 22 prt_maze03 48 21
+prt_maze03 45 21 prt_maze03 18 151
+prt_maze03 18 154 prt_maze03 48 21
+prt_maze03 54 5 prt_maze03 71 97
+prt_maze03 74 97 prt_maze03 56 8
+prt_maze03 74 12 prt_maze03 175 168
+prt_maze03 175 165 prt_maze03 71 12
+prt_maze03 194 175 prt_maze03 191 139
+prt_maze03 194 139 prt_maze03 191 175
+prt_maze03 166 139 prt_maze03 63 88
+prt_maze03 45 104 prt_maze03 96 48
+prt_maze03 96 45 prt_maze03 48 104
+prt_maze03 63 85 prt_maze03 169 139
+prt_maze03 5 140 prt_maze03 111 56
+prt_maze03 114 56 prt_maze03 8 140
+prt_maze03 23 125 prt_maze03 177 71
+prt_maze03 177 74 prt_maze03 23 128
+prt_maze03 194 54 prt_maze03 171 94
+prt_maze03 168 94 prt_maze03 191 54
+prt_maze03 175 45 prt_maze03 22 191
+prt_maze03 22 194 prt_maze03 175 48
+prt_maze03 5 186 prt_maze03 151 134
+prt_maze03 154 134 prt_maze03 8 186
+prt_maze03 137 125 prt_maze03 71 71
+prt_maze03 74 74 prt_maze03 48 21
+prt_maze03 17 114 prt_maze03 129 102
+prt_maze03 125 105 prt_maze03 58 191
+prt_maze03 58 194 prt_maze03 8 58
+prt_maze03 52 45 prt_maze03 16 31
+prt_maze03 16 34 prt_maze03 52 48
+prt_maze03 23 5 prt_maze03 88 13
+prt_maze03 85 13 prt_maze03 23 8
+prt_maze03 99 34 prt_maze03 98 151
+prt_maze03 114 22 prt_maze03 104 71
+prt_maze03 104 74 prt_maze03 111 22
+prt_maze03 142 114 prt_maze03 54 151
+prt_maze03 54 154 prt_maze03 142 111
+prt_maze03 63 125 prt_maze03 88 97
+prt_maze03 85 97 prt_maze03 63 128
+prt_maze03 85 56 prt_maze03 176 31
+prt_maze03 105 114 prt_maze03 128 174
+prt_maze03 125 171 prt_maze03 105 111
+prt_maze03 154 181 prt_maze03 139 48
 prt_monk 22 248 prt_fild03 371 255
 prt_monk 192 172 monk_test 329 50
 prt_sewb1 135 248 prt_fild05 270 212
