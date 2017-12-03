@@ -4353,14 +4353,25 @@ sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
 
 	if ($config{$prefix . "_hp"}) {
-		return 0 if (!$monster->{hp});
-		if ($config{$prefix . "_hp"} =~ /^(.*)\%$/) {
-			return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $1)); 
+		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $config{$prefix . "_hp"}));
+			} elsif($monster->{hp_percent}) {
+				return 0 unless (inRange($monster->{hp_percent}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
+		} elsif($config{$prefix . "_hp"} =~ /(\d+)$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
 		} else {
-			return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
+			return 0;
 		}
 	}
-	
+
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$monster->{ID}}, $config{$prefix . "_timeout"}) }
 
 	if (my $misses = $config{$prefix . "_misses"}) {
