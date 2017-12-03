@@ -159,6 +159,12 @@ veins 208 128 rachel 115 125 2200 1 c r2 c r0
 veins 208 128 yuno 158 125 3000 1 c r2 c r1
 moc_para01 14 32 prontera 116 72 1800 1 c c r0 c n
 
+#Geffen
+geffen 120 62 prontera 116 72 1200 1 c r2 c r0
+geffen 120 62 aldebaran 168 112 1200 1 c r2 c r1
+geffen 120 62 gef_fild10 52 326 1700 1 c r2 c r2
+geffen 120 62 mjolnir_02 99 351 1700 1 c r2 c r3
+
 # Training Grounds
 new_1-1 148 112 new_1-2 100 9
 new_2-1 148 112 new_2-2 100 9
