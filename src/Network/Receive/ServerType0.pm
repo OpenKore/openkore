@@ -6209,9 +6209,9 @@ sub monster_hp_info_tiny {
 	my ($self, $args) = @_;
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
-		$monster->{hp} = $args->{hp} * 5;
+		$monster->{hp_percent} = $args->{hp} * 5;
 		
-		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp}), "parseMsg_damage";
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
 }
 
