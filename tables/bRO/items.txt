@@ -8030,4 +8030,32 @@
 19296#Chapéu Chique com Pena#
 19316#Capuz de Esquilo#
 31203#Churrasquelmo#
+//*****************************************************
+//------------Aplicar em 2017-12-05--------------------
+//*****************************************************
+19924#Máscara de Odin#
+20300#Máscara Vento da Colina#
+20098#Adorno Vampiresco#
+20401#Espírito angelical#
+19915#Pequeno Par de Chifres#
+
+28521#Blessing_Of_Giants#
+31383#Costume_Volume_Low_Twin#
+20844#Candy_Pocket_Bag(Magic)#
+20248#Costume_Strong_Hair#
+19083#Hero's_Mask#
+22182#Shoes_Of_Punishment#
+15272#Khalitzburg_Knightage_Armor#
+28572#Celine's_Brooch#
+15165#White_Marching_Hat#
+20433#Costume_Louise's_Red_Hat#
+19145#Whistle#
+19306#Heart_Ace_In_Mouth#
+19956#Costume_Marching_Hat#
+20116#Mermaid_Headphone#
+20198#Costume_Brown_Cat_Ear_Hairband#
+20457#Costume_Fluttering_Feather#
+28617#Bible_Of_Exorcism#
+
+
 //file end
