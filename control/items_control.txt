@@ -102,7 +102,7 @@ Cotton Shirt [1] 0 0 1
 2409 0 0 1 # High Heels
 2502 0 0 1 # Hood
 2502 0 0 1 # Hood [1]
-2304 0 0 1 # Jacket
+2303 0 0 1 # Jacket
 2304 0 0 1 # Jacket [1]
 2506 0 0 1 # Manteau
 2308 0 0 1 # Mantle
