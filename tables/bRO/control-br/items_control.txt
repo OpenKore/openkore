@@ -108,7 +108,7 @@ Cotton Shirt [1] 0 0 1
 2409 0 0 1 # Salto_Alto
 2502 0 0 1 # Capuz
 2502 0 0 1 # Capuz
-2304 0 0 1 # Gibão
+2303 0 0 1 # Gibão
 2304 0 0 1 # Gibão
 2506 0 0 1 # Manteau
 2308 0 0 1 # Capote
