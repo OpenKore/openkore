@@ -3,7 +3,7 @@
 * Check if an issue already exists for your request.
 * Please post in English if possible.
 * Please use the issue template, please post infornations about the server and your configuration.
-* Remember, developers are doing this on their free time.
+* Remember, developers are doing this on free time.
 
 | Server | Status | Supporter |
 | --- | --- | --- |
