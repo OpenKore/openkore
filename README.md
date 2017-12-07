@@ -9,16 +9,9 @@ Things to know
 | --- | --- | --- |
 | `iRO` | working | allanon |
 | `twRO` | Not working | windhamwong |
-| `kRO` | Not working | | 
-| `jRO` | Not working | |
-| `bRO` | working | allanon, Henrybk, lututui, alisonrag |
+| `bRO` | working | Henrybk, lututui, alisonrag |
 | `idRO` | working only RE_server | sctnightcore(temp)
 | `fRO` | working | sctnightcore | 
-| `cRO` | Not working | | 
-| `mRO` | Not working | | 
-| `pRO` | Not working | |
-| `tRO` | Not working | |
-
 
 =========================
 ### OpenKore what-will-become-2.1
