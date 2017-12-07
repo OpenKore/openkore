@@ -1,4 +1,4 @@
-Things to know
+### Things to know
 * Before submitting an issue, ensure you are on the latest release.
 * Check if an issue already exists for your request.
 * Please post in English if possible.
@@ -12,6 +12,7 @@ Things to know
 | `bRO` | working | Henrybk, lututui, alisonrag |
 | `idRO` | working only RE_server | sctnightcore(temp)
 | `fRO` | working | sctnightcore | 
+| `pServer` | update servertybe | SkylorD sctnightcore |
 
 =========================
 ### OpenKore what-will-become-2.1
