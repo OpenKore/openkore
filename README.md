@@ -1,3 +1,10 @@
+Things to know
+* Before submitting an issue, ensure you are on the latest release.
+* Check if an issue already exists for your request.
+* Please post in English if possible.
+* Please use the issue template, please post infornations about the server and your configuration.
+* Remember, developers are doing this on their free time.
+
 | Server | Status | Supporter |
 | --- | --- | --- |
 | `iRO` | working | allanon |
@@ -7,7 +14,8 @@
 | `bRO` | working | allanon, Henrybk, lututui, alisonrag |
 | `idRO` | working only RE_server | sctnightcore(temp)
 | `fRO` | working | sctnightcore | 
-| `cRO` | Not working | sctnightcore | 
+| `cRO` | Not working | | 
+| `mRO` | Not working | | 
 | `pRO` | Not working | |
 | `tRO` | Not working | |
 
