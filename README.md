@@ -4,6 +4,9 @@
 * Please post in English if possible.
 * Please use the issue template, please post infornations about the server and your configuration.
 * Remember, developers are doing this on free time.
+### Warning
+EN : openkore.com is not affiliated with openkore.in
+TH : openkore.com ไม่มีส่วนเกี่ยวข้องครับ openkore.in
 
 | Server | Status | Supporter |
 | --- | --- | --- |
