@@ -13024,3 +13024,69 @@ See you tomorrow, Jack!#
 11528#Wind blowing from the black hill#SG_FEEL#QUE_NOIMAGE#
 Enable to get black fur from the monsters in Valley of Gyoll.#
 A black fur collector#
+
+//-------- Geffen Magic Tournament fix
+
+62838#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+First round of the Tournament.#
+Defeat Arhi#
+
+62839#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Second round of the Tournament.#
+Defeat Dio Anemos#
+
+62840#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Third round of the Tournament.#
+Defeat Geffen Gangster#
+
+62841#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Third round of the Tournament.#
+Defeat Geffen Bully#
+
+62842#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Third round of the Tournament.#
+Defeat Geffen Shoplifter#
+
+62843#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Fourth round of the Tournament.#
+Defeat Faymont#
+
+62844#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Fifth round of the Tournament.#
+Defeat Ordre#
+
+62845#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Sixth round of the Tournament.#
+Defeat Blut Hase#
+
+62846#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Seventh round of the Tournament.#
+Defeat Kuro Akuma#
+
+62847#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Eighth round of the Tournament.#
+Defeat Ifodes#
+
+62848#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Ninth round of the Tournament.#
+Defeat Licheni#
+
+62849#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Tenth round of the Tournament.#
+Defeat Odoric#
+
+62850#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Eleventh round of the Tournament.#
+Defeat Ju#
+
+62851#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Twelfth round of the Tournament.#
+Defeat Dwigh#
+
+62852#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Twelfth round of the Tournament.#
+Defeat Fay Kanavian#
+
+62853#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
+Last round of the Tournament.#
+Defeat Fenrir#
