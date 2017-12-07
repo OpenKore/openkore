@@ -2,11 +2,11 @@
 * Before submitting an issue, ensure you are on the latest release.
 * Check if an issue already exists for your request.
 * Please post in English if possible.
-* Please use the issue template, please post infornations about the server and your configuration.
+* Please use the issue template, please post information about the server and your configuration.
 * Remember, developers are doing this on free time.
 ### Warning
 EN : openkore.com is not affiliated with openkore.in
-TH : openkore.com ไม่มีส่วนเกี่ยวข้องครับ openkore.in
+TH : openkore.com ไม่มีส่วนเกี่ยวข้องกับ openkore.in
 
 | Server | Status | Supporter |
 | --- | --- | --- |
