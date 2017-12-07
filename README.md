@@ -6,6 +6,7 @@
 * Remember, developers are doing this on free time.
 ### Warning
 EN : openkore.com is not affiliated with openkore.in
+
 TH : openkore.com ไม่มีส่วนเกี่ยวข้องกับ openkore.in
 
 | Server | Status | Supporter |
