@@ -7,9 +7,9 @@
 
 | Server | Status | Supporter |
 | --- | --- | --- |
-| `iRO` | working | allanon |
+| `iRO` | Botable, Weekly Update | allanon |
 | `twRO` | Not working | windhamwong |
-| `bRO` | working | Henrybk, lututui, alisonrag |
+| `bRO` | Botable, Weekly Update | Henrybk, lututui, alisonrag |
 | `idRO` | working only RE_server | sctnightcore(temp)
 | `fRO` | working | sctnightcore | 
 | `pServer` | update servertybe | SkylorD sctnightcore |
