@@ -46,7 +46,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [OpenKore forum](http://forums.openkore.com/)
 * [IRC Channel](irc://irc.freenode.net/#openkore) : https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore
 * [Brazilian Community](http://openkorebrasil.org/)
-
+* [Taiwanese Community](http://optw.nva-hk.com/forum.php)
 ## Warning
 
 Brazilian and others Community are not affiliated to openkore.com
