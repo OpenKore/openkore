@@ -47,12 +47,16 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [IRC Channel](https://webchat.freenode.net/?channels=openkore) : https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore
 * [Brazilian Community](http://openkorebrasil.org/)
 * [Taiwanese Community](http://optw.nva-hk.com/forum.php)
+
 ## Warning
 
-Brazilian and others Community are not affiliated to openkore.com
+Other Community are not affiliated to openkore.com
 
 ## Other Links
 1. [Openkore History](http://openkore.com/index.php/OpenKore)
 2. [Legacy Changelog](https://github.com/OpenKore/openkore/commits/master/README.txt)
 3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
 4. [Feature Requests and TODO Wiki](http://openkore.com/index.php/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
+
+## License
+http://www.gnu.org/licenses/gpl.html
