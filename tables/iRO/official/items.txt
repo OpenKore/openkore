@@ -9420,3 +9420,4 @@
 31300#Costume_Warm_Cat_Muffler#
 31301#Costume_Blinking_Eyes#
 31302#Costume_Black_Magenta_Ribbon#
+31420#Costume:_Shining_Santa_Poring#
