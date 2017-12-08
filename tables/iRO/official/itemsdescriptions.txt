@@ -87546,3 +87546,16 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31420#
+When equipped, EXP increases by 25% when defeating monsters during December 2017.
+Increases the healing rate of Carrots by 100%
+Increases drops by 15%
+Enables the dropping of Carrots when defeating monsters
+
+(The above options will be removed on the 31st of December, 2017.)
+^ff0000Cannot trade with other users.^000000
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777771^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
