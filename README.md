@@ -18,7 +18,7 @@ EN : openkore.com is not affiliated with openkore.in | TH : openkore.com ไม�
 | `mRO` | Maylisian RO | Need Verification | N/A |
 | `thRO` | Thai RO | Need Verification | N/A |
 | `cRO` | Chinese RO | Need Verification | N/A |
-| `pServer` | update servertybe | SkylorD sctnightcore |
+| `pServer` | update servertybe |sT2012-2017 work |SkylorD sctnightcore |
 
 
 =========================
