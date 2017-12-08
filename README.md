@@ -8,14 +8,22 @@
 ### Warning
 EN : openkore.com is not affiliated with openkore.in | TH : openkore.com ไม่มีส่วนเกี่ยวข้องกับ openkore.in
 
-| Server | Status | Supporter |
-| --- | --- | --- |
-| `iRO` | Botable, Weekly Update | allanon |
-| `twRO` | Not working | windhamwong |
-| `bRO` | Botable, Weekly Update | Henrybk, lututui, alisonrag |
-| `idRO` | working only RE_server | sctnightcore(temp)
-| `fRO` | working | sctnightcore | 
+| Server | Description | Status | Supporter |
+| --- | --- | --- | --- |
+| `iRO` | International(US) RO | Botable, Weekly Update | allanon |
+| `twRO` | Taiwanese RO | Not working | windhamwong |
+| `bRO` | Brazilian RO | Botable, Weekly Update | Henrybk, lututui, alisonrag |
+| `idRO` | Indonesian RO | working only RE_server | sctnightcore(temp)
+| `fRO` | Europe(french) RO | working | sctnightcore | 
+| `mRO` | Maylisian RO | Need Verification | N/A |
+| `thRO` | Thai RO | Need Verification | N/A |
+| `cRO` | Chinese RO | Need Verification | N/A |
 | `pServer` | update servertybe | SkylorD sctnightcore |
+
+
+=========================
+### Legacy Changelog
+=========================
 
 =========================
 ### OpenKore what-will-become-2.1
@@ -678,5 +686,3 @@ For older news, please read:
 http://www.openkore.com/misc/OldNews.txt
 
 --------------------------
-
-# Commit Testing ;p
