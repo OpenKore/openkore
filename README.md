@@ -1,4 +1,5 @@
 ### Things to know
+* OpenKore is an intelligent automated assistant for Ragnarok Online. It is a free, open source and cross-platform program (Linux and 	   Windows are supported)
 * Before submitting an issue, ensure you are on the latest release.
 * Check if an issue already exists for your request.
 * Please post in English if possible.
