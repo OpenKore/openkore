@@ -31,7 +31,7 @@ To run OpenKore you will need:
 | `bRO` | Brazilian RO | Botable, Weekly Update | Henrybk, lututui, alisonrag |
 | `idRO` | Indonesian RO | working only RE_server | sctnightcore(temp)
 | `fRO` | Europe(french) RO | working | sctnightcore | 
-| `mRO` | Maylisian RO | Need Verification | N/A |
+| `mRO` | Malaysian RO | Need Verification | N/A |
 | `thRO` | Thai RO | Need Verification | N/A |
 | `cRO` | Chinese RO | Need Verification | N/A |
 | `pServer` | update servertybe |sT2012-2017 work |SkylorD sctnightcore |
