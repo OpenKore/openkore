@@ -6,7 +6,7 @@
 ## Prerequisites
 
 To run OpenKore you will need:
-1. [Download and Install Perl](http://openkore.com/index.php/How_to_run_OpenKore#Perl) (You can run start.exe or wxstart.exe if you use microsoft windows)
+* [Download and Install Perl](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements) (You can run start.exe or wxstart.exe if you use microsoft windows)
 
 ## Quickstart
 
@@ -50,13 +50,20 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 
 ## Warning
 
-Other Community are not affiliated to openkore.com
+Other communities are not affiliated to openkore.com
 
 ## Other Links
+
 1. [Openkore History](http://openkore.com/index.php/OpenKore)
 2. [Legacy Changelog](https://github.com/OpenKore/openkore/commits/master/README.txt)
 3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
 4. [Feature Requests and TODO Wiki](http://openkore.com/index.php/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
 
 ## License
-http://www.gnu.org/licenses/gpl.html
+
+This software is open source, licensed under the GNU General Public License, version 2. 
+Basically, this means that you're free to use and allowed to modify and distribute this software. 
+However, if you distribute modified versions, you **MUST** also distribute the source code.
+
+
+See http://www.gnu.org/licenses/gpl.html for the full license.
