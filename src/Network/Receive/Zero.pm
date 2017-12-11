@@ -15,12 +15,14 @@ package Network::Receive::Zero;
 use strict;
 use base qw(Network::Receive::ServerType0);
 use Log qw(warning debug error message);
+use Globals qw(%config %masterServers $messageSender);
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0AE3' => ['received_login_token', 'a2 a4 Z20 a*', [qw(len login_type flag login_token)]],
+		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0A00' => ['hotkeys'],	
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
@@ -36,11 +38,13 @@ sub new {
 
 sub received_login_token {
 	my ($self, $args) = @_;
-	debug sprintf("Received_login_token. Length: %s, Login Type: %s, Flag: %s, Token: %s \n", $args->{len}, $args->{login_type}, $args->{flag}, $args->{login_token});
-	#$self->sendTokenToServer($args->{login_token});
+	#message "Length: ".$args->{len}."\n";
+	#message "login_type: ".$args->{login_type}."\n";
+	#message "flag: ".$args->{flag}."\n";
+	#message "Token: ".$args->{login_token}."\n";
+	my $master = $masterServers{$config{master}};
+
+	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len});
 }
 
 1;
-=pod
-eiei
-=cut
