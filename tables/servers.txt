@@ -166,7 +166,7 @@ serverType kRO_RagexeRE_Zero
 serverEncoding Korean
 charBlockSize 147 #i think new charBlockSize
 gameGuard 1
-addTableFolders kRO/Zero;iRO
+addTableFolders kRO/Zero;kRO
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137
