@@ -534,3 +534,14 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+
+[Korea - kRO:Zero]
+ip 112.175.128.137
+port 6950
+master_version 0
+version 19
+serverType Zero
+serverEncoding Korean
+charBlockSize 145 #i think new charBlockSize
+gameGuard 1
+addTableFolders kRO/Zero;kRO
