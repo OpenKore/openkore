@@ -143,7 +143,6 @@ sub encrypt_password {
 		my $rijndael = Utils::Rijndael->new;
 		$rijndael->MakeKey($key, $chain, 32, 32);
 		$password_rijndael = unpack("Z32", $rijndael->Encrypt($in, undef, 32, 0));
-		Misc::visualDump($password_rijndael);
 		return $password_rijndael;
 	} else {
 		error("Password is not configured");
