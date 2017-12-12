@@ -155,6 +155,19 @@ secureLogin 1
 serverEncoding Japanese
 addTableFolders Old
 
+[Korea - kRO:Zero]
+#Todo 2 ip login packet 
+#Todo 2 packet login 
+ip 112.175.128.135
+port 6900
+master_version 0
+version 19
+serverType kRO_RagexeRE_Zero
+serverEncoding Korean
+charBlockSize 147 #i think new charBlockSize
+gameGuard 1
+addTableFolders kRO/Zero;kRO
+
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137
 port 6900
