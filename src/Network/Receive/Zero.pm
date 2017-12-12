@@ -22,6 +22,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0A00' => ['hotkeys'],
@@ -41,7 +42,7 @@ sub received_login_token {
 
 	my $master = $masterServers{$config{master}};
 
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{ip}, 6900, $master->{port});
+	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
 }
 
 1;

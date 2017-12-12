@@ -106,7 +106,7 @@ sub sendMasterLogin {
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length, $serverip, $serverport, $currentport) = @_;
+	my ($self, $username, $password, $master_version, $version, $token, $length, $ott_ip, $ott_port) = @_;
 	my $len =  $length + 92;
 
 	my $password_rijndael = $self->encrypt_password($password);
@@ -114,7 +114,7 @@ sub sendTokenToServer {
 	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
-	$net->serverConnect($serverip, $serverport);
+	$net->serverConnect($ott_ip, $ott_port);
 
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
