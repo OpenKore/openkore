@@ -15,20 +15,20 @@ package Network::Send::Zero;
 use strict;
 use base qw(Network::Send::ServerType0);
 use Globals; 
-use Network::Send::ServerType0; 
-use Log qw(error debug message); 
+use Network::Send::ServerType0;
+use Log qw(error debug message);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'08AC' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0941' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0862' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0885' => ['actor_name_request', 'a4', [qw(ID)]],
 		'087B' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
-		'0934' => ['buy_bulk_closeShop'],			
+		'0934' => ['buy_bulk_closeShop'],
 		'08A4' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0436' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0864' => ['character_move', 'a3', [qw(coordString)]],
@@ -46,11 +46,11 @@ sub new {
 		'0959' => ['storage_password'],
 		'095F' => ['sync', 'V', [qw(time)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
-		'0825' => ['token_login', 'v v x v Z25 a32 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],		
+		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		master_login 0ACF
 		actor_action 08AC
@@ -76,9 +76,9 @@ sub new {
 		storage_password 0959
 		sync 095F
 	);
-	
+
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #	sendCryptKeys 0x718D0388, 0x20042F67, 0x56A11525
 #		use = $key1 $key3 $key2
@@ -99,20 +99,22 @@ sub sendMasterLogin {
 		username => $username,
 		password_rijndael => $password_rijndael,
 		flag => 'G000', # Maybe this say that we are connecting from client
-	});	
-	
+	});
+
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length) = @_;
+	my ($self, $username, $password, $master_version, $version, $token, $length, $serverip, $serverport, $currentport) = @_;
 	my $len =  $length + 92;
-	message "len: ".$len."\n";
+
 	my $password_rijndael = $self->encrypt_password($password);
 	my $ip = '192.168.0.14';
-	my $mac = '20CF3095572A';	
+	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
+
+	$net->serverConnect($serverip, $serverport);
 
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
@@ -123,13 +125,13 @@ sub sendTokenToServer {
 		password_rijndael => '',
 		mac => $mac_hyphen_separated,
 		ip => $ip,
-		token => $token,		
+		token => $token,
 	});	
 	
 	$self->sendToServer($msg);
+
 	debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
-
 
 sub encrypt_password {
 	my ($self, $password) = @_;
