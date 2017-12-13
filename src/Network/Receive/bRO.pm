@@ -17,7 +17,7 @@ use base qw(Network::Receive::ServerType0);
 use Globals qw(@articles $playersList $shopEarned $articles);
 use Log qw(message);
 use Translation qw(T TF);
-use Misc qw(shopLog);
+use Misc qw(shopLog closeShop);
 
 sub new {
 	my ($class) = @_;
