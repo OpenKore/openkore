@@ -20,16 +20,16 @@ pvp_y_6-2.gat#izlude_a.gat#
 pvp_y_7-2.gat#izlude_a.gat#
 pvp_y_8-2.gat#izlude_a.gat#
 
-# EP14.4 fields are in a subdirectory.
-conch_in.gat#EP14.4/conch_in.gat#
-lasa_dun01.gat#EP14.4/lasa_dun01.gat#
-lasa_dun02.gat#EP14.4/lasa_dun02.gat#
-lasa_dun03.gat#EP14.4/lasa_dun03.gat#
-lasa_dun_q.gat#EP14.4/lasa_dun_q.gat#
-lasa_fild01.gat#EP14.4/lasa_fild01.gat#
-lasa_fild02.gat#EP14.4/lasa_fild02.gat#
-lasagna.gat#EP14.4/lasagna.gat#
-lasa_in01.gat#EP14.4/lasa_in01.gat#
+# EP14.4
+lasagna.gat#lasagna.gat#
+lasa_in01.gat#lasa_in01.gat#
+conch_in.gat#conch_in.gat#
+lasa_fild01.gat#lasa_fild01.gat#
+lasa_fild02.gat#lasa_fild02.gat#
+lasa_dun01.gat#lasa_dun01.gat#
+lasa_dun02.gat#lasa_dun02.gat#
+lasa_dun03.gat#lasa_dun03.gat#
+lasa_dun_q.gat#lasa_dun_q.gat#
 
 # Include untracked local modifications.
 !include_create_if_missing resnametable-custom.txt
