@@ -6,12 +6,13 @@
 ## Prerequisites
 
 To run OpenKore you will need:
-* [Read the Requirements page on our wiki](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements) (You can run start.exe or wxstart.exe if you use microsoft windows)
+* [Read the Requirements page on our wiki](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements)
 
 ## Quickstart
 
-1.  [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
-2.  Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
+1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
+2. Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
+3. Run openkore.pl (you can run start.exe or wxstart.exe if you use Windows).
 
 ## Things to know
 
