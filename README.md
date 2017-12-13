@@ -1,22 +1,21 @@
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
 * OpenKore is an custom client and intelligent automated assistant for Ragnarok Online.
-* It is a **free**, open source and cross-platform program (Linux and Windows are supported).
+* It is a **free**, open source and cross-platform program (Linux, Windows and MacOS are supported).
 
 ## Prerequisites
 
 To run OpenKore you will need:
-* [Download and Install Perl](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements) (You can run start.exe or wxstart.exe if you use microsoft windows)
+* [Read the Requirements page on our wiki](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements) (You can run start.exe or wxstart.exe if you use microsoft windows)
 
 ## Quickstart
 
-1.  [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it.
+1.  [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
 2.  Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
-3.  [Compile fields](http://openkore.com/index.php/FLD_Creation_Guide) to add fields to openkore.
 
 ## Things to know
 
-* Before submitting an issue, ensure you are on the latest release.
+* Before submitting an issue, ensure you are running the latest commit on branch.
 * Check if an issue already exists for your request.
 * Please post in English if possible.
 * Please use the issue template, please post information about the server and your configuration.
