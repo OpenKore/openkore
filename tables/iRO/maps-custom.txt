@@ -1,0 +1,11 @@
+# Lasa fields
+
+lasagna.rsw#Port city of Lasagna#
+lasa_fild01.rsw#Ravioli Plain Watch#
+lasa_fild02.rsw#Ravioli Forest#
+lasa_dun01.rsw#Dragon's Nest#
+lasa_dun02.rsw#Dragon's Nest#
+lasa_dun03.rsw#Dragon's Nest#
+conch_in.rsw#Inside the Kon-Kilina#
+lasa_in01.rsw#Inside Lasagna#
+lasa_dun_q.rsw#Dragon's Nest#
