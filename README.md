@@ -34,7 +34,7 @@ To run OpenKore you will need:
 | `mRO` | Malaysian RO | Need Verification | N/A |
 | `thRO` | Thai RO | Need Verification | N/A |
 | `cRO` | Chinese RO | Need Verification | N/A |
-| `kRO:Zero` | New Korea server | 70% | alisonrag sctnightcore(temp) SkylorD(temp) |
+| `kRO:Zero` | New Korea server | Working 90% | alisonrag sctnightcore(temp) SkylorD(temp) |
 | `pServer` | update servertybe |sT2012-2017 work |SkylorD sctnightcore |
 
 ## Contributing
