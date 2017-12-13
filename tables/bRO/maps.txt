@@ -924,3 +924,7 @@ un_bunker.rsw#Abrigo Subterrâneo#
 un_myst.rsw#Túnel do Abrigo#
 1@uns.rsw#Sala Final#
 1@lab.rsw#Laboratório Central#
+
+//Clock Tower Nightmare
+c_tower2_.rsw#Torre do Relógio Distorcida 2º Andar#
+c_tower3_.rsw#Torre do Relógio Distorcida 3º Andar#
