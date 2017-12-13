@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x2E09434A, 0x6F313849, 0x52753276
+sendCryptKeys 0x5E411C41, 0x5C415C41, 0x5C415C41
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x2E09434A, 0x6F313849, 0x52753276
+sendCryptKeys 0x5E411C41, 0x5C415C41, 0x5C415C41
 
 ## http://euro-ro.net/
 [Europe - euRO]

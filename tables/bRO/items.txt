@@ -7004,7 +7004,7 @@
 //------------Aplicar em 2015-12-08--------------------
 //*****************************************************
 20070#Capuz de Alpaca Fofinha#
-19702#Gorro Natalino#
+19702#Gorro Natalino Vermelho#
 18838#Touca de Angeling#
 //*****************************************************
 //------------Aplicar em 2015-12-15--------------------
@@ -8038,24 +8038,33 @@
 20098#Adorno Vampiresco#
 20401#Espírito angelical#
 19915#Pequeno Par de Chifres#
-
-28521#Blessing_Of_Giants#
-31383#Costume_Volume_Low_Twin#
-20844#Candy_Pocket_Bag(Magic)#
-20248#Costume_Strong_Hair#
-19083#Hero's_Mask#
-22182#Shoes_Of_Punishment#
-15272#Khalitzburg_Knightage_Armor#
-28572#Celine's_Brooch#
-15165#White_Marching_Hat#
-20433#Costume_Louise's_Red_Hat#
-19145#Whistle#
-19306#Heart_Ace_In_Mouth#
-19956#Costume_Marching_Hat#
-20116#Mermaid_Headphone#
-20198#Costume_Brown_Cat_Ear_Hairband#
-20457#Costume_Fluttering_Feather#
-28617#Bible_Of_Exorcism#
-
-
+//*****************************************************
+//------------Aplicar em 2017-12-12--------------------
+//*****************************************************
+20198#Orelhas Peludinhas#
+20248#Peruca de Saiadim#
+20116#Fones de Sereia#
+19022#Pedra Filosofal#
+19306#Carta de Comodo#
+//*****************************************************
+//------------Clock Tower Nightmare--------------------
+//*****************************************************
+2717#Relógio de Bolso#
+2971#Relógio de Bolso#
+16024#Quatrilho#
+1668#Bengala#
+15089#Fraque#
+22515#Chave do Tempo Distorcido#
+18874#Monóculo#
+//*****************************************************
+//------------Clock Tower Nightmare Cards--------------
+//*****************************************************
+4625#Carta Vigia do Tempo#
+4626#Carta Marca-Tempo#
+4627#Carta Despertador#
+4628#Carta Neo Punk#
+4629#Carta Ancião Ancestral#
+4630#Carta Diretor#
+4631#Carta Visconde Coruja#
+4632#Carta Marquês Coruja#
 //file end

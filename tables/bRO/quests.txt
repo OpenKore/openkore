@@ -1,4 +1,4 @@
-// 쟏쒡뿸
+// ÇÏÄ¡¿ø
 1000#Transcendental#SG_FEEL#QUE_NOIMAGE#
 Você pode se tornar um herói com o Livro de Ymir. Encontre o Hall da Valquíria e se torne um novo herói. #
 #
@@ -59,7 +59,7 @@ Colha Cogumelos Venenosos e Cogumelos Borrachentos #
 Preencha o formulário de inscrição para espadachim. No teste, o jogador precisa conseguir uma mensagem de sucesso do gerente que se encontra no último ponto de controle, depois de passar por todas as etapas do teste. #
 Passe em todas as etapas do teste. #
 
-// 솶만솤
+// Á¶¹ÌÁ¤
 
 2000#Mudança de Classe: Ferreiro#SG_FEEL#QUE_NOIMAGE#
 Queremos verificar a dedicação e vontade dos Mercadores que querem se tornar Ferreiros. Como primeiro teste, vá até Einbech e ajude Geschupenschte, um dos membros da guilda. #
@@ -636,7 +636,7 @@ Investigação no Santuário de Odin #
 Colete Pedaços de Chifre. #
 #
 
-// 뇨삺떿
+// ±èÀºµ¿
 
 3000#Mudança de Classe: Bardo#SG_FEEL#QUE_NOIMAGE#
 Encontrei um belo Bardo cantor. Quero ser um Bardo... Devo perguntar a ele como se torna um? #
@@ -809,7 +809,7 @@ Você estende a mão e pega um dos fragmentos. É um pedaço da pele do Imperado
 'Parabéns, soldado. Você salvou este mundo e seu povo de serem consumidos pela destruição do mal. Tenho três itens. Qual deles você quer receber?' #
  #
 
-//--------------------몣샎붺샇 뎲룅---------------------------------
+//--------------------º£ÀÎ½ºÀÇ ³²¸Å---------------------------------
 3060#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Um menino chamado Karyn perdeu sua irmãzinha quando foram ao Vulcão de Thor em Veins. Você precisa ajudá-lo a encontrar sua irmã Curdie. #
  #
@@ -1091,12 +1091,12 @@ Você capturou a Gang Z e obteve o Livro dos Mistérios Proibidos. Volte a conve
   #
 
 
-3135#벼냨볶샇 볕믳 - 뗕쇶샇 뻈솤좭#SG_FEEL#QUE_NOIMAGE#
-듏뗥좣뇗샇 뇗뢲샚럎 샎쟘 샌뇗뗥뛳뷇 뎪릫듂 붱냔 뎴쇶 뻊삻 믳쎳뢦 뻲뻺듙. 벼냨볶샇 샚솤듉럂삺 뻠 3샏떿뻈 쇶볓 뗉 뾹솤샌듙. #
+3135#¼¼°è¼öÀÇ ¼Õ»ó - µÕÁöÀÇ ¾ÈÁ¤È­#SG_FEEL#QUE_NOIMAGE#
+´ÏµåÈ£±×ÀÇ ±×¸²ÀÚ·Î ÀÎÇØ ÀÌ±×µå¶ó½Ç ³ª¹«´Â ½±°Ô ³´Áö ¾ÊÀ» »óÃ³¸¦ ¾ò¾ú´Ù. ¼¼°è¼öÀÇ ÀÚÁ¤´É·ÂÀº ¾à 3ÀÏµ¿¾È Áö¼Ó µÉ ¿¹Á¤ÀÌ´Ù. #
   #
 
-// 뿀뎲냦
-//----------------------쟥엍샼쇷------------------------------
+// ¿À³²°æ
+//----------------------ÇåÅÍÀüÁ÷------------------------------
 4000#Mudança de Classe: Caçador#SG_FEEL#QUE_NOIMAGE#
 Você precisa passar pelo teste de Dejiko para avançar. #
 #
@@ -1154,7 +1154,7 @@ Volte à Guilda dos Caçadores para relatar que passou no exame. #
 Penetração #
 
 
-//--------------------놹뿕벱쏢--------------------------------
+//--------------------±¹¿Õ¼±Ãâ--------------------------------
 4015#Tornando-se um Avaliador#SG_FEEL#QUE_NOIMAGE#
 Encontre-se com o inspetor do reino e torne-se um avaliador. #
 #
@@ -1227,11 +1227,11 @@ Há uma conspiração entre as famílias Walter e Richard. Você precisa contar 
 O príncipe Ahrum foi morto por Ernst. Você precisa relatar isso o mais rápido possível. #
 #
 
-// 뇇뿀많
+// ±Ç¿À¹Î
 
 
 
-//엂뇇샼쇷
+//ÅÂ±ÇÀüÁ÷
 
 6000#Mudança de Classe: Taekwon#SG_FEEL#QUE_NOIMAGE#
 Você escolheu o caminho do Taekwon. Você deve aumentar seu nível de base e falar com Fênix. #
@@ -1248,7 +1248,7 @@ Você finalmente pode se tornar Taekwon, falando mais uma vez com Fênix. #
 
 
 
-//볒뿯뢵쒿샼쇷
+//¼Ò¿ï¸µÄ¿ÀüÁ÷
 
 6005#Mudança de Classe: Espiritualista#SG_FEEL#QUE_NOIMAGE#
 Se quiser dominar o poder dos espíritos, você deve realizar uma cerimônia com alguns materiais. Você deve coletar 1 Rosa Eterna, 1 Diamante de 3 Quilates e 1 Coração Imortal. #
@@ -1269,7 +1269,7 @@ O eco dos espíritos ainda está em seu coração. Fale com Maia de novo. #
 
 
 
-//붴돫
+//½´³ë
 6010#Mudança de Classe: Super Aprendiz#SG_FEEL#QUE_NOIMAGE#
 Se quiser mesmo aproveitar a vida simples de Aprendiz, você deve coletar 2 tipos de itens simples. #
 30 Mucos Pegajosos, 30 Resinas #
@@ -1277,7 +1277,7 @@ Se quiser mesmo aproveitar a vida simples de Aprendiz, você deve coletar 2 tipo
 
 
 
-//듑샚
+//´ÑÀÚ
 6015#Um favor para Cougar#SG_FEEL#QUE_NOIMAGE#
 Encontre Wildcat Joe em Einbroch e fale com ele. #
 #
@@ -1297,7 +1297,7 @@ Corra e traga 5 Minérios de Ferro e 1 Fracon para Cougar. #
 
 
 
-//냇붽뢵냅
+//°Ç½½¸µ°Å
 6020#Carta do Mestre Miller#SG_FEEL#QUE_NOIMAGE#
 Leve a carta para o Sr. Chifre de Touro Inteligente em Payon. #
 #
@@ -1320,8 +1320,8 @@ Isso vai levar algum tempo. Fale com ele mais tarde. #
 
 
 
-// 맨쟽량
-//-------듭벭샼쇷 뫎뫐---------------
+// ¹èÇý·É
+//-------´í¼­ÀüÁ÷ ºÎºÐ---------------
 
 7000#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Você foi à Escola de Dança de Comodo para se tornar Odalisca. Você preencheu a ficha de inscrição. #
@@ -1351,7 +1351,7 @@ Vamos Dançar! #
 Seus passos foram fantásticos! A instrutora Borwaju deve estar impressionada. Vamos ver o que ela achou... #
 Converse com Borwaju #
 
-//------ 뇇벺 샼쇷
+//------ ±Ç¼º ÀüÁ÷
 7007#Solar, Lunar, Estelar#SG_FEEL#QUE_NOIMAGE#
 Você pode encontrar Moogang em Comodo, supostamente no lugar mais perto do céu. #
 Converse com Moogang #
@@ -1372,7 +1372,7 @@ Fragmento Estelar e Poeira Estelar #
 Volte a 'Moogang.' #
 Converse com 'Moogang' #
 
-//---뾡쟇볒뗥 13.1 드떨뢮뿂샇 샇럚 2뫎 룰럎얩 쏟샻 (ep13_moc2.sc)
+//---¿¡ÇÇ¼Òµå 13.1 ´Üµ¨¸®¿ÂÀÇ ÀÇ·Ú 2ºÎ ¸ð·ÎÅ© ÃßÀû (ep13_moc2.sc)
 
 7012#Caça ao Culto de Morroc#SG_FEEL#QUE_NOIMAGE#
 Echinacea não deixou muita escolha. De qualquer forma, procure Kidd. #
@@ -1498,7 +1498,7 @@ Você é pego quando procurava pelos Dandelions sozinho. Você não se esquece d
 
 
 //----- EP 13
-//---- 쒷쟁샇 믧산믧
+//---- Ä·ÇÁÀÇ »çÀ°»ç
 7042#Meio-Expediente#SG_FEEL#QUE_NOIMAGE#
 Traga 50 Peixes Frescos que servirão de alimento para os Tatachos. Procure-os nos campos. #
 Traga 50 Peixes Frescos #
@@ -1523,7 +1523,7 @@ Traga 30 Pêlos #
 Parece que tudo está terminado por hoje. Conseguirei trabalhar um pouco. Pelo menos pelas próximas 5 horas... #
 #
 //----------------EP 13----------------------------------
-//-언뎪엤붺언뿶 080702
+//-Å¸³ªÅä½ºÅ¸¿ö 080702
 7048#Torre de Thanatos#SG_FEEL#QUE_NOIMAGE#
 Burled quer saber por que está tão ansioso para explorar a Torre de Rekenber apesar de sua história de sacrifícios. Talvez o Selo possua alguma pista. #
 Investigue o Selo dentro da Torre #
@@ -1548,8 +1548,8 @@ Encontre outro selo na Torre #
 Quando o quarto selo foi encontrado, você também encontrou o diário de Varmunt. Talvez seja este diário que Rekenber procurava! Devo informar Burled. #
 Entregue o diário de Varmunt para Burled #
 
-// 샌냦볷
-//--------------------뻮뷪뷅샼쇷--------------------------------
+// ÀÌ°æ¼÷
+//--------------------¾î½ê½ÅÀüÁ÷--------------------------------
 8000#Desistindo: Mercenário#SG_FEEL#QUE_NOIMAGE#
 Desista da mudança de classe para Mercenário e volte à cidade. #
 Desistindo da Mudança para Mercenário #
@@ -1587,7 +1587,7 @@ Agora você se tornou um Mercenário!! #
 Mudança de Classe: Mercenário #
 
 
-//쟁뢮붺욮 샼쇷
+//ÇÁ¸®½ºÆ® ÀüÁ÷
 
 8009#Mudança de Classe: Sacerdote#SG_FEEL#QUE_NOIMAGE#
 Aceite as Três Provas do Sacerdócio para começar a mudança de classe. #
@@ -1626,7 +1626,7 @@ Mudança de Classe: Sacerdote - Inscrição #
 Agora você se tornou um Sacerdote!! #
 Agora você se tornou um Sacerdote! #
 
-// 뻆샎뫪럎얩 냸샥 쓹붺욮
+// ¾ÆÀÎºê·ÎÅ© °øÀå Äù½ºÆ®
 
 8017#Fábrica de Einbroch#SG_FEEL#QUE_NOIMAGE#
 Se puder, por favor inspecione o 2o. painel de controle, que parece estar quebrado há algum tempo... #
@@ -1690,7 +1690,7 @@ Precisamos de pelo menos 20 ^FF0000Tubos Flexíveis^000000, 10 ^FF0000Pregos Enf
 
 
 
-// 뢮죷언뢣솨 : 뫱냸솤 쓹붺욮
+// ¸®È÷Å¸¸£Á¨ : ºñ°øÁ¤ Äù½ºÆ®
 
 8032#Favor para Tarlock#SG_FEEL#QUE_NOIMAGE#
 Tenho um irmão mais novo que quase nunca vejo, porque ele também é um Capitão de Aeroplano que está sempre viajando. Pode levar esta carta ao meu irmão Ferlock? E por favor volte com a resposta dele, certo? #
@@ -1709,7 +1709,7 @@ Ah, então você entregou minha carta? Ótimo, e você ainda trouxe uma resposta
  #
 
 
-// 뢮죷언뢣솨 : 삯믧 샌만뢣 쓹붺욮
+// ¸®È÷Å¸¸£Á¨ : À¯»ç ÀÌ¹Ì¸£ Äù½ºÆ®
 
 8036#Favor para Hallen#SG_FEEL#QUE_NOIMAGE#
 Você poderia entregar esta carta para Kaci? É de um cara chamado Sr. Mawong, o mentor dela ou algo assim. #
@@ -1744,7 +1744,7 @@ Você estava me perguntando sobre os mecanismos de vôo do Aeroplano. Então, vo
 Você deve ir falar com Ferlock. #
 
 
-// 죖냖 : 뻠 놸쟏뇢 쓹붺욮
+// ÈÖ°Ö : ¾à ±¸ÇÏ±â Äù½ºÆ®
 
 8044#Noivo de Euslan#SG_FEEL#QUE_NOIMAGE#
 ...Está mesmo disposto a procurar Thierry para mim? Oh, muito obrigada mesmo! Não imagina o quanto sua gentil oferta significa para mim. Thierry saiu de viagem em um dos Aeroplanos para encontrar um remédio que os doutores disseram que preciso para tratar minha doença. #
@@ -1783,7 +1783,7 @@ Entenda, quero vê-la assim que puder, mas tenho de esperar até que os agentes 
 Entregue o remédio a Euslan. #
 
 
-// 죖냖 : 뻠쏊 쓹붺욮 (hg_herv.sc)
+// ÈÖ°Ö : ¾àÃÊ Äù½ºÆ® (hg_herv.sc)
 
 8053#Encontrando o Filho#SG_FEEL#QUE_NOIMAGE#
 Preciso que você encontre meu filho Postell e diga a ele para trazer meu remédio! Por favor, vá para o leste e saia da cidade; você deve encontrar Postell por lá. #
@@ -1802,7 +1802,7 @@ Dê uma olhada na gaveta de remédios, e pegue o que quiser. #
 Olhe dentro da gaveta de remédios. #
 
 
-// 죖냖 : 쏟뻯 쓹붺욮 (hg_memo.sc)
+// ÈÖ°Ö : Ãß¾ï Äù½ºÆ® (hg_memo.sc)
 
 8057#Manainne Resmungando#SG_FEEL#QUE_NOIMAGE#
 Esta árvore significa tanto para todos nesta cidade, e todos nós temos lembranças especiais deste lugar. Mas esse El Schatt quer cortá-la para construir sua loja... #
@@ -1833,7 +1833,7 @@ Volte para Hugel #
  #
 
 
-// 죖냖 : 뿀떭 쓹붺욮 (hg_odeng.sc)
+// ÈÖ°Ö : ¿Àµ­ Äù½ºÆ® (hg_odeng.sc)
 
 8064#Sopa com Bolinhos de Peixe#SG_FEEL#QUE_NOIMAGE#
 Por favor, leve esta encomenda de Sopa com Bolinhos de Peixe para minha amiga Neha. Que bom que ela é uma cliente regular... #
@@ -1884,7 +1884,7 @@ Você está dispensado. Pode sair, e leve meus nobres agradecimentos a Cellette.
 Você conseguiu entregar a Sopa com Bolinhos de Peixe. #
 
 
-// 뻆샎뫪럎얩 : 뾬샎 쓹붺욮 (ein_ryu.sc)
+// ¾ÆÀÎºê·ÎÅ© : ¿¬ÀÎ Äù½ºÆ® (ein_ryu.sc)
 
 8076#Klitzer e Calla#SG_FEEL#QUE_NOIMAGE#
 Sei que estou agindo como um completo idiota. Mas eu daria tudo para ver Calla... Não escute nada do que digo. Eu sou somente um pobre apaixonado pela pessoa errada. Deve ser isso... #
@@ -1939,7 +1939,7 @@ Você abriu meus olhos. De agora em diante, farei meu melhor para me tornar dign
  #
 
 
-// 뛳쟯 : 샟룸뗈 뷉뫎뢧 쓹붺욮 (rachel_wonjumin.sc)
+// ¶óÇï : Àß¸øµÈ ½ÉºÎ¸§ Äù½ºÆ® (rachel_wonjumin.sc)
 
 8089#Criança Desaparecida em Rachel#SG_FEEL#QUE_NOIMAGE#
 Não tenho provas, mas suspeito que tenha sido roubada por Phobe, um servo que desapareceu na mesma época em que a jóia sumiu. Você pode querer perguntar aos outros servos sobre seu paradeiro. #
@@ -1986,7 +1986,7 @@ Este bilhete é uma carta de recomendação que escrevi para você. Por favor, e
 Vá falar com Sir Zhed. #
 
 
-// 뛳쟯 : 뷅냼 쓹붺욮 (rachel_ma1.sc)
+// ¶óÇï : ½Å°ü Äù½ºÆ® (rachel_ma1.sc)
 
 8100#Templo de Rachel#SG_FEEL#QUE_NOIMAGE#
 Enquanto termino de escrever esta recomendação, vou dizer como chegar ao escritório da Papisa, para onde você deve ir depois de coletar 40 Corações Glaciais. #
@@ -2013,7 +2013,7 @@ Alertei a Bekento que ele poderia causar problemas para você, mas parece que vo
 Volte a falar com Zhed. #
 
 
-// 뛳쟯 : 낳쎴쟏쇶 룸쟑 뿮룭 쓹붺욮 (rachel_ryu.sc)
+// ¶óÇï : °³Ã´ÇÏÁö ¸øÇÑ ¿î¸í Äù½ºÆ® (rachel_ryu.sc)
 
 8106#Mistério de Bruspetti#SG_FEEL#QUE_NOIMAGE#
 Acabo de descobrir que minha preciosa filha tem saído com alguém. Ela foi para alguma outra cidade por causa desse garoto, e não sei nada dela desde então! Deve estar em uma viagem romântica com quem quer que seja esse rapaz. #
@@ -2084,7 +2084,7 @@ Ele ainda resiste... Como posso fazê-lo revelar a verdade? Talvez haja algo que
 ... Por favor, deixe-me só. Eu perdi o amor da minha vida por algo estúpido que fiz no passado. Se quiser me castigar, vá em frente... #
 Vá ao jardim da Freya. #
 
-// 뻆뿤언뻟 : 豣뻧닡 쓹붺욮 (ayo_tom.sc)
+// ¾Æ¿äÅ¸¾ß : Œc¾ç²á Äù½ºÆ® (ayo_tom.sc)
 
 8123#O prato mais famosa de Ayotaya, Sopa Tailandesa#SG_FEEL#QUE_NOIMAGE#
 Todos podem preparar Sopa Tailandesa, entretanto, eu recomendo que você visite ^3131FFMali^000000. Ela é a melhor cozinheira. Por que não pergunta se ela pode cozinhar para você? #
@@ -2103,7 +2103,7 @@ Agora você pode pegar '^CE0000Pimenta Vermelha^000000' e outros materiais no me
 Leve 30 Pimentas Vermelhas e os outros ingredientes para Mali. #
 
 
-// 뻆뢶싪 : 룰룰언럎 쓹붺욮 (japan_momo_q.sc)
+// ¾Æ¸¶Âê : ¸ð¸ðÅ¸·Î Äù½ºÆ® (japan_momo_q.sc)
 
 8127#Viagem ao Momotaro#SG_FEEL#QUE_NOIMAGE#
 O chefe disse que os Dokebis arrecadaram 20 milhões de zeny por hackear contas... Desde que os habitantes começaram a desperdiçar seu tempo, você não pode derrotar os Dokebis por ter nível baixo. Avise os outros. #
@@ -2122,7 +2122,7 @@ Realmente você é bom. Você tem os movimentos, kiddo. Mostre-me a saída. Nos 
  #
 
 
-// 뻆뢶싪 : 듸샼 쏢샔 쓹붺욮 (japan_mono.sc)
+// ¾Æ¸¶Âê : ´øÀü ÃâÀÔ Äù½ºÆ® (japan_mono.sc)
 
 8131#A mãe do Senhor Feudal de Amatsu#SG_FEEL#QUE_NOIMAGE#
 A mão do Senhor Feudal descansa aqui. Ela ficou doente por meses. É por isso que ela está aqui. #
@@ -2145,7 +2145,7 @@ Um grande expírito vai expulsar o espírito da raposa do ser humano. Venha, e m
  #
 
 
-// 룰붺쓚뫱뻆 : 뫒믧뷅 쓚붦샌 쓹붺욮 (mos_request.sc)
+// ¸ð½ºÄÚºñ¾Æ : ºÒ»ç½Å ÄÚ½¦ÀÌ Äù½ºÆ® (mos_request.sc)
 
 
 8136#Floresta Perigosa#SG_FEEL#QUE_NOIMAGE#
@@ -2177,7 +2177,7 @@ Você precisa de ^0000ff2 Rubis Amaldiçoados, 3 Ouros, 1 Anel Vermelho, 2 Cabel
 Leve 2 Rubis Amaldiçoados, 3 Ouros, 1 Anel Vermelho, 2 Cabelos de Lusalka, 10 Fios Dourados para o ferreiro em Moscovia #
 
 
-// <뮡낣 망쇶 쓹붺욮>
+// <»¡°£ ¹ÝÁö Äù½ºÆ®>
 
 8143#Anel Vermelho de Bassili#SG_FEEL#QUE_NOIMAGE#
 Dei o anel para minha filha mais nova, Mashenka, como presente. Mas ela morreu... Eu tenho apenas minha filha mais velha, Ryubaba. Ela é muito esperta e atenciosa, mas não consigo esquecer minha outra filha... #
@@ -2199,7 +2199,7 @@ O que é isso? Terrível! Por que essa flauta faz esse som? Nunca ouvi isso ante
 Não quero trocar isso pelo anel! Tenho que deixar seu pai saber a verdade! Estou indo contar tudo agora! Você será punida! #
 Contar ao Bassili #
 
-// <럧믬뇮샇 룓뢮쒫뛴 쓹붺욮>
+// <·ç»ì±îÀÇ ¸Ó¸®Ä«¶ô Äù½ºÆ®>
 
 8148#Senhorita desapontada#SG_FEEL#QUE_NOIMAGE#
 Você foi para o pântano de Moscovia? Você viu minha irmã? Não me importo se ela se tornou Lusalka. Quero saber onde ela está. #
@@ -2226,7 +2226,7 @@ Poderia, por gentileza, levar essa mensagem para ela? Antes da lua cheia, Voltar
  #
 
 
-// <뢶럎쇮뇮 쓹붺욮>
+// <¸¶·ÎÁî±î Äù½ºÆ®>
 
 8155#Mazroka, o dono do inverno#SG_FEEL#QUE_NOIMAGE#
 Nessa caverna, existem muitas coisas'. Você escapou da caverna com ^0000ff100 Biscoitos de Gengibre^000000 da Brazier e ^0000ff100 maçãs^000000. #
@@ -2240,13 +2240,13 @@ Como você ouviu, para fazer o 'Fio de Ouro' precisa de muito tempo. Começarei 
 Koshei poderá ser hostil com você por ter ajudado Maria. Você quer os fios de ouro? Ok, darei pra você! Mas, existe mais um teste. Não quero que você seja sacrificado, por favor considere isso. #
  #
 
-// <맙맙뻟낡뿍 좲뇝믶 뾭볨>
+// <¹Ù¹Ù¾ß°¡¿Í È²±Ý»ö ¿­¼è>
 
-8158#뎰삺 뿀뗎뢷샇 맙맙뻟낡#SG_FEEL#QUE_NOIMAGE#
+8158#³°Àº ¿ÀµÎ¸·ÀÇ ¹Ù¹Ù¾ß°¡#SG_FEEL#QUE_NOIMAGE#
 Estava procurando pelo chaveiror que seria capaz de produzir a chave! O chaveiro da Chave Dourada vive em uma cabana na floresta. ^ff0000Ei, beba minha verruga.^000000 Este feitiço lhe protegerá das Babayagas... #
  #
 
-// <Babayaga's Favor : 뇃볶냨뾭>
+// <Babayaga's Favor : ±Ã¼ö°è¿­>
 
 8159#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Minha vaca sumiu. Encontre-a e lhe aplique mo feitiço para voltar para cá. O feitiço é '^ff0000Bom alimento com sabor de laranja^000000'. Você deverá se lembrar disso. #
@@ -2256,7 +2256,7 @@ Ache a vaca da Babayaga #
 Você a encantou apidamente e a vaca sumiu depois de mugir! #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 몹믧냨뾭>
+// <Favor para Babayaga : º¹»ç°è¿­>
 
 8161#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Atráz da minha casa, não existem caixas ruidosas. Esse recente barulho está impedindo que eu durma. Acabe com ele. #
@@ -2266,7 +2266,7 @@ Acabe com o barulho. #
 ...se fizer barulho mais uma vez, você verá mais que imagina... #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 떵뗏냨뾭>
+// <Favor para Babayaga : µµµÏ°è¿­>
 
 8163#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Ache minhas colheres de prata. Alguns piratas roubaram. Acho que estão perto do navio quebrado. Traga para mim. #
@@ -2292,7 +2292,7 @@ Faça a chave juntando os pedaços. #
 A luz refletida vai direto para a imagem da mulher e a fumaça vem da caixa que foi aberta! Você encontrou as colheres #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 맽믧냨뾭>
+// <Favor para Babayaga : ¹ý»ç°è¿­>
 
 8169#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Compre um livro mágico pra mim. Foi publicado por Momotaro em Amatsu. Vá e traga um pra mim. #
@@ -2302,7 +2302,7 @@ Comprando livro para Babayaga #
 São alguns desses? 'Magica para destruir o tempo', 'A história da casa fantasma ao redor do mundo', 'Estranho e esquisito mundo das ervas.' se precisar de algum livro, me avise. #
 Volte para a Babayaga. #
 
-// <Favor para Babayaga : 냋믧냨뾭>
+// <Favor para Babayaga : °Ë»ç°è¿­>
 
 8171#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Pode ver a jaula perto da cabine? Existem fantasmas vivendo ali por perto. Tire-os de lá, me irritam muito. #
@@ -2312,7 +2312,7 @@ Expulsar o fantasma da cabine. #
 Eu não quero prejudicar nenhuma pessoa! Serei o guardião dessa casa! nunca esquecerei sua bondade por brincar com um fantasma simples como eu. #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 믳샎냨뾭, 좮샥쇷뻷놺>
+// <Favor para Babayaga : »óÀÎ°è¿­, È®ÀåÁ÷¾÷±º>
 
 8173#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Vá para Payon e compre-me uma vassoura. É a melhor coisa para limpar, pena que eu não tenho tempo para ir até lá. #
@@ -2326,9 +2326,9 @@ Não tenho vassouras. Os fantasmas me levaram todas. Fiquei satisfeita, pois era
 Ah. eu perdi, mas foi muito legal. Lhe darei a vassoura como prometido. Se possível, brinque comigo novamente quando puder. #
 Volte para a Babayaga #
 
-// <좲뇝믶샇 뾭볨>
+// <È²±Ý»öÀÇ ¿­¼è>
 
-8176#좲뇝믶샇 뾭볨#SG_FEEL#QUE_NOIMAGE#
+8176#È²±Ý»öÀÇ ¿­¼è#SG_FEEL#QUE_NOIMAGE#
 Você está no horário certo. Acabei de terminar a chave! Aqui, ajude Maria com essa chave e expulse Koshei. Kehehehehehe. #
 Encontre Maria #
 
@@ -2349,7 +2349,7 @@ Pegue isso e ajude Maria. Primeiro, aplique a Água Morta para curá-la da maldi
 Vá ajudar maria Maria. #
 
 
-// 쓹붺욮 붺얳 : 삧샚뗥, 믧샌욮 뫭랡붺엍 (qskilll_wizard.sc)
+// Äù½ºÆ® ½ºÅ³ : À§ÀÚµå, »çÀÌÆ® ºí·¡½ºÅÍ (qskilll_wizard.sc)
 
 8181#Explosão Protetora#SG_FEEL#QUE_NOIMAGE#
 Essa habilidade parece boa, mas é difícil de aprendê-la. Cavaleiros são 'experts' com habilidades para empurrar inimigos, então procure um que lhe explique essa teoria em Prontera. Verifique a direçao das 11 horas no Mini-Mapa. #
@@ -2364,7 +2364,7 @@ Não sou filantrópico, por isso utilizo poucas aulas e muito esforço! Me traga
 Leve os materiais para Meow. #
 
 
-// 쓹붺욮 붺얳 : 벼샌쇶, 뾤랹룠얻 쓁맶엍 솦솶, 뾤랹룠얻 쎼샎쇶 (qskilll_sage.sc)
+// Äù½ºÆ® ½ºÅ³ : ¼¼ÀÌÁö, ¿¤·¹¸àÅ» ÄÁ¹öÅÍ Á¦Á¶, ¿¤·¹¸àÅ» Ã¼ÀÎÁö (qskilll_sage.sc)
 
 8184#Conversor Elemental#SG_FEEL#QUE_NOIMAGE#
 Traga os materiais para que possamos criar um conversor básico. Você vai precisar de ^ff00007 Chifres, 12 Cascos Arco Íris, 10 Cascos de Caramujos, 4 Pergaminhos em Branco, 10 Caudas de Escorpião^000000. #
@@ -2391,7 +2391,7 @@ Traga ^ff000020 Cristais Azuis, 1 Solução de Payon, 1 Solução de Morroc ^000
 Volte para Mishuna com os materiais. #
 
 
-// 쓹붺욮 붺얳 : 듭벭, 룅좤샇 삮얩 (qskilll_dancer.sc)
+// Äù½ºÆ® ½ºÅ³ : ´í¼­, ¸ÅÈ¤ÀÇ À®Å© (qskilll_dancer.sc)
 
 8190#Piscadela Encantadora#SG_FEEL#QUE_NOIMAGE#
 Traga ^FF00001 Espelho de Cristal^0000000! Essa ferramenta é muito importante para essa lição, então traga-me isso rápido! #
@@ -2417,7 +2417,7 @@ Vá embora... ick, fale com Canell, minha irmã...!..ZzzzzZzZZZzzzZZ.. #
 Agora, você deve descobrir o verdadeiro segredo da Piscadela. Mas, desde que seja esse tipo de mulher, eu lhe ensinarei. Ho-ho~ #
  #
 
-// ep13 : 믯놹 뾬쟕 솶믧드샇 낥뗮 (ep13_1_rhea.sc)
+// ep13 : »ï±¹ ¿¬ÇÕ Á¶»ç´ÜÀÇ °¥µî (ep13_1_rhea.sc)
 
 8196#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
 Estes escrivãos estão muito estressados. Melhor ver qual o problema. #
@@ -2479,7 +2479,7 @@ Participe do encontro #
 "Ok. Vamos marcar outra reunião. Procure o oficial."#
  #
 
-// 용엤뢮뻳 쓹붺욮 : 냋믧 (tu_sword.sc)
+// Æ©Åä¸®¾ó Äù½ºÆ® : °Ë»ç (tu_sword.sc)
 
 8211#A palestra de Shurank#SG_FEEL#QUE_NOIMAGE#
 "Você aprendeu a arte de utilizar o Golpe Fulminante? Acredito que essa habilidade é a essência dos espadachins!"#
@@ -2553,7 +2553,7 @@ Volte para Shurank #
 "Essa será a palestra final para você. Escute atentamente sobre a habilidade 'Impacto Explosivo'."#
 A palestra de Shurank #
 
-// 용엤뢮뻳 쓹붺욮 : 믳샎 (tu_merchant.sc)
+// Æ©Åä¸®¾ó Äù½ºÆ® : »óÀÎ (tu_merchant.sc)
 
 8229#A palestra de Guarnien#SG_FEEL#QUE_NOIMAGE#
 "Você realmente pode ser um mercador se você carregar bons itens para vender. Aumente o nível da habilidade 'Aumentar Peso do Carinho' para Lv 4. Depois disso, poderemos conversar sobre você se tornar um mercador de verdade."#
@@ -2604,7 +2604,7 @@ A palestra de Guarnien #
 Fale com Guarnien depois de aprender 'Comércio' #
 
 
-// ep13 : 엫뾪뇢 쓹붺욮 (ep13_2_rhea.sc)
+// ep13 : Åë¿ª±â Äù½ºÆ® (ep13_2_rhea.sc)
 
 8241#Coleção de Jóias Vermelhas#SG_FEEL#QUE_NOIMAGE#
 Você coletava jóias de um túmulo! #
@@ -2659,17 +2659,17 @@ Quero produzir um dispositivo que poderá ler as mágicas codificadas nas jóias
 Depois de uma hora, volte a falar com o Engenheiro em Schwartzvald. #
 
 
-// 맚벱놸
+// ¹Ú¼±±¸
 
-//================================뎪샌욮 샼쇷==========================================
+//================================³ªÀÌÆ® ÀüÁ÷==========================================
 
-//-----------------쟬뢣뢸------------------------
+//-----------------Çì¸£¸¸------------------------
 
 9000#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 Herman, Capitão da Cavalaria, diz que você precisa obter aprovações de outros Cavaleiros para se tornar um. #
 Fale com outros membros da Cavalaria. #
 
-//-----------------뾣뗥럹-----------------------
+//-----------------¿£µå·ù-----------------------
 
 // 1st test - 1
 9001#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2686,14 +2686,14 @@ Você deve coletar 5 Patas de Inseto, 5 Corações de Sereia, 5 Flores de Planta
 Sir Andrew disse para você visitar Sir Siracuse para continuar com os testes. #
 Converse com Sir Siracuse #
 
-//----------------솦샓붺--------------------------
+//----------------Á¦ÀÓ½º--------------------------
 
 // 2nd test
 9004#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 James Siracuse disse para você visitar Sir Windsor para continuar com os testes. #
 Converse com Sir Windsor #
 
-//----------------삩샺--------------------------
+//----------------À©Àú--------------------------
 
 // 3rd test
 9005#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2712,7 +2712,7 @@ Mate todos os monstros em 3 minutos #
 Sir Windsor disse para você visitar Amy Beatrice para o próximo teste. #
 Converse com Amy Beatrice #
 
-//----------------뾡샌만--------------------------
+//----------------¿¡ÀÌ¹Ì--------------------------
 
 
 // 3rd test
@@ -2728,7 +2728,7 @@ Amy Beatrice disse para você visitar Sir Edmond para o próximo teste. #
 Converse com Sir Edmond #
 
 
-//----------------뻖뗥룳뗥--------------------------
+//----------------¾Öµå¸óµå--------------------------
 
 // 4th test
 9010#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2740,21 +2740,21 @@ Meditação #
 Sir Edmond disse para você encontrar Sir Gray para o teste final. #
 Converse com Sir Gray #
 
-//-----------------뇗랹샌----------------------------
+//-----------------±×·¹ÀÌ----------------------------
 
 // 6th test
 9012#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 Sir Gray disse para você falar com o Capitão para mudar de classe, já que você falou com todos os outros cavaleiros. Finalmente, é hora de se tornar Cavaleiro! #
 Converse com Sir Gray #
 
-//=======================솾럡======================================
+//=======================Á¾·á======================================
 
 
 
 
-//= =====================삧샚뗥 ==============================
+//= =====================À§ÀÚµå ==============================
 
-//---------------------------쒫욮뢰듀--------------------------------
+//---------------------------Ä«Æ®¸°´À--------------------------------
 9013#Mudança de Classe: Bruxo#SG_FEEL#QUE_NOIMAGE#
 O primeiro teste de Catherine, Bruxa da Guilda, é coletar Gemas. #
 Colete 3 Gemas de cada cor: Vermelha, Azul e Amarela. #
@@ -2770,7 +2770,7 @@ Você passou no teste de Catherine. Ela disse que você deve falar com o Bruxo M
 Encontre e fale com o Bruxo Misterioso. #
 
 
-//---------------------------뛳뿬랻 ( 삽쒧쟑 뎲샚 )--------------------------------
+//---------------------------¶ó¿ì·» ( À½Ä§ÇÑ ³²ÀÚ )--------------------------------
 
 9016#Mudança de Classe: Bruxo#SG_FEEL#QUE_NOIMAGE#
 A segunda etapa do teste de mudança de classe é responder às perguntas de Raulel. #
@@ -2784,7 +2784,7 @@ Faça o teste prático com 3 propriedades diferentes #
 Você passou em todos os testes de Raulel. Fale com Catherine para terminar! #
 Converse com Catherine #
 
-//---------------------------샼샥--------------------------------
+//---------------------------ÀüÀå--------------------------------
 2069#Desfiladeiro de Tierra#SG_FEEL#QUE_NOIMAGE#
 Você recebeu um indicador mostrando que participou da batalha do Desfiladeiro de Tierra. O Exército de Guillaume não vai deixar você participar de mais nenhuma batalha até que o indicador se esgote. #
 Espere o tempo acabar para poder voltar à Batalha do Desfiladeiro de Tierra. #
@@ -2806,7 +2806,7 @@ Derrote Naght Sieger no 102o. nível da Torre Sem Fim. #
 Por ter morrido dentro da Torre Sem Fim, você não poderá entrar nela até que ela seja restaurada. #
 #
 
-//---------------------------뿕삧솶럊--------------------------------
+//---------------------------¿ÕÀ§Á¶·Ê--------------------------------
 10000#Para a Corte Real de Prontera#SG_FEEL#QUE_NOIMAGE#
 Como o mensageiro disse, vá à Corte Real de Prontera e fale com o Inspetor. #
 #
@@ -2910,7 +2910,7 @@ Vamos nos lembrar da última conversa entre os dois príncipes #
 Relate ao inspetor tudo pelo que você passou. #
 #
 
-//---------------------------삯돫 룞엤 쓹--------------------------------
+//---------------------------À¯³ë ¸ÞÅä Äù--------------------------------
 10026#Reforma de Meto#SG_FEEL#QUE_NOIMAGE#
 Vá olhar Meto como Weigon lhe pediu. #
 #
@@ -2943,7 +2943,7 @@ Vá para Meto e verifique se sua interferência foi efetiva. #
 Sucesso, reporte para Weigon. #
 #
 
-//---------------------------냯럻 싸쟑 샎낣--------------------------------
+//---------------------------°ï·û ÂøÇÑ ÀÎ°£--------------------------------
 10034#Procurando a Faca#SG_FEEL#QUE_NOIMAGE#
 Vá para o campo procurar a faca de YunKyoHam. #
 #
@@ -2952,7 +2952,7 @@ Vá para o campo procurar a faca de YunKyoHam. #
 Você encontrou a faca, volte e fale com YunKyoHam. #
 #
 
-//---------------------------붺뷃 뿍믧뫱 쓹--------------------------------
+//---------------------------½º½Ã ¿Í»çºñ Äù--------------------------------
 10036#Abastecimento - Doces#SG_FEEL#QUE_NOIMAGE#
 Leve 10 Balas para Magumagu. #
 #
@@ -2977,7 +2977,7 @@ Leve 1 Prato de Porcelana para Magumagu. #
 Leve 100 Corações de Sereia para Magumagu. #
 #
 
-//---------------------------냇망 쎣뇢 쓹--------------------------------
+//---------------------------°Ç¹Ý Ã£±â Äù--------------------------------
 10042#Teclas de piano - Faltam 5#SG_FEEL#QUE_NOIMAGE#
 Provavelmente a pessoa que tem dificuldade em falar deve ter a próxima tecla. #
 #
@@ -3030,7 +3030,7 @@ Parece que não tem problemas em colocar em qualquer lugar, mesmo não sendo uma
 Fale com a bruxa, Clint Kana para sair. #
 #
 
-//---------------------------뿬얺 쏟샥 맸뾪 쓹--------------------------------
+//---------------------------¿ìÅº ÃßÀå ¹ø¿ª Äù--------------------------------
 
 10055#Cultura de Wootan#SG_FEEL#QUE_NOIMAGE#
 O Chefe da tribo Wootan sugere que você continue a aprender sobre essa cultura. #
@@ -3041,7 +3041,7 @@ Você aprenderá o idioma Wootan se trouxer certos itens. #
 10 Papéis Amarelados, 5 Pedaços de Papel, 1 Tinta de Polvo, 1 Pluma de Ave #
 
 // --------------EP13------------------------------------------
-//---------------------------샌냨럎 낡샚--------------------------------
+//---------------------------ÀÌ°è·Î °¡ÀÚ--------------------------------
 10057#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Apenas os mais fortes passarão no teste. #
 Vá ao oficial em Aldebaran. #
@@ -3175,8 +3175,8 @@ Parece que você o influenciou. #
 Você é experiênte em falar coisas para ele, apenas fale sobre seus sentimentos. #
 
 
-// 볛볛샌
-// ----------뿀뗲뷅샼, 믽쎼뾬놸, 떵벭냼, 떹쇝듂돫샎
+// ¼Û¼ÛÀÌ
+// ----------¿Àµò½ÅÀü, »ýÃ¼¿¬±¸, µµ¼­°ü, µ¹ÁÝ´Â³ëÀÎ
 11000#Inspeção do Templo de Odin#SG_FEEL#QUE_NOIMAGE#
 Enfim, se quiser nos ajudar, dê uma olhada nos arredores do templo e veja se quer trabalhar conosco. Fale com o Barqueiro para viajar até o templo, OK? #
 Fale com Alex de novo, depois de investigar o Templo. #
@@ -3605,8 +3605,8 @@ Apenas descanse. #
 Precisamos de couro para todos do acampamento. Você pode conseguir couro dos ^0000FFTendrilrions^000000. Precisamos de ^0000FF20^000000 desses. #
 Apenas consiga os pedaços de couro dos Tendrilions. #
 
-// 맚샏뿫
-//---------------쒣놸, 릫뇢냸뇞------------------------
+// ¹ÚÀÏ¿ë
+//---------------Ä£±¸, ¹«±â°ø±Þ------------------------
 12000#Amigos: Discordância#SG_FEEL#QUE_NOIMAGE#
 Encontre o outro amigo de Maku e fale com ele. #
 Encontre o outro amigo de Maku. #
@@ -3869,7 +3869,7 @@ Apenas podeá acessar a Torre dentro do limite de tempo. #
 Tempo de acesso para a torre. #
 
 //---------------Brasilis Q --------------------------------------
-//뫪뛳쇺뢮붺 - 샌믳쟑 쟘몯낡
+//ºê¶óÁú¸®½º - ÀÌ»óÇÑ ÇØº¯°¡
 9028#Captura das Anêmonas#SG_FEEL#QUE_NOIMAGE#
 Algumas Anêmonas surgiram misteriosamente em ^8B4513Brasilis^000000. #
 Capture-as usando uma ^006400Rede de Captura^000000 recebida da Bióloga Lucia. #
@@ -7058,7 +7058,7 @@ Trabalhe com ^005DFFViorel^000000#
 Você pode usar o serviço de reset de atributos se possuir uma Pedra das Valquírias. . #
 Volte daqui a ^FF000020 horas^000000. #
 
-//=== 쟒럎삩 떥샌===
+//=== ÇÒ·ÎÀ© µ¥ÀÌ===
 //------------------ O Mercador do Inferno
 14166#Maçã!!!#SG_FEEL#QUE_NOIMAGE#
 Pegue uma maçã fresca do mundo dos vivos e entregue-a ao Mercador do Inferno. Ele diz que gostaria de ajudar você, então escute-o. #
@@ -7772,7 +7772,7 @@ Você deve esperar 3 horas antes de refazer a missão Caça às Nereidas. #
 Você deve esperar 3 horas antes de refazer a missão Caça aos Mascarados. #
 #
 
-//----------2012얩뢮붺뢶붺_Feliz Natal, Equipe Fumacentos em Ao!
+//----------2012Å©¸®½º¸¶½º_Feliz Natal, Equipe Fumacentos em Ação!
 
 1276#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
 Colete 10 Doces Roubados, 10 Biscoitos Roubados e 10 Mochila de Itens Roubados se derrotar Fumacentos em Meias e Fumacentos Natalinos. #
@@ -10532,7 +10532,7 @@ Volte de manhã.#
 Quer uma obra de arte do Pastor Estiloso? Tente trazer todos os itens necessários!#
 Complete a produção do Chapéu.#
 
-//냸벺샼 TE
+//°ø¼ºÀü TE
 
 7501# Bebê Suspeito (1)#SG_FEEL#QUE_NOIMAGE#
 Um pedido para eliminar um Bebê Suspeito que se esconde nos castelos dos Feudos de Gloria e Kafragarten durante a Guerra do Emperium. Alvo: 1 Bebê.#
@@ -11371,7 +11371,7 @@ Colete 10 Ramos de Azevinho#
 
 //Hero's Trail pt.1
 
-//- 뾵뿵샇 죧샻
+//- ¿µ¿õÀÇ ÈçÀû
 12325#Covil de Vermes#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#
@@ -11392,7 +11392,7 @@ Você pode repetir a missão após 1 dia.#
 Enquanto caçava no Covil de Vermes, você encontrou um Bracelete que pertencia a uma Alma Infeliz.#
 Você pode repetir a missão após 1 dia.#
 
-//-뾵뿵샇 죧샻
+//-¿µ¿õÀÇ ÈçÀû
 15002#Memórias de Sara#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#

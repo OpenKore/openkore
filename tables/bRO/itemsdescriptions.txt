@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 04/12, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 05/12. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 01/01/2018, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 02/01/2018. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -13420,12 +13420,13 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 2354#
 Uma armadura que foi acidentalmente encantada por Goibne, o ferreiro, quando ele derramou o místico elixir da vida sobre ela.
-^0000ffVIT +2, máx. HP +10%.^000000
+^0000ffVIT +2.^000000
+^0000ffHP máx. +10%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777350^000000
 Nível necessário: ^77777754^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2355#
 Robe do Anjo Guardião do Superaprendiz.
@@ -13468,12 +13469,13 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 2419#
 Um par de sapatos supostamente forjado por Goibne em resposta à competição de seu rival, Dulb.
-^0000ffMáx. HP +5%, máx. SP +5% e DEFM +3.^000000
+^0000ffDEFM +3.^000000
+^0000ffHP e SP máx. +5%.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777713^000000
 Peso: ^77777770^000000
 Nível necessário: ^77777754^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2420#
 Sandálias divinas usadas pelo Anjo Guardião dos Super Aprendizes.
@@ -13555,12 +13557,14 @@ Nível necessário: ^77777761^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 2520#
-A primeira criação de Goibne, sua rara e preciosa armadura. Diminui o dano físico a longas distâncias em 10%. DEFM +2.
+A primeira criação de Goibne, sua rara e preciosa armadura.
+^0000ffDEFM +2.^000000
+^0000ffResistência a danos físicos a distância +10%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777711^000000
 Peso: ^77777770^000000
 Nível necessário: ^77777754^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2521#
 O confortável e quente Casaco do Anjo Guardião do Superaprendiz. Aumenta a recuperação natural de HP em 5%.
@@ -13938,13 +13942,24 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 5128#
 Uma das poucas armaduras forjadas por Goibe, o ferreiro. Dizem que os deuses gostaram mais das armaduras do que das armas que ele forjou.
-^0000ffVIT +3, DEFM +3. Se o usuário está equipado com o conjunto de Armadura Goibne completo, esse elmo adiciona VIT +5, Máx. HP +15%, Máx. SP +5%, DEF +5, DEFM +15 e 10% de resistência contra as propriedades Água, Vento, Terra e Fogo.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
+^0000ffVIT +3.^000000
+^0000ffDEFM +3.^000000
+^FF6347Conjunto^000000
+^FF6347[Grevas de Goibne]^000000
+^FF6347[Armadura de Goibne]^000000
+^FF6347[Ombreiras de Goibne]^000000
+^0000ffDEF +5.^000000
+^0000ffDEFM +15 adicional.^000000
+^0000ffVIT +5 adicional.^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+^0000ffResistência as propriedades Água, Vento, Terra e Fogo +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo ^000000
 Defesa: ^77777710^000000
-Equipa em: ^777777Topo^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777754^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 1475#
 Não se conhece muito sobre a misteriosa Lança Eqüestre...
@@ -24806,13 +24821,17 @@ Classes que utilizam: ^777777Todas as classes e suas evoluções exceto Aprendiz
 #
 2537#
 Manteau negro que apenas aqueles sem medo conseguem vestir.
-Reduz o dano de propriedade Neutro em 5%.
-Causa +10% dano físico ao Imperador Morroc.
-HP Máx +6% quando equipado junto com as Botas de Diabolus.
+^0000ffHP máx. +100.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+^0000ffDano físico contra Morroc Ferido +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas de Diabolus]^000000
+^0000ffHP máx. +6%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777715^000000
 Peso: ^77777725^000000
-Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2728#
 Uma mão esquelética que invoca sentimentos misteriosos.
@@ -24826,13 +24845,15 @@ Classes que utilizam: ^777777Todas as classes T. e suas evoluções exceto Apren
 #
 2729#
 Um anel em que símbolos misteriosos estão gravados.
-HP Máx + 100, SP Máx +100.
-Aumenta a recuperação recebida pela habilidade Cura em 5%.
-Aumenta em 10% o ataque físico causado no Imperador Morroc.
+^0000ffHP e SP máx. +100.^000000
+^0000ffEfetividade de cura +5%.^000000
+^0000ffTolerância a Congelamento +15%.^000000
+^0000ffDano físico contra Morroc Ferido +10%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777775^000000
-Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2730#
 Uma recompensa real dada aos membros da Guarda Continental.
@@ -24863,44 +24884,55 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 5808#
 Uma diadema que pertenceu ao Imperador Morroc e só pode ser usada por aqueles que derrotaram o demônio.
-Aumenta a resistência a Petrificar, Congelamento e Atordoamento em 20%.
-A resistência aumenta em 2% para cada nível de aprimoramento do item.
-(O bônus por nível de aprimoramento só será válido até o nível +10 do equipamento)
-Tipo: ^777777Equipamento para a cabeça^000000
+^0000ffTolerância a Atordoamento, Congelamento e Petrificação +20%.^000000
+A cada refino até o +10:
+^0000ffTolerância a Atordoamento, Congelamento e Petrificação +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
 Peso: ^77777725^000000
-Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2374#
 Uma vestimenta em que símbolos misteriosos estão gravados.
-SP Máx +150, DEFM +5
-Reduz o tempo entre conjurações em 10%
-Aumenta a recuperação recebida pela habilidade Curar em 6%
-ATQ +3%, ATQM +3% quando equipado junto com o Anel de Diabolus
+^0000ffDEFM +5.^000000
+^0000ffSP máx. +150.^000000
+^0000ffPós-conjuração -10%.^000000
+^0000ffEfetividade de cura +6%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel de Diabolus]^000000
+^0000ffDano físico e mágico +3%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777757^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Arqueiro T., Mago T., Noviço T. e evoluções.^000000
+Classes: ^777777Arqueiro T., Mago T., Noviço T. e evoluções^000000
 #
 2375#
 Uma armadura feita de um material desconhecido que guarda poderes misteriosos.
-FOR + 2, DES + 1, HP Máx +150.
-Aumenta a resistência a Petrificar e Atordoamento em 5%.
-ATQ +3%, ATQM +3% quando equipada junto com o Anel de Diabolus.
+^0000ffFOR +2. DES +1.^000000
+^0000ffHP máx. +150.^000000
+^0000ffTolerância a Petrificação +5%.^000000
+^0000ffTolerância a Atordoamento +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel de Diabolus]^000000
+^0000ffDano físico e mágico +3%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777779^000000
-Peso: ^77777760^000000 Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções.^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
 #
 2433#
 Botas mágicas que se ajustam aos pés do usuário.
-Aumenta o HP máximo do usuário em 10x o Nível Base.
+^0000ffA cada nível de base:^000000
+^0000ffHP máx. +10.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777715^000000
 Peso: ^77777725^000000
-Classes que utilizam: ^777777Classes T. 2-1 e 2-2^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 
 // ---------- 쟒슦 엗붺욮 -----------
@@ -24941,13 +24973,24 @@ Classes que utilizam: ^777777Mago T e evoluções, Espiritualista^000000
 #
 2716#
 Luva favorita entre bibliotecários.
-SP + 20.
-Quando equipada com o Relógio de Bolso e a Magia Antiga ou o Princípios de Magia, INT +5, HP + 700, Vel de ATQ + 5%.
+^0000ffSP máx. +20.^000000
+^FF6347Conjunto^000000
+^FF6347[Relógio de Bolso]^000000
+^FF6347[Magia Antiga]^000000
+^0000ffINT +5.^000000
+^0000ffHP máx. +700.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Relógio de Bolso]^000000
+^FF6347[Princípios da Magia]^000000
+^0000ffINT +5.^000000
+^0000ffHP máx. +700.^000000
+^0000ffVelocidade de ataque +5%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Bruxo, Sábio, e evoluções; Espiritualista^000000
+Classes: ^777777Todas^000000
 #
 2717#
 Um relógico prateado com uma longa corrente.
@@ -37019,11 +37062,11 @@ ATQ + 18, Precisão + 5.
 #
 
 4835#
-ATQ em Longas Distâncias + 8%
+Dano físico a distância +8%.
 #
 
 4836#
-ATQ em Longas Distâncias + 10%
+Dano físico a distância +10%.
 #
 
 4843#
@@ -37600,10 +37643,10 @@ Equipa em : ^777777Armadura^000000
 Peso : ^7777771^000000
 #
 4848#
-Redução de 5% contra ataques da propriedade Neutra
+Resistência a propriedade Neutro +5%.
 #
 4849#
-Redução de 5% contra ataques da raça Humanoide
+Resistência a raça Humanoide +5%.
 #
 
 4852#
@@ -37690,10 +37733,10 @@ ATQM +9. Tempo de conjuração variável -6%.
 ATQM +12. Tempo de conjuração variável -8%.
 #
 4833#
-ATQ em Longas Distâncias +4%
+Dano físico a distância +4%.
 #
 4834#
-ATQ em Longas Distâncias +6%
+Dano físico a distância +6%.
 #
 4810#
 ATQ + 9, Precisão + 3.
@@ -38422,7 +38465,7 @@ SP +100
 SP +150
 #
 4807#
-Vel. ATQ +1.
+Velocidade de ataque +1.
 #
 4811#
 ATQ +6, Precisão +2.
@@ -38458,25 +38501,27 @@ ATQM +21. Tempo de conjuração variável -10%.
 ATQM +50. Tempo de conjuração variável -20%.
 #
 4832#
-Ataque a distância 2%.
+Dano físico a distância +2%.
 #
 4837#
-Ataque a distância 12%.
+Dano físico a distância +12%.
 #
 4838#
-Ataque a distância 14%.
+Dano físico a distância +14%.
 #
 4839#
-Ataque a distância 16%.
+Dano físico a distância +16%.
 #
 4840#
-Ataque a distância 18%.
+Dano físico a distância +18%.
 #
 4841#
-Ataque a distância 20%, Vel. ATQ +1.
+Velocidade de ataque +1.
+Dano físico a distância +20%.
+
 #
 4842#
-Vel. ATQ +2.
+Velocidade de ataque +2.
 #
 4859#
 Esquiva +1.
@@ -45848,16 +45893,33 @@ Classes : ^777777Todas^000000
 #
 18866#
 Usada normalmente pelo notório e mal humorado Duque Coruja, agora esta cartola é seu troféu!
-^0000FFINT+1, AGI+1^000000
-Ao atacar magicamente, chance de conjurar Amplificação Mística em nível 2. Se refinada em nível 6 ou mais, aumenta a chance baseada no nível do refinamento.
-Se equipado em conjunto com Monóculo, a chance de conjurar a habilidade também é aumentada.
-Se equipado com a carta Barão Coruja, chance de conjurar automaticamente Amplificação Mística em nível 4.
-Se equipado com a carta Barão Coruja e Duque Coruja, chance de conjurar automaticamente Amplificação Mística em nível 6.
-Se equipado com o Cajado do Cavalheiro[1] a chance de conjurar a habilidade será aumentada por nível de refinamento.
-Se equipado com o Cajado do Cavalheiro[1] com refinamento acima de +10, diminui o tempo de conjuração variável.
+^0000ffINT +1. AGI +1.^000000
+Ao realizar ataques mágicos:
+^0000ff0,5% de chance de autoconjurar [Amplificação Mística] nv. 2.^000000
+A cada refino a partir do +6:
+^0000ffChance de autoconjurar [Amplificação Mística] +0,1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Monóculo]^000000
+A cada refino a partir do +6:
+^0000ffChance de autoconjurar [Amplificação Mística] +0,1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Barão Coruja]^000000
+^0000ffAutoconjura [Amplificação Mística] no nível 4.^000000
+^0000ffChance de autoconjurar [Amplificação Mística] +0,3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Duque Coruja]^000000
+^FF6347[Carta Barão Coruja]^000000
+^0000ffAutoconjura [Amplificação Mística] no nível 6.^000000
+^0000ffChance de autoconjurar [Amplificação Mística] +0,2%.^000000
+^FF6347Conjunto^000000
+^FF6347[Cajado do Cavalheiro]^000000
+A cada refino da arma:
+^0000ffChance de autoconjurar [Amplificação Mística] +0,4%.^000000
+Arma com refino +10 ou mais:
+^0000ffConjuração variável -20%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^77777715^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^77777715^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
@@ -56399,5 +56461,271 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-12-12--------------------
+//*****************************************************
+20198#
+Inspirado na princesa do reino de Di-ji Xaratt, personagem de uma antiga história infantil, esse conjunto de orelhas bem fofas foi confeccionado pelos apaixonados por gatos daquela região. Dizem até que elas se mexem sozinhas, mas mesmo se não o fizerem, continuam fofas do mesmo jeito.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20248#
+Uma peruca inspirada em um guerreiro de uma raça forte e poderosa, chamada Saiadims. Todos os que pertencem a ela possuem esse estilo bem peculiar na cabeça, com um desejo incontrolável de gritar sempre que lutam. Você vai até parecer meio louco, mas lembre-se: força na peruca!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20116#
+Trazido das profundezas do oceano com toda a tecnologia de algum reino perdido por lá, esse fone de ouvido adornado por bolhas e lindas barbatanas vai trazer um toque diferente e jamais visto antes! Ah, que pena seria se você deixasse de ter um desses!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19022#
+Você finalmente obteve a lendária Pedra Filosofal, tão buscada pelos alquimistas! Famosa por poder transformar chumbo em ouro ou mesmo por conceder a imortalidade, ela foi o objetivo da busca de várias pessoas e feras feridas, desde Nicolas Flamel até o Waldir-Morte e os irmãos El Ricos. Prova de sua ligação com os alquimistas é que ela parece afetar todo tipo de homunculus, até mesmo os em forma de chapéus!
+^0000ffTolerância a Cegueira +100%.^000000
+^FF6347Conjunto^000000
+^FF6347[Chapéu de Filir]^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffReflete 4% do dano físico recebido.^000000
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar o [Efeito F] por 7 segundos.^000000
+^CD3278Efeito F:^000000
+^0000ff[Ataque Duplo] nv. 10.^000000
+^0000ffVelocidade de ataque +2 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Boneca de Lif]^000000
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar o [Efeito L] por 7 segundos.^000000
+A cada refino:
+^0000ffSP máx. +1%.^000000
+^0000ffRegeneração natural de SP +1%.^000000
+^CD3278Efeito L:^000000
+^0000ffRecupera 3 de SP por ataque físico.^000000
+^FF6347Conjunto^000000
+^FF6347[Chapéu de Amistr]^000000
+^0000ffEfetividade de cura recebida +2%.^000000
+^0000ffRecuperação de HP por itens +2%.^000000
+Ao receber ataques físicos:
+^0000ff1,5% de chance de ativar o [Efeito A] por 7 segundos.^000000
+A cada refino:
+^0000ffHP máx. +1%.^000000
+^CD3278Efeito A:^000000
+^0000ffDEF +20 por refino.^000000
+^FF6347Conjunto^000000
+^FF6347[Chapéu de Vanilmirth]^000000
+^0000ffDrena 200 de SP ao desequipar.^000000
+^0000ffDano de [Relâmpago] [Coluna de Pedra] [Lanças de Fogo] e [Lanças de Gelo] +50%.^000000
+Ao realizar ataques físicos:
+^0000ff0,4% de chance de autoconjurar [Lanças Duplas] nv. 1 ou no nível aprendido.^000000
+^0000ff5% de chance de autoconjurar [Relâmpago] [Coluna de Pedra] [Lanças de Fogo] e [Lanças de Gelo] nv. 1 ou no nível aprendido.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+19306#
+Uma carta especial do baralho de Me Soka Morô, o arruaceiro assassino que participou do reality show ‘CaçadorXCaçador’. Ela é extremamente afiada e um poderoso aliado para as suas habilidades, sejam elas quais forem.
+^0000ffDano crítico +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Marcas de Comodo]^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffDano crítico +2% adicional.^000000
+^0000ffResistência a personagens +2%.^000000
+^0000ffResistência a [Ataque Crítico] de monstros +100%.^000000
+A cada 10 de DES base:
+^0000ffDano crítico +2%.^000000
+SOR base 108 ou mais:
+^0000ffDano crítico +2% adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffResistência a personagens +2% adicional.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +4% adicional.^000000
+^0000ffVelocidade de ataque +2 adicional.^000000
+^0000ffResistência a personagens +4% adicional.^000000
+^0000ffAo realizar ataques físicos normais, espalha o dano básico na área de 3x3 células.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Clock Tower Nightmare--------------------
+//*****************************************************
+2717#
+Um relógico prateado com uma longa corrente.
+^FF6347Conjunto^000000
+^FF6347[Monóculo]^000000
+^FF6347[Grimório]^000000
+^0000ffDano mágico +7%.^000000
+^0000ffRegeneração natural de HP e SP +15%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777771^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
+#
+2971#
+Um relógico prateado com uma longa corrente.
+^FF6347Conjunto^000000
+^FF6347[Monóculo]^000000
+^FF6347[Grimório]^000000
+^0000ffDano mágico +7%.^000000
+^0000ffRegeneração natural de HP e SP +15%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777771^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
+#
+15089#
+Uma vestimenta normalmente usada por cavalheiros. Os efeitos da distorção temporal estão impregnados nos fios do tecido.
+^0000ffPós-conjuração -3%.^000000
+^0000ffConjuração variável -3%.^000000
+^0000ffVelocidade de ataque +3%.^000000
+Refino +7 ou mais:
+^0000ffPós-conjuração -2% adicional.^000000
+^0000ffConjuração variável -2% adicional.^000000
+^0000ffVelocidade de ataque +2% adicional.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777740^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
+#
+18874#
+Um óculos para um só olho. Parece ser usado mais por vaidade do que por necessidade.
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+1668#
+Uma bengala utilizada por diversos cavalheiros. Uma lâmina secreta dentro do cabo pode ser usada para proteção, caso necessário.
+^0000ffATQM +150.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Fraque]^000000
+^0000ffPós-conjuração -10%.^000000
+A cada refino da arma até o +10:
+^0000ffPós-conjuração -1%.^000000
+Tipo: ^777777Cajado^000000
+Ataque: ^777777120^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
+#
+16024#
+Maça de cabeça redonda feita de ferro temperado. Arma pesada, mas muito poderosa.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDano físico contra a raça Humanoide +10%.^000000
+^0000ffDano físico contra as propriedades Terra e Maldito +10%.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^777777165^000000
+Peso: ^77777790^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Noviços e evoluções^000000
+#
+22515#
+Uma chave amaldiçoada pelo feitiço do Vigia do Tempo. Faz com que o tempo passe mais devagar.
+^0000ffAutoconjura [Espírito dos Amaldiçoados] nv. 2.^000000
+Recarga:  ^77777760 segundos^000000
+Nível necessário:  ^777777100^000000
+Peso: ^77777730^000000
+#
+//*****************************************************
+//-----------Clock Tower Nightmare Cards---------------
+//*****************************************************
+4625#
+^0000ffDano mágico +20%.^000000
+^0000ffCusto de SP das habilidades +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4626#
+^0000ffDano mágico contra as raças Amorfo e Demônio +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Neo Punk]^000000
+^0000ffIgnora 50% da DEFM das raças Amorfo e Demônio.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4627#
+^0000ffDano físico contra as raças Amorfo e Demônio +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Neo Punk]^000000
+^0000ffIgnora 50% da DEF das raças Amorfo e Demônio.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4628#
+^0000ffResistência as raças Amorfo e Demônio +25%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Marca-Tempo]^000000
+^0000ffResistência as raças Amorfo e Demônio +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Despertador]^000000
+^0000ffResistência as raças Amorfo e Demônio +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
+Peso: ^7777771^000000
+#
+4629#
+^0000ffResistência a propriedade Neutro +15%.^000000
+A cada refino:
+^0000ffDano mágico de propriedade Terra +3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Diretor]^000000
+^0000ffResistência a propriedade Neutro +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+4630#
+Ao receber ataques físico ou mágicos:
+^0000ff3% de chance de autoconjurar [Espírito dos Amaldiçoados] nv. 2.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Ancião Ancestral]^000000
+^0000ffChance de autoconjurar [Espírito dos Amaldiçoados] +2%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+4631#
+^0000ffVelocidade de ataque +3%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+4632#
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Furacão] nv. 1.^000000
+Ao aprender [Furacão] nv. 5:
+^0000ffAutoconjura [Furacão] nv. 5.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Visconde Coruja]^000000
+Ao realizar ou receber ataques físicos:
+^0000ff2% de chance de autoconjurar [Ira de Thor] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
 #
 //file end
