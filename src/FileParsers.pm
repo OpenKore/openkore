@@ -504,6 +504,7 @@ sub parseItemsControl {
 		}
 		
 		next if $key =~ /^$/;
+		$args_text =~ s/\s*#.*//;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
