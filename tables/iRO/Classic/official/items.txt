@@ -6932,3 +6932,4 @@
 19990#Aries_Diadem_Certificate#
 19991#Ninja_Scroll_Certificate#
 19992#Telling_Doll_Hat_Certificate#
+19993#Red_Wing_Hat_Certificate#
