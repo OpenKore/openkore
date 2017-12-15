@@ -155,7 +155,6 @@ izlude 134 88 morocc 156 47 1200 1 c r2 c r2
 izlude 134 88 aldebaran 168 112 1800 1 c r2 c r3
 rachel 109 138 veins 205 101 2200 1 c r2 c r0
 veins 208 128 rachel 115 125 2200 1 c r2 c r0
-veins 208 128 yuno 158 125 3000 1 c r2 c r1
 moc_para01 14 32 prontera 116 72 1800 1 c c r0 c n
 
 #Geffen
