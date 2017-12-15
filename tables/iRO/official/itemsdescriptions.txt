@@ -72194,6 +72194,27 @@ Creates a chance of casting Level 5 Lord of Vermilion when you receive Physical 
 Additional VIT +1 per upgrade level at +11 and above.
 Weight : ^77777730^000000
 #
+18933#
+^808080A hat decorated with mechanical parts and plants.^000000
+Type: Equipment
+Class: Headgear
+Position: Upper
+Defense: 1
+Weight: 0
+Required Jobs: All Jobs
+Dex + 2
+Mdef + 7
+Increases the damage of Spore Explosion by 5%.
+Increases the damage of Spore Explosion by an additional 5% per 2 upgrade levels of the item.
+Set Bonus
+Mechanical Plant Hat
+Pipe
+Reduces the cast delay of skills by 5%.
+Set Bonus
+Mechanical Plant Hat
+Tower Keeper Card
+Reduces the variable casting time of skills by 10%.
+#
 18937#
 ^808080A component left by a robotic doll which mourned the death of its owner. It's filled with their memories of love.^000000
 ^FFFFFF_^000000
