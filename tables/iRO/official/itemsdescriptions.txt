@@ -17043,15 +17043,23 @@ placeholder
 placeholder
 #
 2371#
-A risque undergarment
-that is comfortable to
-wear, but offers very
-little in the way of
-defense.
-Class : ^777777Armor^000000
-Defense : ^77777722^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+^808080A risque undergarment that is comfortable to wear, but offers very little in the way of defense.^000000
+Class: Armor
+Defense: 22
+Weight: 10
+Required Level: 1
+Required Jobs: All Jobs
+^800080Set Bonus^000000
+^008080Etran's Undershirt^000000
+^008080Pantie [1]^000000
+Int + 15
+Max HP + 5%
+Max SP + 5%
+^800080Set Bonus^000000
+^008080Pantie^000000
+^008080Undershirt^000000
+Agi + 5
+Flee + 10
 #
 2372#
 An exclusive robe for
@@ -19171,14 +19179,14 @@ Required Jobs: All Jobs
 Enables ^0000FFLevel 1 Greed^000000.
 If upgrade level is +7 or higher,
 Atk + 20 if the users base Str is 90 or higher.
-Matk + 20 if the users base Int is 90 or higher.
+Matk + 30 if the users base Int is 90 or higher.
 Aspd + 8% if the users base Agi is 90 or higher.
 Increases long-ranged damage on targets by 5% if the users base Dex is 90 or higher.
 Increases critical damage on targets by 10% if the users base Luk is 90 or higher.
 Reduces damage taken from Neutral property attacks by 5% if the users base Vit is 90 or higher.
 If upgrade level is +9 or higher,
 Additional Atk + 10 if the users base Str is 90 or higher.
-Additional Matk + 10 if the users base Int is 90 or higher.
+Additional Matk + 20 if the users base Int is 90 or higher.
 Aspd + 1 if the users base Agi is 90 or higher.
 Increases long-ranged damage on targets by an additional 5% if the users base Dex is 90 or higher.
 Increases critical damage on targets by an additional 5% if the users base Luk is 90 or higher.
@@ -34766,16 +34774,16 @@ Weight : ^77777720^000000
 Jobs: ^777777All^000000
 #
 5383#
-This hat is made especially for hunting Brute type Monsters!
-Luk +1
-Increase physical damage inflicted on Brute monsters by 10% and magical damage inflicted on Brute monsters by 5%.
-^ff0000This item is Account Bound^000000
-Class : ^777777Headgear^000000
-Location: ^777777Upper^000000
-Defense: ^7777776^000000
-Weight : ^77777725^000000
-Required Level : ^77777750^000000
-Jobs: ^777777All^000000
+^808080This hat is made especially for hunting brute type monsters!^000000
+Class: Headgear
+Position: Upper
+Defense: 6
+Weight: 25
+Required Level: 50
+Required Jobs: All Jobs
+Luk + 1
+Increases physical damage on Brute race targets by 10%.
+Increases magical damage on Brute race targets by 5%.
 #
 5384#
 A Santa Hat with two pom-poms instead of one for double the Christmas fun!
@@ -38267,14 +38275,15 @@ Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 5878#
-A blue rose that can never exist.
-This is a total dream to make it to geneticists.
-With physical critical attacks, Aspersio Lv1 can be activated with a certain chance.
-LUK + 1.
-Class : ^777777Headgear^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^77777730^000000
-Required LV : ^77777730^000000
-Job : ^777777all jobs^000000
+^808080A blue rose which shouldn't exist. Geneticists dream of being able to make this.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+Luk + 1
+Adds a 5% chance of endowing the users weapon with Holy property for 60 seconds.
 #
 5879#
 Sunglasses shaped like Poring.
@@ -38563,6 +38572,17 @@ If upgrade level is +7 or higher,
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by an additional 50%.
 Increases the recovery rate of ^008080Raw Fish^000000 and ^008080Sushi^000000 consumables by an additional 125%.
 This item is indestructible in battle.
+#
+5945#
+^808080A popular snack while taking tests. It makes one look more studious but, it's days may be numbered if it stays in somebody's mouth any longer.^000000
+Class: Headgear
+Position: Lower
+Defense: 0
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+Str + 1
+Adds a 5% chance of endowing the users weapon with Fire property for 60 seconds.
 #
 5948#
 A mask for Assassins
@@ -68410,6 +68430,25 @@ Beelzebub Wing Box
 (8) Job Battle Manual
 
 #
+17903#
+Class: Item Giver
+Weight: 1
+When opened gives one of the following,
+Bio Protector
+Red Well Chewed Pencil
+Siegfried's Helmet
+Phreeoni Wing
+Blacksmith's Gloves
+Mechanic Plant Hat
+Toy Syringe
+Malach's Skin
+Faceworm Egg Shell
+Hunting Knife
+Wing of Beezlebub Box
+Blacksmith Blessing x 8
+BattlemanualX3  x 6
+Job Manual 50 x 8
+#
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
 Class : ^777777Cannonball^000000
@@ -73379,6 +73418,31 @@ If upgrade level is +9 or higher,
 Increases physical and magical damage on Faceworm Nest monsters by an additional 20%.
 Reduces damage taken from Faceworm Nest monsters by an additional 20%.
 #
+19082#
+^808080Protector used to protect the eyes of a bio scientist. Wear safety glasses when performing tests.^000000
+Class: Headgear
+Position: Middle
+Defense: 3
+Weight: 50
+Required Level: 50
+Required Jobs: All Jobs
+Hit + 10
+Perfect Hit + 5
+Reduces the cast delay of skills by 5%.
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Pipe^000000
+Reduces the cast delay of skills by 5%.
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Mechanical Plant Hat^000000
+Increases the damage of ^0000FFSpore Explosion^000000 by 5% per upgrade level of ^008080Mechanical Plant Hat^000000.
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Mechanical Plant Hat^000000
+^008080Pipe^000000
+Reduces the SP cost of ^0000FFSpore Explosion^000000 by 20.
+#
 19083#
 ^808080The mask owned by the hero of an unknown clan which brings health and well being to the user.^000000
 ^FFFFFF_^000000
@@ -73619,32 +73683,25 @@ Increases resistance to ^800000Silence^000000 and ^800000Stun^000000 by an addit
 #
 19114#
 ^808080A luxurious ribbon made with soft silk.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Headgear
 Position: Upper
 Defense: 15
 Weight: 30
 Required Level: 70
 Required Jobs: All Jobs
-^FFFFFF_^000000
-Reduces damage taken from Earth property attackers by 20%.
-^FFFFFF_^000000
+Reduces damage taken from Earth property attacks by 20%.
 If upgrade level is +5 or higher,
-Reduces damage taken from Small, Medium and Large size attackers by 2%.
-^FFFFFF_^000000
+Reduces damage taken from Small, Medium and Large size enemies by 2%.
 If upgrade level is +7 or higher,
-Reduces damage taken from Small, Medium and Large size attackers an additional by 3%.
-^FFFFFF_^000000
+Reduces damage taken from Small, Medium and Large size enemies by an additional 3%.
 ^800080Set Bonus^000000
-^008080Sting Silk Ribbon^000000
 ^008080Scarlet Rose^000000
-Reduces damage taken from Small, Medium and Large size attackers an additional by 5%.
-^FFFFFF_^000000
-^800080Set Bonus^000000
 ^008080Sting Silk Ribbon^000000
+Reduces damage taken from Small, Medium and Large size enemies by 5%.
+^800080Set Bonus^000000
 ^008080Sting Card^000000
-Reduces damage taken from Small, Medium and Large size attackers an additional by 10%.
+^008080Sting Silk Ribbon^000000
+Reduces damage taken from Small, Medium and Large size enemies by 10%.
 #
 19125#
 ^808080Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.^000000
@@ -73884,6 +73941,80 @@ Immune to ^800000Stone Curse^000000.
 If upgrade level is +9 or higher,
 Increases physical and magical damage on Clock Tower and Nightmare Clock Tower monsters by an additional 20%.
 Reduces damage taken from Clock Tower and Nightmare Clock Tower monsters by an additional 20%.
+#
+19285#
+^808080A helm worn by some unknown hero. This unknown hero had a body which could not be penetrated by any weapons.^000000
+Class: Headgear
+Position: Upper
+Defense: 0
+Weight: 50
+Required Level: 100
+Required Jobs: All Jobs
+Reduces damage taken from boss monsters by 5%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Perfect Dodge + 5
+Reduces damage taken from boss monsters by an additional 5%.
+If upgrade level is +8 or higher,
+Additional Perfect Dodge + 5
+Reduces damage taken from boss monsters by an additional 10%.
+Prevents the user from being knocked back.
+#
+19288#
+^808080A helm that once belonged to an ancient giant.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19289#
+^808080An eye patch containing the great powers of Hatii.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19290#
+^808080The horns from an elder devil. It has great magical powers.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19291#
+^808080This shiba inu took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19292#
+^808080A knitted cap inspired by the smokie which can be worn daily due to its' simple design.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19293#
+^808080Fashionable glasses that do not have an upper frame to hold the lens. The ideal item for fashionable users of glasses.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+19294#
+^808080A pair of headphones with cat ears.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19377#
 A marinated beef dish
@@ -75816,11 +75947,12 @@ Required LV : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19780#
-Cute hat for your everyday wear.
-Class : ^777777Costume^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A knitted hat inspired by the lunatic which can be worn daily due to its' simple design. It is really useful for cold weather.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19783#
 A beard that makes you look serious once you wear it.
@@ -75927,11 +76059,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19806#
-A fancy hairpin which you can feel spring flowers.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+^808080A fancy hairpin. You can feel spring flowers.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19807#
 A brave headgear that no one can block.
@@ -76065,11 +76198,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19826#
-Earringa made with ice and extra chemicals. Why is it so chilly when you wear it?
-Class : ^777777Costume^000000
-Location :  ^777777Middle ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080Earrings made with ice and extra chemicals. Why is it so chilly when you wear it?^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19827#
 A hat shaped like Homunculus Amistr.
@@ -76622,11 +76756,12 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19958#
-A Hat worn in church choir.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+^808080A hat worn by members of a church choir.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19959#
 Argiope put on top of head. Be careful, sometimes it might move fiercely.
@@ -76809,68 +76944,76 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19984#
-A hat popularly worn in always-winter country. When worn, memories of trains and happiness faintly recollects.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+^808080A hat popularly worn in always-winter country. When worn, you faintly recall happy memories.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19985#
-A crown made with rare crystals.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A crown made with rare crystals.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19986#
-A fluffy looking hat.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A hat molded out of Lunatic fluff.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19987#
-Warm hat for cold times. Sometimes people wear this just because it looks cool.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A hat woven out of yarn that keeps the head warm, but is mostly worn because of its fashionable look.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19988#
-A crown made from an elder's branch.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A crown made from an elder's branch.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19989#
-A hairband made with lamb's wool and horn.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Middle ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A hairband made with lamb's wool and horn.^000000
+Class: Costume
+Position: Middle
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19990#
-A replica of Rabbit ear hat.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080A knitted hat inspired by the eclipse which can be worn daily due to its' simple design. It is really useful for cold weather.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19991#
-An armor made of purified white flower.
-Some say flowers are the harbringers of Spring.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Upper ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080An armor made of purified white flower. Some say flowers are the harbingers of Spring.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19992#
-It's so cold, even your breath is cold.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location :  ^777777Lower ^000000Weight : ^7777770^000000
-Required lvl : ^7777771^000000
-Job : ^777777All^000000
+^808080You can see continuous cold breath.^000000
+Class: Costume
+Position: Lower
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
 #
 19994#
 A headgear to commemorate saLU-salo event!
@@ -77938,6 +78081,14 @@ Location : ^777777Lower ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20204#
+^808080This hat is made especially for hunting brute type monsters!^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 20217#
 ^808080This lovely veil can be worn in all sorts of social situations.^000000
 Class: Costume
@@ -78240,12 +78391,11 @@ Required Job: All Jobs
 #
 20286#
 ^808080Glasses rimmed under the lens only. They fit any types of coordination nicely either cool or cute.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Lower)
+Class: Costume
+Position: Lower
 Weight: 0
 Required Level: 1
-Required Job: All Jobs
+Required Jobs: All Jobs
 #
 20287#
 ^808080A hat resembles the man's hairdo who always looks for someone to fight with.^000000
@@ -78419,13 +78569,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20317#
-^808080A headphone with cat ears.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
+^808080A pair of headphones with cat ears.^000000
+Class: Costume
+Position: Upper
 Weight: 0
 Required Level: 1
-Required Job: All Jobs
+Required Jobs: All Jobs
 #
 20318#
 ^808080A costume item resembles a decoration of the robot Charleston's body in Verus. It is said to be an antenna having a receiving function, but the details are unknown.^000000
@@ -79832,24 +79981,21 @@ Required Jobs: All Jobs
 #
 20778#
 ^808080A reddish cloak invented by a guild of magicians to extend the wearer's magical power.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Garment
 Defense: 8
 Weight: 70
 Required Level: 1
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Max SP + 10%
+Mdef + 3
 Reduces the SP cost of skills by 1%.
 Reduces the SP cost of skills by an additional 2% per 3 upgrade levels of the item.
 If upgrade level is +9 or higher,
 Restores 20 SP to the user when a monster is killed by a short-ranged attack.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Red Lotus Stole^000000
 ^008080Undead Knight F Card^000000
-Drains 20 SP from the user when a monster is killed by a short-ranged attack.
+Disables the following effects of ^008080Undead Knight F Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 #
 20783#
 ^808080A cape wore by a kid who's dream is to become a hero. Despite it's look, the robe has outstanding protection abilities.^000000
@@ -79949,39 +80095,31 @@ The users casting cannot be interrupted outside of WoE.
 #
 20797#
 ^808080This undershirt belonged to the ancient Laphine, Etran.^000000
-^FFFFFF_^000000
-Type: Equipment
 Class: Garment
 Defense: 0
 Weight: 15
 Required Level: 1
 Required Jobs: All Jobs
-^FFFFFF_^000000
 Max HP + 2%
-MDEF + 10
-^FFFFFF_^000000
+Mdef + 10
 If upgrade level is +7 or higher,
 Additional Max HP + 4%
-^FFFFFF_^000000
 If upgrade level is +8 or higher,
 Additional Max HP + 6%
-^FFFFFF_^000000
 If upgrade level is +9 or higher,
 Additional Max HP + 8%
-^FFFFFF_^000000
 If upgrade level is +10 or higher,
 Prevents the user from being knocked back.
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Etran's Undershirt^000000
-^008080Pantie^000000
-INT + 15
-Max HP + 5%
-Max SP + 5%
-^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Deviling Card^000000
-Reduces damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attackers by 50%.
+^008080Etran's Undershirt^000000
+Disables the following effects of ^008080Deviling Card^000000, Increases damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attacks by 50%.
+^800080Set Bonus^000000
+^008080Etran's Undershirt^000000
+^008080Pantie [1]^000000
+Int + 15
+Max HP + 5%
+Max SP + 5%
 #
 20799#
 ^808080A towel empowered with the four great elements.^000000
@@ -80037,7 +80175,6 @@ Attack Speed + 1
 #
 20800#
 ^808080This blood soaked cape releases a terrible aura.^000000
-^FF0000This item is currently not working as intended.^000000
 Class: Garment
 Defense: 18
 Weight: 30
@@ -80466,6 +80603,29 @@ Max HP + 15%
 Mdef + 10
 Reduces damage taken from Demi-Human race enemies by 5%.
 Increases the recovery rate of recovery items by 10%.
+#
+20859#
+^808080A suit inspired by Phreeoni. You feel like you can fly!^000000
+Class: Garment
+Defense: 10
+Weight: 30
+Required Level: 100
+Required Jobs: All Jobs
+Max HP + 10%
+Hit + 10
+If upgrade level is +7 or higher,
+Additional Hit + 20
+If upgrade level is +8 or higher,
+Additional Hit + 30
+If upgrade level is +9 or higher,
+Additional Hit + 40
+If upgrade level is +10 or higher,
+Additional Hit + 100
+^800080Set Bonus^000000
+^008080Phreeoni Card^000000
+^008080Phreeoni Wings^000000
+Perfect Hit + 50
+Immune to ^800000Stone Curse^000000.
 #
 21001#
 *Stats during WoE & PVP
@@ -81054,6 +81214,16 @@ Class : ^777777Shoes^000000 Defense : ^77777712^000000
 Weight : ^77777725^000000
 Required Level : ^77777790^000000
 Job : ^777777All^000000
+#
+22062#
+^808080These shoes were worn by a man who made a living out of engineering. They contain the man's many years of experience.^000000
+Class: Shoes
+Defense: 10
+Weight: 30
+Required Level: 30
+Required Jobs: All Jobs
+Increases the experience given from Formless race monsters by 5%.
+Increases the experience given from Formless race monsters by an additional 1% per upgrade level of the item.
 #
 22064#
 ^808080Boots covered with razorsharp thorns.^000000
@@ -82544,6 +82714,15 @@ Costume Cat's Mouth
 ^FF0000Account Bound^000000
 Class: Item Giver
 Weight: 1
+When opened gives one of the following,
+Costume Gigant Helm
+Costume Moon Eye Patch
+Costume Elder Devil Horn
+Costume Shiba Inu
+Costume Under Rimmed Glasses
+Costume Cyber Cat Ear Headphones Red
+Costume Hunting Cap
+Costume King Sura Headband
 #
 23600#
 ^FF0000Account Bound^000000
@@ -82562,6 +82741,11 @@ Weight: 1
 #
 23603#
 ^FF0000Account Bound^000000
+Class: Item Giver
+Weight: 1
+#
+23625#
+^808080You will receive one Bio Protector and one Pipe.^000000
 Class: Item Giver
 Weight: 1
 #
@@ -85619,16 +85803,16 @@ Agi + 2
 Aspd + 2%
 Reduces damage taken from Demi-Human, Brute and Fish race enemies by 1%.
 Reduces damage taken from Demon and Undead race enemies by 2%.
-Enables ^0000FFLevel 3 Increase Agility^000000.
+Enables ^0000FFLevel 6 Increase Agility^000000.
 If the users base Agi is 100 or higher,
 Additional Aspd + 5%
 ^800080Set Bonus^000000
 ^008080DelayafterAttack1Lv^000000
-^008080Horn of Kirin^000000
+^008080Kirin Horn^000000
 Aspd + 1
 ^800080Set Bonus^000000
 ^008080DelayafterAttack2Lv^000000
-^008080Horn of Kirin^000000
+^008080Kirin Horn^000000
 Aspd + 1
 #
 28502#
@@ -85752,6 +85936,17 @@ If ^008080Giant Axe^000000 upgrade level is +9 or higher,
 Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by an additional 10%.
 Increases physical damage on boss monsters by an additional 10%.
 
+#
+28531#
+^808080A pair of gloves once owned by a legendary blacksmith. They allow the wearer to use their physical prowess more efficiently.^000000
+^FF0000This accessory can only be equipped in the right accessory slot.^000000
+Class: Accessory
+Weight: 50
+Required Level: 80
+Required Jobs: All Jobs
+Reduces the cast delay of skills by 10%.
+Increases physical damage on boss monsters by 5%.
+Bypass 50% of hard defense of normal monsters and boss monsters when performing a physical attack.
 #
 28600#
 Attack: 0
@@ -86896,6 +87091,14 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+31125#
+^808080A hat worn by a notorious pirate in the past. The hat was always covered with blood due to the pirate's cruelty.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
 31132#
 ^808080A wreath made from sprigs of holly.^000000
 ^FF0000 ^0000FFChristmas Blessing^000000 restores 1225 HP and 25 SP to the user every second.^000000
@@ -87040,6 +87243,14 @@ Required Jobs: All Jobs
 #
 31179#
 ^808080A mask shaped like a noble wolf.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+#
+31180#
+^808080A headband that only the strongest sura were thought to wear. It truly leaves in impact.^000000
 Class: Costume
 Position: Upper
 Weight: 0
