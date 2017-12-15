@@ -3572,6 +3572,7 @@
 5933#Crow_Tengu_Mask#
 5937#Flying_Helmet#
 5938#Octopus_Hat#
+5945#Well-Chewed_Pencil_(Red)#
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
@@ -7597,6 +7598,7 @@
 17892#Overseas_Care_Package_X#
 17893#Overseas_Care_Package_XI#
 17900#Overseas_Care_Package_XII#
+17903#Overseas_Care_Package_XIII#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -7961,6 +7963,7 @@
 18930#Gorilla_Model_Hat#
 18931#Lion_Model_Hat#
 18932#Rhino_Model_Hat#
+18933#Mechanical_Plant_Hat#
 18937#Memory_of_Lovers#
 18944#Deviruchi_Balloon#
 18945#Super_Cute_Doll_Hat#
@@ -8038,6 +8041,7 @@
 19048#Elemental_Tights#
 19079#Celestial_Woman's_Flower#
 19081#Faceworm_Egg_Shell#
+19082#Bio_Protector#
 19083#Mask_of_Hero#
 19084#Parfaille_Vigilante_Hat#
 19101#Glast_Heim_Spectator#
@@ -8069,6 +8073,14 @@
 19209#Classic_Giant_Flywing_500_Box#
 19212#Malangdo_Pirate_Hat#
 19269#Happy_Flapping_Angel_Wings#
+19285#Siegfried's_Helmet#
+19288#Costume_Gigant_Helm#
+19289#Costume_Moon_Eyepatch#
+19290#Costume_Elder_Devil_Horn#
+19291#Costume_Shiba_Inu#
+19292#Costume_Smokie_Knit_Cap#
+19293#Costume_Under_Rimmed_Glasses#
+19294#Costume_Cyber_Cat_Ear_Headphones_(Red)#
 19377#Shiny_Marinade_Beef#
 19378#Chile_Shrimp_Gratin#
 19379#Red_Mushroom_Wine#
@@ -8294,7 +8306,7 @@
 19774#Costume:_Emperor_Wreath_J#
 19775#Costume:_Marvelous_Wig#
 19776#Costume:_Tomboy_Fairy#
-19780#Costume_Rabbit_Ear_Knit_Hat#
+19780#Costume_Lunatic_Knit_Hat#
 19783#Costume:_Granpa_Stache#
 19785#Costume:_Crunch_Toast#
 19787#Costume:_Devoted_Eyes#
@@ -8308,7 +8320,7 @@
 19803#Costume:_Pinwheel_Cap#
 19804#Costume:_Red_Vane_Hairpin#
 19805#Costume:_Taboo_Curse_Scroll#
-19806#Costume:_Full_Bloom_Hairpin#
+19806#Costume_Full_Bloom_Hairpin#
 19807#Costume:_Majestic_Helmet#
 19808#Blazing_Sun_Costume#
 19809#Purple_Cowboy_Hat_Costume#
@@ -8328,7 +8340,7 @@
 19823#Costume:_Kitsune_Mask_Hood#
 19824#Costume:_Evil_Druid_Hat#
 19825#Costume:_Vicious_Stop_Bandage#
-19826#Costume_Ice_Wing_Ear#
+19826#Costume_Ice_Wing_Ears#
 19827#Costume:_Amistr_Cap#
 19828#Costume:_Fedora#
 19829#Costume:_Straw_Hat#
@@ -8402,7 +8414,7 @@
 19955#Costume:_Christmas_Tree_Hat#
 19956#placeholder#
 19957#placeholder#
-19958#placeholder#
+19958#Costume_Choir_Hat#
 19959#Costume:_Drooping_Argiope#
 19960#placeholder#
 19961#Costume_Rune_Circlet#
@@ -8425,13 +8437,13 @@
 19979#Costume_Golden_Question#
 19980#Costume_Silver_Question#
 19982#Costume:_Santa_Hat#
-19984#placeholder#
+19984#Costume_Cold_Protection_Hat#
 19985#Costume_Aura_Quartz_Crown#
 19986#Costume_Lunatic_Hat#
-19987#Costume_Blue_Fur_Hat#
+19987#Costume_Blue_Beanie#
 19988#Costume_Elder_Crown#
 19989#Costume_Mouton_Life#
-19990#Costume_Snow_Rabbit_Knit_Hat#
+19990#Costume_Eclipse_Knit_Hat#
 19991#Costume_Galanthus_Guard#
 19992#Costume_Chilly_Breath#
 19994#saLUsalo_Hat#
@@ -8538,6 +8550,7 @@
 20200#Costume_Rabbit_Head_Dress#
 20201#Costume_Banshee_Master_Kiss#
 20202#Costume_Deviruchi_Balloon#
+20204#Costume_Hunting_Cap#
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
 20219#(null)#
@@ -8571,7 +8584,7 @@
 20283#Costume:_Overprotector#
 20284#Costume:_Cherry_Blossom_Hat#
 20285#Costume:_Fluttering_Cherry_Blossom#
-20286#Costume:_Red_Under_Rimmed_Glasses#
+20286#Costume_Under_Rimmed_Glasses_(Red)#
 20287#Costume:_Man's_Golden_Pride#
 20288#Costume_Bijou_Hat#
 20293#Costume:_Sleeper_Hat#
@@ -8591,7 +8604,7 @@
 20314#Costume:_New_Wave_Sunglasses#
 20315#Costume:_Analyzing_Eye#
 20316#Costume:_Cherub's_Winged_Helm#
-20317#Costume:_Cat_Ear_Cyber_Headphone#
+20317#Costume_Cyber_Cat_Ear_Headphones#
 20318#Costume:_Charleston's_Antenna#
 20319#Costume:_Crimson_Booster#
 20321#Classic_Underneath_Saber_2_Week_Rental_Box#
@@ -8738,6 +8751,7 @@
 20837#Skin_of_Gwiber#
 20845#Malach's_Skin#
 20846#Temporal_Manteau#
+20859#Phreeoni_Wings#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
@@ -8784,6 +8798,7 @@
 22059#Egir_Shoes#
 22060#Hunter_Shoes#
 22061#Lumiere_Shoes#
+22062#Mechanic's_Shoes#
 22064#Thorny_Shoes#
 22067#Witch_Shoes#
 22069#Lian_Shoes#
@@ -8938,11 +8953,12 @@
 23507#October_Costume_Box#
 23508#iRO_2017_Oct_CosBox2#
 23516#November_Costume_Box_Ani_Maul#
-23588#2017_Dec_Costume_Box#
+23588#Winter_Wonderland_Costume_Box#
 23600#Prisoner_Bundle_A#
 23601#Imperial_Bundle_A#
 23602#Giant_Bundle_A#
 23603#Sol_Bundle_B#
+23625#Bio_Protector_Bundle_A#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9181,13 +9197,14 @@
 28492#Thieves'_Guide_Vol._1#
 28495#Sheriff's_Left_Badge#
 28496#Sheriff's_Right_Badge#
-28501#Horn_of_Kirin#
+28501#Kirin_Horn#
 28502#Mob_Scarf#
 28503#Keraunos#
 28507#Magician's_Gloves#
 28513#Celine's_Brooch#
 28520#Egir_Ring#
 28521#Giant's_Protection#
+28531#Blacksmith's_Gloves#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
@@ -9342,6 +9359,7 @@
 31121#Costume_Bat_Stole#
 31122#Costume_Bloody_Vicious_Stop_Bandage#
 31123#Costume_Ｇhostring_Tall_Hat#
+31125#Costume_Queen_Anz_Revenge#
 31132#Costume_Christmas_Wreath#
 31140#Costume_Black_Cowboy_Hat#
 31141#Costume_Cactus_Flower_Corsage#
@@ -9359,6 +9377,7 @@
 31172#Costume_Los_Pollos_Locos#
 31177#Costume_Tail_Hat#
 31179#Costume_Wolf_Masquerade#
+31180#Costume_King_Sura_Headband#
 31181#Costume_Rosary's_Necklace#
 31182#Costume_Side_Cap#
 31183#Costume_Fallen_Angel's_Blessing#
