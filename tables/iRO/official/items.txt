@@ -7963,6 +7963,7 @@
 18930#Gorilla_Model_Hat#
 18931#Lion_Model_Hat#
 18932#Rhino_Model_Hat#
+18933#Mechanical_Plant_Hat#
 18937#Memory_of_Lovers#
 18944#Deviruchi_Balloon#
 18945#Super_Cute_Doll_Hat#
