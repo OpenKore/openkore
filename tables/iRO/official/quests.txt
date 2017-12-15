@@ -21985,3 +21985,43 @@ Hunt the Dream Demon.#
 62960#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
 You can try again tomorrow.#
 #
+
+62967#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Speak to Santa Claws, he's on the 2nd claw from the right.#
+#
+
+62968#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Get Santa Claws 1 Yarn and 10 Fresh fish, once you've acquired them, bring them to Grumpy Helper by his side.#
+#
+
+62969#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Looks like Grumpy Helper is no help at all, go back to Santa Claws and speak to him again.#
+#
+
+62970#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+May as well take things into your own hands at this rate! Speak to the Cheerful Helper. He seems pretty excited about Christmas.#
+#
+
+62971#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Gather 20 Wrapping Paper and 20 Wrapping Lace for the Cheerful Helper.#
+#
+
+62972#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Go back to Retired Santa and ask him for help in making Christmas gifts.#
+#
+
+62973#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Go to the sleigh below the tree in Lute. Retired Santa said there are some gifts over there.#
+#
+
+62974#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Good Job! Now take these gifts to the northeast sleigh and load them up for delivery.#
+#
+
+62975#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+You've successfully placed all of the gifts on the sleigh. Go back to Retired Santa to tell him the good news!#
+#
+
+62976#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Speak to Retired Santa again tomorrow to help save Christmas again!#
+#
