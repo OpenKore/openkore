@@ -54,7 +54,6 @@ sub shop_sold2 {
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
-	#my $msg = TF("sold: %s - %s %sz (buyer: %s)\n", $amount, $articles[$number]{name}, $earned, $playersList->getByID($args->{ID})->{name});
 	shopLog($msg);
 	message($msg, "sold");
 
