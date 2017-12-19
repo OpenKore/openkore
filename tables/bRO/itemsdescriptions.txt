@@ -9945,7 +9945,7 @@ Peso: ^7777771^000000
 #
 
 // V8.1
-// ------쇟놹럎쓃뛳샌슡------
+// ------Áß±¹·ÎÄÃ¶óÀÌÂ¡------
 7262#
 Um leque que é muito útil no verão.
 ^ffffff_^000000
@@ -9992,7 +9992,7 @@ Leite engarrafado para bebês.
 Peso: ^7777771^000000
 #
 
-// ------2004 룓련r)3/4움쳅
+// ------2004 ¸Ó¸(r)3/4ÆÀÌÅÛ ´ë*(r) 3/4÷µ¥ÀÌÆ(r)------
 5057#
 Uma faixa de cabelo com orelhinhas pretas. É uma cópia da faixa de Wichebain em Morroc.
 Classe: ^777777Equipamento para a cabeça^000000
@@ -10338,7 +10338,7 @@ Nível necessário: ^77777755^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 #
 
-//-----------샚뿍샌---------------------
+//-----------ÀÚ¿ÍÀÌ---------------------
 681#
 Um álbum de fotografias com lembranças de um casamento ou de uma lua-de-mel. (Apenas para pessoas casadas)
 ^ffffff_^000000
@@ -10346,7 +10346,7 @@ Peso: ^7777771^000000
 #
 
 //V8.2
-// ------엂놹럎쓃뛳샌슡------
+// ------ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡------
 7285#
 Uma meada de linhas que possuem um poder sagrado.
 ^ffffff_^000000
@@ -10383,7 +10383,7 @@ Um  maciço e lindo anel de noivado, com a frase 'Escravo do Amor' gravada.
 Peso: ^7777771^000000
 #
 
-// ------4랹몧뤢뇢쓹1/2뫆(r)------
+// ------4·¹º§¹"±âÄù1/2ºÆ(r)------
 7289#
 Uma pedra preciosa também chamada de 'Olivina'. Simboliza paz de espírito e sabedoria.
 ^ffffff_^000000
@@ -10430,7 +10430,7 @@ Uma mica escura comum. Simboliza apoio espiritual.
 Peso: ^77777710^000000
 #
 
-// ------엂놹럎쓃뛳샌슡2------
+// ------ÅÂ±¹·ÎÄÃ¶óÀÌÂ¡2------
 7298#
 Vestimentas auxiliares feitas com duas folhas gigantes.
 ^ffffff_^000000
@@ -10467,7 +10467,7 @@ Uma palavra que significa 'Setembro' em um país deserto e um mês de lua sagrad
 Peso: ^77777730^000000
 #
 
-// ------얥웪쏟낡------
+// ------Å¥ÆêÃß°¡------
 9026#
 Ovo contendo uma Jirtas de estimação. Deve ser chocado por uma Incubadora.
 ^0000ffCom lealdade normal/alta: Aumenta o ATQ e ATQM contra raça Humanoide em 2%.^000000
@@ -10480,7 +10480,7 @@ Ovo contendo uma Alice de estimação. Deve ser chocado por uma Incubadora.
 Tipo: ^777777Ovo de Bichinho^000000
 Peso: ^7777770^000000
 #
-// ------- 뫎좰샽샌몥욮 --------
+// ------- ºÎÈ°ÀýÀÌº¥Æ® --------
 574#
 Ovo de pássaro. Muito nutritivo. As crianças adoram! ^000088Recupera uma pequena quantidade de HP^000000.
 ^ffffff_^000000
@@ -10827,7 +10827,7 @@ Um minério de Mythril, que pode ser purificado para fazer Mythril.
 Peso: ^77777715^000000
 #
 
-/ ------뇦뗥뢱*맀찠쓹1/2뫆(r) 3/4움쳅
+/ ------±æµå¸±*¹ÀÌ Äù1/2ºÆ(r) 3/4ÆÀÌÅÛ------
 7234#
 Uma estátua que representa a camaradagem dos companheiros de guilda.
 ^ffffff_^000000
@@ -17950,10 +17950,10 @@ Classes que utilizam: ^777777Todas^000000
 #
 
 
-// ------------------- 2006 믳망뇢 뷅뇔쒫뗥 쏟낡.-----------------------
-//뾵릮뇇 11.1 뾡벭 뻷떥샌욮 솦뿜쟏뇢럎 쟕듏듙.
+// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
+//¿µ¹®±Ç 11.1 ¿¡¼­ ¾÷µ¥ÀÌÆ® Á¦¿ÜÇÏ±â·Î ÇÕ´Ï´Ù.
 
-// ------------- 뻆럧뎪 믳망뇢 -----------
+// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
 
 7561#
 Um coração congelado que
@@ -18068,7 +18068,7 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Mago, Noviço e Evoluções / Espiritualista^000000
 #
 
-//----------------------20060610 뷅뇔쏟낡뻆샌엛-------------------------
+//----------------------20060610 ½Å±ÔÃß°¡¾ÆÀÌÅÛ-------------------------
 5169#
 Uma máscara branca com maquiagem vermelha que
 é usada pelo ator que interpreta a noiva no teatro Coreano.
@@ -18186,7 +18186,7 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Todas^000000
 #
 
-// -------------- 2006 쏟낡뻆샌엛 -------------
+// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
 
 12183#
 Um aljava contendo
@@ -23267,9 +23267,10 @@ Classes que utilizam: ^777777Todas^000000
 #
 12354#
 Um bloco de chocolate em formato de lenha coberto de neve. Olhar para ele dá a sensação de que o Natal se aproxima...
-Aumenta a recuperação de HP e SP em 3% por 10 minutos. Precisão + 3, Crítico + 7.
-^ffffff_^000000
-Peso: ^7777775^000000
+^0000ffCRIT +7. Precisão +10.^000000
+^0000ffRegeneração natural de HP e SP +3%.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^77777750^000000
 #
 12355#
 Caixa de presente especial para o Natal. Somente os meninos e meninas bem-comportados ganham presentes nesta época. Se comporte mal durante o ano e ganhará um punhado de carvão!
@@ -23478,7 +23479,7 @@ Efeito é cancelado se o usuário morrer.
 Duração: ^77777720 minutos^000000
 Peso: ^7777778^000000
 #
-// ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
+// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
 7798#
 Um fragmento sombrio, imbuído com um espírito melancólico. Quando você olha para ele, pode se sentir absorto.
 ^ffffff_^000000
@@ -23490,7 +23491,7 @@ Você consegue sentir um poder muito perigoso deste cristal. Perto dele, você s
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
-// ------------------- 샌몥욮 뻆샌엛 ------------------
+// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
 6000#
 Cinzas imbuídas com um poder mágico misterioso e sombrio.
 ^ffffff_^000000
@@ -23527,7 +23528,7 @@ Madrasta - Karma de uma vida anterior? "
 Peso: ^7777771^000000
 #
 
-// ------------------ 쟏뻇 엗붺욮 (볒쓏)----------------
+// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
 1568#
 Livro encantado com a propriedade Água.
 Tipo: ^777777Livro^000000
@@ -24011,7 +24012,7 @@ Um emblema indicando que o usuário participa atualmente da guerra. Retirado dos
 #
 
 // ------------- Ep. 12 ---------------
-// ------------- 샼샥 몸믳 뻆샌엛 ---------------
+// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
 5518#
 Um equipamento para a cabeça feito a partir dos chifres de um Bafomé. Possui um forte significado místico.
 Concede 12% de resistência a monstros da raça Humanoide.
@@ -24729,7 +24730,7 @@ Envelope selado que parece conter uma mensagem importante.
 Peso: ^7777771^000000
 #
 
-// ------------ 룞룰뢮뻳 듸샼 몸믳엛 ----------------
+// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#
 Uma das lâminas gêmeas do Naght Sieger. Ela foi criada com um belo e misterioso metal azul.
 ^0000ffSempre que causar dano físico há uma pequena chance de ignorar a DEF do alvo durante 5 segundos.
@@ -24800,7 +24801,7 @@ Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas as classes T. e suas evoluções exceto Aprendizes^000000
 #
 
-//룰럎얩 쓁욼동얻 낡뗥 샎쇵벭
+//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
 7826#
 Certifica que o aventureiro que o carrega possui coragem suficiente para ser considerado membro da Guarda Continental.
 ^ffffff_^000000
@@ -24809,7 +24810,7 @@ Assinado: Chefe Balrog.
 Peso: ^7777770^000000
 #
 
-// ------------ 뢶뿕 룰럎얩 ----------------
+// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
 2536#
 Pele amaldiçoada em linguagem demoníaca.
 DEFM + 2, HP Máx + 200, Esquiva + 10
@@ -24935,7 +24936,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 
-// ---------- 쟒슦 엗붺욮 -----------
+// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
 2129#
 Livro que contém habilidades básicas para Clérigos.
 ^0000FFINT +1.^000000
@@ -25275,7 +25276,7 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
 #
 
-// ------------- 샼샥 죖샥 ---------------
+// ------------- ÀüÀå ÈÖÀå ---------------
 7828#
 Insígnia fornecida para os combatentes que lutaram bravamente no Campo de Batalha.
 ^ffffff_^000000
@@ -25287,7 +25288,7 @@ Insígnia fornecida para os combatentes que lutaram bravamente no Campo de Batal
 Peso: ^7777770^000000
 #
 
-// -------- 뫀샎샇 뷅샼 뻆샌엛 ------------
+// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
 6001#
 Essência de fogo que contém o puro espírito de Thor, Deus do Trovão. Ela possui poderes misteriosos de combate às trevas.
 ^ffffff_^000000
@@ -25304,7 +25305,7 @@ Pendente usado para aprisionar almas andarilhas de lugares desconhecidos.
 Peso: ^7777771^000000
 #
 
-// ----------------- 뢶럂샌 뇪뗧 맙웷룞욮 샎쟼 -----------------
+// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
 6004#
 Uma boneca que possui a Maldição de Bafomé. Ela parece estar unida a algo.
 ^ffffff_^000000
@@ -25439,7 +25440,7 @@ Um belo e longo chifre com muito poder mágico. Pode ser vendido a um NPC mercad
 Peso: ^7777771^000000
 #
 
-// --------- EP13 뷅뇔 샥뫱 뻆샌엛 ---------------
+// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
 5398#
 Capacete feito com um crânio de dragão. Tão duro que não pode ser quebrado facilmente.
 FOR + 2. DEFM + 5.
@@ -26026,7 +26027,7 @@ Um pedaço do mais puro chocolate. A aparência não é muito boa, mas o gosto �
 ^ffffff_^000000
 Peso: ^77777730^000000
 
-// ----------- 뾡쟇볒뗥 13 ppl 뻆샌엛 -----------
+// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
 6051#
 Mineral desconhecido, não encontrado em Midgard. Parece guardar um poder mágico desconhecido.
 ^ffffff_^000000
@@ -26132,7 +26133,7 @@ Uma útil ferramenta voltada para fins de trabalho. Mas cuidado pois ela pode se
 Peso: ^7777771^000000
 #
 
-// ---------- 얩뢮냅 몸" 뻆샌엛 ----------
+// ---------- Å©¸®°Å º¸" ó ¾ÆÀÌÅÛ ----------
 13416#
 Espada fabricada no Reino Maroll.
 ^a400cdIndestrutível em batalha.^000000
@@ -26954,7 +26955,7 @@ Nível necessário: ^77777781^000000
 Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 
-// ---------- 얩뢮냅 몸" 뻆샌엛 쏟낡 Defense놸 ----------
+// ---------- Å©¸®°Å º¸" ó ¾ÆÀÌÅÛ Ãß°¡ Defense±¸ ----------
 2445#
 Calçado fabricado em massa no Reino Maroll.
 ^0000ffHP e SP máx. +5%.^000000
@@ -27021,7 +27022,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 
-// ----------- 샌몥욮 뻆샌엛 ------------
+// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
 2443#
 Botas à prova d'água.
 ^0000ffTempo de pescaria -2 segundos.^000000
@@ -27945,18 +27946,21 @@ Classes que utilizam: ^777777Todas^000000
 #
 5384#
 Aqui o 2.0 também significa 2x mais diversão! Esta é a união perfeita de dois Gorros de Natal, com estrelas nas pontas. Dizem que o próprio Papai Noel encomendou sua criação para competir com as Orelhas de Coelho sempre usadas na época da páscoa.
-SOR + 3
-Adiciona 20% de resistência contra Maldição.
-Reduz em 2% o tempo de conjuração variável de habilidades.
-Adiciona 2% de velocidade de ataque.
-Chance de obter os itens Pedaço de Bolo, Bala e Bengala Doce sempre que derrotar monstros.
-Pequena chance de adicionar Crítico + 50 ao usar ataque físico de curto e longo alcance.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffSOR +3.^000000
+^0000ffConjuração variável -2%.^000000
+^0000ffVelocidade de ataque +2%.^000000
+^0000ffTolerância a maldição +20%.^000000
+Ao derrotar monstros:
+^0000ff1% de chance de derrubar Pedaço de Bolo.^000000
+^0000ff2% de chance de derrubar Bala ou Bengala Doce.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de ativar [CRIT +50] por 10 segundos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777720^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 14233#
 Uma caixa que contém 10 Galhos Secos. Sente-se um poder estranho saindo dela.
@@ -30305,16 +30309,22 @@ SOR +10
 //----CASH Items December 2009----
 5738#
 Um chapéu no formato de uma divertida miniatura de um boneco de neve. Com ele na cabeça você ficará sempre de cuca fresca. A melhor parte é que, como ele não derrete, você sentirá como se fosse natal o ano inteiro! E ainda terá uma ótima desculpa para disfarçar a sua caspa!
-^0000ffFOR +1, INT +1, DEFM +3. Concede +7% de resistência a ataques da propriedade Água.
-Pequena chance de conjurar a habilidade Piada Infame em nível 1 ao receber dano físico e mágico.
-Pequena chance de derrubar os itens Sobremesa de Noel e Bengala Doce ao derrotar monstros.
-Se refinado em +8 ou superior, chance de conjurar Piada Infame em nível 5 ao invés de nível 1.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffDEFM +3.^000000
+^0000ffFOR +1. INT +1^000000
+^0000ffResistência a propriedade Água +7%.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff2% de chance de autoconjurar [Piada Infame] nv. 1.^000000
+Ao derrotar monstros:
+^0000ff3% de chance de derrubar Bengala Doce.^000000
+^0000ff1% de chance de derrubar Sobremesa de Noel.^000000
+Refino +8 ou mais:
+^0000ffAutoconjura [Piada Infame] nv. 5.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5592#
 Um belo par de asas homenageando a Valquíria Sigrún, cujo nome significa “vitória”. Ela se tornou famosa por seu romance com o valente Helgi, que derrotou um reino inteiro para ficar com sua amada.
@@ -30810,13 +30820,14 @@ Classes que utilizam: ^777777Todas^000000
 #
 2565#
 Uma toalha de praia colorida usada para tomar sol.
-^0000ffDefM +3, Esquiva +7.^000000
-^0000ffResistência a ataques Neutros +7%.^000000
+^0000ffDEFM +3.^000000
+^0000ffEsquiva +7.^000000
+^0000ffResistência a propriedade Neutro +7%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^7777772^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5770#
 Um Pouring geladinho que pula em sua cabeça.
@@ -34417,13 +34428,14 @@ Peso: 1
 #
 2474#
 Um par de calçados criado por Iemanjá, a deusa do mar. É perfeito para você usar na hora de pular as sete ondas, garantindo muito mais energia e fé para que seus desejos se realizem no próximo ano.
-^FF6347Máx. HP e máx. SP +7%.
-A efetividade de cura por poções e habilidades é aumentada em +5%.^000000
+^0000ffHP e SP máx. +7%.^000000
+^0000ffEfetividade de cura +5%.^000000
+^0000ffRecuperação de HP por itens +5%.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^7777773^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 16994#
 Um ovo feito especialmente para celebrar o Ano Novo. Ao abri-lo, você receberá uma surpresa.
@@ -39991,18 +40003,15 @@ Peso: ^7777771^000000
 #
 18850#
 Chapéu de Natal que a equipe Fumacentos em Ação pegou 'emprestado sem permissão' no estoque da loja em Lutie.
-É muito útil para ajudar a equipe Fumacentos em Ação a dormir no relento. Ele é muito quentinho.
-DEFM +3, AGI +1, DES +1.
-^ff0000Os efeitos abaixo serão removidos após o término do Evento de Natal de 2012^000000
-A velocidade de recuperação de HP será aumentada em 5% durante esse período.
-Aumento de 3% na velocidade de recuperação de SP.
-Ao derrotar um monstro, há a chance de conseguir o item ^00ff00Sobremesa de Noel^000000.
-Tipo : ^777777Equipamento para Cabeça^000000
+É muito útil para ajudar a equipe Fumacentos em Ação a dormir no relento. Ele é muito quentinho
+^0000ffDEFM +3.^000000
+^0000ffAGI +1. DES +1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777777^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível Necessário : ^7777771^000000
-Classe: ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19707#
 Chapéu de Natal que a equipe Fumacentos em Ação pegou 'emprestado sem permissão' no estoque da loja em Lutie.
@@ -40903,12 +40912,13 @@ Classes: ^777777Todas.^000000
 //------------------April2013 Items---------------------------------
 18647#
 Este tapa-olho no formato de uma estrela azul foi criado em homenagem ao famoso Mecânico pirata, Franco. Considerado meio excêntrico por vestir apenas uma sunga e partes modificadas de M.E.C.H.A. nos braços e por adorar refrigerantes como o Sograt Cola, Franco ficou SUUPER emocionado quando descobriu que a estilista marinha Leira criaria um item para homenageá-lo, apesar de achar que seria super divertido se no lugar do tapa-olho ela tivesse criado uma espécie de nariz super metálico.
-Resistência a Atordoamento +15% .
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffTolerância a atordoamento +15%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Meio^000000
-Peso : ^77777710^000000
-Classe : ^777777Todas^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18648#
 Então você acreditou no seu amigo quando ele disse que seria engraçado ir até Lutie dar uma lambida naqueles postes de metal no formato de bengalas de alcaçuz? Você realmente pensou que fossem doces de verdade? Nem te passou pela cabeça que por causa do frio, sua língua ficaria congelada e grudada? Bem, ao menos você conseguiu se desgrudar, depois que cinco pessoas pararam de rir pra te puxar. E não precisa se preocupar, não está nem um pouco esquisito, imagina! E daí que até demônios estão fugindo quando veem você? Considere isso um bônus, seu linguarudo! Como seu amigo falou, no fim você ficou ótimo assim. E você sempre acredita no seu amigo, não é?
@@ -46014,24 +46024,26 @@ Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
 18844#
-Esse balão é um divertido souvenir das festas de final de ano. O engraçado é que, por ser um pouring, ele não deveria estar cheio d’água?
-^FF0000Todos os Atributos +2, Esquiva Perfeita +2. ^000000
+Esse balão é um divertido souvenir das festas de final de ano. O engraçado é que, por ser um pouring, ele não deveria estar cheio d'água?
+^0000ffEsquiva perfeita +2.^000000
+^0000ffTodos os atributos +2.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777775 ^000000
 Equipa em: ^777777Baixo^000000
-Peso: ^7777775 ^000000
-Nível Necessário: ^7777771 ^000000
-Classes: ^777777Todas ^000000
+Defesa: ^7777775^000000
+Peso: ^7777775^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18858#
 Nada melhor para embalar seu Espírito de Natal do que colocar na cabeça o poring mais angelical de todos! Principalmente quanto ele trocou sua auréola pelo gorro do Papai Noel.
-HP Máximo +200. Velocidade de Ataque +1.
+^0000ffHP máx. +200.^000000
+^0000ffVelocidade de ataque +1.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777775 ^000000
 Equipa em: ^777777Baixo^000000
-Peso: ^7777775 ^000000
-Level Requirement : ^7777771 ^000000
-Classes: ^777777Todas ^000000
+Defesa: ^7777775^000000
+Peso: ^7777775^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19783#
 Tipo: ^777777Visual ^000000
@@ -46043,15 +46055,16 @@ Classes: ^777777Todas ^000000
 #
 18553#
 Perfeito pra você que adora ganhar presentes de Natal. Agora, é só esperar que as pessoas resolvam colocar presentes embaixo dessa sua árvore... Nem que sejam, bem, minipresentes.
-^FF0000Aumenta Resistência contra os status negativos Atordoamento, Maldição e Caos. Aumenta resistência contra ataques do elemento Sombrio.
-Chance de derrubar o item Bala ao derrotar um monstro com ataques físicos.
-Pequena chance de derrubar o item Caixa de Presente ao derrotar um monstro com ataques físicos.^000000
+^0000ffTolerância a atordoamento, maldição, cegueira e confusão +20%.^000000
+Ao derrotar monstros:
+^0000ff1% de chance de derrubar Bala.^000000
+^0000ff0,1% de chance de derrubar Caixa de Presente.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777773 ^000000
-Equipa em: ^777777Topo ^000000
-Peso: ^77777750 ^000000
-Required Level : ^77777730 ^000000
-Classes: ^777777Todas ^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
 #
 19686#
 Uma divertida tiara com um bonequinho do Papai Noel. Parece até que ele está saindo ou entrando em uma chaminé. Ou no caso, na sua cabeça.
@@ -53592,7 +53605,7 @@ Peso: ^77777750^000000
 Propriedade: ^777777Sagrado^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^7777771^000000
-Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Magos, Mercadores, Gatunos e evoluções^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 15066#
 Armadura com detalhes em peridoto. Parece boa, só está empoeirada.
@@ -56727,5 +56740,264 @@ Ao realizar ou receber ataques físicos:
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
+#
+//*****************************************************
+//------------Aplicar em 2017-12-19--------------------
+//*****************************************************
+28521#
+Um dente de dragão utilizado como colar pelos gigantes que habitavam o mundo antigo. O pingente possui uma magia intensa, e fará com que o poder físico de seu usuário seja comparável ao de um verdadeiro gigante!
+^0000ffDano físico +5%.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^0000ffHP e SP máx. +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Machado Gigante]^000000
+^0000ffResistência a monstros da raça Humanoide +3%.^000000
+Refino +7 ou mais:
+^0000ffDano de [Choque do Carrinho] +5%.^000000
+^0000ffDano físico contra monstros Chefes +5%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Choque do Carrinho] +10% adicional.^000000
+^0000ffDano físico contra monstros Chefes +10% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Lança Gigante]^000000
+^0000ffResistência a monstros da raça Humanoide +3%.^000000
+Refino +7 ou mais:
+^0000ffDano físico contra monstros Chefes +5%.^000000
+^0000ffDano de [Onda de Choque] +5%.^000000
+^0000ffDano de [Perfurar em Espiral] +5%.^000000
+Refino +9 ou mais:
+^0000ffDano físico contra monstros Chefes +10% adicional.^000000
+^0000ffDano de [Onda de Choque] +10% adicional.^000000
+^0000ffDano de [Perfurar em Espiral] +10% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Arco Gigante]^000000
+^0000ffResistência a monstros da raça Humanoide +3%.^000000
+A cada 10 de FOR base:
+^0000ffDano físico a distância +2%.^000000
+Refino +7 ou mais:
+^0000ffDano físico contra monstros Chefes +5%.^000000
+^0000ffDano de [Disparo Certeiro] +5%.^000000
+^0000ffDano de [Tempestade de Flechas] +5%.^000000
+Refino +9 ou mais:
+^0000ffDano físico contra monstros Chefes +10% adicional.^000000
+^0000ffDano de [Disparo Certeiro] +10% adicional.^000000
+^0000ffDano de [Tempestade de Flechas] +10% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28572#
+Um broche dourado feito para Celine Kimi, a boneca da Fábrica do Terror. Claramente valioso, o broche foi produzido com muito carinho e precisão pelo artesão de bonecas. Ao tocá-lo, você sente uma energia poderosa emanando do pingente.
+^0000ffHP máx. +500.^000000
+^0000ffSP máx. +250.^000000
+^0000ffDano mágico +5%.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Luva dos Espíritos Malignos]^000000
+^0000ffATQ e ATQM +50.^000000
+^0000ffVelocidade de ataque +2 adicional.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Lanças dos Aesir] nv. 1.^000000
+^0000ff2% de chance de autoconjurar [Castigo de Nerthus] nv. 1.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de autoconjurar [Maestria Arcana] nv. 1.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff5% de chance de autoconjurar [Pântano dos Mortos] nv. 3.^000000
+^FF6347Conjunto^000000
+^FF6347[Presilha de Rosas]^000000
+^0000ffConjuração fixa -50%.^000000
+A cada 3 refinos até o +12:
+^0000ffTodos os atributos +1.^000000
+Refino +9 ou mais:
+^0000ffDano mágico contra monstros Chefes +20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Laço da Celine]^000000
+^0000ffConjuração fixa -50%.^000000
+^0000ffDano mágico contra monstros Chefes +20%.^000000
+A cada 3 refinos até o +12:
+^0000ffTodos os atributos +1.^000000
+Refino +9 ou mais:
+^0000ffResistência a raça Humanoide +10%.^000000
+^0000ffDano mágico contra monstros Chefes +20% adicional.^000000
+Refino +11 ou mais:
+^0000ffResistência a raça Humanoide +2%.^000000
+^0000ffDano mágico contra monstros Chefes +20% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+19083#
+Uma máscara feita de ouro e amaldiçoada com espíritos antigos. Apesar de conceder uma grande resistência ao seu possuidor, ela também afeta sua personalidade por meio da remoção total de todas as inibições psicológicas. Seu primeiro detentor foi Istanlei Ipkiss, e ela o levou à ruína.
+^0000ffVIT +10.^000000
+^0000ffDEFM +10.^000000
+^0000ffReflete 1% do dano físico recebido.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
+20844#
+Uma sacola mágica que pertenceu ao Antonio, o anti-Papai Noel. Antonio utilizava esta sacola para enganar crianças com os doces, por fim, sequestrando-as dentro da bolsa. As histórias do homem do saco surgiram por conta desta emblemática sacola. A bolsa mágica é encantada para que seu poder aumente conforme seu aprimoramento.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Nv. base até 99:
+^0000ffEXP adquirida por monstros +10%.^000000
+Nv. base 100 ou mais:
+^0000ffEXP adquirida por monstros +4%.^000000
+--------------------------
+A cada 3 refinos:
+^0000ffDano mágico +2%.^000000
+Refino +9 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +12 ou mais:
+^0000ffPós-conjuração -7%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+Defesa: ^77777730^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20457#
+Este adereço fará com que penas coloridas ilusórias caiam à sua volta a todo momento. As penas coloridas são em homenagem às aves em extinção da fauna de Brasilis.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31383#
+Esta peruca azul é o mais novo destaque da coleção de perucas Waifu, desenvolvidas pelo famoso cabeleireiro de Amatsu, Delso Kamyura. Feitas especialmente sob encomenda, estas perucas completamente sedosas farão com que todos acreditem que você é a Waifu prometida enviada pelos deuses.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20433#
+Uma réplica fiel do chapéu utilizado por Catherine Jet Johnson, a antiga assistente do artesão de bonecas da Fábrica do Terror de Lutie. Esta boina vermelha vai te proteger do frio e te deixar com um visual incrível para o período de festas.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19956#
+Um chapéu vermelho utilizado por membros de fanfarras militares de toda a Rune-Midgard. Os detalhes em dourado são delicados e bem produzidos. Agarre seu instrumento, entre em fila e prepare-se para marchar!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//--------------ITENS DE NATAL 2017--------------------
+//*****************************************************
+20222#
+Um chapéu feito pelos próprios ajudantes do Papai-Noel. O gorro foi feito em tecido azul para agradar a todos que tenham essa como sua cor favorita!
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, mas pode ser colocado no armazém e vendido nos NPC's.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31390#
+Um chapéu feito das esperanças das pessoas de lugares onde não neva durante o inverno. A neve cai como uma Nevasca.
+^008080Até o dia 16/01/2018:^000000
+A cada 20 níveis base:
+^0000ffHP máx. +250.^000000
+A cada 30 níveis base:
+^0000ffDano físico e mágico contra monstros +2%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, mas pode ser colocado no armazém e vendido nos NPC's.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+11575#
+Um delicioso biscoito da sorte.
+^0000ffRecupera um pouco de HP.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Peso: ^7777773^000000
+#
+11578#
+Bastão de doce listrado que parece uma bengala.
+^0000ffRecupera aproximadamente 105 de HP.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Peso: ^7777774^000000
+#
+11580#
+Um doce natalino delicioso.
+^0000ffRecupera aproximadamente 45 de HP.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Peso: ^7777773^000000
+#
+11581#
+^ff0000Intransferível.^000000
+Um bolo enorme cortado em fatias. Sabor de creme macio derretido.
+^0000ffRecupera um pouco de HP.^000000
+Peso: ^77777710^000000
+#
+23548#
+Um doce transparente que contém cristais de gelo. Vão te congelar por inteiro.
+^008080Até o dia 16/01/2018:^000000
+^0000ffRecupera 5% de HP e SP.^000000
+^0000ffPequena chance de receber Congelamento.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Peso: ^7777772^000000
+#
+23549#
+Um biscoito que parece com Snow, o boneco de neve. Eficaz e saboroso.
+^008080Até o dia 16/01/2018:^000000
+^0000ffRecupera 5% de HP.^000000
+^0000ffPrecisão +30.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777775^000000
+#
+23550#
+Um biscoito que parece com Winter, o boneco de neve. Eficaz e saboroso.
+^008080Até o dia 16/01/2018:^000000
+^0000ffRecupera 5% de HP.^000000
+^0000ffDano físico +3%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777775^000000
+#
+23551#
+Um biscoito que parece com Festie, a boneca de neve. Eficaz e saboroso.
+^008080Até o dia 16/01/2018:^000000
+^0000ffRecupera 5% de HP.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777775^000000
+#
+23552#
+Um biscoito que parece com Flora, a boneca de neve. Eficaz e saboroso.
+^008080Até o dia 16/01/2018:^000000
+^0000ffRecupera 5% de HP.^000000
+^0000ffDano mágico +3%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777775^000000
+#
+23553#
+Uma caixa pode conter aperitivos, chapéus e uma variedade de itens. O que será que tem dentro?
+^008080Até o dia 16/01/2018:^000000
+^0000ffConcede um item aleatório.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
+Peso: ^77777710^000000
 #
 //file end
