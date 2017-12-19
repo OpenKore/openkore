@@ -30,6 +30,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]],
