@@ -41227,9 +41227,10 @@ known to be the biggest animal existing on the earth
 Weight : ^7777771^000000
 #
 6898#
-The top Sea-living mammal.
-It is smart and mild but no carnivore sea animal can mess with him.
-Weight : ^7777771^000000
+^808080Can be exchanged during Christmas 2017 for rewards.^000000
+^FF0000Account Bound^000000
+Type: Miscellaneous
+Weight: 1
 #
 6899#
 A legendary king Octopus living in the deep sea.
@@ -78394,12 +78395,13 @@ Required Job: All Jobs
 #
 20284#
 ^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
+Type: Equipment
+Class: Costume
+Position: Upper
 Weight: 0
 Required Level: 1
-Required Job: All Jobs
+Required Jobs: All Jobs
+Originally awarded to Kami Kali, Myzery, Milkythief, Nirvanna21, Kritical Assassin for contributing to the community.
 #
 20285#
 ^808080Petals of cherry blossoms are failling gently. The petals dance beautifully as if they inform you that spring has come.^000000

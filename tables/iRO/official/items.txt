@@ -4112,7 +4112,7 @@
 6893#To_Serve_Man#
 6894#Champion_Badge#
 6897#Blue_Whale#
-6898#Whale#
+6898#Santa_Claws_Token#
 6899#Giant_Octopus#
 6900#Giant_Squid#
 6901#Sturgeon#
@@ -8582,7 +8582,7 @@
 20281#Costume:_Kindergartener's_Hat#
 20282#Costume:_White_Boy's_Cap#
 20283#Costume:_Overprotector#
-20284#Costume:_Cherry_Blossom_Hat#
+20284#Costume_Cherry_Blossom_Hat#
 20285#Costume:_Fluttering_Cherry_Blossom#
 20286#Costume_Under_Rimmed_Glasses_(Red)#
 20287#Costume:_Man's_Golden_Pride#

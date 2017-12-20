@@ -71089,3 +71089,16 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19994#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Santa Poring Hat!
+500 Sticky Mucus
+250 Jellopy
+1 Poring Card
+1 Santa Poring Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
