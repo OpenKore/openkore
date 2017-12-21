@@ -2818,6 +2818,10 @@ moc_para01 158 26 moc_para01 55 27
 moc_para01 30 10 prontera 116 72
 
 # Malangdo
+malangdo 219 86 alberta 192 150 1000 c c r1
+malangdo 219 86 izlude 194 180 1000 c c r0
+alberta 200 151 malangdo 217 85 1000 c r1 c c r0
+izlude 182 192 malangdo 217 85 1000 c r1 c c r0
 mal_in01 18 161 malangdo 112 167
 malangdo 112 167 mal_in01 17 163
 mal_in01 75 174 mal_in01 18 173
