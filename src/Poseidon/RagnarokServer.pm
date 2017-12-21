@@ -28,6 +28,8 @@ use Utils qw(binSize getCoordString timeOut getHex getTickCount);
 use Poseidon::Config;
 use FileParsers;
 use Math::BigInt;
+use Log qw(message);
+use I18N qw(bytesToString stringToBytes);
 
 my %clientdata;
 
@@ -255,7 +257,7 @@ sub ParsePacket
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0')) { # 0064 packet thanks to abt123
+	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0')|| ($switch eq '0AAC')) { # 0064 packet thanks to abt123
 
 #		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
 #		$client->send($data);
@@ -271,6 +273,21 @@ sub ParsePacket
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
+		} elsif ($switch eq '0AAC') {
+		$data = pack("C*", 0xC9, 0x0A) . # header
+				pack("C*", 0xCF, 0x00) . # length
+				$sessionID . # sessionid
+				$accountID . # accountid
+				$sessionID2 . # sessionid2
+				pack("x4") . # lastloginip
+				pack("C1", $sex) . # sex
+				pack("x32") . # ??
+				pack("a19", stringToBytes("Poseidon Server")) . # serverName
+				$serverUsers .
+				pack("x1") . # ??
+				pack("C*", 0x80, 0x32) . # ??
+				pack("a*", $host.":".$self->getPort()) .
+				pack("x114");
 		} else {
 			$data = pack("C*", 0x69, 0x00, 0x4F, 0x00) . 
 				$sessionID . $accountID . $sessionID2 . 
@@ -308,7 +325,21 @@ sub ParsePacket
 		}
 
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
+		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {			
+			my $data;
+			$data = $accountID;
+			$client->send($data);
+			
+			$data = pack("C*", 0x2D, 0x08, 0x1D, 0x00, 0x03, 0x00, 0x00, 0x03, 0x03) .
+			pack("x20");
+			$client->send($data);
+			
+			$data = pack("C*", 0xA0, 0x09, 0x01) .
+			pack("x3");			
+			$client->send($data);
 
+			return;
+		}
 		# Character List
 		SendCharacterList($self, $client, $msg, $index);
 
@@ -319,6 +350,8 @@ sub ParsePacket
 			undef $clientdata{$index}{gameLogin_packet};
 		}
 
+	} elsif ($switch eq '09A1') {		
+		SendCharacterList($self, $client, $msg, $index);
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
 		# If Using Packet Encrypted Client
@@ -823,7 +856,8 @@ sub SendCharacterList
 	# Character Block Pack String
 	my $packstring = '';
 
-	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $blocksize == 147;
+	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $blocksize == 147;	
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $blocksize == 145;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $blocksize == 144;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $blocksize == 140;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $blocksize == 136;
@@ -845,37 +879,50 @@ sub SendCharacterList
 	my $data;
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
 		$data = $accountID . pack("v2 C5 a20", 0x82d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
+	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {		
+		$data = pack("C*", 0x9D, 0x09) .
+		pack("v", $len + 4);
 	} else {
 		$data = $accountID . pack("v v C3", 0x6b, $len + 7, $totalslots, -1, -1);
 	}
-	
+
 	# Character Block
 	my $block;
-	
+
+	my $sex = 1;
+	my $map = "moc_prydb1.gat";
+
 	# Filling Character 1 Block
 	$cID = $charID;	$hp = 10000; $maxHp = 10000; $sp = 10000; $maxSp = 10000; $hairstyle = 1; $level = 99; $headTop = 0; $hairColor = 6;
 	$name = "Poseidon"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 0; $rename = 0;
-	
+
 	# Preparing Character 1 Block
-	$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId, $hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name), $str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, 0, $sex);
+	} else {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
+	}
 
 	# Attaching Block
 	$data .= $block;
-	
+
 	# Filling Character 2 Block
 	$cID = $charID;	$hp = 10000; $maxHp = 10000; $sp = 10000; $maxSp = 10000; $hairstyle = 1; $level = 99; $headTop = 0; $hairColor = 6;
 	$name = "Poseidon Dev"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 1; $rename = 0;
-	
-	# Preparing Character 2 Block
-	$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);		
-	
-	# Attaching Block
-	$data .= $block;		
-	
-	# Measuring Size of Block
-	print "Wanted CharBlockSize : $blocksize\n";		
-	print "Built CharBlockSize : " . length($block) . "\n";
 
+	# Preparing Character 2 Block
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId, $hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name), $str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, 0, $sex);
+	} else {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
+	}
+
+	# Attaching Block
+	$data .= $block;
+
+	# Measuring Size of Block
+	print "Wanted CharBlockSize : $blocksize\n";
+	print "Built CharBlockSize : " . length($block) . "\n";
 	$client->send($data);
 }
 

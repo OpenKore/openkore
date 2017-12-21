@@ -3,19 +3,28 @@ decrypt_mid 0
 charBlockSize 116
 charListPacket 0x6b
 maploginPacket 0000
+
 [bRO_2016-11-01a]
 decrypt_mid 1
 decrypt_mid_keys 0x6D9253BB 0x7DB60BB3 0x3AD51C28
 charBlockSize 124
 charListPacket 0x82d
 maploginPacket 0870
+
 [bRO_2016-11-08a]
 decrypt_mid 1
 decrypt_mid_keys 0x17AC78C2 0x1ADE5C66 0x2A84793C
 charBlockSize 124
 charListPacket 0x82d
 maploginPacket 088E
+
 [tRO_2013-07-09a]
 decrypt_mid 1
 decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02 # K A M
 charBlockSize 144
+
+[cRO_2017-12-13a]
+decrypt_mid 0
+charBlockSize 147
+charListPacket 0x99d
+maploginPacket 0x436
