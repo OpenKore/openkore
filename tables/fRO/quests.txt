@@ -13090,3 +13090,58 @@ Defeat Fay Kanavian#
 62853#Geffen Magic Tournament#SG_FEEL#QUE_NOIMAGE#
 Last round of the Tournament.#
 Defeat Fenrir#
+
+
+//  Dec Winter Snow Flower Festival
+
+14849#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You want to make snow flower bouquet? Then, collect 10 magical snow flower and come back here.#
+10 magical snow flower#
+
+14850#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+After making a snow flower bouquet, the mission from Snow flower illusionist is available. If you are interested find the place.#
+To snow flower illusionist#
+
+14851#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find Coti and Ulsi.#
+To Coti#
+
+14852#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Have you found a special card from you gift box? Then bring them to Twinkle and Bling. You will receive a special gift.#
+To Twinkle#
+
+14853#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 magical snow flower to make snow flower bouquet. Please do not forget 1 carrot for decorating snowman. - Marine#
+10 Snow flower, 1 carrot#
+
+14854#Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The effect of magical snow flower is still remained. Please comeback after the dawn. - Marine#
+Waiting time#
+
+14855#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! To us donate 10 warm cotton!#
+10 Warm cotton#
+
+14856#Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping will be finished by dawn so please come back after dawn! - Coti#
+Waiting time#
+
+14857#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is WINTER!! Please open snow flower envelop from your gift box. In the envelop, you can find these letters W. I. N. T. E. R.. Total of 6 letters. - Twinkle#
+Collect WINTER card#
+
+14858#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelop from your gift box. In the envelop, you can find these letters S. N. O. W. Total of 4 letters. - Twinkle#
+Collect SNOW card#
+
+14859#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelop from your gift box. In the envelop, you can find these letters F. E. S. T. I. V. A. L. Total of 8 letters. - Twinkle#
+Collect FESTIVAL card#
+
+14860#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FLOWER!! Please open snow flower envelop from your gift box. In the envelop, you can find these letters F. L. O. W. E. R. Total of 6 letters. - Twinkle#
+Collect FLOWER card#
+
+14861#Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Letter card exchange is once a day. Okay? So please comeback after dawn! - Twinkle#
+Waiting time#
