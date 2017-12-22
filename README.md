@@ -51,7 +51,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [Taiwanese Community](http://optw.nva-hk.com/forum.php)
 ## Warning
 
-Other communities are not affiliated to openkore.com 
+Other communities are not affiliated to openkore.com
 
 ## Other Links
 
