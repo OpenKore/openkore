@@ -35,7 +35,7 @@ To run OpenKore you will need:
 | `thRO` | Thai RO | Need Verification | N/A |
 | `cRO` | Chinese RO | working | alisonrag, sctnightcore(temp) |
 | `kRO:Zero` | New Korea server | Need unpack,recvpacket,sync,key | alisonrag sctnightcore(temp) SkylorD(temp) |
-| `pServer` | update servertybe |sT2012-2017 work | SkylorD, sctnightcore |
+| `pServer` | update servertybe | Need find recvpacket | SkylorD, sctnightcore |
 
 ## Contributing
 
@@ -52,9 +52,6 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 ## Warning
 
 Other communities are not affiliated to openkore.com 
-
-Openkore.in :: BAN :: Deceive others to buy openkore that is not available.
-
 
 ## Other Links
 
