@@ -574,23 +574,3 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
-
-[Private Server - Love DOS]
-# http://www.lovedos.com/
-ip 27.151.28.111
-port 16900
-master_version 4
-version 56
-serverType kRO_RagexeRE_2017_06_14b
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding cp949
-gameGuard 0
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-addTableFolders kRO/RagexeRE_2017_06_14b;translated;translated/kRO_english;kRO
-charBlockSize 145
-pinCode 0
-sendCryptKeys 0x5ED10A48, 0x2E5D761F, 0x667F4301
-private 1
