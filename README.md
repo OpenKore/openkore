@@ -45,13 +45,15 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 
 * [OpenKore Wiki](http://wiki.openkore.com/)
 * [OpenKore forum](http://forums.openkore.com/)
-* [IRC Channel](https://webchat.freenode.net/?channels=openkore) : https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore
+* [IRC Channel](https://webchat.freenode.net/?channels=openkore) 
+* [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
 * [Taiwanese Community](http://optw.nva-hk.com/forum.php)
-
 ## Warning
 
-Other communities are not affiliated to openkore.com
+Other communities are not affiliated to openkore.com 
+Openkore.in :: BAN 
+
 
 ## Other Links
 
