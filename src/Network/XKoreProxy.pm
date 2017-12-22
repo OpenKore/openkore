@@ -447,15 +447,22 @@ sub modifyPacketIn {
 		}
 	}
 
-	if ($switch eq "0069") {
+	if ($switch eq "0069" || $switch eq "0AC4") {
 		use bytes; no encoding 'utf8';
+		my $accountInfo;
+		my $serverInfo;
 
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
 		# Modify the server config'ed on Kore to point to proxy
-		my $accountInfo = substr($msg, 0, 47);
-		my $serverInfo = substr($msg, 47, length($msg));
+		if($switch eq "0069") {
+			$accountInfo = substr($msg, 0, 47);
+			$serverInfo = substr($msg, 47, length($msg));
+		} else {
+			$accountInfo = substr($msg, 0, 64);
+			$serverInfo = substr($msg, 64, length($msg));
+		}
 		my $newServers = '';
 		my $serverCount = 0;
 
