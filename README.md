@@ -52,7 +52,8 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 ## Warning
 
 Other communities are not affiliated to openkore.com 
-Openkore.in :: BAN 
+
+Openkore.in :: BAN :: Deceive others to buy openkore that is not available.
 
 
 ## Other Links
