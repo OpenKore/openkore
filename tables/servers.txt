@@ -574,4 +574,3 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
-
