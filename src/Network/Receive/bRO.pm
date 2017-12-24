@@ -25,7 +25,6 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
-		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09E5' => ['shop_sold2', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 	);
 	
