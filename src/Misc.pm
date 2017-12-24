@@ -4523,6 +4523,7 @@ sub closeShop {
 	$shopstarted = 0;
 	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("shop_closed");
 	message T("Shop closed.\n");
 }
 
