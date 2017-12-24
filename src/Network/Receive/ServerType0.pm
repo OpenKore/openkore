@@ -3260,7 +3260,7 @@ sub shop_sold {
 	my $earned = $amount * $articles[$number]{price};
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
-	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
+	my $msg = TF("Sold: %s x %s - %sz\n", $articles[$number]{name}, $amount, $earned);
 	shopLog($msg);
 	message($msg, "sold");
 
@@ -3269,10 +3269,11 @@ sub shop_sold {
 	Plugins::callHook(
 		'vending_item_sold',
 		{
-			#These first two entries are equivalent to $args' contents.
 			'vendShopIndex' => $number,
 			'amount' => $amount,
 			'vendArticle' => $articles[$number], #This is a hash
+			'zenyEarned' => $earned,
+			'packetType' => "short",
 		}
 	);
 
@@ -3296,12 +3297,13 @@ sub shop_sold_long {
 	my $amount = $args->{amount};
 	my $earned = $args->{zeny};
 	my $charID = getHex($args->{charID});
+	my $when = $args->{time};
 
 	$articles[$number]{sold} += $amount;
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	
-	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
+	my $msg = TF("[%s] Sold: %s x %s - %sz (Buyer charID: %s)\n", getFormattedDate($when), $articles[$number]{name}, $amount, $earned, $charID);
 	shopLog($msg);
 	message($msg, "sold");
 
@@ -3310,12 +3312,13 @@ sub shop_sold_long {
 	Plugins::callHook(
 		'vending_item_sold',
 		{
-			#These first two entries are equivalent to $args' contents.
 			'vendShopIndex' => $number,
 			'amount' => $amount,
 			'vendArticle' => $articles[$number], #This is a hash
 			'buyerCharID' => $charID,
 			'zenyEarned' => $earned,
+			'time' => $when,
+			'packetType' => "long",
 		}
 	);
 
