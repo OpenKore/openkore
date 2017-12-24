@@ -3315,7 +3315,7 @@ sub shop_sold_long {
 			'vendShopIndex' => $number,
 			'amount' => $amount,
 			'vendArticle' => $articles[$number], #This is a hash
-			'buyerCharID' => $charID,
+			'buyerCharID' => $args->{charID},
 			'zenyEarned' => $earned,
 			'time' => $when,
 			'packetType' => "long",
