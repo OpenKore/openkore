@@ -25,7 +25,7 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
-		'09E5' => ['shop_sold2', 'v2 a4 V2', [qw(number amount charID time zeny)]],
+		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 	);
 	
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
@@ -41,7 +41,7 @@ sub new {
 	return $self;
 }
 
-sub shop_sold2 {
+sub shop_sold_long {
 	my ($self, $args) = @_;
 
 	# sold something
