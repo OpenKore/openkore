@@ -567,6 +567,7 @@ sub new {
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'09DE' => ['private_message', 'v V Z25 Z*', [qw(len charID privMsgUser privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
 		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
@@ -3285,7 +3286,50 @@ sub shop_sold {
 			closeShop();
 		}
 	}
-}##end shop_sold()
+}
+
+sub shop_sold_long {
+	my ($self, $args) = @_;
+
+	# sold something
+	my $number = $args->{number};
+	my $amount = $args->{amount};
+	my $earned = $args->{zeny};
+	my $charID = getHex($args->{charID});
+
+	$articles[$number]{sold} += $amount;
+	$shopEarned += $earned;
+	$articles[$number]{quantity} -= $amount;
+	
+	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
+	shopLog($msg);
+	message($msg, "sold");
+
+	# Call hook before we possibly remove $articles[$number] or
+	# $articles itself as a result of the sale.
+	Plugins::callHook(
+		'vending_item_sold',
+		{
+			#These first two entries are equivalent to $args' contents.
+			'vendShopIndex' => $number,
+			'amount' => $amount,
+			'vendArticle' => $articles[$number], #This is a hash
+			'buyerCharID' => $charID,
+			'zenyEarned' => $earned,
+		}
+	);
+
+	# Adjust the shop's articles for sale, and notify if the sold
+	# item and/or the whole shop has been sold out.
+	if ($articles[$number]{quantity} < 1) {
+		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
+		#$articles[$number] = "";
+		if (!--$articles){
+			message T("Items have been sold out.\n"), "sold";
+			closeShop();
+		}
+	}
+}
 
 
 # TODO:
