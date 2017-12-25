@@ -283,7 +283,7 @@ sub ParsePacket
 				pack("C1", $sex) . # accountSex
 				pack("x6") . # unknown
 				$serverName . # serverName
-				$serverUsers . # users				
+				$serverUsers . # users
 				pack("C*", 0x80, 0x32) . # ??
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
