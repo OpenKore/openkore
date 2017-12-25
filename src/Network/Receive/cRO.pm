@@ -31,13 +31,12 @@ sub new {
 	
 	my %packets = (
 		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
+		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
-		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],
-		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
+		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],		
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -49,7 +48,7 @@ sub new {
 	
 	my %handlers = qw(
 		received_characters 099D
-		received_characters_info 082D
+		received_characters 082D
 		sync_received_characters 09A0
 		account_server_info 0AC9
 		received_character_ID_and_Map 0AC5
@@ -83,17 +82,14 @@ sub parse_account_server_info {
     }
 
     @{$args->{servers}} = map {
-        my %server;
-        @server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
-        if ($masterServer && $masterServer->{private}) {
-            $server{ip} = $masterServer->{ip};
-        } else {
-            $server{ip} = inet_ntoa($server{ip});
-            $server{ip} = "char.ro.zhaouc.com";
-        }
-        $server{name} = bytesToString($server{name});
-        \%server
-    } unpack '(a32)*', $args->{serverInfo};
+		my %server;
+		@server{qw(name users unknown ip_port)} = unpack 'a20 V a2 a*', $_;
+		@server{qw(ip port)} = split (/\:/, $server{ip_port});
+		$server{ip} =~ s/^\s+|\s+$//g;
+		$server{port} =~ tr/0-9//cd;
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a72)*', $args->{serverInfo};
 }
 
 sub received_character_ID_and_Map {
@@ -123,8 +119,6 @@ sub received_character_ID_and_Map {
 		}
 	}
 
-	#$map_ip = makeIP($args->{mapIP});
-	#$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 	$map_ip = $args->{mapUrl};
 	$map_ip =~ s/:[0-9]+//;
 	$map_port = $args->{mapPort};

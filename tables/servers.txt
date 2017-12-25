@@ -478,17 +478,6 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-## http://ro.kunlun.com/
-[cRO - China]
-ip 118.186.39.226
-port 6900
-master_version 4
-version 4
-serverType cRO
-serverEncoding Simplified Chinese
-charBlockSize 144
-addTableFolders cRO
-
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
 ip 118.89.42.108
@@ -507,6 +496,7 @@ secureLogin_account 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 pinCode 1
 charDeleteDateType 1
+pauseCharLogin 1
 
 ####################
 # Private RO Servers

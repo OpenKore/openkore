@@ -264,8 +264,7 @@ sub ParsePacket
 		my $sex = 1;
 		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
 		my $serverUsers = pack("V", @{$self->clients()} - 1);
-		# '0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
-		# 			[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+
 		my $data;
 		if ($switch eq '01FA') {
 			$data = pack("C*", 0x69, 0x00, 0x53, 0x00) . 
@@ -280,14 +279,14 @@ sub ParsePacket
 				$accountID . # accountid
 				$sessionID2 . # sessionid2
 				pack("x4") . # lastloginip
-				pack("C1", $sex) . # sex
-				pack("x32") . # ??
-				pack("a19", stringToBytes("Poseidon Server")) . # serverName
-				$serverUsers .
-				pack("x1") . # ??
+				pack("a26", time) . # lastLoginTime
+				pack("C1", $sex) . # accountSex
+				pack("x6") . # unknown
+				$serverName . # serverName
+				$serverUsers . # users
 				pack("C*", 0x80, 0x32) . # ??
-				pack("a*", $host.":".$self->getPort()) .
-				pack("x114");
+				pack("a*", $host.":".$self->getPort()) . # ip:port
+				pack("x114"); # fill with 00
 		} else {
 			$data = pack("C*", 0x69, 0x00, 0x4F, 0x00) . 
 				$sessionID . $accountID . $sessionID2 . 
