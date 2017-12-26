@@ -1,0 +1,127 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-26 19:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../vendingLog.pl:64
+#, perl-format
+msgid "%s We sold something to %s!\n"
+msgstr ""
+
+#: ../vendingLog.pl:67
+#, perl-format
+msgid "%s Your sever doesn't use %s, unloading %s\n"
+msgstr ""
+
+#: ../vendingLog.pl:73
+#, perl-format
+msgid "%s Already known buyer, using cached name (%s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:75
+#, perl-format
+msgid "%s New charID, queuing name request.\n"
+msgstr ""
+
+#: ../vendingLog.pl:90
+#, perl-format
+msgid "%s Queue is empty.\n"
+msgstr ""
+
+#: ../vendingLog.pl:94
+#, perl-format
+msgid "%s Shutting down...\n"
+msgstr ""
+
+#: ../vendingLog.pl:115
+#, perl-format
+msgid "%s Max name request attempts reached, giving up on charID %s\n"
+msgstr ""
+
+#: ../vendingLog.pl:122
+#, perl-format
+msgid "%s Requesting player name with charID %s (attempt number %d)\n"
+msgstr ""
+
+#: ../vendingLog.pl:170
+msgid " Vending Log "
+msgstr ""
+
+#: ../vendingLog.pl:181
+msgid ""
+"#  Item                    Amount       Earned Buyer                 "
+"When     \n"
+msgstr ""
+
+#: ../vendingLog.pl:184
+msgid "Unknown"
+msgstr ""
+
+#: ../vendingLog.pl:203
+msgid " Nothing sold yet "
+msgstr ""
+
+#: ../vendingLog.pl:206
+msgid "Total"
+msgstr ""
+
+#: ../vendingLog.pl:217
+#, perl-format
+msgid ""
+"%s timeout %s is undefined or equal to zero. Defaulting to %s second(s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:223
+#, perl-format
+msgid ""
+"%s max tries %s is undefined or equal to zero. Defaulting to %s attempt(s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:233
+#, perl-format
+msgid "%s Unloading plugin...\n"
+msgstr ""
+
+#: ../vendingLog.pl:249
+#, perl-format
+msgid "%s Plugin unloaded.\n"
+msgstr ""
+
+#: ../vendingLog.pl:255
+#, perl-format
+msgid "%s Reloading plugin...\n"
+msgstr ""
+
+#: ../vendingLog.pl:262
+#, perl-format
+msgid "%s Plugin reloaded.\n"
+msgstr ""
+
+#: ../vendingLog.pl:278
+#, perl-format
+msgid "%s Logging vending\n"
+msgstr ""
+
+#: ../VendingLog/HookManager.pm:31
+#, perl-format
+msgid "%s Hooked onto %s!\n"
+msgstr ""
+
+#: ../VendingLog/HookManager.pm:41
+#, perl-format
+msgid "%s Unhooked from %s!\n"
+msgstr ""
