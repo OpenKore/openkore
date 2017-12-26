@@ -46,7 +46,7 @@ our @EXPORT = (
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getCoordString2
-	getFormattedDate getHex giveHex getRange getTickCount
+	getFormattedDate getFormattedDateShort getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoordsDir makeCoordsXY makeCoordsFromTo makeDistMap makeIP encodeIP parseArgs
 	quarkToString stringToQuark shiftPack swrite timeConvert timeOut
 	urldecode urlencode unShiftPack vocalString wrapText pin_encode)
@@ -802,15 +802,25 @@ sub getCoordString2 {
 }
  
 sub getFormattedDate {
-        my $thetime = shift;
-        my $r_date = shift;
-        my @localtime = localtime $thetime;
-        my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
-        $localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
-        $localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
-        $localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
-        $$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
-        return $$r_date;
+	my $thetime = shift;
+	my $r_date = shift;
+	my @localtime = localtime $thetime;
+	my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
+	$localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
+	$localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
+	$localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
+	$$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
+	return $$r_date;
+}
+
+# Year-Month-Day
+sub getFormattedDateShort {
+	my $thetime = shift;
+	my $r_date = shift;
+	my @localtime = localtime $thetime;
+	
+	$$r_date = sprintf("%s-%s-%s", ($localtime[5] + 1900), $localtime[4], $localtime[3]);
+	return $$r_date;
 }
 
 sub getHex {
