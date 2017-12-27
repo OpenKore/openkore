@@ -391,7 +391,6 @@ Animal Poop 0 0 1
 1055 0 0 1 # Pele_de_Minhoca
 1040 0 0 1 # Bigode_de_Anão_Ancião
 1011 0 0 1 # Emveretarcon
-1059 0 0 1 # Tecido
 540 0 0 1 # Ração_para_Falcão
 1063 0 0 1 # Presa
 949 0 0 1 # Pluma
