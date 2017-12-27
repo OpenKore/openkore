@@ -385,7 +385,6 @@ Animal Poop 0 0 1
 1055 0 0 1 # Earthworm Peeling
 1040 0 0 1 # Elder Pixie's Moustache
 1011 0 0 1 # Emveretarcon
-1059 0 0 1 # Fabric
 540 0 0 1 # Falcon Food
 1063 0 0 1 # Fang
 949 0 0 1 # Feather
