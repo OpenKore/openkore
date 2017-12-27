@@ -158,7 +158,8 @@ Yellow Plant 0 0 0
 ##### MVPs and Dangerous Monsters #####
 ##MOB NAME : MVP
 Amon Ra 0 1 0
-Amdarias 0 1 0
+Amdarais 0 1 0
+Amdarias 0 1 0 #(Re-Stats)
 Archangeling 0 1 0
 Assassin Cross Eremes 0 1 0
 Atroce 0 1 0
@@ -235,7 +236,8 @@ Wounded Morroc 0 1 0
 Ygnizem 0 1 0
 ##MOB ID : MVP
 1511 0 1 0 #Amon Ra
-2476 0 1 0 #Amdarias
+2476 0 1 0 #Amdarias(Re-Stats)
+2476 0 1 0 #Amdarais
 1388 0 1 0 #Archangeling
 1647 0 1 0 #Assassin Cross Eremes
 1785 0 1 0 #Atroce
