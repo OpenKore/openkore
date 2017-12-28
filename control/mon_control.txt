@@ -156,6 +156,7 @@ Yellow Plant 0 0 0
 1967 -1 0 0
 
 ##### MVPs and Dangerous Monsters #####
+#Include MVP name,ID from avoid_mvps.txt
 !include mon_control/avoid_mvps.txt
 
 
