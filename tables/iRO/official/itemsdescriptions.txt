@@ -47697,6 +47697,29 @@ A condensed White Potion  that weighs less.
 ^ffffff_^000000
 Weight : ^7777775^000000
 #
+11575#
+^ff0000Cannot trade with other users.^000000
+Lucky delicious cookie
+Weight : ^7777773^000000
+Weight : ^7777773^000000
+#
+11578#
+^ff0000Cannot trade with other users.^000000
+Lollipop ^000088HP  105 is recovered^000000.
+^ffffff_^000000
+#
+11580#
+^ff0000Cannot trade with other users.^000000
+Sweet candy ^000088HP 45 is recovered^000000.
+
+
+Weight : ^7777773^000000
+#
+11581#
+^ff0000Cannot trade with other users.^000000
+Huge cake is cut into pieces. Melting taste of soft cream. HP is recovered when consumed.
+Weight : ^77777710^000000
+#
 11583#
 ^000088HP/SP Recovery Item^000000
 A kind of drink made from chocolate and milk from one of the Royal Court Dessert Specialist's recipes.
@@ -75592,6 +75615,14 @@ Weight: 0
 Required Level: 1
 Required Job: All Jobs
 #
+19702#
+More cute and charming santa's hat. Must have for this season!.
+
+Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
+#
 19707#
 Christmas hat that Raccoon Hooray team 'borrowed' from Santa.
 It is very helpful for the Raccoons to keep warm since they're currently homeless.
@@ -82733,6 +82764,48 @@ Costume Hopping Rabbit
 Costume Hippo Hat
 Costume Cat's Mouth
 #
+23548#
+Candy that is transparent. Ice crystal is in candy which is very cold when swallowed. It will be freezing.
+Recovers HP 5%, SP 5% when used.
+Freezes in low chance..
+)
+Weight : ^7777772^000000
+#
+23549#
+Cookie that is made like snow man. Effective and tasty when consumed.
+Recovers HP by 5% and Hit+ 30 for 10 minutes when consumed.
+^ff0000 Cannot use together with item that has the same effects. ^000000
+)
+Weight : ^7777775^000000
+#
+23550#
+A cookie that looks like the snowman Winter. Effective and tasty when consumed.
+Recovers HP by 5% and increase ATK +3% for 10 minutes when consumed.
+)
+Weight : ^7777775^000000
+#
+23551#
+A cookie that looks like the snowman Pestie. Effective and tasty when consumed.
+Recovers HP by 5% and increases ATK speed for 10 minutes (Delay After Attack decreases 10%) when consumed.
+)
+Weight : ^7777775^000000
+#
+23552#
+A cookie that looks like the snowman Flora. Effective and tasty when consumed.
+Recovers  HP 5% , increases MATK+3% for 10 minutes.
+)
+Weight : ^7777775^000000
+#
+23553#
+Box that contains snacks, hats and other variety of items. We wonder what's inside!
+)
+Weight : ^77777710^000000
+#
+23554#
+Envelop that has snow flower card. When opened, a snow flower card is received.
+)
+Weight : ^7777775^000000
+#
 23588#
 ^FF0000Account Bound^000000
 Class: Item Giver
@@ -84344,6 +84417,16 @@ Weight: 0
 ^FFFFFF_^000000
 Type: Miscellaneous
 Weight: 0
+#
+25425#
+Ice crystal that is found among monsters with cold energy. Used for making snow man due to its white, cold and bandable characteristic.
+)
+Weight : ^7777770^000000
+#
+25426#
+White warm cotton. Can be used to make cotton clothes and snow decoration.
+)
+Weight : ^7777770^000000
 #
 26100#
 ^808080A foxtail crafted by the Paradise Group. A basic item for experienced summoners.^000000
@@ -87779,6 +87862,16 @@ Position: Middle
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
+#
+31390#
+ Hat that is made with spirit of people's hope for place which doesn't snow during winter.  Snow that falls from cloud reflects like Stormgast.
+Increase HP by +250 for each 20 level during event period.
+All damage to monster increase by 2% by every 30 base level.
+(The option is deleted during maintenance in last week of 2017 December.)
+Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All Jobs^000000
 #
 31420#
 When equipped, EXP increases by 25% when defeating monsters during December 2017.
