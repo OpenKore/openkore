@@ -5143,6 +5143,10 @@
 11564#Sweet_Canape#
 11572#Jolly_Blue_Potion#
 11573#Jolly_Condensed_White_Potion#
+11575#(Not_for_Sale)_Lucky_Cookie#
+11578#(Not_for_Sale)_Lollipop#
+11580#(Not_for_Sale)_Candy#
+11581#(Not_for_Sale)_Piece_of_Cake#
 11583#Jolly_Chocolate_Drink#
 11589#Iceflake#
 11592#Trans_Candy_Red#
@@ -8256,6 +8260,7 @@
 19696#Costume:_Mochiring_Hat#
 19697#Costume:_Rudolf_Santa_Hat#
 19701#C_Red_Bonnet#
+19702#Costume_Santa's_Hat#
 19707#Costume:_Polar_Bear_Cap#
 19709#Costume:_Yellow_Ribbon#
 19710#Costume:_Wings_Of_Victory#
@@ -8953,6 +8958,13 @@
 23507#October_Costume_Box#
 23508#iRO_2017_Oct_CosBox2#
 23516#November_Costume_Box_Ani_Maul#
+23548#Ice_Candy#
+23549#Snow_Cookie#
+23550#Winter_Cookie#
+23551#Pestie_Cookie#
+23552#Flora_Cookie#
+23553#Snow_Flower_Festival_Giftbox#
+23554#Snow_Flower_Card_Envelop#
 23588#Winter_Wonderland_Costume_Box#
 23600#Prisoner_Bundle_A#
 23601#Imperial_Bundle_A#
@@ -9111,6 +9123,8 @@
 25294#Clover_Ticket#
 25295#Happy_Three_Leaf_Clover#
 25296#Something_Fatal#
+25425#Magical_Snow_Flower#
+25426#Warm_Cotton#
 26100#Paradise_Foxtail_II#
 26101#Paradise_Foxtail_III#
 26107#Elder_Staff#
@@ -9439,4 +9453,5 @@
 31300#Costume_Warm_Cat_Muffler#
 31301#Costume_Blinking_Eyes#
 31302#Costume_Black_Magenta_Ribbon#
+31390#Costume_Let_It_Snow#
 31420#Costume:_Shining_Santa_Poring#
