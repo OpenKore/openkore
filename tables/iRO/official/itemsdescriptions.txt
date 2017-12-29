@@ -1128,15 +1128,12 @@ Weight: 10
 ASPD + 10% for 30 minutes.
 #
 656#
-^808080A special tonic that combats the effects of drowsiness. Temporarily increases attack speed.^000000
-^FFFFFF_^000000
-Type: Consumable
+^808080A special tonic that combats the effects of drowsiness.^000000
 Class: Stat Boost
 Weight: 15
 Required Level: 40
-Required Job: Novice Jobs, Swordman Jobs, Mage Jobs, Archer, Hunter Jobs, Merchant Jobs, Thief Jobs, Acolyte, Monk Jobs, Ninja Jobs, Gunslinger Jobs, Taekwon Jobs
-^FFFFFF_^000000
-ASPD + 15% for 30 minutes.
+Required Jobs: All Jobs except Acolyte, Priest Jobs, Bard Jobs, Dancer Jobs
+Aspd + 15% for 30 minutes.
 #
 657#
 ^808080A remarkably powerful medicine that stimulates circulation and amplifies quickness.^000000
@@ -38714,6 +38711,14 @@ letter ''^000088B^000000'' which is used for special events.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+6017#
+^808080T is written in snow flower festival card. Combine with other snow flower festival card to make various words.^000000
+Weight: 1
+#
+6018#
+^808080V is written in snow flower festival card. Combine with other snow flower festival card to make various words.^000000
+Weight: 1
+#
 6020#
 Beautiful Silver colored fur that can be sold to merchant NPCs at a high price.
 ^ffffff_^000000
@@ -41229,7 +41234,6 @@ Weight : ^7777771^000000
 6898#
 ^808080Can be exchanged during Christmas 2017 for rewards.^000000
 ^FF0000Account Bound^000000
-Type: Miscellaneous
 Weight: 1
 #
 6899#
@@ -47070,8 +47074,12 @@ Food Required: ITEM
 Increases the recovery rate of ^008080ITEM^000000 consumables by 1031%.
 #
 9113#
-An egg in which a Skelion Cute Pet rests. Can be hatched by using a [Pet Incubator].
+^808080An egg in which a Skelion Cute Pet rests. Can be hatched by using a [Pet Incubator].
 Type : ^777777Monster Egg^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 10001#
 A pristine helmet made from an animal skull.
@@ -47287,10 +47295,14 @@ Weight: 0
 Required Monster: Scatleton
 #
 10042#
-A cool looking dark mane, you will feel like a true king.
+^808080A cool looking dark mane, you will feel like a true king.
 Type : ^777777Pet Equipment^000000
 Job : ^777777Skelion^000000
 
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 11000#
 A book documenting the history of Prontera. There's a whole chapter dedicated to Tristam III.
@@ -47698,27 +47710,28 @@ A condensed White Potion  that weighs less.
 Weight : ^7777775^000000
 #
 11575#
-^ff0000Cannot trade with other users.^000000
-Lucky delicious cookie
-Weight : ^7777773^000000
-Weight : ^7777773^000000
+^808080A cookie which is rumored to bring luck to whomever eats it.^000000
+Class: Recovery
+Weight: 3
+Restores ^008000160^000000 to ^008000200^000000 HP.
 #
 11578#
-^ff0000Cannot trade with other users.^000000
-Lollipop ^000088HP  105 is recovered^000000.
-^ffffff_^000000
+^808080A candy cane which is rumored to bring luck to whoever eats it.^000000
+Class: Recovery
+Weight: 4
+Restores ^008000105^000000 to ^008000145^000000 HP.
 #
 11580#
-^ff0000Cannot trade with other users.^000000
-Sweet candy ^000088HP 45 is recovered^000000.
-
-
-Weight : ^7777773^000000
+^808080Candy which is rumored to bring luck to whoever eats it.^000000
+Class: Recovery
+Weight: 3
+Restores ^00800045^000000 to ^00800065^000000 HP.
 #
 11581#
-^ff0000Cannot trade with other users.^000000
-Huge cake is cut into pieces. Melting taste of soft cream. HP is recovered when consumed.
-Weight : ^77777710^000000
+^808080A sweet slice of cake covered in icing and topped with a cherry.^000000
+Class: Recovery
+Weight: 10
+Restores ^008000270^000000 to ^008000330^000000 HP.
 #
 11583#
 ^000088HP/SP Recovery Item^000000
@@ -47837,8 +47850,12 @@ Weight: 5
 Restores ^00800060^000000 SP.
 #
 11616#
-Skelion’s favourite piece of meat. Pet Food Merchant sells this item.
+^808080Skelion’s favourite piece of meat. Pet Food Merchant sells this item.
 Weight : ^7777775^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 11701#
 #
@@ -67476,11 +67493,44 @@ There are little bit of can in it too.
 ^ff0000It cannot be traded with other accounts.^000000
 Weight : ^7777771^000000
 #
+17514#
+^808080A box that contains 1 Rideword Hat
+Description
+A hat designed to mimic the look of a terrible magic book which attacks people.
+When physically melee attacking, there is a 5% chance to recover 8% of your damage as HP.
+When physically melee attacking, there is a 1% chance to recover 4% of your damage as SP.
+Drains 10 HP every 5 seconds while equipped.
+^ffffff_^000000
+^ff0000If refined to +9 or higher, the HP and SP recovery is doubled^000000
+Slot : ^7777771^000000
+Class : ^777777Headgear^000000
+Location : ^777777Upper^000000
+Defense : ^7777773^000000
+Weight : ^77777730^000000
+Level : ^77777740^000000
+Job : ^777777All^000000
+Box Weight : ^7777771^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
 17517#
 Weight: 0
 Yo, I heard you like boxes
 When opened gives three Overseas Care Packages
 
+#
+17523#
+^808080Box containing 10 Silvervine 100 Boxes
+Use these as currency to exchange for special items
+Weight : ^7777770^000000
+^ff0000Box is trade/store/vend, once opened the item becomes account bound^000000
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 17528#
 Just in time for Christmas is our assortment of fun wintertime costume hats! For 300 points you can let it go with this stylish box. Gives one of the following at random when opened
@@ -68320,6 +68370,243 @@ Costume Umbala Spirit
 Costume Black Shiba Inu Hat
 Costume Quati Hat
 #
+17853#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Costume
+Weight: 0
+^FFFFFF_^000000
+An elegantly decorated egg containing one of the following costumes
+Costume Side Cap
+Costume Fallen Angel's Blessing
+Costume Eye of the Hawk
+Costume Engineer Cap
+Costume Black Cat
+Costume War Princess Ribbon
+Costume Mono Gothic Bonnet
+Costume Red Cat Ears Cape
+Costume Angel's Black Mini Silk Hat
+Costume Rosary's Necklace
+
+^808080^000000
+^FFFFFF_^000000
+Type: Costume
+Weight: 0
+^FFFFFF_^000000
+An elegantly decorated egg containing one of the following costumes
+Costume Side Cap
+Costume Fallen Angel's Blessing
+Costume Eye of the Hawk
+Costume Engineer Cap
+Costume Black Cat
+Costume War Princess Ribbon
+Costume Mono Gothic Bonnet
+Costume Red Cat Ears Cape
+Costume Angel's Black Mini Silk Hat
+Costume Rosary's Necklace
+
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17854#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Bullock Helm
+Costume Dark Knight Mask
+Costume Double Horn Helm
+Costume Dragon Skull
+Costume General Helmet
+Costume Lightning Speed
+Costume Pegasus Wing Ears
+Costume Pirate Dagger
+Costume Rainbow Wing Ears
+Costume Vanargandr Helm
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Bullock Helm
+Costume Dark Knight Mask
+Costume Double Horn Helm
+Costume Dragon Skull
+Costume General Helmet
+Costume Lightning Speed
+Costume Pegasus Wing Ears
+Costume Pirate Dagger
+Costume Rainbow Wing Ears
+Costume Vanargandr Helm
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17855#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17856#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Black Cat Ears Beret
+Costume: Bunny Headdress
+Costume: Earth Goddess Flower
+Costume: Lightning Speed
+Costume: Scratching Cat
+Costume: Spell Circuit
+Costume: Veil
+Costume: Warg in Mouth
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17857#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17858#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Angel's Masquerade
+Costume: Captain Carocc's Hat
+Costume: Chick Hat
+Costume: Darkness Helm
+Costume: Kitsune Mask Hood
+Costume: Little Angel Doll
+Costume: Pigeon On Shoulder
+Costume: Rabbit Ear Hat
+Costume: Robo Eye
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
 17859#
 ^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
 ^FF0000Account Bound^000000
@@ -68352,6 +68639,545 @@ Costume Bloody Bandages
 Costume Tall Ghostring Hat
 Costume Assassin's Skull Mask
 Costume Hoplite Helmet
+#
+17861#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17862#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Classic Ribbon
+Costume: Gryphon Hat
+Costume: Mochiring Hat
+Costume: Piamette Hood
+Costume: Puppy Hat
+Costume: Sleeping Kitty Hat
+Costume: Tomboy Fairy
+Costume: Wings of Victory
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17863#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume: Knit Snow Rabbit Hat
+Costume: Knit Rabbit Ear Hat
+Costume: Lunatic Hat
+Costume: Ice Wing Ears
+Costume: Galanthus Guard
+Costume: Elder Crown
+Costume: Chilly Breath
+Costume: Blue Fur Hat
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17864#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Black Cat Hoodie
+Costume Tiger Face
+Costume Black and White Temptation
+Costume Pig Head
+Costume Pretty Bear
+Costume Cat Ear Hat
+Costume Elephant Hat
+Costume Umbala Spirit
+Costume Black Shiba Inu Hat
+Costume Quati Hat
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Black Cat Hoodie
+Costume Tiger Face
+Costume Black and White Temptation
+Costume Pig Head
+Costume Pretty Bear
+Costume Cat Ear Hat
+Costume Elephant Hat
+Costume Umbala Spirit
+Costume Black Shiba Inu Hat
+Costume Quati Hat
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17865#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Costume
+Weight: 0
+^FFFFFF_^000000
+An elegantly decorated egg containing one of the following costumes
+Costume Side Cap
+Costume Fallen Angel's Blessing
+Costume Eye of the Hawk
+Costume Engineer Cap
+Costume Black Cat
+Costume War Princess Ribbon
+Costume Mono Gothic Bonnet
+Costume Red Cat Ears Cape
+Costume Angel's Black Mini Silk Hat
+Costume Rosary's Necklace
+
+^808080^000000
+^FFFFFF_^000000
+Type: Costume
+Weight: 0
+^FFFFFF_^000000
+An elegantly decorated egg containing one of the following costumes
+Costume Side Cap
+Costume Fallen Angel's Blessing
+Costume Eye of the Hawk
+Costume Engineer Cap
+Costume Black Cat
+Costume War Princess Ribbon
+Costume Mono Gothic Bonnet
+Costume Red Cat Ears Cape
+Costume Angel's Black Mini Silk Hat
+Costume Rosary's Necklace
+
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17866#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Bullock Helm
+Costume Dark Knight Mask
+Costume Double Horn Helm
+Costume Dragon Skull
+Costume General Helmet
+Costume Lightning Speed
+Costume Pegasus Wing Ears
+Costume Pirate Dagger
+Costume Rainbow Wing Ears
+Costume Vanargandr Helm
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Bullock Helm
+Costume Dark Knight Mask
+Costume Double Horn Helm
+Costume Dragon Skull
+Costume General Helmet
+Costume Lightning Speed
+Costume Pegasus Wing Ears
+Costume Pirate Dagger
+Costume Rainbow Wing Ears
+Costume Vanargandr Helm
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17867#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17868#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume Evil Mask
+Costume Helm of Dragoon
+Costume Jumping Poring
+Costume Love Guard
+Costume Piggy Bank
+Costume Poring Letter
+Costume Rainbow Poring Hat
+Costume Reginleif Wings
+Costume Southern Cross
+Costume Wind Mildstone
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Black Cat Ears Beret
+Costume: Bunny Headdress
+Costume: Earth Goddess Flower
+Costume: Lightning Speed
+Costume: Scratching Cat
+Costume: Spell Circuit
+Costume: Veil
+Costume: Warg in Mouth
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17869#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17870#
+^808080^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Diabolic Headphones
+Costume: Falling Leaves
+Costume: Fan in Mouth
+Costume: Lady's Feather Hat
+Costume: Lude Hood
+Costume: Monochrome Cap
+Costume: Pumpkin Head
+Costume: Sepia Cap
+Costume: Straw Rice Bag
+Costume: Test Subject Aura
+^808080^000000
+^FFFFFF_^000000
+Type: Consumable
+Class: Item Giver
+Weight: 1
+^FFFFFF_^000000
+Open the box to receive 1 random costume from the following
+Costume: Angel's Masquerade
+Costume: Captain Carocc's Hat
+Costume: Chick Hat
+Costume: Darkness Helm
+Costume: Kitsune Mask Hood
+Costume: Little Angel Doll
+Costume: Pigeon On Shoulder
+Costume: Rabbit Ear Hat
+Costume: Robo Eye
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17871#
+^808080^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+Required Jobs: All Jobs
+When opened gives one of the following;
+Costume Cat Eye
+Costume Floating Ghost
+Costume Red Subject Aura
+Costume Loyal Servant of Morocc
+Costume Gram Peony
+Costume Dwarf Beard
+Costume Servant Devilring
+Costume Magic Eyes
+
+^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+Required Jobs: All Jobs
+When opened gives one of the following;
+Costume Cat Eye
+Costume Floating Ghost
+Costume Red Subject Aura
+Costume Loyal Servant of Morocc
+Costume Gram Peony
+Costume Dwarf Beard
+Costume Servant Devilring
+Costume Magic Eyes
+
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17872#
+^808080^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+Required Jobs: All Jobs
+When opened gives one of the following;
+Costume Bapho Jr. Horns
+Costume Niflheim Bunny Hat
+Costume Sky of Memory Hat
+Costume Blue Wizard's Hat
+Costume Vampire Familiar
+Costume Bat Wing Stole
+Costume Bloody Bandages
+Costume Tall Ghostring Hat
+Costume Assassin's Skull Mask
+Costume Hoplite Helmet
+
+^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+Required Jobs: All Jobs
+When opened gives one of the following;
+Costume Bapho Jr. Horns
+Costume Niflheim Bunny Hat
+Costume Sky of Memory Hat
+Costume Blue Wizard's Hat
+Costume Vampire Familiar
+Costume Bat Wing Stole
+Costume Bloody Bandages
+Costume Tall Ghostring Hat
+Costume Assassin's Skull Mask
+Costume Hoplite Helmet
+
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17873#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+17874#
+^808080^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Tiger Mask
+Costume Shaving Foam
+Costume Sheep Hat
+Costume Brown Stole
+Costume Piggyback
+Costume Teddy Bear Hood
+Costume Happy Droopy Lunatic Ears (Black)
+Costume Mouton Life (Blue)
+Costume Soft Sheep Hat
+Costume Rune Helm
+^808080A mysterious egg which contains a costume.^000000
+^FF0000Account Bound^000000
+Type: Usable
+Class: Item Giver
+Weight: 1
+When opened it gives one of the following at random:
+Costume Classic Ribbon
+Costume: Gryphon Hat
+Costume: Mochiring Hat
+Costume: Piamette Hood
+Costume: Puppy Hat
+Costume: Sleeping Kitty Hat
+Costume: Tomboy Fairy
+Costume: Wings of Victory
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 17876#
 Class: Item Giver
@@ -68472,6 +69298,14 @@ Wing of Beezlebub Box
 Blacksmith Blessing x 8
 BattlemanualX3  x 6
 Job Manual 50 x 8
+#
+17928#
+^808080Randomly gives 1 item when opened
+Weight : ^7777771^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -72220,7 +73054,6 @@ Weight : ^77777730^000000
 #
 18933#
 ^808080A hat decorated with mechanical parts and plants.^000000
-Type: Equipment
 Class: Headgear
 Position: Upper
 Defense: 1
@@ -72230,13 +73063,13 @@ Dex + 2
 Mdef + 7
 Increases the damage of Spore Explosion by 5%.
 Increases the damage of Spore Explosion by an additional 5% per 2 upgrade levels of the item.
-Set Bonus
-Mechanical Plant Hat
-Pipe
+^800080Set Bonus^000000
+^800080Mechanical Plant Hat^000000
+^800080Pipe^000000
 Reduces the cast delay of skills by 5%.
-Set Bonus
-Mechanical Plant Hat
-Tower Keeper Card
+^800080Set Bonus^000000
+^800080Mechanical Plant Hat^000000
+^800080Tower Keeper Card^000000
 Reduces the variable casting time of skills by 10%.
 #
 18937#
@@ -75616,12 +76449,16 @@ Required Level: 1
 Required Job: All Jobs
 #
 19702#
-More cute and charming santa's hat. Must have for this season!.
+^808080More cute and charming santa's hat. Must have for this season!.
 
 Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 19707#
 Christmas hat that Raccoon Hooray team 'borrowed' from Santa.
@@ -78425,14 +79262,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20284#
-^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.^000000
-Type: Equipment
+^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute. This hat was originally awarded to ^3E0694Kami Kali^000000, ^3E0694Kritical Assassin^000000, ^3E0694Milky Thief^000000, ^3E0694Myzery^000000 and ^3E0694Nirvanna21^000000 for contributing to the community.^000000
 Class: Costume
 Position: Upper
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
-Originally awarded to Kami Kali, Myzery, Milkythief, Nirvanna21, Kritical Assassin for contributing to the community.
 #
 20285#
 ^808080Petals of cherry blossoms are failling gently. The petals dance beautifully as if they inform you that spring has come.^000000
@@ -81753,6 +82588,7 @@ Defense: 15
 Weight: 50
 Required Level: 100
 Required Jobs: All Jobs
+Mdef + 15
 Max HP + 3%
 Max SP + 3%
 Matk + 2%
@@ -82765,46 +83601,49 @@ Costume Hippo Hat
 Costume Cat's Mouth
 #
 23548#
-Candy that is transparent. Ice crystal is in candy which is very cold when swallowed. It will be freezing.
-Recovers HP 5%, SP 5% when used.
-Freezes in low chance..
-)
-Weight : ^7777772^000000
+^808080Transparent candy embedded with an ice crystal which may cause a freezing sensation when swallowed.^000000
+Class: Recovery
+Weight: 2
+Restores 5% HP and SP.
+Adds a 3% chance of inflicting ^800000Frozen^000000 on the user when using this item.
 #
 23549#
-Cookie that is made like snow man. Effective and tasty when consumed.
-Recovers HP by 5% and Hit+ 30 for 10 minutes when consumed.
-^ff0000 Cannot use together with item that has the same effects. ^000000
-)
-Weight : ^7777775^000000
+^808080A delicious cookie shaped like the snowman known as Snow.^000000
+Class: Recovery
+Weight: 5
+Hit + 30 for 10 minutes.
+Restores 5% HP.
 #
 23550#
-A cookie that looks like the snowman Winter. Effective and tasty when consumed.
-Recovers HP by 5% and increase ATK +3% for 10 minutes when consumed.
-)
-Weight : ^7777775^000000
+^808080A delicious cookie shaped like the snowman known as Winter.^000000
+Class: Recovery
+Weight: 5
+Atk + 3% for 10 minutes.
+Restores 5% HP.
 #
 23551#
-A cookie that looks like the snowman Pestie. Effective and tasty when consumed.
-Recovers HP by 5% and increases ATK speed for 10 minutes (Delay After Attack decreases 10%) when consumed.
-)
-Weight : ^7777775^000000
+^808080A delicious cookie shaped like the snowman known as Pestie.^000000
+Class: Recovery
+Weight: 5
+Aspd + 10% for 10 minutes.
+Restores 5% HP.
 #
 23552#
-A cookie that looks like the snowman Flora. Effective and tasty when consumed.
-Recovers  HP 5% , increases MATK+3% for 10 minutes.
-)
-Weight : ^7777775^000000
+^808080A delicious cookie shaped like the snowman known as Flora.^000000
+Class: Recovery
+Weight: 5
+Matk + 3% for 10 minutes.
+Restores 5% HP.
 #
 23553#
-Box that contains snacks, hats and other variety of items. We wonder what's inside!
-)
-Weight : ^77777710^000000
+^808080A box that contains snacks, hats and many other items. I wonder what I'll get if I open it!^000000
+Class: Item Giver
+Weight: 10
 #
 23554#
-Envelop that has snow flower card. When opened, a snow flower card is received.
-)
-Weight : ^7777775^000000
+^808080An envelop that has snow flower card inside.^000000
+Class: Item Giver
+Weight: 5
 #
 23588#
 ^FF0000Account Bound^000000
@@ -84419,14 +85258,12 @@ Type: Miscellaneous
 Weight: 0
 #
 25425#
-Ice crystal that is found among monsters with cold energy. Used for making snow man due to its white, cold and bandable characteristic.
-)
-Weight : ^7777770^000000
+^808080An ice crystal that is found among monsters with cold energy. It is very useful for making snowman due to its white, cold and binding properties.^000000
+Weight: 0
 #
 25426#
-White warm cotton. Can be used to make cotton clothes and snow decoration.
-)
-Weight : ^7777770^000000
+^808080White warm cotton that can be used to make clothes and decorations.^000000
+Weight: 0
 #
 26100#
 ^808080A foxtail crafted by the Paradise Group. A basic item for experienced summoners.^000000
@@ -85960,15 +86797,14 @@ Increases the damage of ^0000FFLightning Ride^000000 by 5%.
 #
 28507#
 ^808080A pair of gloves once owned by a genius magician. They allow the wearer to use their magic more efficiently.^000000
-^FF0000The glove can only be equipped in the right accessory slot.^000000
-Type: Equipment
+^FF0000This accessory can only be equipped in the right accessory slot.^000000
 Class: Accessory
 Weight: 50
 Required Level: 80
 Required Jobs: All Jobs
 Reduces the variable casting time of skills by 10%.
 Increases the damage of Water, Earth, Fire, Wind and Ghost property magical attacks on targets by 5%
-Bypass 50% of Mdef of Normal and Boss targets when performing a magical attack. ^FF0000This effect does not work on other players.^000000
+Bypass 50% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack.
 #
 28513#
 ^808080A high quality brooch that is made by one of the best craftsman in the world. It has been together with Celine since she was created.^000000
@@ -86052,7 +86888,7 @@ Required Level: 80
 Required Jobs: All Jobs
 Reduces the cast delay of skills by 10%.
 Increases physical damage on boss monsters by 5%.
-Bypass 50% of hard defense of normal monsters and boss monsters when performing a physical attack.
+Bypass 50% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
 28600#
 Attack: 0
@@ -86394,6 +87230,46 @@ If the users base Dex is 90 or higher,
 Reduces the variable casting time of skills by 5%.
 If the users base Luk is 90 or higher,
 Increases critical damage on targets by 5%.
+#
+28930#
+^808080A square shield
+that is small, yet
+effective in combat.
+Class : ^777777Shield^000000
+Defense : ^77777740^000000
+Weight : ^77777730^000000
+Jobs: ^777777All^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+28931#
+^808080A rounded shield
+that readily absorbs
+impact from attacks.
+Class : ^777777Shield^000000
+Defense : ^77777740^000000
+Weight : ^77777760^000000
+Jobs: ^777777Swordman, Acolyte, Merchant, and Thief
+Classes; Bard and
+Dancer Jobs^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
+#
+28932#
+^808080A well crafted shield
+which most kinds of^FFFFFF      ^000000 attack cannot penetrate.
+Class : ^777777Shield^000000
+Defense : ^77777760^000000
+Weight : ^777777130^000000
+Jobs: ^777777Swordman Class^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
 29000#
 Type: Miscellaneous
@@ -87864,17 +88740,18 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31390#
- Hat that is made with spirit of people's hope for place which doesn't snow during winter.  Snow that falls from cloud reflects like Stormgast.
-Increase HP by +250 for each 20 level during event period.
-All damage to monster increase by 2% by every 30 base level.
-(The option is deleted during maintenance in last week of 2017 December.)
-Class : ^777777Costume Equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+^808080This hat is made with spirit of people's hope for a place which doesn't snow during winter.^000000
+Class: Costume
+Position: Upper
+Weight: 0
+Required Level: 1
+Required Jobs: All Jobs
+^FF0000The following effects are active during the month of December.^000000
+Max HP + 250 for every 20 base levels.
+Increases physical and magical damage on targets by 2% for every 30 base levels.
 #
 31420#
-When equipped, EXP increases by 25% when defeating monsters during December 2017.
+^808080When equipped, EXP increases by 25% when defeating monsters during December 2017.
 Increases the healing rate of Carrots by 100%
 Increases drops by 15%
 Enables the dropping of Carrots when defeating monsters
@@ -87885,4 +88762,8 @@ Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777771^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
+^000000
+Attack: 0
+Weight: 0
+Weapon Level: 0
 #
