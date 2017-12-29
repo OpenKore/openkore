@@ -67126,6 +67126,14 @@ Amistr Bag
 
 #
 17384#
+^FF0000Account Bound^000000
+^FF00001^000000
+Type: Usable
+Class: Item Giver
+Weight: 0
+When opened gives 1 Amistr Bag
+Amistr Bags are account bound. Can be enchanted during an Amistr Bag Event
+Visit Prontera 146 192 for more details
 #
 17385#
 #
@@ -76456,9 +76464,10 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 ^000000
-Attack: 0
+Type: Equipment
+Class: Headgear
+Defense: 0
 Weight: 0
-Weapon Level: 0
 #
 19707#
 Christmas hat that Raccoon Hooray team 'borrowed' from Santa.
