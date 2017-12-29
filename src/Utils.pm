@@ -819,7 +819,7 @@ sub getFormattedDateShort {
 	my $r_date = shift;
 	my @localtime = localtime $thetime;
 	
-	$$r_date = sprintf("%s-%s-%s", ($localtime[5] + 1900), $localtime[4], $localtime[3]);
+	$$r_date = sprintf("%s-%s-%s", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
 	return $$r_date;
 }
 
