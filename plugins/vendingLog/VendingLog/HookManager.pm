@@ -4,13 +4,14 @@ use strict;
 
 use Plugins;
 use Log qw(debug);
-
-use lib $Plugins::current_plugin_folder;
-use VendingLog::Translation qw(TF);
+use Settings qw(%sys);
 
 use constant {
 	PACKAGE_PREFIX => "[VL_HookManager]",
+	PLUGIN_PODIR => "$Plugins::current_plugin_folder/po",
 };
+
+my $translator = new Translation(PLUGIN_PODIR, $sys{locale});
 
 sub new {
 	my $class = shift;
@@ -28,7 +29,7 @@ sub hook {
 	
 	if (not exists $self->{hook}) {
 		$self->{hook} = Plugins::addHook($self->{hookString}, $self->{callback});
-		debug TF("%s Hooked onto %s!\n", PACKAGE_PREFIX, $self->{hookString});
+		debug $translator->translatef("%s Hooked onto %s!\n", PACKAGE_PREFIX, $self->{hookString});
 	}
 }
 
@@ -38,7 +39,7 @@ sub unhook {
 	if (exists $self->{hook}) {
 		Plugins::delHook($self->{hookString}, $self->{hook});
 		delete $self->{hook};
-		debug TF("%s Unhooked from %s!\n", PACKAGE_PREFIX, $self->{hookString});
+		debug $translator->translatef("%s Unhooked from %s!\n", PACKAGE_PREFIX, $self->{hookString});
 	}
 }
 
