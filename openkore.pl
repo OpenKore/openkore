@@ -37,7 +37,7 @@ sub __start {
 	undef $@;
 	parseArguments();
 	Settings::loadSysConfig();
-	Translation::initDefault(undef, $sys{locale});
+	Translation::initDefault($sys{locale});
 
 	use Globals;
 	use Interface;
