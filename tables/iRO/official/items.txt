@@ -7497,7 +7497,7 @@
 17381#Lucky_Care_Package_Remix#
 17382#Overseas_Care_Package_IX#
 17383#Blast_from_the_Past_Box#
-17384#Bloody_Shoes_Shadow_Box#
+17384#Amistr_Bag_Box#
 17385#Liberation_Shoes_Shadow_Box#
 17386#Chemical_Shoes_Shadow_Box#
 17387#Clamorous_Shoes_Shadow_Box#
