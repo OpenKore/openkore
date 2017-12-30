@@ -1,0 +1,97 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 17:02-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../raiseSkill.pl:14
+msgid "automatically raise character skills"
+msgstr ""
+
+#: ../raiseSkill.pl:41
+msgid "[raiseSkill] Plugin unloading or reloading\n"
+msgstr ""
+
+#: ../raiseSkill.pl:64
+msgid "[raiseSkill] Plugin stage changed to 'INACTIVE'\n"
+msgstr ""
+
+#: ../raiseSkill.pl:71
+msgid "[raiseSkill] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n"
+msgstr ""
+
+#: ../raiseSkill.pl:76
+msgid "[raiseSkill] Plugin stage changed to 'ADDING'\n"
+msgstr ""
+
+#: ../raiseSkill.pl:90
+msgid "[raiseSkill] Received a raise chance or answer\n"
+msgstr ""
+
+#: ../raiseSkill.pl:106
+#, perl-format
+msgid "[raiseSkill] Decided next skill to raise: '%s'\n"
+msgstr ""
+
+#: ../raiseSkill.pl:110
+msgid "[raiseSkill] No more skills to raise; disabling skillsAddAuto\n"
+msgstr ""
+
+#: ../raiseSkill.pl:132
+msgid "[raiseSkill] We don't have any free skill point\n"
+msgstr ""
+
+#: ../raiseSkill.pl:135
+msgid "[raiseSkill] We have free skill points\n"
+msgstr ""
+
+#: ../raiseSkill.pl:137
+#, perl-format
+msgid "[raiseSkill] Skill '%s' cannot be raised further\n"
+msgstr ""
+
+#: ../raiseSkill.pl:140
+#, perl-format
+msgid "[raiseSkill] We can raise '%s' further\n"
+msgstr ""
+
+#: ../raiseSkill.pl:147
+#, perl-format
+msgid ""
+"[raiseSkill] Skill '%s' does not exist in your skill tree; disabling "
+"skillsAddAuto\n"
+msgstr ""
+
+#: ../raiseSkill.pl:150
+#, perl-format
+msgid ""
+"[raiseSkill] Skill '%s' reached its maximum level or prerequisite not "
+"reached; disabling skillsAddAuto\n"
+msgstr ""
+
+#: ../raiseSkill.pl:160
+#, perl-format
+msgid "Auto-adding skill '%s' to '%d'\n"
+msgstr ""
+
+#: ../raiseSkill.pl:198
+#, perl-format
+msgid "Unknown skill '%s' in '%s'; disabling skillsAddAuto\n"
+msgstr ""
+
+#: ../raiseSkill.pl:202
+msgid "[raiseSkill] Configuration set in config.txt is valid\n"
+msgstr ""
