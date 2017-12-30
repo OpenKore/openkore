@@ -14,14 +14,13 @@ use Utils::DataStructures qw(binRemoveAllAndShift);
 
 use lib $Plugins::current_plugin_folder;
 use VendingLog::HookManager;
-use VendingLog::Translation qw(T TF);
 
 use constant {
 	PACKET_STRING => "shop_sold_long",
 	
 	PLUGIN_PREFIX => "[vendingLog]",
 	PLUGIN_NAME => "vendingLog",
-	PLUGIN_DESCRIPTION => "Logs vending for servers with shop_sold_long",
+	PLUGIN_PODIR => "$Plugins::current_plugin_folder/po",
 	
 	TIMEOUT_KEY_REQUEST => "vendingLog_request",
 	TIMEOUT_VALUE_REQUEST => 5,
@@ -30,10 +29,17 @@ use constant {
 	MAX_ATTEMPTS_VALUE_REQUEST => 3,
 	
 	COMMAND_HANDLE => "vendinglog",
-	COMMAND_DESCRIPTION => "Command used by vendingLog plugin",
 };
 
-Plugins::register(PLUGIN_NAME, PLUGIN_DESCRIPTION, \&onUnload, \&onReload);
+my $translator = new Translation(PLUGIN_PODIR, $sys{locale});
+my $main_command = Commands::register([COMMAND_HANDLE, $translator->translate("Command used by vendingLog plugin"), \&onCommandCall]);
+my $terminateWhenDone = 0;
+
+my %shopLog;
+my %knownNames;
+my %requestCounter;
+
+my @requestQueue;
 
 my %hooks = (
 	init => new VendingLog::HookManager("start3", \&onInitialized),
@@ -43,18 +49,8 @@ my %hooks = (
 	mainLoop_post => new VendingLog::HookManager("mainLoop_post", \&onMainLoop),
 );
 
+Plugins::register(PLUGIN_NAME, $translator->translate("Logs vending for servers with shop_sold_long"), \&onUnload, \&onReload);
 $hooks{init}->hook();
-
-VendingLog::Translation::initDefault(undef, $sys{locale});
-
-my $main_command = Commands::register([COMMAND_HANDLE, COMMAND_DESCRIPTION, \&onCommandCall]);
-
-my $terminateWhenDone = 0;
-my %shopLog;
-my %knownNames;
-my %requestCounter;
-
-my @requestQueue;
 
 # We sold something!
 sub onItemSold {
@@ -62,18 +58,18 @@ sub onItemSold {
 	
 	my $charID = getHex($args->{buyerCharID});
 	
-	debug TF("%s We sold something to %s!\n", PLUGIN_PREFIX, $charID);
+	debug $translator->translatef("%s We sold something to %s!\n", PLUGIN_PREFIX, $charID);
 	
 	unless ($args->{packetType} eq "long") {
-		warning TF("%s Your sever doesn't use %s, unloading %s\n", PLUGIN_PREFIX, PACKET_STRING, PLUGIN_NAME);
+		warning $translator->translatef("%s Your sever doesn't use %s, unloading %s\n", PLUGIN_PREFIX, PACKET_STRING, PLUGIN_NAME);
 		Plugins::unload("vendingLog");
 		return;
 	}
 	
 	if (exists $knownNames{$charID}) {
-		debug TF("%s Already known buyer, using cached name (%s)\n", PLUGIN_PREFIX, $knownNames{$charID});
+		debug $translator->translatef("%s Already known buyer, using cached name (%s)\n", PLUGIN_PREFIX, $knownNames{$charID});
 	} else {
-		debug TF("%s New charID, queuing name request.\n", PLUGIN_PREFIX);
+		debug $translator->translatef("%s New charID, queuing name request.\n", PLUGIN_PREFIX);
 
 		push @requestQueue, $args->{buyerCharID};
 		$hooks{mainLoop_post}->hook();
@@ -88,11 +84,11 @@ sub onItemSold {
 # Hook onto mainLoop to request char names
 sub onMainLoop {
 	if (scalar @requestQueue == 0) {
-		debug TF("%s Queue is empty.\n", PLUGIN_PREFIX);
+		debug $translator->translatef("%s Queue is empty.\n", PLUGIN_PREFIX);
 		$hooks{mainLoop_post}->unhook();
 			
 		if ($terminateWhenDone == 1) {
-			debug TF("%s Shutting down...\n", PLUGIN_PREFIX);
+			debug $translator->translatef("%s Shutting down...\n", PLUGIN_PREFIX);
 			prepareShopShutdown(1);
 		} else {
 			return;
@@ -113,14 +109,15 @@ sub requestCharacterName {
 	my $charID = getHex($requestQueue[0]);
 	
 	if ($requestCounter{$requestQueue[0]} > $timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout}) {
-		warning TF("%s Max name request attempts reached, giving up on charID %s\n", PLUGIN_PREFIX, $charID);
+		warning $translator->translatef("%s Max name request attempts reached, giving up on charID %s\n", PLUGIN_PREFIX, $charID);
 
 		delete $requestCounter{$requestQueue[0]};
 		binRemoveAllAndShift(\@requestQueue, $requestQueue[0]);
 	} else {
 		$hooks{packet_character_name}->hook();
 		
-		debug TF("%s Requesting player name with charID %s (attempt number %d)\n", PLUGIN_PREFIX, $charID, $requestCounter{$requestQueue[0]});
+		debug $translator->translatef("%s Requesting player name with charID %s (attempt number %d)\n", PLUGIN_PREFIX, 
+										$charID, $requestCounter{$requestQueue[0]});
 		$messageSender->sendGetCharacterName($requestQueue[0]);
 		$requestCounter{$requestQueue[0]}++;
 	}
@@ -168,7 +165,7 @@ sub prepareShopShutdown {
 }
 
 sub prepareMessage {
-	my $msg = center(T(" Vending Log "), 79, '=') ."\n";
+	my $msg = center($translator->translate(" Vending Log "), 79, '=') ."\n";
 	
 	my $offset = 0;
 	my $totalZeny = 0;
@@ -179,10 +176,10 @@ sub prepareMessage {
 	foreach my $key (keys %shopLog) {
 		if (exists $shopLog{$key}{item}) {
 			if ($offset == 0) {
-				$msg .= T("#  Item                    Amount       Earned Buyer                 When     \n");
+				$msg .= $translator->translate("#  Item                    Amount       Earned Buyer                 When     \n");
 			}
 
-			$name = (exists $knownNames{$key}) ? $knownNames{$key} : T("Unknown");
+			$name = (exists $knownNames{$key}) ? $knownNames{$key} : $translator->translate("Unknown");
 			
 			for ($i = 0; $i < scalar @{$shopLog{$key}{item}}; ++$i) {
 				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>",
@@ -201,10 +198,10 @@ sub prepareMessage {
 	}
 	
 	if ($offset == 0) {
-		$msg .= center(T(" Nothing sold yet "), 79, ' ') ."\n";
+		$msg .= center($translator->translate(" Nothing sold yet "), 79, ' ') ."\n";
 	} else {
 		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>",
-					[undef, T("Total"), formatNumber($totalAmount), formatNumber($totalZeny), undef, undef]);
+					[undef, $translator->translate("Total"), formatNumber($totalAmount), formatNumber($totalZeny), undef, undef]);
 	}
 
 	return $msg;
@@ -215,13 +212,13 @@ sub prepareMessage {
 #####################
 sub onInitialized {
 	if (not exists $timeout{TIMEOUT_KEY_REQUEST} or $timeout{TIMEOUT_KEY_REQUEST}{timeout} == 0) {
-		warning TF("%s timeout %s is undefined or equal to zero. Defaulting to %s second(s)\n", 
+		warning $translator->translatef("%s timeout %s is undefined or equal to zero. Defaulting to %s second(s)\n", 
 				PLUGIN_PREFIX, TIMEOUT_KEY_REQUEST, TIMEOUT_VALUE_REQUEST);
 		$timeout{TIMEOUT_KEY_REQUEST}{timeout} = TIMEOUT_VALUE_REQUEST;
 	}
 	
 	if (not exists $timeout{MAX_ATTEMPTS_KEY_REQUEST} or $timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout} == 0) {
-		warning TF("%s max tries %s is undefined or equal to zero. Defaulting to %s attempt(s)\n", 
+		warning $translator->translatef("%s max tries %s is undefined or equal to zero. Defaulting to %s attempt(s)\n", 
 				PLUGIN_PREFIX, MAX_ATTEMPTS_KEY_REQUEST, MAX_ATTEMPTS_VALUE_REQUEST);
 		$timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout} = MAX_ATTEMPTS_VALUE_REQUEST;
 	}
@@ -231,7 +228,7 @@ sub onInitialized {
 }
 
 sub onUnload {
-	warning TF("%s Unloading plugin...\n", PLUGIN_PREFIX);
+	warning $translator->translatef("%s Unloading plugin...\n", PLUGIN_PREFIX);
 
 	$hooks{packet_character_name}->unhook();
 	$hooks{mainLoop_post}->unhook();
@@ -247,20 +244,20 @@ sub onUnload {
 	
 	$terminateWhenDone = 0;
 
-	warning TF("%s Plugin unloaded.\n", PLUGIN_PREFIX);
+	warning $translator->translatef("%s Plugin unloaded.\n", PLUGIN_PREFIX);
 }
 
 sub onReload {
 	onUnload();
 
-	warning TF("%s Reloading plugin...\n", PLUGIN_PREFIX);
+	warning $translator->translatef("%s Reloading plugin...\n", PLUGIN_PREFIX);
 	
 	$hooks{shop_sold}->hook();
 	$hooks{shop_close}->hook();
 	
 	onInitialized();
 	
-	warning TF("%s Plugin reloaded.\n", PLUGIN_PREFIX);
+	warning $translator->translatef("%s Plugin reloaded.\n", PLUGIN_PREFIX);
 }
 
 sub clearLists {
@@ -276,7 +273,7 @@ sub onCommandCall {
 	message $msg, "list";
 	
 	if ($args eq "log") {
-		debug TF("%s Logging vending\n", PLUGIN_PREFIX);
+		debug $translator->translatef("%s Logging vending\n", PLUGIN_PREFIX);
 		shopLog($msg);
 	}
 }
