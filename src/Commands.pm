@@ -3578,7 +3578,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "share"){
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T ("Party EXP is set to " . (($char->{party}{share}) ? T("Even") : T("Individual")) . " Take\n");
+					message TF("Party EXP is set to '%s Take'\n", ($char->{party}{share}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 						"Usage: party share <flag>\n");
@@ -3590,7 +3590,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "shareitem") {
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T("Party item is set to " . (($char->{party}{itemPickup}) ? T("Even") : T("Individual")) . " Take\n");
+					message TF("Party item is set to '%s Take'\n", ($char->{party}{itemPickup}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party shareitem' (Set Party Share Item)\n" .
 						"Usage: party shareitem <flag>\n");
@@ -3602,7 +3602,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "sharediv") {
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T("Party item division is set to ". (($char->{party}{itemDivision}) ? T("Even") : T("Individual")) ." Take\n");
+					message TF("Party item division is set to '%s Take'\n", ($char->{party}{itemDivision}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party sharediv' (Set Party Item Division)\n" .
 						"Usage: party sharediv <flag>\n");
