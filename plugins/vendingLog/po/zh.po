@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-26 19:25+0000\n"
+"POT-Creation-Date: 2017-12-30 14:52-0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,111 +17,119 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../vendingLog.pl:64
+#: ../vendingLog.pl:35
+msgid "Command used by vendingLog plugin"
+msgstr ""
+
+#: ../vendingLog.pl:52
+msgid "Logs vending for servers with shop_sold_long"
+msgstr ""
+
+#: ../vendingLog.pl:61
 #, perl-format
 msgid "%s We sold something to %s!\n"
 msgstr ""
 
-#: ../vendingLog.pl:67
+#: ../vendingLog.pl:64
 #, perl-format
 msgid "%s Your sever doesn't use %s, unloading %s\n"
 msgstr ""
 
-#: ../vendingLog.pl:73
+#: ../vendingLog.pl:70
 #, perl-format
 msgid "%s Already known buyer, using cached name (%s)\n"
 msgstr ""
 
-#: ../vendingLog.pl:75
+#: ../vendingLog.pl:72
 #, perl-format
 msgid "%s New charID, queuing name request.\n"
 msgstr ""
 
-#: ../vendingLog.pl:90
+#: ../vendingLog.pl:87
 #, perl-format
 msgid "%s Queue is empty.\n"
 msgstr ""
 
-#: ../vendingLog.pl:94
+#: ../vendingLog.pl:91
 #, perl-format
 msgid "%s Shutting down...\n"
 msgstr ""
 
-#: ../vendingLog.pl:115
+#: ../vendingLog.pl:112
 #, perl-format
 msgid "%s Max name request attempts reached, giving up on charID %s\n"
 msgstr ""
 
-#: ../vendingLog.pl:122
+#: ../vendingLog.pl:119
 #, perl-format
 msgid "%s Requesting player name with charID %s (attempt number %d)\n"
 msgstr ""
 
-#: ../vendingLog.pl:170
+#: ../vendingLog.pl:168
 msgid " Vending Log "
 msgstr ""
 
-#: ../vendingLog.pl:181
+#: ../vendingLog.pl:179
 msgid ""
 "#  Item                    Amount       Earned Buyer                 "
 "When     \n"
 msgstr ""
 
-#: ../vendingLog.pl:184
+#: ../vendingLog.pl:182
 msgid "Unknown"
 msgstr ""
 
-#: ../vendingLog.pl:203
+#: ../vendingLog.pl:201
 msgid " Nothing sold yet "
 msgstr ""
 
-#: ../vendingLog.pl:206
+#: ../vendingLog.pl:204
 msgid "Total"
 msgstr ""
 
-#: ../vendingLog.pl:217
+#: ../vendingLog.pl:215
 #, perl-format
 msgid ""
 "%s timeout %s is undefined or equal to zero. Defaulting to %s second(s)\n"
 msgstr ""
 
-#: ../vendingLog.pl:223
+#: ../vendingLog.pl:221
 #, perl-format
 msgid ""
 "%s max tries %s is undefined or equal to zero. Defaulting to %s attempt(s)\n"
 msgstr ""
 
-#: ../vendingLog.pl:233
+#: ../vendingLog.pl:231
 #, perl-format
 msgid "%s Unloading plugin...\n"
 msgstr ""
 
-#: ../vendingLog.pl:249
+#: ../vendingLog.pl:247
 #, perl-format
 msgid "%s Plugin unloaded.\n"
 msgstr ""
 
-#: ../vendingLog.pl:255
+#: ../vendingLog.pl:253
 #, perl-format
 msgid "%s Reloading plugin...\n"
 msgstr ""
 
-#: ../vendingLog.pl:262
+#: ../vendingLog.pl:260
 #, perl-format
 msgid "%s Plugin reloaded.\n"
 msgstr ""
 
-#: ../vendingLog.pl:278
+#: ../vendingLog.pl:276
 #, perl-format
 msgid "%s Logging vending\n"
 msgstr ""
 
-#: ../VendingLog/HookManager.pm:31
+#: ../VendingLog/HookManager.pm:32
 #, perl-format
 msgid "%s Hooked onto %s!\n"
 msgstr ""
 
-#: ../VendingLog/HookManager.pm:41
+#: ../VendingLog/HookManager.pm:42
 #, perl-format
 msgid "%s Unhooked from %s!\n"
 msgstr ""

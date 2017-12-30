@@ -6,7 +6,7 @@ set -e
 LANGUAGES="tl id pt zh_CN zh th ko ru de"
 
 echo "Extracting messages from source..."
-xgettext --from-code=utf-8 -L Perl --force-po -o vendinglog.pot --keyword=T --keyword=TF \
+xgettext --from-code=utf-8 -L Perl --force-po -o vendinglog.pot --keyword=translate --keyword=translatef \
 	--add-comments='Translation Comment:' \
 	../vendingLog.pl \
 	../VendingLog/*.pm
