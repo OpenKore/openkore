@@ -3,19 +3,19 @@
 # This file is distributed under the same license as OpenKore.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-30 16:13-0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-12-30 17:07-0200\n"
 "Last-Translator: lututui <lututuibr@gmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.12\n"
 
 #: ../raiseStat.pl:14
 msgid "automatically raise character stats"
@@ -31,7 +31,9 @@ msgstr "[raiseStat] Estado do plugin alterado para 'INATIVO' (INACTIVE)\n"
 
 #: ../raiseStat.pl:71
 msgid "[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n"
-msgstr "[raiseStat] Estado do plugin alterado para 'AGUARDANDO_CHANCE_OU_RESPOSTA' (AWAITING_CHANCE_OR_ANSWER)\n"
+msgstr ""
+"[raiseStat] Estado do plugin alterado para "
+"'AGUARDANDO_CHANCE_OU_RESPOSTA' (AWAITING_CHANCE_OR_ANSWER)\n"
 
 #: ../raiseStat.pl:76
 msgid "[raiseStat] Plugin stage changed to 'ADDING'\n"
@@ -63,13 +65,11 @@ msgstr "[raiseStat] Há pontos de atributos suficiente para adicionar '%s'\n"
 #: ../raiseStat.pl:147
 #, perl-format
 msgid "[raiseStat] Auto-adding stat '%s' to '%d'\n"
-msgstr "[raiseStat] Adicionando a atributo '%s' para '%d' pontos\n"
+msgstr "[raiseStat] Adicionando ponto ao atributo '%s', para '%d' pontos\n"
 
 #: ../raiseStat.pl:191
 #, perl-format
-msgid ""
-"Stat '%s' is more then 99 and 'statsAdd_over_99' is disabled; disabling "
-"statsAddAuto\n"
+msgid "Stat '%s' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n"
 msgstr ""
 "O atributo '%s' já tem mais de 99 pontos e 'statsAdd_over_99' está desativado; desabilitando "
 "statsAddAuto\n"
