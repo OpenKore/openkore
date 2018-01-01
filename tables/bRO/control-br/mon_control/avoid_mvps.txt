@@ -6,82 +6,82 @@
 #http://forums.openkore.com/viewtopic.php?f=16&t=10150
 #Name MVP
 
-Amon Ra 0 1 0
-Amdarias 0 1 0
-Archangeling 0 1 0
-Assassin Cross Eremes 0 1 0
-Atroce 0 1 0
-Baphomet 0 1 0
-Bacsojin 0 1 0
-Beelzebub 0 1 0
-Boitata 0 1 0
-Buwaya 0 1 0
-Champion Chen 0 1 0
-Clown Alphoccio 0 1 0
-Creator Flamel 0 1 0
-Daehyon 0 1 0
-Dark Illusion 0 1 0
-Dark Lord 0 1 0
-Detale 0 1 0
-Doppelganger 0 1 0
-Dracula 0 1 0
-Drake 0 1 0
-Eddga 0 1 0
-Egnigem Cenia 0 1 0
-Evil Snake Lord 0 1 0
-Fallen Bishop 0 1 0
-Garm 0 1 0
-Gioia 0 1 0
-Gloom Under Night 0 1 0
-Gold Queen Scaraba 0 1 0
-Golden Thief Bug 0 1 0
-Gopinich 0 1 0
-Gypsy Trentini 0 1 0
-High Priest Magaleta 0 1 0
-High Wizard Katrinn 0 1 0
-Ifrit 0 1 0
-Incantation Samurai 0 1 0
-Kades 0 1 0
-Kiel D-01 0 1 0
-Kraken 0 1 0
-Ktullanux 0 1 0
-Kubkin 0 1 0
-Lady Tany 0 1 0
-Leak 0 1 0
-Lord Knight Seyren 0 1 0
-Lord of Death 0 1 0
-Lost Dragon 0 1 0
-Maya 0 1 0
-Maya Purple 0 1 0
-Mistress 0 1 0
-Moonlight 0 1 0
-Nidhoggr's Shadow 0 1 0
-Nightmare Amon Ra 0 1 0
-Mutant Dragon 0 1 0
-Orc Hero 0 1 0
-Orc Lord 0 1 0
-Osiris 0 1 0
-Paladin Randel 0 1 0
-Pharaoh 0 1 0
-Phreeoni 0 1 0
-Pori Pori 0 1 0
-Professor Celia 0 1 0
-Pyuriel 0 1 0
-Queen Scaraba 0 1 0
-Root of Corruption 0 1 0
-RSX-0806 0 1 0
-RWC Boss 0 1 0
-Sniper Shecil 0 1 0
-Stalker Gertie 0 1 0
-Stormy Knight 0 1 0
-Tao Gunka 0 1 0
-Thanatos 0 1 0
-Turtle General 0 1 0
-Valkyrie Randgris 0 1 0
-Vesper 0 1 0
-Whitesmith Harword 0 1 0
-Wounded Morroc 0 1 0
-Ygnizem 0 1 0
+Amon Ra -1 1 0
+Amdarias -1 1 0
+Archangeling -1 1 0
+Assassin Cross Eremes -1 1 0
+Atroce -1 1 0
+Baphomet -1 1 0
+Bacsojin -1 1 0
+Beelzebub -1 1 0
+Boitata -1 1 0
+Buwaya -1 1 0
+Champion Chen -1 1 0
+Clown Alphoccio -1 1 0
+Creator Flamel -1 1 0
+Daehyon -1 1 0
+Dark Illusion -1 1 0
+Dark Lord -1 1 0
+Detale -1 1 0
+Doppelganger -1 1 0
+Dracula -1 1 0
+Drake -1 1 0
+Eddga -1 1 0
+Egnigem Cenia -1 1 0
+Evil Snake Lord -1 1 0
+Fallen Bishop -1 1 0
+Garm -1 1 0
+Gioia -1 1 0
+Gloom Under Night -1 1 0
+Gold Queen Scaraba -1 1 0
+Golden Thief Bug -1 1 0
+Gopinich -1 1 0
+Gypsy Trentini -1 1 0
+High Priest Magaleta -1 1 0
+High Wizard Katrinn -1 1 0
+Ifrit -1 1 0
+Incantation Samurai -1 1 0
+Kades -1 1 0
+Kiel D-01 -1 1 0
+Kraken -1 1 0
+Ktullanux -1 1 0
+Kubkin -1 1 0
+Lady Tany -1 1 0
+Leak -1 1 0
+Lord Knight Seyren -1 1 0
+Lord of Death -1 1 0
+Lost Dragon -1 1 0
+Maya -1 1 0
+Maya Purple -1 1 0
+Mistress -1 1 0
+Moonlight -1 1 0
+Nidhoggr's Shadow -1 1 0
+Nightmare Amon Ra -1 1 0
+Mutant Dragon -1 1 0
+Orc Hero -1 1 0
+Orc Lord -1 1 0
+Osiris -1 1 0
+Paladin Randel -1 1 0
+Pharaoh -1 1 0
+Phreeoni -1 1 0
+Pori Pori -1 1 0
+Professor Celia -1 1 0
+Pyuriel -1 1 0
+Queen Scaraba -1 1 0
+Root of Corruption -1 1 0
+RSX-0806 -1 1 0
+RWC Boss -1 1 0
+Sniper Shecil -1 1 0
+Stalker Gertie -1 1 0
+Stormy Knight -1 1 0
+Tao Gunka -1 1 0
+Thanatos -1 1 0
+Turtle General -1 1 0
+Valkyrie Randgris -1 1 0
+Vesper -1 1 0
+Whitesmith Harword -1 1 0
+Wounded Morroc -1 1 0
+Ygnizem -1 1 0
 
 #ID mob
 1511 -1 1 0 #Amon Ra
