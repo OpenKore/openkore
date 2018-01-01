@@ -3,7 +3,7 @@ package vendingLog;
 use strict;
 
 use Commands;
-use Globals qw(%timeout $messageSender);
+use Globals qw(%timeout $messageSender $net);
 use Settings qw(%sys);
 use I18N qw(bytesToString);
 use Log qw(warning message debug);
@@ -104,7 +104,7 @@ sub onMainLoop {
 
 # Request char name
 sub requestCharacterName {
-	return unless scalar @requestQueue > 0;
+	return unless scalar @requestQueue > 0 and $net->getState() == Network::IN_GAME;
 	
 	my $charID = getHex($requestQueue[0]);
 	
