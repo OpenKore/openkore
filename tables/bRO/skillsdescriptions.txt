@@ -9613,7 +9613,7 @@ O dano de Fogo causado nos oponentes que tocarem neste rastro aumenta conforme o
 SO_ELECTRICWALK#
 Passos da Sílfide
 Nível Máximo: 5
-^777777Pré requisitos: Furacão 1 ^000000
+^777777Pré requisitos: Furacão 1, Encanto de Órion 1 ^000000
 Tipo: ^777777  Ofensiva ^000000
 Descrição: ^777777 Cria energia nos pés do usuário por 12 segundos, de forma que um rastro de eletricidade é criado a medida que o usuário se movimenta.
 O dano de Vento causado nos oponentes que tocarem neste rastro aumenta conforme o nível da habilidade.^000000
@@ -11456,7 +11456,8 @@ MER_INVINCIBLEOFF2#
 !!
 Nível Máximo : 1
 Descrição : Desativa sua invencibilidade.
-#GC_DARKCROW#
+#
+GC_DARKCROW#
 Garra Sombria
 Nível Máximo : 5
 ^777777Pré requisito : Passo Sombrio 5 ^000000
@@ -11639,5 +11640,13 @@ Nível Máximo : 1
 Alcance: 2 células.
 Duração: 10 segundos.
 Tempo de recarga: 30 segundos.
-Descrição : Desativa o vínculo do Demônio Morroc com o Fanático das Trevas, permitindo atacá-lo com precisão."
+Descrição : Desativa o vínculo do Demônio Morroc com o Fanático das Trevas, permitindo atacá-lo com precisão.
+#
+ALL_NIFLHEIM_RECALL#
+Para Nifflheim
+Nível máximo: 1
+Tipo: Ativa
+Conjuração: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição: ^777777Teleporta os vivos para o mundo dos mortos, Nifflheim!^000000"
 #
