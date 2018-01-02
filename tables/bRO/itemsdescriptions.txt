@@ -24993,15 +24993,6 @@ Peso: ^77777710^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
-2717#
-Um relógico prateado com uma longa corrente.
-Quando equipado com Monóculo e Grimório, a recuperação HP e SP aumentam em 15%, ATQM + 7%.
-Tipo: ^777777Acessório^000000
-Defesa: ^7777771^000000
-Peso: ^77777720^000000
-Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Magos e evoluções, Espiritualista^000000
-#
 2718#
 Um broche prateado muito brilhante.
 Quando equipado com o Arco de Luna, DES +1, SP +50 e Recuperação de SP +10%.
@@ -53037,9 +53028,9 @@ Refino +7 ou mais:
 ^0000ffDano mágico de propriedade Água +5% adicional.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Bastão de Lágrimas]^000000
-A cada nível de [Esfera d'Água]:
+A cada ponto investido em [Esfera d'Água]:
 ^0000ffDano de [Esfera d'Água] +30%.^000000
-A cada nível de [Congelar]:
+A cada ponto investido em [Congelar]:
 ^0000ffIgnora +5% da DEFM do oponente.^000000
 A cada refino da arma:
 ^0000ffDano de [Esfera d'Água] +20%.^000000
@@ -56944,9 +56935,9 @@ Um doce natalino delicioso.
 Peso: ^7777773^000000
 #
 11581#
-^ff0000Intransferível.^000000
 Um bolo enorme cortado em fatias. Sabor de creme macio derretido.
 ^0000ffRecupera um pouco de HP.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
 Peso: ^77777710^000000
 #
 23548#
@@ -56999,5 +56990,58 @@ Uma caixa pode conter aperitivos, chapéus e uma variedade de itens. O que será
 ^0000ffConcede um item aleatório.^000000
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
 Peso: ^77777710^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-02--------------------
+//*****************************************************
+22182#
+Consagrado com as bênçãos dos deuses, este par de sapatos pertenceu ao famoso exorcista Padre Quededo. Este calçado é perfeito para aqueles que desejam a expiação das mazelas e pecados do passado.
+^0000ffDEFM +15.^000000
+^0000ffHP e SP máx. +3%.^000000
+^0000ffDano mágico +2%.^000000
+^0000ffDano de [Judex] +30%.^000000
+^0000ffDano mágico de propriedade Sagrado +2%.^000000
+Refino +7 ou mais:
+^0000ffHP e SP máx. +7% adicional.^000000
+^0000ffDano mágico +3% adicional.^000000
+^0000ffDano mágico de propriedade Sagrado +3% adicional.^000000
+Refino +9 ou mais:
+^0000ffHP e SP máx. +10% adicional.^000000
+^0000ffDano mágico +10% adicional.^000000
+^0000ffDano mágico de propriedade Sagrado +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Vara Sagrada]^000000
+A cada nível de [Lauda Ramus]:
+^0000ffDano de [Adoramus] +10%.^000000
+A cada nível de [Lauda Agnus]:
+^0000ffDano de [Adoramus] +10%.^000000
+A cada nível de [Gênese]:
+^0000ffDano de [Adoramus] +10%.^000000
+A cada nível de [Oratio]:
+^0000ffConjuração variável de [Judex] -5%.^000000
+^0000ffConjuração variável de [Adoramus] -5%.^000000
+Arma com refino +8 ou mais:
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +30%.^000000
+^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +30%.^000000
+Arma com refino +12 ou mais:
+^0000ffDano de [Adoramus] +20%.^000000
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +20% adicional.^000000
+^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +20% adicional.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+15272#
+Esta era a armadura original usada pela maior espadachim que viveu na antiga capital de Rune-Midgard. A capitã da Ordem dos Khalitzburg era perita no uso do florete, mas infelizmente acabou sucumbindo à Maldição de Glast Heim, lançada pela maligna valquíria necromante, Himelmez.
+^0000ffResistência a raça Humanoide +1%.^000000
+A cada 3 refinos até o +15:
+^0000ffDano físico a distância +6%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 //file end
