@@ -4016,7 +4016,6 @@
 2130#Escudo Cruzado#
 2131#Bíblia da Magia, Vol. 1#
 2716#Luva de Bibliotecário#
-2717#Relógio de Bolso#
 2718#Broche Lunático#
 2719#Pulso de Ferro#
 2720#Medalha de Honra#
@@ -8093,4 +8092,9 @@
 23551#Biscoito da Festie#
 23552#Biscoito da Flora#
 23553#Caixa do Festival das Flores de Neve#
+//*****************************************************
+//------------Aplicar em 2018-01-02--------------------
+//*****************************************************
+22182#Sapatos da Penitência#
+15272#Armadura da Khalitzburg#
 //file end
