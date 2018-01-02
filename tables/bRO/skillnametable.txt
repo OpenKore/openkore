@@ -1084,3 +1084,4 @@ GM_ITEM_ATKMIN#Max Physical item attack rate#
 GM_ITEM_MATKMAX#Minimize Physical item attack rate#
 GM_ITEM_MATKMIN#Minimize Magic item attack rate#
 MC_CARTDECORATE#Decorar Carrinho#
+ALL_NIFLHEIM_RECALL#Para Nifflheim!#
