@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -1193,6 +1193,45 @@ sub parse_item_list_window_selected {
 sub reconstruct_item_list_window_selected {
 	my ($self, $args) = @_;
 	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(itemIndex amount)} } @{$args->{items}};
+}
+
+# Select equip for refining
+# '0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+# @param itemIndex OpenKore's Inventory Item Index
+# @author [Cydh]
+sub sendRefineUISelect {
+	my ($self, $itemIndex) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'refineui_select',
+		index => $itemIndex,
+	}));
+	debug "Checking item for RefineUI\n", "sendPacket";
+}
+
+# Continue to refine equip
+# '0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+# @param itemIndex OpenKore's Inventory Item Index
+# @param materialNameIDMaterial's NameID
+# @param useCatalyst Catalyst (Blacksmith Blessing) toggle. 0 = Not using, 1 = Use catalyst
+# @author [Cydh]
+sub sendRefineUIRefine {
+	my ($self, $itemIndex, $materialNameID, $useCatalyst) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'refineui_refine',
+		index => $itemIndex,
+		catalyst => $materialNameID,
+		bless => $useCatalyst,
+	}));
+	debug "Refining using RefineUI\n", "sendPacket";
+}
+
+# Cancel RefineUI usage
+# '0AA4' => ['refineui_close', '' ,[qw()]],
+# @author [Cydh]
+sub sendRefineUIClose {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'refineui_close'}));
+	debug "Closing RefineUI\n", "sendPacket";
 }
 
 1;

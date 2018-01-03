@@ -16,6 +16,20 @@ package Network::Receive::kRO::RagexeRE_2016_12_07e;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2016_07_06c);
 
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'0AA0' => ['refineui_opened', '' ,[qw()]],
+		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+	);
+
+	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+
+	return $self;
+}
+
 
 1;
 =pod

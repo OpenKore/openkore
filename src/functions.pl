@@ -667,6 +667,7 @@ sub initMapChangeVars {
 	undef $rodexList;
 	undef $rodexWrite;
 	undef $skillExchangeItem;
+	undef $refineUI;
 	$captcha_state = 0;
 
 	$itemsList->clear();
