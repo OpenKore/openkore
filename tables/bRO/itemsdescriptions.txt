@@ -57007,7 +57007,7 @@ Refino +7 ou mais:
 ^0000ffDano mágico de propriedade Sagrado +3% adicional.^000000
 Refino +9 ou mais:
 ^0000ffHP e SP máx. +10% adicional.^000000
-^0000ffDano mágico +10% adicional.^000000
+^0000ffDano mágico +5% adicional.^000000
 ^0000ffDano mágico de propriedade Sagrado +5% adicional.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Vara Sagrada]^000000
