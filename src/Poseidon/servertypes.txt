@@ -20,7 +20,7 @@ maploginPacket 088E
 
 [tRO_2013-07-09a]
 decrypt_mid 1
-decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02 # K A M
+decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02
 charBlockSize 144
 
 [cRO_2017-12-13a]
@@ -28,3 +28,10 @@ decrypt_mid 0
 charBlockSize 147
 charListPacket 0x99d
 maploginPacket 0x436
+
+[kRO_2018-01-03a]
+decrypt_mid 1
+decrypt_mid_keys 0x2A3D4E64 0x69FF066F 0x7008690C
+charListPacket 0x99d
+maploginPacket 0958
+charBlockSize 155
