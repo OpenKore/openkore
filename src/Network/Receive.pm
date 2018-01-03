@@ -4165,4 +4165,60 @@ sub skill_exchange_item {
 	$skillExchangeItem = $args->{type} + 1;
 }
 
+# Allowed to RefineUI by server
+# '0AA0' => ['refineui_opened', '' ,[qw()]],
+# @author [Cydh]
+sub refineui_opened {
+	my ($self, $args) = @_;
+	message TF("RefineUI is opened. Type 'i' to check equipment and its index. To continue: refineui select [ItemIdx]\n"), "info";
+	$refineUI->{open} = 1;
+}
+
+# Received refine info for selected item
+# '0AA2' => ['refineui_info', 'v v C a*' ,[qw(index bless materials)]],
+# @param args Packet data
+# @author [Cydh]
+sub refineui_info {
+	my ($self, $args) = @_;
+
+	if ($args->{len} > 7) {
+		$refineUI->{itemIndex} = $args->{index};
+		$refineUI->{bless} = $args->{bless};
+
+		my $item = $char->inventory->[$refineUI->{invIndex}];
+		my $bless = $char->inventory->getByNameID($Blacksmith_Blessing);
+
+		message T("========= RefineUI Info =========\n"), "info";
+		message TF("Target Equip:\n".
+				"- Index: %d\n".
+				"- Name: %s\n",
+				$refineUI->{invIndex}, $item ? itemName($item) : "Unknown."),
+				"info";
+
+		message TF("%s:\n".
+				"- Needed: %d\n".
+				"- Owned: %d\n",
+				#itemNameSimple($Blacksmith_Blessing)
+				"Blacksmith Blessing", $refineUI->{bless}, $bless ? $bless->{amount} : 0),
+				"info";
+
+		@{$refineUI->{materials}} = map { my %r; @r{qw(nameid chance zeny)} = unpack 'v C V', $_; \%r} unpack '(a7)*', $args->{materials};
+
+		my $msg = center(T(" Possible Materials "), 53, '-') ."\n" .
+				T("Mat_ID      %           Zeny        Material                        \n");
+		foreach my $mat (@{$refineUI->{materials}}) {
+			my $myMat = $char->inventory->getByNameID($mat->{nameid});
+			my $myMatCount = sprintf("%d ea %s", $myMat ? $myMat->{amount} : 0, itemNameSimple($mat->{nameid}));
+			$msg .= swrite(
+				"@>>>>>>>> @>>>>> @>>>>>>>>>>>>   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$mat->{nameid}, $mat->{chance}, $mat->{zeny}, $myMatCount]);
+		}
+		$msg .= ('-'x53) . "\n";
+		message $msg, "info";
+		message TF("Continue: refineui refine %d [Mat_ID] [catalyst_toggle] to continue.\n", $refineUI->{invIndex}), "info";
+	} else {
+		error T("Equip cannot be refined, try different equipment. Type 'i' to check equipment and its index.\n");
+	}
+}
+
 1;
