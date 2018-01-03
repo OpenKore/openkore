@@ -239,7 +239,7 @@ sub initHandlers {
 	southeast			=> \&cmdManualMove,
 	southwest			=> \&cmdManualMove,
 	captcha			   => \&cmdAnswerCaptcha,
-	refineui			=> \&cmdRefienUI,
+	refineui			=> \&cmdRefineUI,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -6753,7 +6753,7 @@ sub cmdExchangeItem {
 # refineui refine [item_index] [material_id] [catalyst_toggle]
 # @author [Cydh]
 ##
-sub cmdRefienUI {
+sub cmdRefineUI {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
