@@ -230,7 +230,6 @@ sub ParsePacket
 	# countries' clients (except probably oRO). The best way to support other clients would be: use a barebones
 	# eAthena or Freya as the emulator, or figure out the correct packet switches and include them in the
 	# if..elsif..else blocks.
-
 	if (($switch eq '01DB') || ($switch eq '0204')) { # client sends login packet 0204 packet thanks to elhazard
 
 		# '01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
@@ -257,7 +256,7 @@ sub ParsePacket
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0')|| ($switch eq '0AAC')) { # 0064 packet thanks to abt123
+	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0AAC') || ($switch eq '0ACF') || ($switch eq '0825')) { # 0064 packet thanks to abt123
 
 #		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
 #		$client->send($data);
@@ -287,6 +286,27 @@ sub ParsePacket
 				pack("C*", 0x80, 0x32) . # ??
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
+		} elsif ($switch eq '0ACF') { #kRO Zero Token
+			$data = pack("C*", 0xE3, 0x0A) . # header
+					pack("C*", 0x2F, 0x00) . # length
+					pack("l", "0") . # login_type
+					pack("Z20","S1000") . # flag
+					pack("Z*", "OpenkoreClientToken"); # login_token			
+		} elsif ($switch eq '0825') { # received kRO Zero Token
+			$data = pack("C*", 0xC4, 0x0A) . # header
+				pack("C*", 0xE0, 0x00) . # length
+				$sessionID . # sessionid
+				$accountID . # accountid
+				$sessionID2 . # sessionid2
+				pack("x4") . # lastloginip
+				pack("a26", time) . # lastLoginTime
+				pack("C1", $sex) . # accountSex 
+				pack("x17") . # unknown				
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+				$port .	
+				$serverName . 
+				$serverUsers . 
+				pack("x130");				
 		} else {
 			$data = pack("C*", 0x69, 0x00, 0x4F, 0x00) . 
 				$sessionID . $accountID . $sessionID2 . 
@@ -329,7 +349,7 @@ sub ParsePacket
 			$data = $accountID;
 			$client->send($data);
 			
-			$data = pack("C*", 0x2D, 0x08, 0x1D, 0x00, 0x03, 0x00, 0x00, 0x03, 0x03) .
+			$data = pack("C*", 0x2D, 0x08, 0x1D, 0x00, 0x02, 0x00, 0x00, 0x02, 0x02) .
 			pack("x20");
 			$client->send($data);
 			
@@ -379,7 +399,6 @@ sub ParsePacket
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
 		) { # client sends the maplogin packet
-
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
 		$clientdata{$index}{serverType} = 0;
@@ -854,8 +873,8 @@ sub SendCharacterList
 	
 	# Character Block Pack String
 	my $packstring = '';
-
-	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V x4 x4 x4 x1' if $blocksize == 147;	
+	$packstring = 'a4 a8 V a8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 155;
+	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 147;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $blocksize == 145;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $blocksize == 144;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $blocksize == 140;
@@ -884,7 +903,7 @@ sub SendCharacterList
 	} else {
 		$data = $accountID . pack("v v C3", 0x6b, $len + 7, $totalslots, -1, -1);
 	}
-
+	
 	# Character Block
 	my $block;
 
@@ -897,11 +916,11 @@ sub SendCharacterList
 
 	# Preparing Character 1 Block
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId, $hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name), $str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, 0, $sex);
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
 	}
-
+	
 	# Attaching Block
 	$data .= $block;
 
@@ -911,7 +930,7 @@ sub SendCharacterList
 
 	# Preparing Character 2 Block
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId, $hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name), $str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, 0, $sex);
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
 	}
@@ -930,12 +949,24 @@ sub SendMapLogin {
 
 	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
 	my $data;
-	
-	if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
-	$data .= pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
+	if ( $config{server_type} =~ /^kRO/ ) { # kRO Zero
+		$data .= pack("C*", 0x83, 0x02) . $accountID; #accountID
+		$client->send($data);
+		
+		$data = pack("C*", 0xDE, 0x0A, 0x46, 0x00, 0x00, 0x00); # idk '-'
+		$client->send($data);
+		
+		$data = pack("C*", 0xEB, 0x02) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05, 0x00, 0x00); # map loaded
+		$client->send($data);
+		
+	} else {
+		if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
+		$data = pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
+		$client->send($data);
+	}
 
 	if ($clientdata{$index}{mode}) {
-		$data .= pack("C2 v1", 0x0F, 0x01, 226) .
+		$data = pack("C2 v1", 0x0F, 0x01, 226) .
 			# skillID targetType level sp range skillName
 			pack("v2 x2 v3 a24 C1", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
 			pack("v2 x2 v3 a24 C1", 24, 4, 1, 10, 10, "AL_RUWACH", 0) . # self skill test
@@ -943,9 +974,8 @@ sub SendMapLogin {
 			pack("v2 x2 v3 a24 C1", 26, 4, 2, 9, 1, "AL_TELEPORT", 0) . # self skill test
 			pack("v2 x2 v3 a24 C1", 27, 2, 4, 26, 9, "AL_WARP", 0) . # location skill test
 			pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
+			$client->send($data);
 	}
-	
-	$client->send($data);
 	
 	$client->{connectedToMap} = 1;	
 }

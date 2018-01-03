@@ -19,7 +19,7 @@ server_type=bRO_2016-11-08a
 
 # Char Block Size
 # Here you can specify the desired CharBlockSize your client requires
-# The available block sizes are : 106, 108, 112, 116, 128, 132, 136, 140, 144, 145 and 147
+# The available block sizes are : 106, 108, 112, 116, 128, 132, 136, 140, 144, 145, 147 and 155
 CharBlockSize=116
 
 debug=0

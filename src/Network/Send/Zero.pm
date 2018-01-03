@@ -37,7 +37,7 @@ sub new {
 		'0366' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'093A' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
 		'0835' => ['item_take', 'a4', [qw(ID)]],
-		'0920' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0958' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'088D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'0281' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0878' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
@@ -67,7 +67,7 @@ sub new {
 		item_drop 0366
 		item_list_res 093A
 		item_take 0835
-		map_login 0920
+		map_login 0958
 		party_join_request_by_name 088D
 		skill_use 0281
 		skill_use_location 0878
