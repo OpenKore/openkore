@@ -1228,14 +1228,15 @@ sub processAutoStorage {
 		if (!$config{storageAuto_useChatCommand}) {
 			# Stop if the specified NPC is invalid
 			$args->{npc} = {};
-			getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
+			getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
 			if (!defined($args->{npc}{ok})) {
 				$args->{done} = 1;
 				return;
 			}
 			if (!AI::args->{distance}) {
-				# Calculate variable or fixed (old) distance
-				if ($config{'storageAuto_minDistance'} && $config{'storageAuto_maxDistance'}) {
+				if ($config{storageAuto_standpoint}) {
+					AI::args->{distance} = 1;
+				} elsif ($config{'storageAuto_minDistance'} && $config{'storageAuto_maxDistance'}) {	# Calculate variable or fixed (old) distance
 					AI::args->{distance} = $config{'storageAuto_minDistance'} + round(rand($config{'storageAuto_maxDistance'} - $config{'storageAuto_minDistance'}));
 				} else {
 					AI::args->{distance} = $config{'storageAuto_distance'};
@@ -1293,8 +1294,11 @@ sub processAutoStorage {
 					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
 						error T("Something is wrong with storageAuto_npc_type in your config.\n");
 					}
+					
+					my $realpos = {};
+					getNPCInfo($config{storageAuto_npc}, $realpos);
 
-					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
+					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{'storageAuto_npc_steps'});
 				}
 
 				#delete $ai_v{temp}{storage_opened};
