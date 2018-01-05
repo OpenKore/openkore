@@ -2475,6 +2475,8 @@ sub received_characters {
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
+		$chars[$slot]{map_name} = $mapname;
+		$chars[$slot]{map_name} =~ s/\.gat//g;
 	}
 
 	message T("Received characters from Character Server\n"), "connection";
