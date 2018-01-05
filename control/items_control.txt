@@ -72,7 +72,7 @@ Arrow 3000 1 0
 ##### WORTHLESS GEARS #####
 # Worthless gears which are sold by default
 
-2306 0 0 1 # Adventurer's Suit
+2305 0 0 1 # Adventurer's Suit
 2211 0 0 1 # Bandana
 2217 0 0 1 # Biretta
 2405 0 0 1 # Boots
