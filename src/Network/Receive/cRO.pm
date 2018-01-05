@@ -89,7 +89,7 @@ sub parse_account_server_info {
 		$server{port} =~ tr/0-9//cd;
 		$server{name} = bytesToString($server{name});
 		\%server
-	} unpack '(a72)*', $args->{serverInfo};
+	} unpack '(a154)*', $args->{serverInfo};
 }
 
 sub received_character_ID_and_Map {
