@@ -27,16 +27,18 @@ To run OpenKore you will need:
 | Server | Description | Status | Supporter |
 | --- | --- | --- | --- |
 | `iRO` | International(US) RO | Botable, Weekly Update | allanon |
-| `twRO` | Taiwanese RO | Not working | windhamwong |
-| `bRO` | Brazilian RO | Botable, Weekly Update | Henrybk, lututui, alisonrag |
-| `idRO` | Indonesian RO | working only RE_server | sctnightcore(temp)
-| `fRO` | Europe(french) RO | working | sctnightcore | 
-| `mRO` | Malaysian RO | Need Verification | N/A |
+| `bRO` | Brazilian RO | Botable, Weekly Update | lututui, Henrybk, alisonrag |
+| `idRO` | Indonesian RO | Botable only RE_server | sctnightcore(temp)
+| `fRO` | Europe(french) RO | Botable | sctnightcore | 
+| `cRO` | Chinese RO | Botable, Weekly Update  | alisonrag, sctnightcore |
+| `kRO:Zero` | Korea Zero server | Botable, Weekly Update | alisonrag, sctnightcore  |
+| `kRO` | Korea RO | Need Verification |  N/A|
+| `jRO` | Japanese RO | Need Verification | N/A |
 | `thRO` | Thai RO | Need Verification | N/A |
-| `cRO` | Chinese RO | working | alisonrag, sctnightcore(temp) |
-| `kRO:Zero` | New Korea server | Need unpack,recvpacket,sync,key | alisonrag sctnightcore(temp) SkylorD(temp) |
-| `pServer` | update servertybe | Need find recvpacket | SkylorD, sctnightcore |
-
+| `mRO` | Malaysian RO | Not Working | N/A |
+| `phRO` | Philippines RO | Not Working| N/A |
+| `twRO` | Taiwanese RO | Not working | windhamwong |
+| `pServer` | update servertybe | Need find recvpacket | sctnightcore, SkylorD  |
 ## Contributing
 
 OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary submit a pull request!
