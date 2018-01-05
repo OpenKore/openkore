@@ -18,6 +18,8 @@ use Log qw(warning debug error message);
 use Globals qw(%config %masterServers $messageSender $net $char $conState_tries %timeout @chars);
 use Translation;
 use Utils qw(makeCoordsDir);
+use I18N qw(bytesToString);
+use Socket qw(inet_ntoa);
 
 sub new {
 	my ($class) = @_;
@@ -85,6 +87,24 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+}
+
+sub parse_account_server_info {
+    my ($self, $args) = @_;
+
+    if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
+        $args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
+    } else {
+        delete $args->{lastLoginIP};
+    }
+
+    @{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;		
+		$server{ip} = inet_ntoa($server{ip});
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a160)*', $args->{serverInfo};
 }
 
 sub character_ban_list {
