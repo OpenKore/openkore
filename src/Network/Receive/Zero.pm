@@ -35,11 +35,12 @@ sub new {
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0ACB' => ['stat_info', 'v V', [qw(type val)]],
+		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'a*', [qw(unknown)]],
 		'0ADE' => ['flag', 'a*', [qw(unknown)]],
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
+		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],		
-		
 	);
 
 	foreach my $switch (keys %packets) {
