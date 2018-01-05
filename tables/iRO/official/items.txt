@@ -7524,6 +7524,7 @@
 17487#May_The_Groove_Be_With_You_Box#
 17488#Anniversary_Lucky_Box#
 17489#Anniversary_Lucky_Crate#
+17497#Snowy_Wears_Costume_Box#
 17503#Summer_Cooler#
 17504#Summer_Cooler_Crate#
 17505#Circ_de_Ceptember_Groove_Pack#
@@ -7627,7 +7628,7 @@
 17893#Overseas_Care_Package_XI#
 17900#Overseas_Care_Package_XII#
 17903#Overseas_Care_Package_XIII#
-17928#2018_Jan_Costume_Box#
+17928#Costume_Box_XIV:_Stay_Frosty#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
