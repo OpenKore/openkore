@@ -22,29 +22,7 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'08AC' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0941' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0862' => ['actor_look_at', 'v C', [qw(head body)]],
-		'0885' => ['actor_name_request', 'a4', [qw(ID)]],
-		'087B' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
-		'0934' => ['buy_bulk_closeShop'],
-		'08A4' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
-		'0436' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
-		'0864' => ['character_move', 'a3', [qw(coords)]],
-		'0893' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0897' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'0366' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'093A' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
-		'0835' => ['item_take', 'a4', [qw(ID)]],
-		'0958' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'088D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0281' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0878' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0870' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0936' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'0959' => ['storage_password'],
-		'095F' => ['sync', 'V', [qw(time)]],
+	my %packets = (		
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
 	);
@@ -53,28 +31,7 @@ sub new {
 
 	my %handlers = qw(
 		master_login 0ACF
-		actor_action 08AC
-		actor_info_request 0941
-		actor_look_at 0862
-		actor_name_request 0885
-		buy_bulk_buyer 087B
-		buy_bulk_closeShop 0934
-		buy_bulk_openShop 08A4
-		buy_bulk_request 0436
-		character_move 0864
-		friend_request 0893
-		homunculus_command 0897
-		item_drop 0366
-		item_list_res 093A
-		item_take 0835
-		map_login 0958
-		party_join_request_by_name 088D
-		skill_use 0281
-		skill_use_location 0878
-		storage_item_add 0870
-		storage_item_remove 0936
-		storage_password 0959
-		sync 095F
+		token_login 0825
 	);
 
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}

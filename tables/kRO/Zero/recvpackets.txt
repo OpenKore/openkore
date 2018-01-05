@@ -1,6 +1,6 @@
 # Encryption: 0x2A3D4E64 0x7008690C 0x69FF066F
-# kRO Zero Date: 2018-01-03
-# Especial Thanks to @4144
+# kRO Zero Date: 2018-01-03a
+# Thanks to @4144
 0888 7
 0896 10
 07E4 5
