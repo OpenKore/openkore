@@ -66352,7 +66352,7 @@ Weight : ^7777771^000000
 17289#
 ^808080A box that contains a Beelzebub Wing. An un-consumable version of a fly wing which fades over time.^000000
 ^FF0000Account Bound^000000
-^FF0000The item will last 7 days once obtained from the box.^000000
+^FF0000The item will last 30 days once obtained from the box.^000000
 ^FFFFFF_^000000
 Type: Consumable
 Class: Item Giver
@@ -67398,6 +67398,21 @@ Costume Angel Mini Silk Hat
 Hexagon Spectacles
 Mochiring Hat
 Weight : ^7777771^000000
+#
+17497#
+Type: ^808080Usable^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following
+Costume: Sweet Bonnet
+Costume: Soulless Wing
+Costume: Tare Neko Cru
+Costume: Vane Hairpin
+Costume: White Kitten Ears
+Costume: Love Chick Hat
+Costume: Silver Tiara
+Costume: Bell Ribbon
+
 #
 17503#
 The Summer Cooler has items that will help keep you cool during the heat.
@@ -69308,12 +69323,16 @@ BattlemanualX3  x 6
 Job Manual 50 x 8
 #
 17928#
-^808080Randomly gives 1 item when opened
-Weight : ^7777771^000000
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+^808080Randomly gives 1 of the following items when opened
+
+Costume Eclipse Hat
+Costume Gigantic Water Cap
+Costume Archangeling Hat
+Costume Pink Woolen Hat
+Costume Blue Drooping Cat
+Costume Choco Mint Bonnet
+Costume Rose From Frozen Land
+Costume Snownow Hat
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
