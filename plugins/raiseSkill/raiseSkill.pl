@@ -6,9 +6,12 @@ use Utils;
 use Skill;
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
+use Settings qw(%sys);
+use Translation;
 
+my $translator = new Translation("$Plugins::current_plugin_folder/po", $sys{locale});
 
-Plugins::register('raiseSkill', 'automatically raise character skills', \&on_unload);
+Plugins::register('raiseSkill', $translator->translate('automatically raise character skills'), \&on_unload);
 
 ################################################################
 #  Hooks used to activate the plugin during initialization
@@ -35,7 +38,7 @@ use constant {
 sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
-   message "[raiseSkill] Plugin unloading or reloading\n", 'success';
+   message $translator->translate("[raiseSkill] Plugin unloading or reloading\n"), 'success';
 }
 
 ################################################################
@@ -58,19 +61,19 @@ sub changeStatus {
 	if ($new_status == INACTIVE) {
 		undef $next_skill;
 		undef @skills_to_add;
-		debug "[raiseSkill] Plugin stage changed to 'INACTIVE'\n";
+		debug $translator->translate("[raiseSkill] Plugin stage changed to 'INACTIVE'\n");
 	} elsif ($new_status == AWAITING_CHANCE_OR_ANSWER) {
 		$waiting_hooks = Plugins::addHooks(
 			['packet_charSkills', \&on_possible_raise_chance_or_answer],
 			['packet_homunSkills', \&on_possible_raise_chance_or_answer],
 			['packet/stat_info', \&on_possible_raise_chance_or_answer], # 12 is points_skill
 		);
-		debug "[raiseSkill] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n";
+		debug $translator->translate("[raiseSkill] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n");
 	} elsif ($new_status == ADDING) {
 		$adding_hook = Plugins::addHooks(
 			['AI_pre',            \&on_ai_pre]
 		);
-		debug "[raiseSkill] Plugin stage changed to 'ADDING'\n";
+		debug $translator->translate("[raiseSkill] Plugin stage changed to 'ADDING'\n");
 	}
 	$status = $new_status;
 }
@@ -84,7 +87,7 @@ sub on_possible_raise_chance_or_answer {
 	my $hookName = shift;
 	my $args = shift;
 	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 12);
-	debug "[raiseSkill] Received a raise chance or answer\n";
+	debug $translator->translate("[raiseSkill] Received a raise chance or answer\n");
 	changeStatus(ADDING);
 }
 
@@ -100,11 +103,11 @@ sub getNextSkill {
 		my $wanted_skill_level = $skill->getLevel;
 		if ($char_skill_level < $wanted_skill_level) {
 			$next_skill = $skill;
-			debug "[raiseSkill] Decided next skill to raise: '".$next_skill."'\n";
+			debug $translator->translatef("[raiseSkill] Decided next skill to raise: '%s'\n", $next_skill);
 			return 1;
 		}
 	}
-	message "[raiseSkill] No more skills to raise; disabling skillsAddAuto\n", 'success';
+	message $translator->translate("[raiseSkill] No more skills to raise; disabling skillsAddAuto\n"), 'success';
 	return 0;
 }
 
@@ -126,25 +129,25 @@ sub on_ai_pre {
 	$timeout->{time} = time;
 	return changeStatus(INACTIVE) unless (getNextSkill());
 	unless (hasFreeSkillPoint()) {
-		debug "[raiseSkill] We don't have any free skill point\n";
+		debug $translator->translate("[raiseSkill] We don't have any free skill point\n");
 		return changeStatus(AWAITING_CHANCE_OR_ANSWER);
 	}
-	debug "[raiseSkill] We have free skill points\n";
+	debug $translator->translate("[raiseSkill] We have free skill points\n");
 	unless (canRaiseFurther()) {
-		debug "[raiseSkill] Skill '".$next_skill->getName."' cannot be raised further\n";
+		debug $translator->translatef("[raiseSkill] Skill '%s' cannot be raised further\n", $next_skill->getName);
 		return changeStatus(INACTIVE);
 	}
-	debug "[raiseSkill] We can raise '".$next_skill->getName."' further\n";
+	debug $translator->translatef("[raiseSkill] We can raise '%s' further\n", $next_skill->getName);
 	raiseSkill();
 	changeStatus(AWAITING_CHANCE_OR_ANSWER);
 }
 
 sub canRaiseFurther {
 	if (!$char->{skills}{$next_skill->getHandle()}) {
-		error "[raiseSkill] Skill '".$next_skill->getName."' does not exist in your skill tree; disabling skillsAddAuto\n";
+		error $translator->translatef("[raiseSkill] Skill '%s' does not exist in your skill tree; disabling skillsAddAuto\n", $next_skill->getName);
 		return 0;
 	} elsif ($char->{skills}{$next_skill->getHandle()}{up} == 0) {
-		error "[raiseSkill] Skill '".$next_skill->getName."' reached its maximum level or prerequisite not reached; disabling skillsAddAuto\n";
+		error $translator->translatef("[raiseSkill] Skill '%s' reached its maximum level or prerequisite not reached; disabling skillsAddAuto\n", $next_skill->getName);
 		return 0;
 	}
 	return 1;
@@ -154,7 +157,7 @@ sub canRaiseFurther {
 #  raiseSkill() sends to the server our skill raise request and
 #  prints it on console.
 sub raiseSkill {
-	message "Auto-adding skill ".$next_skill->getName." to ".($char->getSkillLevel($next_skill)+1)."\n";
+	message $translator->translatef("Auto-adding skill '%s' to '%d'\n", $next_skill->getName, $char->getSkillLevel($next_skill)+1);
 	$messageSender->sendAddSkillPoint($next_skill->getIDN);
 }
 
@@ -192,11 +195,11 @@ sub validateSteps {
 		if ($skill->getIDN) {
 			push(@skills_to_add, $skill);
 		} else {
-			error "Unknown skill '".$sk."' in '".$step."'; disabling skillsAddAuto\n";
+			error $translator->translatef("Unknown skill '%s' in '%s'; disabling skillsAddAuto\n", $sk, $step);
 			return 0;
 		}
 	}
-	debug "[raiseSkill] Configuration set in config.txt is valid\n";
+	debug $translator->translate("[raiseSkill] Configuration set in config.txt is valid\n");
 	return 1;
 }
 
