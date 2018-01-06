@@ -17,15 +17,17 @@ use base qw(Network::Send::ServerType0);
 use Globals; 
 use Network::Send::ServerType0;
 use Log qw(error debug message);
+use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		#'07E4' => ['character_move', 'a3', [qw(coords)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 	);
 
@@ -40,6 +42,8 @@ sub new {
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{char_create_version} = 0x0A39;
 
 	return $self;
 }
@@ -83,7 +87,7 @@ sub sendTokenToServer {
 		ip => $ip,
 		token => $token,
 	});	
-	
+
 	$self->sendToServer($msg);
 
 	debug "Sent sendTokenLogin\n", "sendPacket", 2;
@@ -103,6 +107,35 @@ sub encrypt_password {
 	} else {
 		error("Password is not configured");
 	}
+}
+
+sub reconstruct_char_delete2_accept {
+	my ($self, $args) = @_;
+	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
+	$args->{length} = 8 + length($args->{code});
+	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
+}
+
+sub sendCharCreate {
+	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
+
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+	$job_id     ||= 0;    # novice
+	$sex        ||= 0;    # female
+
+	my $msg = $self->reconstruct({
+		switch => 'char_create',
+		name => stringToBytes( $name ),
+		slot => $slot,
+		hair_color => $hair_color,
+		hair_style => $hair_style,
+		job_id => 0,
+		unknown => 0,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
 }
 
 1;

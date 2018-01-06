@@ -103,11 +103,6 @@ sub parse_account_server_info {
 	} unpack '(a160)*', $args->{serverInfo};
 }
 
-sub parse_exp {
-	my ($self, $args) = @_;
-	$args->{val} = Math::BigInt64->hex_to_int64(getHex($args->{val}));
-}
-
 sub character_ban_list {
 	my ($self, $args) = @_;
 	# Header + Len + CharList[character_name(size:24)]
