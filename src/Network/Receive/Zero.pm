@@ -33,10 +33,10 @@ sub new {
 		'0A00' => ['hotkeys'],
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
-		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
-		'0AC7' => ['map_changed', 'Z16 v2 a4 v ', [qw(map x y IP port]],		
-		'0ACB' => ['stat_info', 'v V', [qw(type val)]],
-		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]],
+		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], #miss 128 unknow
+		'0AC7' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
+		'0ACB' => ['stat_info', 'v V', [qw(type val)]],   #need check 
+		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]], #need check 
 		'0ADC' => ['flag', 'a*', [qw(unknown)]],
 		'0ADE' => ['flag', 'a*', [qw(unknown)]],
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
