@@ -4174,6 +4174,7 @@ sub stat_info {
 		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
 		'02A2' => $char->{mercenary},
 		'07DB' => $char->{homunculus},
+		'0ACC' => $char,
 		#'081E' => Sorcerer's Spirit - not implemented in Kore
 	}->{$args->{switch}};
 

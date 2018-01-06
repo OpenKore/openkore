@@ -17,7 +17,7 @@ use base qw(Network::Receive::ServerType0);
 use Log qw(warning debug error message);
 use Globals qw(%config %masterServers $messageSender $net $char $conState_tries %timeout @chars);
 use Translation;
-use Utils qw(makeCoordsDir);
+use Utils qw(makeCoordsDir getHex);
 use I18N qw(bytesToString);
 use Socket qw(inet_ntoa);
 
@@ -94,12 +94,6 @@ sub map_loaded {
 sub parse_account_server_info {
     my ($self, $args) = @_;
 
-    if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
-        $args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
-    } else {
-        delete $args->{lastLoginIP};
-    }
-
     @{$args->{servers}} = map {
 		my %server;
 		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;		
@@ -107,6 +101,11 @@ sub parse_account_server_info {
 		$server{name} = bytesToString($server{name});
 		\%server
 	} unpack '(a160)*', $args->{serverInfo};
+}
+
+sub parse_exp {
+	my ($self, $args) = @_;
+	$args->{val} = Math::BigInt64->hex_to_int64(getHex($args->{val}));
 }
 
 sub character_ban_list {
