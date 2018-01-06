@@ -1185,14 +1185,16 @@ sub charSelectScreen {
 			}
 		}
 		
-		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d, %s)%s",
+		my $messageMapName = sprintf(", %s", $chars[$num]{map_name}) if ($chars[$num]{map_name});
+		
+		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
 			$sex_lut{$chars[$num]{sex}},
 			$chars[$num]{lv},
 			$chars[$num]{lv_job},
-			$chars[$num]{map_name},
+			$messageMapName,
 			$messageDeleteDate);
 		push @charNameIndices, $num;
 	}
