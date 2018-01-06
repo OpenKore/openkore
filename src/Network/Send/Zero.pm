@@ -23,7 +23,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'07E4' => ['character_move', 'a3', [qw(coords)]],
+		#'07E4' => ['character_move', 'a3', [qw(coords)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
@@ -32,7 +32,6 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		character_move 07E4
 		item_use 0439
 		token_login 0825
 		master_login 0ACF		
