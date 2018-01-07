@@ -800,26 +800,36 @@ sub getCoordString2 {
 	
 	return $coords;
 }
- 
+
+# Month Day Hour:Minute:Second Year
 sub getFormattedDate {
 	my $thetime = shift;
 	my $r_date = shift;
 	my @localtime = localtime $thetime;
 	my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
-	$localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
-	$localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
-	$localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
-	$$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
+	
+	$$r_date = sprintf("%s %02d %02d:%02d:%02d %4d", $themonth, $localtime[3], $localtime[2], $localtime[1], $localtime[0], $localtime[5] + 1900);
 	return $$r_date;
 }
 
-# Year-Month-Day
+# Year-Month-Day (0)
+# Hour:Minute:Second (1)
+# \&getFormattedDate (2)
 sub getFormattedDateShort {
 	my $thetime = shift;
+	my $mode = shift;
 	my $r_date = shift;
+	
+	return getFormattedDate($thetime, $r_date) if ($mode == 2);
+	
 	my @localtime = localtime $thetime;
 	
-	$$r_date = sprintf("%s-%s-%s", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
+	if ($mode == 0) {
+		$$r_date = sprintf("%4d-%02d-%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
+	} elsif ($mode == 1) {
+		$$r_date = sprintf("%02d:%02d:%02d", $localtime[2], $localtime[1], $localtime[0]);
+	}
+	
 	return $$r_date;
 }
 
