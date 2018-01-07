@@ -375,8 +375,52 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
-	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
-	$timeout{$timeout}{'timeout'} = $time;
+	my %args;
+
+	if (@_ == 1) {
+		$args{silent} = $_[0];
+	} else {
+		%args = @_;
+	}
+	
+	$args{autoCreate} = 1 if (!exists $args{autoCreate});
+	
+	Plugins::callHook('setTimeout', {
+		timeout => $timeout,
+		time => $time,
+		additionalOptions => \%args
+	});
+	
+	if (!$args{silent}) {
+		my $oldtime = $timeout{$timeout}{timeout};
+		if (!defined $oldtime) {
+			$oldtime = "not set";
+		}
+		
+		if ($timeout{$timeout}{timeout} eq $time) {
+			if ($time) {
+				message TF("Timeout '%s' is already %s\n", $timeout, $time), "info";
+			} else {
+				message TF("Timeout '%s' is already *None*\n", $timeout), "info";
+			}
+			return;
+		}
+		
+		if (!defined $time) {
+			message TF("Timeout '%s' unset (was %s)\n", $timeout, $oldtime), "info";
+		} else {
+			message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $oldtime), "info";
+		}
+	}
+	if ($args{autoCreate} && !exists $timeout{$timeout}{timeout}) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			print $f "$timeout\n";
+			close($f);
+		}
+	}
+	
+	$timeout{$timeout}{timeout} = $time;
 	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
