@@ -5474,7 +5474,7 @@ use constant {
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
-	my ($self, $args) = @_;	
+	my ($self, $args) = @_;
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
 	$args->{percent} = $max ? $args->{val} / $max * 100 : 0;
 
