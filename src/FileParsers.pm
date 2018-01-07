@@ -1219,7 +1219,7 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	my $reader = new Utils::TextReader($file);
+	my $reader = new Utils::TextReader($file, { hide_includes => 0, hide_comments => 0 });
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/\x{FEFF}//g;
