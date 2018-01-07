@@ -5475,6 +5475,7 @@ use constant {
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
 	my ($self, $args) = @_;
+
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
 	$args->{percent} = $max ? $args->{val} / $max * 100 : 0;
 
