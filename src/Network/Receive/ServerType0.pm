@@ -2895,7 +2895,7 @@ sub received_characters {
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 		$chars[$slot]{map_name} = $mapname;
 		$chars[$slot]{map_name} =~ s/\.gat//g;
-		if((grep { $masterServer->{charBlockSize} eq $_ } qw( 155 ))) {
+		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
 			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
 			$chars[$slot]{exp} = join '', reverse split /(\s+)/, $chars[$slot]{exp};
 			$chars[$slot]{exp} = hex $chars[$slot]{exp};
