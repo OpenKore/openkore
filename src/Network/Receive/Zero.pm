@@ -36,8 +36,8 @@ sub new {
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], #miss 128 unknow
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
-		'0ACB' => ['stat_info', 'v a2', [qw(type val)]],
-		'0ACC' => ['exp', 'a4 a8 v2', [qw(ID val type flag)]],
+		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
+		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'a*', [qw(unknown)]],
 		'0ADE' => ['flag', 'a*', [qw(unknown)]],
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
@@ -116,5 +116,23 @@ sub flag {
 sub offline_vending_disappeared {
 	my ($self, $args) = @_;
 	# Header + Len + accountID[(size:4)]
+}
+
+sub parse_stat_info {
+	my ($self, $args) = @_;
+	if($args->{switch} eq "0ACB") {
+			$args->{val} = getHex($args->{val});
+			$args->{val} = join '', reverse split /(\s+)/, $args->{val};
+			$args->{val} = hex $args->{val};
+	}
+}
+
+sub parse_exp {
+	my ($self, $args) = @_;
+	if($args->{switch} eq "0ACC") {
+			$args->{val} = getHex($args->{val});
+			$args->{val} = join '', reverse split /(\s+)/, $args->{val};
+			$args->{val} = hex $args->{val};
+	}
 }
 1;
