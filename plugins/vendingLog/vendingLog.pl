@@ -233,8 +233,8 @@ sub onInitialized {
 	if (!exists $config{&DATE_FORMAT_KEY} or 
 		($config{&DATE_FORMAT_KEY} != 0 && $config{&DATE_FORMAT_KEY} != 1 && $config{&DATE_FORMAT_KEY} != 2)) {
 		warning $translator->translatef("%s date format %s is undefined or invalid. Defaulting to %s (%s)\n",
-				PLUGIN_PREFIX, DATE_FORMAT_KEY, 0, DATE_FORMAT_VALUE_X_MEANING->[0]);
-		configModify(DATE_FORMAT_KEY, 0);
+				PLUGIN_PREFIX, DATE_FORMAT_KEY, 1, DATE_FORMAT_VALUE_X_MEANING->[1]);
+		configModify(DATE_FORMAT_KEY, 1);
 	} else {
 		debug $translator->translatef("%s date format %s set to %s (%s)\n",
 				PLUGIN_PREFIX, DATE_FORMAT_KEY, $config{&DATE_FORMAT_KEY}, DATE_FORMAT_VALUE_X_MEANING->[$config{&DATE_FORMAT_KEY}]);
