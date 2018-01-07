@@ -3,11 +3,11 @@ package vendingLog;
 use strict;
 
 use Commands;
-use Globals qw(%timeout $messageSender $net);
+use Globals qw(%timeout $messageSender $net %config);
 use Settings qw(%sys);
 use I18N qw(bytesToString);
 use Log qw(warning message debug);
-use Misc qw(shopLog center);
+use Misc qw(shopLog center setTimeout configModify);
 use Plugins;
 use Utils qw(getHex timeOut swrite getFormattedDateShort formatNumber);
 use Utils::DataStructures qw(binRemoveAllAndShift);
@@ -29,6 +29,10 @@ use constant {
 	MAX_ATTEMPTS_VALUE_REQUEST => 3,
 	
 	COMMAND_HANDLE => "vendinglog",
+	
+	DATE_FORMAT_KEY => "vendingLog_dateFormat",
+	
+	DATE_FORMAT_VALUE_X_MEANING => [ "h:m:s", "y-m-d", "Mon d h:m:s y" ],
 };
 
 my $translator = new Translation(PLUGIN_PODIR, $sys{locale});
@@ -95,10 +99,10 @@ sub onMainLoop {
 		}		
 	}
 	
-	if (timeOut($timeout{TIMEOUT_KEY_REQUEST})) {
+	if (timeOut($timeout{&TIMEOUT_KEY_REQUEST})) {
 		requestCharacterName();
 		
-		$timeout{TIMEOUT_KEY_REQUEST}{time} = time;
+		$timeout{&TIMEOUT_KEY_REQUEST}{time} = time;
 	}
 }
 
@@ -108,7 +112,7 @@ sub requestCharacterName {
 	
 	my $charID = getHex($requestQueue[0]);
 	
-	if ($requestCounter{$requestQueue[0]} > $timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout}) {
+	if ($requestCounter{$requestQueue[0]} > $config{&MAX_ATTEMPTS_KEY_REQUEST}) {
 		warning $translator->translatef("%s Max name request attempts reached, giving up on charID %s\n", PLUGIN_PREFIX, $charID);
 
 		delete $requestCounter{$requestQueue[0]};
@@ -182,10 +186,10 @@ sub prepareMessage {
 			$name = (exists $knownNames{$key}) ? $knownNames{$key} : $translator->translate("Unknown");
 			
 			for ($i = 0; $i < scalar @{$shopLog{$key}{item}}; ++$i) {
-				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>",
+				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
 						[$offset+$i+1, ${$shopLog{$key}{item}}[$i], formatNumber(${$shopLog{$key}{amount}}[$i]),
 						formatNumber(${$shopLog{$key}{zenyEarned}}[$i]), $name,
-						getFormattedDateShort(${$shopLog{$key}{time}}[$i])]);
+						getFormattedDateShort(${$shopLog{$key}{time}}[$i], $config{&DATE_FORMAT_KEY})]);
 						
 				$totalZeny += ${$shopLog{$key}{zenyEarned}}[$i];
 				$totalAmount += ${$shopLog{$key}{amount}}[$i];
@@ -200,7 +204,7 @@ sub prepareMessage {
 	if ($offset == 0) {
 		$msg .= center($translator->translate(" Nothing sold yet "), 79, ' ') ."\n";
 	} else {
-		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>",
+		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
 					[undef, $translator->translate("Total"), formatNumber($totalAmount), formatNumber($totalZeny), undef, undef]);
 	}
 
@@ -211,16 +215,29 @@ sub prepareMessage {
 # Plugin Management #
 #####################
 sub onInitialized {
-	if (not exists $timeout{TIMEOUT_KEY_REQUEST} or $timeout{TIMEOUT_KEY_REQUEST}{timeout} == 0) {
-		warning $translator->translatef("%s timeout %s is undefined or equal to zero. Defaulting to %s second(s)\n", 
+	if (!exists $timeout{&TIMEOUT_KEY_REQUEST} or $timeout{&TIMEOUT_KEY_REQUEST}{timeout} <= 0) {
+		warning $translator->translatef("%s timeout %s is undefined, equal to zero or invalid. Defaulting to %s second(s)\n", 
 				PLUGIN_PREFIX, TIMEOUT_KEY_REQUEST, TIMEOUT_VALUE_REQUEST);
-		$timeout{TIMEOUT_KEY_REQUEST}{timeout} = TIMEOUT_VALUE_REQUEST;
+		setTimeout(TIMEOUT_KEY_REQUEST, TIMEOUT_VALUE_REQUEST);
+	} else {
+		debug $translator->translatef("%s timeout %s set to %s second(s)\n",
+				PLUGIN_PREFIX, TIMEOUT_KEY_REQUEST, $timeout{TIMEOUT_KEY_REQUEST}{timeout});
 	}
 	
-	if (not exists $timeout{MAX_ATTEMPTS_KEY_REQUEST} or $timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout} == 0) {
-		warning $translator->translatef("%s max tries %s is undefined or equal to zero. Defaulting to %s attempt(s)\n", 
+	if (!exists $config{&MAX_ATTEMPTS_KEY_REQUEST} or $config{&MAX_ATTEMPTS_KEY_REQUEST} <= 0) {
+		warning $translator->translatef("%s max tries %s is undefined, equal to zero or invalid. Defaulting to %s attempt(s)\n", 
 				PLUGIN_PREFIX, MAX_ATTEMPTS_KEY_REQUEST, MAX_ATTEMPTS_VALUE_REQUEST);
-		$timeout{MAX_ATTEMPTS_KEY_REQUEST}{timeout} = MAX_ATTEMPTS_VALUE_REQUEST;
+		configModify(MAX_ATTEMPTS_KEY_REQUEST, MAX_ATTEMPTS_VALUE_REQUEST);
+	}
+	
+	if (!exists $config{&DATE_FORMAT_KEY} or 
+		($config{&DATE_FORMAT_KEY} != 0 && $config{&DATE_FORMAT_KEY} != 1 && $config{&DATE_FORMAT_KEY} != 2)) {
+		warning $translator->translatef("%s date format %s is undefined or invalid. Defaulting to %s (%s)\n",
+				PLUGIN_PREFIX, DATE_FORMAT_KEY, 0, DATE_FORMAT_VALUE_X_MEANING->[0]);
+		configModify(DATE_FORMAT_KEY, 0);
+	} else {
+		debug $translator->translatef("%s date format %s set to %s (%s)\n",
+				PLUGIN_PREFIX, DATE_FORMAT_KEY, $config{&DATE_FORMAT_KEY}, DATE_FORMAT_VALUE_X_MEANING->[$config{&DATE_FORMAT_KEY}]);
 	}
 	
 	$hooks{shop_sold}->hook();
