@@ -115,11 +115,6 @@ sub flag {
 	my ($self, $args) = @_;
 }
 
-sub offline_vending_disappeared {
-	my ($self, $args) = @_;
-	# Header + Len + accountID[(size:4)]
-}
-
 sub parse_stat_info {
 	my ($self, $args) = @_;
 	if($args->{switch} eq "0ACB") {
