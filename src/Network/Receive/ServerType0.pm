@@ -2888,13 +2888,21 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = ($masterServer->{charBlockSize} == 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
 
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 		$chars[$slot]{map_name} = $mapname;
 		$chars[$slot]{map_name} =~ s/\.gat//g;
+		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
+			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
+			$chars[$slot]{exp} = join '', reverse split /(\s+)/, $chars[$slot]{exp};
+			$chars[$slot]{exp} = hex $chars[$slot]{exp};
+			$chars[$slot]{exp_job} = getHex($chars[$slot]{exp_job});
+			$chars[$slot]{exp_job} = join '', reverse split /(\s+)/, $chars[$slot]{exp_job};
+			$chars[$slot]{exp_job} = hex $chars[$slot]{exp_job};
+		}
 	}
 
 	# FIXME better support for multiple received_characters packets
@@ -4174,6 +4182,7 @@ sub stat_info {
 		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
 		'02A2' => $char->{mercenary},
 		'07DB' => $char->{homunculus},
+		'0ACB' => $char,
 		#'081E' => Sorcerer's Spirit - not implemented in Kore
 	}->{$args->{switch}};
 
