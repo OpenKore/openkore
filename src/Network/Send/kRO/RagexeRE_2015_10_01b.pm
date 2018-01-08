@@ -54,7 +54,7 @@ sub new {
 		storage_item_add 07EC
 		storage_item_remove 0364
 		sync 035F
-		item_list_res 0281
+		item_list_window_selected 0281
 		storage_password 0860
 	);
 	
