@@ -12,7 +12,7 @@
 package Network::Send::kRO::RagexeRE_2013_08_07a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2013_05_22);
+use base qw(Network::Send::kRO::RagexeRE_2013_06_26c);
 use Log qw(debug);
 
 sub new {
