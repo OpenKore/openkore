@@ -24,7 +24,7 @@ sub new {
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
+		'0437' => ['character_move','a3', [qw(coordString)]],
 		'0438' => ['storage_password'],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0878' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
