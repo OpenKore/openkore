@@ -873,7 +873,7 @@ sub SendCharacterList
 	
 	# Character Block Pack String
 	my $packstring = '';
-	$packstring = 'a4 a8 V a8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 155;
+	$packstring = 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 155;
 	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 147;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $blocksize == 145;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $blocksize == 144;
