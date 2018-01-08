@@ -182,7 +182,7 @@ sub clone_vender_lost {
 	binRemove(\@venderListsID, $ID);
 	delete $venderLists{$ID};
 
-	if (defined $playersList->getByID($ID)) {
+	if (defined $playersList->getByID($args->{ID})) {
 		my $player = $playersList->getByID($args->{ID});
 		
 		if (grep { $ID eq $_ } @venderListsID) {
