@@ -32,7 +32,7 @@ sub new {
 		'094A' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'087E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'089A' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0938' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0938' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0436' => ['item_take', 'a4', [qw(ID)]],
 		'0363' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'089F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],

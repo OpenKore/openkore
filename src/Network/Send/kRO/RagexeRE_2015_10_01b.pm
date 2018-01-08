@@ -31,7 +31,7 @@ sub new {
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'035F' => ['sync', 'V', [qw(time)]],
-		'0281' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0860' => ['storage_password'],
 	);
 	
