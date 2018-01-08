@@ -1125,7 +1125,7 @@ sub processAutoMakeArrow {
 sub processAutoStorage {
 	# storageAuto - chobit aska 20030128
 	if (AI::is("", "route", "sitAuto", "follow")
-		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
 		  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
@@ -1143,7 +1143,7 @@ sub processAutoStorage {
 
 	} elsif (AI::is("", "route", "attack")
 		  && $config{storageAuto}
-		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
 		  && !AI::inQueue("storageAuto")
 		  && $char->inventory->isReady()) {
@@ -1225,7 +1225,7 @@ sub processAutoStorage {
 
 		my $do_route;
 
-		if (!$config{storageAuto_useChatCommand}) {
+		if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem}) {
 			# Stop if the specified NPC is invalid
 			$args->{npc} = {};
 			getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
@@ -1281,6 +1281,29 @@ sub processAutoStorage {
 			if (!defined($args->{sentStore})) {
 				if ($config{storageAuto_useChatCommand}) {
 					$messageSender->sendChat($config{storageAuto_useChatCommand});
+				} elsif ($config{storageAuto_useItem}) {
+					my $itemToOpenStorageWith = Actor::Item::get($config{storageAuto_useItem_item});
+					
+					if (!$itemToOpenStorageWith) {
+						error TF("Cannot find item %s to open storage\n", $config{storageAuto_useItem_item});
+						
+						if ($config{storageAuto_npc}) {
+							warning TF("Falling back to regular npc at %s, disabling storageAuto_useItem\n", $config{storageAuto_npc});
+							configModify("storageAuto_useItem", 0);
+						} else {
+							warning T("No fallback npc specified, disabling storageAuto\n");
+							configModify("storageAuto", 0);
+							AI::dequeue if (AI::action eq "storageAuto");
+						}
+						return;
+					}
+					
+					if (timeOut($timeout{ai_storageAuto_useItem})) {
+						debug TF("Consuming item %s to open storage\n", $config{storageAuto_useItem});
+						
+						$itemToOpenStorageWith->use;
+						$timeout{ai_storageAuto_useItem}{time} = time;
+					}
 				} else {
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
