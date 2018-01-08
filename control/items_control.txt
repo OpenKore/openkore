@@ -72,15 +72,15 @@ Arrow 3000 1 0
 ##### WORTHLESS GEARS #####
 # Worthless gears which are sold by default
 
-2306 0 0 1 # Adventurer's Suit
+2305 0 0 1 # Adventurer's Suit
 2211 0 0 1 # Bandana
 2217 0 0 1 # Biretta
-2406 0 0 1 # Boots
-2104 0 0 1 # Buckler
+2405 0 0 1 # Boots
+2103 0 0 1 # Buckler
 2227 0 0 1 # Cap
-2315 0 0 1 # Chain Mail
+2314 0 0 1 # Chain Mail
 2233 0 0 1 # Circlet
-2310 0 0 1 # Coat
+2309 0 0 1 # Coat
 2310 0 0 1 # Coat [1]
 2302 0 0 1 # Cotton Shirt
 Cotton Shirt [1] 0 0 1
@@ -90,47 +90,46 @@ Cotton Shirt [1] 0 0 1
 2212 0 0 1 # Eye Patch
 2612 0 0 1 # Flower Ring
 2219 0 0 1 # Flu Mask
-2317 0 0 1 # Full Plate
-2265 0 0 1 # Gangster Mask
+2316 0 0 1 # Full Plate
 2231 0 0 1 # Gemmed Sallet
 2204 0 0 1 # Glasses
 2610 0 0 1 # Gold Ring
-2102 0 0 1 # Guard
+2101 0 0 1 # Guard
 2210 0 0 1 # Hair Band
 2221 0 0 1 # Hat
-2229 0 0 1 # Helm
+2228 0 0 1 # Helm
 2409 0 0 1 # High Heels
-2502 0 0 1 # Hood
+2501 0 0 1 # Hood
 2502 0 0 1 # Hood [1]
 2303 0 0 1 # Jacket
 2304 0 0 1 # Jacket [1]
-2506 0 0 1 # Manteau
-2308 0 0 1 # Mantle
+2505 0 0 1 # Manteau
+2307 0 0 1 # Mantle
 2308 0 0 1 # Mantle [1]
-2108 0 0 1 # Mirror Shield
+2107 0 0 1 # Mirror Shield
 2278 0 0 1 # Mr. Smile
-2504 0 0 1 # Muffler
+2503 0 0 1 # Muffler
 2313 0 0 1 # Padded Armor
 2371 0 0 1 # Pantie
-2209 0 0 1 # Ribbon
+2208 0 0 1 # Ribbon
 2209 0 0 1 # Ribbon [1]
 2840 0 0 1 # Rosary
-2326 0 0 1 # Saint's Robe
-2402 0 0 1 # Sandals
+2325 0 0 1 # Saint's Robe
+2401 0 0 1 # Sandals
 2402 0 0 1 # Sandals [1]
-2324 0 0 1 # Scapulare
+2323 0 0 1 # Scapulare
 2408 0 0 1 # Shackles
-2106 0 0 1 # Shield
-2404 0 0 1 # Shoes
-2322 0 0 1 # Silk Robe
+2105 0 0 1 # Shield
+2403 0 0 1 # Shoes
+2321 0 0 1 # Silk Robe
 2611 0 0 1 # Silver Ring
-2333 0 0 1 # Silver Robe
+2332 0 0 1 # Silver Robe
 2333 0 0 1 # Silver Robe [1]
 2715 0 0 1 # Skull Ring
-2336 0 0 1 # Thief Clothes
-2331 0 0 1 # Tights
+2335 0 0 1 # Thief Clothes
+2330 0 0 1 # Tights
 2223 0 0 1 # Turban
-2329 0 0 1 # Wooden Mail
+2328 0 0 1 # Wooden Mail
 2329 0 0 1 # Wooden Mail [1]
 
 
