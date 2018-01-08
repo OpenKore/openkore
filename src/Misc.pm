@@ -4383,6 +4383,10 @@ sub checkPlayerCondition {
 	if ($config{$prefix."_isNotMyDevotee"}) {
 		return 0 if (defined $devotionList->{$accountID}->{targetIDs}->{$id});
 	}
+	
+	if ($config{$prefix."_spirit"}) {
+		return 0 unless inRange(defined $player->{spirits} ? $player->{spirits} : 0, $config{$prefix . "_spirit"});
+	}
 
 	my %args = (
 		player => $player,
