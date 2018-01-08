@@ -59,7 +59,7 @@ sub new {
 		friend_request 0920
 		homunculus_command 0876
 		item_drop 0877
-		item_list_res 0895
+		item_list_window_selected 0895
 		item_take 087B
 		map_login 0811
 		party_join_request_by_name 086E
