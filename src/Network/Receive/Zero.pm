@@ -20,7 +20,7 @@ use Translation;
 use Utils qw(makeCoordsDir getHex);
 use I18N qw(bytesToString);
 use Socket qw(inet_ntoa);
-use Utils::DataStructures qw(binAdd);
+use Utils::DataStructures qw(binAdd binRemove);
 
 sub new {
 	my ($class) = @_;
@@ -32,6 +32,7 @@ sub new {
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'0A00' => ['hotkeys'],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
@@ -143,19 +144,14 @@ sub clone_vender_found {
 	$venderLists{$ID}{title} = bytesToString($args->{title});
 	$venderLists{$ID}{id} = $ID;
 	
-	my $actor = $playersList->getByID($ID);
+	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
 		$actor = new Actor::Player();
-		$actor->{appear_time} = time;
-		# New actor_display packets include the player's name
-		$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
-
+		$actor->{ID} = $args->{ID};
 		$actor->{nameID} = $ID;
-		
-		$actor->{ID} = $ID;
-		$actor->{charID} = $args->{charID} if $args->{charID} && $args->{charID} ne "\0\0\0\0";
-		$actor->{jobID} = $args->{jobID};
-		$actor->{type} = $args->{jobID};
+		$actor->{appear_time} = time;
+		# New actor_display packets include the player's name		
+		$actor->{jobID} = $args->{jobID};		
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
 		$actor->{walk_speed} = 1; #hack
@@ -176,8 +172,6 @@ sub clone_vender_found {
 		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
 		$playersList->add($actor);
 		Plugins::callHook('add_player_list', $actor);
-		$messageSender->sendGetPlayerInfo($ID);
-		$messageSender->sendGetCharacterName($ID);
 	}
 }
 
@@ -189,7 +183,7 @@ sub clone_vender_lost {
 	delete $venderLists{$ID};
 
 	if (defined $playersList->getByID($ID)) {
-		my $player = $playersList->getByID($ID);
+		my $player = $playersList->getByID($args->{ID});
 		
 		if (grep { $ID eq $_ } @venderListsID) {
 			binRemove(\@venderListsID, $ID);
@@ -200,7 +194,7 @@ sub clone_vender_lost {
 		$players_old{$ID} = $player->deepCopy();
 		Plugins::callHook('player_disappeared', {player => $player});
 
-		$playersList->remove($player);
+		$playersList->removeByID($args->{ID});
 	}
 }
 1;
