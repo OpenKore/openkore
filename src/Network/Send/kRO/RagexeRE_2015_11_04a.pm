@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2015_11_04a;
 
 use strict;
-use base 'Network::Send::kRO::RagexeRE_2015_10_01b';
+use base qw(Network::Send::kRO::RagexeRE_2015_10_01b);
 
 sub new {
 	my ($class) = @_;
@@ -32,7 +32,7 @@ sub new {
 		'07EC' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'088D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'093A' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0866' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0866' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0964' => ['item_take', 'a4', [qw(ID)]],
 		'0360' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'08A5' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -59,7 +59,7 @@ sub new {
 		friend_request 07EC
 		homunculus_command 088D
 		item_drop 0437
-		item_list_res 093A
+		item_list_window_selected 093A
 		item_take 0964
 		map_login 0360
 		party_join_request_by_name 08A5
