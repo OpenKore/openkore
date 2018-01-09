@@ -23,7 +23,7 @@ sub new {
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
 	);
 	
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		received_characters 099D
