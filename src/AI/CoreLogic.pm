@@ -420,6 +420,7 @@ sub processDrop {
 ##### PORTALREADD #####
 # Automatically adds the last missing portals to portals_lut
 sub processReAddMissingPortals {
+	return unless ($config{route_ReAddMissingPortals});
 	return unless (@portals_lut_missed);
 	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
 	my $portal = shift(@portals_lut_missed);
