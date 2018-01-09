@@ -2379,14 +2379,18 @@ Nível necessário: ^77777736^000000
 Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 1230#
-Ferramenta. Normalmente tem a empunhadura envolvida em linha. É usada para fazer buracos em madeira ou gelo.
-^0000ffAumenta o dano físico de acordo com a defesa do alvo.^000000
+Ferramenta usada para fazer buracos em madeira ou gelo. Normalmente tem a empunhadura envolvida em linha.
+^0000ffMantém [Investigar] ativo.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar defesa são aplicados antes de [Investigar].^000000
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777760^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777736^000000
-Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções, Espiritualista, Ninja^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Ninjas, Espiritualistas e evoluções^000000
 #
 1231#
 Adaga solene com emblemas luxuosos gravados. Geralmente utilizidas em ocasiões especiais.
@@ -9453,14 +9457,26 @@ Trajes do noivo em uma cerimônia de casamento. É bastante simples e de cortes 
 Peso: ^7777771^000000
 #
 2634#
-Anel usado pelo noivo para selar o sagrado matrimônio. Tem uma pedra resplandecente, azul, e detalhes em safira por todo o aro. Representa o amor verdadeiro.
-^ffffff_^000000
+Anel usado pelo noivo para selar o sagrado matrimônio.
+^0000ffHabilita [Amor Eterno] nv. 1.^000000
+^0000ffHabilita [Amor Verdadeiro] nv. 1.^000000
+^0000ffHabilita [Saudades de Você] nv. 1.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2635#
-Anel usado pela noiva para selar o sagrado matrimônio. Tem uma pedra resplandecente, azul, e detalhes em rubi por todo o aro. Representa o amor eterno.
-^ffffff_^000000
+Anel usado pela noiva para selar o sagrado matrimônio.
+^0000ffHabilita [Amor Eterno] nv. 1.^000000
+^0000ffHabilita [Amor Verdadeiro] nv. 1.^000000
+^0000ffHabilita [Saudades de Você] nv. 1.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 
 // Halloween
@@ -10340,8 +10356,11 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 
 //-----------ÀÚ¿ÍÀÌ---------------------
 681#
-Um álbum de fotografias com lembranças de um casamento ou de uma lua-de-mel. (Apenas para pessoas casadas)
-^ffffff_^000000
+Um álbum de fotografias com lembranças de um casamento ou de uma lua-de-mel.
+^0000ffVeste o personagem com uma Roupa de Casamento.^000000
+^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
+Tipo: ^777777Roupa^000000
+Duração: ^77777710 minutos^000000
 Peso: ^7777771^000000
 #
 
@@ -17653,16 +17672,18 @@ Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções, Espiritualista e Ninja^000000
 #
 13017#
-Ferramenta. Normalmente tem a empunhadura envolvida em linha.
-É usada para fazer buracos em madeira ou gelo. Ignora a defesa de
-qualquer armadura sem dificuldade.
-^0000ffAumenta o dano físico de acordo com a defesa do alvo.^000000
-Classe: ^777777Adaga^000000
-Força de Ataque: ^77777770^000000
+Ferramenta usada para fazer buracos em madeira ou gelo. Normalmente tem a empunhadura envolvida em linha.
+^0000ffMantém [Investigar] ativo.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar defesa são aplicados antes de [Investigar].^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777770^000000
 Peso: ^77777760^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777736^000000
-Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções, Espiritualista, Ninja^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Ninjas, Espiritualistas e evoluções^000000
 #
 13018#
 Adaga feita segundo o estilo de uma certa tribo do deserto.
@@ -18820,7 +18841,10 @@ Classes que utilizam: ^777777Todas^000000
 // ------------- Summer Event 07 ---------------
 12260#
 Vista-se a caráter para curtir ao máximo o Festival de Verão. Só não vá deixar suas roupas normais jogadas por aí!
-^ffffff_^000000
+^0000ffVeste o personagem com uma Roupa de Praia.^000000
+^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
+Tipo: ^777777Roupa^000000
+Duração: ^77777710 minutos^000000
 Peso: ^77777710^000000
 #
 
@@ -18920,9 +18944,12 @@ Uma panqueca recheada de cogumelos, regados ao molho branco. Tem um sabor suave 
 Peso: ^77777715^000000
 #
 12132#
-Uma pequena bolsa mágica vermelha.
-Permite o uso de uma ^000088Roupa de Natal^000000 por 10 minutos.
-^ffffff_^000000
+Pequena bolsa mágica vermelha.
+^0000ffVeste o personagem com uma Roupa Natalina.^000000
+^0000ffAumenta a velocidade de movimento.^000000
+^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
+Tipo: ^777777Roupa^000000
+Duração: ^77777710 minutos^000000
 Peso: ^77777720^000000
 #
 //5811#
@@ -19750,11 +19777,13 @@ Peso: ^7777771^000000
 4399#
 ^0000ffDEF -30.^000000
 ^0000ffEsquiva -30.^000000
-^0000ffAumenta o dano físico de acordo com a defesa do alvo.^000000
-Ao realizar ataques físicos:
-^0000ffDrena 1 de SP.^000000
+^0000ffMantém [Investigar] ativo.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar DEF são aplicados antes de [Investigar].^000000
 Tipo: ^777777Carta^000000
-Equipa em: ^777777Arma^000000
+Ataque: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4400#
@@ -20410,10 +20439,14 @@ Peso: ^7777771^000000
 // ----------------- Pets - part 2 -------------------
 
 9030#
-O ovo onde o bichinho de estimação Donzela Verde dorme.
-Bônus para lealdade alta: DEF +1, Aumenta a resistência a ataques de Humanoides em 1%.
-Alimento: ^777777Bolo para Bichinho^000000
-Tipo: ^777777Ovo de Bichinho^000000
+Ovo contendo uma Donzela Verde.
+^008080Pode ser chocado com uma Incubadora.^000000
+Lealdade alta:
+^0000ffDEF +1.^000000
+^0000ffResistência a raça Humanoide +1%.^000000
+Tipo: ^777777Mascote^000000
+Comida: ^777777Bolinho Quente^000000
+Peso: ^7777770^000000
 #
 9031#
 O ovo onde o bichinho de estimação Coelho dorme. Você pode acordá-lo com uma incubadora.
@@ -23267,7 +23300,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 12354#
 Um bloco de chocolate em formato de lenha coberto de neve. Olhar para ele dá a sensação de que o Natal se aproxima...
-^0000ffCRIT +7. Precisão +10.^000000
+^0000ffCRIT +7. Precisão +3.^000000
 ^0000ffRegeneração natural de HP e SP +3%.^000000
 Duração: ^77777710 minutos^000000
 Peso: ^77777750^000000
@@ -24040,17 +24073,22 @@ Classes que utilizam: ^777777Aprendiz, Espadachim, Mago, Arqueiro, Mercador, Gat
 #
 13037#
 Uma adaga especializada em destruir humanoides.
-FOR + 1, AGI + 1
-Aumenta o Ataque Físico contra Humanoides em 75%.
-Ao realizar ataque físico, existe a chance de, por 6 segundos, encantar a arma com o efeito da habilidade Impacto Psíquico e da arma Rondel.
-Se equipado por Ninja, Arruaceiro ou Desordeiro, adiciona +90 de ATQM.
-Indestrutível em batalha.
+^0000ffFOR +1. AGI +1.^000000
+^0000ffDano físico contra monstros da raça Humanoide +75%.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de ativar [Investigar] por 6 segundos.^000000
+^FF6347Ninjas, Arruaceiros e evoluções:^000000
+^0000ffATQM +90.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar DEF são aplicados antes de [Investigar].^000000
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Aprendiz, Espadachim, Mago, Arqueiro, Mercador, Gatuno e evoluções; Ninja e Espiritualista.^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Ninjas, Espiritualistas e evoluções^000000
 #
 13410#
 Uma espada de gladiador, desenhada especialmente para batalhas contra Humanoides.
@@ -25141,11 +25179,11 @@ Arma sagrada de um guerreiro do oriente.
 ^0000ffEsquiva perfeita +10.^000000
 Refino +9 ou mais:
 ^0000ffPós-conjuração -20%.^000000
-^0000ffCusto de SP das habilidades -20%.^000000
+^0000ffConsumo de SP -20%.^000000
 ^FF6347Lordes e Paladinos:^000000
 Nv. de classe 70 ou mais:
 ^0000ffAo realizar ataques físicos, 1% de chance de ativar [ATQ +50] por 10 segundos.^000000
-^FF6347Cavaleiros Rúnicos:^000000
+^FF6347Cavaleiros Rúnicos e Guardiões Reais:^000000
 Nv. de classe 50 ou mais:
 ^0000ffAo realizar ataques físicos, 1% de chance de ativar [ATQ +50] por 10 segundos.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
@@ -27821,16 +27859,18 @@ Classes que utilizam: ^777777Todas^000000
 
 //----April cash item----
 5490#
-Um elmo com a forma da cabeça de chacal de Anúbis, o deus egípcio do submundo. Você é capaz de sentir um pouco da centelha divina do antigo deus emanando do elmo, sinal de que ele deve dar poderes muito especiais.
-Reduz em 10% o dano recebido de monstros do tipo MVP.
-Aumenta em 10% a efetividade da habilidade Cura e de itens de cura usados no usuário.
-DEFM + 5. Não pode ser aprimorado.
-Tipo: ^777777Equipamento para a cabeça^000000
+Um elmo com a forma da cabeça de chacal de Anubis, o deus egípcio do submundo. Você é capaz de sentir um pouco da centelha divina do antigo deus emanando do elmo, sinal de que ele deve dar poderes muito especiais.
+^a400cdNão pode ser refinado.^000000
+^0000ffDEFM +5.^000000
+^0000ffEfetividade de cura recebida +10%.^000000
+^0000ffRecuperação de HP por itens +10%.^000000
+^0000ffResistência a monstros Chefes +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo e Meio^000000
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo e centro^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 1383#
 Uma arma com poderes divinos. Cuidado ao manuseá-la.
@@ -31202,8 +31242,8 @@ Peso: ^7777771^000000
 #
 6115#
 Um bolinho saboroso, servido quente.
-Comida para o homunculus ^777777Elanor^000000.
-Tipo: ^777777Comida para homunculus^000000
+Tipo: ^777777Comida^000000
+Alimenta: ^777777Eleanor e Doneza Verde^000000
 Peso: ^7777771^000000
 #
 5779#
@@ -35558,20 +35598,18 @@ Classe : ^777777Todas as classes^000000
 #
 
 5671#
-Essa é uma boneca que definitivamente dividiu opiniões.
-Certos cultistas a consideram mais fofinha que as bonecas Kafra.
-Outras pessoas tem mais medo dela do que do boneco Châqui.
-Mas apesar de sua aparência medonha, você se sente muito especial quando a coloca na cabeça.
-Principalmente quando está aniquilando seus inimigos, huhuhu.
-Não pode ser refinado.
-Ganha 02 SP ao derrotar monstros utilizando ataques físicos ou mágicos de curta distância.
-Pequena chance de ativar 'Ferimento Mortal' Nv2 ao receber ataques físicos de curta distância.
-Tipo : ^777777Equipamento para cabeça^000000
+Essa é uma boneca que definitivamente dividiu opiniões. Certos cultistas a consideram mais fofinha que as bonecas Kafra. Outras pessoas tem mais medo dela do que do boneco Châqui. Mas apesar de sua aparência medonha, você se sente muito especial quando a coloca na cabeça. Principalmente quando está aniquilando seus inimigos, huhuhu.
+^a400cdNão pode ser refinado.^000000
+Ao realizar ataques físicos de curta distância:
+^0000ff0,2% de chance de autoconjurar [Ferimento Crítico] nv. 2.^000000
+Ao derrotar monstros com ataques mágicos ou físicos de curta distância:
+^0000ffRecupera 2 de SP.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível necessário : ^77777770^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
 #
 
 12642#
@@ -35581,20 +35619,17 @@ Peso : ^77777710^000000
 
 
 18504#
-Um elmo confeccionado para ser semelhante a cabeça do Anúbis.
-Sua magia pode deixar as pessoas imóveis como múmias.
-Redução de Def -50% e DefM -50% sobre o valor dos equipamentos em utilização.
-^0000ffEste valor não é mostrado no atalho ALT+Q^000000
-Existe a pequena possibilidade de Petrificar os
-inimigos em uma área de 11*11 células quando receber
-ataques físicos ou mágicos.
-Não pode ser refinado.
-Tipo : ^777777Equipamento para cabeça^000000
-Equipa em : ^777777Topo, Meio e Baixo^000000
+Um elmo confeccionado para ser semelhante a cabeça do Anubis.
+^a400cdNão pode ser refinado.^000000
+^0000ffDEF e DEFM -50%.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff1% de chance de autoconjurar [Olhar da Medusa] nv. 2.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Defesa: ^7777770^000000
-Peso : ^777777100^000000
-Nível necessário : ^77777770^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
 #
 
 
@@ -37527,16 +37562,15 @@ Nível Necessário : ^77777710^000000
 Classes : ^777777Todas as Classes^000000
 #
 18571#
-Decorado com brilhantes flores brancas encontradas apenas na floresta de Amatsu.
-Dizem que o perfume dessas flores ajuda a clarear a mente para tornar as pessoas mais experientes em suas tarefas.
-Recebe 3% a mais de EXP a cada monstro derrotado.
-Não pode ser refinado.
-Tipo : ^777777Equipamento para Cabeça^000000
+Decorado com brilhantes flores brancas encontradas apenas na floresta de Amatsu. Dizem que o perfume dessas flores ajuda a clarear a mente para tornar as pessoas mais experientes em suas tarefas.
+^a400cdNão pode ser refinado.^000000
+^0000ffEXP adquirida por monstros +3%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo ^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Topo^000000
-Peso : ^777777100^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas as Classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 12792#
 Pílulas feitas com radiação gama extraída do Vulcão de Ifrit. Criadas por Brulsse Béner, um famoso bioquímico que está sempre verde de raiva, e não de inveja. São feitas para conceder muito poder pro usuário, mas também o deixam bastante drenado. Foram banidas do antigo servidor Loki.
@@ -38162,10 +38196,9 @@ Peso : ^7777771^000000
 #
 
 4486#
-^0000ffReduz em 15% o tempo de conjuração variável de magias.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+^0000ffConjuração variável -15%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 
@@ -42852,12 +42885,15 @@ Classes : ^777777Todas^000000
 #
 
 4482#
-Recupera 50 HP e 10 SP a cada 15 segundos
-Aumenta o HP e SP máximos em 5%.
-Caso o refinamento do calçado equipado seja +15, a recuperação de HP e SP terá redução em 10 segundos e adicionará +5% de aumento do HP e SP máximo.
-Tipo : ^777777Carta^000000
-Equipa em : ^777777Calçado^000000
-Peso : ^7777771^000000
+^0000ffHP e SP máx. +5%.^000000
+A cada 15 segundos:
+^0000ffRecupera 50 de HP e 10 de SP.^000000
+Refino +15 ou mais:
+^0000ffHP e SP máx. +2% adicional.^000000
+^0000ffRecuperação de HP e SP será de 10 segundos.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
 #
 
 //-------------------------------------------------------------------
@@ -43184,7 +43220,11 @@ Peso : ^77777710^000000
 #
 22538#
 Tecido leve e delicado, perfeito para confecção de roupas tradicionais coreanas.
-Peso : ^7777771^000000
+^0000ffVeste o personagem com uma Roupa Coreana.^000000
+^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
+Tipo: ^777777Roupa^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777771^000000
 #
 12646#
 Polvo assado muito saboroso, feito em Malangdo para a comemoração da chegada do Ano do Macaco.
@@ -44110,14 +44150,14 @@ Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
 #
 18777#
-De acordo com a lenda, se você esfregasse essa lâmpada, libertaria o poderoso Gênio de Rachel, que te concederia 3 desejos. Pena que o Alladino passou na sua frente e o libertou. Ainda assim, com esta lâmpada “você nunca teve uma sorte assim”!
-^FF0000SOR +10^000000
+De acordo com a lenda, se você esfregasse essa lâmpada, libertaria o poderoso Gênio de Rachel, que te concederia 3 desejos. Pena que o Alladino passou na sua frente e o libertou. Ainda assim, com esta lâmpada 'você nunca teve uma sorte assim'!
+^0000ffSOR +10.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa : ^7777773^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777710^000000
-Nível Necessário : ^7777771^000000
-Classes: ^777777Todas ^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2961#
 Quando você entrou nas catacumbas de Rachel à procura da famosa lâmpada mágica, acabou sendo perseguido por uma verdadeira onda de magmarings. Pra sua sorte, este tapete mágico apareceu e o salvou num piscar de olhos.
@@ -52994,7 +53034,7 @@ Classes: ^777777Todas^000000
 28025#
 Uma dupla de katares usados por dois sicários gêmeos, Tande e Virgílio, após derrotarem o demoníaco Monarca Lich. De acordo com as lendas, Tande e Virgílio na verdade eram frutos do amor de uma valquíria com um demônio, por isso estavam divididos entre os mundos da luz e das trevas. Apesar de possuírem personalidades opostas, ambos se dedicaram à caça e extermínio de demônios que chegavam a chorar só de ouvir o nome deles.
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
-A cada 2 refinos:
+^0000ffA cada 2 refinos:^000000
 ^0000ffDano de [Lâminas de Loki] +1%.^000000
 ^0000ffDano de [Castigo de Loki] +2%.^000000
 ^0000ffDano de [Lâminas Retalhadoras] +3%.^000000
@@ -53003,13 +53043,17 @@ Refino +7 ou mais:
 Refino +9 ou mais:
 ^0000ffVelocidade de ataque +5% adicional.^000000
 Refino +12 ou mais:
-^0000ffAumenta o dano físico de acordo com a defesa do alvo.^000000
+^0000ffMantém [Investigar] ativo.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar DEF são aplicados antes de [Investigar].^000000
 Tipo: ^777777Katar^000000
 Ataque: ^777777150^000000
 Peso: ^777777280^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
-Classes: ^777777Sicários^000000
+Classes: ^777777Sicários e evoluções^000000
 #
 22104#
 Um par de botas encantadas que surgiram quando as águas vindas das Cataratas de Brasilis se chocaram com o mar de Kotakahuana.
@@ -54136,15 +54180,19 @@ Classes: ^777777Todas^000000
 #
 1993#
 E aí o autor da peça de teatro A Paixão de Misto, Mel Gibemoneyson Plis, foi pular uma cerca de arame farpado e se cortou. No dia seguinte, ele estava vendendo esse novo chicote para as musas. Tenho pena dos seus inimigos.
-^0000ffAumenta o dano físico de acordo com a defesa do alvo.^000000
+^0000ffMantém [Investigar] ativo.^000000
 Ao realizar ataques físicos:
 ^0000ffDrena 3 de SP do usuário.^000000
+^FF6347Investigar:^000000
+^0000ffAnula a defesa física do alvo.^000000
+^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
+^0000ffEfeitos de ignorar defesa são aplicados antes de [Investigar].^000000
 Tipo: ^777777Chicote^000000
 Ataque: ^77777780^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777105^000000
-Classes: ^777777Musas^000000
+Classes: ^777777Musas e evoluções^000000
 #
 //*****************************************************
 //------------Aplicar em 2017-08-22--------------------
@@ -54679,7 +54727,11 @@ A cada 2 refinos da arma:
 ^FF6347[Zweihander]^000000
 A cada 2 refinos da arma:
 ^0000ffATQ +20.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^FF6347Conjunto^000000
+^FF6347Quatrilho [0]^000000
+A cada 2 refinos da arma:
+^0000ffDano de [Garra de Tigre] +7%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^77777712^000000
 Peso: ^77777780^000000
@@ -55185,13 +55237,9 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 16074#
-Feito para os Superaprendizes mais brutos e contendo a força de um meteoro, esse martelo pesado é perfeito para a pancadaria! Não se esqueça de aumentar seus níveis de habilidade para que seus inimigos descubram  qual é o verdadeiro impacto de uma explosão cósmica!
-^0000ffA cada refino até o +10:^000000
-^0000ffATQ +10.^000000
-FOR base 108 ou mais:
-^0000ffCusto de SP das habilidades -10%.^000000
-FOR base 120 ou mais:
-^0000ffCusto de SP das habilidades -20% adicional.^000000
+Feito para os Superaprendizes mais brutos e contendo a força de um meteoro, esse martelo pesado é perfeito para a pancadaria! Não se esqueça de aumentar seus níveis de habilidade para que seus inimigos descubram qual é o verdadeiro impacto de uma explosão cósmica!
+^a400cdIndestrutível em batalha.^000000
+^0000ffHabilita [Impacto de Tyr] no mesmo nível aprendido de [Perícia com Espada].^000000
 A cada nível de [Perícia em Armamento]:
 ^0000ffATQ +5.^000000
 A cada nível de [Perícia com Machado e Espada]:
@@ -55201,10 +55249,12 @@ A cada nível de [Punho de Ferro]:
 ^0000ffATQ +30.^000000
 Ao aprender [Usar Carrinho] nv. 10:
 ^0000ffHabilita [Cavalo-de-Pau] nv. 1.^000000
-Ao aprender [Perícia com Espada] nv. 1:
-^0000ffHabilita [Impacto de Tyr] nv. 1.^000000
-A cada nível de [Perícia com Espada]:
-^0000ffNível de [Impacto de Tyr] +1.^000000
+A cada refino até o +10:
+^0000ffATQ +10.^000000
+FOR base 108 ou mais:
+^0000ffConsumo de SP -10%.^000000
+FOR base 120 ou mais:
+^0000ffConsumo de SP -20% adicional.^000000
 Tipo: ^777777Maça^000000
 Ataque: ^7777771^000000
 Peso: ^7777772.000^000000
@@ -57043,5 +57093,45 @@ Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-09--------------------
+//*****************************************************
+28617#
+Essencial para Arcebispos, essa Bíblia foi usada séculos atrás pelos irmãos Linchester, os consagrados caçadores de demônios. Mas não se preocupe, você não precisa saber latim para usá-la, basta ter sabedoria e fé para que as bênçãos caiam sobre você. Com elas, as criaturas sombrias se afastarão e uma poderosa proteção divina te envolverá.
+^0000ffATQM +170.^000000
+^0000ffINT +2. DES +2.^000000
+^0000ffEfetividade de cura +10%.^000000
+^0000ffRecuperação de HP por itens +10%.^000000
+^0000ffDano de [Magnus Exorcismus] +40%.^000000
+A cada 3 de INT base:
+^0000ffDano de [Magnus Exorcismus] +2%.^000000
+Refino +1 ou mais:
+^0000ffAo receber danos físicos, 5% de chance de ativar um [efeito] por 1 segundo.^000000
+A cada refino a partir do +2:
+^0000ffDuração do [efeito] +1 segundo.^000000
+^CD3278Efeito:^000000
+^0000ffIgnora 100% da DEFM de monstros normais e Chefes.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel Espiritual]^000000
+^0000ffConjuração variável de [Magnus Exorcismus] -25%.^000000
+Tipo: ^777777Livro^000000
+Ataque: ^77777730^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Arcebispos^000000
+#
+19145#
+Uma doce melodia que te acompanhará aonde quer que você vá, carregando uma magia misteriosa que te dá forças para lutar. As lendas falam de um pássaro raro cujo último canto de vida se perdeu com o vento, dando origem a esse agradável som.
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques mágicos ou físicos de curto ou longo alcance:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 //file end
