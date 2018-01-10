@@ -41,7 +41,10 @@ sub new {
 		'0875' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'091D' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'095D' => ['storage_password'],
-		'035F' => ['sync', 'V', [qw(time)]],		
+		'035F' => ['sync', 'V', [qw(time)]],
+		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA4' => ['refineui_close', '' ,[qw()]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
