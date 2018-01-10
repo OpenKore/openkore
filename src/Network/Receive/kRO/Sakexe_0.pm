@@ -388,6 +388,8 @@ sub new {
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
+		'0AA0' => ['refineui_opened', '' ,[qw()]],
+		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		};
 
 	# Item RECORD Struct's
