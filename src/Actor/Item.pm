@@ -186,7 +186,7 @@ sub bulkEquip {
 		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
 		
 		if ($list->{$_} eq "[NONE]") {
-			next unless $char->{equipment}{$_};
+			next unless ($char->{equipment} && $char->{equipment}{$_});
 			$char->{equipment}{$_}->unequip();
 		} else {
 			$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
