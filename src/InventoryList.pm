@@ -395,7 +395,7 @@ sub sumByName {
 	assert(defined $name) if DEBUG;
 	my $sum = 0;
 	for my $item (@$self) {
-		if ($item->{name} eq $name) {
+		if (lc($item->{name}) eq lc($name)) {
 			$sum = $sum + $item->{amount};
 		}
 	}
