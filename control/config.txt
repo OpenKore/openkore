@@ -207,7 +207,7 @@ route_step 15
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
-route_ReAddMissingPortals 1
+route_reAddMissingPortals 1
 
 runFromTarget 0
 runFromTarget_dist 6
