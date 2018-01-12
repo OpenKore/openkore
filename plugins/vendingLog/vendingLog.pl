@@ -186,7 +186,7 @@ sub prepareMessage {
 			$name = (exists $knownNames{$key}) ? $knownNames{$key} : $translator->translate("Unknown");
 			
 			for ($i = 0; $i < scalar @{$shopLog{$key}{item}}; ++$i) {
-				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
+				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<",
 						[$offset+$i+1, ${$shopLog{$key}{item}}[$i], formatNumber(${$shopLog{$key}{amount}}[$i]),
 						formatNumber(${$shopLog{$key}{zenyEarned}}[$i]), $name,
 						getFormattedDateShort(${$shopLog{$key}{time}}[$i], $config{&DATE_FORMAT_KEY})]);
@@ -204,7 +204,7 @@ sub prepareMessage {
 	if ($offset == 0) {
 		$msg .= center($translator->translate(" Nothing sold yet "), 79, ' ') ."\n";
 	} else {
-		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
+		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<",
 					[undef, $translator->translate("Total"), formatNumber($totalAmount), formatNumber($totalZeny), undef, undef]);
 	}
 
