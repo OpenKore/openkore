@@ -71116,3 +71116,17 @@ It is worth 3 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19996#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Koneko Hat!
+250 Golden Hair
+125 Fish Tail
+10 Yarn
+2 Cat's Eyes
+1 Koneko Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
