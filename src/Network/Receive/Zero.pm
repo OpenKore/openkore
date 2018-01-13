@@ -21,8 +21,6 @@ use I18N qw(bytesToString);
 use Socket qw(inet_ntoa);
 use Utils;
 use Utils::DataStructures;
-use Data::Dumper;
-use Misc;
 
 sub new {
 	my ($class) = @_;
@@ -139,15 +137,15 @@ sub parse_exp {
 }
 
 sub clone_vender_found {
-	my ($self, $args) = @_;	
-	my $ID = unpack("V", $args->{ID});	
+	my ($self, $args) = @_;
+	my $ID = unpack("V", $args->{ID});
 	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
 		binAdd(\@venderListsID, $ID);
 		Plugins::callHook('packet_vender', {ID => $ID, title => bytesToString($args->{title})});
 	}
 	$venderLists{$ID}{title} = bytesToString($args->{title});
 	$venderLists{$ID}{id} = $ID;
-	
+
 	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
 		my %actor;
@@ -155,7 +153,7 @@ sub clone_vender_found {
 		$actor{ID} = $args->{ID};
 		$actor{nameID} = $ID;
 		$actor{appear_time} = time;
-		$actor{jobID} = $args->{jobID};		
+		$actor{jobID} = $args->{jobID};
 		$actor{pos_to}{x} = $args->{coord_x};
 		$actor{pos_to}{y} = $args->{coord_y};
 		$actor{walk_speed} = 1; #hack
@@ -168,7 +166,7 @@ sub clone_vender_found {
 		$actor{shield} = $args->{shield};
 		$actor{sex} = $args->{sex};
 		$actor{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
-		
+
 		$playersList->add($actor);
 		Plugins::callHook('add_player_list', $actor);
 	}
@@ -183,7 +181,7 @@ sub clone_vender_lost {
 
 	if (defined $playersList->getByID($args->{ID})) {
 		my $player = $playersList->getByID($args->{ID});
-		
+
 		if (grep { $ID eq $_ } @venderListsID) {
 			binRemove(\@venderListsID, $ID);
 			delete $venderLists{$ID};
@@ -209,11 +207,11 @@ sub clone_vender_lost {
 			binAdd(\@partyUsersID, $ID);
 		}
 		$char->{party}{users}{$ID} = new Actor::Party();
-		@{$char->{party}{users}{$ID}}{qw(ID GID name map admin online jobID lv)} = unpack('V V Z24 Z16 C2 v2', substr($args->{playerInfo}, $i, 54));	
-		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});		
+		@{$char->{party}{users}{$ID}}{qw(ID GID name map admin online jobID lv)} = unpack('V V Z24 Z16 C2 v2', substr($args->{playerInfo}, $i, 54));
+		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});
 		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
 		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
-		
+
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
 }
