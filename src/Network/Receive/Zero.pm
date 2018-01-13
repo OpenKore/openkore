@@ -216,5 +216,5 @@ sub clone_vender_lost {
 		
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
- }
+}
 1;
