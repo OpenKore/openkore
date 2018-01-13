@@ -17,10 +17,12 @@ use base qw(Network::Receive::ServerType0);
 use Log qw(warning debug error message);
 use Globals;
 use Translation;
-use Utils qw(makeCoordsDir getHex);
 use I18N qw(bytesToString);
 use Socket qw(inet_ntoa);
-use Utils::DataStructures qw(binAdd binRemove);
+use Utils;
+use Utils::DataStructures;
+use Data::Dumper;
+use Misc;
 
 sub new {
 	my ($class) = @_;
@@ -45,7 +47,9 @@ sub new {
 		'0ADE' => ['flag', 'a*', [qw(unknown)]],
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
-		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],		
+		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
+		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
+ 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -119,18 +123,18 @@ sub flag {
 sub parse_stat_info {
 	my ($self, $args) = @_;
 	if($args->{switch} eq "0ACB") {
-			$args->{val} = getHex($args->{val});
-			$args->{val} = join '', reverse split /(\s+)/, $args->{val};
-			$args->{val} = hex $args->{val};
+		$args->{val} = getHex($args->{val});
+		$args->{val} = join '', reverse split / /, $args->{val};
+		$args->{val} = hex $args->{val};
 	}
 }
 
 sub parse_exp {
 	my ($self, $args) = @_;
 	if($args->{switch} eq "0ACC") {
-			$args->{val} = getHex($args->{val});
-			$args->{val} = join '', reverse split /(\s+)/, $args->{val};
-			$args->{val} = hex $args->{val};
+		$args->{val} = getHex($args->{val});
+		$args->{val} = join '', reverse split / /, $args->{val};
+		$args->{val} = hex $args->{val};
 	}
 }
 
@@ -146,30 +150,25 @@ sub clone_vender_found {
 	
 	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
+		my %actor;
 		$actor = new Actor::Player();
-		$actor->{ID} = $args->{ID};
-		$actor->{nameID} = $ID;
-		$actor->{appear_time} = time;
-		# New actor_display packets include the player's name		
-		$actor->{jobID} = $args->{jobID};		
-		$actor->{pos_to}{x} = $args->{coord_x};
-		$actor->{pos_to}{y} = $args->{coord_y};
-		$actor->{walk_speed} = 1; #hack
-		$actor->{robe} = $args->{robe};
-		$actor->{clothes_color} = $args->{clothes_color};
-
-		if (exists $args->{lowhead}) {
-			$actor->{headgear}{low} = $args->{lowhead};
-			$actor->{headgear}{mid} = $args->{midhead};
-			$actor->{headgear}{top} = $args->{tophead};
-			$actor->{weapon} = $args->{weapon};
-			$actor->{shield} = $args->{shield};
-		}
-
-		$actor->{sex} = $args->{sex};
-
-		# Monsters don't have hair colors or heads to look around...
-		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+		$actor{ID} = $args->{ID};
+		$actor{nameID} = $ID;
+		$actor{appear_time} = time;
+		$actor{jobID} = $args->{jobID};		
+		$actor{pos_to}{x} = $args->{coord_x};
+		$actor{pos_to}{y} = $args->{coord_y};
+		$actor{walk_speed} = 1; #hack
+		$actor{robe} = $args->{robe};
+		$actor{clothes_color} = $args->{clothes_color};
+		$actor{headgear}{low} = $args->{lowhead};
+		$actor{headgear}{mid} = $args->{midhead};
+		$actor{headgear}{top} = $args->{tophead};
+		$actor{weapon} = $args->{weapon};
+		$actor{shield} = $args->{shield};
+		$actor{sex} = $args->{sex};
+		$actor{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+		
 		$playersList->add($actor);
 		Plugins::callHook('add_player_list', $actor);
 	}
@@ -197,4 +196,25 @@ sub clone_vender_lost {
 		$playersList->removeByID($args->{ID});
 	}
 }
+
+ sub party_users_info {
+	my ($self, $args) = @_;
+ 	return unless Network::Receive::changeToInGameState();
+ 
+ 	$char->{party}{name} = bytesToString($args->{party_name});
+
+	for (my $i = 0; $i < length($args->{playerInfo}); $i += 54) {
+		my $ID = substr($args->{playerInfo}, $i, 4);
+		if (binFind(\@partyUsersID, $ID) eq "") {
+			binAdd(\@partyUsersID, $ID);
+		}
+		$char->{party}{users}{$ID} = new Actor::Party();
+		@{$char->{party}{users}{$ID}}{qw(ID GID name map admin online jobID lv)} = unpack('V V Z24 Z16 C2 v2', substr($args->{playerInfo}, $i, 54));	
+		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});		
+		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
+		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
+		
+		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
+	}
+ }
 1;

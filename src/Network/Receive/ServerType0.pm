@@ -2899,10 +2899,10 @@ sub received_characters {
 		$chars[$slot]{map_name} =~ s/\.gat//g;
 		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
 			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
-			$chars[$slot]{exp} = join '', reverse split /(\s+)/, $chars[$slot]{exp};
+			$chars[$slot]{exp} = join '', reverse split / /, $chars[$slot]{exp};
 			$chars[$slot]{exp} = hex $chars[$slot]{exp};
 			$chars[$slot]{exp_job} = getHex($chars[$slot]{exp_job});
-			$chars[$slot]{exp_job} = join '', reverse split /(\s+)/, $chars[$slot]{exp_job};
+			$chars[$slot]{exp_job} = join '', reverse split / /, $chars[$slot]{exp_job};
 			$chars[$slot]{exp_job} = hex $chars[$slot]{exp_job};
 		}
 	}
