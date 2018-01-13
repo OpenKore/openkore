@@ -63,6 +63,8 @@ serverType fRO
 serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
+patchserver ftp.ragnarokonline.fr
+patchpath /patch01
 
 [Indonesia - idRO: Midgard,Asgard ,Valhalla]
 ip 202.93.25.131
