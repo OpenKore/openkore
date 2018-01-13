@@ -148,24 +148,23 @@ sub clone_vender_found {
 
 	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
-		my %actor;
 		$actor = new Actor::Player();
-		$actor{ID} = $args->{ID};
-		$actor{nameID} = $ID;
-		$actor{appear_time} = time;
-		$actor{jobID} = $args->{jobID};
-		$actor{pos_to}{x} = $args->{coord_x};
-		$actor{pos_to}{y} = $args->{coord_y};
-		$actor{walk_speed} = 1; #hack
-		$actor{robe} = $args->{robe};
-		$actor{clothes_color} = $args->{clothes_color};
-		$actor{headgear}{low} = $args->{lowhead};
-		$actor{headgear}{mid} = $args->{midhead};
-		$actor{headgear}{top} = $args->{tophead};
-		$actor{weapon} = $args->{weapon};
-		$actor{shield} = $args->{shield};
-		$actor{sex} = $args->{sex};
-		$actor{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+		$actor->{ID} = $args->{ID};
+		$actor->{nameID} = $ID;
+		$actor->{appear_time} = time;
+		$actor->{jobID} = $args->{jobID};
+		$actor->{pos_to}{x} = $args->{coord_x};
+		$actor->{pos_to}{y} = $args->{coord_y};
+		$actor->{walk_speed} = 1; #hack
+		$actor->{robe} = $args->{robe};
+		$actor->{clothes_color} = $args->{clothes_color};
+		$actor->{headgear}{low} = $args->{lowhead};
+		$actor->{headgear}{mid} = $args->{midhead};
+		$actor->{headgear}{top} = $args->{tophead};
+		$actor->{weapon} = $args->{weapon};
+		$actor->{shield} = $args->{shield};
+		$actor->{sex} = $args->{sex};
+		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
 
 		$playersList->add($actor);
 		Plugins::callHook('add_player_list', $actor);

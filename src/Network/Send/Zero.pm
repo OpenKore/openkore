@@ -29,7 +29,7 @@ sub new {
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0998' => ['send_equip', 'a2 v', [qw(ID type)]],
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
-		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],		
+		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
