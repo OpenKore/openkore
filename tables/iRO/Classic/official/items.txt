@@ -6935,3 +6935,4 @@
 19993#Red_Wing_Hat_Certificate#
 19994#Santa_Poring_Hat_Certificate#
 19995#Glaris_Doll_Hat_Certificate#
+19996#Koneko_Hat_Certificate#
