@@ -27,6 +27,7 @@ sub new {
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'0998' => ['send_equip', 'a2 v', [qw(ID type)]],
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 	);
@@ -36,7 +37,8 @@ sub new {
 	my %handlers = qw(
 		item_use 0439
 		token_login 0825
-		master_login 0ACF		
+		send_equip 0998
+		master_login 0ACF
 	);
 
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
