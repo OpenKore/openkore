@@ -137,7 +137,7 @@ sub checkPersonGuild {
 
 	if ($guild eq 'guild.txt') {
 		my @gld;
-		if (open(FILE, "<", Settings::getControlFilename("guild.txt"))) {
+		if (open(FILE, "<:utf8", Settings::getControlFilename("guild.txt"))) {
 			while (<FILE>) {
 				$_ =~ s/\x{FEFF}//g;
 				chomp($_);
