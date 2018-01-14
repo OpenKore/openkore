@@ -5,70 +5,67 @@
 extern "C" {
 #endif /* __cplusplus */
 
+typedef struct Nodes{
+    unsigned short x;
+    unsigned short y;
+    unsigned short parentX;
+    unsigned short parentY;
+	unsigned int whichlist : 2;
+	unsigned int openListIndex;
+	unsigned int g;
+	unsigned short h;
+	unsigned int f;
+} Node;
+
+typedef struct Blocks{
+	unsigned int walkable : 1;
+	Node nodeInfo;
+} Block;
+
+typedef struct Maps{
+	unsigned int height;
+	unsigned int width;
+	Block **grid;
+} Map;
 
 typedef struct {
-	unsigned short x;
-	unsigned short y;
-} pos;
+    int x;
+    int y;
+    int distanceFromCurrent;
+} eachNeigh;
 
 typedef struct {
-	unsigned int size;
-	pos *array;
-} pos_list;
+    eachNeigh neighborNodes[8];
+    int count;
+} Neighbors;
 
 typedef struct {
-	pos p;
-	int g;
-	int f;
-	int parent;
-} pos_ai;
+    int x;
+    int y;
+    int f;
+} TypeList;
 
 typedef struct {
-	unsigned int size;
-	pos_ai *array;
-} pos_ai_list;
-
-typedef struct {
-	int val;
-	int index;
-} QuicksortFloat;
-
-typedef struct {
-	unsigned int size;
-	QuicksortFloat *array;
-} index_list;
-
-typedef struct {
-	unsigned int size;
-	int *array;
-} lookups_list;
-
-typedef struct {
-	pos_list solution;
-	pos_ai_list fullList;
-	index_list openList;
-	lookups_list lookup;
-	const char* map;
-	const unsigned char* weight;
-	unsigned long width;
-	unsigned long height;
-	pos * start;
-	pos * dest;
-	unsigned long time_max;
-	int first_time;
-
-	void *map_sv;
-	void *weight_sv;
+	Map* currentMap;
+	int avoidWalls;
+	int time_max;
+	int solution_size;
+	int startX;
+	int startY;
+	int endX;
+	int endY;
+	int initialized;
+	int run;
+	int size;
+    int openListSize;
+    int Gscore;
+    int indexNeighbor;
+    int nodeList;
+	TypeList* openList;
+	Node* currentNode;
+	Neighbors* currentNeighbors;
+	Node* infoAdress;
 } CalcPath_session;
-
-
-CalcPath_session *CalcPath_new ();
-CalcPath_session *CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
-	unsigned long width, unsigned long height,
-	pos * start, pos * dest, unsigned long time_max);
-int CalcPath_pathStep (CalcPath_session *session);
-void CalcPath_destroy (CalcPath_session *session);
-
 
 #ifdef __cplusplus
 }

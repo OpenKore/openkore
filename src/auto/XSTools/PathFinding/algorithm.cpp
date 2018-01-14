@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <math.h>
 #include "algorithm.h"
 
@@ -7,11 +8,15 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
-#define SOLUTION_MAX 5000
-#define FULL_LIST_MAX 480000
-#define OPEN_LIST_MAX 160000
-#define LOOKUPS_MAX 200000
+#define DIAGONAL 14
+#define ORTOGONAL 10
+#define NONE 0
+#define OPEN 1
+#define CLOSED 2
+#define PATH 3
+#define LCHILD(currentIndex) 2 * currentIndex + 1
+#define RCHILD(currentIndex) 2 * currentIndex + 2
+#define PARENT(currentIndex) (int)floor((currentIndex - 1) / 2)
 
 #ifdef WIN32
 	#include <windows.h>
@@ -30,35 +35,6 @@ extern "C" {
 /*******************************************/
 
 
-static unsigned char *default_weight = NULL;
-
-
-static inline int
-QuickfindFloatMax(QuicksortFloat* a, int val, int lo, int hi)
-{
-	int x = (lo+hi)>>1;
-	if (val == a[x].val)
-		return x;
-	if (x != hi - 1 && val < a[x].val)
-		return QuickfindFloatMax(a, val, x, hi);
-	if (x != lo && val > a[x].val)
-		return QuickfindFloatMax(a, val, lo, x);
-	if (val < a[x].val)
-		return x+1;
-	else
-		return x;
-}
-
-static inline char
-CalcPath_getMap(const char *map, unsigned long width, unsigned long height, pos *p) {
-	if (p->x >= width || p->y >= height) {
-		return 0;
-	} else {
-		return map[(p->y*width)+p->x];
-	}
-}
-
-
 // Create a new, empty pathfinding session.
 // You must initialize it with CalcPath_init()
 CalcPath_session *
@@ -67,239 +43,325 @@ CalcPath_new ()
 	CalcPath_session *session;
 
 	session = (CalcPath_session*) malloc (sizeof (CalcPath_session));
-	session->first_time = 1;
-	session->map_sv = NULL;
-	session->weight_sv = NULL;
+	
+	session->initialized = 0;
+	session->run = 0;
+	
 	return session;
+}
+
+void 
+freeMap(Map* currentMap)
+{
+    int i;
+    for(i = 0; i < currentMap->height; i++);{
+        free(currentMap->grid[i]);
+    }
+    free(currentMap->grid);
+    free(currentMap);
+}
+
+Map* 
+mallocMap(int width, int height)
+{
+    Map* currentMap = (Map*) malloc(sizeof(Map));
+    currentMap->width = width;
+	currentMap->height = height;
+	currentMap->grid = (Block**) malloc(currentMap->width * sizeof(Block*));
+	int j;
+	for(j = 0; j < currentMap->width; j++){
+        currentMap->grid[j] = (Block*) malloc(currentMap->height * sizeof(Block));
+    }
+    return currentMap;
+}
+
+Map* 
+GenerateMap(unsigned char *map, unsigned long width, unsigned long height)
+{
+    Map* currentMap = mallocMap(width, height);
+
+	int x = 0;
+	int y = 0;
+	
+	int max = width * height;
+	
+	int current = 1;
+	int i;
+	while (current <= max) {
+		current = (y * width) + x;
+		i = map[current];
+		currentMap->grid[x][y].walkable = (i & 1) ? 1 : 0;
+		currentMap->grid[x][y].nodeInfo.whichlist = NONE;
+        currentMap->grid[x][y].nodeInfo.openListIndex = NONE;
+		if (x == currentMap->width - 1) {
+			y++;
+			x = 0;
+		}
+		else {
+			x++;
+		}
+	}
+	return currentMap;
+}
+
+int 
+heuristic_cost_estimate(Node* currentNode, Node* goalNode)
+{
+	int xDistance = abs(currentNode->x - goalNode->x);
+	int yDistance = abs(currentNode->y - goalNode->y);
+	int hScore;
+	if (xDistance > yDistance) {
+		hScore = DIAGONAL * yDistance + ORTOGONAL * (xDistance - yDistance);
+	}
+	else {
+		hScore = DIAGONAL * xDistance + ORTOGONAL * (yDistance - xDistance);
+	}
+	return hScore;
+}
+
+void 
+organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* currentMap)
+{
+    int count = 0;
+    int i;
+	for (i = -1; i <= 1; i++)
+	{
+	    int j;
+		for (j = -1; j <= 1; j++)
+		{
+			if (i == 0 && j == 0){ continue; }
+			int x = currentNode->x + i;
+			int y = currentNode->y + j;
+			if (x > currentMap->width - 1 || y > currentMap->height - 1){ continue; }
+			if (x < 0 || y < 0){ continue; }
+			if (currentMap->grid[x][y].walkable == 0){ continue; }
+			if (i != 0 && j != 0) {
+                if (currentMap->grid[x][currentNode->y].walkable == 0 || currentMap->grid[currentNode->x][y].walkable == 0){ continue; }
+                currentNeighbors->neighborNodes[count].distanceFromCurrent = DIAGONAL;
+			} else {
+                currentNeighbors->neighborNodes[count].distanceFromCurrent = ORTOGONAL;
+			}
+				currentNeighbors->neighborNodes[count].x = x;
+				currentNeighbors->neighborNodes[count].y = y;
+				count++;
+		}
+	}
+	currentNeighbors->count = count;
+}
+
+//Openlist is a binary heap of min-heap type
+
+void 
+openListAdd (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap)
+{
+    openList[openListSize].x = infoAdress->x;
+    openList[openListSize].y = infoAdress->y;
+    openList[openListSize].f = infoAdress->f;
+    currentMap->grid[openList[openListSize].x][openList[openListSize].y].nodeInfo.openListIndex = openListSize;
+    int currentIndex = openListSize;
+    TypeList Temporary;
+    while (PARENT(currentIndex) >= 0) {
+        if (openList[PARENT(currentIndex)].f > openList[currentIndex].f) {
+            Temporary = openList[currentIndex];
+            openList[currentIndex] = openList[PARENT(currentIndex)];
+            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            openList[PARENT(currentIndex)] = Temporary;
+            currentMap->grid[openList[PARENT(currentIndex)].x][openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+            currentIndex = PARENT(currentIndex);
+        } else { break; }
+    }
+}
+
+void 
+reajustOpenListItem (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap)
+{
+    int currentIndex = infoAdress->openListIndex;
+    openList[currentIndex].f = infoAdress->f;
+    TypeList Temporary;
+    while (PARENT(currentIndex) >= 0) {
+        if (openList[PARENT(currentIndex)].f > openList[currentIndex].f) {
+            Temporary = openList[currentIndex];
+            openList[currentIndex] = openList[PARENT(currentIndex)];
+            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            openList[PARENT(currentIndex)] = Temporary;
+            currentMap->grid[openList[PARENT(currentIndex)].x][openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+            currentIndex = PARENT(currentIndex);
+        } else { break; }
+    }
+}
+
+Node* 
+openListGetLowest (TypeList* openList, Map* currentMap, int openListSize)
+{
+    Node* lowestNode = &currentMap->grid[openList[0].x][openList[0].y].nodeInfo;
+    openList[0] = openList[openListSize-1];
+    currentMap->grid[openList[0].x][openList[0].y].nodeInfo.openListIndex = 0;
+    int lowestChildIndex = 0;
+    int currentIndex = 0;
+    TypeList Temporary;
+    while (LCHILD(currentIndex) < openListSize - 2) {
+        //There are 2 children
+        if (RCHILD(currentIndex) <= openListSize - 2) {
+            if (openList[RCHILD(currentIndex)].f <= openList[LCHILD(currentIndex)].f) {
+                lowestChildIndex = RCHILD(currentIndex);
+            } else {
+                lowestChildIndex = LCHILD(currentIndex);
+            }
+        } else {
+            //There is 1 children
+            if (LCHILD(currentIndex) <= openListSize - 2) {
+                lowestChildIndex = LCHILD(currentIndex);
+            } else {
+                break;
+            }
+        }
+        if (openList[currentIndex].f > openList[lowestChildIndex].f) {
+            Temporary = openList[currentIndex];
+            openList[currentIndex] = openList[lowestChildIndex];
+            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            openList[lowestChildIndex] = Temporary;
+            currentMap->grid[openList[lowestChildIndex].x][openList[lowestChildIndex].y].nodeInfo.openListIndex = lowestChildIndex;
+            currentIndex = lowestChildIndex;
+        } else { break; }
+    }
+    return lowestNode;
+}
+
+void 
+reconstruct_path(CalcPath_session *session)
+{
+	while (session->currentNode->x != session->startX || session->currentNode->y != session->startY)
+    {
+        session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo.whichlist = PATH;
+        session->currentNode = &session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo;
+        session->solution_size++;
+    }
+}
+
+void 
+CalcPath_pathStep (CalcPath_session *session)
+{
+	
+	if (!session->initialized) {
+		return -2;
+	}
+	
+	Node* startNode = &session->currentMap->grid[session->startX][session->startY].nodeInfo;
+	Node* goalNode = &session->currentMap->grid[session->endX][session->endY].nodeInfo;
+	
+	if (!session->run) {
+		session->run = 1;
+		session->solution_size = 0;
+		session->size = session->currentMap->height * session->session->currentMap->width;
+		session->openListSize = 1;
+		session->Gscore = 0;
+		session->indexNeighbor = 0;
+		//session->nodeList;
+		session->openList = (TypeList*) malloc(session->size * session->sizeof(TypeList));
+		//session->session->currentNode;
+		session->currentNeighbors = (Neighbors*) malloc(session->sizeof(Neighbors));
+		//session->infoAdress;
+		
+		session->openList[0].x = startNode->x;
+		session->openList[0].y = startNode->y;
+		session->currentMap->grid[session->openList[0].x][session->openList[0].y].nodeInfo.x = startNode->x;
+		session->currentMap->grid[session->openList[0].x][session->openList[0].y].nodeInfo.y = startNode->y;
+	}
+	
+	unsigned long timeout = (unsigned long) GetTickCount();
+	int loop = 0;
+    while (session->openListSize > 0) {
+		
+		loop++;
+		if (loop == 100) {
+			if (GetTickCount() - timeout > session->time_max)
+				return 0;
+			else
+				loop = 0;
+		}
+		
+        //get lowest F score member of openlist and delete it from it
+        session->currentNode = session->openListGetLowest (session->openList, session->currentMap, session->openListSize);
+        session->openListSize--;
+
+        //add session->currentNode to closedList
+        session->currentNode->whichlist = CLOSED;
+
+		//if current is the goal, return the path.
+		if (session->currentNode->x == goalNode->x && session->currentNode->y == goalNode->y) {
+            //return path
+            reconstruct_path(session);
+			return 1;
+		}
+
+		organizeNeighborsStruct(session->currentNeighbors, session->currentNode, session->currentMap);
+		for (session->indexNeighbor = 0; session->indexNeighbor < session->currentNeighbors->count; session->indexNeighbor++) {
+            session->infoAdress = &session->currentMap->grid[session->currentNeighbors->neighborNodes[session->indexNeighbor].x][session->currentNeighbors->neighborNodes[session->indexNeighbor].y].nodeInfo;
+			session->nodeList = session->infoAdress->whichlist;
+			if (session->nodeList == CLOSED) { continue; }
+
+			session->Gscore = session->currentNode->g + session->currentNeighbors->neighborNodes[session->indexNeighbor].distanceFromCurrent;
+
+			if (session->nodeList != OPEN) {
+                session->infoAdress->x = session->currentNeighbors->neighborNodes[session->indexNeighbor].x;
+                session->infoAdress->y = session->currentNeighbors->neighborNodes[session->indexNeighbor].y;
+                session->infoAdress->parentX = session->currentNode->x;
+                session->infoAdress->parentY = session->currentNode->y;
+                session->infoAdress->whichlist = OPEN;
+                session->infoAdress->g = session->Gscore;
+                session->infoAdress->h = heuristic_cost_estimate(session->infoAdress, goalNode);
+                session->infoAdress->f = session->Gscore + session->infoAdress->h;
+				session->openListAdd (session->openList, session->infoAdress, session->openListSize, session->currentMap);
+				session->openListSize++;
+			} else {
+                if (session->Gscore < session->infoAdress->g) {
+                    session->infoAdress->parentX = session->currentNode->x;
+                    session->infoAdress->parentY = session->currentNode->y;
+                    session->infoAdress->g = session->Gscore;
+                    session->infoAdress->f = session->Gscore + session->infoAdress->h;
+                    reajustOpenListItem (session->openList, session->infoAdress, session->openListSize, session->currentMap);
+                }
+			}
+		}
+	}
+	return -1;
 }
 
 // Create a new pathfinding session, or reset an existing session.
 // Resetting is preferred over destroying and creating, because it saves
 // unnecessary memory allocations, thus improving performance.
 CalcPath_session *
-CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
-	unsigned long width, unsigned long height,
-	pos * start, pos * dest, unsigned long time_max)
+CalcPath_init (CalcPath_session *session)
 {
-	if (!session)
-		session = CalcPath_new ();
+	session->currentMap->grid[session->startX][session->startY].nodeInfo.x = session->startX;
+	session->currentMap->grid[session->startX][session->startY].nodeInfo.y = session->startY;
+	session->currentMap->grid[session->startX][session->startY].nodeInfo.g = 0;
+	session->currentMap->grid[session->endX][session->endY].nodeInfo.x = session->endX;
+	session->currentMap->grid[session->endX][session->endY].nodeInfo.y = session->endY;
 	
-	pos_list * solution = &session->solution;
-	pos_ai_list * fullList = &session->fullList;
-	index_list * openList = &session->openList;
-	lookups_list * lookup = &session->lookup;
+	session->initialized = 1;
 	
-	unsigned long i;
-	int index;
-
-	session->width = width;
-	session->height = height;
-	if (!session->first_time) {
-		free (session->start);
-		free (session->dest);
-	}
-	session->start = start;
-	session->dest = dest;
-	session->time_max = time_max;
-
-	session->map = map;
-	if (weight)
-		session->weight = weight;
-	else {
-		if (!default_weight) {
-			default_weight = (unsigned char *) malloc(256);
-			default_weight[0] = 255;
-			memset(default_weight + 1, 1, 255);
-		}
-		session->weight = (const unsigned char *) default_weight;
-	}
-
-	if (session->first_time) {
-		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
-		session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
-		session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
-		session->lookup.array = (int*) malloc(LOOKUPS_MAX*sizeof(int));
-	}
-
-	solution->size = 0;
-	openList->size = 1;
-	fullList->size = 1;
-	fullList->array[0].p = *start;
-	fullList->array[0].g = 0;
-	fullList->array[0].f = abs(start->x - dest->x) + abs(start->y - dest->y);
-	fullList->array[0].parent = -1;
-	openList->array[0].val = fullList->array[0].f;
-	openList->array[0].index = 0;
-	for (i = 0; i < width * height;i++) {
-		lookup->array[i] = 999999;
-	}
-	index = fullList->array[0].p.y*width + fullList->array[0].p.x;
-	lookup->array[index] = 0;
-	lookup->size = width*height;
-
-	session->first_time = 0;
+	//Pathfind(session, &session->currentMap->grid[session->startX][session->startY].nodeInfo, &session->currentMap->grid[session->endX][session->endY].nodeInfo);
+	
+	//freeMap(session->currentMap);
+	
 	return session;
-}
-
-/*
- * Return values:
- * -2 = session not initialized (you must call CalcPath_init() first)
- * -1 = failed (no solution found)
- *  0 = timeout (pathfinding not yet complete; run this function again to resume)
- *  1 = finished
- */
-int
-CalcPath_pathStep(CalcPath_session * session)
-{
-	pos mappos;
-	int newg;
-	unsigned char successors_size;
-	int j, cur, successors_start,suc, found,index;
-	unsigned long timeout = (unsigned long) GetTickCount();
-	unsigned int loop = 0;
-
-	pos_list * solution = &session->solution;
-	pos_ai_list *fullList = &session->fullList;
-	index_list *openList = &session->openList;
-	lookups_list *lookup = &session->lookup;
-	const char* map = session->map;
-	const unsigned char* weight  = session->weight;
-	unsigned long width = session->width;
-	unsigned long height = session->height;
-	pos * start = session->start;
-	pos * dest = session->dest;
-	unsigned long time_max = session->time_max;
-
-	if (session->first_time) {
-		return -2;
-	}
-
-	if (start == NULL && dest == NULL) {
-		return -1;
-	}
-	if (CalcPath_getMap(map, width, height, start) == 0 || CalcPath_getMap(map, width, height, dest) ==  0) {
-		return -1;
-	}
-	while (1) {
-		loop++;
-		if (loop == 50) {
-			if (GetTickCount() - timeout > time_max)
-				return 0;
-			else
-				loop = 0;
-		}
-
-		//get next from the list
-		if (openList->size == 0) {
-			//failed!
-			return -1;
-		}
-		openList->size--;
-		cur = openList->array[openList->size].index;
-
-		//has higher g value than another with same state?
-		index = fullList->array[cur].p.y*width + fullList->array[cur].p.x;
-		if (fullList->array[cur].g > lookup->array[index])
-			continue;
-
-		//check if finished
-		if (dest->x == fullList->array[cur].p.x && dest->y == fullList->array[cur].p.y) {
-			do {
-				solution->array[solution->size] = fullList->array[cur].p;
-				cur = fullList->array[cur].parent;
-				solution->size++;
-			} while (cur != -1);
-			return 1;
-		}
-
-		//Get successors
-		successors_start = fullList->size;
-		successors_size = 0;
-		mappos.x = fullList->array[cur].p.x-1;
-		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x;
-		mappos.y = fullList->array[cur].p.y-1;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x+1;
-		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x;
-		mappos.y = fullList->array[cur].p.y+1;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		//do the step
-		for (j=0;j < successors_size;j++) {
-			suc = successors_start+j;
-			newg = fullList->array[cur].g + weight[CalcPath_getMap(map, width, height, &fullList->array[suc].p)];
-			index = fullList->array[suc].p.y*width + fullList->array[suc].p.x;
-			if (newg >= lookup->array[index])
-				continue;
-
-			fullList->array[suc].g = newg;
-			fullList->array[suc].f = newg + abs(fullList->array[suc].p.x - dest->x) + abs(fullList->array[suc].p.y - dest->y);
-			fullList->array[suc].parent = cur;
-
-			lookup->array[index] = fullList->array[suc].g;
-
-			if (openList->size > 0)
-				found = QuickfindFloatMax(openList->array, fullList->array[suc].f, 0, openList->size);
-			else
-				found = 0;
-
-			if (openList->size - found > 0) {
-				memmove(openList->array+found+1,openList->array+found, sizeof(QuicksortFloat)*(openList->size - found));
-			}
-
-			openList->array[found].index = suc;
-			openList->array[found].val = fullList->array[suc].f;
-			openList->size++;
-		}
-	}
-	return 0;
 }
 
 void
 CalcPath_destroy (CalcPath_session *session)
 {
-	if (!session->first_time) {
-		free (session->start);
-		free (session->dest);
-		free (session->solution.array);
-		free (session->fullList.array);
-		free (session->openList.array);
-		free (session->lookup.array);
+	if (session->initialized) {
+		freeMap(session->currentMap);
 	}
+	
+	if (session->run) {
+		free(session->openList);
+		free(session->currentNeighbors);
+	}
+	
 	free (session);
 }
-
 
 #ifdef __cplusplus
 }

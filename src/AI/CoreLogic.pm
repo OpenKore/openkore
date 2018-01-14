@@ -2156,7 +2156,7 @@ sub processLockMap {
 			unless ($args{'return'}) {
 				my ($lockX, $lockY, $i);
 				eval {
-					my $lockField = new Field(name => $config{'lockMap'}, loadDistanceMap => 0);
+					my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
 					$i = 500;
 					if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
 						do {

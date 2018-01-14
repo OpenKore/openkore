@@ -467,23 +467,23 @@ sub main {
 			# location may be out of date. So we use a smaller distance so we can still move.
 			($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
 
-		# Find the distance value of the block that's farthest away from a wall
-		my $highest;
+		# Find the weight value of the block that has the smallest value
+		my $smallest;
 		foreach (@blocks) {
-			my $dist = ord(substr($field->{dstMap}, $_->{y} * $field->width + $_->{x}));
-			if (!defined $highest || $dist > $highest) {
-				$highest = $dist;
+			my $weight = $field->getBlockWeight($_->{x}, $_->{y});
+			if (!defined $smallest || $weight < $smallest) {
+				$smallest = $weight;
 			}
 		}
 
 		# Get rid of rediculously large route distances (such as spots that are on a hill)
 		# Get rid of blocks that are near a wall
 		my $pathfinding = new PathFinding;
-		use constant AVOID_WALLS => 4;
+		use constant AVOID_CELLS => 2;
 		for (my $i = 0; $i < @blocks; $i++) {
-			# We want to avoid walls (so we don't get cornered), if possible
-			my $dist = ord(substr($field->{dstMap}, $blocks[$i]{y} * $field->width + $blocks[$i]{x}));
-			if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
+			# We want to avoid heavy weight cells (so we don't get cornered), if possible
+			my $weight = $field->getBlockWeight($blocks[$i]{x}, $blocks[$i]{y});
+			if ($smallest < AVOID_CELLS && $weight >= AVOID_CELLS) {
 				delete $blocks[$i];
 				next;
 			}

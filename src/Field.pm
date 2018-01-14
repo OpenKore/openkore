@@ -35,7 +35,7 @@
 # - <tt>height</tt> - The field's height. You should not access this item directly; use $Field->width() instead.
 # - <tt>rawMap</tt> - The raw map data. Contains information about which blocks you can walk on (byte 0),
 #                     and which not (byte 1).
-# - <tt>dstMap</tt> - The distance map data. Used by pathfinding.
+# - <tt>weightMap</tt> - The weight map data. Used by pathfinding.
 # `l`
 package Field;
 
@@ -64,9 +64,12 @@ use constant {
 ##
 # Field->new(options...)
 #
-# Create a new Load a field (.fld2) file. This function also loads an associated .dist file
-# (the distance map file), which is used by pathfinding (for wall avoidance support).
-# If the associated .dist file does not exist, it will be created.
+# Create a new Load a field (.fld2) file. 
+#
+# This function also loads an associated .weight file
+# (the weight per cell file), which is used by pathfinding (for path choosing).
+# If the associated .weight file does not exist, it will be created using an associated .dist file
+# (the distance map file). If the associated .dist file does not exist, it will be created.
 #
 # This function also supports gzip-compressed field files (.fld2.gz). If the .fld2 file cannot
 # be found, but the corresponding .fld2.gz file can be found, this function will load that
@@ -77,7 +80,7 @@ use constant {
 # `l
 # - <tt>file</tt> - The file to load.
 # - <tt>name</tt> - The name of the field to load.
-# - <tt>loadDistanceMap</tt> (optional) - Whether to also load the distance map. By default, this is true.
+# - <tt>loadWeightMap</tt> (optional) - Whether to also load the weight map. By default, this is true.
 # `l`
 #
 # You must specify either the 'file' option or the 'name' option. If you do not, an
@@ -97,9 +100,9 @@ sub new {
 	my $self = bless {}, $class;
 
 	if ($args{file}) {
-		$self->loadFile($args{file}, $args{loadDistanceMap});
+		$self->loadFile($args{file}, $args{loadWeightMap});
 	} elsif ($args{name}) {
-		$self->loadByName($args{name}, $args{loadDistanceMap});
+		$self->loadByName($args{name}, $args{loadWeightMap});
 	} else {
 		ArgumentException->throw("No field name or filename specified.");
 	}
@@ -230,23 +233,32 @@ sub isWater {
 	return ($p & TILE_WATER);
 }
 
+sub getBlockWeight {
+	my ($self, $x, $y) = @_;
+	if ($self->isOffMap($x, $y)) {
+		return 255;
+	} else {
+		return ord(substr($self->{weightMap}, ($y * $self->{width}) + $x, 1));
+	}
+}
+
 ##
-# void $Field->loadFile(String filename, [boolean loadDistanceMap = true])
+# void $Field->loadFile(String filename, [boolean loadWeightMap = true])
 # filename: The filename of the field file to load.
-# loadDistanceMap: Whether to also load the associated distance map file.
+# loadWeightMap: Whether to also load the associated weight map file.
 #
 # Load the specified field file (.fld2 file). This is like calling the constructor
 # with the 'file' argument, but allows you to load a field inside this Field object.
 #
-# If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
+# If $loadWeightMap is set to false, then $self->{weightMap} will be undef.
 #
 # Throws FileNotFoundException if the specified file does not exist.
 # Throws IOException if a read error occured while reading the field file
 # and/or the distance map file.
 sub loadFile {
-	my ($self, $filename, $loadDistanceMap) = @_;
+	my ($self, $filename, $loadWeightMap) = @_;
 
-	$loadDistanceMap = 1 if (!defined $loadDistanceMap);
+	$loadWeightMap = 1 if (!defined $loadWeightMap);
 	$filename =~ s/\//\\/g if ($^O eq 'MSWin32');
 	if (!-f $filename) {
 		FileNotFoundException->throw("File $filename does not exist.");
@@ -289,25 +301,43 @@ sub loadFile {
 
 	($width, $height) = unpack("v v", substr($fieldData, 0, 4, ''));
 
-
-	# Load the associated distance map (.dist file)
-	my $distFile = $filename;
-	$distFile =~ s/\.fld2(\.gz)?$/.dist/i;
-	if ($loadDistanceMap) {
-		if ((!-f $distFile && !-f $distFile.'.gz') || !$self->loadDistanceMap($distFile, $width, $height)) {
-			# (Re)create the distance map.
+	# Load the associated weight map (.weight file)
+	my $weightFile = $filename;
+	$weightFile =~ s/\.fld2(\.gz)?$/.weight/i;
+	if ($loadWeightMap) {
+		if ((!-f $weightFile && !-f $weightFile.'.gz') || !$self->loadWeightMap($weightFile, $width, $height)) {
+			
+			# Load the associated distance map (.dist file)
+			my $distFile = $filename;
+			$distFile =~ s/\.fld2(\.gz)?$/.dist/i;
+			if ((!-f $distFile && !-f $distFile.'.gz') || !$self->loadDistanceMap($distFile, $width, $height)) {
+				# (Re)create the distance map.
+				my $f;
+				$self->{dstMap} = Utils::makeDistMap($fieldData, $width, $height);
+				if (open($f, ">", $distFile)) {
+					binmode $f;
+					print $f pack("a2 v1", 'V#', 4);
+					print $f pack("v v", $width, $height);
+					print $f $self->{dstMap};
+					close $f;
+				}
+			}
+			
+			# (Re)create the weight map.
 			my $f;
-			$self->{dstMap} = Utils::makeDistMap($fieldData, $width, $height);
-			if (open($f, ">", $distFile)) {
+			$self->{weightMap} = Utils::makeWeightMap($self->{dstMap}, $width, $height);
+			if (open($f, ">", $weightFile)) {
 				binmode $f;
-				print $f pack("a2 v1", 'V#', 4);
+				print $f pack("a2 v1", 'V#', 1);
 				print $f pack("v v", $width, $height);
-				print $f $self->{dstMap};
+				print $f $self->{weightMap};
 				close $f;
 			}
+			
+			delete $self->{dstMap};
 		}
 	} else {
-		delete $self->{dstMap};
+		delete $self->{weightMap};
 	}
 
 	$self->{width}  = $width;
@@ -317,6 +347,74 @@ sub loadFile {
 	$self->{baseName} =~ s/\.fld2$//i;
 	$self->{name} = $self->{baseName};
 	return 1;
+}
+
+# boolean $Field->loadWeightMap(String filename, int width, int height)
+# filename: The filename of the weight map.
+# width: The width of the field.
+# height: The width of the field.
+# Requires: The file $filename exists.
+# Returns: Whether the weight map file is valid. If it's invalid, then it should be regenerated.
+#
+# Load a weight map (.weight file). $self->{weightMap} will contain the weight map data.
+#
+# Throws IOException if a read error occured.
+sub loadWeightMap {
+	my ($self, $filename, $width, $height) = @_;
+	my ($f, $weightData);
+	
+	$filename .= '.gz' if (-f $filename.'.gz');
+	
+	if ($filename =~ /\.gz$/) {
+		use bytes;
+		no encoding 'utf8';
+		
+		my $gz = gzopen($filename, 'rb');
+		if (!$gz) {
+			IOException->throw("Cannot open $filename for reading.");
+			return;
+		} else {
+			$weightData = '';
+			while (!$gz->gzeof()) {
+				my $buf;
+				if ($gz->gzread($buf) >= 0) {
+					$weightData .= $buf;
+				} else {
+					IOException->throw("An error occured while decompressing $filename.");
+					return;
+				}
+			}
+			$gz->gzclose();
+		}
+	} elsif (open($f, "<", $filename)) {
+		binmode $f;
+		local($/);
+		$weightData = <$f>;
+		close $f;
+	} else {
+		IOException->throw("Cannot open distance map $filename for reading.");
+		return;
+	}
+	
+	# Get file version.
+	my $dversion = 0;
+	if (substr($weightData, 0, 2) eq "V#") {
+		$dversion = unpack("xx v", substr($weightData, 0, 4, ''));
+	}
+
+	# Get map width and height.
+	my ($dw, $dh) = unpack("v v", substr($weightData, 0, 4, ''));
+
+	# Version 0 files had a bug when height != width
+	# Version 1 (the current version) is the first version.
+	# If the distance map version is smaller than 4, regenerate the distance map.
+
+	if ($dversion >= 1 && $width == $dw && $height == $dh) {
+		$self->{weightMap} = $weightData;
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 # boolean $Field->loadDistanceMap(String filename, int width, int height)
@@ -391,9 +489,9 @@ sub loadDistanceMap {
 }
 
 ##
-# void $Field->loadByName(String name, [boolean loadDistanceMap = true])
+# void $Field->loadByName(String name, [boolean loadWeightMap = true])
 # name: The name of the field to load. E.g. "prontera".
-# loadDistanceMap: Whether to also load the associated distance map file.
+# loadWeightMap: Whether to also load the associated weight map file.
 #
 # Load a field file based on it's name. The actual field file to load is automatically
 # determined based on the field name, the field files folder, whether the field file
@@ -402,14 +500,14 @@ sub loadDistanceMap {
 # This method is like calling the constructor with the 'name' argument,
 # but allows you to load a field inside this Field object.
 #
-# If $loadDistanceMap is set to false, then $self->{dstMap} will be undef.
+# If $loadWeightMap is set to false, then $self->{weightMap} will be undef.
 #
 # Throws FileNotFoundException if a field file cannot be found for the specified
 # field name.
 # Throws IOException if a read error occured while reading the field file
 # and/or the distance map file.
 sub loadByName {
-	my ($self, $name, $loadDistanceMap) = @_;
+	my ($self, $name, $loadWeightMap) = @_;
 	my $baseName;
 	($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
 	$self->{baseName} = $baseName;
@@ -423,7 +521,7 @@ sub loadByName {
 	}
 
 	if (-f $file) {
-		$self->loadFile($file, $loadDistanceMap);
+		$self->loadFile($file, $loadWeightMap);
 		$self->{baseName} = $baseName;
 		$self->{name} = $name;
 	} else {

@@ -63,11 +63,11 @@ sub new {
 #
 # Semi-required arguments:
 # `l
-# - field: a hash with the keys <tt>dstMap</tt>, <tt>width</tt>, and <tt>height</tt>
+# - field: a hash with the keys <tt>weightMap</tt>, <tt>width</tt>, and <tt>height</tt>
 # `l`
 # OR all of:
 # `l
-# - distance_map: a reference to a field map with precomuted distances from walls
+# - weight_map: a reference to a field map with precomuted weights for each cell
 # - width: the width of the field
 # - height: the height of the field
 # `l`
@@ -75,22 +75,20 @@ sub new {
 # Optional arguments:
 # `l
 # - timeout: the number of milliseconds to run each step for, defaults to 1500
-# - weights: a reference to a string of 256 characters, used as the weights to give
-#            squares from 0 to 255 squares away from the closest wall. The first
-#            character must be chr(255).
+# - avoidWalls: of walls should be avoided during pathing, defaults to 1
 # `l`
 sub reset {
 	my $class = shift;
 	my %args = @_;
 
 	# Check arguments
-	croak "Required arguments missing or wrong, specify correct 'field' or 'distance_map' and 'width' and 'height'\n"
-		unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{distance_map} && $args{width} && $args{height});
+	croak "Required arguments missing or wrong, specify correct 'field' or 'weight_map' and 'width' and 'height'\n"
+		unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{weight_map} && $args{width} && $args{height});
 	croak "Required argument 'start' missing\n" unless $args{start};
 	croak "Required argument 'dest' missing\n" unless $args{dest};
 
-	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when dstMap not available
-	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{dstMap}) {
+	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when weightMap not available
+	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{weightMap}) {
 		$args{field}->loadByName($args{field}->name, 1);
 	}
 
@@ -100,16 +98,24 @@ sub reset {
 	$hookArgs{return} = 1;
 	Plugins::callHook("PathFindingReset", \%hookArgs);
 	if ($hookArgs{return}) {
-		$args{distance_map} = \($args{field}->{dstMap}) unless $args{distance_map};
+		$args{weight_map} = \($args{field}->{weightMap}) unless $args{weight_map};
 		$args{width} = $args{field}{width} unless $args{width};
 		$args{height} = $args{field}{height} unless $args{height};
 		$args{timeout} = 1500 unless $args{timeout};
+		$args{avoidWalls} = 1 unless $args{avoidWalls};
 	}
 
-	return $class->_reset($args{distance_map}, $args{weights}, $args{width}, $args{height},
-		$args{start}{x}, $args{start}{y},
-		$args{dest}{x}, $args{dest}{y},
-		$args{timeout});
+	return $class->_reset(
+		$args{weight_map}, 
+		$args{avoidWalls}, 
+		$args{width}, 
+		$args{height},
+		$args{start}{x}, 
+		$args{start}{y},
+		$args{dest}{x}, 
+		$args{dest}{y},
+		$args{timeout}
+	);
 }
 
 

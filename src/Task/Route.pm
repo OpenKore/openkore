@@ -398,22 +398,12 @@ sub getRoute {
 	Misc::closestWalkableSpot($field, \%start);
 	Misc::closestWalkableSpot($field, \%dest);
 
-	# Generate map weights (for wall avoidance)
-	my $weights;
-	if ($avoidWalls) {
-		#$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-		$weights = join('', (map chr($_), (255, 7, 6, 3, 2, 1)));
-		$weights .= chr(1) x (256 - length($weights));
-	} else {
-		$weights = chr(255) . (chr(1) x 255);
-	}
-
 	# Calculate path
 	my $pathfinding = new PathFinding(
 		start => \%start,
 		dest  => \%dest,
 		field => $field,
-		weights => $weights
+		avoidWalls => $avoidWalls
 	);
 	return undef if (!$pathfinding);
 
