@@ -59,6 +59,8 @@ ip 54.36.76.129
 port 6900
 master_version 31
 version 1
+patchpath /patch01
+patchserver ftp.ragnarokonline.fr
 serverType fRO
 serverEncoding Western
 addTableFolders fRO
