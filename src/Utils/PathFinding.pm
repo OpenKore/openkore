@@ -133,12 +133,6 @@ sub reset {
 #     and y coordinates from the start to the end of the path.
 
 ##
-# $PathFinding->runstr()
-# Returns: undef on failure, 0 when pathfinding is not yet complete, or a string
-#     of packed shorts. The shorts are pairs of X and Y coordinates running
-#     from the end to the start of the path. (note that the order is reversed)
-
-##
 # $PathFinding->runcount()
 # Returns: -1 on failure, 0 when pathfinding is not yet complete, or the
 #     number of steps required to walk from source to destination.
