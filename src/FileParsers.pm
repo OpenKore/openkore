@@ -536,7 +536,7 @@ sub parseMonControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,@args,$args);
+	my ($key,@args,$args,%cache);
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -552,18 +552,12 @@ sub parseMonControl {
 			($key, $args) = lc($line) =~ /([\s\S]+?) ([\-\d\.]+[\s\S]*)/;
 		}
 
-		@args = split / /, $args;
-		if ($key ne "") {
-			$r_hash->{$key}{attack_auto} = $args[0];
-			$r_hash->{$key}{teleport_auto} = $args[1];
-			$r_hash->{$key}{teleport_search} = $args[2];
-			$r_hash->{$key}{skillcancel_auto} = $args[3];
-			$r_hash->{$key}{attack_lvl} = $args[4];
-			$r_hash->{$key}{attack_jlvl} = $args[5];
-			$r_hash->{$key}{attack_hp} = $args[6];
-			$r_hash->{$key}{attack_sp} = $args[7];
-			$r_hash->{$key}{weight} = $args[8];
-		}
+		next if $key =~ /^$/;
+		$args =~ s/\s*#.*//;
+		@args = split /\s+/, $args;
+		# Cache similar entries to save memory.
+		$r_hash->{$key} = $cache{$args} ||= { map {$_ => shift @args}
+			qw(attack_auto teleport_auto teleport_search skillcancel_auto attack_lvl attack_jlvl attack_hp attack_sp weight) };
 	}
 	return 1;
 }
