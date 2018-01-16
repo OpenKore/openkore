@@ -9,6 +9,7 @@ EFST_CONCENTRATION Concentração
 EFST_GRIFFON Montar Grifo
 EFST_GS_MADNESSCANCEL Resistência Final
 EFST_GS_ACCURACY Aumentar Precisão
+EFST_FOOD_STR Bônus de FOR
 EFST_HALLUCINATIONWALK Passos da Ilusão
 EFST_STORMKICK_ON Postura do Tornado
 EFST_KAUPE Kaupe
@@ -16,6 +17,8 @@ EFST_SHIELDSPELL_DEF Aegis Domini
 EFST_WARMER Aquecer Terreno
 EFST_PROTECT_MDEF Poção de DEFM
 EFST_STAR_COMFORT Proteção Estelar
+EFST_FOOD_CRITICALSUCCESSVALUE Bônus de CRIT
+EFST_PROPERTYTELEKINESIS Ataques encantados com a propriedade Fantasma
 EFST_GLOOMYDAY Ode a Hela
 EFST_SIRCLEOFNATURE Sibilo de Eir
 EFST_DEADLYINFECT Pestilência
@@ -27,6 +30,7 @@ EFST_ATKER_BLOOD Suco de Gato
 EFST_BODYPAINT Borrifar Tinta
 EFST_NJ_UTSUSEMI Troca de Pele
 EFST_POISONINGWEAPON Aplicar Toxina
+EFST_CASH_DEATHPENALTY Anula a perda de EXP ao morrer
 EFST_GS_ADJUSTMENT Pânico do Justiceiro
 EFST_AUTOSPELL Desejo Arcano
 EFST_DEC_AGI Diminuir Agilidade
@@ -37,15 +41,19 @@ EFST_TAROTCARD Destino nas Cartas
 EFST_FEARBREEZE Disparo Selvagem
 EFST_GN_CARTBOOST Propulsão do Carrinho
 EFST_SHIELDSPELL_REF Aegis Domini
+EFST_FOOD_INT_CASH Aumenta INT
 EFST_NOEQUIPSHIELD Remover Escudo
 EFST_MELTDOWN Golpe Estilhaçante
 EFST_QUAGMIRE Pântano dos Mortos
 EFST_KAIZEL Kaizel
 EFST_CR_SHRINK Submissão
+EFST_FOOD_VIT Bônus de VIT
 EFST_PARRYING Aparar Golpe
 EFST_PROTECTWEAPON Revestir Arma
+EFST_FOOD_AGI Bônus de AGI
 EFST_INC_AGI Aumentar Agilidade
 EFST_SHOUT Grito de Guerra
+EFST_CASH_RECEIVEITEM Aumenta a chance de um monstro derrubar itens
 EFST_SPL_DEF Geleia de Mel de Vagalume
 EFST_ILLUSION Alucinação
 EFST_HOVERING Planar
@@ -79,6 +87,7 @@ EFST_PROTECTSHIELD Revestir Escudo
 EFST_MAGNIFICAT Magnificat
 EFST_ATTHASTE_POTION1 Poção da Concentração
 EFST_POISONREACT Refletir Veneno
+EFST_MOVHASTE_HORSE Velocidade de ataque aumentada
 EFST_CRESCENTELBOW Cotovelada Ascendente
 EFST_SONG_OF_MANA Canção de Alfheim
 EFST_KAAHI Kaahi
@@ -86,12 +95,15 @@ EFST_ECHOSONG Canção de Balder
 EFST_PRESERVE Preservar
 EFST_WEAPONPERFECT Manejo Perfeito
 EFST_PROVOKE Provocar
+EFST_MOVHASTE_POTION Movimento acelerado
 EFST_EDP Encantar com Veneno Mortal
 EFST_JOINTBEAT Ataque Vital
 EFST_PROVIDENCE Divina Providência
 EFST_FIGHTINGSPIRIT Aura de Combate
+EFST_FOOD_VIT_CASH Aumenta VIT
 EFST_SATURDAY_NIGHT_FEVER Loucura
 EFST_TRUESIGHT Visão Real
+EFST_CASH_PLUSONLYJOBEXP Bônus de EXP de Classe
 EFST_ARMOR_PROPERTY Propriedade
 EFST_TENSIONRELAX Relaxar
 EFST_DEATHHURT Squamata
@@ -114,6 +126,7 @@ EFST_SUN_COMFORT Proteção Solar
 EFST_KYRIE Kyrie Eleison
 EFST_PROTECTARMOR Revestir Armadura
 EFST_GIANTGROWTH Força Titânica
+EFST_STR_SCROLL Aumenta FOR
 EFST_AB_SECRAMENT Sacramentum
 EFST_PARALYSE Curare
 EFST_PROPERTYGROUND Terremoto
@@ -124,11 +137,14 @@ EFST_SPL_MATK Lágrima de Cornus
 EFST_DEEP_SLEEP Sono Profundo
 EFST_RECOGNIZEDSPELL Maestria Arcana
 EFST_TARGET_ASPD Poção Mental
+EFST_FOOD_BASICAVOIDANCE Bônus de Esquiva
 EFST_DEFENDER Aura Sagrada
 EFST_WEAPONPROPERTY Aspersio
 EFST_S_LIFEPOTION Poção Menor de Vida
+EFST_FOOD_LUK Bônus de SOR
 EFST_BLOODING Sangramento
 EFST_REFRESH Purificação
+EFST_FOOD_LUK_CASH Aumenta SOR
 EFST_BROKENARMOR Armadura quebrada
 EFST_DODGE_ON Cambalhota
 EFST_TARGET_BLOOD Mega Resistência
@@ -139,18 +155,23 @@ EFST_PROPERTYWIND Ventania
 EFST_ENCHANTBLADE Encantar Lâmina
 EFST_ADRENALINE Adrenalina Pura
 EFST_MAGICMUSHROOM Waraitake
+EFST_CASH_PLUSEXP Bônus de EXP
 EFST_ATTHASTE_POTION2 Poção do Despertar
 EFST_TOXIN Cicuta
 EFST_RAISINGDRAGON Dragão Ascendente
 EFST_HARMONIZE Harmonizar
+EFST_CHASEWALK2 FOR aumentada
+EFST_FOOD_STR_CASH Aumenta FOR
 EFST_CLOAKINGEXCEED Ocultação
 EFST_ASSUMPTIO2 Assumptio
 EFST_THORNS_TRAP Armadilha de Espinhos
 EFST_SLOWPOISON Retardar Veneno
 EFST_CLOAKING Furtividade
+EFST_PARTYFLEE Esquiva aumentada
 EFST_CRITICALPERCENT Abrasivo
 EFST_INSPIRATION Consagração
 EFST_UNLIMITED_HUMMING_VOICE Murmúrio Perene
+EFST_FOOD_DEX Bônus de DES
 EFST_ANALYZE Analisar
 EFST_GENTLETOUCH_REVITALIZE Chakra do Vigor
 EFST_COUNTER_ON Postura do Contrachute
@@ -166,6 +187,8 @@ EFST_STRIPACCESSARY Remover Acessório
 EFST_PROPERTYUNDEAD Zumbificação
 EFST_INVISIBILITY Forma Etérea
 EFST_ABUNDANCE Regeneração Espiritual
+EFST_FOOD_BASICHIT Bônus de Precisão
+EFST_FOOD_AGI_CASH Aumenta AGI
 EFST_SHADOWFORM Vínculo Sombrio
 EFST_AUTOSHADOWSPELL Desejo das Sombras
 EFST_SHAPESHIFT Reconfigurar Elemento
@@ -175,8 +198,11 @@ EFST_MARIONETTE Controle de Marionete
 EFST_WZ_SIGHTBLASTER Explosão Protetora
 EFST_LEXAETERNA Lex Aeterna
 EFST_INFRAREDSCAN Sensor Infravermelho
+EFST_INT_SCROLL Aumenta INT
 EFST_ASPERSIO Aspersio
+EFST_MOVHASTE_INFINITY Movimento acelerado
 EFST_LERADS_DEW Orvalho de Idun
+EFST_FOOD_INT Bônus de INT
 EFST_VENOMBLEED Beladona
 EFST_GS_GATLINGFEVER Ataque Gatling
 EFST_VITALITYACTIVATION Vitalidade Rúnica
@@ -189,12 +215,14 @@ EFST_HEALPLUS Poção da Regeneração
 EFST_PROTECT_DEF Poção de DEF
 EFST_CRITICALWOUND Ferimento Crítico
 EFST_PRESTIGE Prestigio Divino
+EFST_FOOD_DEX_CASH Aumenta DES
 EFST_CARTBOOST Impulso do Carrinho
 EFST_L_LIFEPOTION Poção Média de Vida
 EFST_WINDWALK Caminho do Vento
 EFST_PROPERTYFIRE Chamas
 EFST_STRIKING Encanto de Órion
 EFST_DOWNKICK_ON Postura da Patada Voadora
+EFST_PROPERTYDARK Ataques encantados com a propriedade Sombrio
 EFST_REFLECTSHIELD Escudo Refletor
 EFST_RIDING Montaria
 EFST_LIGHTNINGWALK Salto Relâmpago
@@ -229,11 +257,18 @@ EFST_VOLCANIC_ASH Cinzas Vulcânicas
 EFST_ATKER_ASPD Pílula de HP
 EFST_ATKER_MOVESPEED Pílula de SP
 EFST_OVERLAPEXPUP Comida de Gato
+EFST_PLUSATTACKPOWER ATQ aumentado
+EFST_PLUSMAGICPOWER ATQM aumentado
 EFST_MACRO Utilizando Macro
 EFST_MACRO_POSTDELAY Tempo de espera de uso de Macro
 EFST_MONSTER_TRANSFORM Disface
 EFST_SIT Sentar
 EFST_ALL_RIDING Montaria
+EFST_SKF_MATK Bônus de ATQM
+EFST_SKF_ATK Bônus de ATQ
+EFST_SKF_ASPD Bônus de velocidade de ataque
+EFST_SKF_CAST Conjuração variável reduzida
+EFST_REWARD_PLUSONLYJOBEXP Bônus de EXP de Classe
 EFST_ENERVATION Máscara da Fraqueza
 EFST_GROOMY Máscara da Melancolia
 EFST_IGNORANCE Máscara da Tolice
@@ -287,6 +322,9 @@ EFST_GVG_SLEEP Fada do Sonho
 EFST_GVG_CURSE Fada da Sorte
 EFST_GVG_SILENCE Fada da Música
 EFST_GVG_BLIND Fada da Luz
+EFST_GEFFEN_MAGIC1 Bênção da Lydia Aumenta o dano físico contra Humanoides
+EFST_GEFFEN_MAGIC2 Bênção da Fenrir Aumenta o dano mágico contra Humanoides
+EFST_GEFFEN_MAGIC3 Bênção de Chaos Aumenta a resistência contra Humanoides
 EFST_QUEST_BUFF1 Bênção de Reno
 EFST_QUEST_BUFF2 Bênção de Reno
 EFST_QUEST_BUFF3 Bênção de Reno
@@ -298,6 +336,9 @@ EFST_REBOUND Fadiga
 EFST_UNLIMIT Ilimitar
 EFST_KINGS_GRACE Graça Real
 EFST_DARKCROW Ferida
+EFST_GEFFEN_MAGIC1 Bênção da Lydia Aumenta o dano físico contra Humanoides
+EFST_GEFFEN_MAGIC2 Bênção da Fenrir Aumenta o dano mágico contra Humanoides
+EFST_GEFFEN_MAGIC3 Bênção de Chaos Aumenta a resistência contra Humanoides
 EFST_FENRIR_CARD Poder da Fenrir
 EFST_HELM_VERKANA Runa Berkana
 EFST_HELM_RHYDO Runa Raido
