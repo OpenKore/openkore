@@ -301,7 +301,7 @@ sub filewrite {
 	open(WRITE, ">:utf8", $controlfile);
 	print WRITE join ("\n", @lines);
 	close(WRITE);
-	message "$file: '$name' set to @value (was $oldval)\n", 'info';
+	message "$file: '$name' set to @value (was ". ($oldval || "*None*") .")\n", 'info';
 	Commands::run("reload $file")
 }
 
