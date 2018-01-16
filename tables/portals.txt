@@ -357,6 +357,50 @@ prt_fild08a 170 378 prontera 156 22
 prt_fild08a 233 16 moc_fild01 239 382
 prt_fild08a 371 212 izlude 24 98
 
+#kRO:zero warp prt_fild08b,prt_fild08c,prt_fild08d
+
+prt_fild08b 16 187 prt_fild07 385 186
+prt_fild08b 16 239 prt_fild07 383 239
+prt_fild08b 55 21 moc_fild01 56 384
+prt_fild08b 170 378 prontera 156 22
+prt_fild08b 233 16 moc_fild01 239 382
+prt_fild08b 371 212 izlude 30 78
+
+prt_fild07 385 186 prt_fild08b 16 187
+prt_fild07 383 239 prt_fild08b 16 239
+moc_fild01 56 384 prt_fild08b 55 21
+prontera 156 22 prt_fild08b 170 378
+moc_fild01 239 382 prt_fild08b 233 16
+izlude 30 78 prt_fild08b 371 212
+
+prt_fild08c 16 187 prt_fild07 385 186
+prt_fild08c 16 239 prt_fild07 383 239
+prt_fild08c 55 21 moc_fild01 56 384
+prt_fild08c 170 378 prontera 156 22
+prt_fild08c 233 16 moc_fild01 239 382
+prt_fild08c 371 212 izlude 30 78
+
+prt_fild07 385 186 prt_fild08c 16 187
+prt_fild07 383 239 prt_fild08c 16 239
+moc_fild01 56 384 prt_fild08c 55 21
+prontera 156 22 prt_fild08c 170 378
+moc_fild01 239 382 prt_fild08c 233 16
+izlude 30 78 prt_fild08c 371 212
+
+prt_fild08d 16 187 prt_fild07 385 186
+prt_fild08d 16 239 prt_fild07 383 239
+prt_fild08d 55 21 moc_fild01 56 384
+prt_fild08d 170 378 prontera 156 22
+prt_fild08d 233 16 moc_fild01 239 382
+prt_fild08d 371 212 izlude 30 78
+
+prt_fild07 385 186 prt_fild08d 16 187
+prt_fild07 383 239 prt_fild08d 16 239
+moc_fild01 56 384 prt_fild08d 55 21
+prontera 156 22 prt_fild08d 170 378
+moc_fild01 239 382 prt_fild08d 233 16
+izlude 30 78 prt_fild08d 371 212
+
 #################### Criatura Academy ####################
 izlude 125 257 iz_ac01 99 29
 izlude 130 257 iz_ac01 99 29
