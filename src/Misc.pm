@@ -2341,8 +2341,8 @@ sub items_control {
 # Returns the mon_control.txt settings for monster name $name.
 # If $name has no specific settings, use 'all'.
 sub mon_control {
-	my $name = shift;
-	my $nameID = shift;
+	my ($name, $nameID) = @_;
+	
 	return $mon_control{lc($name)} || $mon_control{$nameID} || $mon_control{all} || { attack_auto => 1 };
 }
 
