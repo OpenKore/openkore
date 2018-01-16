@@ -156,7 +156,7 @@ my ($cmd, $args) = @_;
 			$ctrl_hash->{$realKey}{attack_jlvl}, $ctrl_hash->{$realKey}{attack_hp}, $ctrl_hash->{$realKey}{attack_sp},
 			$ctrl_hash->{$realKey}{weight});
 	} elsif ($cmd eq 'pconf') {
-		$oldval = $pickupitems{lc($key)};
+		$oldval = $pickupitems{$realKey};
 	} elsif ($cmd eq 'sconf') {
 		if ($shopname) {
 			$oldval = $shop{title_line};
