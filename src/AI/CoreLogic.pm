@@ -2889,7 +2889,7 @@ sub processAutoAttack {
 					next;
 				}
 
-				my $control = mon_control($monster->{name});
+				my $control = mon_control($monster->{name}, $monster->{nameID});
 				if (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
