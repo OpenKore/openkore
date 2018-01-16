@@ -25,6 +25,7 @@ use strict;
 use Plugins;
 use Globals;
 use Log qw(message error debug warning);
+use Misc qw(parseReload);
 
 Plugins::register('xConf', 'commands for change items_control, mon_control, pickupitems, priority', \&Unload, \&Unload);
 
@@ -205,29 +206,35 @@ sub fileclear {
 ## set all keys to $value
 sub filesetall {
 	my ($file,$value) = @_;
-	my 	@value;
+	my $controlfile = Settings::getControlFilename($file);
+	my @value;
+	
 	if (!$value) {
 		push (@value, "0") ;
-	}else{
+	} else {
 		@value = split(/\s+/, $value);
 	}
-	my $controlfile = Settings::getControlFilename($file);
-	open(FILE, "<:utf8", $controlfile);
+	
+	open(FILE, "<:utf8", $controlfile);	
 	my @lines = <FILE>;
 	close(FILE);
 	chomp @lines;
+	
 	foreach my $line (@lines) {
 		next if $line =~ /^$/ || $line =~ /^#/;
 		my ($what) = $line =~ /([\s\S]+?)(?:\s[\-\d\.]+[\s\S]*)/;
 		$what =~ s/\s+$//g;
 		$line = join (' ', $what, @value);
 	}
+	
 	open(WRITE, ">:utf8", $controlfile);
 	print WRITE join ("\n", @lines);
 	close(WRITE);
+	
 	message "xConf. $file: all set to $value.\n", 'info';
-	Commands::run("reload $file")
+	parseReload($controlfile);
 }
+
 ## write FILE
 sub filewrite {
 	my ($file, $key, $value, $oldval, $shopname, $name, $realKey) = @_;
@@ -286,7 +293,7 @@ sub filewrite {
 	print WRITE join ("\n", @lines);
 	close(WRITE);
 	message "$file: '$name' set to @value (was ". ($oldval || "*None*") .")\n", 'info';
-	Commands::run("reload $file")
+	parseReload($controlfile);
 }
 
 sub priconf {
@@ -309,7 +316,7 @@ sub priconf {
 	open($file,">:utf8",$controlfile);
 	print $file @lines;
 	close($file);
-	Commands::run("reload priority.txt");
+	parseReload($controlfile);
 }
 
 1;
