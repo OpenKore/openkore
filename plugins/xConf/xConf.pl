@@ -308,7 +308,7 @@ sub priconf {
 	open(my $file,"<:utf8",$controlfile);
 	my @lines;
 	while (my $tmp = <$file>) {
-		push @lines, $tmp if $tmp =~ /^#/;
+		push @lines, $tmp if ($tmp =~ /^#/ or $tmp =~ /^!/);
 	}
 	push @lines, "\n";
 	foreach (@mobs) { push @lines, $_."\n" }
