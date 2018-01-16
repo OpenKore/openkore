@@ -21192,13 +21192,16 @@ Classes: ^777777Transclasses, exceto Aprendizes^000000
 
 2424#
 Este par de sapatos impermeáveis foi projetado especialmente para áreas escorregadias.
-5% de tolerância a ataques da propriedade Água.
-+5% de recuperação de HP. +10% de HP máximo quando equipados com o Cachecol de Lã.
-Tipo de Item: ^777777Calçado^000000
+^0000ffResistência a propriedade Água +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Cachecol de Lã]^000000
+^0000ffHP máx. +10%.^000000
+^0000ffRegeneração natural de HP +5%.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^77777713^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2425#
@@ -21214,14 +21217,16 @@ Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes
 
 2426#
 Estas botas das sombras são feitas com forças das trevas. Seu criador colocou um feitiço para proteger o usuário do perigo.
-Quando atingido por ataque mágico, há chance de lançar automaticamente Furtividade em nível 2.
-Se o jogador tiver Furtividade em nível maior, o nível possuído pelo jogador será usado.
-DEFM + 10
-Tipo de Item: ^777777Calçado^000000
+^0000ffDEFM +10.^000000
+Ao receber danos mágicos:
+^0000ffChance de autoconjurar [Furtividade] nv. 2 se estiver perto de uma parede.^000000
+Furtividade nv. 3 ou mais:
+^0000ffSerá autoconjurado no nível aprendido.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^7777770^000000
 Peso: ^777777200^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2527#
@@ -23904,13 +23909,14 @@ Classe Aplicável: ^777777Todas, exceto Aprendiz^000000
 #
 2434#
 Um par de botas feitas de couro leve e resistente, que faz você querer correr quando as usa.
-AGI +1. AGI +2 se o Nível de Aprimoramento for 9 ou maior.
-Tipo de Item: ^777777Calçado^000000
+^0000ffAGI +1.^000000
+Refino +9 ou mais:
+^0000ffAGI +2 adicional.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^77777716^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777755^000000
-Classe: ^777777Todas as Transcendentais,
-exceto Aprendiz^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2371#
 Roupa de baixo tipo 'pára-quedas', para pessoas corpulentas. Defesa horrível, devido ao tecido esticado.
@@ -29795,18 +29801,19 @@ Peso: ^77777750^000000
 Classes que utilizam:  ^777777Todas as Transcendentais^000000
 #
 2450#
-Sapatos feitos de um ramo da Árvore da Vida.
-São confortáveis e oferecem ao usuário a energia da vida.
-Recuperação de HP aumenta em 5%
-HP máximo + 10%
-Recupera 30 HP a cada 10 segundos
-Efeito de item de cura ou recuperação aumentado em 5%
-DEFM + 3, VIT + 2
+Sapatos feitos de um ramo da Árvore da Vida. São confortáveis e oferecem ao usuário a energia da vida.
+^0000ffDEFM +3. VIT +2.^000000
+^0000ffHP máx. +10%.^000000
+^0000ffEfetividade de cura recebida +5%.^000000
+^0000ffRegeneração natural de HP +5%.^000000
+^0000ffRecuperação de HP por itens +5%.^000000
+A cada 10 segundos:
+^0000ffRecupera 30 de HP.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777716^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam:  ^777777Todas as Transcendentais, exceto Aprendiz^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2553#
 Manteau feito com crina de dragão.
@@ -31801,14 +31808,18 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 2466#
 Calçados leves e resistentes, perfeitos para aventureiros profissionais treinarem suas habilidades de combate.
-^0000ffMáximo HP +2%, máximo SP +2%.
-Recuperação de HP e SP +5%.
-Concede FOR +2 ao equipar junto com Camiseta/Camiseta [1] e Roupa de Baixo/Roupa de Baixo [1].^000000
-Tipo: ^777777Sapato^000000
+^0000ffHP e SP máx. +2%.^000000
+^0000ffEfetividade de cura recebida +5%.^000000
+^0000ffRecuperação de HP por itens +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Camiseta]^000000
+^FF6347[Roupa de Baixo]^000000
+^0000ffFOR +2.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^7777771^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 
 //---- CASH Items August 2010 ----
@@ -34358,14 +34369,14 @@ Classes que utilizam: ^777777Todas^000000
 #
 5765#
 Um adereço do estilo Gótico Lolita, esse laço faz parte da moda urbana recém lançada em Amatsu, atraindo desde adolescentes e jovens adultas, até mesmo pessoas do sexo masculino. Parte de uma subcultura que acaba de florescer na Terra das Cerejeiras, o laço, assim como o estilo que representa, mostra-se bastante resistente a ataques, sejam verbais ou físicos.
-^0000ffReduz em 5% o dano recebido por ataques da propriedade Neutro.
-Reduz em 5% o dano recebido por ataques a distância.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777770^000000
+^0000ffResistência a propriedade Neutro +5%.000000
+^0000ffResistência a danos físicos a distância +5%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Peso: ^77777710^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 2460#
 Calçado de couro grosso que cobre parte da perna. Tem a borda revestida com o pêlo branco de um Lunático. É bem pesada, de modo que apenas quem tem treinamento de combate consegue usá-las.
@@ -38770,13 +38781,14 @@ Classes : ^777777Espadachins/Magos/Arqueiros/Mercadores/Gatunos e suas respectiv
 #
 1494#
 Uma linda lança em forma de onda. Ela foi abençoada pelos espíritos da água.
-HP Máximo + 1% a cada refinamento.
-Tipo : ^777777Lança de Duas Mãos^000000
-Ataque : ^777777190^000000
-Peso : ^777777380^000000
-Nível da Arma : ^7777774^000000
-Nível Necessário : ^777777105^000000
-Classes : ^777777Espadachins e Evoluções^000000
+^0000ffA cada refino:^000000
+^0000ffHP máx. +1%.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777190^000000
+Peso: ^777777380^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777105^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 18117#
 Um lendário arco real. Ele oferece poderes mágicos para flechas específicas.
@@ -48247,14 +48259,16 @@ Peso: ^7777770^000000
 #
 2486#
 Estas botas das sombras são feitas com forças das trevas. Seu criador colocou um feitiço para proteger o usuário do perigo.
-Quando atingido por ataque mágico, há chance de lançar automaticamente Furtividade em nível 2.
-Se o jogador tiver Furtividade em nível maior, o nível possuído pelo jogador será usado.
-DEFM + 10
+^0000ffDEFM +10.^000000
+Ao receber danos mágicos:
+^0000ffChance de autoconjurar [Furtividade] nv. 2 se estiver perto de uma parede.^000000
+Furtividade nv. 3 ou mais:
+^0000ffSerá autoconjurado no nível aprendido.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^7777770^000000
 Peso: ^777777200^000000
-Nível Necessário: ^77777775^000000
-Classes: ^777777Todas as classes Transcendentais, exceto Aprendizes^000000
+Nível necessário: ^77777775^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2976#
 Um assustador lampião que emana escuridão.
@@ -57090,7 +57104,7 @@ A cada 3 refinos até o +15:
 ^0000ffDano físico a distância +6%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^7777770^000000
-Peso: ^7777770^000000
+Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
@@ -57133,5 +57147,64 @@ Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes: ^777777Justiceiros e evoluções^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-16--------------------
+//*****************************************************
+28492#
+Normalmente, espiar o diário de alguém seria falta de educação, mas não se preocupe: os conhecimentos descritos nesse livro são repassados de geração em geração aos Renegados para que eles aprimorem suas técnicas.
+^0000ffFOR +5. AGI +5. INT +5.^000000
+Ao investir um ponto em [Graffiti]:
+^0000ffFOR, AGI e INT +5 adicional.^000000
+^CD3278Permite o uso de habilidades ao aprender uma Máscara no nível 3.^000000
+Infortúnio: ^0000ff[Frenesi] nv. 1.^000000
+Melancolia: ^0000ff[Assumptio] nv. 5.^000000
+Tolice: ^0000ff[Força Violentíssima] nv. 5.^000000
+Ociosidade: ^0000ff[Impacto Meteoro] nv. 5.^000000
+Fraqueza: ^0000ff[Caminho do Vento] nv. 5.^000000
+Vulnerabildade: ^0000ff[Amplificação Mística] nv. 5.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28434#
+Luvas de couro sem dedo, perfeitas para uma briga de rua. Elas foram uma vez usadas por um trio de lutadores que saía à noite para fazer justiça com as próprias mãos nas Ruas da Fúria. Calce-as e sinta o poder para desferir murros poderosos!
+^0000ffFOR +2.^000000
+^0000ffSP máx. +100.^000000
+^0000ffDano físico contra todas as raças +2%.^000000
+^0000ffHabilita [Absorver Esferas Espirituais] nv. 1.^000000
+FOR base 100 ou mais:
+^0000ffDano físico contra todas as raças +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Espírito do Lutador 1]^000000
+^0000ffSP máx. +100 adicional.^000000
+^0000ffDano físico contra todas as raças +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Espírito do Lutador 2]^000000
+^0000ffSP máx. +100 adicional.^000000
+^0000ffDano físico contra todas as raças +5% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+31396#
+Vestir esse capuz é a prova incontestável de que você faz parte do seleto Clube dos Trevosos. Uma joia brilhante adorna a ponta dele, pois por mais que você ame a escuridão, uma luz há de guiar o seu caminho nos passeios góticos à meia-noite.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31395#
+Uma série de livros elementais que flutuam ao seu redor, para que você sempre tenha à mão o conhecimento de como manejar o fogo sem queimar seu manto ou conjurar rajadas de vento sem mandar o próprio chapéu pelos ares.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 //file end
