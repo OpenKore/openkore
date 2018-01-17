@@ -25,6 +25,7 @@ use strict;
 use Plugins;
 use Globals;
 use Log qw(message error debug warning);
+use Misc qw(parseReload);
 
 Plugins::register('xConf', 'commands for change items_control, mon_control, pickupitems, priority', \&Unload, \&Unload);
 
@@ -137,55 +138,35 @@ my ($cmd, $args) = @_;
 			}
 		}
 	}
+	
+	my $realKey;
+	
+	if (exists $ctrl_hash->{lc($name)}) {
+		$realKey = lc($name);
+	} else {
+		$realKey = $key;
+	}
+	
 	if ($cmd eq 'iconf') {
-		$oldval =
-			"$ctrl_hash->{$key}{keep} ".
-			"$ctrl_hash->{$key}{storage} ".
-			"$ctrl_hash->{$key}{sell} ".
-			"$ctrl_hash->{$key}{cart_add} ".
-			"$ctrl_hash->{$key}{cart_get}";
-
-		$oldval =
-			"$ctrl_hash->{lc($name)}{keep} ".
-			"$ctrl_hash->{lc($name)}{storage} ".
-			"$ctrl_hash->{lc($name)}{sell} ".
-			"$ctrl_hash->{lc($name)}{cart_add} ".
-			"$ctrl_hash->{lc($name)}{cart_get}" if $oldval eq "";
-	}
-	if ($cmd eq 'mconf') {
-		$oldval =
-			"$ctrl_hash->{$key}{attack_auto} ".
-			"$ctrl_hash->{$key}{teleport_auto} ".
-			"$ctrl_hash->{$key}{teleport_search} ".
-			"$ctrl_hash->{$key}{skillcancel_auto} ".
-			"$ctrl_hash->{$key}{attack_lvl} ".
-			"$ctrl_hash->{$key}{attack_jlvl} ".
-			"$ctrl_hash->{$key}{attack_hp} ".
-			"$ctrl_hash->{$key}{attack_sp} ".
-			"$ctrl_hash->{$key}{weight}}";
-
-		$oldval =
-			"$ctrl_hash->{lc($name)}{attack_auto} ".
-			"$ctrl_hash->{lc($name)}{teleport_auto} ".
-			"$ctrl_hash->{lc($name)}{teleport_search} ".
-			"$ctrl_hash->{lc($name)}{skillcancel_auto} ".
-			"$ctrl_hash->{lc($name)}{attack_lvl} ".
-			"$ctrl_hash->{lc($name)}{attack_jlvl} ".
-			"$ctrl_hash->{lc($name)}{attack_hp} ".
-			"$ctrl_hash->{lc($name)}{attack_sp} ".
-			"$ctrl_hash->{lc($name)}{weight}" if $oldval eq "";
-	}
-	if ($cmd eq 'pconf') {
-		$oldval = $pickupitems{lc($key)};
-	}
-	if ($cmd eq 'sconf') {
+		$oldval = sprintf("%s %s %s %s %s", $ctrl_hash->{$realKey}{keep}, $ctrl_hash->{$realKey}{storage}, $ctrl_hash->{$realKey}{sell},
+			$ctrl_hash->{$realKey}{cart_add}, $ctrl_hash->{$realKey}{cart_get});
+	} elsif ($cmd eq 'mconf') {
+		$oldval = sprintf("%s %s %s %s %s", $ctrl_hash->{$realKey}{attack_auto}, $ctrl_hash->{$realKey}{teleport_auto},
+			$ctrl_hash->{$realKey}{teleport_search}, $ctrl_hash->{$realKey}{skillcancel_auto}, $ctrl_hash->{$realKey}{attack_lvl},
+			$ctrl_hash->{$realKey}{attack_jlvl}, $ctrl_hash->{$realKey}{attack_hp}, $ctrl_hash->{$realKey}{attack_sp},
+			$ctrl_hash->{$realKey}{weight});
+	} elsif ($cmd eq 'pconf') {
+		$oldval = $pickupitems{$realKey};
+	} elsif ($cmd eq 'sconf') {
 		if ($shopname) {
 			$oldval = $shop{title_line};
 			$oldval =~ s/;;/,,/g;
 		} else {
 			for my $sale (@{$shop{items}}) {
 				if (lc($sale->{name}) eq lc($key)) {
-					$oldval = ($sale->{priceMax}) ? "$sale->{price}..$sale->{priceMax} $sale->{amount}" : "$sale->{price} $sale->{amount}";
+					$oldval = $sale->{price};
+					$oldval .= "..$sale->{priceMax}" if ($sale->{priceMax});
+					$oldval .= " $sale->{amount}";
 					last;
 				}
 			}
@@ -199,7 +180,7 @@ my ($cmd, $args) = @_;
 	} elsif (not defined $value or $value eq $oldval) {
 		message "$file: '$key' is $oldval\n", "info";
 	} else {
-		filewrite($file, $key, $value, $oldval, $shopname, $name);
+		filewrite($file, $key, $value, $oldval, $shopname, $name, $realKey);
 	}
 }
 
@@ -225,35 +206,41 @@ sub fileclear {
 ## set all keys to $value
 sub filesetall {
 	my ($file,$value) = @_;
-	my 	@value;
+	my $controlfile = Settings::getControlFilename($file);
+	my @value;
+	
 	if (!$value) {
 		push (@value, "0") ;
-	}else{
+	} else {
 		@value = split(/\s+/, $value);
 	}
-	my $controlfile = Settings::getControlFilename($file);
-	open(FILE, "<:utf8", $controlfile);
+	
+	open(FILE, "<:utf8", $controlfile);	
 	my @lines = <FILE>;
 	close(FILE);
 	chomp @lines;
+	
 	foreach my $line (@lines) {
 		next if $line =~ /^$/ || $line =~ /^#/;
 		my ($what) = $line =~ /([\s\S]+?)(?:\s[\-\d\.]+[\s\S]*)/;
 		$what =~ s/\s+$//g;
 		$line = join (' ', $what, @value);
 	}
+	
 	open(WRITE, ">:utf8", $controlfile);
 	print WRITE join ("\n", @lines);
 	close(WRITE);
+	
 	message "xConf. $file: all set to $value.\n", 'info';
-	Commands::run("reload $file")
+	parseReload($controlfile);
 }
+
 ## write FILE
 sub filewrite {
-	my ($file, $key, $value, $oldval, $shopname, $name) = @_;
+	my ($file, $key, $value, $oldval, $shopname, $name, $realKey) = @_;
 	my @value;
 	my $controlfile = Settings::getControlFilename($file);
-	debug "sub WRITE = FILE: $file\nKEY: $key\nVALUE: $value\nNAME: $name\nOLDVALUE: $oldval\n";
+	debug "sub WRITE = FILE: $file\nKEY: $key\nVALUE: $value\nNAME: $name\nOLDVALUE: $oldval\nREALKEY: $realKey";
 
 	open(FILE, "<:encoding(UTF-8)", $controlfile);
 	my @lines = <FILE>;
@@ -277,12 +264,16 @@ sub filewrite {
 			my ($what) = $line =~ /([\s\S]+?)\s[\-\d\.]+[\s\S]*/;
 			$what =~ s/\s+$//g;
 			my $tmp;
-			if (lc($what) eq lc($key)) {
+			if (lc($what) eq $realKey) {
 				debug "Change old record: ";
 				if ($file eq 'shop.txt') {
 					$tmp = join ('	', $name, @value);
 				} else {
-					$tmp = join (' ', $key, @value, "#", $name);
+					if ($realKey eq lc($name)) {
+						$tmp = join (' ', $name, @value, "#", $key);
+					} else {
+						$tmp = join (' ', $key, @value, "#", $name);
+					}
 				}
 				$line = $tmp;
 				$used = 1;
@@ -301,8 +292,8 @@ sub filewrite {
 	open(WRITE, ">:utf8", $controlfile);
 	print WRITE join ("\n", @lines);
 	close(WRITE);
-	message "$file: '$name' set to @value (was $oldval)\n", 'info';
-	Commands::run("reload $file")
+	message "$file: '$name' set to @value (was ". ($oldval || "*None*") .")\n", 'info';
+	parseReload($controlfile);
 }
 
 sub priconf {
@@ -317,7 +308,7 @@ sub priconf {
 	open(my $file,"<:utf8",$controlfile);
 	my @lines;
 	while (my $tmp = <$file>) {
-		push @lines, $tmp if $tmp =~ /^#/;
+		push @lines, $tmp if ($tmp =~ /^#/ or $tmp =~ /^!/);
 	}
 	push @lines, "\n";
 	foreach (@mobs) { push @lines, $_."\n" }
@@ -325,7 +316,7 @@ sub priconf {
 	open($file,">:utf8",$controlfile);
 	print $file @lines;
 	close($file);
-	Commands::run("reload priority.txt");
+	parseReload($controlfile);
 }
 
 1;
