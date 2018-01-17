@@ -48,7 +48,7 @@ typedef struct {
 typedef struct {
 	Map* currentMap;
 	int avoidWalls;
-	int time_max;
+	unsigned long time_max;
 	int solution_size;
 	int startX;
 	int startY;
@@ -58,7 +58,7 @@ typedef struct {
 	int run;
 	int size;
     int openListSize;
-    int Gscore;
+    unsigned int Gscore;
     int indexNeighbor;
     int nodeList;
 	TypeList* openList;
@@ -66,6 +66,32 @@ typedef struct {
 	Neighbors* currentNeighbors;
 	Node* infoAdress;
 } CalcPath_session;
+
+CalcPath_session *CalcPath_new ();
+
+void freeMap(Map* currentMap);
+
+Map* mallocMap(int width, int height);
+
+Map* GenerateMap(unsigned char *map, unsigned long width, unsigned long height);
+
+int heuristic_cost_estimate(Node* currentNode, Node* goalNode);
+
+void organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* currentMap);
+
+void openListAdd (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap);
+
+void reajustOpenListItem (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap);
+
+Node* openListGetLowest (TypeList* openList, Map* currentMap, int openListSize);
+
+void reconstruct_path(CalcPath_session *session);
+
+int CalcPath_pathStep (CalcPath_session *session);
+ 
+CalcPath_session *CalcPath_init (CalcPath_session *session);
+
+void CalcPath_destroy (CalcPath_session *session);
 
 #ifdef __cplusplus
 }

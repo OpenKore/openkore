@@ -774,7 +774,7 @@ sub checkWallLength {
 		}
 
 		foreach my $z (@spots) {
-			next if !$field->isWalkable($pos->{x} + $z->[0], $pos->{y} + $z->[1]);
+			next if (!$field->isWalkable(($pos->{x} + $z->[0]), ($pos->{y} + $z->[1])));
 			$pos->{x} += $z->[0];
 			$pos->{y} += $z->[1];
 			return 1;

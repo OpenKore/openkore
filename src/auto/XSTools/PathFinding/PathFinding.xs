@@ -22,7 +22,8 @@ MODULE = PathFinding		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
 
 
-// Creates the actual pathfinding class as seen in PathFinding::new
+
+
 PathFinding
 PathFinding_create()
 	CODE:
@@ -31,7 +32,6 @@ PathFinding_create()
 		RETVAL
 
 
-// Initializes pathing, called directly by PathFinding::reset
 void
 PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max)
 		PathFinding session
@@ -65,7 +65,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 			XSRETURN_UNDEF;
 
 		c_weight_map = (unsigned char *) SvPV (weight_map, len);
-		if ((int) len != width * height)
+		if ((unsigned int) len != width * height)
 			XSRETURN_UNDEF;
 		
 		New (0, data, len, unsigned char);
@@ -102,7 +102,7 @@ PathFinding_run(session, r_array)
 
 		} else if (status > 0) {
 			AV *array;
-			int i, size;
+			int size;
 
 			size = session->solution_size;
 			array = (AV *) SvRV (r_array);
@@ -145,7 +145,6 @@ PathFinding_runref(session)
 
 		} else if (status > 0) {
 			AV * results;
-			int i;
 
 			results = (AV *)sv_2mortal((SV *)newAV());
 			av_extend(results, session->solution_size);

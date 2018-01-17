@@ -53,7 +53,7 @@ CalcPath_new ()
 void 
 freeMap(Map* currentMap)
 {
-    int i;
+    unsigned int i;
     for(i = 0; i < currentMap->height; i++);{
         free(currentMap->grid[i]);
     }
@@ -68,7 +68,7 @@ mallocMap(int width, int height)
     currentMap->width = width;
 	currentMap->height = height;
 	currentMap->grid = (Block**) malloc(currentMap->width * sizeof(Block*));
-	int j;
+	unsigned int j;
 	for(j = 0; j < currentMap->width; j++){
         currentMap->grid[j] = (Block*) malloc(currentMap->height * sizeof(Block));
     }
@@ -80,8 +80,8 @@ GenerateMap(unsigned char *map, unsigned long width, unsigned long height)
 {
     Map* currentMap = mallocMap(width, height);
 
-	int x = 0;
-	int y = 0;
+	unsigned int x = 0;
+	unsigned int y = 0;
 	
 	int max = width * height;
 	
@@ -130,8 +130,8 @@ organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* cur
 		for (j = -1; j <= 1; j++)
 		{
 			if (i == 0 && j == 0){ continue; }
-			int x = currentNode->x + i;
-			int y = currentNode->y + j;
+			unsigned int x = currentNode->x + i;
+			unsigned int y = currentNode->y + j;
 			if (x > currentMap->width - 1 || y > currentMap->height - 1){ continue; }
 			if (x < 0 || y < 0){ continue; }
 			if (currentMap->grid[x][y].walkable == 0){ continue; }
@@ -238,7 +238,7 @@ reconstruct_path(CalcPath_session *session)
     }
 }
 
-void 
+int 
 CalcPath_pathStep (CalcPath_session *session)
 {
 	
@@ -252,14 +252,14 @@ CalcPath_pathStep (CalcPath_session *session)
 	if (!session->run) {
 		session->run = 1;
 		session->solution_size = 0;
-		session->size = session->currentMap->height * session->session->currentMap->width;
+		session->size = session->currentMap->height * session->currentMap->width;
 		session->openListSize = 1;
 		session->Gscore = 0;
 		session->indexNeighbor = 0;
 		//session->nodeList;
-		session->openList = (TypeList*) malloc(session->size * session->sizeof(TypeList));
+		session->openList = (TypeList*) malloc(session->size * sizeof(TypeList));
 		//session->session->currentNode;
-		session->currentNeighbors = (Neighbors*) malloc(session->sizeof(Neighbors));
+		session->currentNeighbors = (Neighbors*) malloc(sizeof(Neighbors));
 		//session->infoAdress;
 		
 		session->openList[0].x = startNode->x;
@@ -281,7 +281,7 @@ CalcPath_pathStep (CalcPath_session *session)
 		}
 		
         //get lowest F score member of openlist and delete it from it
-        session->currentNode = session->openListGetLowest (session->openList, session->currentMap, session->openListSize);
+        session->currentNode = openListGetLowest (session->openList, session->currentMap, session->openListSize);
         session->openListSize--;
 
         //add session->currentNode to closedList
@@ -311,7 +311,7 @@ CalcPath_pathStep (CalcPath_session *session)
                 session->infoAdress->g = session->Gscore;
                 session->infoAdress->h = heuristic_cost_estimate(session->infoAdress, goalNode);
                 session->infoAdress->f = session->Gscore + session->infoAdress->h;
-				session->openListAdd (session->openList, session->infoAdress, session->openListSize, session->currentMap);
+				openListAdd (session->openList, session->infoAdress, session->openListSize, session->currentMap);
 				session->openListSize++;
 			} else {
                 if (session->Gscore < session->infoAdress->g) {
