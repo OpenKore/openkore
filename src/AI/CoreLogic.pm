@@ -2971,7 +2971,7 @@ sub processItemsTake {
 		foreach (@itemsID) {
 			next unless $_;
 			my $item = $items{$_};
-			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
+			next if (pickupitems($item->{name}, $item->{nameID}) eq "0" || pickupitems($item->{name}, $item->{nameID}) == -1);
 
 			$dist = distance($item->{pos}, AI::args->{pos});
 			$dist_to = distance($item->{pos}, AI::args->{pos_to});
@@ -3002,16 +3002,17 @@ sub processItemsAutoGather {
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
-		foreach my $item (@itemsID) {
-			next if ($item eq ""
-				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
-				|| $items{$item}{take_failed} >= 1
-				|| pickupitems(lc($items{$item}{name})) eq "0"
-				|| pickupitems(lc($items{$item}{name})) == -1 );
-			if (!positionNearPlayer($items{$item}{pos}, 12) &&
-			    !positionNearPortal($items{$item}{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
-				gather($item);
+		foreach (@itemsID) {
+			next unless $_;
+			my $item = $items{$_};
+			next if (!timeOut($item->{appear_time}, $timeout{ai_items_gather_start}{timeout})
+				|| $item->{take_failed} >= 1
+				|| pickupitems($item->{name}, $item->{nameID}) eq "0"
+				|| pickupitems($item->{name}, $item->{nameID}) == -1 );
+			if (!positionNearPlayer($item->{pos}, 12) &&
+			    !positionNearPortal($item->{pos}, 10)) {
+				message TF("Gathering: %s (%s)\n", $item->{name}, $item->{binID});
+				gather($_);
 				last;
 			}
 		}
