@@ -2360,7 +2360,15 @@ sub mon_control {
 sub pickupitems {
 	my ($name, $nameID) = @_;
 
-	return $pickupitems{lc($name)} || $pickupitems{$nameID} || $pickupitems{all} || 1;
+	if (exists $pickupitems{lc($name)}) {
+		return $pickupitems{lc($name)};
+	} elsif (exists $pickupitems{$nameID}) {
+		return $pickupitems{$nameID};
+	} elsif (exists $pickupitems{all}) {
+		return $pickupitems{all};
+	}
+	
+	return 1;
 }
 
 sub positionNearPlayer {
