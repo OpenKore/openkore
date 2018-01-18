@@ -244,7 +244,8 @@ sub attack {
 				next;
 			}
 
-			if (existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{'name'})) {
+			if (existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{'name'}) || 
+				existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{nameID})) {
 				message TF("Encounter Monster : %s\n", $monsters{$targetID}{'name'});
 				if ($config{"autoSwitch_$i"."_rightHand"}) {
 
