@@ -18,15 +18,9 @@ typedef struct Nodes{
 } Node;
 
 typedef struct Blocks{
-	unsigned int walkable : 1;
+	unsigned int weight;
 	Node nodeInfo;
 } Block;
-
-typedef struct Maps{
-	unsigned int height;
-	unsigned int width;
-	Block **grid;
-} Map;
 
 typedef struct {
     int x;
@@ -46,10 +40,12 @@ typedef struct {
 } TypeList;
 
 typedef struct {
-	Map* currentMap;
+	Block **currentMap;
 	int avoidWalls;
 	unsigned long time_max;
 	int solution_size;
+	unsigned int width;
+	unsigned int height;
 	int startX;
 	int startY;
 	int endX;
@@ -57,35 +53,29 @@ typedef struct {
 	int initialized;
 	int run;
 	int size;
-    int openListSize;
-    unsigned int Gscore;
-    int indexNeighbor;
-    int nodeList;
+	int openListSize;
 	TypeList* openList;
-	Node* currentNode;
-	Neighbors* currentNeighbors;
-	Node* infoAdress;
 } CalcPath_session;
 
 CalcPath_session *CalcPath_new ();
 
-void freeMap(Map* currentMap);
+void freeMap(CalcPath_session *session);
 
-Map* mallocMap(int width, int height);
+void mallocMap(CalcPath_session *session);
 
-Map* GenerateMap(unsigned char *map, unsigned long width, unsigned long height);
+void GenerateMap(CalcPath_session *session, const char *map);
 
-int heuristic_cost_estimate(Node* currentNode, Node* goalNode);
+int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY);
 
-void organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* currentMap);
+Neighbors organizeNeighborsStruct(CalcPath_session *session, Node* currentNode);
 
-void openListAdd (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap);
+void openListAdd (CalcPath_session *session, Node* infoAdress);
 
-void reajustOpenListItem (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap);
+void reajustOpenListItem (CalcPath_session *session, Node* infoAdress);
 
-Node* openListGetLowest (TypeList* openList, Map* currentMap, int openListSize);
+Node* openListGetLowest (CalcPath_session *session);
 
-void reconstruct_path(CalcPath_session *session);
+void reconstruct_path(CalcPath_session *session, Node* currentNode);
 
 int CalcPath_pathStep (CalcPath_session *session);
  

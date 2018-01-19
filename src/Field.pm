@@ -193,12 +193,13 @@ sub height {
 #
 # If you want to check whether the block is walkable, use $field->isWalkable() instead.
 sub getBlock {
+	my ($self, $offset) = @_;
+	return ord(substr($self->{rawMap}, $offset, 1));
+}
+
+sub getOffset {
 	my ($self, $x, $y) = @_;
-	if ($self->isOffMap($x, $y)) {
-		return TILE_NOWALK;
-	} else {
-		return ord(substr($self->{rawMap}, ($y * $self->{width}) + $x, 1));
-	}
+	return (($y * $self->{width}) + $x);
 }
 
 sub isOffMap {
@@ -211,8 +212,11 @@ sub isOffMap {
 #
 # Check whether you can walk on ($x,$y) on this field.
 sub isWalkable {
-	my $p = &getBlock;
-	return ($p & TILE_WALK);
+	my ($self, $x, $y) = @_;
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	my $value = $self->getBlock($offset);
+	return ($value & TILE_WALK);
 }
 
 ##
@@ -220,8 +224,11 @@ sub isWalkable {
 #
 # Check whether you can snipe through ($x,$y) on this field.
 sub isSnipable {
-	my $p = &getBlock;
-	return ($p & TILE_SNIPE);
+	my ($self, $x, $y) = @_;
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	my $value = $self->getBlock($offset);
+	return ($value & TILE_SNIPE);
 }
 
 ##
@@ -229,17 +236,18 @@ sub isSnipable {
 #
 # Check whether there is water ($x,$y) on this field.
 sub isWater {
-	my $p = &getBlock;
-	return ($p & TILE_WATER);
+	my ($self, $x, $y) = @_;
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	my $value = $self->getBlock($offset);
+	return ($value & TILE_WATER);
 }
 
 sub getBlockWeight {
 	my ($self, $x, $y) = @_;
-	if ($self->isOffMap($x, $y)) {
-		return 255;
-	} else {
-		return ord(substr($self->{weightMap}, ($y * $self->{width}) + $x, 1));
-	}
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	return ord(substr($self->{weightMap}, $offset, 1));
 }
 
 ##

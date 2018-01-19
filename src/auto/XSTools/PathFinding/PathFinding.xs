@@ -28,6 +28,7 @@ PathFinding
 PathFinding_create()
 	CODE:
 		RETVAL = CalcPath_new ();
+
 	OUTPUT:
 		RETVAL
 
@@ -46,32 +47,30 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		unsigned int time_max
 	
 	PREINIT:
-		STRLEN len;
-		unsigned char *c_weight_map, *data;
+		char *data = NULL;
 	
 	CODE:
+		
 		if (session->initialized) {
-			freeMap(session->currentMap);
+			freeMap(session);
 			session->initialized = 0;
 		}
 		
 		if (session->run) {
 			free(session->openList);
-			free(session->currentNeighbors);
 			session->run = 0;
 		}
 		
-		if (!SvOK (weight_map))
-			XSRETURN_UNDEF;
-
-		c_weight_map = (unsigned char *) SvPV (weight_map, len);
-		if ((unsigned int) len != width * height)
-			XSRETURN_UNDEF;
+		/* Sanity check the weight_map parameter and get the weight_map data */
+        if (weight_map && SvOK (weight_map))
+            data = (char *) SvPV_nolen (derefPV (weight_map));
+        if (!data)
+            croak("The 'weight_map' parameter must be a valid scalar.\n");
 		
-		New (0, data, len, unsigned char);
-		Copy (c_weight_map, data, len, unsigned char);
+		session->width = width;
+		session->height = height;
 		
-		session->currentMap = GenerateMap(data, width, height);
+		GenerateMap(session, data);
 		
 		session->startX = startx;
 		session->startY = starty;
@@ -80,7 +79,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		
 		session->avoidWalls = avoidWalls;
 		session->time_max = time_max;
-
+		
 		CalcPath_init (session);
 
 
@@ -108,21 +107,25 @@ PathFinding_run(session, r_array)
 			array = (AV *) SvRV (r_array);
 			if (av_len (array) > size)
 				av_clear (array);
+			
 			av_extend (array, session->solution_size);
 			
-			session->currentNode = &session->currentMap->grid[session->endX][session->endX].nodeInfo;
-			while (session->currentNode->x != session->startX || session->currentNode->y != session->startY)
+			Node currentNode = session->currentMap[session->endX][session->endY].nodeInfo;
+
+			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
+
 				HV * rh = (HV *)sv_2mortal((SV *)newHV());
-				
-				hv_store(rh, "x", 1, newSViv(session->currentNode->x), 0);
-				hv_store(rh, "y", 1, newSViv(session->currentNode->y), 0);
+
+				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
+
+				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
 				
 				av_unshift(array, 1);
-				
+
 				av_store(array, 0, newRV((SV *)rh));
 				
-				session->currentNode = &session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo;
+				currentNode = session->currentMap[currentNode.parentX][currentNode.parentY].nodeInfo;
 			}
 			
 			RETVAL = size;
@@ -149,19 +152,22 @@ PathFinding_runref(session)
 			results = (AV *)sv_2mortal((SV *)newAV());
 			av_extend(results, session->solution_size);
 			
-			session->currentNode = &session->currentMap->grid[session->endX][session->endX].nodeInfo;
-			while (session->currentNode->x != session->startX || session->currentNode->y != session->startY)
+			Node currentNode = session->currentMap[session->endX][session->endY].nodeInfo;
+			
+			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
+
 				HV * rh = (HV *)sv_2mortal((SV *)newHV());
-				
-				hv_store(rh, "x", 1, newSViv(session->currentNode->x), 0);
-				hv_store(rh, "y", 1, newSViv(session->currentNode->y), 0);
+
+				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
+
+				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
 				
 				av_unshift(results, 1);
-				
+
 				av_store(results, 0, newRV((SV *)rh));
-				
-				session->currentNode = &session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo;
+
+				currentNode = session->currentMap[currentNode.parentX][currentNode.parentY].nodeInfo;
 			}
 			
 			RETVAL = newRV((SV *)results);
@@ -178,12 +184,15 @@ PathFinding_runcount(session)
 	PREINIT:
 		int status;
 	CODE:
+
 		status = CalcPath_pathStep (session);
-		if (status < 0)
+		if (status < 0) {
+
 			RETVAL = -1;
-		else if (status > 0)
+		} else if (status > 0) {
 			RETVAL = (int) session->solution_size;
-		else
+
+		} else
 			RETVAL = 0;
 	OUTPUT:
 		RETVAL
@@ -194,4 +203,5 @@ PathFinding_DESTROY(session)
 	PREINIT:
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
+
 		CalcPath_destroy (session);

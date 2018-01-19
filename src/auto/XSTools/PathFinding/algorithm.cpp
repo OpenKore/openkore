@@ -51,49 +51,44 @@ CalcPath_new ()
 }
 
 void 
-freeMap(Map* currentMap)
+freeMap(CalcPath_session *session)
 {
     unsigned int i;
-    for(i = 0; i < currentMap->height; i++);{
-        free(currentMap->grid[i]);
+    for(i = 0; i < session->width; i++){
+        free(session->currentMap[i]);
     }
-    free(currentMap->grid);
-    free(currentMap);
+    free(session->currentMap);
 }
 
-Map* 
-mallocMap(int width, int height)
+void
+mallocMap(CalcPath_session *session)
 {
-    Map* currentMap = (Map*) malloc(sizeof(Map));
-    currentMap->width = width;
-	currentMap->height = height;
-	currentMap->grid = (Block**) malloc(currentMap->width * sizeof(Block*));
+	session->currentMap = (Block**) malloc(session->width * sizeof(Block*));
 	unsigned int j;
-	for(j = 0; j < currentMap->width; j++){
-        currentMap->grid[j] = (Block*) malloc(currentMap->height * sizeof(Block));
+	for(j = 0; j < session->width; j++){
+        session->currentMap[j] = (Block*) malloc(session->height * sizeof(Block));
     }
-    return currentMap;
 }
 
-Map* 
-GenerateMap(unsigned char *map, unsigned long width, unsigned long height)
+void 
+GenerateMap(CalcPath_session *session, const char *map)
 {
-    Map* currentMap = mallocMap(width, height);
+    mallocMap(session);
 
 	unsigned int x = 0;
 	unsigned int y = 0;
 	
-	int max = width * height;
+	int max = session->width * session->height;
 	
-	int current = 1;
+	int current = 0;
 	int i;
-	while (current <= max) {
-		current = (y * width) + x;
+	while (current < max) {
+		current = (y * session->width) + x;
 		i = map[current];
-		currentMap->grid[x][y].walkable = (i & 1) ? 1 : 0;
-		currentMap->grid[x][y].nodeInfo.whichlist = NONE;
-        currentMap->grid[x][y].nodeInfo.openListIndex = NONE;
-		if (x == currentMap->width - 1) {
+		session->currentMap[x][y].weight = i;
+		session->currentMap[x][y].nodeInfo.whichlist = NONE;
+        session->currentMap[x][y].nodeInfo.openListIndex = NONE;
+		if (x == session->width - 1) {
 			y++;
 			x = 0;
 		}
@@ -101,14 +96,13 @@ GenerateMap(unsigned char *map, unsigned long width, unsigned long height)
 			x++;
 		}
 	}
-	return currentMap;
 }
 
 int 
-heuristic_cost_estimate(Node* currentNode, Node* goalNode)
+heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY)
 {
-	int xDistance = abs(currentNode->x - goalNode->x);
-	int yDistance = abs(currentNode->y - goalNode->y);
+	int xDistance = abs(currentX - goalX);
+	int yDistance = abs(currentY - goalY);
 	int hScore;
 	if (xDistance > yDistance) {
 		hScore = DIAGONAL * yDistance + ORTOGONAL * (xDistance - yDistance);
@@ -119,9 +113,11 @@ heuristic_cost_estimate(Node* currentNode, Node* goalNode)
 	return hScore;
 }
 
-void 
-organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* currentMap)
+Neighbors
+organizeNeighborsStruct(CalcPath_session *session, Node* currentNode)
 {
+
+	Neighbors currentNeighbors;
     int count = 0;
     int i;
 	for (i = -1; i <= 1; i++)
@@ -132,95 +128,96 @@ organizeNeighborsStruct(Neighbors* currentNeighbors, Node* currentNode, Map* cur
 			if (i == 0 && j == 0){ continue; }
 			unsigned int x = currentNode->x + i;
 			unsigned int y = currentNode->y + j;
-			if (x > currentMap->width - 1 || y > currentMap->height - 1){ continue; }
+			if (x > session->width - 1 || y > session->height - 1){ continue; }
 			if (x < 0 || y < 0){ continue; }
-			if (currentMap->grid[x][y].walkable == 0){ continue; }
+			if (session->currentMap[x][y].weight == 0){ continue; }
 			if (i != 0 && j != 0) {
-                if (currentMap->grid[x][currentNode->y].walkable == 0 || currentMap->grid[currentNode->x][y].walkable == 0){ continue; }
-                currentNeighbors->neighborNodes[count].distanceFromCurrent = DIAGONAL;
+                if (session->currentMap[x][currentNode->y].weight == 0 || session->currentMap[currentNode->x][y].weight == 0){ continue; }
+                currentNeighbors.neighborNodes[count].distanceFromCurrent = DIAGONAL;
 			} else {
-                currentNeighbors->neighborNodes[count].distanceFromCurrent = ORTOGONAL;
+                currentNeighbors.neighborNodes[count].distanceFromCurrent = ORTOGONAL;
 			}
-				currentNeighbors->neighborNodes[count].x = x;
-				currentNeighbors->neighborNodes[count].y = y;
+				currentNeighbors.neighborNodes[count].x = x;
+				currentNeighbors.neighborNodes[count].y = y;
 				count++;
 		}
 	}
-	currentNeighbors->count = count;
+	currentNeighbors.count = count;
+	return currentNeighbors;
 }
 
 //Openlist is a binary heap of min-heap type
 
 void 
-openListAdd (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap)
+openListAdd (CalcPath_session *session, Node* infoAdress)
 {
-    openList[openListSize].x = infoAdress->x;
-    openList[openListSize].y = infoAdress->y;
-    openList[openListSize].f = infoAdress->f;
-    currentMap->grid[openList[openListSize].x][openList[openListSize].y].nodeInfo.openListIndex = openListSize;
-    int currentIndex = openListSize;
+    session->openList[session->openListSize].x = infoAdress->x;
+    session->openList[session->openListSize].y = infoAdress->y;
+    session->openList[session->openListSize].f = infoAdress->f;
+    session->currentMap[session->openList[session->openListSize].x][session->openList[session->openListSize].y].nodeInfo.openListIndex = session->openListSize;
+    int currentIndex = session->openListSize;
     TypeList Temporary;
     while (PARENT(currentIndex) >= 0) {
-        if (openList[PARENT(currentIndex)].f > openList[currentIndex].f) {
-            Temporary = openList[currentIndex];
-            openList[currentIndex] = openList[PARENT(currentIndex)];
-            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
-            openList[PARENT(currentIndex)] = Temporary;
-            currentMap->grid[openList[PARENT(currentIndex)].x][openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+        if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
+            Temporary = session->openList[currentIndex];
+            session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
+            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->openList[PARENT(currentIndex)] = Temporary;
+            session->currentMap[session->openList[PARENT(currentIndex)].x][session->openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
 }
 
 void 
-reajustOpenListItem (TypeList* openList, Node* infoAdress, int openListSize, Map* currentMap)
+reajustOpenListItem (CalcPath_session *session, Node* infoAdress)
 {
     int currentIndex = infoAdress->openListIndex;
-    openList[currentIndex].f = infoAdress->f;
+    session->openList[currentIndex].f = infoAdress->f;
     TypeList Temporary;
     while (PARENT(currentIndex) >= 0) {
-        if (openList[PARENT(currentIndex)].f > openList[currentIndex].f) {
-            Temporary = openList[currentIndex];
-            openList[currentIndex] = openList[PARENT(currentIndex)];
-            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
-            openList[PARENT(currentIndex)] = Temporary;
-            currentMap->grid[openList[PARENT(currentIndex)].x][openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+        if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
+            Temporary = session->openList[currentIndex];
+            session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
+            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->openList[PARENT(currentIndex)] = Temporary;
+            session->currentMap[session->openList[PARENT(currentIndex)].x][session->openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
 }
 
 Node* 
-openListGetLowest (TypeList* openList, Map* currentMap, int openListSize)
+openListGetLowest (CalcPath_session *session)
 {
-    Node* lowestNode = &currentMap->grid[openList[0].x][openList[0].y].nodeInfo;
-    openList[0] = openList[openListSize-1];
-    currentMap->grid[openList[0].x][openList[0].y].nodeInfo.openListIndex = 0;
+    Node* lowestNode = &session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo;
+    session->openList[0] = session->openList[session->openListSize-1];
+    session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.openListIndex = 0;
     int lowestChildIndex = 0;
     int currentIndex = 0;
     TypeList Temporary;
-    while (LCHILD(currentIndex) < openListSize - 2) {
+    while (LCHILD(currentIndex) < session->openListSize - 2) {
         //There are 2 children
-        if (RCHILD(currentIndex) <= openListSize - 2) {
-            if (openList[RCHILD(currentIndex)].f <= openList[LCHILD(currentIndex)].f) {
+        if (RCHILD(currentIndex) <= session->openListSize - 2) {
+            if (session->openList[RCHILD(currentIndex)].f <= session->openList[LCHILD(currentIndex)].f) {
                 lowestChildIndex = RCHILD(currentIndex);
             } else {
                 lowestChildIndex = LCHILD(currentIndex);
             }
         } else {
             //There is 1 children
-            if (LCHILD(currentIndex) <= openListSize - 2) {
+            if (LCHILD(currentIndex) <= session->openListSize - 2) {
                 lowestChildIndex = LCHILD(currentIndex);
             } else {
                 break;
             }
         }
-        if (openList[currentIndex].f > openList[lowestChildIndex].f) {
-            Temporary = openList[currentIndex];
-            openList[currentIndex] = openList[lowestChildIndex];
-            currentMap->grid[openList[currentIndex].x][openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
-            openList[lowestChildIndex] = Temporary;
-            currentMap->grid[openList[lowestChildIndex].x][openList[lowestChildIndex].y].nodeInfo.openListIndex = lowestChildIndex;
+        if (session->openList[currentIndex].f > session->openList[lowestChildIndex].f) {
+            Temporary = session->openList[currentIndex];
+            session->openList[currentIndex] = session->openList[lowestChildIndex];
+            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->openList[lowestChildIndex] = Temporary;
+            session->currentMap[session->openList[lowestChildIndex].x][session->openList[lowestChildIndex].y].nodeInfo.openListIndex = lowestChildIndex;
             currentIndex = lowestChildIndex;
         } else { break; }
     }
@@ -228,12 +225,12 @@ openListGetLowest (TypeList* openList, Map* currentMap, int openListSize)
 }
 
 void 
-reconstruct_path(CalcPath_session *session)
+reconstruct_path(CalcPath_session *session, Node* currentNode)
 {
-	while (session->currentNode->x != session->startX || session->currentNode->y != session->startY)
+	while (currentNode->x != session->startX || currentNode->y != session->startY)
     {
-        session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo.whichlist = PATH;
-        session->currentNode = &session->currentMap->grid[session->currentNode->parentX][session->currentNode->parentY].nodeInfo;
+        session->currentMap[currentNode->parentX][currentNode->parentY].nodeInfo.whichlist = PATH;
+        currentNode = &session->currentMap[currentNode->parentX][currentNode->parentY].nodeInfo;
         session->solution_size++;
     }
 }
@@ -246,27 +243,25 @@ CalcPath_pathStep (CalcPath_session *session)
 		return -2;
 	}
 	
-	Node* startNode = &session->currentMap->grid[session->startX][session->startY].nodeInfo;
-	Node* goalNode = &session->currentMap->grid[session->endX][session->endY].nodeInfo;
-	
 	if (!session->run) {
 		session->run = 1;
 		session->solution_size = 0;
-		session->size = session->currentMap->height * session->currentMap->width;
+		session->size = session->height * session->width;
 		session->openListSize = 1;
-		session->Gscore = 0;
-		session->indexNeighbor = 0;
-		//session->nodeList;
 		session->openList = (TypeList*) malloc(session->size * sizeof(TypeList));
-		//session->session->currentNode;
-		session->currentNeighbors = (Neighbors*) malloc(sizeof(Neighbors));
-		//session->infoAdress;
-		
-		session->openList[0].x = startNode->x;
-		session->openList[0].y = startNode->y;
-		session->currentMap->grid[session->openList[0].x][session->openList[0].y].nodeInfo.x = startNode->x;
-		session->currentMap->grid[session->openList[0].x][session->openList[0].y].nodeInfo.y = startNode->y;
+		session->openList[0].x = session->startX;
+		session->openList[0].y = session->startY;
+		session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.x = session->startX;
+		session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.y = session->startY;
 	}
+	
+	
+	Node* currentNode;
+	Neighbors currentNeighbors;
+	Node* infoAdress;
+	unsigned int Gscore = 0;
+	int indexNeighbor = 0;
+	int nodeList;
 	
 	unsigned long timeout = (unsigned long) GetTickCount();
 	int loop = 0;
@@ -274,52 +269,55 @@ CalcPath_pathStep (CalcPath_session *session)
 		
 		loop++;
 		if (loop == 100) {
-			if (GetTickCount() - timeout > session->time_max)
+			if (GetTickCount() - timeout > session->time_max) {
 				return 0;
-			else
+			} else
 				loop = 0;
 		}
 		
         //get lowest F score member of openlist and delete it from it
-        session->currentNode = openListGetLowest (session->openList, session->currentMap, session->openListSize);
+        currentNode = openListGetLowest (session);
+		
         session->openListSize--;
 
-        //add session->currentNode to closedList
-        session->currentNode->whichlist = CLOSED;
+        //add currentNode to closedList
+        currentNode->whichlist = CLOSED;
 
 		//if current is the goal, return the path.
-		if (session->currentNode->x == goalNode->x && session->currentNode->y == goalNode->y) {
+		if (currentNode->x == session->endX && currentNode->y == session->endY) {
             //return path
-            reconstruct_path(session);
+            reconstruct_path(session, currentNode);
 			return 1;
 		}
 
-		organizeNeighborsStruct(session->currentNeighbors, session->currentNode, session->currentMap);
-		for (session->indexNeighbor = 0; session->indexNeighbor < session->currentNeighbors->count; session->indexNeighbor++) {
-            session->infoAdress = &session->currentMap->grid[session->currentNeighbors->neighborNodes[session->indexNeighbor].x][session->currentNeighbors->neighborNodes[session->indexNeighbor].y].nodeInfo;
-			session->nodeList = session->infoAdress->whichlist;
-			if (session->nodeList == CLOSED) { continue; }
+		currentNeighbors = organizeNeighborsStruct(session, currentNode);
 
-			session->Gscore = session->currentNode->g + session->currentNeighbors->neighborNodes[session->indexNeighbor].distanceFromCurrent;
+		for (indexNeighbor = 0; indexNeighbor < currentNeighbors.count; indexNeighbor++) {
 
-			if (session->nodeList != OPEN) {
-                session->infoAdress->x = session->currentNeighbors->neighborNodes[session->indexNeighbor].x;
-                session->infoAdress->y = session->currentNeighbors->neighborNodes[session->indexNeighbor].y;
-                session->infoAdress->parentX = session->currentNode->x;
-                session->infoAdress->parentY = session->currentNode->y;
-                session->infoAdress->whichlist = OPEN;
-                session->infoAdress->g = session->Gscore;
-                session->infoAdress->h = heuristic_cost_estimate(session->infoAdress, goalNode);
-                session->infoAdress->f = session->Gscore + session->infoAdress->h;
-				openListAdd (session->openList, session->infoAdress, session->openListSize, session->currentMap);
+            infoAdress = &session->currentMap[currentNeighbors.neighborNodes[indexNeighbor].x][currentNeighbors.neighborNodes[indexNeighbor].y].nodeInfo;
+			nodeList = infoAdress->whichlist;
+			if (nodeList == CLOSED) { continue; }
+
+			Gscore = currentNode->g + currentNeighbors.neighborNodes[indexNeighbor].distanceFromCurrent;
+
+			if (nodeList != OPEN) {
+                infoAdress->x = currentNeighbors.neighborNodes[indexNeighbor].x;
+                infoAdress->y = currentNeighbors.neighborNodes[indexNeighbor].y;
+                infoAdress->parentX = currentNode->x;
+                infoAdress->parentY = currentNode->y;
+                infoAdress->whichlist = OPEN;
+                infoAdress->g = Gscore;
+                infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY);
+                infoAdress->f = infoAdress->g + infoAdress->h;
+				openListAdd (session, infoAdress);
 				session->openListSize++;
 			} else {
-                if (session->Gscore < session->infoAdress->g) {
-                    session->infoAdress->parentX = session->currentNode->x;
-                    session->infoAdress->parentY = session->currentNode->y;
-                    session->infoAdress->g = session->Gscore;
-                    session->infoAdress->f = session->Gscore + session->infoAdress->h;
-                    reajustOpenListItem (session->openList, session->infoAdress, session->openListSize, session->currentMap);
+                if (Gscore < infoAdress->g) {
+                    infoAdress->parentX = currentNode->x;
+                    infoAdress->parentY = currentNode->y;
+                    infoAdress->g = Gscore;
+                    infoAdress->f = infoAdress->g + infoAdress->h;
+                    reajustOpenListItem (session, infoAdress);
                 }
 			}
 		}
@@ -333,15 +331,15 @@ CalcPath_pathStep (CalcPath_session *session)
 CalcPath_session *
 CalcPath_init (CalcPath_session *session)
 {
-	session->currentMap->grid[session->startX][session->startY].nodeInfo.x = session->startX;
-	session->currentMap->grid[session->startX][session->startY].nodeInfo.y = session->startY;
-	session->currentMap->grid[session->startX][session->startY].nodeInfo.g = 0;
-	session->currentMap->grid[session->endX][session->endY].nodeInfo.x = session->endX;
-	session->currentMap->grid[session->endX][session->endY].nodeInfo.y = session->endY;
+	session->currentMap[session->startX][session->startY].nodeInfo.x = session->startX;
+	session->currentMap[session->startX][session->startY].nodeInfo.y = session->startY;
+	session->currentMap[session->startX][session->startY].nodeInfo.g = 0;
+	session->currentMap[session->endX][session->endY].nodeInfo.x = session->endX;
+	session->currentMap[session->endX][session->endY].nodeInfo.y = session->endY;
 	
 	session->initialized = 1;
 	
-	//Pathfind(session, &session->currentMap->grid[session->startX][session->startY].nodeInfo, &session->currentMap->grid[session->endX][session->endY].nodeInfo);
+	//Pathfind(session, &session->currentMap[session->startX][session->startY].nodeInfo, &session->currentMap[session->endX][session->endY].nodeInfo);
 	
 	//freeMap(session->currentMap);
 	
@@ -351,16 +349,17 @@ CalcPath_init (CalcPath_session *session)
 void
 CalcPath_destroy (CalcPath_session *session)
 {
+
 	if (session->initialized) {
-		freeMap(session->currentMap);
+		freeMap(session);
 	}
 	
 	if (session->run) {
 		free(session->openList);
-		free(session->currentNeighbors);
 	}
-	
+
 	free (session);
+
 }
 
 #ifdef __cplusplus
