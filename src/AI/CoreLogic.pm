@@ -1155,6 +1155,7 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
+			next if ($config{"getAuto_$i"."_disabled"});
 			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 				foreach (keys %items_lut) {
 					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
@@ -1171,7 +1172,8 @@ sub processAutoStorage {
 			    (!$item ||
 				 ($amount <= $config{"getAuto_${i}_minAmount"} &&
 				  $amount < $config{"getAuto_${i}_maxAmount"})
-			    )
+			    ) &&
+				checkSelfCondition("getAuto_$i")
 			) {
 				if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 =pod
@@ -1448,7 +1450,9 @@ sub processAutoStorage {
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
-					if (!$config{"getAuto_$args->{index}"}) {
+					if (!$config{"getAuto_$args->{index}"}
+						|| $config{"getAuto_$args->{index}_disabled"}
+						|| !checkSelfCondition($config{"getAuto_$args->{index}"})) {
 						$args->{index}++;
 						next;
 					}
