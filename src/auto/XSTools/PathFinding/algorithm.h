@@ -57,7 +57,7 @@ CalcPath_session *CalcPath_new ();
 
 void GenerateMap(CalcPath_session *session, const char *map);
 
-int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY);
+int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls);
 
 Neighbors organizeNeighborsStruct(CalcPath_session *session, Node* currentNode);
 

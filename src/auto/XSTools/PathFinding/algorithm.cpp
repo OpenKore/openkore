@@ -75,16 +75,16 @@ GenerateMap(CalcPath_session *session, const char *map)
 int 
 heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls)
 {
-	int xDistance = abs(currentX - goalX);
-	int yDistance = abs(currentY - goalY);
-	
-	int hScore = (ORTOGONAL * (xDistance + yDistance)) + ((DIAGONAL - (2 * ORTOGONAL)) * min(xDistance, yDistance));
-	
-	if (avoidWalls) {
-		hScore += max(xDistance, yDistance) * 10;
-	}
-	
-	return hScore;
+    int xDistance = abs(currentX - goalX);
+    int yDistance = abs(currentY - goalY);
+    
+    int hScore = (ORTOGONAL * (xDistance + yDistance)) + ((DIAGONAL - (2 * ORTOGONAL)) * ((xDistance > yDistance) ? yDistance : xDistance));
+    
+    if (avoidWalls) {
+        hScore += (((xDistance > yDistance) ? xDistance : yDistance) * 10);
+    }
+    
+    return hScore;
 }
 
 Neighbors
