@@ -51,49 +51,23 @@ CalcPath_new ()
 }
 
 void 
-freeMap(CalcPath_session *session)
-{
-    unsigned int i;
-    for(i = 0; i < session->width; i++){
-        free(session->currentMap[i]);
-    }
-    free(session->currentMap);
-}
-
-void
-mallocMap(CalcPath_session *session)
-{
-	session->currentMap = (Block**) malloc(session->width * sizeof(Block*));
-	unsigned int j;
-	for(j = 0; j < session->width; j++){
-        session->currentMap[j] = (Block*) malloc(session->height * sizeof(Block));
-    }
-}
-
-void 
 GenerateMap(CalcPath_session *session, const char *map)
 {
-    mallocMap(session);
+    session->currentMap = (Node*) malloc(session->height * session->width * sizeof(Node));
 
 	unsigned int x = 0;
 	unsigned int y = 0;
 	
-	int max = session->width * session->height;
-	
-	int current = 0;
+	int current;
 	int i;
-	while (current < max) {
-		current = (y * session->width) + x;
-		i = map[current];
-		session->currentMap[x][y].weight = i;
-		session->currentMap[x][y].nodeInfo.whichlist = NONE;
-        session->currentMap[x][y].nodeInfo.openListIndex = NONE;
-		if (x == session->width - 1) {
-			y++;
-			x = 0;
-		}
-		else {
-			x++;
+	for (y = 0; y < session->height; y++) {
+		for (x = 0; x < session->width; x++) {
+			current = (y * session->width) + x;
+			i = map[current];
+
+			session->currentMap[current].weight = i;
+			session->currentMap[current].whichlist = NONE;
+			session->currentMap[current].openListIndex = NONE;
 		}
 	}
 }
@@ -130,9 +104,9 @@ organizeNeighborsStruct(CalcPath_session *session, Node* currentNode)
 			unsigned int y = currentNode->y + j;
 			if (x > session->width - 1 || y > session->height - 1){ continue; }
 			if (x < 0 || y < 0){ continue; }
-			if (session->currentMap[x][y].weight == 0){ continue; }
+			if (session->currentMap[(y * session->width) + x].weight == 0){ continue; }
 			if (i != 0 && j != 0) {
-                if (session->currentMap[x][currentNode->y].weight == 0 || session->currentMap[currentNode->x][y].weight == 0){ continue; }
+               if (session->currentMap[(currentNode->y * session->width) + x].weight == 0 || session->currentMap[(y * session->width) + currentNode->x].weight == 0){ continue; }
                 currentNeighbors.neighborNodes[count].distanceFromCurrent = DIAGONAL;
 			} else {
                 currentNeighbors.neighborNodes[count].distanceFromCurrent = ORTOGONAL;
@@ -154,16 +128,16 @@ openListAdd (CalcPath_session *session, Node* infoAdress)
     session->openList[session->openListSize].x = infoAdress->x;
     session->openList[session->openListSize].y = infoAdress->y;
     session->openList[session->openListSize].f = infoAdress->f;
-    session->currentMap[session->openList[session->openListSize].x][session->openList[session->openListSize].y].nodeInfo.openListIndex = session->openListSize;
+    session->currentMap[(session->openList[session->openListSize].y * session->width) + session->openList[session->openListSize].x].openListIndex = session->openListSize;
     int currentIndex = session->openListSize;
     TypeList Temporary;
     while (PARENT(currentIndex) >= 0) {
         if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
             Temporary = session->openList[currentIndex];
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
-            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            session->currentMap[session->openList[PARENT(currentIndex)].x][session->openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+            session->currentMap[(session->openList[PARENT(currentIndex)].y * session->width) + session->openList[PARENT(currentIndex)].x].openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -179,9 +153,9 @@ reajustOpenListItem (CalcPath_session *session, Node* infoAdress)
         if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
             Temporary = session->openList[currentIndex];
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
-            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            session->currentMap[session->openList[PARENT(currentIndex)].x][session->openList[PARENT(currentIndex)].y].nodeInfo.openListIndex = PARENT(currentIndex);
+            session->currentMap[(session->openList[PARENT(currentIndex)].y * session->width) + session->openList[PARENT(currentIndex)].x].openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -190,9 +164,9 @@ reajustOpenListItem (CalcPath_session *session, Node* infoAdress)
 Node* 
 openListGetLowest (CalcPath_session *session)
 {
-    Node* lowestNode = &session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo;
+    Node* lowestNode = &session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x];
     session->openList[0] = session->openList[session->openListSize-1];
-    session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.openListIndex = 0;
+    session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].openListIndex = 0;
     int lowestChildIndex = 0;
     int currentIndex = 0;
     TypeList Temporary;
@@ -215,9 +189,9 @@ openListGetLowest (CalcPath_session *session)
         if (session->openList[currentIndex].f > session->openList[lowestChildIndex].f) {
             Temporary = session->openList[currentIndex];
             session->openList[currentIndex] = session->openList[lowestChildIndex];
-            session->currentMap[session->openList[currentIndex].x][session->openList[currentIndex].y].nodeInfo.openListIndex = currentIndex;
+            session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[lowestChildIndex] = Temporary;
-            session->currentMap[session->openList[lowestChildIndex].x][session->openList[lowestChildIndex].y].nodeInfo.openListIndex = lowestChildIndex;
+            session->currentMap[(session->openList[lowestChildIndex].y * session->width) + session->openList[lowestChildIndex].x].openListIndex = lowestChildIndex;
             currentIndex = lowestChildIndex;
         } else { break; }
     }
@@ -229,8 +203,8 @@ reconstruct_path(CalcPath_session *session, Node* currentNode)
 {
 	while (currentNode->x != session->startX || currentNode->y != session->startY)
     {
-        session->currentMap[currentNode->parentX][currentNode->parentY].nodeInfo.whichlist = PATH;
-        currentNode = &session->currentMap[currentNode->parentX][currentNode->parentY].nodeInfo;
+        session->currentMap[(currentNode->parentY * session->width) + currentNode->parentX].whichlist = PATH;
+        currentNode = &session->currentMap[(currentNode->parentY * session->width) + currentNode->parentX];
         session->solution_size++;
     }
 }
@@ -251,8 +225,8 @@ CalcPath_pathStep (CalcPath_session *session)
 		session->openList = (TypeList*) malloc(session->size * sizeof(TypeList));
 		session->openList[0].x = session->startX;
 		session->openList[0].y = session->startY;
-		session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.x = session->startX;
-		session->currentMap[session->openList[0].x][session->openList[0].y].nodeInfo.y = session->startY;
+		session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].x = session->startX;
+		session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].y = session->startY;
 	}
 	
 	
@@ -294,7 +268,7 @@ CalcPath_pathStep (CalcPath_session *session)
 
 		for (indexNeighbor = 0; indexNeighbor < currentNeighbors.count; indexNeighbor++) {
 
-            infoAdress = &session->currentMap[currentNeighbors.neighborNodes[indexNeighbor].x][currentNeighbors.neighborNodes[indexNeighbor].y].nodeInfo;
+            infoAdress = &session->currentMap[(currentNeighbors.neighborNodes[indexNeighbor].y * session->width) + currentNeighbors.neighborNodes[indexNeighbor].x];
 			nodeList = infoAdress->whichlist;
 			if (nodeList == CLOSED) { continue; }
 
@@ -331,17 +305,13 @@ CalcPath_pathStep (CalcPath_session *session)
 CalcPath_session *
 CalcPath_init (CalcPath_session *session)
 {
-	session->currentMap[session->startX][session->startY].nodeInfo.x = session->startX;
-	session->currentMap[session->startX][session->startY].nodeInfo.y = session->startY;
-	session->currentMap[session->startX][session->startY].nodeInfo.g = 0;
-	session->currentMap[session->endX][session->endY].nodeInfo.x = session->endX;
-	session->currentMap[session->endX][session->endY].nodeInfo.y = session->endY;
+	session->currentMap[(session->startY * session->width) + session->startX].x = session->startX;
+	session->currentMap[(session->startY * session->width) + session->startX].y = session->startY;
+	session->currentMap[(session->startY * session->width) + session->startX].g = 0;
+	session->currentMap[(session->endY * session->width) + session->endX].x = session->endX;
+	session->currentMap[(session->endY * session->width) + session->endX].y = session->endY;
 	
 	session->initialized = 1;
-	
-	//Pathfind(session, &session->currentMap[session->startX][session->startY].nodeInfo, &session->currentMap[session->endX][session->endY].nodeInfo);
-	
-	//freeMap(session->currentMap);
 	
 	return session;
 }
@@ -351,7 +321,7 @@ CalcPath_destroy (CalcPath_session *session)
 {
 
 	if (session->initialized) {
-		freeMap(session);
+		free(session->currentMap);
 	}
 	
 	if (session->run) {

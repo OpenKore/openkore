@@ -52,7 +52,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 	CODE:
 		
 		if (session->initialized) {
-			freeMap(session);
+			free(session->currentMap);
 			session->initialized = 0;
 		}
 		
@@ -110,7 +110,7 @@ PathFinding_run(session, r_array)
 			
 			av_extend (array, session->solution_size);
 			
-			Node currentNode = session->currentMap[session->endX][session->endY].nodeInfo;
+			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
 
 			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
@@ -125,7 +125,7 @@ PathFinding_run(session, r_array)
 
 				av_store(array, 0, newRV((SV *)rh));
 				
-				currentNode = session->currentMap[currentNode.parentX][currentNode.parentY].nodeInfo;
+				currentNode = session->currentMap[(currentNode.parentY * session->width) + currentNode.parentX];
 			}
 			
 			RETVAL = size;
@@ -152,7 +152,7 @@ PathFinding_runref(session)
 			results = (AV *)sv_2mortal((SV *)newAV());
 			av_extend(results, session->solution_size);
 			
-			Node currentNode = session->currentMap[session->endX][session->endY].nodeInfo;
+			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
 			
 			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
@@ -167,7 +167,7 @@ PathFinding_runref(session)
 
 				av_store(results, 0, newRV((SV *)rh));
 
-				currentNode = session->currentMap[currentNode.parentX][currentNode.parentY].nodeInfo;
+				currentNode = session->currentMap[(currentNode.parentY * session->width) + currentNode.parentX];
 			}
 			
 			RETVAL = newRV((SV *)results);
@@ -203,5 +203,4 @@ PathFinding_DESTROY(session)
 	PREINIT:
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
-
 		CalcPath_destroy (session);

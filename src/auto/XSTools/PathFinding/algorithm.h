@@ -12,15 +12,11 @@ typedef struct Nodes{
     unsigned short parentY;
 	unsigned int whichlist : 2;
 	unsigned int openListIndex;
+	unsigned int weight;
 	unsigned int g;
 	unsigned short h;
 	unsigned int f;
 } Node;
-
-typedef struct Blocks{
-	unsigned int weight;
-	Node nodeInfo;
-} Block;
 
 typedef struct {
     int x;
@@ -40,7 +36,6 @@ typedef struct {
 } TypeList;
 
 typedef struct {
-	Block **currentMap;
 	int avoidWalls;
 	unsigned long time_max;
 	int solution_size;
@@ -55,13 +50,10 @@ typedef struct {
 	int size;
 	int openListSize;
 	TypeList* openList;
+	Node *currentMap;
 } CalcPath_session;
 
 CalcPath_session *CalcPath_new ();
-
-void freeMap(CalcPath_session *session);
-
-void mallocMap(CalcPath_session *session);
 
 void GenerateMap(CalcPath_session *session, const char *map);
 
