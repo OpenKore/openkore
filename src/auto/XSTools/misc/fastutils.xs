@@ -364,7 +364,7 @@ CODE:
 	New (0, data, len, unsigned char);
 	Copy (c_weightMap, data, len, unsigned char);
 	
-	int distance_to_weight[5] = { 0, 7, 6, 3, 2 };
+	int distance_to_weight[5] = { 0, 70, 60, 30, 20 };
 	int max_distance = 4;
 	int fill_weight = 1;
 

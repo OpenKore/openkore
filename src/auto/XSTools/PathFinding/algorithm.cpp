@@ -73,17 +73,17 @@ GenerateMap(CalcPath_session *session, const char *map)
 }
 
 int 
-heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY)
+heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls)
 {
 	int xDistance = abs(currentX - goalX);
 	int yDistance = abs(currentY - goalY);
-	int hScore;
-	if (xDistance > yDistance) {
-		hScore = DIAGONAL * yDistance + ORTOGONAL * (xDistance - yDistance);
+	
+	int hScore = (ORTOGONAL * (xDistance + yDistance)) + ((DIAGONAL - (2 * ORTOGONAL)) * min(xDistance, yDistance));
+	
+	if (avoidWalls) {
+		hScore += max(xDistance, yDistance) * 10;
 	}
-	else {
-		hScore = DIAGONAL * xDistance + ORTOGONAL * (yDistance - xDistance);
-	}
+	
 	return hScore;
 }
 
@@ -104,16 +104,20 @@ organizeNeighborsStruct(CalcPath_session *session, Node* currentNode)
 			unsigned int y = currentNode->y + j;
 			if (x > session->width - 1 || y > session->height - 1){ continue; }
 			if (x < 0 || y < 0){ continue; }
-			if (session->currentMap[(y * session->width) + x].weight == 0){ continue; }
+			int weight = session->currentMap[(y * session->width) + x].weight;
+			if (weight == 0){ continue; }
 			if (i != 0 && j != 0) {
                if (session->currentMap[(currentNode->y * session->width) + x].weight == 0 || session->currentMap[(y * session->width) + currentNode->x].weight == 0){ continue; }
                 currentNeighbors.neighborNodes[count].distanceFromCurrent = DIAGONAL;
 			} else {
                 currentNeighbors.neighborNodes[count].distanceFromCurrent = ORTOGONAL;
 			}
-				currentNeighbors.neighborNodes[count].x = x;
-				currentNeighbors.neighborNodes[count].y = y;
-				count++;
+			if (session->avoidWalls) {
+				currentNeighbors.neighborNodes[count].distanceFromCurrent += weight;
+			}
+			currentNeighbors.neighborNodes[count].x = x;
+			currentNeighbors.neighborNodes[count].y = y;
+			count++;
 		}
 	}
 	currentNeighbors.count = count;
@@ -281,7 +285,7 @@ CalcPath_pathStep (CalcPath_session *session)
                 infoAdress->parentY = currentNode->y;
                 infoAdress->whichlist = OPEN;
                 infoAdress->g = Gscore;
-                infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY);
+                infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY, session->avoidWalls);
                 infoAdress->f = infoAdress->g + infoAdress->h;
 				openListAdd (session, infoAdress);
 				session->openListSize++;
