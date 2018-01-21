@@ -319,7 +319,7 @@ sub iterate {
 				# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 				# for example.
 				my %nextPos = (x => $self->{new_x}, y => $self->{new_y});
-				if (distance(\%nextPos, $pos) > $config{$self->{actor}{configPrefix}.'route_step'}) {
+				if (distance(\%nextPos, $pos) > ($config{$self->{actor}{configPrefix}.'route_step'} * 2)) {
 					debug "Route $self->{actor} - movement interrupted: reset route\n", "route";
 					$self->{stage} = '';
 

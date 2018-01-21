@@ -205,7 +205,7 @@ route_teleport 0
 route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
-route_step 15
+route_step 7
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
@@ -370,7 +370,7 @@ mercenary_attackChangeTarget 1
 mercenary_followDistanceMax 10
 mercenary_followDistanceMin 3
 
-mercenary_route_step 15
+mercenary_route_step 7
 
 mercenary_tankMode 0
 mercenary_tankModeTarget
@@ -403,7 +403,7 @@ homunculus_attackChangeTarget 1
 homunculus_followDistanceMax 10
 homunculus_followDistanceMin 3
 
-homunculus_route_step 15
+homunculus_route_step 7
 
 homunculus_tankMode 0
 homunculus_tankModeTarget
