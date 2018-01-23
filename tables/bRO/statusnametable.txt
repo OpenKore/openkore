@@ -87,7 +87,7 @@ EFST_PROTECTSHIELD Revestir Escudo
 EFST_MAGNIFICAT Magnificat
 EFST_ATTHASTE_POTION1 Poção da Concentração
 EFST_POISONREACT Refletir Veneno
-EFST_MOVHASTE_HORSE Velocidade de ataque aumentada
+EFST_MOVHASTE_HORSE Movimento acelerado
 EFST_CRESCENTELBOW Cotovelada Ascendente
 EFST_SONG_OF_MANA Canção de Alfheim
 EFST_KAAHI Kaahi
