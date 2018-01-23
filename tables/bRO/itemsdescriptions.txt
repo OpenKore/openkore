@@ -21102,15 +21102,18 @@ Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes
 
 2123#
 Uma placa de aço redonda e brilhante, usada para servir comida.
-^0000ffDEFM + 2.^000000
-^0000ff5% de chance de refletir magias de alvo único.^000000
-Ao equipar as Luvas de Orleans:
-^0000ffTempo de conjuração variável -10%.^000000
-Tipo de Item: ^777777Escudo^000000
+^0000ffDEFM +2.^000000
+Ao receber dano mágico de alvo único:
+^0000ff5% de chance de refletir a magia.^000000
+^FF6347Conjunto^000000
+^FF6347[Luvas de Orleans]^000000
+^0000ffConjuração variável -10%.^000000
+Tipo: ^777777Escudo^000000
 Defesa: ^77777775^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
+
 #
 
 2124#
@@ -21147,13 +21150,16 @@ Classes que utilizam: ^777777Transcendentais de Espadachim/Mercador^000000
 #
 2365#
 Um uniforme que pertenceu a um cozinheiro que adorava limpeza. Ninguém o fazia parar de falar sobre sua cozinha higiênica.
-^0000ffTempo de conjuração variável +15%.^000000
 ^0000ffA conjuração não pode ser interrompida.^000000
-Tipo de Item: ^777777Armadura^000000
+^0000ffConjuração variável +15%.^000000
+^FF6347Conjunto^000000
+^FF6347[Colar de Orleans]^000000
+^0000ffConjuração variável -15%.^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777715^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2366#
 Um traje sagrado, produzido por uma série de rituais religiosos.
@@ -21309,12 +21315,12 @@ Classes que utilizam: ^777777Transcendentais de Espadachim^000000
 2701#
 Um par de luvas que já foi usado por um cozinheiro de palácio. Parece que você pode imitar a precisão dos gestos do cozinheiro com estas luvas.
 ^0000ffDES +2.^000000
-^0000ffATQM +3%.^000000
-Tipo de Item: ^777777Acessório^000000
+^0000ffDano mágico +3%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777790^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2702#
@@ -22117,11 +22123,10 @@ Classe: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4430#
-Ao sofrer danos físicos:
+Ao sofrer danos físicos de curta distância:
 ^0000ffPequena chance de autoconjurar [Terremoto] nv. 10.^000000
 A cada 10 níveis de classe:
-^0000ffATQ +1.^000000
-^0000ffCRIT +1.^000000
+^0000ffATQ e CRIT +1.^000000
 ^0000ffPrecisão +1.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
@@ -31250,7 +31255,7 @@ Peso: ^7777771^000000
 6115#
 Um bolinho saboroso, servido quente.
 Tipo: ^777777Comida^000000
-Alimenta: ^777777Eleanor e Doneza Verde^000000
+Alimenta: ^777777Eleanor e Donzela Verde^000000
 Peso: ^7777771^000000
 #
 5779#
@@ -34369,7 +34374,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 5765#
 Um adereço do estilo Gótico Lolita, esse laço faz parte da moda urbana recém lançada em Amatsu, atraindo desde adolescentes e jovens adultas, até mesmo pessoas do sexo masculino. Parte de uma subcultura que acaba de florescer na Terra das Cerejeiras, o laço, assim como o estilo que representa, mostra-se bastante resistente a ataques, sejam verbais ou físicos.
-^0000ffResistência a propriedade Neutro +5%.000000
+^0000ffResistência a propriedade Neutro +5%.^000000
 ^0000ffResistência a danos físicos a distância +5%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
@@ -35516,17 +35521,18 @@ Peso : ^7777770^000000
 Um colar que pertenceu a um dos melhores chefs de cozinha de toda Midgard. Ao equipa-lo, você sentirá uma vontade incontrolável de cozinhar.
 ^0000ffDES +2.^000000
 ^0000ffATQM +20.^000000
-Ao equipar as Luvas de Orleans:
+^FF6347Conjunto^000000
+^FF6347[Luvas de Orleans]^000000
 ^0000ffATQM +20 adicional.^000000
-Ao equipar a Bata de Orleans:
-^0000ffTempo de conjuração variável -15%.^000000
-Ao equipar a Travessa de Orleans:
-^0000ffATQM +2 por refino da Travessa de Orleans.^000000
-Tipo : ^777777Acessorio^000000
+^FF6347Conjunto^000000
+^FF6347[Travessa de Orleans]^000000
+A cada refino do Escudo:
+^0000ffATQM +2 adicional.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777710^000000
-Nível necessário : ^77777710^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 
 
@@ -38785,6 +38791,7 @@ Uma linda lança em forma de onda. Ela foi abençoada pelos espíritos da água.
 ^0000ffHP máx. +1%.^000000
 Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777190^000000
+Propriedade: ^777777Água^000000
 Peso: ^777777380^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777105^000000
@@ -39719,7 +39726,7 @@ Tipo: ^777777Arco^000000
 Ataque: ^777777140^000000
 Peso: ^7777770^000000
 Nível da arma: ^7777773^000000
-Nível necessário: ^7777760^000000
+Nível necessário: ^77777760^000000
 Classes: ^777777Arqueiros, Arruaceiros e evoluções e Gatunos^000000
 #
 18514#
@@ -41944,15 +41951,15 @@ Nível necessário: ^777777130^000000
 Classes: ^777777Classes 3^000000
 #
 18885#
-Um boné das Filipinas que virou marca da “tribo dos Jejemons”, um estranho grupo social que criou uma nova forma de internetês. No lugar de simplesmente abreviarem as palavras (ou escreverem errado), eles substituem letras de forma a deixar o texto praticamente incompreensível, exceto para outros Jejemons. O próprio nome deriva da forma como escrevem as risadas “hehehe”, que virou “jejeje”. O qU3 AcXh0w d1SS0?
-INT + 3, FOR + 2
-Aumenta a resistência contra monstros do tipo humanoide em 11%
-Aumenta a recuperação de HP por Mastelas em 70%
+Um boné das Filipinas que virou marca da 'tribo dos Jejemons', um estranho grupo social que criou uma nova forma de internetês. No lugar de simplesmente abreviarem as palavras (ou escreverem errado), eles substituem letras de forma a deixar o texto praticamente incompreensível, exceto para outros Jejemons. O próprio nome deriva da forma como escrevem as risadas 'hehehe', que virou 'jejeje'. O qU3 AcXh0w d1SS0?
+^0000ffINT +3. FOR +2.^000000
+^0000ffRecuperação de HP da Mastela +70%.^000000
+^0000ffResistência a oponentes da raça Humanoide +11%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo ^000000
 Peso: ^77777710^000000
-Nível Necessário: ^77777770^000000
+Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
 
@@ -43126,17 +43133,18 @@ Classes: ^777777Todas^000000
 #
 18878#
 Um chapéu usado por um grupo seleto de soldados, dispostos a arriscar a vida por seu líder.
-+5% de resistência contra ataques da propriedade Neutra.
-+5% de resistência contra ataques físicos à distância.
-Resistência a ataques da propriedade Neutra aumenta 1% a cada refinamento a partir do +6
-Resistência a ataques físicos à distância aumenta 1% a cada refinamento a partir do +6
-Indestrutível em batalha.
-Tipo: ^777777Equipamento para cabeça^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+^0000ffResistência a danos físicos a distância +5%.^000000
+A cada refino a partir do refino +6:
+^0000ffResistência a propriedade Neutro +1%.^000000
+^0000ffResistência a danos físicos a distância +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777715^000000
-Equipa em : ^777777Topo^000000
-Peso : ^777777100^000000
-Nível Necessário : ^77777750^000000
-Classes : ^777777Todas^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 //-------------------------------------------------------------------
 
@@ -43262,14 +43270,14 @@ Peso : ^7777773^000000
 //2014-03-11
 2985#
 Quando você deixou esse anel dourado cair no fogo, surgiu nele uma inscrição no antigo dialeto de Glast Heim: Um Anel para todos governar, um Anel para encontrá-los. Um Anel para todos trazer e na Guerra do Emperium derrotá-los. Quais outros segredos esconderá este anel?
-^0000FFINT +3.
-ATQM +30
-Permite o uso da Habilidade Esconderijo nv. 1^000000
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777750^000000
-Classes : ^777777Todas^000000
+^0000ffINT +3.^000000
+^0000ffATQM +30.^000000
+^0000ffHabilita [Esconderijo] nv. 1.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 16555#
 Uma caixa contendo 1 Pedra das Valquírias.
@@ -47793,7 +47801,8 @@ Recupera 45 de HP.
 Ao usar, transforma o usuário em um Serial Killer por 10 minutos. HP Máximo + 1000 enquanto transformado.
 Peso: ^7777773^000000
 #
-11593#Recupera 45 de HP.
+11593#
+Recupera 45 de HP.
 [Este item será removido do jogo na atualização de 17/11/2015]
 Ao usar, transforma o usuário em uma Bathory por 10 minutos. SP Máximo + 100 enquanto transformado.
 Peso: ^7777773^000000
@@ -47804,7 +47813,8 @@ Recupera 45 de HP.
 Ao usar, transforma o usuário em um Jack por 10 minutos. Aumenta a efetividade do item 'Abóbora' em 2000% enquanto transformado.
 Peso: ^7777773^000000
 #
-11595#Recupera 45 de HP.
+11595#
+Recupera 45 de HP.
 [Este item será removido do jogo na atualização de 17/11/2015]
 Ao usar, transforma o usuário em um Quve por 10 minutos. Precisão + 10 e Esquiva + 20 enquanto transformado.
 Peso: ^7777773^000000
@@ -48984,9 +48994,10 @@ Um pingente dourado que simboliza a harmonia.
 ^0000ffDano mágico +6%.^000000
 ^0000ffRegeneração natural de HP e SP +50%.^000000
 ^0000ffResistência a propriedade Sagrado +5%.^000000
-Ao receber danos físicos:
-^0000ffChance de autoconjurar [Renovatio] nv. 1.^000000
-^0000ffChance de consumir 1 [Gema Azul] para autoconjurar [Santuário] nv. 3.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Renovatio] nv. 1.^000000
+Ao sofrer danos físicos de curta distância:
+^0000ff5% de chance de consumir 1 Gema Azul para autoconjurar [Santuário] nv. 3.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Pingente do Caos]^000000
 ^0000ffTodos os atributos +5.^000000
@@ -49000,17 +49011,17 @@ Classes: ^777777Terceiras Classes^000000
 Um pingente dourado que simboliza o caos.
 ^0000ffINT -5.^000000
 ^0000ffDano físico +6%.^000000
-^0000ffTolerância a [Caos] +100%^000000
+^0000ffTolerância a [Caos] +100%.^000000
 ^0000ffResistência a propriedade Sombrio +5%.^000000
-Ao receber danos físicos:
-^0000ffChance de autoconjurar [Toque de Insanidade] nv. 2.^000000
 Ao realizar ataques físicos:
-^0000ffChance de infligir [Caos] no oponente.^000000
+^0000ff5% de chance de infligir [Caos] no oponente.^000000
+Ao sofrer danos físicos de curta distância:
+^0000ff3% de chance de autoconjurar [Toque de Insanidade] nv. 2.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Pingente da Harmonia]^000000
-Ao receber danos mágicos:
-^0000ffChance de autoconjurar [Redemoinho de Absorção] nv. 1.^000000
-^0000ffSe [Tinta para Parede] estiverem no inventário, elas serão consumidas.^000000
+Ao sofrer danos mágicos:
+^0000ff5% de chance de autoconjurar [Redemoinho de Absorção] nv. 1.^000000
+^6A5ACDConsome Tinta para Parede se estiver no inventário.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
@@ -50418,7 +50429,7 @@ Passos:
 2 – Dê duplo clique no cupom.
 3 – Retorne a tela de seleção de personagens, clique com o botão direito no personagem que utilizou o cartão e selecione a opção Realizar a troca de slot.
 4 – Escolha o personagem com que você gostaria trocar de posição, clique com o botão direito e selecione a opção Trocar para esse slot.
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem colocado na Kafra.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão nem colocado no carrinho, mas pode ser colocado na Kafra.^000000
 Peso: ^7777770^000000
 #
 557#
@@ -52760,19 +52771,19 @@ Classes: ^777777Todas^000000
 19252#
 Agora suas orelhas são idênticas às orelhas de Kardui, o Rei dos Esplêndidos. Seria você um descendente da raça das fadas de Alfheim, criadas pelos mesmos deuses que criaram os elfos? Ou seria apenas uma fantasia, feita com penas e papel machê? E Betty, a Azarada, arrumará um namorado apesar de ter 1 de sorte? Será que Maria do Reino conseguirá escapar da sua irmã gêmea maligna? A vida é cheia de mistérios!
 ^0000ffA cada 10 de DES base:^000000
-ATQM +2.
-^0000ffDES base 108 ou mais:^000000
-ATQM +30.
-Tempo de conjuração variável -10%
-^0000ffDES base 120 ou mais:^000000
-ATQM +80 adicional.
-Tempo de conjuração variável -5% adicional.
+^0000ffATQM +2.^000000
+DES base 108 ou mais:
+^0000ffATQM +30.^000000
+^0000ffConjuração variável -10%.^000000
+DES base 120 ou mais:
+^0000ffATQM +80 adicional.^000000
+^0000ffConjuração variável -5% adicional.^000000
 ^FF6347Conjunto^000000
+^FF6347Arma do tipo Cajado, Livro ou Cajado de Duas Mãos^000000
 ^FF6347[Carta Leão de Vinhas]^000000
-^FF6347Arma tipo Livro, Cajado ou Cajado de Duas Mãos^000000
 A cada 2 refinos da arma até o +14:
-^0000ffDano mágico contra personagens +2%.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ffDano mágico contra Personagens +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
@@ -57203,6 +57214,37 @@ Classes: ^777777Todas^000000
 Uma série de livros elementais que flutuam ao seu redor, para que você sempre tenha à mão o conhecimento de como manejar o fogo sem queimar seu manto ou conjurar rajadas de vento sem mandar o próprio chapéu pelos ares.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-23--------------------
+//*****************************************************
+5878#
+Uma bela e rara rosa, cujo cultivo só se tornou possível graças à sabedoria de bioquímicos. Sua coloração azul é resultado de manipulações genéticas envolvendo materiais químicos.
+^0000ffSOR +1.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de encantar a arma com propriedade Sagrado por 60 segundos.^000000
+Tipo: ^777777Equipamento para cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
+19862#
+Reza a lenda que uma Succubus troca seus chifres uma vez a cada dez luas cheias. Para esses seres, seus antigos chifres têm pouco valor, mas supersticiosos do mundo inteiro os veem como amuletos de boa sorte.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31325#
+Quando uma Rainha Scaraba renuncia de seu cargo, sua coroa é enterrada nos cantos mais escuros do Túnel Kamidal. O que não contavam é que arqueólogos logo encontrariam esse local em suas escavações, o que tornaria esse acessório uma grande moda entre os aventureiros.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000

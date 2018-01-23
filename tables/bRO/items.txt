@@ -8109,22 +8109,24 @@
 28434#Luvas do Pugilista#
 31396#Capuz Trevoso#
 31395#Conhecimento Flutuante#
+//*****************************************************
+//------------Aplicar em 2018-01-23--------------------
+//*****************************************************
+5878#Rosa Anil#
+19862#Chifres de Succubus#
+31325#Coroa da Rainha Scaraba#
 
 31399#Costume_Darkness_Veil#
 20515#Costume_Magic_Circle#
 31382#Costume_Punky_Cat_Ears#
 28564#Valkyrie's_Waterdrop#
 22138#Demonist_Shoes#
-5878#Miraculous_Blue_Rose#
 28438#Fairy_Leaf_Powder#
 20372#Costume_Ribbon_Hat#
 19575#Costume_Ascending_Black_Dragon#
 28551#Imperial_Gloves#
-19862#Costume_Succubus_Horns#
 28503#Keraunos#
 28517#Ring_Of_Abyss_Knight#
 20115#Costume_Under_Rim_Glasses#
 19269#Rainbow_Colored_Wings#
-31325#Costume_Queen_Scaraba's_Crown#
-
 //file end
