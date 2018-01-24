@@ -4138,7 +4138,8 @@ sub checkSelfCondition {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
 				for my $monster (@$monstersList) {
-					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
+					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) || 
+										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}));
                 }
             }
 		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
@@ -4146,7 +4147,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4157,7 +4159,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($accountID)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4168,7 +4171,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) || 
+				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
 				return 0;
 			}
 		}
@@ -4366,7 +4370,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($id)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name}) || 
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4377,7 +4382,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_monsters"}) {
 		my $exists;
 		foreach (ai_getPlayerAggressives($id)) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name}) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
