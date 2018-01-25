@@ -742,6 +742,7 @@ getAuto {
 	minAmount
 	maxAmount
 	passive
+	disabled 0
 }
 
 ######## Opções de depuração; útil apenas para desenvolvedores ########
