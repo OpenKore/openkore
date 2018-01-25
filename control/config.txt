@@ -729,6 +729,7 @@ getAuto {
 	minAmount
 	maxAmount
 	passive
+	disabled 0
 }
 
 ######## Debugging options; only useful for developers ########
