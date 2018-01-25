@@ -204,6 +204,8 @@ sub getQuestStatus {
 			$result->{$quest_id} = 'incomplete';
         } elsif ( grep { $_->{goal} && $_->{count} < $_->{goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
+        } elsif ( grep { !$_->{goal} && $_->{count} == 0 } values %{ $quest->{missions} } ) {
+			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';
 		}
