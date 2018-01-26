@@ -3653,7 +3653,7 @@ Property: ^808080Neutral^000000
 Weight: ^80808080^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808036^000000
-Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
 Increases physical damage on Earth and Wind property targets by 10%.
 This item is indestructible in battle.
 #
@@ -5754,6 +5754,31 @@ Requires Level: ^80808070^000000
 Usable By: ^808080Swordman Jobs^000000
 Atk + 5 for every 10 base above base level 70.
 Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
+#
+1449#
+A large one-handed spear that shakes the earth and also stimulate user's metabolism.
+Class: ^808080One-Handed Spear^000000
+Attack: ^808080145^000000
+Property: ^808080Earth^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808048^000000
+Usable By: ^808080Swordman Jobs^000000
+Max HP + 800
+Max SP - 50
+^800080Set Bonus^000000
+^008080Gelerdria^000000
+^008080Storm Stone^000000
+If ^008080Gelerdria^000000 upgrade level is +7 or higher,
+Increases physical damage on boss monsters by 30%.
+Increases physical damage on Water and Wind property targets by 30%.
+Increases physical damage on Insect and Fish race targets by 30%.
+Increases the damage of ^0000FFWind Cutter^000000 by 30%.
+If ^008080Gelerdria^000000 upgrade level is +9 or higher,
+Increases physical damage on boss monsters by an additional 20%.
+Increases physical damage on Water and Wind property targets by an additional 20%.
+Increases physical damage on Insect and Fish race targets by an additional 20%.
+Increases the damage of ^0000FFWind Cutter^000000 by an additional 20%.
 #
 1450#
 The two-handed spear of an evil spirit.
@@ -34456,18 +34481,34 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 5596#
-A Four-leafed clover that brings it's wearer luck.
-Luk+3, Mdef +2
-Can be placed in Kafra Storage, cart and traded.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Lower^000000
-Weight : ^7777775^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A four-leafed clover that brings it's wearer luck.
+^FF0000Character Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080802^000000
+Weight: ^8080805^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1 if the user has active vip.
+Atk + 5
+Matk + 5
+Mdef + 2
+Increases the experience given from monsters by 2% if the user has active vip.
 #
 5597#
-placeholder
+A bubblegum which can swell up like a balloon.
+^FF0000Character Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080802^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1 if the user has active vip.
+Atk + 5
+Matk + 5
+Mdef + 2
+Increases the drop rate of items by 5% if the user has active vip.
 #
 5598#
 A magnificent crown created to pay tribute to the 6th sign of the zodiac, Virgo the Virgin.  Attached to the crown is a Sapphire gemstone, the birthstone for those born under this sign.
@@ -34496,14 +34537,16 @@ Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 5600#
-Given as a reward to creative members of the community to say 'thank you' for their help in contributing to the game.
-+3 to all stats until 2-18-2016
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A cute ribbon where the sides reflect the national colors of Brazil. Originally given as a reward to creative members of the community to say 'thank you' for their help in contributing to the game.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stat + 3
+Mdef + 1
 #
 5601#
 A two-toned banana yellow and green colored beret.
@@ -45744,6 +45787,14 @@ Attack: 0
 Weight: 0
 Weapon Level: 0
 #
+11617#
+A chocoball dropped by a bad catcumber. There is silvervine all over a soft sweet chocolate ball.
+^FF0000This item will have no effect once that event has ended.^000000
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
+Restores ^008000500^000000 HP.
+Restores ^00800025^000000 SP.
+#
 11701#
 #
 11706#
@@ -47522,6 +47573,11 @@ A box with a bomb capsule. When you use a bomb poring is summoned. Flammable!.
 Weight : ^7777771^000000
 #
 12259#
+^FF0000Character Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080800^000000
+Gives the user 3,000,000 base experience when used.
+Gives the user 1,500,000 job experience when used.
 #
 12260#
 This refreshing outfit truly is the sidearm of an experienced adventurer.
@@ -58836,6 +58892,18 @@ It's contents can be freely traded once opened.
 ^ff0000Cannot be refunded after opening^000000
 Weight : ^7777771^000000
 #
+14836#
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+#
+14856#
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+#
+14884#
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -59936,6 +60004,19 @@ Mdef + 5
 Additional Mdef + 1 per upgrade level of the item.
 Reduces damage taken from Fish race enemies by 5%.
 Reduces damage taken from Fish race enemies by an additional 1% per upgrade level of the item.
+#
+15143#
+Ritualistic clothing that contains the power of nature.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Plant race enemies by 5%.
+Reduces damage taken from Plant race enemies by an additional 1% per upgrade level of the item.
 #
 15145#
 ^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to absorb all kinds of energy.^000000
@@ -61260,9 +61341,21 @@ Weight : ^7777771^000000
 #
 16386#
 #
+16388#
+Contains an Four Leaf Clover in Mouth, a rental copy of the item which last for a total of 4 hours.
+^FF0000Account Bound^000000
+^FF0000Once this box is opened, the rental period begins.^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+#
 16389#
 #
 16390#
+Contains an Bubble Gum in Mouth, a rental copy of the item which last for a total of 4 hours.
+^FF0000Account Bound^000000
+^FF0000Once this box is opened, the rental period begins.^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 16393#
 #
@@ -65734,6 +65827,25 @@ Haunted Armor Helm
 Costume: Eremes Scarf
 Costume: Secret Zipper
 #
+17720#
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When Opened Gives one of the following
+Reginrev's Wings
+Hibiscus
+Brazil Twin Ribbon
+Romantic White Flower
+Miracle Medicine
+HE Battlemanual x 3
+Battle Manual x 4
+Bubble Gum x 4
+Medium Life Potion x 30
+Four Leaf Clover in Mouth (4 Hour Rental)
+Insurance x 20
+Boarding Haltar (30 day rental)
+Giant Flywing x 200
+Chewing Gum (4 Hour Rental)
+#
 17728#
 When opened gives the user 100 HD Oridecon
 8 Mad Bunny Scrolls
@@ -67243,6 +67355,27 @@ Costume Blue Drooping Cat
 Costume Choco Mint Bonnet
 Costume Rose From Frozen Land
 Costume Snownow Hat
+#
+17938#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+#
+17939#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When opened gives one of the following
+
+Costume Glast Heim Spectator
+Costume Katarina von Blood 60
+Costume Clock Winding Key
+Costume Crow on Shoulder
+Costume Diabolic Lapel
+Costume Punkish Cat Ears
+Costume Volume Low Twin
+Costume Fake Ears
+Costume Gothic Pumpkin Handicraft
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -72601,6 +72734,69 @@ Max HP + 200
 If the users base level is 100 or higher,
 Max HP + 2000
 #
+19139#
+A orb that automatically protects its' owner.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Atk + 2%
+Matk + 2%
+Reduces the variable casting time of skills by 3%.
+Enables ^0000FFLevel 1 Hiding^000000.
+^800080Set Bonus^000000
+^008080Survivor's Circlet^000000
+^008080Survivor's Orb^000000
+Vit + 4
+Reduces the variable casting time of skills by 6%.
+Increases the damage of Earth and Wind property magical attacks on targets by 20%.
+Reduces damage taken from Demi-Human race enemies by 4%.
+If ^008080Survivor's Circlet^000000 upgrade level is +7 or higher,
+Additional Vit + 4
+Reduces the variable casting time of skills by an additional 6%.
+Reduces damage taken from Demi-Human race enemies by an additional 4%.
+If ^008080Survivor's Circlet^000000 upgrade level is +9 or higher,
+Additional Vit + 4
+Reduces the variable casting time of skills by an additional 6%.
+Reduces damage taken from Demi-Human race enemies by an additional 4%.
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+Reduces the fixed casting time of skills by 50%.
+Reduces damage taken from Demi-Human race enemies by 1%.
+If ^008080Survivor's Manteau^000000 upgrade level is +5 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
+Additional Matk + 2%
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
+Additional Matk + 2%
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 3%.
+Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Shoes^000000
+Vit + 5
+Int + 5
+Reduces damage taken from Demi-Human race enemies by 3%.
+#
 19141#
 ^808080A mask filled with the sorrow of Thanatos. It looks cute but it is very durable.^000000
 Class: Headgear
@@ -72778,6 +72974,34 @@ Reduces damage taken from Wind property attacks by an additional 15%.
 If upgrade level is +9 or higher,
 Increases physical and magical damage on Malangdo monsters by an additional 20%.
 Reduces damage taken from Malangdo monsters by an additional 20%.
+#
+19221#
+A hairband adorned with what appears to be the wings of a golden angel.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 2% if the users base Vit is 70 or higher.
+Max SP + 2% if the users base Vit is 70 or higher.
+Atk + 5 if the users base Str is 70 or higher.
+Matk + 5 if the users base Int is 70 or higher.
+Aspd + 2% if the users base Agi is 70 or higher.
+Increases long-ranged damage on targets by 2% if the users base Dex is 70 or higher.
+Increases critical damage on targets by 2% if the users base Luk is 70 or higher.
+If upgrade level is +7 or higher,
+Additional Max HP + 3% if the users base Vit is 70 or higher.
+Additional Max SP + 3% if the users base Vit is 70 or higher.
+Additional Atk + 10 if the users base Str is 70 or higher.
+Additional Matk + 10 if the users base Int is 70 or higher.
+Additional Aspd + 3% if the users base Agi is 70 or higher.
+Increases long-ranged damage on targets by an additional 3% if the users base Dex is 70 or higher.
+Increases critical damage on targets by an additional 3% if the users base Luk is 70 or higher.
+^800080Set Bonus^000000
+^008080Golden Angel Hairband^000000
+^008080Golden Angel Wings^000000
+All Stats + 1
 #
 19246#
 A necklace designed specifically for Royal Guards. It stands for the act of protecting others.
@@ -79453,6 +79677,33 @@ Reduces the cast delay of skills by 1% for every combined sum of 20 base Int and
 If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a physical attack.
 #
+20841#
+A pair of wings from a golden angel.
+Class: ^808080Garment^000000
+Defense: ^80808020^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 5% if the users base Vit is 90 or higher.
+Max SP + 5% if the users base Vit is 90 or higher.
+Atk + 15 if the users base Str is 90 or higher.
+Matk + 15 if the users base Int is 90 or higher.
+Aspd + 1 if the users base Agi is 90 or higher.
+Increases long-ranged damage on targets by 5% if the users base Dex is 90 or higher.
+Increases critical damage on targets by 5% if the users base Luk is 90 or higher.
+If upgrade level is +9 or higher,
+Additional Max HP + 5% if the users base Vit is 90 or higher.
+Additional Max SP + 5% if the users base Vit is 90 or higher.
+Additional Atk + 15 if the users base Str is 90 or higher.
+Additional Matk + 15 if the users base Int is 90 or higher.
+Additional Aspd + 1 if the users base Agi is 90 or higher.
+Increases long-ranged damage on targets by an additional 5% if the users base Dex is 90 or higher.
+Increases critical damage on targets by an additional 5% if the users base Luk is 90 or higher.
+^800080Set Bonus^000000
+^008080Golden Angel Hairband^000000
+^008080Golden Angel Wings^000000
+All Stats + 1
+#
 20845#
 ^808080The skin of a dragon which has a mouth large enough to swallow an entire human.^000000
 Class: Garment
@@ -80682,6 +80933,62 @@ Additional Max SP + 10%
 Additional Matk + 5%
 Increases the damage of Neutral and Fire property magical attacks on targets by an additional 5%.
 #
+22170#
+A pair of shoes that automatically protects its' owner.
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 3%
+Max SP + 3%
+Matk + 2%
+Mdef + 15
+Increases the damage of Earth and Wind property magical attacks on targets by 2%.
+Reduces damage taken from Demi-Human race enemies by 5%.
+If upgrade level is +5 or higher,
+Additional Max HP + 7%
+Additional Max SP + 7%
+Additional Matk + 3%
+Increases the damage of Earth and Wind property magical attacks on targets by an additional 3%.
+If upgrade level is +7 or higher,
+Additional Max HP + 10%
+Additional Max SP + 10%
+Additional Matk + 5%
+Increases the damage of Earth and Wind property magical attacks on targets by an additional 5%.
+^800080Set Bonus^000000
+^008080Survivor's Circlet^000000
+^008080Survivor's Shoes^000000
+Increases the damage of Earth and Wind property magical attacks on targets by 10%.
+If ^008080Survivor's Circlet^000000 upgrade level is +7 or higher,
+Increases the damage of Earth and Wind property magical attacks on targets by an additional 10%.
+If ^008080Survivor's Circlet^000000 upgrade level is +9 or higher,
+Increases the damage of Earth and Wind property magical attacks on targets by an additional 10%.
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Shoes^000000
+Matk + 10%
+If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
+Reduces damage taken from Earth and Wind property attacks by 15%.
+If ^008080Survivor's Manteau^000000 upgrade level is +9 or higher,
+Reduces damage taken from Earth and Wind property attacks by an additional 15%.
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Shoes^000000
+Vit + 5
+Int + 5
+Reduces damage taken from Demi-Human race enemies by 3%.
+^800080Set Bonus^000000
+^008080Survivor's Rod [1]^000000
+^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
+#
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
 Weight: ^7777771^000000
@@ -81766,6 +82073,14 @@ Weight: 1
 ^FF0000Account Bound^000000
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
+#
+23660#
+A bottle containing a scent which is irresistible to doggo. The contents have been lowered to that others can safely consume it.
+^FF0000This item will have no effect once that event has ended.^000000
+Class: ^808080Recovery^000000
+Weight: ^80808018^000000
+Restores 18% HP.
+Restores 18% SP.
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -83348,6 +83663,13 @@ Weight: 0
 ^808080White warm cotton that can be used to make clothes and decorations.^000000
 Weight: 0
 #
+25479#
+A bottle containing a scent which is irresistible to doggo. It contains something so delicious, it can be dangerous!
+
+^FF0000This item will have no effect once that event has ended.^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080800^000000
+#
 26100#
 ^808080A foxtail crafted by the Paradise Group. A basic item for experienced summoners.^000000
 ^FF0000Character Bound^000000
@@ -84762,6 +85084,28 @@ Atk + 30
 Aspd + 1
 Increases critical damage on targets by 20%.
 #
+28484#
+The scarf of a gunman who killed the four great gun masters. It is said he felt great remorse after he finished killing, so much so that he destroyed his gun and vanished.
+Class: ^808080Accessory^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Atk + 5%
+Aspd + 2% per level of ^0000FFMass Spiral^000000 known.
+Reduces the variable casting time of skills by 10%.
+Reduces the cast delay of skills by 1% per level of ^0000FFFire Rain^000000 known.
+Reduces the cooldown of ^0000FFHit Barrel^000000 by 4 seconds per level of ^0000FFShattering Storm^000000 known.
+Reduces the cooldown of ^0000FFShattering Storm^000000 by 0.1 seconds per level of ^0000FFShattering Storm^000000 known.
+Increases critical damage on targets by 3% per level of ^0000FFDragon Tail^000000 known.
+Increases the damage of ^0000FFFire Rain^000000 by 5% per level of ^0000FFFire Rain^000000 known.
+Increases the damage of ^0000FFMass Spiral^000000 by 5% per level of ^0000FFMass Spiral^000000 known.
+Increases the damage of ^0000FFQuick Draw Shot^000000 by 5% per level of ^0000FFEternal Chain^000000 known.
+Increases the damage of ^0000FFShattering Storm^000000 by 10% per level of ^0000FFShattering Storm^000000 known.
+Reduces the SP cost of ^0000FFFire Dance^000000 by 5.
+Reduces the SP cost of ^0000FFFire Rain^000000 by 4 per level of ^0000FFFire Rain^000000 known.
+Reduces the SP cost of ^0000FFMass Spiral^000000 by 2 per level of ^0000FFMass Spiral^000000 known.
+Adds a 100% chance of buffing the user for 50 seconds when using ^0000FFCrimson Marker^000000; Adds a 1% chance of casting ^0000FFLevel 1 Dragon Tail^000000 on the target when performing a physical attack per level of ^0000FFDragon Tail^000000 known, if a higher level of this skill is known, it will be cast instead.
+#
 28491#
 ^808080A dagger with a wide variety of applications. Particularly useful for hunting in the mountains.^000000
 ^FFFFFF_^000000
@@ -84893,6 +85237,75 @@ Reduces the variable casting time of ^0000FFHell Gate^000000 by 3% for every 20 
 Reduces the variable casting time of ^0000FFLightning Ride^000000 by 5% for every 15 base levels.
 Reduces the cooldown of ^0000FFPower Absorb^000000 by 3 seconds.
 Increases the damage of ^0000FFLightning Ride^000000 by 5%.
+#
+28506#
+A stone containing the power of the storms.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 5%
+Atk + 5%
+Aspd + 5%
+^800080Set Bonus^000000
+^008080Gelerdria^000000
+^008080Storm Stone^000000
+If ^008080Gelerdria^000000 upgrade level is +7 or higher,
+Increases physical damage on boss monsters by 30%.
+Increases physical damage on Water and Wind property targets by 30%.
+Increases physical damage on Insect and Fish race targets by 30%.
+Increases the damage of ^0000FFWind Cutter^000000 by 30%.
+If ^008080Gelerdria^000000 upgrade level is +9 or higher,
+Increases physical damage on boss monsters by an additional 20%.
+Increases physical damage on Water and Wind property targets by an additional 20%.
+Increases physical damage on Insect and Fish race targets by an additional 20%.
+Increases the damage of ^0000FFWind Cutter^000000 by an additional 20%.
+^800080Set Bonus^000000
+^008080Peuz's Greaves^000000
+^008080Storm Stone^000000
+Reduces damage taken from Demi-Human race enemies by 3%.
+If ^008080Peuz's Greaves^000000 upgrade level is +7 or higher,
+Aspd + 10%
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+If ^008080Peuz's Greaves^000000 upgrade level is +9 or higher,
+Additional Aspd + 10%
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Peuz's Greaves^000000
+^008080Peuz's Manteau^000000
+^008080Peuz's Plate^000000
+^008080Peuz's Seal^000000
+^008080Storm Stone^000000
+Adds a 100% chance of buffing the user for 10 seconds when using ^0000FFAura Blade^000000; Reduces the cast delay of skills by 70%.
+^800080Set Bonus^000000
+^008080Peuz's Manteau^000000
+^008080Storm Stone^000000
+Reduces damage taken from Demi-Human race enemies by 3%.
+Reduces the SP cost of ^0000FFWind Cutter^000000 by 18.
+If ^008080Peuz's Manteau^000000 upgrade level is +7 or higher,
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+If ^008080Peuz's Manteau^000000 upgrade level is +9 or higher,
+Reduces damage taken from long-ranged attacks by an additional 10%.
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Peuz's Plate^000000
+^008080Storm Stone^000000
+Immune to ^800000Frozen^000000.
+Reduces damage taken from Demi-Human race enemies by 3%.
+If ^008080Peuz's Plate^000000 upgrade level is +7 or higher,
+Max HP + 15%
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+If ^008080Peuz's Plate^000000 upgrade level is +9 or higher,
+Additional Max HP + 15%
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+^800080Set Bonus^000000
+^008080Peuz's Seal^000000
+^008080Storm Stone^000000
+Max SP + 5%
+Atk + 5%
+Aspd + 5%
+Reduces damage taken from Demi-Human race enemies by 4%.
 #
 28507#
 ^808080A pair of gloves once owned by a genius magician. They allow the wearer to use their magic more efficiently.^000000
@@ -85347,6 +85760,95 @@ If the users base Dex is 90 or higher,
 Reduces the variable casting time of skills by 5%.
 If the users base Luk is 90 or higher,
 Increases critical damage on targets by 5%.
+#
+28929#
+A shield that fills the user with so much joy.
+Class: ^808080Shield^000000
+Defense: ^808080150^000000
+Weight: ^808080350^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
+^800080Set Bonus^000000
+^008080Alnold Card^000000
+^008080Happy Shield^000000
+Increases the experience given from Plant race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Anubis Card^000000
+^008080Happy Shield^000000
+Increases the experience given from Angel race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Bigfoot Card^000000
+^008080Happy Shield^000000
+Increases the experience given from Insect race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Insect race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Insect race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Khalitzburg Card^000000
+Increases the experience given from Demon race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Demon race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Demon race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Orc Warrior Card^000000
+Increases the experience given from Brute race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Brute race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Brute race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Penomena Card^000000
+Increases the experience given from Formless race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Formless race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Formless race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Rafflesia Card^000000
+Increases the experience given from Fish race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Fish race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Fish race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Sky Petite Card^000000
+Increases the experience given from Dragon race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Dragon race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Dragon race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Teddy Bear Card^000000
+Increases the experience given from Undead race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Undead race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Undead race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Happy Shield^000000
+^008080Thara Frog Card^000000
+Increases the experience given from Demi-Human race monsters by 5%.
+If ^008080Happy Shield^000000 upgrade level is +6 or higher,
+Increases the experience given from Demi-Human race monsters by an additional 5%.
+If ^008080Happy Shield^000000 upgrade level is +8 or higher,
+Increases the experience given from Demi-Human race monsters by an additional 5%.
 #
 28930#
 ^808080A square shield
@@ -86871,6 +87373,77 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31377#
+A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31378#
+A hat celebrating the 60th descendant of the Blood family.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31379#
+A key designed to wind up a clock or a toy. It would seem people have seen fit to put it on their head instead.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31380#
+A crow which won't stop talking all day long.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31381#
+A lapel said to have be worn by Satan Morroc.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31382#
+A stylish hat with two large cat paws drooping down the sides.
+Class: ^808080Costume^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31383#
+A pig tail hair style where the ribbons are tied at the lower end of the hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31384#
+Hey, are you tired of real ears cluttering up your head, when you use them to listen to your surroundings and utilize them as a basic sense? Come on down and get some real fake ears!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31385#
+A gothic inspired mini crown which is made to be worn with dark clothing choices.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 31390#
 ^808080This hat is made with spirit of people's hope for a place which doesn't snow during winter.^000000
 Class: Costume
@@ -86898,4 +87471,14 @@ Jobs : ^777777All Jobs^000000
 Attack: 0
 Weight: 0
 Weapon Level: 0
+#
+31455#
+A helm made with secret ingredients from doggo. It's made with soft and warm fur to give it a cute look. It can't get cuter than this.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of February.^000000
+Increases the recovery rate of ^008080Meat^000000 consumables by 2018%.
 #
