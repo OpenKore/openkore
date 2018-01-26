@@ -714,6 +714,7 @@
 1441#Ru_Blue_Spear#
 1442#Ru_Gold_Spear#
 1443#Crimson_Spear#
+1449#Gelerdria#
 1450#Vicious_Mind_Lance#
 1451#Guisarme#
 1452#Guisarme#
@@ -3363,8 +3364,8 @@
 5593#Rabbit_Bonnet#
 5594#Donut_In_Mouth#
 5595#Eye_Of_Juno#
-5596#Four_Leaf_Clover#
-5597#Chewing_Gum#
+5596#Four_Leaf_Clover_in_Mouth#
+5597#Bubble_Gum_in_Mouth#
 5598#Virgo_Crown#
 5599#Virgo_Diadem#
 5600#Brazil_Twin_Ribbon#
@@ -5168,6 +5169,7 @@
 11608#Chocolate_Egg#
 11609#Tasty_Cookie_Egg#
 11616#Yummy_Meat#
+11617#Silvervine_Chocoball#
 11701#(null)#
 11706#Steak#
 11707#Roast_Beef#
@@ -6876,6 +6878,9 @@
 14683#10th_Anniversary_Lucky_Box#
 14706#Pirate_Eyepatch_Box#
 14759#Shadow_Armor_Weapon_Box#
+14836#Xin_Niar_Scroll#
+14856#Ancient_Elven_Scroll#
+14884#Weather_Scroll#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -6977,6 +6982,7 @@
 15139#Shepherd_Cloth#
 15140#Natural_Clothes#
 15142#Orca_Clothes#
+15143#Vermin_Cloth#
 15145#Evil_Dragon_Armor#
 15146#Flattery_Robe#
 15147#Abusive_Robe#
@@ -7141,8 +7147,9 @@
 16381#WoE_Teleport_Scroll_100_Box#
 16385#O'Riley's_Green_Box#
 16386#Four_Leaf_Clover_In_Mouth_Box3#
+16388#Four_Leaf_Clover_in_Mouth_Box_III#
 16389#Bubble_Gum_In_Mouth_Box2#
-16390#Bubble_Gum_In_Mouth_Box3#
+16390#Bubble_Gum_in_Mouth_Box_III#
 16393#HD_Oridecon_Box5#
 16394#HE_Oridecon_Box10#
 16395#HD_Elunium_Box5#
@@ -7561,6 +7568,7 @@
 17667#Heart's_Foundation_Lucky_Box#
 17709#Costume_Amistr_Bag_Box#
 17714#Akiba's_Gashapon_Pack#
+17720#Valkyrie_Scroll#
 17728#HD_Oridecon_100_Box#
 17729#HD_Elunium_100_Box#
 17730#Enriched_Oridecon_100_Box#
@@ -7633,6 +7641,8 @@
 17903#Overseas_Care_Package_XIII#
 17927#Overseas_Care_Package_XIV#
 17928#Costume_Box_XIV:_Stay_Frosty#
+17938#February_2018_Overseas_Care_Package#
+17939#Spooky_January_Costume_Box#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8094,6 +8104,7 @@
 19114#Sting_Silk_Ribbon#
 19125#Cylinder_Hairband#
 19137#Strawberry_Mouth_Guard#
+19139#Survivor's_Orb#
 19141#Maero_Mask#
 19156#Lunar_Rainbow#
 19201#Classic_Battle_Manual_10_Box#
@@ -8106,6 +8117,7 @@
 19208#Classic_Small_Life_Potion_10_Box#
 19209#Classic_Giant_Flywing_500_Box#
 19212#Malangdo_Pirate_Hat#
+19221#Golden_Angel_Hairband#
 19246#Royal_Guard_Necklace#
 19269#Happy_Flapping_Angel_Wings#
 19285#Siegfried's_Helmet#
@@ -8786,6 +8798,7 @@
 20834#Drifter's_Cape#
 20836#Skin_of_Lindwyrm#
 20837#Skin_of_Gwiber#
+20841#Golden_Angel_Wings#
 20845#Malach's_Skin#
 20846#Temporal_Manteau#
 20859#Phreeoni_Wings#
@@ -8862,6 +8875,7 @@
 22131#Spurred_Boots#
 22134#Enforcer_Shoes#
 22138#Devil_Worshipper_Shoes#
+22170#Survivor's_Shoes#
 22507#Old_Scroll#
 22508#Eden_Group_Mark#
 22511#Fenrir's_Power_Scroll#
@@ -9006,6 +9020,7 @@
 23603#Sol_Bundle_B#
 23625#Bio_Protector_Bundle_A#
 23658#Lamor_Bundle_B#
+23660#Dogly_Bottle_Z#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9160,6 +9175,7 @@
 25296#Something_Fatal#
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
+25479#Dogly_Bottle#
 26100#Paradise_Foxtail_II#
 26101#Paradise_Foxtail_III#
 26107#Elder_Staff#
@@ -9242,6 +9258,7 @@
 28438#Fairy_Leaf_Powder#
 28441#Vigilante_Badge#
 28442#Hippie_Feather#
+28484#Rebellion's_Scarf#
 28491#Hunting_Knife#
 28492#Thieves'_Guide_Vol._1#
 28495#Sheriff's_Left_Badge#
@@ -9249,6 +9266,7 @@
 28501#Kirin_Horn#
 28502#Mob_Scarf#
 28503#Keraunos#
+28506#Storm_Stone#
 28507#Magician's_Gloves#
 28513#Celine's_Brooch#
 28520#Egir_Ring#
@@ -9274,6 +9292,7 @@
 28910#Imuke_Upper_Shield#
 28916#Gaia_Shield#
 28921#Anemos_Shield#
+28929#Happy_Shield#
 28930#Mad_Bunny_Guard#
 28931#Mad_Bunny_Buckler#
 28932#Mad_Bunny_Shield#
@@ -9493,5 +9512,15 @@
 31300#Costume_Warm_Cat_Muffler#
 31301#Costume_Blinking_Eyes#
 31302#Costume_Black_Magenta_Ribbon#
+31377#Costume_Glast_Heim_Spectator#
+31378#Costume_Katarina_von_Blood_60#
+31379#Costume_Clock_Winding_Key#
+31380#Costume_Crow_on_Shoulder#
+31381#Costume_Diabolic_Lapel#
+31382#Costume_Punkish_Cat_Ears#
+31383#Costume_Volume_Low_Twin#
+31384#Costume_Fake_Ears#
+31385#Costume_Gothic_Pumpkin_Handicraft#
 31390#Costume_Let_It_Snow#
 31420#Costume:_Shining_Santa_Poring#
+31455#Costume_Super_Cute_Dog#
