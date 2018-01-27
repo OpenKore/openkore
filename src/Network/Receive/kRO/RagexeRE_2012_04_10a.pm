@@ -16,31 +16,6 @@ package Network::Receive::kRO::RagexeRE_2012_04_10a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2012_03_07f);
-sub new {
-   my ($class) = @_;
-   my $self = $class->SUPER::new(@_);
-   my %packets = (
-	 '0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
-	 '090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-	 '0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-	 '0086' => ['actor_display', 'a4 a6 V', [qw(ID coords tick)]],
-   );
-   
-   	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-	
-	my %handlers = qw(
-		actor_connected 090F
-		actor_moved 0914
-		actor_exists 0915
-		actor_display 0086
-	);
-	
-   foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
-
-   return $self;
-}
 
 1;
 
