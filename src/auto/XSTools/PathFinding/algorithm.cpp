@@ -74,7 +74,7 @@ openListAdd (CalcPath_session *session, Node* infoAdress)
     session->openList[currentIndex].x = infoAdress->x;
     session->openList[currentIndex].y = infoAdress->y;
     session->openList[currentIndex].f = infoAdress->f;
-    infoAdress.openListIndex = currentIndex;
+    infoAdress->openListIndex = currentIndex;
     TypeList Temporary;
     while (PARENT(currentIndex) >= 0) {
         if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
@@ -82,7 +82,7 @@ openListAdd (CalcPath_session *session, Node* infoAdress)
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
             session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            infoAdress.openListIndex = PARENT(currentIndex);
+            infoAdress->openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -100,7 +100,7 @@ reajustOpenListItem (CalcPath_session *session, Node* infoAdress)
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
             session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            infoAdress.openListIndex = PARENT(currentIndex);
+            infoAdress->openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -176,7 +176,6 @@ CalcPath_pathStep (CalcPath_session *session)
 	
 	
 	Node* currentNode;
-	Neighbors currentNeighbors;
 	Node* infoAdress;
 	unsigned int Gscore = 0;
 	int indexNeighbor = 0;
@@ -238,13 +237,13 @@ CalcPath_pathStep (CalcPath_session *session)
 					distanceFromCurrent = ORTOGONAL;
 				}
 				if (session->avoidWalls) {
-					distanceFromCurrent += infoAdress.weight;
+					distanceFromCurrent += session->map[current];
 				}
 				
 				Gscore = currentNode->g + distanceFromCurrent;
 				
 				if (infoAdress->whichlist == NONE) {
-					infoAdress.weight = session->map[current];
+					infoAdress->weight = session->map[current];
 					infoAdress->x = x;
 					infoAdress->y = y;
 					infoAdress->parentX = currentNode->x;
