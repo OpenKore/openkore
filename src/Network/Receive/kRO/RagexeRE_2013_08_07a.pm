@@ -17,21 +17,6 @@ package Network::Receive::kRO::RagexeRE_2013_08_07a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2013_06_26b);
 
-sub new {
-	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	my %packets = (
-		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
-		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
-		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
-	);
-
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
-
-	return $self;
-}
-
 1;
 =pod
 //2013-08-07Ragexe (Shakto)
