@@ -50,28 +50,6 @@ CalcPath_new ()
 	return session;
 }
 
-void 
-GenerateMap(CalcPath_session *session, const char *map)
-{
-    session->currentMap = (Node*) malloc(session->height * session->width * sizeof(Node));
-
-	unsigned int x = 0;
-	unsigned int y = 0;
-	
-	int current;
-	int i;
-	for (y = 0; y < session->height; y++) {
-		for (x = 0; x < session->width; x++) {
-			current = (y * session->width) + x;
-			i = map[current];
-
-			session->currentMap[current].weight = i;
-			session->currentMap[current].whichlist = NONE;
-			session->currentMap[current].openListIndex = NONE;
-		}
-	}
-}
-
 int 
 heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls)
 {
@@ -87,53 +65,16 @@ heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int av
     return hScore;
 }
 
-Neighbors
-organizeNeighborsStruct(CalcPath_session *session, Node* currentNode)
-{
-
-	Neighbors currentNeighbors;
-    int count = 0;
-    int i;
-	for (i = -1; i <= 1; i++)
-	{
-	    int j;
-		for (j = -1; j <= 1; j++)
-		{
-			if (i == 0 && j == 0){ continue; }
-			unsigned int x = currentNode->x + i;
-			unsigned int y = currentNode->y + j;
-			if (x > session->width - 1 || y > session->height - 1){ continue; }
-			if (x < 0 || y < 0){ continue; }
-			int weight = session->currentMap[(y * session->width) + x].weight;
-			if (weight == 0){ continue; }
-			if (i != 0 && j != 0) {
-               if (session->currentMap[(currentNode->y * session->width) + x].weight == 0 || session->currentMap[(y * session->width) + currentNode->x].weight == 0){ continue; }
-                currentNeighbors.neighborNodes[count].distanceFromCurrent = DIAGONAL;
-			} else {
-                currentNeighbors.neighborNodes[count].distanceFromCurrent = ORTOGONAL;
-			}
-			if (session->avoidWalls) {
-				currentNeighbors.neighborNodes[count].distanceFromCurrent += weight;
-			}
-			currentNeighbors.neighborNodes[count].x = x;
-			currentNeighbors.neighborNodes[count].y = y;
-			count++;
-		}
-	}
-	currentNeighbors.count = count;
-	return currentNeighbors;
-}
-
 //Openlist is a binary heap of min-heap type
 
 void 
 openListAdd (CalcPath_session *session, Node* infoAdress)
 {
-    session->openList[session->openListSize].x = infoAdress->x;
-    session->openList[session->openListSize].y = infoAdress->y;
-    session->openList[session->openListSize].f = infoAdress->f;
-    session->currentMap[(session->openList[session->openListSize].y * session->width) + session->openList[session->openListSize].x].openListIndex = session->openListSize;
-    int currentIndex = session->openListSize;
+	int currentIndex = session->openListSize;
+    session->openList[currentIndex].x = infoAdress->x;
+    session->openList[currentIndex].y = infoAdress->y;
+    session->openList[currentIndex].f = infoAdress->f;
+    infoAdress.openListIndex = currentIndex;
     TypeList Temporary;
     while (PARENT(currentIndex) >= 0) {
         if (session->openList[PARENT(currentIndex)].f > session->openList[currentIndex].f) {
@@ -141,7 +82,7 @@ openListAdd (CalcPath_session *session, Node* infoAdress)
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
             session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            session->currentMap[(session->openList[PARENT(currentIndex)].y * session->width) + session->openList[PARENT(currentIndex)].x].openListIndex = PARENT(currentIndex);
+            infoAdress.openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -159,7 +100,7 @@ reajustOpenListItem (CalcPath_session *session, Node* infoAdress)
             session->openList[currentIndex] = session->openList[PARENT(currentIndex)];
             session->currentMap[(session->openList[currentIndex].y * session->width) + session->openList[currentIndex].x].openListIndex = currentIndex;
             session->openList[PARENT(currentIndex)] = Temporary;
-            session->currentMap[(session->openList[PARENT(currentIndex)].y * session->width) + session->openList[PARENT(currentIndex)].x].openListIndex = PARENT(currentIndex);
+            infoAdress.openListIndex = PARENT(currentIndex);
             currentIndex = PARENT(currentIndex);
         } else { break; }
     }
@@ -267,36 +208,62 @@ CalcPath_pathStep (CalcPath_session *session)
             reconstruct_path(session, currentNode);
 			return 1;
 		}
-
-		currentNeighbors = organizeNeighborsStruct(session, currentNode);
-
-		for (indexNeighbor = 0; indexNeighbor < currentNeighbors.count; indexNeighbor++) {
-
-            infoAdress = &session->currentMap[(currentNeighbors.neighborNodes[indexNeighbor].y * session->width) + currentNeighbors.neighborNodes[indexNeighbor].x];
-			nodeList = infoAdress->whichlist;
-			if (nodeList == CLOSED) { continue; }
-
-			Gscore = currentNode->g + currentNeighbors.neighborNodes[indexNeighbor].distanceFromCurrent;
-
-			if (nodeList != OPEN) {
-                infoAdress->x = currentNeighbors.neighborNodes[indexNeighbor].x;
-                infoAdress->y = currentNeighbors.neighborNodes[indexNeighbor].y;
-                infoAdress->parentX = currentNode->x;
-                infoAdress->parentY = currentNode->y;
-                infoAdress->whichlist = OPEN;
-                infoAdress->g = Gscore;
-                infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY, session->avoidWalls);
-                infoAdress->f = infoAdress->g + infoAdress->h;
-				openListAdd (session, infoAdress);
-				session->openListSize++;
-			} else {
-                if (Gscore < infoAdress->g) {
-                    infoAdress->parentX = currentNode->x;
-                    infoAdress->parentY = currentNode->y;
-                    infoAdress->g = Gscore;
-                    infoAdress->f = infoAdress->g + infoAdress->h;
-                    reajustOpenListItem (session, infoAdress);
-                }
+		
+		int i;
+		for (i = -1; i <= 1; i++)
+		{
+			int j;
+			for (j = -1; j <= 1; j++)
+			{
+				if (i == 0 && j == 0){ continue; }
+				unsigned int x = currentNode->x + i;
+				unsigned int y = currentNode->y + j;
+				int current = (y * session->width) + x;
+				
+				infoAdress = &session->currentMap[current];
+				
+				if (infoAdress->whichlist == CLOSED) { continue; }
+				
+				if (infoAdress->whichlist == NONE) {
+					if (x > session->width - 1 || y > session->height - 1){ continue; }
+					if (x < 0 || y < 0){ continue; }
+					if (session->map[current] == 0){ continue; }
+				}
+				
+				int distanceFromCurrent;
+				if (i != 0 && j != 0) {
+				   if (session->map[(currentNode->y * session->width) + x] == 0 || session->map[(y * session->width) + currentNode->x] == 0){ continue; }
+					distanceFromCurrent = DIAGONAL;
+				} else {
+					distanceFromCurrent = ORTOGONAL;
+				}
+				if (session->avoidWalls) {
+					distanceFromCurrent += infoAdress.weight;
+				}
+				
+				Gscore = currentNode->g + distanceFromCurrent;
+				
+				if (infoAdress->whichlist == NONE) {
+					infoAdress.weight = session->map[current];
+					infoAdress->x = x;
+					infoAdress->y = y;
+					infoAdress->parentX = currentNode->x;
+					infoAdress->parentY = currentNode->y;
+					infoAdress->whichlist = OPEN;
+					infoAdress->g = Gscore;
+					infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY, session->avoidWalls);
+					infoAdress->f = infoAdress->g + infoAdress->h;
+					openListAdd (session, infoAdress);
+					session->openListSize++;
+				} else {
+					if (Gscore < infoAdress->g) {
+						infoAdress->parentX = currentNode->x;
+						infoAdress->parentY = currentNode->y;
+						infoAdress->g = Gscore;
+						infoAdress->f = infoAdress->g + infoAdress->h;
+						reajustOpenListItem (session, infoAdress);
+					}
+				}
 			}
 		}
 	}

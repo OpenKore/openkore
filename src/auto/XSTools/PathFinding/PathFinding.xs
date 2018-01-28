@@ -69,8 +69,9 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		
 		session->width = width;
 		session->height = height;
+		session->map = data;
 		
-		GenerateMap(session, data);
+		session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 		
 		session->startX = startx;
 		session->startY = starty;
