@@ -87455,6 +87455,15 @@ Required Jobs: All Jobs
 Max HP + 250 for every 20 base levels.
 Increases physical and magical damage on targets by 2% for every 30 base levels.
 #
+31408#
+Celebrating the release of Ragnarok Rush this majestic goat horns represents great deeds.
+^ff0000This item cannot be traded with other accounts.^000000
+Class : ^777777Costume^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
+Required Level : ^777777100^000000
+Job : ^777777All^000000
+#
 31420#
 ^808080When equipped, EXP increases by 25% when defeating monsters during December 2017.
 Increases the healing rate of Carrots by 100%
