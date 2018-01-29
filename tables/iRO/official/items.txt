@@ -9522,5 +9522,6 @@
 31384#Costume_Fake_Ears#
 31385#Costume_Gothic_Pumpkin_Handicraft#
 31390#Costume_Let_It_Snow#
+31408#Costume:_Ragnarok_Rush_Goat#
 31420#Costume:_Shining_Santa_Poring#
 31455#Costume_Super_Cute_Dog#
