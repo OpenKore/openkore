@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
 #  $Revision: 6687 $
-#  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
+#  $Id: kRO.pm 6687 200-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -363,6 +363,7 @@ sub new {
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
+		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
@@ -5052,6 +5053,46 @@ sub rodex_delete {
 	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
 	
 	delete $rodexList->{mails}{$args->{mailID1}};
+}
+
+sub rates_info2 {
+	my ($self, $args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v V3';
+	my $header_len = ((length pack $header_pack) + 2);
+	
+	my $detail_pack = 'C l3';
+	my $detail_len = length pack $detail_pack;
+	
+	my %rates = (
+		exp => { total => $args->{exp}/1000 }, # Value to Percentage => /100
+		death => { total => $args->{death}/1000 }, # 1 d.p. => /10
+		drop => { total => $args->{drop}/1000 },
+	);
+
+	# get details
+	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i += $detail_len) {
+	
+		my ($type, $exp, $death, $drop) = unpack($detail_pack, substr($msg, $i, $detail_len));
+		
+		$rates{exp}{$type} = $exp/1000;
+		$rates{death}{$type} = $death/1000;
+		$rates{drop}{$type} = $drop/1000;
+	}
+
+	# we have 4 kinds of detail:
+	# $rates{exp or drop or death}{DETAIL_KIND}
+	# 0 = base server exp (?)
+	# 1 = premium acc additional exp
+	# 2 = server additional exp
+	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
+	message T("=========================== Server Infos ===========================\n"), "info";
+	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
+	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
+	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
+	message "=====================================================================\n", "info";
 }
 
 1;
