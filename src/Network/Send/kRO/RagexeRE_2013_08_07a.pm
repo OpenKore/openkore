@@ -12,58 +12,53 @@
 package Network::Send::kRO::RagexeRE_2013_08_07a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2013_05_22);
-use Log qw(debug);
+use base qw(Network::Send::kRO::RagexeRE_2013_06_26b);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'08A2' => undef,
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
-		'095C' => undef,
-		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'0360' => undef,
-		'0437' => ['character_move','a3', [qw(coordString)]],#5
-#		'07EC' => undef,
-		'035F' => ['sync', 'V', [qw(time)]],#6
-		'0925' => undef,
-		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
-		'095E' => undef,
-		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
-		'089C' => undef,
-		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
-		'08A3' => undef,
-		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
-		'087E' => undef,
-		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
-		'0811' => undef,
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
-		'08A6' => undef,
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
-#		'0369' => undef,
-		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
-		'08A9' => undef,
-		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
-		'0950' => undef,
-		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-#		'0362' => undef,
-		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'0926' => undef,
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0811' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0817' => ['buy_bulk_closeShop'],			
+		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
+		'0437' => ['character_move', 'a3', [qw(coordString)]],
+		'023B' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
+		'07E4' => ['item_take', 'a4', [qw(ID)]],
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'086D' => ['storage_password'],
+		'035F' => ['sync', 'V', [qw(time)]],	
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
+	
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 096A
 		actor_look_at 0202
 		actor_name_request 0368
+		buy_bulk_buyer 0811
+		buy_bulk_closeShop 0817
+		buy_bulk_openShop 0815
+		buy_bulk_request 0360
 		character_move 0437
 		friend_request 023B
 		homunculus_command 0361
 		item_drop 0362
+		item_list_window_selected 0281
 		item_take 07E4
 		map_login 022D
 		party_join_request_by_name 0802
@@ -71,13 +66,19 @@ sub new {
 		skill_use_location 0438
 		storage_item_add 07EC
 		storage_item_remove 0364
+		storage_password 086D
 		sync 035F
 	);
+	
+	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+#	elif PACKETVER == 20130807 // 2013-08-07Ragexe
+#		packet_keys(0x7E241DE0,0x5E805580,0x3D807D80);
+#	$self->cryptKeys(0x7E241DE0, 0x3D807D80, 0x5E805580);
 
-#	$self->cryptKeys(2116296160, 1031830912, 1585468800);
-
-	$self;
+	return $self;
 }
 
 1;
