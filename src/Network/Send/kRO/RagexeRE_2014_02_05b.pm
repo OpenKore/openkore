@@ -21,26 +21,26 @@ sub new {
 	
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0965' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0802' => ['actor_look_at', 'v C', [qw(head body)]],
+		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0202' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0887' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0811' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0817' => ['buy_bulk_closeShop'],			
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
-		'089B' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'092D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'0361' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0895' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
-		'0940' => ['item_take', 'a4', [qw(ID)]],
-		'0966' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'095D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'023B' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
+		'07E4' => ['item_take', 'a4', [qw(ID)]],
+		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'088E' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0367' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'0865' => ['storage_password'],
+		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'086D' => ['storage_password'],
 		'035F' => ['sync', 'V', [qw(time)]],		
 	);
 	
@@ -48,26 +48,26 @@ sub new {
 	
 	my %handlers = qw(
 		actor_action 0369
-		actor_info_request 0965
-		actor_look_at 0802
+		actor_info_request 096A
+		actor_look_at 0202
 		actor_name_request 0368
-		buy_bulk_buyer 0887
+		buy_bulk_buyer 0811
 		buy_bulk_closeShop 0817
 		buy_bulk_openShop 0815
 		buy_bulk_request 0360
 		character_move 0437
-		friend_request 089B
-		homunculus_command 092D
-		item_drop 0361
-		item_list_window_selected 0895
-		item_take 0940
-		map_login 0966
-		party_join_request_by_name 095D
+		friend_request 023B
+		homunculus_command 0361
+		item_drop 0362
+		item_list_window_selected 0281
+		item_take 07E4
+		map_login 022D
+		party_join_request_by_name 0802
 		skill_use 083C
 		skill_use_location 0438
-		storage_item_add 088E
-		storage_item_remove 0367
-		storage_password 0865
+		storage_item_add 07EC
+		storage_item_remove 0364
+		storage_password 086D
 		sync 035F
 	);
 	
