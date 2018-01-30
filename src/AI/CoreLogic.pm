@@ -1041,6 +1041,25 @@ sub processTransferItems {
 			redo;
 		}
 
+		#verify if we can carry the amount of item
+		#if you're sending to storage, doesn't need to check weight
+		#if there is no information about weight, there's no point in check
+		if ($row->{target} ne 'storage' && $item->weight()) {
+            my $freeWeight;
+            if ($row->{target} eq 'inventory') {
+                $freeWeight = int ($char->{weight_max} - $char->{weight});
+            } else { #if target not inventory, then is cart!
+                $freeWeight = $char->cart->{weight_max} - $char->cart->{weight};
+            }
+			my $weightNeeded = min( $item->{amount}, $row->{amount} || $item->{amount} ) * ($item->weight()/10);
+			
+			if ($weightNeeded > $freeWeight) {
+				#need to low down the amount
+				$row->{amount} = int ( $freeWeight / ( $item->weight()/10 ) );
+				warning TF("Amount of item %s is more that you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
+			}		
+		}
+
 		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
 			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
 			redo;
