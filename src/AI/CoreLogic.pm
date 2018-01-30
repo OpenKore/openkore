@@ -1049,13 +1049,13 @@ sub processTransferItems {
 			if ($row->{target} eq 'inventory') {
 				$freeWeight = int ($char->{weight_max} - $char->{weight});
 			} else { #if target not inventory, then is cart!
-				$freeWeight = $char->cart->{weight_max} - $char->cart->{weight};
+				$freeWeight = int ($char->cart->{weight_max} - $char->cart->{weight});
 			}
 			my $weightNeeded = min( $item->{amount}, $row->{amount} || $item->{amount} ) * ($item->weight()/10);
 			
 			if ($weightNeeded > $freeWeight) {
 				#need to low down the amount
-				$row->{amount} = int ( $freeWeight / ( $item->weight()/10 ) );
+				$row->{amount} = $freeWeight / ( $item->weight()/10 );
 				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
 			}		
 		}
