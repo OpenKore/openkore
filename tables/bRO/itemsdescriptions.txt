@@ -25260,31 +25260,33 @@ Classes: ^777777Noviços e evoluções^000000
 #
 13034#
 Adaga afiada feita por habilidosos artesãos da Guilda dos Mercenários.
-Quando equipada em conjunto com a Tempestade de Areia:
-- SP + 20, HP Máximo + 5%, Precisão + 10;
-- Aumenta o dano contra monstros Grandes em 30%;
-- Adiciona uma pequena chance de ativar 190 de Velocidade de Ataque por 7 segundos quando atacar.
+^FF6347Conjunto^000000
+^FF6347[Tempestade de Areia]^000000
+^0000ffPrecisão +10.^000000
+^0000ffHP máx. +5%.^000000
+^0000ffSP máx. +20%.^000000
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^777777130^000000
+Ataque: ^777777130^000000
 Peso: ^77777760^000000
-Propriedade: ^777777Neutra^000000
-Nível da Arma: ^7777772^000000
+Propriedade: ^777777Neutro^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Algoz^000000
+Classes: ^777777Algozes e evoluções^000000
 #
 13035#
-Adaga afiada feita por habilidosos artesãos da Guilda dos Mercenários.
-Quando equipada em conjunto com o Crepúsculo do Deserto:
-- SP + 20, HP Máximo + 5%, Precisão + 10;
-- Aumenta o dano contra monstros Grandes em 30%;
-- Adiciona uma pequena chance de ativar 190 de Velocidade de Ataque por 7 segundos quando atacar.
+Adaga afiada feita por habilidosas artesãs da Guilda dos Mercenários
+^FF6347Conjunto^000000
+^FF6347[Crepúsculo do Deserto]^000000
+^0000ffDano físico contra oponentes de tamanho Grande +30%.^000000
+Ao realizar ataques físicos:
+^0000ff0,1% de chance de ativar [Velocidade de ataque +100%] por 7 segundos.^000000
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^77777760^000000
-Propriedade: ^777777Neutra^000000
-Nível da Arma: ^7777772^000000
+Propriedade: ^777777Neutro^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Algoz^000000
+Classes: ^777777Algozes e evoluções^000000
 #
 1572#
 Este livro ajuda jovens estudantes de magia.
@@ -25579,13 +25581,14 @@ Peso: ^77777730^000000
 Classes que utilizam:  ^7777772a. Classe Transcendental^000000
 #
 2544#
-Couro de Tendrilion com ramos de planta saindo dele.
-Aumento de 5% na resistência a ataques de propriedade Terra e Água.
-Aumento de 5% na resistência a monstros de raça Bruto e Planta.
+Couro de Leão de Vinhas com ramos de planta saindo dele.
+^0000ffResistência as raças Bruto e Planta +5%.^000000
+^0000ffResistência as propriedades Terra e Água +5%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777714^000000
 Peso: ^77777750^000000
-Classes que utilizam:  ^7777772a. Classe Transcendental^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Classes Transcendentais 2-1 e 2-2^000000
 #
 2545#
 Um traje clerical para proteger os exorcistas da Igreja de Prontera.
@@ -29829,17 +29832,19 @@ Peso: ^777777100^000000
 Classes que utilizam:  ^777777Todas as Transcendentais, exceto Aprendiz^000000
 #
 2554#
-Roupa feita com uma escama do lacaio de Nidhogg. Ainda possui um poder muito forte.
-^0000ffDEFM +3. ^000000
+Roupa feita com uma escama da sombra de Nidhogg. Ainda possui um poder muito forte.
+^0000ffDEFM +3.^000000
 ^0000ffResistência a todas as propriedades +7%.^000000
 ^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
-Aumenta SP Máx. de acordo com a fórmula:
-^0000ff[Nv. de Base/3 + (refino x10)]^000000
+A cada refino:
+^0000ffSP +10.^000000
+A cada 3 níveis de base:
+^0000ffSP +1.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777725^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777790^000000
-Classes que utilizam:  ^777777Todas as Transcendentais, exceto Aprendiz^000000
+Classes: ^777777Todas as Transcendentais, exceto Aprendizes^000000
 #
 2787#
 Broche feito com lágrimas do Elemental de Água.
@@ -30565,14 +30570,17 @@ Classes que utilizam: ^777777Todas^000000
 #
 5454#
 Parece um cachorrinho, mas é uma réplica encantada de pelúcia no topo de sua cabeça.
-^0000ffFOR +1, INT +1.^000000
-^0000ffAo atacar fisicamente, chance de aumentar o Crítico para 100% por 3 segundos.^000000
-^0000ffAo atacar magicamente, chance de ignorar em 100% a DEFM por 3 segundos.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffFOR +1. INT +1.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de ativar [Dano crítico +100%] por 3 segundos.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar [Ignora 100% da DEFM de monstros] por 3 segundos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777750^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5584#
 Um chifre demoníaco, carregando a essência do mal encarnado.
@@ -38860,18 +38868,20 @@ Nível Necessário : ^77777720^000000
 Classes :  ^777777Todas exceto Aprendiz^000000
 #
 18729#
-Dizem que na família mafiosa mais famosa de Lighthalzen havia o único minijusticeiro de Midgard. Conhecido como Rebourne, o pequeno bebê era extremamente poderoso, e entre suas armas secretas estava a Bola Rebourne. Também conhecida como “bola do último desejo”, quando atinge seu alvo na cabeça ela se incendeia e teoricamente mata seu alvo. Para sua sorte, ela também instantaneamente o ressuscita, liberando uma incrível força interior capaz de transformar qualquer pessoa que não seja boa em nada, mas que possua um último desejo, em um verdadeiro herói!
-Reduz em 10% o dano causado por monstros da raça Humanoide. Não reduz dano de jogadores.
-Aumenta a recuperação pelo item Mastela em +30%.
-Reduz o tempo de conjuração variável em 3%.
-Se  o refinamento do item for +12 ou maior, reduz o tempo de conjuração em 1%. Se o refinamento for +14 ou maior, reduz o tempo de conjuração em mais 1%.
-Os bônus são cumulativos, podendo reduzir o tempo de conjuração em até 5%.
-Tipo : ^777777Equipamento para Cabeça^000000
+Dizem que na família mafiosa mais famosa de Lighthalzen havia o único minijusticeiro de Midgard. Conhecido como Rebourne, o pequeno bebê era extremamente poderoso, e entre suas armas secretas estava a Bola Rebourne. Também conhecida como 'bola do último desejo', quando atinge seu alvo na cabeça ela se incendeia e teoricamente mata seu alvo. Para sua sorte, ela também instantaneamente o ressuscita, liberando uma incrível força interior capaz de transformar qualquer pessoa que não seja boa em nada, mas que possua um último desejo, em um verdadeiro herói!
+^0000ffConjuração variável -3%.^000000
+^0000ffRecuperação de HP da Mastela +30%.^000000
+^0000ffResistência a monstros da raça Humanoide +10%.^000000
+Refino +12 ou mais:
+^0000ffConjuração variável -1% adicional.^000000
+Refino +14 ou mais:
+^0000ffConjuração variável -1% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777715^000000
-Nível Necessário : ^7777771^000000
-Classes :  ^777777Todas^000000
+Peso: ^77777715^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18696#
 Quer irritar seus inimigos? Quer ser mais pentelho que as piadas de bardo? Então experimente as vantagens deste estranho elmo “amaldiçoado”. Basta colocar na cabeça para que você comece a tagarelar sem parar: “Ei, Mammonita! Ei, Mammonita! Ei, Mammonita! Mammonita! Ei, Mammonita!”. Pior de tudo é que funciona, e seus inimigos vão acabar entrando na faca. Ou, no caso, na “mammonitada”.
@@ -40878,14 +40888,15 @@ Peso : ^7777770^000000
 
 //------------------March2013 Items---------------------------------
 5788#
-Óculos misteriosos, inventado pelo Feiticeiro James Camarão, para que as pessoas, ao ler seu livro, “Ah, vá! Tá...”, acreditassem que as imagens dele estavam saltando para fora das páginas. Quando você o coloca, além de um estranho desejo de comer pipoca, você tem a incrível sensação de que as coisas ao seu redor estão mais reais do que eram antes. Parece até que este golpe vindo em sua direção pode lhe atingir... Opa! E não é que pode mesmo? Se abaixe aí!
-^0000FFAumenta o Dano Mágico em 4% em monstros da raça Amorfo. Diminui em 5% o dano recebido da propriedade Neutra.^000000
-Tipo : ^777777Equipamento para Cabeça^000000
+Óculos misteriosos, inventado pelo Feiticeiro James Camarão, para que as pessoas, ao ler seu livro, 'Ah, vá! Tá... ', acreditassem que as imagens dele estavam saltando para fora das páginas. Quando você o coloca, além de um estranho desejo de comer pipoca, você tem a incrível sensação de que as coisas ao seu redor estão mais reais do que eram antes. Parece até que este golpe vindo em sua direção pode lhe atingir... Opa! E não é que pode mesmo? Se abaixe aí!
+^0000ffResistência a raça Amorfo +5%.^000000
+^0000ffDano mágico contra a raça Amorfo +4%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777771^000000
-Equipa em : ^777777Meio^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777710^000000
-Classe: ^777777Todas^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 18699#
 Para as outras pessoas deve ser engraçado olhar para você e ter a impressão que tem um peixe na sua cabeça tentando te engolir. Para sua sorte, ele nunca fará isso... Ao menos enquanto você continuar o alimentando com outros peixes frescos! Dizem que um Felino da Corporação Pata de Gato chamado Feliz foi quem pescou esse peixe encantado e já ia transformá-lo em jantar quando seu melhor amigo, um mestre chamado Nátiçu, teve a brilhante ideia de transformá-lo em chapéu. Nem pense em criticar! Afinal, quem anda por aí com ele na cabeça é você!
@@ -48316,15 +48327,16 @@ Classes: ^777777Todas^000000
 #
 13442#
 Um guarda-chuva muito velho e desgastado, mas que emana um grande poder mágico.
-ATQM + 80.
-Adiciona ATQM +10 a cada refinamento.
-Permite o uso da habilidade [Espíritos Anciões] nv. 10.
+^0000ffATQM +80.^000000
+^0000ffHabilita [Espíritos Anciões] nv. 10.^000000
+A cada refino:
+^0000ffATQM +10.^000000
 Tipo: ^777777Espada^000000
 Ataque: ^777777120^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777773^000000
-Nível Necessário: ^77777780^000000
-Classes: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 18848#
 Uma bela presilha enfeitada com rosas encantadas e sem espinhos.
@@ -49477,9 +49489,9 @@ Recompensa dos guerreiros na missão para derrotar Morroc.
 Peso: ^77777710^000000
 #
 22566#
-Congelado desde o princípio dos tempos. Nunca derreteu após a criação do mundo.
-O toque gélido em sua pele é atormentadoramente bom.
-Cura o efeito [Queimadura]
+Um cristal congelado desde o princípio dos tempos. Nunca derreteu após a criação do mundo. O toque gélido em sua pele é atormentadoramente bom.
+^0000ffRemove o efeito [Queimadura].^000000
+^0000ffGarante 10 segundos de imunidade a [Queimadura].^000000
 Peso: ^7777770^000000
 #
 22567#
@@ -57245,6 +57257,43 @@ Classes: ^777777Todas^000000
 Quando uma Rainha Scaraba renuncia de seu cargo, sua coroa é enterrada nos cantos mais escuros do Túnel Kamidal. O que não contavam é que arqueólogos logo encontrariam esse local em suas escavações, o que tornaria esse acessório uma grande moda entre os aventureiros.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo e Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-30--------------------
+//*****************************************************
+28564#
+Delicada e preciosa como uma joia, esta é uma lágrima de Valquíria que se cristalizou com o tempo. Dizem que sua cor vermelha vem da grande quantidade de magia condensada em sua essência.
+^0000ffPós-conjuração -5%.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffRegeneração natural de SP +50%.^000000
+^0000ffConjuração variável de [Oratio] -50%.^000000
+A cada nível de [Impositio Manus]:
+^0000ffDano mágico contra todos os tamanhos +3%.^000000
+A cada 2 níveis de base:
+^0000ffDano de [Magnus Exorcismus] +3%.^000000
+Ao aprender [Impositio Manus] nv. 5:
+^0000ffHabilita [Poder de Odin] nv. 2.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+20115#
+A discrição desses óculos é perfeita se você quer adotar um look intelectual. Mas atenção: é bem provável que você seja bombardeado por perguntas como “Quem descobriu Brasilis?” ou “Com quantos parafusos se faz um Metaling?”, afinal, querem saber se você é inteligentão mesmo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31399#
+Ornamentado com joias preciosas, esse véu um dia foi usado por Milena, a Odalisca. Dizia-se que em suas aventuras, ela ficava acordada pela madrugada inteira só pra aplaudir o nascer do sol.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
