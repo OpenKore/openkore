@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
 #  $Revision: 6687 $
-#  $Id: kRO.pm 6687 200-04-19 19:04:25Z technologyguild $
+#  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
