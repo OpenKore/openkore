@@ -1056,7 +1056,7 @@ sub processTransferItems {
 			if ($weightNeeded > $freeWeight) {
 				#need to low down the amount
 				$row->{amount} = int ( $freeWeight / ( $item->weight()/10 ) );
-				warning TF("Amount of item %s is more that you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
+				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
 			}		
 		}
 
