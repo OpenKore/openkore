@@ -174,7 +174,6 @@ CalcPath_pathStep (CalcPath_session *session)
 		session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].y = session->startY;
 	}
 	
-	
 	Node* currentNode;
 	Node* infoAdress;
 	unsigned int Gscore = 0;
@@ -217,17 +216,17 @@ CalcPath_pathStep (CalcPath_session *session)
 				if (i == 0 && j == 0){ continue; }
 				unsigned int x = currentNode->x + i;
 				unsigned int y = currentNode->y + j;
+				
+				if (x > session->width - 1 || y > session->height - 1){ continue; }
+				if (x < 0 || y < 0){ continue; }
+				
 				int current = (y * session->width) + x;
+				
+				if (session->map[current] == 0){ continue; }
 				
 				infoAdress = &session->currentMap[current];
 				
 				if (infoAdress->whichlist == CLOSED) { continue; }
-				
-				if (infoAdress->whichlist == NONE) {
-					if (x > session->width - 1 || y > session->height - 1){ continue; }
-					if (x < 0 || y < 0){ continue; }
-					if (session->map[current] == 0){ continue; }
-				}
 				
 				int distanceFromCurrent;
 				if (i != 0 && j != 0) {
