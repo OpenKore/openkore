@@ -1216,10 +1216,12 @@ sub processAutoStorage {
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
 		AI::dequeue;
-		if ($forcedByBuy) {
-			AI::queue("sellAuto", {forcedByBuy => 1});
-		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
-			AI::queue("sellAuto", {forcedByStorage => 1});
+		if ($config{sellAuto} && ai_sellAutoCheck()) {
+			if ($forcedByBuy) {
+				AI::queue("sellAuto", {forcedByBuy => 1});
+			} elsif (!$forcedBySell) {
+				AI::queue("sellAuto", {forcedByStorage => 1});
+			}
 		}
 
 	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
