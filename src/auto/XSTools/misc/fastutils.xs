@@ -366,7 +366,7 @@ CODE:
 	
 	int distance_to_weight[5] = { 0, 70, 60, 30, 20 };
 	int max_distance = 4;
-	int fill_weight = 1;
+	int fill_weight = 10;
 
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < width; x++) {
