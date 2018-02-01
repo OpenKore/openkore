@@ -12,7 +12,6 @@ typedef struct Nodes{
     unsigned short parentY;
 	unsigned int whichlist : 2;
 	unsigned int openListIndex;
-	unsigned int weight;
 	unsigned int g;
 	unsigned short h;
 	unsigned int f;

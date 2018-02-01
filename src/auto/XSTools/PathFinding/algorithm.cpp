@@ -170,8 +170,6 @@ CalcPath_pathStep (CalcPath_session *session)
 		session->openList = (TypeList*) malloc(session->size * sizeof(TypeList));
 		session->openList[0].x = session->startX;
 		session->openList[0].y = session->startY;
-		session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].x = session->startX;
-		session->currentMap[(session->openList[0].y * session->width) + session->openList[0].x].y = session->startY;
 	}
 	
 	Node* currentNode;
@@ -217,8 +215,7 @@ CalcPath_pathStep (CalcPath_session *session)
 				unsigned int x = currentNode->x + i;
 				unsigned int y = currentNode->y + j;
 				
-				if (x > session->width - 1 || y > session->height - 1){ continue; }
-				if (x < 0 || y < 0){ continue; }
+				if (x >= session->width || y >= session->height || x < 0 || y < 0){ continue; }
 				
 				int current = (y * session->width) + x;
 				
@@ -242,7 +239,6 @@ CalcPath_pathStep (CalcPath_session *session)
 				Gscore = currentNode->g + distanceFromCurrent;
 				
 				if (infoAdress->whichlist == NONE) {
-					infoAdress->weight = session->map[current];
 					infoAdress->x = x;
 					infoAdress->y = y;
 					infoAdress->parentX = currentNode->x;
