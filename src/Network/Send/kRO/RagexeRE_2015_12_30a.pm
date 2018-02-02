@@ -9,11 +9,11 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-#bysctnightcore
-package Network::Send::kRO::RagexeRE_2016_12_07e;
+
+package Network::Send::kRO::RagexeRE_2015_12_30a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_08_24a);
+use base qw(Network::Send::kRO::RagexeRE_2015_12_02);
 
 sub new {
 	my ($class) = @_;
@@ -22,29 +22,26 @@ sub new {
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'08A1' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0869' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0811' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0817' => ['buy_bulk_closeShop'],			
-		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0436' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
-		'0867' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'023B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
-		'08AD' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'087E' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
-		'08A2' => ['item_take', 'a4', [qw(ID)]],
-		'0361' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0965' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'088E' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0949' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0897' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'085B' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
+		'094E' => ['item_take', 'a4', [qw(ID)]],
+		'0815' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0861' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0875' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0886' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'02C4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'091D' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'095D' => ['storage_password'],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
-		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
-		'0AA4' => ['refineui_close', '' ,[qw()]],
+		'0923' => ['storage_password'],
+		'035F' => ['sync', 'V', [qw(time)]],	
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -52,36 +49,35 @@ sub new {
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 096A
-		actor_look_at 08A1
+		actor_look_at 0869
 		actor_name_request 0368
 		buy_bulk_buyer 0811
 		buy_bulk_closeShop 0817
-		buy_bulk_openShop 0815
+		buy_bulk_openShop 0436
 		buy_bulk_request 0360
 		character_move 0437
-		friend_request 0867
-		homunculus_command 023B
-		item_drop 08AD
-		item_list_window_selected 087E
-		item_take 08A2
-		map_login 0361
-		party_join_request_by_name 0965
+		friend_request 088E
+		homunculus_command 0949
+		item_drop 0897
+		item_list_window_selected 085B
+		item_take 094E
+		map_login 0815
+		party_join_request_by_name 0861
 		skill_use 083C
-		skill_use_location 0438
-		storage_item_add 0875
+		skill_use_location 0886
+		storage_item_add 02C4
 		storage_item_remove 091D
-		storage_password 095D
+		storage_password 0923
 		sync 035F
 	);
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-# 		#elif PACKETVER == 20161207 // 2016-12-07eRagexeRE
-#		packet_keys(0x52D267AA,0x4FE42156,0x1292153E);
-#		use $key1 $key3 $key2
-#	$self->cryptKeys(0x52D267AA,0x1292153E,0x4FE42156);
-
+	
+##if PACKETVER == 20151230
+###packetKeys(0x54C51241,0x33883499,0x3CDA35F0);
+#	$self->cryptKeys(0x54C51241, 0x3CDA35F0, 0x33883499);
 
 	return $self;
 }
