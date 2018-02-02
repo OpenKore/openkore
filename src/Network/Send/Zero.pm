@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-#bysctnightcore
+# by alisonrag / sctnightcore
 package Network::Send::Zero;
 
 use strict;
@@ -24,6 +24,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		'0447' => ['blocking_play_cancel'],
+		'01C0' => ['request_remain_time'],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]],
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
@@ -135,6 +137,26 @@ sub sendCharCreate {
 		job_id => 0,
 		unknown => 0,
 		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+}
+
+sub sendReqRemainTime {
+	my ($self) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'request_remain_time',
+	});
+
+	$self->sendToServer($msg);
+}
+
+sub sendBlockingPlayerCancel {
+	my ($self) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'blocking_play_cancel',
 	});
 
 	$self->sendToServer($msg);

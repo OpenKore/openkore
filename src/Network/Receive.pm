@@ -3885,6 +3885,7 @@ sub map_change {
 		ai_clientSuspend(0, 10);
 	} else {
 		$messageSender->sendMapLoaded();
+		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero )); # request to unfreeze char alisonrag
 		# $messageSender->sendSync(1);
 		$timeout{ai}{time} = time;
 	}
