@@ -106,7 +106,7 @@ sub new {
 
 ##
 # Actor::Item::get(name, skipIndex, notEquipped)
-# item: can be either an object itself, an ID or a name.
+# item: can be either an object itself, an binID or a name.
 # skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: 1 = not equipped item; 0 = equipped item; undef = all item
 # Returns: an Actor::Item object, or undef if not found or parameters not matched.
