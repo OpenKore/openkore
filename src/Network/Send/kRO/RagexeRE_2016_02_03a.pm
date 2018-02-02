@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2016_02_03a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_01_06a);
+use base qw(Network::Send::kRO::RagexeRE_2016_01_27a);
 
 sub new {
 	my ($class) = @_;
@@ -74,9 +74,8 @@ sub new {
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
 #packet_keys(0x3E1411AF,0x6C744497,0x7CFA1BDE);	
-#openkore use with  key1,key3,key2
-#hex to dec 1041502639,2096765918,1819559063 = key1,key3,key2
 #	$self->cryptKeys(0x3E1411AF,0x7CFA1BDE ,0x6C744497);
 
 
