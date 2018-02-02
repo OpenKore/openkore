@@ -178,6 +178,8 @@ CalcPath_pathStep (CalcPath_session *session)
 	int indexNeighbor = 0;
 	int nodeList;
 	
+	int next = 0;
+	
 	unsigned long timeout = (unsigned long) GetTickCount();
 	int loop = 0;
     while (session->openListSize > 0) {
@@ -191,7 +193,12 @@ CalcPath_pathStep (CalcPath_session *session)
 		}
 		
         //get lowest F score member of openlist and delete it from it
-        currentNode = openListGetLowest (session);
+		if (next > 0) {
+			currentNode = &session->currentMap[next];
+			next = 0;
+		} else {
+			currentNode = openListGetLowest (session);
+		}
 		
         session->openListSize--;
 
@@ -243,12 +250,17 @@ CalcPath_pathStep (CalcPath_session *session)
 					infoAdress->y = y;
 					infoAdress->parentX = currentNode->x;
 					infoAdress->parentY = currentNode->y;
-					infoAdress->whichlist = OPEN;
 					infoAdress->g = Gscore;
 					infoAdress->h = heuristic_cost_estimate(infoAdress->x, infoAdress->y, session->endX, session->endY, session->avoidWalls);
 					infoAdress->f = infoAdress->g + infoAdress->h;
-					openListAdd (session, infoAdress);
-					session->openListSize++;
+					if (next == 0 && infoAdress->f == currentNode->f) {
+						infoAdress->whichlist = CLOSED;
+						next = current;
+					} else {
+						infoAdress->whichlist = OPEN;
+						openListAdd (session, infoAdress);
+						session->openListSize++;
+					}
 				} else {
 					if (Gscore < infoAdress->g) {
 						infoAdress->parentX = currentNode->x;
