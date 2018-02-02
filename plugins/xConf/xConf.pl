@@ -200,7 +200,7 @@ sub fileclear {
 	print WRITE join ("\n", @newlines);
 	close(WRITE);
 	message "xConf. $file: cleared.\n", 'info';
-	Commands::run("reload $file")
+	parseReload($file);
 }
 
 ## set all keys to $value
@@ -232,7 +232,7 @@ sub filesetall {
 	close(WRITE);
 	
 	message "xConf. $file: all set to $value.\n", 'info';
-	parseReload($controlfile);
+	parseReload($file);
 }
 
 ## write FILE
@@ -293,7 +293,7 @@ sub filewrite {
 	print WRITE join ("\n", @lines);
 	close(WRITE);
 	message "$file: '$name' set to @value (was ". ($oldval || "*None*") .")\n", 'info';
-	parseReload($controlfile);
+	parseReload($file);
 }
 
 sub priconf {
@@ -316,7 +316,7 @@ sub priconf {
 	open($file,">:utf8",$controlfile);
 	print $file @lines;
 	close($file);
-	parseReload($controlfile);
+	parseReload("priority.txt");
 }
 
 1;
