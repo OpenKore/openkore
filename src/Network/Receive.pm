@@ -279,7 +279,7 @@ sub parse_account_server_info {
 			\%server
 	} unpack '(a32)*', $args->{serverInfo};
 }	
-	if ($args->{switch} eq '0AC4') {
+	elsif ($args->{switch} eq '0AC4') {
 			@{$args->{servers}} = map {
 			my %server;
 			@server{qw(ip port name users display)} = unpack 'a4 v Z20 v3 a128', $_;
