@@ -316,7 +316,7 @@ sub priconf {
 	open($file,">:utf8",$controlfile);
 	print $file @lines;
 	close($file);
-	parseReload($file);
+	parseReload("priority.txt");
 }
 
 1;
