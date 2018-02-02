@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-# Korea (kRO) #bysctnightcore
+# Korea (kRO) # by alisonrag / sctnightcore
 # The majority of private servers use eAthena, this is a clone of kRO
 package Network::Receive::Zero;
 use strict;
@@ -27,6 +27,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		'01C1' => ['remain_time_info' , 'a4 a4 a4', [qw(result expiration_date remain_time)]],
 		'020D' => ['character_ban_list', 'v a*', [qw(len charList)]], # -1 charList[charName size:24]
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -79,16 +80,19 @@ sub map_loaded {
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
+		$messageSender->sendReqRemainTime();
 		$messageSender->sendMapLoaded();
-
 		$messageSender->sendSync(1);
-
+		$messageSender->sendRequestCashItemsList();
+		$messageSender->sendGuildRequestInfo();
+		
 		message(T("You are now in the game\n"), "connection");
 		Plugins::callHook('in_game');
 		$timeout{'ai'}{'time'} = time;
 		our $quest_generation++;
 
 		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
+		$messageSender->sendBlockingPlayerCancel(); # request to unfreeze char
 	}
 
 	$char->{pos} = {};
@@ -214,4 +218,10 @@ sub clone_vender_lost {
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
 }
+
+sub remain_time_info {
+	my ($self, $args) = @_;
+	debug TF("Remain Time - Result: %s - Expiration Date: %s - Time: %s\n", $args->{result}, $args->{expiration_date}, $args->{remain_time}), "console", 1;
+}
+
 1;
