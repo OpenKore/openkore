@@ -268,28 +268,28 @@ sub parse_account_server_info {
 	}
 	if ($args->{switch} eq '0069') {
 		@{$args->{servers}} = map {
-			my %server;
-			@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
-			if ($masterServer && $masterServer->{private}) {
-			$server{ip} = $masterServer->{ip};
-			} else {
-			$server{ip} = inet_ntoa($server{ip});
-			}
-			$server{name} = bytesToString($server{name});
-			\%server
+		my %server;
+		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
+		if ($masterServer && $masterServer->{private}) {
+		$server{ip} = $masterServer->{ip};
+		} else {
+		$server{ip} = inet_ntoa($server{ip});
+		}
+		$server{name} = bytesToString($server{name});
+		\%server
 	} unpack '(a32)*', $args->{serverInfo};
-}	
+}
 	elsif ($args->{switch} eq '0AC4') {
-			@{$args->{servers}} = map {
-			my %server;
-			@server{qw(ip port name users display)} = unpack 'a4 v Z20 v3 a128', $_;
-			if ($masterServer && $masterServer->{private}) {
-				$server{ip} = $masterServer->{ip};
-			} else {
-				$server{ip} = inet_ntoa($server{ip});
-			}
-			$server{name} = bytesToString($server{name});
-			\%server
+		@{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;
+		if ($masterServer && $masterServer->{private}) {
+			$server{ip} = $masterServer->{ip};
+		} else {
+			$server{ip} = inet_ntoa($server{ip});
+		}
+		$server{name} = bytesToString($server{name});
+		\%server
 		} unpack '(a160)*', $args->{serverInfo};
 	}
 }
