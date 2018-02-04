@@ -1,4 +1,4 @@
-#############################################################################################
+﻿#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -196,6 +196,7 @@ itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
 itemsTakeGreed 0
+itemsCheckWeight 1
 
 lockMap
 lockMap_x
