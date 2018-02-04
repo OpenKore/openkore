@@ -269,9 +269,6 @@ sub onReload {
 
 	warning $translator->translatef("%s Reloading plugin...\n", PLUGIN_PREFIX);
 	
-	$hooks{shop_sold}->hook();
-	$hooks{shop_close}->hook();
-	
 	onInitialized();
 	
 	warning $translator->translatef("%s Plugin reloaded.\n", PLUGIN_PREFIX);
