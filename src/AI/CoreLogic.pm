@@ -1044,7 +1044,7 @@ sub processTransferItems {
 		#verify if we can carry the amount of item
 		#if you're sending to storage, doesn't need to check weight
 		#if there is no information about weight, there's no point in check
-		if ($row->{target} ne 'storage' && $item->weight()) {
+		if ($row->{target} ne 'storage' && $item->weight() && $config{itemsCheckWeight}) {
 			my $freeWeight;
 			if ($row->{target} eq 'inventory') {
 				$freeWeight = int ($char->{weight_max} - $char->{weight});
