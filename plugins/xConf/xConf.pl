@@ -187,7 +187,18 @@ my ($cmd, $args) = @_;
 ## clear file leave only #lines, emptylines and all parameter.
 sub fileclear {
 	my ($file) = @_;
-	my $controlfile = Settings::getControlFilename($file);
+
+	my $controlfile;
+	if ($file eq 'items_control.txt') {
+		$controlfile = Settings::getItemsControlFilename();
+	} elsif ($file eq 'mon_control.txt') {
+		$controlfile = Settings::getMonControlFilename();
+	} elsif ($file eq 'shop.txt') {
+		$controlfile = Settings::getShopFilename();
+	} else {
+		$controlfile = Settings::getControlFilename($file);
+	}
+
 	open(FILE, "<:utf8", $controlfile);
 	my @lines = <FILE>;
 	close(FILE);
@@ -206,8 +217,18 @@ sub fileclear {
 ## set all keys to $value
 sub filesetall {
 	my ($file,$value) = @_;
-	my $controlfile = Settings::getControlFilename($file);
+	my $controlfile;
 	my @value;
+
+	if ($file eq 'items_control.txt') {
+		$controlfile = Settings::getItemsControlFilename();
+	} elsif ($file eq 'mon_control.txt') {
+		$controlfile = Settings::getMonControlFilename();
+	} elsif ($file eq 'shop.txt') {
+		$controlfile = Settings::getShopFilename();
+	} else {
+		$controlfile = Settings::getControlFilename($file);
+	}
 	
 	if (!$value) {
 		push (@value, "0") ;
@@ -239,7 +260,18 @@ sub filesetall {
 sub filewrite {
 	my ($file, $key, $value, $oldval, $shopname, $name, $realKey) = @_;
 	my @value;
-	my $controlfile = Settings::getControlFilename($file);
+
+	my $controlfile;
+	if ($file eq 'items_control.txt') {
+		$controlfile = Settings::getItemsControlFilename();
+	} elsif ($file eq 'mon_control.txt') {
+		$controlfile = Settings::getMonControlFilename();
+	} elsif ($file eq 'shop.txt') {
+		$controlfile = Settings::getShopFilename();
+	} else {
+		$controlfile = Settings::getControlFilename($file);
+	}
+	
 	debug "sub WRITE = FILE: $file\nKEY: $key\nVALUE: $value\nNAME: $name\nOLDVALUE: $oldval\nREALKEY: $realKey";
 
 	open(FILE, "<:encoding(UTF-8)", $controlfile);
