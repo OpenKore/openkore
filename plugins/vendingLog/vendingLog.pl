@@ -36,7 +36,7 @@ use constant {
 };
 
 my $translator = new Translation(PLUGIN_PODIR, $sys{locale});
-my $main_command = Commands::register([COMMAND_HANDLE, $translator->translate("Command used by vendingLog plugin"), \&onCommandCall]);
+my $main_command;
 my $terminateWhenDone = 0;
 
 my %shopLog;
@@ -242,6 +242,8 @@ sub onInitialized {
 	
 	$hooks{shop_sold}->hook();
 	$hooks{shop_close}->hook();
+	
+	$main_command = Commands::register([COMMAND_HANDLE, $translator->translate("Command used by vendingLog plugin"), \&onCommandCall]);
 }
 
 sub onUnload {
@@ -268,9 +270,6 @@ sub onReload {
 	onUnload();
 
 	warning $translator->translatef("%s Reloading plugin...\n", PLUGIN_PREFIX);
-	
-	$hooks{shop_sold}->hook();
-	$hooks{shop_close}->hook();
 	
 	onInitialized();
 	
