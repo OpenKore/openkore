@@ -2801,30 +2801,6 @@ sub sense_result {
 			$args->{spirit}, $args->{undead}), "list";
 }
 
-sub shop_sold {
-	my ($self, $args) = @_;
-
-	# sold something
-	my $number = $args->{number};
-	my $amount = $args->{amount};
-
-	$articles[$number]{sold} += $amount;
-	my $earned = $amount * $articles[$number]{price};
-	$shopEarned += $earned;
-	$articles[$number]{quantity} -= $amount;
-	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
-	shopLog($msg);
-	message($msg, "sold");
-	if ($articles[$number]{quantity} < 1) {
-		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
-		#$articles[$number] = "";
-		if (!--$articles){
-			message T("Items have been sold out.\n"), "sold";
-			closeShop();
-		}
-	}
-}
-
 sub skill_cast {
 	my ($self, $args) = @_;
 
