@@ -266,10 +266,23 @@ sub parse_account_server_info {
 	} else {
 		delete $args->{lastLoginIP};
 	}
-
-	@{$args->{servers}} = map {
+	if ($args->{switch} eq '0069') {
+		@{$args->{servers}} = map {
 		my %server;
 		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
+		if ($masterServer && $masterServer->{private}) {
+		$server{ip} = $masterServer->{ip};
+		} else {
+		$server{ip} = inet_ntoa($server{ip});
+		}
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a32)*', $args->{serverInfo};
+}
+	elsif ($args->{switch} eq '0AC4') {
+		@{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;
 		if ($masterServer && $masterServer->{private}) {
 			$server{ip} = $masterServer->{ip};
 		} else {
@@ -277,7 +290,8 @@ sub parse_account_server_info {
 		}
 		$server{name} = bytesToString($server{name});
 		\%server
-	} unpack '(a32)*', $args->{serverInfo};
+		} unpack '(a160)*', $args->{serverInfo};
+	}
 }
 
 sub reconstruct_account_server_info {
