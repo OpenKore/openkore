@@ -8118,7 +8118,16 @@
 //*****************************************************
 //------------Aplicar em 2018-01-30--------------------
 //*****************************************************
-28564#Lágrima de Valquíria#
-20115#Óculos Intelectuais#
+28564#Lágrima Azul de Valquíria #
+20115#Óculos do Sabe-Tudo#
 31399#Véu da Madrugada#
+//*****************************************************
+//------------Aplicar em 2018-02-06--------------------
+//*****************************************************
+31108#Balão de Fala (Abraços Grátis)#
+31109#Balão de Fala (Recruto para Clã)#
+31110#Balão de Fala (Procuro Grupo)#
+31111#Balão de Fala (Procuro Membros)#
+31112#Balão de Fala (Hue Hue Br)#
+28517#Anel do Rei Abissal#
 //file end

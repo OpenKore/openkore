@@ -3,8 +3,8 @@
 7608#
 Ticket promocional criado pela Corporação Kafra.
 Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 22/01/2018, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 23/01/2018. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Esta promoção está disponível apenas até o dia 19/02/2018, então troque-o agora mesmo!
+^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 20/02/2018. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
 Peso: ^7777771^000000
 #
 7558#
@@ -5502,14 +5502,15 @@ Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2614#
-Esse tesouro único pode Neutralizar todos os tipos de veneno do mundo.
-Reduz em 4% o dano recebido por monstros da raça Demônio e Morto-Vivo.
-^FF0000Torna o personagem imune ao status Veneno.^000000
-Classe: ^777777Acessório^000000
+Esse tesouro único pode neutralizar todos os tipos de veneno do mundo.
+^0000ffResistência a raça Demônio +4%.^000000
+^0000ffResistência a raça Morto-Vivo +4%.^000000
+^0000ffTolerância a Envenenamento +100%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 2615#
 Anel misterioso que aumenta a defesa do usuário.
@@ -6331,10 +6332,10 @@ Combina com:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4067#
-^0000ffConcede 20% de resistência contra Congelamento, DEF +1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+^0000ffDEF +1.^000000
+^0000ffTolerância a Congelamento +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4068#
@@ -6472,10 +6473,10 @@ Combina com: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4087#
-^0000ffTorna o usuário imune à [Confusão]. Concede 15% de resistência contra ataques da Propriedade Terra.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+^0000ffTolerância a Caos +100%.^000000
+^0000ffResistência a propriedade Terra +15%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4088#
@@ -6599,10 +6600,10 @@ Combina com: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4105#
-^0000ffTorna o usuário imune a [Congelamento]. Concede 5% de resistência contra ataques da propriedade Água.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+^0000ffTolerância a Congelamento +100%.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4106#
@@ -6648,10 +6649,9 @@ Combina com: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4112#
-^0000ffTorna o usuário imune a [Silêncio].^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+^0000ffTolerância a Silêncio +100%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4113#
@@ -6717,10 +6717,10 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4122#
-^0000ffTorna o usuário imune a [Cegueira], FOR +1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+^0000ffFOR +1.^000000
+^0000ffTolerância a Cegueira +100%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4123#
@@ -6731,10 +6731,10 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4124#
-^0000ffTorna o usuário imune a [Petrificar]. Reduz em 15% o dano causado por monstros da raça Demônio.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+^0000ffTolerância a Petrificação +100%.^000000
+^0000ffResistência a raça Demônio +15%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4125#
@@ -6752,10 +6752,10 @@ Combina com: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4127#
-^0000ffTorna o usuário imune a [Sono], AGI +1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+^0000ffAGI +1.^000000
+^0000ffTolerância a Sono +100%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4128#
@@ -10360,7 +10360,7 @@ Um álbum de fotografias com lembranças de um casamento ou de uma lua-de-mel.
 ^0000ffVeste o personagem com uma Roupa de Casamento.^000000
 ^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
 Tipo: ^777777Roupa^000000
-Duração: ^77777710 minutos^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
 #
 
@@ -11081,10 +11081,11 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4155#
-Dano físico contra Goblin de Adaga, Mangual, Machado, Martelo, Maça, Goblin Arqueiro e Líder Goblin +30%.
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano físico contra Goblins +30%.^000000
+Goblins afetados:
+^0000ffGoblin Líder, Goblin Arqueiro, Goblin de Adaga, Mangual, Machado, Martelo e Maça.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4156#
@@ -11318,9 +11319,11 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4184#
-Dano físico contra Golem, Golem Estalactítico, Golem de Lava, Golem de Madeira e Golem de Bradium +30%.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano físico contra Golens +30%.^000000
+Golens afetados:
+^0000ffGolem, Golem de Madeira, Golem de Lava, Golem Estalactítico e Golem de Bradium.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4185#
@@ -11629,10 +11632,10 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4223#
-^0000ffAdiciona 20% a mais de tolerância contra Atordoamento. DEF +1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+^0000ffDEF +1.^000000
+^0000ffTolerância a Atordoamento +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4224#
@@ -11885,9 +11888,11 @@ Utilização: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4255#
-Dano físico contra Guerreiro Orc, Grand Orc, Orc Zumbi, Orc Esqueleto, Orc Arqueiro e Zenorc +30%.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano físico contra Orcs +30%.^000000
+Orcs afetados:
+^0000ffGuerreiro Orc, Senhora Orc, Grand Orc, Orc Zumbi, Orc Arqueiro e Orc Esqueleto.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4256#
@@ -12170,9 +12175,11 @@ Utilização: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4291#
-Dano físico contra Cobold de Machado, Maça, Martelo, Arqueiro e Líder Cobold +30%.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano físico contra Cobolds +30%.^000000
+Cobolds afetados:
+^0000ffCobold Líder, Cobold Arqueiro, Cobold de Machado, Martelo e Maça, Kobold Arqueiro Abissal, Kobold Abissal de Machado, Martelo e Maça.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4292#
@@ -12655,13 +12662,14 @@ Peso: ^7777771^000000
 // ------- 2005 ???? ?? ??? -------
 5104#
 Uma Venda encantada por magia negra.
-^0000ffTorna o usuário imune a [Cegueira].
-Tolerância contra [Atordoamento] +2%.^000000
-Classe: ^777777Equipamento para a cabeça^000000
+^0000ffTolerância a Cegueira +100%.^000000
+^0000ffTolerância a Atordoamento +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
 Peso: ^77777710^000000
-Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 // ??????
 12021#
@@ -19252,10 +19260,10 @@ Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4336#
-Carta Ungoliant.
-Acrescenta imunidade a Sangramento e aumenta a Recuperação de HP em 10%.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+^0000ffTolerância a Sangramento +100%.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4337#
@@ -19407,10 +19415,14 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4354#
-Carta Gemini-S58.
-Acrescenta 30% de resistência a Atordoar se a AGI básica do usuário for 90 ou maior, e acrescenta 50% de resistência a Petrificar e Dormir se a VIT básica for 80 ou maior.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+AGI base 90 ou mais:
+^0000ffTolerância a Silêncio +30%.^000000
+^0000ffTolerância a Atordoamento +30%.^000000
+VIT base 80 ou mais:
+^0000ffTolerância a Sono +50%.^000000
+^0000ffTolerância a Petrificação +50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4355#
@@ -21141,12 +21153,13 @@ Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos e evoluções^0
 #
 2364#
 Uma armadura de placas feita de uma rocha meteórica de substâncias desconhecidas.
-30% de tolerância a ataques que atordoam e congelam.
-Tipo de Item: ^777777Armadura^000000
+^0000ffTolerância a Congelamento +30%.^000000
+^0000ffTolerância a Atordoamento +30%.^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777785^000000
 Peso: ^777777300^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim/Mercador^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores e evoluções^000000
 #
 2365#
 Um uniforme que pertenceu a um cozinheiro que adorava limpeza. Ninguém o fazia parar de falar sobre sua cozinha higiênica.
@@ -22188,10 +22201,11 @@ Classe: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4439#
-30% de tolerância adicional contra Atordoar, Amaldiçoar, Cegar, Petrificar.
-Ao sofrer ataque físico de curto ou longo alcance, causa esses mesmos estados ao inimigo.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Escudo^000000
+^0000ffTolerância a Petrificação, Atordoamento, Maldição e Cegueira +30%.^000000
+Ao sofrer danos físicos de curto ou longo alcance:
+^0000ff5% de chance de infligir Petrificação, Atordoamento, Maldição ou Cegueira no oponente.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4440#
@@ -30572,9 +30586,9 @@ Classes que utilizam: ^777777Todas^000000
 Parece um cachorrinho, mas é uma réplica encantada de pelúcia no topo de sua cabeça.
 ^0000ffFOR +1. INT +1.^000000
 Ao realizar ataques físicos:
-^0000ff1% de chance de ativar [Dano crítico +100%] por 3 segundos.^000000
+^0000ff1% de chance de ativar [Taxa de Crítico +100] por 3 segundos.^000000
 Ao realizar ataques mágicos:
-^0000ff1% de chance de ativar [Ignora 100% da DEFM de monstros] por 3 segundos.^000000
+^0000ff1% de chance de ativar [Ignora 100% da DEFM de oponentes] por 3 segundos.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777774^000000
@@ -35019,13 +35033,15 @@ Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, neg
 //-------dewata-----------------
 15032#
 Uma armadura confeccionada com couro de animal. A tribo Jaty usa durante a batalha.
-Reduz em 5% o dano por ataque de todos os monstros. DEFM + 10.
-15% de tolerância adicional contra atordoamento e congelamento.
+^0000ffDEFM +10.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+^0000ffTolerância a Congelamento +15%.^000000
+^0000ffTolerância a Atordoamento +15%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^7777772^000000
 Peso: ^77777750^000000
-Nível Necessário : ^7777771^000000
-Classes que utilizam:  ^777777Todas exceto Aprendiz e Evolução^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 
 18520#
@@ -35578,21 +35594,16 @@ Classe : ^777777Todas as classes^000000
 
 
 18531#
-Um boneco de tartaruga, réplica fiel do Batedor, lendário exemplar da Ilha das Tartarugas.
-Parece tão real que você será capaz de oferecer alface para ele.
-^0000ffDano físico +20% contra os monstros:^000000
-^0000ffBatedor^000000
-^0000ffSoldado^000000
-^0000ffCongelador^000000
-^0000ffAgressor^000000
-^0000ffAquecedor^000000
-^0000ffGeneral Tartaruga^000000
-Tipo : ^777777Equipamento para cabeça^000000
+Um boneco de tartaruga, réplica fiel do Batedor, lendário exemplar da Ilha das Tartarugas. Parece tão real que você será capaz de oferecer alface para ele.
+^0000ffDano físico contra Tartarugas +20%.^000000
+Tartarugas afetadas:
+^0000ffBatedor, Congelador, Agressor, Aquecedor, Soldado e General Tartaruga.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777778^000000
-Equipa em : ^777777Topo^000000
-Peso : ^777777100^000000
-Nível necessário : ^77777710^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 
 
@@ -38709,13 +38720,13 @@ Classes : ^777777Todos exceto Aprendiz^000000
 #
 18703#
 Um pequeno broto da Árvore da Vida, Yggdrasil. Cultivado a partir de uma Semente de Yggdrasil, graças às suas capacidades curativas, o broto era usado nas refeições para evitar intoxicação alimentar, até os aventureiros passarem a usá-lo como forma de prevenção a envenenamentos.
-Aumenta em 20% a tolerância contra o status Veneno.
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffTolerância a Envenenamento +20%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Baixo^000000
-Peso : ^7777775^000000
-Nível Necessário : ^7777771^000000
-Classes :  ^777777Todas^000000
+Peso: ^7777775^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 12829#
 Este item guarda a essência de Óreas, deus das Montanhas e filho de Gaia. Sente-se uma incrível energia ao tocar neste item, como se você realmente fosse capaz de carregar uma montanha em seus ombros.
@@ -40889,7 +40900,7 @@ Peso : ^7777770^000000
 //------------------March2013 Items---------------------------------
 5788#
 Óculos misteriosos, inventado pelo Feiticeiro James Camarão, para que as pessoas, ao ler seu livro, 'Ah, vá! Tá... ', acreditassem que as imagens dele estavam saltando para fora das páginas. Quando você o coloca, além de um estranho desejo de comer pipoca, você tem a incrível sensação de que as coisas ao seu redor estão mais reais do que eram antes. Parece até que este golpe vindo em sua direção pode lhe atingir... Opa! E não é que pode mesmo? Se abaixe aí!
-^0000ffResistência a raça Amorfo +5%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
 ^0000ffDano mágico contra a raça Amorfo +4%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
@@ -45265,7 +45276,9 @@ Classe : ^777777Todas^000000
 //******************************************
 #
 4507#
-Dano físico contra monstros Scaraba +30%.
+^0000ffDano físico contra Scarabas +30%.^000000
+Scarabas afetados:
+^0000ffScaraba Chifre, Chifres Duplos, Scaraba Galhado, Scaraba Ancinho, Ovo de Scaraba Chifre, Ovo de Chifres Duplos, Ovo de Scaraba Galhado, Ovo de Scaraba Ancinho, Rainha Scaraba e todas as versões douradas.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -57265,7 +57278,7 @@ Classes: ^777777Todas^000000
 //------------Aplicar em 2018-01-30--------------------
 //*****************************************************
 28564#
-Delicada e preciosa como uma joia, esta é uma lágrima de Valquíria que se cristalizou com o tempo. Dizem que sua cor vermelha vem da grande quantidade de magia condensada em sua essência.
+Delicada e preciosa como uma joia, esta é uma lágrima de Valquíria que se cristalizou com o tempo. Dizem que sua cor azul vem da grande quantidade de magia condensada em sua essência.
 ^0000ffPós-conjuração -5%.^000000
 ^0000ffConjuração variável -10%.^000000
 ^0000ffRegeneração natural de SP +50%.^000000
@@ -57296,6 +57309,65 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-01-30--------------------
+//*****************************************************
+31108#
+Não importa se você gosta de carinho ou se quer disfarçar sua carência com solidariedade – qualquer situação é válida pra sair distribuindo abraços em amigos ou aventureiros que nunca viu na vida.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31109#
+Só mesmo os melhores são capazes de dominar a Guerra do Emperium. Aumente seus números e crie um Clã imbatível!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31110#
+Até os Algozes mais solitários podem precisar de uma companhia na hora de upar, não é mesmo? Se bater aquela sensação de desolação, é só equipar este balão e atrair os mais diversos grupos!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31111#
+Você juntou todo o pessoal pra fazer aquela instância dificílima, mas tá faltando uma classe essencial pra você encarar o desafio. O que fazer? Usar este balão de fala, é claro!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31112#
+Se você quer entrar no espírito “hue”, é só sair com este balão por aí, porque vamos ser francos: todo mundo adora uma zoeira. Na pior das hipóteses, alguém pode não entender a piada e te dar uns Zennys.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28517#
+Anel que um dia foi usado pelo Rei Abissal, o grande Monarca Lich. O dragão entalhado em seu exterior é sinal de grande poder e respeito.
+^0000ffFOR +2. AGI +1.^000000
+^0000ffDano físico +6%.^000000
+Ao derrotar monstros com ataques físicos de curta distância:
+^0000ffRecupera 300 de HP.^000000
+A cada 3 níveis de base:
+^0000ffDano de [Lâminas de Loki] +1%.^000000
+A cada 10 níveis de base:
+^0000ffDano de [Castigo de Loki] +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777130^000000
 Classes: ^777777Todas^000000
 #
 //file end
