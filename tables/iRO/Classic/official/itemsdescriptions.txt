@@ -71116,3 +71116,60 @@ It is worth 3 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+19996#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Koneko Hat!
+250 Golden Hair
+125 Fish Tail
+10 Yarn
+2 Cat's Eyes
+1 Koneko Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19997#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Scorpio Diadem!
+5 Gold
+100 2carat Diamonds
+300 3carat Diamonds
+5 Topaz
+1 Scorpio Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19998#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sorin Doll Hat!
+300 Ectoplasm
+200 Fabric
+1 Spiritual Crystals (Phylla)
+1 Spiritual Crystals (Rhyncho)
+1 Hung Doll
+1 Sorin Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19999#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mischievous Fairy!
+200 Jellopy
+50 Elastic Bands
+50 Elder Pixie's Moustache
+10 Soft Silk
+1 Mischievous Fairy Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#

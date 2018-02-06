@@ -6935,3 +6935,7 @@
 19993#Red_Wing_Hat_Certificate#
 19994#Santa_Poring_Hat_Certificate#
 19995#Glaris_Doll_Hat_Certificate#
+19996#Koneko_Hat_Certificate#
+19997#Scorpio_Diadem_Certificate#
+19998#Sorin_Doll_Hat_Certificate#
+19999#Mischievous_Fairy_Certificate#

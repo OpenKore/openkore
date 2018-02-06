@@ -1,7 +1,6 @@
 package eventMacro::FileParser;
 
 use strict;
-use encoding 'utf8';
 
 require Exporter;
 our @ISA = qw(Exporter);

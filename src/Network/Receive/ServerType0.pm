@@ -1951,7 +1951,7 @@ sub inventory_item_added {
 
 		if (AI::state == AI::AUTO) {
 			# Auto-drop item
-			if (pickupitems(lc($item->{name})) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
 				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
 			}
@@ -2122,6 +2122,7 @@ sub map_changed {
 		oldMap => $oldMap,
 	});
 	$timeout{ai}{time} = time;
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero )); # request to unfreeze char
 }
 
 sub memo_success {
@@ -2899,10 +2900,10 @@ sub received_characters {
 		$chars[$slot]{map_name} =~ s/\.gat//g;
 		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
 			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
-			$chars[$slot]{exp} = join '', reverse split /(\s+)/, $chars[$slot]{exp};
+			$chars[$slot]{exp} = join '', reverse split / /, $chars[$slot]{exp};
 			$chars[$slot]{exp} = hex $chars[$slot]{exp};
 			$chars[$slot]{exp_job} = getHex($chars[$slot]{exp_job});
-			$chars[$slot]{exp_job} = join '', reverse split /(\s+)/, $chars[$slot]{exp_job};
+			$chars[$slot]{exp_job} = join '', reverse split / /, $chars[$slot]{exp_job};
 			$chars[$slot]{exp_job} = hex $chars[$slot]{exp_job};
 		}
 	}

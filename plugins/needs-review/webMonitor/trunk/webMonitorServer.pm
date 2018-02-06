@@ -315,12 +315,12 @@ sub request {
 			push @unusableID, $item->{nameID};
 			push @unusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @unusableAmount, $item->{amount};
-			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' . '">' . T('Drop 1') . '</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usableID, $item->{nameID};
 			push @usable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @usableAmount, $item->{amount};
-			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{binID} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{binID} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' .'">' . T('Drop 1') . '</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
@@ -329,7 +329,7 @@ sub request {
 			} else {
 				push @uequipmentID, $item->{nameID};
 				push @uequipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
-				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{binID} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{binID} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' .'">' . T('Drop 1') . '</a></td>';
 			}
 		}
 	}

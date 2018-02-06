@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x1D051F1C, 0x7B7927F6, 0x26DF79EB
+sendCryptKeys 0x1D4F1D02, 0x530C3688, 0x25704043
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x1D051F1C, 0x7B7927F6, 0x26DF79EB
+sendCryptKeys 0x1D4F1D02, 0x530C3688, 0x25704043
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -59,6 +59,8 @@ ip 54.36.76.129
 port 6900
 master_version 31
 version 1
+patchpath /patch01
+patchserver ftp.ragnarokonline.fr
 serverType fRO
 serverEncoding Western
 addTableFolders fRO
@@ -97,7 +99,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x62E840BB, 0x522D36A9, 0x01B82E94
+sendCryptKeys 0x749B1443, 0x315845FD, 0x506B2918
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -140,7 +142,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x7C8C33B2, 0x0C8F6D77, 0x281057F3
+sendCryptKeys 0x641E5F90, 0x0FD45DDB, 0x5E71315C
 
 
 
@@ -174,7 +176,7 @@ pinCode 1
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 OTT_ip 112.175.128.135
 OTT_port 6900
-sendCryptKeys 0x2A3D4E64, 0x69FF066F, 0x7008690C
+sendCryptKeys 0x1F422E02, 0x52025202, 0x12025202
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137

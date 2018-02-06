@@ -183,6 +183,7 @@ itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
 itemsTakeGreed 0
+itemsCheckWeight 1
 
 lockMap
 lockMap_x
@@ -204,7 +205,10 @@ route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 15
+route_removeMissingPortals_NPC 1
+route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
+route_reAddMissingPortals 1
 
 runFromTarget 0
 runFromTarget_dist 6
@@ -726,6 +730,7 @@ getAuto {
 	minAmount
 	maxAmount
 	passive
+	disabled 0
 }
 
 ######## Debugging options; only useful for developers ########

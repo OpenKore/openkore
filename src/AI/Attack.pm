@@ -297,8 +297,10 @@ sub main {
 		 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
 		 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"})
 		 && checkSelfCondition("attackComboSlot_$i")
-		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}))
-		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}))
+		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) ||
+				existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID}))
+		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || 
+				existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID})))
 		 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
 
 			$args->{attackComboSlot_uses}{$i}++;
@@ -345,8 +347,10 @@ sub main {
 				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
 				    $target->{skillUses}{$skill->getHandle()} < $config{"attackSkillSlot_$i"."_maxUses"})
 				&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
-				&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}))
-				&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}))
+				&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) ||
+					existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID}))
+				&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) ||
+					existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID})))
 				&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
 				&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
 			) {

@@ -420,6 +420,7 @@ sub processDrop {
 ##### PORTALREADD #####
 # Automatically adds the last missing portals to portals_lut
 sub processReAddMissingPortals {
+	return unless ($config{route_reAddMissingPortals});
 	return unless (@portals_lut_missed);
 	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
 	my $portal = shift(@portals_lut_missed);
@@ -785,7 +786,7 @@ sub processTake {
 			} else {
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
@@ -1040,6 +1041,25 @@ sub processTransferItems {
 			redo;
 		}
 
+		#verify if we can carry the amount of item
+		#if you're sending to storage, doesn't need to check weight
+		#if there is no information about weight, there's no point in check
+		if ($row->{target} ne 'storage' && $item->weight() && $config{itemsCheckWeight}) {
+			my $freeWeight;
+			if ($row->{target} eq 'inventory') {
+				$freeWeight = int ($char->{weight_max} - $char->{weight});
+			} else { #if target not inventory, then is cart!
+				$freeWeight = int ($char->cart->{weight_max} - $char->cart->{weight});
+			}
+			my $weightNeeded = min( $item->{amount}, $row->{amount} || $item->{amount} ) * ($item->weight()/10);
+			
+			if ($weightNeeded > $freeWeight) {
+				#need to low down the amount
+				$row->{amount} = $freeWeight / ( $item->weight()/10 );
+				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
+			}		
+		}
+
 		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
 			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
 			redo;
@@ -1154,6 +1174,7 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
+			next if ($config{"getAuto_$i"."_disabled"});
 			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 				foreach (keys %items_lut) {
 					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
@@ -1170,7 +1191,8 @@ sub processAutoStorage {
 			    (!$item ||
 				 ($amount <= $config{"getAuto_${i}_minAmount"} &&
 				  $amount < $config{"getAuto_${i}_maxAmount"})
-			    )
+			    ) &&
+				checkSelfCondition("getAuto_$i")
 			) {
 				if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 =pod
@@ -1213,10 +1235,12 @@ sub processAutoStorage {
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
 		AI::dequeue;
-		if ($forcedByBuy) {
-			AI::queue("sellAuto", {forcedByBuy => 1});
-		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
-			AI::queue("sellAuto", {forcedByStorage => 1});
+		if ($config{sellAuto} && ai_sellAutoCheck()) {
+			if ($forcedByBuy) {
+				AI::queue("sellAuto", {forcedByBuy => 1});
+			} elsif (!$forcedBySell) {
+				AI::queue("sellAuto", {forcedByStorage => 1});
+			}
 		}
 
 	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
@@ -1447,7 +1471,9 @@ sub processAutoStorage {
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
-					if (!$config{"getAuto_$args->{index}"}) {
+					if (!$config{"getAuto_$args->{index}"}
+						|| $config{"getAuto_$args->{index}_disabled"}
+						|| !checkSelfCondition($config{"getAuto_$args->{index}"})) {
 						$args->{index}++;
 						next;
 					}
@@ -2888,7 +2914,7 @@ sub processAutoAttack {
 					next;
 				}
 
-				my $control = mon_control($monster->{name});
+				my $control = mon_control($monster->{name}, $monster->{nameID});
 				if (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
@@ -2970,7 +2996,7 @@ sub processItemsTake {
 		foreach (@itemsID) {
 			next unless $_;
 			my $item = $items{$_};
-			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
+			next if (pickupitems($item->{name}, $item->{nameID}) eq "0" || pickupitems($item->{name}, $item->{nameID}) == -1);
 
 			$dist = distance($item->{pos}, AI::args->{pos});
 			$dist_to = distance($item->{pos}, AI::args->{pos_to});
@@ -3001,16 +3027,17 @@ sub processItemsAutoGather {
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
-		foreach my $item (@itemsID) {
-			next if ($item eq ""
-				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
-				|| $items{$item}{take_failed} >= 1
-				|| pickupitems(lc($items{$item}{name})) eq "0"
-				|| pickupitems(lc($items{$item}{name})) == -1 );
-			if (!positionNearPlayer($items{$item}{pos}, 12) &&
-			    !positionNearPortal($items{$item}{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
-				gather($item);
+		foreach (@itemsID) {
+			next unless $_;
+			my $item = $items{$_};
+			next if (!timeOut($item->{appear_time}, $timeout{ai_items_gather_start}{timeout})
+				|| $item->{take_failed} >= 1
+				|| pickupitems($item->{name}, $item->{nameID}) eq "0"
+				|| pickupitems($item->{name}, $item->{nameID}) == -1 );
+			if (!positionNearPlayer($item->{pos}, 12) &&
+			    !positionNearPortal($item->{pos}, 10)) {
+				message TF("Gathering: %s (%s)\n", $item->{name}, $item->{binID});
+				gather($_);
 				last;
 			}
 		}
@@ -3056,7 +3083,7 @@ sub processItemsGather {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 			}
 
 		} else {

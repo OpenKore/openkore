@@ -162,37 +162,80 @@ Yellow Plant 0 0 0
 1967 -1 0 0
 
 ##### MVPs e mini-boss #####
-Amon Ra 0 1 0
-Archangeling 0 1 0
-Baphomet 0 1 0
-Bacsojin 0 1 0
-Dark Illusion 0 1 0
-Dark Lord 0 1 0
-Detale 0 1 0
-Doppelganger 0 1 0
-Dracula 0 1 0
-Drake 0 1 0
-Eddga 0 1 0
-Dark Snake Lord 0 1 0
-Garm 0 1 0
-Egnigem Cenia 0 1 0
-Golden Thief Bug 0 2 0
-Incantation Samurai 0 1 0
-Lady Tany 0 1 0
-Lord of Death 0 1 0
-Maya 0 1 0
-Maya Purple 0 1 0
-Mistress 0 1 0
-Moonlight 0 1 0
-Mutant Dragon 0 1 0
-Orc Hero 0 1 0
-Orc Lord 0 1 0
-Osiris 0 1 0
-Pharaoh 0 1 0
-Phreeoni 0 1 0
-RSX-0806 0 1 0
-Stormy Knight 0 1 0
-Tao Gunka 0 1 0
-Thanatos 0 1 0
-Turtle General 0 1 0
-Vesper 0 1 0
+##MOB ID : MVP
+1511 -1 1 0 #Amon Ra
+2476 -1 1 0 #Amdarias
+1388 -1 1 0 #Archangeling
+1647 -1 1 0 #Assassin Cross Eremes
+1785 -1 1 0 #Atroce
+1039 -1 1 0 #Baphomet
+1630 -1 1 0 #Bacsojin
+1874 -1 1 0 #Beelzebub
+2068 -1 1 0 #Boitata
+2319 -1 1 0 #Buwaya
+2238 -1 1 0 #Champion Chen
+2240 -1 1 0 #Clown Alphoccio
+2236 -1 1 0 #Creator Flamel
+2253 -1 1 0 #Daehyon
+1302 -1 1 0 #Dark Illusion
+1272 -1 1 0 #Dark Lord
+1719 -1 1 0 #Detale
+1046 -1 1 0 #Doppelganger
+1389 -1 1 0 #Dracula
+1112 -1 1 0 #Drake
+1115 -1 1 0 #Eddga
+1658 -1 1 0 #Egnigem Cenia
+1418 -1 1 0 #Evil Snake Lord
+1871 -1 1 0 #Fallen Bishop
+1252 -1 1 0 #Garm
+2251 -1 1 0 #Gioia
+1768 -1 1 0 #Gloom Under Night
+2165 -1 1 0 #Gold Queen Scaraba
+1086 -1 1 0 #Golden Thief Bug
+1885 -1 1 0 #Gopinich
+2241 -1 1 0 #Gypsy Trentini
+1649 -1 1 0 #High Priest Magaleta
+1651 -1 1 0 #High Wizard Katrinn
+1832 -1 1 0 #Ifrit
+1492 -1 1 0 #Incantation Samurai
+2255 -1 1 0 #Kades
+1734 -1 1 0 #Kiel D-01
+2202 -1 1 0 #Kraken
+1779 -1 1 0 #Ktullanux
+1980 -1 1 0 #Kubkin
+1688 -1 1 0 #Lady Tany
+2156 -1 1 0 #Leak
+1646 -1 1 0 #Lord Knight Seyren
+1373 -1 1 0 #Lord of Death
+2131 -1 1 0 #Lost Dragon 
+1147 -1 1 0 #Maya
+1289 -1 1 0 #Maya Purple
+1059 -1 1 0 #Mistress
+1150 -1 1 0 #Moonlight
+2022 -1 1 0 #Nidhoggr's Shadow
+2362 -1 1 0 #Nightmare Amon Ra
+1262 -1 1 0 #Mutant Dragon
+1087 -1 1 0 #Orc Hero
+1190 -1 1 0 #Orc Lord
+1038 -1 1 0 #Osiris
+2235 -1 1 0 #Paladin Randel
+1157 -1 1 0 #Pharaoh
+1159 -1 1 0 #Phreeoni
+1502 -1 1 0 #Pori Pori
+2237 -1 1 0 #Professor Celia
+2249 -1 1 0 #Pyuriel
+2087 -1 1 0 #Queen Scaraba
+2475 -1 1 0 #Root of Corruption
+1623 -1 1 0 #RSX-0806
+2341 -1 1 0 #RWC Boss
+1650 -1 1 0 #Sniper Shecil
+2239 -1 1 0 #Stalker Gertie
+1251 -1 1 0 #Stormy Knight
+1583 -1 1 0 #Tao Gunka
+1708 -1 1 0 #Thanatos
+1312 -1 1 0 #Turtle General
+1751 -1 1 0 #Valkyrie Randgris
+1685 -1 1 0 #Vesper
+1648 -1 1 0 #Whitesmith Harword
+1917 -1 1 0 #Wounded Morroc
+1658 -1 1 0 #Ygnizem

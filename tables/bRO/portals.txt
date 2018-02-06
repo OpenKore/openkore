@@ -2793,29 +2793,24 @@ veins 220 109 moc_para01 31 14 c c r0
 yuno 144 189 moc_para01 31 14 c c r0
 
 # Eden HQ
-moc_para01 47 39 moc_para01 106 14 c r0
-moc_para01 102 92 moc_para01 111 33
+moc_para01 48 39 moc_para01 106 14
+moc_para01 107 12 moc_para01 48 35
+moc_para01 100 27 moc_para01 47 85
+moc_para01 49 86 moc_para01 103 27
 moc_para01 113 32 moc_para01 105 92
-moc_para01 107 12 moc_para01 47 37
-moc_para01 47 161 moc_para01 47 18
+moc_para01 102 92 moc_para01 111 33
 moc_para01 57 27 moc_para01 162 26
 moc_para01 158 26 moc_para01 55 27
-#moc_para01 57 27 moc_para01 107 12
-# moc_para01 100 27 moc_para01 47 85
-# moc_para01 49 86 moc_para01 103 27
-# moc_para01 113 32 moc_para01 105 92
-# moc_para01 102 92 moc_para01 113 32
-# moc_para01 57 27 moc_para01 107 12
-# moc_para01 158 26 moc_para01 57 27
-# #moc_para01 48 16 moc_para01 48 164
-# moc_para01 48 16 moc_paraup 48 164
-# #moc_para01 47 161 moc_para01 47 18
-# moc_paraup 47 161 moc_para01 47 18
-# #moc_para01 41 187 moc_para01 179 93
-# moc_paraup 41 187 moc_paraup 179 93
-# #moc_para01 179 90 moc_para01 41 185
-# moc_paraup 179 90 moc_paraup 41 185
+moc_para01 48 16 moc_para01 48 164
+moc_para01 47 161 moc_para01 47 18
+moc_para01 41 187 moc_para01 179 93
+moc_para01 179 90 moc_para01 41 185
+moc_para01 29 187 moc_para01 180 159
+moc_para01 180 156 moc_para01 29 185
+moc_para01 17 187 moc_para01 132 159
+moc_para01 132 156 moc_para01 17 185
 moc_para01 30 10 prontera 116 72
+#moc_para01 44 19 moc_fild20 342 198 0 c r0 c #Requires paying 50k first
 
 # Malangdo
 malangdo 219 86 alberta 192 150 1000 c c r1
