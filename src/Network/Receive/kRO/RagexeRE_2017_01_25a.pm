@@ -15,7 +15,22 @@ package Network::Receive::kRO::RagexeRE_2017_01_25a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2016_12_28a);
+use Log qw(warning debug error message);
+use Socket qw(inet_ntoa);
+use I18N qw(bytesToString);
 
+
+sub parse_account_server_info {
+    my ($self, $args) = @_;
+
+    @{$args->{servers}} = map {
+		my %server;
+		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;		
+		$server{ip} = inet_ntoa($server{ip});
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a160)*', $args->{serverInfo};
+}
 
 1;
 =pod
