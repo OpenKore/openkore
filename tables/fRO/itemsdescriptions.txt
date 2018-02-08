@@ -9144,184 +9144,148 @@ Cute Pet monster eggs.
 Weight : ^7777773^000000
 #
 9001#
-An egg in which a
-Poring Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Poring Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Luk+2, Crit+1.
+Class: ^777777Monster Egg^000000
 #
 9002#
-An egg in which a
-Drops Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Drops Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+HIt+3, Atk+3.
+Class: ^777777Monster Egg^000000
 #
 9003#
-An egg containing
-a Poporing Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg containing a Poporing Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Luk +2 Poison Resistence +10%
+Class: ^777777Monster Egg^000000
 #
 9004#
-An egg containing
-a Lunatic Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg containing a Lunatic Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Crit+2, Atk+2.
+Class: ^777777Monster Egg^000000
 #
 9005#
-An egg containing
-a Picky Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg containing a Picky Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Str+1, Atk+5
+Class: ^777777Monster Egg^000000
 #
 9006#
-A Chonchon Cute Pet
-rests inside this egg.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+A Chonchon Cute Pet rests inside this egg.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Agi+1, Flee+2.
+Class: ^777777Monster Egg^000000
 #
 9007#
-An egg in which
-a Steel Chonchon
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Steel Chonchon Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.^
+Agi -1 Flee +6
+Class: ^777777Monster Egg^000000
 #
 9008#
-An egg in which
-a Hunter Fly
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Hunter Fly Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Perfect Dodge +2 Flee -5
+Class: ^777777Monster Egg^000000
 #
 9009#
-An egg in which
-a Savage Bebe
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Savage Bebe Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Vit+1, MHP+50.
+Class: ^777777Monster Egg^000000
 #
 9010#
-An egg that
-contains a Baby
-Desert Wolf Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg that contains a Baby Desert Wolf Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Int+1, MSP+20.
+Class: ^777777Monster Egg^000000
 #
 9011#
-An egg that contains
-a Rocker Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg that contains a Rocker Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+HP Recovery +5% Max HP +25
+Class: ^777777Monster Egg^000000
 #
 9012#
-An egg in which a
-Spore Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Spore Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Hit +5 Atk -2
+Class: ^777777Monster Egg^000000
 #
 9013#
-An egg in which
-a Poison Spore
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Poison Spore Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Str +1 Int +1
+Class: ^777777Monster Egg^000000
 #
 9014#
-An egg that
-contains a Peco
-Peco Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg that contains a Peco Peco Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+MaxSP -10 MaxHP +150
+Class: ^777777Monster Egg^000000
 #
 9015#
-An egg in which a
-Smokie Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Smokie Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Agi +1 Perfect Dodge +1
+Class: ^777777Monster Egg^000000
 #
 9016#
-An egg in which a
-Yoyo Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Yoyo Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Crit +3 Luk -1
+Class: ^777777Monster Egg^000000
 #
 9017#
-An egg in which
-an Orc Warrior Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which an Orc Warrior Cute Pet lies dormant.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Def -3 Atk +10
+Class: ^777777Monster Egg^000000
 #
 9018#
-An egg in which a
-Munak Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Munak Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Def +1 Int +1
+Class: ^777777Monster Egg^000000
 #
 9019#
-An egg in which a
-Dokebi Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000. 
-Class : ^777777Monster Egg^000000
+An egg in which a Dokebi Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Matk +1% Atk -1%
+Class: ^777777Monster Egg^000000
 #
 9020#
-An egg that
-contains a
-Sohee Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg that contains a Sohee Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Str +1 Dex +1
+Class: ^777777Monster Egg^000000
 #
 9021#
-An egg that
-contains an
-Isis Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg that contains an Isis Cute Pet.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Atk +1% Matk -1%
+Class: ^777777Monster Egg^000000
 #
 9022#
-An egg in which
-a Green Petite
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Green Petite Cute Pet rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Aspd +1% Def/Mdef -2
+Class: ^777777Monster Egg^000000
 #
 9023#
-An egg in which
-a Deviruchi Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Deviruchi Cute Pet lies dormant.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Atk/Matk +1% MaxHP/MaxSP -3%
+Class: ^777777Monster Egg^000000
 #
 9024#
-An egg in which a
-Baphomet Jr. Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Monster Egg^000000
+An egg in which a Baphomet Jr. Cute Pet lies dormant.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Def/Mdef +1 Resistance against Stun -1%
+Class: ^777777Monster Egg^000000
 #
 10001#
 A pristine helmet made from an animal skull.
@@ -12301,18 +12265,16 @@ During this period, everyone goes on a fast and lead an acentic life.
 Weight : ^7777770^000000
 #
 9026#
-An egg that
-holds a Zealotus.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Pet Egg^000000
+An egg that holds a Zealotus.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Magic Damage against Demi-Human/Player +2%
+Class: ^777777Pet Egg^000000
 #
 9027#
-An egg in which
-an Alice rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Class : ^777777Pet Egg^000000
+An egg in which an Alice rests.
+Can be hatched by using a ^33CC33Pet Incubator^000000.
+Mdef +1 Resistance against Demi-Human/Player +1%
+Class: ^777777Pet Egg^000000
 #
 7289#
 A gemstone which is also called as 'Olivine'.
@@ -16313,7 +16275,7 @@ An electric wire. Beware of electrick shock.
 A freshly scented,
 thorny fruit from a tree that restores a small
 amount of HP and SP.
-Weight : ^7777774^000000
+Weight : ^7777776^000000
 #
 7340#
 A dark oval stone
@@ -21741,13 +21703,10 @@ Required Level : ^77777727^000000
 Job : ^777777Acolyte Class^000000
 #
 1418#
-A legendary spear that
-is famous for never
-missing its target.
-Each strike has a 10%
-chance of being an
-inescapable attack.
-Increases Accuracy by 30%. Class : ^777777Spear^000000
+A legendary spear that is famous for never missing its target.
+Each strike has a 25% chance of being an inescapable attack.
+HIT +30.
+Class : ^777777Spear^000000
 Attack: ^777777120^000000
 Weight : ^77777750^000000
 Property: ^777777Wind^000000
@@ -22261,7 +22220,7 @@ You risk freezing youself if you touch it.
 A freshly scented,
 thorny fruit from a tree that restores a small
 amount of HP and SP.
-Weight : ^7777774^000000
+Weight : ^7777776^000000
 #
 2422#
 Jeweled, golden
@@ -23737,18 +23696,13 @@ Weight : ^7777771^000000
 
 // ------------------- 11.3 =E1T @e:q >F@LE[ --------------------------
 2122#
-A magnificent
-platinum shield that
-is rumored to be able
-to reflect harmul magic. Reduces damage from
-Mid and Large sized
-mosnters by 15%, and
-reduces damage from
-Undead monsters by
-10%. Has a 40% chance
-to reflect magic for
-2 seconds with each
-magic spell attack.
+A magnificent platinum shield that
+is rumored to be able to reflect harmful magic.
+Reduces damage from Mid and Large sized
+monsters by 15%, and reduces damage from
+Undead monsters by 10%.
+Has a 40% chance to reflect magic for
+2 seconds with each magic spell attack.
 MDEF +5
 Class : ^777777Shield^000000
 Defense : ^77777795^000000
@@ -23759,14 +23713,10 @@ Jobs except Novice^000000
 #
 
 2123#
-A shiny, round steel
-plate used for serving
-food. 5% chance of
-reflecting magic.
-MDEF +2. Cast Time
-reduced by 10% when
-worn with Orlean's
-Gloves.
+A shiny, round steel plate used for serving food.
+5% chance of reflecting magic.
+MDEF +2.
+Cast Time reduced by 10% when worn with Orlean's Gloves.
 Class : ^777777Shield^000000
 Defense : ^77777775^000000
 Weight : ^777777100^000000
@@ -23776,12 +23726,10 @@ Jobs except Novice^000000
 #
 
 2124#
-A rough shield
-covered in spikes
-that deters rushing
-enemies. MDEF +2.
-When worn with
-Bison Horn:
+A rough shield covered in spikes 
+that deters rushing enemies. 
+MDEF +2.
+When worn with Bison Horn:
 ^6A5ACDBison Set^000000
 ^3CB371Thorny Buckler^000000
 ^3CB371Bison Horn^000000
@@ -23806,13 +23754,9 @@ Required Level: ^77777775^000000
 Job : ^777777Transcendent Swordman, Merchant and Thief Classes^000000
 #
 2364#
-This plate armor
-was forged using
-mysterious materials
-from a meteor. Adds
-30% tolerance to
-Stun and Freeze
-statuses.
+This plate armor was forged using
+mysterious materials from a meteor.
+Adds 30% tolerance to Stun and Freeze status.
 Class : ^777777Armor^000000
 Defense : ^77777785^000000
 Weight : ^777777300^000000
@@ -23823,15 +23767,12 @@ Merchant Classes^000000
 #
 
 2365#
-A uniform that was
-once worn by a chef
-that was obsessed
-with cleanliness.
-Nobody could stop
-him once he started
+A uniform that was once worn by a chef
+that was obsessed with cleanliness.
+Nobody could stop him once he started
 talking about cuisine.
-Wearer's magic cannot
-be interrupted (except during WoE) at the cost of increasing Cast Time by 15%.
+Wearer's magic cannot be interrupted (except during WoE)
+at the cost of increasing Cast Time by 15%.
 Class : ^777777Armor^000000
 Defense : ^77777715^000000
 Weight : ^77777730^000000
@@ -23841,14 +23782,10 @@ Jobs except Novice^000000
 #
 
 2366#
-A holy garment that
-has been purified by
-a series of religious
-rituals. Increases
-tolerance to Curse,
-Silence, Stun, Sleep,
-and Stone Curse
-statuses by 5%.
+A holy garment that has been purified by
+a series of religious rituals.
+Increases tolerance to Curse, Silence,
+Stun, Sleep and Stone Curse statuses by 5%.
 Class : ^777777Armor^000000
 Defense : ^77777750^000000
 Weight : ^777777150^000000
@@ -23858,16 +23795,13 @@ Jobs except Novice^000000
 #
 
 2367#
-A sniping suit that
-stimulates all the
-muscles used in firing
-arrows, increasing
+A sniping suit that stimulates all the
+muscles used in firing arrows, increasing
 accuracy while reducing stress on the body.
 CRI +6 with additional
-CRI bonus determined
-by LUK stat. MDEF +5.
-Skill Delay reduced
-by 23%.
+CRI bonus determined by LUK stat.
+MDEF +5.
+Skill Delay reduced by 23%.
 Class : ^777777Armor^000000
 Defense : ^77777742^000000
 Weight : ^77777775^000000
@@ -23876,19 +23810,13 @@ Job : ^777777Sniper Job^000000
 #
 
 2423#
-Although it seems
-that whoever made
-these shoes tried to
-fix his mistakes, he
-didn't make these
-as well as he hoped.
-Increase Max HP and
-SP by 20%. Increasing
-the Upgrade Level
-will reduce Max
-SP and HP bonus,
-but will increase
-DEF bonus.
+Although it seems that whoever made
+these shoes tried to fix his mistakes, he
+didn't make these as well as he hoped.
+Increase Max HP and SP by 20%.
+Increasing the Upgrade Level
+will reduce Max SP and HP bonus,
+but will increase DEF bonus.
 Class : ^777777Shoes^000000    
 Defense : ^77777713^000000
 Weight : ^77777750^000000
@@ -23898,17 +23826,12 @@ Jobs except Novice^000000
 #
 
 2424#
-This pair of shoes
-was designed with
-a waterproof coating
-that prevents slippage
-in wet areas. Adds 5%
-tolerance to Water
-property attacks,
-+ 5% HP Recovery.
+This pair of shoes was designed with a waterproof coating
+that prevents slippage in wet areas.
+Adds 5% tolerance to Water property attacks
++5% HP Recovery.
+When worn with Wool Scarf:
 Adds +10% Max HP
-when worn with
-Wool Scarf.
 Class : ^777777Shoes^000000    
 Defense : ^77777713^000000
 Weight : ^77777730^000000
@@ -23918,15 +23841,12 @@ Jobs except Novice^000000
 #
 
 2425#
-A pair of boots
-made of light,
-resilient leather
-that makes you want
-to run when you wear
-them. AGI +1.
+A pair of boots made of light,
+resilient leather that makes you want
+to run when you wear them.
+AGI +1.
+When Upgrade Level is 9 or greater:
 Additional AGI +2
-when Upgrade Level
-is 9 or greater.	
 Class : ^777777Shoes^000000
 Defense : ^77777716^000000
 Weight : ^77777750^000000
@@ -23937,25 +23857,16 @@ Jobs except Novice^000000
 
 
 2426#
-Shadowy shoes made
-using dark forces,
-and enchanted with
-a spell to protect
-their wearer when
-danger approaches.
+Shadowy shoes made using dark forces,
+and enchanted with a spell to protect
+their wearer when danger approaches.
 MDEF +10.
-Has a certain chance
-of auto casting Lv.3
-Cloaking when hit by
-magic attacks. If the
-wearer has learned
-a higher level of
-Cloaking, those
-levels of Cloaking
-will be auto cast
-instead. If the
-wearer has not 
-learned Lv. 3 Cloak
+Has a certain chance of auto casting Lv.3
+Cloaking when hit by magic attacks. If the
+wearer has learned a higher level of
+Cloaking, those levels of Cloaking
+will be auto cast instead. If the
+wearer has not  learned Lv. 3 Cloak
 the wearer cannot move away from walls.
 Class : ^777777Shoes^000000
 Defense : ^7777770^000000
@@ -23966,17 +23877,11 @@ Jobs except Novice^000000
 #
 
 2527#
-A garment that's
-so warm, it makes
-the wearer feel
-as if a dragon is 
+A garment that's so warm, it makes
+the wearer feel as if a dragon is 
 breathing on him.
-Reduces damage from
-Dragon monsters by 15%. Increases damage by
-5% when worn with
-Dragon Slayer,
-Dragon Killer,
-Gae Bolg.
+Reduces damage from Dragon monsters by 15%.
+Increases damage by 5% when worn with Dragon Slayer, Dragon Killer, Gae Bolg.
 Class : ^777777Garment^000000
 Defense : ^77777716^000000
 Weight : ^77777760^000000
@@ -23986,10 +23891,8 @@ Jobs except Novice^000000
 #
 
 2528#
-A scarf made from
-the highest quality
-wool that feels so
-comforting and cozy
+A scarf made from the highest quality
+wool that feels so comforting and cozy
 when you're exhausted.
 MDEF +4.
 Class : ^777777Garment^000000
@@ -24001,14 +23904,10 @@ Jobs except Novice^000000
 #
 
 2529#
-A symbol worn by
-runners that just
-makes you want to
-sprint when you
-wear it. AGI +2.
-Flee +10 when worn
-with Black Leather
-Boots.
+A symbol worn by runners that just
+makes you want to sprint when you wear it.
+AGI +2.
+Flee +10 when worn with Black Leather Boots.
 Class : ^777777Garment^000000
 Defense : ^77777713^000000
 Weight : ^77777750^000000
@@ -24018,14 +23917,10 @@ Jobs except Novice^000000
 #
 
 2530#
-A symbol worn by
-runners that just
-makes you want to
-sprint when you
-wear it. AGI +2.
-Flee +10 when worn
-with Black Leather
-Boots.
+A symbol worn by runners that just
+makes you want to sprint when you wear it.
+AGI +2.
+Flee +10 when worn with Black Leather Boots.
 Class : ^777777Garment^000000
 Defense : ^77777713^000000
 Weight : ^77777750^000000
@@ -24034,19 +23929,12 @@ Job : ^777777All Transcendent
 Jobs except Novice^000000
 #
 2531#
-A mysterious cape
-with a protective
-spell that can convert
-the wearer's magic
-defense to physical
-defense. Each physical
-attack against the
-wearer has a chance
-reducing physical
-damage by 20% for
-2 seconds at the
-cost of reducing
-MDEF by 20%.
+A mysterious cape with a protective
+spell that can convert the wearer's magic
+defense to physical defense. Each physical
+attack against the wearer has a chance
+reducing physical damage by 20% for
+2 seconds at the cost of reducing MDEF by 20%.
 Class : ^777777Garment^000000  
 Defense : ^77777713^000000
 Weight : ^77777770^000000
@@ -24057,18 +23945,12 @@ and Thief Classes^000000
 #
 
 2532#
-A mysterious cape
-with a protective
-spell that converts
-the wearer's DEF to
-MDEF. MDEF +3. 
-When receiving magic
-damage, there is a
-chance that for
-2 seconds magic
-damage will be
-reduced by 20% at
-the cost of reducing defense by 20%.
+A mysterious cape with a protective
+spell that converts the wearer's DEF to MDEF.
+MDEF +3. 
+When receiving magic damage, there is a
+chance that for 2 seconds magic damage will be
+reduced by 20% at the cost of reducing defense by 20%.
 Class : ^777777Garment^000000
 Defense : ^7777778^000000
 Weight : ^77777740^000000
@@ -24079,14 +23961,9 @@ and Archer Classes^000000
 #
 
 2700#
-Red silk that a
-female saint could
-use to seal evil.
-Reduced chance
-of being inflicted
-with the Confused
-status when worn
-with Spectral Spear.
+Red silk that a female saint could use to seal evil.
+Reduced chance of being inflicted with the Confused
+status when worn with Spectral Spear.
 Class : ^777777Accessory^000000
 Defense : ^7777770^000000
 Weight : ^77777710^000000
@@ -24096,19 +23973,10 @@ Swordman Classes^000000
 #
 
 2701#
-A pair of gloves
-that were once worn
-by a palace chef.
-Wearing these make
-you feel as if you
-could draw upon
-the dexterity that
-chef used in cooking.
+A pair of gloves that were once worn by a palace chef.
+Wearing these make you feel as if you could draw upon the dexterity that chef used in cooking.
 DEX +2, MATK +3%
-Cast Time
-reduced by 10% when
-worn with Orlean's
-Server.
+Cast Time reduced by 10% when worn with Orlean's Plate.
 Class : ^777777Accessory^000000
 Defense : ^7777770^000000
 Weight : ^77777710^000000
@@ -28903,7 +28771,7 @@ Class : ^777777Head Gear^000000
 Defense : ^7777770^000000
 Slot : ^777777Upper^000000
 Weight : ^77777760^000000
-Required Level : ^7777771^000000
+Required Level : ^77777750^000000
 Job : ^777777All^000000
 #
 16461#
@@ -29032,15 +28900,15 @@ Puissiez-vous rester
 Weight : ^7777771^000000
 #
 7983#
-jeune à jamais!
+jeune ࡪamais!
 Weight : ^7777771^000000
 #
 7984#
-Que votre rêve
+Que votre r뷥
 Weight : ^7777771^000000
 #
 7985#
-se réalise!
+se rꢬise!
 Weight : ^7777771^000000
 #
 7986#
@@ -29052,11 +28920,11 @@ voeux!
 Weight : ^7777771^000000
 #
 7988#
-Puissiez-vous être
+Puissiez-vous 뵲e
 Weight : ^7777771^000000
 #
 7989#
-heureux à jamais!
+heureux ࡪamais!
 Weight : ^7777771^000000
 #
 7990#
@@ -29234,7 +29102,7 @@ Jobs: ^777777All^000000
 When you have it, you can feel a splendid aristocratic atmosphere of chung.
 LUK + 3.
 When you are under physical attack, it uses Lv5 Mammonite skill by low chance.
-(if you don’t have zeny, it doesn't work.)
+(if you donӴ have zeny, it doesn't work.)
 Class : ^777777Head Gear^000000
 Defense : ^7777775^000000
 Slot : ^777777Upper^000000
@@ -32226,7 +32094,7 @@ Location : ^777777Upper^000000Weight : ^77777750^000000
 Required Level : ^77777730^000000
 Job : ^777777All^000000
 Secret Effects (Required a set item)
-When equipped with [Evolved Smoking Pipe] and white feathers refined to 5 or higher, Hit + 1¡¢MaxHP + 2% at every 2 refinements.
+When equipped with [Evolved Smoking Pipe] and white feathers refined to 5 or higher, Hit + 1bMaxHP + 2% at every 2 refinements.
 #
 18574#
 A headgear similar to the one worn by the 'Lord of Death'.
@@ -32293,7 +32161,7 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 18620#
-A pink heart-shaped eye patch. Seems like going well with a nurse¡¯s cap.
+A pink heart-shaped eye patch. Seems like going well with a nurseos cap.
 Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid^000000 Weight : ^7777775^000000
 Required Level : ^77777720^000000
@@ -32463,7 +32331,7 @@ Required Level. : ^7777771^000000
 Job : ^777777All^000000
 #
 19737#
-Big hat for captain pirate. This could show the prestige of captian pirates, but it’s worn out much.t
+Big hat for captain pirate. This could show the prestige of captian pirates, but itӳ worn out much.t
 Class : ^777777Costume^000000
 Position : ^777777upper ^000000 Weight : ^7777770^000000
 Required Level. : ^7777771^000000
@@ -33289,7 +33157,7 @@ Required Level : ^77777780^000000
 Job : ^777777Magician, Acolyte, Soul Linker^000000
 #
 18987#
-Jömungandr the Midgard Serpent, give him some blood to activate his power.
+J򭵮gandr the Midgard Serpent, give him some blood to activate his power.
 All Status +2.
 Cast time, delay after using skills - 5%.
 Reduce damage from Human type monster -10%.
@@ -34186,7 +34054,7 @@ Required Lv. : ^7777771^000000
 Job : ^777777All^000000
 #
 19913#
-Animal's feaces, or Poop…It cannot be said directly so people call it 'that thing'.
+Animal's feaces, or PoopƉt cannot be said directly so people call it 'that thing'.
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Top ^000000 Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
@@ -34907,7 +34775,7 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19652#
-A hat worn by a well-known magician. Rabbit is peeping out, and we don’t know what is going to pop out next.
+A hat worn by a well-known magician. Rabbit is peeping out, and we donӴ know what is going to pop out next.
 Class : ^777777Costume Equipment^000000 Defense : ^7777771^000000
 Location : ^777777Upper ^000000Weight : ^77777780^000000
 Req Lvl. : ^7777771^000000
@@ -36309,7 +36177,7 @@ Job : ^777777Genetic^000000
 #
 5935#
 Magnificent Artworks have been painted with this brush.
-This item has originally been created by Sahima's during the Ragnarök Online Workshop at the 'Connichi 2013'.
+This item has originally been created by Sahima's during the Ragnar򫠏nline Workshop at the 'Connichi 2013'.
 This item enables the skill [Scribble] when equipped. Each cast requires 1 'Red Gemstone'.
 Class: ^777777Helmet^000000
 Depense: ^7777770^000000
@@ -38522,7 +38390,7 @@ Job: ^777777Scatleton^000000
 #
 20397#
 A helmet that can transform you into Jakk.
-It is so precise that even Jakk‘s friends are tricked.
+It is so precise that even Jakkҳ friends are tricked.
 The way it is produced is confidential...
 If you take on physical/magic attacks during the event period, you can transform into Jakk for 10 seconds with a 3.1% probability.
 Type: ^777777Costume^000000 Defense: ^7777770^000000
@@ -38786,7 +38654,7 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20409#
-Nothing to change even after puttion on. It chills blood for some reason though…
+Nothing to change even after puttion on. It chills blood for some reason thoughō
 
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
@@ -39176,10 +39044,11 @@ Job : ^777777All^000000
 
 31052#
 A protective mask that was used by Alchemists to protect from poisonous gas.
-Type : ^777777Costume^000000 Armor : ^7777770^000000
-Location : ^777777Upper/Mid/Lower ^000000Weight : ^7777770^000000
-Req. level : ^7777771^000000
-Job : ^777777All Jobs^000000
+Class: ^777777Costume^000000
+Position: ^777777Upper, Mid & Low^000000
+Weight: ^7777770^000000
+Required Level: ^7777771^000000
+Job: ^777777All Job Classes^000000
 #
 23164#
 A potion created and distributed by 10th anniversary NPC Granpa Boxter.
@@ -39251,7 +39120,7 @@ Decayed black fur. It is ominous in the shadow.
 Weight : ^7777770^000000
 #
 11616#
-Skelion’s favourite piece of meat. Pet Food Merchant sells this item
+Skelionӳ favourite piece of meat. Pet Food Merchant sells this item
 Weight : ^7777775^000000
 #
 
@@ -39410,7 +39279,7 @@ Oh Holy Light!
 I was just an average Acolyte.. but one day, this magical priest came by and tossed me this magical feather containing powerful magic..
 Since then, I became a Magical Acolyte who fights against the black Porings of the Devil's order..
 Everyday is a struggle but let's be magical today as always!
-So.. let's go! Magical † Acolyte!~?"
+So.. let's go! Magical ƠAcolyte!~?"
 why do I keep hearing this in my head..
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
@@ -43406,9 +43275,9 @@ Weight : ^77777720^000000
 
 9028#
 An egg in which a Rice Cake Cute Pet rests. Can be hatched by using a Pet Incubator.
-Class : ^777777Monster’s Egg^000000
+Resistance against Neutral Property +1% MaxHP -1%
+Class: ^777777Monster Egg^000000
 #
-
 7613#
 Small amount of warm glutinous rice filling.
  
@@ -52388,7 +52257,7 @@ Job : ^777777All Jobs^000000
 A hat that is provided only for members of the Paradise Team.
 It's designed to go well with a suit.
 Class : ^777777Helmet^000000 Defense : ^7777775^000000
-À§Ä¡: ^777777Upper ^000000 Weight : ^7777770^000000
+'ġ: ^777777Upper ^000000 Weight : ^7777770^000000
 Required Level : ^77777712^000000
 Job : ^777777All Jobs^000000
 #
@@ -52813,7 +52682,7 @@ Job : ^777777All Jobs^000000
 ^00008830 days Rental Item.^000000
 A hat that holds spirit of sun. 
 Reduce Demi-human damage by 10%.
-Add chance to cast Lv1 ¡°Sight¡± skill or Lv1 ¡°Sight Thrasher¡± when being hit by physical or magical attacks.
+Add chance to cast Lv1 pSightq skill or Lv1 pSight Thrasherq when being hit by physical or magical attacks.
 Class : ^777777Headgear^000000    Defense : ^7777771^000000
 Location : ^777777Upper,Middle^000000 Weight : ^7777770^000000
 Required Level : ^77777760^000000
@@ -53411,7 +53280,7 @@ Weight : ^7777771^000000
 6285#
 This is the manual book for producing Enrich_White_PotionZ, vitata500, Enriched cell juice.
 Enriched white potionZ : ^000088Cylinder 10  + white potion 20  + white herb 10  + alchol 1 ^000000
-vitata 500 : ^000088cylinder 10  + grape 10 + honey 10 + + Blue Herb 10 °³^000000
+vitata 500 : ^000088cylinder 10  + grape 10 + honey 10 + + Blue Herb 10 г^000000
 Enrich Celermine Juice : ^000088Empty Testtube 10 + Awakening Potion 5 + Concentration Potion 5 + Spicy Sauce 5^000000
 Cure Free : ^000088Empty Testtube 10 + Panacea 5 + Green Herb 20 + Mastela Fruit 1 + Yggdrasil Leaf 1^000000
 Weight : ^7777771^000000
@@ -53573,12 +53442,12 @@ A jar of Gulaman made from strawberry flavored gelatin.
 Weight : ^7777771^000000
 #
 7744#
-A jar of ¡°Leche Flan¡± made from creamy eggs and milk. 
+A jar of pLeche Flanq made from creamy eggs and milk. 
  
 Weight : ^7777771^000000
 #
 7745#
-A jar of ¡°Ube¡± made from yummy sweet purple yams. 
+A jar of pUbeq made from yummy sweet purple yams. 
  
 Weight : ^7777771^000000
 #
@@ -53588,22 +53457,22 @@ A jar of Sago made of Tapioca cooked in brown sugar.
 Weight : ^7777771^000000
 #
 7747#
-A jar of ¡°Langka¡± made of sweetened Jackfruit.
+A jar of pLangkaq made of sweetened Jackfruit.
  
 Weight : ^7777771^000000
 #
 7748#
-A jar of ¡°Sweet Beans¡± made of sweetened Kidney beans. 
+A jar of pSweet Beansq made of sweetened Kidney beans. 
  
 Weight : ^7777771^000000
 #
 7749#
-A jar of ¡°Sweet bananas¡± made of firm and ripe bananas cooked in sugar syrup.
+A jar of pSweet bananasq made of firm and ripe bananas cooked in sugar syrup.
  
 Weight : ^7777771^000000
 #
 7750#
-A jar of ¡°Macapuno¡± made from young coconut meat cooked in sugar syrup. 
+A jar of pMacapunoq made from young coconut meat cooked in sugar syrup. 
  
 Weight : ^7777771^000000
 #
@@ -53964,15 +53833,6 @@ It's consumed for Generic Skill, 'Spore Explosion'.
 Weight : ^7777770.1^000000
 #
 
-2352#
-An exclusive armor for new adventurers.
-Impossible to refine this item.
-Class : ^777777Armor^000000    Defense : ^77777725^000000
-Weight : ^7777770.1^000000
-Required Level : ^7777771^000000
-Applicable Job : ^777777Novice^000000
-#
-
 12728#
 ^ff0000This item is trade locked.^000000
 Maximizes a user's cell activation that HP recovery skill or potion effect increases 1.5 times.
@@ -54055,7 +53915,6 @@ Weight : ^7777770.1^000000
 Required Level : ^7777771^000000
 Applicable Job : ^777777Novice^000000
 #
-
 11056#
 A singlepath of the study of spirits! 'Earthde Lagon' unravels the mystery of spirit magic.
 Only Lagon tells you the points of the Spirit Magic! Only the key points are in it!'
@@ -54120,6 +53979,15 @@ Weight : ^7777775^000000
 12386#
 Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Chain Lightning magic.
 Weight : ^7777775^000000
+#
+
+2352#
+An exclusive armor for new adventurers.
+Impossible to refine this item.
+Class : ^777777Armor^000000    Defense : ^77777725^000000
+Weight : ^7777770.1^000000
+Required Level : ^7777771^000000
+Applicable Job : ^777777Novice^000000
 #
 
 12387#
@@ -54388,7 +54256,7 @@ Weight : ^7777770^000000
 #
 
 
-// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
+// ---------- Ep13.3 ŹݺƮ߆Lƛ ------------
 12580#
 A trial product which has been researched from the Geffen Magic Academy for a long time.
 This magical scroll is able to search which items are on sale, which items are being purchased, and can locate the searched vendor.
@@ -56670,7 +56538,7 @@ Transparent item which imprisons Buwaya's Spirit. Rumor says you can hear Buwaya
 Weight : ^7777771^000000
 #
 
-//-------½É¿¬ÀÇÈ¸¶û Ãß°¡ ¾ÆÀÌÅÛ------------
+//-------މ߬Gȸ׻ ğС ߆Lƛ------------
 1293#
 *Stats during WoE & PVP
 Reduces the target's Def and Mdef to 1 on successful hit. This effect does not work with skills.
@@ -57078,7 +56946,7 @@ Weapon Level : ^7777774^000000
 Required Level : ^77777795^000000
 Job : ^777777Swordman Class^000000
 #
-//»ý´ø4Ãþ
+//ܽո4ľ
 1290#
 The Katar that the accessin who never lose targets in any situation used. He even used his luck to focus on the target.
 Increases Hit Success rate depending on Base Luck.
@@ -57824,7 +57692,7 @@ Weight : ^7777773^000000      Property : ^777777Neutral^000000
 Level Limit : ^777777100^000000
 #
 13311#
-Huuma Shuriken recently released by the Ninja Association. Carries a nickname of Shadow for the special metal it was made from which doesn’t reflect moonlight.
+Huuma Shuriken recently released by the Ninja Association. Carries a nickname of Shadow for the special metal it was made from which doesnӴ reflect moonlight.
 STR+ 3.
 Class : ^777777Huuma Shuriken^000000 Atk : ^777777170^000000
 Weight : ^777777150^000000
@@ -59968,7 +59836,7 @@ Compound on: ^777777Helm^000000
 Weight: ^7777771^000000
 #
 4587#
-+12 Critical damage on Human/Animal/Fish monsters.
+Increase Critical Hit chance by 12% against Human/Animal/Fish monsters.
 Class: ^777777Card^000000
 Compound on: ^777777Accessory^000000
 Weight: ^7777771^000000
@@ -60299,8 +60167,8 @@ Equip To: ^7777773rd Archer Classes^000000
 #
 18122#
 An oversized bow with slow shooting speed and poor accuracy. Each and every arrow it shoots, though, is powerful enough to kill their victims at once. 
-Ranged Physical Attack Strength -40%.
-Decreases Attack Speed (+15% post-attack delay).
+Ranged Physical Attack Strength +40%.
+Decreases Attack Speed by 15%.
 Hit -50.
 Class: ^777777Bow^000000 ATK: ^777777195^000000
 Weight: ^777777300^000000
@@ -60657,6 +60525,10 @@ A box containing the essence of Mastela Fruit. Be careful when opening.
 Weight : ^7777770^000000
 "^ff0000Caution - Item can be lost if you are possessing more than weight or quantity limit when opening the box!^000000"
 #
+12531#
+A box that contains 100 White Potions.
+Weight: ^7777770^000000
+#
 6685#
 A certificate given to people who rebuild the Morocc
 ^ff0000It cannot be traded with other accounts.^000000
@@ -60994,10 +60866,15 @@ Required Level: ^77777799^000000
 Equip To: ^777777All Classes^000000
 #
 15074#
-This uniform worn by the Geffen Mages enhances its wearer's concentration while he casts spells. 
+This uniform worn by the Geffen Mages enhances its
+wearer's concentration while he casts spells.
 -10% SP consumption.
-+15% Floating Casting. Casting cannot be interrupted.
-Additional +5% SP consumption when upgraded to +7. Floating Casting -5% when upgraded to +9.
++15% Variable Casttime.
+Casting cannot be interrupted.
+When upgraded to +7: 
+Additional -5% SP consumption.
+When upgraded to +9:
+Variable Casttime -5%.
 Class: ^777777Armor^000000 DEF: ^77777740^000000
 Weight: ^777777100^000000
 Required Level: ^77777799^000000
@@ -61254,7 +61131,7 @@ Piece of Ancient Gigantes type monster. Maybe a researcher of some kind would se
 Weight : ^7777771^000000
 #
 19914#
-Airship Captain Felrock‘s Hat
+Airship Captain Felrockҳ Hat
 It is a different color from normally worn hats.
 Type : ^777777Costume^000000
 Location : ^777777Top^000000Weight : ^7777770^000000
@@ -61295,21 +61172,21 @@ Required Level : ^777777125^000000
 Job : ^777777All^000000
 #
 15117#
-Airship captain Felrock‘s possessions.
+Airship captain Felrockҳ possessions.
 Resolved the airship attack incident and acquired as a trophy.
 MaxHP + 500, MaxSP + 50, MDEF + 10.
 All State + 1.
 If 7 smelting, MaxHP + 500, MaxSP + 50.
 If 9 smelting, MaxHP + 200, MaxSP + 20.
 If 12 smelting, MaxHP + 300, MaxSP + 30.
-If equipped together with Felrock‘s Armor, Felrock‘s Cloak, Felrock‘s Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total smelting is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
+If equipped together with Felrockҳ Armor, Felrockҳ Cloak, Felrockҳ Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total smelting is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
 Type : ^777777Armor^000000    Defense : ^77777770^000000
 Weight : ^77777775^000000
 Required Level : ^777777125^000000
 Job : ^777777All^000000
 #
 20744#
-Airship captain Felrock‘s possessions.
+Airship captain Felrockҳ possessions.
 Resolved the airship attack incident and acquired as a trophy.
 Nothing tolerance 10% increase, Flee + 20.
 Floating Casting 10% decrease.
@@ -61322,7 +61199,7 @@ Required Level : ^777777125^000000
 Job : ^777777All^000000
 #
 22047#
-Airship captain Felrock‘s possessions.
+Airship captain Felrockҳ possessions.
 Resolved the airship attack incident and acquired as a trophy.
 AGI + 1, Attack rate increase (Delay after attack 5% reduction).
 If 7 smelting, AGI + 1, Delay after attack extra 5% decrease
