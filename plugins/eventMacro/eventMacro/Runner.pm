@@ -1083,24 +1083,27 @@ sub next {
 					}
 					
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(([^\)]+)\)$/) {
-    				my ( $pattern, $var_str ) = parseArgs( "$1", undef, ',' );
-    				$var_str =~ s/^\s+|\s+$//gos;
+					my ($pattern, $var_str) = parseArgs("$1", undef, ',');
+					$var_str =~ s/^\s+|\s+$//gos;
 					my $split_var;
-    				if (my $var_hash = $self->find_and_define_key_index($var_str)) {
-						return if (defined $self->error);
+					
+					my $var_hash = $self->find_and_define_key_index($var_str);
+					return if (defined $self->error);
+					
+					if ($var_hash) {
 						$split_var = $var_hash->{var};
-						
 					} else {
+						$split_var = find_variable($var_str);
+						
 						return if (defined $self->error);
-						$split_var = find_variable($1);
-						if (defined $self->error) {
-							return;
-						} elsif (!defined $split_var) {
+						
+						if (!defined $split_var) {
 							$self->error("Could not define variable type");
 							return;
 						}
 					}
-    				$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
+					
+					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
     
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
