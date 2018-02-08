@@ -43,8 +43,6 @@ sub new {
 		char_delete2_accept 098F
 	);
 
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
-
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
