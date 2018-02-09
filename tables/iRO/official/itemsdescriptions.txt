@@ -58904,6 +58904,23 @@ Weight: ^8080801^000000
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 #
+14921#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened, gives one of the following at random:
+Costume Fire Muffler
+Costume Gerhard Von Deviruchi 83 years
+Costume Queen Scaraba Helm
+Costume Rolf Von Gigue 666
+Costume Wood Goblin Nose
+Costume Faceworm Egg Shell
+Costume Alice Wig
+Costume Fallen Angel Valletta
+Costume Chung E Shinyon Cap
+Costume Black Khalitzburg Knight Helm
+
+
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -68005,23 +68022,15 @@ Required Level: 50
 Jobs: All
 #
 18564#
-^808080A love that can never be stopped.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Lower
-Defense: 0
-Weight: 20
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A love that can never be stopped.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Increases the SP cost of skills by 15%.
 The users casting cannot be interrupted outside of WoE.
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Heart Wing Hairband^000000
-^008080Love Piece^000000
-Reduces the fixed casting time of skills by 10%.
 #
 18565#
 This is an exact replica of the hat worn by O'Riley the Leprechaun.
@@ -75827,10 +75836,11 @@ Job : ^777777All^000000
 #
 19936#
 A neatted cap with sacred water god power.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Lv. req : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19939#
 A big Antler.
@@ -77320,34 +77330,36 @@ Req LvL : ^7777771^000000
 Job : ^777777All^000000
 #
 20235#
-A rose said to blossom only on a frozen land. It never melts down due to the special process.
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Lower ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A rose said to blossom only in a frozen land. It never melts down.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20236#
-A hat features pretty blue color symbolizing love for mother
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A hat features a pretty blue color symbolizing a mother's love.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20237#
-A woolen hat made in order to stay the head warm.
-Some people wear it for their style rather than for keeping warmth.
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A wool hat made in order to stay the head warm. Some people wear it for their style rather than for keeping warmth.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20238#
-A doll made to put on a head.
- You must be imagining if you hear a cat cry or feel something moves on your head.
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A doll made to put on a head. You must be imagining if you hear a cat cry or feel something moves on your head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20239#
 A large ribbon muffler
@@ -77371,34 +77383,28 @@ Lv. req.: ^7777771^000000
 Class: ^777777All classes^000000
 #
 20241#
-A hat modeled after Eclipse, the leader of Lunatics
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A hat modeled after Eclipse, the leader of Lunatics.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20242#
-A costume hat modeled after the snowman called Snownow keeping the town Lutie.
-Surprisingly, snow falls on your head when you wear it.
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
-A costume hat modeled after the snowman called Snownow keeping the town Lutie.
-Surprisingly, snow falls on your head when you wear it.
-^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
-^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A costume hat modeled after the snowman called Snowysnow keeping the town Lutie. Surprisingly, snow falls on your head when you wear it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20243#
-A choco mint bonnet
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Upper ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A mint chocolate bonnet - delicious, cool, and crisp.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20246#
 ^808080It feels as if I'm locked inside the cascading time.^000000
@@ -86857,6 +86863,16 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31178#
+Muffler made from the feathers of KASA.
+Be cautious! It's very hot!
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 31179#
 ^808080A mask shaped like a noble wolf.^000000
 Class: Costume
@@ -87373,6 +87389,80 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31318#
+Inflate the body, intimidate the enemy! This Deviruchi balloon is so sinister, yet so cute!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31325#
+Fantastic helm fashioned after the head of the Queen Scaraba.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31326#
+A Baphomet style costume made for special occasions.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31327#
+The nose of a wood goblin. It can smell special types of plants.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31328#
+A costume hat that looks like a Faceworm egg shell
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31329#
+A wig that has the hairstyle of Alice.
+It took a lot of effort to make the wig identical to the hairstyle of Alice.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31330#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31331#
+Costume cap in a perfectly coordinated pair.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31332#
+A costume helm with the looks of the helm of a Khalitzburg Knight.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
 Class: ^808080Costume^000000
@@ -87456,13 +87546,12 @@ Max HP + 250 for every 20 base levels.
 Increases physical and magical damage on targets by 2% for every 30 base levels.
 #
 31408#
-Celebrating the release of Ragnarok Rush this majestic goat horns represents great deeds.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Celebrating the release of Ragnarok Rush with these majestic goat horns that represents great deeds.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31420#
 ^808080When equipped, EXP increases by 25% when defeating monsters during December 2017.
