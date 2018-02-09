@@ -36,6 +36,8 @@ sub new {
 		actor_exists 09FF
 		inventory_item_added 0A37
 		map_login 0436
+		character_status 0229
+		actor_status_active 0196
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
