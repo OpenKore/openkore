@@ -25,6 +25,21 @@ use Utils::DataStructures;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		received_characters 099D
+		received_characters 082D
+		sync_received_characters 09A0
+		account_server_info 0AC4
+		received_character_ID_and_Map 0AC5
+		map_changed 0AC7
+		actor_exists 09FF
+		inventory_item_added 0A37
+		map_login 0436
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	return $self;
 }
 
