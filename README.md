@@ -51,6 +51,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
 * [Taiwanese Community](http://optw.nva-hk.com/forum.php)
+* [kRO:Zero/cRO Community](http://openk0re.xyz/)
 ## Warning
 
 Other communities are not affiliated to openkore.com
