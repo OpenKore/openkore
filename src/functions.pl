@@ -884,9 +884,9 @@ sub mainLoop_initialized {
 		my ($basePercent, $jobPercent, $weight, $pos);
 
 		assert(defined $char);
-		$basePercent = sprintf("%.2f", $char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
-		$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
-		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});
+		$basePercent = sprintf("%.2f", $char->exp_base_percent);
+		$jobPercent = sprintf("%.2f",$char->exp_job_percent);
+		$weight = int($char->weight_percent) . "%";
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 		my $aiSeq = join(",", @ai_seq);
 		# Translation Comment: Interface Title with character status
