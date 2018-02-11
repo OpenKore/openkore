@@ -28,24 +28,15 @@ use Utils::Exceptions;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+	# the following packets are already implemented in st0, but the struct in cRO is different
 	my %packets = (
-		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]],
-		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'006D' => ['character_creation_successful', 'a4 V9 v V2 v14 Z24 C6 v2 Z*', [qw(charID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag mapname)]],
-		'0097' => ['private_message', 'v Z28 Z*', [qw(len privMsgUser privMsg)]],		
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
-		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
-		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 	);
-	
+
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
-	
+
 	my %handlers = qw(
 		received_characters 099D
 		received_characters 082D
@@ -55,20 +46,20 @@ sub new {
 		map_changed 0AC7
 		login_error 0ACD
 		character_creation_successful 006D
-		private_message 0097		
+		private_message 0097
 		map_property3 099B
 		area_spell_multiple2 099F
 		actor_moved 09FD
 		actor_connected 09FE
-		actor_exists 09FF		
+		actor_exists 09FF
 		inventory_item_added 0A0C
 		inventory_items_nonstackable 0A0D
-		account_id 0283		
+		account_id 0283
 		quest_all_list3 09F8
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -171,7 +162,6 @@ sub map_changed {
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
 
-	#$map_ip = makeIP($args->{IP});
 	$map_ip = $args->{url};
 	$map_ip =~ s/:[0-9]+//;
 	$map_port = $args->{port};
