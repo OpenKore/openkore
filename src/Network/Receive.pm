@@ -4183,4 +4183,102 @@ sub refineui_info {
 	}
 }
 
+sub character_ban_list {
+	my ($self, $args) = @_;
+	# Header + Len + CharList[character_name(size:24)]
+}
+
+sub flag {
+	my ($self, $args) = @_;
+}
+
+sub parse_stat_info {
+	my ($self, $args) = @_;
+	if($args->{switch} eq "0ACB") {
+		$args->{val} = getHex($args->{val});
+		$args->{val} = join '', reverse split / /, $args->{val};
+		$args->{val} = hex $args->{val};
+	}
+}
+
+sub parse_exp {
+	my ($self, $args) = @_;
+	if($args->{switch} eq "0ACC") {
+		$args->{val} = getHex($args->{val});
+		$args->{val} = join '', reverse split / /, $args->{val};
+		$args->{val} = hex $args->{val};
+	}
+}
+
+sub clone_vender_found {
+	my ($self, $args) = @_;
+	my $ID = unpack("V", $args->{ID});
+	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
+		binAdd(\@venderListsID, $ID);
+		Plugins::callHook('packet_vender', {ID => $ID, title => bytesToString($args->{title})});
+	}
+	$venderLists{$ID}{title} = bytesToString($args->{title});
+	$venderLists{$ID}{id} = $ID;
+
+	my $actor = $playersList->getByID($args->{ID});
+	if (!defined $actor) {
+		$actor = new Actor::Player();
+		$actor->{ID} = $args->{ID};
+		$actor->{nameID} = $ID;
+		$actor->{appear_time} = time;
+		$actor->{jobID} = $args->{jobID};
+		$actor->{pos_to}{x} = $args->{coord_x};
+		$actor->{pos_to}{y} = $args->{coord_y};
+		$actor->{walk_speed} = 1; #hack
+		$actor->{robe} = $args->{robe};
+		$actor->{clothes_color} = $args->{clothes_color};
+		$actor->{headgear}{low} = $args->{lowhead};
+		$actor->{headgear}{mid} = $args->{midhead};
+		$actor->{headgear}{top} = $args->{tophead};
+		$actor->{weapon} = $args->{weapon};
+		$actor->{shield} = $args->{shield};
+		$actor->{sex} = $args->{sex};
+		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
+
+		$playersList->add($actor);
+		Plugins::callHook('add_player_list', $actor);
+	}
+}
+
+sub clone_vender_lost {
+	my ($self, $args) = @_;
+
+	my $ID = unpack("V", $args->{ID});
+	binRemove(\@venderListsID, $ID);
+	delete $venderLists{$ID};
+
+	if (defined $playersList->getByID($args->{ID})) {
+		my $player = $playersList->getByID($args->{ID});
+
+		if (grep { $ID eq $_ } @venderListsID) {
+			binRemove(\@venderListsID, $ID);
+			delete $venderLists{$ID};
+		}
+
+		$player->{gone_time} = time;
+		$players_old{$ID} = $player->deepCopy();
+		Plugins::callHook('player_disappeared', {player => $player});
+
+		$playersList->removeByID($args->{ID});
+	}
+}
+
+sub remain_time_info {
+	my ($self, $args) = @_;
+	debug TF("Remain Time - Result: %s - Expiration Date: %s - Time: %s\n", $args->{result}, $args->{expiration_date}, $args->{remain_time}), "console", 1;
+}
+
+sub received_login_token {
+	my ($self, $args) = @_;
+
+	my $master = $masterServers{$config{master}};
+
+	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
+}
+
 1;

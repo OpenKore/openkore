@@ -22,15 +22,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
-	my %packets = (
-		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
-		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'09D4' => ['sell_buy_complete'],
-	);
-
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		master_login 0AAC
 		character_move 035F
@@ -49,9 +40,8 @@ sub new {
 		storage_password 023B
 		send_equip 0998
 		sell_buy_complete 09D4
+		char_delete2_accept 098F
 	);
-
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 

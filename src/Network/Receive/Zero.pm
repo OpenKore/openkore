@@ -26,44 +26,23 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'01C1' => ['remain_time_info' , 'a4 a4 a4', [qw(result expiration_date remain_time)]],
-		'020D' => ['character_ban_list', 'v a*', [qw(len charList)]], # -1 charList[charName size:24]
-		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
-		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
-		'0A00' => ['hotkeys'],
-		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
-		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
-		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
-		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
-		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
-		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], #miss 128 unknow
-		'0AC7' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
-		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
-		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
-		'0ADC' => ['flag', 'a*', [qw(unknown)]],
-		'0ADE' => ['flag', 'a*', [qw(unknown)]],
-		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
-		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
-		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
-		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
- 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+	my %handlers = qw(
+		received_characters 099D
+		received_characters 082D
+		sync_received_characters 09A0
+		account_server_info 0AC4
+		received_character_ID_and_Map 0AC5
+		map_changed 0AC7
+		actor_exists 09FF
+		inventory_item_added 0A37
+		map_login 0436
+		character_status 0229
+		actor_status_active 0196
 	);
 
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
-}
-
-sub received_login_token {
-	my ($self, $args) = @_;
-
-	my $master = $masterServers{$config{master}};
-
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
 }
 
 # from old ServerType0
@@ -113,91 +92,6 @@ sub parse_account_server_info {
 	} unpack '(a160)*', $args->{serverInfo};
 }
 
-sub character_ban_list {
-	my ($self, $args) = @_;
-	# Header + Len + CharList[character_name(size:24)]
-}
-
-sub flag {
-	my ($self, $args) = @_;
-}
-
-sub parse_stat_info {
-	my ($self, $args) = @_;
-	if($args->{switch} eq "0ACB") {
-		$args->{val} = getHex($args->{val});
-		$args->{val} = join '', reverse split / /, $args->{val};
-		$args->{val} = hex $args->{val};
-	}
-}
-
-sub parse_exp {
-	my ($self, $args) = @_;
-	if($args->{switch} eq "0ACC") {
-		$args->{val} = getHex($args->{val});
-		$args->{val} = join '', reverse split / /, $args->{val};
-		$args->{val} = hex $args->{val};
-	}
-}
-
-sub clone_vender_found {
-	my ($self, $args) = @_;
-	my $ID = unpack("V", $args->{ID});
-	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
-		binAdd(\@venderListsID, $ID);
-		Plugins::callHook('packet_vender', {ID => $ID, title => bytesToString($args->{title})});
-	}
-	$venderLists{$ID}{title} = bytesToString($args->{title});
-	$venderLists{$ID}{id} = $ID;
-
-	my $actor = $playersList->getByID($args->{ID});
-	if (!defined $actor) {
-		$actor = new Actor::Player();
-		$actor->{ID} = $args->{ID};
-		$actor->{nameID} = $ID;
-		$actor->{appear_time} = time;
-		$actor->{jobID} = $args->{jobID};
-		$actor->{pos_to}{x} = $args->{coord_x};
-		$actor->{pos_to}{y} = $args->{coord_y};
-		$actor->{walk_speed} = 1; #hack
-		$actor->{robe} = $args->{robe};
-		$actor->{clothes_color} = $args->{clothes_color};
-		$actor->{headgear}{low} = $args->{lowhead};
-		$actor->{headgear}{mid} = $args->{midhead};
-		$actor->{headgear}{top} = $args->{tophead};
-		$actor->{weapon} = $args->{weapon};
-		$actor->{shield} = $args->{shield};
-		$actor->{sex} = $args->{sex};
-		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
-
-		$playersList->add($actor);
-		Plugins::callHook('add_player_list', $actor);
-	}
-}
-
-sub clone_vender_lost {
-	my ($self, $args) = @_;
-
-	my $ID = unpack("V", $args->{ID});
-	binRemove(\@venderListsID, $ID);
-	delete $venderLists{$ID};
-
-	if (defined $playersList->getByID($args->{ID})) {
-		my $player = $playersList->getByID($args->{ID});
-
-		if (grep { $ID eq $_ } @venderListsID) {
-			binRemove(\@venderListsID, $ID);
-			delete $venderLists{$ID};
-		}
-
-		$player->{gone_time} = time;
-		$players_old{$ID} = $player->deepCopy();
-		Plugins::callHook('player_disappeared', {player => $player});
-
-		$playersList->removeByID($args->{ID});
-	}
-}
-
  sub party_users_info {
 	my ($self, $args) = @_;
  	return unless Network::Receive::changeToInGameState();
@@ -217,11 +111,6 @@ sub clone_vender_lost {
 
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
-}
-
-sub remain_time_info {
-	my ($self, $args) = @_;
-	debug TF("Remain Time - Result: %s - Expiration Date: %s - Time: %s\n", $args->{result}, $args->{expiration_date}, $args->{remain_time}), "console", 1;
 }
 
 1;
