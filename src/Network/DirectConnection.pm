@@ -239,9 +239,13 @@ sub serverDisconnect {
 		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
 			$self->{remote_socket}->peerport()), "connection";
 		close($self->{remote_socket});
-		!$self->serverAlive() ?
-			message T("disconnected\n"), "connection" :
+		if (!$self->serverAlive()) {
+			message T("disconnected\n"), "connection";
+			Plugins::callHook("disconnected");
+		} else {
 			error T("couldn't disconnect\n"), "connection";
+			Plugins::callHook("disconnect_fail");
+		}
 	}
 }
 
@@ -628,8 +632,8 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{play})) {
 			error T("Timeout on Map Server, "), "connection";
-			Plugins::callHook('disconnected');
 			if ($config{dcOnDisconnect}) {
+				Plugins::callHook('disconnected');
 				error T("Auto disconnecting on Disconnect!\n");
 				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
 				$quit = 1;
