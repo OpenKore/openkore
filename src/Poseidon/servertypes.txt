@@ -35,3 +35,10 @@ decrypt_mid_keys 0x2A3D4E64 0x69FF066F 0x7008690C
 charListPacket 0x99d
 maploginPacket 0958
 charBlockSize 155
+
+[kRO_2018-02-07a]
+decrypt_mid 1
+decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
+charListPacket 0x99d
+maploginPacket 022D
+charBlockSize 155
