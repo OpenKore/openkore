@@ -95,6 +95,7 @@ sub new {
 	$self->{error_code} = undef;
 	$self->{error_message} = undef;
 	$self->{map_change} = 0;
+	$self->{disconnected} = 0;
 	
 	debug "Task::TalkNPC::new has been called with sequence '".$self->{sequence}."'.\n", "ai_npcTalk";
 	
@@ -163,6 +164,9 @@ sub delHooks {
 	
 	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
 	delete $self->{mapChangedHook};
+	
+	Plugins::delHook($self->{disconnectedHook}) if $self->{disconnectedHook};
+	delete $self->{disconnectedHook};
 }
 
 sub DESTROY {
@@ -195,12 +199,19 @@ sub activate {
 	);
 	
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
+	$self->{disconnectedHook} = Plugins::addHook('disconnected', \&disconnected, \@holder);
 }
  
 sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 	$self->{map_change} = 1;
+}
+
+sub disconnected {
+	my (undef, undef, $holder) = @_;
+	debug "Disconnected during TalkNPC, cancelling task...\n";
+	$holder->[0]->{disconnected} = 1;
 }
 
 # Overrided method.
@@ -257,14 +268,15 @@ sub iterate {
 	my $ai_npc_talk_wait_after_close_to_cancel = $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} : 0.5;
 	my $ai_npc_talk_wait_after_cancel_to_destroy = $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} : 0.5;
 
-	if ($self->{map_change}) {
+	if ($self->{map_change} || $self->{disconnected}) {
 		
-		#A conversation started right after mapchange (eg. payon guards)
+		#A conversation started right after mapchange/disconnection (eg. payon guards)
 		if (%talk) {
 			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
 			# TODO: maybe better create a new task and pass remaining steps to it
 			debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
 			$self->{map_change} = 0;
+			$self->{disconnected} = 0;
 			$self->find_and_set_target;
 			$self->{stage} = TALKING_TO_NPC;
 			$self->{time} = time;
@@ -272,16 +284,16 @@ sub iterate {
 		#If there's no conversation clear this task
 		} else {
 			if ($self->{stage} == TALKING_TO_NPC) {
-				debug "Ending Task::TalkNPC due to mapchange, conversation interrupted and finished.\n";
+				debug "Ending Task::TalkNPC due to mapchange or disconnection, conversation interrupted and finished.\n";
 				
 			} elsif ($self->{stage} == AFTER_NPC_CLOSE) {
-				debug "Ending Task::TalkNPC due to mapchange, talk cancel won't be sent.\n";
+				debug "Ending Task::TalkNPC due to mapchange or disconnection, talk cancel won't be sent.\n";
 				
 			} elsif ($self->{stage} == AFTER_NPC_CANCEL) {
-				debug "Ending Task::TalkNPC due to mapchange, ending task before timeout.\n";
+				debug "Ending Task::TalkNPC due to mapchange or disconnection, ending task before timeout.\n";
 				
 			} elsif ($self->{stage} == NOT_STARTED) {
-				debug "Ending Task::TalkNPC due to mapchange, ending task before conversation started.\n";
+				debug "Ending Task::TalkNPC due to mapchange or disconnection, ending task before conversation started.\n";
 			}
 			$self->conversation_end;
 		}
@@ -744,6 +756,7 @@ sub cancelTalk {
 	
 	if (defined $self->{error_message}) {
 		debug "Trying to auto close the conversation due to error.\n", 'ai_npcTalk';
+		debug $self->{error_message} . "\n", 'ai_npcTalk';
 	}
 	
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
