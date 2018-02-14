@@ -12353,60 +12353,60 @@ Hunt 30 Gibbet monsters at the Valley of Gyoll east of Nifflheim#
 Bring 5 Ectoplasm and 5 Poisonous Powders to the Witch in Nifflheim.#
 #
 
-62200#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Go to the Brasilis Inn and find Monsieur Pierrot.#
+62200#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Go to the Payon Inn and find Monsieur Pierrot.#
 #
 
-62201#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to Major Molotov at the Brasilis Inn bar.#
+62201#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to Major Molotov at the Payon Inn bar.#
 #
 
-62202#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62202#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Bring 25 bottles of ^ff0000Milk^000000,  15 ^ff0000Strawberries^000000 and 20 ^ff0000Iron Ore^000000s to Major Molotov#
 #
 
-62203#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Rachel Delegation Miss Mansur at the Brasilis Inn#
+62203#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Rachel Delegation Miss Mansur at the Payon Inn#
 #
 
-62204#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Race Aslan to the Eastern Corner of the southern center part of Brasilis.#
+62204#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Race Aslan to the entrance of Payon.#
 #
 
-62205#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Return to Madame Mansur at Brasilis Inn#
+62205#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Return to Madame Mansur at Payon Inn#
 #
 
-62206#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Madame Mansur needs to convince the remaining delegates to come to Brasilis for the games. Return to her next week when the new delegates arrive.#
+62206#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Madame Mansur needs to convince the remaining delegates to come to Payon for the games. Return to her next week when the new delegates arrive.#
 #
 
-62207#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62207#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Look for the Weapon Shop Manager and speak to him.#
 #
 
-62208#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62208#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to the Port Malaya delegate Lawrence Llaguno.#
 #
 
-62209#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Brasilis delegate.#
+62209#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Payon delegate.#
 #
 
-62210#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62210#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to Terra Track or Franklin Field and let them know that you are done speaking to the delegates.#
 #
 
 70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to joust the famous Fencing Master. Though, if you give him 1 Eden Merit Badge he will let you skip waiting.#
+You must wait 3 hours before attempting to joust the famous Fencing Master.#
 #
 
 70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must weight 3 hours before attempting to test your strength. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must weight 3 hours before attempting to test your strength.#
 #
 
 70226#Summer Sports Obstacle Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to tackle the obstacle course again. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must wait 3 hours before attempting to tackle the obstacle course again.#
 #
 
 70231#Back to School#SG_FEEL#QUE_NOIMAGE#
@@ -21986,20 +21986,8 @@ Hunt the Dream Demon.#
 You can try again tomorrow.#
 #
 
-62961#Trick or Treat#SG_FEEL#QUE_NOIMAGE#
-Give candy away again.#
-#
-
-62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
-Hunt the following monsters for Norman.#
-#
-
-62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
-Norman can't make another bag until hes had a chance to rest.#
-#
-
 62967#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
-Speak to Santa Claws.#
+Speak to Santa Claws, he's on the 2nd claw from the right.#
 #
 
 62968#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
@@ -22037,6 +22025,8 @@ You've successfully placed all of the gifts on the sleigh. Go back to Retired Sa
 62976#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Retired Santa again tomorrow to help save Christmas again!#
 #
+
+
 
 // 12뿹 뒫닉 쏠솦
 
@@ -22197,76 +22187,44 @@ Hunt the monster listed#
 63003#Hunting Board#SG_FEEL#QUE_NOIMAGE#
 Hunt the monster listed#
 #
-63004#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63005#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63006#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63007#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63008#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63009#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63010#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63011#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63012#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63013#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Hunt the following monsters for Norman.#
 #
 
-63015#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Norman can't make another bag until hes had a chance to rest.#
 #
-63016#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+//Valentines Day 2018
+63029#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again about bringing chocolates to Niflheim.#
 #
-63017#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63030#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Bring Ingrid the ingredients she needs to make the chocolates. She needs 30 Cacao, 10 Honey, 5 Milk, 3 Red Spice, 3 Cooking Oil, and 1 Home Cooking Kit.#
 #
-63018#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63031#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to see if she's done making the chocolates.#
 #
-63019#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63032#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go to Niflheim and search for Rupert. He can be anywhere...#
 #
-63020#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63034#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Dullahans to gain Rupert's trust.#
 #
-63021#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63035#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Rupert again when you're ready.#
 #
-63022#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63036#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go back to Ingrid and tell her the good news!#
 #
-63023#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63024#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63025#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63026#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63027#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
-#
-63028#Hunting Board#SG_FEEL#QUE_NOIMAGE#
-Hunt the monster listed#
+
+63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to conclude your adventure.#
 #

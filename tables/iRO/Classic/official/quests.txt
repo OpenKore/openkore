@@ -12203,59 +12203,59 @@ Hunt 30 Gibbet monsters at the Valley of Gyoll east of Nifflheim#
 Bring 5 Ectoplasm and 5 Poisonous Powders to the Witch in Nifflheim.#
 #
 
-62200#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Go to the Geffen Inn and find Monsieur Pierrot.#
+62200#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Go to the Payon Inn and find Monsieur Pierrot.#
 #
 
-62201#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to Major Molotov at the Geffen Inn bar.#
+62201#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to Major Molotov at the Payon Inn bar.#
 #
 
-62202#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62202#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Bring 25 bottles of ^ff0000Milk^000000,  15 ^ff0000Strawberries^000000 and 20 ^ff0000Iron Ore^000000s to Major Molotov#
 #
 
-62203#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Rachel Delegation Miss Mansur at the Geffen Inn#
+62203#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to the Rachel Delegation Miss Mansur at the Payon Inn#
 #
 
-62204#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Race Aslan to the Eastern Corner of the southern fountain at Geffen.#
+62204#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Race Aslan to the entrance of Payon.#
 #
 
-62205#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Return to Madame Mansur at Geffen Inn#
+62205#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Return to Madame Mansur at Payon Inn#
 #
 
-62206#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Madame Mansur needs to convince the remaining delegates to come to Geffen for the games. Return to her next week when the new delegates arrive.#
+62206#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Madame Mansur needs to convince the remaining delegates to come to Payon for the games. Return to her next week when the new delegates arrive.#
 #
 
-62207#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62207#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Look for the Weapon Shop Manager and speak to him.#
 #
 
-62208#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62208#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Return to the Port Malaya delegate Lawrence Llaguno.#
 #
 
-62209#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Brasilis delegate.#
+62209#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to the Payon delegate.#
 #
 
-62210#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62210#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Return to Terra Track or Franklin Field and let them know that you are done speaking to the delegates.#
 #
 
-70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
+70224#Sports Fencing Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to joust the famous Fencing Master. Though, if you give him 1 Eden Merit Badge he will let you skip waiting.#
 #
 
-70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
+70225#Sports Punching Bag Timer#SG_FEEL#QUE_NOIMAGE#
 You must weight 3 hours before attempting to test your strength. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
 #
 
-70226#Summer Sports Obstacle Timer#SG_FEEL#QUE_SUMMERGAMES#
+70226#Sports Obstacle Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to tackle the obstacle course again. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
 #
 
@@ -13051,11 +13051,11 @@ Kill the large orc wandering somewhere in the sewers.#
 Please wait three hours before playing again#
 #
 
-70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
+70224#Summer Sports Fencing Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to joust the famous Fencing Master. #
 #
 
-70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
+70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_NOIMAGE#
 You must weight 3 hours before attempting to test your strength.#
 #
 
