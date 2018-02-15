@@ -19,8 +19,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'0ACC' => ['exp', 'a4 V v2', [qw(ID val type flag)]],
-		'0ACB' => ['stat_info', 'v V', [qw(type val)]],
+		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
+		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
