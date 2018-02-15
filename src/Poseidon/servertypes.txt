@@ -36,9 +36,9 @@ charListPacket 0x99d
 maploginPacket 0958
 charBlockSize 155
 
-[kRO_2018-02-13b]
+[kRO_2018-02-07a]
 decrypt_mid 1
-decrypt_mid_keys 0x0513075E 0x67C56C6F 0x347075AF
+decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
 charListPacket 0x99d
-maploginPacket 0941
+maploginPacket 022D
 charBlockSize 155
