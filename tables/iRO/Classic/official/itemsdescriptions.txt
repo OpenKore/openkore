@@ -38915,8 +38915,6 @@ Defense: ^7777777^000000
 5388#
 This cute animated Boa will keep you company as you meander around on your adventures.
 Enables the use of Level 5 Double Attack.
-^ff0000Exclusively available by Redeeming an Ultimate Game Card between March 1 - 31st, 2011^000000!
-^ff0000Can be traded, stored, and vended^000000
 Slot: ^7777771^000000
 Location: ^777777Upper^000000
 Defense: ^7777771^000000
@@ -71185,6 +71183,20 @@ Return this certificate and the following items to Frank, the owner of the Laure
 Shadowy rumors say the following about this certificate:
 It is Tier 3
 It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20004#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Snake Head Hat!
+200 Snake Scales
+100 Anolian Skins
+50 Reptile Tongues
+1 Sidewinder Card
+1 Snake Head Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
