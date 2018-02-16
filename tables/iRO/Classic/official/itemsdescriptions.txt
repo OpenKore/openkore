@@ -38915,8 +38915,6 @@ Defense: ^7777777^000000
 5388#
 This cute animated Boa will keep you company as you meander around on your adventures.
 Enables the use of Level 5 Double Attack.
-^ff0000Exclusively available by Redeeming an Ultimate Game Card between March 1 - 31st, 2011^000000!
-^ff0000Can be traded, stored, and vended^000000
 Slot: ^7777771^000000
 Location: ^777777Upper^000000
 Defense: ^7777771^000000
@@ -47821,7 +47819,7 @@ Job : ^777777All^000000
 #
 
 18611#
-Dark-colored plastic framed glasses, great for looking retro and intelligent! Int +1, Mdef +2.
+Dark-colored plastic framed glasses, great for looking retro and intelligent! Mdef +2.
 Class : ^777777Headgear^000000
 Defense : ^7777770^000000
 Location : ^777777Middle^000000
@@ -55185,7 +55183,7 @@ A box that contains 1 Gold Key used to open gold boxes.
 Weight : ^7777771^000000
 #
 19610#
-Use this key to open gold boxes.
+Use this key to open treasure caches in Asgard Village.
 Weight : ^7777771^000000
 #
 19611#
@@ -69499,6 +69497,7 @@ Weight : ^7777771^000000
 What kind of experiments were being done on the Kobold that you got this from?
 Lower Headgear
 Weight : ^7777771^000000
+Job: ^777777Swordman, Mage, Archer, Merchant, Thief Classes, Soul Linker, and Ninja^000000
 #
 
 19862#
@@ -69685,4 +69684,1519 @@ Gangster Scarf
 Evil Marching Hat
 Holy Marching Hat
 Miniglasses [1]
+#
+
+5464#
+Zaha doll hat which resembles angel of Zaha. It looks great on your head.
+INT+2
+Can't be refined.
+Item Class : ^777777Headgear^000000    Defense : ^7777771^000000
+Location : ^777777Upper ^000000    Weight : ^7777770^000000
+Jobs : ^777777All^000000
+#
+
+19874#
+A kit of cooking supplies. Although much of it is old and out of date there might be something of use inside.
+Weight: 1
+#
+
+19876#
+2016 June Lucky Box!
+
+In Celebration of Gramp's pending retirement the following items can be obtained by chance,
+Lv 10 Fencer Merc Scroll 40 cnt
+3X Battle Manual 5 cnt
+Party Blessing Scroll 100 cnt
+Party Increase Agi Scroll 100 cnt
+Amistr Cap
+Lif Doll Hat
+HE Bubblegum 10 cnt
+Vanilmirth Hat
+Skull Cap
+Mental Potion 80 cnt
+Filir Wing
+Filir Hat
+Slot Coupon 1 cnt
+#
+
+5762#
+A helmet similar to the one worn by Duneyrr.
+Item Class : ^777777Headgear^000000 Defense : ^7777775^000000
+Location : ^777777Upper ^000000 Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+19877#
+The Groove pack always contains the following:
+
+1x Battle ManualX3
+
+Gives one of the following at random:
+
+Well Chewed Pencil
+AFK Hat
+Ribbon Chef Hat
+Gentleman's Pipe
+Mega resist Potion
+2x Battle Manual X3
+3x HE Bubble Gum
+Eddga Doll[1]
+Demon Mask
+#
+
+19878#
+Gives one of the following at random:
+
+Well Chewed Pencil
+AFK Hat
+Ribbon Chef Hat
+Gentleman's Pipe
+Mega resist Potion
+2x Battle Manual X3
+3x HE Bubble Gum
+Eddga Doll[1]
+Demon Mask
+#
+
+
+18631#
+Sensual Chef hat made in cute concept art. Goes well with casual outfit.
+Drops Outdoor/Home/Professional/Royal/Fantastic Cooking Kit by random percentage when +7 enchant and above.
+Class: Headgear Defense: 5
+Location: Upper Weight: 30
+Required Level: 70
+Jobs: All
+#
+
+4510#
+When melee attacking, has a chance of inflicting sleep on enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4511#
+Magic attacks have a chance of silencing enemies.
+Class : ^777777Card^000000
+Compound on : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+4513#
+Increase Critical chance by 2.
+If Thief class, Increase additionally 1 per 2 refine.
+Class : ^777777Card^000000
+Compound on : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4512#
+Heal effectiveness + 3%.
+If used by acolyte types, each 2 refine adds 1% heal effectiveness.
+Class : ^777777Card^000000
+Location : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+4514#
+Increases damage against undead monsters by 20%.
+Class : ^777777Card^000000
+Location : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+
+
+19880#
+Lucky Box celebrating the coming of the new school year!
+When Opened gives one of the following
+40cnt Fencing Mercenary Scroll
+10cnt HE Bubble Gum
+350cnt Greed Scroll
+Imp Hat
+Gryphon Hat
+Sleeper Hat
+Fish Head Hat
+Piggy Bank Hat
+Black Frame Glasses [1]
+#
+
+
+
+27343#
+A cute beret with cat ears! Cats don't normally wear hats but if they did they would wear this one.
+Class : ^777777Headgear^000000
+Defense : ^7777775^000000
+Location : ^777777Upper ^000000
+Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+
+5572#
+^808080A hat commemorating the inauguration of 29th head of Maximilian family among the babe of the babes. It symbolize courage against the big as one of the small.^000000
+^FFFFFF_^000000
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+
+19890#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Chick Hat!
+1 Egg Shell [0]
+100 Feather of Birds
+10 Fluff
+1 Cobweb
+1000 Zeny
+1 Chick Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19891#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Rideword Hat!
+4 Star Dust
+100 Worn Out Pages
+1 Old Magic Book
+5000 Zeny
+1 Rideword Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19892#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Lunatic Hat!
+Four Leaf Clover x 1
+Carrot x 200
+Rainbow Carrot x 5
+Clover x 50
+Feather x 50
+1 Lunatic Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19893#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Takius' Blindfold [0]!
+Black Dyestuff x 1
+Frabric x 150
+Ribbon[0]
+1 Takius' Blindfold [0] Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19894#
+Take this key and a Treasure Cache to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
+#
+
+19895#
+Take this Tier 1 Treasure Cache and appropriate key to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
+#
+
+19898#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evil Marching Hat!
+Little Evil Horn x 200
+Little Evil Wing x 200
+Eye of Dullahan x 1
+Dullahan's Helm x 20
+1000 Zeny
+1 Evil Marching Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+
+19899#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Skull Cap!
+Skel Bones x 1000
+Zenorc Fangs x 1000
+Skulls x 100
+Bone Helm
+1000 Zeny
+1 Skull Cap Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+25132#
+The most important decoration item for Halloween
+A candle inside of pumpkin makes more real Halloween mood.
+Weight : ^7777770^000000
+#
+25133#
+^808080Clean and dry stem. Suitable as a Halloween decoration!^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 0
+#
+11605#
+^808080A sweet chocolate is found inside this cripy butter scented cookie. Take caution as it might fly away.^000000
+^FFFFFF_^000000
+Type: Miscellaneous
+Weight: 5
+#
+
+19904#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Black Devil Mask[0]!
+Skel Bones x 1000
+Zenorc Fangs x 1000
+Skulls x 100
+Bone Helm
+1000 Zeny
+1 Black Devil Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19901#
+When opened gives 100 Mega Resist Potions
+#
+19902#
+When opened gives 100 Mental Potions
+#
+19903#
+When opened gives the following
+100 Party Increase Agility Scrolls
+100 Party Blessing Scrolls
+#
+
+
+19905#
+^808080Droopy Lunatic ears. Cutely garnished with clover flower bouquets.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+
+19907#
+^808080Sunglasses with the lenses modeled after Poring. An essential item for drawing everybody's attention.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+
+19908#
+^808080A crown taken after Beelzebub known for exposing its existence from a depth of Nameless Island. A crown exduing elegance.^000000
+^FFFFFF_^000000
+Type: Costume
+Position: Headgear (Upper)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+
+19909#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Holy Marching Hat!
+5 Yggdrasil Leafs
+1 Emperium
+20 Yggdrasil Berries
+5 Yggdrasil Seeds
+1000 Zeny
+1 Holy Marching Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+
+19906#
+Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+
+19910#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Well Chewed Pencil!
+Trunk x 20
+Barren Trunk x 100
+Iron x 20
+Rocker Doll x 5
+1000 Zeny
+1 Well Chewed Pencil Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+
+
+19914#
+Increases Resistance versus Fish by 3%
+Increases EXP from fish by 5%
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: ^777777All^000000
+#
+
+
+19915#
+Increases Resistance versus Beasts by 3%
+Increases EXP from Beasts by 5%
+Class : ^777777Headgear^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^77777710^000000
+Jobs: ^777777All^000000
+#
+
+19911#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Yggdrasil Crown!
+5 Yggdrasil Leafs
+1 Emperium
+20 Yggdrasil Berries
+5 Yggdrasil Seeds
+1000 Zeny
+1 Yggdrasil Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19912#
+Contains one gold key that can be used to open a treasure cache!
+#
+
+19917#
+Contains 6x Classic Wintertime Box
+Which Contain one of the following by chance
+Lv 10 Sword Merc Scroll 40cnt
+BattlemanualX3 6cnt
+Job Battlemanual 9cnt
+HE Bubblegum 10cnt
+Vanilmirth Hat
+Lost Wolf Puppy
+Scratching Cat
+Filir Wing
+Filir Hat
+Slot Coupon
+#
+
+19916#
+Contains one of the following by chance
+Lv 10 Sword Merc Scroll 40cnt
+BattlemanualX3 6cnt
+Job Battlemanual 9cnt
+HE Bubblegum 10cnt
+Vanilmirth Hat
+Lost Wolf Puppy
+Scratching Cat
+Filir Wing
+Filir Hat
+Slot Coupon
+#
+
+19918#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gentlemen's Pipe!
+20 Used Iron Plates
+100 Dokebi Horns
+20 Hinalle Leaflet
+2 Fire Arrows
+1000 Zeny
+1 Gentlemen's Pipe Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19919#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Baby Dragon Hat!
+100 Dragon Scales
+200 Pieces of Egg Shell
+20 Sleep Arrows
+1 Coal
+1000 Zeny
+1 Baby Dragon Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19921#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gemini Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamonds
+500 Blue Gemstones
+1000 Zeny
+1 Gemini Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19922#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Triple Poring Hat!
+30 Unripe Apples
+3 Poring Cards
+300 Sticky Mucus
+1 Cap
+1000 Zeny
+1 Triple Poring Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19923#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Captain's Hat!
+500 Fabric
+100 Soft Silk
+10 Sea-Otter Fur
+50 Crystal Blue
+1000 Zeny
+1 Captain's Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19924#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Wandering Wolf Helm!
+250 Animal Skin
+2 Well-Dried Bone
+100 Wolf Claws
+1 Wolf Card
+1000 Zeny
+1 Wandering Wolf Helm Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19926#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hat Of Fortune!
+250 Feather
+10 Aquamarine
+1 Four Leaf Clover
+1 Heavenly Maiden Robe
+1000 Zeny
+1 Hat Of Fortune Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19925#
+An eye patch modeled after the evil eye of Demon Baron.
+Type: Costume
+Position: Headgear (Middle)
+Weight: 0
+Required Level: 1
+Required Job: All Jobs
+#
+
+18653#
+A headphone from Devil Deviruchi. It is good to block the noise from outside.
+Class : Headgear
+Location : Upper
+Weight : 20
+Req Level : 30
+Jobs : All
+#
+
+19927#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Black Frame Glasses!
+200 Steel
+200 Glass Beads
+50 Black Dyestuff
+50 Star Dust
+1000 Zeny
+1 Black Frame Glasses Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19928#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Bubble Gum In Mouth!
+500 Sticky Mucus
+200 Decayed Nail
+300 Large Jellopy
+25 Red Prickly Fruit
+1000 Zeny
+1 Bubble Gum In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+5153#
+A hairpin shaped to look like an Angeling.
+Your body feels strangely light when you wear it.
+Flee Rate + 5
+[+ Angel's Dress]
+INT + 2, LUK + 6, Flee Rate + 5
+Class : ^777777Upper Headgear^000000
+Defense : ^7777773^000000
+Weight : ^777777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+19929#
+Take this key and a Treasure Cache to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
+#
+
+19930#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sakura Coronet!
+5 Gold
+20 Garnets
+10 Opals
+1 Puppy Love
+1000 Zeny
+1 Sakura Coronet Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19931#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Libra Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+10 Opals
+1000 Zeny
+1 Libra Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19932#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Piggie Bank!
+1 Gold Ring
+1 Silver Ring
+2 Level 3 Fire Bolt Scrolls
+200 Mud Lumps
+10,000 Zeny
+1 Piggie Bank Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19933#
+Early March Lucky Box
+
+!
+Stock up on consumables and a handful of seasonal hats in order to prepare for adventuring this St. Patrick's day!
+When Opened gives one of the following:
+7 X BattlemanualX3
+110 X HE Bubble Gum
+44 X Lv 10 Sword Merc Scrolls
+110 X Party Blessing Scrolls
+110 X Party Increase Agility Scrolls
+110 X Party Assumptio Scroll
+4Leaf Clover In Mouth
+White Snake Hat
+#
+
+19934#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Musketeer Hat!
+100 Animal Skins
+5 Soft Feathers
+2 Elastic Bands
+1 Holden Card
+1000 Zeny
+1 Musketeer Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19935#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Camp Fire Hat!
+100 Stone
+100 Trunks
+20 Coal
+5 Flame Hearts
+1000 Zeny
+1 Camp Fire Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+14575#
+A sweet pancake
+made by Thachentze,
+the kind lady chef
+living in Lutie.
+Str +5
+^FFFFFF ^000000
+Weight : ^77777750^000000
+#
+
+14576#
+Wine distilled from
+Mastela fruit that
+helps the drinker to
+maintain clarity of
+thought. Int +5
+^FFFFFF ^000000
+Weight : ^77777740^000000
+#
+
+14577#
+A bao that is fried
+and seasoned with
+spicy sauce. If you're
+not used to spicy food,^FFFFFF  ^000000 it's not a good idea to
+eat too many. Vit +5
+^FFFFFF ^000000
+Weight : ^77777780^000000
+#
+
+14578#
+Steamed pumpkin and
+Red Bat Wings wrapped
+in a Hinale leaflet that have a combined flavor
+that is... indescribable. Agi + 5
+^FFFFFF ^000000
+Weight : ^77777750^000000
+#
+
+14579#
+A trendy green salad
+that is topped with
+sweet Umbala dressing.
+Dex +5
+^FFFFFF ^000000
+Weight : ^77777720^000000
+#
+
+14580#
+A fried tail from a
+scorpion, which is
+said to be the most
+nutritious and tasty
+part of a scorpion.
+There are trace bits
+of poison, so don't
+eat too much. Luk +5
+^FFFFFF ^000000
+Weight : ^77777740^000000
+#
+
+19936#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Parade Hat!
+20 Level 3 Heal scrolls
+5 Blue Feathers
+2 Chivalry Emblems
+500 Fabric
+1000 Zeny
+1 Parade Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19937#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Chicken Hat!
+20 Yggdrasil Seeds
+100 Monster's Feed
+200 Pieces of Egg Shell
+300 Feather of Birds
+1000 Zeny
+1 Chicken Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19938#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Dark Randgris Helm!
+1 Blade Lost in Darkness
+10 Crystals of Darkness
+10 Sea-Otter Fur
+200 Steel
+1000 Zeny
+Dark Randgris Helm Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19939#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Yellow Ribbon!
+100 Condensed Yellow Potions
+100 Yellow Herbs
+10 Soft Silk
+1 Bandana
+1000 Zeny
+Yellow Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19940#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Virgo Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+25 Sapphires
+1000 Zeny
+1 Virgo Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19941#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Moonlight Flower Hat!
+500 Animal Skin
+100 Sea-Otter Fur
+2 Soft Silk
+1 Fancy Flower
+1000 Zeny
+1 Moonlight Flower Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19942#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Little Feather Hat!
+500 Feathers
+500 Feather of Birds
+20 Blue Feathers
+2 Archer Skeleton Cards
+1000 Zeny
+1 Little Feather Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19943#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Droopy Turtle Hat!
+150 Turtle Shell
+100 Prickly Fruit
+100 Logs
+50 Sleep Arrows
+1000 Zeny
+1 Droopy Turtle Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19944#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Elven Ears!
+200 Skel-Bone
+100 Leopard Skin
+50 Elastic Bands
+1 Contorted Self-Portrait
+1000 Zeny
+1 Elven Ears Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19945#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Cat Lace Hairband!
+500 Flowers
+10 Trunks
+2 Black Cat Dolls
+1 Soft Silk
+1000 Zeny
+1 Cat Lace Hairband Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19946#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Libra Diadem!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+10 Opals
+1000 Zeny
+1 Libra Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19947#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Shark Hat!
+500 Fabric
+250 Sharp Scales
+100 Sea-Otter Fur
+5 Ancient Tooths
+1000 Zeny
+1 Shark Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19948#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ship Captain Hat!
+300 Feather of Birds
+200 Soft Silk
+100 Oil Paper
+1 Archer Skeleton Card
+1000 Zeny
+1 Ship Captain Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19949#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Yoyo Hat!
+500 Bananas
+2 Claw of Monkey
+10 Yoyo Tails
+1 Yoyo Doll
+1000 Zeny
+1 Yoyo Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+25279#
+^808080Ammo that must have been illegally produced.^000000
+Weight: 1
+#
+
+25280#
+^808080This shotgun is out of commission.^000000
+Weight: 1
+#
+
+25281#
+^808080A flimsy scimitar made of impure metal. It looks like it's ready to snap at a moment's notice.^000000
+Weight: 1
+#
+
+25282#
+^808080An old revolver with loose, rattling joints.^000000
+Weight: 1
+#
+
+25249#
+^808080Buffalo Bandit Albert's mane. It's used as proof of negotiation.^000000
+Weight: 0
+#
+
+25250#
+^808080The official currency of Rock Ridge.^000000
+Weight: 0
+#
+
+19950#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Leo Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamonds
+15 Peridot
+1000 Zeny
+1 Leo Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19951#
+This blank certificate can be used with, forgery tokens, to forge a hat certificate. Look for Hank in Morroc.
+Weight: 1
+Character Bound
+#
+
+19952#
+These forgery tokens, along with a blank certificate, can be given to Hank in Morroc to forge a hat certificate.
+#
+
+19953#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Donut In Mouth!
+500 Bread
+100 Yams
+5 Level 3 Heal
+1 Sweet Milk
+1000 Zeny
+1 Donut In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19954#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Neko Mimi Kafra!
+500 Cobwebs
+100 Metal Fragments
+5 Cat's Eyes
+1 Kafra Legend Vol. 1
+1000 Zeny
+1 Neko Mimi Kafra Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19955#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pecopeco Hairband!
+500 Peco Peco Feather
+300 Wing of Dragonfly
+100 Elastic Bands
+1 Blue Feather
+1000 Zeny
+1 Pecopeco Hairband Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19957#
+Take this Tier 2 Treasure Cache and appropriate key to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
+#
+
+19958#
+Take this Tier 3 Treasure Cache and appropriate key to Asgard Village 125, 110
+and the Treasure Cache Opener will be able to help you.
+#
+
+19971#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Fish In Mouth!
+400 Sharp Scales
+200 Worm Peelings
+50 Ancient Tooth
+1 Small Bottle
+1000 Zeny
+1 Fish In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19972#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hockey Mask!
+400 Skel-Bones
+200 White Herbs
+50 Garnets
+1 Well-Dried Bone
+1000 Zeny
+1 Hockey Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19973#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sagittarius Crown!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+50 Zircon
+1 Archer Skeleton Card
+1000 Zeny
+1 Sagittarius Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19974#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Fish Head Hat!
+300 Sharp Scales
+150 Worm Peelings
+25 Ancient Tooth
+100 Rotten Meat
+1000 Zeny
+1 Fish Head Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19975#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ribbon Chef Hat!
+100 Fabric
+50 Soft Silk
+5 Professional Cooking Kit
+1 Level 10 Cookbook
+1 Small Ribbons
+1000 Zeny
+1 Ribbon Chef Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19977#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Drooping Cat!
+300 Black Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Evolved Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19978#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 AFK Hat!
+300 Cloud Crumbs
+200 Fluff
+50 Strange Steel Pieces
+1 Black Cat Doll
+1000 Zeny
+1 AFK Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19979#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pirate Dagger!
+300 Skel-Bones
+100 Red Gemstones
+10 Gold
+1 Dagger [3]
+1000 Zeny
+1 Pirate Dagger Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Token
+Weight: 1
+Character Bound
+#
+
+19980#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Tiger Mask!
+200 Old White Cloths
+100 Black Bear Skins
+10 Striped Socks
+1 Denture from Dragon Mask
+1000 Zeny
+1 Tiger Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19981#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Taurus Diadem!
+5 Gold
+50 2carat Diamonds
+250 3carat Diamond
+1 Gemstone
+100 Emeralds
+1000 Zeny
+1 Taurus Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19982#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Blue Drooping Cat!
+300 Blue Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Blue Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19983#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Amistr Cap!
+300 Fluff
+200 Animal Skins
+2 Evil Horn
+1 Ice Titan Card
+1000 Zeny
+1 Amistr Cap Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19984#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pizza Hat!
+300 Bread
+200 Cheese
+100 Rotten Meat
+10 Red Chiles
+1000 Zeny
+1 Pizza Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19985#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Filir's Pinions!
+300 Steel
+200 Feathers
+10 Aquamarines
+1 Blue Bijou
+1000 Zeny
+1 Filir's Pinions Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19986#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Takius' Blindfold [1]!
+Black Dyestuff x 2
+Frabric x 300
+Ribbon[0]
+1 Takius' Blindfold [1] Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19987#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brazil Beret!
+300 Fabric
+10 Yellow Bijou
+10 Green Bijou
+1 Cap [0]
+1 Brazil Beret Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19988#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Marvelous Wig!
+100 Coral Reef
+10 Amethysts
+10 Pearls
+1 Wig
+1 Marvelous Wig Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19989#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 4Leaf Clover In Mouth!
+200 Huge Leaf
+100 Stem
+1 Four Leaf Clover
+1 4Leaf Clover In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19990#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aries Diadem!
+5 Gold
+100 2carat Diamonds
+300 3carat Diamonds
+5 1carat Diamonds
+1 Aries Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19991#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ninja Scroll!
+200 Ectoplasm
+100 Oil Paper
+50 Squid Ink
+1 Ninja Scroll Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19992#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Telling Doll Hat!
+300 Ectoplasm
+200 Fabric
+2 Spiritual Crystals (Rhyncho)
+1 Hung Doll
+1 Telling Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19993#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Red Wing Hat!
+200 Feathers
+100 Old White Cloth
+10 Garnets
+2 Giant Butterfly Wings
+1 Red Wing Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19994#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Santa Poring Hat!
+500 Sticky Mucus
+250 Jellopy
+1 Poring Card
+1 Santa Poring Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19995#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Glaris Doll Hat!
+300 Ectoplasm
+200 Fabric
+2 Spiritual Crystals (Phylla)
+1 Hung Doll
+1 Glaris Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19996#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Koneko Hat!
+250 Golden Hair
+125 Fish Tail
+10 Yarn
+2 Cat's Eyes
+1 Koneko Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19997#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Scorpio Diadem!
+5 Gold
+100 2carat Diamonds
+300 3carat Diamonds
+5 Topaz
+1 Scorpio Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19998#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sorin Doll Hat!
+300 Ectoplasm
+200 Fabric
+1 Spiritual Crystals (Phylla)
+1 Spiritual Crystals (Rhyncho)
+1 Hung Doll
+1 Sorin Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+19999#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mischievous Fairy!
+200 Jellopy
+50 Elastic Bands
+50 Elder Pixie's Moustache
+10 Soft Silk
+1 Mischievous Fairy Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20000#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Defolty Doll Hat!
+300 Ectoplasm
+200 Fabric
+100 Blue Hair
+2 Spiritual Crystal (Rhyncho)
+1 Hung Doll
+1 Defolty Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20004#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Snake Head Hat!
+200 Snake Scales
+100 Anolian Skins
+50 Reptile Tongues
+1 Sidewinder Card
+1 Snake Head Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
 #
