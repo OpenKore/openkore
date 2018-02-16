@@ -3820,6 +3820,7 @@
 6306#Clotted_Bloodstain#
 6307#Strange_Magic_Stone#
 6308#Unknown_Relic#
+6316#VIP_Token_of_Siegfried#
 6319#Small_Bradium#
 6320#Magical_Stone#
 6321#Rake_Horn_Helm#
@@ -7642,7 +7643,7 @@
 17903#Overseas_Care_Package_XIII#
 17927#Overseas_Care_Package_XIV#
 17928#Costume_Box_XIV:_Stay_Frosty#
-17938#February_2018_Overseas_Care_Package#
+17938#Overseas_Care_Package_XV#
 17939#Spooky_January_Costume_Box#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
@@ -7855,6 +7856,7 @@
 18714#Hippo_Hat#
 18716#Strawberry_In_Mouth#
 18718#Rose_Hairband#
+18720#Magical_Booster#
 18727#Sedora_Hat#
 18728#Egir_Helm#
 18729#RWC2012_MVP_Hat#
@@ -8063,7 +8065,7 @@
 19017#Classic_Necklace_2_Week_Rental_Box#
 19018#Classic_Ring_2_Week_Rental_Box#
 19019#Classic_Rosary_2_Week_Rental_Box#
-19020#Classic_Solar_Sword_2_Week_Rental_Box#
+19020#Survival_Circlet#
 19021#Classic_Pole_Axe_2_Week_Rental_Box#
 19022#Classic_Safety_Ring_2_Week_Rental_Box#
 19023#Classic_Steel_Flower_2_Week_Rental_Box#
@@ -8791,6 +8793,7 @@
 20808#Sight_Amistr_Bag#
 20809#Improve_Concentration_Amistr_Bag#
 20811#Hiding_Amistr_Bag#
+20813#Cloak_of_Survival#
 20814#Wakwak_Manteau#
 20815#Seraphim_Robe#
 20820#Elemental_Cape#

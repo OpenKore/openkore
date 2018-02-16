@@ -21986,42 +21986,245 @@ Hunt the Dream Demon.#
 You can try again tomorrow.#
 #
 
-62967#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62967#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Santa Claws, he's on the 2nd claw from the right.#
 #
 
-62968#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62968#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Get Santa Claws 1 Yarn and 10 Fresh fish, once you've acquired them, bring them to Grumpy Helper by his side.#
 #
 
-62969#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62969#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Looks like Grumpy Helper is no help at all, go back to Santa Claws and speak to him again.#
 #
 
-62970#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62970#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 May as well take things into your own hands at this rate! Speak to the Cheerful Helper. He seems pretty excited about Christmas.#
 #
 
-62971#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62971#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Gather 20 Wrapping Paper and 20 Wrapping Lace for the Cheerful Helper.#
 #
 
-62972#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62972#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Go back to Retired Santa and ask him for help in making Christmas gifts.#
 #
 
-62973#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62973#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Go to the sleigh below the tree in Lute. Retired Santa said there are some gifts over there.#
 #
 
-62974#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62974#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Good Job! Now take these gifts to the northeast sleigh and load them up for delivery.#
 #
 
-62975#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62975#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 You've successfully placed all of the gifts on the sleigh. Go back to Retired Santa to tell him the good news!#
 #
 
-62976#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62976#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Retired Santa again tomorrow to help save Christmas again!#
+#
+
+
+
+// 12뿹 뒫닉 쏠솦
+
+14849#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You wanna a make snow flower bouquet? Then, collect 10 magical snow flowers and come back here.#
+10 magical snow flower#
+
+14850#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+Find the Snow flower illusionist. If you are interested find the place.#
+To snow flower illusionist#
+
+14851#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find Coti and Ulsi.#
+To Coti#
+
+14852#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Did you find a special card from your gift box? Then bring it to Twinkle. You will receive a special gift.#
+To Twinkle#
+
+14853#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 magical snow flowers to make a snow flower bouquet. Please don't forget 1 carrot for decorating the snowman. - Marine#
+10 Snow flower, 1 carrot#
+
+14854#Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The magical snow flower effect is still remains. Please comeback after the dawn. - Marine#
+Waiting time#
+
+14855#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! Donate 10 warm cotton!#
+10 Warm cotton#
+
+14856#Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping seems be be finished by dawn so please come back after dawn! - Coti#
+Waiting time#
+
+14857#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is WINTER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters W. I. N. T. E. R.. Total of 6 letters. - Twinkle#
+Collect WINTER card#
+
+14858#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S. N. O. W. Total of 4 letters. - Twinkle#
+Collect SNOW card#
+
+14859#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. E. S. T. I. V. A. L. Total of 8 letters. - Twinkle#
+Collect FESTIVAL card#
+
+14860#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FLOWER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. L. O. W. E. R. Total of 6 letter. - Twinkle#
+Collect FLOWER card#
+
+14861#Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Alphabet card exchange is once a day. Okay? So please comeback after dawn! - Twinkle#
+Waiting time#
+
+
+62977#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62978#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62979#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62980#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62981#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62982#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62983#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62984#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62985#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62986#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62987#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62988#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62989#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62990#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62991#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62992#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62993#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62994#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62995#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62996#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62997#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62998#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62999#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63000#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63001#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63002#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63003#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Hunt the following monsters for Norman.#
+#
+
+62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Norman can't make another bag until hes had a chance to rest.#
+#
+
+//Valentines Day 2018
+63029#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again about bringing chocolates to Niflheim.#
+#
+
+63030#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Bring Ingrid the ingredients she needs to make the chocolates. She needs 30 Cacao, 10 Honey, 5 Milk, 3 Red Spice, and 3 Cooking Oil.#
+#
+
+63031#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to see if she's done making the chocolates.#
+#
+
+63032#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go to Niflheim and search for Rupert. He can be anywhere...#
+#
+
+63034#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Dullahans to gain Rupert's trust.#
+#
+
+63035#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Rupert again when you're ready.#
+#
+
+63036#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go back to Ingrid and tell her the good news!#
+#
+
+63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to conclude your adventure.#
 #
