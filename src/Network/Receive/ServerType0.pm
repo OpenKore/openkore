@@ -414,7 +414,7 @@ sub new {
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],		# var len
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
-		'02B9' => ['hotkeys'],
+		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'02C1' => ['npc_chat', 'x2 a4 a4 Z*', [qw(ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
@@ -465,7 +465,7 @@ sub new {
 
 		'0449' => ['hack_shield_alarm'],
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
-		'07D9' => ['hotkeys'], # 268 # hotkeys:38
+		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
 		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
@@ -583,7 +583,7 @@ sub new {
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
-		'0A00' => ['hotkeys'],
+		'0A00' => ['hotkeys', 'C a*', [qw(rotate hotkeys)]], # 269 # hotkeys:38
 		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
 		'0A07' => ['rodex_remove_item', 'C a2 v2', [qw(result ID amount weight)]],   # 9
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
@@ -5008,31 +5008,6 @@ sub auction_add_item {
 	else {
 		message TF("Succeeded to add item with index: %s.\n", $args->{ID}), "info";
 	}
-}
-
-# this info will be sent to xkore 2 clients
-sub hotkeys {
-	my ($self, $args) = @_;
-	undef $hotkeyList;
-	my $msg;
-	$msg .= center(" " . T("Hotkeys") . " ", 79, '-') . "\n";
-	$msg .=	swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
-			["#", T("Name"), T("Type"), T("Lv")]);
-	$msg .= sprintf("%s\n", ('-'x79));
-	my $j = 0;
-	for (my $i = 2; $i < $args->{RAW_MSG_SIZE}; $i+=7) {
-		$hotkeyList->[$j]->{type} = unpack("C1", substr($args->{RAW_MSG}, $i, 1));
-		$hotkeyList->[$j]->{ID} = unpack("V1", substr($args->{RAW_MSG}, $i+1, 4));
-		$hotkeyList->[$j]->{lv} = unpack("v1", substr($args->{RAW_MSG}, $i+5, 2));
-
-		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
-			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
-			$hotkeyList->[$j]->{type} ? T("skill") : T("item"),
-			$hotkeyList->[$j]->{lv}]);
-		$j++;
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	debug($msg, "list");
 }
 
 sub hack_shield_alarm {
