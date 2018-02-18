@@ -1782,6 +1782,7 @@ sub revolving_entity {
 	if ($sourceID eq $accountID && $entityNum != $char->{spirits}) {
 		$char->{spirits} = $entityNum;
 		$char->{amuletType} = $entityElement;
+		$char->{spiritsType} = $entityType;
 		$entityElement ?
 			# Translation Comment: Message displays following: quantity, the name of the entity and its element
 			message TF("You have %s %s(s) of %s now\n", $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 :
@@ -1790,6 +1791,7 @@ sub revolving_entity {
 	} elsif ($entityNum != $actor->{spirits}) {
 		$actor->{spirits} = $entityNum;
 		$actor->{amuletType} = $entityElement;
+		$actor->{spiritsType} = $entityType;
 		$entityElement ?
 			# Translation Comment: Message displays following: actor, quantity, the name of the entity and its element
 			message TF("%s has %s %s(s) of %s now\n", $actor, $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 :
