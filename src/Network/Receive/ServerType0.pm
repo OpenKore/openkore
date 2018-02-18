@@ -611,7 +611,7 @@ sub new {
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
-		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], #miss 128 unknow
+		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
@@ -2965,55 +2965,6 @@ sub received_characters {
 	} else {
 		CharacterLogin();
 	}
-}
-
-sub received_character_ID_and_Map {
-	my ($self, $args) = @_;
-	message T("Received character ID and Map IP from Character Server\n"), "connection";
-	$net->setState(4);
-	undef $conState_tries;
-	$charID = $args->{charID};
-
-	if ($net->version == 1) {
-		undef $masterServer;
-		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
-	}
-
-	my ($map) = $args->{mapName} =~ /([\s\S]*)\./; # cut off .gat
-	my $map_noinstance;
-	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
-	if (!$field || $map ne $field->name()) {
-		eval {
-			$field = new Field(name => $map);
-		};
-		if (my $e = caught('FileNotFoundException', 'IOException')) {
-			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
-			undef $field;
-		} elsif ($@) {
-			die $@;
-		}
-	}
-
-	$map_ip = makeIP($args->{mapIP});
-	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-	$map_port = $args->{mapPort};
-	message TF("----------Game Info----------\n" .
-		"Char ID: %s (%s)\n" .
-		"MAP Name: %s\n" .
-		"MAP IP: %s\n" .
-		"MAP Port: %s\n" .
-		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
-		$args->{mapName}, $map_ip, $map_port), "connection";
-	checkAllowedMap($map_noinstance);
-	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
-	$net->serverDisconnect(1);
-	main::initStatVars();
-}
-
-sub received_sync {
-	return unless changeToInGameState();
-	debug "Received Sync\n", 'parseMsg', 2;
-	$timeout{'play'}{'time'} = time;
 }
 
 sub refine_result {
