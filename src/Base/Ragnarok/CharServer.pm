@@ -233,7 +233,7 @@ sub sendCharInfo {
 
 			my $sex;
 
-			if($masterServer->{charBlockSize} == 145 && $masterServer->{serverType} =~ /^iRO/) {
+			if($masterServer->{charBlockSize} >= 145) {
 				$sex = $char->{sex};
 			}
 
@@ -278,7 +278,7 @@ sub sendCharInfo {
 				0,
 				0,
 				$field->baseName.".gat",
-				0,
+				"",
 				$sex,
 			);
 		}
