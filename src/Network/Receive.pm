@@ -28,6 +28,7 @@ use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
 
 use AI;
+use Field;
 use Globals;
 #use Settings;
 use Log qw(message warning error debug);
@@ -4279,6 +4280,56 @@ sub received_login_token {
 	my $master = $masterServers{$config{master}};
 
 	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
+}
+
+
+sub received_character_ID_and_Map {
+	my ($self, $args) = @_;
+	message T("Received character ID and Map IP from Character Server\n"), "connection";
+	$net->setState(4);
+	undef $conState_tries;
+	$charID = $args->{charID};
+
+	if ($net->version == 1) {
+		undef $masterServer;
+		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
+	}
+
+	my ($map) = $args->{mapName} =~ /([\s\S]*)\./; # cut off .gat
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
+	}
+
+	$map_ip = makeIP($args->{mapIP});
+	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
+	$map_port = $args->{mapPort};
+	message TF("----------Game Info----------\n" .
+		"Char ID: %s (%s)\n" .
+		"MAP Name: %s\n" .
+		"MAP IP: %s\n" .
+		"MAP Port: %s\n" .
+		"-----------------------------\n", getHex($charID), unpack("V1", $charID),
+		$args->{mapName}, $map_ip, $map_port), "connection";
+	checkAllowedMap($map_noinstance);
+	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
+	$net->serverDisconnect(1);
+	main::initStatVars();
+}
+
+sub received_sync {
+	return unless changeToInGameState();
+	debug "Received Sync\n", 'parseMsg', 2;
+	$timeout{'play'}{'time'} = time;
 }
 
 1;
