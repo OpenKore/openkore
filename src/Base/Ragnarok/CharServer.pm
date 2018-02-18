@@ -278,7 +278,7 @@ sub sendCharInfo {
 				0,
 				0,
 				$field->baseName.".gat",
-				0,
+				"",
 				$sex,
 			);
 		}
