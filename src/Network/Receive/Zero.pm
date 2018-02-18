@@ -28,16 +28,18 @@ sub new {
 
 	my %handlers = qw(
 		received_characters 099D
-		received_characters 082D
+		received_characters_info 082D
 		sync_received_characters 09A0
 		account_server_info 0AC4
 		received_character_ID_and_Map 0AC5
 		map_changed 0AC7
 		actor_exists 09FF
 		inventory_item_added 0A37
-		map_login 0436
 		character_status 0229
 		actor_status_active 0196
+		hotkeys 0A00
+		item_exists 0ADD
+		account_id 0283
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
