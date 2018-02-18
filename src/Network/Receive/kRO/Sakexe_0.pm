@@ -199,6 +199,7 @@ sub new {
 		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
+		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
@@ -2809,30 +2810,6 @@ sub sense_result {
 			$args->{def}, $args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
 			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
 			$args->{spirit}, $args->{undead}), "list";
-}
-
-sub shop_sold {
-	my ($self, $args) = @_;
-
-	# sold something
-	my $number = $args->{number};
-	my $amount = $args->{amount};
-
-	$articles[$number]{sold} += $amount;
-	my $earned = $amount * $articles[$number]{price};
-	$shopEarned += $earned;
-	$articles[$number]{quantity} -= $amount;
-	my $msg = TF("sold: %s - %s %sz\n", $amount, $articles[$number]{name}, $earned);
-	shopLog($msg);
-	message($msg, "sold");
-	if ($articles[$number]{quantity} < 1) {
-		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
-		#$articles[$number] = "";
-		if (!--$articles){
-			message T("Items have been sold out.\n"), "sold";
-			closeShop();
-		}
-	}
 }
 
 sub skill_cast {
