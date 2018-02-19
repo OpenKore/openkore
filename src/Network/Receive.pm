@@ -285,9 +285,8 @@ sub reconstruct_account_server_info {
 	my ($self, $args) = @_;
 	
 	$args->{lastLoginIP} = inet_aton($args->{lastLoginIP});
-	
+
 	if(exists $packetParser->{packet_lut}{account_server_info} && $packetParser->{packet_lut}{account_server_info} eq "0AC4") {
-		message "Entrei!\n\n";
 		$args->{serverInfo} = pack '(a160)*', map { pack(
 			'a4 v Z20 v3 a128',
 			inet_aton($_->{ip}),
