@@ -950,7 +950,7 @@ sub SendMapLogin {
 
 	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
 	my $data;
-	if ( $config{server_type} =~ /^Korea/ ) { # kRO Zero
+	if ( $config{server_type} =~ /^kRO/ ) { # kRO Zero
 		$data .= pack("C*", 0x83, 0x02) . $accountID; #accountID
 		$client->send($data);
 		
