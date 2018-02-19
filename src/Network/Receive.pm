@@ -261,13 +261,47 @@ sub received_characters_unpackString {
 
 sub parse_account_server_info {
 	my ($self, $args) = @_;
+	my $server_info;
+
+	if ($args->{switch} eq '0069') {  # DEFAULT PACKET
+		$server_info = {
+			len => 32,
+			types => 'a4 v Z20 v2 x2',
+			keys => [qw(ip port name users display)],
+		};
+
+	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+		$server_info = {
+			len => 160,
+			types => 'a4 v Z20 v3 a128',
+			keys => [qw(ip port name users state property unknown)],
+		};
+		
+	} elsif ($args->{switch} eq '0AC9') { # cRO 2017
+		$server_info = {
+			len => 154,
+			types => 'a20 V a2 a126',
+			keys => [qw(name users unknown ip_port)],
+		};
+		
+	} else { # this can't happen
+		return;
+	}
+
+	 @{$args->{servers}} = map {
+		my %server;
+		@server{@{$server_info->{keys}}} = unpack($server_info->{types}, $_));
+		$server{ip} = inet_ntoa($server{ip});
+		$server{name} = bytesToString($server{name});
+		\%server
+	} unpack '(a160)*', $args->{serverInfo};
 
 	if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
 		$args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
 	} else {
 		delete $args->{lastLoginIP};
 	}
-
+	
 	@{$args->{servers}} = map {
 		my %server;
 		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
