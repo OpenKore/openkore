@@ -536,7 +536,7 @@ sub ParsePacket {
 		# save servers.txt info
 		$clientdata{$index}{serverType} = "1 or 2";
 
-	} elsif (($switch eq '0436' || $switch eq '022D') &&
+	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{maploginPacket}) &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
