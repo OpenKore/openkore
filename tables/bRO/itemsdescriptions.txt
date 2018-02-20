@@ -1,10 +1,16 @@
 //---Ticket-------------------------------------------------
 //Ticket de Promoção
 7608#
-Ticket promocional criado pela Corporação Kafra.
-Troque-o por um item aleatório no NPC Máquina de Promoções, encontrado em Prontera nas coordenadas 141 226.
-Esta promoção está disponível apenas até o dia 19/02/2018, então troque-o agora mesmo!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 20/02/2018. O item obtido na troca com o NPC é aleatório!^000000 Boa sorte!
+Ticket temporário criado pela Corporação Kafra.
+^0000ffPermite adquirir 1 item aleatório na Máquina de Promoções.^000000
+--------------------------
+^CD3278NPC:^000000 Máquina de Promoções
+^CD3278Coord.:^000000 prontera 141, 226
+<NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
+--------------------------
+Promoção limitada até o dia ^ff000022.01.2018.^000000
+Este item será removido no dia ^ff000023.01.2018.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 7558#
@@ -13679,13 +13685,17 @@ Classes que utilizam: ^777777Gatuno e evoluções, Ninja^000000
 #
 2655#
 Uma pesada bola de aço presa a uma algema, usada para impedir a fuga de prisioneiros em tempos antigos. Entretanto, prisioneiros equipados com esta bola conseguiam usá-las como uma arma.
-^0000ffAo equipar os Grilhões:^000000
+^FF6347Conjunto^000000
+^FF6347[Grilhões]^000000
 ^0000ffATQ +50.^000000
-^0000ffResistência aos monstros Zumbi Prisioneiro e Esqueleto Prisioneiro +20%.^000000
+^0000ffResistência a Prisioneiros +20%.^000000
+Prisioneiros afetados:
+^0000ffZumbi Prisioneiro e Esqueleto Prisioneiro.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^777777400^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2656#
 Um misterioso e antigo artefato que pode aumentar muito o poder defensivo de uma armadura comum, mas faz com que o usuário se sinta um tanto lento.
@@ -16366,6 +16376,7 @@ Peso:  ^7777771^000000
 // -------------- Corrida de Monstros -----------------
 7514#
 Um certificado que permite aos apostadores da Corrida de Monstros verificar os dados do monstro em que apostaram. Ele só pode ser usado na Arena de Corrida de Monstros de Hugel.
+^FF0000Atenção! Este item não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser colocado no armazém e vendido no NPC.^000000
 #
 7515#
 Uma medalha feita a partir de um metal raro e misterioso. Essas medalhas não podem ser negociadas ou dadas para outros jogadores.
@@ -19005,13 +19016,14 @@ Classes que utilizam: ^777777Todas^000000
 #
 5277#
 Uma legítima bandana amarela usada pelos mecânicos de Einbroch para proteger suas cabeças do calor das máquinas e do sol. Tão legítima que vem com tudo original: manchas de óleo legítimas, cheiro de suor legítimo, marcas de graxa legítimas...
-SOR + 2, VIT + 2
-Reduz o dano recebido por ataques físicos de longo alcance em 10%.
-Defesa: ^7777772^000000
+^0000ffSOR +2. VIT +2.^000000
+^0000ffResistência a danos físicos a distância +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777720^000000
-Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5206#
 Se a florzinha amarela não combina com suas roupas, ou se você prefere uma grande margarida para combinar com seu novo corte de cabelo, esta é sua melhor opção. Claro que, se você acha isso, você só pode ser uma garota. Ou um Bardo.
@@ -35373,19 +35385,19 @@ Peso : ^7777771^000000
 
 
 18533#
-Um chapéu contendo as lindas listras das abelhas e seu doce aroma de mel.
-Mais um atrativo para os insetos, vítimas de toda sua fúria.
+Um chapéu contendo as lindas listras das abelhas e seu doce aroma de mel. Mais um atrativo para os insetos, vítimas de toda sua fúria.
 Apenas tenha muito cuidado com os insetos, suas ferroadas são doloridas.
-DEFM + 3
-+ 5% de dano físico e mágico contra monstros do tipo Inseto.
-+ 5% de resistência contra monstros do tipo Inseto.
-Chance muito baixa de dropar ‘Mel’ ao derrotar monstros do tipo inseto
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+^0000ffDEFM +3.^000000
+^0000ffResistência a raça Inseto +5%.^000000
+^0000ffDano físico e mágico contra a raça Inseto +5%.^000000
+Ao derrotar monstros da raça Inseto:
+^0000ff0,02% de chance de derrubar Mel.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
 Peso: ^77777710^000000
-Nível Necessário: ^77777750^000000
-Classes que utilizam:  ^777777Todas as Classes^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas ^000000
 #
 
 
@@ -35438,15 +35450,16 @@ Peso : ^7777771^000000
 
 18600#
 Um bonitinho boné com orelhas de gato. É interessante notar que o sucesso deste boné começou em Amatsu, onde grupos de heróis como a equipe feminina Amatsu Miau Miau ou os explosivos justiceiros Suados Cats o adotaram como parte de seus uniformes.
-ATQ + 5%.
-Se refinado acima de +5, adiciona 1% de bônus no ataque físico contra monstros do tipo Humanoide e reduz em 1% o dano recebido de monstros do tipo Humanoide.
-Este bônus funcionará até +20 de refinamento
-Tipo : ^777777Equipamento para a cabeça^000000
+^0000ffDano físico +5%.^000000
+A cada refino a partir do +6:
+^0000ffResistência a raça Humanoide +1%.^000000
+^0000ffDano físico contra a raça Humanoide +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^77777730^000000
-Nível necessário : ^7777771^000000
-Classes : ^777777Todas as classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas ^000000
 #
 
 18603#
@@ -35463,15 +35476,14 @@ Classes: ^777777Todas as classes^000000
 
 18530#
 Uma máscara amaldiçoada utilizada pelo Despero de Thanatos.
-Quando utilizada, lhe deixará mais ágil.
-Esquiva + 3
-Sorte - 5
-Tipo : ^777777Equipamento para cabeça^000000
+^0000ffSOR -5.^000000
+^0000ffEsquiva +3.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Centro-baixo^000000
-Peso : ^77777710^000000
-Nível necessário : ^77777730^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas ^000000
 #
 18538#
 'Confeccionado' em Niflheim, esse pequeno espírito travesso está pronto para fazer sua cabeça e possuir seu cor... quer dizer, dar ótimos conselhos! Enquanto estiver controla... err... aconselhado por este simpático ser do além, o bem e o mal serão conceitos sem importância.
@@ -35489,18 +35501,23 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 15040#
-Uma das partes do uniforme utilizado por prisioneiros.
-Esse tipo de coloração na roupa lhe mostra qual é o tipo da vestimenta.
-^0000ffEsquiva +1 por refino.^000000
-^0000ffPrecisão +1 por refino.^000000
-Ao equipar com os Grilhões:
+Uma das partes do uniforme utilizado por prisioneiros. Esse tipo de coloração na roupa lhe mostra qual é o tipo da vestimenta.
+^0000ffA cada refino:^000000
+^0000ffEsquiva e Precisão +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Grilhões]^000000
 ^0000ffATQ +5.^000000
-^0000ffATQ +1 por refino dos Grilhões até o +10.^000000
-Tipo : ^777777Vestimenta^000000
+A cada refino do Calçado até o +10:
+^0000ffATQ +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Algemas de Presidiário]^000000
+A cada refino da Armadura até o +10:
+^0000ffATQ +2.^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^7777775^000000
-Peso : ^777777150^000000
-Nível necessário : ^77777750^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^777777150^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 
 //---------2011 halloween event
@@ -37534,22 +37551,23 @@ Classes : ^777777Todas as Classes exceto Aprendiz e Evolução^000000
 #
 
 2913#
-Estas são algemas utilizadas apenas em ocasiões especiais para segurar os mais fortes arruaceiros quando detidos ou transferidos de um local para outro.
-Feitas de um material mais forte que o Bradium, que as torna inquebráveis, as algemas não deixam dúvida: se você for capaz de atacar enquanto estiver algemado, é porque você é muito bom no que faz!
+Estas são algemas utilizadas apenas em ocasiões especiais para segurar os mais fortes arruaceiros quando detidos ou transferidos de um local para outro. Feitas de um material mais forte que o Bradium, que as torna inquebráveis, as algemas não deixam dúvida: se você for capaz de atacar enquanto estiver algemado, é porque você é muito bom no que faz!
 ^0000ffATQ +5.^000000
-Ao equipar a Bola de Ferro Ensanguentada:
+^FF6347Conjunto^000000
+^FF6347[Grilhões]^000000
+A cada refino do Calçado até o +10:
+^0000ffATQ +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Venda]^000000
 ^0000ffATQ +10 adicional.^000000
-Ao equipar a Venda:
+^FF6347Conjunto^000000
+^FF6347[Bola de Ferro Ensanguentada]^000000
 ^0000ffATQ +10 adicional.^000000
-Ao equipar o Uniforme de Presidiário:
-^0000ffATQ +2 por refino do Uniforme até o +10.^000000
-Ao equipar os Grilhões:
-^0000ffATQ +1 por refino dos Grilhões até o +10.^000000
-Tipo : ^777777Acessório^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^777777240^000000
-Nível Necessário : ^77777710^000000
-Classes : ^777777Todas as Classes^000000
+Peso: ^777777240^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 
 18576#
@@ -37963,7 +37981,7 @@ Peso : ^7777771^000000
 #
 
 14545#
-Um manuscrito feito pelos 3 fundadores do bROWiki. Cada um colaborou com 100% do próprio conhecimento para guiar novos aventureiros em suas viagens por Midgard.
+Um manuscrito antigo, escrito por grandes sábios de Rune-Midgard. Cada um deles colaborou com todo o seu conhecimento para guiar novos aventureiros em suas viagens.
 ^0000ffEXP adquirida +300%.^000000
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Duração: ^77777730 minutos^000000
@@ -41037,14 +41055,16 @@ Peso: ^7777771^000000
 #
 1562#
 Um livro que registrou a história de incontáveis batalhas, incluindo as estratégias usadas por seu escritor.
+^a400cdNão pode ser refinado.^000000
 ^0000ffINT +3.^000000
-^0000ffAo realizar ataques físicos, chance de autoconjurar [Bênção] nv. 3, ou no maior nível aprendido, em si.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Bênção] nv. 3 ou no maior nível aprendido.^000000
 Tipo: ^777777Livro^000000
 Ataque: ^777777110^000000
 Peso: ^77777770^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
-Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
+Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluuções^000000
 #
 19541#
 Dizem que quem já curtiu a página de Ragnarök no Facebook, um famoso grimório da Biblioteca de Juno, é presenteado com esta bela flor, mesmo que seja um troll. Esta amável flor branca é prova que você está à caminho de zerar a internet – seja lá o que isso quer dizer!
@@ -43437,15 +43457,17 @@ Classe : ^777777Todas^000000
 #
 18601#
 Um saboroso quitute para ser usado na cabeça, esse brioche avermelhado foi encantado para parecer sempre deliciosamente saboroso, o que pode distrair um pouco seus inimigos e fazê-los pegar um pouco mais leve na hora de lhe atacar.
-ATQM + 5%, DEFM + 5.
-Se refinado acima de +5, adiciona 1% de bônus no ataque mágico contra monstros do tipo Humanoide e reduz em 1% o dano recebido de monstros do tipo Humanoides.
-Este bônus funcionará até +20 de refinamento
-Tipo : ^777777Equipamento para a cabeça^000000
+^0000ffDEFM +5.^000000
+^0000ffDano mágico +5%.^000000
+A cada refino a partir do +6:
+^0000ffResistência a raça Humanoide +1%.^000000
+^0000ffDano mágico contra a raça Humanoide +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas ^000000
 #
 18539#
 Um grande boné criado pela ex-justiceira, professora e estilista, Yoco Rittana, ele leva sua marca registrada, uma presilha em forma de caveira. Feito para acomodar grandes quantidades de cabelo, ou mesmo para cobrir qualquer careca, Yoco afirma que o criou pensando nos elfos magos. Você não pode deixar de imaginar o que será que ela quis dizer com isso, e pensar se o boné não guarda algum tipo de segredo.
@@ -44442,13 +44464,13 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 18868#
 Assim que colocou essa máscara, você começou a gargalhar de forma maligna e ficou obcecado em conquistar o Castelo da Caveira Cinza, guardado pelo herói Ele-omem.
-Crítico +5.
-Tipo : ^777777Equipamento para a Cabeça^000000
+^0000ffCRIT +5.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
 Defesa: ^7777772^000000
-Equipa em : ^777777Meio / Baixo ^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777770^000000
-Classes : ^777777Todas^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777720^000000
+Classes: ^777777Todas ^000000
 #
 5388#
 Quem anda por Prontera já viu um dos folhetins escritos pelo grupo de bardos comediantes infames. Adotando a jibóia como mascote, o grupo se tornou um sucesso nacional, motivando as Organizações Kafrajara a lançar esse chapéu. Diante da fama do novo chapéu, os comediantes comentaram: “Só não usa a Jibóia quem for goiaba!”.
@@ -54893,6 +54915,7 @@ Um anel que dá a sensação de voar como um foguete. Mas a reação é tão gra
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
+Nível Necessário: ^77777770^000000
 Classes:  ^7777772a. Classe Transcendental^000000
 #
 28432#
@@ -55914,117 +55937,181 @@ Apesar do recipiente estar gasto, o combustível ainda parece útil.
 Peso: ^77777710^000000
 #
 6965#
-Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Fogo.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
-^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffEncanta a armadura com a propriedade Fogo.^000000
+^008080Usável somente no primeiro encanto.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6966#
-Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Água.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
-^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffEncanta a armadura com a propriedade Água.^000000
+^008080Usável somente no primeiro encanto.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6967#
-Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Terra.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
-^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffEncanta a armadura com a propriedade Terra.^000000
+^008080Usável somente no primeiro encanto.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6968#
-Um 'blueprint' de um reator da categoria E, sendo do sub-tipo Vento.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
-^ff0000Atenção: este item só pode ser usado no primeiro encantamento.^000000
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffEncanta a armadura com a propriedade Vento.^000000
+^008080Usável somente no primeiro encanto.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6969#
-Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Fogo.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffResistência a propriedade Fogo +25%.^000000
+^0000ffResistência a propriedade Água -25%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6970#
-Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Água.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffResistência a propriedade Água +25%.^000000
+^0000ffResistência a propriedade Vento -25%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6971#
-Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Terra.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffResistência a propriedade Terra +25%.^000000
+^0000ffResistência a propriedade Fogo -25%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6972#
-Um 'blueprint' de um reator da categoria R, sendo do sub-tipo Vento.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffResistência a propriedade Vento +25%.^000000
+^0000ffResistência a propriedade Terra -25%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6973#
-Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Corpo.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+A cada 5 segundos:
+^0000ffRegenera 50 de HP.^000000
+Refino +7 ou mais:
+^0000ffRegenera 50 de HP adicional.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6974#
-Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Alma.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+A cada 5 segundos:
+^0000ffRegenera 3 de SP.^000000
+Refino +7 ou mais:
+^0000ffRegenera 2 de SP adicional.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6975#
-Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Físico.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffRegeneração natural de HP +50%.^000000
+Refino +7 ou mais:
+^0000ffRegeneração natural de HP +50% adicional.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6976#
-Um 'blueprint' de um reator da categoria C, sendo do sub-tipo Mental.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffRegeneração natural de SP +50%.^000000
+Refino +7 ou mais:
+^0000ffRegeneração natural de SP +50% adicional.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6977#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo FOR.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+Cada 10 de FOR base:
+^0000ffATQ +5.^000000
+Refino +7 ou mais:
+^0000ffATQ +10.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6978#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo INT.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+Cada 10 de INT base:
+^0000ffATQM +5.^000000
+Refino +7 ou mais:
+^0000ffATQM +10.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6979#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo DEF.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffDEF +100.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6980#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ESQV.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffEsquiva perfeita +3.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6981#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ATQ.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffATQ +20.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6982#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo ATQM.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffATQM +20.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6983#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo HP.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffHP máx. +5%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6984#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo SP.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffSP máx. +3%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6985#
-Um 'blueprint' de um reator da categoria I, sendo do sub-tipo Gelo.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffTolerância a Congelamento +100%.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 6986#
-Um 'blueprint' de um reator da categoria A, sendo do sub-tipo VdA.
-Apenas MARS_01 consegue fazer a leitura deste diagrama.
+Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em um encantamento com os efeitos descritos abaixo.
+--------------------------
+^0000ffVelocidade de ataque +1.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 //*****************************************************
@@ -57347,7 +57434,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31112#
-Se você quer entrar no espírito “hue”, é só sair com este balão por aí, porque vamos ser francos: todo mundo adora uma zoeira. Na pior das hipóteses, alguém pode não entender a piada e te dar uns Zennys.
+Se você quer entrar no espírito “hue”, é só sair com este balão por aí, porque vamos ser francos: todo mundo adora uma zoeira. Na pior das hipóteses, alguém pode não entender a piada e te dar uns Zenys.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -57368,6 +57455,41 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^777777130^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-02-20--------------------
+//*****************************************************
+18741#
+Essas chamas esverdeadas aquecem e iluminam tudo em seu caminho. Apesar de existirem diversas crenças e lendas a respeito do fogo esmeralda, já foi comprovado que o fenômeno surge a partir da inflamação de gases emitidos por um Poporing. Não pergunte quais gases são esses.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20395#
+Um chapéu que já pertenceu a uma geração inteira de Bruxas Sombrias – feiticeiras conhecidas por criar as misturas dos venenos mais mortais. Apesar de suas intenções duvidosas, seu senso de moda não era nada questionável, afinal, esse chapéu permanece estiloso mesmo depois de séculos!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20145#
+Coloque esse visor futurista no rosto, foque sua visão em alguém e descubra informações mais do que úteis! Basta um rápido olhar para saber o signo da pessoa, se ela prefere falar “biscoito” ou “bolacha” e até mesmo seu personagem favorito dos Farofeiros do Zodíaco.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19668#
+Talvez seja só placebo, mas os mensageiros dizem que essa boina te dá a velocidade pra viajar de Al De Baran a Morroc indo em um pé e voltando em outro. É claro que você usaria um acessório desses APENAS caso precisasse fazer o trabalho de um mensageiro... Certo?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //file end
