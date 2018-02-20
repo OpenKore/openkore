@@ -2018,7 +2018,7 @@
 4157#Carta Goblin Arqueiro#
 4158#Carta Exterminador Voador#
 4159#Carta Nove Caudas#
-4160#Carta Soldado Atirador#
+4160#Carta Zumbi Atirador#
 4161#Carta Grand Peco#
 4162#Carta Grizzly#
 4163#Carta Grifo#
@@ -6164,7 +6164,7 @@
 19768#Tiara de Sakura#
 19770#Caneca de Chá Oriental#
 19771#Presilha de Borboleta#
-19772#Chapéu de Abelha#
+19772#Touca de Abelha#
 19773#Presilha de Angeling#
 19775#Peruca Maravilinda#
 17305#Ovo Fashion#
@@ -8130,4 +8130,11 @@
 31111#Balão de Fala (Procuro Membros)#
 31112#Balão de Fala (Hue Hue Br)#
 28517#Anel do Rei Abissal#
+//*****************************************************
+//------------Aplicar em 2018-02-20--------------------
+//*****************************************************
+18741#Fogo Esmeralda#
+20395#Chapéu da Bruxa Sombria#
+20145#Visor do Ciborgue#
+19668#Boina Vermelha do Mensageiro#
 //file end
