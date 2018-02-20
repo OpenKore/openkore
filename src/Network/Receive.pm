@@ -288,31 +288,27 @@ sub parse_account_server_info {
 		return;
 	}
 
-	 @{$args->{servers}} = map {
+	@{$args->{servers}} = map {
 		my %server;
-		@server{@{$server_info->{keys}}} = unpack($server_info->{types}, $_));
-		$server{ip} = inet_ntoa($server{ip});
+		@server{@{$server_info->{keys}}} = unpack($server_info->{types}, $_);
+		if ($masterServer && $masterServer->{private}) {
+			$server{ip} = $masterServer->{ip};
+		} elsif ($args->{switch} eq '0AC9') {
+			@server{qw(ip port)} = split (/\:/, $server{ip_port});
+			$server{ip} =~ s/^\s+|\s+$//g;
+			$server{port} =~ tr/0-9//cd;
+		} else {
+			$server{ip} = inet_ntoa($server{ip});
+		}
 		$server{name} = bytesToString($server{name});
 		\%server
-	} unpack '(a160)*', $args->{serverInfo};
+	} unpack '(a'.$server_info->{len}.')*', $args->{serverInfo};
 
 	if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
 		$args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
 	} else {
 		delete $args->{lastLoginIP};
 	}
-	
-	@{$args->{servers}} = map {
-		my %server;
-		@server{qw(ip port name users display)} = unpack 'a4 v Z20 v2 x2', $_;
-		if ($masterServer && $masterServer->{private}) {
-			$server{ip} = $masterServer->{ip};
-		} else {
-			$server{ip} = inet_ntoa($server{ip});
-		}
-		$server{name} = bytesToString($server{name});
-		\%server
-	} unpack '(a32)*', $args->{serverInfo};
 }
 
 sub reconstruct_account_server_info {
