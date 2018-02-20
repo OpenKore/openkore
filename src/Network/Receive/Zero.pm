@@ -82,19 +82,7 @@ sub map_loaded {
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 }
 
-sub parse_account_server_info {
-    my ($self, $args) = @_;
-
-    @{$args->{servers}} = map {
-		my %server;
-		@server{qw(ip port name users state property unknown)} = unpack 'a4 v Z20 v3 a128', $_;		
-		$server{ip} = inet_ntoa($server{ip});
-		$server{name} = bytesToString($server{name});
-		\%server
-	} unpack '(a160)*', $args->{serverInfo};
-}
-
- sub party_users_info {
+sub party_users_info {
 	my ($self, $args) = @_;
  	return unless Network::Receive::changeToInGameState();
  

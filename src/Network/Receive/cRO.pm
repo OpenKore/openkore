@@ -63,26 +63,6 @@ sub new {
 	return $self;
 }
 
-sub parse_account_server_info {
-    my ($self, $args) = @_;
-
-    if (length $args->{lastLoginIP} == 4 && $args->{lastLoginIP} ne "\0"x4) {
-        $args->{lastLoginIP} = inet_ntoa($args->{lastLoginIP});
-    } else {
-        delete $args->{lastLoginIP};
-    }
-
-    @{$args->{servers}} = map {
-		my %server;
-		@server{qw(name users unknown ip_port)} = unpack 'a20 V a2 a*', $_;
-		@server{qw(ip port)} = split (/\:/, $server{ip_port});
-		$server{ip} =~ s/^\s+|\s+$//g;
-		$server{port} =~ tr/0-9//cd;
-		$server{name} = bytesToString($server{name});
-		\%server
-	} unpack '(a154)*', $args->{serverInfo};
-}
-
 sub received_character_ID_and_Map {
 	my ($self, $args) = @_;
 	message T("Received character ID and Map IP from Character Server\n"), "connection";
