@@ -36,10 +36,18 @@ sub new {
 		actor_exists 09FF
 		inventory_item_added 0A37
 		character_status 0229
-		actor_status_active 0196
+		actor_status_active 0984
 		hotkeys 0A00
 		item_exists 0ADD
 		account_id 0283
+		map_loaded 02EB
+		actor_action 08C8
+		inventory_items_nonstackable 0A0D
+		cart_items_nonstackable 0A0F
+		storage_items_nonstackable 0A10
+		inventory_items_stackable 0991
+		cart_items_stackable 0993
+		storage_items_stackable 0995
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
