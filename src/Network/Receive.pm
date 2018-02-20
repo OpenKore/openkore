@@ -2953,6 +2953,7 @@ sub chat_info {
 		$chat = $chatRooms{$args->{ID}} = {};
 		binAdd(\@chatRoomsID, $args->{ID});
 	}
+	$chat->{len} = $args->{len};
 	$chat->{title} = $title;
 	$chat->{ownerID} = $args->{ownerID};
 	$chat->{limit} = $args->{limit};
