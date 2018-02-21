@@ -1,5 +1,10 @@
 //-- 제로
-//-- 최종갱신 오전 10:19 2017-11-23 제로
+//-- 최종갱신 오후 5:27 2018-01-26 제로
+
+// 제로 2nd memorial
+1@ant01.rsw#개미지옥#
+1@izd02.rsw#이즈루드 던전 2층#
+1@tre02.rsw#침몰선#
 
 //프론테라 지하수로
 1@sewb2.rsw#지하수로#
@@ -930,7 +935,7 @@ prt_are_in.rsw#아레나 대기실#
 arena_room.rsw#아레나 대기실#
 prt_arena01.rsw#아레나#
 prt_are01.rsw#아레나#
-glast_01.rsw#글레스트헤임#
+glast_01.rsw#글래스트헤임#
 alde_dun01.rsw#알데바란 시계탑 지하 1층#
 alde_dun02.rsw#알데바란 시계탑 지하 2층#
 alde_dun03.rsw#알데바란 시계탑 지하 3층#
@@ -939,22 +944,22 @@ c_tower1.rsw#알데바란 시계탑 지상 1층#
 c_tower2.rsw#알데바란 시계탑 지상 2층#
 c_tower3.rsw#알데바란 시계탑 지상 3층#
 c_tower4.rsw#알데바란 시계탑 지상 4층#
-gl_cas01.rsw#글레스트헤임 성 1층#
-gl_cas02.rsw#글레스트헤임 성 2층#
-gl_church.rsw#글레스트헤임 수도원#
-gl_chyard.rsw#글레스트헤임 지하 묘지#
-gl_dun01.rsw#글레스트헤임 지하 동굴 1층#
-gl_dun02.rsw#글레스트헤임 지하 동굴 2층#
-gl_in01.rsw#글레스트헤임 실내#
-gl_knt01.rsw#글레스트헤임 기사단 1층#
-gl_knt02.rsw#글레스트헤임 기사단 2층#
-gl_prison.rsw#글레스트헤임 지하 감옥 1층#
-gl_prison1.rsw#글레스트헤임 지하 감옥 2층#
-gl_sew01.rsw#글레스트헤임 지하 수로 1층#
-gl_sew02.rsw#글레스트헤임 지하 수로 2층#
-gl_sew03.rsw#글레스트헤임 지하 수로 3층#
-gl_sew04.rsw#글레스트헤임 지하 수로 4층#
-gl_step.rsw#글레스트헤임 계단 던전#
+gl_cas01.rsw#글래스트헤임 성 1층#
+gl_cas02.rsw#글래스트헤임 성 2층#
+gl_church.rsw#글래스트헤임 수도원#
+gl_chyard.rsw#글래스트헤임 지하 묘지#
+gl_dun01.rsw#글래스트헤임 지하 동굴 1층#
+gl_dun02.rsw#글래스트헤임 지하 동굴 2층#
+gl_in01.rsw#글래스트헤임 실내#
+gl_knt01.rsw#글래스트헤임 기사단 1층#
+gl_knt02.rsw#글래스트헤임 기사단 2층#
+gl_prison.rsw#글래스트헤임 지하 감옥 1층#
+gl_prison1.rsw#글래스트헤임 지하 감옥 2층#
+gl_sew01.rsw#글래스트헤임 지하 수로 1층#
+gl_sew02.rsw#글래스트헤임 지하 수로 2층#
+gl_sew03.rsw#글래스트헤임 지하 수로 3층#
+gl_sew04.rsw#글래스트헤임 지하 수로 4층#
+gl_step.rsw#글래스트헤임 계단 던전#
 pvp_y_room.rsw#PvP : 대기실#
 pvp_n_room.rsw#PvP : 대기실#
 pvp_c_room.rsw#PvP : 대기실#
