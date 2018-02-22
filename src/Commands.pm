@@ -5295,11 +5295,21 @@ sub cmdUseSkill {
 	my @args = parseArgs($args_string);
 
 	if ($cmd eq 'sl') {
-		my $x = $args[1];
-		my $y = $args[2];
-		if (@args < 3 || @args > 4) {
+		my ($x, $y);
+		
+		if (scalar @args < 3) {
+			$x = $char->position->{x};
+			$y = $char->position->{y};
+			$level = $args[1];
+		} else {
+			$x = $args[1];
+			$y = $args[2];
+			$level = $args[3];
+		}
+		
+		if (@args < 1 || @args > 4) {
 			error T("Syntax error in function 'sl' (Use Skill on Location)\n" .
-				"Usage: sl <skill #> <x> <y> [level]\n");
+				"Usage: sl <skill #> [<x> <y>] [level]\n");
 			return;
 		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
 			error T("Error in function 'sl' (Use Skill on Location)\n" .
@@ -5307,7 +5317,6 @@ sub cmdUseSkill {
 			return;
 		} else {
 			$target = { x => $x, y => $y };
-			$level = $args[3];
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
