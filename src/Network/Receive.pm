@@ -639,6 +639,7 @@ sub actor_display {
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
 
