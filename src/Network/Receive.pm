@@ -3282,7 +3282,7 @@ sub emoticon {
 sub errors {
 	my ($self, $args) = @_;
 
-	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME && $args->{type} == 0);
+	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME);
 	if ($net->getState() == Network::IN_GAME &&
 		($config{dcOnDisconnect} > 1 ||
 		($config{dcOnDisconnect} &&
@@ -3298,7 +3298,7 @@ sub errors {
 
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	if ($args->{type} != 0) {
+	if (($args->{type} != 0)) {
 		$net->serverDisconnect();
 	}
 	if ($args->{type} == 0) {
