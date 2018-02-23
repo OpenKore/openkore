@@ -58917,6 +58917,22 @@ Costume Black Khalitzburg Knight Helm
 
 
 #
+14930#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When Opened Gives one of the following
+Heroic Backpack [1]
+CD in Mouth
+Enforcer Cape [1]
+Enforcer Shoes
+Mob Scarf
+Battle Manual X3 (6)
+Bloody Branch (5)
+Citizen Oda's Miracle Elixir (10)
+Safe to 7 Chance Box (4)
+Safe to 10 Certificate (2)
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.

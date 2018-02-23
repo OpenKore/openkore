@@ -6883,6 +6883,7 @@
 14856#Ancient_Elven_Scroll#
 14884#Weather_Scroll#
 14921#Fancy_February_Costume_Box#
+14930#Overseas_Care_Package_Remix_I#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
