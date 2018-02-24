@@ -239,9 +239,14 @@ sub serverDisconnect {
 		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
 			$self->{remote_socket}->peerport()), "connection";
 		close($self->{remote_socket});
-		!$self->serverAlive() ?
-			message T("disconnected\n"), "connection" :
+		
+		if ($self->serverAlive()) {
 			error T("couldn't disconnect\n"), "connection";
+			Plugins::callHook("serverDisconnect/fail");
+		} else {
+			message T("disconnected\n"), "connection";
+			Plugins::callHook("serverDisconnect/success");
+		}
 	}
 }
 
