@@ -2181,6 +2181,7 @@ ra_in01 241 299 ra_in01 193 312
 ra_in01 185 303 ra_in01 194 249
 ra_in01 357 61 ra_in01 310 62
 ra_in01 297 59 ra_in01 339 116
+ra_temin 28 319 ra_san01 139 139
 ra_temin 130 93 ra_temin 239 258
 ra_temin 206 93 ra_temin 312 258
 ra_temin 275 332 ra_temin 27 305
@@ -2189,6 +2190,7 @@ ra_temsky 99 118 ra_temsky 99 140
 ra_temsky 112 143 ra_temsky 141 139
 ra_temsky 87 143 ra_temsky 58 139
 ra_temple 120 22 rachel 150 243
+ra_temple 119 180 ra_temin 169 23
 ra_in01 237 202 rachel 81 38
 ra_in01 181 202 rachel 61 38
 ra_in01 250 38 rachel 217 60
