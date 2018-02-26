@@ -4027,7 +4027,7 @@ sub checkSelfCondition {
 	if ($char->{homunculus}) {
 		if ($config{$prefix . "_homunculus_hp"}) {
 			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{hpPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
 			}
@@ -4035,7 +4035,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_homunculus_sp"}) {
 			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{spPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
 			}
@@ -4057,7 +4057,7 @@ sub checkSelfCondition {
 	if ($char->{mercenary}) {
 		if ($config{$prefix . "_mercenary_hp"}) {
 			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{hpPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
 			}
@@ -4065,7 +4065,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_mercenary_sp"}) {
 			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{spPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 			}

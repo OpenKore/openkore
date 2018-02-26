@@ -1294,7 +1294,6 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 }
 
 # 022E
@@ -1852,8 +1851,6 @@ sub memo_success {
 			$char->{mercenary}{$type} = $args->{param};
 
 			$char->{mercenary}{attack_speed} = int (200 - (($char->{mercenary}{attack_delay} < 10) ? 10 : ($char->{mercenary}{attack_delay} / 10)));
-			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
-			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
 			$char->{mercenary}{walk_speed}   = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
 
 			debug "Mercenary: $type = $args->{param}\n";
@@ -2969,10 +2966,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;

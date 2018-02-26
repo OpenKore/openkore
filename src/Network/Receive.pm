@@ -1147,10 +1147,10 @@ sub actor_action {
 			}
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 		} elsif ($args->{sourceID} eq $args->{targetID}) {
 			message("$status $msg");
@@ -3444,17 +3444,8 @@ sub homunculus_food {
 # TODO: wouldn't it be better if we calculated these only at (first) request after a change in value, if requested at all?
 sub slave_calcproperty_handler {
 	my ($slave, $args) = @_;
-	# so we don't devide by 0
-	# wtf
-=pod
-	$slave->{hp_max}       = ($args->{hp_max} > 0) ? $args->{hp_max} : $args->{hp};
-	$slave->{sp_max}       = ($args->{sp_max} > 0) ? $args->{sp_max} : $args->{sp};
-=cut
 
-	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
-	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
+	$slave->{attack_speed} = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
 }
 
 sub gameguard_grant {

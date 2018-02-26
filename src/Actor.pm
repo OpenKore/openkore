@@ -873,4 +873,38 @@ sub sendAttackStop {
 #
 # Send "standby" to the server.
 
+##
+# float $char->exp_base_percent()
+#
+# Returns your base exp percentage (between 0 and 100).
+sub exp_base_percent {
+	my ($self) = @_;
+	
+	if ($self->{exp_max}) {
+		return ($self->{exp} / $self->{exp_max} * 100);
+	}
+		
+	return 0;
+}
+
+##
+# float $char->hp_percent()
+#
+# Returns your HP percentage (between 0 and 100).
+sub hp_percent {
+	my ($self) = @_;
+
+	return main::percent_hp($self);
+}
+
+##
+# float $char->sp_percent()
+#
+# Returns your SP percentage (between 0 and 100).
+sub sp_percent {
+	my ($self) = @_;
+
+	return main::percent_sp($self);
+}
+
 1;
