@@ -4487,4 +4487,44 @@ sub received_sync {
 	$timeout{'play'}{'time'} = time;
 }
 
+sub actor_look_at {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $actor = Actor::get($args->{ID});
+	$actor->{look}{head} = $args->{head};
+	$actor->{look}{body} = $args->{body};
+	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg";
+}
+
+sub actor_movement_interrupted {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	my %coords;
+	$coords{x} = $args->{x};
+	$coords{y} = $args->{y};
+
+	my $actor = Actor::get($args->{ID});
+	$actor->{pos} = {%coords};
+	$actor->{pos_to} = {%coords};
+	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
+		$actor->{sitting} = 0;
+	}
+	if ($actor->isa('Actor::You')) {
+		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
+		AI::clear("move");
+	}
+	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
+		AI::clear("move");
+	}
+}
+
+sub actor_trapped {
+	my ($self, $args) = @_;
+	# original comment was that ID is not a valid ID
+	# but it seems to be, at least on eAthena/Freya
+	my $actor = Actor::get($args->{ID});
+	debug "$actor->nameString() is trapped.\n";
+}
+
 1;
