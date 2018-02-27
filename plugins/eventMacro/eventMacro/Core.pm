@@ -111,7 +111,7 @@ sub unload {
 	$self->clear_queue();
 	$self->clean_hooks();
 	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
-	Plugins::delHook($self->{AI_state_change_Hook_Handle});
+	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
 }
 
 sub clean_hooks {
