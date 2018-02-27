@@ -8043,7 +8043,7 @@
 20198#Orelhas Peludinhas#
 20248#Peruca de Saiadim#
 20116#Fones de Sereia#
-19022#Pedra Filosofal#
+19022#Cristal Filosofal#
 19306#Carta de Comodo#
 //*****************************************************
 //------------Clock Tower Nightmare--------------------
@@ -8137,4 +8137,11 @@
 20395#Chapéu da Bruxa Sombria#
 20145#Visor do Ciborgue#
 19668#Boina Vermelha do Mensageiro#
+//*****************************************************
+//------------Aplicar em 2018-02-27--------------------
+//*****************************************************
+28433#Cristal da Luz Azul#
+18813#Óculos Retrofuturistas#
+20375#Chapéu do Marechal#
+19904#Boina da Caveira#
 //file end

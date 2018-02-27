@@ -13483,13 +13483,18 @@ Classes que utilizam: ^777777Aprendiz^000000
 #
 2417#
 Um par de sapatos abençoados por Freyr, o deus da terra e filho de Njord. Essa bênção livra o usuário da dor.
-^0000ffAumenta o efeito das poções Vermelha, Laranja, Amarela e Branca em 20%, adiciona AGI +2.
-Se o dono estiver equipado com o conjunto de armadura, adiciona AGI +3 e Máx. HP/SP + 5%.^000000
+^0000ffAGI +2.^000000
+^0000ffRecuperação de HP das Poções Vermelha, Laranja, Amarela e Branca +20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Bênção de Odin]^000000
+^FF6347[Sobrepeliz do Falcão]^000000
+^0000ffAGI +3 adicional.^000000
+^0000ffHP e SP máx. +5%.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777712^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2418#
 As botas usadas por Vidar, filho de Odin, quando ele matou o Lobo Fenrir. Elas representam a grande força física e mental mostradas por Vidar naquela épica batalha final.
@@ -21237,13 +21242,14 @@ Classes: ^777777Transclasses, exceto Aprendizes^000000
 
 2425#
 Botas feitas de couro leve, mas firme. Basta usá-las para ficar com vontade de correr.
-AGI + 1
-AGI + 2 adicional quando o nível de refinamento for 9 ou maior.
-Tipo de Item: ^777777Calçado^000000
+^0000ffAGI +1.^000000
+Refino +9 ou mais:
+^0000ffAGI +2 adicional.^000000
+Tipo: ^777777Calçado^000000
 Defesa: ^77777716^000000
-Peso: ^77777750^000000
-Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Peso: ^77777755^000000
+Nível necessário: ^77777765^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2426#
@@ -42141,73 +42147,100 @@ Peso: ^7777771^000000
 #
 // ---------- Port Malaya new items ------------
 2169#
-Escudo prático, firme e leve, feito de junco.
-Diminui danos de monstros do tipo Chefe em 1% a cada 3 refinamentos.
-Se equipado em conjunto com Kalasag, Roupa de Aniagem de Buwaya, Armadura de Escamas de Bakonawa e Botas do Pesadelo de Bangungot, reduz dano recebido em 30% e aumenta o HP Máximo e SP Máximo em 10% dentro do território de Porto Malaya.
+Escudo prático, firme e leve, feito de junco
+^0000ffA cada 3 refinos:^000000
+^0000ffResistência a Chefes +1%.000000
+^FF6347Conjunto^000000
+^FF6347[Roupa de Buwaya]^000000
+^FF6347[Botas de Bangungot]^000000
+^FF6347[Armadura de Bakonawa]^000000
+^0000ffHP e SP máx. +10%.^000000
+^0000ffResistência a Malayanos +30%.000000
+Malayanos afetados:
+^0000ffManananggal, Mangkukulan, Bakonawa, Bangungot, Buwaya, Alga, Escravos de Buwaya, Bungisngis, Engkanto, Wakwak, Jejeling, Tiyaniak e Tikbalang.000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777740^000000
 Peso: ^77777740^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2170#
-Escudo prático, firme e leve, feito de junco.
-Diminui danos de monstros do tipo Chefe em 1% a cada 3 refinamentos.
+Escudo prático, firme e leve, feito de junco
+^0000ffA cada 3 refinos:^000000
+^0000ffResistência a Chefes +1%.000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777740^000000
 Peso: ^77777740^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2491#
 Botas agourentas, emitindo a vingança de Bangungot e seu ódio contra humanos.
-Aumenta DEFM em +1 a cada nível de refinamento.
-Se o refinamento for 14 ou maior, aumenta a Velocidade de Movimento do personagem.
+^0000ffA cada refino:^000000
+^0000ffDEFM +1.000000
+Refino +14 ou mais:
+^0000ffAumenta a velocidade de movimento.000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777710^000000
 Peso: ^77777760^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2492#
-Botas agourentas emitindo a vingança de Bangungot e seu ódio contra humanos.
-Aumenta DEFM em +1 a cada nível de refinamento.
-Se o refinamento for 12 ou maior, aumenta a Velocidade de Movimento do personagem.
+Botas agourentas, emitindo a vingança de Bangungot e seu ódio contra humanos.
+^0000ffA cada refino:^000000
+^0000ffDEFM +1.000000
+Refino +12 ou mais:
+^0000ffAumenta a velocidade de movimento.000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777710^000000
 Peso: ^77777760^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2590#
 Roupas confeccionadas do saco de sequestro de Buwaya. Cheia de espíritos vingativos que não descansam em paz.
-A cada 3 refinamentos, aumenta a cura por itens em 1%.
-Diminui em 10% o dano recebido de monstros dos elementos Água, Terra, Fogo e Vento.
+^0000ffResistência as propriedades Fogo, Terra, Água e Vento +10%.^000000
+A cada 3 refinos:
+^0000ffEfetividade de cura recebida +1%.^000000
+^0000ffRecuperação de HP por itens+1%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^7777778^000000
 Peso: ^77777720^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2591#
 Roupas confeccionadas do saco de sequestro de Buwaya. Cheia de espíritos vingativos que não descansam em paz.
-A cada 3 refinamentos, aumenta a cura por itens em 1%.
-Diminui em 10% o dano recebido de monstros dos elementos Água, Terra, Fogo e Vento.
+^0000ffResistência as propriedades Fogo, Terra, Água e Vento +10%.^000000
+A cada 3 refinos:
+^0000ffEfetividade de cura recebida +1%.^000000
+^0000ffRecuperação de HP por itens+1%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^7777778^000000
 Peso: ^77777720^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2907#
-Tatuagem amuleto com padrão de um enorme Jacaré. Dizem que aquele que tiver essa tatuagem possuirá poderes extremos.
-+ 7% de ATQM, Reduz Conjurações Fixas em 7%.
+Tatuagem amuleto com padrão de um enorme Jacaré. Dizem que aquele que tiver essa tatuagem possuirá poderes extremos
+^0000ffDano mágico +7%.^000000
+^0000ffConjuração fixa -7%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2910#
 Tatuagem amuleto com padrão de um dragão engolindo a lua. Dizem que aquele que tiver essa tatuagem possuirá poderes extremos.
-Aumenta o ATQ em 7% e a Velocidade de Ataque em 10%.
+^0000ffDano físico +7%.^000000
+^0000ffVelocidade de ataque +10%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2911#
 Tatuagem amuleto com padrão de uma mulher gorda. Dizem que aquele que tiver essa tatuagem possuirá poderes extremos.
@@ -42227,21 +42260,25 @@ Tipo: ^777777Ovo de Monstro^000000
 #
 15051#
 Armadura feita de Escama de Bakonawa. Libera um misterioso efeito de luz de luar.
-Diminui danos de monstros do tipo Chefe em 1% a cada 2 refinamentos.
-Adiciona +1 em todos os atributos
+^0000ffTodos os atributos +1.^000000
+A cada 2 refinos:
+^0000ffResistência a Chefes +1%.000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777755^000000
 Peso: ^77777750^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 15052#
 Armadura feita de Escama de Bakonawa. Libera um misterioso efeito de luz de luar.
-Diminui danos de monstros do tipo Chefe em 1% a cada 2 refinamentos.
-Adiciona +2 em todos os atributos
+^0000ffTodos os atributos +1.^000000
+A cada 2 refinos:
+^0000ffResistência a Chefes +1%.000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777755^000000
 Peso: ^77777750^000000
-Classe: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 12699#
 Cinto especial feito para controlar Tikbalang como um servo. Tenha cuidado, pois Tikbalang resistirá violentamente quando usado.
@@ -42256,8 +42293,8 @@ Peso: ^7777771^000000
 #
 12775#
 Totem com poderosa habilidade de lutar agressivamente contra demônios. Emite energia poderosa e sagrada.
-Aumenta em 10% os danos físico e mágico contra Demônios por 20 minutos.
-^ffffff_^000000
+^0000ffDano físico e mágico contra a raça Demônio +10%.^000000
+Duração: ^77777720 minutos^000000
 Peso: ^77777760^000000
 #
 6496#
@@ -43511,31 +43548,36 @@ Classe : ^777777Todas as classes^000000
 //Todos os servidores
 // Kagerou e Oboro
 2171#
-Proteção de braço com um desenho de raposa encantador. Você se sente ágil ao usá-la.
-Esquiva + 5.
+Proteção de braço com um desenho de raposa encantadora. Você se sente ágil ao usá-la.
+^0000ffEsquiva +5.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777745^000000
 Peso: ^77777720^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 2172#
 Proteção de braço com um desenho de lobo ameaçador. Você sente um instinto selvagem ao usá-la.
-ATQ +100 e Esquiva -50 por 5 segundos ao atacar fisicamente a curta distância.
+^0000ffAo realizar ataques físicos de curta distância:^000000
+^0000ff2% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffATQ +100.^000000
+^0000ffEsquiva -50.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777770^000000
 Peso: ^77777725^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 2173#
 Proteção de braço com um desenho brilhante de lua crescente. Você sente uma plenitude mística ao usá-la.
-Reduz o tempo entre habilidades em 2% por nível de refinamento.
+^0000ffA cada refino:^000000
+^0000ffPós-conjuração -2%.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777745^000000
 Peso: ^77777725^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 6493#
 Peça de metal com agulhas afiadas. É doloroso de se pisar. Útil para jogar no chão em emergências para atrasar perseguidores.
@@ -45706,23 +45748,25 @@ Classe : ^777777Sicário^000000
 #
 2475#
 Grevas criadas ao purificar uma Runa Ur.
-^0000ffSP Máx. +40.^000000
-^0000ffHP +1% por refino acima do +8.^000000
-Tipo : ^777777Calçado^000000
-Defesa : ^77777732^000000
-Peso : ^77777790^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Cavaleiro Rúnico^000000
+^0000ffSP máx. +40.^000000
+A cada refino a partir do +8:
+^0000ffHP máx. +1%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777732^000000
+Peso: ^77777790^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
 #
 2476#
 Grevas criadas ao purificar uma Runa Peuz.
-^0000ffSP Máx. +40.^000000
-^0000ffAGI +1 por refino acima do +8.^000000
-Tipo : ^777777Calçado^000000
-Defesa : ^77777732^000000
-Peso : ^77777790^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Cavaleiro Rúnico^000000
+^0000ffSP máx. +40.^000000
+A cada refino a partir do +8:
+^0000ffAGI +1.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777732^000000
+Peso: ^77777790^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
 #
 2574#
 Um manto criado ao purificar uma Runa Ur.
@@ -48972,40 +49016,50 @@ Classes: ^777777Todas ^000000
 //*****************************************************
 22035#
 Feito de folhas de Nepenthes, um conhecido relaxante muscular, estes sapatos lhe ajudam a conjurar habilidades mais rapidamente.
-^0000ffTempo de conjuração variável -10%.^000000
-Se refinado em +8:
+^0000ffConjuração variável -10%.^000000
+Refino +8 ou mais:
 ^0000ffConjuração variável -5% adicional.^000000
-^0000ffAdicional de -1% por refino até o +10.^000000
-Se refinado em +11:
+Refino +9 ou mais:
+^0000ffConjuração variável -1% adicional.^000000
+Refino +10 ou mais:
+^0000ffConjuração variável -1% adicional.^000000
+Refino +11 ou mais:
 ^0000ffConjuração variável -3% adicional.^000000
-^0000ffAdicional de -3% por refino até o +13.^000000
-Tipo: ^777777Sapatos^000000
-DEF: ^77777710^000000
+Refino +12 ou mais:
+^0000ffConjuração variável -3% adicional.^000000
+Refino +13 ou mais:
+^0000ffConjuração variável -3% adicional.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777710^000000
 Peso: ^77777730^000000
-Nível Necessário: ^777777160^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^777777160^000000
+Classes: ^777777Todas^000000
 #
 22036#
 Estas botas de couro prateado de raposa fornecem excelente atrito, facilitando uma movimentação segura.
-^0000ffDano a distância +5%.^000000
-Se refinado em +8:
-^0000ffDano a distância +1% por refino até o +13.^000000
-Tipo: ^777777Sapatos^000000
-DEF: ^77777715^000000
+^0000ffDano físico a distância +5%.^000000
+Refino +8 ou mais:
+^0000ffDano físico a distância +1% adicional.^000000
+A cada refino a partir do +9 até o +13:
+^0000ffDano físico a distância +1%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
 Peso: ^77777730^000000
-Nível Necessário: ^777777160^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^777777160^000000
+Classes: ^777777Todas^000000
 #
 22037#
 Botas tingidas com fluido corporal de Ungoliant que ajudam na concentração.
-^0000ffConsumo de SP por habilidades -5%.^000000
-Se refinado em +8:
-^0000ffConsumo de SP -1% por refino até o +13.^000000
-Tipo: ^777777Sapatos^000000
-DEF: ^77777710^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+Refino +8 ou mais:
+^0000ffCusto de SP das habilidades -1% adicional.^000000
+A cada refino a partir do +9 até o +13:
+^0000ffCusto de SP das habilidades -1%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777710^000000
 Peso: ^77777730^000000
-Nível Necessário: ^777777160^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^777777160^000000
+Classes: ^777777Todas^000000
 #
 2981#
 Um anel feito para guerreiros com a missão de derrotar Morroc.
@@ -55054,7 +55108,7 @@ Peso: ^7777770^000000
 #
 23460#
 Uma sacola confeccionada especialmente para capturar seres mágicos.
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC's.^000000
 Peso: ^7777775^000000
 #
 13073#
@@ -56681,7 +56735,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19022#
-Você finalmente obteve a lendária Pedra Filosofal, tão buscada pelos alquimistas! Famosa por poder transformar chumbo em ouro ou mesmo por conceder a imortalidade, ela foi o objetivo da busca de várias pessoas e feras feridas, desde Nicolas Flamel até o Waldir-Morte e os irmãos El Ricos. Prova de sua ligação com os alquimistas é que ela parece afetar todo tipo de homunculus, até mesmo os em forma de chapéus!
+Você finalmente obteve o lendário Cristal Filosofal! Famoso por transformar chumbo em ouro ou até conceder a imortalidade, essa preciosidade foi almejada por várias pessoas e feras feridas: desde Nicolas Flamel até o Waldir-Morte e os irmãos El Ricos.
 ^0000ffTolerância a Cegueira +100%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Chapéu de Filir]^000000
@@ -56964,7 +57018,7 @@ Refino +9 ou mais:
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
-Nível necessário: ^777777100^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 28572#
@@ -57486,6 +57540,56 @@ Classes: ^777777Todas^000000
 #
 19668#
 Talvez seja só placebo, mas os mensageiros dizem que essa boina te dá a velocidade pra viajar de Al De Baran a Morroc indo em um pé e voltando em outro. É claro que você usaria um acessório desses APENAS caso precisasse fazer o trabalho de um mensageiro... Certo?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-02-27--------------------
+//*****************************************************
+28433#
+Um cristal que irradia uma bela luz azulada, que dizem trazer bons resultados em combate aos sortudos. Ele foi polido até atingir uma forma oval perfeita.
+^0000ffCRIT +5.^000000
+^0000ffDano crítico +2%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffHabilita [Chama Reveladora] nv. 1.^000000
+SOR base 100 ou mais:
+^0000ffCRIT +10 adicional.^000000
+^0000ffDano crítico +10% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedra de Crítico 1]^000000
+^0000ffDano crítico +10% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedra de Crítico 2]^000000
+^0000ffDano crítico +10% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+18813#
+Acreditava-se que todos os óculos escuros no futuro seriam como este. Erraram feio, mas pelo menos a noção de estilo deles era certeira. Recomenda-se usá-los até à noite, pois o seu futuro vai ser tão brilhante que você vai precisar de óculos escuros o tempo todo!
+^0000ffPós-conjuração -10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
+20375#
+Apenas os Marechais mais renomados de Rune-Midgard usaram um chapéu como este. Pode parecer um pouco chamativo para alguém do alto escalão, mas acredite: ele impõe muito respeito!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19904#
+Adornada com uma presilha de caveira, essa boina roxa é bastante estilosa e mantém o equilíbrio perfeito entre um ar descolado e gótico. Assim, as pessoas vão perceber logo de cara que você sabe se vestir de forma fofa, mas seu coração é pura maldade!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
