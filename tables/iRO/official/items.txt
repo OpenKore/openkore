@@ -3562,8 +3562,8 @@
 5900#Divine_Guard_Hat#
 5901#Focus_Beret#
 5902#Harvester_Hat#
-5903#Dead_man_bandana#
-5904#Very_normal_hat#
+5903#Dead_Man_Bandana#
+5904#Very_Normal_Hat#
 5905#Lyrica_Hat#
 5906#Oni_Horns#
 5907#Sea_Captain_Hat#

@@ -30759,16 +30759,15 @@ Applicable Jobs : ^777777Swordman Class/Merchant Class/Thief Class ^000000
 #
 5182#
 A small brown-colored dog that sits atop your head. It's so cute you'd be barking mad to remove it.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808050^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 Agi + 1.
 Auto casts Gloria Lv1 with low percent chance; if AGI is over 77, the cast increases to Lv3.
 Cannot be upgraded.
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-^ffffff_^000000
-Weight : ^77777750^000000
-Required Level : ^77777730^000000
-Jobs : ^777777All^000000
 #
 5183#
 A bird's nest with a newly hatched baby bird. It takes certain responsibility to keep the baby bird.
@@ -34478,11 +34477,12 @@ A four-leafed clover that brings it's wearer luck.
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080802^000000
-Weight: ^8080805^000000
+Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Luk + 3
 Mdef + 2
+All Stats + 1 if the user has active vip
 #
 5597#
 A bubblegum which can swell up like a balloon.
@@ -36291,155 +36291,174 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 5897#
-A copy of the legendary artifact left behind by the greatest Super Novice to ever walk the earth.  The real one has been lost
-for ages, but this replica can imitate some of its awesome power.
-ATK + 30, MATK + 30
-HIT, FLEE, CRI, MDEF + 10.
-Perfect Dodge + 5.
-ASPD + 2.
-Reduces Variable Cast Time by 20%
-Reduce 5% damage from Neutral Property.
-If upgraded to +7 or higher, MHP + 1000, MSP + 100.
-If upgraded to +9 or higher, All State + 5.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777720^000000
-Location : ^777777Upper ^000000
-Weight : ^7777775^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Super Novice Only^000000
+A copy of the legendary artifact left behind by the greatest Super Novice to ever walk the earth. The real one has been lost for ages, but this replica can imitate some of its awesome power.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808020^000000
+Weight: ^8080805^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Super Novice^000000
+Atk + 30
+Matk + 30
+Mdef + 10
+Hit + 10
+Flee + 10
+Perfect Dodge + 5
+Crit + 10
+Aspd + 2
+Reduces the variable casting time of skills by 20%.
+Reduces damage taken from Neutral property attacks by 5%.
+If upgrade level is +7 or higher,
+Max HP + 1000
+Max SP + 100
+If upgrade level is +9 or higher,
+All Stats + 5
 #
 5898#
-A hairband with an array of autumn leaves attached to it.  It displays the beauty of an autumn forest for all to see.
-When using the skill Wind Walk, SP consumption  -20.
-Increase long distance Physical attack by 5%.
-If upgraded to +7 or higher, increases ATK by 2 for every 5 base INT
-If upgraded to +9 or higher,, increases Arrow Storm damage additionally by 2% for every its BaseLV 10 .
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Ranger only^000000
+A hairband with an array of autumn leaves attached to it. It displays the beauty of an autumn forest for all to see.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Ranger^000000
+Increases long-ranged damage on targets by 5%.
+Reduces the SP cost of ^0000FFWind Walker^000000 by 20.
+If upgrade level is +7 or higher,
+Atk + 2 for every 5 base Int.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFArrow Storm^000000 by 2% for every 10 base levels.
 #
 5899#
- simple black ribbon that promotes focus no matter how intense the battle is.
-Increase Sonic Wave, Wind Cutter damage by 50%.
-If upgraded to +7 or higher, Add ATK +2 per base AGI 5
-If upgraded to +9 or higher,  increases the damage done by Ignition Break by 30%
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Rune Knight Only^000000
+A simple black ribbon that promotes focus no matter how intense the battle is.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Increases the damage of ^0000FFSonic Wave^000000 and ^0000FFWind Cutter^000000 by 50%.
+If upgrade level is +7 or higher,
+Atk + 2 for every 5 base Agi.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFIgnition Break^000000 by 30%.
 #
 5900#
 A majestic hat that displays the divine authority that has been invested in the wearer.
-Reduce the damage received by small, mid, big monsters by 5%
-If upgraded to +7 or higher, Activate Heal Lv.5 with 1% chance to yourself when you get physical attacked. (if learned, activated acquired Lv.)
-If upgraded to +9 or higher, Increase Genesis Ray damage by 20%.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Royal Guard Only^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Royal Guard^000000
+Reduces damage taken from Small, Medium and Large size enemies by 5%.
+If upgrade level is +7 or higher,
+Adds a 1% chance of casting ^0000FFLevel 5 Heal^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFGenesis Ray^000000 by 20%.
 #
 5901#
 A green beret that helps the user to refocus their energy into more meaningful attacks. The star on the front is inscribed with the character for 'Dragon'.
-When the Dragon Combo is used, autocast Fallen Empire Lv.1(if learned, autocast the acquired Lv.)
-If upgraded to +7 or higher, when Physical attacking, ASPD +2 for 5 sec with 3% chance.
-If upgraded to +9 or higher,, Increase Fallen Empire damage by 30%.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Sura Only^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Sura^000000
+Adds a X% chance of casting ^0000FFLevel 1 Fallen Empire^000000 on the target when using ^0000FFDragon Combo^000000, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +7 or higher,
+Adds a 3% chance of buffing the user for 5 seconds when performing a physical attack; Aspd + 2.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFFallen Empire^000000 by 30%.
 #
 5902#
 A good-luck hat worn by farmers to make sure they collect an exceptionally good harvest.  Some say it was blessed by the Harvest Goddess herself.
-Adds a chance to drop Blood Sucker Seed and Explosive Mushroom Spore when killing monsters. (1%)
-If upgraded to +7 or higher, adds a small chance to drop Thorn Seed when killing monsters. (0.5%)
-If upgraded to +9 or higher,,  increases the damage done by Cart Cannon skill by 15%.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Geneticist Only^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Geneticist^000000
+Adds a chance of gaining ^008080Blood Sucker Seed^000000 and ^008080Explosive Mushroom Spore^000000 when a monster is killed.
+If upgrade level is +7 or higher,
+Adds a chance of gaining ^008080Thorn Seed^000000 when a monster is killed.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFCart Cannon^000000 by 15%.
 #
 5903#
-An otherwise normal ghost bandana with a red spiral insignia on the front.  It demonstrates a strong connection between the wearer and the afterlife.
-Increase 2 CRI per refine Lv., reduce the fixed casting by 2%.
-When being physically attacked, has a 1% chance to autocast highest level learned Eswoo on the wearer.1%
-If upgraded to +7 or higher,, MATK + 20, Increase casting rate of Eswoo.(3%)
-If upgraded to +9 or higher, reduce variable casting by 20%, when Estun, Esma is used, Consumed SP -5.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777715^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^77777799^000000
-Job : ^777777Magician Class,Soul Linker Only^000000
+An otherwise normal ghost bandana with a red spiral insignia on the front. It demonstrates a strong connection between the wearer and the afterlife.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Crit + 2 per upgrade level of the item.
+Reduces the fixed casting time of skills by 2%.
+Adds a 1% chance of casting ^0000FFLevel 1 Eswoo^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +7 or higher,
+Matk + 20
+Adds an additional 2% chance of casting ^0000FFLevel 1 Eswoo^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +9 or higher,
+Reduces the variable casting time of ^0000FFEsma^000000 and ^0000FFEstun^000000 by 20%.
+Reduces the SP cost of ^0000FFEsma^000000 and ^0000FFEstun^000000 by 5.
 #
 5904#
-A simple hat that would look inconspicuous in any crowd.  Its very helpful to anyone who is trying to blend in.
-MATK + 7%
-If upgraded to +7 or higher, Increases MATK by 2 per Base INT 5 .
-If upgraded to +9 or higher,, Additional increase on MATK by 5%.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Shadow chaser only^000000
+A simple hat that would look inconspicuous in any crowd. It's very helpful to anyone who is trying to blend in.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Shadow Chaser^000000
+Matk + 7%
+If upgrade level is +7 or higher,
+Matk + 2 for every 5 base Int.
+If upgrade level is +9 or higher,
+Additional Matk + 5%
 #
 5905#
-A finely crafted hat designed just for Maestros.  You can't see from the outside, but on the inside is written every song a Maestro needs to make it big!
-Increase Severe Rainstorm damage by 15%
-If upgraded to +7 or higher,, Reduces fixed casting time of all skills by 4% for each level of Voice Lessons learned.
-If upgraded to +9 or higher, reduces the SP cost of Severe Rainstorm by 10.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Maestro only^000000
+A finely crafted hat designed just for Maestros. You can't see from the outside, but on the inside is written every song a Maestro needs to make it big!
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Maestro^000000
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 15%.
+If upgrade level is +7 or higher,
+Reduces the fixed casting time of skills by 4% per level of ^0000FFVoice Lessons^000000 known.
+If upgrade level is +9 or higher,
+Reduces the SP cost of ^0000FFSevere Rainstorm^000000 by 10.
 #
 5906#
-Twisted horns that were supposedly crafted to look like those of a race of demons that died out long ago.  Apparently placing them on your head can grant you a small amount of their power.
-Increase the damage of the skill Counter Slash by 10% for each level of Weapon Blocking learned.
-If upgraded to +7 or higher,, ATK+ 20, HIT + 5.
-If upgraded to +9 or higher, when physical attacking, autocast Cross Impact Lv.1 by 1% chance.
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Guillotine cross only^000000
+Twisted horns that were supposedly crafted to look like those of a race of demons that died out long ago. Apparently placing them on your head can grant you a small amount of their power.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Increases the damage of ^0000FFCounter Slash^000000 by 10% per level of ^0000FFWeapon Blocking^000000 known.
+If upgrade level is +7 or higher,
+Atk + 20
+Hit + 5
+If upgrade level is +9 or higher,
+Adds a 1% chance of casting ^0000FFLevel 1 Cross Impact^000000 on the target when performing a physical attack.
 #
 5907#
-the eyes of naval crews everywhere."
-Axe Tornado and Axe Boomerang damage +20%
-If upgraded to +7 or higher, each level of Weaponry Research learned increases damage of Axe Tornado by an additional 1%
-If upgraded to +9 or higher,,each level of Axe Mastery increases the damage of Axe Tornado by an additional 1%
-^ff0000This item cannot be traded with other accounts.^000000
-Class : ^777777Headgear^000000
-Defense : ^77777720^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Lv. : ^777777100^000000
-Job : ^777777Mechanic only^000000
+The eyes of naval crews everywhere.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808020^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 and ^0000FFAxe Tornado^000000 by 20%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFAxe Tornado^000000 by an additional 1% per level of ^0000FFWeaponry Research^000000 known.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFAxe Tornado^000000 by an additional 1% per level of ^0000FFAxe Mastery^000000 known.
 #
 5912#
 Deviling is your loyal servant who will always stand by your side.
@@ -59170,18 +59189,20 @@ Job : ^777777Rune Knight^000000
 #
 15037#
 Armor created by purifying Peuz runestones.
+Class: ^808080Armor^000000
+Defense: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^808080300^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
 MDEF + 10.
 ATK + 20, FLEE + 17.
 If worn with Peuz Greaves, Shoes and accessory,
 Increases damage to all monster sizes by 10%.
 Increases damage of Wind Cutter and Sonic Wave by 100%.
-Has a chance of activating Storm Blast and Spear Dynamo and adding 2 Aspd while physically attacking.
+Has a chance of activating Storm Blast and Spear Dynamo while physically attacking
+When using Spear Dynamo has of chance adding 2 Aspd while physically attacking for 1 second
 Increases SP costs of skills by 10.
-Class : ^777777Armor^000000
-Defense : ^777777110^000000
-Weight : ^777777300^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
 #
 15038#
 Armor that contains the reliquery remains of an ancient Assassin.
@@ -69946,60 +69967,64 @@ Required Jobs: All Jobs
 Increases physical damage on Demi-Human race targets by 8%.
 #
 18791#
-^FF0000Can be obtained from Poring Festival or Item Mall.^000000
 A ribbon once worn by a shrine maiden as she fought off hordes of demons and youkai.  Wearing it demonstrates - and rewards - your resolve to follow the same path.
--Increases the damage of Magnus Exorcismus by 30%.
--Increases the damage of Magnus Exorcismus by an additional 5% for every 2 refines on the headgear.
--If upgraded to +7, there is a 5% chance of autocasting the learned level of heal when taking physical or magical damage.
--If upgraded to +9, reduces fixed cast time by 1%
-Class : ^777777Headgear^000000
-Defense : ^77777730^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Archbishop^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop^000000
+Increases the damage of ^0000FFMagnus Exorcismus^000000 by 30%.
+Increases the damage of ^0000FFMagnus Exorcismus^000000 by an additional 5% per 2 upgrade levels of the item.
+If upgrade level is +7 or higher,
+Adds a 5% chance of casting ^0000FFLevel 1 Heal^000000 on the user when receiving a physical or magical attack, if a higher level of this skill is known, it will be cast instead.
+If upgrade level is +9 or higher,
+Reduces the fixed casting time of skills by 1%.
 #
 18793#
-^FF0000Can be obtained from Poring Festival or Item Mall.^000000
-A hat that promotes a sophisticated yet sleepy look. It once belonged to an ancient magician who was well known for her vast knowledge and lazy behaviour, to the point she was nicknamed "The Great Unmoving Library."
--Adds 50% more damage to all bolts.
--MDEF +10
--If upgraded to +7 Increases Spell Fist Damage by 25%.
--If upgraded to +9 ASPD +5.
-Class : ^777777Headgear^000000
-Defense : ^77777725^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Sorcerer^000000
+A hat that promotes a sophisticated yet sleepy look. It once belonged to an ancient magician who was well known for her vast knowledge and lazy behavior, to the point she was nicknamed "The Great Unmoving Library".
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808025^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Sorcerer^000000
+Mdef + 10
+Increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000 and ^0000FFLightning Bolt^000000 by 50%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFSpell Fist^000000 by 25%.
+If upgrade level is +9 or higher,
+Aspd + 5
 #
 18794#
-^FF0000Can be obtained from Poring Festival or Item Mall.^000000
 Just an ordinary black magician's hat.  For some reason, you feel somewhat extraordinary while wearing it.
--Increases Crimson Rock, Jack Frost, Earth Strain, and Chain Lightning damage by 5%
--Magical attacks bypass the defense of normal monsters by 10%
--Each upgrade increases magic defense bypass by an additional 2%
-- If upgraded to +7 or higher, increases Crimson Rock, Jack Frost, Earth Strain, and Chain Lightning damage by an additional  5%
-- If upgraded to +9 or higher, increases MATK by 5%
-Class : ^777777Headgear^000000
-Defense : ^77777715^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Warlock^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Bypass 10% of hard magic defense of normal monsters when performing a magical attack.
+Bypass an additional 2% of hard magic defense of normal monsters when performing a magical attack per upgrade level of the item.
+Increases the damage of ^0000FFChain Lightning^000000, ^0000FFCrimson Rock^000000, ^0000FFEarth Strain^000000 and ^0000FFJack Frost^000000 by 5%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFChain Lightning^000000, ^0000FFCrimson Rock^000000, ^0000FFEarth Strain^000000 and ^0000FFJack Frost^000000 by an additional 5%.
+If upgrade level is +9 or higher,
+Matk + 5%
 #
 18795#
-^FF0000Can be obtained from Poring Festival or Item Mall.^000000
 A hat named after the mysterious bird that sings at night. It's song is used to cause night blindness to mask its true form in order to eat humans that stray too deep into the forest.
--Reduces fixed casting time of all skills by 5% for each level of Voice Lessons learned.
--If upgraded to +7 or higher, increases Severe Rainstorm damage by 25%.
--If upgraded to +9 or higher, Increases MaxSP by 200
-Class : ^777777Headgear^000000
-Defense : ^77777715^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Wanderer^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Wanderer^000000
+Reduces the fixed casting time of skills by 5% per level of ^0000FFVoice Lessons^000000 known.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 25%.
+If upgrade level is +9 or higher,
+Max SP + 200
 #
 18796#
 ^ff0000Account Bound^000000
@@ -71440,19 +71465,18 @@ Increases the damage of ^0000FFAxe Tornado^000000 by 20% per 2 upgrade levels of
 Increases the damage of ^0000FFPower Swing^000000 by 20% per 2 upgrade levels of the item.
 #
 18974#
-^808080An old, abandoned driver band that emanates a mysterious aura.^000000
+An old, abandoned driver band that emanates a mysterious aura.
 ^FF0000Account Bound^000000
-Class: Headgear
-Position: Upper
-Defense: 10
-Weight: 10
-Required Level: 170
-Required Jobs: Mechanic
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^808080170^000000
+Usable By: ^808080Mechanic^000000
 All Stat + 1
 Max HP + 1% per 2 upgrade levels of the item.
 Max SP + 1% per 2 upgrade levels of the item.
 Atk + 4 per upgrade level of the item.
-Mdef + 5
 Aspd + 1 per 5 upgrade levels of the item.
 Increases the cooldown of ^0000FFSuicidal Destruction^000000 by 10 seconds per 4 upgrade levels of the item.
 Increases the damage of ^0000FFArm Cannon^000000 by 5% per 2 upgrade levels of the item.
@@ -85757,13 +85781,13 @@ Reduces damage taken from long-ranged attacks by an additional 15%.
 Increases damage taken from long-ranged attacks by 35%.
 #
 28916#
-^808080A shield that contains the power of the earth.^000000
-Class: Shield
-Defense: 150
-Weight: 200
-Required Level: 90
-Required Jobs: All Jobs
-Mdef + 15
+A shield that contains the power of the earth.
+Class: ^808080Shield^000000
+Defense: ^808080150^000000
+Weight: ^808080200^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
 Increases physical and magical damage on Earth property targets by 5%.
 Reduces damage taken from Earth property attacks by 10%.
 This item is indestructible in battle.
@@ -85771,18 +85795,12 @@ If upgrade level is +6 or higher,
 Increases physical and magical damage on Earth property targets by an additional 10%.
 Reduces damage taken from Earth property attacks by an additional 15%.
 If upgrade level is +8 or higher,
-If the users base Str is 90 or higher,
-Atk + 50
-If the users base Agi is 90 or higher,
-Aspd + 5%
-If the users base Vit is 90 or higher,
-Increases the recovery rate of recovery items by 10%.
-If the users base Int is 90 or higher,
-Matk + 30
-If the users base Dex is 90 or higher,
-Reduces the variable casting time of skills by 5%.
-If the users base Luk is 90 or higher,
-Increases critical damage on targets by 5%.
+Atk + 50, if the users base Str is 90 or higher.
+Matk + 30, if the users base Int is 90 or higher.
+Aspd + 5%, if the users base Agi is 90 or higher.
+Reduces the variable casting time of skills by 5%, if the users base Dex is 90 or higher.
+Increases critical damage on targets by 5%, if the users base Luk is 90 or higher.
+Increases the recovery rate of recovery items by 10%, if the users base Vit is 90 or higher.
 #
 28921#
 ^808080A shield that contains the power of the wind.^000000
