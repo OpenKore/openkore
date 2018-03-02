@@ -6942,3 +6942,4 @@
 20000#Defolty_Doll_Hat_Certificate#
 20004#Snake_Head_Hat_Certificate#
 20005#Bennit_Doll_Hat_Certificate#
+20006#Cancer_Crown_Certificate#
