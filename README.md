@@ -38,7 +38,7 @@ To run OpenKore you will need:
 | `mRO` | Malaysian RO | Not Working | N/A |
 | `phRO` | Philippines RO | Not Working| N/A |
 | `twRO` | Taiwanese RO | Not working | windhamwong |
-| `pServer` | update servertybe | Need find recvpacket | sctnightcore, SkylorD  |
+| `pServer` | update servertybe | New Packet | sctnightcore, SkylorD  |
 ## Contributing
 
 OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary submit a pull request!
@@ -51,7 +51,6 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
 * [Taiwanese Community](http://optw.nva-hk.com/forum.php)
-* [kRO:Zero/cRO Community](http://openk0re.xyz/)
 ## Warning
 
 Other communities are not affiliated to openkore.com
