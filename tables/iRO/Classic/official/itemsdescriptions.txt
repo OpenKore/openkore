@@ -71215,3 +71215,17 @@ It is worth 3 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20006#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Cancer Crown!
+5 Gold
+50 2carat Diamonds
+200 3carat Diamonds
+200 Rubys
+1 Cancer Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
