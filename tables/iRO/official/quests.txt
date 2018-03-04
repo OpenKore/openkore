@@ -71,8 +71,8 @@ Gain 2 base levels to complete your Field Combat Training by killing as many mon
 // 솶만솤
 
 2000#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Einbech and help one of our guild members Geschupenschte.#
-Meet Geschupenschte, Blacksmith of Einbech.#
+We want to check the dedication and eagerness of Merchants who apply to us to become Blacksmiths. For the first test, go to Alberta and help one of our guild members Geschupenschte.#
+Meet Geschupenschte, Blacksmith of Alberta.#
 
 2001#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
 It pains me to say this, but it seems you need to study a little more. You can never be a Blacksmith with this score!#
@@ -111,19 +111,19 @@ All done! Okay. Give this Gladius to Wickebine in Morroc of Rune-Midgarts Kingdo
 Deliver Gladius to Wickebine in Morroc.#
 
 2010#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-All done! Okay. Give this Tsurugi to Krongast who is in Lighthalzen. Be sure to bring the reciept back to me.#
-Deliver Tsurugi to Krongast in Lighthalzen.#
+All done! Okay. Give this Tsurugi to Grongast who is in Izlude. Be sure to bring the reciept back to me.#
+Deliver Tsurugi to Krongast in Izlude.#
 
 2011#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
 All done! Okay. Give this Arbalest to Talpiz who is in Payon of Rune-Midgarts Kingdom. Be sure to bring the reciept back to me.#
 Deliver Arbalest to Talpiz in Payon.#
 
 2012#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-All done! Okay. Give this Ring Pommel Saber to Bismarc who is in Hugel. Be sure to bring the reciept back to me.#
-Deliver Ring Pommel Saber to Bismarc in Hugel.#
+All done! Okay. Give this Ring Pommel Saber to Bismarc who is in Comodo. Be sure to bring the reciept back to me.#
+Deliver Ring Pommel Saber to Bismarc in Comodo.#
 
 2013#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
-Well done! You're a great merchant indeed! Okay, go to Altiregen in Einbroch!#
+Well done! You're a great merchant indeed! Okay, go to Altiregen in Geffen!#
 Go back to Altiregen#
 
 2014#Job Change to Blacksmith#SG_FEEL#QUE_NOIMAGE#
@@ -1676,6 +1676,12 @@ Bring the Laphine craftsman 15 Crystallized Teardrops and 15 Fluorescent Liquid.
 7082#Helping the Laphine Craftsman#SG_FEEL#QUE_NOIMAGE#
 You did great finding the Crystallized Teardrops and Fluorescent Liquid. They have enough supply for today.#
 #
+
+7117#Sprakki's Task I#SG_FEEL#QUE_NOIMAGE#
+Follow Sprakki's directions and walk across the bridge to the east.#
+Walk across the bridge to the east.#
+
+
 
 // 샌냦볷
 //--------------------뻮뷪뷅샼쇷--------------------------------
@@ -12347,60 +12353,60 @@ Hunt 30 Gibbet monsters at the Valley of Gyoll east of Nifflheim#
 Bring 5 Ectoplasm and 5 Poisonous Powders to the Witch in Nifflheim.#
 #
 
-62200#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Go to the Brasilis Inn and find Monsieur Pierrot.#
+62200#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Go to the Payon Inn and find Monsieur Pierrot.#
 #
 
-62201#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to Major Molotov at the Brasilis Inn bar.#
+62201#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to Major Molotov at the Payon Inn bar.#
 #
 
-62202#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62202#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Bring 25 bottles of ^ff0000Milk^000000,  15 ^ff0000Strawberries^000000 and 20 ^ff0000Iron Ore^000000s to Major Molotov#
 #
 
-62203#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Rachel Delegation Miss Mansur at the Brasilis Inn#
+62203#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Rachel Delegation Miss Mansur at the Payon Inn#
 #
 
-62204#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Race Aslan to the Eastern Corner of the southern center part of Brasilis.#
+62204#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Race Aslan to the entrance of Payon.#
 #
 
-62205#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Return to Madame Mansur at Brasilis Inn#
+62205#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Return to Madame Mansur at Payon Inn#
 #
 
-62206#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Madame Mansur needs to convince the remaining delegates to come to Brasilis for the games. Return to her next week when the new delegates arrive.#
+62206#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Madame Mansur needs to convince the remaining delegates to come to Payon for the games. Return to her next week when the new delegates arrive.#
 #
 
-62207#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62207#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Look for the Weapon Shop Manager and speak to him.#
 #
 
-62208#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62208#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to the Port Malaya delegate Lawrence Llaguno.#
 #
 
-62209#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Brasilis delegate.#
+62209#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Payon delegate.#
 #
 
-62210#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62210#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to Terra Track or Franklin Field and let them know that you are done speaking to the delegates.#
 #
 
 70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to joust the famous Fencing Master. Though, if you give him 1 Eden Merit Badge he will let you skip waiting.#
+You must wait 3 hours before attempting to joust the famous Fencing Master.#
 #
 
 70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must weight 3 hours before attempting to test your strength. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must weight 3 hours before attempting to test your strength.#
 #
 
 70226#Summer Sports Obstacle Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to tackle the obstacle course again. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must wait 3 hours before attempting to tackle the obstacle course again.#
 #
 
 70231#Back to School#SG_FEEL#QUE_NOIMAGE#
@@ -21226,3 +21232,999 @@ Suspicious Shadow#
 14517#Midnight Snack Delivery#SG_FEEL#QUE_NOIMAGE#
 You delivered the midnight snack#
 Midnight Snack Delivery#
+
+
+
+//----- 2017 3뿹 쟠몹쟑 뻋 쏠솦 - 뻈쇶쟶
+
+62899#Find Happy Egg#SG_FEEL#QUE_NOIMAGE#
+Happy Egg Festival began. Come back to member of Egg festival after break 10 of happy eggs.#
+Find 10 Happy Eggs #
+
+62900#Find Happy Egg - Stand by#SG_FEEL#QUE_NOIMAGE#
+Visit later since the festival item can be received once per day.#
+04h Reset#
+
+62901#Find Happy Egg again!#SG_FEEL#QUE_NOIMAGE#
+Happy Egg Festival began. Come back to member of Egg festival after break 10 of happy eggs.#
+Find 10 Happy Eggs #
+
+62902#Help Festival Decoration#SG_FEEL#QUE_NOIMAGE#
+To decorate festival, collect 10 Happy Three Leaf Clovers from Clover Poporing or Clover Lunatic and give to Deco Expert.#
+10Happy Three Leaf Clovers #
+
+62903#Help Festival Decoration - Stand by#SG_FEEL#QUE_NOIMAGE#
+Doing one thing in a day is waste of time. Come back after midnight.#
+04h Reset#
+
+62904#Help Festival Decoration again!#SG_FEEL#QUE_NOIMAGE#
+To decorate festival, collect 10 Happy Three Leaf Clovers from Clover Poporing or Clover Lunatic and give to Deco Expert.#
+10Happy Three Leaf Clovers #
+
+62905#Happy Pet Vending Machine#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62906#404 Unable to find!#SG_FEEL#QUE_NOIMAGE#
+Something fatal showed up from festival eggs. You can capture those bugs from mysterious eggs with D. Buger. Collect 10 of them and give to Festival Guide.#
+10 Something Fatal#
+
+62907#404 Unable to find - Stand by#SG_FEEL#QUE_NOIMAGE#
+It is so tiring to catch bugs... somehow want to go back home. Let's catch them again tomorrow.#
+04h Reset#
+
+62908#Unable to find 404!#SG_FEEL#QUE_NOIMAGE#
+Something fatal showed up from festival eggs. You can capture those bugs from mysterious eggs with D. Buger. Collect 10 of them and give to Festival Guide.#
+10 Something Fatal#
+
+
+62909#Repay from good work#SG_FEEL#QUE_NOIMAGE#
+Helped twice on catching fatal bugs. Festival guide mentioned about special repay. Let's do it once more.#
+#
+
+
+
+//Last revision: Dec 1, 2016 at 06:38 p.m.
+//Rock Ridge
+1298#Gas! Gas!#SG_FEEL#QUE_NOIMAGE#
+Ghast in front of the Rock Ridge Mine asked me to hunt Gasters. I should eliminate 20 Gasters.#
+Eliminate 20 Gasters.#
+
+1299#Patrol Once a Day#SG_FEEL#QUE_NOIMAGE#
+Ghast said he only needs me to hunt Gasters once a day, before his patrol shift begins. I should wait until his shift begins at 4:00 a.m. the next day.#
+Revisit Ghast after 4:00 a.m. the next day.#
+
+1321#Spotty and Her Ring#SG_FEEL#QUE_NOIMAGE#
+Spotty took Mrs. McPhy's ring with him, and Mr. McPhy is too scared of the Buffalo Bandits to go search for it. I should help them.#
+Find the ring that Spotty took.#
+
+1322#Found Something#SG_FEEL#QUE_NOIMAGE#
+I've found something shiny inside one of the holes Spotty dug, but it's not a gold ring. I've searched along the barbed wire fence enough. I should return to Mrs. McPhy.#
+Return to Mrs. McPhy.#
+
+1323#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1324#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1325#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1326#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1327#Spotty, No!#SG_FEEL#QUE_NOIMAGE#
+Spotty took more stuff from the house to the wasteland, to Mrs. McPhy's dismay. I should look for the missing items.#
+Look for household items that Spotty took.#
+
+1328#Found Missing Items#SG_FEEL#QUE_NOIMAGE#
+I've found what Mrs. McPhy is looking for inside one of the holes Spotty dug. I should go back to Mrs. Mrs. McPhy.#
+Return to Mrs. McPhy.#
+
+1329#Spotty in the Dreamland#SG_FEEL#QUE_NOIMAGE#
+Spotty looks like he's done for the day; he's sound asleep. I should come back after 4:00 a.m. tomorrow and ask Mrs. McPhy if she needs help.#
+Revisit Mrs. McPhy after 4:00 a.m. the next day.#
+
+1330#Spotty's Holes#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy will tell me where he thinks Spotty's holes are. I should go outside the village and look for him.#
+Look for Mr. McPhy outside the village.#
+
+1331#Avenging Spotty#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy, convinced that the Buffalo Bandits wronged Spotty, asked me to take care of them. I should eliminate 3 yellow-haired, 3 black-haired, and 3 white-haired Buffalo Bandits.#
+Eliminate Buffalo Bandits.#
+
+1332#Blood for Blood#SG_FEEL#QUE_NOIMAGE#
+Mr. McPhy is not done avenging Spotty. I should come back to Mr. McPhy in town after 4:00 a.m. the next day.#
+Revisit Mr. McPhy after 4:00 a.m. the next day.#
+
+//Rock Ridge
+7790#Rock Ridge, Land of Opportunities#SG_FEEL#QUE_NOIMAGE#
+Karam Pucci has waived the ship fare to Rock Ridge as a complimentary service.#
+#
+
+7791#Problems in Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+Karam Pucci said Rock Ridge needs help. I should go to Rock Ridge and talk to Mayor Costello by the dock.#
+Talk to Costello.#
+
+7792#Problems in Rock Ridge 2#SG_FEEL#QUE_NOIMAGE#
+Mayor Costello said Rock Ridge is in trouble because of the Buffalo Bandits, and that he wants me to solve the problem in concert with the sheriff. ^4d4dffI should go to the sheriff's office and meet Wyatt Warp^000000.#
+Talk to Wyatt Warp.#
+
+7793#Good News#SG_FEEL#QUE_NOIMAGE#
+Johnny James, the leader of the Buffalo Bandits, only wants to negotiate with Mayor Costello. I should deliver this exciting news to ^4d4dffCostello at the dock^000000.#
+Talk to Costello.#
+
+7794#Expected Response#SG_FEEL#QUE_NOIMAGE#
+Costello, too afraid of the bandits to go negotiate with them, asked me to go on his behalf. I should go tell Sheriff Warp.#
+Talk to Wyatt Warp.#
+
+7795#Negotiation on the Railroad#SG_FEEL#QUE_NOIMAGE#
+The negotiation meeting will take place by the ^4d4dffunmoving freight train^000000. I can find it if I exit the village through the eastern gate and follow the railroad.#
+
+Find Unmoving Freight Train.#
+7796#Unexpected Arrest#SG_FEEL#QUE_NOIMAGE#
+Cactus vigilantes have helped us capture the leader of the Buffalo Bandits, Johnny James. I should return to the ^4d4dffsheriff's office and talk to the sheriffs about our next move^000000.#
+
+Talk to Wyatt and Ivoka.#
+7797#Hear Me Out 1#SG_FEEL#QUE_NOIMAGE#
+Like Ivoka suggested, I should talk to Johnny James and plant a seed of doubt in his mind about Albert Ford.#
+Talk to Johnny James.#
+
+7798#Perfectly Primed#SG_FEEL#QUE_NOIMAGE#
+Johnny James is convinced that Albert Ford betrayed him. He asked me to get rid of Albert and bring his mane as proof. I should report to the Sheriff for now.#
+Talk to Wyatt Warp.#
+
+7799#Shawn McCurdy's Weapon 1#SG_FEEL#QUE_NOIMAGE#
+Sheriff Warp said ^4d4dffForeman McCurdy^000000 has a good bargaining chip. He's in the plaza.#
+Talk to Shawn McCurdy.#
+
+7800#Shawn McCurdy's Weapon 2#SG_FEEL#QUE_NOIMAGE#
+I could get some purple ores, which I thought could no longer be mined because of the Buffalo Bandits. I should find Shawn McCurdy ^4d4dffsouth from the entrance to the mine^000000.#
+Talk to Shawn McCurdy.#
+
+7801#Shawn McCurdy's Weapon 3#SG_FEEL#QUE_NOIMAGE#
+We were able to sneak into the second floor of the mine. I should get ^4d4dff1 Purple Ore^000000, and then talk to Shawn.#
+1 Purple Ore#
+
+7802#Hear Me Out 2#SG_FEEL#QUE_NOIMAGE#
+I should ^4d4dffknock on the signaling rock 3 times^000000, and then talk to Albert Ford about his gang's future.#
+Talk to Albert Ford.#
+
+7803#Happy for Broken Trust#SG_FEEL#QUE_NOIMAGE#
+Albert Ford, convinced Johnny James betrayed his gang, has agreed to make a deal. I should deliver Albert's Mane to Johnny James as proof.#
+Talk to Johnny James.#
+
+7804#Location of the Ores#SG_FEEL#QUE_NOIMAGE#
+Johnny told me where he hid the ores: ^4d4dffunder the elevator on the second floor of the mine^000000. I should report to Sheriff Warp with this information.#
+Talk to Wyatt Warp.#
+
+7805#Location of the Ores 2#SG_FEEL#QUE_NOIMAGE#
+^4d4dffShawn McCurdy^000000 is at the ^4d4dfftemporary entrance to the second floor of the mine^000000. I should tell him where the ores are and follow him to the inside of the mine.#
+Talk to Shawn McCurdy.#
+
+7806#Location of the Ores 3#SG_FEEL#QUE_NOIMAGE#
+The broken elevator is to the north from the center of the second floor. I should find an ^4d4dffOre Box^000000 underneath the elevator, and bring it to Shawn McCurdy.#
+1 Ore Box#
+
+7807#Ace up Our Sleeve#SG_FEEL#QUE_NOIMAGE#
+I should get rid of some Buffalo Bandits and collect ^4d4dff5 Brown Mufflers and 5 Bandit Scarves^000000 to show Albert Ford. He'll hit the roof.#
+5 Brown Mufflers and 5 Bandit Scarves#
+
+7808#Case Solved#SG_FEEL#QUE_NOIMAGE#
+I might have burned my bridges with Albert Ford, but I don't care. I don't have to see him anymore. I should report to Sheriff Warp.#
+Talk to Wyatt Warp.#
+
+7809#Collecting Ores#SG_FEEL#QUE_NOIMAGE#
+Collected the ores.#
+#
+
+//North America Local Map Rock Ridge Quest
+9438#To the New Land!#SG_FEEL#QUE_NOIMAGE#
+Talk to Karam Pucci in Alberta and go to the new land.#
+Talk to Karam Pucci in Alberta.#
+
+9439#Serious Problem#SG_FEEL#QUE_NOIMAGE#
+Costello in Rock Ridge needs help for some problem that his village is having.#
+Meet Costello in Rock Ridge.#
+
+9440#To Address the Problem#SG_FEEL#QUE_NOIMAGE#
+Ask the village sheriff, Wyatt Warp, for more details about the problem.#
+Talk to Wyatt Warp in the sheriff's office in Rock Ridge.#
+
+9441#The Quickest Solution#SG_FEEL#QUE_NOIMAGE#
+Ask Costello for his opinion on how to solve the problem.#
+Talk to Costello.#
+
+9442#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Ask Ivoka Skudi for his opinion on how to solve the problem.#
+Talk to Ivoka Skudi in the sheriff's office.#
+
+9443#Taking Our Time#SG_FEEL#QUE_NOIMAGE#
+Ask Shawn McCurdy for his opinion on how to solve the problem.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9444#Making My Decision#SG_FEEL#QUE_NOIMAGE#
+Select one of the three propositions.#
+Talk to Wyatt Warp.#
+
+9445#How Much?#SG_FEEL#QUE_NOIMAGE#
+Give Costello 1 million Zeny for the negotiation.#
+Talk to Costello while carrying 1 million Zeny.#
+
+9446#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Ivoka Skudi in the sheriff's office, and then talk to Johnny James in the underground jail cell.#
+Talk to Ivoka Skudi and Johnny James.#
+
+9447#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Now that I convinced Johnny James, it's time to convince Albert Ford.#
+Talk to Albert Ford by the entrance to the mine.#
+
+9448#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Use Albert Ford's mane to reassure Johnny James.#
+Bring the mane to Johnny James.#
+
+9449#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Now I know where the ores are. I should report to Ivoka Skudi and Wyatt Warp.#
+Talk to Ivoka Skudi and Wyatt Warp.#
+
+9450#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy and learn about the secret passage into the mine.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9451#Playing Enemies#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy by the secret entrance to the mine and enter the mine.#
+Talk to Shawn McCurdy in the Rock Ridge field.#
+
+9452#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+I should talk to Shawn McCurdy about mining.#
+Talk to Shawn McCurdy in Rock Ridge.#
+
+9453#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Talk to Shawn McCurdy by the secret entrance to the mine and enter the mine.#
+Talk to Shawn McCurdy in the Rock Ridge field.#
+
+9454#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Collect Purple Ores in the mine, and bring at least 20 Purple Ores to Costello.#
+Collect 20 Purple Ores and bring them to Costello.#
+
+9455#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Bring the ores to Albert Ford by the entrance to the mine, and renegotiate with him.#
+Collect 20 Purple Ores and bring them to Albert Ford.#
+
+9456#Sweat for Blood#SG_FEEL#QUE_NOIMAGE#
+Go over the new negotiation details with Albert Ford, and then report to Costello.#
+Talk to Costello.#
+
+9457#Solved Anyway#SG_FEEL#QUE_NOIMAGE#
+Solve the problem of the Rock Ridge village.#
+Talk to Wyatt Warp.#
+
+9458#Pipe Cleaning#SG_FEEL#QUE_NOIMAGE#
+Eliminate sea anemones that keep sticking to the water pipes in the basement of Rock Ridge.#
+Eliminate 20 Sea Anemones.#
+
+9459#Too Early for Pipe Cleaning#SG_FEEL#QUE_NOIMAGE#
+There are not yet many sea anemones to get rid of.#
+#
+
+9460#Collecting Ore Fragments#SG_FEEL#QUE_NOIMAGE#
+Hunt monsters in the Rock Ridge fields and mine, and collect ore fragments.#
+Collect 10 Ore Fragments and deliver them to Crouched Horse.#
+
+9461#Enough Ores#SG_FEEL#QUE_NOIMAGE#
+Crouched Horse doesn't need more ores at this moment.#
+#
+
+//Rock Ridge
+
+12381#New Continent's Food Supplier#SG_FEEL#QUE_NOIMAGE#
+Supply food ingredients to the new continent to the best of your ability.#
+New continent's food supplier#
+
+12382#Distributing Food#SG_FEEL#QUE_NOIMAGE#
+Thanks to you, now the food distributer has enough ingredients to cook for everyone who has been waiting for their food.#
+Quest resets at 4:00 a.m.#
+
+12383#Sweet Potato Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Sweet Potatoes516 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Sweet Potatoes516#
+
+12384#Meat Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 50 Meats517 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+50 Meats517#
+
+12385#Carrot Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Carrots515 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Carrots515#
+
+12386#Banana Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Bananas513 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Bananas513#
+
+12387#Pumpkin Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 160 Pumpkins535 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+160 Pumpkins535#
+
+12388#Mushroom Delivery#SG_FEEL#QUE_NOIMAGE#
+Get 60 Mushrooms581 from the mainland and deliver them to the Food Distributor in Rock Ridge. You can buy them from merchants in big cities.#
+60 Mushrooms581#
+
+12389#Guardian of Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+You have joined the vigilante group of the pioneer village in the new continent.#
+Vigilantes in the new continent#
+
+12390#Relieved for Now#SG_FEEL#QUE_NOIMAGE#
+This should keep the pioneer village safe from monsters for now.#
+Quest resets at 4:00 a.m.#
+
+12391#Buffaloes with Rifles#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000rifle Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12392#Punishing the Red Masks#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000red mask Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12393#Eye Patch Desperadoes#SG_FEEL#QUE_NOIMAGE#
+Eliminate 15 ^ff0000eye patch Buffalo Bandits^000000. #
+Eliminate 15 Buffalo Bandits.#
+
+12394#Exterminate Gray Four-legged Beasts#SG_FEEL#QUE_NOIMAGE#
+Eliminate 20 ^ff0000Coyotes^000000. They are mainly found in the narrow valley in the west of Rock Ridge.#
+Eliminate 20 Coyotes.#
+
+12395#Exterminate Swamp Arclouzes#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Swamp Arclouzes^000000. You can find them in the basement of Rock Ridge.#
+Eliminate 10 Swamp Arclouzes.#
+
+12396#Exterminate Brown Rats#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Brown Rats^000000. You can find them in the basement of Rock Ridge.#
+Eliminate 10 Brown Rats.#
+
+12398#You're Good#SG_FEEL#QUE_NOIMAGE#
+Good job accomplishing a tricky mission. Go ahead and rest for a while.#
+Quest resets at 4:00 a.m.#
+
+12399#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000rifle Buffalo Bandits with glowing blue eyes^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12400#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Buffalo Bandits wearing green masks^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12401#Hunt Heinous Criminals#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Buffalo Bandits wearing an eye patch and a pale green vest^000000. #
+Eliminate 10 Buffalo Bandits.#
+
+12402#Eliminate Dangerous Gas#SG_FEEL#QUE_NOIMAGE#
+Eliminate 10 ^ff0000Gasters^000000. #
+Eliminate 10 Gasters.#
+
+12403#Laborers of Rock Ridge#SG_FEEL#QUE_NOIMAGE#
+Be the supplier of water for the pioneer village in the new continent.#
+Protect the water in the new continent.#
+
+12404#Are You Not Tired?#SG_FEEL#QUE_NOIMAGE#
+You have maintained all the pipes in the basement of Rock Ridge. The desalination system should be fine for a while.#
+Quest resets at 4:00 a.m.#
+
+12405#Maintain the Red Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky red pipe. Find a glowing red spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing red spot in the basement of Rock Ridge.#
+
+12406#Maintain the Blue Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky blue pipe. Find a glowing blue spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing blue spot in the basement of Rock Ridge.#
+
+12407#Maintain the Yellow Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky yellow pipe. Find a glowing yellow spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing yellow spot in the basement of Rock Ridge.#
+
+12408#Maintain the White Pipe#SG_FEEL#QUE_NOIMAGE#
+Repair the leaky white pipe. Find a glowing white spot in the basement of Rock Ridge, and then click it to repair the pipe.#
+Find a glowing white spot in the basement of Rock Ridge.#
+
+12409#Pipes Maintained#SG_FEEL#QUE_NOIMAGE#
+You have maintained all the pipes. Now return to the ground level and talk to Desalination Facility Manager.#
+Return to the ground level.#
+
+12410#Contract with the Wealthy Merchant#SG_FEEL#QUE_NOIMAGE#
+Entered a contract with the wealthy merchant.#
+Entered a contract with the wealthy merchant.#
+
+12411#Come Back Tomorrow#SG_FEEL#QUE_NOIMAGE#
+He's done doing business with you for the day. Please come back tomorrow.#
+Quest resets at 4:00 a.m.#
+
+//Rock Ridge Fireworks Festival Committee
+
+14672#Preparing for the Firework Festival#SG_FEEL#QUE_NOIMAGE#
+Gasters drop deadly poisonous powder and explosive powder. Bring me 10 Deadly Poisonous Powders and 1 Explosive Powder. Oh, and don't forget to cull Gasters by hunting 15 of them.#
+10 Deadly Poisonous Powders and 1 Explosive Powder#
+
+14673#Time to Make Bombs#SG_FEEL#QUE_NOIMAGE#
+You've brought me enough ingredients to make bombs all night. Come back early in the morning tomorrow. That's the best time to do things. - Demon#
+Quest resets at 4:00 a.m.#
+
+//Rock Ridge
+62910#Peace of the Family#SG_FEEL#QUE_NOIMAGE#
+Mrs. Cacturon asked me to find 5 Juice Mix Packages that she bought for her son and lost in the wasteland. I might as well hunt 30 Coyotes for the safety of these villagers.#
+Get 5 Juice Mix Packages and hunt Coyotes.#
+
+62911#Back for More Coyotes Tomorrow#SG_FEEL#QUE_NOIMAGE#
+I should call it a day today and come back tomorrow to hunt more coyotes.#
+Reset at 4:00 a.m.#
+
+62912#Hunting Coyotes Again#SG_FEEL#QUE_NOIMAGE#
+I should hunt 30 Coyotes to protect the villagers, and report to Mrs. Cacturon.#
+Hunt coyotes.#
+
+62913#Failed to Get Juice Mix Package#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62914#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62915#Discovered Wasteland Cactuten#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62916#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62917#Discovered Coyote#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62918#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62919#Discovered Cactus Girl#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62920#Discovered Coyote#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62921#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62922#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62923#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62924#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62925#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62926#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+62927#Discovered Suspicious Sand Pile#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+
+62626#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62627#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62628#Fishing Event - Prontera Field#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62629#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62630#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62631#Fishing Event - Byalan Island#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62632#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62633#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62634#Fishing Event - Alberta#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62635#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62636#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62637#Fishing Event - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62638#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62639#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62640#Fishing Event - Comodo#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62641#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62642#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62643#Fishing Event - Izlude#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62651#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62652#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62653#Fishing Event - Hugel#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62654#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62655#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62656#Fishing Event - Niflheim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62657#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62658#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+62659#Fishing Event - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+There is a 30 minute cooldown per fishing spot. You can try again soon!#
+Come back in a little while to fish again!#
+
+
+62928#Silvervine Quest - Angeling#SG_FEEL#QUE_NOIMAGE#
+Please help me get my revenge!#
+Eliminate the Angeling#
+
+62929#Silvervine Quest - Archangeling#SG_FEEL#QUE_NOIMAGE#
+This monster beat me up in the past! Make it disappear!#
+Eliminate the Archangeling#
+
+62930#Silvervine Quest - Cat o Nine Tails#SG_FEEL#QUE_NOIMAGE#
+Please get rid of it!#
+Eliminate the Cat o Nine Tails#
+
+62931#Silvervine Quest - Deviling#SG_FEEL#QUE_NOIMAGE#
+Exterminate...Exterminate...!#
+Eliminate the Deviling#
+
+62932#Silvervine Quest - Dragonfly#SG_FEEL#QUE_NOIMAGE#
+Help me squash it!#
+Eliminate the Dragonfly#
+
+62933#Silvervine Quest - Eclipse#SG_FEEL#QUE_NOIMAGE#
+Please help me get my revenge!#
+Eliminate the Eclipse#
+
+62934#Silvervine Quest - Ghostring#SG_FEEL#QUE_NOIMAGE#
+Get rid of the spookiness.#
+Eliminate the Ghostring#
+
+62935#Silvervine Quest - Mastering#SG_FEEL#QUE_NOIMAGE#
+Please help eliminate!#
+Eliminate the Mastering#
+
+62936#Silvervine Quest - Maya Purple#SG_FEEL#QUE_NOIMAGE#
+Help me out and I'll reward you!#
+Eliminate the Maya Purple#
+
+62937#Silvervine Quest - Toad#SG_FEEL#QUE_NOIMAGE#
+Please banish the Toad!#
+Eliminate the Toad#
+
+62938#Silvervine Quest - Vagabond Wolf#SG_FEEL#QUE_NOIMAGE#
+Make it disappear and I'll reward you!#
+Eliminate the Vagabond Wolf#
+
+62939#Silvervine Quest - Vocal#SG_FEEL#QUE_NOIMAGE#
+I never liked bugs...please get rid of this monster.#
+Eliminate the Vocal#
+
+62942#Silvervine Miracle Elixir Buff I#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
+
+62943#Rock Ridge Spotlight Buff#SG_FEEL#QUE_NOIMAGE#
+You can get another Spotlight Buff tomorrow!#
+You can get another Spotlight Buff tomorrow!#
+
+62945#Silvervine Miracle Elixir Buff II#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
+
+62946#Silvervine Miracle Elixir Buff III#SG_FEEL#QUE_NOIMAGE#
+You can get this buff up to 3 times a day#
+Come back later for another buff#
+
+62948#Silvervine Stat Reset#SG_FEEL#QUE_NOIMAGE#
+You can reset 5 of your stat points once a week. Please come back next week if you'd like to reset your stats again.#
+Come back next week if you'd like another stat reset#
+
+
+
+
+// A Bed Of Honor
+
+14683#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+You can see the device of great crystal shape if you look around where you arrive. Close in with it so that you could use the device.#
+Mysterious Device#
+
+14684#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14685#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14686#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+
+
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+14687#Mysterious Device#SG_FEEL#QUE_NOIMAGE#
+Emergency Proto... starts.. running... Operate... RT..017 to.. user... The.. Cool... Down... 1Hour...#
+The Cool Down#
+
+
+62949#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+You have been sent into a dream state Maybe someone can help you..#
+#
+
+62950#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Find others stuck here and get their help.#
+#
+
+62951#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Lenn has asked you to bring him Ectoplasm.#
+#
+
+62952#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Talk to Lenn.#
+#
+
+
+62953#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+DREAM ESSENCE.#
+#
+
+62954#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Bring Claud Rusty Kitchen Knives#
+#
+
+62955#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+MYSTERIOUS HATCHET#
+#
+
+62956#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Check on Gina Crey#
+#
+
+62957#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+It is time to leave return to the one who brought you here.#
+#
+
+62958#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dream Demon.#
+#
+
+62959#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dream Demon.#
+#
+
+62960#A Nightmare on Prontera Street#SG_FEEL#QUE_NOIMAGE#
+You can try again tomorrow.#
+#
+
+62967#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Speak to Santa Claws, he's on the 2nd claw from the right.#
+#
+
+62968#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Get Santa Claws 1 Yarn and 10 Fresh fish, once you've acquired them, bring them to Grumpy Helper by his side.#
+#
+
+62969#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Looks like Grumpy Helper is no help at all, go back to Santa Claws and speak to him again.#
+#
+
+62970#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+May as well take things into your own hands at this rate! Speak to the Cheerful Helper. He seems pretty excited about Christmas.#
+#
+
+62971#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Gather 20 Wrapping Paper and 20 Wrapping Lace for the Cheerful Helper.#
+#
+
+62972#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Go back to Retired Santa and ask him for help in making Christmas gifts.#
+#
+
+62973#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Go to the sleigh below the tree in Lute. Retired Santa said there are some gifts over there.#
+#
+
+62974#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Good Job! Now take these gifts to the northeast sleigh and load them up for delivery.#
+#
+
+62975#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+You've successfully placed all of the gifts on the sleigh. Go back to Retired Santa to tell him the good news!#
+#
+
+62976#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+Speak to Retired Santa again tomorrow to help save Christmas again!#
+#
+
+
+
+// 12뿹 뒫닉 쏠솦
+
+14849#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You wanna a make snow flower bouquet? Then, collect 10 magical snow flowers and come back here.#
+10 magical snow flower#
+
+14850#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+Find the Snow flower illusionist. If you are interested find the place.#
+To snow flower illusionist#
+
+14851#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find Coti and Ulsi.#
+To Coti#
+
+14852#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Did you find a special card from your gift box? Then bring it to Twinkle. You will receive a special gift.#
+To Twinkle#
+
+14853#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 magical snow flowers to make a snow flower bouquet. Please don't forget 1 carrot for decorating the snowman. - Marine#
+10 Snow flower, 1 carrot#
+
+14854#Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The magical snow flower effect is still remains. Please comeback after the dawn. - Marine#
+Waiting time#
+
+14855#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! Donate 10 warm cotton!#
+10 Warm cotton#
+
+14856#Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping seems be be finished by dawn so please come back after dawn! - Coti#
+Waiting time#
+
+14857#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is WINTER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters W. I. N. T. E. R.. Total of 6 letters. - Twinkle#
+Collect WINTER card#
+
+14858#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S. N. O. W. Total of 4 letters. - Twinkle#
+Collect SNOW card#
+
+14859#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. E. S. T. I. V. A. L. Total of 8 letters. - Twinkle#
+Collect FESTIVAL card#
+
+14860#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FLOWER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. L. O. W. E. R. Total of 6 letter. - Twinkle#
+Collect FLOWER card#
+
+14861#Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Alphabet card exchange is once a day. Okay? So please comeback after dawn! - Twinkle#
+Waiting time#
+
+
+62977#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62978#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62979#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62980#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62981#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62982#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62983#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62984#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62985#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62986#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62987#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62988#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62989#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62990#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62991#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62992#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62993#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62994#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62995#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62996#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62997#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62998#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62999#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63000#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63001#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63002#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63003#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Hunt the following monsters for Norman.#
+#
+
+62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Norman can't make another bag until hes had a chance to rest.#
+#
+
+//Valentines Day 2018
+63029#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again about bringing chocolates to Niflheim.#
+#
+
+63030#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Bring Ingrid the ingredients she needs to make the chocolates. She needs 30 Cacao, 10 Honey, 5 Milk, 3 Red Spice, and 3 Cooking Oil.#
+#
+
+63031#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to see if she's done making the chocolates.#
+#
+
+63032#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go to Niflheim and search for Rupert. He can be anywhere...#
+#
+
+63034#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Dullahans to gain Rupert's trust.#
+#
+
+63035#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Rupert again when you're ready.#
+#
+
+63036#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go back to Ingrid and tell her the good news!#
+#
+
+63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to conclude your adventure.#
+#
