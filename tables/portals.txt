@@ -3035,15 +3035,15 @@ mal_in02 142 60 mal_in02 162 61
 xmas 139 307 evt_xmas 129 129 0 c r1
 
 #EP-14.2
-// mora <-> bif_fild02
+# mora <-> bif_fild02
 mora 182 74 bif_fild02 286 327
 bif_fild02 285 332 mora 179 74 0 c r0 n 
 
-//  bif_fild02 <-> ecl_fild01
+#  bif_fild02 <-> ecl_fild01
 bif_fild02 292 351 ecl_fild01 205 76
 ecl_fild01 207 72 bif_fild02 294 350
 
-// ecl_fild01 <-> ecl_tdun0.*
+# ecl_fild01 <-> ecl_tdun0.*
 ecl_fild01 182 82 ecl_tdun01 60 13
 ecl_tdun01 61 11 ecl_fild01 182 85
 ecl_tdun01 67 106 ecl_tdun02 60 88
@@ -3055,11 +3055,11 @@ ecl_tdun04 26 26 ecl_tdun03 50 44
 ecl_tdun04 34 17 ecl_fild01 183 73
 ecl_fild01 183 70 ecl_tdun04 33 19
 
-// eclage <-> ecl_fild01
+# eclage <-> ecl_fild01
 eclage 98 26 ecl_fild01 99 317
 ecl_fild01 97 322 eclage 100 28
 
-// eclage <-> ecl_in01
+# eclage <-> ecl_in01
 eclage 299 309 ecl_in01 47 11
 ecl_in01 47 8 eclage 297 307
 
@@ -3108,7 +3108,7 @@ casp_in01 262 203 casp_in01 191 201
 casp_auct02 40 36 caspen 151 198
 casp_dun01 23 38 caspen 267 277
 
-//Museum
+#Museum
 brasilis 146 162 bra_in01 17 137
 bra_in01 17 134  brasilis 148 161
 bra_in01 50 145  bra_in01 81 143
@@ -3118,7 +3118,7 @@ bra_in01 79 169  bra_in01 46 170
 bra_in01 138 174 bra_in01 12 183
 bra_in01 206 98  bra_in01 138 176
 
-//Inn
+#Inn
 brasilis 274 153 bra_in01 38 9
 bra_in01 39 7 brasilis 273 151
 bra_in01 52 27 bra_in01 85 26
@@ -3132,11 +3132,19 @@ bra_in01 25 70  bra_in01 32 26
 bra_in01 31 74  bra_in01 148 59
 bra_in01 148 57 bra_in01 31 72
 
-//Dungeon
+#Dungeon
 bra_dun01 199 35 bra_dun02 261 263
 bra_dun02 261 265 bra_dun01 199 37
 
-//Dungeon Access
+#Dungeon Access
 bra_in01 144 187 bra_in01 0 206 102 c r0 n
 bra_in01 206 188 bra_dun01 87 47 0 n
 bra_dun01 87 43 bra_in01 206 185 0 n
+
+# dewata
+dewata 44 252 dew_fild01 373 212
+dew_fild01 375 212 dewata 46 256
+dew_fild01 57 273 dew_in01 15 33
+dew_fild01 48 65 dew_dun02 302 30
+dew_dun02 305 30 dew_fild01 50 65
+
