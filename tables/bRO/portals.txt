@@ -2927,3 +2927,44 @@ moc_prydb1 103 54 moc_prydn1 93 96 5000 c r0 c c r0 c c r0 c c r0 c
 moc_prydn1 94 98 moc_prydb1 100 57 0 c r0 c
 moc_prydn1 223 9 moc_prydn2 192 8
 moc_prydn2 195 8 moc_prydn1 220 9
+
+
+# dewata #need add step npc talk 
+dewata 44 252 dew_fild01 373 212
+dew_fild01 375 212 dewata 46 256
+dew_fild01 57 273 dew_in01 15 33
+dew_fild01 48 65 dew_dun02 302 30
+dew_dun02 305 30 dew_fild01 50 65
+
+# Lasagna #need add step npc talk 
+lasa_fild02 348 244 lasa_dun01 24 143
+lasa_dun01 18 143 lasa_fild02 344 243
+lasa_dun_q 190 14 lasa_dun01 152 98
+lasa_dun01 157 98 lasa_dun02 22 171
+lasa_dun02 18 171 lasa_dun01 153 98
+lasa_dun02 146 58 lasa_dun03 190 18
+lasa_dun03,190,15 lasa_dun02,146 54
+lasa_fild01 134 381 lasagna 153 58
+lasagna 150 54 lasa_fild01 131 378
+lasa_fild01 341 375 lasagna 327 56
+lasagna 327 51 lasa_fild01 344 371
+lasagna 358 91 lasa_fild02 20 98
+lasa_fild02 16 98 lasagna 355 92
+lasa_in01 159 61 lasagna 68 202
+conch_in 60 61 lasagna 206 323
+conch_in 51 60 conch_in 31 60
+conch_in 34 60 conch_in 53 59
+conch_in 63 53 conch_in 63 33
+conch_in 63 35 conch_in 64 55
+conch_in 64 66 conch_in 63 89
+conch_in 63 87 conch_in 63 64
+conch_in 101 53 conch_in 101 33
+conch_in 101 35 conch_in 102 55
+conch_in 101 66 conch_in 101 89
+conch_in 102 87 conch_in 101 64
+conch_in 137 53 conch_in 139 33
+conch_in 139 35 conch_in 138 55
+conch_in 137 66 conch_in 139 89
+conch_in 140 87 conch_in 137 64
+conch_in 142 60 conch_in 162 61
+conch_in 159 61 conch_in 140 59
