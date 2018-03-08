@@ -6878,6 +6878,7 @@
 14667#Scroll_of_Health#
 14683#10th_Anniversary_Lucky_Box#
 14706#Pirate_Eyepatch_Box#
+14735#Hop_into_the_Costume_Box#
 14759#Shadow_Armor_Weapon_Box#
 14836#Xin_Niar_Scroll#
 14856#Ancient_Elven_Scroll#
@@ -8206,7 +8207,7 @@
 19537#C_Gryphon_Hat#
 19538#Costume:_Full_Moon#
 19539#Costume:_Reginleif_Hairband#
-19540#Costume:_Rabbit_Earplug#
+19540#Costume:_Rabbit_Earmuffs#
 19541#Costume:_White_Romantic_Flower#
 19542#Costume:_Devil_Whisper#
 19543#Oliver_Wolf_Hood#
@@ -8266,7 +8267,7 @@
 19649#Costume:_White_Kitten_Ears#
 19650#Costume_Rainbow_Feather_Decoration#
 19651#C_RWC_Shouting_Mouth#
-19652#placeholder#
+19652#Costume:_Rabbit_Magic_Hat#
 19653#placeholder#
 19654#Costume:_Captain_Carocc's_Hat#
 19655#placeholder#
