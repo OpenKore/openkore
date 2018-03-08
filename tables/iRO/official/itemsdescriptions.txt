@@ -33802,14 +33802,16 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 5520#
-Celebrate the year of the rabbit and keep your ears warm at the same time.
-Matk +4%, Damage against all monster types increases by 4%.
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper & Middle^000000
-Weight : ^7777774^000000
-Required Level: ^7777771^000000
-Jobs : ^777777All^000000
+Celebrate the year of the rabbit and keep your ears warm at the same time
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080800^000000
+Weight: ^8080804^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk +4%
+Damage against all monster types increases by 4%
+
 #
 5521#
 The fearsome growl of the warrior, highly intimdating.  Part of the Eastern Costume Set, obtainable from the ^0000CCGoCash East West Costume Box^000000.
@@ -58886,6 +58888,20 @@ Weight : ^7777771^000000
 14706#
 Contains 1 Pirate Eyepatch that lasts for 3 days
 #
+14735#
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+When opened gives one of the following
+
+Costume Eclipse Knit Hat
+Costume Lunatic Knit Hat
+Costume Rabbit Earplug
+Costume Camouflage Bunny Hood
+Costume Pretty Rabbit Hood
+Costume Rabbit Magic Hat
+Costume Love Rabbit Hood
+Costume Rabbit Ear Hat
+#
 14759#
 A box that gives you a random item.
 Open to get one of the following:
@@ -59202,7 +59218,7 @@ Increases damage to all monster sizes by 10%.
 Increases damage of Wind Cutter and Sonic Wave by 100%.
 Has a chance of activating Storm Blast and Spear Dynamo while physically attacking
 When using Spear Dynamo has of chance adding 2 Aspd while physically attacking for 1 second
-Increases SP costs of skills by 10.
+Increases SP costs of skills by 10%.
 #
 15038#
 Armor that contains the reliquery remains of an ancient Assassin.
@@ -73927,11 +73943,11 @@ Jobs : ^777777All^000000
 #
 19540#
 Ear plugs in the form of a white rabbit small and cute.
-AGI + 1, FLEE + 2.
-Class : ^777777Costume^000000
-Location : ^777777Upper-Mid ^000000 Weight : ^7777770^000000
-Req Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19541#
 #
@@ -74442,10 +74458,9 @@ Jobs : ^777777All^000000
 #
 19652#
 A hat worn by a well-known magician. Rabbit is peeping out, and we don't know what is going to pop out next.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^77777780^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 19653#
 A hat which gives you a holy power and celestial melody in the rim of the ear.
@@ -75159,12 +75174,12 @@ Required LV : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19780#
-^808080A knitted hat inspired by the lunatic which can be worn daily due to its' simple design. It is really useful for cold weather.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A knitted hat inspired by the lunatic which can be worn daily due to its' simple design. It is really useful for cold weather.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19783#
 A beard that makes you look serious once you wear it.
@@ -75556,19 +75571,20 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19875#
-A rabbit doll hat made by a very famous artist.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper Mid Lower ^000000 Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+A rabbit doll hat made by a very famous artist
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19876#
-^808080A wonderful hat with rabbit ears on top. It's like magic!^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A wonderful hat with rabbit ears on top. It's like magic!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19877#
 A blindfold with scary eyes. It is said those eyes are moving sometimes.
@@ -75602,10 +75618,11 @@ Job : ^777777all jobs^000000
 #
 19881#
 A newly designed love rabbit hood for the new year.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper Mid Lower ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19882#
 Wearing it, you might want to compound CO2 and H2O into carbohydrate by the solar energy.
@@ -76095,12 +76112,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19974#
-^808080A hood designed for expert levels of camouflage.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hood designed for expert levels of camouflage.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19976#
 A hat which cats of Malangdo wear during the Christmas season.
@@ -76205,12 +76222,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19990#
-^808080A knitted hat inspired by the eclipse which can be worn daily due to its' simple design. It is really useful for cold weather.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A knitted hat inspired by the eclipse which can be worn daily due to its' simple design. It is really useful for cold weather.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19991#
 ^808080An armor made of purified white flower. Some say flowers are the harbingers of Spring.^000000
