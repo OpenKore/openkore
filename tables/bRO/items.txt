@@ -8144,4 +8144,15 @@
 18813#Óculos Retrofuturistas#
 20375#Chapéu do Marechal#
 19904#Boina da Caveira#
+//*****************************************************
+//------------Aplicar em 2018-03-06--------------------
+//*****************************************************
+19098#Chapéu Macabro de Cetim#
+28901#Coelho Macabro#
+31193#Chapéu de Ahat#
+20506#Manto Invisível#
+19269#Tiara do Orgulho#
+19097#Gravata Macabra de Cetim#
+19299#Fragmento de Yggdrasil#
+28902#Coelho Macabro#
 //file end
