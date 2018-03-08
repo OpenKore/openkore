@@ -142,7 +142,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x6677138E, 0x1D943D2D, 0x005E3E51
+sendCryptKeys 0x2D0E7B39, 0x47D017E9, 0x404C705A
 
 
 
