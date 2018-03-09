@@ -1831,6 +1831,13 @@ sub shop_sold {
 	# item and/or the whole shop has been sold out.
 	if ($articles[$number]{quantity} < 1) {
 		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
+		Plugins::callHook(
+			'vending_item_sold_out',
+			{
+				'vendShopIndex' => $number,
+				'vendArticle' => $articles[$number],
+			}
+		);
 		#$articles[$number] = "";
 		if (!--$articles){
 			message T("Items have been sold out.\n"), "sold";
@@ -1876,6 +1883,13 @@ sub shop_sold_long {
 	# item and/or the whole shop has been sold out.
 	if ($articles[$number]{quantity} < 1) {
 		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
+		Plugins::callHook(
+			'vending_item_sold_out',
+			{
+				'vendShopIndex' => $number,
+				'vendArticle' => $articles[$number],
+			}
+		);
 		#$articles[$number] = "";
 		if (!--$articles){
 			message T("Items have been sold out.\n"), "sold";
