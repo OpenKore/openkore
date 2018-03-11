@@ -2145,7 +2145,7 @@ sub map_changed {
 		oldMap => $oldMap,
 	});
 	$timeout{ai}{time} = time;
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero )); # request to unfreeze char
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal )); # request to unfreeze char
 }
 
 sub memo_success {
