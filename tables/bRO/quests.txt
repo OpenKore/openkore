@@ -11622,36 +11622,36 @@ O tempo foi distorcido por Hugin! Qualquer coisa pode acontecer dentro deste cas
 Distorção Espacial#
 
 //13th anniversary
-291000#Presente das Fadas#SG_FEEL#QUE_NOIMAGE#
-Você capturou algumas fadas para a Garota Mimada em Alberta. Você pode dizer que fez uma boa ação, afinal... era o aniversário dela...#
+291000#6 anos de bROWiki#SG_FEEL#QUE_NOIMAGE#
+Você capturou algumas fadas na esperança de que uma delas seja a Garota Mimada, mas infelizmente não era... Será necessário retornar amanhã para pegar mais Bolsas Mágicas com o <NAVI>[Felino]<INFO>prontera,196,263,0,000,0</INFO></NAVI>.#
 Volte amanhã.#
 
-291001#Presente das Fadas (Dia 1)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291001#6 anos de bROWiki (Dia 1)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291002#Presente das Fadas (Dia 2)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291002#6 anos de bROWiki (Dia 2)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291003#Presente das Fadas (Dia 3)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291003#6 anos de bROWiki (Dia 3)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291004#Presente das Fadas (Dia 4)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291004#6 anos de bROWiki (Dia 4)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291005#Presente das Fadas (Dia 5)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291005#6 anos de bROWiki (Dia 5)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291006#Presente das Fadas (Dia 6)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291006#6 anos de bROWiki (Dia 6)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
-291007#Presente das Fadas (Dia 7)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para a Garota Mimada e compre quantas for necessário.#
+291007#6 anos de bROWiki (Dia 7)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
 Capture 10 Fadas.#
 
 7775#Mudança de Classe: Bioquímicos#SG_FEEL#QUE_NOIMAGE#

@@ -21140,15 +21140,17 @@ Peso: ^7777771^000000
 
 // ------------------- 11.3 ?? ?? ??? --------------------------
 2122#
-Um magnífico escudo de platina. Alguns dizem que ele rebate feitiços negativos.
-15% de redução de dano contra monstros de tamanho médio e grande, mais 10% contra morto-vivos.
-40% de chance de rebater magia por 2 segundos quando atacado com feitiços.
-DEFM + 5
-Tipo de Item: ^777777Escudo^000000
+Um magnífico escudo de platina.
+^0000ffDEFM +5.^000000
+^0000ffResistência a raça Morto-Vivo +10%.^000000
+^0000ffResistência a oponentes de tamanho Médio e Grande +15%.^000000
+Ao receber danos mágicos:
+^0000ff15% de chance de autoconjurar [Reflexão Mágica] nv. 2.^000000
+Tipo: ^777777Escudo^000000
 Defesa: ^77777795^000000
 Peso: ^777777120^000000
 Nível necessário: ^77777768^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 
 2123#
@@ -21333,26 +21335,26 @@ Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes
 #
 
 2531#
-Uma capa misteriosa com um feitiço protetor. Converte a defesa mágica do usuário em defesa física
-Ao receber ataque físico, há chance de reduzir dano em 20% por 2 segundos.
-Em troca, reduz DEFM em 20% por 2 segundos.
-Tipo de Item: ^777777Capa^000000
+Uma capa misteriosa capaz de proteger seu usuário de ataques.
+^0000ffAo receber danos físicos:^000000
+^0000ff2% de chance de autoconjurar [Pele Rochosa] nv. 1.^000000
+Tipo: ^777777Capa^000000
 Defesa: ^77777713^000000
 Peso: ^77777770^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim/Mercador/Gatuno^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 
 2532#
-Uma capa misteriosa com um feitiço protetor. Converte a DEF do usuário em DEFM.
-DEFM + 3
-Todo o dano de ataques mágicos é reduzido em 20% por 2 segundos.
-Em troca, a DEF é reduzida em 20%.
-Tipo de Item: ^777777Capa^000000
+Uma capa misteriosa capaz de proteger seu usuário de magias.
+^0000ffDEFM +3.^000000
+Ao receber danos mágicos:
+^0000ff20% de chance de autoconjurar [Anti Magia] nv. 1.^000000
+Tipo: ^777777Capa^000000
 Defesa: ^7777778^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Transcendentais de Bruxo/Noviço/Arqueiro^000000
+Classes: ^777777Arquimagos, Noviços T., Arqueiros T. e evoluções^000000
 #
 
 2700#
@@ -21463,9 +21465,9 @@ Classes: ^777777Algozes e evoluções^000000
 Um Katar que permite ataque de longo alcance, com um poder terrível.
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
 Ao realizar ataques físicos:
-^0000ffChance de autoconjurar [Sangramento] nv. 1.^000000
+^0000ff3% de chance de autoconjurar [Sangria] nv. 1.^000000
 Refino +9 ou mais:
-^0000ffAutoconjura [Sangramento] nv. 2.^000000
+^0000ffNível autoconjurado de [Sangria] +1.^000000
 Tipo: ^777777Katar^000000
 Ataque: ^777777120^000000
 Peso: ^777777170^000000
@@ -21700,15 +21702,18 @@ Classes que utilizam: ^777777Transcendentais de Espadachim/Mago/Arqueiro/Mercado
 #
 
 13028#
-Bisturi de dentista usado para ajudar a arrancar dentes. A vítima desta arma fica com dificuldades para falar.
-Há chance de aumentar em 20% o tempo de conjuração variável de todos os inimigos em uma área de 5x5 células.
-Se o nível de refinamento da arma for 9 ou mais, a chance sobe para 40%, em uma área de 11x11 células.
-Tipo de Item: ^777777Adaga^000000
-Força de ataque: ^777777130^000000
+Bisturi de dentista usado para ajudar a arrancar dentes.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff5% de chance de autoconjurar [Conjuração Lenta] nv. 1.^000000
+Refino +9 ou mais:
+^0000ffNível autoconjurado de [Conjuração Lenta] +1.^000000
+^0000ffChance de autoconjurar [Conjuração Lenta] +2% adicional.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777130^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim/Mago/Arqueiro/Mercador/Gatuno^000000
+Classes: ^777777Transclasses de Espadachins, Magos, Mercadores, Gatunos, Arqueiros e evoluções^000000
 #
 
 1420#
@@ -21909,15 +21914,18 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 
 1919#
 Um instrumento usado para liberar um som grave. Produz Generosidade, Sabedoria e Sensibilidade.
-Recupera 3 SP quando o inimigo morre.
-Há uma chance de lançar Fúria da Terra nv. 3, quando o usuário sofre ataques físicos.
-Ao atacar, há uma chance de deixar confusos todos os inimigos em uma área de 11x11 células.
-Tipo de Item: ^777777Instrumento^000000
-Força de ataque: ^777777130^000000
+^0000ffAo derrotar monstros:^000000
+^0000ffRegenera 3 de SP.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Toque de Insanidade] nv. 2.^000000
+Ao receber danos físicos:
+^0000ff3% de chance de autoconjurar [Fúria da Terra] nv. 3.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777130^000000
 Peso: ^777777150^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Menestrel^000000
+Classes: ^777777Menestréis e evoluções^000000
 #
 
 1920#
@@ -21949,16 +21957,19 @@ Classes que utilizam: ^777777Cigana e Evolução^000000
 #
 
 1973#
-Um chicote feito com a pata de uma notória bruxa que vivia nos mares do oeste.
-Essa bruxa era conhecida por absorver energia de seus alvos.
-Recupera 5 SP quando o inimigo morre.
-Ao sofrer ataque físico, há chance de lançar Congelar nv. 3.
-Ao atacar, há chance de silenciar todos os inimigos em uma área de 11x11 células.
-Tipo de Item: ^777777Chicote^000000  Força de ataque: ^777777110^000000
+Um chicote feito com a pata de uma notória bruxa que vivia nos mares do oeste absorvendo energia dos seus alvos.
+^0000ffAo derrotar monstros:^000000
+^0000ffRegenera 5 de SP.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Som do Silêncio] nv. 2.^000000
+Ao receber danos físicos:
+^0000ff5% de chance de autoconjurar [Congelar] nv. 3.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777110^000000
 Peso: ^777777150^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Cigana e Evolução^000000
+Classes: ^777777Ciganas e evoluções^000000
 #
 
 1974#
@@ -29936,14 +29947,16 @@ Peso: ^77777720^000000
 Classes que utilizam:  ^777777Todas as Transcendentais, exceto Aprendiz^000000
 #
 15000#
-Armadura de placas, coberta com ossos afiados.
-Ao sofrer ataque, há 1% de chance de causar Sangramento em uma área de 5x5 células ao redor do jogador.
-Ignora 10% da DEF de monstros dos tipos Humano e Bruto.
-FOR + 1, DEFM + 3
-Tipo: ^777777Armadura^000000    Defesa: ^77777760^000000
+Armadura de placas, coberta com ossos afiados
+^0000ffFOR +1. DEFM +3.^000000
+^0000ffIgnora 10% da DEF de oponentes da raça Bruto e Humanoide.^000000
+Ao receber danos físicos:
+^0000ff1% de chance de autoconjurar [Sangria] nv. 1.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777760^000000
 Peso: ^777777100^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam:  ^777777Evoluções de Gatuno T., Espadachim T. e Mercador T.^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 
 // -----------  Ep 13.2 additional equipment items ------------
@@ -39247,6 +39260,7 @@ Classe: ^777777Arcano^000000
 Um anel de ouro antigo, mas brilhante, rodeado por outros anéis. Dizem que é a relíquia de um santo.
 VIT + 2. Aumenta em 2% a eficiência das habilidades de cura.
 Permite que o usuário encante itens com efeitos relacionados a Curatio.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -39258,6 +39272,7 @@ Classe: ^777777Arcebispo^000000
 Um anel espesso com uma pedra roxa dado a um sacerdote treinador.
 INT + 2. Aumenta em 2% a eficiência das habilidades de cura.
 Permite que o usuário encante itens com efeitos relacionados ao [Sopro Divino].
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -39269,6 +39284,7 @@ Classe: ^777777Arcebispo^000000
 Um anel com uma pedra clara misteriosa. Dizem que é a relíquia de um líder religioso.
 DES + 2. Aumenta em 2% a eficiência das habilidades de cura.
 Permite que o usuário encante itens com efeitos relacionados à eficiência das habilidades de cura.
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -41254,7 +41270,7 @@ Refino +6 ou mais:
 Refino +9 ou mais:
 ^0000ffReflete 20% do dano físico.^000000
 Ao receber danos mágicos:
-^0000ffChance de autoconjurar [Espelho Mágico (NPC)] nv. 2.^000000
+^0000ffChance de autoconjurar [Reflexão Mágica] nv. 2.^000000
 Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777250^000000
 Peso: ^777777450^000000
@@ -41681,7 +41697,7 @@ Refino +6 ou mais:
 Refino +9 ou mais:
 ^0000ffReflete 20% do dano físico.^000000
 Ao receber danos mágicos:
-^0000ffChance de autoconjurar [Espelho Mágico (NPC)] nv. 3.^000000
+^0000ffChance de autoconjurar [Reflexão Mágica] nv. 3.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777260^000000
 Peso: ^777777350^000000
@@ -45587,9 +45603,10 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4525#
-Esquiva +10.
-Habilita [Esconderijo] nv. 1 e [Ataque Surpresa] nv. 1.
-Chance de causar Sangramento ao usar [Ataque Surpresa].
+^0000ffEsquiva +10.^000000
+^0000ffHabilita [Esconderijo] nv. 1 e [Ataque Surpresa] nv. 1.^000000
+Ao usar [Ataque Surpresa]:
+^0000ff25% de chance de autoconjurar [Sangria] nv. 1.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
@@ -57678,7 +57695,7 @@ Ao realizar ataques físicos ou mágicos:
 A cada refino do Chapéu:
 ^0000ffChance de transformação +0,2%.^000000
 A cada 3 refinos do Escudo:
-^0000ffDuranção da transformação +1 segundo.^000000
+^0000ffDuração da transformação +1 segundo.^000000
 ^CD3278Durante a transformação:^000000
 ^0000ffDrena 50 de HP do usuário a cada segundo.^000000
 Ao realizar ou receber danos físicos:
@@ -57819,6 +57836,258 @@ Refino +12 ou mais:
 Tipo: ^777777Escudo^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-03-06--------------------
+//*****************************************************
+28437#
+Um par de luvas criado pelos alquimistas mais dedicados que, seguindo fielmente os conceitos filosóficos dessa prática, confeccionaram-no em prol da restauração do seu corpo e espírito.
+^0000ffINT +2.^000000
+^0000ffDano mágico +2%.^000000
+^0000ffHabilita [Curar] nv. 3.^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+INT base 100 ou mais:
+^0000ffDano mágico +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedra de Encantamento 1]^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffDano mágico contra todas as raças +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pedra de Encantamento 2]^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffDano mágico contra todas as raças +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^77777740^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19575#
+Inspirado nos mitos dos povos antigos, esse chapéu vai amedrontar qualquer um por aí, mesmo que não cuspa fogo. Os detalhes dos dentes afiados e dos olhos repletos de raiva são fieis às descrições de velhas histórias de horror.
+^0000ffAo realizar ataques físicos ou mágicos, pequena chance de se transformar na Sombra da Guardiã por 3 segundos.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19104#
+Ardendo em chamas, estas asas de dragão vão te dar um visual tão poderoso que você vai realmente sentir como se estivesse pegando fogo. Mas nem pense em tentar voar!
+^FF6347Espadachins e evoluções:^000000
+^0000ffResistência a oponentes de tamanho Grande +5%.^000000
+^0000ffResistência a oponentes de tamanho Médio +3%.^000000
+^FF6347Magos e evoluções:^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+^FF6347Mercadores e evoluções:^000000
+^0000ffResistência a monstros chefes +5%.^000000
+^0000ffResistência a monstros normais +3%.^000000
+^FF6347Noviços e evoluções:^000000
+^0000ffEfetividade de cura +10%.^000000
+^FF6347Gatunos e evoluções:^000000
+^0000ffEsquiva +10.^000000
+^0000ffEsquiva perfeita +3.^000000
+^FF6347Arqueiros e evoluções:^000000
+^0000ffResistência a danos físicos a distância +10%.^000000
+^FF6347Mestres Taekwons, Aprendizes e Espiritualistas:^000000
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +100.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777777^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
+#
+5897#
+Adornada com lindas e delicadas pétalas cor-de-rosa encontradas na Ilha de Jawaii, essa coroa é dedicada aos Superaprendizes, e concede a eles toda a força de que mais precisam.
+^0000ffCRIT e DEFM +10.^000000
+^0000ffATQ e ATQM +30.^000000
+^0000ffEsquiva perfeita +5.^000000
+^0000ffPrecisão e Esquiva +10.^000000
+^0000ffVelocidade de ataque +2.^000000
+^0000ffConjuração variável -20%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+Refino +7 ou mais:
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +100.^000000
+Refino +9 ou mais:
+^0000ffTodos os atributos +5.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777720^000000
+Peso: ^7777775^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Superaprendizes^000000
+#
+5898#
+O outono é sempre igual, mas esta tiara é diferente de todas as já vistas em Rune-Midgard – suas folhas carregam uma energia especial, cujo poder é misteriosamente concedido apenas aos Sentinelas.
+^0000ffDano físico a distância +5%.^000000
+^0000ffCusto de SP de [Caminho do Vento] -20.^000000
+Refino +7 ou mais:
+^0000ffATQ +2 a cada 5 de INT base.^000000
+Refino +9 ou mais:
+^0000ffA cada 10 níveis base, dano de [Tempestade de Flechas] +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sentinelas^000000
+#
+5899#
+Para mostrar que o Punk não morreu, este laço atende perfeitamente ao estilo. Use-o para mostrar que segue no espírito e tá pronto pra fazer uma bate-cabeça.
+^0000ffDano de [Vento Cortante] e [Onda de Choque] +50%.^000000
+Refino +7 ou mais:
+^0000ffATQ +2 a cada 5 de AGI base.^000000
+Refino +9 ou mais:
+^0000ffDano de [Impacto Flamejante] +30%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
+#
+5901#
+Você treinou seu corpo e mente para alcançar a força de um verdadeiro Shura, ou como também é conhecido, um “deus da Guerra”. Use esta boina feita especialmente para os bravos lutadores, e sinta seu potencial se expandir.
+^0000ffAo usar [Punho do Dragão]:^000000
+^0000ff10% de chance de autoconjurar [Soco Furacão] nv. 1 ou no nível aprendido.^000000
+Refino +7 ou mais:
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de ativar [Velocidade de ataque +2] por 5 segundos.^000000
+Refino +9 ou mais:
+^0000ffAumenta o dano de [Ruína].^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Shuras^000000
+#
+5902#
+Apesar do nome, você não precisa estar na roça para usar este chapéu. Afinal, ele te ajudará a colher mais itens dos seus inimigos... Se é que você me entende.
+^0000ffAo derrotar monstros:^000000
+^0000ff1% de chance de derrubar Esporo Explosivo ou Semente Sanguessuga.^000000
+Refino +7 ou mais:
+^0000ffAo derrotar monstros:^000000
+^0000ff0,5% de chance de derrubar Semente Selvagem.^000000
+Refino +9 ou mais:
+^0000ffAumenta o dano de [Canhão de Prótons].^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Bioquímicos^000000
+#
+5904#
+Um chapéu resistente e deslumbrante, com uma aba bem grande e uma faixa de seda. Você vai ficar a cara da riqueza com ele!
+^0000ffDano mágico +7%.^000000
+Refino +7 ou mais:
+^0000ffATQM +2 a cada 5 de INT base.^000000
+Refino +9 ou mais:
+^0000ffDano mágico +5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Renegados^000000
+#
+5906#
+Um par de chifres que pertenceu a algum demônio do submundo. Nenhum demônio foi machucado para isso, eles só trocam de chifre com uma frequência BEM alta.
+^0000ffA cada nível de [Reflexo de Combate]:^000000
+^0000ffDano de [Retaliação] +10%.^000000
+Refino +7 ou mais:
+^0000ffATQ +20.^000000
+^0000ffPrecisão +5.^000000
+Refino +9 ou mais:
+^0000ffAo realizar ataques físicos:^000000
+^0000ff1% de chance de autoconjurar [Lâminas Retalhadoras] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sicários^000000
+#
+5907#
+Mesmo que você não saiba a diferença entre “bombordo” e “estibordo”, fica difícil não se sentir um rei da navegação com um desses na cabeça!
+^0000ffDano de [Fúria do Furacão] e [Arremesso de Machado] +20%.^000000
+Refino +7 ou mais:
+^0000ffA cada nível de [Perícia em Armamento]:^000000
+^0000ffDano de [Fúria do Furacão] +1%.^000000
+Refino +9 ou mais:
+^0000ffA cada nível de [Maestria com Machados]:^000000
+^0000ffDano de [Fúria do Furacão] +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777720^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Mecânicos^000000
+#
+18791#
+Uma graça de laço, que já pertenceu a uma sacerdotisa que cansou de dar Bênção e Impositio Manus a aventureiros aleatórios e decidiu seguir carreira em outra classe. Quem sabe parte dos seus poderes divinos não ficou contida neste laço?
+^0000ffINT +1. VIT +2.^000000
+^0000ffDano de [Magnus Exorcismus] +20%.^000000
+Refino +7 ou mais:
+^0000ffAo receber danos físicos:^000000
+^0000ff5% de chance de autoconjurar em si [Curar] nv. 1 ou no nível aprendido.^000000
+Refino +9 ou mais:
+^0000ffDano de [Magnus Exorcismus] +20% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcebispos^000000
+#
+18794#
+Esse chapéu é a prova de que as aparências podem enganar. Você nem imaginava que essa fofura com lacinho, estrela e babados escondesse tanto poder, não é?
+^0000ffAGI +1. INT +2.^000000
+^0000ffDano de [Abalo Sísmico] [Meteoro Escarlate] e [Esquife de Gelo] +10%.^000000
+Refino +7 ou mais:
+^0000ffIgnora 20% da DEFM dos monstros normais.^000000
+Refino +9 ou mais:
+^0000ffIgnora +20% adicional da DEFM dos monstros normais.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcanos^000000
+#
+18795#
+Existem detalhes que são puramente estéticos. As asinhas desta boina, por exemplo, não vão te levar voando a lugar nenhum, mas não dá pra discordar que elas dão um ar muito legal!
+^0000ffFOR +1. SOR +2.^000000
+^0000ffDano físico a distância +5%.^000000
+Refino +7 ou mais:
+^0000ffDano de [Temporal de Mil Flechas] +15%.^000000
+Refino +9 ou mais:
+^0000ffRecarga de [Temporal de Mil Flechas] -2 segundos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Musas^000000
+#
+20440#
+Um guizo banhado a ouro junto de um laço encantador. E diferente dos guizos comuns, esse produz uma melodia agradável e suave.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20328#
+Uma carpa dourada criada especialmente para ser utilizada como prêmio aos participantes do famoso concurso "Cospobre de Rune-Midgard". Apesar de morta e mirradinha, o que vale é a intenção, não é mesmo? Ostente toda a sua exclusividade por aí, e lembre-se sempre: ESCAMA SÓ DE PEIXE!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
