@@ -83,4 +83,17 @@ sub sendCharCreate {
 	$self->sendToServer($msg);
 }
 
+sub sendChat { # 00F3
+    my ($self, $message) = @_;
+    $message = "|00$message" if $masterServer->{chatLangCode};
+
+    my ($data, $charName); # Type: Bytes
+    $message = stringToBytes($message); # Type: Bytes
+    $charName = stringToBytes($char->{name});
+    $data = pack("C*", 0xF3, 0x00) .
+        pack("v*", length($charName) + length($message) + 8) .
+        $charName . " : " . $message . chr(0);
+    $self->sendToServer($data);
+}
+
 1;
