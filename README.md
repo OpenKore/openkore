@@ -24,21 +24,21 @@ To run OpenKore you will need:
 
 ### Status of botting on Official Servers
 
-| Server | Description | Status | Supporter |
-| --- | --- | --- | --- |
-| `iRO` | International(US) RO | Botable, Weekly Update | allanon |
-| `bRO` | Brazilian RO | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| `idRO` | Indonesian RO | Botable only RE_server | sctnightcore(temp)
-| `fRO` | Europe(french) RO | Botable | sctnightcore | 
-| `cRO` | Chinese RO | Botable, Weekly Update  | alisonrag, sctnightcore |
-| `kRO:Zero` | Korea Zero server | Botable, Weekly Update | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | Need Verification |  N/A|
-| `jRO` | Japanese RO | Need Verification | N/A |
-| `thRO` | Thai RO | Need Verification | N/A |
-| `mRO` | Malaysian RO | Not Working | N/A |
-| `phRO` | Philippines RO | Not Working| N/A |
-| `twRO` | Taiwanese RO | Not working | windhamwong |
-| `pServer` | update servertybe | New Packet | sctnightcore, SkylorD  |
+| Server | Description | Protection | Status | Supporter |
+| --- | --- | --- | --- | --- |
+| `iRO` | International(US) RO | **** | Botable, Weekly Update | allanon |
+| `bRO` | Brazilian RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
+| `idRO` | Indonesian RO | **** | Botable only RE_server | sctnightcore(temp)
+| `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
+| `cRO` | Chinese RO | nProtect | Botable, Weekly Update  | alisonrag, sctnightcore |
+| `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
+| `kRO` | Korea RO | HShield | Need Verification |  N/A|
+| `jRO` | Japanese RO | HShield | Need Verification | N/A |
+| `thRO` | Thai RO | EAC | Need Verification | N/A |
+| `mRO` | Malaysian RO | Cdclient | Not Working | N/A |
+| `phRO` | Philippines RO | Cdclient | Not Working | N/A |
+| `twRO` | Taiwanese RO | Cdclient | Not working | windhamwong |
+
 ## Contributing
 
 OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary submit a pull request!
