@@ -5662,7 +5662,7 @@
 12641#New_Recruit_Pack#
 12642#Fruit_Of_Mastela_Box#
 12643#E_Coin_Pack50#
-12646#Takoyaki#
+12646#Poring_Pretzel#
 12647#Ink_Ball#
 12654#Recruit's_Mount_Gift#
 12658#Transformation_Scroll(Deviruchi)#
@@ -6884,6 +6884,7 @@
 14856#Ancient_Elven_Scroll#
 14884#Weather_Scroll#
 14921#Fancy_February_Costume_Box#
+14924#Overseas_Care_Package_XVI#
 14930#Overseas_Care_Package_Remix_I#
 15000#Bone_Plate#
 15002#Rune_Plate#
@@ -7005,6 +7006,7 @@
 15196#Sea_Dragon_Armor#
 15204#Abyss_Dress#
 15205#Medical_Scrubs#
+15249#Antonio's_Coat#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -8882,6 +8884,7 @@
 22134#Enforcer_Shoes#
 22138#Devil_Worshipper_Shoes#
 22170#Survivor's_Shoes#
+22172#Gray_Wing_Boots#
 22507#Old_Scroll#
 22508#Eden_Group_Mark#
 22511#Fenrir's_Power_Scroll#
@@ -9279,6 +9282,8 @@
 28521#Giant's_Protection#
 28531#Blacksmith's_Gloves#
 28551#Imperial_Glove#
+28564#Valkyrie_Drop#
+28565#Perverse_Demon_Mask#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
