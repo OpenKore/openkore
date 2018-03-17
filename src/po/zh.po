@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 10:39-0300\n"
+"POT-Creation-Date: 2018-03-17 11:24-0300\n"
 "PO-Revision-Date: 2014-12-02 01:53-0000\n"
 "Last-Translator: \n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
@@ -4489,12 +4489,12 @@ msgstr ""
 
 #: ../Misc.pm:1022
 #, fuzzy, perl-format
-msgid "actorAdded: %s %s (%s), size %s\n"
+msgid "Actor added: %s %s (%s), size %s\n"
 msgstr "倉庫物品加入: %s (%d) x %s\n"
 
 #: ../Misc.pm:1061
 #, fuzzy, perl-format
-msgid "actorRemoved: %s %s (%s), size %s\n"
+msgid "Actor removed: %s %s (%s), size %s\n"
 msgstr "手推車物品已移除: %s (%d) x %s\n"
 
 #: ../Misc.pm:1135
@@ -7345,8 +7345,8 @@ msgid "Sold: %s x %s - %sz\n"
 msgstr "已賣出: %s - %s %sz\n"
 
 #: ../Network/Receive.pm:1833 ../Network/Receive.pm:1885
-#, perl-format
-msgid "sold out: %s\n"
+#, fuzzy, perl-format
+msgid "Sold out: %s\n"
 msgstr "已賣完: %s\n"
 
 #: ../Network/Receive.pm:1843 ../Network/Receive.pm:1895
