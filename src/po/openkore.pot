@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 10:39-0300\n"
+"POT-Creation-Date: 2018-03-17 11:25-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3723,12 +3723,12 @@ msgstr ""
 
 #: ../Misc.pm:1022
 #, perl-format
-msgid "actorAdded: %s %s (%s), size %s\n"
+msgid "Actor added: %s %s (%s), size %s\n"
 msgstr ""
 
 #: ../Misc.pm:1061
 #, perl-format
-msgid "actorRemoved: %s %s (%s), size %s\n"
+msgid "Actor removed: %s %s (%s), size %s\n"
 msgstr ""
 
 #: ../Misc.pm:1135
@@ -6483,7 +6483,7 @@ msgstr ""
 
 #: ../Network/Receive.pm:1833 ../Network/Receive.pm:1885
 #, perl-format
-msgid "sold out: %s\n"
+msgid "Sold out: %s\n"
 msgstr ""
 
 #: ../Network/Receive.pm:1843 ../Network/Receive.pm:1895

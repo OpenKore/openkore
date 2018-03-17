@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 2.0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 10:39-0300\n"
+"POT-Creation-Date: 2018-03-17 11:24-0300\n"
 "PO-Revision-Date: 2010-12-15 17:52+0700\n"
 "Last-Translator: Richard Samuel <dewa5227@gmail.com>\n"
 "Language-Team: Indonesian <dewa5227@yahoo.com>\n"
@@ -4531,13 +4531,13 @@ msgstr ""
 "%s"
 
 #: ../Misc.pm:1022
-#, perl-format
-msgid "actorAdded: %s %s (%s), size %s\n"
+#, fuzzy, perl-format
+msgid "Actor added: %s %s (%s), size %s\n"
 msgstr "PenambahanActor: %s %s (%s), size %s\n"
 
 #: ../Misc.pm:1061
-#, perl-format
-msgid "actorRemoved: %s %s (%s), size %s\n"
+#, fuzzy, perl-format
+msgid "Actor removed: %s %s (%s), size %s\n"
 msgstr "PenghapusanActor: %s %s (%s), size %s\n"
 
 #: ../Misc.pm:1135
@@ -7420,8 +7420,8 @@ msgid "Sold: %s x %s - %sz\n"
 msgstr "terjual: %s - %s %sz\n"
 
 #: ../Network/Receive.pm:1833 ../Network/Receive.pm:1885
-#, perl-format
-msgid "sold out: %s\n"
+#, fuzzy, perl-format
+msgid "Sold out: %s\n"
 msgstr "Terjual : %s\n"
 
 #: ../Network/Receive.pm:1843 ../Network/Receive.pm:1895

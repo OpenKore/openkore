@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gKore (OpenKore 2.0.5.1)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 10:39-0300\n"
+"POT-Creation-Date: 2018-03-17 11:24-0300\n"
 "PO-Revision-Date: 2010-11-29 20:08+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: German <thrice007@yahoo.de>\n"
@@ -4470,12 +4470,12 @@ msgstr ""
 
 #: ../Misc.pm:1022
 #, fuzzy, perl-format
-msgid "actorAdded: %s %s (%s), size %s\n"
+msgid "Actor added: %s %s (%s), size %s\n"
 msgstr "Item ins Storage hinzugefügt: %s (%d) x %s\n"
 
 #: ../Misc.pm:1061
 #, fuzzy, perl-format
-msgid "actorRemoved: %s %s (%s), size %s\n"
+msgid "Actor removed: %s %s (%s), size %s\n"
 msgstr "Item aus Cart entfernt: %s (%d) x %s\n"
 
 #: ../Misc.pm:1135
@@ -7370,8 +7370,8 @@ msgid "Sold: %s x %s - %sz\n"
 msgstr "Verkauft: %s - %s %sz\n"
 
 #: ../Network/Receive.pm:1833 ../Network/Receive.pm:1885
-#, perl-format
-msgid "sold out: %s\n"
+#, fuzzy, perl-format
+msgid "Sold out: %s\n"
 msgstr "Ausverkauft: %s\n"
 
 #: ../Network/Receive.pm:1843 ../Network/Receive.pm:1895

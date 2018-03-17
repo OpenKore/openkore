@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-17 10:39-0300\n"
+"POT-Creation-Date: 2018-03-17 11:24-0300\n"
 "PO-Revision-Date: 2015-11-23 14:20+0300\n"
 "Last-Translator: ya4ept <ya4ept@ya.ru>\n"
 "Language-Team: ya4ept <ya4ept@ya.ru>\n"
@@ -4426,13 +4426,13 @@ msgstr ""
 "%s"
 
 #: ../Misc.pm:1022
-#, perl-format
-msgid "actorAdded: %s %s (%s), size %s\n"
+#, fuzzy, perl-format
+msgid "Actor added: %s %s (%s), size %s\n"
 msgstr "actorAdded: %s %s (%s), размер %s\n"
 
 #: ../Misc.pm:1061
-#, perl-format
-msgid "actorRemoved: %s %s (%s), size %s\n"
+#, fuzzy, perl-format
+msgid "Actor removed: %s %s (%s), size %s\n"
 msgstr "actorRemoved: %s %s (%s), размер %s\n"
 
 #: ../Misc.pm:1135
@@ -7305,8 +7305,8 @@ msgid "Sold: %s x %s - %sz\n"
 msgstr "Продано: %s шт. - %s, получено %s зени.\n"
 
 #: ../Network/Receive.pm:1833 ../Network/Receive.pm:1885
-#, perl-format
-msgid "sold out: %s\n"
+#, fuzzy, perl-format
+msgid "Sold out: %s\n"
 msgstr "проданы все предметы: %s.\n"
 
 #: ../Network/Receive.pm:1843 ../Network/Receive.pm:1895
