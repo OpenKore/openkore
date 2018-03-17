@@ -71258,3 +71258,10 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+12646#
+A baked snack served at bars all over Rune Midgard
+Luk + 9 for 10 minutes.
+Atk + 20 for 10 minutes.
+Matk + 20 for 10 minutes.
+#
