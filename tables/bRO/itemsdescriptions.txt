@@ -6165,10 +6165,10 @@ Combina com: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4042#
-^0000ffDEF +2, 10% de resistência contra ataques de propriedade de Vento.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+^0000ffDEF +2.^000000
+^0000ffResistência a propriedade Vento +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4043#
@@ -9006,7 +9006,7 @@ Manual de Instruções para a criação de Fogo Grego. Evite mostrar este livro 
 Peso: ^7777771^000000
 #
 7129#
-Manual de Instruções para a criação de Ácido Sulfúrico, também conhecido como H2SO4. Quando estiver produzindo o ácido, não o deixe cair sobre o livro. Na verdade, não o deixe cair sobre NADA que seja importante para você.
+Manual de Instruções para a criação de Ácido Clorídrico, também conhecido como HCI. Quando estiver produzindo o ácido, não o deixe cair sobre o livro. Na verdade, não o deixe cair sobre NADA que seja importante para você.
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
@@ -11053,19 +11053,18 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4151#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Planta.^000000
-^0000ffRecebe 20% a mais de dano de monstros do tipo Planta. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Planta -20%.^000000
+^0000ffEXP adquirida por monstros da raça Planta +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4152#
-^0000ffAdiciona a chance de ganhar um Suco de Maçã/Banana/Cenoura cada vez que um monstro do tipo Inseto for derrotado.^000000
-^0000ffO suco ganho recupera 50% a mais de HP. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+^0000ffRegeneração de HP de Suco de Maçã, Banana e Cenoura +50%.^000000
+Ao derrotar monstros da raça Inseto:
+^0000ff3% de chance de derrubar Suco de Maçã, Banana ou Cenoura.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4153#
@@ -11151,19 +11150,19 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4163#
-^0000ffTaxa de Esquiva +2, Crítico +7.
-Se utilizada por um personagem da Classe Espadachim e suas evoluções, adiciona a chance de conjurar automaticamente a habilidade Impacto de Tyr em nível 5 ao atacar um inimigo. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffCRIT +7.^000000
+^0000ffEsquiva +2.^000000
+Espadachins e evoluções:
+^0000ffAo realizar ataques físicos, 1% de chance de autoconjurar [Impacto de Tyr] nv. 5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4164#
-^0000ffRecebe 10% a mais de pontos de experiência toda vez que um monstro do tipo Peixe for derrotado.
-Recebe 20% a mais de dano de monstros do tipo Peixe. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Peixe -20%.^000000
+^0000ffEXP adquirida por monstros da raça Peixe +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4165#
@@ -11488,11 +11487,10 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4204#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Bruto.
-Recebe 20% a mais de dano de monstros do tipo Bruto.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Bruto -20%.^000000
+^0000ffEXP adquirida por monstros da raça Bruto +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4205#
@@ -11622,11 +11620,10 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4221#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Inseto.
-Recebe 20% a mais de dano de monstros do tipo Inseto.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Inseto -20%.^000000
+^0000ffEXP adquirida por monstros da raça Inseto +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4222#
@@ -11730,11 +11727,10 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4235#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Anjo.
-Recebe 20% a mais de dano de monstros do tipo Anjo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Anjo -20%.^000000
+^0000ffEXP adquirida por monstros da raça Anjo +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4236#
@@ -11763,11 +11759,10 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4239#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Amorfo.
-Recebe 20% a mais de dano de monstros do tipo Amorfo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Amorfo -20%.^000000
+^0000ffEXP adquirida por monstros da raça Amorfo +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4240#
@@ -11809,11 +11804,10 @@ Utilização: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4245#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Humanoide.
-Recebe 20% a mais de dano de monstros do tipo Humanoide.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Humanoide -20%.^000000
+^0000ffEXP adquirida por monstros da raça Humanoide +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4246#
@@ -11848,11 +11842,10 @@ Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4249#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Demônio.
-Recebe 20% a mais de dano de monstros do tipo Demônio.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Demônio -20%.^000000
+^0000ffEXP adquirida por monstros da raça Demônio +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4250#
@@ -11987,11 +11980,10 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4267#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Dragão.
-Recebe 20% a mais de dano de monstros do tipo Dragão.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Dragão -20%.^000000
+^0000ffEXP adquirida por monstros da raça Dragão +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4268#
@@ -12053,11 +12045,10 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4275#
-^0000ffRecebe 10% a mais de Pontos de Experiência de monstros do tipo Morto-Vivo.
-Recebe 20% a mais de dano de monstros do tipo Morto-Vivo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffResistência a monstros da raça Morto-Vivo -20%.^000000
+^0000ffEXP adquirida por monstros da raça Morto-Vivo +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4276#
@@ -15234,8 +15225,7 @@ Um cozido com um aroma estranho, suspeito até, mas que dá a quem o ingere a se
 Peso: ^7777771^000000
 #
 12208#
-Um livro com mais de 500 páginas, trazendo descrições detalhadas de como maximizar seus treinamentos no campo de batalha. Provavelmente vem com um curso de leitura dinâmica, pois você deve terminar de lê-lo em meia hora...
-Não é cumulativo com outros itens de experiência e serviços como VIP.
+Um livro com mais de 500 páginas, trazendo descrições detalhadas de como maximizar seus treinamentos no campo de batalha.
 ^0000ffEXP adquirida +50%.^000000
 Duração: ^77777730 minutos^000000
 Peso: ^7777770^000000
@@ -23117,7 +23107,6 @@ Peso: ^7777771^000000
 #
 14533#
 Um livro cujas páginas foram escritas por Sábios antigos. Contém um encantamento que amplifica seu aprendizado em batalha.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
 ^0000ffEXP adquirida +100%.^000000
 Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
@@ -24847,27 +24836,33 @@ Peso: ^7777771^000000
 // ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
 13412#
 Uma das lâminas gêmeas do Naght Sieger. Ela foi criada com um belo e misterioso metal azul.
-^0000ffSempre que causar dano físico há uma pequena chance de ignorar a DEF do alvo durante 5 segundos.
-Permite usar a habilidade "Rajada Congelante" em nível 5.^000000
+^0000ffHabilita [Rajada Congelante] nv. 5.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffIgnora 100% da DEF dos monstros normais.^000000
 Tipo: ^777777Espada^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777150^000000
 Propriedade: ^777777Água^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
+Classes: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
 #
 13413#
 Uma das lâminas gêmeas do Naght Sieger. Ela foi criada com um belo e misterioso metal vermelho.
-^0000ffSempre que causar dano físico há uma pequena chance de ignorar a DEF do alvo durante 5 segundos.
-Permite usar a habilidade "Chuva de Meteoros" em nível 3.^000000
+^0000ffHabilita [Chuva de Meteoros] nv. 3.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffIgnora 100% da DEF dos monstros normais.^000000
 Tipo: ^777777Espada^000000
-Força de Ataque: ^777777160^000000
+Ataque: ^777777160^000000
 Peso: ^777777150^000000
 Propriedade: ^777777Fogo^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
+Classes: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
 #
 1636#
 Cajado coberto de espinhos criado por feiticeiros poderosos.
@@ -26159,6 +26154,7 @@ Peso: ^7777770^000000
 2393#
 Um traje típico para aventureiros errantes. Leve e confortável.
 Não é possível refinar.
+^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão, colocado no carrinho nem transferido para o armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777745^000000
 Peso: ^7777770^000000
@@ -29192,11 +29188,10 @@ Um livro que permite invocar um assistente Mímico. Não é necessário aliment�
 Peso: ^7777771^000000
 #
 14592#
-A continuação de uma coleção de sucesso, esse livro traz descrições detalhadas de como ter um melhor desempenho nas experiências vividas por sua classe. Provavelmente vem com um curso de leitura dinâmica, pois você deve terminar de lê-lo em meia hora...
-Não é cumulativo com outros itens de experiência e serviços como VIP.
+A continuação de uma coleção de sucesso, esse livro traz descrições detalhadas de como ter um melhor desempenho nas experiências vividas por sua classe.
 ^0000ffEXP de classe adquirida +50%.^000000
 Duração: ^77777730 minutos^000000
-Negociação: ^777777Não pode ser negociado ou jogado no chão. Pode ser colocado no armazém.^000000
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
 Peso: ^7777771^000000
 #
 5547#
@@ -31203,7 +31198,6 @@ Peso:  ^7777771^000000
 #
 12312#
 Um Manual de Combate que dura o dobro do tempo de um normal!
-Não é cumulativo com outros itens de experiência e serviços como VIP.
 ^0000ffEXP adquirida +50%.^000000
 Duração: ^77777760 minutos^000000
 Peso: ^7777770^000000
@@ -31242,7 +31236,6 @@ Peso: ^7777771^000000
 #
 12411#
 Uma enciclopédia contendo os maiores segredos e dicas de batalha.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
 ^0000ffEXP adquirida +200%.^000000
 Duração: ^77777715 minutos^000000
 Peso: ^7777771^000000
@@ -34259,10 +34252,9 @@ Peso : ^7777771^000000
 #
 12263#
 Manual que explica a maneira mais eficiente de batalhar. É um exemplo bem detalhado de um manual.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
 ^0000ffEXP adquirida +50%.^000000
 Duração: ^77777730 minutos^000000
-Negociação: ^777777Não pode ser negociado ou jogado no chão. Pode ser colocado no armazém.^000000
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 //renewal end
@@ -40884,12 +40876,13 @@ Recupera 3% de HP e SP.
 Peso: ^7777775^000000
 #
 12633#
-Produção especial de Malangdo, enlatado para que você possa guardar com facilidade. É conhecida estranhamente por dar poderes às pessoas. Acumula com outros consumíveis de mesmo efeito.
-O efeito do Buff desaparece assim que você for nocauteado.
-^0000ffEXP adquirida por monstros +10%.^000000
+Produção especial de Malangdo, enlatado para que você possa guardar com facilidade. É conhecida estranhamente por dar poderes às pessoas.
 ^0000ffTaxa de DROP +20%.^000000
+^0000ffEXP adquirida por monstros +10%.^000000
+^a400cdAcumula com outros consumíveis de mesmo efeito.^000000
+^a400cdEfeito é removido ao morrer.^000000
 Duração: ^77777720 minutos^000000
-^FF0000Atenção! O item não pode ser negociado, colocado no carrinho, vendido em NPC nem jogado ao chão, mas pode ser colocado na Kafra .^000000
+Negociação: ^777777Não pode ser derrubado, negociado, colocado no carrinho ou vendido em NPC,  mas pode ser colocado no armazém.^000000
 Peso: ^7777775^000000
 #
 12636#
@@ -43261,10 +43254,9 @@ Peso: ^7777770^000000
 #
 12766#
 Manual que explica a maneira mais eficiente de batalhar. É um exemplo bem detalhado de um manual.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
 ^0000ffEXP de classe adquirida +50%.^000000
 Duração: ^77777730 minutos^000000
-Negociação: ^777777Não pode ser negociado ou jogado no chão. Pode ser colocado no armazém.^000000
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 12529#
@@ -43708,7 +43700,7 @@ Somente ninjas muito habilidosos podem manusear essa adaga. A favorita dos ninja
 Tipo: ^777777Adaga^000000
 Ataque: ^777777120^000000
 Peso: ^77777760^000000
-Nível da arma: ^7777774^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^777777110^000000
 Classes: ^777777Ninjas e evoluções^000000
 #
@@ -44125,26 +44117,36 @@ Classes : ^777777Todas^000000
 #
 
 13696#
-Uma caixa contendo 10 Grimórios de Combate.
-Grimório de Combate - aumenta a ^000088EXP ganha ao se derrotar monstros em +100% pelo período de 30 minutos^000000.
-^000088O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra^000000.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
+Uma caixa que contém 10 Grimórios de Combate. Ao abri-la os itens serão deixados em seu inventário.
+--------------------------
+^0000ffEXP adquirida +100%.^000000
+Duração: ^77777730 minutos^000000
+Peso: ^7777771^000000
+--------------------------
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
 Peso: ^7777771^000000
 #
 
 13990#
-Uma caixa contendo 10 Manual de Batalha de Classe.
-Manual de Combate - ^000088Aumenta a EXP de Classe ganha ao se derrotar monstros em +50% pelo período de 30 minutos.^000000
-Não é cumulativo com outros itens de experiência e serviços como VIP.
+Uma caixa que contém 10 Manuais de Combate de Classe. Ao abri-la os itens serão deixados em seu inventário.
+--------------------------
+^0000ffEXP de classe adquirida +50%.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra^000000
+--------------------------
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
+Peso: ^7777771^000000
 #
 
 12900#
-Uma caixa contendo 10 Manuais de Combate.
-Manual de Combate - ^000088Aumenta a EXP ganha ao se derrotar monstros em +50% pelo período de 30 minutos.^000000
+Uma caixa que contém 10 Manuais de Combate. Ao abri-la os itens serão deixados em seu inventário.
+--------------------------
+^0000ffEXP adquirida +50%.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra^000000
+--------------------------
+Negociação: ^777777Não pode ser derrubado ou negociado, mas pode ser colocado no armazém.^000000
+Peso: ^7777771^000000
 #
 //----------------------------------------------------------
 
@@ -48795,8 +48797,11 @@ Classes: ^777777Todas ^000000
 #
 16267#
 Uma caixa que contém 10 Enciclopédias de Combate. Ao abri-la os itens serão deixados em seu inventário.
-Enciclopédia de Combate - Aumenta a ^000088EXP ganha ao se derrotar monstros em +200% pelo período de 15 minutos^000000.
-Não é cumulativo com outros itens de experiência e serviços como VIP.
+--------------------------
+^0000ffEXP adquirida +200%.^000000
+Duração: ^77777715 minutos^000000
+Peso: ^7777771^000000
+--------------------------
 Peso: ^7777771^000000
 #
 //*****************************************************
@@ -57840,7 +57845,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //*****************************************************
-//------------Aplicar em 2018-03-06--------------------
+//------------Aplicar em 2018-03-13--------------------
 //*****************************************************
 28437#
 Um par de luvas criado pelos alquimistas mais dedicados que, seguindo fielmente os conceitos filosóficos dessa prática, confeccionaram-no em prol da restauração do seu corpo e espírito.
@@ -57901,7 +57906,7 @@ Nível necessário: ^77777750^000000
 Classes: ^777777Todas^000000
 #
 5897#
-Adornada com lindas e delicadas pétalas cor-de-rosa encontradas na Ilha de Jawaii, essa coroa é dedicada aos Superaprendizes, e concede a eles toda a força de que mais precisam.
+Adornada com lindas e delicadas pétalas de lótus encontradas na Ilha de Jawaii, essa coroa é o símbolo daqueles que buscam por tesouros.
 ^0000ffCRIT e DEFM +10.^000000
 ^0000ffATQ e ATQM +30.^000000
 ^0000ffEsquiva perfeita +5.^000000
@@ -57922,7 +57927,7 @@ Nível necessário: ^77777799^000000
 Classes: ^777777Superaprendizes^000000
 #
 5898#
-O outono é sempre igual, mas esta tiara é diferente de todas as já vistas em Rune-Midgard – suas folhas carregam uma energia especial, cujo poder é misteriosamente concedido apenas aos Sentinelas.
+O outono é sempre igual, mas esta tiara é diferente de todas as já vistas em Rune-Midgard. Suas folhas parecem ter sido pintadas imperfeitamente, mas carregam uma energia especial!
 ^0000ffDano físico a distância +5%.^000000
 ^0000ffCusto de SP de [Caminho do Vento] -20.^000000
 Refino +7 ou mais:
@@ -57937,7 +57942,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Sentinelas^000000
 #
 5899#
-Para mostrar que o Punk não morreu, este laço atende perfeitamente ao estilo. Use-o para mostrar que segue no espírito e tá pronto pra fazer uma bate-cabeça.
+Para mostrar que o Punk não morreu, este laço atende perfeitamente ao estilo. Ele divide sua cabeça em duas partes, podendo ser metade humano e metade punk!
 ^0000ffDano de [Vento Cortante] e [Onda de Choque] +50%.^000000
 Refino +7 ou mais:
 ^0000ffATQ +2 a cada 5 de AGI base.^000000
@@ -57951,7 +57956,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Cavaleiros Rúnicos^000000
 #
 5901#
-Você treinou seu corpo e mente para alcançar a força de um verdadeiro Shura, ou como também é conhecido, um “deus da Guerra”. Use esta boina feita especialmente para os bravos lutadores, e sinta seu potencial se expandir.
+Boina feita especialmente para os bravos lutadores de artes marciais ou para simplórios vigias de mansões.
 ^0000ffAo usar [Punho do Dragão]:^000000
 ^0000ff10% de chance de autoconjurar [Soco Furacão] nv. 1 ou no nível aprendido.^000000
 Refino +7 ou mais:
@@ -57967,7 +57972,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Shuras^000000
 #
 5902#
-Apesar do nome, você não precisa estar na roça para usar este chapéu. Afinal, ele te ajudará a colher mais itens dos seus inimigos... Se é que você me entende.
+Cuidar de um jardim pode ser entediante, mas este chapéu deixa a sua vida despreocupada para caçar itens, então relaxe e beba alguma coisa!
 ^0000ffAo derrotar monstros:^000000
 ^0000ff1% de chance de derrubar Esporo Explosivo ou Semente Sanguessuga.^000000
 Refino +7 ou mais:
@@ -57983,7 +57988,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Bioquímicos^000000
 #
 5904#
-Um chapéu resistente e deslumbrante, com uma aba bem grande e uma faixa de seda. Você vai ficar a cara da riqueza com ele!
+Um chapéu resistente e deslumbrante, usado por pessoas que sentem a necessidade de serem lembradas, amadas e até odiadas!
 ^0000ffDano mágico +7%.^000000
 Refino +7 ou mais:
 ^0000ffATQM +2 a cada 5 de INT base.^000000
@@ -57997,7 +58002,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Renegados^000000
 #
 5906#
-Um par de chifres que pertenceu a algum demônio do submundo. Nenhum demônio foi machucado para isso, eles só trocam de chifre com uma frequência BEM alta.
+Um par de chifres que pertenceu a alguma demônia. Pelo tamanho dos chifres, pode-se dizer que era uma diabinha adulta, mas extremamente infantil.
 ^0000ffA cada nível de [Reflexo de Combate]:^000000
 ^0000ffDano de [Retaliação] +10%.^000000
 Refino +7 ou mais:
@@ -58014,7 +58019,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Sicários^000000
 #
 5907#
-Mesmo que você não saiba a diferença entre “bombordo” e “estibordo”, fica difícil não se sentir um rei da navegação com um desses na cabeça!
+A antiga dona deste chapéu tinha o péssimo hábito de afundar seus próprios navios. Usá-lo não traz boa sorte, mas dá para se sentir como uma rainha da navegação!
 ^0000ffDano de [Fúria do Furacão] e [Arremesso de Machado] +20%.^000000
 Refino +7 ou mais:
 ^0000ffA cada nível de [Perícia em Armamento]:^000000
@@ -58030,7 +58035,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Mecânicos^000000
 #
 18791#
-Uma graça de laço, que já pertenceu a uma sacerdotisa que cansou de dar Bênção e Impositio Manus a aventureiros aleatórios e decidiu seguir carreira em outra classe. Quem sabe parte dos seus poderes divinos não ficou contida neste laço?
+Uma laço que pertenceu a uma sacerdotisa exterminadora de demônios. Use-o apenas se você sentir confiança em conjurar seus poderes.
 ^0000ffINT +1. VIT +2.^000000
 ^0000ffDano de [Magnus Exorcismus] +20%.^000000
 Refino +7 ou mais:
@@ -58046,7 +58051,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Arcebispos^000000
 #
 18794#
-Esse chapéu é a prova de que as aparências podem enganar. Você nem imaginava que essa fofura com lacinho, estrela e babados escondesse tanto poder, não é?
+Quem poderia imaginar que essa gracinha de chapéu escondesse tanto poder mágico! Afinal, se não brilha, não é magia!
 ^0000ffAGI +1. INT +2.^000000
 ^0000ffDano de [Abalo Sísmico] [Meteoro Escarlate] e [Esquife de Gelo] +10%.^000000
 Refino +7 ou mais:
@@ -58061,7 +58066,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Arcanos^000000
 #
 18795#
-Existem detalhes que são puramente estéticos. As asinhas desta boina, por exemplo, não vão te levar voando a lugar nenhum, mas não dá pra discordar que elas dão um ar muito legal!
+As asinhas desta boina são inspiradas em um pássaro cujo canto atrai monstros e assusta moradores.
 ^0000ffFOR +1. SOR +2.^000000
 ^0000ffDano físico a distância +5%.^000000
 Refino +7 ou mais:
@@ -58087,6 +58092,42 @@ Classes: ^777777Todas^000000
 Uma carpa dourada criada especialmente para ser utilizada como prêmio aos participantes do famoso concurso "Cospobre de Rune-Midgard". Apesar de morta e mirradinha, o que vale é a intenção, não é mesmo? Ostente toda a sua exclusividade por aí, e lembre-se sempre: ESCAMA SÓ DE PEIXE!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-03-20--------------------
+//*****************************************************
+20236#
+Inspirado no lendário Poring Divino, ArchAgeling, o gorro dá o toque final ao seu visual. Apesar de servir apenas como enfeite, não dá pra negar o quanto toda essa fofura faz dele essencial! Afinal, fofo é a última moda em Rune-Midgard.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31315#
+Se as trevas te assustam, então experimente essa estola delicada e repleta de uma bênção angelical, cujo lindo par de asas é inspirado no anjo da guarda supremo da Família Poring. Você vai se sentir um verdadeiro ser celestial.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31151#
+“Ah, como eu queria ser um gato”, foi o que disse uma pensadora do século XXI. Bom, pensando em como esse desejo deve ser comum em Rune-Midgard, esse par de orelhas fofinhas e felpudas foi feito especialmente para aqueles que, de vez em quando, gostariam de ter a vida boa dos bichanos.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20372#
+Um chapéu delicado, confeccionado especialmente para ser utilizado como prêmio aos participantes do famoso concurso “Cospobre de Rune-Midgard”.  A fita de cetim e flor de seda são como uma coroa entre suas madeixas. Na parte interior do chapéu, em pequenas letras bordadas, você lê: “Levante a cabeça, princesa, senão o chapéu cai”.
+^FF0000Atenção! Este item não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
