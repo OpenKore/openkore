@@ -8164,14 +8164,21 @@
 5897#Coroa de Pétalas#
 5898#Tiara de Outono#
 5899#Laço Punk#
-5901#Boina do Deus da Guerra#
-5902#Chapéu do Camponês#
+5901#Boina de Vigia#
+5902#Chapéu de Jardinagem#
 5904#Chapéu Luxuoso#
 5906#Chifres Maléficos#
-5907#Chapéu do Almirante#
+5907#Chapéu da Almirante#
 18791#Laço Divino#
 18794#Chapéu Gracioso#
 18795#Boné com Asinhas#
 20440#Laço com Guizo#
 20328#Carpa Dourada de Cospobre#
+//*****************************************************
+//------------Aplicar em 2018-03-20--------------------
+//*****************************************************
+20236#Gorro de ArchAngeling#
+31315#Estola Angelical#
+31151#Orelhas Felpudas#
+20372#Chapéu Delicado de Cospobre#
 //file end
