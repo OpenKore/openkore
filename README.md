@@ -32,7 +32,7 @@ To run OpenKore you will need:
 | `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
 | `cRO` | Chinese RO | nProtect | Botable, Weekly Update  | alisonrag, sctnightcore |
 | `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | HShield | Need Verification |  N/A|
+| `kRO` | Korea RO | Cdclient | Need Verification |  N/A|
 | `jRO` | Japanese RO | HShield | Need Verification | N/A |
 | `thRO` | Thai RO | EAC | Need Verification | N/A |
 | `mRO` | Malaysian RO | Cdclient | Not Working | N/A |
