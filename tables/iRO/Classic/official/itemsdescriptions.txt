@@ -71265,3 +71265,17 @@ Luk + 9 for 10 minutes.
 Atk + 20 for 10 minutes.
 Matk + 20 for 10 minutes.
 #
+
+20009#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sunglasses!
+200 Resin
+75 Metal Fragments
+75 Glass Beads
+5 Black Dyestuffs
+1 Sunglasses Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#

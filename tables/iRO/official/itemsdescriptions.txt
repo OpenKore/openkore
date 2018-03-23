@@ -58951,6 +58951,7 @@ Costume Black Khalitzburg Knight Helm
 #
 14924#
 When Opened Gives one of the following
+
 Gray Wing Boots
 Valkyrie Drop [1]
 Antonio's Coat [1]
@@ -58961,6 +58962,10 @@ Abyss Dress
 (8) Job Battle Manual
 Party Hard Pack
 Mini Glasses [1]
+
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 14930#
 ^FF0000Account Bound^000000
@@ -60542,8 +60547,9 @@ Reduces damage taken from ^0000FFCritical Slash^000000 by 100%.
 ^008080Antonio Card^000000
 ^008080Antonio's Coat^000000
 Def + 250
+Reduces damage taken from Neutral, Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attacks by 5%.
 Enables ^0000FFLevel 1 Teleport^000000.
-Disables the following effects of ^008080Antonio Card^000000, Adds a 50% chance of casting ^0000FFLevel 1 Teleport^000000 on the user when receiving a physical attack.
+Disables the following effects of ^008080Antonio Card^000000: Adds a 50% chance of casting ^0000FFLevel 1 Teleport^000000 on the user when receiving a physical attack.
 If upgrade level is +7 or higher,
 Immune to ^800000Frozen^000000.
 If upgrade level is +9 or higher,
@@ -65406,6 +65412,26 @@ and ALSO Contains one of the following:
 ^FFFFFF ^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+17481#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following
+Fallen Angel Wings [1]
+Heroic Backpack [1]
+White Snake Hat
+Hexagon Spectacles [1]
+Azure Dragon Armor [1]
+Valkyrie Hammer [4]
+Costume Gloomy Pumpkin Hat
+Costume Lude Mask
+Costume Quve Mask
+Costume Witch's Pumpkin Hat
+Costume Wickibane Black Cat Ear
+Costume Floating Ghost
+Costume Triangle Roof Hat
+Costume Grey Drooping Kitty
+Costume Dark Blindfold
 #
 17485#
 This item cannot be traded, but can be saved and opened at your leisure!
@@ -81155,12 +81181,12 @@ Restores 500 HP to the user when a monster is killed by a physical attack.
 Increases the damage of ^0000FFBomb Cluster^000000 by 30% for every 20 base Int.
 Reduces the SP cost of ^0000FFElectric Shock^000000 by 30.
 Increased Movement Speed.
-If upgrade level is +7 or higher,
+If ^008080Black Wing Suit^000000 upgrade level is +7 or higher,
 Perfect Dodge + 6
 Reduces damage taken from Demi-Human race enemies by 8%.
 Increases the damage of ^0000FFBomb Cluster^000000 by an additional 400%
 Increases the damage of ^0000FFAimed Bolt^000000 by 20%
-If upgrade level is +9 or higher,
+If ^008080Black Wing Suit^000000 upgrade level is +9 or higher,
 Additional Perfect Dodge + 3
 Reduces damage taken from Demi-Human race enemies by an additional 4%.
 Increases the damage of ^0000FFBomb Cluster^000000 by an additional 200%
@@ -81170,12 +81196,12 @@ Increases the damage of ^0000FFAimed Bolt^000000 by an additional 10%
 ^008080White Wing Suit^000000
 Increases critical damage on targets by 4%. for every 20 base Luk.
 Increased Movement Speed.
-If upgrade level is +7 or higher,
+If ^008080White Wing Wing Suit^000000 upgrade level is +7 or higher,
 Aspd + 8%
 Reduces damage taken from Demi-Human race enemies by 8%.
 Increases the damage of ^0000FFBlitz Beat^000000 by 40%
 Increases the damage of ^0000FFFocused Arrow Strike^000000 by 50%
-If upgrade level is +9 or higher,
+If ^008080White Wing Wing Suit^000000 upgrade level is +9 or higher,
 Additional Aspd + 4%
 Reduces damage taken from Demi-Human race enemies by an additional 4%.
 Increases the damage of ^0000FFBlitz Beat^000000 by an additional 20%
@@ -85643,8 +85669,8 @@ Max HP + 1% for every 18 base Dex.
 Perfect Dodge + 1 for every 18 base Agi.
 Reduces the variable casting time of skills by 1% for every 18 base Vit.
 Reduces the cast delay of skills by 1% for every 18 base Int.
-Bypass 15% of hard defense of normal monsters and boss monsters when performing a physical attack for every 18 base Luk.
-Bypass 15% of hard magic defense of normal monsters and boss monsters when performing a magical attack for every 18 base Str.
+Bypass 15% of hard defense of normal monsters, boss monsters and players when performing a physical attack for every 18 base Luk.
+Bypass 15% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack for every 18 base Str.
 #
 28600#
 Attack: 0
