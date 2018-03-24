@@ -285,14 +285,14 @@ moc_fild07 380 202 moc_fild20 208 207 c r2
 
 # Dimensional Gorge (Episode 12)
 # moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
-moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
 moc_fild21 26 196 moc_fild20 349 179
 moc_fild22 32 196 moc_fild20 349 179
 
