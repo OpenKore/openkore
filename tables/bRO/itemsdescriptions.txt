@@ -15305,26 +15305,26 @@ Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, neg
 7619#
 Elunium Enriquecido que pode ser encontrado enterrado nas mais profundas camadas subterrâneas.
 --------------------------
-^0000ffUsado como material para tornar as armaduras mais fortes. A chance de refinar uma armadura com sucesso aumenta.^000000
+^0000ffAumenta as chances de sucesso ao refinar um equipamento.^000000
 --------------------------
 ^CD3278NPC:^000000 Suhnbi
-^CD3278Coord.:^000000 prontera 169, 228
+^CD3278Local:^000000 prontera 169, 228
 <NAVI>[Navegar]<INFO>prontera,169,228,0,000,0</INFO></NAVI>
 --------------------------
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
+Negociação: ^777777Pode ser colocado na Kafra, mas não pode ser derrubado, negociado, nem colocado no carrinho.^000000
 --------------------------
 Peso: ^7777771^000000
 #
 7620#
 Oridecon Enriquecido que pode ser encontrado enterrado nas mais profundas camadas subterrâneas.
 --------------------------
-^0000ffUsado como material para tornar as armas mais fortes. A chance de refinar uma arma com sucesso aumenta.^000000
+^0000ffAumenta as chances de sucesso ao refinar uma arma.^000000
 --------------------------
 ^CD3278NPC:^000000 Suhnbi
-^CD3278Coord.:^000000 prontera 169, 228
+^CD3278Local:^000000 prontera 169, 228
 <NAVI>[Navegar]<INFO>prontera,169,228,0,000,0</INFO></NAVI>
 --------------------------
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
+Negociação: ^777777Pode ser colocado na Kafra, mas não pode ser derrubado, negociado, nem colocado no carrinho.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -18509,9 +18509,16 @@ Peso: ^7777771^000000
 #
 // ---------------- ??? ??? -----------------
 7776#
-Sente-se magro e raquítico? Sua armadura fica dançando sobre seus ombros esqueléticos? Seus problemas acabam agora! Com o curso de tonificação do Mister Peso você ficará sarado e bombadão para intimidar os inimigos na Guerra, atropelar o pré-cast inimigo com um peitoral bem definido e carregar mais poções que o NPC vendedor em seus bíceps largos!
-Leve este Passe para o Mister Peso (Prontera 99, 64) e receba seu treinamento. Sua capacidade de carga aumenta em 200 para cada Passe. Você pode aumentar sua capacidade de carga apenas 10 vezes.
-^ffffff_^000000
+Passe usado para garantir um treinamento de tonificação muscular. Necessário para deixar seus bíceps largos!
+--------------------------
+^0000ffCapacidade de carga +200.^000000
+^0000ffPode ser usado 10 vezes, sendo cumulativo.^000000
+^0000ffO efeito é permanente.^000000
+--------------------------
+^CD3278NPC:^000000 Mister Peso
+^CD3278Local:^000000 prontera 99, 64
+<NAVI>[Navegar]<INFO> prontera,99,64,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777771^000000
 #
 // ---------------- ????? 20070702 -----------------
@@ -22764,7 +22771,14 @@ Classe: ^777777Todas as classes.^000000
 //Peso: ^7777770^000000
 //#
 6046#
-Cupom que o Estilista Especial pede em troca para tingir suas roupas. Você pode encontrá-lo em Prontera, nas coordenadas 105,66.
+Cupom usado para tingir roupas.
+--------------------------
+^0000ffPermite mudar a cor da roupa de um personagem.^000000
+--------------------------
+^CD3278NPC:^000000 Estilista Especial
+^CD3278Local:^000000 prontera 105, 66
+<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 14289#
@@ -22776,8 +22790,14 @@ Cupom que o Estilista Especial pede em troca para tingir suas roupas. Você pode
 Peso: ^7777771^000000
 #
 6047#
-Cupom que o Estilista Especial pede em troca para tirar a tintura de suas roupas. Você pode encontrá-lo em Prontera, nas coordenadas 105 66.
-^ffffff_^000000
+Cupom usado para remover a tintura das roupas.
+--------------------------
+^0000ffPermite retornar à cor original da roupa de um personagem.^000000
+--------------------------
+^CD3278NPC:^000000 Estilista Especial
+^CD3278Local:^000000 prontera 105, 66
+<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 14290#
@@ -30464,10 +30484,17 @@ Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
 6320#
-Pedra afiada possuidora de um poder extremo.
-^0000ffPermite resetar todos os atributos de um personagem no Resetador Rino.^000000 <NAVI>[prontera 150 285]<INFO>prontera,150,285,0,000,0</INFO></NAVI>
+Pedras afiadas possuidoras de um poder extremo.
+--------------------------
+^0000ffPermite resetar todos os pontos de atributo em um personagem.^000000
+--------------------------
+^CD3278NPC:^000000 Resetador Rino
+^CD3278Local:^000000 prontera 150, 285
+<NAVI>[Navegar]<INFO>prontera,150,285,0,000,0</INFO></NAVI>
+--------------------------
 Negociação: ^777777Não pode ser derrubado, mas pode ser negociado, colocado no armazém e no carrinho.^000000
-Peso: ^7777770^000000
+--------------------------
+Peso: ^7777771^000000
 #
 16556#
 Uma caixa contendo 1 Pedra das Valquírias.
@@ -32178,24 +32205,22 @@ Peso: ^77777715^000000
 #
 6225#
 Após anos de compressão, a densidade deste material aumentou imensamente, mas é muito duro para ser refinado facilmente.
-Recentemente descobriu-se que é possível usá-lo para aprimoramentos.
 --------------------------
-^0000ffSe ocorrer falha ao aprimorar uma armadura acima do +10, o item não será destruido (em vez disso, o nível de aprimoramento será reduzido em -1).^000000
+^0000ffEm casos de falha ao refinar itens +10 ou mais, o equipamento não será perdido, mas reduz 1 nível de refino.^000000
 --------------------------
 ^CD3278NPC:^000000 Brokk
-^CD3278Coord.:^000000 brasilis 153, 150
+^CD3278Local:^000000 brasilis 153, 150
 <NAVI>[Navegar]<INFO>brasilis,153,150,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
 #
 6226#
-Após anos de estudo, especialistas de Midgard conseguiram aumentar a densidade deste material, mas é muito duro para ser refinado facilmente.
-Recentemente descobriu-se que é possível usá-lo para aprimoramentos.
+Após anos de estudo, especialistas conseguiram aumentar a densidade deste material, mas é muito duro para ser refinado facilmente.
 --------------------------
-^0000ffSe ocorrer falha ao aprimorar uma arma acima do +10, o item não será destruido (em vez disso, o nível de aprimoramento será reduzido em -1).^000000
+^0000ffEm casos de falha ao refinar itens +10 ou mais, a arma não será perdida, mas reduz 1 nível de refino.^000000
 --------------------------
 ^CD3278NPC:^000000 Brokk
-^CD3278Coord.:^000000 brasilis 153, 150
+^CD3278Local:^000000 brasilis 153, 150
 <NAVI>[Navegar]<INFO>brasilis,153,150,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
@@ -34347,7 +34372,14 @@ Serve para: ^777777Imp^000000
 Peso: ^7777770^000000
 #
 6396#
-Um utensílio feito de magia élfica condensada, que é consumido para se tentar criar um slot de cartas em certos equipamentos como Orelhas de Elfo. Após ser utilizado, ele desaparece.
+Um utensílio feito de magia élfica condensada.
+--------------------------
+^0000ffPermite criar um slot de carta em certos equipamentos.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre dos Slots
+^CD3278Local:^000000 prontera 101, 65
+<NAVI>[Navegar]<INFO> prontera,101,65,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777771^000000
 #
 18507#
@@ -34526,24 +34558,24 @@ Classes que utilizam: ^777777Todas^000000
 6240#
 Um Oridecon perfeito, que garante a segurança no refinamento de seu equipamento.
 --------------------------
-^0000ffAo refinar armas +7, +8 ou +9, ela não se quebrará caso o aprimoramento falhe. Porém se falhar, cairá 1 nível de refinamento.^000000
+^0000ffEm casos de falha ao refinar itens +7, +8 ou +9, a arma não será perdida, mas reduz 1 nível de refino.^000000
 --------------------------
 ^CD3278NPC:^000000 Ferreiro Certeiro
-^CD3278Coord.:^000000 prontera 124, 67
+^CD3278Local:^000000 prontera 124, 67
 <NAVI>[Navegar]<INFO>prontera,124,67,0,000,0</INFO></NAVI>
 --------------------------
-Peso: 1
+Peso: ^7777771^000000
 #
 6241#
 Um Elunium perfeito, que garante a segurança no refinamento de seu equipamento.
 --------------------------
-^0000ffAo refinar equipamentos com nível de refinamento +7, +8 ou +9, ele não se quebrará caso o aprimoramento falhe. Porém se falhar, cairá 1 nível de refinamento.^000000
+^0000ffEm casos de falha ao refinar itens +7, +8 ou +9, o equipamento não será perdido, mas reduz 1 nível de refino.^000000
 --------------------------
 ^CD3278NPC:^000000 Ferreiro Certeiro
-^CD3278Coord.:^000000 prontera 124, 67
+^CD3278Local:^000000 prontera 124, 67
 <NAVI>[Navegar]<INFO>prontera,124,67,0,000,0</INFO></NAVI>
 --------------------------
-Peso: 1
+Peso: ^7777771^000000
 #
 16393#
 Uma caixa contendo 5 Oridecons Perfeitos.
@@ -34785,53 +34817,123 @@ Profissões que utilizam : ^777777Todas^000000
 #
 
 6456#
-Você pode refinar sua Arma para + 5 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +5.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6457#
-Você pode refinar sua Armadura para + 5 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +5.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6228#
-Você pode refinar sua Arma para + 9 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +9.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6229#
-Você pode refinar sua Arma para + 8 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +8.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6230#
-Você pode refinar sua Arma para + 7 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +7.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6231#
-Você pode refinar sua Arma para + 6 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +6.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6232#
-Você pode refinar sua Armadura para + 9 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +9.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6233#
-Você pode refinar sua Armadura para + 8 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +8.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6234#
-Você pode refinar sua Armadura para + 7 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +7.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 6235#
-Você pode refinar sua Armadura para + 6 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +6.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 
 //---- Val Kiwi Event 2011 ----
@@ -35017,15 +35119,15 @@ Nível necessário : ^77777710^000000
 Profissões que utilizam : ^777777Todas^000000
 #
 6439#
-Mega-Elunium que foi abençoado pelos Deuses.
+Um minério de equipamentos que foi abençoado pelos Deuses.
 --------------------------
-^0000ffCriado para refinamentos entre +6 e +12. Caso o refino falhe, o nível de aprimoramento não será alterado e não há chance do item ser perdido.^000000
+^0000ffEm casos de falha ao refinar itens entre +6 e +12, o equipamento não será perdido e o refino não será reduzido.^000000
 --------------------------
 ^CD3278NPC:^000000 Ferreiro Magnífico
-^CD3278Coord.:^000000 prt_in 53, 56
+^CD3278Local:^000000 prt_in 53, 56
 <NAVI>[Navegar]<INFO>prt_in,53,56,0,000,0</INFO></NAVI>
 --------------------------
-Peso : ^7777771^000000
+Peso: ^7777771^000000
 #
 
 16755#
@@ -35043,15 +35145,15 @@ Peso : ^7777771^000000
 #
 
 6438#
-Omni-Oridecon que foi abençoado pelos Deuses.
+Um minério de armas que foi abençoado pelos Deuses.
 --------------------------
-^0000ffCriado para refinamentos entre +6 e +12. Caso o refino falhe, o nível de aprimoramento não será alterado e não há chance do item ser perdido.^000000
+^0000ffEm casos de falha ao refinar itens entre +6 e +12, a arma não será perdida e o refino não será reduzido.^000000
 --------------------------
 ^CD3278NPC:^000000 Ferreiro Magnífico
-^CD3278Coord.:^000000 prt_in 53, 56
+^CD3278Local:^000000 prt_in 53, 56
 <NAVI>[Navegar]<INFO>prt_in,53,56,0,000,0</INFO></NAVI>
 --------------------------
-Peso : ^7777771^000000
+Peso: ^7777771^000000
 #
 
 16753#
@@ -37734,12 +37836,26 @@ Um ovo com a aparência de um morto e com seu interior mais que vivo. Pode lhe r
 Peso: ^7777771^000000
 #
 6238#
-Você pode refinar sua Arma para + 11 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar armas sem risco de perda.
+--------------------------
+^0000ffRefina uma arma para o nível +11.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 6239#
-Você pode refinar sua Armadura para + 11 com o ^0000FFMestre do Refino^000000 em ^8B4513Prontera^000000. - Item Consumível -
-Peso : ^7777770^000000
+Pergaminho usado para refinar equipamentos sem risco de perda.
+--------------------------
+^0000ffRefina um equipamento para o nível +11.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre do Refino
+^CD3278Local:^000000 prontera 184, 177
+<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 18668#
 Um boneco de tartaruga feito especialmente para ser colocado na cabeça de pessoas hiperativas para deixa-las mais calmas e pacientes.
