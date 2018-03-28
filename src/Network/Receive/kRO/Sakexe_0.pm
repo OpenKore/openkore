@@ -156,17 +156,17 @@ sub new {
 		'00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
 		'00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'00F8' => ['storage_closed'], # 2
-		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
-		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]], # -1
-		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]], # 27
-		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
-		'0101' => ['party_exp', 'V', [qw(type)]], # 6
-		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]], # 79
-		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
-		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
-		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
+		'00FA' => ['party_organize_result', 'C', [qw(fail)]],
+		'00FB' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]],
+		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
+		'0101' => ['party_exp', 'V', [qw(type)]],
+		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]],
+		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name result)]],
+		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
+		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
-		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
+		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
 		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
@@ -313,7 +313,7 @@ sub new {
 		'01E2' => ['marriage_req', 'a4 a4 Z24', [qw(AID GID name)]], # 34 # TODO: rename vars?
 		'01E4' => ['marriage_start'], # 2
 		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],  # 26
-		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]], # 81
+		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
@@ -338,19 +338,26 @@ sub new {
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
 		# // 0x020b,0
 		# // 0x020c,0
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
 		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
+		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
+		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
+		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
@@ -395,6 +402,8 @@ sub new {
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
+		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
+		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
@@ -404,6 +413,8 @@ sub new {
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADE' => ['flag', 'V', [qw(unknown)]],
+		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
+		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		
 		};
 
@@ -1959,206 +1970,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $talk{msg}\n", "npc";
-}
-
-sub party_allow_invite {
-   my ($self, $args) = @_;
-
-   if ($args->{type}) {
-      message T("Not allowed other player invite to Party\n"), "party", 1;
-   } else {
-      message T("Allowed other player invite to Party\n"), "party", 1;
-   }
-}
-
-sub party_chat {
-	my ($self, $args) = @_;
-
-	my $msg = bytesToString($args->{message});
-
-	# Type: String
-	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
-	$chatMsgUser =~ s/ $//;
-
-	stripLanguageCode(\$chatMsg);
-	# Type: String
-	my $chat = "$chatMsgUser : $chatMsg";
-	message TF("[Party] %s\n", $chat), "partychat";
-
-	chatLog("p", "$chat\n") if ($config{'logPartyChat'});
-	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
-
-	Plugins::callHook('packet_partyMsg', {
-		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
-	});
-}
-
-# TODO: test if this packet also gives us the item share options => 07D8 does this
-# TODO: add 07D8 strings for rules: item_pickup, item_division
-sub party_exp {
-	my ($self, $args) = @_;
-	$char->{party}{share} = $args->{type};
-	if ($args->{type} == 0) {
-		message T("Party EXP set to Individual Take\n"), "party", 1;
-	} elsif ($args->{type} == 1) {
-		message T("Party EXP set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
-}
-
-sub party_hp_info {
-	my ($self, $args) = @_;
-	my $ID = $args->{ID};
-
-	if ($char->{party}{users}{$ID}) {
-		$char->{party}{users}{$ID}{hp} = $args->{hp};
-		$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
-	}
-}
-
-sub party_invite {
-	my ($self, $args) = @_;
-	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
-	$incomingParty{ID} = $args->{ID};
-	$incomingParty{ACK} = $args->{switch} eq '02C6' ? '02C7' : '00FF';
-	$timeout{ai_partyAutoDeny}{time} = time;
-}
-
-sub party_invite_result {
-	my ($self, $args) = @_;
-	my $name = bytesToString($args->{name});
-	if ($args->{type} == 0) {
-		warning TF("Join request failed: %s is already in a party\n", $name);
-	} elsif ($args->{type} == 1) {
-		warning TF("Join request failed: %s denied request\n", $name);
-	} elsif ($args->{type} == 2) {
-		message TF("%s accepted your request\n", $name), "info";
-	} elsif ($args->{type} == 3) {
-		message T("Join request failed: Party is full.\n"), "info";
-	} elsif ($args->{type} == 4) {
-		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
-	}
-}
-
-sub party_join {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my ($ID, $role, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID role x y type name user map)};
-	$name = bytesToString($name);
-	$user = bytesToString($user);
-
-	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
-		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
-		if ($ID eq $accountID) {
-			message TF("You joined party '%s'\n", $name), undef, 1;
-			# Some servers receive party_users_info before party_join when logging in
-			# This is to prevent clearing info already in $char->{party}
-			$char->{party} = {} unless ref($char->{party}) eq "HASH";
-			$char->{party}{joined} = 1;
-		} else {
-			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
-		}
-	}
-
-	my $actor = $char->{party}{users}{$ID} && %{$char->{party}{users}{$ID}} ? $char->{party}{users}{$ID} : new Actor::Party;
-
-	$actor->{admin} = !$role;
-	delete $actor->{statuses} unless $actor->{online} = !$type;
-	$actor->{pos}{x} = $x;
-	$actor->{pos}{y} = $y;
-	$actor->{map} = $map;
-	$actor->{name} = $user;
-	$actor->{ID} = $ID;
-	$char->{party}{users}{$ID} = $actor;
-
-=pod
-	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
-	$char->{party}{users}{$ID}{admin} = !$role;
-	if ($type == 0) {
-		$char->{party}{users}{$ID}{online} = 1;
-	} elsif ($type == 1) {
-		$char->{party}{users}{$ID}{online} = 0;
-		delete $char->{party}{users}{$ID}{statuses};
-	}
-=cut
-	$char->{party}{name} = $name;
-=pod
-	$char->{party}{users}{$ID}{pos}{x} = $x;
-	$char->{party}{users}{$ID}{pos}{y} = $y;
-	$char->{party}{users}{$ID}{map} = $map;
-	$char->{party}{users}{$ID}{name} = $user;
-	$char->{party}{users}{$ID}->{ID} = $ID;
-=cut
-
-	if ($config{partyAutoShare} && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption(1, 0);
-	}
-}
-
-sub party_leave {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	delete $char->{party}{users}{$ID};
-	binRemove(\@partyUsersID, $ID);
-	if ($ID eq $accountID) {
-		message T("You left the party\n");
-		delete $char->{party};
-		undef @partyUsersID;
-		$char->{party}{joined} = 0;
-	} else {
-		message TF("%s left the party\n", bytesToString($args->{name}));
-	}
-}
-
-sub party_location {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	if ($char->{party}{users}{$ID}) {
-		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
-		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
-		$char->{party}{users}{$ID}{online} = 1;
-		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
-	}
-}
-
-sub party_organize_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		warning T("Can't organize party - party name exists\n");
-	} else {
-		$char->{party}{users}{$accountID}{admin} = 1 if $char->{party}{users}{$accountID};
-	}
-}
-
-sub party_users_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $msg = $args->{RAW_MSG};
-	$char->{party}{name} = bytesToString($args->{party_name});
-
-	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
-		my $ID = substr($msg, $i, 4);
-		if (binFind(\@partyUsersID, $ID) eq "") {
-			binAdd(\@partyUsersID, $ID);
-		}
-		$char->{party}{users}{$ID} = new Actor::Party();
-		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
-		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
-		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
-		$char->{party}{users}{$ID}->{ID} = $ID;
-		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-	}
 }
 
 sub pet_capture_result {
@@ -4277,23 +4088,6 @@ sub cooking_list {
 	$msg .= sprintf("%s\n", ('-'x79));
 	message($msg, "list");
 	message T("You can now use the 'cook' command.\n"), "info";
-}
-
-# TODO: test whether the message is correct: tech: i haven't seen this in action yet
-sub party_show_picker {
-	my ($self, $args) = @_;
-
-	# wtf the server sends this packet for your own character? (rRo)
-	return if $args->{sourceID} eq $accountID;
-
-	my $string = ($char->{party}{users}{$args->{sourceID}} && %{$char->{party}{users}{$args->{sourceID}}}) ? $char->{party}{users}{$args->{sourceID}}->name() : $args->{sourceID};
-	my $item = {};
-	$item->{nameID} = $args->{nameID};
-	$item->{identified} = $args->{identified};
-	$item->{upgrade} = $args->{upgrade};
-	$item->{cards} = $args->{cards};
-	$item->{broken} = $args->{broken};
-	message TF("Party member %s has picked up item %s.\n", $string, itemName($item)), "info";
 }
 
 # 02CB
