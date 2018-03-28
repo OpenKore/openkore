@@ -22228,3 +22228,89 @@ Go back to Ingrid and tell her the good news!#
 63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
 Speak to Ingrid again to conclude your adventure.#
 #
+
+//bounty board
+
+63050#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63051#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63052#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63053#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63054#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63055#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63056#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63057#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63058#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63059#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63060#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63061#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63062#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63063#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63064#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63065#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63066#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63067#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63068#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63069#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63070#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
