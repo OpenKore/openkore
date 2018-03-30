@@ -4,8 +4,9 @@ use strict;
 use warnings;
 
 use FindBin qw($RealBin);
+use lib "$RealBin/..";
 use lib "$RealBin/../..";
-use lib "$RealBin/../../deps";
+use lib "$RealBin/../deps";
 
 use Bus::Client;
 use Getopt::Long;

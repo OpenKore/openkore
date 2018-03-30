@@ -21,8 +21,9 @@
 
 use strict;
 use FindBin qw($RealBin);
+use lib "$RealBin/..";
 use lib "$RealBin/../..";
-use lib "$RealBin/../../deps";
+use lib "$RealBin/../deps";
 use Getopt::Long;
 
 use Utils::Daemon;
