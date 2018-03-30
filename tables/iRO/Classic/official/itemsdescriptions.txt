@@ -71274,8 +71274,32 @@ Return this certificate and the following items to Frank, the owner of the Laure
 5 Black Dyestuffs
 1 Sunglasses Certificate
 Shadowy rumors say the following about this certificate:
-It is Tier 1
-It is worth 1 Forgery Tokens
+It is Tier 3
+It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
+#
+
+20010#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Moon Rabbit Hat!
+200 Golden Hair
+100 White Herb
+50 Animal Skin
+50 Ectoplasm
+1 Moon Rabbit Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+18693#
+The headgear is made according to the sleeping kitty. Increase damage inflicted on Brute Monsters by 2%.
+Class : ^777777Headgear^000000
+Defense : ^7777774^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Level Requirement : ^77777720^000000
+Job : ^777777All Job except Novice^000000
 #
