@@ -11,11 +11,9 @@
 #############################################################################
 # bRO (Brazil)
 package Network::Receive::bRO;
+
 use strict;
-use Log qw(warning debug);
-use base 'Network::Receive::ServerType0';
-use Globals qw(%charSvrSet $messageSender);
-use Translation qw(TF);
+use base qw(Network::Receive::ServerType0);
 
 sub new {
 	my ($class) = @_;
@@ -23,10 +21,9 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
-		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 	);
 	
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		received_characters 099D
@@ -37,19 +34,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub sync_received_characters {
-	my ($self, $args) = @_;
-
-	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
-	
-	# When XKore 2 client is already connected and Kore gets disconnected, send sync_received_characters anyway.
-	# In most servers, this should happen unless the client is alive
-	# This behavior was observed in April 12th 2017, when Odin and Asgard were merged into Valhalla
-	for (1..$args->{sync_Count}) {
-		$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
-	}
 }
 
 *parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;

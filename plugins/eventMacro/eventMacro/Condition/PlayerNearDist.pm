@@ -79,4 +79,8 @@ sub get_new_variable_list {
 	return $new_variables;
 }
 
+sub usable {
+	1;
+}
+
 1;

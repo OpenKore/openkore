@@ -1638,3 +1638,6 @@ guild_vs7.rsw#DreamerRO PvP Arena#
 hero_camp.rsw#Hero Division's Camp#
 phtownall.rsw#Hero Camp#
 Hyrule.rsw#Hyrule#
+1@pop1.rsw#Pope's Office#
+1@pop2.rsw#The Way Back Home#
+1@pop3.rsw#Garden In The Sky#

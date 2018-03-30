@@ -387,7 +387,7 @@ sub getTablesFolders {
 # undef if there is folder(s) specified in --tables, otherwise tables path
 # TODO: way to reconfigure only that path? (by now it's always 'tables')
 sub getTablepackFolder {
-	!$options{tables} && @tablesFolders[@tablesFolders-1]
+	return $tablesFolders[$#tablesFolders];
 }
 
 ##
@@ -715,6 +715,18 @@ sub getItemsControlFilename {
 	} else {
 		return getControlFilename("items_control.txt");
 	}
+}
+
+sub setItemsControlFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getItemsControlFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$items_control_file = $new_filename;
 }
 
 sub getShopFilename {

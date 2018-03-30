@@ -1,4 +1,4 @@
-
+//°ø¼ºÀü TE º¹»ç¸Ê 
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -445,7 +445,7 @@ pvp_y_6-5.rsw#PvP : Ruangan Morroc#
 pvp_y_7-5.rsw#PvP : Ruangan Morroc#
 pvp_y_8-5.rsw#PvP : Ruangan Morroc#
 pvp_2vs2.rsw#PvP : Colosseum#
-
+//------¿ò¹ß¶ó °ü·Ã Ãß°¡------------------
 um_dun01.rsw#Toko Tukang Kayu di Dalam Hutan#
 um_dun02.rsw#Jalan Menuju ke Dunia Lain#
 um_in.rsw#Dalam Umbala#
@@ -454,7 +454,7 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-
+//--------------´ÏÇÃÇìÀÓ-----------
 nif_in.rsw#Dalam Niflheim#
 yggdrasil01.rsw#?Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
@@ -853,9 +853,11 @@ mal_dun01.rsw#malangdo Dungeon#
 2@pump.rsw#Culvert Dungeon2#
 
 
+//»ýÃ¼´øÀü
 lhz_dun04.rsw#Human Experimentation Laboratory B4#
 que_lhz.rsw#Human Experimentation Laboratory B4#
 1@lhz.rsw#Wolfchev's Lab#
 
+//-Å©¸®½º¸¶½º ÀÌº¥Æ® ½Å±Ô Ãß°¡ ¸Ê Áö¿ªÁ¤º¸
 
 niflxmas.rsw#Deadman's land Niffelheim#

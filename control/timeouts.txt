@@ -150,6 +150,7 @@ ai_sellAuto_wait_after_packet_giveup 15
 
 ai_storageAuto 2
 ai_storageAuto_giveup 15
+ai_storageAuto_useItem 2
 # delay between sending cart item add/get packets
 ai_cartAuto 0.15
 

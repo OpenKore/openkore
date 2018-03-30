@@ -16,7 +16,7 @@ use List::Util qw(max min sum);
 use eventMacro::Data;
 use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
-use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs
+use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
 	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index getQuestStatus);
 use eventMacro::Automacro;
@@ -41,7 +41,7 @@ sub new {
 	$self->{line_index} = 0;
 	
 	$self->{label} = {scanLabels($self->{lines_array})};
-	$self->{loops} = {scanLoops($self->{lines_array})};
+	$self->{block} = scanBlocks($self->{lines_array});
 	
 	$self->{time} = time;
 	
@@ -422,25 +422,23 @@ sub scanLabels {
 	return %labels
 }
 
-# Scans the script for loops
-sub scanLoops {
+# Scans the script for blocks
+sub scanBlocks {
 	my $script = $_[0];
-	my %loops;
-	my $block_start;
+	my $blocks = {};
+	my $block_starts = [];
 	
 	for (my $line = 0; $line < @{$script}; $line++) {
-		
-		if (defined $block_start) {
-			next unless (${$script}[$line] =~ /^}$/);
-			$loops{end_to_start}{$line} = $block_start;
-			$loops{start_to_end}{$block_start} = $line;
-			undef $block_start;
-			
-		} elsif (${$script}[$line] =~ /^while\s+\(\s*(.*)\s*\)\s+{$/) {
-			$block_start = $line;
+		if ($script->[$line] =~ /^(if|switch|while)\s+\(.*\)\s+{$/) {
+			push @$block_starts, { type => $1, start => $line };
+		} elsif ($script->[$line] eq '}') {
+			my $block = pop @$block_starts;
+			$block->{end} = $line;
+			$blocks->{end_to_start}{$line} = $block;
+			$blocks->{start_to_end}{$block->{start}} = $block;
 		}
 	}
-	return %loops
+	$blocks;
 }
 
 # Decides what to do when we get to the end of a macro script
@@ -633,7 +631,7 @@ sub define_next_valid_command {
 			} else {
 				debug "[eventMacro] Condition of 'while' is false.\n", "eventMacro", 3;
 				debug "[eventMacro] Moving to the end of 'while' loop.\n", "eventMacro", 3;
-				$self->line_index($self->{loops}{start_to_end}{$self->line_index});
+				$self->line_index($self->{block}{start_to_end}{$self->line_index}{end});
 			}
 			$self->next_line;
 			
@@ -697,8 +695,8 @@ sub define_next_valid_command {
 							return;
 						}
 						
-						#Start of another if block
-						if ( $self->{current_line} =~ /^if.*{$/ ) {
+						#Start of another if/switch/case/while block
+						if ( $self->{current_line} =~ /^(if|switch|case|while).*{$/ ) {
 							$block_count++;
 							
 						#End of an if block or start of else block
@@ -919,9 +917,9 @@ sub define_next_valid_command {
 		# End block of "if", "switch" or "while"
 		######################################
 		} elsif ($self->{current_line} eq '}') {
-			if (exists $self->{loops}{end_to_start}{$self->line_index}) {
+			if ($self->{block}{end_to_start}{$self->line_index}{type} eq 'while') {
 				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
-				$self->line_index($self->{loops}{end_to_start}{$self->line_index});
+				$self->line_index($self->{block}{end_to_start}{$self->line_index}{start});
 			} else {
 				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
 				$self->next_line;
@@ -1040,7 +1038,7 @@ sub next {
 			} elsif ($value =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
 				
-				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name})) : 0);
+				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name}, $complement)) : 0);
 				$eventMacro->set_var(
 					$var->{type}, 
 					$var->{real_name}, 
@@ -1084,12 +1082,29 @@ sub next {
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
 					
-				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(\s*(.*?)\s*\)$/) {
-					my ( $pattern, $var_str ) = parseArgs( "$1", undef, ',' );
+				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(([^\)]+)\)$/) {
+					my ($pattern, $var_str) = parseArgs("$1", undef, ',');
 					$var_str =~ s/^\s+|\s+$//gos;
-					my $split_var = find_variable( $var_str );
-					$self->error( 'Variable not recognized' ), return if !$split_var;
+					my $split_var;
+					
+					my $var_hash = $self->find_and_define_key_index($var_str);
+					return if (defined $self->error);
+					
+					if ($var_hash) {
+						$split_var = $var_hash->{var};
+					} else {
+						$split_var = find_variable($var_str);
+						
+						return if (defined $self->error);
+						
+						if (!defined $split_var) {
+							$self->error("Could not define variable type");
+							return;
+						}
+					}
+					
 					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
+    
 				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
 					my $type = $1;
 					my $var2 = find_variable($2);
@@ -1807,6 +1822,9 @@ sub parse_command {
 			
 		} elsif ($keyword eq 'Inventory') {
 			$result = join ',', getInventoryIDs($parsed);
+			
+		} elsif ($keyword eq 'InventoryType') {
+			$result = join ',', getInventoryTypeIDs($parsed);
 			
 		} elsif ($keyword eq 'store') {
 			$result = (getItemIDs($parsed, $storeList))[0];

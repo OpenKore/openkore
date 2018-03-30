@@ -144,7 +144,7 @@ sub match {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
 			if (!defined $cmpr) {
 				no strict;
-				foreach my $idx (1..$#-) {$varStack{".lastMatch$idx"} = ${$idx}}
+				foreach my $idx (1..$#+) {$varStack{".lastMatch$idx"} = ${$idx}}
 				use strict;
 			}
 			return 1

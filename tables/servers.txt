@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x45C412D6, 0x7DCF4ECC, 0x58F85010
+sendCryptKeys 0x48B2431D, 0x5B2B7428, 0x2212199E
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x45C412D6, 0x7DCF4ECC, 0x58F85010
+sendCryptKeys 0x48B2431D, 0x5B2B7428, 0x2212199E
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -55,23 +55,25 @@ dead_message euRO was closed on September 30, 2010. There used to be transfers t
 ## http://www.ragnarokeurope.com/
 [France - fRO]
 title France - fRO (ragnarokeurope.com): Chaos
-ip 164.132.152.34
+ip 54.36.76.129
 port 6900
 master_version 31
 version 1
+patchpath /patch01
+patchserver ftp.ragnarokonline.fr
 serverType fRO
 serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
 
-[Indonesia - idRO: Midgard]
-ip 202.43.167.67
+[Indonesia - idRO: Midgard,Asgard ,Valhalla]
+ip 202.93.25.131
 port 6900
 master_version 12
 version 2
 patchserver wpatch.ragnarok.co.id
 patchpath /patch02
-serverType idRO
+serverType idRO_Renewal
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -94,9 +96,10 @@ serverType iRO
 serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
-addTableFolders iRO
+addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
+sendCryptKeys 0x16B841CA, 0x776D61F2, 0x6E1833DE
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -116,7 +119,7 @@ charBlockSize 145
 [International - iRO: Loki Classic]
 # http://playragnarok.com
 title International - iRO: Classic.Loki
-ip 128.241.92.203
+ip 128.241.92.202
 port 6900
 master_version 1
 version 18
@@ -139,7 +142,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x02354CB3, 0x7E0D1FD2, 0x4DC524E3
+sendCryptKeys 0x7AFA7BED, 0x6B1F3560, 0x27EF5764
 
 
 
@@ -153,6 +156,27 @@ serverType 7
 secureLogin 1
 serverEncoding Japanese
 addTableFolders Old
+
+
+[Korea - kRO:Zero]
+ip 112.175.128.137
+port 6950
+master_version 0
+version 19
+secureLogin 0
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType Zero
+serverEncoding Korean
+charBlockSize 155
+gameGuard 1
+addTableFolders kRO/Zero;kRO
+pinCode 1
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+OTT_ip 112.175.128.135
+OTT_port 6900
+sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
 ip 112.175.128.137
@@ -456,19 +480,44 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-## http://ro.kunlun.com/
-[cRO - China]
-ip 118.186.39.226
+# http://ro.zhaouc.com/
+[cRO - China: Taren]
+ip 118.89.42.108
 port 6900
 master_version 4
-version 4
+version 1
 serverType cRO
-serverEncoding Simplified Chinese
-charBlockSize 144
+serverEncoding GBK
+charBlockSize 147
 addTableFolders cRO
+gameGuard 1
+secureLogin 0
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+pinCode 1
+charDeleteDateType 1
+pauseCharLogin 1
 
 ####################
 # Private RO Servers
+
+## http://gombak-gamerz.com/
+[GGamerzRO]
+ip 116.251.223.176
+port 6900
+private 1
+master_version 1
+version 55
+recvpackets recvpackets_20151104.txt
+serverType kRO_RagexeRE_2015_11_04a
+serverEncoding Western
+charBlockSize 147
+pinCode 1
+addTableFolders pserver/ggRO
+clientHash fa058c003da60688ef1f8baffa0d3135
+sendCryptKeys 0x4C17382A, 0x29961E4F, 0x7ED174C9
 
 [Localhost]
 ip localhost
@@ -517,32 +566,3 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
-
-# clientside: ? (2010-01-26aRagexeRE.exe)
-# serverside: ?
-[KoreRO]
-dead 1
-ip kronos.sca-gaming.net
-port 6900
-private 1
-master_version 20
-version 23
-serverType kRO_RagexeRE_2010_07_14a
-serverEncoding Western
-charBlockSize 112
-chatLangCode 1
-addTableFolders pserver/KoreRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO
-
-# clientside: ? (2010-07-30aRagexeRE.exe)
-# serverside: ?
-[AegisRO]
-ip 23.88.84.215
-port 6900
-private 1
-master_version 14
-version 26
-serverType kRO_RagexeRE_2010_07_14a
-serverEncoding Western
-charBlockSize 112
-chatLangCode 0
-addTableFolders pserver/AegisRO;eA;kRO/RagexeRE_2010_07_14a;translated/kRO_english;kRO

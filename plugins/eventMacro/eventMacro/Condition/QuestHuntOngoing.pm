@@ -117,12 +117,21 @@ sub check_quests {
 		next unless (exists $questList->{$quest_ID}->{active});
 		next unless ($questList->{$quest_ID}->{active});
 		next unless (exists $questList->{$quest_ID}->{missions});
-		next unless (exists $questList->{$quest_ID}->{missions}->{$mob_ID});
+		
+		my $quest_hunt_ID;
+		foreach (keys %{$questList->{$quest_ID}->{missions}}) {
+			if ($questList->{$quest_ID}->{missions}->{$_}->{mobID} == $mob_ID) {
+				$quest_hunt_ID = $_;
+				last;
+			}
+		}
+		
+		next unless (exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID});
 		
 		next if (
-			exists $questList->{$quest_ID}->{missions}->{$mob_ID}->{count} &&
-			exists $questList->{$quest_ID}->{missions}->{$mob_ID}->{goal} &&
-			$questList->{$quest_ID}->{missions}->{$mob_ID}->{count} == $questList->{$quest_ID}->{missions}->{$mob_ID}->{goal}
+			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{count} &&
+			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{goal} &&
+			$questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{count} == $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{goal}
 		);
 		
 		$self->{fulfilled_quest_id} = $quest_ID;

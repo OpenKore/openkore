@@ -25,7 +25,7 @@ use FastUtils;
 our %EXPORT_TAGS = (
 	# Manipulation functions for arrays which can contain "holes".
 	arrays  => [qw( binAdd binFind binFindReverse binRemove binRemoveAndShift
-			binRemoveAndShiftByIndex binSize )],
+			binRemoveAllAndShift binRemoveAndShiftByIndex binSize )],
 	# Functions for searching in arrays and nested data structures.
 	finders => [qw( existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
 			findIndexStringList_lc findLastIndex findKey findKeyString )],
@@ -150,6 +150,23 @@ sub binRemoveAndShift {
 	}
 	@{$r_array} = @newArray;
 	return $found;
+}
+
+sub binRemoveAllAndShift {
+	my $r_array = shift;
+	my $ID = shift;
+	my @found;
+	my $i;
+	my @newArray;
+	for ($i = 0; $i < @{$r_array};$i++) {
+		if ($$r_array[$i] ne $ID) {
+			push @newArray, $$r_array[$i];
+		} else {
+			push @found, $i;
+		}
+	}
+	@{$r_array} = @newArray;
+	return @found;
 }
 
 sub binRemoveAndShiftByIndex {

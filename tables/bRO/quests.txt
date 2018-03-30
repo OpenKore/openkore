@@ -1,4 +1,4 @@
-// 쟏쒡뿸
+// ÇÏÄ¡¿ø
 1000#Transcendental#SG_FEEL#QUE_NOIMAGE#
 Você pode se tornar um herói com o Livro de Ymir. Encontre o Hall da Valquíria e se torne um novo herói. #
 #
@@ -59,7 +59,7 @@ Colha Cogumelos Venenosos e Cogumelos Borrachentos #
 Preencha o formulário de inscrição para espadachim. No teste, o jogador precisa conseguir uma mensagem de sucesso do gerente que se encontra no último ponto de controle, depois de passar por todas as etapas do teste. #
 Passe em todas as etapas do teste. #
 
-// 솶만솤
+// Á¶¹ÌÁ¤
 
 2000#Mudança de Classe: Ferreiro#SG_FEEL#QUE_NOIMAGE#
 Queremos verificar a dedicação e vontade dos Mercadores que querem se tornar Ferreiros. Como primeiro teste, vá até Einbech e ajude Geschupenschte, um dos membros da guilda. #
@@ -636,7 +636,7 @@ Investigação no Santuário de Odin #
 Colete Pedaços de Chifre. #
 #
 
-// 뇨삺떿
+// ±èÀºµ¿
 
 3000#Mudança de Classe: Bardo#SG_FEEL#QUE_NOIMAGE#
 Encontrei um belo Bardo cantor. Quero ser um Bardo... Devo perguntar a ele como se torna um? #
@@ -809,7 +809,7 @@ Você estende a mão e pega um dos fragmentos. É um pedaço da pele do Imperado
 'Parabéns, soldado. Você salvou este mundo e seu povo de serem consumidos pela destruição do mal. Tenho três itens. Qual deles você quer receber?' #
  #
 
-//--------------------몣샎붺샇 뎲룅---------------------------------
+//--------------------º£ÀÎ½ºÀÇ ³²¸Å---------------------------------
 3060#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Um menino chamado Karyn perdeu sua irmãzinha quando foram ao Vulcão de Thor em Veins. Você precisa ajudá-lo a encontrar sua irmã Curdie. #
  #
@@ -1091,12 +1091,12 @@ Você capturou a Gang Z e obteve o Livro dos Mistérios Proibidos. Volte a conve
   #
 
 
-3135#벼냨볶샇 볕믳 - 뗕쇶샇 뻈솤좭#SG_FEEL#QUE_NOIMAGE#
-듏뗥좣뇗샇 뇗뢲샚럎 샎쟘 샌뇗뗥뛳뷇 뎪릫듂 붱냔 뎴쇶 뻊삻 믳쎳뢦 뻲뻺듙. 벼냨볶샇 샚솤듉럂삺 뻠 3샏떿뻈 쇶볓 뗉 뾹솤샌듙. #
+3135#¼¼°è¼öÀÇ ¼Õ»ó - µÕÁöÀÇ ¾ÈÁ¤È­#SG_FEEL#QUE_NOIMAGE#
+´ÏµåÈ£±×ÀÇ ±×¸²ÀÚ·Î ÀÎÇØ ÀÌ±×µå¶ó½Ç ³ª¹«´Â ½±°Ô ³´Áö ¾ÊÀ» »óÃ³¸¦ ¾ò¾ú´Ù. ¼¼°è¼öÀÇ ÀÚÁ¤´É·ÂÀº ¾à 3ÀÏµ¿¾È Áö¼Ó µÉ ¿¹Á¤ÀÌ´Ù. #
   #
 
-// 뿀뎲냦
-//----------------------쟥엍샼쇷------------------------------
+// ¿À³²°æ
+//----------------------ÇåÅÍÀüÁ÷------------------------------
 4000#Mudança de Classe: Caçador#SG_FEEL#QUE_NOIMAGE#
 Você precisa passar pelo teste de Dejiko para avançar. #
 #
@@ -1154,7 +1154,7 @@ Volte à Guilda dos Caçadores para relatar que passou no exame. #
 Penetração #
 
 
-//--------------------놹뿕벱쏢--------------------------------
+//--------------------±¹¿Õ¼±Ãâ--------------------------------
 4015#Tornando-se um Avaliador#SG_FEEL#QUE_NOIMAGE#
 Encontre-se com o inspetor do reino e torne-se um avaliador. #
 #
@@ -1227,11 +1227,11 @@ Há uma conspiração entre as famílias Walter e Richard. Você precisa contar 
 O príncipe Ahrum foi morto por Ernst. Você precisa relatar isso o mais rápido possível. #
 #
 
-// 뇇뿀많
+// ±Ç¿À¹Î
 
 
 
-//엂뇇샼쇷
+//ÅÂ±ÇÀüÁ÷
 
 6000#Mudança de Classe: Taekwon#SG_FEEL#QUE_NOIMAGE#
 Você escolheu o caminho do Taekwon. Você deve aumentar seu nível de base e falar com Fênix. #
@@ -1248,7 +1248,7 @@ Você finalmente pode se tornar Taekwon, falando mais uma vez com Fênix. #
 
 
 
-//볒뿯뢵쒿샼쇷
+//¼Ò¿ï¸µÄ¿ÀüÁ÷
 
 6005#Mudança de Classe: Espiritualista#SG_FEEL#QUE_NOIMAGE#
 Se quiser dominar o poder dos espíritos, você deve realizar uma cerimônia com alguns materiais. Você deve coletar 1 Rosa Eterna, 1 Diamante de 3 Quilates e 1 Coração Imortal. #
@@ -1269,7 +1269,7 @@ O eco dos espíritos ainda está em seu coração. Fale com Maia de novo. #
 
 
 
-//붴돫
+//½´³ë
 6010#Mudança de Classe: Super Aprendiz#SG_FEEL#QUE_NOIMAGE#
 Se quiser mesmo aproveitar a vida simples de Aprendiz, você deve coletar 2 tipos de itens simples. #
 30 Mucos Pegajosos, 30 Resinas #
@@ -1277,7 +1277,7 @@ Se quiser mesmo aproveitar a vida simples de Aprendiz, você deve coletar 2 tipo
 
 
 
-//듑샚
+//´ÑÀÚ
 6015#Um favor para Cougar#SG_FEEL#QUE_NOIMAGE#
 Encontre Wildcat Joe em Einbroch e fale com ele. #
 #
@@ -1297,7 +1297,7 @@ Corra e traga 5 Minérios de Ferro e 1 Fracon para Cougar. #
 
 
 
-//냇붽뢵냅
+//°Ç½½¸µ°Å
 6020#Carta do Mestre Miller#SG_FEEL#QUE_NOIMAGE#
 Leve a carta para o Sr. Chifre de Touro Inteligente em Payon. #
 #
@@ -1320,8 +1320,8 @@ Isso vai levar algum tempo. Fale com ele mais tarde. #
 
 
 
-// 맨쟽량
-//-------듭벭샼쇷 뫎뫐---------------
+// ¹èÇý·É
+//-------´í¼­ÀüÁ÷ ºÎºÐ---------------
 
 7000#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Você foi à Escola de Dança de Comodo para se tornar Odalisca. Você preencheu a ficha de inscrição. #
@@ -1351,7 +1351,7 @@ Vamos Dançar! #
 Seus passos foram fantásticos! A instrutora Borwaju deve estar impressionada. Vamos ver o que ela achou... #
 Converse com Borwaju #
 
-//------ 뇇벺 샼쇷
+//------ ±Ç¼º ÀüÁ÷
 7007#Solar, Lunar, Estelar#SG_FEEL#QUE_NOIMAGE#
 Você pode encontrar Moogang em Comodo, supostamente no lugar mais perto do céu. #
 Converse com Moogang #
@@ -1372,7 +1372,7 @@ Fragmento Estelar e Poeira Estelar #
 Volte a 'Moogang.' #
 Converse com 'Moogang' #
 
-//---뾡쟇볒뗥 13.1 드떨뢮뿂샇 샇럚 2뫎 룰럎얩 쏟샻 (ep13_moc2.sc)
+//---¿¡ÇÇ¼Òµå 13.1 ´Üµ¨¸®¿ÂÀÇ ÀÇ·Ú 2ºÎ ¸ð·ÎÅ© ÃßÀû (ep13_moc2.sc)
 
 7012#Caça ao Culto de Morroc#SG_FEEL#QUE_NOIMAGE#
 Echinacea não deixou muita escolha. De qualquer forma, procure Kidd. #
@@ -1498,7 +1498,7 @@ Você é pego quando procurava pelos Dandelions sozinho. Você não se esquece d
 
 
 //----- EP 13
-//---- 쒷쟁샇 믧산믧
+//---- Ä·ÇÁÀÇ »çÀ°»ç
 7042#Meio-Expediente#SG_FEEL#QUE_NOIMAGE#
 Traga 50 Peixes Frescos que servirão de alimento para os Tatachos. Procure-os nos campos. #
 Traga 50 Peixes Frescos #
@@ -1523,7 +1523,7 @@ Traga 30 Pêlos #
 Parece que tudo está terminado por hoje. Conseguirei trabalhar um pouco. Pelo menos pelas próximas 5 horas... #
 #
 //----------------EP 13----------------------------------
-//-언뎪엤붺언뿶 080702
+//-Å¸³ªÅä½ºÅ¸¿ö 080702
 7048#Torre de Thanatos#SG_FEEL#QUE_NOIMAGE#
 Burled quer saber por que está tão ansioso para explorar a Torre de Rekenber apesar de sua história de sacrifícios. Talvez o Selo possua alguma pista. #
 Investigue o Selo dentro da Torre #
@@ -1548,8 +1548,8 @@ Encontre outro selo na Torre #
 Quando o quarto selo foi encontrado, você também encontrou o diário de Varmunt. Talvez seja este diário que Rekenber procurava! Devo informar Burled. #
 Entregue o diário de Varmunt para Burled #
 
-// 샌냦볷
-//--------------------뻮뷪뷅샼쇷--------------------------------
+// ÀÌ°æ¼÷
+//--------------------¾î½ê½ÅÀüÁ÷--------------------------------
 8000#Desistindo: Mercenário#SG_FEEL#QUE_NOIMAGE#
 Desista da mudança de classe para Mercenário e volte à cidade. #
 Desistindo da Mudança para Mercenário #
@@ -1587,7 +1587,7 @@ Agora você se tornou um Mercenário!! #
 Mudança de Classe: Mercenário #
 
 
-//쟁뢮붺욮 샼쇷
+//ÇÁ¸®½ºÆ® ÀüÁ÷
 
 8009#Mudança de Classe: Sacerdote#SG_FEEL#QUE_NOIMAGE#
 Aceite as Três Provas do Sacerdócio para começar a mudança de classe. #
@@ -1626,7 +1626,7 @@ Mudança de Classe: Sacerdote - Inscrição #
 Agora você se tornou um Sacerdote!! #
 Agora você se tornou um Sacerdote! #
 
-// 뻆샎뫪럎얩 냸샥 쓹붺욮
+// ¾ÆÀÎºê·ÎÅ© °øÀå Äù½ºÆ®
 
 8017#Fábrica de Einbroch#SG_FEEL#QUE_NOIMAGE#
 Se puder, por favor inspecione o 2o. painel de controle, que parece estar quebrado há algum tempo... #
@@ -1690,7 +1690,7 @@ Precisamos de pelo menos 20 ^FF0000Tubos Flexíveis^000000, 10 ^FF0000Pregos Enf
 
 
 
-// 뢮죷언뢣솨 : 뫱냸솤 쓹붺욮
+// ¸®È÷Å¸¸£Á¨ : ºñ°øÁ¤ Äù½ºÆ®
 
 8032#Favor para Tarlock#SG_FEEL#QUE_NOIMAGE#
 Tenho um irmão mais novo que quase nunca vejo, porque ele também é um Capitão de Aeroplano que está sempre viajando. Pode levar esta carta ao meu irmão Ferlock? E por favor volte com a resposta dele, certo? #
@@ -1709,7 +1709,7 @@ Ah, então você entregou minha carta? Ótimo, e você ainda trouxe uma resposta
  #
 
 
-// 뢮죷언뢣솨 : 삯믧 샌만뢣 쓹붺욮
+// ¸®È÷Å¸¸£Á¨ : À¯»ç ÀÌ¹Ì¸£ Äù½ºÆ®
 
 8036#Favor para Hallen#SG_FEEL#QUE_NOIMAGE#
 Você poderia entregar esta carta para Kaci? É de um cara chamado Sr. Mawong, o mentor dela ou algo assim. #
@@ -1744,7 +1744,7 @@ Você estava me perguntando sobre os mecanismos de vôo do Aeroplano. Então, vo
 Você deve ir falar com Ferlock. #
 
 
-// 죖냖 : 뻠 놸쟏뇢 쓹붺욮
+// ÈÖ°Ö : ¾à ±¸ÇÏ±â Äù½ºÆ®
 
 8044#Noivo de Euslan#SG_FEEL#QUE_NOIMAGE#
 ...Está mesmo disposto a procurar Thierry para mim? Oh, muito obrigada mesmo! Não imagina o quanto sua gentil oferta significa para mim. Thierry saiu de viagem em um dos Aeroplanos para encontrar um remédio que os doutores disseram que preciso para tratar minha doença. #
@@ -1783,7 +1783,7 @@ Entenda, quero vê-la assim que puder, mas tenho de esperar até que os agentes 
 Entregue o remédio a Euslan. #
 
 
-// 죖냖 : 뻠쏊 쓹붺욮 (hg_herv.sc)
+// ÈÖ°Ö : ¾àÃÊ Äù½ºÆ® (hg_herv.sc)
 
 8053#Encontrando o Filho#SG_FEEL#QUE_NOIMAGE#
 Preciso que você encontre meu filho Postell e diga a ele para trazer meu remédio! Por favor, vá para o leste e saia da cidade; você deve encontrar Postell por lá. #
@@ -1802,7 +1802,7 @@ Dê uma olhada na gaveta de remédios, e pegue o que quiser. #
 Olhe dentro da gaveta de remédios. #
 
 
-// 죖냖 : 쏟뻯 쓹붺욮 (hg_memo.sc)
+// ÈÖ°Ö : Ãß¾ï Äù½ºÆ® (hg_memo.sc)
 
 8057#Manainne Resmungando#SG_FEEL#QUE_NOIMAGE#
 Esta árvore significa tanto para todos nesta cidade, e todos nós temos lembranças especiais deste lugar. Mas esse El Schatt quer cortá-la para construir sua loja... #
@@ -1833,7 +1833,7 @@ Volte para Hugel #
  #
 
 
-// 죖냖 : 뿀떭 쓹붺욮 (hg_odeng.sc)
+// ÈÖ°Ö : ¿Àµ­ Äù½ºÆ® (hg_odeng.sc)
 
 8064#Sopa com Bolinhos de Peixe#SG_FEEL#QUE_NOIMAGE#
 Por favor, leve esta encomenda de Sopa com Bolinhos de Peixe para minha amiga Neha. Que bom que ela é uma cliente regular... #
@@ -1884,7 +1884,7 @@ Você está dispensado. Pode sair, e leve meus nobres agradecimentos a Cellette.
 Você conseguiu entregar a Sopa com Bolinhos de Peixe. #
 
 
-// 뻆샎뫪럎얩 : 뾬샎 쓹붺욮 (ein_ryu.sc)
+// ¾ÆÀÎºê·ÎÅ© : ¿¬ÀÎ Äù½ºÆ® (ein_ryu.sc)
 
 8076#Klitzer e Calla#SG_FEEL#QUE_NOIMAGE#
 Sei que estou agindo como um completo idiota. Mas eu daria tudo para ver Calla... Não escute nada do que digo. Eu sou somente um pobre apaixonado pela pessoa errada. Deve ser isso... #
@@ -1939,7 +1939,7 @@ Você abriu meus olhos. De agora em diante, farei meu melhor para me tornar dign
  #
 
 
-// 뛳쟯 : 샟룸뗈 뷉뫎뢧 쓹붺욮 (rachel_wonjumin.sc)
+// ¶óÇï : Àß¸øµÈ ½ÉºÎ¸§ Äù½ºÆ® (rachel_wonjumin.sc)
 
 8089#Criança Desaparecida em Rachel#SG_FEEL#QUE_NOIMAGE#
 Não tenho provas, mas suspeito que tenha sido roubada por Phobe, um servo que desapareceu na mesma época em que a jóia sumiu. Você pode querer perguntar aos outros servos sobre seu paradeiro. #
@@ -1986,7 +1986,7 @@ Este bilhete é uma carta de recomendação que escrevi para você. Por favor, e
 Vá falar com Sir Zhed. #
 
 
-// 뛳쟯 : 뷅냼 쓹붺욮 (rachel_ma1.sc)
+// ¶óÇï : ½Å°ü Äù½ºÆ® (rachel_ma1.sc)
 
 8100#Templo de Rachel#SG_FEEL#QUE_NOIMAGE#
 Enquanto termino de escrever esta recomendação, vou dizer como chegar ao escritório da Papisa, para onde você deve ir depois de coletar 40 Corações Glaciais. #
@@ -2013,7 +2013,7 @@ Alertei a Bekento que ele poderia causar problemas para você, mas parece que vo
 Volte a falar com Zhed. #
 
 
-// 뛳쟯 : 낳쎴쟏쇶 룸쟑 뿮룭 쓹붺욮 (rachel_ryu.sc)
+// ¶óÇï : °³Ã´ÇÏÁö ¸øÇÑ ¿î¸í Äù½ºÆ® (rachel_ryu.sc)
 
 8106#Mistério de Bruspetti#SG_FEEL#QUE_NOIMAGE#
 Acabo de descobrir que minha preciosa filha tem saído com alguém. Ela foi para alguma outra cidade por causa desse garoto, e não sei nada dela desde então! Deve estar em uma viagem romântica com quem quer que seja esse rapaz. #
@@ -2084,7 +2084,7 @@ Ele ainda resiste... Como posso fazê-lo revelar a verdade? Talvez haja algo que
 ... Por favor, deixe-me só. Eu perdi o amor da minha vida por algo estúpido que fiz no passado. Se quiser me castigar, vá em frente... #
 Vá ao jardim da Freya. #
 
-// 뻆뿤언뻟 : 豣뻧닡 쓹붺욮 (ayo_tom.sc)
+// ¾Æ¿äÅ¸¾ß : Œc¾ç²á Äù½ºÆ® (ayo_tom.sc)
 
 8123#O prato mais famosa de Ayotaya, Sopa Tailandesa#SG_FEEL#QUE_NOIMAGE#
 Todos podem preparar Sopa Tailandesa, entretanto, eu recomendo que você visite ^3131FFMali^000000. Ela é a melhor cozinheira. Por que não pergunta se ela pode cozinhar para você? #
@@ -2103,7 +2103,7 @@ Agora você pode pegar '^CE0000Pimenta Vermelha^000000' e outros materiais no me
 Leve 30 Pimentas Vermelhas e os outros ingredientes para Mali. #
 
 
-// 뻆뢶싪 : 룰룰언럎 쓹붺욮 (japan_momo_q.sc)
+// ¾Æ¸¶Âê : ¸ð¸ðÅ¸·Î Äù½ºÆ® (japan_momo_q.sc)
 
 8127#Viagem ao Momotaro#SG_FEEL#QUE_NOIMAGE#
 O chefe disse que os Dokebis arrecadaram 20 milhões de zeny por hackear contas... Desde que os habitantes começaram a desperdiçar seu tempo, você não pode derrotar os Dokebis por ter nível baixo. Avise os outros. #
@@ -2122,7 +2122,7 @@ Realmente você é bom. Você tem os movimentos, kiddo. Mostre-me a saída. Nos 
  #
 
 
-// 뻆뢶싪 : 듸샼 쏢샔 쓹붺욮 (japan_mono.sc)
+// ¾Æ¸¶Âê : ´øÀü ÃâÀÔ Äù½ºÆ® (japan_mono.sc)
 
 8131#A mãe do Senhor Feudal de Amatsu#SG_FEEL#QUE_NOIMAGE#
 A mão do Senhor Feudal descansa aqui. Ela ficou doente por meses. É por isso que ela está aqui. #
@@ -2145,7 +2145,7 @@ Um grande expírito vai expulsar o espírito da raposa do ser humano. Venha, e m
  #
 
 
-// 룰붺쓚뫱뻆 : 뫒믧뷅 쓚붦샌 쓹붺욮 (mos_request.sc)
+// ¸ð½ºÄÚºñ¾Æ : ºÒ»ç½Å ÄÚ½¦ÀÌ Äù½ºÆ® (mos_request.sc)
 
 
 8136#Floresta Perigosa#SG_FEEL#QUE_NOIMAGE#
@@ -2177,7 +2177,7 @@ Você precisa de ^0000ff2 Rubis Amaldiçoados, 3 Ouros, 1 Anel Vermelho, 2 Cabel
 Leve 2 Rubis Amaldiçoados, 3 Ouros, 1 Anel Vermelho, 2 Cabelos de Lusalka, 10 Fios Dourados para o ferreiro em Moscovia #
 
 
-// <뮡낣 망쇶 쓹붺욮>
+// <»¡°£ ¹ÝÁö Äù½ºÆ®>
 
 8143#Anel Vermelho de Bassili#SG_FEEL#QUE_NOIMAGE#
 Dei o anel para minha filha mais nova, Mashenka, como presente. Mas ela morreu... Eu tenho apenas minha filha mais velha, Ryubaba. Ela é muito esperta e atenciosa, mas não consigo esquecer minha outra filha... #
@@ -2199,7 +2199,7 @@ O que é isso? Terrível! Por que essa flauta faz esse som? Nunca ouvi isso ante
 Não quero trocar isso pelo anel! Tenho que deixar seu pai saber a verdade! Estou indo contar tudo agora! Você será punida! #
 Contar ao Bassili #
 
-// <럧믬뇮샇 룓뢮쒫뛴 쓹붺욮>
+// <·ç»ì±îÀÇ ¸Ó¸®Ä«¶ô Äù½ºÆ®>
 
 8148#Senhorita desapontada#SG_FEEL#QUE_NOIMAGE#
 Você foi para o pântano de Moscovia? Você viu minha irmã? Não me importo se ela se tornou Lusalka. Quero saber onde ela está. #
@@ -2226,7 +2226,7 @@ Poderia, por gentileza, levar essa mensagem para ela? Antes da lua cheia, Voltar
  #
 
 
-// <뢶럎쇮뇮 쓹붺욮>
+// <¸¶·ÎÁî±î Äù½ºÆ®>
 
 8155#Mazroka, o dono do inverno#SG_FEEL#QUE_NOIMAGE#
 Nessa caverna, existem muitas coisas'. Você escapou da caverna com ^0000ff100 Biscoitos de Gengibre^000000 da Brazier e ^0000ff100 maçãs^000000. #
@@ -2240,13 +2240,13 @@ Como você ouviu, para fazer o 'Fio de Ouro' precisa de muito tempo. Começarei 
 Koshei poderá ser hostil com você por ter ajudado Maria. Você quer os fios de ouro? Ok, darei pra você! Mas, existe mais um teste. Não quero que você seja sacrificado, por favor considere isso. #
  #
 
-// <맙맙뻟낡뿍 좲뇝믶 뾭볨>
+// <¹Ù¹Ù¾ß°¡¿Í È²±Ý»ö ¿­¼è>
 
-8158#뎰삺 뿀뗎뢷샇 맙맙뻟낡#SG_FEEL#QUE_NOIMAGE#
+8158#³°Àº ¿ÀµÎ¸·ÀÇ ¹Ù¹Ù¾ß°¡#SG_FEEL#QUE_NOIMAGE#
 Estava procurando pelo chaveiror que seria capaz de produzir a chave! O chaveiro da Chave Dourada vive em uma cabana na floresta. ^ff0000Ei, beba minha verruga.^000000 Este feitiço lhe protegerá das Babayagas... #
  #
 
-// <Babayaga's Favor : 뇃볶냨뾭>
+// <Babayaga's Favor : ±Ã¼ö°è¿­>
 
 8159#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Minha vaca sumiu. Encontre-a e lhe aplique mo feitiço para voltar para cá. O feitiço é '^ff0000Bom alimento com sabor de laranja^000000'. Você deverá se lembrar disso. #
@@ -2256,7 +2256,7 @@ Ache a vaca da Babayaga #
 Você a encantou apidamente e a vaca sumiu depois de mugir! #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 몹믧냨뾭>
+// <Favor para Babayaga : º¹»ç°è¿­>
 
 8161#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Atráz da minha casa, não existem caixas ruidosas. Esse recente barulho está impedindo que eu durma. Acabe com ele. #
@@ -2266,7 +2266,7 @@ Acabe com o barulho. #
 ...se fizer barulho mais uma vez, você verá mais que imagina... #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 떵뗏냨뾭>
+// <Favor para Babayaga : µµµÏ°è¿­>
 
 8163#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Ache minhas colheres de prata. Alguns piratas roubaram. Acho que estão perto do navio quebrado. Traga para mim. #
@@ -2292,7 +2292,7 @@ Faça a chave juntando os pedaços. #
 A luz refletida vai direto para a imagem da mulher e a fumaça vem da caixa que foi aberta! Você encontrou as colheres #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 맽믧냨뾭>
+// <Favor para Babayaga : ¹ý»ç°è¿­>
 
 8169#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Compre um livro mágico pra mim. Foi publicado por Momotaro em Amatsu. Vá e traga um pra mim. #
@@ -2302,7 +2302,7 @@ Comprando livro para Babayaga #
 São alguns desses? 'Magica para destruir o tempo', 'A história da casa fantasma ao redor do mundo', 'Estranho e esquisito mundo das ervas.' se precisar de algum livro, me avise. #
 Volte para a Babayaga. #
 
-// <Favor para Babayaga : 냋믧냨뾭>
+// <Favor para Babayaga : °Ë»ç°è¿­>
 
 8171#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Pode ver a jaula perto da cabine? Existem fantasmas vivendo ali por perto. Tire-os de lá, me irritam muito. #
@@ -2312,7 +2312,7 @@ Expulsar o fantasma da cabine. #
 Eu não quero prejudicar nenhuma pessoa! Serei o guardião dessa casa! nunca esquecerei sua bondade por brincar com um fantasma simples como eu. #
 Volte para a Babayaga #
 
-// <Favor para Babayaga : 믳샎냨뾭, 좮샥쇷뻷놺>
+// <Favor para Babayaga : »óÀÎ°è¿­, È®ÀåÁ÷¾÷±º>
 
 8173#Favor para Babayaga#SG_FEEL#QUE_NOIMAGE#
 Vá para Payon e compre-me uma vassoura. É a melhor coisa para limpar, pena que eu não tenho tempo para ir até lá. #
@@ -2326,9 +2326,9 @@ Não tenho vassouras. Os fantasmas me levaram todas. Fiquei satisfeita, pois era
 Ah. eu perdi, mas foi muito legal. Lhe darei a vassoura como prometido. Se possível, brinque comigo novamente quando puder. #
 Volte para a Babayaga #
 
-// <좲뇝믶샇 뾭볨>
+// <È²±Ý»öÀÇ ¿­¼è>
 
-8176#좲뇝믶샇 뾭볨#SG_FEEL#QUE_NOIMAGE#
+8176#È²±Ý»öÀÇ ¿­¼è#SG_FEEL#QUE_NOIMAGE#
 Você está no horário certo. Acabei de terminar a chave! Aqui, ajude Maria com essa chave e expulse Koshei. Kehehehehehe. #
 Encontre Maria #
 
@@ -2349,7 +2349,7 @@ Pegue isso e ajude Maria. Primeiro, aplique a Água Morta para curá-la da maldi
 Vá ajudar maria Maria. #
 
 
-// 쓹붺욮 붺얳 : 삧샚뗥, 믧샌욮 뫭랡붺엍 (qskilll_wizard.sc)
+// Äù½ºÆ® ½ºÅ³ : À§ÀÚµå, »çÀÌÆ® ºí·¡½ºÅÍ (qskilll_wizard.sc)
 
 8181#Explosão Protetora#SG_FEEL#QUE_NOIMAGE#
 Essa habilidade parece boa, mas é difícil de aprendê-la. Cavaleiros são 'experts' com habilidades para empurrar inimigos, então procure um que lhe explique essa teoria em Prontera. Verifique a direçao das 11 horas no Mini-Mapa. #
@@ -2364,7 +2364,7 @@ Não sou filantrópico, por isso utilizo poucas aulas e muito esforço! Me traga
 Leve os materiais para Meow. #
 
 
-// 쓹붺욮 붺얳 : 벼샌쇶, 뾤랹룠얻 쓁맶엍 솦솶, 뾤랹룠얻 쎼샎쇶 (qskilll_sage.sc)
+// Äù½ºÆ® ½ºÅ³ : ¼¼ÀÌÁö, ¿¤·¹¸àÅ» ÄÁ¹öÅÍ Á¦Á¶, ¿¤·¹¸àÅ» Ã¼ÀÎÁö (qskilll_sage.sc)
 
 8184#Conversor Elemental#SG_FEEL#QUE_NOIMAGE#
 Traga os materiais para que possamos criar um conversor básico. Você vai precisar de ^ff00007 Chifres, 12 Cascos Arco Íris, 10 Cascos de Caramujos, 4 Pergaminhos em Branco, 10 Caudas de Escorpião^000000. #
@@ -2391,7 +2391,7 @@ Traga ^ff000020 Cristais Azuis, 1 Solução de Payon, 1 Solução de Morroc ^000
 Volte para Mishuna com os materiais. #
 
 
-// 쓹붺욮 붺얳 : 듭벭, 룅좤샇 삮얩 (qskilll_dancer.sc)
+// Äù½ºÆ® ½ºÅ³ : ´í¼­, ¸ÅÈ¤ÀÇ À®Å© (qskilll_dancer.sc)
 
 8190#Piscadela Encantadora#SG_FEEL#QUE_NOIMAGE#
 Traga ^FF00001 Espelho de Cristal^0000000! Essa ferramenta é muito importante para essa lição, então traga-me isso rápido! #
@@ -2417,7 +2417,7 @@ Vá embora... ick, fale com Canell, minha irmã...!..ZzzzzZzZZZzzzZZ.. #
 Agora, você deve descobrir o verdadeiro segredo da Piscadela. Mas, desde que seja esse tipo de mulher, eu lhe ensinarei. Ho-ho~ #
  #
 
-// ep13 : 믯놹 뾬쟕 솶믧드샇 낥뗮 (ep13_1_rhea.sc)
+// ep13 : »ï±¹ ¿¬ÇÕ Á¶»ç´ÜÀÇ °¥µî (ep13_1_rhea.sc)
 
 8196#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
 Estes escrivãos estão muito estressados. Melhor ver qual o problema. #
@@ -2479,7 +2479,7 @@ Participe do encontro #
 "Ok. Vamos marcar outra reunião. Procure o oficial."#
  #
 
-// 용엤뢮뻳 쓹붺욮 : 냋믧 (tu_sword.sc)
+// Æ©Åä¸®¾ó Äù½ºÆ® : °Ë»ç (tu_sword.sc)
 
 8211#A palestra de Shurank#SG_FEEL#QUE_NOIMAGE#
 "Você aprendeu a arte de utilizar o Golpe Fulminante? Acredito que essa habilidade é a essência dos espadachins!"#
@@ -2553,7 +2553,7 @@ Volte para Shurank #
 "Essa será a palestra final para você. Escute atentamente sobre a habilidade 'Impacto Explosivo'."#
 A palestra de Shurank #
 
-// 용엤뢮뻳 쓹붺욮 : 믳샎 (tu_merchant.sc)
+// Æ©Åä¸®¾ó Äù½ºÆ® : »óÀÎ (tu_merchant.sc)
 
 8229#A palestra de Guarnien#SG_FEEL#QUE_NOIMAGE#
 "Você realmente pode ser um mercador se você carregar bons itens para vender. Aumente o nível da habilidade 'Aumentar Peso do Carinho' para Lv 4. Depois disso, poderemos conversar sobre você se tornar um mercador de verdade."#
@@ -2604,7 +2604,7 @@ A palestra de Guarnien #
 Fale com Guarnien depois de aprender 'Comércio' #
 
 
-// ep13 : 엫뾪뇢 쓹붺욮 (ep13_2_rhea.sc)
+// ep13 : Åë¿ª±â Äù½ºÆ® (ep13_2_rhea.sc)
 
 8241#Coleção de Jóias Vermelhas#SG_FEEL#QUE_NOIMAGE#
 Você coletava jóias de um túmulo! #
@@ -2659,17 +2659,17 @@ Quero produzir um dispositivo que poderá ler as mágicas codificadas nas jóias
 Depois de uma hora, volte a falar com o Engenheiro em Schwartzvald. #
 
 
-// 맚벱놸
+// ¹Ú¼±±¸
 
-//================================뎪샌욮 샼쇷==========================================
+//================================³ªÀÌÆ® ÀüÁ÷==========================================
 
-//-----------------쟬뢣뢸------------------------
+//-----------------Çì¸£¸¸------------------------
 
 9000#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 Herman, Capitão da Cavalaria, diz que você precisa obter aprovações de outros Cavaleiros para se tornar um. #
 Fale com outros membros da Cavalaria. #
 
-//-----------------뾣뗥럹-----------------------
+//-----------------¿£µå·ù-----------------------
 
 // 1st test - 1
 9001#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2686,14 +2686,14 @@ Você deve coletar 5 Patas de Inseto, 5 Corações de Sereia, 5 Flores de Planta
 Sir Andrew disse para você visitar Sir Siracuse para continuar com os testes. #
 Converse com Sir Siracuse #
 
-//----------------솦샓붺--------------------------
+//----------------Á¦ÀÓ½º--------------------------
 
 // 2nd test
 9004#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 James Siracuse disse para você visitar Sir Windsor para continuar com os testes. #
 Converse com Sir Windsor #
 
-//----------------삩샺--------------------------
+//----------------À©Àú--------------------------
 
 // 3rd test
 9005#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2712,7 +2712,7 @@ Mate todos os monstros em 3 minutos #
 Sir Windsor disse para você visitar Amy Beatrice para o próximo teste. #
 Converse com Amy Beatrice #
 
-//----------------뾡샌만--------------------------
+//----------------¿¡ÀÌ¹Ì--------------------------
 
 
 // 3rd test
@@ -2728,7 +2728,7 @@ Amy Beatrice disse para você visitar Sir Edmond para o próximo teste. #
 Converse com Sir Edmond #
 
 
-//----------------뻖뗥룳뗥--------------------------
+//----------------¾Öµå¸óµå--------------------------
 
 // 4th test
 9010#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
@@ -2740,21 +2740,21 @@ Meditação #
 Sir Edmond disse para você encontrar Sir Gray para o teste final. #
 Converse com Sir Gray #
 
-//-----------------뇗랹샌----------------------------
+//-----------------±×·¹ÀÌ----------------------------
 
 // 6th test
 9012#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 Sir Gray disse para você falar com o Capitão para mudar de classe, já que você falou com todos os outros cavaleiros. Finalmente, é hora de se tornar Cavaleiro! #
 Converse com Sir Gray #
 
-//=======================솾럡======================================
+//=======================Á¾·á======================================
 
 
 
 
-//= =====================삧샚뗥 ==============================
+//= =====================À§ÀÚµå ==============================
 
-//---------------------------쒫욮뢰듀--------------------------------
+//---------------------------Ä«Æ®¸°´À--------------------------------
 9013#Mudança de Classe: Bruxo#SG_FEEL#QUE_NOIMAGE#
 O primeiro teste de Catherine, Bruxa da Guilda, é coletar Gemas. #
 Colete 3 Gemas de cada cor: Vermelha, Azul e Amarela. #
@@ -2770,7 +2770,7 @@ Você passou no teste de Catherine. Ela disse que você deve falar com o Bruxo M
 Encontre e fale com o Bruxo Misterioso. #
 
 
-//---------------------------뛳뿬랻 ( 삽쒧쟑 뎲샚 )--------------------------------
+//---------------------------¶ó¿ì·» ( À½Ä§ÇÑ ³²ÀÚ )--------------------------------
 
 9016#Mudança de Classe: Bruxo#SG_FEEL#QUE_NOIMAGE#
 A segunda etapa do teste de mudança de classe é responder às perguntas de Raulel. #
@@ -2784,7 +2784,7 @@ Faça o teste prático com 3 propriedades diferentes #
 Você passou em todos os testes de Raulel. Fale com Catherine para terminar! #
 Converse com Catherine #
 
-//---------------------------샼샥--------------------------------
+//---------------------------ÀüÀå--------------------------------
 2069#Desfiladeiro de Tierra#SG_FEEL#QUE_NOIMAGE#
 Você recebeu um indicador mostrando que participou da batalha do Desfiladeiro de Tierra. O Exército de Guillaume não vai deixar você participar de mais nenhuma batalha até que o indicador se esgote. #
 Espere o tempo acabar para poder voltar à Batalha do Desfiladeiro de Tierra. #
@@ -2806,7 +2806,7 @@ Derrote Naght Sieger no 102o. nível da Torre Sem Fim. #
 Por ter morrido dentro da Torre Sem Fim, você não poderá entrar nela até que ela seja restaurada. #
 #
 
-//---------------------------뿕삧솶럊--------------------------------
+//---------------------------¿ÕÀ§Á¶·Ê--------------------------------
 10000#Para a Corte Real de Prontera#SG_FEEL#QUE_NOIMAGE#
 Como o mensageiro disse, vá à Corte Real de Prontera e fale com o Inspetor. #
 #
@@ -2910,7 +2910,7 @@ Vamos nos lembrar da última conversa entre os dois príncipes #
 Relate ao inspetor tudo pelo que você passou. #
 #
 
-//---------------------------삯돫 룞엤 쓹--------------------------------
+//---------------------------À¯³ë ¸ÞÅä Äù--------------------------------
 10026#Reforma de Meto#SG_FEEL#QUE_NOIMAGE#
 Vá olhar Meto como Weigon lhe pediu. #
 #
@@ -2943,7 +2943,7 @@ Vá para Meto e verifique se sua interferência foi efetiva. #
 Sucesso, reporte para Weigon. #
 #
 
-//---------------------------냯럻 싸쟑 샎낣--------------------------------
+//---------------------------°ï·û ÂøÇÑ ÀÎ°£--------------------------------
 10034#Procurando a Faca#SG_FEEL#QUE_NOIMAGE#
 Vá para o campo procurar a faca de YunKyoHam. #
 #
@@ -2952,7 +2952,7 @@ Vá para o campo procurar a faca de YunKyoHam. #
 Você encontrou a faca, volte e fale com YunKyoHam. #
 #
 
-//---------------------------붺뷃 뿍믧뫱 쓹--------------------------------
+//---------------------------½º½Ã ¿Í»çºñ Äù--------------------------------
 10036#Abastecimento - Doces#SG_FEEL#QUE_NOIMAGE#
 Leve 10 Balas para Magumagu. #
 #
@@ -2977,7 +2977,7 @@ Leve 1 Prato de Porcelana para Magumagu. #
 Leve 100 Corações de Sereia para Magumagu. #
 #
 
-//---------------------------냇망 쎣뇢 쓹--------------------------------
+//---------------------------°Ç¹Ý Ã£±â Äù--------------------------------
 10042#Teclas de piano - Faltam 5#SG_FEEL#QUE_NOIMAGE#
 Provavelmente a pessoa que tem dificuldade em falar deve ter a próxima tecla. #
 #
@@ -3030,7 +3030,7 @@ Parece que não tem problemas em colocar em qualquer lugar, mesmo não sendo uma
 Fale com a bruxa, Clint Kana para sair. #
 #
 
-//---------------------------뿬얺 쏟샥 맸뾪 쓹--------------------------------
+//---------------------------¿ìÅº ÃßÀå ¹ø¿ª Äù--------------------------------
 
 10055#Cultura de Wootan#SG_FEEL#QUE_NOIMAGE#
 O Chefe da tribo Wootan sugere que você continue a aprender sobre essa cultura. #
@@ -3041,7 +3041,7 @@ Você aprenderá o idioma Wootan se trouxer certos itens. #
 10 Papéis Amarelados, 5 Pedaços de Papel, 1 Tinta de Polvo, 1 Pluma de Ave #
 
 // --------------EP13------------------------------------------
-//---------------------------샌냨럎 낡샚--------------------------------
+//---------------------------ÀÌ°è·Î °¡ÀÚ--------------------------------
 10057#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Apenas os mais fortes passarão no teste. #
 Vá ao oficial em Aldebaran. #
@@ -3175,8 +3175,8 @@ Parece que você o influenciou. #
 Você é experiênte em falar coisas para ele, apenas fale sobre seus sentimentos. #
 
 
-// 볛볛샌
-// ----------뿀뗲뷅샼, 믽쎼뾬놸, 떵벭냼, 떹쇝듂돫샎
+// ¼Û¼ÛÀÌ
+// ----------¿Àµò½ÅÀü, »ýÃ¼¿¬±¸, µµ¼­°ü, µ¹ÁÝ´Â³ëÀÎ
 11000#Inspeção do Templo de Odin#SG_FEEL#QUE_NOIMAGE#
 Enfim, se quiser nos ajudar, dê uma olhada nos arredores do templo e veja se quer trabalhar conosco. Fale com o Barqueiro para viajar até o templo, OK? #
 Fale com Alex de novo, depois de investigar o Templo. #
@@ -3605,8 +3605,8 @@ Apenas descanse. #
 Precisamos de couro para todos do acampamento. Você pode conseguir couro dos ^0000FFTendrilrions^000000. Precisamos de ^0000FF20^000000 desses. #
 Apenas consiga os pedaços de couro dos Tendrilions. #
 
-// 맚샏뿫
-//---------------쒣놸, 릫뇢냸뇞------------------------
+// ¹ÚÀÏ¿ë
+//---------------Ä£±¸, ¹«±â°ø±Þ------------------------
 12000#Amigos: Discordância#SG_FEEL#QUE_NOIMAGE#
 Encontre o outro amigo de Maku e fale com ele. #
 Encontre o outro amigo de Maku. #
@@ -3869,7 +3869,7 @@ Apenas podeá acessar a Torre dentro do limite de tempo. #
 Tempo de acesso para a torre. #
 
 //---------------Brasilis Q --------------------------------------
-//뫪뛳쇺뢮붺 - 샌믳쟑 쟘몯낡
+//ºê¶óÁú¸®½º - ÀÌ»óÇÑ ÇØº¯°¡
 9028#Captura das Anêmonas#SG_FEEL#QUE_NOIMAGE#
 Algumas Anêmonas surgiram misteriosamente em ^8B4513Brasilis^000000. #
 Capture-as usando uma ^006400Rede de Captura^000000 recebida da Bióloga Lucia. #
@@ -7058,7 +7058,7 @@ Trabalhe com ^005DFFViorel^000000#
 Você pode usar o serviço de reset de atributos se possuir uma Pedra das Valquírias. . #
 Volte daqui a ^FF000020 horas^000000. #
 
-//=== 쟒럎삩 떥샌===
+//=== ÇÒ·ÎÀ© µ¥ÀÌ===
 //------------------ O Mercador do Inferno
 14166#Maçã!!!#SG_FEEL#QUE_NOIMAGE#
 Pegue uma maçã fresca do mundo dos vivos e entregue-a ao Mercador do Inferno. Ele diz que gostaria de ajudar você, então escute-o. #
@@ -7772,7 +7772,7 @@ Você deve esperar 3 horas antes de refazer a missão Caça às Nereidas. #
 Você deve esperar 3 horas antes de refazer a missão Caça aos Mascarados. #
 #
 
-//----------2012얩뢮붺뢶붺_Feliz Natal, Equipe Fumacentos em Ao!
+//----------2012Å©¸®½º¸¶½º_Feliz Natal, Equipe Fumacentos em Ação!
 
 1276#Feliz Natal, Equipe Fumacentos em Ação!#SG_FEEL#QUE_NOIMAGE#
 Colete 10 Doces Roubados, 10 Biscoitos Roubados e 10 Mochila de Itens Roubados se derrotar Fumacentos em Meias e Fumacentos Natalinos. #
@@ -10532,7 +10532,7 @@ Volte de manhã.#
 Quer uma obra de arte do Pastor Estiloso? Tente trazer todos os itens necessários!#
 Complete a produção do Chapéu.#
 
-//냸벺샼 TE
+//°ø¼ºÀü TE
 
 7501# Bebê Suspeito (1)#SG_FEEL#QUE_NOIMAGE#
 Um pedido para eliminar um Bebê Suspeito que se esconde nos castelos dos Feudos de Gloria e Kafragarten durante a Guerra do Emperium. Alvo: 1 Bebê.#
@@ -11371,7 +11371,7 @@ Colete 10 Ramos de Azevinho#
 
 //Hero's Trail pt.1
 
-//- 뾵뿵샇 죧샻
+//- ¿µ¿õÀÇ ÈçÀû
 12325#Covil de Vermes#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#
@@ -11392,7 +11392,7 @@ Você pode repetir a missão após 1 dia.#
 Enquanto caçava no Covil de Vermes, você encontrou um Bracelete que pertencia a uma Alma Infeliz.#
 Você pode repetir a missão após 1 dia.#
 
-//-뾵뿵샇 죧샻
+//-¿µ¿õÀÇ ÈçÀû
 15002#Memórias de Sara#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#
@@ -11620,3 +11620,726 @@ Reporte o caso a Hugin.#
 12322#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
 O tempo foi distorcido por Hugin! Qualquer coisa pode acontecer dentro deste castelo.#
 Distorção Espacial#
+
+//13th anniversary
+291000#6 anos de bROWiki#SG_FEEL#QUE_NOIMAGE#
+Você capturou algumas fadas na esperança de que uma delas seja a Garota Mimada, mas infelizmente não era... Será necessário retornar amanhã para pegar mais Bolsas Mágicas com o <NAVI>[Felino]<INFO>prontera,196,263,0,000,0</INFO></NAVI>.#
+Volte amanhã.#
+
+291001#6 anos de bROWiki (Dia 1)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291002#6 anos de bROWiki (Dia 2)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291003#6 anos de bROWiki (Dia 3)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291004#6 anos de bROWiki (Dia 4)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291005#6 anos de bROWiki (Dia 5)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291006#6 anos de bROWiki (Dia 6)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+291007#6 anos de bROWiki (Dia 7)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+Capture 10 Fadas.#
+
+7775#Mudança de Classe: Bioquímicos#SG_FEEL#QUE_NOIMAGE#
+A melhor maneira de treinar habilidades com o carrinho é usá-lo contra alguma coisa. Eu lembro de ter visto um monte de Esporos Venenosos em uma jaula...#
+Elimite 100 Esporos Venenosos na jaula da Guilda#
+
+11498#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você foi acordado pelas vozes sussurrantes de fantasmas. Você se encontra em Niflheim, a cidade dos mortos. Vamos ouvir o que os fantasmas tem a dizer.#
+Fale com Hororong#
+
+11499#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Eles disseram que o Jakk da praça pode saber de algo. Vamos perguntar para o Jakk da praça.#
+Fale com Jakk#
+
+11500#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você ouviu sobre o lugar onde Jakk costumava ficar. Vamos voltar para Hooroorong.#
+Fale com Hooroorong#
+
+11501#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororong. Eles são pegos ao capturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11502#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você trouxe Jakks para Niflheim. De acordo com os fantasmas, ramos de Jakk nascem se ele ficar no mundo dos vivos por um longo período. Deixe-o descansar.#
+Descanso de Jakk#
+
+11503#Jack and Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororing. Eles são pegos ao caprturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11504#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+É difícil de entender, mas parece que você precisa pegar Ramo Branco Fino e voltar até Jakk.#
+Colete um Ramo Branco Fino#
+
+11505#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gatinho assustado fugiu quando Jakk foi capturado. Pergunte a  Harorong, quem estava com Jakk.#
+Fale com Harorong#
+
+11506#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Nibble na entrada pode ter visto o bichano. Fale com Nibble na entrada oeste de Niflheim.#
+Nibble no oeste de Niflheim#
+
+11507#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Um pequeno, e branco objeto foi avistado na entrada pouco tempo atrás. Eles não tem certeza se era um gato. Vamos perguntar para alguém fora da entrada.#
+Fale com Jakk Aterrorizado#
+
+11508#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o gato de Jakk foi ali. Vamos falar com o Jakk que está tentando encontrar o gato.#
+Fale com Jakk#
+
+11509#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gato de Jakk foi para Midgard através de uma raiz da Yggdrasil. Ele provavelmente foi por Umbala. Vamos investigar.#
+Investigação na entrada Norte de Umbala#
+
+11510#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O pesquisador disse que ele explicou para o gatinho como chegar até Morroc. Vamos investigar perto da entrada Norte de Morroc.#
+Investigação na entrada Norte de Morroc#
+
+11511#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O mercador disse que ele contou a alguém como chegar até Alberta. Vamos investigar perto da entrada Norte de Alberta.#
+Investigação na entrada de Alberta#
+
+11512#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Se você for até o porto, você encontrará muitos gatos que querem roubar seus peixes. Vamos investigar perto do porto.#
+Invesgitação no porto de Alberta#
+
+11513#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Você achou um gato branco, mas não parece ser o gato de Jakk. O monte de areia é suspeito. Vamos investigar.#
+Investigação no Monte de Areia#
+
+11514#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+No monte de areia, você encontrou ossos que parecem vir de um animal pequeno. Você também encontrou uma coleira vermelha com um sino. Vamos voltar até Jakk.#
+Fale com Jakk em Niflheim#
+
+11515#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o Gatinho não está bem. Encontre o Gatinho ao Sul de Jakk.#
+Converse com o Gatinho#
+
+11516#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Gatinho mudou para o Zumbichano de Juba devido à aventura. Conte ao Jakk que ele não pode voltar a ser quem era, pois muito foi mudado.#
+Converse com Jakk#
+
+11517#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Existem diversos gatos no meio do Vale de Gyoll. Tente encontrar o gatinho ali.#
+Procure pelo Gato#
+
+11518#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você encontrou diversos zumbichanos no meio do Vale de Gyoll, mas eles não parecem bem. Colete ^ff00005 Pelugens Negras^000000 para esquentar o Zumbichano.#
+5 Pelugens Negras#
+
+11519#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano ficou muito triste para continuar conversando. Volte até Jakk.#
+Converse com Jakk#
+
+11520#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk ama seu gato demais para ter outro gato em seu lugar. Converse com Zumbichano de Juba novamente.#
+Converse com o Zumbichano de Juba#
+
+11521#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano de Juba não quer mais conversar. Volte até Jakk.#
+Converse com Jakk#
+
+11522#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que esperaria pelo Gatinho e pediu que você cuidasse dos outros gatos. Ajude zumbichanos no Vale de Gyoll ao coletar ^ff000010 Ramos Brancos Finos^000000.#
+Para o Vale de Gyoll#
+
+11523#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Ao se recuperar, Zumbichano ficou com fome. Colete ^ff000010 Peixes Frescos^000000.#
+10 Peixes Frescos#
+
+11524#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano pediu por mais ^ff000020 Ramos Brancos Finos^000000. Colete-os.#
+20 Ramos Brancos Finos#
+
+11525#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano parece estar com o mesmo vigor que o Zumbichano de Juba. Pergunte ao Zumbichano de Juba sobre isso.#
+Converse com Zumbichano de Juba#
+
+11526#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano de Juba também estará partindo em uma nova jornada. Converse com Jakk sobre isso.#
+Conte ao Jakk#
+
+11527#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk deve estar cansado. Volte a falar com ele após as 4 da manhã.#
+Até amanhã, Jakk!#
+
+11528#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Permite pegar Pelugens Negras dos monstros do Vale de Gyoll.#
+Coletor de Pelugens Negras#
+
+
+//ep15.1
+4295#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Você conheceu um bardo andarilho nas escavações de Verus.#
+Termine de falar com o Bardo.#
+
+4296#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+O bardo errante parece não estar mais interessado em saber das suas aventuras.#
+Volte amanhã.#
+
+4297#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre uma Corporação muito famosa na República de Schwartzwald!#
+Complete a missão ^CD3278A Empresa^000000 e retorne ao Bardo.#
+
+4298#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre o Presidente da República de Schwartwald!#
+Complete a missão ^CD3278O Presidente^000000 e retorne ao Bardo.#
+
+4299#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre uma Professora que estuda as Ruínas de Juperos!#
+Complete a missão ^CD3278Explorando Juperos^000000 e retorne ao Bardo.#
+
+4300#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um bardo contador de histórias quer saber sobre um cientista louco em Juno!#
+Complete a missão ^CD3278Cientista Maluco^000000 e retorne ao Bardo.#
+
+4301#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um curioso bardo deseja saber mais a respeito de uma pesquisa sobre armas biológicas!#
+Complete a missão ^CD3278A Biopesquisa^000000 e retorne ao Bardo.#
+
+4302#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
+Um curioso bardo deseja saber mais a respeito de uma escavação no Templo de Odin!#
+Complete a missão ^CD3278Inspeção no Templo de Odin^000000 e retorne ao Bardo.#
+
+// Episode 15.1 Phantasmagorika
+5304#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Apesar de ser um sítio arqueológico, Verus também precisa de ajuda da polícia! Os ^CD3278Adoradores do Infortúnio^000000 estão importunando as pessoas que estão explorando a cidade e os policiais dependem de você para dar uma lição neles!#
+Ajude o Chefe de Polícia Kesler.#
+
+5305#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Salgran pela primeira vez.#
+Fale com o Policial Salgran#
+
+5306#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Gerev pela primeira vez.#
+Fale com o Policial Gerev#
+
+5307#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Seiden pela primeira vez.#
+Fale com o Policial Seiden#
+
+5308#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o Policial Piffs pela primeira vez.#
+Fale com o Policial Piffs#
+
+5309#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O Chefe de Polícia quer saber se seus colegas estão com problemas. Você pode encontrar os policiais Salgran, Gerev e Seiden na Praça Central de Verus. O policial Piffs encontra-se próximo ao Chefe Kesler.#
+Ajude os policiais.#
+
+5310#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Salgran parece ter um pequeno problema com as Propagandas Ilegais.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5311#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Gerev parece ter um pequeno problema com as Armadilhas.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5312#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Seiden parece ter um pequeno problema com as Pedras.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5313#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+O policial Piffs parece ter um pequeno problema com as Ervas.#
+Retorne ao Chefe quando falar com todos os policiais.#
+
+5314#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os ^CD3278Adoradores do Infortúnio^000000 estão sujando a praça central de Verus com Propagandas Ilegais! É melhor você remover esses panfletos imediatamente antes que eles fiquem colados no chão permanentemente.#
+Elimine 10 Propagandas Ilegais.#
+
+5315#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Alguns viajantes e historiadores estão sendo vítimas das armadilhas colocadas pelos ^CD3278Adoradores do Infortúnio^000000! É melhor você removê-las antes que causem mais problemas!#
+Desarme 10 armadilhas.#
+
+5316#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os destroços da cidade estão servindo como pedra para os ^CD3278Adoradores do Infortúnio^000000 atirarem contra os policiais! Recolha essas pedras do chão para garantir que os Adoradores não as peguem primeiro!#
+Recolha 10 pedras grandes.#
+
+5317#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Os policiais se machucam constantemente ao enfrentar os ^CD3278Adoradores do Infortúnio^000000. A sugestão dos médicos é realizar o tratamento com ervas colhidas nos matagais espalhados pelo sítio arqueológico.#
+Recolha 10 ervas.#
+
+5318#Posto Policial#SG_FEEL#QUE_NOIMAGE#
+Você concluiu todos os trabalhos das outras unidades policiais e pode finalmente descansar! Quem sabe amanhã o Chefe de Polícia Kesler queira a sua ajuda novamente?#
+Volte amanhã.#
+
+// Verus City
+7606#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Foi descoberta uma passagem secreta nas ruínas de Juperos! A Corporação Rekenber e o Grupo do Éden estão recrutando aventureiros e viajantes para trabalhar na escavação!#
+Junte-se ao time de escavação.#
+
+7607#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+A líder do Grupo do Éden quer fazer com você a respeito do projeto de escavação chamado 'Fantasmagórica'. Vá até o segundo andar do Grupo do Éden e dirija-se até a terceira porta, no final do salão.#
+Fale com a Líder do Grupo do Éden.#
+
+7608#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Para se inscrever no projeto de escavação 'Fantasmagórica', você precisará registrar-se com Lenore, na sala ao lado.#
+Fale com a Secretária Lenore.#
+
+7609#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você deve dirijir-se às ruínas de Juperos e entrar na passagem recém-descoberta! Fale com os guias no local para que eles possam te indicar o caminho até o sítio arqueológico. Chegando lá, fale com a Recepcionista Nara para confirmar o registro.#
+Registre-se como um membro do time de escavação de ^CD3278Atnad^000000.#
+
+7610#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você é um membro oficial do time de escavação de ^CD3278Atnad^000000 e pode participar do projeto 'Fantasmagórica'.#
+Parabéns!#
+
+7611#Limpando o Caminho#SG_FEEL#QUE_NOIMAGE#
+Nem todo mundo que explora essa área é um aventureiro... cientistas, historiadores e até pessoas comuns estão se machucando por causa desses robôs que estão invadindo o túnel.#
+Elimine 10 Robôs de Reconhecimento.#
+
+7612#Limpando o Caminho#SG_FEEL#QUE_NOIMAGE#
+Muito obrigado pela sua ajuda! Você deveria descansar, outros aventureiros podem cuidar dos monstros no túnel por enquanto.#
+Volte amanhã.#
+
+7613#Eliminando Robôs#SG_FEEL#QUE_NOIMAGE#
+A praça central de Verus está infestada com criaturas estranhas que parecem viver aqui muito antes de nós... Acontece que eles atrapalham o avanço de outras equipes de escavação. Por favor, dê um jeito neles.#
+Elimine 15 Robôs de Reparo e 15 Robôs de Exploração.#
+
+7614#Eliminando Robôs#SG_FEEL#QUE_NOIMAGE#
+Você conseguiu dar um jeito nos robôs da praça central de Verus!#
+Volte amanhã.#
+
+7615#Relatório Diário de Núcleos#SG_FEEL#QUE_NOIMAGE#
+Esses robôs de Verus podem ser a chave para uma civilização muito avançada. Você pode conseguir Núcleos de Energia destruindo qualquer Robô de Reconhecimento, Robô Reparor e Robô Explorador.#
+Colete 20 Núcleos de Energia.#
+
+7616#Relatório Diário de Núcleos#SG_FEEL#QUE_NOIMAGE#
+O time de escavação está focando em estudar os Núcleos de Energia. Você deveria descansar enquanto isso.#
+Volte amanhã.#
+
+7617#Relatório Diário#SG_FEEL#QUE_NOIMAGE#
+Leve o ^CD3278Relatório da Escavação^000000 para o Comandante Louis na Central de Comando. Depois disso, seu trabalho por hoje acabou!#
+Entregue o relatório para o Comandante Louis.#
+
+7618#Relatório Diário#SG_FEEL#QUE_NOIMAGE#
+Você já entregou o ^CD3278Relatório da Escavação^000000 hoje. É necessário que outro relatóro seja escrito para você entregá-lo novamente#
+Volte amanhã.#
+
+7619#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora você é um membro oficial do time de escavação de ^CD3278Atnad^000000 e pode participar do projeto 'Fantasmagórica'.#
+Fale com Aureth.#
+
+7620#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+O Arqueologista Aureth te pediu para ir até Lloyd e Luke na Praça Central Verus.#
+Fale com o Maquinista Lloyd.#
+
+7621#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+O Maquinista Lloyd pediu ajuda para sua pesquisa sobre as energias dos robôs quebrados. Para coletar essas energias, será necessário usar 1 Garrafa Vazia em cada 'Resto de Máquina' espalhado por toda Verus. Como ele quer 10 energias, leve ^4d4dff10 Garrafas Vazias^000000.#
+Colete 10 Energias Condensadas para Lloyd.#
+
+7622#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Informe os resultados da pesquisa de Lloyd para Aureth.#
+Fale com Aureth.#
+
+7623#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Parece que o velho Atnad está chamando você.#
+Fale com Ian Atnad.#
+
+7624#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Ian Atnad quer que você encontre algo para comer que seja delicioso e refrescante. É melhor você falar com Aureth pra saber quem saberia que tipo de iguaria é esta.#
+Fale com Aureth.#
+
+7625#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Luke vai cozinhar algo para o velho Ian se você trouxer 2 Carnes, 1 Manga de Mora e 1 Banana.#
+Entregue os itens para Luke.#
+
+7626#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Você conseguiu a Torrada de Carne com as habilidades de cozinha do Luke!#
+Entregue a Torrada de Carne para Ian Atnad.#
+
+7627#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+Agora que você fez o favor para Ian, está na hora de saber sobre a última exploração!#
+Converse com Ian Atnad.#
+
+7628#Relatório Diário de Energia#SG_FEEL#QUE_NOIMAGE#
+O Maquinista Lloyd pediu ajuda para sua pesquisa sobre as energias dos robôs quebrados. Para coletar essas energias, será necessário usar 1 Garrafa Vazia em cada 'Resto de Máquina' espalhado por toda Verus. Como ele quer 10 energias, leve ^4d4dff10 Garrafas Vazias^000000.#
+Colete 10 Energias Condensadas para Lloyd.#
+
+7629#Relatório Diário de Energia#SG_FEEL#QUE_NOIMAGE#
+Você ajudou o Maquinista Lloyd na pesquisa sobre energias condensadas.#
+Volte amanhã.#
+
+// ep 15.1
+11363#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que você precisa ter acesso ao elevador antes de usá-lo. Dirija-se ao Quartal General da Corporação Rekenber em Lighthalzen e converse com Leitner na mesa à esquerda do hall de entrada.#
+Registre-se com Leitner.#
+
+11364#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Registro concluído! Retorne ao Planalto de El Mes para usar o elevador que leva direto para Verus.#
+Fale com Elisha.#
+
+11365#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Procure pela Guia Scarlet no centro da cidade de Verus, próxima a uma fonte.#
+Fale com Scarlet.#
+
+11366#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Algo parece ter dado errado com o elevador! Colete 30 Placas de Ferro Usadas para resolver esse problema!#
+Traga 30 ^CD3278Placas de Ferro Usadas^000000.#
+
+11367#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Du Lian parece ter se impressionado com essa estranha Fonte no meio de Verus...#
+Investigue a Fonte.#
+
+11368#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Você não encontrou nada na fonte. Verifique as miudezas ali perto.#
+Investigue as Miudezas.#
+
+11369#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Esse ambiente é propício para a criação de plantas? Verifique a árvore ali perto.#
+Investigue a Árvore.#
+
+11370#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Aquela casa estranha tem uma placa de aviso bem peculiar pendurado na porta.#
+Examine o Aviso.#
+
+11371#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Tem um caminho atrás da casa! Entre naquele portal e siga para a próxima área.#
+Fale com Du Lian nessa nova área.#
+
+11372#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Existe uma fonte mais ao norte, ela é igual a outra fonte que encontramos.#
+Investigue a Fonte.#
+
+11373#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Mark vai até o norte desse lugar, será que ele vai muito longe?#
+Fale com Mark ao norte.#
+
+11374#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O caminho parece estar bloqueado.#
+Fale com Tamarin que está logo ali adiante.#
+
+11375#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Magi está investigando a entrada da área destruída, ela está um pouco mais afastada do portal.#
+Fale com Maggi.#
+
+11376#Perigo no Elevador#SG_FEEL#QUE_NOIMAGE#
+De repente, o elevador parou de se mover, mas não parece estar quebrado. Desça e dê uma olhada.#
+Verifique o elevador.#
+
+11377#Perigo no Elevador#SG_FEEL#QUE_NOIMAGE#
+Você ajudou o homem que estava preso na porta do elevador.#
+Parabéns!#
+
+13184#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+A Charleston parece estar com problemas. Porque você não entra na fábrica e traz os componentes que ela quer?#
+Entre na Fábrica de Charlestons.#
+
+13185#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+Você entrou na Fábrica de Charlestons, haverá um tempo de espera para retornar a ela.#
+Volte amanhã.#
+
+13186#Charleston em Crise#SG_FEEL#QUE_NOIMAGE#
+Você entrou na Fábrica de Charlestons, haverá um tempo de espera para retornar a ela.#
+Volte amanhã.#
+
+13187#Limpeza de Disco#SG_FEEL#QUE_NOIMAGE#
+Elimine os Roborings na Fábrica de Charlestons.#
+Elimine 50 Roboring.#
+
+13188#Limpeza de Disco#SG_FEEL#QUE_NOIMAGE#
+Limpeza de disco concluída!#
+Volte amanhã.#
+
+// ep 15.2
+7641#Recrutamento de Escavadores#SG_FEEL#QUE_NOIMAGE#
+A partir de agora, você tem acesso liberado para as outras áreas de Verus. Para garantir o acesso, é necessário falar com um dos Guardas da entrada e confirmar a sua equipe de escavação!#
+Fale com Damhwa.#
+
+7642#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Investigue a área do Instituto WISH de Pesquisa ao norte da Praça Central de Verus. Qualquer descoberta pequena será importante para reportar ao time de escavação de Atnad.#
+Verifique os Papéis espalhados.#
+
+7643#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um tipo de peça misteriosa no Instituto WISH de Pesquisa. É bom reportar a descoberta para o time de escavação de Atnad.#
+Fale com Ian Atnad.#
+
+7644#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+O registro de memória só funciona com o reprodutor em posse da Capitã Arquien. Dirija-se até a sede do Grupo do Éden e peça pelo ^CD3278Reprodutor de Registro^000000.#
+Fale com a Capitã Arquien no Grupo do Éden.#
+
+7645#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você precisará coletar 5 registros de memória para preencher todo o conteúdo do Reprodutor. Os registros de memória podem ser encontrados vasculhando os papéis espalhados no Instituto WISH de Pesquisa. Leve todos os registros de memória para a Capitã Arquien, em Verus.#
+Traga 5 Registros de Memórias do Instituto.#
+
+7646#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Ouça o conteúdo do registro de memórias no Reprodutor ao lado da Capitã Arquien, não esqueça de conversar com ela depois.#
+Clique no Reprodutor.#
+
+7647#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Reporte suas descobertas ao arqueólogo Ian Atnad.#
+Fale com Ian Atnad.#
+
+7648#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Dirija-se ao abrigo subterrâneo no Laboratório OPTATIO de Experimentos e colete 5 Registros de Memórias para a Capitã Arquien.#
+Traga 5 Registros de Memórias do Abrigo.#
+
+7649#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Informe para Ian Atnad sobre o conteúdo dos Registros de Memórias do Abrigo.#
+Fale com Ian Atnad sobre os registros.#
+
+7650#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Retorne ao Instituto WISH de Pesquisa e colete 5 Registros de Memórias para a Capitã Arquien decifrar o conteúdo.#
+Traga 5 Registros de Memórias do Instituto.#
+
+7651#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Você já ouviu o conteúdo do registro de memória do instituto. Encontre Arquien no horário combinado.#
+Volte amanhã.#
+
+7652#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Retorne ao abrigo subterrâneo no Laboratório OPTATIO de Experimentos e colete 5 Registros de Memórias do Abrigo para a Capitã Arquien decifrar o conteúdo.#
+Traga 5 Registros de Memórias do Abrigo.#
+
+7653#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Você já ouviu o conteúdo do registro de memória do abrigo. Encontre Arquien no horário combinado.#
+Volte amanhã.#
+
+7654#Memórias do Instituto#SG_FEEL#QUE_NOIMAGE#
+Descubra o conteúdo ouvindo o reprodutor de registro.#
+Use o Reprodutor.#
+
+7655#Memórias do Abrigo#SG_FEEL#QUE_NOIMAGE#
+Descubra o conteúdo ouvindo o reprodutor de registro.#
+Use o Reprodutor.#
+
+7656#Registro de Memórias#SG_FEEL#QUE_NOIMAGE#
+Após 5 dias de trabalho contínuo, a Corporação Rekenber finalmente notou seus esforços e te convidou para ir até a sala do Presidente, na Sede em Lighthalzen.#
+Converse com Tatio.#
+
+11379#Sala Final#SG_FEEL#QUE_NOIMAGE#
+Você já investigou a sala final do abrigo subterrâneo! O cheiro fedido dos zumbis impedirão você de entrar nela por um bom tempo...#
+Volte amanhã.#
+
+11380#Sala Final#SG_FEEL#QUE_NOIMAGE#
+O grupo descobriu a última sala do abrigo subterrâneo! Quais segredos você encontrará por aqui? O que você descobrir, conte para Fruit lá fora... isso se você conseguir sobreviver!#
+Elimine T_W_O.#
+
+11381#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Os arqueólogos de Verus disseram que existe um abrigo subterrâneo no centro desse lugar. É melhor investigarmos.#
+Fale com Fruit.#
+
+11382#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Fruit quer que você investigue o abrigo subterrâneo. Parece que alguém ficará encarregado de te guiar pelo lugar!#
+Fale com Verity.#
+
+11383#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O lugar é fedido e cheio de zumbis, mas é melhor se acalmar e investigar o abrigo para saber se existe algo que valha a pena recuperar.#
+Fale com Alp.#
+
+11384#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O grupo encontrou a guia... e também uma sala com energia peculiar...#
+Fale com Alp.#
+
+11385#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que a porta da sala leva para um túnel subterrâneo do abrigo. É melhor seguir as orientações da guia.#
+Fale com Verity.#
+
+11386#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+Parece que existe mais uma porta para outra sala, vamos investigar.#
+Entre no portal.#
+
+11387#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+A misteriosa porta está te levando para mais uma sala... quantas salas existem afinal?#
+Converse com Du Lian.#
+
+11388#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+A porta para voltar ao abrigo está travada... e agora? O jeito é seguir o conselho da guia Verity e adentrar-se cada vez mais nas salas desse lugar misterioso...#
+Continue entrando nos portais.#
+
+11389#Investigando o Passado#SG_FEEL#QUE_NOIMAGE#
+O grupo encontrou uma mensagem que parece ter sido deixada aqui por um bom tempo... de quem será?#
+Continue entrando nos portais.#
+
+12346#Laboratório Central#SG_FEEL#QUE_NOIMAGE#
+O pesquisador está curioso em saber das tecnologias citadas em sua pesquisa.#
+Acesse o Laboratório Central.#
+
+12347#Laboratório Central#SG_FEEL#QUE_NOIMAGE#
+Você já investigou o Laboratório Central por hoje.#
+Volte amanhã.#
+
+13195#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com seu estagiário, é melhor procurar por ele!#
+Fale com o Jornalista Bobão, Trapp.#
+
+13196#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com sua Fotógrafa, é melhor procurar por ela!#
+Fale com a Fotógrafa Jornalista, Sunny Kim.#
+
+13197#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Krotzel está preocupada com seu Repórter de Sobrevivência, é melhor procurar por ela!#
+Fale com o Jornalista Exausto, Grizzly Grylls.#
+
+13198#Brigan Mensal: Krotzel#SG_FEEL#QUE_NOIMAGE#
+Krotzel que saber como estão seus outros colegas jornalistas.#
+Fale com todos os repórteres.#
+
+13199#Brigan Mensal#SG_FEEL#QUE_NOIMAGE#
+Você encontrou todos os jornalistas da revista Brigan Mensal!#
+Volte amanhã.#
+
+13200#Brigan Mensal: Estagiário#SG_FEEL#QUE_NOIMAGE#
+Trapp quer ser um reporter de sobrevivência quando crescer, mas ele está tendo problemas com os monstros das ruínas de Verus!#
+Elimine 30 Fumaças Verdes.#
+
+13201#Brigan Mensal: Estagiário#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Trapp no trabalho de estagiário por hoje.#
+Volte amanhã.#
+
+13202#Brigan Mensal: Fotografia#SG_FEEL#QUE_NOIMAGE#
+Sunny Kim quer tirar fotos de aventureiros enfrentando os robôs da área. Enfrente alguns deles para ajudá-la nessa tarefa!#
+Elimine 30 Robôs de Reparo Turbo.#
+
+13203#Brigan Mensal: Fotografia#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Sunny Kim no trabalho de fotografia por hoje.#
+Volte amanhã.#
+
+13204#Brigan Mensal: Sobrevivência#SG_FEEL#QUE_NOIMAGE#
+Parece que Grizzly Grylls está com vontade de experimentar esse famoso inseto que devora metais! Alguns robôs daqui parecem estar cheios deles!#
+Colete 30 Isopteros.#
+
+13205#Brigan Mensal: Sobrevivência#SG_FEEL#QUE_NOIMAGE#
+Você ajudou Grizzly Grylls no trabalho de sobrevivência por hoje.#
+Volte amanhã.#
+
+
+
+// EP15_2 Memory record
+5341#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5342#Sobrevivendo no Abrigo: Dia 1#SG_FEEL#QUE_NOIMAGE#
+Após a grande explosão, muitas pessoas correram para o abrigo subterrâneo e estão precisando de ajuda.#
+Fale com a Dra. Fresa.#
+
+5343#Sobrevivendo no Abrigo: Dia 1#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFBioengenheiros^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Bioengenheiro Touring.#
+
+5344#Dia 1 no Abrigo: Mecânicos#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFMecânicos^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Mecânico Al.#
+
+5345#Dia 1 no Abrigo: Gerentes#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFGerentes de Instalações Remodeling^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com o Gerente de Instalações Remodeling.#
+
+5346#Dia 1 no Abrigo: Especialistas#SG_FEEL#QUE_NOIMAGE#
+A Dra. Fresa quer saber quantos ^0000FFEspecialistas em Substâncias Químicas^000000 sobreviveram após a explosão e estão vivendo no abrigo.#
+Fale com Karsten.#
+
+5347#Dia 1 no Abrigo: Bioengenheiros#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFBioengenheiros^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5348#Dia 1 no Abrigo: Mecânicos#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFMecânicos^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5349#Dia 1 no Abrigo: Gerentes#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFGerentes de Instalações Remodeling^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5350#Dia 1 no Abrigo: Especialistas#SG_FEEL#QUE_NOIMAGE#
+Você descobriu quantos ^0000FFEspecialistas em Substâncias Químicas^000000 sobreviveram. Hora de ^CD3278informar o número^000000 para a Dra. Fresa.#
+Fale com a Dra. Fresa.#
+
+5351#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5352#Sobrevivendo no Abrigo: Dia 30#SG_FEEL#QUE_NOIMAGE#
+Você precisa carregar até 5 Caixas de Purificador de Ar para os Gerentes de Zona. Você pode carregar 1 por vez ou as 5 de uma vez, se conseguir! As zonas dos gerentes são: ^0000FFC-O^000000, ^0000FFF-1^000000, ^0000FFF-2^000000, ^0000FFI-0^000000 e ^0000FFZ-0^000000.#
+Leve as caixas do Mecânico Mugeosi.#
+
+5353#Dia 30 no Abrigo: Zona C-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona C-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5354#Dia 30 no Abrigo: Zona F-1#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona F-1.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5355#Dia 30 no Abrigo: Zona F-2#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona F-2.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5356#Dia 30 no Abrigo: Zona I-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona I-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5357#Dia 30 no Abrigo: Zona Z-0#SG_FEEL#QUE_NOIMAGE#
+Você entregou a Caixa de Purificador de Ar ao Gerente da Zona Z-0.#
+Fale com o Mecânico Mugeosi após entregar todas as caixas.#
+
+5358#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5359#Sobrevivendo no Abrigo: Dia 32#SG_FEEL#QUE_NOIMAGE#
+Nessa estufa existem plantações de uva que aparecerão periodicamente. Basta andar pela área até encontrar ^CD3278Uvas Frescas^000000 pelo chão.#
+Traga 30 Uvas Frescas para Ebrik.#
+
+5360#Dia 32 no Abrigo: Mecânico#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com o Mecânico Al.#
+
+5361#Dia 32 no Abrigo: Gerente#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com o Gerente de Instalações Remodeling.#
+
+5362#Dia 32 no Abrigo: Especialista#SG_FEEL#QUE_NOIMAGE#
+O Bioengenheiro Ebrik pediu que você entregue essas Uvas frescas para outros pesquisadores do abrigo.#
+Fale com Karsten.#
+
+5363#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5364#Sobrevivendo no Abrigo: Dia 40#SG_FEEL#QUE_NOIMAGE#
+Alguns sobreviventes do abrigo subterrâneo estão apresentando sintomas de convulsão. Sua tarefa é 'cuidar' dos pacientes que aparecem descontrolados na clínica temporária. A Enfermeira Lapplad vai te dizer quando for o bastante.#
+'Cuide' dos Pacientes Convulsionando.#
+
+5365#Dia 40 no Abrigo: Urgência!#SG_FEEL#QUE_NOIMAGE#
+Está acontecendo um aumento drástico no número de sobreviventes convulsionando! O infectante está se espalhando rapidamente pelo abrigo e é necessário dar essa notícia urgente para a Dra. Fresa!!#
+Fale com a Dra. Fresa.#
+
+5366#Sobrevivendo...#SG_FEEL#QUE_NOIMAGE#
+Parece que ninguém reconheceu que você é um viajante do tempo! Bom, seria legal você realizar essa tarefa antes que a viagem temporal comece a ficar instável.#
+Você tem 22 horas para completar a missão.#
+
+5367#Sobrevivendo no Abrigo: Dia 50#SG_FEEL#QUE_NOIMAGE#
+Você tem duas tarefas! Falar com Avrandi na Zona Z-2 sobre os Bens requisitados e entregar uma mensagem para o Mecânico Al dizendo: ^CD3278Não temos materiais, parem de construir mais máquinas!^000000.#
+Fale com Avrandi e com o Mecânico Al.#
+
+5368#Dia 50 no Abrigo: Entrega completa!#SG_FEEL#QUE_NOIMAGE#
+Você entregou os Bens requisitados para o Chefe de Distribuição!#
+Retorne a Ernon.#
+
+5369#Dia 50 no Abrigo: Mensagem entregue!#SG_FEEL#QUE_NOIMAGE#
+Você entregou a mensagem para o Mecânico Al!#
+Retorne a Ernon.#
+
+5370#Volte ao Presente!#SG_FEEL#QUE_NOIMAGE#
+Você completou com sucesso a tarefa requisitada! Está na hora de voltar à sua época atual, pois viagens no tempo podem causar instabilidades.#
+Use o Transportador para sair.#
+
+//Verus
+12368#Operação Sucata#SG_FEEL#QUE_NOIMAGE#
+A pilha de sucatas na sua frente é, na verdade, um Robô da Fábrica Ferdinando. Apesar de velho, parece que ele está funcionando, basta trazer 1 Tanque Velho para reiniciá-lo.#
+Traga 1 Tanque Velho.#

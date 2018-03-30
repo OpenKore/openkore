@@ -238,7 +238,12 @@ sub initHandlers {
 	northwest			=> \&cmdManualMove,
 	southeast			=> \&cmdManualMove,
 	southwest			=> \&cmdManualMove,
-	captcha			   => \&cmdAnswerCaptcha
+	captcha			   => \&cmdAnswerCaptcha,
+	refineui			=> \&cmdRefineUI,
+
+	# Skill Exchange Item
+	cm					=> \&cmdExchangeItem,
+	analysis			=> \&cmdExchangeItem,
 	);
 }
 
@@ -3456,26 +3461,58 @@ sub cmdOpenShop {
 
 sub cmdParty {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2) = $args =~ /^(\w*)(?: (.+))?$/;
-=pod
-	my ($arg1) = $args =~ /^(\w*)/;
-	my ($arg2) = $args =~ /^\w* (\S+)\b/;
-=cut
+	my ($arg1, $arg2) = parseArgs($args, 2);
 
-	if ($arg1 eq "" && (!$char || !$char->{'party'} || !%{$char->{'party'}} )) {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command\n");
+	} elsif (!$char) {
 		error T("Error in function 'party' (Party Functions)\n" .
-			"Can't list party - you're not in a party.\n");
-	} elsif ($arg1 eq "") {
+			"Party info not available yet\n");
+	} elsif (!$char->{party}{joined}) {
+		if ($arg1 eq "create") {
+			if ($arg2 eq "") {
+				error T("Syntax Error in function 'party create' (Organize Party)\n" .
+					"Usage: party create <party name>\n");
+			} else {
+				$messageSender->sendPartyOrganize($arg2);
+			}
+		} elsif ($arg1 eq "join") {
+			if ($arg2 ne "1" && $arg2 ne "0") {
+				error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
+					"Usage: party join <flag>\n");
+			} elsif ($incomingParty{ID} eq "") {
+				error T("Error in function 'party join' (Join/Request to Join Party)\n" .
+					"Can't accept/deny party request - no incoming request.\n");
+			} else {
+				if ($incomingParty{ACK} eq '02C7') {
+					$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, $arg2);
+				} else {
+					$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
+				}
+				undef %incomingParty;
+			}
+		} else {
+			error T("Error in function 'party' (Party Functions)\n" .
+				"You're not in a party.\n");
+		}
+	} elsif ($char->{party}{joined} && ($arg1 eq "create" || $arg1 eq "join")) {
+		error T("Error in function 'party' (Party Functions)\n" .
+			"You're already in a party.\n");
+	} elsif ($arg1 eq "" || $arg1 eq "info") {
 		my $msg = center(T(" Party Information "), 79, '-') ."\n".
-			TF("Party name: %s\n\n" .
+			TF("Party name: %s\n" . 
+			"EXP Take: %s       Item Take: %s       Item Division: %s\n\n".
 			"#    Name                   Map           Coord     Online  HP\n",
-			$char->{'party'}{'name'});
+			$char->{'party'}{'name'},
+			($char->{party}{share}) ? T("Even") : T("Individual"),
+			($char->{party}{itemPickup}) ? T("Even") : T("Individual"),
+			($char->{party}{itemDivision}) ? T("Even") : T("Individual"));
 		for (my $i = 0; $i < @partyUsersID; $i++) {
 			next if ($partyUsersID[$i] eq "");
 			my $coord_string = "";
 			my $hp_string = "";
 			my $name_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'};
-			my $admin_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "A" : "";
+			my $admin_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? T("A") : "";
 			my $online_string;
 			my $map_string;
 
@@ -3505,124 +3542,135 @@ sub cmdParty {
 		$msg .= ('-'x79) . "\n";
 		message $msg, "list";
 
-	} elsif (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", 'party ' .$arg1);
-		return;
-
-	} elsif ($arg1 eq "create") {
-#		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
-		if ($arg2 eq "") {
-			error T("Syntax Error in function 'party create' (Organize Party)\n" .
-				"Usage: party create <party name>\n");
-		} else {
-			$messageSender->sendPartyOrganize($arg2);
-		}
-
-	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
-		error T("Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
-			"Usage: party join <flag>\n");
-	} elsif ($arg1 eq "join" && $incomingParty{ID} eq "") {
-		error T("Error in function 'party join' (Join/Request to Join Party)\n" .
-			"Can't accept/deny party request - no incoming request.\n");
-	} elsif ($arg1 eq "join") {
-		if ($incomingParty{ACK} eq '02C7') {
-			$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, $arg2);
-		} else {
-			$messageSender->sendPartyJoin($incomingParty{ID}, $arg2);
-		}
-		undef %incomingParty;
-	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
-		error T("Error in function 'party leave' (Leave Party)\n" .
-			"Can't leave party - you're not in a party.\n");
 	} elsif ($arg1 eq "leave") {
 		$messageSender->sendPartyLeave();
-	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-		error T("Error in function 'party request' (Request to Join Party)\n" .
-			"Can't request a join - you're not in a party.\n");
-	} elsif ($arg1 eq "request") {
-		unless ($arg2 =~ /\D/) {
-			if ($playersID[$arg2] eq "") {
-				error TF("Error in function 'party request' (Request to Join Party)\n" .
-					"Can't request to join party - player %s does not exist.\n", $arg2);
-			} else {
-				$messageSender->sendPartyJoinRequest($playersID[$arg2]);
-			}
-		} else {
-			message TF("Requesting player %s to join your party.\n", $arg2);
-			$messageSender->sendPartyJoinRequestByName ($arg2);
-		}
 	# party leader specific commands
-	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader") {
-		my $party_admin;
-		# check if we are the party leader before using leader specific commands.
-		for (my $i = 0; $i < @partyUsersID; $i++) {
-			if (($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) && ($char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $char->name)){
-				message T("You are the party leader.\n"), "info";
-				$party_admin = 1;
+	} elsif ($arg1 eq "share" || $arg1 eq "shareitem" || $arg1 eq "shareauto" || $arg1 eq "sharediv" || $arg1 eq "kick" || $arg1 eq "leader" || $arg1 eq "request") {
+		if ($arg2 ne "") {
+			my $party_admin;
+			# check if we are the party leader before using leader specific commands.
+			for (my $i = 0; $i < @partyUsersID; $i++) {
+				if (($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) && ($char->{'party'}{'users'}{$partyUsersID[$i]}{'name'} eq $char->name)){
+					debug T("You are the party leader.\n"), "info";
+					$party_admin = 1;
+					last;
+				}
+			}
+			
+			if (!$party_admin) {
+				error TF("Error in function 'party %s'\n" .
+					"You must be the party leader in order to use this !\n", $arg1);
+				return;
 			}
 		}
-		if (!$party_admin) {
-			error TF("Error in function 'party %s'\n" .
-			"You must be the party leader in order to use this !\n", $arg1);
-			return;
-		} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party share' (Set Party Share EXP)\n" .
-				"Can't set share - you're not in a party.\n");
-		} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
-			error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
-				"Usage: party share <flag>\n");
-		} elsif ($arg1 eq "share") {
-			$messageSender->sendPartyOption($arg2, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-			$char->{party}{shareForcedByCommand} = 1;
-		} elsif ($arg1 eq "shareitem" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party shareitem' (Set Party Share Item)\n" .
-				"Can't set share - you're not in a party.\n");
-		} elsif ($arg1 eq "shareitem" && $arg2 ne "1" && $arg2 ne "0") {
-			error T("Syntax Error in function 'party shareitem' (Set Party Share Item)\n" .
-				"Usage: party shareitem <flag>\n");
+		
+		if ($arg1 eq "request") {
+			if ($arg2 =~ /\D/ || $args =~ /".*"/) {
+				message TF("Requesting player %s to join your party.\n", $arg2);
+				$messageSender->sendPartyJoinRequestByName($arg2);
+			} else {
+				if ($playersID[$arg2] eq "") {
+					error TF("Error in function 'party request' (Request to Join Party)\n" .
+						"Can't request to join party - player %s does not exist.\n", $arg2);
+				} else {
+					$messageSender->sendPartyJoinRequest($playersID[$arg2]);
+				}
+			}
+		} elsif ($arg1 eq "share"){
+			if ($arg2 ne "1" && $arg2 ne "0") {
+				if ($arg2 eq "") {
+					message TF("Party EXP is set to '%s Take'\n", ($char->{party}{share}) ? T("Even") : T("Individual"));
+				} else {
+					error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+						"Usage: party share <flag>\n");
+				}
+			} else {
+				$messageSender->sendPartyOption($arg2, $char->{party}{itemPickup}, $char->{party}{itemDivision});
+				$char->{party}{shareForcedByCommand} = 1;
+			}
 		} elsif ($arg1 eq "shareitem") {
-			$messageSender->sendPartyOption($config{partyAutoShare}, $arg2, $config{partyAutoShareItemDiv});
-			$char->{party}{shareForcedByCommand} = 1;
-		} elsif ($arg1 eq "sharediv" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party share' (Set Party Share EXP)\n" .
-				"Can't set share - you're not in a party.\n");
-		} elsif ($arg1 eq "sharediv" && $arg2 ne "1" && $arg2 ne "0") {
-			error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
-				"Usage: party share <flag>\n");
+			if ($arg2 ne "1" && $arg2 ne "0") {
+				if ($arg2 eq "") {
+					message TF("Party item is set to '%s Take'\n", ($char->{party}{itemPickup}) ? T("Even") : T("Individual"));
+				} else {
+					error T("Syntax Error in function 'party shareitem' (Set Party Share Item)\n" .
+						"Usage: party shareitem <flag>\n");
+				}
+			} else {
+				$messageSender->sendPartyOption($char->{party}{share}, $arg2, $char->{party}{itemDivision});
+				$char->{party}{shareForcedByCommand} = 1;
+			}
 		} elsif ($arg1 eq "sharediv") {
-			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $arg2);
-			$char->{party}{shareForcedByCommand} = 1;
+			if ($arg2 ne "1" && $arg2 ne "0") {
+				if ($arg2 eq "") {
+					message TF("Party item division is set to '%s Take'\n", ($char->{party}{itemDivision}) ? T("Even") : T("Individual"));
+				} else {
+					error T("Syntax Error in function 'party sharediv' (Set Party Item Division)\n" .
+						"Usage: party sharediv <flag>\n");
+				}
+			} else {
+				$messageSender->sendPartyOption($char->{party}{share}, $char->{party}{itemPickup}, $arg2);
+				$char->{party}{shareForcedByCommand} = 1;
+			}
 		} elsif ($arg1 eq "shareauto") {
 			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 			$char->{party}{shareForcedByCommand} = undef;
-		} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party kick' (Kick Party Member)\n" .
-				"Can't kick member - you're not in a party.\n");
-		} elsif ($arg1 eq "kick" && $arg2 eq "") {
-			error T("Syntax Error in function 'party kick' (Kick Party Member)\n" .
-				"Usage: party kick <party member #>\n");
-		} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
-			error TF("Error in function 'party kick' (Kick Party Member)\n" .
-				"Can't kick member - member %s doesn't exist.\n", $arg2);
 		} elsif ($arg1 eq "kick") {
-			$messageSender->sendPartyKick($partyUsersID[$arg2]
-					,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
-
-		} elsif ($arg1 eq "leader" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
-			error T("Error in function 'party leader' (Change Party Leader)\n" .
-				"Can't change party leader - you're not in a party.\n");
-		} elsif ($arg1 eq "leader" && ($arg2 eq "" || $arg2 !~ /\d/)) {
-			error T("Syntax Error in function 'party leader' (Change Party Leader)\n" .
-				"Usage: party leader <party member #>\n");
-			} elsif ($arg1 eq "leader" && $partyUsersID[$arg2] eq "") {
-			error TF("Error in function 'party leader' (Change Party Leader)\n" .
-				"Can't change party leader - member %s doesn't exist.\n", $arg2);
+			if ($arg2 eq "") {
+				error T("Syntax Error in function 'party kick' (Kick Party Member)\n" .
+					"Usage: party kick <party member>\n");
+			} elsif ($arg2 =~ /\D/ || $args =~ /".*"/) {
+				my $found;
+				foreach (@partyUsersID) {
+					if ($char->{'party'}{'users'}{$_}{'name'} eq $arg2) {
+						$messageSender->sendPartyKick($_, $arg2);
+						$found = 1;
+						last;
+					}
+				}
+				
+				if (!$found) {
+					error TF("Error in function 'party kick' (Kick Party Member)\n" .
+						"Can't kick member - member %s doesn't exist.\n", $arg2);
+				}
+			} else {
+				if ($partyUsersID[$arg2] eq "") {
+					error TF("Error in function 'party kick' (Kick Party Member)\n" .
+						"Can't kick member - member %s doesn't exist.\n", $arg2);
+				} else {
+					$messageSender->sendPartyKick($partyUsersID[$arg2], $char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
+				}
+			}
 		} elsif ($arg1 eq "leader") {
-			$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+			if ($arg2 eq "") {
+				error T("Syntax Error in function 'party leader' (Change Party Leader)\n" .
+					"Usage: party leader <party member>\n");
+			} elsif ($arg2 =~ /\D/ || $args =~ /".*"/) {
+				my $found;
+				foreach (@partyUsersID) {
+					if ($char->{'party'}{'users'}{$_}{'name'} eq $arg2) {
+						$messageSender->sendPartyLeader($_);
+						$found = 1;
+						last;
+					}
+				}
+				
+				if (!$found) {
+					error TF("Error in function 'party leader' (Change Party Leader)\n" .
+						"Can't change party leader - member %s doesn't exist.\n", $arg2);
+				}
+			} else {
+				if ($partyUsersID[$arg2] eq "") {
+					error TF("Error in function 'party leader' (Change Party Leader)\n" .
+						"Can't change party leader - member %s doesn't exist.\n", $arg2);
+				} else {
+					$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+				}
+			}
 		}
 	} else {
 		error T("Syntax Error in function 'party' (Party Management)\n" .
-			"Usage: party [<create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n");
+			"Usage: party [<info|create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n");
 	}
 }
 
@@ -4636,7 +4684,7 @@ sub cmdStorage {
 			cmdStorage_log();
 		} elsif ($switch eq 'desc') {
 			cmdStorage_desc($items);
-		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && $items) || $switch eq 'close') {
+		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && ($items || $args =~ /$switch 0/)) || $switch eq 'close') {
 			if ($char->storage->isReady()) {
 				if ($switch eq 'add') {
 					cmdStorage_add($items);
@@ -5247,11 +5295,21 @@ sub cmdUseSkill {
 	my @args = parseArgs($args_string);
 
 	if ($cmd eq 'sl') {
-		my $x = $args[1];
-		my $y = $args[2];
-		if (@args < 3 || @args > 4) {
+		my ($x, $y);
+		
+		if (scalar @args < 3) {
+			$x = $char->position->{x};
+			$y = $char->position->{y};
+			$level = $args[1];
+		} else {
+			$x = $args[1];
+			$y = $args[2];
+			$level = $args[3];
+		}
+		
+		if (@args < 1 || @args > 4) {
 			error T("Syntax error in function 'sl' (Use Skill on Location)\n" .
-				"Usage: sl <skill #> <x> <y> [level]\n");
+				"Usage: sl <skill #> [<x> <y>] [level]\n");
 			return;
 		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
 			error T("Error in function 'sl' (Use Skill on Location)\n" .
@@ -5259,7 +5317,6 @@ sub cmdUseSkill {
 			return;
 		} else {
 			$target = { x => $x, y => $y };
-			$level = $args[3];
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
@@ -6476,7 +6533,7 @@ sub cmdRodex {
 			
 		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
-				"You still have to set something to send the mail (title, body, zeny oy target)\n");
+				"You still have to set something to send the mail (title, body, zeny or target)\n");
 			return;
 		}
 		
@@ -6614,6 +6671,196 @@ sub cmdCancelTransaction {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
+	}
+}
+
+##
+# 'cm' for Change Material (Genetic)
+# 'analysis' for Four Spirit Analysis (Sorcerer) [Untested yet]
+# @author [Cydh]
+##
+sub cmdExchangeItem {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my ($switch, $args) = @_;
+	my $type;
+	my $typename;
+
+	if ($switch eq "cm") {
+		if ($skillExchangeItem != 1) { # Change Material (2494)
+			error T("This command only available after using 'Change Material' skill!\n");
+			return;
+		}
+		$typename = "Change Material";
+	} elsif ($switch eq "analysis") {
+		if ($skillExchangeItem != 2 && $skillExchangeItem != 3) { # Four Spirit Analysis (2462)
+			error T("This command only available after using 'Four Spirit Analysis' skill!\n");
+			return;
+		}
+		$typename = "Four Spirit Analysis";
+	} else {
+		error T("Invalid usage!\n");
+		return;
+	}
+
+	if ($args eq "cancel" || $args eq "end" || $args eq "no") {
+		my @items = ();
+		message TF("Item Exchange %s is canceled.\n", $typename), "info";
+		undef $skillExchangeItem;
+		$messageSender->sendItemListWindowSelected(0, $type, 0, \@items); # Cancel: 0
+		return;
+	}
+	$type = $skillExchangeItem-1;
+
+	my ($item1, $amt1) = $args =~ /^(\d+) (\d+)/;
+
+	if ($item1 >= 0 and $amt1 > 0) {
+		my @list = split(/,/, $args);
+		my @items = ();
+
+		@list = grep(!/^$/, @list); # Remove empty entries
+		foreach (@list) {
+			my ($invIndex, $amt) = $_ =~ /^(\d+) (\d+)/;
+			my $item = $char->inventory->get($invIndex);
+			if ($item) {
+				if ($item->{amount} < $amt) {
+					warning TF("Invalid amount! Only have %dx %s (%d).\n", $item->{amount}, $item->{name}, $invIndex);
+				} elsif ($item->{equipped} != 0) {
+					warning TF("Equipped item was selected %s (%d)!\n", $item->{name}, $invIndex);
+				} else {
+					#message TF("Selected: %dx %s\n", $amt, $item->{name});
+					push(@items,{itemIndex => $item->{index}, amount => $amt, itemName => $item->{name}});
+				}
+			} else {
+				warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			}
+		}
+		if (@items > 0) {
+			my $num = scalar @items;
+			message TF("Number of selected items for %s: %d\n", $typename, $num), "info";
+			message T("======== Exchange Item List ========\n");
+			map {message "$_->{itemName} $_->{amount}x\n"} @items;
+			message "==============================\n";
+			undef $skillExchangeItem;
+			$messageSender->sendItemListWindowSelected($num, $type, 1, \@items); # Process: 1
+			return;
+		} else {
+			error T("No item was selected.\n");
+		}
+	}
+
+	error TF("Syntax Error in function '%s'. Usages:\n".
+			"Single Item: %s <item #> <amount>\n".
+			"Combination: %s <item #> <amount>,<item #> <amount>,<item #> <amount>\n", $switch, $switch, $switch);
+}
+
+##
+# refineui select [item_index]
+# refineui refine [item_index] [material_id] [catalyst_toggle]
+# @author [Cydh]
+##
+sub cmdRefineUI {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my ($cmd, $args_string) = @_;
+	if (!defined $refineUI) {
+		error T("Cannot use RefineUI yet.\n");
+		return;
+	}
+	my @args = parseArgs($args_string, 4);
+
+	# refineui close
+	# End Refine UI state
+	if ($args[0] eq "cancel" || $args[0] eq "end" || $args[0] eq "no") {
+		message T("Closing Refine UI.\n"), "info";
+		undef $refineUI;
+		$messageSender->sendRefineUIClose();
+		return;
+
+	# refineui select [item_index]
+	# Do refine
+	} elsif ($args[0] eq "select") {
+		#my ($invIndex) = $args =~ /^(\d+)/;
+		my $invIndex = $args[1];
+
+		# Check item
+		my $item = $char->inventory->get($invIndex);
+		if (!defined $item) {
+			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			return;
+		} elsif ($item->{equipped} != 0) {
+			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
+			return;
+		}
+		$refineUI->{invIndex} = $invIndex;
+		message TF("Request info for selected item to refine: %s (%d)\n", $item->{name}, $invIndex);
+		$messageSender->sendRefineUISelect( $item->{ID});
+		return;
+
+	# refineui refine [item_index] [material_id] [catalyst_toggle]
+	# Do refine
+	} elsif ($args[0] eq "refine") {
+		#my ($invIndex, $matInvIndex, $catalyst) = $args =~ /^(\d+) (\d+) (\d+|yes|no)/;
+		my $invIndex = $args[1];
+		my $matNameID = $args[2];
+		my $catalyst = $args[3];
+
+		# Check item
+		my $item = $char->inventory->get($invIndex);
+		if (!defined $item) {
+			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			return;
+		} elsif ($item->{equipped} != 0) {
+			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
+			return;
+		}
+
+		# Check material
+		my $material = $char->inventory->getByNameID($matNameID);
+		if (!defined $material) {
+			warning TF("You don't have enough '%s' (%d) as refine material.\n", itemNameSimple($matNameID), $matNameID);
+			return;
+		}
+		# Check if the selected item is valid material
+		my $valid = 0;
+		foreach my $mat (@{$refineUI->{materials}}) {
+			if ($mat->{nameid} == $matNameID) {
+				$valid = 1;
+			}
+		}
+		if ($valid != 1) {
+			warning TF("'%s' (%d) is not valid refine material for '%s'.\n", itemNameSimple($matNameID), $matNameID, $item->{name});
+			return;
+		}
+
+		# Check catalyst toggle
+		my $useCatalyst = 0;
+		#my $Blacksmith_Blessing = 6635; # 6635,Blacksmith_Blessing,Blacksmith Blessing
+		my $blessName = itemNameSimple($Blacksmith_Blessing);
+		if ($refineUI->{bless} > 0 && ($catalyst == 1 || $catalyst eq "yes")) {
+			my $catalystItem = $char->inventory->getByNameID($Blacksmith_Blessing);
+			if (!$catalystItem || $catalystItem->{amount} < $refineUI->{bless}) {
+				warning TF("You don't have %s for RefineUI. Needed: %d!\n", $blessName, $refineUI->{bless});
+				return;
+			}
+			$useCatalyst = 1;
+		}
+
+		my $matStr = $material->{name};
+		if ($useCatalyst) {
+			$matStr .= " and ".$refineUI->{bless}."x ".$blessName;
+		}
+		message TF("Refining item: %s with material %s.\n", $item->{name}, $matStr);
+		$messageSender->sendRefineUIRefine($item->{ID}, $matNameID, $useCatalyst);
+		return;
+	} else {
+		error T("Invalid usage!\n");
+		return;
 	}
 }
 
