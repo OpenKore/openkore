@@ -1,6 +1,9 @@
 package OpenKore::Plugins::BusParty;
 ###############################################################################
 # Plugin to update party information via bus.
+#
+# This plugin is always loaded, but only sends data if the "bus_party" config
+# option is enabled.
 
 use strict;
 
@@ -28,6 +31,8 @@ sub Unload {
 }
 
 sub onMainLoopPre {
+    return if !$config{bus_party};
+
     return if !timeOut($timeout);
     $timeout->{time} = time;
 
