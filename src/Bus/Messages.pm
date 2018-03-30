@@ -90,10 +90,9 @@ use Exporter;
 use base qw(Exporter);
 use Encode;
 use Utils::Exceptions;
-use JSON;
+use JSON::Tiny qw( &decode_json &encode_json );
 
 our @EXPORT_OK = qw(serialize unserialize);
-our $json = JSON->new->utf8->allow_nonref;
 
 ##
 # Bytes Bus::Messages::serialize(String ID, arguments)
@@ -106,7 +105,7 @@ our $json = JSON->new->utf8->allow_nonref;
 # This symbol is exportable.
 sub serialize {
 	my ( $ID, $arguments ) = @_;
-	my $data = eval { $json->encode( { ID => $ID, args => $arguments } ) };
+	my $data = eval { encode_json( { ID => $ID, args => $arguments } ) };
 	$data = 'null' if !defined $data;
 	pack( 'V', 4 + length $data ) . $data;
 }
@@ -135,7 +134,7 @@ sub unserialize {
 	my $messageLen = unpack 'V', $data;
 	return if $dataLen < $messageLen;
 
-	my $msg = $json->decode( substr $data, 4, $messageLen - 4 );
+	my $msg = decode_json( substr $data, 4, $messageLen - 4 );
 
 	$$r_ID = $msg->{ID};
 	$$processed = $messageLen;
