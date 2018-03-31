@@ -4562,42 +4562,56 @@ sub actor_trapped {
 
 sub party_join {
 	my ($self, $args) = @_;
-
 	return unless changeToInGameState();
-	my ($ID, $role, $x, $y, $type, $name, $user, $map, $lv, $item_pickup, $item_share, $charID, $jobID) = @{$args}{qw(ID role x y type name user map lv item_pickup item_share charID jobID)};
-	$name = bytesToString($name);
-	$user = bytesToString($user);
+	my $keys;
+	my $info;
+	if ($args->{switch} eq '0104') {  # DEFAULT OLD PACKET
+		$keys = [qw(ID role x y type name user map)];
+	} elsif ($args->{switch} eq '01E9') { # PACKETVER >= 2015
+		$keys = [qw(ID role x y type name user map lv item_pickup item_share)];
 
-	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
-		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
-		if ($ID eq $accountID) {
-			message TF("You joined party '%s'\n", $name), undef, 1;
+	} elsif ($args->{switch} eq '0A43') { #  PACKETVER >= 2016
+		$keys = [qw(ID role jobID lv x y type name user map item_pickup item_share)];
+
+	} elsif ($args->{switch} eq '0AE4') { #  PACKETVER >= 2017
+		$keys = [qw(ID charID role jobID lv x y type name user map item_pickup item_share)];
+
+	} else { # this can't happen
+		return;
+	}
+	
+	@{$info}{@{$keys}} = @{$args}{@{$keys}};
+
+	if (!$char->{party}{joined} || !$char->{party}{users}{$info->{ID}} || !%{$char->{party}{users}{$info->{ID}}}) {
+		binAdd(\@partyUsersID, $info->{ID}) if (binFind(\@partyUsersID, $info->{ID}) eq "");
+		if ($info->{ID} eq $accountID) {
+			message TF("You joined party '%s'\n", $info->{name}), undef, 1;
 			# Some servers receive party_users_info before party_join when logging in
 			# This is to prevent clearing info already in $char->{party}
 			$char->{party} = {} unless ref($char->{party}) eq "HASH";
 			$char->{party}{joined} = 1;
-			Plugins::callHook('packet_partyJoin', { partyName => $name });
+			Plugins::callHook('packet_partyJoin', { partyName => $info->{name} });
 		} else {
-			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
+			message TF("%s joined your party '%s'\n", $info->{user}, $info->{name}), undef, 1;
 		}
 	}
 
-	my $actor = $char->{party}{users}{$ID} && %{$char->{party}{users}{$ID}} ? $char->{party}{users}{$ID} : new Actor::Party;
+	my $actor = $char->{party}{users}{$info->{ID}} && %{$char->{party}{users}{$info->{ID}}} ? $char->{party}{users}{$info->{ID}} : new Actor::Party;
 
-	$actor->{admin} = !$role;
-	delete $actor->{statuses} unless $actor->{online} = !$type;
-	$actor->{pos}{x} = $x;
-	$actor->{pos}{y} = $y;
-	$actor->{map} = $map;
-	$actor->{name} = $user;
-	$actor->{ID} = $ID;
-	$actor->{lv} = $lv;
-	$actor->{jobID} = $jobID;
-	$actor->{charID} = $charID; # why now use charID?
-	$char->{party}{users}{$ID} = $actor;
-	$char->{party}{name} = $name;
-	$char->{party}{itemPickup} = $item_pickup;
-	$char->{party}{itemDivision} = $item_share;
+	$actor->{admin} = !$info->{'role'};
+	delete $actor->{statuses} unless $actor->{'online'} = !$info-{'type'};
+	$actor->{pos}{x} = $info->{'x'};
+	$actor->{pos}{y} = $info->{'y'};
+	$actor->{map} = $info->{'map'};
+	$actor->{name} = $info->{'user'};
+	$actor->{ID} = $info->{'ID'};
+	$actor->{lv} = $info->{'lv'} if $info->{'lv'};
+	$actor->{jobID} = $info->{'jobID'} if $info->{'jobID'};
+	$actor->{charID} = $info->{'charID'} if $info->{'charID'}; # why now use charID?
+	$char->{party}{users}{$info->{'ID'}} = $actor;
+	$char->{party}{name} = $info->{'name'};
+	$char->{party}{itemPickup} = $info->{'item_pickup'};
+	$char->{party}{itemDivision} = $info->{'item_share'};
 }
 
 # TODO: store this state
@@ -4823,6 +4837,7 @@ sub party_users_info {
 		return if(length($args->{playerInfo}) - $i == 6);
 
 		my $ID = substr($args->{playerInfo}, $i, 4);
+
 		if (binFind(\@partyUsersID, $ID) eq "") {
 			binAdd(\@partyUsersID, $ID);
 		}
