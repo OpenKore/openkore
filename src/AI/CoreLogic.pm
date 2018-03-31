@@ -2632,7 +2632,8 @@ sub processPartySkillUse {
 					}
 					
 					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
-					next if (($char->{party}{users}{$ID} ne $playersList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
+					my $player = $playersList->getByID($ID);
+					next if (($char->{party}{users}{$ID}{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 				
 				my $player = Actor::get($ID);
