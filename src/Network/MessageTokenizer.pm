@@ -188,7 +188,7 @@ sub slicePacket {
 	} else { # packet is at correct size
 		$packet = $data;
 		$$additional_data = undef;
-		if (length($data) > 2) {
+		if (length($data) > 4) {
 			my $packet_length = unpack("v", substr($data, 2, 2));
 			if ($packet_length > 1 && length($data) > $packet_length) {
 				$packet = substr($data, 0, $packet_length);
