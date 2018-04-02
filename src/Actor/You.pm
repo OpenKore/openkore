@@ -176,7 +176,39 @@ sub sp_percent {
 sub weight_percent {
 	my ($self) = @_;
 
-	return $self->{weight} / $self->{weight_max} * 100;
+	if ($self->{weight_max}) {
+		return $self->{weight} / $self->{weight_max} * 100;
+	}
+	
+	return 0;
+}
+
+##
+# float $char->exp_base_percent()
+#
+# Returns your base exp percentage (between 0 and 100).
+sub exp_base_percent {
+	my ($self) = @_;
+	
+	if ($self->{exp_max}) {
+		return ($self->{exp} / $self->{exp_max} * 100);
+	}
+		
+	return 0;
+}
+
+##
+# float $char->exp_job_percent()
+#
+# Returns your job exp percentage (between 0 and 100).
+sub exp_job_percent {
+	my ($self) = @_;
+	
+	if ($self->{exp_job_max}) {
+		return ($self->{exp_job} / $self->{exp_job_max} * 100);
+	}
+	
+	return 0;
 }
 
 
@@ -244,7 +276,8 @@ sub attack {
 				next;
 			}
 
-			if (existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{'name'})) {
+			if (existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{'name'}) || 
+				existsInList($config{"autoSwitch_$i"}, $monsters{$targetID}{nameID})) {
 				message TF("Encounter Monster : %s\n", $monsters{$targetID}{'name'});
 				if ($config{"autoSwitch_$i"."_rightHand"}) {
 

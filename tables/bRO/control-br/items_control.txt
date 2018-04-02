@@ -108,7 +108,7 @@ Cotton Shirt [1] 0 0 1
 2409 0 0 1 # Salto_Alto
 2502 0 0 1 # Capuz
 2502 0 0 1 # Capuz
-2304 0 0 1 # Gibão
+2303 0 0 1 # Gibão
 2304 0 0 1 # Gibão
 2506 0 0 1 # Manteau
 2308 0 0 1 # Capote
@@ -391,7 +391,6 @@ Animal Poop 0 0 1
 1055 0 0 1 # Pele_de_Minhoca
 1040 0 0 1 # Bigode_de_Anão_Ancião
 1011 0 0 1 # Emveretarcon
-1059 0 0 1 # Tecido
 540 0 0 1 # Ração_para_Falcão
 1063 0 0 1 # Presa
 949 0 0 1 # Pluma

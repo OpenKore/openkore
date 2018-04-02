@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2016_12_07e;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_07_06c);
+use base qw(Network::Send::kRO::RagexeRE_2016_08_24a);
 
 sub new {
 	my ($class) = @_;
@@ -32,7 +32,7 @@ sub new {
 		'0867' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'023B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'08AD' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'087E' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'087E' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'08A2' => ['item_take', 'a4', [qw(ID)]],
 		'0361' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0965' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -41,7 +41,10 @@ sub new {
 		'0875' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'091D' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'095D' => ['storage_password'],
-		'035F' => ['sync', 'V', [qw(time)]],		
+		'035F' => ['sync', 'V', [qw(time)]],
+		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA4' => ['refineui_close', '' ,[qw()]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -59,7 +62,7 @@ sub new {
 		friend_request 0867
 		homunculus_command 023B
 		item_drop 08AD
-		item_list_res 087E
+		item_list_window_selected 087E
 		item_take 08A2
 		map_login 0361
 		party_join_request_by_name 0965

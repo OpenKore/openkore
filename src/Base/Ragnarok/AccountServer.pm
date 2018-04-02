@@ -149,6 +149,94 @@ sub master_login {
 	}
 }
 
+sub token_login {
+	my ($self, $args, $client) = @_;
+	
+	my $sessionID = $self->{sessionStore}->generateSessionID();
+	my %session = (
+		sessionID => $sessionID,
+		sessionID2 => $sessionID
+	);
+
+	my $password_check = do {
+		if (defined $args->{token}) {
+			sub { $args->{token} eq $_[0] }
+		} else {
+			$client->send($self->{recvPacketParser}->reconstruct({
+				switch => 'login_error',
+				type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
+			}));
+			$client->close();
+		}
+	};
+
+	my $result = $self->login(\%session, $args->{username}, $password_check);
+	if ($result == LOGIN_SUCCESS) {
+		$self->{sessionStore}->add(\%session);
+	
+		$session{state} = 'About to select character';
+
+		# Show list of character servers.
+		my @servers;
+		foreach my $charServer (@{$self->{charServers}}) {
+			my $ip = $charServer->getHost;
+			$ip = $client->{BSC_sock}->sockhost if $ip =~ /^0\./;
+
+			push @servers, {
+				ip => $ip,
+				port => $charServer->getPort,
+				name => $charServer->getName,
+				users => $charServer->getPlayersCount,
+				state => 0,
+				property => 0,
+				unknown => 0,
+				display => 5, # don't show number of players
+			};
+		}
+
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'account_server_info',
+			# maybe sessionstore should store sessionID as bytes?
+			sessionID => pack('V', $session{sessionID}),
+			accountID => $session{accountID},
+			sessionID2 => pack('V', $session{sessionID2}),
+			lastLoginIP => 0,
+			lastLoginTime => time,
+			accountSex => $session{sex},
+			servers => \@servers,
+		}));
+		$client->close();
+	} elsif ($result == ACCOUNT_NOT_FOUND) {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_INVALID_ID,
+		}));
+		$client->close();
+	} elsif ($result == PASSWORD_INCORRECT) {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_INVALID_PASSWD,
+		}));
+		$client->close();
+	} elsif ($result == ACCOUNT_BANNED) {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
+		}));
+		$client->close();
+	} elsif ($result == SERVER_REFUSED) {
+		$client->send($self->{recvPacketParser}->reconstruct({
+			switch => 'login_error',
+			type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
+		}));
+		$client->close();
+	} else {
+		die "Unexpected result $result.";
+	}
+
+	$session{state} = 'About to select character';
+}
+
 sub client_hash {
 	my ($self, $args, $client) = @_;
 	

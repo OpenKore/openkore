@@ -183,6 +183,7 @@ itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
 itemsTakeGreed 0
+itemsCheckWeight 1
 
 lockMap
 lockMap_x
@@ -204,7 +205,10 @@ route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 15
+route_removeMissingPortals_NPC 1
+route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
+route_reAddMissingPortals 1
 
 runFromTarget 0
 runFromTarget_dist 6
@@ -254,7 +258,7 @@ teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
-teleportAuto_useSkill 3
+teleportAuto_useSkill 1
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
 teleportAuto_notPlayers
@@ -705,6 +709,7 @@ sellAuto_npc_steps s
 
 storageAuto 0
 storageAuto_npc
+storageAuto_standpoint
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
@@ -712,6 +717,8 @@ storageAuto_password
 storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
+storageAuto_useItem 0
+storageAuto_useItem_item
 storageAuto_notAfterDeath
 relogAfterStorage 0
 minStorageZeny 50
@@ -723,6 +730,7 @@ getAuto {
 	minAmount
 	maxAmount
 	passive
+	disabled 0
 }
 
 ######## Debugging options; only useful for developers ########

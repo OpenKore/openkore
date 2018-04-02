@@ -1,0 +1,80 @@
+1 1,? *？*
+2 2,happy *高兴*
+3 3,love *爱心*
+4 4,sweat *流冷汗*
+5 5,idea *灵感*
+6 6,angry *生气*
+7 7,boring *郁闷*
+8 8,$ *金钱*
+9 9,... *无言*
+10 10,scissors *剪刀*
+11 11,stone *石头*
+12 12,paper *布*
+13 13,flag1,korea *韩国旗*
+14 14,love2 *大爱心*
+15 15,thx *感谢*
+16 16,...2 *无奈*
+17 17,sry *抱歉*
+18 18,ha *欢笑*
+19 19,sweat2 *喷汗*
+20 20,huh *迷惑*
+21 21,good *一级棒*
+22 22,where *寻找*
+23 23,omg *天哪！*
+24 24,o *Ｏ*
+25 25,x *Ｘ*
+26 26,help *救命*
+27 27,go *出发*
+28 28,cry *哭泣*
+29 29,hehe *奸笑*
+30 30,kiss *接吻*
+31 31,kiss2 *轻吻*
+32 32,sigh2 *呼*
+33 33,ok *嗯*
+34 34,silence *禁言*
+35 35,flag2,indo *印尼旗*
+36 36,e1,angry2 *火大*
+37 37,e2,eat *嘴馋*
+38 38,e3,beauty *漂亮*
+39 39,e4,funny *开玩笑*
+40 40,e5,shy *害羞*
+41 41,e6,touch *摸摸*
+42 42,e7,sp *补SP*
+43 43,e8,slur *流口水*
+44 44,e9,come *过来*
+45 45,e10,zz *好困*
+46 46,e11,congrat *祝贺*
+47 37,e12,hp *补hp*
+48 48,flag3,phili *菲律宾旗*
+49 49,flag4,usa *美国旗*
+50 50,flg5,singa *新加坡旗*
+51 51,flg6,brazil *巴西旗*
+52 52,flash *FlashEyes(?!)*
+53 53,spin *SpinEyes(?!)*
+54 54,sigh *'o'(?!)*
+55 55,dumb *Dumb(?!)*
+56 56,crwd *( . )(?!)*
+57 57,down *Down(?!)*
+58 58,dice1 *骰子#1*
+59 59,dice2 *骰子#2*
+60 60,dice3 *骰子#3*
+61 61,dice4 *骰子#4*
+62 62,dice5 *骰子#5*
+63 63,dice6 *骰子#6*
+64 64,flag7 *Flag 7*
+65 65,here *PointingHand*
+66 66,flg8 *Flag 8*
+67 67,flg9 *Flag 9*
+68 68,phone *CellPhone(?!)*
+69 69,mail *E-Mail(?!)*
+70 70,rh *Unknown(RedHieroglyphs)*
+71 71,signal1 *Cell signal power 1/3(?!)*
+72 72,signal2 *Cell signal power 2/3(?!)*
+73 73,signal3 *Cell signal power 3/3(?!)*
+74 74,e27,hum *Unknown(Face w/lines)*
+75 75,e28,fear *Fear!(?!)*
+76 76,e29,oops *Oops*
+77 77,e30,boring2 *Boooring(?!)*
+78 78,e31,bless *BlessingLight*
+79 79,e32,panic *Panic!*
+80 80,e33,whisp *Whisp*

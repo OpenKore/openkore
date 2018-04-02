@@ -239,6 +239,7 @@ sub initHandlers {
 	southeast			=> \&cmdManualMove,
 	southwest			=> \&cmdManualMove,
 	captcha			   => \&cmdAnswerCaptcha,
+	refineui			=> \&cmdRefineUI,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -3578,7 +3579,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "share"){
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T ("Party EXP is set to " . (($char->{party}{share}) ? T("Even") : T("Individual")) . " Take\n");
+					message TF("Party EXP is set to '%s Take'\n", ($char->{party}{share}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 						"Usage: party share <flag>\n");
@@ -3590,7 +3591,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "shareitem") {
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T("Party item is set to " . (($char->{party}{itemPickup}) ? T("Even") : T("Individual")) . " Take\n");
+					message TF("Party item is set to '%s Take'\n", ($char->{party}{itemPickup}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party shareitem' (Set Party Share Item)\n" .
 						"Usage: party shareitem <flag>\n");
@@ -3602,7 +3603,7 @@ sub cmdParty {
 		} elsif ($arg1 eq "sharediv") {
 			if ($arg2 ne "1" && $arg2 ne "0") {
 				if ($arg2 eq "") {
-					message T("Party item division is set to ". (($char->{party}{itemDivision}) ? T("Even") : T("Individual")) ." Take\n");
+					message TF("Party item division is set to '%s Take'\n", ($char->{party}{itemDivision}) ? T("Even") : T("Individual"));
 				} else {
 					error T("Syntax Error in function 'party sharediv' (Set Party Item Division)\n" .
 						"Usage: party sharediv <flag>\n");
@@ -5294,11 +5295,21 @@ sub cmdUseSkill {
 	my @args = parseArgs($args_string);
 
 	if ($cmd eq 'sl') {
-		my $x = $args[1];
-		my $y = $args[2];
-		if (@args < 3 || @args > 4) {
+		my ($x, $y);
+		
+		if (scalar @args < 3) {
+			$x = $char->position->{x};
+			$y = $char->position->{y};
+			$level = $args[1];
+		} else {
+			$x = $args[1];
+			$y = $args[2];
+			$level = $args[3];
+		}
+		
+		if (@args < 1 || @args > 4) {
 			error T("Syntax error in function 'sl' (Use Skill on Location)\n" .
-				"Usage: sl <skill #> <x> <y> [level]\n");
+				"Usage: sl <skill #> [<x> <y>] [level]\n");
 			return;
 		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
 			error T("Error in function 'sl' (Use Skill on Location)\n" .
@@ -5306,7 +5317,6 @@ sub cmdUseSkill {
 			return;
 		} else {
 			$target = { x => $x, y => $y };
-			$level = $args[3];
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
@@ -6745,6 +6755,113 @@ sub cmdExchangeItem {
 	error TF("Syntax Error in function '%s'. Usages:\n".
 			"Single Item: %s <item #> <amount>\n".
 			"Combination: %s <item #> <amount>,<item #> <amount>,<item #> <amount>\n", $switch, $switch, $switch);
+}
+
+##
+# refineui select [item_index]
+# refineui refine [item_index] [material_id] [catalyst_toggle]
+# @author [Cydh]
+##
+sub cmdRefineUI {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my ($cmd, $args_string) = @_;
+	if (!defined $refineUI) {
+		error T("Cannot use RefineUI yet.\n");
+		return;
+	}
+	my @args = parseArgs($args_string, 4);
+
+	# refineui close
+	# End Refine UI state
+	if ($args[0] eq "cancel" || $args[0] eq "end" || $args[0] eq "no") {
+		message T("Closing Refine UI.\n"), "info";
+		undef $refineUI;
+		$messageSender->sendRefineUIClose();
+		return;
+
+	# refineui select [item_index]
+	# Do refine
+	} elsif ($args[0] eq "select") {
+		#my ($invIndex) = $args =~ /^(\d+)/;
+		my $invIndex = $args[1];
+
+		# Check item
+		my $item = $char->inventory->get($invIndex);
+		if (!defined $item) {
+			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			return;
+		} elsif ($item->{equipped} != 0) {
+			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
+			return;
+		}
+		$refineUI->{invIndex} = $invIndex;
+		message TF("Request info for selected item to refine: %s (%d)\n", $item->{name}, $invIndex);
+		$messageSender->sendRefineUISelect( $item->{ID});
+		return;
+
+	# refineui refine [item_index] [material_id] [catalyst_toggle]
+	# Do refine
+	} elsif ($args[0] eq "refine") {
+		#my ($invIndex, $matInvIndex, $catalyst) = $args =~ /^(\d+) (\d+) (\d+|yes|no)/;
+		my $invIndex = $args[1];
+		my $matNameID = $args[2];
+		my $catalyst = $args[3];
+
+		# Check item
+		my $item = $char->inventory->get($invIndex);
+		if (!defined $item) {
+			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			return;
+		} elsif ($item->{equipped} != 0) {
+			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
+			return;
+		}
+
+		# Check material
+		my $material = $char->inventory->getByNameID($matNameID);
+		if (!defined $material) {
+			warning TF("You don't have enough '%s' (%d) as refine material.\n", itemNameSimple($matNameID), $matNameID);
+			return;
+		}
+		# Check if the selected item is valid material
+		my $valid = 0;
+		foreach my $mat (@{$refineUI->{materials}}) {
+			if ($mat->{nameid} == $matNameID) {
+				$valid = 1;
+			}
+		}
+		if ($valid != 1) {
+			warning TF("'%s' (%d) is not valid refine material for '%s'.\n", itemNameSimple($matNameID), $matNameID, $item->{name});
+			return;
+		}
+
+		# Check catalyst toggle
+		my $useCatalyst = 0;
+		#my $Blacksmith_Blessing = 6635; # 6635,Blacksmith_Blessing,Blacksmith Blessing
+		my $blessName = itemNameSimple($Blacksmith_Blessing);
+		if ($refineUI->{bless} > 0 && ($catalyst == 1 || $catalyst eq "yes")) {
+			my $catalystItem = $char->inventory->getByNameID($Blacksmith_Blessing);
+			if (!$catalystItem || $catalystItem->{amount} < $refineUI->{bless}) {
+				warning TF("You don't have %s for RefineUI. Needed: %d!\n", $blessName, $refineUI->{bless});
+				return;
+			}
+			$useCatalyst = 1;
+		}
+
+		my $matStr = $material->{name};
+		if ($useCatalyst) {
+			$matStr .= " and ".$refineUI->{bless}."x ".$blessName;
+		}
+		message TF("Refining item: %s with material %s.\n", $item->{name}, $matStr);
+		$messageSender->sendRefineUIRefine($item->{ID}, $matNameID, $useCatalyst);
+		return;
+	} else {
+		error T("Invalid usage!\n");
+		return;
+	}
 }
 
 1;

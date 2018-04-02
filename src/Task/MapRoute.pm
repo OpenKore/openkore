@@ -179,13 +179,15 @@ sub iterate {
 					
 				} else {
 					# NPC sequence is a failure
-					# We delete that portal and try again
-					my $missed = {};
-					$missed->{time} = time;
-					$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-					$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-					push(@portals_lut_missed, $missed);
-					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					if ($config{route_removeMissingPortals_NPC}) {
+						# We delete that portal and try again
+						my $missed = {};
+						$missed->{time} = time;
+						$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+						$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+						push(@portals_lut_missed, $missed);
+						delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					}
 					error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "route";
 					$self->initMapCalculator();	# redo MAP router
 				}
@@ -340,7 +342,7 @@ sub iterate {
 				}
 			}
 			
-		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
+		} elsif ( $config{route_removeMissingPortals} && distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;

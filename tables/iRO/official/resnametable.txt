@@ -136,6 +136,11 @@ edic_dun01l.gat#dic_dun01.gat#
 edic_dun01l.rsw#dic_dun01.rsw#
 삯샺샎엍웤샌붺\map\edic_dun01l.bmp#삯샺샎엍웤샌붺\map\dic_dun01.bmp#
 
+edic_dun01.gnd#dic_dun01.gnd#
+edic_dun01.gat#dic_dun01.gat#
+edic_dun01.rsw#dic_dun01.rsw#
+삯샺샎엍웤샌붺\map\edic_dun01.bmp#삯샺샎엍웤샌붺\map\dic_dun01.bmp#
+
 edic_dun02l.gnd#dic_dun02.gnd#
 edic_dun02l.gat#dic_dun02.gat#
 edic_dun02l.rsw#dic_dun02.rsw#

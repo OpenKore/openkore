@@ -375,8 +375,52 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
-	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
-	$timeout{$timeout}{'timeout'} = $time;
+	my %args;
+
+	if (@_ == 1) {
+		$args{silent} = $_[0];
+	} else {
+		%args = @_;
+	}
+	
+	$args{autoCreate} = 1 if (!exists $args{autoCreate});
+	
+	Plugins::callHook('setTimeout', {
+		timeout => $timeout,
+		time => $time,
+		additionalOptions => \%args
+	});
+	
+	if (!$args{silent}) {
+		my $oldtime = $timeout{$timeout}{timeout};
+		if (!defined $oldtime) {
+			$oldtime = "not set";
+		}
+		
+		if ($timeout{$timeout}{timeout} eq $time) {
+			if ($time) {
+				message TF("Timeout '%s' is already %s\n", $timeout, $time), "info";
+			} else {
+				message TF("Timeout '%s' is already *None*\n", $timeout), "info";
+			}
+			return;
+		}
+		
+		if (!defined $time) {
+			message TF("Timeout '%s' unset (was %s)\n", $timeout, $oldtime), "info";
+		} else {
+			message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $oldtime), "info";
+		}
+	}
+	if ($args{autoCreate} && !exists $timeout{$timeout}{timeout}) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			print $f "$timeout\n";
+			close($f);
+		}
+	}
+	
+	$timeout{$timeout}{timeout} = $time;
 	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
@@ -975,7 +1019,7 @@ sub actorAdded {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
-		debug TF("actorAdded: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		debug TF("Actor added: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
 		
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
 			use Data::Dumper;
@@ -1014,7 +1058,7 @@ sub actorRemoved {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
-		debug TF("actorRemoved: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		debug TF("Actor removed: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
 		
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
 			use Data::Dumper;
@@ -1185,14 +1229,16 @@ sub charSelectScreen {
 			}
 		}
 		
-		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d, %s)%s",
+		my $messageMapName = sprintf(", %s", $chars[$num]{map_name}) if ($chars[$num]{map_name});
+		
+		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
 			$sex_lut{$chars[$num]{sex}},
 			$chars[$num]{lv},
 			$chars[$num]{lv_job},
-			$chars[$num]{map_name},
+			$messageMapName,
 			$messageDeleteDate);
 		push @charNameIndices, $num;
 	}
@@ -2279,36 +2325,50 @@ sub objectRemoved {
 }
 
 ##
-# items_control($name)
+# items_control($name, $nameID)
 #
 # Returns the items_control.txt settings for item name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "do nothing" (empty hash);
 sub items_control {
-	my $name = shift;
-	my $nameID = shift;	
-	return $items_control{lc($name)} || $items_control{lc($nameID)} || $items_control{all} || {};
+	my ($name, $nameID) = @_;
+
+	return $items_control{lc($name)} || $items_control{$nameID} || $items_control{all} || {};
 }
 
 ##
-# mon_control($name)
+# mon_control($name, $nameID)
 #
 # Returns the mon_control.txt settings for monster name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "attack";
 sub mon_control {
-	my $name = shift;
-	my $nameID = shift;
+	my ($name, $nameID) = @_;
+	
 	return $mon_control{lc($name)} || $mon_control{$nameID} || $mon_control{all} || { attack_auto => 1 };
 }
 
 ##
-# pickupitems($name)
+# pickupitems($name, $nameID)
 #
 # Returns the pickupitems.txt settings for item name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "pick up" (1);
 sub pickupitems {
-	my ($name) = @_;
+	my ($name, $nameID) = @_;
 
-	return ($pickupitems{lc($name)} ne '') ? $pickupitems{lc($name)} : $pickupitems{all};
+	if (exists $pickupitems{lc($name)}) {
+		return $pickupitems{lc($name)};
+	} elsif (exists $pickupitems{$nameID}) {
+		return $pickupitems{$nameID};
+	} elsif (exists $pickupitems{all}) {
+		return $pickupitems{all};
+	}
+	
+	return 1;
 }
 
 sub positionNearPlayer {
@@ -4078,7 +4138,8 @@ sub checkSelfCondition {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
 				for my $monster (@$monstersList) {
-					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
+					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) || 
+										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}));
                 }
             }
 		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
@@ -4086,7 +4147,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4097,7 +4159,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($accountID)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4108,7 +4171,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) || 
+				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
 				return 0;
 			}
 		}
@@ -4191,8 +4255,36 @@ sub checkSelfCondition {
 		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
 	}
 	
-	if (defined $config{$prefix.'_devotees'}) {
+	if ($config{$prefix.'_devotees'}) {
 		return 0 unless inRange(scalar keys %{$devotionList->{$accountID}{targetIDs}}, $config{$prefix.'_devotees'});
+	}
+	
+	if ($config{$prefix."_whenPartyMembersNear"}) {
+		# Short circuit if there's not enough players nearby, party members or not
+		# +1 account for self
+		return 0 unless inRange(scalar @{$playersList} + 1, $config{$prefix."_whenPartyMembersNear"});
+
+		# Short circuit if there's not enough players in our party
+		return 0 unless inRange(scalar @partyUsersID, $config{$prefix."_whenPartyMembersNear"});
+
+		my $dist;
+		my $amountInRange = 1; # account for self
+		
+		if ($config{$prefix."_whenPartyMembersNearDist"}) {
+			$dist = $config{$prefix."_whenPartyMembersNearDist"};
+		} else {
+			$dist = "< ";
+			$dist .= ($config{removeActorWithDistance} || $config{clientSight} || 15);
+		}
+
+		foreach my $player (@{$playersList}) {
+			next unless (exists $char->{party}{users}{$player->{ID}} && $char->{party}{users}{$player->{ID}});
+			next unless inRange(distance(calcPosition($char), calcPosition($player)), $dist);
+			 
+			++$amountInRange;
+		}
+
+		return 0 unless inRange($amountInRange, $config{$prefix."_whenPartyMembersNear"});
 	}
 
 	my %hookArgs;
@@ -4278,7 +4370,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($id)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name}) || 
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4289,7 +4382,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_monsters"}) {
 		my $exists;
 		foreach (ai_getPlayerAggressives($id)) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name}) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4337,6 +4431,10 @@ sub checkPlayerCondition {
 	if ($config{$prefix."_isNotMyDevotee"}) {
 		return 0 if (defined $devotionList->{$accountID}->{targetIDs}->{$id});
 	}
+	
+	if ($config{$prefix."_spirit"}) {
+		return 0 unless inRange(defined $player->{spirits} ? $player->{spirits} : 0, $config{$prefix . "_spirit"});
+	}
 
 	my %args = (
 		player => $player,
@@ -4353,14 +4451,25 @@ sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
 
 	if ($config{$prefix . "_hp"}) {
-		return 0 if (!$monster->{hp});
-		if ($config{$prefix . "_hp"} =~ /^(.*)\%$/) {
-			return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $1)); 
+		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $config{$prefix . "_hp"}));
+			} elsif($monster->{hp_percent}) {
+				return 0 unless (inRange($monster->{hp_percent}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
+		} elsif($config{$prefix . "_hp"} =~ /(\d+)$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
 		} else {
-			return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
+			return 0;
 		}
 	}
-	
+
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$monster->{ID}}, $config{$prefix . "_timeout"}) }
 
 	if (my $misses = $config{$prefix . "_misses"}) {
@@ -4512,6 +4621,7 @@ sub closeShop {
 	$shopstarted = 0;
 	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("shop_closed");
 	message T("Shop closed.\n");
 }
 

@@ -94,6 +94,9 @@ sub new {
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
 		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA4' => ['refineui_close', '' ,[qw()]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

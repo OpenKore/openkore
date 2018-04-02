@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -876,7 +876,7 @@ sub sendCharDelete2Accept {
 
 sub reconstruct_char_delete2_accept {
 	my ($self, $args) = @_;
-	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}\n", "sendPacket", 2;
+	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}\n", "sendPacket", 2;
 }
 
 # 0x082B,6
@@ -1193,6 +1193,110 @@ sub parse_item_list_window_selected {
 sub reconstruct_item_list_window_selected {
 	my ($self, $args) = @_;
 	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(itemIndex amount)} } @{$args->{items}};
+}
+
+# Select equip for refining
+# '0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+# @param itemIndex OpenKore's Inventory Item Index
+# @author [Cydh]
+sub sendRefineUISelect {
+	my ($self, $itemIndex) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'refineui_select',
+		index => $itemIndex,
+	}));
+	debug "Checking item for RefineUI\n", "sendPacket";
+}
+
+# Continue to refine equip
+# '0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+# @param itemIndex OpenKore's Inventory Item Index
+# @param materialNameIDMaterial's NameID
+# @param useCatalyst Catalyst (Blacksmith Blessing) toggle. 0 = Not using, 1 = Use catalyst
+# @author [Cydh]
+sub sendRefineUIRefine {
+	my ($self, $itemIndex, $materialNameID, $useCatalyst) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'refineui_refine',
+		index => $itemIndex,
+		catalyst => $materialNameID,
+		bless => $useCatalyst,
+	}));
+	debug "Refining using RefineUI\n", "sendPacket";
+}
+
+# Cancel RefineUI usage
+# '0AA4' => ['refineui_close', '' ,[qw()]],
+# @author [Cydh]
+sub sendRefineUIClose {
+	my $self = shift;
+	$self->sendToServer($self->reconstruct({switch => 'refineui_close'}));
+	debug "Closing RefineUI\n", "sendPacket";
+}
+
+sub sendTokenToServer {
+	my ($self, $username, $password, $master_version, $version, $token, $length, $ott_ip, $ott_port) = @_;
+	my $len =  $length + 92;
+
+	my $password_rijndael = $self->encrypt_password($password);
+	my $ip = '192.168.0.14';
+	my $mac = '20CF3095572A';
+	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
+
+	$net->serverConnect($ott_ip, $ott_port);
+
+	my $msg = $self->reconstruct({
+		switch => 'token_login',
+		len => $len, # size of packet
+		version => $version,
+		master_version => $master_version,
+		username => $username,
+		password_rijndael => '',
+		mac => $mac_hyphen_separated,
+		ip => $ip,
+		token => $token,
+	});	
+
+	$self->sendToServer($msg);
+
+	debug "Sent sendTokenLogin\n", "sendPacket", 2;
+}
+
+# encrypt password kRO/cRO version 2017-2018
+sub encrypt_password {
+	my ($self, $password) = @_;
+	my $password_rijndael;
+	if (defined $password) {
+		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $in = pack('a32', $password);
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 32, 32);
+		$password_rijndael = unpack("Z32", $rijndael->Encrypt($in, undef, 32, 0));
+		return $password_rijndael;
+	} else {
+		error("Password is not configured");
+	}
+}
+
+sub sendReqRemainTime {
+	my ($self) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'request_remain_time',
+	});
+
+	$self->sendToServer($msg);
+}
+
+sub sendBlockingPlayerCancel {
+	my ($self) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'blocking_play_cancel',
+	});
+
+	$self->sendToServer($msg);
 }
 
 1;

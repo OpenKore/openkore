@@ -6,9 +6,12 @@ use Utils;
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
+use Settings qw(%sys);
+use Translation;
 
+my $translator = new Translation("$Plugins::current_plugin_folder/po", $sys{locale});
 
-Plugins::register('raiseStat', 'automatically raise character stats', \&on_unload);
+Plugins::register('raiseStat', $translator->translate('automatically raise character stats'), \&on_unload);
 
 ################################################################
 #  Hooks used to activate the plugin during initialization
@@ -35,7 +38,7 @@ use constant {
 sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
-   message "[raiseStat] Plugin unloading or reloading\n", 'success';
+   message $translator->translate("[raiseStat] Plugin unloading or reloading\n"), 'success';
 }
 
 ################################################################
@@ -58,19 +61,19 @@ sub changeStatus {
 	if ($new_status == INACTIVE) {
 		undef $next_stat;
 		undef @stats_to_add;
-		debug "[raiseStat] Plugin stage changed to 'INACTIVE'\n";
+		debug $translator->translate("[raiseStat] Plugin stage changed to 'INACTIVE'\n");
 	} elsif ($new_status == AWAITING_CHANCE_OR_ANSWER) {
 		$waiting_hooks = Plugins::addHooks(
 			['packet/stats_added', \&on_possible_raise_chance_or_answer],
 			['packet/stats_info', \&on_possible_raise_chance_or_answer],
 			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free
 		);
-		debug "[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n";
+		debug $translator->translate("[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n");
 	} elsif ($new_status == ADDING) {
 		$adding_hook = Plugins::addHooks(
 			['AI_pre',            \&on_ai_pre]
 		);
-		debug "[raiseStat] Plugin stage changed to 'ADDING'\n";
+		debug $translator->translate("[raiseStat] Plugin stage changed to 'ADDING'\n");
 	}
 	$status = $new_status;
 }
@@ -84,7 +87,7 @@ sub on_possible_raise_chance_or_answer {
 	my $hookName = shift;
 	my $args = shift;
 	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9);
-	debug "[raiseStat] Received a raise chance or answer\n";
+	debug $translator->translate("[raiseStat] Received a raise chance or answer\n");
 	changeStatus(ADDING);
 }
 
@@ -101,11 +104,11 @@ sub getNextStat {
 		$amount += $char->{"$step->{'stat'}_bonus"} unless $config{statsAddAuto_dontUseBonus};	
 		if ($amount < $step->{'value'}) {
 			$next_stat = $step->{'stat'};
-			debug "[raiseStat] Decided next stat to raise: '".$next_stat."'\n";
+			debug $translator->translatef("[raiseStat] Decided next stat to raise: '%s'\n", $next_stat);
 			return 1;
 		}
 	}
-	message "[raiseStat] No more stats to raise; disabling statsAddAuto\n", 'success';
+	message $translator->translate("[raiseStat] No more stats to raise; disabling statsAddAuto\n"), 'success';
 	return 0;
 }
 
@@ -129,10 +132,10 @@ sub on_ai_pre {
 	$timeout->{time} = time;
 	return changeStatus(INACTIVE) unless (getNextStat());
 	unless (canRaise()) {
-		debug "[raiseStat] Not enough free points to raise '".$next_stat."'\n";
+		debug $translator->translatef("[raiseStat] Not enough free points to raise '%s'\n", $next_stat);
 		return changeStatus(AWAITING_CHANCE_OR_ANSWER);
 	}
-	debug "[raiseStat] We have enough free points to raise '".$next_stat."'\n";
+	debug $translator->translatef("[raiseStat] We have enough free points to raise '%s'\n", $next_stat);
 	raiseStat();
 	changeStatus(AWAITING_CHANCE_OR_ANSWER);
 }
@@ -141,7 +144,7 @@ sub on_ai_pre {
 #  raiseStat() sends to the server our stat raise request and
 #  prints it on console.
 sub raiseStat {
-	message "[raiseStat] Auto-adding stat ".$next_stat." to ".($char->{$next_stat}+1)."\n";
+	message $translator->translatef("[raiseStat] Auto-adding stat '%s' to '%d'\n", $next_stat, $char->{$next_stat}+1);
 	$messageSender->sendAddStatusPoint({
 		str => STATUS_STR,
 		agi => STATUS_AGI,
@@ -185,16 +188,16 @@ sub validateSteps {
 			my $value = $1;
 			my $stat = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {
-				error "Stat '".$step."' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n";
+				error $translator->translatef("Stat '%s' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n", $step);
 				return 0;
 			}
 			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
 		} else {
-			error "Unknown stat ".$step."; disabling statsAddAuto\n";
+			error $translator->translatef("Unknown stat '%s'; disabling statsAddAuto\n", $step);
 			return 0;
 		}
 	}
-	debug "[raiseStat] Configuration set in config.txt is valid\n";
+	debug $translator->translate("[raiseStat] Configuration set in config.txt is valid\n");
 	return 1;
 }
 

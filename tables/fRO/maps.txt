@@ -805,6 +805,11 @@ dic_fild01.rsw#Kamidal in the Skirts of Mountain#
 dic_fild02.rsw#Kamidal in the Skirts of Mountain#
 dic_dun01.rsw#Kamidal Tunnel#
 dic_dun02.rsw#Skarava Hall#
+dewata.rsw#Dewata#
+dew_in01.rsw#Inside Dewata#
+dew_fild01.rsw#Dewata Field#
+dew_dun01.rsw#Krakatau Volcano#
+dew_dun02.rsw#Dewata Cave#
 malaya.rsw#Port Malaya#
 ma_fild01.rsw#Baryo Mahiwaga#
 ma_fild02.rsw#Forest#

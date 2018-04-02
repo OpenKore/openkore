@@ -1,0 +1,160 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-07 17:42-0200\n"
+"PO-Revision-Date: 2018-01-07 17:48-0200\n"
+"Last-Translator: lututui <lututuibr@gmail.com>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.12\n"
+
+#: ../vendingLog.pl:39
+msgid "Command used by vendingLog plugin"
+msgstr "Comando utilizado pelo plugin vendingLog"
+
+#: ../vendingLog.pl:56
+msgid "Logs vending for servers with shop_sold_long"
+msgstr "Registra vendas para servidores que usam o pacote shop_sold_long"
+
+#: ../vendingLog.pl:65
+#, perl-format
+msgid "%s We sold something to %s!\n"
+msgstr "%s Vendemos algo para %s!\n"
+
+#: ../vendingLog.pl:68
+#, perl-format
+msgid "%s Your sever doesn't use %s, unloading %s\n"
+msgstr "%s Seu servidor não utiliza %s, descarregando %s\n"
+
+#: ../vendingLog.pl:74
+#, perl-format
+msgid "%s Already known buyer, using cached name (%s)\n"
+msgstr "%s Comprador já conhecido, usando nome em cache (%s)\n"
+
+#: ../vendingLog.pl:76
+#, perl-format
+msgid "%s New charID, queuing name request.\n"
+msgstr "%s Novo charID, adicionando pedido de nome à lista.\n"
+
+#: ../vendingLog.pl:91
+#, perl-format
+msgid "%s Queue is empty.\n"
+msgstr "%s Fila vazia.\n"
+
+#: ../vendingLog.pl:95
+#, perl-format
+msgid "%s Shutting down...\n"
+msgstr "%s Terminando...\n"
+
+#: ../vendingLog.pl:116
+#, perl-format
+msgid "%s Max name request attempts reached, giving up on charID %s\n"
+msgstr "%s Quantidade máxima de pedidos atingida, desistindo do charID %s\n"
+
+#: ../vendingLog.pl:123
+#, perl-format
+msgid "%s Requesting player name with charID %s (attempt number %d)\n"
+msgstr "%s Pedindo o nome do jogador de charID %s (tentativa número %d)\n"
+
+#: ../vendingLog.pl:172
+msgid " Vending Log "
+msgstr " Relatório de Vendas "
+
+#: ../vendingLog.pl:183
+msgid ""
+"#  Item                    Amount       Earned Buyer                 "
+"When     \n"
+msgstr ""
+"#  Item                    Quant.       Lucrou Comprador             "
+"Quando   \n"
+
+#: ../vendingLog.pl:186
+msgid "Unknown"
+msgstr "Desconhecido"
+
+#: ../vendingLog.pl:205
+msgid " Nothing sold yet "
+msgstr " Nada vendido ainda "
+
+#: ../vendingLog.pl:208
+msgid "Total"
+msgstr "Total"
+
+#: ../vendingLog.pl:219
+#, perl-format
+msgid ""
+"%s timeout %s is undefined, equal to zero or invalid. Defaulting to %s "
+"second(s)\n"
+msgstr ""
+"%s timeout %s não está definido, é igual a zero ou inválido. Utilizando "
+"padrão de %s segundo(s)\n"
+
+#: ../vendingLog.pl:223
+#, perl-format
+msgid "%s timeout %s set to %s second(s)\n"
+msgstr "%s timeout %s definido como %s segundo(s)\n"
+
+#: ../vendingLog.pl:228
+#, perl-format
+msgid ""
+"%s max tries %s is undefined, equal to zero or invalid. Defaulting to %s "
+"attempt(s)\n"
+msgstr ""
+"%s limite de tentativas %s não está definido, é igual a zero ou inválido. "
+"Utilizando padrão de %s tentativa(s)\n"
+
+#: ../vendingLog.pl:235
+#, perl-format
+msgid "%s date format %s is undefined or invalid. Defaulting to %s (%s)\n"
+msgstr ""
+"%s formatação de data %s não está definido, é igual a zero ou inválido. "
+"Utilizando padrão de %s (%s)\n"
+
+#: ../vendingLog.pl:239
+#, perl-format
+msgid "%s date format %s set to %s (%s)\n"
+msgstr "%s formatação de data %s definida como %s (%s)\n"
+
+#: ../vendingLog.pl:248
+#, perl-format
+msgid "%s Unloading plugin...\n"
+msgstr "%s Descarregando plugin...\n"
+
+#: ../vendingLog.pl:264
+#, perl-format
+msgid "%s Plugin unloaded.\n"
+msgstr "%s Plugin descarregado.\n"
+
+#: ../vendingLog.pl:270
+#, perl-format
+msgid "%s Reloading plugin...\n"
+msgstr "%s Recarregando plugin...\n"
+
+#: ../vendingLog.pl:277
+#, perl-format
+msgid "%s Plugin reloaded.\n"
+msgstr "%s Plugin recarregado.\n"
+
+#: ../vendingLog.pl:293
+#, perl-format
+msgid "%s Logging vending\n"
+msgstr "%s Registrando relatório de vendas\n"
+
+#: ../VendingLog/HookManager.pm:32
+#, perl-format
+msgid "%s Hooked onto %s!\n"
+msgstr "%s Conectado a %s!\n"
+
+#: ../VendingLog/HookManager.pm:42
+#, perl-format
+msgid "%s Unhooked from %s!\n"
+msgstr "%s Desconectado de %s!\n"

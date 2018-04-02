@@ -183,10 +183,10 @@ sub iterate {
 			debug sprintf("%s\n", $self->getRouteString()), "route";
 
 		} elsif ($self->{done}) {
-			my $destpos = $self->{target}->{x} ? " ($self->{target}->{x},$self->{target}->{y})" : '';
+			my $destpos = $self->{targets}[0]->{x} ? " (".$self->{targets}[0]->{x}.",".$self->{targets}[0]->{y}.")" : undef;
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
-				$self->{target}->{map}, $destpos));
+				$self->{targets}[0]->{map} || T("unknown"), $destpos));
 			debug "CalcMapRoute failed.\n", "route";
 		}
 	}

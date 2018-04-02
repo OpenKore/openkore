@@ -3660,7 +3660,7 @@ Nível Máximo: 10
 Tipo: ^777777Indefinido^000000
 Alvo: ^777777Indefinido^000000
 Resultado : ^777777Conjura uma habilidade aleatória, de qualquer classe. Esta habilidade tem dez níveis, e quanto maior seu nível, maior a quantidade de habilidades possíveis de se utilizar.^000000
-^777777Consome^000099 2 Gemas Amarelas^777777.^000000
+^777777Consome^000099 Consome 2 Gemas Amarelas, mas ainda consumirá 1 Gema Amarela independente de efeitos como Carta Abelha Rainha, Canção Preciosa e Véu das Gemas Sagradas.^777777.^000000
 #
 SA_MONOCELL#
 Unicelular
@@ -9613,7 +9613,7 @@ O dano de Fogo causado nos oponentes que tocarem neste rastro aumenta conforme o
 SO_ELECTRICWALK#
 Passos da Sílfide
 Nível Máximo: 5
-^777777Pré requisitos: Furacão 1 ^000000
+^777777Pré requisitos: Furacão 1, Encanto de Órion 1 ^000000
 Tipo: ^777777  Ofensiva ^000000
 Descrição: ^777777 Cria energia nos pés do usuário por 12 segundos, de forma que um rastro de eletricidade é criado a medida que o usuário se movimenta.
 O dano de Vento causado nos oponentes que tocarem neste rastro aumenta conforme o nível da habilidade.^000000

@@ -106,7 +106,7 @@ sub new {
 
 ##
 # Actor::Item::get(name, skipIndex, notEquipped)
-# item: can be either an object itself, an ID or a name.
+# item: can be either an object itself, an binID or a name.
 # skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: 1 = not equipped item; 0 = equipped item; undef = all item
 # Returns: an Actor::Item object, or undef if not found or parameters not matched.
@@ -184,14 +184,20 @@ sub bulkEquip {
 		my $skipIndex;
 		$skipIndex = $rightHand if ($_ eq 'leftHand');
 		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
-		$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
-
-		next unless ($item && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
-
-		$item->equipInSlot($_);
 		
-		$rightHand = $item->{binID} if ($_ eq 'rightHand');
-		$rightAccessory = $item->{binID} if ($_ eq 'rightAccessory');
+		if ($list->{$_} eq "[NONE]") {
+			next unless ($char->{equipment} && $char->{equipment}{$_});
+			$char->{equipment}{$_}->unequip();
+		} else {
+			$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
+
+			next unless ($item && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
+
+			$item->equipInSlot($_);
+			
+			$rightHand = $item->{binID} if ($_ eq 'rightHand');
+			$rightAccessory = $item->{binID} if ($_ eq 'rightAccessory');
+		}
 	}
 }
 
@@ -234,8 +240,12 @@ sub scanConfigAndCheck {
 	my $count = 0;
 	foreach my $slot (values %equipSlot_lut) {
 		if (exists $config{"${prefix}_$slot"}){
-			my $item = Actor::Item::get($config{"${prefix}_$slot"}, undef, 1);
-			$count++ if ($item && $char->{equipment} && (!$char->{equipment}{$slot} || $char->{equipment}{$slot}{name} ne $item->{name}));
+			if ($config{"${prefix}_$slot"} eq "[NONE]") {
+				$count++ if ($char->{equipment} && $char->{equipment}{$slot});
+			} else {
+				my $item = Actor::Item::get($config{"${prefix}_$slot"}, undef, 1);
+				$count++ if ($item && $char->{equipment} && (!$char->{equipment}{$slot} || $char->{equipment}{$slot}{name} ne $item->{name}));
+			}
 		}
 	}
 	return $count;

@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2016_02_03a;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_01_06a);
+use base qw(Network::Send::kRO::RagexeRE_2016_01_27a);
 
 sub new {
 	my ($class) = @_;
@@ -32,7 +32,7 @@ sub new {
 		'0361' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0872' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0947' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0835' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0835' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'095A' => ['item_take', 'a4', [qw(ID)]],
 		'0819' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'093E' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -59,7 +59,7 @@ sub new {
 		friend_request 0361
 		homunculus_command 0872
 		item_drop 0947
-		item_list_res 0835
+		item_list_window_selected 0835
 		item_take 095A
 		map_login 0819
 		party_join_request_by_name 093E
@@ -74,9 +74,8 @@ sub new {
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
 #packet_keys(0x3E1411AF,0x6C744497,0x7CFA1BDE);	
-#openkore use with  key1,key3,key2
-#hex to dec 1041502639,2096765918,1819559063 = key1,key3,key2
 #	$self->cryptKeys(0x3E1411AF,0x7CFA1BDE ,0x6C744497);
 
 

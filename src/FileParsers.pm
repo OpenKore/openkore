@@ -504,6 +504,7 @@ sub parseItemsControl {
 		}
 		
 		next if $key =~ /^$/;
+		$args_text =~ s/\s*#.*//;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
@@ -1218,7 +1219,7 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	my $reader = new Utils::TextReader($file);
+	my $reader = new Utils::TextReader($file, { hide_includes => 0, hide_comments => 0 });
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/\x{FEFF}//g;

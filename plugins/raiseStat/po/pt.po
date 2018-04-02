@@ -1,0 +1,84 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 16:13-0200\n"
+"PO-Revision-Date: 2017-12-30 17:07-0200\n"
+"Last-Translator: lututui <lututuibr@gmail.com>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.12\n"
+
+#: ../raiseStat.pl:14
+msgid "automatically raise character stats"
+msgstr "adiciona pontos de atributo automaticamente"
+
+#: ../raiseStat.pl:41
+msgid "[raiseStat] Plugin unloading or reloading\n"
+msgstr "[raiseStat] Plugin descarregando ou recarregando\n"
+
+#: ../raiseStat.pl:64
+msgid "[raiseStat] Plugin stage changed to 'INACTIVE'\n"
+msgstr "[raiseStat] Estado do plugin alterado para 'INATIVO' (INACTIVE)\n"
+
+#: ../raiseStat.pl:71
+msgid "[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n"
+msgstr ""
+"[raiseStat] Estado do plugin alterado para "
+"'AGUARDANDO_CHANCE_OU_RESPOSTA' (AWAITING_CHANCE_OR_ANSWER)\n"
+
+#: ../raiseStat.pl:76
+msgid "[raiseStat] Plugin stage changed to 'ADDING'\n"
+msgstr "[raiseStat] Estado do plugin alterado apra 'ADICIONANDO' (ADDIND)\n"
+
+#: ../raiseStat.pl:90
+msgid "[raiseStat] Received a raise chance or answer\n"
+msgstr "[raiseStat] Recebida chance ou resposta\n"
+
+#: ../raiseStat.pl:107
+#, perl-format
+msgid "[raiseStat] Decided next stat to raise: '%s'\n"
+msgstr "[raiseStat] Próximo atributo a ser adicionado: '%s'\n"
+
+#: ../raiseStat.pl:111
+msgid "[raiseStat] No more stats to raise; disabling statsAddAuto\n"
+msgstr "[raiseStat] Não há mais atributos para adicionar; desativando statsAddAuto\n"
+
+#: ../raiseStat.pl:135
+#, perl-format
+msgid "[raiseStat] Not enough free points to raise '%s'\n"
+msgstr "[raiseStat] Não há pontos de atributo suficiente para adicionar '%s'\n"
+
+#: ../raiseStat.pl:138
+#, perl-format
+msgid "[raiseStat] We have enough free points to raise '%s'\n"
+msgstr "[raiseStat] Há pontos de atributos suficiente para adicionar '%s'\n"
+
+#: ../raiseStat.pl:147
+#, perl-format
+msgid "[raiseStat] Auto-adding stat '%s' to '%d'\n"
+msgstr "[raiseStat] Adicionando ponto ao atributo '%s', para '%d' pontos\n"
+
+#: ../raiseStat.pl:191
+#, perl-format
+msgid "Stat '%s' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n"
+msgstr ""
+"O atributo '%s' já tem mais de 99 pontos e 'statsAdd_over_99' está desativado; desabilitando "
+"statsAddAuto\n"
+
+#: ../raiseStat.pl:196
+#, perl-format
+msgid "Unknown stat '%s'; disabling statsAddAuto\n"
+msgstr "Atributo desconhecido '%s'; desativando statsAddAuto\n"
+
+#: ../raiseStat.pl:200
+msgid "[raiseStat] Configuration set in config.txt is valid\n"
+msgstr "[raiseStat] Configuração em config.txt é válida\n"
