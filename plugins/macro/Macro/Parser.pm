@@ -2,7 +2,6 @@
 package Macro::Parser;
 
 use strict;
-use encoding 'utf8';
 
 require Exporter;
 our @ISA = qw(Exporter);

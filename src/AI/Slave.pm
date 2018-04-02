@@ -816,7 +816,7 @@ sub processAutoAttack {
 					}
 				}
 				
-				my $control = mon_control($monster->{name});
+				my $control = mon_control($monster->{name}, $monster->{nameID});
 				if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && $attackOnRoute >= 2 && $safe

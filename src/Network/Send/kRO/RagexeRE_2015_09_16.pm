@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2015_09_16;
 
 use strict;
-use base 'Network::Send::kRO::RagexeRE_2015_05_13a';
+use base qw(Network::Send::kRO::RagexeRE_2015_05_13a);
 
 sub new {
 	my ($class) = @_;
@@ -36,7 +36,7 @@ sub new {
 		'0934' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'085E' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'08AC' => ['sync', 'V', [qw(time)]],
-		'0961' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0961' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0941' => ['storage_password'],
 	);
 	

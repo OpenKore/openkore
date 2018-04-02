@@ -12,8 +12,7 @@
 package Network::Send::kRO::RagexeRE_2015_12_02;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2015_11_18a);
-use Log qw(debug);
+use base qw(Network::Send::kRO::RagexeRE_2015_11_25d);
 
 sub new {
 	my ($class) = @_;

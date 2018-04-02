@@ -717,6 +717,18 @@ sub getItemsControlFilename {
 	}
 }
 
+sub setItemsControlFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getItemsControlFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$items_control_file = $new_filename;
+}
+
 sub getShopFilename {
 	if (defined $shop_file) {
 		return $shop_file;
