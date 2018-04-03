@@ -57623,7 +57623,7 @@ Classes: ^777777Todas^000000
 //------------Aplicar em 2018-01-30--------------------
 //*****************************************************
 28564#
-Delicada e preciosa como uma joia, esta é uma lágrima de Valquíria que se cristalizou com o tempo. Dizem que sua cor azul vem da grande quantidade de magia condensada em sua essência.
+Delicada e preciosa como uma joia, esta é uma lágrima de Valquíria que se cristalizou com o tempo. Dizem que sua cor vermelha vem da grande quantidade de magia condensada em sua essência.
 ^0000ffPós-conjuração -5%.^000000
 ^0000ffConjuração variável -10%.^000000
 ^0000ffRegeneração natural de SP +50%.^000000
@@ -58246,6 +58246,324 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-04-03--------------------
+//*****************************************************
+28927#
+Quando mais nenhuma defesa funcionava, os guardiões de Prontera se apoiavam nesse espesso escudo. Eles eram abençoados por poderes divinos toda vez que iam à luta com essa Égide e o Gládio da Nobreza.
+^0000ffDEFM +10.^000000
+Refino +7 ou mais:
+^0000ffDano físico e mágico contra a raça Morto-Vivo +15%.^000000
+^0000ffDano físico e mágico contra a propriedade Sombrio +15%.^000000
+Refino +9 ou mais:
+^0000ffDano físico e mágico contra a raça Morto-Vivo +15% adicional.^000000
+^0000ffDano físico e mágico contra a propriedade Sombrio +15% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Gládio da Nobreza]^000000
+A cada refino do Escudo:
+^0000ffDano de [Golpe Fulminante] [Crux Magnun] e [Crux Divinum] +20%.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^777777150^000000
+Peso: ^777777250^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Guardiões Reais^000000
+#
+13465#
+Essa era a lâmina que os guardiões de Prontera desembainhavam em situações que os forçavam a ir à luta. Eles eram abençoados por poderes divinos toda vez que iam à luta com esse Gládio e a Égide da Nobreza.
+^0000ffATQM +130.^000000
+-------------------------
+Efeitos abaixo disponíveis apenas se o usuário ^ff0000não^000000 tiver investido pontos em [Montaria].
+-------------------------
+^0000ffAnula a penalidade de tamanho da arma.^000000
+A cada nível aprendido de [Rapidez com Lança]:
+^0000ffCRIT +3. Esquiva +2.^000000
+^0000ffVelocidade de ataque +3%.^000000
+A cada refino:
+^0000ffDano de [Golpe Fulminante] [Crux Magnun] e [Crux Divinum] +20%.^000000
+Refino +6 ou mais:
+^0000ffEfetividade de cura +40%.^000000
+^0000ffEfetividade de cura recebida +15%.^000000
+^0000ffRecuperação de HP por itens +15%.^000000
+Refino +8 ou mais:
+^0000ffEfetividade de cura +40% adicional.^000000
+^0000ffEfetividade de cura recebida +15% adicional.^000000
+^0000ffRecuperação de HP por itens +15% adicional.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777170^000000
+Propriedade: ^777777Fantasma^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Guardiões Reais^000000
+#
+31299#
+Uma fofura de coelho carinhoso e cheio de pelos macios, cuja cor amarela criou supostos rumores de que ele traria riqueza. Superstição ou não, essa companhia com certeza trará bons momentos à sua aventura!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31201#
+Apesar do nome, essa coroa pode não ser das maiores, mas com certeza vai dar um “quê” de importância à sua presença – desde que você mantenha a cabeça erguida, é claro. Não abaixe a cabeça, senão a coroa cai!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20299#
+Uma bela de uma torta de baunilha que vai ficar enfiada na sua cara até você decidir que não tem mais graça. Uma coisa é certa: não vai dar pra brincar de “torta na cara” se você já estiver usando uma dessas!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20765#
+Um lindo par de asas que emana beleza e ar celestial invejáveis. Suas penas são macias como as nuvens do Paraíso, mas tome cuidado para não sujá-las.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24212#
+Apesar de serem produzidos de puro ferro, esses sapatos possuem um vínculo arcano com o Escudo do Novato. São indicados para aventureiros que têm um longo caminho evolutivo pela frente.
+^0000ffHP máx. +10 por refino.^000000
+A cada 2 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^77777750 a 99^000000
+Classes: ^777777Todas^000000
+#
+24213#
+Apesar de ser produzido de puro ferro, esse escudo possui um vínculo arcano com os Sapatos do Novato. É indicado para aventureiros que têm um longo caminho evolutivo pela frente.
+^0000ffHP máx. +10 por refino.^000000
+A cada 2 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sapatos do Novato]^000000
+^0000ffEXP adquirida por monstros +5% adicional.^000000
+Soma dos refinos do escudo + grevas maior ou igual a 15:
+^0000ffEXP adquirida por monstros +5% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Escudo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^77777750 a 99^000000
+Classes: ^777777Todas^000000
+#
+24214#
+Apesar de serem produzidos de puro duralumínio, esses sapatos possuem um vínculo arcano com o Escudo Avançado. São indicados para aventureiros com muito poder, mas que ainda buscam a perfeição.
+^0000ffHP máx. +10 por refino.^000000
+A cada 3 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^777777100 a 149^000000
+Classes: ^777777Todas^000000
+#
+24215#
+Apesar de ser produzido de puro duralumínio, esse escudo possui um vínculo arcano com os Sapatos Avançados. É indicado para aventureiros com muito poder, mas que ainda buscam a perfeição.
+^0000ffHP máx. +10 por refino.^000000
+A cada 3 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sapatos Avançados]^000000
+^0000ffEXP adquirida por monstros +2% adicional.^000000
+Soma dos refinos do escudo + grevas maior ou igual a 15:
+^0000ffEXP adquirida por monstros +2% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Escudo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^777777100 a 149^000000
+Classes: ^777777Todas^000000
+#
+24208#
+Apesar de serem produzidos de puro aço, esses sapatos possuem um vínculo arcano com o Escudo do Perito. São indicados para verdadeiros heróis que estão prestes a atingir seus limites.
+^0000ffHP máx. +10 por refino.^000000
+A cada 4 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^777777150 a 175^000000
+Classes: ^777777Todas^000000
+#
+24209#
+Apesar de ser produzido de puro aço, esse escudo possui um vínculo arcano com os Sapatos do Perito. É indicado para verdadeiros heróis que estão prestes a atingir seus limites.
+^0000ffHP máx. +10 por refino.^000000
+A cada 4 refinos:
+^0000ffEXP adquirida por monstros +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sapatos do Perito]^000000
+^0000ffEXP adquirida por monstros +1% adicional.^000000
+Soma dos refinos do escudo + grevas maior ou igual a 15:
+^0000ffEXP adquirida por monstros +1% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Escudo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^777777150 a 175^000000
+Classes: ^777777Todas^000000
+#
+28438#
+Um lindo e misterioso colar com um grande pingente; dentro dele, há um tipo desconhecido de pó de fada. Além de exalar um doce perfume, é um belo artefato para completar seu visual.
+^0000ffDES +2.^000000
+^0000ffPós-conjuração -5%.^000000
+^0000ffDano físico a distância +2%.^000000
+^0000ffHabilita [Impacto Explosivo] nv. 3.^000000
+DES base 100 ou mais:
+^0000ffDano físico a distância +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Mira Apurada 1]^000000
+^0000ffPós-conjuração -5% adicional.^000000
+^0000ffDano físico a distância +5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Mira Apurada 2]^000000
+^0000ffPós-conjuração -5% adicional.^000000
+^0000ffDano físico a distância +5% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+31176#
+Macia e fofinha, essa boina de ursinho é ideal para os adeptos de um visual mais kawaii, como costumam dizer os jovens de Amatsu. Suas patas e seu cabeção se encaixam perfeitamente na sua cabeça, mas não se preocupe: seu peso não vai atrapalhar nem um pouco.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31437#
+Esse adorável pinguim é perfeito como um fiel companheiro. Não importa aonde você vá, ele estará sempre ao seu lado; quer lealdade melhor do que a de um bichinho que vai abrir mão dos lugares mais gélidos só pra estar com você?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+22172#
+Botas verde-amarelas de borracha com lindas asas prateadas em cada pé. Seu estilo pode ser considerado estranho por alguns, mas é melhor pensar bem antes de ignorá-las.
+^0000ffDEFM +15.^000000
+^0000ffHP e SP máx. +3%.^000000
+^0000ffDano crítico +2%.^000000
+^0000ffDano físico a distância +2%.^000000
+^0000ffHabilita [Esconderijo] nv. 1.^000000
+Refino +5 ou mais:
+^0000ffHP e SP máx. +7% adicional.^000000
+^0000ffDano crítico +3% adicional.^000000
+^0000ffDano físico a distância +3% adicional.^000000
+Refino +7 ou mais:
+^0000ffHP e SP máx. +10% adicional.^000000
+^0000ffDano crítico +3% adicional.^000000
+^0000ffDano físico a distância +10% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Malha da Luz]^000000
+^0000ffAumenta a velocidade de movimento.^000000
+A cada 20 de SOR base:
+^0000ffDano crítico +4%.^000000
+Malha com refino +7 ou mais:
+^0000ffVelocidade de ataque +8%.^000000
+^0000ffDano de [Tiro Preciso] +50%.^000000
+^0000ffDano de [Ataque Aéreo] +40%.^000000
+^0000ffResistência a oponentes da raça Humanoide +8%.^000000
+Malha com refino +9 ou mais:
+^0000ffVelocidade de ataque +4% adicional.^000000
+^0000ffDano de [Tiro Preciso] +25% adicional.^000000
+^0000ffDano de [Ataque Aéreo] +20% adicional.^000000
+^0000ffResistência a oponentes da raça Humanoide +4%.^000000
+^FF6347Conjunto^000000
+^FF6347[Malha das Sombras]^000000
+^0000ffAumenta a velocidade de movimento.^000000
+^0000ffCusto de SP de [Armadilha Energizada] -30.^000000
+Ao derrotar monstros com qualquer tipo de ataque:
+^0000ffRegenera 500 de HP.^000000
+A cada 20 de INT base:
+^0000ffDano de [Bomba Relógio] +30%.^000000
+Malha com refino +7 ou mais:
+^0000ffEsquiva perfeita +6.^000000
+^0000ffDano de [Bomba Relógio] +400%.^000000
+^0000ffDano de [Disparo Certeiro] +20%.^000000
+^0000ffResistência a oponentes da raça Humanoide +8%.^000000
+Malha com refino +9 ou mais:
+^0000ffEsquiva perfeita +3 adicional.^000000
+^0000ffDano de [Bomba Relógio] +200% adicional.^000000
+^0000ffDano de [Disparo Certeiro] +10% adicional.^000000
+^0000ffResistência a oponentes da raça Humanoide +4% adicional.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+2984#
+Um par de luvas de couro com um adereço felpudo ao punho. Com elas, qualquer um vai poder esbanjar elegância por toda a Rune-Midgard, e de quebra, ela ainda vai manter suas mãos e habilidades aquecidas.
+^0000ffEXP adquirida por monstros +5%.^000000
+^0000ffResistência a todas as raças -5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Gajomart]^000000
+^0000ffResistência a monstros da raça Planta -10%.^000000
+^0000ffEXP adquirida por monstros da raça Planta +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Gunllinbursti]^000000
+^0000ffResistência a monstros da raça Peixe -10%.^000000
+^0000ffEXP adquirida por monstros da raça Peixe +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Diabinho]^000000
+^0000ffResistência a monstros da raça Bruto -10%.^000000
+^0000ffEXP adquirida por monstros da raça Bruto +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Esqueleto General]^000000
+^0000ffResistência a monstros da raça Inseto -10%.^000000
+^0000ffEXP adquirida por monstros da raça Inseto +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Mão de Ferro]^000000
+^0000ffResistência a monstros da raça Amorfo -10%.^000000
+^0000ffEXP adquirida por monstros da raça Amorfo +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Am Mut]^000000
+^0000ffResistência a monstros da raça Humanoide -10%.^000000
+^0000ffEXP adquirida por monstros da raça Humanoide +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Verme Ancião]^000000
+^0000ffResistência a monstros da raça Demônio -10%.^000000
+^0000ffEXP adquirida por monstros da raça Demônio +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Estrondo]^000000
+^0000ffResistência a monstros da raça Dragão -10%.^000000
+^0000ffEXP adquirida por monstros da raça Dragão +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Zumbi Prisioneiro]^000000
+^0000ffResistência a monstros da raça Morto-Vivo -10%.^000000
+^0000ffEXP adquirida por monstros da raça Morto-Vivo +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cookie Natalino]^000000
+^0000ffResistência a monstros da raça Anjo -10%.^000000
+^0000ffEXP adquirida por monstros da raça Anjo +5%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
 //file end
