@@ -8118,7 +8118,7 @@
 //*****************************************************
 //------------Aplicar em 2018-01-30--------------------
 //*****************************************************
-28564#Lágrima Azul de Valquíria #
+28564#Lágrima de Valquíria #
 20115#Óculos do Sabe-Tudo#
 31399#Véu da Madrugada#
 //*****************************************************
@@ -8181,4 +8181,24 @@
 31315#Estola Angelical#
 31151#Orelhas Felpudas#
 20372#Chapéu Delicado de Cospobre#
+//*****************************************************
+//------------Aplicar em 2018-04-03--------------------
+//*****************************************************
+28927#Égide da Nobreza#
+13465#Gládio da Nobreza#
+31299#Coelhinho Branco#
+31201#Coroa da Grandeza#
+20299#Torta de Baunilha#
+20765#Asas Imaculadas de Arcanjo#
+24212#Sapatos do Novato#
+24213#Escudo do Novato#
+24214#Sapatos Avançados#
+24215#Escudo Avançado#
+24208#Sapatos do Perito#
+24209#Escudo do Perito#
+28438#Pó de Fada#
+31176#Boina de Ursinho#
+31437#Pequeno Pinguim#
+22172#Botas Aladas#
+2984#Luvas Felpudas#
 //file end
