@@ -805,6 +805,11 @@ dic_fild01.rsw#Kamidal in the Skirts of Mountain#
 dic_fild02.rsw#Kamidal in the Skirts of Mountain#
 dic_dun01.rsw#Kamidal Tunnel#
 dic_dun02.rsw#Skarava Hall#
+dewata.rsw#Dewata#
+dew_in01.rsw#Inside Dewata#
+dew_fild01.rsw#Dewata Field#
+dew_dun01.rsw#Krakatau Volcano#
+dew_dun02.rsw#Dewata Cave#
 malaya.rsw#Port Malaya#
 ma_fild01.rsw#Baryo Mahiwaga#
 ma_fild02.rsw#Forest#
@@ -874,3 +879,27 @@ gl_chyard_.rsw#Churchyard#
 //Clocktower_nightmare
 c_tower2_.rsw#Twisted Time Clock Tower 2nd Floor#
 c_tower3_.rsw#Twisted Time Clock Tower 3rd Floor#
+//뾵뿵샇죧샻
+dali02.rsw#Crack of Dimension#
+1@tnm1.rsw#Darklord Tower High Floor#
+1@tnm2.rsw#Darklord Tower Top Floor#
+1@tnm3.rsw#Morocc Castle Underground#
+1@ge_st.rsw#Geffen Magic Competition#
+1@gef.rsw#Geffen Magic Competition#
+1@gef_in.rsw#Geffen Magic Competition#
+1@spa.rsw#Lost Soul's Palace#
+
+//EP.14.3
+moro_vol.rsw#Flame Basin#
+moro_cav.rsw#Flame Cave#
+1@dth1.rsw#Bios Island#
+1@dth2.rsw#Bios Island#
+1@dth3.rsw#Bios Island#
+1@rev.rsw#Morse Cave#
+1@eom.rsw#Dark Lord Temple#
+1@jtb.rsw#Nightmare Jitterbug#
+
+//Hero Trail Part3
+1@glast.rsw#Old Glast Heim#
+1@air1.rsw#Airship#
+1@air2.rsw#Airship#

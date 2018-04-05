@@ -1235,7 +1235,7 @@
 7100#Sharp_Leaf#
 7101#PecoPeco_Feather#
 7102#Nightmare#
-7103#Unknown_Liquid_Bottle#
+7103#Ghostly_Goo#
 7104#False_Angel_Wing#
 7105#False_Heaven_Ring#
 7106#Antelope_Horn#
@@ -2329,7 +2329,7 @@
 12128#Royal_Cooking_Kit#
 12129#Fantastic_Cooking_Kit#
 12131#Lucky_Potion#
-12135#Green_Ale#
+12135#Green_Lager#
 
 
 // ------------------ Ninja added ------------------------
@@ -3605,12 +3605,6 @@
 13989#Acid_Bomb_Box(10)#
 12330#Summon_Female_GameMaster_Scroll#
 12329#Summon_Male_GameMaster_Scroll#
-6012#Blue_C_Card#
-6485#Blue_2_Card#
-6486#Blue_0_Card#
-6487#Blue_1_Card#
-7470#Blue_W_Card#
-7602#Blue_R_Card#
 12696#RWC_Celebration_Firecracker#
 12697#RWC_Celebration_Firecracker_II#
 2168#Immuned_Shield#
@@ -3874,7 +3868,7 @@
 11717#Yogurt#
 11718#Sushi_Kebab#
 11719#Bisket_Dessert#
-5881#Weißbier_Hat#
+5881#Wei?ier_Hat#
 7674#Mysterious_Ingredient#
 17335#Mysterious_Ingredient_Box#
 22624#Riesen_Bretzel#
@@ -4014,6 +4008,7 @@
 7821#Green_Apple#
 6055#Plus-Plus_Box#
 4867#MHP+3%#
+4868#MHP+4%#
 2961#Magic_Carpet#
 6626#Genie_Powder#
 6627#Genie_Lamp#
@@ -4216,7 +4211,6 @@
 20765#C_Archangel_Wing#
 19982#C_Santa_Hat#
 19707#C_Polar_Bear_Cap#
-20222#C_Blue_Pigtail_Santa_Hat#
 19697#C_Rudolph_Santa_Hat#
 11565#White_potion#
 11568#Red_Slim_Potion#
@@ -4637,6 +4631,247 @@
 25245#Small_pile_of_bones#
 
 31172#C_Roast_Memory#
+
+19683#Costume_Sweet_Candy#
+31195#Costume_Mini_Chocolate_Hat#
+25290#Sweets_Festival_Coin#
+25291#Product_Chocolate#
+25292#Stolen_Cocoa_Bean#
+11607#Sweet_Crepe#
+23259#Strawberry_Cream_Cupcake#
+23260#Fruit_Parfait#
+23261#Chewy_Macaroon#
+22991#Soccer_Cake#
+23045#Mont_Blanc_Cake#
+23079#Strawberry_Cream_Cake#
+
+17462#Costama_Wing_II#
+5909#C_Valkyrie_Circlet#
+5911#C_Imperial_Feather#
+5912#C_Minions_Of_Devil#
+19623#C_Bizofnil_Wing_Deco#
+5913#C_Anemos_Mask#
+5914#C_Flutter_Butterfly#
+5915#C_Angel_Veil#
+5979#C_Fluttering_Angel's_Wing#
+5980#C_Classical_Feather_Hat#
+5981#C_Satanic_Lost#
+
+20374#C_Mechanical_Plant_Hat#
+20375#C_Ignis_Cap#
+20376#C_Memories_Of_Lovers#
+20377#C_Flying_Helmet#
+20379#C_PocketWatch_Hair_Ornament#
+20380#C_Mech_Feather_Hairband#
+20381#C_Steampunk_Hat#
+20382#C_Silversniper_Doll#
+20383#C_Magicdecoy_Doll#
+20378#C_Sky_Helm#
+17611#Costama_Steampunk#
+
+20400#C_Ictus'_Rosario#
+20401#C_Angel_Spirit_Guides#
+20403#C_Drooping_Dolor_Hat#
+20404#C_Blessing_Of_Angels#
+20405#C_Eremes_Scarf#
+20406#C_Commandments_Of_Chain#
+20407#C_Red Subject Aura#
+20408#C_Bloody_Light_and_Darkness_Crown#
+20409#C_There_Is…_Something…#
+20402#C_Holy_Klobuk#
+17635#Costama_Holy_Darkness_II#
+
+20411#C_Glaris_Doll_Hat#
+20412#C_Tayelin_Doll_Hat#
+20413#C_Piamette_Hairband#
+20429#C_Piamette_BowTie#
+20430#C_Loyal_Servant_of_Morocc#
+20431#C_Maggiestein_Head_Dress#
+20432#C_Khalitzburg_Knight_Helm#
+20433#C_Louise_Red_Hat#
+20414#C_Crown_Of_Deceit#
+20415#C_Goddess_of_Victory(Blue)#
+17638#Costama_Characters#
+
+20435#C_Camellia_Hair_Pin#
+20436#C_Angeling_Knitted_Cap#
+20437#C_Drooping_Cherry_Blossom_Hairband#
+20438#C_Abacus_In_Mouth#
+20439#C_Glow_Of_New_Year#
+20508#C_Poster_Girl_Hat#
+20440#C_Tone_Of_Gold#
+20441#C_Large_Ribbon_Muffler(Red)#
+20442#C_RW_Mochiring_Hat#
+20062#C_Angel_Stairs#
+17641#Costama_NewYear_II#
+
+20460#C_Thornbush_Hairband#
+20461#C_93_BloodyWing#
+20462#C_Cat_Ears_Cape#
+20463#C_Two_Tone_Beret#
+20464#C_Monochrome_RibbonHat#
+20465#C_Glasses_Without_Lens#
+20466#C_Crimson_Ribbon#
+20467#C_Elemental_Crown#
+20035#C_Blue_Rose_Of_Miracle#
+20037#C_Owlduke's_Silk_Hat#
+17661#Costama_Gothic_II#
+
+24072#Big_Armor_Shadow#
+24073#Medium_Armor_Shadow#
+24074#Small_Armor_Shadow#
+24075#Big_Weapon_Shadow#
+24076#Medium_Weapon_Shadow#
+24077#Small_Weapon_Shadow#
+24078#Spiritual_Weapon_Shadow#
+24079#Spiritual_Earring_Shadow#
+24080#Spiritual_Pendant_Shadow#
+
+31052#C_Alchemist_Mask#
+23164#Granpa_Speed_potion#
+19577#10th Anni Hat EU#
+
+12186#Unknown_Liquid_Bottle_Box#
+
+
+31387#Costume Jack#
+9113#Skelion Egg#
+10042#Dark Mane#
+6298#Broken Pumpkin#
+25408#Memories of Gyoll#
+25421#Pumpkin Decoration#
+25422#Dry White Stem#
+25401#Black Fur#
+11616#Yummy Meat#
+
+19706#C_Red_Dress_Hat#
+20482#C_Heaven_Cage#
+20483#C_Butterfly_Barrettes#
+20484#C_Sunflower_Hairpin#
+20485#C_Maneater_Flower_HP#
+20486#C_Twin_Margaret#
+20487#C_Floral_Waltz#
+20488#C_Pope_Ribbon#
+20489#C_Pope_Crown#
+20490#C_Full_Bloom_HP(Blue)#
+17670#Costama_FlowerGarden_II#
+
+20495#Costume_Quati_Hat#
+20496#Costume_Black_Shiba_Inu_Hat#
+20497#Costume_Umbala_Spirit#
+20498#Costume_Elephant_Hat#
+20499#Costume_Cat_Ear_Hat#
+31027#Costume_Pretty_Bear#
+31029#Costume_Pig_Nose#
+31030#Costume_Tiger_Face#
+31028#Costume_Black_Cat_Hoodie#
+17678#Costama_Animals_III#
+
+31040#Costume_Magical_Feather#
+31041#Costume_Kitten_Lace_Hairband#
+31042#Costume_Survival_Circlet#
+31043#Costume_White_Ribbon#
+31044#Costume_Pink_Drooping_Kitty#
+31045#Costume_Blue_Rear_Ribbon#
+31046#Costume_White_Rose_Princess#
+31047#Costume_First_Love_Cheeks#
+31048#Costume_White_Lily(Black_Ribbon)#
+17687#Costama_GirlsSelectionIV#
+
+31053#Costume_King_Tiger_Doll_Hat#
+31054#Costume_Sting_Hat#
+31055#Costume_Poring_Bubble_Pipe#
+31056#Costume_Exploding_Red_Wave#
+31057#Costume_Eremes_Scarf(Black)#
+19599#Costume_Imp_Hat#
+31089#Costume_Exploding_Wave#
+31090#Costume_Angeling_Wanna_Fly#
+20349#Costume_Flying_Galapagos#
+17693#Costama_Monsters_III#
+
+31062#Costume_Eleanor_Wig#
+31070#Costume_Hair_Buns(Purple)#
+31069#Costume_Hair_Buns(Brown)#
+31068#Costume_Hair_Buns(White)#
+31067#Costume_Hair_Buns(Black)#
+31066#Costume_Hair_Buns(Green)#
+31065#Costume_Hair_Buns(Yellow)#
+31064#Costume_Hair_Buns(Red)#
+31063#Costume_Hair_Buns(Blue)#
+31071#Costume_Roll_Twin(Blue)#
+31072#Costume_Roll_Twin(Red)#
+31073#Costume_Roll_Twin(Yellow)#
+31074#Costume_Roll_Twin(Green)#
+31075#Costume_Roll_Twin(Black)#
+31076#Costume_Roll_Twin(White)#
+31077#Costume_Roll_Twin(Brown)#
+31078#Costume_Roll_Twin(Purple)#
+31079#Costume_Long_Pony(Blue)#
+31080#Costume_Long_Pony(Red)#
+31081#Costume_Long_Pony(Yellow)#
+31082#Costume_Long_Pony(Green)#
+31083#Costume_Long_Pony(Black)#
+31084#Costume_Long_Pony(White)#
+31085#Costume_Long_Pony(Brown)#
+31086#Costume_Long_Pony(Purple)#
+17710#Costama_Hair_Collection_II_(BRYG)#
+17711#Costama_Hair_Collection_II_(BWBP)#
+
+
+19702#Costume_Santa's_hat#
+20222#Costume_Blue_Santa's_hat#
+31390#Costume_Let_It_Snow#
+7713#Snow Flower_Festival_Card_A#
+6486#Snow Flower_Festival_Card_E#
+7463#Snow Flower_Festival_Card_F#
+7465#Snow Flower_Festival_Card_L#
+7466#Snow Flower_Festival_Card_N#
+7467#Snow Flower_Festival_Card_O#
+7470#Snow Flower_Festival_Card_W#
+6487#Snow Flower_Festival_Card_I#
+7601#Snow Flower_Festival_Card_S#
+7602#Snow Flower_Festival_Card_R#
+6485#Snow Flower_Festival_Card_T#
+7714#Snow Flower_Festival_Card_V#
+25425#Magical_Snow Flower#
+25426#Warm_Cotton#
+11575#[Not for sale]_Lucky_Cookie#
+11578#[Not for sale]_Lollipop#
+11580#[Not for sale]_Candy#
+11581#[Not for sale]_Piece_of_Cake#
+23554#Snow_Flower_Card_Envelop#
+23548#Ice_Candy#
+23549#Snow_Cookie#
+23550#Winter_Cookie#
+23551#Pestie_Cookie#
+23552#Flora_Cookie#
+23553#Snow flower_Festival_Giftbox#
+
+20450#C_Glam_Peony#
+31459#C_Sweets_Bonbon#
+
+20449#C_White_and_Black_Temptation#
+
+
+22549#[Complementary]_Poison_Bottle#
+
+9099#Teddy_Bear_Egg#
+31197#Costume_Egg_Crispinette#
+20085#Costume_Clover_Silk_Hat#
+25294#Clover_Ticket#
+25295#Happy_Three-Leaf_Clover#
+25233#Cotton_Tufts#
+25296#Something_Fatal#
+11608#Chocolate_Egg#
+11609#Tasty_Cookie_Egg#
+12360#Red_Juice#
+12361#Delicious_Shaved_Ice#
+12366#Girl_Doll#
+12370#Girl's_Naivety#
+23189#Small_Doll_Needle#
+23296#D.Burger#
+23297#Lovely_Egg_Box#
+
 
 // -------------- Item End ------------
 
@@ -5175,7 +5410,9 @@
 4809#Fighting_Spirit3#
 4861#MHP+1%#
 4862#MHP+2%#
-4863#MHP+3%#
+4863#Fatal_Lv1#
+4864#Fatal_Lv2#
+4865#Fatal_Lv3#
 4870#SP+25#
 4871#SP+75#
 
@@ -5258,28 +5495,28 @@
 1649#Rafini_Staff#
 1746#Elven_Bow#
 16003#Carga_Mace#
-1192#P.Slayer1#
-1193#P.Slayer2#
-1650#P.Staff1#
-1651#P.Staff2#
-1747#P.Bow1#
-1748#P.Bow2#
+1192#Eden_Group_Slayer_I#
+1193#Eden_Group_Slayer_II#
+1650#Eden_Group_Staff_I#
+1651#Eden_Group_Staff_II#
+1747#Eden_Group_Bow_I#
+1748#Eden_Group_Bow_II#
 2456#Paradise_Team_Boots1#
 2457#Paradise_Team_Boots2#
 2458#Paradise_Team_Boots3#
 2560#Paradise_Team_Manteau#
 5583#Paradise_Team_Hat#
-13050#P.Dagger1#
-13051#P.Dagger2#
-13112#P.Revolver1#
-13113#P.Revolver2#
-13423#P.Sabre1#
-13424#P.Sabre2#
+13050#Eden_Group_Dagger_I#
+13051#Eden_Group_Dagger_II#
+13112#Eden_Group_Revolver_I#
+13113#Eden_Group_Revolver_II#
+13423#Eden_Group_Sabre_I#
+13424#Eden_Group_Sabre_II#
 15009#Paradise_TeamUniform1#
 15010#Paradise_TeamUniform2#
 15011#Paradise_TeamUniform3#
-16004#P.Mace1#
-16005#P.Mace2#
+16004#Eden_Group_Mace_I#
+16005#Eden_Group_Mace_II#
 11514#Enriched_Slim_Potion#
 2146#Siver_Guard#
 2147#Round_Buckler#
@@ -5897,12 +6134,6 @@
 17030#St_Patrick_Box#
 18565#St_Patrick_Hat#
 
-6012#Blue_C_Card#
-6485#Blue_2_Card#
-6486#Blue_0_Card#
-6487#Blue_1_Card#
-7470#Blue_W_Card#
-7602#Blue_R_Card#
 
 //--------------RWC 2011------------
 
@@ -6686,7 +6917,7 @@
 1289#Eden_Group_Katar_I#
 1391#Eden_Group_Two_Handed_Axe_I#
 13310#Eden_Group_Huuma_Shuriken_I#
-18106#Eden_Group_Bow3#
+18106#Eden_Group_Bow_III#
 13114#Eden_Group_Revolver_III#
 1434#Eden_Group_Spear_I#
 1583#Eden_Group_Dictionary_I#
@@ -6696,7 +6927,7 @@
 1986#Eden_Group_Whip_I#
 13066#Eden_Group_Dagger_III#
 13434#Eden_Group_Saber_III#
-16014#Eden_Group_Mace3#
+16014#Eden_Group_Mace_III#
 
 2022#Staff_Of_Geffen#
 2499#Temporal_Boots#
@@ -6813,3 +7044,165 @@
 4605#Undead_Knight_M_Card#
 4606#Undead_Knight_F_Card#
 4607#Faithful_Manager_Card#
+
+22035#Hero_Nepenthes_Shoes#
+22036#Hero_Silverleather_Boots#
+22037#Hero_Ungoliant_Boots#
+2981#Hero_Ring#
+2988#Hero_Ring_Of_Newoz#
+2989#Floral_Bracelet_Of_Aigu#
+2990#Pendant_Of_Harmony#
+2991#Pendant_Of_Chaos#
+2992#Pendant_Of_Maelstorm#
+15100#Frozen_Breastplate#
+15101#Harden_Breastplate#
+15093#Hero_Plate#
+15094#Hero_Magic_Coat#
+15095#Hero_Judgement_Shawl#
+15096#Hero_Trade_Mail#
+15097#Hero_Hidden_Cloth#
+15098#Hero_Taget_Suits#
+18122#Gigantic_Bow#
+18123#Bow_Of_Storm#
+4890#MDEF+1#
+4891#MDEF+3#
+4892#MDEF+5#
+4893#DEF+15#
+4894#ATK + 4%#
+4895#ATK + 5%#
+4896#MATK + 2%#
+4897#MATK + 3%#
+4898#MATK + 4%#
+4899#MATK + 5%#
+4900#MHP+5%#
+4908#Darklord_Essence_Force1#
+4909#Darklord_Essence_Force2#
+4910#Darklord_Essence_Force3#
+4911#Darklord_Essence_Intelligence1#
+4912#Darklord_Essence_Intelligence2#
+4901#MDEF+7#
+4913#Darklord_Essence_Intelligence3#
+4902#DEF+18#
+4914#Darklord_Essence_Speed1#
+4903#DEF+21#
+4915#Darklord_Essence_Speed2#
+4904#ATK + 6%#
+4916#Darklord_Essence_Speed3#
+4905#ATK + 7%#
+4917#Darklord_Essence_Vitality1#
+4906#MATK + 6%#
+4918#Darklord_Essence_Vitality2#
+4907#MATK + 7%#
+4919#Darklord_Essence_Vitality3#
+4920#Darklord_Essence_Concentration1#
+4921#Darklord_Essence_Concentration2#
+4922#Darklord_Essence_Concentration3#
+4923#Darklord_Essence_Luck1#
+4924#Darklord_Essence_Luck2#
+4925#Darklord_Essence_Luck3#
+4559#Lord_Morocc_Card#
+4882#ATK + 1%#
+4883#MATK + 1%#
+6684#Token_Of_Hero#
+6713#Soul_Of_Ahat#
+6714#Soul_Of_Shnaim#
+6715#Darklord_Soulpiece#
+6708#Mana_crystal#
+6719#Tooth_Of_Jitterbug#
+22535#Worker_Summon_Scroll#
+22536#Worker_Summon_Scroll#
+22537#Prize_Of_Hero#
+22566#Frost_Crystal#
+22567#Squad_Prize#
+22568#Nydhogg_Summon_Scroll#
+1934#Contabass#
+1989#Gymnastics_Ribbon#
+1935#Ukulele_Of_Newoz#
+1990#Floral_Mic_Of_Aigu#
+12530#Mastela_Fruit_Box#
+6685#Morocc_Merit#
+22535#Worker_Scroll#
+22536#Worker_Scroll#
+6686#Brick#
+6687#Long_Rope#
+6688#Wood#
+6689#Burning_Bug_Skin#
+6690#Yummy_Stem#
+6691#Burning_Feather#
+6692#Patrol_Log#
+6693#Stone_Of_Blessing#
+6694#Monster_Blood#
+6695#Golem's_Fiery_Stone_Tooth#
+6696#Frilldora's_Fiery_Nape#
+6698#Hatchet#
+
+1438#Thanatos_Spear#
+1496#Thanatos_Long_Spear#
+1669#Thanatos_Staff#
+1671#Evil_Slayer_Vanquisher_Staff#
+1836#Thanatos_Knuckle#
+1933#Thanatos_Violin#
+1988#Thanatos_Whip#
+2023#Thanatos_Two-handed_Staff#
+2185#Magic_Reflector#
+2186#Revised_Encyclopedia#
+2187#Shield_Of_Gray#
+2963#Physical_Enhancer_Ring#
+2964#Magic_Intensifier_Ring#
+4556#Fenrir_Card#
+4557#Weakened_Fenrir_Card#
+4885#Conjure1#
+4886#Conjure2#
+4887#Conjure3#
+4888#Conjure4#
+4889#Conjure5#
+6671#Geffen_Magic_Contest_Coin#
+6672#Gray_Shard#
+7641#Cure_Box#
+13093#Thanatos_Dagger#
+13094#Evil_Slayer_Stabber_Dagger#
+13441#Thanatos_Sword#
+15073#Anti-magic_Suit#
+15074#Geffen_Magic_Robe#
+15090#Armor_Of_Gray#
+15091#Gray_Robe#
+16027#Evil_Slayer_Destroyer_Hammer#
+16028#Thanatos_Hammer#
+18119#Thanatos_Bow#
+18120#Evil_Slayer_Piercer_Bow#
+18820#Gray_Helmet#
+20721#Cloak_Of_Gray#
+21009#Thanatos_Great_Sword#
+21010#Evil_Slayer_Slasher_Sword#
+22033#Boots_Of_Gray#
+22511#Fenrir_Card#
+22517#Loki_Summon_Scroll#
+28000#Thanatos_Katar#
+28001#Evil_Slayer_Ripper_Katar#
+28100#Thanatos_Axe#
+
+28310#Sarah's Left Earring#
+28311#Sarah's Right Earring#
+15121#Sarah's Battle Robe#
+4610#Sarah Card#
+4939#CRI Lv2#
+4940#CRI Lv3#
+4941#CRI Lv4#
+4942#Parrying Lv1#
+4943#Parrying Lv2#
+4944#Parrying Lv3#
+4945#Economy Lv1#
+4946#Economy Lv2#
+4947#Economy Lv3#
+4948#Delay After Skill Lv1#
+4949#Delay After Skill Lv2#
+4950#Delay After Skill Lv3#
+6803#Piece of Gigantes#
+
+19914#Felrock's_Hat#
+15116#Airship's_Armor#
+20743#Airship's_Cloak#
+22046#Airship's_Boots#
+15117#Felrock's_Armor#
+20744#Felrock's_Cloak#
+22047#Felrock's_Boots#
