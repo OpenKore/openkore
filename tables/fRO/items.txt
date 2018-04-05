@@ -1214,7 +1214,7 @@
 2111#Sacred_Mission#
 2340#Novice_Breastplate#
 2341#Legion_Plate_Armor#
-2342#Legion_Plate_Armor# 
+2342#Legion_Plate_Armor#
 2343#Robe_of_Cast#
 2411#Greaves#
 2412#Greaves#
@@ -1235,7 +1235,7 @@
 7100#Sharp_Leaf#
 7101#PecoPeco_Feather#
 7102#Nightmare#
-7103#Ghostly_Goo#
+7103#Unknown_Liquid_Bottle#
 7104#False_Angel_Wing#
 7105#False_Heaven_Ring#
 7106#Antelope_Horn#
@@ -1343,7 +1343,7 @@
 2634#Wedding_Ring#
 2635#Wedding_Ring#
 
-// ----- Á¤¿ùÀÌº¥Æ® -----
+// ----- 솤뿹샌몥욮 -----
 
 554#Mochi#
 555#Traditional_Rice_Cake#
@@ -1363,7 +1363,7 @@
 676#Bag_of_Silver_Coins#
 677#Platinum_Coin#
 
-// ---- ¿ò¹ß¶ó °ü·Ã Ãß°¡ ¾ÆÀÌÅÛ - 01 -----------
+// ---- 뿲맟뛳 냼럃 쏟낡 뻆샌엛 - 01 -----------
 7183#Letter_from_Sister#
 7184#Piano_Key#
 7185#Quiz_Entry#
@@ -1416,7 +1416,7 @@
 7225#Pumpkin_Lantern#
 7226#Pellet#
 
-//----- Å©¸®½º¸¶½º ÀÌ¹êÆ® 2004 ------
+//----- 얩뢮붺뢶붺 샌맪욮 2004 ------
 7174#Packing_Ribbon#
 7175#Packing_Paper#
 // The Sign
@@ -1499,7 +1499,7 @@
 5093#Coif#
 5094#Helmet_of_Orc_Hero#
 680#Magic_Carnation#
-// --------- ºÎÈ°Àý ÀÌº¥Æ® ---------
+// --------- 뫎좰샽 샌몥욮 ---------
 
 574#Egg#
 12019#Holy_Egg#
@@ -1510,7 +1510,7 @@
 682#Distilled_Fighting_Spirit#
 683#Herb_of_Incantation#
 
-// ----- Áß±¹·ÎÄÃ¶óÀÌÂ¡ -----
+// ----- 쇟놹럎쓃뛳샌슡 -----
 7252#Eastern_Medicine#
 679#Gold_Pill#
 7262#Fan_of_Cat_Monster#
@@ -1892,7 +1892,7 @@
 7314#The_Sign#
 2644#The_Sign_#
 7277#Munak_Doll#
-// Å×½ºÆ®¾ÆÀÌÅÛ
+// 엗붺욮뻆샌엛
 12021#Pork#
 12022#Galbi#
 7181#Receipt#
@@ -1908,7 +1908,7 @@
 5141#Marionette_Doll#
 5142#Crescent_Helm#
 5143#Kabuki_Mask#
-5151#Note_Headphone#	
+5151#Note_Headphone#
 5099#Neko_Mimi#
 5188#Minstrel_Hat#
 5148#Phrygian_Cap#
@@ -2329,7 +2329,7 @@
 12128#Royal_Cooking_Kit#
 12129#Fantastic_Cooking_Kit#
 12131#Lucky_Potion#
-12135#Green_Lager#
+12135#Green_Ale#
 
 
 // ------------------ Ninja added ------------------------
@@ -2505,7 +2505,7 @@
 32612#Bubble_Gum_Medium_Box#
 32613#Lucky_Clip_Medium_Box#
 
-// ------------------- 2006 »ó¹Ý±â ½Å±ÔÄ«µå Ãß°¡.-----------------------
+// ------------------- 2006 믳망뇢 뷅뇔쒫뗥 쏟낡.-----------------------
 
 4332#Waste_Stove_Card#
 4333#Venomous_Card#
@@ -2584,7 +2584,7 @@
 4406#Skeggiold_Card#
 4407#Randgris_Card#
 
-// ---------------- Ã¥ÀÐ±â --------------------
+// ---------------- 쎥샐뇢 --------------------
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
 11002#Chef_King_Orleans_Vol.1#
@@ -2596,11 +2596,11 @@
 11008#Biographical_Dictionary_Copy_Edition#
 11009#Adventure_Story_Vol.2#
 
-// ------------------- Åä¸£È­»ê Äù½ºÆ® ¾ÆÀÌÅÛ ---------------------
+// ------------------- 엤뢣좭믪 쓹붺욮 뻆샌엛 ---------------------
 7704#Broken_Thermometer#
 7705#Note_of_Geologist#
 
-// ------------------- Åä¸£È­»ê ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------------
+// ------------------- 엤뢣좭믪 뷅뇔 샥뫱 뻆샌엛 ---------------------
 1370#Doom_Slayer#
 1371#Doom_Slayer#
 13163#Long_Barrel#
@@ -2615,7 +2615,7 @@
 2679#Ring_Of_Resonance#
 2680#Lesser_Elemental_Ring#
 
-// ------------- ¾Æ·ç³ª »ó¹Ý±â -----------
+// ------------- 뻆럧뎪 믳망뇢 -----------
 
 7561#Glacial_Heart#
 7562#Ice_Scale#
@@ -2635,7 +2635,7 @@
 2422#High_Fashion_Sandals#
 7597#Master_Fish_Stone#
 
-// -----------------------2006 »ó¹Ý±â Åõ±¸¾ÆÀÌÅÛ--------------------------
+// -----------------------2006 믳망뇢 엵놸뻆샌엛--------------------------
 
 5169#Bride_Mask#
 5170#Feather_Beret#
@@ -2647,7 +2647,7 @@
 5176#Hahoe_Mask#
 5177#Mythical_Lion_Mask#
 
-// -------------- 2006 Ãß°¡¾ÆÀÌÅÛ -------------
+// -------------- 2006 쏟낡뻆샌엛 -------------
 
 5184#Captain_Hat#
 12183#Holy_Arrow_Quiver#
@@ -2825,7 +2825,7 @@
 12242#Mercenary_Awakening_Potion#
 12243#Mercenary_Berserk_Potion#
 
-// ---------------- ¸±·¹ÀÌ Äù½ºÆ® ¾ÆÀÌÅÛ ------------------
+// ---------------- 뢱랹샌 쓹붺욮 뻆샌엛 ------------------
 7730#Mission_Certificate_1#
 7731#Mission_Certificate_2#
 7732#Mission_Certificate_3#
@@ -2839,17 +2839,17 @@
 7740#Mission_Certificate_11#
 7741#Mission_Certificate_12#
 
-// -------------- 11.3 ÀâÅÛ -------------------
+// -------------- 11.3 샢엛 -------------------
 7751#Old_White_Cloth#
 7752#Clattering_Skull#
 7753#Broken_Farming_Utensil#
 7754#Broken_Crown#
 
-// ------------ Äù½ºÆ® ¾ÆÀÌÅÛ -----------------
+// ------------ 쓹붺욮 뻆샌엛 -----------------
 7755#Research_Note#
 7756#Sealed_Book#
 
-// ------------------- 11.3 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ --------------------------
+// ------------------- 11.3 뷅뇔 샥뫱 뻆샌엛 --------------------------
 2122#Platinum_Shield#
 2123#Orleans's_Plate#
 2124#Thorny_Shield#
@@ -2917,7 +2917,7 @@
 13107#Western_Outlaw#
 13170#Lever_Action_Rifle#
 
-// ------------ 11.3 Äù½ºÆ® ¾ÆÀÌÅÛ --------------
+// ------------ 11.3 쓹붺욮 뻆샌엛 --------------
 7722#Debt_Note#
 7723#Diamond_of_Ruin#
 7724#Forbidden_Secret_Art#
@@ -2948,7 +2948,7 @@
 14577#Spicy_Fried_Bao#
 14579#Green_Salad#
 
-// ----------------- 20070808 ½Å±Ô_Card 34Á¾ -----------------
+// ----------------- 20070808 뷅뇔_Card 34솾 -----------------
 4408#Gloom_Under_Night_Card#
 4409#Agav_Card#
 4410#Echio_Card#
@@ -2985,7 +2985,7 @@
 4441#Fallen_Bishop_Card#
 
 // ------------- Ep. 12 ---------------
-// ------------- ÀüÀå º¸»ó ¾ÆÀÌÅÛ ---------------
+// ------------- 샼샥 몸믳 뻆샌엛 ---------------
 13036#Assassin_Damascus#
 13037#Assassin_Damascus#
 13410#Gladiator_Blade#
@@ -3079,17 +3079,17 @@
 5400#Fox_Hat#
 5367#Hyegun_Hat#
 
-// ------------ ¸Þ¸ð¸®¾ó ´øÀü º¸»óÅÛ ----------------
+// ------------ 룞룰뢮뻳 듸샼 몸믳엛 ----------------
 13412#Twin_Edge_of_Naght_Sieger#
 13413#Twin_Edge_of_Naght_Sieger#
 1636#Thorn_Staff_of_Darkness#
 1185#Violet_Fear#
 2542#Flame_Manteau_of_Naght_Sieger#
 
-//¸ð·ÎÅ© ÄÁÆ¼³ÙÅ» °¡µå ÀÎÁõ¼­
+//룰럎얩 쓁욼동얻 낡뗥 샎쇵벭
 7826#Continental_Guard_Paper#
 
-// ------------ ¸¶¿Õ ¸ð·ÎÅ© ----------------
+// ------------ 뢶뿕 룰럎얩 ----------------
 2536#Skin_of_Ventus#
 2537#Diabolus_Manteau#
 2728#Cursed_Hand#
@@ -3102,7 +3102,7 @@
 2375#Diabolus_Armor#
 2433#Diabolus_Boots#
 
-// ---------- ÇÒÂ¦ Å×½ºÆ® -----------
+// ---------- 쟒슦 엗붺욮 -----------
 2129#Exorcism_Bible#
 2130#Cross_Shield#
 2131#Magic_Bible_Vol1#
@@ -3131,26 +3131,26 @@
 1572#Principles_of_Magic#
 1573#Ancient_Magic#
 
-// ------------- ÀüÀå ÈÖÀå ---------------
+// ------------- 샼샥 죖샥 ---------------
 7828#Bravery_Badge#
 7829#Valor_Badge#
 
-// -------- ºÀÀÎÀÇ ½ÅÀü ¾ÆÀÌÅÛ ------------
+// -------- 뫀샎샇 뷅샼 뻆샌엛 ------------
 6001#Essence_of_Fire#
 6002#Token_of_Apostle#
 6003#Pendant_of_Spirit#
 
-// ----------------- ¸¶·ÂÀÌ ±êµç ¹ÙÆ÷¸ÞÆ® ÀÎÇü -----------------
+// ----------------- 뢶럂샌 뇪뗧 맙웷룞욮 샎쟼 -----------------
 6004#Cursed_Baphomet_Doll#
 
-// ------------------- 12.1 Äù½ºÆ® ¾ÆÀÌÅÛ ----------------------
+// ------------------- 12.1 쓹붺욮 뻆샌엛 ----------------------
 7798#Fragment_of_Darkness#
 7799#Crystal_of_Darkness#
 
-// --------------- ÇÊ¸®ÇÉ ÀÚÃ¼Á¦ÀÛ Åõ±¸ 7Á¾ ----
+// --------------- 쟊뢮쟉 샚쎼솦샛 엵놸 7솾 ----
 5374#Gigantic_Magestic_Goat#
 
-// ------------------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------------
+// ------------------- 샌몥욮 뻆샌엛 ------------------
 6000#Ashes_of_Darkness#
 //-- Ep12 Add-------------------------------------------
 7820#Piece_of_Morocc_Skin#
@@ -3161,7 +3161,7 @@
 7582#Jewel_of_Destruction#
 12281#Treasure_Box#
 7849#Soul_Crystal#
-// ------------------ ÇÏ¾Ç Å×½ºÆ® (¼ÒÄÏ)----------------
+// ------------------ 쟏뻇 엗붺욮 (볒쓏)----------------
 1568#Book_of_Billows#
 1569#Book_of_Mother_Earth#
 1570#Book_of_Blazing_Sun#
@@ -3201,7 +3201,7 @@
 2128#Sacred_Mission#
 2523#Undershirt#
 5353#Hat_of_the_Sun_God#
-// ----------------- ¸ð½ºÄÚºñ¾Æ(·¯½Ã¾Æ ·ÎÄÃ¶óÀÌÂ¡)------------------
+// ----------------- 룰붺쓚뫱뻆(랯뷃뻆 럎쓃뛳샌슡)------------------
 7760#Yaga's_Magic_Book#
 7761#Magic_Gourd_Bottle#
 7762#Yaga's_Pestle#
@@ -3210,7 +3210,7 @@
 7765#Babayaga's_Secret_Medicine#
 2707#GUSLI#
 
-//----¸ð½ºÄÚºñ¾Æ 2Â÷---------- ·¯½Ã¾Æ ºÒ»ç½Å ÄÚ½¦ÀÌ ¾ÆÀÌÅÛ ---------------
+//----룰붺쓚뫱뻆 2싷---------- 랯뷃뻆 뫒믧뷅 쓚붦샌 뻆샌엛 ---------------
 7876#Golden_Key#
 7877#Red_Ring#
 7878#Lusalka's_Hair#
@@ -3605,6 +3605,12 @@
 13989#Acid_Bomb_Box(10)#
 12330#Summon_Female_GameMaster_Scroll#
 12329#Summon_Male_GameMaster_Scroll#
+6012#Blue_C_Card#
+6485#Blue_2_Card#
+6486#Blue_0_Card#
+6487#Blue_1_Card#
+7470#Blue_W_Card#
+7602#Blue_R_Card#
 12696#RWC_Celebration_Firecracker#
 12697#RWC_Celebration_Firecracker_II#
 2168#Immuned_Shield#
@@ -4008,7 +4014,6 @@
 7821#Green_Apple#
 6055#Plus-Plus_Box#
 4867#MHP+3%#
-4868#MHP+4%#
 2961#Magic_Carpet#
 6626#Genie_Powder#
 6627#Genie_Lamp#
@@ -4211,6 +4216,7 @@
 20765#C_Archangel_Wing#
 19982#C_Santa_Hat#
 19707#C_Polar_Bear_Cap#
+20222#C_Blue_Pigtail_Santa_Hat#
 19697#C_Rudolph_Santa_Hat#
 11565#White_potion#
 11568#Red_Slim_Potion#
@@ -4632,224 +4638,6 @@
 
 31172#C_Roast_Memory#
 
-19683#Costume_Sweet_Candy#
-31195#Costume_Mini_Chocolate_Hat#
-25290#Sweets_Festival_Coin#
-25291#Product_Chocolate#
-25292#Stolen_Cocoa_Bean#
-11607#Sweet_Crepe#
-23259#Strawberry_Cream_Cupcake#
-23260#Fruit_Parfait#
-23261#Chewy_Macaroon#
-22991#Soccer_Cake#
-23045#Mont_Blanc_Cake#
-23079#Strawberry_Cream_Cake#
-
-17462#Costama_Wing_II#
-5909#C_Valkyrie_Circlet#
-5911#C_Imperial_Feather#
-5912#C_Minions_Of_Devil#
-19623#C_Bizofnil_Wing_Deco#
-5913#C_Anemos_Mask#
-5914#C_Flutter_Butterfly#
-5915#C_Angel_Veil#
-5979#C_Fluttering_Angel's_Wing#
-5980#C_Classical_Feather_Hat#
-5981#C_Satanic_Lost#
-
-20374#C_Mechanical_Plant_Hat#
-20375#C_Ignis_Cap#
-20376#C_Memories_Of_Lovers#
-20377#C_Flying_Helmet#
-20379#C_PocketWatch_Hair_Ornament#
-20380#C_Mech_Feather_Hairband#
-20381#C_Steampunk_Hat#
-20382#C_Silversniper_Doll#
-20383#C_Magicdecoy_Doll#
-20378#C_Sky_Helm#
-17611#Costama_Steampunk#
-
-20400#C_Ictus'_Rosario#
-20401#C_Angel_Spirit_Guides#
-20403#C_Drooping_Dolor_Hat#
-20404#C_Blessing_Of_Angels#
-20405#C_Eremes_Scarf#
-20406#C_Commandments_Of_Chain#
-20407#C_Red Subject Aura#
-20408#C_Bloody_Light_and_Darkness_Crown#
-20409#C_There_Is…_Something…#
-20402#C_Holy_Klobuk#
-17635#Costama_Holy_Darkness_II#
-
-20411#C_Glaris_Doll_Hat#
-20412#C_Tayelin_Doll_Hat#
-20413#C_Piamette_Hairband#
-20429#C_Piamette_BowTie#
-20430#C_Loyal_Servant_of_Morocc#
-20431#C_Maggiestein_Head_Dress#
-20432#C_Khalitzburg_Knight_Helm#
-20433#C_Louise_Red_Hat#
-20414#C_Crown_Of_Deceit#
-20415#C_Goddess_of_Victory(Blue)#
-17638#Costama_Characters#
-
-20435#C_Camellia_Hair_Pin#
-20436#C_Angeling_Knitted_Cap#
-20437#C_Drooping_Cherry_Blossom_Hairband#
-20438#C_Abacus_In_Mouth#
-20439#C_Glow_Of_New_Year#
-20508#C_Poster_Girl_Hat#
-20440#C_Tone_Of_Gold#
-20441#C_Large_Ribbon_Muffler(Red)#
-20442#C_RW_Mochiring_Hat#
-20062#C_Angel_Stairs#
-17641#Costama_NewYear_II#
-
-20460#C_Thornbush_Hairband#
-20461#C_93_BloodyWing#
-20462#C_Cat_Ears_Cape#
-20463#C_Two_Tone_Beret#
-20464#C_Monochrome_RibbonHat#
-20465#C_Glasses_Without_Lens#
-20466#C_Crimson_Ribbon#
-20467#C_Elemental_Crown#
-20035#C_Blue_Rose_Of_Miracle#
-20037#C_Owlduke's_Silk_Hat#
-17661#Costama_Gothic_II#
-
-24072#Big_Armor_Shadow#
-24073#Medium_Armor_Shadow#
-24074#Small_Armor_Shadow#
-24075#Big_Weapon_Shadow#
-24076#Medium_Weapon_Shadow#
-24077#Small_Weapon_Shadow#
-24078#Spiritual_Weapon_Shadow#
-24079#Spiritual_Earring_Shadow#
-24080#Spiritual_Pendant_Shadow#
-
-31052#C_Alchemist_Mask#
-23164#Granpa_Speed_potion#
-19577#10th Anni Hat EU#
-
-12186#Unknown_Liquid_Bottle_Box#
-
-
-31387#Costume Jack#
-9113#Skelion Egg#
-10042#Dark Mane#
-6298#Broken Pumpkin#
-25408#Memories of Gyoll#
-25421#Pumpkin Decoration#
-25422#Dry White Stem#
-25401#Black Fur#
-11616#Yummy Meat#
-
-19706#C_Red_Dress_Hat#
-20482#C_Heaven_Cage#
-20483#C_Butterfly_Barrettes#
-20484#C_Sunflower_Hairpin#
-20485#C_Maneater_Flower_HP#
-20486#C_Twin_Margaret#
-20487#C_Floral_Waltz#
-20488#C_Pope_Ribbon#
-20489#C_Pope_Crown#
-20490#C_Full_Bloom_HP(Blue)#
-17670#Costama_FlowerGarden_II#
-
-20495#Costume_Quati_Hat#
-20496#Costume_Black_Shiba_Inu_Hat#
-20497#Costume_Umbala_Spirit#
-20498#Costume_Elephant_Hat#
-20499#Costume_Cat_Ear_Hat#
-31027#Costume_Pretty_Bear#
-31029#Costume_Pig_Nose#
-31030#Costume_Tiger_Face#
-31028#Costume_Black_Cat_Hoodie#
-17678#Costama_Animals_III#
-
-31040#Costume_Magical_Feather#
-31041#Costume_Kitten_Lace_Hairband#
-31042#Costume_Survival_Circlet#
-31043#Costume_White_Ribbon#
-31044#Costume_Pink_Drooping_Kitty#
-31045#Costume_Blue_Rear_Ribbon#
-31046#Costume_White_Rose_Princess#
-31047#Costume_First_Love_Cheeks#
-31048#Costume_White_Lily(Black_Ribbon)#
-17687#Costama_GirlsSelection?#
-
-31053#Costume_King_Tiger_Doll_Hat#
-31054#Costume_Sting_Hat#
-31055#Costume_Poring_Bubble_Pipe#
-31056#Costume_Exploding_Red_Wave#
-31057#Costume_Eremes_Scarf(Black)#
-19599#Costume_Imp_Hat#
-31089#Costume_Exploding_Wave#
-31090#Costume_Angeling_Wanna_Fly#
-20349#Costume_Flying_Galapagos#
-17693#Costama_Monsters_III#
-
-31062#Costume_Eleanor_Wig#
-31070#Costume_Hair_Buns(Purple)#
-31069#Costume_Hair_Buns(Brown)#
-31068#Costume_Hair_Buns(White)#
-31067#Costume_Hair_Buns(Black)#
-31066#Costume_Hair_Buns(Green)#
-31065#Costume_Hair_Buns(Yellow)#
-31064#Costume_Hair_Buns(Red)#
-31063#Costume_Hair_Buns(Blue)#
-31071#Costume_Roll_Twin(Blue)#
-31072#Costume_Roll_Twin(Red)#
-31073#Costume_Roll_Twin(Yellow)#
-31074#Costume_Roll_Twin(Green)#
-31075#Costume_Roll_Twin(Black)#
-31076#Costume_Roll_Twin(White)#
-31077#Costume_Roll_Twin(Brown)#
-31078#Costume_Roll_Twin(Purple)#
-31079#Costume_Long_Pony(Blue)#
-31080#Costume_Long_Pony(Red)#
-31081#Costume_Long_Pony(Yellow)#
-31082#Costume_Long_Pony(Green)#
-31083#Costume_Long_Pony(Black)#
-31084#Costume_Long_Pony(White)#
-31085#Costume_Long_Pony(Brown)#
-31086#Costume_Long_Pony(Purple)#
-17710#Costama_Hair_Collection_II_(BRYG)#
-17711#Costama_Hair_Collection_II_(BWBP)#
-
-
-19702#Costume_Santa's_hat#
-20222#Costume_Blue_Santa's_hat#
-31390#Costume_Let_It_Snow#
-7713#Snow Flower_Festival_Card_A#
-6486#Snow Flower_Festival_Card_E#
-7463#Snow Flower_Festival_Card_F#
-7465#Snow Flower_Festival_Card_L#
-7466#Snow Flower_Festival_Card_N#
-7467#Snow Flower_Festival_Card_O#
-7470#Snow Flower_Festival_Card_W#
-6487#Snow Flower_Festival_Card_I#
-7601#Snow Flower_Festival_Card_S#
-7602#Snow Flower_Festival_Card_R#
-6485#Snow Flower_Festival_Card_T#
-7714#Snow Flower_Festival_Card_V#
-25425#Magical_Snow Flower#
-25426#Warm_Cotton#
-11575#[Not for sale]_Lucky_Cookie#
-11578#[Not for sale]_Lollipop#
-11580#[Not for sale]_Candy#
-11581#[Not for sale]_Piece_of_Cake#
-23554#Snow_Flower_Card_Envelop#
-23548#Ice_Candy#
-23549#Snow_Cookie#
-23550#Winter_Cookie#
-23551#Pestie_Cookie#
-23552#Flora_Cookie#
-23553#Snow flower_Festival_Giftbox#
-
-
-
-
 // -------------- Item End ------------
 
 // -------------- Duplication item shop ------------
@@ -5063,7 +4851,7 @@
 12302#Egnigem_Cenia_Contract#
 
 //Ep13
-// ---------- ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ ------------
+// ---------- 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 ------------
 6027#Crystal_Of_Feardoom#
 6028#Sealed_Scroll#
 6029#Morocc_Tracing_Log#
@@ -5077,7 +4865,7 @@
 6035#Decaying_Stem#
 14596#Pierre's_Treasurebox#
 
-// ----------- 20080521 ¿¡ÇÇ¼Òµå 13 Äù½ºÆ® ¾ÆÀÌÅÛ -----------
+// ----------- 20080521 뾡쟇볒뗥 13 쓹붺욮 뻆샌엛 -----------
 6036#Meeting_Invitation#
 6037#Messy_File#
 6038#Neat_Report#
@@ -5098,10 +4886,10 @@
 12321#Arunafeltz_Desert_Sandwich#
 12322#Chocolate_Pie#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ppl ¾ÆÀÌÅÛ -----------
+// ----------- 뾡쟇볒뗥 13 ppl 뻆샌엛 -----------
 6051#Gray_Hollow#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 ----------
 13416#Glorious_Flamberge#
 13417#Glorious_Rapier#
 13418#Glorious_Holy_Avenger#
@@ -5135,7 +4923,7 @@
 2549#Glorious_Muffler#
 2772#Glorious_Ring#
 
-// ---------- Å©¸®°Å º¸»ó ¾ÆÀÌÅÛ Ãß°¡ ¹æ¾î±¸ ----------
+// ---------- 얩뢮냅 몸믳 뻆샌엛 쏟낡 맦뻮놸 ----------
 2445#Glorious_Public_Shoes#
 2446#Glorious_Supplied_Shoes#
 2395#Glorious_Public_Suit#
@@ -5143,17 +4931,17 @@
 2773#Glorious_Public_Ring#
 2774#Glorious_Supplied_Ring#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ³¬½Ã ------------
+// ----------- 뾡쟇볒뗥 13 뎬뷃 ------------
 2775#Lure#
 2550#Fisher's_Muffler#
 
-// ----------- ¿¡ÇÇ¼Òµå 13 ÀâÅÛ ------------
+// ----------- 뾡쟇볒뗥 13 샢엛 ------------
 6020#Fur#
 6021#Peaked_Hat#
 6022#Hard_Skin#
 6023#Mystic_Horn#
 
-// --------- EP13 ½Å±Ô Àåºñ ¾ÆÀÌÅÛ ---------------
+// --------- EP13 뷅뇔 샥뫱 뻆샌엛 ---------------
 5398#Bone_Head#
 5399#Mandragora_Cap#
 2386#Chameleon_Armor#
@@ -5193,7 +4981,7 @@
 1926#Harp_of_Nepenthes#
 6010#Dig_Dug#
 
-// ----------- ÀÌº¥Æ® ¾ÆÀÌÅÛ ------------
+// ----------- 샌몥욮 뻆샌엛 ------------
 2443#Fisher's_Boots#
 2764#Small_Fishing_Rod#
 6048#Unidentified_Mineral#
@@ -5387,9 +5175,7 @@
 4809#Fighting_Spirit3#
 4861#MHP+1%#
 4862#MHP+2%#
-4863#Fatal_Lv1#
-4864#Fatal_Lv2#
-4865#Fatal_Lv3#
+4863#MHP+3%#
 4870#SP+25#
 4871#SP+75#
 
@@ -5472,28 +5258,28 @@
 1649#Rafini_Staff#
 1746#Elven_Bow#
 16003#Carga_Mace#
-1192#Eden_Group_Slayer_I#
-1193#Eden_Group_Slayer_II#
-1650#Eden_Group_Staff_I#
-1651#Eden_Group_Staff_II#
-1747#Eden_Group_Bow_I#
-1748#Eden_Group_Bow_II#
+1192#P.Slayer1#
+1193#P.Slayer2#
+1650#P.Staff1#
+1651#P.Staff2#
+1747#P.Bow1#
+1748#P.Bow2#
 2456#Paradise_Team_Boots1#
 2457#Paradise_Team_Boots2#
 2458#Paradise_Team_Boots3#
 2560#Paradise_Team_Manteau#
 5583#Paradise_Team_Hat#
-13050#Eden_Group_Dagger_I#
-13051#Eden_Group_Dagger_II#
-13112#Eden_Group_Revolver_I#
-13113#Eden_Group_Revolver_II#
-13423#Eden_Group_Sabre_I#
-13424#Eden_Group_Sabre_II#
+13050#P.Dagger1#
+13051#P.Dagger2#
+13112#P.Revolver1#
+13113#P.Revolver2#
+13423#P.Sabre1#
+13424#P.Sabre2#
 15009#Paradise_TeamUniform1#
 15010#Paradise_TeamUniform2#
 15011#Paradise_TeamUniform3#
-16004#Eden_Group_Mace_I#
-16005#Eden_Group_Mace_II#
+16004#P.Mace1#
+16005#P.Mace2#
 11514#Enriched_Slim_Potion#
 2146#Siver_Guard#
 2147#Round_Buckler#
@@ -5727,7 +5513,7 @@
 12323#Novice_Fly_Wing#
 13040#Novice_Cutter#
 
-// ---------3Â÷ ÀüÁ÷Äù½ºÆ®---------
+// ---------3싷 샼쇷쓹붺욮---------
 12380#Job_Change_Flute#
 12381#Ancient_Language_Scroll#
 12382#Ancient_Language_Scroll#
@@ -5744,7 +5530,7 @@
 6153#Special_Exchange_Coupon#
 6154#Broken_Horn_Pipe#
 
-// ---------- ÇÑ±¹ ÃÊº¸ÀÚ¼ö·ÃÀå -----------
+// ---------- 쟑놹 쏊몸샚볶럃샥 -----------
 2819#Swordman_Manual#
 2820#Thief_Manual#
 2821#Acolyte_Manual#
@@ -5762,7 +5548,7 @@
 11056#Spiritualism_Guide#
 12258#Bombring_Capsule#
 
-//------ ¸®´º¾ó ÆíÁý (ÇÊ¸®ÇÉ¿¡ ¾ø´Â Å¬¶ó) ----------
+//------ 뢮뒺뻳 웭쇽 (쟊뢮쟉뾡 뻸듂 얬뛳) ----------
 2777#Shaman_Ring#
 2778#Shaman_Earrings#
 2779#Dark_Knight_Belt#
@@ -5795,8 +5581,8 @@
 7957#Lost_Card3#
 7958#Lost_Card4#
 16266#Red_Beret_Box#
-12413#PC Cafe_Coupon_Box¥±#
-// --------- Áßµ¿ 7¿ù ¿ùµåÅõ¾î ----------
+12413#PC Cafe_Coupon_BoxⅡ#
+// --------- 쇟떿 7뿹 뿹뗥엵뻮 ----------
 1313#Traveler's_Axe#
 1652#Traveler's_Rod#
 1749#Traveler's_Bow#
@@ -5804,12 +5590,12 @@
 13052#Traveler's_Dagger#
 13425#Traveler's_Sword#
 16006#Traveler's_Mace#
-//---- 2010 ÇÑ±¹ Ãß¼® ÀÌº¥Æ®-----
+//---- 2010 쟑놹 쏟벮 샌몥욮-----
 6099#Grilled_Rice_Cake#
-//---- 2010 º½¸ÂÀÌ ÀÌº¥Æ®-----
+//---- 2010 몽룂샌 샌몥욮-----
 5781#Persica#
 
-// ------- ÇÑ±¹ 7¿ù ½Å±ÔÄ«µå -------
+// ------- 쟑놹 7뿹 뷅뇔쒫뗥 -------
 4442#Tatacho_Card#
 4443#Aqua_Elemental_Card#
 4444#Draco_Card#
@@ -5821,12 +5607,12 @@
 4451#Entweihein_Crothen_Card#
 4452#Centipede_Larva_Card#
 4453#Hilsrion_Card#
-//------- 2010 ÇÒ·ÎÀ© ÀÌº¥Æ® -------
+//------- 2010 쟒럎삩 샌몥욮 -------
 6424#Halloween_Spiritpiece#
 6425#Halloween_Certificate#
 12192#Pumpkin_Pie#
 18527#Gloomy_Pumpkin_Hat#
-//------4ºÐ±â ÃßÃµ Ä³½¬ ¾ÆÀÌÅÛ-----
+//------4뫐뇢 쏟쎵 쒳붬 뻆샌엛-----
 16631#Aributa_Scroll#
 16652#Flame_Scroll#
 5765#Black_Tail_Ribbon#
@@ -5877,14 +5663,14 @@
 16380#Siege_Teleport_Scroll_Silver_30Box#
 12404#Energizing_Potion#
 16254#Energizing_Potion_Box#
-// --------- ÇÑ±¹ 8¿ù Ä³½ÃÁ¦·Ã ----------
+// --------- 쟑놹 8뿹 쒳뷃솦럃 ----------
 6240#HE_Oridecon#
 6241#HE_Elunium#
 16393#HE_Oridecon_Box50#
 16394#HE_Oridecon_Box10#
 16395#HE_Elunium_Box50#
 16396#HE_Elunium_Box10#
-// --------- ÇÑ±¹ 6¿ù ¿À¹öÁ¦·Ã ---------
+// --------- 쟑놹 6뿹 뿀맶솦럃 ---------
 6223#Carnium#
 6224#Bradium#
 6225#HD_Carnium#
@@ -5893,7 +5679,7 @@
 16259#HD_Carnium_Box5#
 16260#HD_Bradium_Box10#
 16261#HD_Carnium_Box10#
-//---- ÇÊ¸®ÇÉ ¸ó½ºÅÍ Ä§·« ¹æ¾î ÀÌº¥Æ® -----
+//---- 쟊뢮쟉 룳붺엍 쒧랫 맦뻮 샌몥욮 -----
 18510#Bloody_Angel_Wings#
 18511#Bloody_Angel_Feathers#
 
@@ -5961,7 +5747,7 @@
 17075#Empty_Bottle_Box100#
 17076#Empty_Bottle_Box500#
 
-// --------- Dewata (Indonesia Localizing) -------------	
+// --------- Dewata (Indonesia Localizing) -------------
 15032#Tidung#
 18520#Jaty_Crown#
 13067#Caress#
@@ -6024,7 +5810,7 @@
 5674#Pig_Moneycoin#
 
 
-// ---------- EP13.3 ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- EP13.3 뷅뇔 뻆샌엛 ------------
 6321#Rake_Horn_Helm#
 6322#Antler_Helm#
 6323#Twin_Horn_Helm#
@@ -6048,12 +5834,12 @@
 16010#Red_Ether_Bag#
 18103#Mystic_Bow#
 
-// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
+// ---------- Ep13.3 쓹붺욮뻆샌엛 ------------
 2463#Feral_Boots#
 2564#Feral_Tail#
 2843#Golden_Bell#
 2844#Light_of_El_Dicastes#
-//-------------------13.3 ÆÑÅ°Áö ¿ë----------------
+//-------------------13.3 웑얰쇶 뿫----------------
 12622#Boarding_Halter#
 16682#Boarding_Halter_Box#
 16683#Boarding_Halter_Box#
@@ -6106,11 +5892,17 @@
 13953#All_In_One_Ring_Box#
 
 12696#RWC_Celebration_Firecracker#
-12697#RWC_Celebration_Firecracker_¥±#
+12697#RWC_Celebration_Firecracker_Ⅱ#
 18521#Lucky_Clover#
 17030#St_Patrick_Box#
 18565#St_Patrick_Hat#
 
+6012#Blue_C_Card#
+6485#Blue_2_Card#
+6486#Blue_0_Card#
+6487#Blue_1_Card#
+7470#Blue_W_Card#
+7602#Blue_R_Card#
 
 //--------------RWC 2011------------
 
@@ -6122,7 +5914,7 @@
 12694#Shoes_Card_Album#
 12695#Accessory_Card_Album#
 12696#RWC_Celebration_Firework#
-12697#RWC_Celebration_Firework_¥±#
+12697#RWC_Celebration_Firework_Ⅱ#
 12698#Weapon_Card_Album#
 17122#Greedy_Frog_Box#
 17123#Black_Devil's_Mask_Box#
@@ -6407,7 +6199,7 @@
 6221#Mystic_Hydra_Ball#
 6237#Guarana_Fruit#
 
-// ---------- EP13.3 ½Å±Ô ¾ÆÀÌÅÛ ------------
+// ---------- EP13.3 뷅뇔 뻆샌엛 ------------
 6321#Rake_Horn_Helm#
 6322#Antler_Helm#
 6323#Twin_Horn_Helm#
@@ -6431,7 +6223,7 @@
 16010#Red_Ether_Bag#
 18103#Mystic_Bow#
 
-// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
+// ---------- Ep13.3 쓹붺욮뻆샌엛 ------------
 2463#Feral_Boots#
 2564#Feral_Tail#
 2843#Golden_Bell#
@@ -6596,7 +6388,7 @@
 4833#Expert_Archer_2#
 4834#Expert_Archer_3#
 
-//----------½É¿¬ÀÇÈ¸¶û Ãß°¡ ¾ÆÀÌÅÛ--------- 
+//----------뷉뾬샇좸뛻 쏟낡 뻆샌엛---------
 1293#Velum_Jamadhar#
 1294#Velum_Scare#
 1395#Velum_Buster#
@@ -6894,7 +6686,7 @@
 1289#Eden_Group_Katar_I#
 1391#Eden_Group_Two_Handed_Axe_I#
 13310#Eden_Group_Huuma_Shuriken_I#
-18106#Eden_Group_Bow_III#
+18106#Eden_Group_Bow3#
 13114#Eden_Group_Revolver_III#
 1434#Eden_Group_Spear_I#
 1583#Eden_Group_Dictionary_I#
@@ -6904,7 +6696,7 @@
 1986#Eden_Group_Whip_I#
 13066#Eden_Group_Dagger_III#
 13434#Eden_Group_Saber_III#
-16014#Eden_Group_Mace_III#
+16014#Eden_Group_Mace3#
 
 2022#Staff_Of_Geffen#
 2499#Temporal_Boots#
@@ -7021,167 +6813,3 @@
 4605#Undead_Knight_M_Card#
 4606#Undead_Knight_F_Card#
 4607#Faithful_Manager_Card#
-
-22035#Hero_Nepenthes_Shoes#
-22036#Hero_Silverleather_Boots#
-22037#Hero_Ungoliant_Boots#
-2981#Hero_Ring#
-2988#Hero_Ring_Of_Newoz#
-2989#Floral_Bracelet_Of_Aigu#
-2990#Pendant_Of_Harmony#
-2991#Pendant_Of_Chaos#
-2992#Pendant_Of_Maelstorm#
-15100#Frozen_Breastplate#
-15101#Harden_Breastplate#
-15093#Hero_Plate#
-15094#Hero_Magic_Coat#
-15095#Hero_Judgement_Shawl#
-15096#Hero_Trade_Mail#
-15097#Hero_Hidden_Cloth#
-15098#Hero_Taget_Suits#
-18122#Gigantic_Bow#
-18123#Bow_Of_Storm#
-4890#MDEF+1#
-4891#MDEF+3#
-4892#MDEF+5#
-4893#DEF+15#
-4894#ATK + 4%#
-4895#ATK + 5%#
-4896#MATK + 2%#
-4897#MATK + 3%#
-4898#MATK + 4%#
-4899#MATK + 5%#
-4900#MHP+5%#
-4908#Darklord_Essence_Force1#
-4909#Darklord_Essence_Force2#
-4910#Darklord_Essence_Force3#
-4911#Darklord_Essence_Intelligence1#
-4912#Darklord_Essence_Intelligence2#
-4901#MDEF+7#
-4913#Darklord_Essence_Intelligence3#
-4902#DEF+18#
-4914#Darklord_Essence_Speed1#
-4903#DEF+21#
-4915#Darklord_Essence_Speed2#
-4904#ATK + 6%#
-4916#Darklord_Essence_Speed3#
-4905#ATK + 7%#
-4917#Darklord_Essence_Vitality1#
-4906#MATK + 6%#
-4918#Darklord_Essence_Vitality2#
-4907#MATK + 7%#
-4919#Darklord_Essence_Vitality3#
-4920#Darklord_Essence_Concentration1#
-4921#Darklord_Essence_Concentration2#
-4922#Darklord_Essence_Concentration3#
-4923#Darklord_Essence_Luck1#
-4924#Darklord_Essence_Luck2#
-4925#Darklord_Essence_Luck3#
-4559#Lord_Morocc_Card#
-4882#ATK + 1%#
-4883#MATK + 1%#
-6684#Token_Of_Hero#
-6713#Soul_Of_Ahat#
-6714#Soul_Of_Shnaim#
-6715#Darklord_Soulpiece#
-6708#Mana_crystal#
-6719#Tooth_Of_Jitterbug#
-22535#Worker_Summon_Scroll#
-22536#Worker_Summon_Scroll#
-22537#Prize_Of_Hero#
-22566#Frost_Crystal#
-22567#Squad_Prize#
-22568#Nydhogg_Summon_Scroll#
-1934#Contabass#
-1989#Gymnastics_Ribbon#
-1935#Ukulele_Of_Newoz#
-1990#Floral_Mic_Of_Aigu#
-12530#Mastela_Fruit_Box#
-6685#Morocc_Merit#
-22535#Worker_Scroll#
-22536#Worker_Scroll#
-6686#Brick#
-6687#Long_Rope#
-6688#Wood#
-6689#Burning_Bug_Skin#
-6690#Yummy_Stem#
-6691#Burning_Feather#
-6692#Patrol_Log#
-6693#Stone_Of_Blessing#
-6694#Monster_Blood#
-6695#Golem's_Fiery_Stone_Tooth#
-6696#Frilldora's_Fiery_Nape#
-6698#Hatchet#
-
-1438#Thanatos_Spear#
-1496#Thanatos_Long_Spear#
-1669#Thanatos_Staff#
-1671#Evil_Slayer_Vanquisher_Staff#
-1836#Thanatos_Knuckle#
-1933#Thanatos_Violin#
-1988#Thanatos_Whip#
-2023#Thanatos_Two-handed_Staff#
-2185#Magic_Reflector#
-2186#Revised_Encyclopedia#
-2187#Shield_Of_Gray#
-2963#Physical_Enhancer_Ring#
-2964#Magic_Intensifier_Ring#
-4556#Fenrir_Card#
-4557#Weakened_Fenrir_Card#
-4885#Conjure1#
-4886#Conjure2#
-4887#Conjure3#
-4888#Conjure4#
-4889#Conjure5#
-6671#Geffen_Magic_Contest_Coin#
-6672#Gray_Shard#
-7641#Cure_Box#
-13093#Thanatos_Dagger#
-13094#Evil_Slayer_Stabber_Dagger#
-13441#Thanatos_Sword#
-15073#Anti-magic_Suit#
-15074#Geffen_Magic_Robe#
-15090#Armor_Of_Gray#
-15091#Gray_Robe#
-16027#Evil_Slayer_Destroyer_Hammer#
-16028#Thanatos_Hammer#
-18119#Thanatos_Bow#
-18120#Evil_Slayer_Piercer_Bow#
-18820#Gray_Helmet#
-20721#Cloak_Of_Gray#
-21009#Thanatos_Great_Sword#
-21010#Evil_Slayer_Slasher_Sword#
-22033#Boots_Of_Gray#
-22511#Fenrir_Card#
-22517#Loki_Summon_Scroll#
-28000#Thanatos_Katar#
-28001#Evil_Slayer_Ripper_Katar#
-28100#Thanatos_Axe#
-
-28310#Sarah's Left Earring#
-28311#Sarah's Right Earring#
-15121#Sarah's Battle Robe#
-4610#Sarah Card#
-4939#CRI Lv2#
-4940#CRI Lv3#
-4941#CRI Lv4#
-4942#Parrying Lv1#
-4943#Parrying Lv2#
-4944#Parrying Lv3#
-4945#Economy Lv1#
-4946#Economy Lv2#
-4947#Economy Lv3#
-4948#Delay After Skill Lv1#
-4949#Delay After Skill Lv2#
-4950#Delay After Skill Lv3#
-6803#Piece of Gigantes#
-
-19914#Felrock's_Hat#
-15116#Airship's_Armor#
-20743#Airship's_Cloak#
-22046#Airship's_Boots#
-15117#Felrock's_Armor#
-20744#Felrock's_Cloak#
-22047#Felrock's_Boots#
-
-
