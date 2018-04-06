@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -1297,6 +1297,148 @@ sub sendBlockingPlayerCancel {
 	});
 
 	$self->sendToServer($msg);
+}
+
+
+sub rodex_delete_mail {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_delete_mail',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_request_zeny {
+	my ($self, $mailID1, $mailID2, $type) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_request_zeny',
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+		type => $type,
+	}));
+}
+
+sub rodex_request_items {
+	my ($self, $mailID1, $mailID2, $type) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_request_items',
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+		type => $type,
+	}));
+}
+
+sub rodex_cancel_write_mail {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_cancel_write_mail',
+	}));
+	undef $rodexWrite;
+}
+
+sub rodex_add_item {
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_add_item',
+		ID => $ID,
+		amount => $amount,
+	}));
+}
+
+sub rodex_remove_item {
+	my ($self, $ID, $amount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_remove_item',
+		ID => $ID,
+		amount => $amount,
+	}));
+}
+
+sub rodex_open_write_mail {
+	my ($self, $name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_open_write_mail',
+		name => $name,
+	}));
+}
+
+sub rodex_checkname {
+	my ($self, $name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_checkname',
+		name => $name,
+	}));
+}
+
+sub rodex_send_mail {
+	my ($self) = @_;
+
+	my $title = stringToBytes($rodexWrite->{title});
+	my $body = stringToBytes($rodexWrite->{body});
+	my $pack = $self->reconstruct({
+		switch => 'rodex_send_mail',
+		receiver => $rodexWrite->{target}{name},
+		sender => $char->{name},
+		zeny1 => $rodexWrite->{zeny},
+		zeny2 => 0,
+		title_len => length $title,
+		body_len => length $body,
+		char_id => $rodexWrite->{target}{char_id},
+		title => $title,
+		body => $body,
+	});
+
+	$self->sendToServer($pack);
+}
+
+sub rodex_refresh_maillist {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_refresh_maillist',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_read_mail {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_read_mail',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_next_maillist {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_next_maillist',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_open_mailbox {
+	my ($self, $type, $mailID1, $mailID2) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_open_mailbox',
+		type => $type,
+		mailID1 => $mailID1,
+		mailID2 => $mailID2,
+	}));
+}
+
+sub rodex_close_mailbox {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_close_mailbox',
+	}));
+	undef $rodexList;
 }
 
 1;
