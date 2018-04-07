@@ -65,6 +65,7 @@ sub new {
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0130' => ['sendenteringvender', 'v V', [qw(len accountID)]],		
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -695,11 +696,13 @@ sub sendCompanionRelease {
 # TODO
 
 # 0x0130,6,vendinglistreq,2
-sub sendEnteringVender {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0130, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Entering Vender: ".getHex($ID)."\n", "sendPacket", 2;
+sub sendenteringvender {
+    my ($self, $accountID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'sendenteringvender',
+        accountID => $accountID,
+    }));
+	debug "Sent Entering Vender: ".getHex($accountID)."\n", "sendPacket", 2;	
 }
 
 # 0x0131,86
