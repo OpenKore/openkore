@@ -682,12 +682,6 @@ sub sendCompanionRelease {
 # TODO
 
 # 0x0130,6,vendinglistreq,2
-sub sendEnteringVender {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0130, $ID);
-	$self->sendToServer($msg);
-
-}
 sub sendenteringvender {
     my ($self, $accountID) = @_;
     $self->sendToServer($self->reconstruct({
