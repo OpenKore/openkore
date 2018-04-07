@@ -1441,4 +1441,48 @@ sub rodex_close_mailbox {
 	undef $rodexList;
 }
 
+sub sendEnteringVender {
+    my ($self, $accountID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_entering_vending',
+        accountID => $accountID,
+    }));
+}
+
+sub sendUnequip {
+    my ($self, $itemIndex) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_unequip_item',
+        Index => $itemIndex,
+    }));
+}
+
+sub sendAddStatusPoint {
+    my ($self, $ID,$Amount) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_add_status_point',
+        statusID => $ID,
+        Amount => '1', 
+    }));
+}
+
+sub sendAddSkillPoint {
+    my ($self, $skillID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_add_skill_point',
+        skillID => $skillID, 
+    }));
+}
+
+sub sendShortcutKeyChange {
+    my ($self, $index, $isSkill, $ID, $count) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_shortcut_key_change',
+        index => $index,
+		isSkill => $isSkill,
+		ID => $ID,
+		count => $count,
+    }));
+}
+
 1;
