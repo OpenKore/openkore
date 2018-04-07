@@ -123,6 +123,7 @@ sub new {
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'0447' => ['blocking_play_cancel'],
