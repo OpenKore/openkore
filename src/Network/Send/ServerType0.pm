@@ -72,6 +72,7 @@ sub new {
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0130' => ['sendenteringvender', 'v V', [qw(len accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -622,10 +623,12 @@ sub sendEmotion {
 }
 
 sub sendEnteringVender {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x30, 0x01) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent Entering Vender: ".getHex($ID)."\n", "sendPacket", 2;
+    my ($self, $accountID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'sendenteringvender',
+        accountID => $accountID,
+    }));
+	debug "Sent Entering Vender: ".getHex($accountID)."\n", "sendPacket", 2;		
 }
 
 # 0x0208,11,friendslistreply,2:6:10
