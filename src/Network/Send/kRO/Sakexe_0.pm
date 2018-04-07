@@ -56,15 +56,19 @@ sub new {
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],#8
 		'00A9' => ['send_equip', 'a2 v', [qw(ID type)]],#6
+		'00AB' => ['send_unequip_item', 'v', [qw(Index)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
+		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0130' => ['send_entering_vending', 'V', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -83,6 +87,7 @@ sub new {
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'02BA' => ['send_shortcut_key_change', 'v c V v', [qw(index isSkill ID count)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
@@ -248,15 +253,6 @@ sub sendGMMessage {
 # 0x00a8,7
 # 0x00aa,7
 
-# 0x00ab,4,unequipitem,2
-sub sendUnequip {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("v", 0x00AB) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Unequip: %s\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 # 0x00ac,7
 # // 0x00ad,0
 # 0x00ae,-1
@@ -275,13 +271,6 @@ sub sendUnequip {
 
 # 0x00ba,2
 # TODO
-
-# 0x00bb,5,statusup,2:4
-sub sendAddStatusPoint {
-	my ($self, $statusID) = @_;
-	my $msg = pack('v2 C', 0x00BB, $statusID, 1);
-	$self->sendToServer($msg);
-}
 
 # 0x00bc,6
 # 0x00bd,44
@@ -596,13 +585,6 @@ sub sendPartyKick {
 # 0x0110,10
 # 0x0111,39
 
-# 0x0112,4,skillup,2
-sub sendAddSkillPoint {
-	my ($self, $skillID) = @_;
-	my $msg = pack('v2', 0x0112, $skillID);
-	$self->sendToServer($msg);
-}
-
 # 0x0113,10,useskilltoid,2:4:6
 # 0x0114,31
 # 0x0115,35
@@ -693,14 +675,6 @@ sub sendCompanionRelease {
 
 # 0x012f,-1
 # TODO
-
-# 0x0130,6,vendinglistreq,2
-sub sendEnteringVender {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x0130, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Entering Vender: ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x0131,86
 # 0x0132,6
@@ -1380,5 +1354,6 @@ sub sendFriendRemove {
 
 # 0x0208,11,friendslistreply,2:6:10
 # sendFriendReject:0/sendFriendAccept:1
+
 
 1;
