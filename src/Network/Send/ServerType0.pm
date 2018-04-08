@@ -106,7 +106,7 @@ sub new {
 		'023B' => ['storage_password'],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-		'02B6' => ['queststate', 'V C', [qw(questID state)]],
+		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['send_shortcut_key_change', 'v c V v', [qw(index isSkill ID count)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
