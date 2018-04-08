@@ -1490,7 +1490,7 @@ sub sendQuestState {
     $self->sendToServer($self->reconstruct({
         switch => 'queststate',
         questID => $questID,
-        state => $state,
+        state => $state, #TODO:[active=0x00],[inactive=0x01]
     }));
 	debug "Sent Quest State.\n", "sendPacket", 2;	
 }
