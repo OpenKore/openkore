@@ -709,6 +709,18 @@ sub getMonControlFilename {
 	}
 }
 
+sub setMonControlFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getMonControlFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$mon_control_file = $new_filename;
+}
+
 sub getItemsControlFilename {
 	if (defined $items_control_file) {
 		return $items_control_file;
@@ -735,6 +747,18 @@ sub getShopFilename {
 	} else {
 		return getControlFilename("shop.txt");
 	}
+}
+
+sub setShopFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getShopFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$shop_file = $new_filename;
 }
 
 sub getSysFilename {
