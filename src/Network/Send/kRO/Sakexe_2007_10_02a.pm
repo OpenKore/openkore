@@ -32,6 +32,7 @@ sub new {
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02B6' => ['sendqueststate', 'V C', [qw(questID state)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -43,13 +44,6 @@ sub sendCashShopBuy {
 	my $msg = pack('v v2 V', 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendQuestState {
-	my ($self, $questID, $state) = @_;
-	my $msg = pack('v V C', 0x02B6, $questID, $state);
-	$self->sendToServer($msg);
-	debug "Sent Quest State.\n", "sendPacket", 2;
 }
 
 sub sendHotkey {
