@@ -45,13 +45,6 @@ sub sendCashShopBuy {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
-sub sendQuestState {
-	my ($self, $questID, $state) = @_;
-	my $msg = pack('v V C', 0x02B6, $questID, $state);
-	$self->sendToServer($msg);
-	debug "Sent Quest State.\n", "sendPacket", 2;
-}
-
 sub sendHotkey {
 	my ($self, $index, $type, $ID, $lv) = @_;
 	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
