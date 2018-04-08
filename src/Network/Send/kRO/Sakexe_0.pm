@@ -87,7 +87,7 @@ sub new {
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
-		'02B6' => ['queststate', 'V C', [qw(questID state)]],
+		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['send_shortcut_key_change', 'v c V v', [qw(index isSkill ID count)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
