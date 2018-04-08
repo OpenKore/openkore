@@ -1485,4 +1485,14 @@ sub sendShortcutKeyChange {
     }));
 }
 
+sub sendQuestState {
+    my ($self, $questID,$state) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_quest_state',
+        questID => $questID,
+        state => $state, #TODO:[active=0x00],[inactive=0x01]
+    }));
+	debug "Sent Quest State.\n", "sendPacket", 2;	
+}
+
 1;
