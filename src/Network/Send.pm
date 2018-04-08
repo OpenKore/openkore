@@ -1494,4 +1494,5 @@ sub sendQuestState {
     }));
 	debug "Sent Quest State.\n", "sendPacket", 2;	
 }
+
 1;
