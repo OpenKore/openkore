@@ -5750,6 +5750,20 @@ Usable By: ^808080Swordman Jobs^000000
 Atk + 5 for every 10 base above base level 70.
 Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
 #
+1447#
+A spear which has been forged with deadly poison for three days and nights. The spear has immense power, but this power comes at a price.
+Class: ^808080One-Handed Spear^000000
+Attack: ^808080150^000000
+Property: ^808080Poison^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+Crit + 10
+Enables ^0000FFLevel 5 Double Attack^000000.
+Adds a X% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
+Adds a X% chance of inflicting ^800000Poison^000000 on the user when receiving a physical attack.
+#
 1449#
 A large one-handed spear that shakes the earth and also stimulate user's metabolism.
 Class: ^808080One-Handed Spear^000000
@@ -5774,6 +5788,8 @@ Increases physical damage on boss monsters by an additional 20%.
 Increases physical damage on Water and Wind property targets by an additional 20%.
 Increases physical damage on Insect and Fish race targets by an additional 20%.
 Increases the damage of ^0000FFWind Cutter^000000 by an additional 20%.
+If ^008080Gelerdria^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of ^0000FFWind Cutter^000000 by 50%.
 #
 1450#
 The two-handed spear of an evil spirit.
@@ -54218,6 +54234,45 @@ Required Jobs: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs
 ^FFFFFF_^000000
 Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
 #
+13461#
+An evil sword in which magnificent power is sealed. It will not be easy to draw out it's power.
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Def - 50
+Mdef - 10
+Adds a X% chance of casting ^0000FFLevel 5 Frost Nova^000000 on the target when performing a physical attack.
+If upgrade level is +7 or higher,
+Mdef + 10
+Crit + 30
+If upgrade level is +10 or higher,
+Def + 50
+Additional Crit + 20
+Aspd + 1
+#
+13462#
+A maximum sword in which magnificent power is sealed. It will not be easy to draw out it's power.
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Max HP - 1000
+Adds a X% chance of casting ^0000FFLevel 5 Cold Bolt^000000 on the target when performing a physical attack.
+If upgrade level is +7 or higher,
+Max HP + 500
+Atk + 65
+If upgrade level is +10 or higher,
+Max HP + 500
+Atk + 45
+Aspd + 1
+#
 13500#
 #
 13501#
@@ -58983,6 +59038,22 @@ Citizen Oda's Miracle Elixir (10)
 Safe to 7 Chance Box (4)
 Safe to 10 Certificate (2)
 #
+14940#
+When opened gives one of the following at random:
+
+Costume Floating Sage Stone
+Costume Radio Antenna
+Costume Vajra
+Costume White Wizard Hat
+Costume Book of Magic
+Costume Sorcerer Hood
+Costume Blinking Small Eyes
+Costume Darkness Veil
+Costume Laser of Eagle
+Costume Magic Circle
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -60239,6 +60310,62 @@ Reduces the fixed casting time of skills by 25%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
+15163#
+A high class robe worn by ranking officials.
+Class: ^808080Armor^000000
+Defense: ^8080800^000000
+Property: ^808080Neutral^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Matk + 5%
+Enables ^0000FFLevel 1 Spell Breaker^000000.
+If the users base level is 120 or higher,
+Additional Matk + 4%
+If the users base level is 140 or higher,
+Additional Matk + 5%
+^800080Set Bonus^000000
+^008080Agenda Robe^000000
+^008080Ancient Cape^000000
+Reduces the variable casting time of skills by 2% per upgrade level of ^008080Agenda Robe^000000.
+The users casting cannot be interrupted outside of WoE.
+^800080Set Bonus^000000
+^008080Agenda Robe^000000
+^008080Cloak of Survival^000000
+Adds a 1% chance of casting ^0000FFLevel 1 Heal^000000 on the user when performing a magical attack per upgrade level of ^008080Agenda Robe^000000.
+#
+15164#
+An elegant robe worn by ranking officials.
+Class: ^808080Armor^000000
+Defense: ^8080800^000000
+Property: ^808080Neutral^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Vit + 5
+Reduces damage taken from Fire and Shadow property attacks by 3% per upgrade level of the item.
+Enables ^0000FFLevel 1 Martyr's Reckoning^000000.
+^800080Set Bonus^000000
+^008080Consultation Robe^000000
+^008080Morrigane's Manteau^000000
+Agi + 1 per upgrade level of ^008080Consultation Robe^000000.
+Flee + 2 per upgrade level of ^008080Consultation Robe^000000.
+The users property becomes Level 1 Ghost.
+^800080Set Bonus^000000
+^008080Consultation Robe^000000
+^008080Deviling Card^000000
+^008080Valkyrie Manteau^000000
+Disables the effects of ^008080Deviling Card^000000.
+^800080Set Bonus^000000
+^008080Consultation Robe^000000
+^008080Valkyrie Manteau^000000
+Vit + 5
+Additional Vit + 1 per upgrade level of ^008080Consultation Robe^000000.
+Luk + 1 per upgrade level of ^008080Consultation Robe^000000.
+Reduces damage taken from Neutral, Fire and Shadow property attacks by 10%.
+If ^008080Consultation Robe^000000 upgrade level is +10 or higher,
+Reduces damage taken from Neutral property attacks by an additional 10%.
+#
 15166#
 ^808080The holy rosary which has received its powers from the apostle of God. It's filled with mysterious powers.^000000
 Class: Headgear
@@ -60296,13 +60423,14 @@ If upgrade level is +9 or higher,
 Immune to ^800000Frozen^000000.
 #
 15175#
-^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to enhance physical abilities.^000000
-Class: Armor
-Defense: 100
-Property: N/A
-Weight: 40
-Required Level: 90
-Required Jobs: All Jobs
+An armor made from the scales of a powerful fire dragon.
+Class: ^808080Armor^000000
+Defense: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Hit + 10
 If upgrade level is +7 or higher,
 Additional Hit + 10
@@ -72851,6 +72979,20 @@ Reduces damage taken from Small, Medium and Large size enemies by 5%.
 ^008080Sting Silk Ribbon^000000
 Reduces damage taken from Small, Medium and Large size enemies by 10%.
 #
+19115#
+A hat which appears to have been made in Schwaltzvalt Republic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Increases long-ranged damage on targets by 6%.
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by an additional 2%.
+If upgrade level is +10 or higher,
+Increases long-ranged damage on targets by an additional 4%.
+#
 19125#
 ^808080Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.^000000
 Class: Headgear
@@ -72888,6 +73030,42 @@ If the users base level is 99 or lower,
 Max HP + 200
 If the users base level is 100 or higher,
 Max HP + 2000
+#
+19138#
+A beautiful coronet decorated with seraphim feathers.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Atk + 5 for every 8 base Int.
+Additional Atk + 50, if the users base Int is 108 or higher.
+Additional Atk + 125, if the users base Int is 120 or higher.
+Reduces the variable casting time of skills by 1% for every 8 base Int.
+Reduces the variable casting time of skills by 1%, if the users base Int is 108 or higher.
+Reduces the variable casting time of skills by 1%, if the users base Int is 120 or higher.
+Increases the recovery rate of recovery skills by 1% for every 8 base Int.
+Increases the recovery rate of recovery skills by an additional 5%, if the users base Int is 108 or higher.
+Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 120 or higher.
+^800080Set Bonus^000000
+^008080Seraphim Coronet^000000
+^008080Seraphim Feather^000000
+Reduces the variable casting time of skills by 1% for every 8 base Int.
+Reduces the variable casting time of skills by an additional 4%, if the users base Int is 108 or higher.
+Reduces the variable casting time of skills by an additional 6%, if the users base Int is 120 or higher.
+Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
+Increases the recovery rate of recovery skills by 5%.
+Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of recovery skills by an additional 15%, if the users base Int is 120 or higher.
+Increases the recovery rate of incoming recovery skills by 5%.
+Increases the recovery rate of incoming recovery skills by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of incoming recovery skills by an additional 15%, if the users base Int is 120 or higher.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
+Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
+Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
 #
 19139#
 A orb that automatically protects its' owner.
@@ -73300,6 +73478,122 @@ Reduces damage taken from Demi-Human race enemies by an additional 2%, if the us
 Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Luk is 120 or higher.
 Reduces damage taken from ^0000FFCritical Slash^000000 by 100%.
 Enables Splash Attacks.if the users base Luk is 120 or higher.
+#
+19326#
+A magic book with great information. The contents are only deciphered while placing the book upon your head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^808080100^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^008080Anopheles Card^000000
+^008080Book of Soyga^000000
+Increases the experience given from Insect race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Insect race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Insect race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Armeyer Dinze Card^000000
+^008080Book of Soyga^000000
+Increases the experience given from Fish race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Fish race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Fish race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Baroness of Retribution Card^000000
+^008080Book of Soyga^000000
+Increases the experience given from Angel race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Cloud Hermit Card^000000
+Increases the experience given from Plant race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Dragon Egg Card^000000
+Increases the experience given from Dragon race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Dragon race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Dragon race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Grove Card^000000
+Increases the experience given from Formless race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Formless race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Formless race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Orc Archer Card^000000
+Increases the experience given from Demi-Human race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Demi-Human race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Demi-Human race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Raydric Archer Card^000000
+Increases the experience given from Demon race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Demon race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Demon race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Stem Worm Card^000000
+Increases the experience given from Brute race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Brute race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Brute race monsters by an additional 5%.
+^800080Set Bonus^000000
+^008080Book of Soyga^000000
+^008080Wraith Card^000000
+Increases the experience given from Undead race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Undead race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Undead race monsters by an additional 5%.
+#
+19327#
+A feather dropped from a Seraphim. It gives off an odor similar to a lamington... no idea why though.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+Increases the recovery rate of recovery skills by 5%.
+^800080Set Bonus^000000
+^008080Seraphim Coronet^000000
+^008080Seraphim Feather^000000
+Reduces the variable casting time of skills by 1% for every 8 base Int.
+Reduces the variable casting time of skills by an additional 4%, if the users base Int is 108 or higher.
+Reduces the variable casting time of skills by an additional 6%, if the users base Int is 120 or higher.
+Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
+Increases the recovery rate of recovery skills by 5%.
+Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of recovery skills by an additional 15%, if the users base Int is 120 or higher.
+Increases the recovery rate of incoming recovery skills by 5%.
+Increases the recovery rate of incoming recovery skills by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of incoming recovery skills by an additional 15%, if the users base Int is 120 or higher.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
+Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
+Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
 #
 19377#
 A marinated beef dish
@@ -78643,6 +78937,22 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20455#
+A hat which appears to have been made in Schwaltzvalt Republic.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+20456#
+A head piece which has the vestige of fierce combat in the battlefield.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 20457#
 ^808080Angelic feathers of many colors floating in the wind.^000000
 Class: Costume
@@ -78683,6 +78993,14 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required LvL : ^7777771^000000
 Job : ^777777All^000000
 #
+20491#
+A laser pointer that will increase your aim. Some say that the lens is from the eyes of a living experiment.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 20495#
 Class :^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
@@ -78722,6 +79040,14 @@ Position: Garment
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
+#
+20515#
+A mystical, magical circle beneath your feet.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -81925,10 +82251,36 @@ Weight: 30
 Restores 50% HP.
 Restores 50% SP.
 #
+23076#
+There is a sticker attached to the vial indicating it has not been tested yet.
+^FF0000Can only be used in the normal Werner Laboratory.^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Aspd + 10 for 10 seconds.
+#
+23077#
+There is a sticker attached to the vial indicating it has not been tested yet.
+^FF0000Can only be used in the normal Werner Laboratory.^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Crit + 30 for 10 seconds.
+#
+23078#
+There is a sticker attached to the vial indicating it has not been tested yet.
+^FF0000Can only be used in the normal Werner Laboratory.^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Reduces the variable casting time of skills by 80% for 10 seconds.
+#
 23080#
 ^808080A crystal formed in the tomb of honor by hundreds of evil thoughts. It can be crushed into fragments.^000000
 Class: Item Giver
 Weight: 50
+#
+23087#
+A bag once owned by Seyren Windsor. It is said to contains his companions belongings.
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 23123#
 ^808080A bullet case containing 500 flare bullets.^000000
@@ -83700,6 +84052,102 @@ Type: Miscellaneous
 Weight: 0
 ^FFFFFF_^000000
 #
+25151#
+A revolver repaired by Rachel. It's not structurally sound to use as a weapon.
+Weight: ^8080800^000000
+#
+25152#
+A bunch of flowers elaborately made to commemorate the memory of loved one.
+Weight: ^8080800^000000
+#
+25153#
+A broken gun wreck. It looks like you can use it again once you take it to expert and get it repaired. Let's take good care of it.
+Weight: ^8080800^000000
+#
+25154#
+A bundle of gunpowder you can see anywhere. It has not been used for a long time, so no one is sure of its explosive power.
+Weight: ^8080801^000000
+#
+25155#
+A special mark given by Schwartz Republic.
+Weight: ^8080800^000000
+#
+25156#
+It can be sold to a merchant for a high price.
+Weight: ^8080801^000000
+#
+25157#
+It can be sold to a merchant.
+Weight: ^8080801^000000
+#
+25158#
+It can be sold to a merchant.
+Weight: ^8080801^000000
+#
+25159#
+The seal symbolizing the Heart Hunter organization.
+Weight: ^8080801^000000
+#
+25160#
+You must return to its owner after reading it in the condition unto which you borrowed it.
+Weight: ^8080800^000000
+#
+25161#
+Looks like it has been made a little poorly, but this cookie is very delicious thanks to its soft texture and sweet taste.
+Weight: ^8080800^000000
+#
+25162#
+A treat made by baking well dried anchovy. It makes a great snack for cats!
+Weight: ^8080800^000000
+#
+25163#
+A piece of paper full of letters advertising the weapon shop 'Clana Nemieri'. It's quite difficult to read.
+Weight: ^8080800^000000
+#
+25164#
+Tea leaves fresh from the garden. You can make the best tea by processing it with a special recipe.
+Weight: ^8080800^000000
+#
+25165#
+The top class tea processed with a special recipe. People say it tastes soft, savory, sour, and sweet.
+Weight: ^8080800^000000
+#
+25166#
+Cotnes's favorite accessory. It looks very classy thanks to the red ruby on the main body inlaid with gold. It can be put into a finger, but I can hardly call it an accessory...
+Weight: ^8080800^000000
+#
+25167#
+A very worn-out letter which looks decades-old. It is too worn out to read contents, but since it was written at an early age, it would be very embarrassing to read it now.
+Weight: ^8080800^000000
+#
+25179#
+The small gem on which 'Tera Gloria', the symbol of the Prontera royal family is engraved. It has been made by refining Ymir's Heart pieces. People call it 'Blessing Star' because it was used for blessing ceremonies.
+Weight: ^8080800^000000
+#
+25180#
+A pair of rings which are so worn out that they are more like scrap metals. The sizes suggest one was for male, and the other female.
+Weight: ^8080800^000000
+#
+25181#
+A wooden rosary which has been touched by so many people's hands. It was very poorly carved.
+Weight: ^8080800^000000
+#
+25182#
+A small dagger with the mark of an assassin engraved on it. It hasn't been used in a long time.
+Weight: ^8080800^000000
+#
+25183#
+An archer's thimble with a small gem as a decoration. The thimble is worn out but the gem still appears as if it was brand new.
+Weight: ^8080800^000000
+#
+25184#
+It looks like it has been cherished for a long time. The surface of leather case is perfect. It contains thread, needle and a few buttons.
+Weight: ^8080800^000000
+#
+25185#
+An old locket pendant. It contains a portrait of generous-looking man and woman.
+Weight: ^8080800^000000
+#
 25187#
 ^808080A bullet that is made for the Slug Shot skill. It can be used as a normal shot but does not give high damage. It's expensive and very heavy... just what is this thing made of?^000000
 Weight: 120
@@ -85116,6 +85564,25 @@ Required Jobs: Doram
 Reduces the variable casting time of ^0000FFPicky Peck^000000 by 50%.
 Increases the damage of ^0000FFPicky Peck^000000 by 1% per level of ^0000FFPicky Peck^000000 known for every 6 base DEX.
 #
+28425#
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Vit + 3
+^F4AD42Novice, Taekwon, Ninja, Gunslinger Bonus^000000
+Max HP + 1000
+Max SP + 200
+#
+28426#
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Int + 3
+^F4AD42Novice, Taekwon, Ninja, Gunslinger Bonus^000000
+Reduces the variable casting time of skills by 30%.
+#
 28429#
 ^808080A necklace belonging to Arquien, the head of Eden Group. It features a large purple jewel.^000000
 ^FFFFFF_^000000
@@ -85456,6 +85923,87 @@ Reduces the variable casting time of ^0000FFLightning Ride^000000 by 5% for ever
 Reduces the cooldown of ^0000FFPower Absorb^000000 by 3 seconds.
 Increases the damage of ^0000FFLightning Ride^000000 by 5%.
 #
+28505#
+A ring that empowers the essences of the Demon God.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Atk + 5%
+Matk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration1^000000
+^008080Demon Lord's Ring^000000
+Reduces the variable casting time of skills by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration2^000000
+^008080Demon Lord's Ring^000000
+Reduces the variable casting time of skills by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration3^000000
+^008080Demon Lord's Ring^000000
+Reduces the variable casting time of skills by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Force1^000000
+^008080Demon Lord's Ring^000000
+Atk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Force2^000000
+^008080Demon Lord's Ring^000000
+Atk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Force3^000000
+^008080Demon Lord's Ring^000000
+Atk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence1^000000
+^008080Demon Lord's Ring^000000
+Matk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence2^000000
+^008080Demon Lord's Ring^000000
+Matk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence3^000000
+^008080Demon Lord's Ring^000000
+Matk + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Luck1^000000
+^008080Demon Lord's Ring^000000
+Increases critical damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Luck2^000000
+^008080Demon Lord's Ring^000000
+Increases critical damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Luck3^000000
+^008080Demon Lord's Ring^000000
+Increases critical damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Darklord Essence Speed1^000000
+^008080Demon Lord's Ring^000000
+Aspd + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Speed2^000000
+^008080Demon Lord's Ring^000000
+Aspd + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Speed3^000000
+^008080Demon Lord's Ring^000000
+Aspd + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality1^000000
+^008080Demon Lord's Ring^000000
+Max HP + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality2^000000
+^008080Demon Lord's Ring^000000
+Max HP + 5%
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality3^000000
+^008080Demon Lord's Ring^000000
+Max HP + 5%
+#
 28506#
 A stone containing the power of the storms.
 Class: ^808080Accessory^000000
@@ -85646,11 +86194,12 @@ Requires Level: ^808080100^000000
 SP Recovery + 50%
 Reduces the variable casting time of skills by 10%.
 Reduces the variable casting time of ^0000FFOratio^000000 by 50%.
-Reduces the fixed casting time of ^0000FFOratio^000000 by 100%.
 Reduces the cast delay of skills by 5%.
 Increases magical damage on Small, Medium and Large size targets by 3% per level of ^0000FFImpositio Manus^000000 known.
 Enables ^0000FFLevel 2 Odin's Power^000000, if ^0000FFImpositio Manus^000000 is at maximum level.
 Increases the damage of ^0000FFMagnus Exorcismus^000000 by 3% for every 2 base levels.
+^F4AD42Arch Bishop Bonus^000000
+Reduces the fixed casting time of skills by 50%.
 #
 28565#
 A demon mask found nearby a Buddha statue in Payon. Some say it has been used for some kind of ritual.
@@ -85671,6 +86220,23 @@ Reduces the variable casting time of skills by 1% for every 18 base Vit.
 Reduces the cast delay of skills by 1% for every 18 base Int.
 Bypass 15% of hard defense of normal monsters, boss monsters and players when performing a physical attack for every 18 base Luk.
 Bypass 15% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack for every 18 base Str.
+#
+28573#
+A beautiful ring with a big shiny emerald inserted into it.
+Class: ^808080Accessory^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Agi + 5
+Additional Agi + 1 per 2 levels of ^0000FFDouble Strafe^000000 known.
+Vit + 5
+Additional Vit + 1 per 2 levels of ^0000FFDouble Strafe^000000 known.
+Dex + 5
+Additional Dex + 1 per 2 levels of ^0000FFDouble Strafe^000000 known.
+Atk + 20 per 2 levels of ^0000FFDouble Strafe^000000 known.
+Increases the damage of ^0000FFArrow Shower^000000 and ^0000FFDouble Strafe^000000 by 1% for every base level.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 2% for every 10 base levels.
+Reduces the SP cost of ^0000FFImprovised Song^000000 by 18.
 #
 28600#
 Attack: 0
@@ -85956,6 +86522,23 @@ Reduces damage taken from long-ranged attacks by an additional 15%.
 ^008080Imuke Upper Shield^000000
 ^008080Horn Card^000000
 Increases damage taken from long-ranged attacks by 35%.
+#
+28913#
+A shield which has become a lot lighter thanks to powerful magic.
+Class: ^808080Shield^000000
+Defense: ^80808050^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 5%
+Reduces damage taken from Neutral property attacks by 5%.
+Bypass 10% of hard defense of normal monsters when performing a physical attack.
+If upgrade level is +7 or higher,
+Additional Aspd + 2%
+Reduces damage taken from Neutral property attacks by an additional 2%.
+If upgrade level is +9 or higher,
+Additional Aspd + 3%
+Reduces damage taken from Neutral property attacks by an additional 3%.
 #
 28916#
 A shield that contains the power of the earth.
@@ -87785,6 +88368,73 @@ Required Jobs: All Jobs
 ^FF0000The following effects are active during the month of December.^000000
 Max HP + 250 for every 20 base levels.
 Increases physical and magical damage on targets by 2% for every 30 base levels.
+#
+31391#
+A stone of a wealthy sage.
+
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31392#
+A hat designed to receive electric waves through its small antennas. It sometimes even receives electric waves from outer space.
+
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31393#
+A weapon of the wind god Rudra that symbolizes indestructibility and irresistible force.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31394#
+A must-have hat for all great wizards.  It looks a bit weird but will make you look super fresh.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31395#
+A floating book containing 4 elemental magic powers.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31396#
+A costume hood of an unidentified evil magician. The glowing light makes it look mysterious.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31398#
+Don't turn your back, don't look away and whatever you do, don't blink.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Doram^000000
+#
+31399#
+A dark, mysterious veil adorned with glistening jewels.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
 #
 31408#
 Celebrating the release of Ragnarok Rush with these majestic goat horns that represents great deeds.

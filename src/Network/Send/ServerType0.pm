@@ -58,20 +58,23 @@ sub new {
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],#8
 		'00A9' => ['send_equip', 'a2 v', [qw(ID type)]],#6
+		'00AB' => ['send_unequip_item', 'v', [qw(Index)]],
 		'00B2' => ['restart', 'C', [qw(type)]],
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
-		'00BB' => ['sendAddStatusPoint'],
+		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
+		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0130' => ['send_entering_vending', 'V', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -103,6 +106,8 @@ sub new {
 		'023B' => ['storage_password'],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
+		'02BA' => ['send_shortcut_key_change', 'v c V v', [qw(index isSkill ID count)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
@@ -213,161 +218,8 @@ sub shuffle {
 	$self->{packet_lut}->{ $new->{$_}->[0] } = $_ foreach keys %$new;
 }
 
-sub rodex_delete_mail {
-	my ($self, $type, $mailID1, $mailID2) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_delete_mail',
-		type => $type,
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-	}));
-}
-
-sub rodex_request_zeny {
-	my ($self, $mailID1, $mailID2, $type) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_request_zeny',
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-		type => $type,
-	}));
-}
-
-sub rodex_request_items {
-	my ($self, $mailID1, $mailID2, $type) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_request_items',
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-		type => $type,
-	}));
-}
-
-sub rodex_cancel_write_mail {
-	my ($self) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_cancel_write_mail',
-	}));
-	undef $rodexWrite;
-}
-
-sub rodex_add_item {
-	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_add_item',
-		ID => $ID,
-		amount => $amount,
-	}));
-}
-
-sub rodex_remove_item {
-	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_remove_item',
-		ID => $ID,
-		amount => $amount,
-	}));
-}
-
-sub rodex_open_write_mail {
-	my ($self, $name) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_open_write_mail',
-		name => $name,
-	}));
-}
-
-sub rodex_checkname {
-	my ($self, $name) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_checkname',
-		name => $name,
-	}));
-}
-
-sub rodex_send_mail {
-	my ($self) = @_;
-
-	my $title = stringToBytes($rodexWrite->{title});
-	my $body = stringToBytes($rodexWrite->{body});
-	my $pack = $self->reconstruct({
-		switch => 'rodex_send_mail',
-		receiver => $rodexWrite->{target}{name},
-		sender => $char->{name},
-		zeny1 => $rodexWrite->{zeny},
-		zeny2 => 0,
-		title_len => length $title,
-		body_len => length $body,
-		char_id => $rodexWrite->{target}{char_id},
-		title => $title,
-		body => $body,
-	});
-
-	$self->sendToServer($pack);
-}
-
-sub rodex_refresh_maillist {
-	my ($self, $type, $mailID1, $mailID2) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_refresh_maillist',
-		type => $type,
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-	}));
-}
-
-sub rodex_read_mail {
-	my ($self, $type, $mailID1, $mailID2) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_read_mail',
-		type => $type,
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-	}));
-}
-
-sub rodex_next_maillist {
-	my ($self, $type, $mailID1, $mailID2) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_next_maillist',
-		type => $type,
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-	}));
-}
-
-sub rodex_open_mailbox {
-	my ($self, $type, $mailID1, $mailID2) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_open_mailbox',
-		type => $type,
-		mailID1 => $mailID1,
-		mailID2 => $mailID2,
-	}));
-}
-
-sub rodex_close_mailbox {
-	my ($self) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'rodex_close_mailbox',
-	}));
-	undef $rodexList;
-}
-
 sub version {
 	return $masterServer->{version} || 1;
-}
-
-sub sendAddSkillPoint {
-	my ($self, $skillID) = @_;
-	my $msg = pack("C*", 0x12, 0x01) . pack("v*", $skillID);
-	$self->sendToServer($msg);
-}
-
-sub sendAddStatusPoint {
-	my ($self, $statusID) = @_;
-	my $msg = pack("C*", 0xBB, 0) . pack("v*", $statusID) . pack("C*", 0x01);
-	$self->sendToServer($msg);
 }
 
 sub sendAlignment {
@@ -619,13 +471,6 @@ sub sendEmotion {
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
 	$self->sendToServer($msg);
 	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
-sub sendEnteringVender {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x30, 0x01) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent Entering Vender: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 # 0x0208,11,friendslistreply,2:6:10
@@ -1180,14 +1025,6 @@ sub sendTop10Taekwon {
 	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
 }
 
-sub sendUnequip {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("v", 0x00AB) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Unequip: %s\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 sub sendWho {
 	my $self = shift;
 	my $msg = pack("v", 0x00C1);
@@ -1365,14 +1202,6 @@ sub sendMessageIDEncryptionInitialized {
 	my $msg = pack("v", 0x02AF);
 	$self->sendToServer($msg);
 	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
-}
-
-# has the same effects as rightclicking in quest window
-sub sendQuestState {
-	my ($self, $questID, $state) = @_;
-	my $msg = pack("v V C", 0x02B6, $questID, $state);
-	$self->sendToServer($msg);
-	debug "Sent Quest State.\n", "sendPacket", 2;
 }
 
 sub sendBattlegroundChat {
