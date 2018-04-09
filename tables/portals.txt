@@ -3184,3 +3184,19 @@ conch_in 140 87 conch_in 137 64
 conch_in 142 60 conch_in 162 61
 conch_in 159 61 conch_in 140 59
 
+# Rock Ridge
+alberta 240 103 harboro1 70 215 10000 c r0 n
+harboro1 60 215 alberta 172 131 c r0 n
+harboro1 241 218 har_in01 18 18
+harboro1 362 206 rockrdg1 37 246
+rockmi1 247 16 rockrdg2 304 350
+rockrdg2 304 350 rockmi1 247 19
+harboro1 312 193 har_in01 26 87
+har_in01 26 90 harboro1 312 193
+har_in01 18 15 harboro1 241 218
+har_in01 34 28 harboro1 241 218
+har_in01 99 30 har_in01 34 31
+har_in01 34 28 har_in01 99 27
+rockrdg1 33 246 harboro1 362 206
+rockrdg1 371 206 rockrdg2 31 207
+rockrdg2 27 207 rockrdg1 371 206
