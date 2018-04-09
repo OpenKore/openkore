@@ -180,6 +180,7 @@ sub slicePacket {
 	my $switch = getMessageID($data);
 	my $real_length = $self->{rpackets}{$switch}{length};	
 	my $packet;
+
 	if (($real_length > 0) # packet size is not variable
 			&& (length($data) > $real_length)) { 
 		$packet = substr($data, 0, $real_length);
@@ -187,6 +188,16 @@ sub slicePacket {
 	} else { # packet is at correct size
 		$packet = $data;
 		$$additional_data = undef;
+		if (length($data) > 4) {
+			my $packet_length = unpack("v", substr($data, 2, 2));
+			if ($packet_length > 4 && length($data) > $packet_length) {
+				my $next_data = substr($data, $packet_length);
+				if (length($next_data) > 1) {
+					$packet = substr($data, 0, $packet_length);
+					$$additional_data = $next_data;
+				}
+			}		
+		}
 	}
 	return $packet; # real packet
 }
