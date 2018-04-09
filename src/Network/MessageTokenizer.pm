@@ -182,10 +182,15 @@ sub slicePacket {
 	my $packet;
 
 	if (($real_length > 0) # packet size is not variable
-			&& (length($data) > $real_length)) { 
-		$packet = substr($data, 0, $real_length);
-		$$additional_data = substr($data, $real_length); # sliced data
-	} else { # packet is at correct size
+			&& (length($data) >= $real_length)) { 
+		if (length($data) > $real_length) {
+			$packet = substr($data, 0, $real_length);
+			$$additional_data = substr($data, $real_length); # sliced data
+		} else {
+			$packet = $data;
+			$$additional_data = undef;
+		}
+	} else { # packet is at correct size?
 		$packet = $data;
 		$$additional_data = undef;
 		if (length($data) > 4) {
