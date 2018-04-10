@@ -22,9 +22,16 @@ Peso: ^7777771^000000
 #
 //Pacote
 7550#
-Ticket promocional permite a entrada nos Mapas Especiais somente para personagens com nível de base maior que 70. Para acessá-los, fale com o NPC Nanaru, localizado em Prontera (162, 326).
-Este ticket desaparecerá durante a manutenção de 03/10/2017. Aproveite e divirta-se!
+Ticket promocional permite a entrada nos Mapas Especiais somente para personagens com nível de base maior que 70.
+--------------------------
+^CD3278NPC:^000000 Nanaru
+^CD3278Coord.:^000000 prontera 162, 326
+<NAVI>[Navegar]<INFO>prontera,162,326,0,000,0</INFO></NAVI>
+--------------------------
+Este ticket desaparecerá durante a manutenção de 08/05/2018. Aproveite e divirta-se!
+--------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+--------------------------
 Peso: ^7777770^000000
 #
 //Ticket dos Gatos
@@ -18517,7 +18524,7 @@ Passe usado para garantir um treinamento de tonificação muscular. Necessário 
 --------------------------
 ^CD3278NPC:^000000 Mister Peso
 ^CD3278Local:^000000 prontera 99, 64
-<NAVI>[Navegar]<INFO> prontera,99,64,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,99,64,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
 #
@@ -22777,7 +22784,7 @@ Cupom usado para tingir roupas.
 --------------------------
 ^CD3278NPC:^000000 Estilista Especial
 ^CD3278Local:^000000 prontera 105, 66
-<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,105,66,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -22796,7 +22803,7 @@ Cupom usado para remover a tintura das roupas.
 --------------------------
 ^CD3278NPC:^000000 Estilista Especial
 ^CD3278Local:^000000 prontera 105, 66
-<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,105,66,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -28525,7 +28532,7 @@ Peso: ^7777771^000000
 #
 13516#
 Uma caixa contendo 5 Geléias Reais.
-^ffffff_^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso: ^7777771^000000
 #
 14253#
@@ -34240,6 +34247,7 @@ Peso: ^7777770^000000
 6377#
 Uma licença da Guilda dos Mercadores que permite abrir uma Loja de Atacado.
 Você precisa ter pelo menos uma cópia dos itens que deseja comprar.
+^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão nem colocado no carrinho, mas pode ser transferido para o armazém e vendido em NPC.^000000
 Item Consumível
 Peso : ^7777771^000000
 #
@@ -34378,7 +34386,7 @@ Um utensílio feito de magia élfica condensada.
 --------------------------
 ^CD3278NPC:^000000 Mestre dos Slots
 ^CD3278Local:^000000 prontera 101, 65
-<NAVI>[Navegar]<INFO> prontera,101,65,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,101,65,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
 #
@@ -34823,7 +34831,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34835,7 +34843,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34847,7 +34855,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34859,7 +34867,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34871,7 +34879,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34883,7 +34891,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34895,7 +34903,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34907,7 +34915,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34919,7 +34927,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34931,7 +34939,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -35525,6 +35533,7 @@ Classes: ^777777Todas^000000
 
 12533#
 Uma caixa contendo 100 Ervas Azuis.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -35551,6 +35560,7 @@ Peso : ^7777770^000000
 #
 12549#
 Uma caixa contendo 100 frascos de Poção Branca Compacta.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -37684,6 +37694,7 @@ Classes : ^777777Todas^000000
 12680#
 Uma caixa contendo 10 unidades de Poção Azul que pode ser utilizada somente
 durante os combates da Guerra do Emperium ou em Salas de PVP.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^77777720^000000
 #
 
@@ -37842,7 +37853,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -37853,7 +37864,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -43550,7 +43561,7 @@ Classes: ^777777Todas^000000
 16555#
 Uma caixa contendo 1 Pedra das Valquírias.
 Pedra das Valquírias - uma pedra negra e afiada, possuidora de um poder extremo. É capaz de resetar os atributos de um personagem.
-^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho, colocado no armazém mas não pode ser derrubado no chão.^000000
+^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho, colocado no armazém, mas não pode ser derrubado no chão.^000000
 Peso: ^7777771^000000
 #
 13710#
@@ -58317,13 +58328,14 @@ Classes: ^777777Todas^000000
 20299#
 Uma bela de uma torta de baunilha que vai ficar enfiada na sua cara até você decidir que não tem mais graça. Uma coisa é certa: não vai dar pra brincar de “torta na cara” se você já estiver usando uma dessas!
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20765#
 Um lindo par de asas que emana beleza e ar celestial invejáveis. Suas penas são macias como as nuvens do Paraíso, mas tome cuidado para não sujá-las.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -58565,5 +58577,44 @@ Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-04-03--------------------
+//*****************************************************
+31381#
+Essa gola carrega um ar misterioso e sombrio, e seu adereço é de origem desconhecida. Acredita-se que ela pertenceu a um monstrengo tão maligno que, ao colocá-la, você poderá se sentir um verdadeiro lorde das trevas.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31052#
+Uma antiga máscara que os Alquimistas costumavam usar durante perigosas experiências. Apesar de te dar um ar meio sinistro, ela vai te manter protegido de gases e líquidos nocivos.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20023#
+Objeto que um dia pertenceu a um bravo soldado, essa boina é muito mais do que a peça de um uniforme militar – é símbolo de coragem e força.  Pode ser até que você sinta uma estranha vontade de bater continência com ela na cabeça, mas é completamente normal.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+12548#
+Uma licença suspeita e falsificada,  mas que permite abrir uma Loja de Compras. O carimbo da Guilda dos Mercadores parece ter sido desenhado à mão.
+Você precisa ter pelo menos uma cópia dos itens que deseja comprar.
+Item Consumível
+Peso : ^7777771^000000
+#
+6377#
+Uma licença da Guilda dos Mercadores que permite abrir uma Loja de Compras.
+Você precisa ter pelo menos uma cópia dos itens que deseja comprar.
+Item Consumível
+Peso : ^7777771^000000
 #
 //file end
