@@ -1474,15 +1474,16 @@ sub sendAddSkillPoint {
     }));
 }
 
-sub sendShortcutKeyChange {
-    my ($self, $index, $isSkill, $ID, $count) = @_;
-    $self->sendToServer($self->reconstruct({
-        switch => 'send_shortcut_key_change',
-        index => $index,
-		isSkill => $isSkill,
-		ID => $ID,
-		count => $count,
-    }));
+sub sendHotKeyChange {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'hotkey_change',
+		idx => $args->{idx},
+		type => $args->{type},
+		id => $args->{id},
+		lvl => $args->{lvl},
+	}));
 }
 
 sub sendQuestState {
