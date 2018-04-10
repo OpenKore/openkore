@@ -315,8 +315,8 @@
 6135#Ticket de Ninfa Perversa#
 6136#Ticket de Medusa#
 10038#Protetor de Chifre#
-6377#Licença_de_Atacado#
-12548#Licença Falsa_Atacado#
+6377#Licença de Loja de Compras#
+12548#Licença Falsa de Loja#
 6360#Fragmento Escarlate#
 6361#Fragmento Azul#
 6362#Fragmento Amarelo#
@@ -5385,7 +5385,7 @@
 17104#Oridecon_Perfeito [50]#
 17105#Elunium_Perfeito [50]#
 2584#Manto_do_Andarilho#
-12379#Biscoito do Papa#
+12379#Biscoito da Papisa#
 
 //------------2012 February Items------------
 
@@ -8201,4 +8201,12 @@
 31437#Pequeno Pinguim#
 22172#Botas Aladas#
 2984#Luvas Felpudas#
+//*****************************************************
+//------------Aplicar em 2018-04-03--------------------
+//*****************************************************
+31381#Gola Diabólica#
+31052#Máscara do Alquimista#
+20023#Boina Militar Vermelha#
+12548#Licença Falsa de Loja#
+6377#Licença de Loja de Compras#
 //file end
