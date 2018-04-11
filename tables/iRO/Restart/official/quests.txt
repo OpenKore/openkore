@@ -22414,3 +22414,10 @@ Hunt the monster listed#
 63095#Hunting Board#SG_FEEL#QUE_NOIMAGE#
 Hunt the monster listed#
 #
+
+63096#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63097#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
