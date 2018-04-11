@@ -375,6 +375,8 @@ sub new {
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
+		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C4 Z24', [qw(len clan_ID clan_name clan_master clan_map alliance antagonist ally unknow antoganist_name)]],		
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -415,7 +417,6 @@ sub new {
 		'0ADE' => ['flag', 'V', [qw(unknown)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
-		
 		};
 
 	# Item RECORD Struct's
@@ -4371,6 +4372,26 @@ sub achievement_update {
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
+}
+
+sub clan_user {
+    my ($self, $args) = @_;
+    foreach (qw(onlineuser totalmembers)) {
+        $clan{$_} = $args->{$_};
+    }	
+    $clan{onlineuser} = $args->{onlineuser};
+    $clan{totalmembers} = $args->{totalmembers};
+}
+
+sub clan_info {
+    my ($self, $args) = @_;
+    foreach (qw(clan_ID clan_name clan_master clan_map alliance antagonist ally unknow antoganist_name)) {
+        $clan{$_} = $args->{$_};
+    }
+	$clan{clan_name} = bytesToString($args->{clan_name});
+	$clan{clan_master} = bytesToString($args->{clan_master});
+	$clan{clan_map} = bytesToString($args->{clan_map});
+	$clan{antoganist_name} = bytesToString($args->{antoganist_name});
 }
 
 1;

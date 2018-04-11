@@ -240,6 +240,7 @@ sub initHandlers {
 	southwest			=> \&cmdManualMove,
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
+	clan				=> \&cmdClan,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -6864,4 +6865,22 @@ sub cmdRefineUI {
 	}
 }
 
+sub cmdClan {
+    my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	if ($args[0] eq "info") {
+		my $msg = center(T(" Clan Information "), 40, '-') ."\n" .
+			TF("ClanName : %s\n" .
+				"Clanmaster : %s\n" .
+				"Clanmap : %s/\n" .
+				"Connect : %s/%s\n",
+		$clan{clan_name}, $clan{clan_master}, $clan{clan_map},$clan{onlineuser}, $clan{totalmembers});
+		$msg .= ('-'x40) . "\n";
+		message $msg, "info";
+	}
+}
 1;
