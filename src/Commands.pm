@@ -84,6 +84,7 @@ sub initHandlers {
 	chist				=> \&cmdChist,
 	cil					=> \&cmdItemLogClear,
 	cl					=> \&cmdChatRoom,
+	cln					=> \&cmdChat,
 	clearlog			=> \&cmdChatLogClear,
 	closeshop			=> \&cmdCloseShop,
 	closebuyshop		=> \&cmdCloseBuyShop,
@@ -6868,10 +6869,14 @@ sub cmdRefineUI {
 sub cmdClan {
     my (undef, $args_string) = @_;
     my (@args) = parseArgs($args_string, 3);
+
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
+	} elsif(!$clan{clan_name}) {
+		error TF("You must be in a Real Clan to use command '%s'\n", shift);
 	}
+
 	if ($args[0] eq "info") {
 		my $msg = center(T(" Clan Information "), 40, '-') ."\n" .
 			TF("ClanName : %s\n" .
@@ -6887,4 +6892,5 @@ sub cmdClan {
 		message $msg, "info";
 	}
 }
+
 1;
