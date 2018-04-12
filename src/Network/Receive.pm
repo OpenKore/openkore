@@ -5217,7 +5217,6 @@ sub clan_info {
 			$clan{ally_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
 			$i += 24;
 		}
-		message "len:".length($args->{ally_antagonist_names})." i:".$i."\n";
 	}
 
 	$count = 0;
@@ -5226,6 +5225,35 @@ sub clan_info {
 			$clan{antagonist_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
 			$i += 24;
 		}
+	}
+}
+
+sub clan_chat {
+	my ($self, $args) = @_;
+	my ($chatMsgUser, $chatMsg); # Type: String
+
+	return unless changeToInGameState();
+	$chatMsgUser = bytesToString($args->{charname});
+	$chatMsg = bytesToString($args->{message});
+
+	chatLog("clan", "$chatMsgUser : $chatMsg\n") if ($config{'logClanChat'});
+	# Translation Comment: Guild Chat
+	message TF("[Clan]%s %s\n", $chatMsgUser, $chatMsg), "clanchat";
+	# Only queue this if it's a real chat message
+	ChatQueue::add('clan', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+
+	Plugins::callHook('packet_clanMsg', {
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
+	});
+}
+
+sub clan_leeave {
+	my ($self, $args) = @_;
+	
+	if($clan{clan_name}) {
+		message TF("[Clan] You leaved $clan{clan_name}");
+		undef %clan;
 	}
 }
 
