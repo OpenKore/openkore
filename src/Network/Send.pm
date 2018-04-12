@@ -1496,4 +1496,10 @@ sub sendQuestState {
 	debug "Sent Quest State.\n", "sendPacket", 2;	
 }
 
+sub sendClanChat {
+    my ($self, $message) = @_;
+	$message = $char->{name}." : ".$message;
+    $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
+}
+
 1;
