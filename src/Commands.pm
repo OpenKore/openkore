@@ -6875,10 +6875,12 @@ sub cmdClan {
 	if ($args[0] eq "info") {
 		my $msg = center(T(" Clan Information "), 40, '-') ."\n" .
 			TF("ClanName : %s\n" .
-				"Clanmaster : %s\n" .
-				"Clanmap : %s/\n" .
-				"Connect : %s/%s\n",
-		$clan{clan_name}, $clan{clan_master}, $clan{clan_map},$clan{onlineuser}, $clan{totalmembers});
+				"Clan Master Name : %s\n" .
+				"Castles Owned : %s\n" .
+				"Ally Clan : %s\n" .
+				"Hostile Clan : %s\n" .
+				"Number of Members : %s/%s\n",
+		$clan{clan_name}, $clan{clan_master}, $clan{clan_map},$clan{alliance},$clan{antoganist_name},$clan{onlineuser}, $clan{totalmembers});
 		$msg .= ('-'x40) . "\n";
 		message $msg, "info";
 	}
