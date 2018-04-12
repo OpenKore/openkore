@@ -5187,4 +5187,46 @@ sub booking_delete {
 	message TF("Deleted reserve group index %s\n", $args->{ID});
 }
 
+
+sub clan_user {
+    my ($self, $args) = @_;
+    foreach (qw(onlineuser totalmembers)) {
+        $clan{$_} = $args->{$_};
+    }	
+    $clan{onlineuser} = $args->{onlineuser};
+    $clan{totalmembers} = $args->{totalmembers};
+}
+
+sub clan_info {
+    my ($self, $args) = @_;
+    foreach (qw(clan_ID clan_name clan_master clan_map alliance_count antagonist_count)) {
+        $clan{$_} = $args->{$_};
+    }
+
+	$clan{clan_name} = bytesToString($args->{clan_name});
+	$clan{clan_master} = bytesToString($args->{clan_master});
+	$clan{clan_map} = bytesToString($args->{clan_map});
+	
+	my $i = 0;
+	my $count = 0;
+	$clan{ally_names} = "";
+	$clan{antagonist_names} = "";
+
+	if($args->{alliance_count} > 0) {
+		for ($count; $count < $args->{alliance_count}; $count++) {
+			$clan{ally_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
+			$i += 24;
+		}
+		message "len:".length($args->{ally_antagonist_names})." i:".$i."\n";
+	}
+
+	$count = 0;
+	if($args->{antagonist_count} > 0) {
+		for ($count; $count < $args->{antagonist_count}; $count++) {
+			$clan{antagonist_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
+			$i += 24;
+		}
+	}
+}
+
 1;
