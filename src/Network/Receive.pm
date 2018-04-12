@@ -5248,7 +5248,7 @@ sub clan_chat {
 	});
 }
 
-sub clan_leeave {
+sub clan_leave {
 	my ($self, $args) = @_;
 	
 	if($clan{clan_name}) {
