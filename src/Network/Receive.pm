@@ -5187,4 +5187,74 @@ sub booking_delete {
 	message TF("Deleted reserve group index %s\n", $args->{ID});
 }
 
+
+sub clan_user {
+    my ($self, $args) = @_;
+    foreach (qw(onlineuser totalmembers)) {
+        $clan{$_} = $args->{$_};
+    }	
+    $clan{onlineuser} = $args->{onlineuser};
+    $clan{totalmembers} = $args->{totalmembers};
+}
+
+sub clan_info {
+    my ($self, $args) = @_;
+    foreach (qw(clan_ID clan_name clan_master clan_map alliance_count antagonist_count)) {
+        $clan{$_} = $args->{$_};
+    }
+
+	$clan{clan_name} = bytesToString($args->{clan_name});
+	$clan{clan_master} = bytesToString($args->{clan_master});
+	$clan{clan_map} = bytesToString($args->{clan_map});
+	
+	my $i = 0;
+	my $count = 0;
+	$clan{ally_names} = "";
+	$clan{antagonist_names} = "";
+
+	if($args->{alliance_count} > 0) {
+		for ($count; $count < $args->{alliance_count}; $count++) {
+			$clan{ally_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
+			$i += 24;
+		}
+	}
+
+	$count = 0;
+	if($args->{antagonist_count} > 0) {
+		for ($count; $count < $args->{antagonist_count}; $count++) {
+			$clan{antagonist_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
+			$i += 24;
+		}
+	}
+}
+
+sub clan_chat {
+	my ($self, $args) = @_;
+	my ($chatMsgUser, $chatMsg); # Type: String
+
+	return unless changeToInGameState();
+	$chatMsgUser = bytesToString($args->{charname});
+	$chatMsg = bytesToString($args->{message});
+
+	chatLog("clan", "$chatMsgUser : $chatMsg\n") if ($config{'logClanChat'});
+	# Translation Comment: Guild Chat
+	message TF("[Clan]%s %s\n", $chatMsgUser, $chatMsg), "clanchat";
+	# Only queue this if it's a real chat message
+	ChatQueue::add('clan', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+
+	Plugins::callHook('packet_clanMsg', {
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
+	});
+}
+
+sub clan_leave {
+	my ($self, $args) = @_;
+	
+	if($clan{clan_name}) {
+		message TF("[Clan] You leaved $clan{clan_name}");
+		undef %clan;
+	}
+}
+
 1;
