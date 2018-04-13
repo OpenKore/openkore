@@ -5257,4 +5257,33 @@ sub clan_leave {
 	}
 }
 
+sub banking_status {
+	my ($self, $args) = @_;
+	foreach (qw(zeny reason)) {
+        $bank{$_} = $args->{$_};
+   }		
+    $bank{zeny} = $args->{zeny};
+	$bank{reason} = $args->{zeny};
+	my $msg = center(T("[Bank Storage]"), 60, '-') ."\n" .
+		TF("In Bank : (%d) Zeny \n" .
+			"On Hand : (%d) Zeny \n",				
+		$bank{zeny}, $char->{zeny});
+		$msg .= ('-'x60) . "\n";
+		message $msg, "info";
+
+		
+}
+
+sub banking_status_withdraw {
+    my ($self, $args) = @_;
+
+	message TF("[BankStatus:Withdraw]Balance in the bank: [%d] Zeny | Balance in ID: [%d] Zeny\n", $args->{inbank}, $char->{zeny}), "info";
+}
+
+sub banking_status_deposit {
+    my ($self, $args) = @_;
+
+	message TF("[BankStatus:Deposit]Balance in the bank: [%d] Zeny | Balance in ID: [%d] Zeny\n", $args->{inbank}, $char->{zeny}), "info";
+}
+
 1;
