@@ -2551,6 +2551,8 @@ sub sendMessage_send {
 		$sender->sendPrivateMsg($user, $msg);
 	} elsif ($type eq "k") {
 		$sender->injectMessage($msg);
+	} elsif ($type eq "cln") {
+		$sender->sendClanChat($msg);
 	}
 }
 
