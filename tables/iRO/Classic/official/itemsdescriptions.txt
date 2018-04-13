@@ -71317,3 +71317,17 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20014#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gangster Scarf!
+100 Fabric
+100 Red Herbs
+50 Burning Hairs
+1 Red Gemstone
+1 Gangster Scarf Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#

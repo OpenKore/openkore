@@ -99,7 +99,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x69896D4C, 0x51DF2156, 0x57DB3FC0
+sendCryptKeys 0x74491C7A, 0x415A2C8A, 0x0217393B
 
 [International - iRO: Sakray]
 # http://playragnarok.com
