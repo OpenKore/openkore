@@ -6875,9 +6875,10 @@ sub cmdClan {
 		return;
 	} elsif(!$clan{clan_name}) {
 		error TF("You must be in a Real Clan to use command '%s'\n", shift);
+		return;
 	}
 
-	if ($args[0] eq "info") {
+	if ($args[0] eq "info" || $args[0] eq "") {
 		my $msg = center(T(" Clan Information "), 40, '-') ."\n" .
 			TF("ClanName : %s\n" .
 				"Clan Master Name : %s\n" .
