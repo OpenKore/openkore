@@ -242,7 +242,7 @@ sub initHandlers {
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
 	clan				=> \&cmdClan,
-
+	bank				=> \&cmdBank,
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
 	analysis			=> \&cmdExchangeItem,
@@ -6891,6 +6891,28 @@ sub cmdClan {
 		$clan{clan_name}, $clan{clan_master}, $clan{onlineuser}, $clan{totalmembers}, $clan{clan_map}, $clan{alliance_count}, $clan{ally_names}, $clan{antagonist_count}, $clan{antagonist_names});
 		$msg .= ('-'x40) . "\n";
 		message $msg, "info";
+	}
+}
+
+
+sub cmdBank {
+    my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	if ($args[0] eq "") {
+		message T("Enter command to use Bank System: bank <check || withdraw [zeny] || deposit [zeny]>\n"), "info";
+	} elsif ($args[0] eq "check") {
+		$messageSender->sendbankcheck($accountID);
+		return;
+	} elsif ($args[0] eq "withdraw") {
+		$messageSender->sendbankwithdraw($accountID, $args[1]);
+		return;
+	} elsif ($args[0] eq "deposit") {
+		$messageSender->sendbankdeposit($accountID, $args[1]);
+		return;
 	}
 }
 
