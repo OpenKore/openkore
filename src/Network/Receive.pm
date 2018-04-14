@@ -5277,13 +5277,13 @@ sub banking_status {
 sub banking_status_withdraw {
     my ($self, $args) = @_;
 
-	message TF("[BankStatus:Withdraw]Balance in the bank: [%d] Zeny | Balance in ID: [%d] Zeny\n", $args->{inbank}, $char->{zeny}), "info";
+	message TF("[BankStatus:Withdraw]Balance in the bank: [%d] Zeny", $args->{inbank}), "info";
 }
 
 sub banking_status_deposit {
     my ($self, $args) = @_;
 
-	message TF("[BankStatus:Deposit]Balance in the bank: [%d] Zeny | Balance in ID: [%d] Zeny\n", $args->{inbank}, $char->{zeny}), "info";
+	message TF("[BankStatus:Deposit]Balance in the bank: [%d] Zeny", $args->{inbank}), "info";
 }
 
 1;

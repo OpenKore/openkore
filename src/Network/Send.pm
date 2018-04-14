@@ -1523,7 +1523,7 @@ sub sendbankdeposit {
 	$self->sendToServer($self->reconstruct({
 		switch => 'banking_deposit',
 		charID => $accountID,
-		zenywithdraw => $zenyamount,
+		zenydeposit => $zenyamount,
 	}));
 }
 
