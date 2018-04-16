@@ -347,6 +347,7 @@ sub new {
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'043E' => ['skill_post_delaylist', 'v a*', [qw(len msg)]],
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
@@ -375,6 +376,7 @@ sub new {
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0985' => ['skill_post_delaylist', 'v a*', [qw(len msg)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
