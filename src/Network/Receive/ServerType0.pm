@@ -546,6 +546,7 @@ sub new {
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0985' => ['skill_post_delaylist2', 'v a*', [qw(packet_len msg)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
@@ -5341,6 +5342,18 @@ sub skill_post_delaylist {
 		my $skillName = (new Skill(idn => $ID))->getName;
 		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
 		$char->setStatus($skillName.$status, 1, $time);
+	}
+}
+
+sub skill_post_delaylist2 {
+	my ($self, $args) = @_;
+	my $unpack = "v V2";
+	for (my $i = 0; $i < ($args->{packet_len} - 4); $i += 10) {
+		my ($skill, $totalDelay, $remainDelay) = unpack($unpack, substr($args->{msg}, $i));
+		my $skillName = (new Skill(idn => $skill))->getName;
+		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
+
+		$char->setStatus($skillName." ".$status, 1, $remainDelay);
 	}
 }
 
