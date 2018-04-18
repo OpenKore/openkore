@@ -117,7 +117,7 @@ CG_HERMODE#Bastão de Hermod#
 CG_TAROTCARD#Destino nas Cartas#
 CR_ACIDDEMONSTRATION#Bomba Ácida#
 CR_CULTIVATION#Cultivar Planta#
-TK_MISSION#Missão Tae Kwon Dô#
+TK_MISSION#Missão Taekwon#
 SL_HIGH#Espírito dos Transcendentais#
 KN_ONEHAND#Rapidez com Uma Mão#
 AL_HOLYWATER#Aqua Benedicta#
@@ -148,7 +148,7 @@ GC_CROSSRIPPERSLASHER#Castigo de Loki#
 GS_SNAKEEYE#Olhos de Serpente#
 AB_CLEMENTIA#Clementia#
 SM_SWORD#Perícia com Espada#
-AL_CRUCIS#Signum Crusis#
+AL_CRUCIS#Signum Crucis#
 GS_TRACKING#Rastrear o Alvo#
 GS_DISARM#Desarmar#
 GS_PIERCINGSHOT#Ferir Alvo#
@@ -298,7 +298,7 @@ NPC_PULSESTRIKE#Golpe Avassalador#
 NPC_HELLJUDGEMENT#Julgamento Infernal#
 NPC_WIDESILENCE#Som do Silêncio#
 NPC_WIDEFREEZE#Beijo do Inverno#
-NPC_WIDEBLEEDING#Sangramento#
+NPC_WIDEBLEEDING#Sangria#
 NPC_WIDESTONE#Olhar da Medusa#
 NPC_WIDECONFUSE#Toque de Insanidade#
 NPC_WIDESLEEP#Sussurro de Morfeu#
@@ -379,7 +379,7 @@ SA_ELEMENTWIND#Mudança Elemental - Vento#
 SM_RECOVERY#Aumentar Recuperação de HP#
 KN_CAVALIERMASTERY#Perícia em Montaria#
 AB_HIGHNESSHEAL#Curatio#
-AB_DUPLELIGHT_MELEE#Gemini Lumen#
+AB_DUPLELIGHT_MELEE#Magni Lumen#
 MER_BENEDICTION#Bendição#
 PR_MACEMASTERY#Perícia com Maça#
 EL_WATER_SCREEN#Treliça de Água#
@@ -467,7 +467,7 @@ HLIF_BRAIN#Cirurgia Cerebral#
 HFLI_SPEED#Vôo Acelerado#
 MH_NEEDLE_OF_PARALYZE#Ponto de Paralisia#
 MH_STYLE_CHANGE#Estilo de Luta#
-MH_ANGRIFFS_MODUS#Raiva Iluminada: Modo de batalha#
+MH_ANGRIFFS_MODUS#Raiva Iluminada#
 MH_VOLCANIC_ASH#Cinzas Vulcânicas#
 BS_IRON#Trabalhar Ferro#
 GD_GLORYGUILD#Gloria do Clã#
@@ -538,7 +538,7 @@ SM_ENDURE#Vigor#
 HT_STEELCROW#Garras de Aço#
 AB_LAUDARAMUS#Lauda Ramus#
 AB_CLEARANCE#Gênese#
-AB_DUPLELIGHT_MAGIC#Gemini Lumen#
+AB_DUPLELIGHT_MAGIC#Modi Lumen#
 HT_BLITZBEAT#Ataque Aéreo#
 HT_DETECTING#Alerta#
 HT_SPRINGTRAP#Desativar Armadilha#
@@ -855,7 +855,7 @@ SR_GENTLETOUCH_CURE#Chakra da Cura#
 SA_REVERSEORCISH#Transformação Orc#
 WM_LULLABY_DEEPSLEEP#Melodia de Morfeu#
 SA_DEATH#Extermínio#
-WM_DEADHILLHERE#Requiem de Orfeu#
+WM_DEADHILLHERE#Réquiem de Orfeu#
 SA_FORTUNE#Toque de Midas#
 WM_SEVERE_RAINSTORM#Temporal de Mil Flechas#
 SA_TAMINGMONSTER#Hipnose#
@@ -951,7 +951,7 @@ NC_VULCANARM#Metralhadora#
 RA_ICEBOUNDTRAP#Armadilha Glacial#
 RA_FIRINGTRAP#Armadilha Incendiária#
 RA_VERDURETRAP#Armadilha Esmeralda#
-RA_COBALTTRAP#Armadilha Cobalt#
+RA_COBALTTRAP#Armadilha Cobalto#
 RA_SENSITIVEKEEN#Faro Aguçado#
 RA_TOOTHOFWUG#Presas Afiadas#
 RA_WUGDASH#Assalto de Worg#
@@ -990,14 +990,14 @@ HP_ASSUMPTIO#Assumptio#
 GC_HALLUCINATIONWALK#Passos da Ilusão#
 HP_BASILICA#Basílica#
 GC_VENOMPRESSURE#Intoxicar#
-HP_MEDITATIO#Meditação#
+HP_MEDITATIO#Meditatio#
 GC_WEAPONCRUSH#Estilhaçar Arma#
 HW_SOULDRAIN#Dreno de Alma#
 GC_POISONINGWEAPON#Aplicar Toxina#
 HW_MAGICCRASHER#Esmagamento Mágico#
 GC_DARKILLUSION#Passo Sombrio#
 HW_MAGICPOWER#Amplificação Mística#
-RK_ABUNDANCE#Amplificação Mística#
+RK_ABUNDANCE#Regeneração Espiritual#
 PA_PRESSURE#Gloria Domini#
 AL_DEMONBANE#Flagelo do Mal#
 PA_SACRIFICE#Sacrifício do Mártir#
@@ -1015,7 +1015,7 @@ HVAN_INSTRUCT#Mudança de Planos#
 PF_SOULCHANGE#Exalar Alma#
 MH_STAHL_HORN#Impacto Preciso#
 PF_SOULBURN#Sifão de Alma#
-NPC_MAGICMIRROR#Espelho Mágico#
+NPC_MAGICMIRROR#Reflexão Mágica#
 ASC_KATAR#Perícia com Katar Avançada#
 DA_DREAM#Black Gemstone Dream#
 DA_SPACE#Dark Twilight#
