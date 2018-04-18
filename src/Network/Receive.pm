@@ -1583,7 +1583,7 @@ sub skill_post_delaylist {
 	my $offset = ($args->{switch} eq '043E') ? 6 : 10;
 	my $unpack = ($args->{switch} eq '043E') ? "v V" : "v V2";
 	
-	for (my $i = 0; $i < length($args->{len}); $i += $offset) {
+	for (my $i = 0; $i < length($args->{msg}); $i += $offset) {
 		my (@delayArgs) = unpack($unpack, substr($args->{msg}, $i));
 		my $skillName = Skill->new(idn => $delayArgs[0])->getName;
 		my $statusName = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
