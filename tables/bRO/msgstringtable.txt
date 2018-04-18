@@ -1738,13 +1738,13 @@ Valor máximo: %s Zeny#
 Loja de Compras#
 Lista de Vendas#
 Número total de itens selecionados %d#
-unable to sell due to exceeding limited price of purchase stall#
+Venda cancelada, pois o valor total ultrapassa o limite máximo estipulado pelo comprador#
 Não pode abrir a Loja de Compras#
 Você excedeu o limite de quantidade de itens#
 Você adquiriu todos os itens no limite do valor#
 Você adquiriu todos os itens#
 Impossível realizar a troca devido a dinheiro insuficiente#
-Você vendeu $s $d itens no valor de $dz#
+Você vendeu %s %dun no valor de %dz#
 $s item não foi vendido devido a excesso de itens desejados#
 Não há Elemental#
 This is restriction server unite war#
@@ -2425,7 +2425,7 @@ the maximum access numbers are exceeded, you cannot enter the server.#
 Fail to access to the server (%d)#
 Exceeded login permit time#
 the authentication is filaed from auth server while login.#
-You cannot use space in the guild name.#
+Você não pode usar espaço no nome da Guilda.#
 Hello players!#
 You time will be finished %d %d %d %d:%d.#
 You have enough time, please play as much as you can!#
