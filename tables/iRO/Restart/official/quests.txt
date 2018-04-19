@@ -22421,3 +22421,43 @@ Hunt the monster listed#
 63097#Hunting Board#SG_FEEL#QUE_NOIMAGE#
 Hunt the monster listed#
 #
+
+63098#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63099#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63100#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63101#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63102#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63103#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63104#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63105#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63106#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63107#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
