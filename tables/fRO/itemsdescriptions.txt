@@ -16836,18 +16836,6 @@ HP and SP^000000.
 
 Weight : ^77777715^000000
 #
-594#
-A pancake in which
-sour cream is one of
-the main ingredients.
-Biting into just once
-will make your eyes
-water. ^000088Cures all
-abnormal statuses^000000,
-^000088recovers HP and SP^000000.
-
-Weight : ^77777715^000000
-#
 595#
 A pancake made
 with mushrooms that
@@ -20294,16 +20282,12 @@ HP and SP^000000.
 Weight : ^77777715^000000
 #
 594#
-A pancake in which
-sour cream is one of
-the main ingredients.
-Biting into just once
-will make your eyes
-water. ^000088Cures all
-abnormal statuses^000000,
-^000088recovers HP and SP^000000.
-
-Weight : ^77777715^000000
+Ein Pfannkuchen, bei dem Sauerrahm einer der Hauptbestandteile ist.
+Das nur einmalige Hineinbeißen lässt einem die Augen tränen.
+^000088Heilt sämtliche negative Statuseffekte.^000000
+^000088Stellt HP und SP wieder her.^000000
+^ffffff_^000000
+Gewicht: ^77777715^000000
 #
 595#
 A pancake made
@@ -23048,63 +23032,6 @@ Location: ^777777Upper^000000    Weight : ^77777720^000000
 Job : ^777777All^000000
 
 Weight : ^7777771^000000
-#
-591#
-A pancake topped
-with caviar. Average
-people have trouble
-telling the difference
-between fine caviar
-and common frog
-spawn eggs. ^000088Cures
-all abnormal statuses^000000,
-^000088recovers HP and SP^000000.
-
-Weight : ^77777715^000000
-#
-592#
-A pancake topped
-with strawberry jam.
-This looks much more
-delicious than plain
-strawberries alone.
-^000088Cures all abnormal
-statuses^000000, ^000088recovers
-HP and SP^000000.
-
-Weight : ^77777715^000000
-#
-593#
-A very sweet pancake
-topped with honey.
-^000088Cures all abnormal
-statuses^000000, ^000088recovers
-HP and SP^000000.
-
-Weight : ^77777715^000000
-#
-594#
-A pancake in which
-sour cream is one of
-the main ingredients.
-Biting into just once
-will make your eyes
-water. ^000088Cures all
-abnormal statuses^000000,
-^000088recovers HP and SP^000000.
-
-Weight : ^77777715^000000
-#
-595#
-A pancake made
-with mushrooms that
-has a light taste that
-everyone seems to
-like. ^000088Cures all
-abnormal statuses^000088,
-^000088recovers HP and SP^000000.
-
-Weight : ^77777715^000000
 #
 // ----- E)8.=:86=: @L:%F. ;jE8 <v?0 --------
 7908#
@@ -59156,11 +59083,11 @@ Weight: ^7777771^000000
 #
 
 22508#
-^ff0000Cannot be tradable with other accounts.^000000
-Emblem only for Paradise team member. it is made to be easy to carry.
-When using this by upgrading the function, it is possible to go back to the town.
-Reuse waiting time: 120min
-Weight : ^7777770^000000
+^ff0000Kann nicht mit anderen Spielern gehandelt werden.^000000
+Dieses Abzeichen ist für 'Eden Group'-Mitglieder und leicht zu tragen.
+Kann seinen Träger ins Eden Group Office transportieren.
+Kann alle 120 Minuten benutzt werden.
+Gewicht: ^7777770^000000
 #
 6549#
 ^ff0000Cannot be tradable with other accounts.^000000
@@ -59169,42 +59096,41 @@ Weight : ^7777770^000000
 #
 
 2473#
-Boots that are provided only for members of the Eden Group.
-These are designed to fit comfortably throughout long-walks.
-HP recovery   +28%
-SP recovery +12%
+Stiefel, die nur Mitglieder der Edengruppe bekommen.
+Sie sind auf langen Märschen besonders bequem.
+HP-Regeneration +28 %
+SP-Regeneration +12 %
 Vit +1, Agi +1
-Cannot be upgraded.
-Class : ^777777Footwear^000000
-Defense : ^77777720^000000
-Weight : ^7777770^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All Jobs^000000
+Kann nicht aufgerüstet werden.
+Gegenstandsart: ^777777Footwear^000000
+Verteidigung: ^77777720^000000
+Gewicht: ^7777770^000000
+Benötigtes Level: ^77777760^000000
+Jobs: ^777777Alle^000000
 #
 2571#
-A manteau which is only for Eden Group members.
-It is designed to flatter anyone's backside.
-Increases tolerance to neutral property by 10%.
+Dieser Mantel ist nur für Mitglieder der Eden Group und lässt seinen Träger sehr gut aussehen.
+Erhöht die Toleranz gegenüber neutraler Eigenschaft um 10 %.
 FLEE +12
-Cannot be upgraded.
-Class : ^777777Garment^000000
-Defense : ^77777718^000000
-Weight : ^7777770^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All Jobs^000000
+Kann nicht aufgerüstet werden.
+Gegenstandsart: ^777777Garment^000000
+Verteidigung: ^77777718^000000
+Gewicht: ^7777770^000000
+Benötigtes Level: ^77777760^000000
+Jobs: ^777777Alle^000000
 #
 15031#
-Armor that is only provided for members of the Eden Group.
-There are various sizes so tall people don't have to worry about it.
-MaxHP +500, MaxSP  +50,
+Rüstung, die nur Mitglieder der Eden Group bekommen.
+Es gibt sie in verschiedenen Größen, auch für große Personen geeignet.
+MaxHP +500, MaxSP +50
 Str +1, Int +1, Dex +1
 Mdef +5.
-Cannot be upgraded.
-Class : ^777777Armor^000000
-Defense : ^77777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All Jobs^000000
+Kann nicht aufgerüstet werden.
+Gegenstandsart: ^777777Rüstung^000000
+Verteidigung: ^77777770^000000
+Gewicht: ^7777770^000000
+Benötigtes Level: ^77777760^000000
+Jobs: ^777777Alle^000000
 #
 18514#
 A hat that is provided only for members of the Eden Group.
