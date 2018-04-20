@@ -65603,6 +65603,22 @@ Costume Galanthus Guard
 Costume Chilly Breath
 Weight : ^7777771^000000
 #
+17476#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following,
+Arch Bishop Ring
+Magician's Glove
+Archangel Wing
+Temporal Manteau
+Skin of Lindwyrm
+Safe to 10 Certificate x 2
+Wing Headphone
+Bear Balloon
+Safe to 7 Chance Box x 4
+Blacksmith Blessing x 6
+Battle Manual X3 x 6
+#
 17480#
 This item cannot be traded, but can be saved and opened at your leisure!
 ^ff0000This box is account bound.^000000
@@ -86236,79 +86252,79 @@ Class: ^808080Accessory^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Atk + 5%
+Weapon Atk + 5%
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force1^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force2^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force3^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 #
 28506#
