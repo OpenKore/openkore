@@ -5288,11 +5288,11 @@ sub banking_status_deposit {
 	if ($args->{reason} == 0x0) {
 		message TF("[BankStatus:Deposit] : Success | [Bank Storage]: %s Zeny.\n", $args->{inbank}), "success";
 	} elsif ($args->{reason} == 0x1) {
-		error TF("[BankStatus:Withdraw] : Error (Try it again) | [Bank Storage]: %s Zeny.\n", $args->{inbank});		
+		error TF("[BankStatus:Deposit] : Error (Try it again) | [Bank Storage]: %s Zeny.\n", $args->{inbank});		
 	} elsif ($args->{reason} == 0x2) {
-		error TF("[BankStatus:Withdraw] : NO MONEY FOR Deposit | [Bank Storage]: %s Zeny.\n", $args->{inbank});
+		error TF("[BankStatus:Deposit] : NO MONEY FOR Deposit | [Bank Storage]: %s Zeny.\n", $args->{inbank});
 	} elsif ($args->{reason} == 0x3) {
-		error TF("[BankStatus:Withdraw] : OVERFLOW | [Bank Storage]: %s Zeny.\n", $args->{inbank});
+		error TF("[BankStatus:Deposit] : OVERFLOW | [Bank Storage]: %s Zeny.\n", $args->{inbank});
 	}
 }
 
