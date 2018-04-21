@@ -25,9 +25,4 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-=pod
-//2007-05-07aSakexe
-0x01fd,15,repairitem,2
-=cut
-
 1;

@@ -25,10 +25,4 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-=pod
-//2005-11-07aSakexe
-0x024e,6,auctioncancel,0
-0x0251,34,auctionsearch,0
-=cut
-
 1;
