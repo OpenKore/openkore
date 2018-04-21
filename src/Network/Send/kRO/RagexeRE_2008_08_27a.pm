@@ -18,7 +18,7 @@
 package Network::Send::kRO::RagexeRE_2008_08_27a;
 
 use strict;
-use base qw(Network::Send::kRO::Sakexe_2009_04_08a); #looks weird, inheriting from a newer file... but this is what eA has and we want to be able to play on eA servers
+use base qw(Network::Send::kRO::RagexeRE_0);
 
 use Log qw(debug);
 
