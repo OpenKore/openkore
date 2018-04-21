@@ -24,9 +24,7 @@ use Globals qw(%config);
 use I18N qw(bytesToString);
 use Log qw(message);
 use Misc qw(stripLanguageCode chatLog);
-
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
+use Translation qw(TF);
 
 sub new {
 	my ($class) = @_;
