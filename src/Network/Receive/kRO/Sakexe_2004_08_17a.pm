@@ -22,24 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2004_08_16a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-		
-	my %packets = (
-		# 0x020f is sent packet
-		'0210' => ['pvppoint_result', 'a4 a4 V3', [qw(ID guildID win_point lose_point point)]], # 22
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2004-08-17aSakexe
-0x020f,10
-0x0210,22
-=cut
 
 1;

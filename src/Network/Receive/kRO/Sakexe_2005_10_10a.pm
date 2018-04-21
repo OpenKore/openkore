@@ -22,24 +22,8 @@ use base qw(Network::Receive::kRO::Sakexe_2005_09_12b);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
-		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
-=pod
-//2005-10-10aSakexe
-0x020e,32
-0x025a,-1
-0x025b,6,cooking,0
-=cut
 
 1;
