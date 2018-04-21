@@ -24,7 +24,7 @@ use I18N qw(bytesToString);
 use Log qw(error message);
 use Misc qw(inventoryItemRemoved itemNameSimple);
 use Utils::DataStructures qw(binAdd);
-use Translation;
+use Translation qw(T TF);
 
 sub new {
 	my ($class) = @_;
