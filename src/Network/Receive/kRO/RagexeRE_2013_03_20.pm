@@ -17,8 +17,8 @@ package Network::Receive::kRO::RagexeRE_2013_03_20;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2012_06_18a);
 use Globals qw (%ai_v $char %charSvrSet %equipSlot_lut %equipSlot_rlut %equipTypes_lut $messageSender $net %timeout);
-use Log qw (message warning);
-use Translation;
+use Log qw (message);
+use Translation qw(T TF);
 
 sub new {
 	my ($class) = @_;
