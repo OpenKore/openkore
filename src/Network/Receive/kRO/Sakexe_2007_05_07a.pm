@@ -20,8 +20,6 @@ package Network::Receive::kRO::Sakexe_2007_05_07a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2007_02_12a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
