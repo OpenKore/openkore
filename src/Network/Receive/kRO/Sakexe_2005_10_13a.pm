@@ -20,8 +20,6 @@ package Network::Receive::kRO::Sakexe_2005_10_13a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_10_10a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -33,7 +31,6 @@ sub new {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
-	return $self;
 	return $self;
 }
 
