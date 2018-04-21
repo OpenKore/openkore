@@ -1718,7 +1718,7 @@ Comandos de Grupo#
 Não é possível se aliar a um Clã #
 Não é possível se aliar a um Clã adversário#
 Não é possível adicionar amigos em mapas de Castelo#
-Abre loja de rua#
+Abre Loja de Compras#
 Preço#
 Zeny#
 Limite de Compra#
@@ -1738,13 +1738,13 @@ Valor máximo: %s Zeny#
 Loja de Compras#
 Lista de Vendas#
 Número total de itens selecionados %d#
-unable to sell due to exceeding limited price of purchase stall#
+Venda cancelada, pois o valor total ultrapassa o limite máximo estipulado pelo comprador#
 Não pode abrir a Loja de Compras#
 Você excedeu o limite de quantidade de itens#
 Você adquiriu todos os itens no limite do valor#
 Você adquiriu todos os itens#
 Impossível realizar a troca devido a dinheiro insuficiente#
-Você vendeu $s $d itens no valor de $dz#
+Você vendeu %s %dun no valor de %dz#
 $s item não foi vendido devido a excesso de itens desejados#
 Não há Elemental#
 This is restriction server unite war#
@@ -1803,7 +1803,7 @@ Insira o prefiro ou sufixo da carta#
 Buscas restantes : %d#
 Nenhuma Loja encontrada#
 Fora do valor#
-Equipamentos#
+Equip#
 Visuais#
 minutos#
 segundos#
@@ -2048,8 +2048,8 @@ Please write the party ad in memo.#
 Only party leader can add party advertisement.#
 It is already added party advertisment.#
 Content#
-equip#
-ordem#
+eqp#
+fav#
 Bloquear Drop#
 Notice to find part members#
 Organize a party#
@@ -2072,13 +2072,13 @@ Convite de grupo está disponível apenas para o líder.#
 Digite o nome do item que você está procurando :#
 You should put the character name.#
 You should put the party name.#
-Guild helper#
-You have no guild joined.#
-Organize a guild#
-Guild name you are creating#
-Guild creation Help word#
-What is guild system#
-You should type guild name.#
+Assistente de Clã.#
+Você não tem clã.#
+Criar Clã.#
+Digite o nome do clã.#
+Dicas de criação de clã.#
+O que é clã.#
+Digite um nome para o seu clã.#
 You have rejected from the party you applied.#
 Select the service.#
 Location that impossible to escape.#
@@ -2086,8 +2086,8 @@ Replay File List#
 File info#
 File List#
 %s item is not possible to trade.#
-Dismiss the guild#
-The dismissed guild name#
+Excluir Clã.#
+Digite o nome do seu clã.#
 It is not logged in or unexist character.#
 Falcon summoning has failed.#
 %d%% ( Premium %d%% + %s server %d%% )#
@@ -2353,17 +2353,17 @@ Macro#
 Webbrowser#
 Navigation#
 UAEURL#
-Clan info#
-Clan level#
-Clan name#
-Clan mark#
-Ally clan#
-Hostile clan#
-Send to Clan#
-Master name#
-The number of members#
-Managed territory#
-Clan chat message display#
+Clã Real#
+Nv. do Clã #
+Nome do Clã #
+Emblema#
+Alianças#
+Inimigos#
+Enviar Clã Real #
+Líder#
+Membros#
+Base#
+Mensagem de Clã Real#
 Move to charging page.#
 https://gfb.gameflier.com/Billing/ingame/index_new.asp?#
 Create the character#
@@ -2417,7 +2417,7 @@ $$all         : All list showing (you can divide the type of output in Type.)#
 $$lv30       : Its level monster(Numbers can be changable)#
 $$lv20~30  : Its Level Monster (Numbers can be changable)#
 1 vs 1#
-Visuais/Sombrios#
+Especial#
 the character job info is weird in slot %d. Please contact to the costomer service. ErrorCode(%d)#
 (%s) %d / %d#
 %s-%s(%d/%d)#
@@ -2425,7 +2425,7 @@ the maximum access numbers are exceeded, you cannot enter the server.#
 Fail to access to the server (%d)#
 Exceeded login permit time#
 the authentication is filaed from auth server while login.#
-You cannot use space in the guild name.#
+Você não pode usar espaço no nome da Guilda.#
 Hello players!#
 You time will be finished %d %d %d %d:%d.#
 You have enough time, please play as much as you can!#
@@ -2558,7 +2558,7 @@ Rifle type should be equiped.#
 Revolver type should be equiped.#
 Saint type bullet should be equiped.#
 Histórico da Venda#
-Purchased item list#
+Histórico da Compra#
 Grenade Launcher type should be equiped.#
 the skill effect such as [Hit Barrel],[Last Stand],[Platinum Altar] cannot be duplicated to use.#
 This skill cannot be used in this map.#
@@ -2603,7 +2603,7 @@ Please fill out 1 to %d numerical value for level.#
 Inventory clearance needed#
 Daily mail sending limit has been exceeded.#
 You cannot open the mail#
-You currently belong to a clan.#
+Você já pertence a um Clã.#
 Gold PC cafe point information#
 Taking off the pet accessory allows you to evolve the pet.#
 In %d minutes#
@@ -2840,7 +2840,7 @@ You can level up the skill from the base Lv. %d.#
 You cannot use the special character as a name.#
 Not enough MHP to use the skill.#
 Not enough MSP to use the skill.#
-Item compare#
+Comparar#
 Bloquear Inventário#
 Screenshot has NOT attached.#
 Twitter#

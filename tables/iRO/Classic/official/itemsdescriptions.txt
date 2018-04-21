@@ -70156,8 +70156,8 @@ Character Bound
 19921#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gemini Crown!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamonds
+25 2carat Diamonds
+125 3carat Diamonds
 500 Blue Gemstones
 1000 Zeny
 1 Gemini Crown Certificate
@@ -70312,8 +70312,8 @@ Character Bound
 19931#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Libra Crown!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamond
+25 2carat Diamonds
+125 3carat Diamond
 10 Opals
 1000 Zeny
 1 Libra Crown Certificate
@@ -70509,8 +70509,8 @@ Character Bound
 19940#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Virgo Crown!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamond
+25 2carat Diamonds
+125 3carat Diamond
 25 Sapphires
 1000 Zeny
 1 Virgo Crown Certificate
@@ -70599,8 +70599,8 @@ Character Bound
 19946#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Libra Diadem!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamond
+25 2carat Diamonds
+125 3carat Diamond
 10 Opals
 1000 Zeny
 1 Libra Diadem Certificate
@@ -70689,8 +70689,8 @@ Weight: 0
 19950#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Leo Crown!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamonds
+25 2carat Diamonds
+125 3carat Diamonds
 15 Peridot
 1000 Zeny
 1 Leo Crown Certificate
@@ -70799,8 +70799,8 @@ Character Bound
 19973#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sagittarius Crown!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamond
+25 2carat Diamonds
+125 3carat Diamond
 50 Zircon
 1 Archer Skeleton Card
 1000 Zeny
@@ -70906,8 +70906,8 @@ Character Bound
 19981#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Taurus Diadem!
 5 Gold
-50 2carat Diamonds
-250 3carat Diamond
+25 2carat Diamonds
+125 3carat Diamond
 1 Gemstone
 100 Emeralds
 1000 Zeny
@@ -71036,8 +71036,8 @@ Character Bound
 19990#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aries Diadem!
 5 Gold
-100 2carat Diamonds
-300 3carat Diamonds
+50 2carat Diamonds
+150 3carat Diamonds
 5 1carat Diamonds
 1 Aries Diadem Certificate
 Shadowy rumors say the following about this certificate:
@@ -71132,8 +71132,8 @@ Character Bound
 19997#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Scorpio Diadem!
 5 Gold
-100 2carat Diamonds
-300 3carat Diamonds
+50 2carat Diamonds
+150 3carat Diamonds
 5 Topaz
 1 Scorpio Diadem Certificate
 Shadowy rumors say the following about this certificate:
@@ -71219,8 +71219,8 @@ Character Bound
 20006#
 Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Cancer Crown!
 5 Gold
-50 2carat Diamonds
-200 3carat Diamonds
+25 2carat Diamonds
+125 3carat Diamonds
 200 Rubys
 1 Cancer Crown Certificate
 Shadowy rumors say the following about this certificate:
@@ -71302,4 +71302,47 @@ Location : ^777777Upper^000000
 Weight : ^77777720^000000
 Level Requirement : ^77777720^000000
 Job : ^777777All Job except Novice^000000
+#
+
+20013#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aquarius Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+25 Garnets
+1 Aquarius Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20014#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gangster Scarf!
+100 Fabric
+100 Red Herbs
+50 Burning Hairs
+1 Red Gemstone
+1 Gangster Scarf Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20015#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gelato Hat!
+300 Ice Cubics
+200 Strawberrys
+100 Solid Peaches
+5 Sweet Milk
+1 Level 5 Frost Diver scroll
+1 Gelato Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
 #

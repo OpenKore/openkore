@@ -74,7 +74,7 @@ sub new {
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
-		'0130' => ['send_entering_vending', 'V', [qw(accountID)]],
+		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
@@ -107,7 +107,7 @@ sub new {
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
-		'02BA' => ['send_shortcut_key_change', 'v c V v', [qw(index isSkill ID count)]],
+		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
@@ -151,6 +151,7 @@ sub new {
 		'08C9' => ['request_cashitems'],#2
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
+		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0998' => ['send_equip', 'a2 V', [qw(ID type)]],#8
 		'09A1' => ['sync_received_characters'],

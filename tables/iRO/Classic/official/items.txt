@@ -6949,3 +6949,6 @@
 20009#Sunglasses_Certificate#
 20010#Moon_Rabbit_Hat_Certificate#
 18693#Sleeping_Kitty_Cat#
+20013#Aquarius_Crown_Certificate#
+20014#Gangster_Scarf_Certificate#
+20015#Gelato_Hat_Certificate#

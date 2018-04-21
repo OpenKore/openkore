@@ -22,9 +22,16 @@ Peso: ^7777771^000000
 #
 //Pacote
 7550#
-Ticket promocional permite a entrada nos Mapas Especiais somente para personagens com nível de base maior que 70. Para acessá-los, fale com o NPC Nanaru, localizado em Prontera (162, 326).
-Este ticket desaparecerá durante a manutenção de 03/10/2017. Aproveite e divirta-se!
+Ingresso especial que permite a entrada nos Mapas Especiais somente para personagens com nível de base maior que 70.
+--------------------------
+^CD3278NPC:^000000 Nanaru
+^CD3278Coord.:^000000 prontera 162, 326
+<NAVI>[Navegar]<INFO>prontera,162,326,0,000,0</INFO></NAVI>
+--------------------------
+Este ticket desaparecerá durante a manutenção de 15/05/2018. Aproveite e divirta-se!
+--------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+--------------------------
 Peso: ^7777770^000000
 #
 //Ticket dos Gatos
@@ -5556,12 +5563,12 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2619#
 Protetor de dedos para Arqueiros. Faz com que esticar a corda do arco seja mais fácil.
-^0000FFAumenta o dano causado por Arcos em 3%.^000000
-Classe: ^777777Acessório^000000
+^0000ffDano físico a distância +3%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
+Classes: ^777777Arqueiros e evoluções^000000
 #
 2620#
 Anel exclusivo para Gatunos.
@@ -6529,10 +6536,9 @@ Combina com: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4094#
-Dano a distância +10%.
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+^0000ffDano físico a distância +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4095#
@@ -11864,10 +11870,9 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4252#
-^0000ffRecebe 5% a menos de dano de Ataques Físicos a Distância.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+^0000ffResistência a danos físicos a distância +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4253#
@@ -13680,7 +13685,7 @@ Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Gatuno e evoluções, Ninja^000000
 #
 2655#
-Uma pesada bola de aço presa a uma algema, usada para impedir a fuga de prisioneiros em tempos antigos. Entretanto, prisioneiros equipados com esta bola conseguiam usá-las como uma arma.
+Uma pesada bola de aço presa a uma algema, usada para impedir a fuga de prisioneiros. Entretanto, prisioneiros equipados com esta bola conseguiam usá-las como uma arma.
 ^FF6347Conjunto^000000
 ^FF6347[Grilhões]^000000
 ^0000ffATQ +50.^000000
@@ -13691,7 +13696,7 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^777777400^000000
 Nível necessário: ^7777771^000000
-Classes: ^777777Todas^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 2656#
 Um misterioso e antigo artefato que pode aumentar muito o poder defensivo de uma armadura comum, mas faz com que o usuário se sinta um tanto lento.
@@ -15257,8 +15262,8 @@ Um bastão que brilha quando é utilizado. As pessoas que vêem essas luzes pare
 ^0000ffRestaura a Árvore de Habilidades e lhe dá o numero correspondente em pontos para fazer a redistribuição.^000000
 ^000088Atenção: para usar o Neuralizador você deve seguir as mesmas exigências do NPC de Reset de Habilidades.^000000
 Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho ou Falcão e só então clique duas vezes no Neuralizador. Do contrário, mesmo que você tente usá-lo, ele não será gasto, mas nada acontecerá!
+^ff0000Atenção: ^777777O item não pode ser derrubado no chão, mas pode ser negociado, colocado na Kafra e no Carrinho^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
 #
 12214#
 Um espelho convexo limpo. A pessoa que possui o espelho pode detectar a aparição de MVPs. Tem um período de duração de 10 minutos e perde o efeito se o personagem sair do mapa.
@@ -15391,8 +15396,8 @@ Neuralizador - ^000088Um bastão que brilha quando é utilizado. As pessoas que 
 Mas atenção: para usar o Neuralizador você deve seguir as mesmas exigências do NPC de Reset Skill.
 Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho ou Falcão e só então clique duas vezes no Neuralizador.
 Do contrário, mesmo que você tente usá-lo, ele não será gasto, mas nada acontecerá!
+^ff0000Atenção: ^777777O item não pode ser derrubado no chão, mas pode ser negociado, colocado na Kafra e no Carrinho^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
 #
 12912#
 Uma caixa contendo 10 Espelhos Convexos. Frágil!
@@ -17938,12 +17943,12 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2671#
 Protetor de dedos para Arqueiros. Faz com que esticar a corda do arco seja mais fácil.
-^0000FFAumenta o dano causado por Arcos em 3%.^000000
-Classe: ^777777Acessório^000000
+^0000ffDano físico a distância +3%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
+Classes: ^777777Arqueiros e evoluções^000000
 #
 2525#
 Rumores dizem que essa capa foi usada por um marquês da antigüidade.
@@ -18517,7 +18522,7 @@ Passe usado para garantir um treinamento de tonificação muscular. Necessário 
 --------------------------
 ^CD3278NPC:^000000 Mister Peso
 ^CD3278Local:^000000 prontera 99, 64
-<NAVI>[Navegar]<INFO> prontera,99,64,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,99,64,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
 #
@@ -19281,10 +19286,10 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4334#
-Carta Nuvem Tóxica.
-Acrescenta 10% de resistência contra ataques a distância, e reduz o dano Neutro em 10%.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+^0000ffResistência a danos físicos a distância +10%.^000000
+^0000ffResistência a dano de propriedade Neutro +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4335#
@@ -22777,7 +22782,7 @@ Cupom usado para tingir roupas.
 --------------------------
 ^CD3278NPC:^000000 Estilista Especial
 ^CD3278Local:^000000 prontera 105, 66
-<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,105,66,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -22796,7 +22801,7 @@ Cupom usado para remover a tintura das roupas.
 --------------------------
 ^CD3278NPC:^000000 Estilista Especial
 ^CD3278Local:^000000 prontera 105, 66
-<NAVI>[Navegar]<INFO> prontera,105,66,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,105,66,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -28525,7 +28530,7 @@ Peso: ^7777771^000000
 #
 13516#
 Uma caixa contendo 5 Geléias Reais.
-^ffffff_^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso: ^7777771^000000
 #
 14253#
@@ -34238,15 +34243,25 @@ Serve para: ^777777Imp^000000
 Peso: ^7777770^000000
 #
 6377#
-Uma licença da Guilda dos Mercadores que permite abrir uma Loja de Atacado.
-Você precisa ter pelo menos uma cópia dos itens que deseja comprar.
-Item Consumível
+Uma licença da Guilda dos Mercadores que permite abrir uma Loja de Compras. Você pode notar que o carimbo é oficial.
+^0000ffPermite abrir um anúncio de Loja de Compras.^000000
+--------------------------
+^008080Instruções de uso:^000000
+Você precisa ter um item no inventário para anunciar a compra.
+Nem todos os itens estão disponíveis para anúncio.
+--------------------------
+^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão, nem colocado no carrinho, mas pode ser transferido para o armazém e vendido em NPC.^000000
 Peso : ^7777771^000000
+Classe : ^777777Mercadores, Super-Aprendizes e Evoluções^000000
 #
 12548#
-Uma licença suspeita que permite abrir uma Loja de Atacado. O carimbo da Guilda dos Mercadores parece ter sido desenhado à mão.
-Você precisa ter pelo menos uma cópia dos itens que deseja comprar.
-Item Consumível
+Uma licença suspeita e falsificada,  mas que permite abrir uma Loja de Compras. O carimbo da Guilda dos Mercadores parece ter sido desenhado à mão.
+^0000ffPermite abrir um anúncio de Loja de Compras.^000000
+--------------------------
+^008080Instruções de uso:^000000
+Você precisa ter um item no inventário para anunciar a compra.
+Nem todos os itens estão disponíveis para anúncio.
+--------------------------
 Peso : ^7777771^000000
 #
 6360#
@@ -34378,7 +34393,7 @@ Um utensílio feito de magia élfica condensada.
 --------------------------
 ^CD3278NPC:^000000 Mestre dos Slots
 ^CD3278Local:^000000 prontera 101, 65
-<NAVI>[Navegar]<INFO> prontera,101,65,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,101,65,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777771^000000
 #
@@ -34823,7 +34838,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34835,7 +34850,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34847,7 +34862,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34859,7 +34874,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34871,7 +34886,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34883,7 +34898,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34895,7 +34910,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34907,7 +34922,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34919,7 +34934,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -34931,7 +34946,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -35525,6 +35540,7 @@ Classes: ^777777Todas^000000
 
 12533#
 Uma caixa contendo 100 Ervas Azuis.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -35551,6 +35567,7 @@ Peso : ^7777770^000000
 #
 12549#
 Uma caixa contendo 100 frascos de Poção Branca Compacta.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -36268,17 +36285,28 @@ Peso : ^7777771^000000
 
 12580#
 Este produto foi pesquisado e testado durante um longo tempo na Academia Mágica de Geffen.
-Um pergaminho mágico que ao ser utilizado 'Pesquisa itens que estão à venda' podendo identificar e encontrar os vendedores.
-^000088Disponível para procurar lojas abertas apenas no mapa em que você estiver.^000000
-^ff0000Atenção! Ao localizar o personagem que está vendendo o item desejado, atente-se e verifique se o mesmo ainda está disponível, pois ele pode já ter sido vendido no meio tempo entre a busca e a localização do vendedor.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffPermite pesquisar até 10 itens em Comércio ou em Loja de Compas no mapa atual.^000000
+--------------------------
+^008080Instruções de uso:^000000
+Verifique sempre o nome e a descrição do item antes de comprá-lo.
+Certifique se o item ainda está disponível na loja, o catálogo não atualiza automaticamente.
+Dê um clique duplo no nome da loja para ela ser indicada no mini-mapa.
+--------------------------
+Peso: ^7777771^000000
 #
 
 12581#
 Este produto feito na Academia Mágica de Geffen sofreu reajustes e agora está mais avançado!
-Um pergaminho mágico que permite 'Itens que estão à venda'. Capaz de comprar ou vender itens pelo sistema de busca!
-^000088Disponível para procurar lojas abertas apenas no mapa em que você estiver.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffPermite pesquisar e comprar itens em Comércio ou em Loja de Compas no mapa atual.^000000
+--------------------------
+^008080Instruções de uso:^000000
+Verifique sempre o nome e a descrição do item antes de comprá-lo.
+Certifique se o item ainda está disponível na loja, o catálogo não atualiza automaticamente.
+Dê um clique duplo no nome da loja para ela ser indicada no mini-mapa.
+--------------------------
+Peso: ^7777771^000000
 #
 
 12591#
@@ -36542,8 +36570,13 @@ Classes: ^777777Todas^000000
 2573#
 Lindas Asas de Arcanjo. Brancas como a neve e leves feito plumas.
 ^008080Exibe o visual nas costas do personagem.^000000
-^FF6347Recebe encantamentos no Mestre Arcanjo (prontera 100, 63)^000000
-Tipo: ^777777Capa ^000000
+^0000ffPode receber encantamentos aleatórios.^000000
+--------------------------
+^CD3278NPC:^000000 Mestre Arcanjo
+^CD3278Local:^000000 prontera 100, 63
+<NAVI>[Navegar]<INFO>prontera,100,63,0,000,0</INFO></NAVI>
+--------------------------
+Tipo: ^777777Capa^000000
 Defesa: ^77777718^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
@@ -36736,9 +36769,8 @@ Um Katar especial revestido de Oridecon e Ouro em uma combinação perfeita.
 A cada refino:
 ^0000ffATQ +10.^000000
 ^0000ffDano crítico +2%.^000000
-A partir do nível de base 70:
-^0000ffATQ +10 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +10.^000000
 Tipo: ^777777Katar^000000
 Ataque: ^77777780^000000
 Peso: ^777777100^000000
@@ -36747,12 +36779,12 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Mercenários e evoluções^000000
 #
 1394#
-Um Machado de Duas Mãos especialmente revestido de Oridecon e Ouro em uma combinação perfeita.
+Um Machado especial revestido de Oridecon e Ouro em uma combinação perfeita.
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQ +14 por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +10 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+A cada refino:
+^0000ffATQ +14.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +10.^000000
 Tipo: ^777777Machado de Duas Mãos^000000
 Ataque: ^777777110^000000
 Peso: ^777777200^000000
@@ -36761,11 +36793,10 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 1491#
-Lança de Duas Mãos especialmente revestida de Oridecon e Ouro em uma perfeita combinação.
+Uma Lança especial revestida de Oridecon e Ouro em uma combinação perfeita.
 ^0000ffATQ +12 por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +10 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +10.^000000
 Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777105^000000
 Peso: ^777777150^000000
@@ -36774,40 +36805,43 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
 1585#
-Um belo Livro confeccionado com páginas de Ouro e escritas em Oridecon.
+Um Livro especial revestido de Oridecon e Ouro em uma combinação perfeita.
 ^0000ffATQM +20.^000000
-^0000ffATQ +10 por refino.^000000
-^0000ffATQM +5 por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +5 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+A cada refino:
+^0000ffATQ +10. ATQM +5.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +5.^000000
 Tipo: ^777777Livro^000000
 Ataque: ^77777745^000000
 Peso: ^77777760^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
-Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
+Classes: ^777777Sacerdotes, Sábios, Mestres Taekwons e evoluções^000000
 #
 2015#
-Cajado refinado em Ouro e Oridecon o transformando em um exemplo de poder e beleza.
-^a400cdIndestrutível em batalha.^000000
+Um Cajado especial revestido de Oridecon e Ouro em uma combinação perfeita.
+--------------------------
 ^0000ffATQM +70.^000000
+--------------------------
+Bruxos e evoluções:
+^0000ffATQM +30 adicional.^000000
+--------------------------
+Sábios e evoluções:
+^0000ffATQM +20 adicional.^000000
+--------------------------
 A cada refino:
 ^0000ffATQM +10.^000000
 ^0000ffEfetividade de cura +1%.^000000
-A partir do nível de base 70:
-^0000ffATQM +10 a cada 10 níveis de base acima do 70.^000000
-Bruxos e evoluções:
-^0000ffATQM +30 adicional.^000000
-Sábios e evoluções:
-^0000ffATQM +20 adicional.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+--------------------------
+A cada 10 níveis base a partir do 70:
+^0000ffATQM +10.^000000
+--------------------------
 Tipo: ^777777Cajado de Duas Mãos^000000
 Ataque: ^77777750^000000
 Peso: ^777777100^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
-Classes: ^777777Magos, Espiritualistas, Noviços e evoluções^000000
+Classes: ^777777Magos, Noviços, Espiritualistas e evoluções^000000
 #
 13071#
 Uma Adaga perfeita refinada em Ouro com sua lâmina em Oridecon.
@@ -36823,14 +36857,13 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Aprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Espiritualistas, Ninjas e evoluções^000000
 #
-
 13115#
-Pistola especialmente forjada em Oridecon e Ouro para os Justiceiros mais exigentes.
-^0000ffATQ +5 por refino.^000000
-^0000ffDano a distância +2% por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +5 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+Uma pistola especial revestida de Oridecon e Ouro em uma combinação perfeita.
+^0000ffA cada refino:^000000
+^0000ffATQ +5.^000000
+^0000ffDano físico a distância +2%.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +5.^000000
 Tipo: ^777777Pistola^000000
 Ataque: ^77777735^000000
 Peso: ^77777750^000000
@@ -36839,13 +36872,13 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Justiceiros e evoluções^000000
 #
 16019#
-Uma bela Maça recoberta em Oridecon e Ouro em uma combinação perfeita.
+Uma Maça especial revestida de Oridecon e Ouro em uma combinação perfeita.
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQ +10 por refino.^000000
-^0000ffEfetividade de cura +1% por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +5 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+A cada refino:
+^0000ffATQ +10.^000000
+^0000ffEfetividade de cura +1%.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +5.^000000
 Tipo: ^777777Maça^000000
 Ataque: ^77777780^000000
 Peso: ^77777780^000000
@@ -37224,14 +37257,18 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
 18112#
-Um Arco especial refinado em Ouro e Oridecon.
-^0000ffATQ +7 por refino.^000000
-^0000ffDano físico a distância +2% por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +10 a cada 10 níveis de base acima do 70.^000000
+Um Arco especial revestido de Oridecon e Ouro em uma combinação perfeita.
+--------------------------
 Caçadores e evoluções:
-^0000ffATQ +20 adicional.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+^0000ffATQ +20.^000000
+--------------------------
+A cada refino:
+^0000ffATQ +7.^000000
+^0000ffDano físico a distância +2%.^000000
+--------------------------
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +5.^000000
+--------------------------
 Tipo: ^777777Arco^000000
 Ataque: ^77777760^000000
 Peso: ^77777760^000000
@@ -37240,12 +37277,11 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Arqueiros e evoluções^000000
 #
 21000#
-Uma magnífica Espada de Duas Mãos refinada em Oridecon e Ouro.
-^0000ffATQ +12 por refino.^000000
-^0000ffATQM +5 por refino.^000000
-A partir do nível de base 70:
-^0000ffATQ +10 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+Uma Espada especial revestido de Oridecon e Ouro em uma combinação perfeita.
+^0000ffA cada refino:^000000
+^0000ffATQ +12. ATQM +5.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +10.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777100^000000
 Peso: ^777777150^000000
@@ -37684,6 +37720,7 @@ Classes : ^777777Todas^000000
 12680#
 Uma caixa contendo 10 unidades de Poção Azul que pode ser utilizada somente
 durante os combates da Guerra do Emperium ou em Salas de PVP.
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^77777720^000000
 #
 
@@ -37842,7 +37879,7 @@ Pergaminho usado para refinar armas sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -37853,7 +37890,7 @@ Pergaminho usado para refinar equipamentos sem risco de perda.
 --------------------------
 ^CD3278NPC:^000000 Mestre do Refino
 ^CD3278Local:^000000 prontera 184, 177
-<NAVI>[Navegar]<INFO> prontera,184,177,0,000,0</INFO></NAVI>
+<NAVI>[Navegar]<INFO>prontera,184,177,0,000,0</INFO></NAVI>
 --------------------------
 Peso: ^7777770^000000
 #
@@ -40064,20 +40101,24 @@ Utilização: ^777777Arma^000000
 Peso : ^7777771^000000
 #
 4465#
-ATQ + 10.
-Se combinado com uma arma do tipo ^ff0000Espada de Duas Mãos^000000 e o refinamento do item for +10 ou maior, Vel. Ataque +1. Se o refinamento for +14 ou maior, Vel. Ataque +1.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Arma^000000
-Peso : ^7777771^000000
+^0000ffATQ +10.^000000
+Espada de Duas Mãos com refino +10 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Espada de Duas Mãos com refino +14 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 4466#
-Ataque físico à distância + 3%.
-Se combinado com uma arma do tipo ^ff0000Arco^000000 e o refinamento do item for +10 ou maior, Vel. Ataque +1. Se o refinamento for +14 ou maior, Vel. Ataque +1.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Arma^000000
-Peso : ^7777771^000000
+^0000ffDano físico a distância +3%.^000000
+Arco com refino +10 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Arco com refino +14 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 4467#
 FOR + 2.
@@ -42902,9 +42943,14 @@ A cada 20 de DES base:
 ^0000ffDano físico a distância +1%.^000000
 A cada 20 de SOR base:
 ^0000ffDano crítico +1%.^000000
-^FF6347Recebe encantamentos na Valquíria Obscura (geffen
-136, 55)^000000
-Tipo: ^777777Capa ^000000
+--------------------------
+^0000ffPode receber encantamentos aleatórios.^000000
+--------------------------
+^CD3278NPC:^000000 Valquíria Obscura
+^CD3278Local:^000000 geffen 136, 55
+<NAVI>[Navegar]<INFO>geffen,136,55,0,000,0</INFO></NAVI>
+--------------------------
+Tipo: ^777777Capa^000000
 Defesa: ^77777718^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
@@ -43550,7 +43596,7 @@ Classes: ^777777Todas^000000
 16555#
 Uma caixa contendo 1 Pedra das Valquírias.
 Pedra das Valquírias - uma pedra negra e afiada, possuidora de um poder extremo. É capaz de resetar os atributos de um personagem.
-^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho, colocado no armazém mas não pode ser derrubado no chão.^000000
+^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho, colocado no armazém, mas não pode ser derrubado no chão.^000000
 Peso: ^7777771^000000
 #
 13710#
@@ -43905,15 +43951,13 @@ Nível Necessário: ^777777110^000000
 Classes: ^777777Ninja e evoluções^000000
 #
 13316#
-Shuriken revestido com Oridecon e Ouro combinados em proporção áurea.
+Um Shuriken Huuma especial revestido de Oridecon e Ouro em uma combinação perfeita.
 ^a400cdIndestrutível em batalha.^000000
 A cada refino:
-^0000ffATQ +10.^000000
-^0000ffATQM +5.^000000
-^0000ffDano a distância +1%.^000000
-A partir do nível de base 70:
-^0000ffATQ +5 a cada 10 níveis de base acima do 70.^000000
-^FF6347Recebe encantamentos do Encantador Diabólico (prontera 107, 65).^000000
+^0000ffATQ +10. ATQM +5.^000000
+^0000ffDano físico a distância +1%.^000000
+A cada 10 níveis base a partir do 70:
+^0000ffATQ +5.^000000
 Tipo: ^777777Shuriken Huuma^000000
 Ataque: ^77777755^000000
 Peso: ^777777150^000000
@@ -44001,8 +44045,15 @@ Classes : ^777777Todas as classes^000000
 #
 6484#
 Uma página de um livro mágico sobre encantamentos.
-^0000ffPermite adicionar 1 encanto em 1 Arma Aprimorada no Encantador Diabólico.^000000 <NAVI>[prontera 107 65]<INFO>prontera,107,65,0,000,0</INFO></NAVI>
+--------------------------
+^0000ffPermite adicionar 1 encanto em 1 Arma Aprimorada.^000000
+--------------------------
+^CD3278NPC:^000000 Encantador Diabólico
+^CD3278Local:^000000 prontera 107, 65
+<NAVI>[Navegar]<INFO>prontera,107,65,0,000,0</INFO></NAVI>
+--------------------------
 Negociação: ^777777Não pode ser trocado entre personagens.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 // Asgard
@@ -44287,10 +44338,22 @@ Classes: ^777777Todas^000000
 //--Aplicar em 10-06-2014 - Todos os servidores
 #
 7227#
-Um passe que permite o acesso a um dos calabouços de Cheffênia apenas uma vez. Após sua utilização, este passe será consumido. Pode ser utilizado nos NPCs em: Izlude (128, 153), Geffen (124, 169), Payon (165, 150), Morroc (142, 100), Lighthalzen (203, 140) ou Rachel (132, 144).
-^ffffff_^000000
-^FF0000ATENÇÃO! O evento Cheffênia será encerrado no dia 01/01/18. O passe perderá a validade após esta data.^000000
-^FF0000Este item não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser transferido para o armazém.^000000
+Passe que deve ser usado sempre que desejar acessar um local.
+--------------------------
+^0000ffPermite entrar em um dos calabouços de Cheffênia.^000000
+--------------------------
+^CD3278NPCs de acesso:^000000
+<NAVI>[Izlude]<INFO>izlude,128,153,0,000,0</INFO></NAVI> <NAVI>[Geffen]<INFO>geffen,124,169,0,000,0</INFO></NAVI>
+<NAVI>[Payon]<INFO>payon,165,150,0,000,0</INFO></NAVI>
+<NAVI>[Morroc]<INFO>morocc,142,100,0,000,0</INFO></NAVI>
+<NAVI>[Rachel]<INFO>rachel,132,144,0,000,0</INFO></NAVI>
+<NAVI>[Lighthalzen]<INFO>izlude,203,140,0,000,0</INFO></NAVI>
+--------------------------
+Encerramento do evento: ^ff000001/01/18.^000000
+O passe perderá validade após a data.
+--------------------------
+Negociação: ^777777Não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 17066#
@@ -54820,87 +54883,92 @@ Nível necessário: ^77777790^000000
 Classes: ^777777Aprendizes e Superaprendizes^000000
 #
 24012#
-Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Dentro das luvas você pode ver escrito “Parabéns”.
-^008080Equipamento Sombrio^000000
-Luva criada para complementar seus equipamentos.
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Dentro das luvas você pode ver escrito 'Parabéns '.
 ^0000ffDES +1.^000000
 A cada refino:
-^0000ffATQ e ATQM +1(Não implementado).^000000
+^0000ffATQ e ATQM +1.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Luva^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Luvas^000000
+Ataque: ^7777770^000000
 Peso: ^7777770^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24013#
-Uma peça extremamente rara de equipamento sombrio, dada somente aos aventureiros mais tenazes. Foi forjada originalmente durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros, mas poucos conhecem esse detalhe. Costurado no tecido você consegue ler uma mensagem secreta: “Parabéns pela sua conquista! Como diziam os antigos, Let’s Rok!”
-^008080Equipamento Sombrio^000000
-Malha criada para complementar seus equipamentos.
+Uma peça extremamente rara de equipamento sombrio, dada somente aos aventureiros mais tenazes. Foi forjada originalmente durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros, mas poucos conhecem esse detalhe. Costurado no tecido você consegue ler uma mensagem secreta: 'Parabéns pela sua conquista! Como diziam os antigos, Let’s Rok! '
 ^0000ffSOR +1.^000000
 A cada refino:
-^0000ffHP máx. +10(Não implementado).^000000
-^ff0000Durante o evento:^000000
-^FF6347Conjunto^000000
-^FF6347[Colar Sombrio Festivo]^000000
-^FF6347[Escudo Sombrio Festivo]^000000
-^FF6347[Luvas Sombrias Festivas]^000000
-^FF6347[Grevas Sombrias Festivas]^000000
-^FF6347[Brincos Sombrios Festivos] ^000000
-^0000ffTodos os atributos +9 até o dia 06/11/2017.^000000
+^0000ffHP máx. +10.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Malha^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Malha^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24014#
-Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Embaixo das botas você pode ler a inscrição “Up”.
-^008080Equipamento Sombrio^000000
-Greva criada para complementar seus equipamentos.
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Embaixo das botas você pode ler a inscrição 'Up '.
 ^0000ffAGI +1.^000000
 A cada refino:
-^0000ffHP máx. +10(Não implementado).^000000
+^0000ffHP máx. +10.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Greva^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24015#
-Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na brasão do escudo você pode ler a inscrição “bRO”.
-^008080Equipamento Sombrio^000000
-Escudo criado para complementar seus equipamentos.
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na brasão do escudo você pode ler a inscrição 'bRO'.
 ^0000ffVIT +1.^000000
 A cada refino:
-^0000ffHP máx. +10(Não implementado).^000000
+^0000ffHP máx. +10.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Escudo^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Escudo^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24016#
-Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Atrás dos brincos você pode ler a inscrição “Level”.
-^008080Equipamento Sombrio^000000
-Brinco criado para complementar seus equipamentos.
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Atrás dos brincos você pode ler a inscrição 'Level'.
 ^0000ffINT +1.^000000
 A cada refino:
-^0000ffHP máx. +10(Não implementado).^000000
+^0000ffHP máx. +10.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Brinco^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Brinco^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24017#
-Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de treze anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na frente do colar você pode ler a inscrição “13 Anos”.
-^008080Equipamento Sombrio^000000
-Colar criado para complementar seus equipamentos.
+Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Na frente do colar você pode ler a inscrição '13 Anos'.
 ^0000ffFOR +1.^000000
 A cada refino:
-^0000ffHP máx. +10(Não implementado).^000000
+^0000ffHP máx. +10.^000000
+--------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
-Tipo: ^777777Colar^000000
+--------------------------
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Colar^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -58317,13 +58385,14 @@ Classes: ^777777Todas^000000
 20299#
 Uma bela de uma torta de baunilha que vai ficar enfiada na sua cara até você decidir que não tem mais graça. Uma coisa é certa: não vai dar pra brincar de “torta na cara” se você já estiver usando uma dessas!
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20765#
 Um lindo par de asas que emana beleza e ar celestial invejáveis. Suas penas são macias como as nuvens do Paraíso, mas tome cuidado para não sujá-las.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -58447,7 +58516,8 @@ Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 31176#
-Macia e fofinha, essa boina de ursinho é ideal para os adeptos de um visual mais kawaii, como costumam dizer os jovens de Amatsu. Suas patas e seu cabeção se encaixam perfeitamente na sua cabeça, mas não se preocupe: seu peso não vai atrapalhar nem um pouco.
+Macia e fofinha, essa boina de ursinho é ideal para os adeptos de um visual mais kawaii, como costumam dizer os jovens de Amatsu.
+Você sente como se o ursinho te observasse o tempo todo. Lendas dizem que quando sua energia acaba, o fofinho Freddy Tazbear cria vida para te assombrar.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -58564,6 +58634,33 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-04-03--------------------
+//*****************************************************
+31381#
+Essa gola carrega um ar misterioso e sombrio, e seu adereço é de origem desconhecida. Acredita-se que ela pertenceu a um monstrengo tão maligno que, ao colocá-la, você poderá se sentir um verdadeiro lorde das trevas.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31052#
+Uma antiga máscara que os Alquimistas costumavam usar durante perigosas experiências. Apesar de te dar um ar meio sinistro, ela vai te manter protegido de gases e líquidos nocivos.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20023#
+Objeto que um dia pertenceu a um bravo soldado, essa boina é muito mais do que a peça de um uniforme militar – é símbolo de coragem e força.  Pode ser até que você sinta uma estranha vontade de bater continência com ela na cabeça, mas é completamente normal.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 //file end

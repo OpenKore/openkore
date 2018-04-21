@@ -1474,15 +1474,16 @@ sub sendAddSkillPoint {
     }));
 }
 
-sub sendShortcutKeyChange {
-    my ($self, $index, $isSkill, $ID, $count) = @_;
-    $self->sendToServer($self->reconstruct({
-        switch => 'send_shortcut_key_change',
-        index => $index,
-		isSkill => $isSkill,
-		ID => $ID,
-		count => $count,
-    }));
+sub sendHotKeyChange {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'hotkey_change',
+		idx => $args->{idx},
+		type => $args->{type},
+		id => $args->{id},
+		lvl => $args->{lvl},
+	}));
 }
 
 sub sendQuestState {
@@ -1493,6 +1494,12 @@ sub sendQuestState {
         state => $state, #TODO:[active=0x00],[inactive=0x01]
     }));
 	debug "Sent Quest State.\n", "sendPacket", 2;	
+}
+
+sub sendClanChat {
+    my ($self, $message) = @_;
+	$message = $char->{name}." : ".$message;
+    $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
 }
 
 1;

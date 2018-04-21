@@ -5996,6 +5996,7 @@
 13127#Crimson_Revolver#
 13128#Vicious_Mind_Revolver#
 13136#Probation_Revolver#
+13138#Dark_Rose#
 13150#Branch#
 13151#Cyclone#
 13152#Cyclone#
@@ -6176,6 +6177,7 @@
 13452#Ru_Gold_Sword#
 13454#Crimson_Sabre#
 13455#Vicious_Mind_Sabre#
+13460#Sealed_Magic_Sword#
 13461#Sealed_Evil_Sword#
 13462#Sealed_Maximum_Sword#
 13500#(null)#
@@ -6984,6 +6986,7 @@
 15124#Holy_Father_Mail#
 15125#Female_Diver's_Suit#
 15126#Doram_Suit#
+15128#Excelion_Suit#
 15129#Luxurious_Doram_Suit#
 15130#Dragon_Mail#
 15135#Dragon_Cloth#
@@ -7012,6 +7015,7 @@
 15196#Sea_Dragon_Armor#
 15204#Abyss_Dress#
 15205#Medical_Scrubs#
+15212#YSF01_Plate#
 15249#Antonio's_Coat#
 16000#Erde#
 16001#Red_Square_Bag#
@@ -7538,6 +7542,7 @@
 17459#Steam_Starter_Package_1#
 17460#Steam_Starter_Package_2#
 17461#Early_Winter_Costume_Box#
+17476#OCP_Remix_III#
 17480#Saint_Patrick_Day_Groove_Box#
 17481#Overseas_Care_Package_Remix_II#
 17485#Easter_Lucky_box#
@@ -7656,6 +7661,7 @@
 17928#Costume_Box_XIV:_Stay_Frosty#
 17938#Overseas_Care_Package_XV#
 17939#Spooky_January_Costume_Box#
+17946#Overseas_Care_Package_XVII#
 18000#Cannon_Ball#
 18001#Holy_Cannon_Ball#
 18002#Dark_Cannon_Ball#
@@ -8795,6 +8801,7 @@
 20761#Costume_Happiness_Wings#
 20762#Costume_GreatDevil_Wing#
 20763#Costume:_Amistr_Bag#
+20773#Excelion_Wing#
 20778#Red_Lotus_Stole#
 20783#Hero_Cape#
 20788#Doram_Manteau#
@@ -8824,6 +8831,7 @@
 20841#Golden_Angel_Wings#
 20845#Malach's_Skin#
 20846#Temporal_Manteau#
+20856#YSF01_Manteau#
 20859#Phreeoni_Wings#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
@@ -8898,6 +8906,7 @@
 22131#Spurred_Boots#
 22134#Enforcer_Shoes#
 22138#Devil_Worshipper_Shoes#
+22141#YSF01_Greaves#
 22170#Survivor's_Shoes#
 22172#Gray_Wing_Boots#
 22507#Old_Scroll#
@@ -9241,6 +9250,12 @@
 27018#GC109_Card#
 27019#DR815_Card#
 27020#T_W_O_Card#
+27147#Humanoid_Chimera_Card#
+27148#Material_Type_Chimera_Card#
+27149#Heart_Hunter_Card#
+27150#Toxic_Enhancement_Chimera_Card#
+27151#Evil_Card#
+27152#Cutie_Card#
 28000#Thanatos_Katar#
 28001#Evil_Slayer_Ripper_Katar#
 28005#Ru_Blue_Katar#
@@ -9262,6 +9277,10 @@
 28216#Probation_Gatling_Gun#
 28217#Probation_Grenade_Launcher#
 28218#Probation_Shotgun#
+28223#Finisher#
+28224#Dustfire#
+28225#Burning_Rose#
+28226#Avenger#
 28303#Vesper_Core_02#
 28305#Vesper_Core_04#
 28310#Sarah's_Left_Earring#
@@ -9449,6 +9468,14 @@
 29118#Affection_Lv._8#
 29119#Affection_Lv._9#
 29120#Affection_Lv._10#
+31016#Decorated_Evil_Tree_Card#
+31017#Vicious_Cookie_Card#
+31018#Evil_Dwelling_Box_Card#
+31019#Creepy_Demon_Card#
+31020#Malicious_Baby_Ghost_Card#
+31021#Dancing_Marionette_Card#
+31022#Abandoned_Teddy_Bear_Card#
+31023#Celine_Kimi_Card#
 31024#Immortal_Cursed_Knight_Card#
 31025#Immortal_Wind_Ghost_Card#
 31026#Stephen_Jack_Ernest_Wolf_Card#

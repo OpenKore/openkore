@@ -5761,8 +5761,8 @@ Requires Level: ^808080100^000000
 Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
 Crit + 10
 Enables ^0000FFLevel 5 Double Attack^000000.
-Adds a X% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
-Adds a X% chance of inflicting ^800000Poison^000000 on the user when receiving a physical attack.
+Adds a 10% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
+Adds a 3% chance of inflicting ^800000Poison^000000 on the user when receiving a physical attack.
 #
 1449#
 A large one-handed spear that shakes the earth and also stimulate user's metabolism.
@@ -17408,6 +17408,7 @@ Usable By: ^808080All Jobs^000000
 Luk + 2
 Atk + 1 for every 20 base Str.
 Matk + 1 for every 20 base Int.
+Mdef + 18
 Aspd + 1% for every 20 base Agi.
 Increases long-ranged damage on targets by 1% for every 20 base Dex.
 Increases critical damage on targets by 1% for every 20 base Luk.
@@ -44961,13 +44962,13 @@ When summoned,
 FLEE +5, MaxHP +100
 #
 9054#
-An egg in which a
-Nightmare Terror Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Increases tolerance to sleep status by 10%.
+An egg in which a cute Nightmare Terror pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Fresh Plant
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Int + 1
+Immune to ^800000Sleep^000000.
 #
 9055#
 An egg in which a
@@ -52236,6 +52237,21 @@ Increases the damage of ^0000FFFire Dance^000000 by 20%.
 If upgrade level is +7 or higher,
 Increases long-ranged damage on targets by 1% per level of ^0000FFChain Action^000000 known.
 #
+13138#
+A revolver decorated with black roses.
+Class: ^808080Pistol^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080180^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Rebel^000000
+Aspd + 10%
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by 15%.
+If upgrade level is +9 or higher,
+Aspd + 1
+#
 13150#
 A practical firearm
 with a long gun barrel
@@ -54234,6 +54250,25 @@ Required Jobs: Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs
 ^FFFFFF_^000000
 Atk + (upgrade level * upgrade level) up to a maximum upgrade level of 15.
 #
+13460#
+A magic sword in which magnificent power is sealed. It will not be easy to draw out it's power.
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Max SP - 100
+Adds a 10% chance of casting ^0000FFLevel 5 Fire Bolt^000000 on the target when performing a physical attack.
+If upgrade level is +7 or higher,
+Max SP + 50
+Matk + 85
+If upgrade level is +10 or higher,
+Additional Max SP + 50
+Additional Matk + 45
+Aspd + 1
+#
 13461#
 An evil sword in which magnificent power is sealed. It will not be easy to draw out it's power.
 Class: ^808080One-Handed Sword^000000
@@ -54245,7 +54280,7 @@ Requires Level: ^808080100^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
 Def - 50
 Mdef - 10
-Adds a X% chance of casting ^0000FFLevel 5 Frost Nova^000000 on the target when performing a physical attack.
+Adds a 10% chance of casting ^0000FFLevel 5 Frost Nova^000000 on the target when performing a physical attack.
 If upgrade level is +7 or higher,
 Mdef + 10
 Crit + 30
@@ -54264,7 +54299,7 @@ Weapon Level: ^8080804^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
 Max HP - 1000
-Adds a X% chance of casting ^0000FFLevel 5 Cold Bolt^000000 on the target when performing a physical attack.
+Adds a 10% chance of casting ^0000FFLevel 5 Cold Bolt^000000 on the target when performing a physical attack.
 If upgrade level is +7 or higher,
 Max HP + 500
 Atk + 65
@@ -60051,6 +60086,25 @@ Reduces the fixed casting time of skills by 15%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Doram Suit^000000, ^008080Doram Manteau^000000, ^008080Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
 #
+15128#
+A power suit made from lost technology found in the research building ruins.
+Class: ^808080Armor^000000
+Defense: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Vit + 6
+Additional Vit + 4, if the users base level is 130 or higher.
+Max HP + 4% per 3 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Excelion Suit^000000
+^008080Excelion Wing^000000
+Perfect Dodge + 6
+Reduces the cast delay of skills by 10%.
+Reduces the cast delay of skills by an additional 10%, if the users base level is 130 or higher.
+This item is indestructible in battle.
+#
 15129#
 ^808080Luxurious light outfit favored by the tidy Doram.^000000
 ^FFFFFF_^000000
@@ -60648,6 +60702,35 @@ Increases resistance to ^800000Stone Curse^000000 by 50%.
 ^008080Medical Scrubs^000000
 If upgrade level is +9 or higher,
 Immune to ^800000Frozen^000000.
+#
+15212#
+The plate used by Werner's experiment. Beware, you may be consumed by it's power.
+Class: ^808080Armor^000000
+Defense: ^80808078^000000
+Weight: ^808080210^000000
+Requires Level: ^808080170^000000
+Usable By: ^808080All Jobs^000000
+Atk + 1% per upgrade level of the item, if the users base Str is 125 or higher.
+If upgrade level is +8 or higher,
+Additional Atk + 5%
+If upgrade level is +11 or higher,
+Additional Atk + 2%
+If upgrade level is +13 or higher,
+Additional Atk + 4%
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Plate^000000
+Aspd + 1% per upgrade level of ^008080YSF01 Greaves^000000.
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+If the combined upgrade levels of ^008080YSF01 Greaves^000000, ^008080YSF01 Manteau^000000 and ^008080YSF01 Plate^000000 are +39 or higher,
+Adds a 5% chance of buffing the user for 5 seconds when performing a physical attack; Bypass 100% of hard defense of normal monsters and boss monsters when performing a physical attack.
+^800080Set Bonus^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+Reduces the cast delay of skills by 1% per upgrade level of ^008080YSF01 Manteau^000000.
 #
 15249#
 A replica of the coat Antonio is wearing. Once worn, you feel like you could become the NEW Antonio.
@@ -65520,6 +65603,22 @@ Costume Galanthus Guard
 Costume Chilly Breath
 Weight : ^7777771^000000
 #
+17476#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following,
+Arch Bishop Ring
+Magician's Glove
+Archangel Wing
+Temporal Manteau
+Skin of Lindwyrm
+Safe to 10 Certificate x 2
+Wing Headphone
+Bear Balloon
+Safe to 7 Chance Box x 4
+Blacksmith Blessing x 6
+Battle Manual X3 x 6
+#
 17480#
 This item cannot be traded, but can be saved and opened at your leisure!
 ^ff0000This box is account bound.^000000
@@ -67655,6 +67754,27 @@ Costume Punkish Cat Ears
 Costume Volume Low Twin
 Costume Fake Ears
 Costume Gothic Pumpkin Handicraft
+#
+17946#
+When Opened Gives one of the following
+
+Book of Soyga
+Seraphim Feather
+Emerald Ring
+Demon God's Ring
+Seraphim Coronet
+(5) Bloody Dead Branch
+(10) Oda's Miracle Elixir
+(8) HE Bubble Gum
+Toy Syringe
+Crow Tegu Mask
+(6) Battle Manual X3
+Glasses [1]
+Sunglasses [1]
+Mini Glasses [1]
+Black Framed Glasses [1]
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 18000#
 A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
@@ -70460,12 +70580,10 @@ Reduces damage taken from Wind property attacks by 5%.
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Glove^000000
-Reduces the cast delay delay of ^0000FFOverbrand^000000 by 100%.
-Increases short-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
-Increases short-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
+Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
+Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
 Increases the damage of ^0000FFCannon Spear^000000 by 30%.
 Increases the damage of ^0000FFOverbrand^000000 by 20%.
-^800080Set Bonus^000000
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Guard^000000
@@ -73043,9 +73161,9 @@ Str + 2
 Atk + 5 for every 8 base Int.
 Additional Atk + 50, if the users base Int is 108 or higher.
 Additional Atk + 125, if the users base Int is 120 or higher.
-Reduces the variable casting time of skills by 1% for every 8 base Int.
-Reduces the variable casting time of skills by 1%, if the users base Int is 108 or higher.
-Reduces the variable casting time of skills by 1%, if the users base Int is 120 or higher.
+Increases the variable casting time of skills by 1% for every 8 base Int.
+Increases the variable casting time of skills by 1%, if the users base Int is 108 or higher.
+Increases the variable casting time of skills by 1%, if the users base Int is 120 or higher.
 Increases the recovery rate of recovery skills by 1% for every 8 base Int.
 Increases the recovery rate of recovery skills by an additional 5%, if the users base Int is 108 or higher.
 Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 120 or higher.
@@ -73056,15 +73174,18 @@ Reduces the variable casting time of skills by 1% for every 8 base Int.
 Reduces the variable casting time of skills by an additional 4%, if the users base Int is 108 or higher.
 Reduces the variable casting time of skills by an additional 6%, if the users base Int is 120 or higher.
 Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
+Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
 Increases the recovery rate of recovery skills by 5%.
 Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 108 or higher.
 Increases the recovery rate of recovery skills by an additional 15%, if the users base Int is 120 or higher.
 Increases the recovery rate of incoming recovery skills by 5%.
 Increases the recovery rate of incoming recovery skills by an additional 10%, if the users base Int is 108 or higher.
 Increases the recovery rate of incoming recovery skills by an additional 15%, if the users base Int is 120 or higher.
-Reduces damage taken from Demi-Human race enemies by 2%.
-Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
-Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
+Increases the recovery rate of recovery items by 5%.
+Increases the recovery rate of recovery items by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of recovery items by an additional 15%, if the users base Int is 120 or higher.
 Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
 #
 19139#
@@ -73584,15 +73705,18 @@ Reduces the variable casting time of skills by 1% for every 8 base Int.
 Reduces the variable casting time of skills by an additional 4%, if the users base Int is 108 or higher.
 Reduces the variable casting time of skills by an additional 6%, if the users base Int is 120 or higher.
 Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
+Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
 Increases the recovery rate of recovery skills by 5%.
 Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 108 or higher.
 Increases the recovery rate of recovery skills by an additional 15%, if the users base Int is 120 or higher.
 Increases the recovery rate of incoming recovery skills by 5%.
 Increases the recovery rate of incoming recovery skills by an additional 10%, if the users base Int is 108 or higher.
 Increases the recovery rate of incoming recovery skills by an additional 15%, if the users base Int is 120 or higher.
-Reduces damage taken from Demi-Human race enemies by 2%.
-Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
-Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
+Increases the recovery rate of recovery items by 5%.
+Increases the recovery rate of recovery items by an additional 10%, if the users base Int is 108 or higher.
+Increases the recovery rate of recovery items by an additional 15%, if the users base Int is 120 or higher.
 Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
 #
 19377#
@@ -77962,12 +78086,13 @@ Required Level: 1
 Required Job: All Jobs
 #
 20284#
-^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute. This hat was originally awarded to ^3E0694Kami Kali^000000, ^3E0694Kritical Assassin^000000, ^3E0694Milky Thief^000000, ^3E0694Myzery^000000 and ^3E0694Nirvanna21^000000 for contributing to the community.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.
+^FF0000This hat was originally awarded to Kami Kali, Kritical Assassin, Milky Thief, Myzery and Nirvanna21 for contributing to the community.^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20285#
 ^808080Petals of cherry blossoms are failling gently. The petals dance beautifully as if they inform you that spring has come.^000000
@@ -79597,6 +79722,24 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+20773#
+A power wing made from lost technology found in the research building ruins.
+Class: ^808080Garment^000000
+Defense: ^80808040^000000
+Weight: ^80808090^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Flee + 2 per upgrade level of the item.
+Perfect Dodge + 8
+Additional Perfect Dodge + 2, if the users base level is 130 or higher.
+^800080Set Bonus^000000
+^008080Excelion Suit^000000
+^008080Excelion Wing^000000
+Perfect Dodge + 6
+Reduces the cast delay of skills by 10%.
+Reduces the cast delay of skills by an additional 10%, if the users base level is 130 or higher.
+This item is indestructible in battle.
+#
 20778#
 ^808080A reddish cloak invented by a guild of magicians to extend the wearer's magical power.^000000
 Class: Garment
@@ -80260,6 +80403,35 @@ Max HP + 15%
 Mdef + 10
 Reduces damage taken from Demi-Human race enemies by 5%.
 Increases the recovery rate of recovery items by 10%.
+#
+20856#
+The manteau used by Werner's experiment. Beware, you may be consumed by it's power.
+Class: ^808080Garment^000000
+Defense: ^80808032^000000
+Weight: ^80808075^000000
+Requires Level: ^808080170^000000
+Usable By: ^808080All Jobs^000000
+Reduces the cast delay of skills by 10%, if the users base Vit is 125 or higher.
+If upgrade level is +8 or higher,
+Atk + 20
+If upgrade level is +11 or higher,
+Reduces the cast delay of skills by an additional 3%.
+If upgrade level is +13 or higher,
+Reduces the cast delay of skills by an additional 4%.
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Plate^000000
+Aspd + 1% per upgrade level of ^008080YSF01 Greaves^000000.
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+If the combined upgrade levels of ^008080YSF01 Greaves^000000, ^008080YSF01 Manteau^000000 and ^008080YSF01 Plate^000000 are +39 or higher,
+Adds a 5% chance of buffing the user for 5 seconds when performing a physical attack; Bypass 100% of hard defense of normal monsters and boss monsters when performing a physical attack.
+^800080Set Bonus^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+Reduces the cast delay of skills by 1% per upgrade level of ^008080YSF01 Manteau^000000.
 #
 20859#
 ^808080A suit inspired by Phreeoni. You feel like you can fly!^000000
@@ -81420,6 +81592,35 @@ Additional Max HP + 10%
 Additional Max SP + 10%
 Additional Matk + 5%
 Increases the damage of Neutral and Fire property magical attacks on targets by an additional 5%.
+#
+22141#
+The greaves used by Werner's experiment. Beware, you may be consumed by it's power.
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^808080130^000000
+Requires Level: ^808080170^000000
+Usable By: ^808080All Jobs^000000
+Increases critical damage on targets by 30%, if the users base Luk is 125 or higher.
+If upgrade level is +8 or higher,
+Aspd + 8%
+If upgrade level is +11 or higher,
+Aspd + 1
+If upgrade level is +13 or higher,
+Increases critical damage on targets by an additional 10%.
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Plate^000000
+Aspd + 1% per upgrade level of ^008080YSF01 Greaves^000000.
+^800080Set Bonus^000000
+^008080YSF01 Greaves^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+If the combined upgrade levels of ^008080YSF01 Greaves^000000, ^008080YSF01 Manteau^000000 and ^008080YSF01 Plate^000000 are +39 or higher,
+Adds a 5% chance of buffing the user for 5 seconds when performing a physical attack; Bypass 100% of hard defense of normal monsters and boss monsters when performing a physical attack.
+^800080Set Bonus^000000
+^008080YSF01 Manteau^000000
+^008080YSF01 Plate^000000
+Reduces the cast delay of skills by 1% per upgrade level of ^008080YSF01 Manteau^000000.
 #
 22170#
 A pair of shoes that automatically protects its' owner.
@@ -84484,6 +84685,63 @@ Class : ^777777Card^000000
 Compound on : ^777777Weapon^000000
 Weight : ^7777771^000000
 #
+27147#
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Hit + 5
+Additional Hit + 10, if the users base level is 90 or higher.
+^800080Set Bonus^000000
+^008080Humanoid Type Chimera Card^000000
+^008080Material Type Chimera Card^000000
+Reduces the cast delay of skills by 3%.
+#
+27148#
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Flee + 10
+Additional Flee + 10, if the users base level is 90 or higher.
+^800080Set Bonus^000000
+^008080Humanoid Type Chimera Card^000000
+^008080Material Type Chimera Card^000000
+Reduces the cast delay of skills by 3%.
+#
+27149#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases long-ranged damage on targets by 5%, if the user has a Grenade Launcher, Revolver or Rifle equipped.
+Increases long-ranged damage on targets by an additional 1% per upgrade level of the compounded item, if the user has a Grenade Launcher, Revolver or Rifle equipped.
+If upgrade level is +10 or higher,
+Increases long-ranged damage on targets by an additional 5%
+#
+27150#
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Max HP + 1000
+Max SP + 200
+If upgrade level is +12 or higher,
+Max HP + 15%
+Max SP + 15%
+#
+27151#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Mdef + 5
+Adds a 30% chance of inflicting ^800000Freezing^000000 on the attacker when receiving a physical attack.
+Adds an additional 10% chance of inflicting ^800000Freezing^000000 on the attacker when receiving a physical attack, if the users base Int is 110 or higher.
+#
+27152#
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Agi + 1 per 2 upgrade levels of the compounded item.
+Max HP + 10%
+Aspd + 1% per 2 upgrade levels of the compounded item.
+#
 28000#
 This katar, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
 It offers incredible power and mana at a great cost.
@@ -84769,6 +85027,71 @@ Required Jobs: Rebel
 Atk + 6 for every 10 base levels up to a maximum base level of 160.
 Hit - 10
 Increases the damage of ^0000FFShattering Storm^000000 by 20%.
+#
+28223#
+A large sniper rifle for combat.
+Class: ^808080Rifle^000000
+Attack: ^808080200^000000
+Property: ^808080Neutral^000000
+Weight: ^808080200^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Rebel^000000
+Increases long-ranged damage on targets by 15%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFAnti-Material Blast^000000 and ^0000FFMass Spiral^000000 by 30%.
+If upgrade level is +9 or higher,
+Reduces the cooldown of ^0000FFAnti-Material Blast^000000 by 1 second.
+#
+28224#
+A shotgun with heavy muzzle flame.
+Class: ^808080Shotgun^000000
+Attack: ^808080300^000000
+Property: ^808080Neutral^000000
+Weight: ^808080130^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Rebel^000000
+Adds a 0.5% chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
+Enables Splash Attacks.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFShatering Storm^000000 by 15%.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFVanishing Buster^000000 by 15%.
+^800080Set Bonus^000000
+^008080Armor-Piercing Bullet^000000
+^008080Dustfire^000000
+Increases long-ranged damage on targets by 30%.
+#
+28225#
+The name derives from the fact that the gun goes red from overheating.
+Class: ^808080Gatling Gun^000000
+Attack: ^808080200^000000
+Property: ^808080Neutral^000000
+Weight: ^808080250^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Rebel^000000
+Increases long-ranged damage on targets by 15%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFFire Rain^000000 by 30%.
+If upgrade level is +9 or higher,
+Reduces the cooldown of ^0000FFFire Rain^000000 by 1 second.
+#
+28226#
+A grenade launcher with the nickname 'Avenger'.
+Class: ^808080Grenade Launcher^000000
+Attack: ^808080350^000000
+Property: ^808080Neutral^000000
+Weight: ^808080180^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Rebel^000000
+Increases long-ranged damage on targets by 20%.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFDragon Tail^000000 by 15%.
+If upgrade level is +9 or higher,
+Reduces the cooldown of ^0000FFHowling Mine^000000 by 1 second.
 #
 28303#
 ^808080An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.^000000
@@ -85929,79 +86252,79 @@ Class: ^808080Accessory^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Atk + 5%
+Weapon Atk + 5%
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Concentration3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Reduces the variable casting time of skills by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force1^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force2^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Force3^000000
-^008080Demon Lord's Ring^000000
-Atk + 5%
+^008080Demon God's Ring^000000
+Weapon Atk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Intelligence3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Matk + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Luck3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Increases critical damage on targets by 5%.
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Speed3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Aspd + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality1^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality2^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 ^800080Set Bonus^000000
 ^008080Darklord Essence Vitality3^000000
-^008080Demon Lord's Ring^000000
+^008080Demon God's Ring^000000
 Max HP + 5%
 #
 28506#
@@ -86180,9 +86503,8 @@ The users casting cannot be interrupted outside of WoE.
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Glove^000000
-Reduces the cast delay delay of ^0000FFOverbrand^000000 by 2 seconds.
-Increases short-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
-Increases short-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
+Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
+Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
 Increases the damage of ^0000FFCannon Spear^000000 by 20%.
 Increases the damage of ^0000FFOverbrand^000000 by 20%.
 #
@@ -86722,10 +87044,11 @@ Weapon Level: 0
 28941#
 A shield made from lost technology found in the research building ruins.
 Class: ^808080Shield^000000
-Defense: ^808080150^000000
-Weight: ^80808095^000000
+Defense: ^80808095^000000
+Weight: ^808080120^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Mdef + 5
 Mdef + 5
 Max HP + 1%
 Additional Max HP + 1% per 3 upgrade levels of the item.
@@ -87177,6 +87500,68 @@ Increases the recovery rate of recovery skills by 45%.
 29120#
 Mdef + 30
 Increases the recovery rate of recovery skills by 55%.
+#
+31016#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 1000
+Max SP + 150
+Flee - 25
+#
+31017#
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Max HP - 2%
+Additional Max HP - 2% per 2 upgrade levels of the compounded item.
+Atk + 1%
+Additional Atk + 1% per 2 upgrade levels of the compounded item.
+Matk + 1%
+Additional Matk + 1% per 2 upgrade levels of the compounded item.
+#
+31018#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Max HP - 1225
+Adds a 50% chance of inflicting ^800000Curse^000000 on the target when performing a magical attack.
+#
+31019#
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Max HP - 13%
+Adds a 40% chance of inflicting ^800000Curse^000000 on the attacker when receiving a magical attack.
+#
+31020#
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Max HP - 13%
+Adds a 40% chance of inflicting ^800000Curse^000000 on the attacker when receiving a physical attack.
+#
+31021#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk - 3%
+Aspd + 10%
+#
+31022#
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Max SP + 20%
+Adds a 0.2% chance of inflicting ^800000Curse^000000 on the user when performing a physical or magical attack.
+#
+31023#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Matk + 10%
+Adds a 0.5% chance of inflicting ^800000Critical Wound^000000 on any target within 11-11 cells of the user when performing a magical attack.
+Adds an additional 1% chance of inflicting ^800000Critical Wound^000000 on any target within 11-11 cells of the user when performing a magical attack per 3 upgrade levels of the compounded item.
 #
 31024#
 Type: Miscellaneous
