@@ -1830,7 +1830,7 @@ sub shop_sold {
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	my $msg = TF("Sold: %s x %s - %sz\n", $articles[$number]{name}, $amount, $earned);
-	shopLog($msg);
+	shopLog($msg) if $config{logShop};
 	message($msg, "sold");
 
 	# Call hook before we possibly remove $articles[$number] or
@@ -1879,8 +1879,8 @@ sub shop_sold_long {
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	
-	my $msg = TF("[%s] Sold: %s x %s - %sz (Buyer charID: %s)\n", getFormattedDate($when), $articles[$number]{name}, $amount, $earned, $charID);
-	shopLog($msg);
+	my $msg = TF("Sold: %s x %s - %sz \n", $articles[$number]{name}, $amount, $earned);
+	shopLog($msg) if $config{logShop};
 	message($msg, "sold");
 
 	# Call hook before we possibly remove $articles[$number] or

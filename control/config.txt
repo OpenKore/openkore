@@ -315,6 +315,7 @@ logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
+logShop 1
 logEmoticons
 logConsole 1
 logAppendUsername 1
