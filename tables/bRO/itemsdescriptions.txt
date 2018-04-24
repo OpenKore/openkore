@@ -16751,161 +16751,153 @@ Um globo usado como um catalisador para permitir a um Ninja executar suas habili
 Peso: ^7777772^000000
 #
 13006#
-Uma adaga cujo punho foi entalhado na escama de um dragão negro, um material que dizem possuir o poder das trevas. Cada ataque de curto alcance possui uma pequena chance de amaldiçoar o alvo.
+Uma adaga cujo punho foi entalhado na escama de um dragão negro, um material que dizem possuir o poder das trevas.
+^0000ffAo realizar ataques físicos de curta distância, 10% de chance de infligir Maldição no oponente.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^777777150^000000
+Ataque: ^777777150^000000
+Propriedade: ^777777Sombrio^000000
 Peso: ^77777760^000000
-Propriedade:^777777Sombrio^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13007#
-Uma maça equipada com um gancho que pode ser usado para remover a arma das mãos de um inimigo. Cada ataque físico de curto alcance possui uma pequena chance de destruir a arma do inimigo.
+Uma adaga equipada com um gancho que pode ser usado para remover a arma das mãos de um inimigo.
+^0000ffAo realizar ataques físicos de curta distância, 2% de chance de destruir a arma do oponente.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13008#
-Uma maça equipada com um gancho que pode ser usado para remover a arma das mãos de um inimigo. Cada ataque físico de curto alcance possui uma pequena chance de destruir a arma do inimigo.
+Uma adaga equipada com um gancho que pode ser usado para remover a arma das mãos de um inimigo.
+^0000ffAo realizar ataques físicos de curta distância, 2% de chance de destruir a arma do oponente.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13009#
 Uma arma lendária com lâminas extremamente afiadas.
-Crítico +3, Velocidade de Ataque +3%.
+^0000ffCRIT +3.^000000
+^0000ffVelocidade de ataque +3%.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^777777125^000000
+Ataque: ^777777125^000000
+Propriedade: ^777777Vento^000000
 Peso: ^77777790^000000
-Propriedade:^777777Vento^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13010#
 Uma adaga lendária que dizem ter sido entregue à humanidade pelos deuses.
-ATQM +50.
-Classe: ^777777Adaga^000000
-Força de ataque: ^77777750^000000
+^0000ffATQM +50.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777750^000000
 Peso: ^77777760^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777712^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13011#
 Uma adaga lendária que dizem ter sido entregue à humanidade pelos deuses.
-ATQM +50.
-Classe: ^777777Adaga^000000
-Força de ataque: ^77777750^000000
+^0000ffATQM +50.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777750^000000
 Peso: ^77777760^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777712^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13012#
 Uma famosa espada que dizem ser tão afiada que é capaz de dividir oceanos ou cortar o ar e fazer com que ele sangre água.
-Adiciona Crítico +10 contra monstros Humanoides em ataques físicos de curto alcance.
+^0000ffCRIT +10 contra a raça Humanoide.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^77777795^000000
+Ataque: ^77777795^000000
+Propriedade: ^777777Água^000000
 Peso: ^77777770^000000
-Propriedade:^777777Água^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13013#
-Uma famosa espada que dizem ser tão afiada que é capaz de dividir oceanos ou cortar o ar e fazer com que ele sangre água. Adiciona Crítico +10 contra monstros Humanoides em ataques físicos de curto alcance.
+Uma famosa espada que dizem ser tão afiada que é capaz de dividir oceanos ou cortar o ar e fazer com que ele sangre água.
+^0000ffCRIT +10 contra a raça Humanoide.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^77777795^000000
+Ataque: ^77777795^000000
+Propriedade: ^777777Água^000000
 Peso: ^77777770^000000
-Propriedade:^777777Água^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13014#
-Uma adaga que possui uma brilhante lâmina branca feita de osso e projetada para apunhalar em vez de cortar. Cada ataque físico de curto alcance possui uma pequena chance de conjurar automaticamente a habilidade Cura Nível 1 no usuário.
+Uma adaga que possui uma brilhante lâmina branca feita de osso e projetada para apunhalar em vez de cortar.
+^0000ffAo realizar ataques físicos de curta distância, 1% de chance de autoconjurar [Curar] nv. 1 em si.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777780^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777742^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13015#
 Uma adaga que possui uma brilhante lâmina branca feita de osso e projetada para apunhalar em vez de cortar.
-Cada ataque físico de curto alcance possui uma pequena chance de conjurar automaticamente a habilidade Cura em Nível 1 no usuário.
+^0000ffAo realizar ataques físicos de curta distância, 1% de chance de autoconjurar [Curar] nv. 1 em si.^000000
 Tipo: ^777777Adaga^000000
-Força de ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777780^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777742^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13300#
-Uma famosa arma Ninja Huuma
-com o formato de uma asa.
-AGI – 1, DES – 2.
-Classe: ^777777Huuma^000000
-Força de ataque: ^777777150^000000
+Uma famosa arma Ninja Huuma com o formato de uma asa.
+^0000ffDES -2. AGI -1.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777150^000000
+Propriedade: ^777777Vento^000000
 Peso: ^777777300^000000
-Propriedade:^777777Vento^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13301#
-Um shuriken gigante e muito
-pesado, no formato de uma
-roda com lâminas. Cada ataque
-físico de curto alcance possui
-uma pequena chance de causar
-Sangramento^FFFFFF  ^000000 nos inimigos.
-Tipo: ^777777Huuma^000000
-Força de ataque: ^77777750^000000
+Um shuriken gigante e muito pesado, no formato de uma roda com lâminas.
+^0000ffAo realizar ataques físicos de curta distância, 1% de chance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^77777750^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777742^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13302#
-Um shuriken gigante e muito
-pesado, no formato de uma roda
-com lâminas.
- Cada ataque físico de curto
-alcance possui uma pequena chance
-de causar Sangramento^FFFFFF  ^000000
-nos inimigos.
-Tipo: ^777777Huuma^000000
-Força de ataque: ^77777750^000000
+Um shuriken gigante e muito pesado, no formato de uma roda com lâminas.
+^0000ffAo realizar ataques físicos de curta distância, 1% de chance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^77777750^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777742^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13303#
-Um shuriken Huuma que carrega a
-propriedade Fogo e solta faíscas
-como fogos de artifício quando^FFFFFF  ^000000
-atinge o inimigo. Cada ataque físico
-de curto alcance possui uma pequena
-chance de conjurar automaticamente a
-habilidade Bola de Fogo Nível 5.
-DES – 2.
-Tipo: ^777777Huuma^000000
-Força de ataque: ^777777185^000000
+Um shuriken Huuma que solta faíscas como fogos de artifício quando atinge o inimigo.
+^0000ffDES -2.^000000
+Ao realizar ataques físicos de curta distância:
+^0000ff3% de chance de autoconjurar [Bola de Fogo] nv. 5.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777185^000000
+Propriedade: ^777777Fogo^000000
 Peso: ^777777150^000000
-Propriedade:^777777Fogo^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 2117#
 Um protetor de braço criado especialmente
@@ -16930,28 +16922,22 @@ Nível necessário: ^77777720^000000
 Classes que utilizam: ^777777Ninja^000000
 #
 2119#
-Um protetor de braço criado exclusivamente
-para a classe Ninja, ele é melhorado
-com Proteção Mágica de alto nível^FFFFFF  ^000000 ´
-por um grande artesão.
-DEFM +5.
+Um protetor de braço criado exclusivamente para a classe Ninja, ele é melhorado com Proteção Mágica de alto nível por um grande artesão.
+^0000ffDEFM +5.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777745^000000
 Peso: ^77777715^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 2120#
-Um protetor de braço criado exclusivamente
-para a classe Ninja, ele é melhorado
-com Proteção Mágica de alto
-nível^FFFFFF  ^000000 por um grande
-artesão. DEFM +5.
+Um protetor de braço criado exclusivamente para a classe Ninja, ele é melhorado com Proteção Mágica de alto nível por um grande artesão.
+^0000ffDEFM +5.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777745^000000
 Peso: ^77777715^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 // ------------ Munição para Justiceiro -------------
 12144#
@@ -21590,15 +21576,15 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Sacerdotes, Monges e evoluções^000000
 #
 13304#
-O Huuma da Calmaria ajuda o usuário a manter a calma em situações tensas. É de grande ajuda em batalha.
-30% de dano adicional com habilidade Arremessar Shuriken Huuma.
-A conjuração não pode ser interrompida.
-Tipo de Item: ^777777Huuma^000000
-Força de ataque: ^777777112^000000
+Este huuma ajuda o usuário a manter a calma em situações tensas. É de grande ajuda em batalha.
+^0000ffA conjuração não pode ser interrompida.^000000
+^0000ffDano de [Arremessar Shuriken Huuma] +30%.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777112^000000
 Peso: ^777777155^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 
 1730#
@@ -24481,29 +24467,32 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 13305#
 Shuriken que guarda grande poder interior que inspira o ataque contra Humanoides.
-FOR + 2, DES + 1
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
-Tipo: ^777777Shuriken^000000
-Força de Ataque: ^77777755^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffFOR +2. DES +1.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^77777755^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13306#
 Shuriken que guarda grande poder interior que inspira o ataque contra Humanoides.
-FOR + 2, DES + 1
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Adiciona ao atacar a chance de aumentar em 100% o Ataque Físico por 10 segundos ao utilizar as habilidades 'Arremessar Shuriken Huuma' e 'Ataque Mortal'.
-Indestrutível em batalha.
-Tipo: ^777777Shuriken^000000
-Força de Ataque: ^77777755^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffFOR +2. DES +1.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de ativar um [efeito] por 10 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffDano de [Ataque Mortal] e [Arremessar Shuriken Huuma] +100%.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^77777755^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Ninja^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 1279#
 Katar especialmente criado para enfrentar Humanoides no campo de batalha.
@@ -43918,37 +43907,40 @@ Classes: ^777777Ninja e evoluções^000000
 #
 13313#
 Shuriken batizado graças às pétalas tremulantes. Dizem que, ao usar esta arma, você se sente cercado por uma nuvem de pétalas.
-ATQM +50.
-Aumenta o dano das Turbilhão de Pétalas em 20%.
+^0000ffATQM +50.^000000
+^0000ffDano de [Turbilhão de Pétalas] +20%.^000000
 Tipo: ^777777Shuriken Huuma^000000
 Ataque: ^777777150^000000
 Peso: ^777777150^000000
-Nível da Arma: ^7777773^000000
-Nível Necessário: ^777777110^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13314#
-Shuriken com a propriedade Água. Ao ser usado, gera uma tempestade de neve.
-ATQM +50.
-Pequena chance de usar automaticamente Grande Floco de Neve nv. 1 ao atacar fisicamente a curta distância ao custo de 1 Pedra do Gelo. Caso o personagem tenha aprendido um nível maior, a habilidade será conjurada no nível aprendido.
+Ao ser usado, este shuriken huuma gera uma tempestade de neve.
+^0000ffATQM +50.^000000
+Ao realizar ataques físicos de curta distância:
+^0000ff3% de chance de consumir 1 Pedra do Gelo para autoconjurar [Grande Floco de Neve] nv. 1 ou no nível aprendido.^000000
 Tipo: ^777777Shuriken Huuma^000000
 Ataque: ^777777200^000000
-Peso: ^777777150^000000
 Propriedade: ^777777Água^000000
-Nível da Arma: ^7777774^000000
-Nível Necessário: ^777777110^000000
-Classes: ^777777Ninja e evoluções^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13315#
 Shuriken com a propriedade Vento. Obstrui a vista dos inimigos com vento e chuva.
-ATQM +50.
-Pequena chance de usar automaticamente Lâmina do Vento nv. 1 ao ao atacar fisicamente a curta distância ao custo de 1 Pedra do Vento. Caso o personagem tenha aprendido um nível maior, a habilidade será conjurada no nível aprendido.
-Tipo: ^777777Shuriken Huuma^000000 Ataque: ^777777200^000000
-Peso: ^777777150^000000
+^0000ffATQM +50.^000000
+Ao realizar ataques físicos de curta distância:
+^0000ff3% de chance de consumir 1 Pedra do Vento para autoconjurar [Descarga Elétrica] nv. 1 ou no nível aprendido.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777200^000000
 Propriedade: ^777777Vento^000000
-Nível da Arma: ^7777774^000000
-Nível Necessário: ^777777110^000000
-Classes: ^777777Ninja e evoluções^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13316#
 Um Shuriken Huuma especial revestido de Oridecon e Ouro em uma combinação perfeita.
@@ -43967,44 +43959,60 @@ Classes: ^777777Ninjas e evoluções^000000
 #
 15053#
 Traje ninja melhorado levando em consideração as opiniões de ninjas habilidosos. A leveza e a durabilidade do tecido estão melhores do que antes.
-AGI +1, AGI +1 a cada 3 níveis de refinamento.
-AGI +2 quando usado em conjunto com uma Proteção de Braço.
+^0000ffAGI +1.^000000
+A cada 3 refinos:
+^0000ffAGI +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Proteção de Braço da Raposa]^000000
+^0000ffAGI +2 adicional.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777770^000000
 Peso: ^777777120^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 15054#
 Armadura de escamas supostamente usada por um ninja lendário. Especializada para ataques de curto alcance.
-HP máximo +15%, SP máximo -30%.
-ATQ +10% e FOR +2 adicionais quando usado em conjunto com a Proteção de Braço do Lobo.
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. -30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Proteção de Braço do Lobo]^000000
+^0000ffFOR +2.^000000
+^0000ffDano físico +10%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777790^000000
 Peso: ^777777180^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 15055#
-Armadura feita especialmente para proteger oficiais de alta patente contra ninjas assassinos. A armadura cria um clone do usuário para enganar o inimigo.
-AGI +1.
-Ao sofrer um ataque corporal, há a chance de conjurar Genjutsu: Clone das Sombras Nv. 1.
-Esquiva +10 quando usado em conjunto com a Proteção de Braço da Lua Crescente.
+Armadura feita especialmente para proteger oficiais de alta patente contra ninjas assassinos.
+^0000ffAGI +1.^000000
+Ao sofrer danos físicos:
+^0000ff5% de chance de autoconjurar [Genjutsu: Clone das Sombras] nv. 1.^000000
+^FF6347Conjunto^000000
+^FF6347[Proteção de Braço da Lua Crescente]^000000
+^0000ffEsquiva +10.^000000
+^0000ffEsquiva perfeita +1.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777760^000000
 Peso: ^777777150^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 15056#
 Traje ninja melhorado levando em consideração as opiniões de ninjas habilidosos. A leveza e a durabilidade do tecido estão melhores do que antes.
-AGI 1, mais AGI +1 a cada 3 níveis de refinamento.
-AGI +2 quando usado em conjunto com uma Proteção de Braço.
+^0000ffAGI +1.^000000
+A cada 3 refinos:
+^0000ffAGI +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Proteção de Braço da Raposa]^000000
+^0000ffAGI +2 adicional.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777770^000000
 Peso: ^777777120^000000
-Nível Necessário: ^777777100^000000
-Classes: ^777777Ninja e evoluções^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 17155#
 ^FF0000Não pode ser trocada entre personagens.^000000
@@ -47421,16 +47429,19 @@ Classes : ^777777Gunslinger^000000
 #
 13317#
 ^ff0000Não pode ser negociado.^000000
-^000088Item de aluguel^000000
-ATQM + 100.
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Sangramento ao atacar fisicamente.
-Tipo: ^777777Magic Shuriken^000000 Ataque: ^77777780^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes: ^777777Ninja^000000
+^000088Item de aluguel.^000000
+Arma de treinamento para a Guerra do Emperium.
+^0000ffATQM +100.^000000
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +20%.^000000
+Ao realizar ataques físicos de curta distância:
+^0000ffChance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^77777780^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 13439#
 ^ff0000Não pode ser negociado.^000000
@@ -57879,6 +57890,7 @@ Refino +12 ou mais:
 ^0000ffAnula a penalidade de tamanho da arma.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Coelho Macabro]^000000
+Refino do chapéu no +1 ou maior:
 Ao realizar ataques físicos ou mágicos:
 ^0000ff0,2% de chance de se transformar em Piamette por 3 segundos.^000000
 A cada refino do Chapéu:
