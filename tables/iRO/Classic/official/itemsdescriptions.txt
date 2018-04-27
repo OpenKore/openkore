@@ -71346,3 +71346,18 @@ It is worth 3 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20016#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Promethean Crown!
+200 Logs
+100 Iron
+40 Coal
+5 Gold
+2 Flame Hearts
+1 Promethean Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
