@@ -2128,11 +2128,11 @@ sub cmdSlave {
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 		
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->{hpPercent}) . '%)';
-		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->{spPercent})."%)";
+		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->hp_percent) . '%)';
+		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->sp_percent)."%)";
 		my $exp_string = (
 			defined $slave->{exp}
-			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->{expPercent})."%)"
+			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->exp_base_percent)."%)"
 			: (
 				defined $slave->{kills}
 				? T("Kills: ") . formatNumber($slave->{kills})
