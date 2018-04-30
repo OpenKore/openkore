@@ -5257,4 +5257,29 @@ sub clan_leave {
 	}
 }
 
+sub rank_points {
+	my ( $self, $args ) = @_;
+
+	$self->blacksmith_points( $args ) if $args->{type} == 0;
+	$self->alchemist_point( $args )   if $args->{type} == 1;
+	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
+	$self->pk_point( $args )   if $args->{type} == 3;
+	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 3;
+}
+
+sub blacksmith_points {
+	my ($self, $args) = @_;
+	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
+sub alchemist_point {
+	my ($self, $args) = @_;
+	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
+sub pk_point {
+	my ($self, $args) = @_;
+	message TF("[POINT] PK Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
 1;
