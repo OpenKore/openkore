@@ -9,8 +9,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 6687 $
-#  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -361,6 +359,7 @@ sub new {
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
+		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
@@ -379,9 +378,13 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+<<<<<<< HEAD
 		'09A6' => ['banking_status', 'V2 v',[qw(zeny reason)]],
 		'09A8' => ['banking_status_deposit', 'v V2 V',[qw(reason inbank onhand)]],
 		'09AA' => ['banking_status_withdraw', 'v V2 V',[qw(reason inbank onhand)]],
+=======
+		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+>>>>>>> master
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -417,6 +420,7 @@ sub new {
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
+		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port unknown)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADE' => ['flag', 'V', [qw(unknown)]],

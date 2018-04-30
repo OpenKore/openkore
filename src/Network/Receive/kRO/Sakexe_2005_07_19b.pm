@@ -20,13 +20,6 @@ package Network::Receive::kRO::Sakexe_2005_07_19b;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_07_18a);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getHex getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
-
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);

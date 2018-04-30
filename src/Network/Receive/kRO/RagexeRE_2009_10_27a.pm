@@ -21,7 +21,7 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2009_10_06a);
 use Globals qw($char);
 use Log qw(message);
-use Translation qw(T TF);
+use Translation qw(TF);
 
 use constant {
 	EXP_FROM_BATTLE => 0x0,
