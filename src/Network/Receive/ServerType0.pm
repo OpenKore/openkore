@@ -455,7 +455,7 @@ sub new {
 
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], #TODO: PACKET_ZC_BROADCAST3
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
-		'043E' => ['skill_post_delaylist'],
+		'043E' => ['skill_post_delaylist', 'v a*', [qw(len msg)]],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]],
 		'0441' => ['skill_delete', 'v', [qw(ID)]],
@@ -546,7 +546,7 @@ sub new {
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
-		'0985' => ['skill_post_delaylist2', 'v a*', [qw(packet_len msg)]],
+		'0985' => ['skill_post_delaylist', 'v a*', [qw(len msg)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
@@ -5330,31 +5330,6 @@ sub skill_delete {
 	message TF( "Lost skill: %s\n", $skill->getName ), 'skill';
 	delete $char->{skills}->{ $skill->getHandle };
 	binRemove( \@skillsID, $skill->getHandle );
-}
-
-sub skill_post_delaylist {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	for (my $i = 4; $i < $args->{msg_size}; $i += 6){
-		my ($ID,$time) = unpack("v V", substr($msg, $i,6));
-		my $skillName = (new Skill(idn => $ID))->getName;
-		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
-		$char->setStatus($skillName.$status, 1, $time);
-	}
-}
-
-sub skill_post_delaylist2 {
-	my ($self, $args) = @_;
-	my $unpack = "v V2";
-	for (my $i = 0; $i < ($args->{packet_len} - 4); $i += 10) {
-		my ($skill, $totalDelay, $remainDelay) = unpack($unpack, substr($args->{msg}, $i));
-		my $skillName = (new Skill(idn => $skill))->getName;
-		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
-
-		$char->setStatus($skillName." ".$status, 1, $remainDelay);
-	}
 }
 
 sub msg_string {

@@ -1585,6 +1585,21 @@ sub skill_post_delay {
 	$char->setStatus($skillName." ".$status, 1, $args->{time});
 }
 
+sub skill_post_delaylist {
+	my ($self, $args) = @_;
+	
+	my $offset = ($args->{switch} eq '043E') ? 6 : 10;
+	my $unpack = ($args->{switch} eq '043E') ? "v V" : "v V2";
+	
+	for (my $i = 0; $i < length($args->{msg}); $i += $offset) {
+		my (@delayArgs) = unpack($unpack, substr($args->{msg}, $i));
+		my $skillName = Skill->new(idn => $delayArgs[0])->getName;
+		my $statusName = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
+		
+		$char->setStatus($skillName . $statusName, 1, $delayArgs[-1]);
+	}
+}
+
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool
 # micc = micc<24 characters, this is the sender name. seems like it's null padded><hex color code><message>
 # micc = Player Broadcast   The struct: micc<23bytes player name+some hex><\x00><colour code><full message>
