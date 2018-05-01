@@ -805,7 +805,9 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "022A" ||
 		$args->{switch} eq "02EE" ||
 		$args->{switch} eq "07F9" ||
-		$args->{switch} eq "0857") {
+		$args->{switch} eq "0915" ||
+		$args->{switch} eq "09DD" ||
+		$args->{switch} eq "09FF") {
 		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
@@ -843,7 +845,10 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "02ED" ||
 		$args->{switch} eq "01D9" ||
 		$args->{switch} eq "07F8" ||
-		$args->{switch} eq "0858") {
+		$args->{switch} eq "0858" ||
+		$args->{switch} eq "090F" ||
+		$args->{switch} eq "09DC" ||
+		$args->{switch} eq "09FE") {
 		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
@@ -863,7 +868,10 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
 		$args->{switch} eq "07F7" ||
-		$args->{switch} eq "0856") {
+		$args->{switch} eq "0856" ||
+		$args->{switch} eq "0914" ||
+		$args->{switch} eq "09DB" ||
+		$args->{switch} eq "09FD") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
@@ -1845,7 +1853,7 @@ sub shop_sold {
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	my $msg = TF("Sold: %s x %s - %sz\n", $articles[$number]{name}, $amount, $earned);
-	shopLog($msg);
+	shopLog($msg) if $config{logShop};
 	message($msg, "sold");
 
 	# Call hook before we possibly remove $articles[$number] or
@@ -1894,9 +1902,9 @@ sub shop_sold_long {
 	$shopEarned += $earned;
 	$articles[$number]{quantity} -= $amount;
 	
-	my $msg = TF("[%s] Sold: %s x %s - %sz (Buyer charID: %s)\n", getFormattedDate($when), $articles[$number]{name}, $amount, $earned, $charID);
-	shopLog($msg);
-	message($msg, "sold");
+	my $msg = TF("Sold: %s x %s - %sz (Buyer charID: %s)\n", $articles[$number]{name}, $amount, $earned, $charID);
+	shopLog($msg) if $config{logShop};
+	message("[" . getFormattedDate($when) . "] " . $msg, "sold");
 
 	# Call hook before we possibly remove $articles[$number] or
 	# $articles itself as a result of the sale.

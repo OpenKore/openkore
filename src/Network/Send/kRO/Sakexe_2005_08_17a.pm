@@ -20,7 +20,7 @@ package Network::Send::kRO::Sakexe_2005_08_17a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_08_08a);
 
-use Log qw(message warning error debug);
+use Log qw(debug);
 
 sub new {
 	my ($class) = @_;

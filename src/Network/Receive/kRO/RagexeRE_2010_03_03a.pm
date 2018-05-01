@@ -20,7 +20,7 @@ package Network::Receive::kRO::RagexeRE_2010_03_03a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_02_23a);
 use Log qw(message);
-use Translation;
+use Translation qw(TF);
 
 sub new {
 	my ($class) = @_;

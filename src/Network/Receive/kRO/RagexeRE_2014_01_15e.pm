@@ -16,6 +16,11 @@ package Network::Receive::kRO::RagexeRE_2014_01_15e;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2013_08_07a);
 
+sub new {
+	my ($class) = @_;
+	return $class->SUPER::new(@_);
+}
+
 1;
 =pod
 #if PACKETVER == 20140115
