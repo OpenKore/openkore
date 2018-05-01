@@ -16,18 +16,11 @@
 # The majority of private servers use eAthena, this is a clone of kRO
 
 package Network::Receive::kRO::Sakexe_2006_03_13a;
-
-use strict;
 use base qw(Network::Receive::kRO::Sakexe_2006_03_06a);
 
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
-
-=pod
-//2006-03-13aSakexe
-0x0273,30,mailreturn,2:6
-=cut
 
 1;

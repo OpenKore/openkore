@@ -20,30 +20,9 @@ package Network::Receive::kRO::Sakexe_2006_03_27a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2006_03_13a);
 
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
-
-=pod
-//2006-03-27aSakexe
-packet_ver: 20
-0x0072,26,useskilltoid,11:18:22
-0x007e,120,useskilltoposinfo,5:15:29:38:40
-0x0085,12,changedir,7:11
-//0x0089,13,ticksend,9
-0x008c,12,getcharnamerequest,8
-0x0094,23,movetokafra,5:19
-0x009b,37,wanttoconnection,9:21:28:32:36
-0x009f,24,useitem,9:20
-0x00a2,11,solvecharname,7
-0x00a7,15,walktoxy,12
-0x00f5,13,takeitem,9
-0x00f7,26,movefromkafra,11:22
-0x0113,40,useskilltopos,5:15:29:38
-0x0116,17,dropitem,8:15
-0x0190,18,actionrequest,7:17
-=cut
 
 1;

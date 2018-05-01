@@ -19,25 +19,10 @@ package Network::Receive::kRO::Sakexe_2009_02_18a;
 
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2009_01_14a);
-use Log qw(debug);
-use Translation qw(TF);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]], # 14
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-=pod
-//2009-02-18aSakexe
-0x0446,14
-=cut
 
 1;

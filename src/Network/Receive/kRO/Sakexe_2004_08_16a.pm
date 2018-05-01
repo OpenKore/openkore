@@ -20,20 +20,9 @@ package Network::Receive::kRO::Sakexe_2004_08_16a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2004_08_09a);
 
-use Log qw(message warning error debug);
-# maybe needed for unfinished packets
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
-
-=pod
-//2004-08-16aSakexe
-0x0212,26,rc,2
-0x0213,26,check,2
-=cut
 
 1;

@@ -22,27 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2007_01_29a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
-		# 0x02ab is sent packet
-		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-
-
-=pod
-// 2007-02-05aSakexe
-0x02aa,4
-0x02ab,36
-0x02ac,6
-=cut
 
 1;
