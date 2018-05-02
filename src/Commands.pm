@@ -5156,13 +5156,17 @@ sub cmdTop10 {
 		message T("Function 'top10' (Show Top 10 Lists)\n" .
 			"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n");
 	} elsif ($arg1 eq "a" || $arg1 eq "alche" || $arg1 eq "alchemist") {
-		$messageSender->sendTop10Alchemist();
+		#$messageSender->sendTop10Alchemist();
+		$messageSender->sendReqRanking(0x01);
 	} elsif ($arg1 eq "b" || $arg1 eq "black" || $arg1 eq "blacksmith") {
-		$messageSender->sendTop10Blacksmith();
+		#$messageSender->sendTop10Blacksmith();
+		$messageSender->sendReqRanking(0x00);
 	} elsif ($arg1 eq "p" || $arg1 eq "pk" || $arg1 eq "pvp") {
-		$messageSender->sendTop10PK();
+		#$messageSender->sendTop10PK();
+		$messageSender->sendReqRanking(0x03);
 	} elsif ($arg1 eq "t" || $arg1 eq "tk" || $arg1 eq "taekwon") {
-		$messageSender->sendTop10Taekwon();
+		#$messageSender->sendTop10Taekwon();
+		$messageSender->sendReqRanking(0x02);
 	} else {
 		error T("Syntax Error in function 'top10' (Show Top 10 Lists)\n" .
 			"Usage: top10 <b|a|t|p> |\n" .

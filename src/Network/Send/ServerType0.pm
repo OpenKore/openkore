@@ -150,6 +150,7 @@ sub new {
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C9' => ['request_cashitems'],#2
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
+		'097C' => ['req_ranking', 'v', [qw(type)]],	
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
