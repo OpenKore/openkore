@@ -23,6 +23,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	$self->{char_create_version} = 0x0A39;
+
 	my %handlers = qw(
 		item_use 0439
 		token_login 0825
@@ -59,28 +61,6 @@ sub reconstruct_char_delete2_accept {
 	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
 	$args->{length} = 8 + length($args->{code});
 	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
-}
-
-sub sendCharCreate {
-	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
-
-	$hair_color ||= 1;
-	$hair_style ||= 0;
-	$job_id     ||= 0;    # novice
-	$sex        ||= 0;    # female
-
-	my $msg = $self->reconstruct({
-		switch => 'char_create',
-		name => stringToBytes( $name ),
-		slot => $slot,
-		hair_color => $hair_color,
-		hair_style => $hair_style,
-		job_id => 0,
-		unknown => 0,
-		sex => $sex,
-	});
-
-	$self->sendToServer($msg);
 }
 
 1;

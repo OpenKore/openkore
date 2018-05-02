@@ -40,7 +40,7 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
+		'0067' => ['char_create', 'a24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
 		'0068' => ['char_delete'], # TODO
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
@@ -100,6 +100,7 @@ sub new {
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
 		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
+		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
@@ -114,6 +115,7 @@ sub new {
 		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
@@ -132,16 +134,6 @@ sub new {
 # TODO: move 0273 and 0275 to appropriate Sakexe version
 
 # 0x0066,6
-
-# 0x0067,37
-sub sendCharCreate {
-	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-
-	my $msg = pack('v a24 C7 v2', 0x0067, stringToBytes($name), $str, $agi, $vit, $int, $dex, $luk, $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
-}
 
 # 0x0068,46
 sub sendCharDelete {

@@ -10,6 +10,10 @@ password
 loginPinCode
 char
 
+# Character Creation Version
+# 1 = Classic Version, 2 = Classic Version without attribute, 3 = Two Sex Account Version , 4 = Doram Version
+charCreateVersion 1
+
 # Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1

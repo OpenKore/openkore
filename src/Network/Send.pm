@@ -35,7 +35,7 @@ use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
-use Log qw(debug);
+use Log qw(debug error);
 
 sub new {
 	my ( $class ) = @_;
@@ -418,6 +418,80 @@ sub sendCharLogin {
 	my ($self, $char) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'char_login', slot => $char}));
 	debug "Sent sendCharLogin\n", "sendPacket", 2;
+}
+
+# Character Creation Version
+# 1 = Classic Version, 2 = Classic Version without attribute, 3 = Two Sex Account Version , 4 = Doram Version
+# Compatibility (char_create_version): 1 = twRO, servertype from 20120307 to 20150930, 0x0A39 = iRO and kRO Zero
+sub sendCharCreate {
+	my ( $self ) = @_;
+	my $msg;
+	
+	if ( $self->{char_create_version} == 0x0A39 || $config{'charCreateVersion'} == 4 ) {
+		my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
+		# name slot hair_color hair_style job_id unknown sex
+		$hair_color ||= 1;
+		$hair_style ||= 0;
+		$job_id     ||= 0;    # novice
+		$sex        ||= 0;    # female
+
+		$msg = $self->reconstruct({
+				switch => '0A39',
+				name => $name,
+				slot => $slot,
+				hair_color => $hair_color,
+				hair_style => $hair_style,
+				job_id => $job_id,
+				unknown => 0,
+				sex => $sex,
+			});
+	} elsif( $config{'charCreateVersion'} == 3 ) {
+		my ($self, $slot, $name, $hair_style, $hair_color, $sex) = @_;
+		$hair_color ||= 1;
+		$hair_style ||= 0;		
+		$sex ||= 0; # female
+
+		$msg = $self->reconstruct({
+				switch => '0A39',
+				name => $name,
+				slot => $slot,
+				hair_color => $hair_color,
+				hair_style => $hair_style,
+				job_id => 0,
+				unknown => 0,
+				sex => $sex,
+			});
+	} elsif ( $self->{char_create_version} == 1 || $config{'charCreateVersion'} == 2 ) {
+		my ($self, $slot, $name, $hair_style, $hair_color) = @_;
+		# name slot hair_style hair_color
+		$hair_color ||= 1;
+		$hair_style ||= 0;
+		$msg = $self->reconstruct({
+				switch => '0970',
+				name => $name,
+				slot => $slot,
+				hair_color => $hair_color,
+				hair_style => $hair_style,
+			});
+	} else {
+		my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+		# name str agi vit int dex luk slot hair_color hair_style
+		$msg = $self->reconstruct({
+				switch => '0067',
+				name => $name,
+				str => $str,
+				agi => $agi,
+				vit => $vit,
+				int => $int,
+				dex => $dex,
+				luk => $luk,
+				slot => $slot,
+				hair_color => $hair_color,
+				hair_style => $hair_style,
+			});
+	}
+
+	$self->sendToServer( $msg );
 }
 
 sub sendMapLogin {

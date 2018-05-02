@@ -65,18 +65,6 @@ sub reconstruct_char_delete2_accept {
 	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
-sub sendCharCreate {
-	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
-
-	$hair_color ||= 1;
-	$hair_style ||= 0;
-	$job_id     ||= 0;    # novice
-	$sex        ||= 0;    # female
-
-	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
-	$self->sendToServer( $msg );
-}
-
 #sub sendCharDelete {
 #	my ($self, $charID, $email) = @_;
 #	my $msg = pack("C*", 0xFB, 0x01) .
