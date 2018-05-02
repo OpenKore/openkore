@@ -378,13 +378,10 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
-<<<<<<< HEAD
 		'09A6' => ['banking_status', 'V2 v',[qw(zeny reason)]],
 		'09A8' => ['banking_status_deposit', 'v V2 V',[qw(reason inbank onhand)]],
 		'09AA' => ['banking_status_withdraw', 'v V2 V',[qw(reason inbank onhand)]],
-=======
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
->>>>>>> master
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
