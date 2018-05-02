@@ -1502,4 +1502,18 @@ sub sendClanChat {
     $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
 }
 
+sub sendReqRanking {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'req_ranking',
+		type => $type,
+# * type
+# *  0: /blacksmith
+# *  1: /alchemist
+# *  2: /taekwon
+# *  3: /pk
+	}));
+	debug "Sent Req Ranking : ".getHex($type)."\n", "sendPacket", 2;
+}
 1;
