@@ -24,20 +24,24 @@ sub new {
 		'095A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0936' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0942' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0881' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'092E' => ['buy_bulk_closeShop'],			
+		'0948' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0835' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0877' => ['character_move', 'a3', [qw(coordString)]],
 		'089E' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0960' => ['homunculus_command', 'v C', [qw(commandType, commandID)]], #f
+		'0960' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'092F' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0961' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'089C' => ['item_take', 'a4', [qw(ID)]],
 		'0969' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0924' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
+		'0924' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'093E' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'022D' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#
+		'0873' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0934' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'085E' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'08AC' => ['sync', 'V', [qw(time)]],
-		'0961' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0941' => ['storage_password'],
+		'08AC' => ['sync', 'V', [qw(time)]],		
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -47,29 +51,36 @@ sub new {
 		actor_info_request 095A
 		actor_look_at 0936
 		actor_name_request 0942
+		buy_bulk_buyer 0881
+		buy_bulk_closeShop 092E
+		buy_bulk_openShop 0948
+		buy_bulk_request 0835
 		character_move 0877
 		friend_request 089E
 		homunculus_command 0960
 		item_drop 092F
+		item_list_window_selected 0961
 		item_take 089C
 		map_login 0969
 		party_join_request_by_name 0924
 		skill_use 093E
-		skill_use_location 022D
+		skill_use_location 0873
 		storage_item_add 0934
 		storage_item_remove 085E
-		sync 08AC
 		storage_password 0941
+		sync 08AC
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-#	$self->cryptKeys(0x17F83A19, 0x1CC541E9, 0x116944F4);	
+#elif PACKETVER == 20150916 // 2015-09-16Ragexe
+#		packet_keys(0x17F83A19,0x116944F4,0x1CC541E9);
+#	$self->cryptKeys(0x17F83A19,0x1CC541E9 ,0x116944F4);
 
 
 	return $self;
 }
+
 
 1;
