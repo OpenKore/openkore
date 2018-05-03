@@ -9,8 +9,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 6687 $
-#  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -67,7 +65,12 @@ sub new {
 		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
-		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
+		'006D' => ($rpackets{'006D'} == 108)
+			? (($rpackets{'006D'} == 110)
+				? ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]] # 110
+				: ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]])
+			: ['character_creation_successful', 'a4 V9 v V2 v15 Z24 C6 v2 Z16 V5', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style body weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag map deleteDate robe slotMove addons sex)]],
+		,
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
@@ -77,11 +80,17 @@ sub new {
 		'0075' => ['changeToInGameState'], # -1
 		'0076' => ['update_char', 'a4 v C', [qw(ID style item)]], # 9
 		'0077' => ['changeToInGameState'], # 5
-		'0078' => ['actor_exists',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], #standing # 54
+		'0078' => ($rpackets{'0078'} == 54) # or 55
+			? ['actor_exists',	'a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]] #standing # 54
+			: ['actor_exists', 'C a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]] # 55 #standing
+		,
 		'0079' => ['actor_connected',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
 		'007B' => ['actor_moved',	'a4 v8 V v6 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #walking # 60
-		'007C' => ['actor_connected',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]], #spawning (eA does not send this for players) # 41
+		'007C' => ($rpackets{'007C'} == 41 )# or 42		
+			? ['actor_connected',	'a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 41
+			: ['actor_connected', 'C a4 v14 C2 a3 C2', [qw(object_type ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 42
+		,
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
 		'0081' => ['errors', 'C', [qw(type)]], # 3
@@ -174,7 +183,6 @@ sub new {
 		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
-		# 0x0110 # TODO
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
@@ -220,7 +228,6 @@ sub new {
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
 		'0154' => ['guild_members_list'], # -1
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 # FIXME: this is a variable len message, can hold multiple entries
-		# 0x0158,-1 # TODO
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
 		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message account)]], # 90
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # 6 # clif_guild_broken
@@ -249,7 +256,6 @@ sub new {
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # 10 # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
-		# // 0x0186,0
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
 		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
@@ -266,8 +272,11 @@ sub new {
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		'019E' => ['pet_capture_process'], # 2
-		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
-		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]], # 35
+		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3		
+		'01A2' => ($rpackets{'01A2'} == 35) # or 37
+			? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
+			: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
+		,
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]], # 11
 		'01A6' => ['egg_list'], # -1
@@ -292,7 +301,6 @@ sub new {
 		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
-		# // 0x01ca,0
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
@@ -306,7 +314,6 @@ sub new {
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking
-		# 0x01dc,-1 # TODO
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]], # 30
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
@@ -320,7 +327,6 @@ sub new {
 		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01F0' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		# 0x01f1,-1 # TODO
 		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]], # 20
 		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # 10 # weather/misceffect2 packet
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]], # 32
@@ -336,17 +342,137 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]], # 34
 		'0209' => ['friend_response', 'v a4 a4 Z24', [qw(type accountID charID name)]], # 36
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
-		# // 0x020b,0
-		# // 0x020c,0
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
-		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
+		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
+		'0210' => ['pvppoint_result', 'a4 a4 V3', [qw(ID guildID win_point lose_point point)]], # 22
+		'0215' => ['gospel_buff_aligned', 'V', [qw(ID)]], # 6
+		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
+		'0219' => ['top10_blacksmith_rank'], #282
+		'021A' => ['top10_alchemist_rank'], # 282
+		'021B' => ['blacksmith_points', 'V2', [qw(points total)]], # 10
+		'021C' => ['alchemist_point', 'V2', [qw(points total)]], # 10
+		'021E' => ['less_effect', 'V', [qw(flag)]], # 6
+		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
+		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
+		'0221' => ['upgrade_list'], # -1
+		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
+		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
+		'0226' => ['top10_taekwon_rank'], # 282
+		'0227' => ['gameguard_request'], # 18 ??
+		'0229' => ['character_status', 'a4 v2 V C', [qw(ID opt1 opt2 option stance)]], # 15
+		'022A' => ['actor_exists', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 58 # standing
+		'022B' => ['actor_connected', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 57 # spawning
+		'022C' => ($rpackets{'022C'} == 64) # or 65
+			? ['actor_moved', 'a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # 64 # walking
+			: ['actor_moved', 'C a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # walking # 65 # TODO: figure out what eA does here (shield is in GEmblemVer?): # v5 => v2 V v
+		,
+		'022E' => ($rpackets{'022E'} == 69) # or 71
+			? ['homunculus_property', 'Z24 C v16 V2 v', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill)]] # 69
+			: ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]] # 71
+		,
+		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
+		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]], # 12
+		'0235' => ['skills_list'], # -1 # homunculus skills
+		'0238' => ['top10_pk_rank'], #  282
+		'0239' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
+		'023A' => ['storage_password_request', 'v', [qw(flag)]], # 4
+		'023C' => ['storage_password_result', 'v2', [qw(type val)]], # 6
+		'023E' => ['storage_password_request', 'v', [qw(flag)]], # 4
+		'0240' => ['mail_refreshinbox', 'v V', [qw(size count)]], # 8
+		'0242' => ['mail_read', 'v V Z40 Z24 V3 v2 C3 a8 C Z*', [qw(len mailID title sender delete_time zeny amount nameID type identified broken upgrade cards msg_len message)]], # -1
+		'0245' => ['mail_getattachment', 'C', [qw(fail)]], # 3
+		'0249' => ['mail_send', 'C', [qw(fail)]], # 3
+		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
+		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
+		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
+		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
+		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5		
+		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
+		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
+		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
+		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
+		'025F' => ['auction_windows', 'V', [qw(flag)]], # 6
+		'0260' => ['mail_window', 'V', [qw(flag)]], # 6
+		'0274' => ['mail_return', 'V v', [qw(mailID fail)]], # 8
+		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]], #v 14
+		'0283' => ['account_id', 'a4', [qw(accountID)]], # 6
+		'0287' => ['cash_dealer'], # -1
+		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12		
+		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
+		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
+		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
+		'0291' => ['message_string', 'v', [qw(msg_id)]], # 4
+		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
+		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]], # 10
+		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
+		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
+		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
+		'029B' => ($rpackets{'029B'} == 72) # or 80
+			? ['mercenary_init', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]] # 72
+			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]] # 80
+		,
+		'029C' => ['mercenary_property', 'v8 Z24 v5 a4 v V2', [qw(atk matk hit crit def mdef flee aspd name lv hp max_hp sp max_sp contract_end faith summons kills)]], # 66
+		'029D' => ['skills_list'], # -1 # mercenary skills		
+		'02A2' => ['mercenary_param_change', 'v V', [qw(type param)]], # 8
+		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
+		'02A6' => ['gameguard_request'], # 22		
+		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
+		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
+		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
+		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
+		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
+		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
+		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
+		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
+		'02B9' => ['hotkeys'], # 191 # hotkeys:27
+		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
+		'02C1' => ['main_chat', 'v a4 a4 a*', [qw(len accountID color message)]], # -1		
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
-		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
+		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
+		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
+		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
+		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10		
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D3' => ['bind_on_equip', 'v', [qw(index)]], # 4
+		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]], # 29
+		'02D5' => ['isvr_disconnect'], # 2
+		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], # -1 #type is job
+		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]], # 10
+		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
+		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1
+		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]], # 32
+		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]], # 6
+		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]], # 36
+		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], # 34
+		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 33
+		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]], # -1 # int[] mapInfoTable
+		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02EA' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02EB' => ['map_loaded', 'V a3 C2 v', [qw(syncMapSync coords xSize ySize font)]], # 13
+		'02EC' => ['actor_exists', 'C a4 v3 V v5 V v5 a4 a4 V C2 a6 C2 v2', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 67 # Moving # TODO: C struct is different
+		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 C2 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 59 # Spawning
+		'02EE' => ['actor_moved', 'a4 v3 V v10 a4 a4 V C2 a3 C3 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize act lv font)]], # 60 # Standing
+		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
+		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
+		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
+		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]], # 25
+		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
+		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
+		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]], # -1
+		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]], # 14
+		'0449' => ['hack_shield_alarm', 'x2', [qw(unknown)]], # 4		
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
@@ -361,13 +487,13 @@ sub new {
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
+		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'08B9' => ['login_pin_code_request2', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
-		'006D' => ['character_creation_successful', 'a4 V9 v V2 v15 Z24 C6 v2 Z16 V5', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style body weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag map deleteDate robe slotMove addons sex)]],
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -379,6 +505,7 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -391,6 +518,7 @@ sub new {
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -402,7 +530,7 @@ sub new {
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
-		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
+		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
@@ -414,6 +542,7 @@ sub new {
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
+		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port unknown)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADE' => ['flag', 'V', [qw(unknown)]],
@@ -1256,6 +1385,12 @@ sub mercenary_init {
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
 	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+	
+	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	}
 }
 
 # 022E

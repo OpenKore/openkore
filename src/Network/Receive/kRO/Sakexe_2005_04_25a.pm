@@ -20,20 +20,9 @@ package Network::Receive::kRO::Sakexe_2005_04_25a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_04_11a);
 
-use Log qw(message warning error debug);
-use Utils qw(getHex getCoordString);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
-
-=pod
-//2005-04-25aSakexe
-0x022d,5,hommenu,4
-0x0232,9,hommoveto,6
-0x0233,11,homattack,0
-0x0234,6,hommovetomaster,0
-=cut
 
 1;

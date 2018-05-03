@@ -805,7 +805,9 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "022A" ||
 		$args->{switch} eq "02EE" ||
 		$args->{switch} eq "07F9" ||
-		$args->{switch} eq "0857") {
+		$args->{switch} eq "0915" ||
+		$args->{switch} eq "09DD" ||
+		$args->{switch} eq "09FF") {
 		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
@@ -843,7 +845,10 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "02ED" ||
 		$args->{switch} eq "01D9" ||
 		$args->{switch} eq "07F8" ||
-		$args->{switch} eq "0858") {
+		$args->{switch} eq "0858" ||
+		$args->{switch} eq "090F" ||
+		$args->{switch} eq "09DC" ||
+		$args->{switch} eq "09FE") {
 		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
@@ -863,7 +868,10 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "022C" ||
 		$args->{switch} eq "02EC" ||
 		$args->{switch} eq "07F7" ||
-		$args->{switch} eq "0856") {
+		$args->{switch} eq "0856" ||
+		$args->{switch} eq "0914" ||
+		$args->{switch} eq "09DB" ||
+		$args->{switch} eq "09FD") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
