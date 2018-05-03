@@ -1318,7 +1318,7 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ( $masterServer->{'charCreationType'} == 4 ) {
+			if ( $masterServer->{'charCreationType'} == 4 || $messageSender->{packet_lut}{'char_create'} eq "0A39") {
 				$message
 					= T( "Please enter the desired properties for your characters, in this form:\n" )
 					. T( "(slot) \"(name)\" (hairstyle) (haircolor) (job) (sex)\n" )
@@ -1329,7 +1329,7 @@ sub charSelectScreen {
 					= T( "Please enter the desired properties for your characters, in this form:\n" )
 					. T( "(slot) \"(name)\" (hairstyle) (haircolor)] (sex)\n" )
 					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
-			} elsif ( $masterServer->{'charCreationType'} == 2 ) {
+			} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} eq "0970" ) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
 					"(slot) \"(name)\" (hairstyle) (haircolor)");
 			} else {
@@ -1603,7 +1603,7 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ( $masterServer->{'charCreationType'} == 4 || $messageSender->{packet_lut}{'char_create'} == "0A39") {
+	if ( $masterServer->{'charCreationType'} == 4 || $messageSender->{packet_lut}{'char_create'} eq "0A39") {
 		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
 		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
 
@@ -1622,7 +1622,7 @@ sub createCharacter {
 		my $sex = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
 
 		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $sex );
-	} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} == "0970") {
+	} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} eq "0970") {
 		my ($hair_style, $hair_color) = @_;
 
 		$messageSender->sendCharCreate($slot, $name, $hair_style, $hair_color);

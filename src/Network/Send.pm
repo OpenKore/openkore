@@ -422,14 +422,13 @@ sub sendCharLogin {
 
 # Character Creation Version
 # 1 = Classic Version, 2 = Classic Version without attribute, 3 = Two Sex Account Version , 4 = Doram Version
-# Compatibility (char_create_version): 1 = twRO, servertype from 20120307 to 20150930, 0x0A39 = iRO and kRO Zero
 sub sendCharCreate {
 	my ( $self ) = @_;
 	my $msg;
 	
-	if ( $masterServer->{'charCreationType'} == 4 || $messageSender->{packet_lut}{'char_create'} == "0A39") {
+	if ( $masterServer->{'charCreationType'} == 4 || $self->{packet_lut}{'char_create'} eq "0A39") {
 		my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
-		my $switch = $messageSender->{packet_lut}{'char_create'} || '0A39';
+		my $switch = $self->{packet_lut}{'char_create'} || '0A39';
 		# name slot hair_color hair_style job_id unknown sex
 		$hair_color ||= 1;
 		$hair_style ||= 0;
@@ -448,7 +447,7 @@ sub sendCharCreate {
 			});
 	} elsif ( $masterServer->{'charCreationType'} == 3) {
 		my ($self, $slot, $name, $hair_style, $hair_color, $sex) = @_;
-		my $switch = $messageSender->{packet_lut}{'char_create'} || '0A39';
+		my $switch = $self->{packet_lut}{'char_create'} || '0A39';
 		$hair_color ||= 1;
 		$hair_style ||= 0;		
 		$sex ||= 0; # female
@@ -463,9 +462,9 @@ sub sendCharCreate {
 				unknown => 0,
 				sex => $sex,
 			});
-	} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} == "0970") {
+	} elsif ( $masterServer->{'charCreationType'} == 2 || $self->{packet_lut}{'char_create'} eq "0970") {
 		my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-		my $switch = $messageSender->{packet_lut}{'char_create'} || '0970';
+		my $switch = $self->{packet_lut}{'char_create'} || '0970';
 		# name slot hair_style hair_color
 		$hair_color ||= 1;
 		$hair_style ||= 0;
@@ -479,7 +478,7 @@ sub sendCharCreate {
 	} else {
 		my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
 		# name str agi vit int dex luk slot hair_color hair_style
-		my $switch = $messageSender->{packet_lut}{'char_create'} || '0067';
+		my $switch = $self->{packet_lut}{'char_create'} || '0067';
 		$msg = $self->reconstruct({
 				switch => $switch,
 				name => $name,
