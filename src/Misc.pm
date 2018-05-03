@@ -1318,18 +1318,23 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		while (1) {
 			my $message;
-			if ( $messageSender->{char_create_version} == 0x0A39 ) {
+			if ( $masterServer->{'charCreationType'} == 4 ) {
 				$message
 					= T( "Please enter the desired properties for your characters, in this form:\n" )
-					. T( "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n" )
+					. T( "(slot) \"(name)\" (hairstyle) (haircolor) (job) (sex)\n" )
 					. T( "Job should be one of 'novice' or 'summoner' (default is 'novice').\n" )
 					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
-			} elsif ($messageSender->{char_create_version}) {
+			} elsif ( $masterServer->{'charCreationType'} == 3 ) {
+				$message
+					= T( "Please enter the desired properties for your characters, in this form:\n" )
+					. T( "(slot) \"(name)\" (hairstyle) (haircolor)] (sex)\n" )
+					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
+			} elsif ( $masterServer->{'charCreationType'} == 2 ) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
-					"(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]");
+					"(slot) \"(name)\" (hairstyle) (haircolor)");
 			} else {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .
-					"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]");
+					"(slot) \"(name)\" (str) (agi) (vit) (int) (dex) (luk) (hairstyle) (haircolor)");
 			}
 
 			my $input = $interface->query($message);
@@ -1584,11 +1589,11 @@ sub createCharacter {
 	} elsif ($slot !~ /^\d+$/) {
 		$interface->errorDialog(TF("Slot \"%s\" is not a valid number.", $slot), 0);
 		return 0;
-	} elsif (exists $charSvrSet{total_slot} && ($slot < 0 || $slot > $charSvrSet{total_slot})) {
-		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", $charSvrSet{total_slot}), 0);
+	} elsif (exists $charSvrSet{total_slot} && ($slot < 0 || $slot > ($charSvrSet{total_slot} - 1))) {
+		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", ($charSvrSet{total_slot} - 1)), 0);
 		return 0;
-	} elsif (exists $charSvrSet{normal_slot} && ($slot < 0 || $slot > $charSvrSet{normal_slot})) {
-		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", $charSvrSet{normal_slot}), 0);
+	} elsif (exists $charSvrSet{normal_slot} && ($slot < 0 || $slot > ($charSvrSet{normal_slot} - 1))) {
+		$interface->errorDialog(TF("The slot must be comprised between 0 and %s.", ($charSvrSet{normal_slot} - 1)), 0);
 		return 0;
 	} elsif ($chars[$slot]) {
 		$interface->errorDialog(TF("Slot %s already contains a character (%s).", $slot, $chars[$slot]{name}), 0);
@@ -1598,7 +1603,7 @@ sub createCharacter {
 		return 0;
 	}
 
-	if ( $messageSender->{char_create_version} == 0x0A39 ) {
+	if ( $masterServer->{'charCreationType'} == 4 || $messageSender->{packet_lut}{'char_create'} == "0A39") {
 		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
 		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
 
@@ -1611,11 +1616,16 @@ sub createCharacter {
 		my $sex    = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
 
 		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $job_id, $sex );
-	} elsif ($messageSender->{char_create_version}) {
+	} elsif ( $masterServer->{'charCreationType'} == 3 ) {
+		my $hair_style = shift if @_ && $_[0] =~ /^\d+$/;
+		my $hair_color = shift if @_ && $_[0] =~ /^\d+$/;
+		my $sex = scalar( grep {/^male|m$/io} @_ )   ? 1    : 0;
+
+		$messageSender->sendCharCreate( $slot, $name, $hair_style, $hair_color, $sex );
+	} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} == "0970") {
 		my ($hair_style, $hair_color) = @_;
 
-		$messageSender->sendCharCreate($slot, $name,
-			$hair_style, $hair_color);
+		$messageSender->sendCharCreate($slot, $name, $hair_style, $hair_color);
 	} else {
 		my ($str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
 
@@ -1637,9 +1647,7 @@ sub createCharacter {
 			}
 		}
 
-		$messageSender->sendCharCreate($slot, $name,
-			$str, $agi, $vit, $int, $dex, $luk,
-			$hair_style, $hair_color);
+		$messageSender->sendCharCreate($slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color);
 	}
 
 	return 1;

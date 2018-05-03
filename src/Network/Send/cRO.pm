@@ -22,6 +22,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
+	$self->{char_create_version} = 1;
+
 	my %handlers = qw(
 		master_login 0AAC
 		character_move 035F
@@ -36,7 +38,6 @@ sub new {
 		actor_name_request 0369
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_create 0970
 		storage_password 023B
 		send_equip 0998
 		sell_buy_complete 09D4
@@ -79,21 +80,6 @@ sub encrypt_password {
 	} else {
 		error("Password is not configured");
 	}
-}
-
-sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-	
-	my $msg = $self->reconstruct({
-		switch => 'char_create',
-		name => stringToBytes($name),
-		slot => $slot,
-		hair_style => $hair_style,
-		hair_color => $hair_color,
-	});
-	
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
 }
 
 sub sendSellBuyComplete {

@@ -26,7 +26,9 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
+charCreationType 1
 sendCryptKeys 0x5E8A7A7C, 0x53E86614, 0x6A06092B
+
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,6 +47,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
+charCreationType 1
 sendCryptKeys 0x5E8A7A7C, 0x53E86614, 0x6A06092B
 
 ## http://euro-ro.net/
@@ -83,6 +86,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 addTableFolders idRO
 charBlockSize 144
 charDeleteDateType 1
+charCreationType 1
 
 # Renewal
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
@@ -100,6 +104,7 @@ addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
 sendCryptKeys 0x48726740, 0x45F025F0, 0x627059F0
+charCreationType 4
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -113,7 +118,8 @@ paddedPackets 0
 paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 addTableFolders iRO
-charBlockSize 145
+charBlockSize 145]
+charCreationType 4
 
 #Pre-renewal
 [International - iRO: Loki Classic]
@@ -143,8 +149,7 @@ pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 sendCryptKeys 0x59EE25EE, 0x25EE25EE, 0x25EE25EE
-
-
+charCreationType 3
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
@@ -176,6 +181,7 @@ pinCode 1
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 OTT_ip 112.175.128.135
 OTT_port 6900
+charCreationType 3
 sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
 
 [Korea - kRO: Sara/Rangidis/Thanatos]
@@ -344,6 +350,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets.txt
 addTableFolders twRO
+charCreationType 2
 captcha 0
 
 [Taiwan - twRO: Free (Moonlight, Baphomet, Poring)]
@@ -358,6 +365,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets.txt
 addTableFolders twRO
+charCreationType 2
 captcha 0
 
 [Taiwan - twRO: Free (Rainbow bridge)]
@@ -372,6 +380,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets.txt
 addTableFolders twRO
+charCreationType 2
 captcha 0
 
 [Taiwan - twRO: All (Prontera)]
@@ -386,6 +395,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 recvpackets recvpackets.txt
 addTableFolders twRO
+charCreationType 2
 captcha 0
 
 [Taiwan - twRO: Happy]
@@ -498,6 +508,7 @@ secureLogin_account 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 pinCode 1
 charDeleteDateType 1
+charCreationType 2
 pauseCharLogin 1
 
 ####################
@@ -552,6 +563,7 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 #clientHash 6e1d7aae3838cd7aec434cd10ef861e9
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
+charCreationType 2
 pinCode 1
 
 [RMS Pre-Re Test Server]
@@ -565,4 +577,5 @@ serverEncoding Western
 charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
+charCreationType 2
 pinCode 1
