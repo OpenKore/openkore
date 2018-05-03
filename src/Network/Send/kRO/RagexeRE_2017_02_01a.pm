@@ -37,7 +37,7 @@ sub new {
 		'094C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0920' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0885' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0881' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0966' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0886' => ['storage_password'],
@@ -64,7 +64,7 @@ sub new {
 		map_login 094C
 		party_join_request_by_name 0920
 		skill_use 083C
-		skill_use_location 0885
+		skill_use_location 0438
 		storage_item_add 0881
 		storage_item_remove 0966
 		storage_password 0886
