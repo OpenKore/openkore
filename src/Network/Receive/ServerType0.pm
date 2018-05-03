@@ -582,7 +582,7 @@ sub new {
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		'09F7' => ['homunculus_property', 'Z24 C v20 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
 		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
