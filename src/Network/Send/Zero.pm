@@ -23,8 +23,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	$self->{char_create_version} = 0x0A39;
-
 	my %handlers = qw(
 		item_use 0439
 		token_login 0825
@@ -33,8 +31,6 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
-	$self->{char_create_version} = 0x0A39;
 
 	return $self;
 }
