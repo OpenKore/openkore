@@ -315,8 +315,6 @@
 6135#Ticket de Ninfa Perversa#
 6136#Ticket de Medusa#
 10038#Protetor de Chifre#
-6377#Licença de Loja de Compras#
-12548#Licença Falsa de Loja#
 6360#Fragmento Escarlate#
 6361#Fragmento Azul#
 6362#Fragmento Amarelo#
@@ -8209,4 +8207,15 @@
 20023#Boina Militar Vermelha#
 12548#Licença Falsa de Loja#
 6377#Licença de Loja de Compras#
+//*****************************************************
+//------------Aplicar em 2018-05-03--------------------
+//*****************************************************
+5967#Galapago Voador#
+19095#Balões da Família Poring#
+31450#Peruca Rosa de Waifu#
+31251#Boca de Gatinho#
+20379#Presilha de Relógio Retrô#
+19163#Boneca da Succubus#
+15371#Roupa de Natal do Antonio#
+5975#Boneca da Jirtas#
 //file end
