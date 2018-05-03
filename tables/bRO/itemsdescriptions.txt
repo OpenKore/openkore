@@ -8,8 +8,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000019.03.2018.^000000
-Este item será removido no dia ^ff000020.03.2018.^000000
+Promoção limitada até o dia ^ff000014.05.2018.^000000
+Este item será removido no dia ^ff000015.05.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -2897,35 +2897,39 @@ Nível necessário: ^7777774^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
 1414#
-Uma lança especialmente encantada com a propriedade Terra.
-^0000ffMáx. HP +800^000000
-^0000ffMáx. SP -50^000000
-Classe: ^777777Lança^000000
-Força de Ataque: ^777777145^000000
+Uma lança especialmente encantada com os poderes da floresta.
+^0000ffHP máx. +800.^000000
+^0000ffSP máx. -50.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777145^000000
+Propriedade: ^777777Terra^000000
 Peso: ^77777770^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1415#
 Lança que trespassa a armadura de inimigos.
-^0000ffIgnora defesa.^000000
-Classe: ^777777Lança^000000
-Força de Ataque: ^777777100^000000
+^0000ffIgnora 100% da DEF de monstros normais.^000000
+^0000ffDano físico contra oponentes de propriedade Neutro +25%.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777100^000000
 Peso: ^77777785^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1416#
 Lança que absorve o espírito dos inimigos que mata.
-^0000ffRecupera 5 SP para cada inimigo morto.^000000
-Classe: ^777777Lança^000000
-Força de Ataque: ^77777795^000000
+^0000ffRegenera 5 de SP a cada oponente morto.^000000
+A cada ataque físico:
+^0000ffRegenera 1 e SP.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^77777795^000000
 Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1451#
 Lança com uma lâmina virada para dentro.
@@ -3063,14 +3067,15 @@ Nível necessário: ^77777733^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 #
 1466#
-Lança com uma lâmina pesada e arredondada. Dize-se que ele ceifa as almas de suas vítimas.
-^0000ffCrítico +30. Precisão +10.^000000
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777150^000000
+Lança com uma lâmina pesada e arredondada. Dize-se que ela ceifa as almas de suas vítimas.
+^0000ffCRIT +30.^000000
+^0000ffPrecisão +10.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777150^000000
 Peso: ^777777250^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1410#
 Lança geralmente usada por pessoas montadas ou por cavaleiros.
@@ -3109,50 +3114,54 @@ Nível necessário: ^77777748^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 #
 1468#
-Lança com a propriedade do vento.
-^0000ffChance de autoconjurar [Tempestade de Raios] nv. 3 ao realizar ataques físicos.^000000
-^0000ffPequena chance de infligir silêncio ao realizar ataques físicos.^000000
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777170^000000
-Peso: ^777777120^000000
+Lança inspirada nas direções que os raios percorrem no céu.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff10% de chance de autoconjurar [Tempestade de Raios] nv. 3.^000000
+^0000ff2% de chance de infligir Silêncio no oponente.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777170^000000
 Propriedade: ^777777Vento^000000
+Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1469#
 A lendária lança de Longino, o soldado romano que perfurou Jesus na cruz.
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777180^000000
-Peso: ^777777200^000000
+^0000ffDano físico contra as raças Humanoide e Anjo +10%.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777180^000000
 Propriedade: ^777777Sombrio^000000
+Peso: ^777777200^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1470#
-Lança que irradia luz sagrada em todas as direções. Cada ponta ataca um inimigo diferente ao mesmo tempo.
-^0000ffPermite o uso da habilidade "Curar" em nível 5.^000000
-^0000ffAdiciona 10% de chance do usuário conjurar a habilidade "Espíritos Anciões" em nível 3 quando estiver atacando.^000000
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777190^000000
-Peso: ^777777300^000000
+Lança que irradia luz sagrada em todas as direções.
+^0000ffHabilita [Curar] nv. 5.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Espíritos Anciões] nv. 3.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777190^000000
 Propriedade: ^777777Sagrado^000000
+Peso: ^777777300^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1471#
-Lança com a propriedade do fogo, tem um grande poder das chamas contido.
-^0000ffAdiciona a chance de invocar automaticamente a habilidade "Bola de Fogo" em nível 3 ao atacar.^000000
-^0000ffFOR +3^000000
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777200^000000
-Peso: ^777777350^000000
+Lança que tem um grande poder das chamas contido.
+^0000ffFOR +3.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Bolas de Fogo] nv. 3.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777200^000000
 Propriedade: ^777777Fogo^000000
+Peso: ^777777350^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1501#
 Um porrete robusto e pesado, barato mas eficiente. Arraste esta arma para a janela de equipamento para utilizar.
@@ -4020,14 +4029,15 @@ Nível necessário: ^77777744^000000
 Classes que utilizam: ^777777Odalisca^000000
 #
 1963#
-Chicote feito de galhos de roseira. Causa ferimentos graves com seus espinhos e é encantado com a Propriedade Veneno. Chance de envenenar o alvo.
-Classe: ^777777Chicote^000000
-Força de Ataque: ^777777115^000000
-Peso: ^77777730^000000
+Chicote feito de galhos de roseira. Causa ferimentos graves com seus espinhos.
+^0000ffAo realizar ataques físicos, 50% de chance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777115^000000
 Propriedade: ^777777Veneno^000000
+Peso: ^77777730^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777744^000000
-Classes que utilizam: ^777777Odalisca^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1964#
 Chicote poderoso feito de correntes de aço.
@@ -8109,13 +8119,13 @@ Classes: ^777777Ferreiros, Alquimistas e evoluções^000000
 #
 1417#
 Lança de uma mão de haste comprida e com uma lâmina de machado na ponta. Muito eficiente quando usado em uma montaria.
-^0000ffFOR +1, INT +2, DES +1^000000
-Classe: ^777777Lança^000000
-Força de Ataque: ^777777160^000000
+^0000ffFOR +1. INT +2. DES +1.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777160^000000
 Peso: ^777777380^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^77777771^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1472#
 Excelente cajado empunhado com as duas mãos que amplifica o poder psíquico.
@@ -10631,16 +10641,18 @@ Um aljave que contém 500 flechas enferrujadas.
 Peso: ^77777725^000000
 #
 1913#
-Guitarra Elétrica que aumenta o poder do usuário.
-^0000ffAGI +1 e INT +2.^000000
-^0000ffChance de usar a habilidade "Trovão de Júpiter" em nível 1.^000000
-Classe: ^777777Instrumento Musical^000000
-Força de Ataque: ^777777110^000000
-Peso: ^777777180^000000
+Guitarra usada em músicas eletrizantes.
+^0000ffAGI +1. INT +2.^000000
+^0000ffHabilita [Trovão de Júpiter] nv.1.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Trovão de Júpiter] nv. 1.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777110^000000
 Propriedade: ^777777Vento^000000
+Peso: ^777777180^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Bardo/ Menestrel^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 562#
 Item de evento kRO.
@@ -13006,14 +13018,14 @@ Classes: ^777777Mercenários e evoluções^000000
 #
 1474#
 Uma lança, feita com o corpo de uma gigantesca criatura marinha morta. A lâmina dentada causa feridas profundas.
-^0000ffIgnora a Defesa de monstros da raça Dragão.
-Causa 10% mais dano contra monstros Chefes.^000000
-Tipo: ^777777Lança de Duas Mãos^000000 Força de Ataque: ^777777160^000000
+^0000ffDano físico contra Chefes +10%.^000000
+^0000ffIgnora 100% de DEF da raça Dragão.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777160^000000
 Peso: ^777777200^000000
-Propriedade: ^777777Neutro^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1723#
 Um arco feito com pedra da lua que tem uma lâmina embutida, que permite a seu dono usá-lo para bloquear ataques inimigos. A desvantagem é que este arco é bem pesado.
@@ -13332,13 +13344,13 @@ Classes que utilizam: ^777777Bardo^000000
 #
 1918#
 Um antigo alaúde visto em exibição em cidades orientais como Payon, Amatsu ou Kunlun. Hoje em dia, ninguém sabe realmente como tocá-lo.
-^0000ffAumenta a força de ataque das habilidades "Vulcão de Flechas" e "Flecha Melódica" em 10%.^000000
-Tipo: ^777777Instrumento Musical^000000 Força de Ataque: ^777777150^000000
+^0000ffDano de [Flecha Melódica] e [Vulcão de Flechas] +10%.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777150^000000
 Peso: ^777777120^000000
-Propriedade:^777777Neutro^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Bardo^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1965#
 Um chicote feito com couro duro de um monstro com a propriedade Fogo.
@@ -13372,33 +13384,33 @@ Classes que utilizam: ^777777Odalisca^000000
 #
 1968#
 Uma corda de pular com cabos de madeira.
-^0000ffAumenta Crítico em 20.^000000
+^0000ffCRIT +20.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Odalisca^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1969#
 Um fio que tem fragmentos de lâminas entrelaçados, fazendo esse chicote tão afiado quanto uma espada.
-Tem 3% de chance de causar [Sangramento] nos inimigos a cada ataque.
+^0000ffAo realizar ataques físicos, 3% de chance de infligir Sangramento no oponente.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^777777140^000000
+Ataque: ^777777140^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Odalisca^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1970#
-Esse chicote é o melhor de todos.
-^0000ffAumenta a força de ataque das habilidades "Vulcão de Flechas" e "Estilingue" em 10%.^000000
+Um chicote usado por uma rainha. É considerado o melhor de todos.
+^0000ffDano de [Estilingue] e [Vulcão de Flechas] +10%.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777110^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Odalisca^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 
 // ---------- Additional weapons and armors ----------
@@ -17758,14 +17770,15 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 1476#
-Lança com uma lâmina pesada e arredondada. Dize-se que ele ceifa as almas
-de suas vítimas. Crítico + 30. Precisão +10.
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777150^000000
+Lança com uma lâmina pesada e arredondada. Dize-se que ela ceifa as almas de suas vítimas.
+^0000ffCRIT +30.^000000
+^0000ffPrecisão +10.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777150^000000
 Peso: ^777777250^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1266#
 Katar feito para atingir pontos vulneráveis.
@@ -21347,12 +21360,14 @@ Classes: ^777777Arquimagos, Noviços T., Arqueiros T. e evoluções^000000
 
 2700#
 Uma seda vermelha usada por uma santa para selar o mal.
-Reduz chance de ficar confuso quando equipado com Lança Espectral.
-Tipo de Item: ^777777Acessório^000000
+^FF6347Conjunto^000000
+^FF6347[Lança Espectral]^000000
+^0000ffChance de infligir Caos no usuário -9,5%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 
 2701#
@@ -21510,30 +21525,35 @@ Classes: ^777777Transcendentais de Espadachins, Mercadores e evoluções^000000
 #
 
 1477#
-Uma formidável lança de duas mãos; seu criador se sacrificou para fazê-la.
-A lança tentará dominar a alma do usuário.
-20% de dano adicional contra monstros Sombrios, Demônios e Morto-Vivos, e reduz em 10% o dano sofrido deles.
-Absorve 50 HP do inimigo morto.
-Há chance de causar confusão no usuário.
-Tipo de Item: ^777777Lança de duas mãos^000000
-Força de ataque: ^777777170^000000
+O criador desta formidável lança sacrificou a própria vida para forjá-la, resultando em uma maldição que tentará dominar a alma de quem a usar.
+^0000ffResistência a propriedade Sombrio +10%.^000000
+^0000ffResistência as raças Morto-Vivo e Demônio +10%.^000000
+^0000ffDano físico contra a raça Demônio +20%.^000000
+^0000ffDano físico contra as propriedades Sombrio e Maldito +20%.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de infligir Caos no usuário.^000000
+Ao derrotar monstros:
+^0000ffRegenera 50 de HP.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777170^000000
 Peso: ^777777200^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 
 1478#
 Lança pontiaguda, eficiente para atacar os pontos fracos do inimigo.
-Ignora a DEF física do inimigo
-Há chance de lançar automaticamente Perfurar nv. 5
-10% de dano extra contra inimigos Humanoides.
-Tipo de Item: ^777777Lança de Duas Mãos^000000
-Força de ataque: ^777777120^000000
+^0000ffDano físico contra a raça Humanoide +10%.^000000
+^0000ffIgnora 100% da DEF de monstros normais e chefes.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Perfurar] nv. 5.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777120^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Somente Cavaleiro/Templário^000000
+Classes: ^777777Cavaleiros, Templários e evoluções^000000
 #
 
 2000#
@@ -21705,42 +21725,51 @@ Classes: ^777777Transclasses de Espadachins, Magos, Mercadores, Gatunos, Arqueir
 #
 
 1420#
-Lança feita com um chifre de unicórnio. Ela Neutraiza efeitos de veneno. Essa arma causa um sangramento que não pode ser estancado.
-Há chance de causar Sangramento.
-Neutraiza efeitos de veneno.
-Propriedade Sagrado. Nunca é danificado.
-Quando equipada com o Escudo da Valquíria, ao sofrer dano do inimigo, há uma chance pequena de lançar automaticamente Assumptio nv. 2 sobre o próprio usuário.
-Tipo de Item: ^777777Lança^000000
-Força de ataque: ^777777150^000000
+Lança feita com um chifre de unicórnio.
+^a400cdIndestrutível em batalha.^000000
+^0000ffHabilita [Desintoxicar] nv. 1.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de infligir Sangramento no oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Escudo da Valquíria]^000000
+Ao receber danos físicos:
+^0000ff0,5% de chance de autoconjurar [Assumptio] nv. 2.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777150^000000
+Propriedade: ^777777Sagrado^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 
 1421#
 Uma lança com um gancho na ponta. O gancho pode ser usado para puxar e empurrar o oponente.
-5% de chance de atordoar o inimigo.
-20% de dano extra contra inimigos Humanoides.
-Permite o uso da habilidade Perfurar Nv. 3.
-Tipo de Item: ^777777Lança^000000
-Força de ataque: ^777777140^000000
+^0000ffHabilita [Perfurar] nv. 3.^000000
+^0000ffDano físico contra a raça Humanoide +20%.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de infligir Atordoamento no oponente.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777140^000000
 Peso: ^77777790^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 
 1422#
 Uma lança com uma lâmina em forma de folha na ponta, feita para caçar. Em vez de perfurar, ela causa dano com seu grande peso.
-Ignora a DEF de monstros Brutos. Há chance dos monstros mortos soltarem Carne.
-Há chance de lançar automaticamente Ataque Vital nv. 3 ao atacar.
-Tipo de Item: ^777777Lança^000000
-Força de ataque: ^777777180^000000
-Peso: ^777777420^000000
-Nível da Arma: ^7777774^000000
-Nível necessário: ^77777760^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim^000000
+^0000ffIgnora 100% de DEF da raça Bruto.^000000
+Ao derrotar monstros da raça Bruto:
+^0000ff10% de chance de derrubar Carne.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Ataque Vital] nv. 3.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777140^000000
+Peso: ^77777790^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777765^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 
 1535#
@@ -21918,30 +21947,34 @@ Classes: ^777777Menestréis e evoluções^000000
 
 1920#
 Ao tocar esta guitarra, o músico só recupera a consciência quando termina a apresentação.
-Reduz em 100% a taxa de recuperação de HP.
-Perde 50 HP a cada 5 segundos.
-Anula toda a DES. Dá ao personagem VelAtq de 190.
-Tipo de Item: ^777777Instrumento^000000
-Força de ataque: ^77777710^000000
+^0000ffDES -100%.^000000
+^0000ffVelocidade de ataque +100%.^000000
+^0000ffRenegeração natural de HP -100%.^000000
+A cada 5 segundos:
+^0000ffDrena 50 de HP do usuário.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^77777710^000000
 Peso: ^777777180^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Menestrel^000000
+Classes: ^777777Menestreis e evoluções^000000
 #
 
 1972#
 Feita com uma criatura que libera energia elétrica. Sua superfície é escorregadia.
-INT + 2, AGI + 2
-Ao atacar, há chance de lançar Trovão de Júpiter nv. 3 e Vulcão de Flechas.
-O nível da habilidade Vulcão de Flechas depende do nível de refinamento da arma.
-Se a arma estiver com refinamento 11 ou maior, o nível 10 da habilidade será conjurado.
-Propriedade Vento
-Tipo de Item: ^777777Chicote^000000
-Força de ataque: ^777777100^000000
+^0000ffAGI +2. INT +2.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Trovão de Júpiter] nv. 3.^000000
+^0000ff5% de chance de autoconjurar [Vulcão de Flechas].^000000
+A cada refino da arma até o +10:
+^0000ffNível autoconjurado de [Vulcão de Flechas] +1.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777100^000000
+Propriedade: ^777777Vento^000000
 Peso: ^777777200^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Cigana e Evolução^000000
+Classes: ^777777Ciganas e evoluções^000000
 #
 
 1973#
@@ -21962,14 +21995,15 @@ Classes: ^777777Ciganas e evoluções^000000
 
 1974#
 Um chicote para recompensar quem se esforça ao máximo.
-Ao atacar, há uma chance de lançar Aumentar Agilidade sobre o usuário.
-O nível de Aumentar Agilidade depende do nível de refinamento da arma.
-Se a arma estiver com refinamento 11 ou maior, o nível 10 da habilidade será conjurado.
-Tipo de Item: ^777777Chicote^000000  Força de ataque: ^777777185^000000
+^0000ffAo realizar ataques físicos, 1% de chance de autoconjurar [Aumentar Agilidade] em si.^000000
+A cada refino da arma até o +10:
+^0000ffNível autoconjurado de [Aumentar Agilidade] +1.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777185^000000
 Peso: ^777777130^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Cigana e Evolução^000000
+Classes: ^777777Ciganas e evoluções^000000
 #
 
 13107#
@@ -23774,63 +23808,65 @@ Nível necessário: ^77777740^000000
 Classes: ^777777Noviços e evoluções^000000
 #
 1922#
-Um alaúde antigo que é visto em algumas cidades orientais como Payon, Amatsu ou o Castelo do Dragão.
-A técnica para tocá-lo se perdeu, e hoje ninguém mais a conhece.
-Aumenta em 10% a força de ataque das habilidades Vulcão de Flechas e Flecha Melódica.
+Um antigo alaúde visto em exibição em cidades orientais como Payon, Amatsu ou Kunlun. Hoje em dia, ninguém sabe realmente como tocá-lo.
+^0000ffDano de [Flecha Melódica] e [Vulcão de Flechas] +10%.^000000
 Tipo: ^777777Instrumento Musical^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777120^000000
-Propriedade:^777777Neutro^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes Aplicáveis: ^777777Bardo^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1976#
-O melhor dentre os melhores chicotes.
-Aumenta em 10% a força de ataque das habilidades Vulcão de Flechas e Estilingue.
+Um chicote usado por uma rainha. É considerado o melhor de todos.
+^0000ffDano de [Estilingue] e [Vulcão de Flechas] +10%.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777110^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
-Classes Aplicáveis: ^777777Odalisca^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1479#
-O criador desta formidável Lança de Duas Mãos sacrificou a própria vida para forjá-la,
-resultando em uma maldição que tentará dominar a alma do usuário.
-Aumenta em 20% o dano contra monstros Sombrios, Demônios e Morto-Vivos em 20%, e reduz o dano causado contra esses monstros em 10%.
-Absorve 50 HP ao derrotar inimigos.
-Há chance de causar status Confuso ao usuário.
-Tipo de Item: ^777777Lança^000000
-Força de ataque: ^777777170^000000
+O criador desta formidável lança sacrificou a própria vida para forjá-la, resultando em uma maldição que tentará dominar a alma de quem a usar.
+^0000ffResistência a propriedade Sombrio +10%.^000000
+^0000ffResistência as raças Morto-Vivo e Demônio +10%.^000000
+^0000ffDano físico contra a raça Demônio +20%.^000000
+^0000ffDano físico contra as propriedades Sombrio e Maldito +20%.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de infligir Caos no usuário.^000000
+Ao derrotar monstros:
+^0000ffRegenera 50 de HP.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777170^000000
 Peso: ^777777200^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777775^000000
-Classe: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1480#
-Uma lança feita com uma criatura marítima gigante.
-A lâmina dentada causa ferimentos profundos nos inimigos.
-Ignora a Defesa de monstros da raça Dragão.
-Causa 10% mais dano contra monstros Chefes.
-Tipo: ^777777Lança de Duas Mãos^000000 Força de Ataque: ^777777160^000000
+Uma lança, feita com o corpo de uma gigantesca criatura marinha morta. A lâmina dentada causa feridas profundas.
+^0000ffDano físico contra Chefes +10%.^000000
+^0000ffIgnora 100% de DEF da raça Dragão.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777160^000000
 Peso: ^777777200^000000
-Propriedade: ^777777Neutro^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes Aplicáveis: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1481#
-Uma lança com a propriedade Vento.
-^0000ffChance de autoconjurar [Tempestade de Raios] nv. 3 ao realizar ataques físicos.^000000
-^0000ffPequena chance de infligir silêncio ao realizar ataques físicos.^000000
-Tipo de Arma: ^777777Lança^000000
-Força de Ataque: ^777777170^000000
-Peso: ^777777200^000000
+Lança inspirada nas direções que os raios percorrem no céu.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff10% de chance de autoconjurar [Tempestade de Raios] nv. 3.^000000
+^0000ff2% de chance de infligir Silêncio no oponente.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777170^000000
 Propriedade: ^777777Vento^000000
-Nível da Arma: ^7777774^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classe Aplicável: ^777777Espadachim^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1180#
 Espada gigantesca. Dizem que é feita do dente canino de um dragão. É capaz de cortar as duras escamas de um dragão sem dificuldade.
@@ -24194,17 +24230,18 @@ Classes que utilizam: ^777777Aprendiz, Espadachim, Mercador, Gatuno e evoluçõe
 #
 1425#
 Uma lança criada para atacar os inimigos a distância. Especialmente desenhada para batalhas contra Humanoides.
-FOR + 2
-Aumenta o Ataque Físico a monstros Humanoides em 95%.
-Ignora a defesa física de humanoides em 20%.
-Aumenta a Velocidade de Ataque em 20% se usada por Templário ou Paladino.
-Indestrutível em batalha.
+^a400cdIndestrutível em batalha.^000000
+^0000ffFOR +2.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
+Templários e evoluções:
+^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Lança^000000
-Força de Ataque: ^77777760^000000
+Ataque: ^77777760^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Espadachim e evoluções.^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1632#
 Um cajado modificado para ser empunhado por magos no campo de batalha. Especialmente desenhada para batalhas contra Humanoides.
@@ -24292,55 +24329,55 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Noviços, Mercadores e
 #
 1923#
 Uma guitarra criada para encorajar exércitos em batalha.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDES +2.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
 Tipo: ^777777Instrumento Musical^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Bardo e Menestrel^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1924#
 Uma guitarra criada para encorajar exércitos em batalha.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Aumenta em 20% o dano causado pela habilidade Vulcão de Flechas.
-Indestrutível em batalha.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDES +2.^000000
+^0000ffDano de [Vulcão de Flechas] +20%.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
 Tipo: ^777777Instrumento Musical^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Bardo e Menestrel^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1977#
 Um chicote criado especialmente para lutar contra Humanoides.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDES +2.^000000
+^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Odalisca e Cigana^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1978#
 Um chicote criado especialmente para lutar contra Humanoides.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Aumenta em 20% o dano causado pela habilidade Vulcão de Flechas.
-Indestrutível em batalha.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDES +2.^000000
+^0000ffDano de [Vulcão de Flechas] +20%.^000000
+^0000ffDano físico contra a raça Humanoide +95%.^000000
 Tipo: ^777777Chicote^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Odalisca e Cigana^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 1574#
 Livro de batalha escrito por um renomado estrategista.
@@ -24426,16 +24463,16 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1482#
 Lança de duas mãos criada para atacar inimigos no campo de batalha.
-FOR + 2
-Aumenta o Ataque Físico contra Humanoides em 25%.
-Ignora completamente a defesa física de humanoides.
-Indestrutível em batalha.
-Tipo: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777160^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffFOR +2.^000000
+^0000ffIgnora 100% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra a raça Humanoide +25%.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777160^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Espadachim e evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1379#
 Um machado de duas mãos aterrorizante. Dizem que estimula os nervos do usuário a matar Humanoides.
@@ -25676,15 +25713,22 @@ Nível necessário: ^77777770^000000
 Classes que utilizam:  ^777777Sumo Sacerdote^000000
 #
 2133#
-Escudo de Torneio sobre o qual se pode colocar uma lança. Muito eficiente para se defender, já que o escudo pode ser usado em conjunto com a lança.
-Aumento de 1% no dano contra todos os monstros.
-Quando equipado com Lança Longa, Lança de Gancho ou Lança de Caça, aumento de 1% no dano contra todos os monstros.
-Se usado por um Lorde, reduz a VelATQ em 5% (aumenta o intervalo entre ataques)
+Escudo com espaço para colocar uma lança. Muito eficiente para se defender.
+^0000ffDano físico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347Qualquer 1 dos itens abaixo^000000
+^FF6347[Lança Longa] ou^000000
+^FF6347[Lança de Caça] ou^000000
+^FF6347[Lança de Gancho]^000000
+^0000ffDEF +2.^000000
+^0000ffDano físico +4% adicional.^000000
+Cavaleiros e evoluções:
+^0000ffVelocidade de ataque -5%.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^777777105^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 2134#
 Um escudo duro e firme, feito das escamas de Naga. Essas escamas são afiadas como lâminas.
@@ -25802,26 +25846,31 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Lordes, Paladinos e evoluções^000000
 #
 1483#
-Lança de duas mãos, feita com o marfim do Mamute. É muito difícil de fabricar por causa da solidez do material, mas sua ponta afiada é perfeita para perfurar.
-AGI + 2, VelATQ + 3%
-Ao atacar inimigo, há chance de lançar Golpe Fatal nv. 1 ou Sangramento.
-Pode usar Estocada nv. 5
-Tipo: ^777777Lança^000000
+Lança feita com o marfim de um Mamute. É muito difícil de fabricar por causa da solidez do material.
+^0000ffAGI +2.^000000
+^0000ffHabilita [Estocada] nv. 5.^000000
+^0000ffVelocidade de ataque +3%.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de infligir Sangramento no oponente.^000000
+^0000ff3% de chance de autoconjurar [Ferimento Mortal] nv. 1.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777160^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim^000000
+Classes: ^777777Espadachins T. e evoluções^000000
 #
 1484#
-Lança de duas mãos que parece a miniatura de um pilar dos templos antigos.
-VelATQ - 10%. A DEF aumenta de acordo com o nível de refinamento.
-Tipo: ^777777Lança^000000
+Lança que parece a miniatura de um pilar dos templos antigos.
+^0000ffVelocidade de ataque -10%.^000000
+A cada 2 refinos:
+^0000ffDEF +1.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777150^000000
 Peso: ^777777560^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Lorde^000000
+Classes: ^777777Lordes e evoluções^000000
 #
 1485#
 Forcado de três pontas, usado com as duas mãos. É leve e muito útil em batalha.
@@ -25934,49 +25983,59 @@ Classes que utilizam:  ^777777Transcendentais de Espadachim / Mercador / Gatuno 
 #
 1979#
 Chicote forte e flexível, feito com um tentáculo de Nepenthes.
-INT + 2
-Ao usar Estilingue, há chance de Congelar o inimigo.
-Se o refinamento estiver acima de 9, a chance de Congelar aumenta.
+^0000ffINT +2.^000000
+Ao usar [Estilingue]:
+^0000ff10% de chance de infligir Congelamento no oponente.^000000
+Refino +9 ou mais:
+^0000ffChance de infligir Congelamento +10% adicional.^000000
 Tipo: ^777777Chicote^000000
 Ataque: ^777777120^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam:  ^777777Cigana e Evolução^000000
+Classes: ^777777Ciganas e evoluções^000000
 #
 1980#
-A ponta do chicote tem um contrapeso. Quem for atingido por este chicote será empurrado.
-AGI + 2, DES + 3
-Efeito de empurrar 2 ou 3 células para trás é somado a Estilingue ou Vulcão de Flechas, respectivamente.
+A ponta deste chicote tem um contrapeso que cria um desequilíbrio.
+^0000ffAGI +2. DES +3.^000000
+Ao usar [Estilingue]:
+^0000ffEmpurra o alvo 2 células para trás.^000000
+Ao usar [Vulcão de Flechas]:
+^0000ffEmpurra o alvo 3 células para trás.^000000
 Tipo: ^777777Chicote^000000
 Ataque: ^777777110^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Cigana e Evolução^000000
+Classes: ^777777Ciganas e evoluções^000000
 #
 1925#
 Uma rabeca de tom grave. Suas 4 cordas emitem um som calmante, o que torna este instrumento bom tanto para uma apresentação solo quanto para concertos.
-AGI + 2, DES + 3
-Efeito de empurrar 2 ou 3 células para trás é somado a Flecha Melódica ou Vulcão de Flechas, respectivamente.
+^0000ffAGI +2. DES +3.^000000
+Ao usar [Flecha Melódica]:
+^0000ffEmpurra o alvo 2 células para trás.^000000
+Ao usar [Vulcão de Flechas]:
+^0000ffEmpurra o alvo 3 células para trás.^000000
 Tipo: ^777777Instrumento Musical^000000
 Ataque: ^777777110^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Menestrel^000000
+Classes: ^777777Menestreis e evoluções^000000
 #
 1926#
 Uma harpa cujas cordas foram feitas com tentáculos de Nepenthes.
-INT + 2
-Ao usar Flecha Melódica, há chance de Atordoar.
-A chance de Atordoar aumenta se o refinamento for maior que 9.
+^0000ffINT +2.^000000
+Ao usar [Flecha Melódica]:
+^0000ff10% de chance de infligir Atordoamento no oponente.^000000
+Refino +9 ou mais:
+^0000ffChance de infligir Atordoamento +10% adicional.^000000
 Tipo: ^777777Instrumento Musical^000000
 Ataque: ^777777120^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes que utilizam:  ^777777Menestrel^000000
+Classes: ^777777Menestreis e evoluções^000000
 #
 
 // ---------- Ep 13 Quest Items ------------
@@ -34797,15 +34856,16 @@ Profissões que utilizam :^777777 Todas^000000
 
 18505#
 Um piercing popular entre a tribo de Umbala, dizem que é feito com um osso encantado de um grande carnívoro caçador. Com ele você finalmente poderá chamar a atenção dos outros para o seu nariz. A não ser que fique segurando o osso com a boca. Algo me diz que será difícil para os outros identificarem qual o seu estilo de uso.
-HP Max + 1%.
-Aumenta em 25% a recuperação de HP do item 'Carne'.
-Ao derrotar um monstro, há chances de derrubar o item 'Carne'.
-Tipo : ^777777Equipamento para a cabeça^000000
+^0000ffHP máx. +1%.^000000
+^0000ffRecuperação de HP da Carne +25%.^000000
+Ao derrotar monstros:
+^0000ff5% de chance de derrubar Carne.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
 Defesa: ^7777771^000000
-Equipa em :^777777Baixo ^000000
-Peso : ^7777770^000000
-Nível necessário :^7777771^000000
-Profissões que utilizam : ^777777Todas^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 
 5365#
@@ -36042,17 +36102,18 @@ Classe : ^777777Evoluções de Espadachim^000000
 1433#
 Uma bela lança feita nos exatos padrões exigidos pelo reino.
 ^0000ffATQM +40.^000000
-^0000ffDano de [Disparo Perfurante] e [Toque do Oblívio] +20%.^000000
+^0000ffDano de [Toque do Oblívio] e [Disparo Perfurante] +20%.^000000
 A cada 2 refinos:
-^0000ffDano de [Disparo Perfurante] e [Toque do Oblívio] +3%.^000000
-Ao equipar a Guarda Imperial:
-^0000ffDano de [Crux Magnun] e [Luz da Criação] +10%.^000000
-Tipo : ^777777Lança de Uma Mão^000000
-Força de Ataque : ^777777180^000000
-Peso : ^777777180^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^777777102^000000
-Classe : ^777777Guardião Real^000000
+^0000ffDano de [Toque do Oblívio] e [Disparo Perfurante] +3%.^000000
+^FF6347Conjunto^000000
+^FF6347[Guarda Imperial]^000000
+^0000ffDano de [Crux Magnum] e [Luz da Criação] +10%.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777180^000000
+Peso: ^777777180^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777102^000000
+Classes: ^777777Guardiões Reais e evoluções^000000
 #
 
 1654#
@@ -36089,41 +36150,43 @@ Classe : ^777777Shura^000000
 1930#
 Uma flauta feita a partir de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffTempo de conjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos.^000000
-A partir do refino +6:
-^0000ffCusto de SP de [Melodia de Morfeu] e [Sinfonia dos Ventos] -4 por refino.^000000
-Tipo : ^777777Instrumento Musical^000000
-Força de Ataque : ^777777170^000000
-Peso : ^77777780^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^777777102^000000
-Classe : ^777777Trovador^000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos000000
+A cada refino a partir do +6:
+^0000ffCusto de SP de [Melodia de Morfeu] e [Sinfonia dos Ventos] -4.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777170^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777102^000000
+Classes: ^777777Trovadores e evoluções^000000
 #
 
 1984#
 Um chicote muito flexível feito de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffTempo de conjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos.^000000
-A partir do refino +6:
-^0000ffCusto de SP de [Melodia de Morfeu] e [Ritmo Contagiante] -4 por refino.^000000
-Tipo : ^777777Chicote^000000
-Força de Ataque : ^777777170^000000
-Peso : ^77777780^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^777777102^000000
-Classe : ^777777Musa^000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos000000
+A cada refino a partir do +6:
+^0000ffCusto de SP de [Melodia de Morfeu] e [Ritmo Contagiante] -4.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777170^000000
+Peso: ^77777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777102^000000
+Classes: ^777777Musas e evoluções^000000
 #
 
 1985#
 Um chicote que possui uma fragrância sedutora vinda do caule de uma rosa mágica.
-^0000ffATQM +130. INT +2.^000000
-^0000ffPequena chance de autoconjurar [Canto da Sereia] nv. 1 em ataques físicos.^000000
-Tipo : ^777777Chicote^000000
-Força de Ataque : ^777777100^000000
-Peso : ^777777100^000000
-Nível da Arma : ^7777774^000000
-Nível Necessário : ^777777110^000000
-Classe : ^777777Musa^000000
+^0000ffATQM +130.^000000
+^0000ffINT +2.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Canto da Sereia] nv. 1.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Musas e evoluções^000000
 #
 
 2153#
@@ -39390,40 +39453,37 @@ Nível Necessário: ^777777100^000000
 Classe: ^777777Arcano^000000
 #
 2864#
-^ff0000Este item não pode ser trocado entre contas.^000000
 Um anel de ouro antigo, mas brilhante, rodeado por outros anéis. Dizem que é a relíquia de um santo.
-VIT + 2. Aumenta em 2% a eficiência das habilidades de cura.
-Permite que o usuário encante itens com efeitos relacionados a Curatio.
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
+^0000ffVIT +2.^000000
+^0000ffEfetividade de cura +2%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^777777110^000000
-Classe: ^777777Arcebispo^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Arcebispos e evoluções^000000
 #
 2865#
-^ff0000Este item não pode ser trocado entre contas.^000000
 Um anel espesso com uma pedra roxa dado a um sacerdote treinador.
-INT + 2. Aumenta em 2% a eficiência das habilidades de cura.
-Permite que o usuário encante itens com efeitos relacionados ao [Sopro Divino].
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
+^0000ffINT +2.^000000
+^0000ffEfetividade de cura +2%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^777777110^000000
-Classe: ^777777Arcebispo^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Arcebispos e evoluções^000000
 #
 2866#
-^ff0000Este item não pode ser trocado entre contas.^000000
-Um anel com uma pedra clara misteriosa. Dizem que é a relíquia de um líder religioso.
-DES + 2. Aumenta em 2% a eficiência das habilidades de cura.
-Permite que o usuário encante itens com efeitos relacionados à eficiência das habilidades de cura.
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC.^000000
+Um anel espesso com uma pedra roxa dado a um sacerdote treinador.
+^0000ffDES +2.^000000
+^0000ffEfetividade de cura +2%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Nível Necessário: ^777777110^000000
-Classe: ^777777Arcebispo^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Arcebispos e evoluções^000000
 #
 5792#
 Um alfinete em forma de peixe. É bonito, mas não parece muito resistente.
@@ -40517,17 +40577,23 @@ Nível necessário: ^77777750^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
 1489#
-^000088Item de Aluguel^000000
-O agulhão é um peixe oceânico. É bem conhecido pelo seu aroma delicioso. Ele está bem congelado.
-Quando usar o perfurar ou perfurar em espiral, ele dá um dano crítico com uma taxa alta. E também se congela em uma taxa baixa.
-O ataque com perfurar em espiral aumenta 100% , o ataque com inspiração 50% . (o efeito da inspiração desaparecerá quando for desequipado)
-Se o nível de base for mais de 100, adicione + 30 de ATQ.
+^000088Item de aluguel.^000000
+O agulhão é um peixe oceânico bem conhecido pelo seu aroma delicioso. Este está bem congelado.
+^0000ffDano de [Consagração] +50%.^000000
+^0000ffDano de [Perfurar em Espiral] +100%.^000000
+Ao usar [Perfurar] ou [Perfurar em Espiral]:
+^0000ff1,5% de chance de infligir Sangramento no oponente.^000000
+Ao sofrer danos físicos:
+^0000ff1% de chance de infligir Hipotermina no usuário.^000000
+Nv. base 100 ou mais:
+^0000ffATQ +30.^000000
+^008080Desequipar o item cancela a duração de [Consagração].^000000
 Tipo: ^777777Lança de Duas Mãos^000000
-Ataque : ^777777220^000000
+Ataque: ^777777220^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classe: ^777777Espadachim e evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 2872#
 Um certificado garantido aos gatos jogadores. Ele tem a habilidade de gravar a disputa.
@@ -42289,16 +42355,17 @@ Nível Necessário : ^77777710^000000
 Classes: ^777777Todas as Classes^000000
 #
 18893#
-Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana.  De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
-Aumenta a resistência contra monstros do tipo Dragão e Humanoide em 8%
-Aumenta o efeito de cura do item Carne em 200%
-Se refinado em 12 ou mais, aumenta HP Máximo em 7% e SP Máximo em 3%
-Tipo : ^777777Equipamento para Cabeça^000000
+Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana. De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
+^0000ffHP máx. +7%.^000000
+^0000ffSP máx. +3%.^000000
+^0000ffRecuperação de HP da Carne +200%.^000000
+^0000ffResistência as raças Dragão e Humanoide +8%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo^000000
-Peso : ^777777100^000000
-Nível Necessário : ^77777710^000000
-Classes : ^777777Todas^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 18895#
 Dizem que há muito tempo, a Tribo Utan venerava uma antiga divindade chamada Tapaton. Por meio de sons produzidos por seu tambor místico, Tapaton teria conseguido guiar os Utan por diversos perigos, até alcançarem as raízes de Yggdrasil, onde Odin aguardava por eles.  Ele precisava que seu maior guerreiro recuperasse um tesouro perdido no Vulcão de Thor. Para que a força de Tapaton continuasse a ecoar nos ouvidos do seu herói, Odin transformou a pequena divindade em um par de asas, que iriam coroar a cabeça do guerreiro e protege-lo do fogo do vulcão. Assim surgiram as Asas de Tapaton.
@@ -46996,27 +47063,33 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 1437#
 ^ff0000Não pode ser negociado.^000000
-^000088Item de aluguel^000000
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Maldição ao atacar fisicamente.
-Tipo: ^777777Lança de Uma Mão^000000 Ataque: ^777777100^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes: ^777777Espadachim e Evoluções^000000
+^000088Item de aluguel.^000000
+Arma de treinamento para a Guerra do Emperium.
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +40%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de infligir Maldição no oponente.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777100^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1495#
 ^ff0000Não pode ser negociado.^000000
-^000088Item de aluguel^000000
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Cegueira ao atacar fisicamente.
-Tipo: ^777777Lança de Duas Mãos^000000 Ataque: ^777777150^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes: ^777777Espadachim e Evoluções^000000
+^000088Item de aluguel.^000000
+Arma de treinamento para a Guerra do Emperium.
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +40%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777150^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1591#
 ^ff0000Não pode ser negociado.^000000
@@ -47064,27 +47137,33 @@ Classes: ^777777Sacerdote e Evolução/Monge e Evolução^000000
 #
 1932#
 ^ff0000Não pode ser negociado.^000000
-^000088Item de aluguel^000000
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Envenenamento ao atacar fisicamente.
-Tipo: ^777777Instrumento Musical^000000 Ataque: ^777777100^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes : ^777777Bardo e Evolução^000000
+^000088Item de aluguel.^000000
+Arma de treinamento para a Guerra do Emperium.
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +40%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777100^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1987#
 ^ff0000Não pode ser negociado.^000000
-^000088Item de aluguel^000000
-*Funcionalidades ativas dentro da área da Guerra do Emperium TE*
-Aumenta o ataque físico em +40% contra outros jogadores.
-Chance de causar Cegueira ao atacar fisicamente.
-Tipo: ^777777Chicote^000000 Ataque: ^777777100^000000
-Peso : ^7777770^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^77777740^000000
-Classes: ^777777Odalisca e Evolução^000000
+^000088Item de aluguel.^000000
+Arma de treinamento para a Guerra do Emperium.
+^6A5ACDEm castelos da GDE TE:^000000
+^0000ffDano físico contra personagens +40%.^000000
+Ao realizar ataques físicos:
+^0000ffChance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^777777100^000000
+Peso: ^7777770^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Odaliscas e evoluções^000000
 #
 2019#
 ^ff0000Não pode ser negociado.^000000
@@ -58672,6 +58751,149 @@ Objeto que um dia pertenceu a um bravo soldado, essa boina é muito mais do que 
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-03--------------------
+//*****************************************************
+5967#
+Cansado da vida na Praia Kokomo, esse Galapago decidiu viajar mundo afora em seu guarda-sol voador (?!). Agora, cabe a você impressioná-lo visitando os locais mais exóticos do mundo!
+^0000ffAGI +1.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Ataque Aéreo] nv. 1 ou no nível aprendido.^000000
+A cada 3 de SOR base:
+^0000ffChance de autoconjuração +0,1%.^000000
+A cada nível aprendido de [Ataque Aéreo]:
+^0000ffChance de autoconjuração +0,2%.^000000
+A cada nível aprendido de [Garras de Aço]:
+^0000ffDano de [Ataque Aéreo] +40%.^000000
+^FF6347Conjunto^000000
+^FF6347[Garra do Falcoeiro]^000000
+^0000ffDano de [Ataque Aéreo]^000000 ^ff0000-200%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Pingu]^000000
+^0000ffRecuperação de HP de Suco de Cenoura, Maçã e Banana +1.000%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Grifo]^000000
+^0000ffDano físico +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffVelocidade de ataque +3%.^000000
+Arma do tipo Arco com refino +10 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cendrawasih]^000000
+^0000ffINT +1.^000000
+^0000ffDano crítico +5%.^000000
+Arqueiros e evoluções:
+^0000ffDano crítico +15% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Condor]^000000
+^0000ffResistência a todas as propriedades +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
+#
+19095#
+Um conjunto de balões de toda a família Poring. Talvez eles não sejam o suficiente pra te fazer voar por aí, mas os bônus que eles te concedem vão te levar às nuvens!
+^0000ffTaxa de DROP +10%.^000000
+^0000ffEXP adquirida por monstros +5%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^7777771^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31450#
+O famoso cabeleireiro de Amatsu, Delso Kamyura, lança mais uma peruca da sua coleção. Desta vez, ela segue o estilo “ombré hair”, indo do loiro ao rosado. Com mechas onduladas e sedosas, essa peruca é um verdadeiro escândalo e arrasa no charme.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31251#
+Você tenta de tudo, mas o mundo da maquiagem artística não é para você? Não precisa mais ficar frustrado — com esse item, o nariz e a boca de um lindo gatinho vão surgir no seu rosto como mágica! Vai deixar todo mundo intrigado, mas e daí? É tão fofo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20379#
+O clássico relógio de bolso não precisa estar sempre guardado. Usando-o como presilha, seu visual ganha um toque retrô cheio de requinte. E além de atender perfeitamente ao gosto dos amantes de moda clássica, também vai ajudar os que sempre perguntam “Com licença, que horas são?”.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19163#
+Uma adorável bonequinha da Succubus para deixar em cima da cabeça. Apesar de ser de grande ajuda, não deixe que esses olhinhos grandes te enganem.
+^0000ffRecupera 500 de HP e 50 de SP ao derrotar monstros com qualquer tipo de ataque.^000000
+Ao desequipar:
+^0000ffDrena 5.000 de HP e 500 de SP.^000000
+^FF6347Conjunto^000000
+^CD3278Mascote [Succubus]^000000
+A cada 5 segundos:
+^0000ffRegenera 500 de HP e 20 de SP.^000000
+Lealdade Alta:
+^0000ffRegenera +500 de HP e +20 de SP adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15371#
+Não importa a época do ano, a Roupa de Natal do Antônio é sempre uma ótima escolha. E não se preocupe se parecer esquisito vestir uma roupa dessas fora da época natalina — quando virem o quão indestrutível você é com ela, vão pensar duas vezes antes de te zoar.
+^0000ffConjuração variável -10%.^000000
+Refino +6 ou mais:
+^0000ffDEFM +5.^000000
+^0000ffEsquiva perfeita +1.^000000
+^0000ffTorna a armadura indestrutível em batalha.^000000
+Refino +7 ou mais:
+^0000ffDEFM +10 adicional.^000000
+^0000ffEsquiva perfeita +1 adicional.^000000
+^0000ffResistência a raça Humanoide +7%.^000000
+Refino +11 ou mais:
+^0000ffDEFM +15 adicional.^000000
+^0000ffEsquiva perfeita +1 adicional.^000000
+^0000ffResistência a [Ataque Crítico] de monstros +100%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Antônio]^000000
+^0000ffAnula o efeito da carta.^000000
+^0000ffDEF +250.^000000
+^0000ffHabilita [Teleporte] nv. 1.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+Refino +10 ou mais:
+^0000ffTolerância a Congelamento +100%.^000000
+Refino +12 ou mais:
+^0000ffO usuário não pode ser empurrado.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+5975#
+Uma bonequinha da Jirtas para você colocar na cabeça e enfrentar todo e qualquer Chefe sem medo.
+^0000ffResistência a Chefes +10%.^000000
+^FF6347Conjunto^000000
+^CD3278Mascote [Jirtas]^000000
+^0000ffResistência a Chefes +5% adicional.^000000
+Lealdade Alta:
+^0000ffResistência a Chefes +5% adicional.^000000
+^0000ffO usuário não pode ser empurrado.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
