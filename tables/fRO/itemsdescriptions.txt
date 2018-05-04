@@ -39685,12 +39685,20 @@ Job : ^777777All^000000
 #
 17710#
 ^ff0000Cannot be traded.^000000
-Costamaegg48_1
+An egg that contains a hair extension (Upper Costume) colored in Blue, Yellow, Red or Green.
+The available extensions are:
+- Hair Bun
+- Roll Twin
+- Long Pony
 Weight : ^7777771^000000
 #
 17711#
 ^ff0000Cannot be traded.^000000
-Costamaegg48_2
+An egg that contains a hair extension (Upper Costume) colored in Black, White, Brown or Purple.
+The available extensions are:
+- Hair Bun
+- Roll Twin
+- Long Pony
 Weight : ^7777771^000000
 #
 
