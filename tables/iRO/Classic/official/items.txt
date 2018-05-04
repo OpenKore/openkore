@@ -6953,3 +6953,4 @@
 20014#Gangster_Scarf_Certificate#
 20015#Gelato_Hat_Certificate#
 20016#Promethean_Crown_Certificate#
+20017#Dress_Hat_Certificate#
