@@ -1463,7 +1463,7 @@ Não é possível deletar acima do nível %d#
 Não pode ser usado com o M.E.C.H.A.#
 Desmonte do Ferus#
 Saia do M.E.C.H.A.#
-item#
+itm#
 Dinheiro#
 Armadura#
 Arma#

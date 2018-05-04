@@ -3091,24 +3091,19 @@ A habilidade tem uma chance de causar o status
 CR_GRANDCROSS#
 Crux Magnum
 Nv máximo: 10
-^777777Pré requisitos: Fé 10, Crux Divinum 6^000000
+Pré requisitos:
+^777777Fé 10^000000
+^777777Crux Divinum 6^000000
 Tipo: ^777777Ofensiva^000000
 Alvo: ^777777Chão^000000
-Resultado: ^777777Cria uma cruz de luz ao redor do
-usuário por 0,9 segundos. Qualquer inimigo que
-esteja na área da cruz receberá três acertos,
-todos de propriedade Sagrada, com dano baseado no
-nível da habilidade e tanto no ATQ quanto ATQM.^000000
-^777777Qualquer Morto-Vivo ou Demônio atingido por
-essa habilidade receberá o status ^880000Cegueira^777777.
-Esta habilidade não pode ser cancelada, mesmo se o
-usuário for atingido durante a conjuração.^000000
-^777777Esta habilidade tem efeitos colaterais. Ela
-consome também uma procentagem de seu HP para ser
-utilizada. E uma parte de todo o dano que você
-causar em todos os oponentes será subtraída de seu
-HP, mesmo que isso o deixe inconsciente. ^000000
-Durante o tempo de conjuração sua Defesa cai para 1/3.^000000
+Descrição:
+^777777Torna-se imóvel durante 0,9 segundos para invocar a grande cruz,
+causando dano híbrido (ATQ e ATQM) de propriedade sagrado no usuário e nos oponentes ao redor.
+Em monstros mortos-vivos e demônios,
+há chance de infligir^000000 ^880000Cegueira^000000.
+^777777A conjuração não pode ser interrompida.
+Consome 20% de HP ao ser conjurada.^000000
+Nível / Dano / SP
 [Nv 1]:^777777 37 SP, 140% ATQ^000000
 [Nv 2]:^777777 44 SP, 180% ATQ^000000
 [Nv 3]:^777777 51 SP, 220% ATQ^000000
@@ -4771,837 +4766,1018 @@ Conteúdo: ^777777Os personagens pais evocam seu filho a um ponto próximo de on
 #
 TK_RUN#
 Corrida
-Nível Máximo: 10
-Tipo: ^777777Movimento^000000
-Descrição: ^777777Permite ao usuário correr com velocidade incrível. Nos níveis 7 e acima, esta habilidade concede ao 
-usuário o ^00BB00Status de Cólera^777777, que irá aumentar temporariamente a FOR por 150 segundos, se o usuário parar de correr e estiver 
-desarmado. O status de Cólera será cancelado se o usuário se equipar com uma arma. Cada nível da habilidade Corrida aumenta o dano 
-desarmado do usuário em +10.^000000
-[Nv  1] ^777777Tempo de Conjuração de 6 s, 100 SP^FFFFFF  ^000000
-[Nv  2] ^777777Tempo de Conjuração de 5 s, 90 SP^000000
-[Nv  3] ^777777Tempo de Conjuração de 4 s, 80 SP^FFFFFF   ^000000
-[Nv  4] ^777777Tempo de Conjuração de 3 s, 70 SP^000000
-[Nv  5] ^777777Tempo de Conjuração de 2 s, 60 SP^FFFFFF   ^000000
-[Nv  6] ^777777Tempo de Conjuração de 1 s, 50 SP^000000
-[Nv  7] ^777777Tempo de Conjuração de 0 s, 40 SP^FFFFFF   ^000000
-[Nv  8] ^777777Tempo de Conjuração de 0 s, 30 SP^000000
-[Nv  9] ^777777Tempo de Conjuração de 0 s, 20 SP^FFFFFF   ^000000
-[Nv  10] ^777777Tempo de Conjuração de 0 s, 10 SP^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Corre em linha reta até atingir um obstáculo.
+Acima do nível 7, ativar e reativar a habilidade enquanto estiver sem arma, fornecerá o estado de 'Cólera'.
+'Cólera' fornece FOR +10 e aumenta o dano das habilidades de chute enquanto estiver sem arma.^000000
+Nível l Dano l Conjuração l Custo de SP
+[Nv 1] ^777777+10^000000 l ^7777776 segundos^000000 l ^777777100^000000
+[Nv 2] ^777777+20^000000 l ^7777775 segundos^000000 l ^77777790^000000
+[Nv 3] ^777777+30^000000 l ^7777774 segundos^000000 l ^77777780^000000
+[Nv 4] ^777777+40^000000 l ^7777773 segundos^000000 l ^77777770^000000
+[Nv 5] ^777777+50^000000 l ^7777772 segundos^000000 l ^77777760^000000
+[Nv 6] ^777777+60^000000 l ^7777771 segundo^000000  l ^77777750^000000
+[Nv 7] ^777777+70^000000 l ^7777770 segundo^000000  l ^77777740^000000
+[Nv 8] ^777777+80^000000 l ^7777770 segundo^000000  l ^77777730^000000
+[Nv 9] ^777777+90^000000 l ^7777770 segundo^000000  l ^77777720^000000
+[Nv 10] ^777777+100^000000 l ^7777770 segundo^000000 l ^77777710^000000
 #
 TK_READYSTORM#
 Postura do Tornado
-Nível Máximo: 1
-^777777Pré requisitos: Chute do Tornado 1^000000
-Tipo: ^777777Stance^000000
-Descrição: ^777777Dá uma chance de 15% do usuário entrar automaticamente na 
-Postura do Tornado quando acertar um alvo.^000000
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^777777Tempo de Conjuração de 0 s, 1 SP^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Chute do Tornado 1^000000
+Tipo: ^777777Ativa^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Enquanto estiver ativa, concede 15% de chance de autoconjurar a 'Postura do Tornado' ao atacar fisicamente, permitindo o uso do 'Chute do Tornado' em seguida.^000000
+Nível l Custo de SP
+[Nv 1] ^7777771^000000
 #
 TK_STORMKICK#
 Chute do Tornado
-Nível Máximo: 7
+Nível máximo: ^7777777^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777O usuário deve estar na ^00BB00Postura do Tornado^777777 para usar esta habilidade, que ataca todos 
-os inimigos dentro de um raio de 5 x 5 células ao redor do usuário.^000000
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^77777714 SP, 180% de ATQ^000000
-[Nv 2] ^77777712 SP, 200% de ATQ^000000
-[Nv 3] ^77777710 SP, 220% de ATQ^000000
-[Nv 4] ^7777778 SP, 240% de ATQ^000000
-[Nv 5] ^7777776 SP, 260% de ATQ^000000
-[Nv 6] ^7777774 SP, 280% de ATQ^000000
-[Nv 7] ^7777772 SP, 300% de ATQ^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Ao ativar a 'Postura do Tornado' em ataques físicos, gira o pé para formar um redemoinho que causa dano físico nos oponentes que estiverem na área 5x5 células ao redor do usuário.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^777777180%^000000 l ^77777714^000000
+[Nv 2] ^777777200%^000000 l ^77777712^000000
+[Nv 3] ^777777220%^000000 l ^77777710^000000
+[Nv 4] ^777777240%^000000 l ^7777778^000000
+[Nv 5] ^777777260%^000000 l ^7777776^000000
+[Nv 6] ^777777280%^000000 l ^7777774^000000
+[Nv 7] ^777777300%^000000 l ^7777772^000000
 #
 TK_READYDOWN#
 Postura da Patada Voadora
-Nível Máximo: 1
-^777777Pré requisitos: Patada Voadora 1^000000
-Tipo: ^777777Postura^000000
-Descrição: ^777777Dá uma chance de 15% do usuário entrar automaticamente na, Postura da Patada Voadora quando acertar um alvo.
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^777777Tempo de Conjuração de 0 s, 1 SP^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Patada Voadora 1^000000
+Tipo: ^777777Ativa^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Enquanto estiver ativa, concede 15% de chance de autoconjurar a 'Postura da Patada Voadora' ao atacar fisicamente, permitindo o uso da 'Patada Voadora' em seguida.^000000
+Nível l Custo de SP
+[Nv 1] ^7777771^000000
 #
 TK_DOWNKICK#
 Patada Voadora
-Nível Máximo: 7
+Nível máximo: ^7777777^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777O usuário deve estar na ^00BB00Postura da Patada Voadora^777777 para usar esta habilidade, que 
-causa dano e o efeito Atordoado por 3 segundos no inimigo-alvo.^000000
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^77777714 SP, 180% ATQ^000000
-[Nv 2] ^77777712 SP, 200% ATQ^000000
-[Nv 3] ^77777710 SP, 220% ATQ^000000
-[Nv 4] ^7777778 SP, 240% ATQ^000000
-[Nv 5] ^7777776 SP, 260% ATQ^000000
-[Nv 6] ^7777774 SP, 280% ATQ^000000
-[Nv 7] ^7777772 SP, 300% ATQ^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Ao ativar a 'Postura da Patada Voadora' em ataques físicos, usa os dois pés para causar dano físico com chance de infligir Atordoamento no alvo.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^777777180%^000000 l ^77777714^000000
+[Nv 2] ^777777200%^000000 l ^77777712^000000
+[Nv 3] ^777777220%^000000 l ^77777710^000000
+[Nv 4] ^777777240%^000000 l ^7777778^000000
+[Nv 5] ^777777260%^000000 l ^7777776^000000
+[Nv 6] ^777777280%^000000 l ^7777774^000000
+[Nv 7] ^777777300%^000000 l ^7777772^000000
 #
 TK_READYTURN#
 Postura da Rasteira
-Nível Máximo: 1
-^777777Pré requisitos: Rasteira 1^000000
-Tipo: ^777777Postura^000000
-Descrição: ^777777Dá uma chance de 15% do usuário entrar automaticamente na Postura da Rasteira quando acertar um alvo.
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^777777Tempo de Conjuração de 0 s, 1 SP^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Rasteira 1^000000
+Tipo: ^777777Ativa^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Enquanto estiver ativa, concede 15% de chance de autoconjurar a 'Postura da Rasteira' ao atacar fisicamente, permitindo o uso da 'Rasteira' em seguida.^000000
+Nível l Custo de SP
+[Nv 1] ^7777771^000000
 #
 TK_TURNKICK#
 Rasteira
-Nível Máximo: 7
+Nível máximo: ^7777777^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777O usuário deve estar na ^00BB00Postura da Rasteira^777777 para usar esta habilidade, que irá causar 
-dano ao alvo e empurrar os inimigos ao redor dele. Os inimigos empurrados não recebem nenhum dano.^000000
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^77777714 SP, 220% ATQ^000000
-[Nv 2] ^77777712 SP, 250% ATQ^000000
-[Nv 3] ^77777710 SP, 280% ATQ^000000
-[Nv 4] ^7777778 SP, 310% ATQ^000000
-[Nv 5] ^7777776 SP, 340% ATQ^000000
-[Nv 6] ^7777774 SP, 370% ATQ^000000
-[Nv 7] ^7777772 SP, 400% ATQ^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Ao ativar a 'Postura da Rasteira' em ataques físicos, atinge os tornozelos do alvo para causar dano físico com chance de infligir Atordoamento.
+Oponentes próximos do alvo serão empurrados para trás, mas não receberão dano.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^777777220%^000000 l ^77777714^000000
+[Nv 2] ^777777250%^000000 l ^77777712^000000
+[Nv 3] ^777777280%^000000 l ^77777710^000000
+[Nv 4] ^777777310%^000000 l ^7777778^000000
+[Nv 5] ^777777340%^000000 l ^7777776^000000
+[Nv 6] ^777777370%^000000 l ^7777774^000000
+[Nv 7] ^777777400%^000000 l ^7777772^000000
 #
 TK_READYCOUNTER#
 Postura do Contrachute
-Nível Máximo: 1
-^777777Pré requisitos: Contrachute 1^000000
-Tipo: ^777777Postura^000000
-Descrição: ^777777Dá uma chance de 20% do usuário entrar automaticamente na ^00BB00Postura do Contrachute^777777 quando acertar um alvo.
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^777777Tempo de Conjuração de 0 s, 1 SP^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Contrachute 1^000000
+Tipo: ^777777Ativa^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Enquanto estiver ativa, concede 15% de chance de autoconjurar a 'Postura do Contrachute' ao atacar fisicamente, permitindo o uso do 'Contrachute' em seguida.^000000
+Nível l Custo de SP
+[Nv 1] ^7777771^000000
 #
 TK_COUNTER#
 Contrachute
-Nível Máximo: 7
+Nível máximo: ^7777777^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777O usuário deve estar na Postura do Contrachute para usar esta habilidade, que sempre acerta seu alvo.^000000
-^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^77777714 SP, 220% ATQ^000000
-[Nv 2] ^77777712 SP, 250% ATQ^000000
-[Nv 3] ^77777710 SP, 280% ATQ^000000
-[Nv 4] ^7777778 SP, 310% ATQ^000000
-[Nv 5] ^7777776 SP, 340% ATQ^000000
-[Nv 6] ^7777774 SP, 370% ATQ^000000
-[Nv 7] ^7777772 SP, 400% ATQ^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Ao ativar a 'Postura do Contrachute' em ataques físicos, pula para atingir o rosto do alvo, causando um dano físico que ignora a esquiva.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^777777220%^000000 l ^77777714^000000
+[Nv 2] ^777777250%^000000 l ^77777712^000000
+[Nv 3] ^777777280%^000000 l ^77777710^000000
+[Nv 4] ^777777310%^000000 l ^7777778^000000
+[Nv 5] ^777777340%^000000 l ^7777776^000000
+[Nv 6] ^777777370%^000000 l ^7777774^000000
+[Nv 7] ^777777400%^000000 l ^7777772^000000
 #
 TK_DODGE#
 Cambalhota
-Nível Máximo: 1
-^777777Pré requisitos: Chute Aéreo 7^000000
-Tipo: ^777777Postura^000000
-Descrição: ^777777Dá uma chance de 20% de bloquear ataques físicos a distância.
-Quando o usuário estiver no status de Cólera (depois de usar Corrida no nível 7 ou maior), a Cambalhota também irá bloquear outros tipos de ataque.^000000
-[Nv 1] ^777777Tempo de Conjuração de 0 s, 1 SP^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Chute Aéreo 7^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Concede 20% de chance de bloquear ataques físicos a distância.
+Se 'Cólera' estiver ativa, também bloqueia ataques físicos de corpo a corpo.^000000
+Nível l Custo de SP
+[Nv 1] ^7777771^000000
 #
 TK_JUMPKICK#
 Chute Aéreo
-Nível Máximo: 7
+Nível máximo: ^7777777^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777Ataca um inimigo distante com um chute que faz o jogador chegar perto do alvo instantaneamente. Durante o status de Cambalhota, o Nível Base do usuário afeta a quantidade de dano infligido.
-O Chute Aéreo terá um dano maior, afetado pelo Nível Base, durante o status de Corrida. Se ambos os status de Cólera e Corrida estiverem ativos, o Chute Aéreo causará um dano ainda maior.
-O Chute Aéreo também irá cancelar a maior parte dos status positivos sobre o alvo, o que inclui status de Espírito concedidos por Espiritualistas, Rapidez com Uma Mão, Kaahi, Kaite, e o efeito da Poção da Fúria Selvagem. 
-No entanto, Desordeiros podem se proteger desse efeito de remoção de status positivo com sua habilidade Preservar. ^FF0000Espiritualistas não podem usar esta habilidade.^000000
-[Nv 1] ^77777770 SP, 40% ATQ^000000
-[Nv 2] ^77777760 SP, 50% ATQ^000000
-[Nv 3] ^77777750 SP, 60% ATQ^000000
-[Nv 4] ^77777740 SP, 70% ATQ^000000
-[Nv 5] ^77777730 SP, 80% ATQ^000000
-[Nv 6] ^77777720 SP, 90% ATQ^000000
-[Nv 7] ^77777710 SP, 100% ATQ^000000
+^FF0000Não pode ser usada por Espiritualistas.^000000
+Descrição:
+^777777Avança instantaneamente no alvo, causando dano físico e cancelando alguns efeitos.
+Remove os espíritos dos Espiritualistas, a Poção da Fúria Selvagem e as habilidades 'Rapidez com Uma Mão', 'Kaahi', 'Kaizel', 'Kaupe' e 'Kaite'.
+Desordeiros que aprenderam 'Preservar' e Espiritualistas não perderão esses efeitos.
+O dano pode ser aumentado se usado após um bloqueio de 'Cambalhota' ou durante a 'Corrida'.^000000
+Nível l Custo de SP l Dano
+[Nv 1] ^77777770^000000 l ^77777740%^000000
+[Nv 2] ^77777760^000000 l ^77777750%^000000
+[Nv 3] ^77777750^000000 l ^77777760%^000000
+[Nv 4] ^77777740^000000 l ^77777770%^000000
+[Nv 5] ^77777730^000000 l ^77777780%^000000
+[Nv 6] ^77777720^000000 l ^77777790%^000000
+[Nv 7] ^77777710^000000 l ^777777100%^000000
 #
 TK_HPTIME#
 Trégua Rápida
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Quando dois ou mais personagens de classes Taekwon se sentam ao lado um do outro, 
-o HP é restaurado para ambos ou para todos. Essa recuperação de HP é afetada pela VIT, e melhorada com mais 30 HP com o comando /doridori.^000000
-[Nv 1] ^777777HP +30^000000
-[Nv 2] ^777777HP +60^000000
-[Nv 3] ^777777HP +90^000000
-[Nv 4] ^777777HP +120^000000
-[Nv 5] ^777777HP +150^000000
-[Nv 6] ^777777HP +180^000000
-[Nv 7] ^777777HP +210^000000
-[Nv 8] ^777777HP +240^000000
-[Nv 9] ^777777HP +270^000000
-[Nv 10] ^777777HP +300^000000
+Descrição:
+^777777Ao sentar ao lado de outros Taekwons e evoluções, regenera o HP a cada 10 segundos.
+O HP recuperado é afetado pela VIT e melhorada com o comando '/doridori'.^000000
+Nível l Regeneração
+[Nv 1] ^77777730^000000
+[Nv 2] ^77777760^000000
+[Nv 3] ^77777790^000000
+[Nv 4] ^777777120^000000
+[Nv 5] ^777777150^000000
+[Nv 6] ^777777180^000000
+[Nv 7] ^777777210^000000
+[Nv 8] ^777777240^000000
+[Nv 9] ^777777270^000000
+[Nv 10] ^777777300^000000
 #
 TK_SPTIME#
 Retiro Rápido
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Quando dois ou mais personagens de classes Taekwon se sentam ao lado um do outro, o SP é restaurado para ambos ou para todos. Essa recuperação de HP é afetada pelo SP Máximo, e melhorada com mais 3 SP com o comando /doridori.
-Usar o comando /doridori durante o status de Retiro Rápido o fará durar por 30 minutos.
-Durante esse status, o usuário terá uma pequena chance de usar o pergaminho de feitiço Coluna de Pedra, com 10% de chance no Nível de Habilidade 1, e 1% de chance no Nível 10. Usar o pergaminho Coluna de Pedra durante esse status irá consumir 10 SP.^000000
-[Nv 1] ^777777SP +3^000000
-[Nv 2] ^777777SP +6^000000
-[Nv 3] ^777777SP +9^000000
-[Nv 4] ^777777SP +12^000000
-[Nv 5] ^777777SP +15^000000
-[Nv 6] ^777777SP +18^000000
-[Nv 7] ^777777SP +21^000000
-[Nv 8] ^777777SP +24^000000
-[Nv 9] ^777777SP +27^000000
-[Nv 10] ^777777SP +30^000000
+Descrição:
+^777777Ao sentar ao lado de outros Taekwons e evoluções, regenera o SP a cada 10 segundos.
+O SP recuperado é afetado pela INT.
+Usar o comando '/doridori' melhora a regeneração do SP e ativa o estado de 'Pausa Feliz' por 30 minutos.
+Enquanto ativo, 'Pausa Feliz' concede a chance de não consumir um 'Pergaminho de Coluna de Pedra' ao ser usado, gastando apenas 10 de SP^000000
+Nível l Regeneração l Chance
+[Nv 1] ^7777773^000000  l ^77777710%^000000
+[Nv 2] ^7777776^000000  l ^7777779%^000000
+[Nv 3] ^7777779^000000  l ^7777778%^000000
+[Nv 4] ^77777712^000000 l ^7777777%^000000
+[Nv 5] ^77777715^000000 l ^7777776%^000000
+[Nv 6] ^77777718^000000 l ^7777775%^000000
+[Nv 7] ^77777721^000000 l ^7777774%^000000
+[Nv 8] ^77777724^000000 l ^7777773%^000000
+[Nv 9] ^77777727^000000 l ^7777772%^000000
+[Nv 10] ^77777730^000000 l ^7777771%^000000
 #
 TK_POWER#
 Kihop
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o Poder de Ataque com base no número de Membros do Grupo que estiverem no mesmo mapa. Ataques normais e habilidades com 500% de força infligem um dano adicional, de acordo com o nível da habilidade.^000000
-^FFFFFF_^000000
-Dano Adicional por Nível
-[Nv 1] ^777777+(Membros do Grupo x 2%)^000000
-[Nv 2] ^777777+(Membros do Grupo x 4%)^000000
-[Nv 3] ^777777+(Membros do Grupo x 6%)^000000
-[Nv 4] ^777777+(Membros do Grupo x 8%)^000000
-[Nv 5] ^777777+(Membros do Grupo x 10%)^000000
+Descrição:
+^777777Concede um bônus no dano físico de acordo com o número de membros do grupo no mesmo mapa.^000000
+Nível l Bônus por membro
+[Nv 1] ^7777772%^000000
+[Nv 2] ^7777774%^000000
+[Nv 3] ^7777776%^000000
+[Nv 4] ^7777778%^000000
+[Nv 5] ^77777710%^000000
 #
 TK_SEVENWIND#
 Brisa Leve
-Nível Máximo: 7
-^777777Pré requisitos: Tregua Rápida 5,
-Retiro Rápido 5, Kihop 5^000000
+Nível máximo: ^7777777^000000
+Pré requisitos:
+^777777Trégua Rápida 5
+Retiro Rápido 5
+Kihop 5^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca um vento que irá encantar os ataques do alvo por 5 minutos com uma propriedade elemental, dependendo do nível em que a habilidade for usada.^000000
-^FFFFFF_^000000
-Consumo de SP e Propriedade por Nível de Habilidade
-[Nv 1] ^777777Terra (20 SP)^000000
-[Nv 2] ^777777Vento (20 SP)^000000
-[Nv 3] ^777777Água (20 SP)^000000
-[Nv 4] ^777777Fogo (20 SP)^000000
-[Nv 5] ^777777Fantasma (50 SP)^000000
-[Nv 6] ^777777Sombrio (50 SP)^000000
-[Nv 7] ^777777Sagrado (50 SP)^000000
+Descrição:
+^777777Controla o ar para encantar os ataques físicos com uma propriedade elemental por 5 minutos.
+Estun, Estin e Esma causarão dano mágico de acordo com a propriedade escolhida.^000000
+Nível l Custo de SP l Propriedade
+[Nv 1] ^77777720^000000 l ^777777Terra^000000
+[Nv 2] ^77777720^000000 l ^777777Vento^000000
+[Nv 3] ^77777720^000000 l ^777777Água^000000
+[Nv 4] ^77777720^000000 l ^777777Fogo^000000
+[Nv 5] ^77777750^000000 l ^777777Fantasma^000000
+[Nv 6] ^77777750^000000 l ^777777Sombrio^000000
+[Nv 7] ^77777750^000000 l ^777777Sagrado^000000
 #
 TK_HIGHJUMP#
 Salto
-Nível Máximo: 5
-Tipo: ^777777Movimento^000000
-Descrição: ^777777O usuário salta para uma célula-alvo, dentro do alcance da habilidade.
-Desde que a célula-alvo não esteja morta ou inacessível, o usuário pode saltar sobre muros e obstáculos. Salto não pode ser usada em áreas em que Asas de Mosca estejam desativadas, com exceção de mapas da Guerra do Emperium.^000000
-Tempo de Conjuração e Alcance da Habilidade por Nível
-[Nv 1] ^7777775 s, 2 células^000000
-[Nv 2] ^7777774 s, 4 células^000000
-[Nv 3] ^7777773 s, 6 células^000000
-[Nv 4] ^7777772 s, 8 células^000000
-[Nv 5] ^7777771 s, 10 células^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Pula em direção a uma célula válida do mapa que esteja dentro do alcance da habilidade, podendo saltar de muros, montanhas e outros obstáculos.
+Não pode ser usada em mapas onde o teleporte é desabilitado, exceto nos castelos da Guerra do Emperium Clássica.^000000
+Nível l Conjuração l Alcance
+[Nv 1] ^7777775 segundos^000000 l ^7777772 células^000000
+[Nv 2] ^7777774 segundos^000000 l ^7777774 células^000000
+[Nv 3] ^7777773 segundos^000000 l ^7777776 células^000000
+[Nv 4] ^7777772 segundos^000000 l ^7777778 células^000000
+[Nv 5] ^7777771 segundo^000000  l ^77777710 células^000000
 #
 SG_FEEL#
 Percepção Solar, Lunar e Estelar
-Nível Máximo: 3
-Tipo: ^777777Designação^000000
-Descrição: ^777777Associa o mapa atual a um dos alinhamentos cósmicos, Solar, Lunar ou Estelar, para o uso de certas habilidades.
-É impossível mudar o alinhamento cósmico de um mapa uma vez que ele tenha sido definido. Usar esta habilidade num mapa já alinhado cosmicamente mostrará uma lista de mapas alinhados.^FF0000
-Apenas 1 mapa pode ser alinhado por cada poder cósmico.^000000
-[Nv 1] ^777777Associa o mapa atual ao alinhamento Solar^000000
-[Nv 2] ^777777Associa o mapa atual ao alinhamento Lunar^000000
-[Nv 3] ^777777Associa o mapa atual ao alinhamento Estelar^000000
+Nível máximo: ^7777773^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Marca permanentemente o mapa com um alinhamento solar, lunar ou estelar para o uso de certas habilidades.
+Apenas 1 mapa pode ser alinhado por nível, totalizando 3 mapas diferentes.
+Usar a habilidade novamente exibe uma lista de mapas já alinhados.^000000
+Nível l Alinhamento
+[Nv 1] ^777777Solar^000000
+[Nv 2] ^777777Lunar^000000
+[Nv 3] ^777777Estelar^000000
 #
 SG_SUN_WARM#
 Calor Solar
-Nível Máximo: 3
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 1^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 1^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Áreas Solares^777777. Causa dano, drena 2 SP e empurra os monstros ao redor do usuário. Em outros jogadores, esta habilidade só terá o efeito de empurrar e drenar SP.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^77777720 SP, 10 s^000000
-[Nv 2] ^77777720 SP, 20 s^000000
-[Nv 3] ^77777720 SP, 60 s^000000
+Descrição:
+^777777Consome 20 de SP para criar uma forte onda de calor ao seu redor, causando dano físico e empurrando monstros que se aproximarem de você.
+Cada dano causado drena 2 do seu SP.
+Não causa dano em outros personagens.
+Só pode ser usada em um mapa SOLAR.^000000
+Nível l Duração
+[Nv 1] ^77777710 segundos^000000
+[Nv 2] ^77777720 segundos^000000
+[Nv 3] ^77777760 segundos^000000
 #
 SG_MOON_WARM#
 Calor Lunar
-Nível Máximo:3
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 2^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 2^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Áreas Lunares^777777. Causa dano, drena 2 SP e empurra os monstros ao redor do usuário. Em outros jogadores, esta habilidade só terá o efeito de empurrar e drenar SP.
-^FFFFFF_^000000
-Consumo de SP e Tempo de Conjuração por Nível
-[Nv 1] ^77777720 SP, 10 s^000000
-[Nv 2] ^77777720 SP, 20 s^000000
-[Nv 3] ^77777720 SP, 60 s^000000
+Descrição:
+^777777Consome 20 de SP para criar uma forte onda de calor ao seu redor, causando dano físico e empurrando monstros que se aproximarem de você.
+Cada dano causado drena 2 do seu SP.
+Não causa dano em outros personagens.
+Só pode ser usada em um mapa LUNAR.^000000
+Nível l Duração
+[Nv 1] ^77777710 segundos^000000
+[Nv 2] ^77777720 segundos^000000
+[Nv 3] ^77777760 segundos^000000
 #
 SG_STAR_WARM#
 Calor Estelar
-Nível Máximo: 3
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 3^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 3^000000
 Tipo: ^777777Ofensiva^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Áreas Estelares^777777. Causa dano, drena 2 SP e empurra os monstros ao redor do usuário. Em outros jogadores, esta habilidade só terá o efeito de empurrar e drenar SP.
-^FFFFFF_^000000
-Consumo de SP e Tempo de Conjuração por Nível
-[Nv 1] ^77777710 SP, 10 s^000000
-[Nv 2] ^77777710 SP, 20 s^000000
-[Nv 3] ^77777710 SP, 60 s^000000
+Descrição:
+^777777Consome 20 de SP para criar uma forte onda de calor ao seu redor, causando dano físico e empurrando monstros que se aproximarem de você.
+Cada dano causado drena 2 do seu SP.
+Não causa dano em outros personagens.
+Só pode ser usada em um mapa ESTELAR.^000000
+Nível l Duração
+[Nv 1] ^77777710 segundos^000000
+[Nv 2] ^77777720 segundos^000000
+[Nv 3] ^77777760 segundos^000000
 #
 SG_SUN_COMFORT#
 Proteção Solar
-Nível Máximo: 4
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 1^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 1^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Dias Solares (pares) ^777777 em ^00BB00Áreas Solares alinhadas^777777. Reduz o dano de inimigos, afetado pela (SOR + DES + Nível Base do personagem)/2.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^77777770 SP, 80 s^000000
-[Nv 2] ^77777760 SP, 160 s^000000
-[Nv 3] ^77777750 SP, 240 s^000000
-[Nv 4] ^77777740 SP, 320 s^000000
+Descrição:
+^777777Melhora sua defesa física de acordo com sua SOR, DES e nível base.
+Só pode ser usada em um mapa SOLAR.
+Só pode ser usada em um dia SOLAR (número par).^000000
+Nível l Custo de SP l Duração
+[Nv 1] ^77777770^000000 l ^77777780 segundos^000000
+[Nv 2] ^77777760^000000 l ^777777160 segundos^000000
+[Nv 3] ^77777750^000000 l ^777777240 segundos^000000
+[Nv 4] ^77777740^000000 l ^777777320 segundos^000000
 #
 SG_MOON_COMFORT#
 Proteção Lunar
-Nível Máximo: 4
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 2^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 2^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Dias Lunares (ímpares) ^777777 em ^00BB00Áreas Lunares alinhadas^777777. Aumenta a taxa de esquiva, afetado pela (SOR + DES + Nível Base do personagem)/2.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^77777770 SP, 80 s^000000
-[Nv 2] ^77777760 SP, 160 s^000000
-[Nv 3] ^77777750 SP, 240 s^000000
-[Nv 4] ^77777740 SP, 320 s^000000
+Descrição:
+^777777Melhora sua esquiva de acordo com sua SOR, DES e nível base.
+Só pode ser usada em um mapa LUNAR.
+Só pode ser usada em um dia LUNAR (número ímpar).^000000
+Nível l Custo de SP l Duração
+[Nv 1] ^77777770^000000 l ^77777780 segundos^000000
+[Nv 2] ^77777760^000000 l ^777777160 segundos^000000
+[Nv 3] ^77777750^000000 l ^777777240 segundos^000000
+[Nv 4] ^77777740^000000 l ^777777320 segundos^000000
 #
 SG_STAR_COMFORT#
 Proteção Estelar
-Nível Máximo: 4
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 3^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 3^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Esta habilidade só é ativada em ^00BB00Dias Estelares (múltiplos de 5) ^777777 em ^00BB00Áreas Estelares alinhadas^777777. Aumenta a velocidade de ataque, afetado pela (SOR + DES + Nível Base do personagem)/10%.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^77777770 SP, 80 s^000000
-[Nv 2] ^77777760 SP, 160 s^000000
-[Nv 3] ^77777750 SP, 240 s^000000
-[Nv 4] ^77777740 SP, 320 s^000000
+Descrição:
+^777777Melhora sua velocidade de ataque de acordo com sua SOR, DES e nível base.
+Só pode ser usada em um mapa ESTELAR.
+Só pode ser usada em um dia ESTELAR (números múltiplos de 5).^000000
+Nível l Custo de SP l Duração
+[Nv 1] ^77777770^000000 l ^77777780 segundos^000000
+[Nv 2] ^77777760^000000 l ^777777160 segundos^000000
+[Nv 3] ^77777750^000000 l ^777777240 segundos^000000
+[Nv 4] ^77777740^000000 l ^777777320 segundos^000000
 #
 SG_HATE#
 Oposição Solar, Lunar e Estelar
-Nível Máximo: 3
-Tipo: ^777777Designação^000000
-Descrição: ^777777Associa o monstro-alvo a um dos alinhamentos cósmicos, Solar, Lunar ou Estelar, para o uso de certas habilidades. É impossível mudar o alinhamento cósmico de um monstro uma vez que ele tenha sido definido. Usar esta habilidade num monstro já alinhado cosmicamente mostrará uma lista de monstros alinhados.^000000
-^FF0000Apenas 1 monstro pode ser designado por cada alinhamento cósmico.^000000
-[Nv 1] ^777777Associa o monstro ao alinhamento Solar. Limitado a monstros Pequenos.^000000
-[Nv 2] ^777777Associa o monstro ao alinhamento Lunar. Limitado a monstros Médios de HP Máximo de 6.000 ou mais.^000000
-[Nv 3] ^777777Associa o monstro ao alinhamento Estelar. Limitado a monstros Grandes de HP Máximo de 20.000 ou mais.^000000
-^777777Quanto aos jogadores, as classes de personagens podem ser alinhadas sem depender do tamanho e do HP Máximo.^000000
+Nível máximo: ^7777773^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Marca permanentemente o alvo com um alinhamento solar, lunar ou estelar de acordo com o Tamanho dele.
+Apenas 1 alvo pode ser alinhado por nível, totalizando 3 alvos diferentes.
+É possível alinhar outros personagens, sem restrição de tamanho e HP.
+Não é possível mudar os alinhamentos do alvo.^000000
+Nível l Alinhamento l Restrições
+[Nv 1] ^777777Solar^000000 l ^777777Alvos pequenos.^000000
+[Nv 2] ^777777Lunar^000000 l ^777777Alvos médios com 6.000 de HP ou mais.^000000
+[Nv 3] ^777777Estelar^000000 l ^777777Alvos Grandes com 20.000 de HP ou mais.^000000
 #
 SG_SUN_ANGER#
 Fúria Solar
-Nível Máximo: 3
-^777777Pré requisitos: Oposição Solar, Lunar e Estelar 1^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Oposição Solar, Lunar e Estelar 1^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o Poder de Ataque contra monstros com alinhamento Solar.
-O Nível Base do personagem, sua SOR, DES e o nível da habilidade afetam esse aumento de dano.^000000
+Descrição:
+^777777Melhora o ATQ contra alvos com alinhamento Solar.
+Aumentar o nível da habilidade melhora o ATQ baseado na sua SOR, DES e nível base.^000000
 #
 SG_MOON_ANGER#
 Fúria Lunar
-Nível Máximo: 3
-^777777Pré requisitos: Oposição Solar, Lunar e Estelar 2^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Oposição Solar, Lunar e Estelar 2^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o Poder de Ataque contra monstros com alinhamento Lunar.
-O Nível Base do personagem, sua SOR, DES e o nível da habilidade afetam esse aumento de dano.^000000
+Descrição:
+^777777Melhora o ATQ contra alvos com alinhamento Lunar.
+Aumentar o nível da habilidade melhora o ATQ baseado na sua SOR, DES e nível base.^000000
 #
 SG_STAR_ANGER#
 Fúria Estelar
-Nível Máximo: 3
-^777777Pré requisitos: Oposição Solar, Lunar e Estelar 3^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Oposição Solar, Lunar e Estelar 3^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o Poder de Ataque contra monstros com alinhamento Estelar.
-O Nível Base do personagem, sua SOR, DES, FOR e o nível da habilidade afetam esse aumento de dano.^000000
+Descrição:
+^777777Melhora o ATQ contra alvos com alinhamento Estelar.
+Aumentar o nível da habilidade melhora o ATQ baseado na sua SOR, DES e nível base.^000000
 #
 SG_SUN_BLESS#
 Bênção Solar
-Nível Máximo: 5
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 1, Oposição Solar, Lunar e Estelar 1^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 1^000000
+Oposição Solar, Lunar e Estelar 1^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta a experiência ganha ao derrotar monstros de alinhamento Solar em dias Solares (pares).^000000
-[Nv 1] ^777777Experiência +10%^000000
-[Nv 2] ^777777Experiência +20%^000000
-[Nv 3] ^777777Experiência +30%^000000
-[Nv 4] ^777777Experiência +40%^000000
-[Nv 5] ^777777Experiência +50%^000000
+Descrição:
+^777777Aumenta a EXP adquirida ao derrotar o monstro alinhado pelo Sol.
+Só pode ser usada em um dia SOLAR (números pares).^000000
+Nível l Experiência
+[Nv 1] ^777777+10%^000000
+[Nv 2] ^777777+20%^000000
+[Nv 3] ^777777+30%^000000
+[Nv 4] ^777777+40%^000000
+[Nv 5] ^777777+50%^000000
 #
 SG_MOON_BLESS#
 Bênção Lunar
-Nível Máximo: 5
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 2, Oposição Solar, Lunar e Estelar 2^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 2^000000
+Oposição Solar, Lunar e Estelar 2^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta a experiência ganha ao derrotar monstros de alinhamento Lunar em dias Lunares (ímpares).^000000
-[Nv 1] ^777777Experiência +10%^000000
-[Nv 2] ^777777Experiência +20%^000000
-[Nv 3] ^777777Experiência +30%^000000
-[Nv 4] ^777777Experiência +40%^000000
-[Nv 5] ^777777Experiência +50%^000000
+Descrição:
+^777777Aumenta a EXP adquirida ao derrotar o monstro alinhado pela Lua.
+Só pode ser usada em um dia LUNAR (números ímpares).^000000
+Nível l Experiência
+[Nv 1] ^777777+10%^000000
+[Nv 2] ^777777+20%^000000
+[Nv 3] ^777777+30%^000000
+[Nv 4] ^777777+40%^000000
+[Nv 5] ^777777+50%^000000
 #
 SG_STAR_BLESS#
 Bênção Estelar
-Nível Máximo: 5
-^777777Pré requisitos: Percepção Solar, Lunar e Estelar 3, Oposição Solar, Lunar e Estelar 3^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Percepção Solar, Lunar e Estelar 3^000000
+Oposição Solar, Lunar e Estelar 3^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta a experiência ganha ao derrotar monstros de alinhamento Estelar em dias Estelares (múltiplos de 5).^000000
-[Nv 1] ^777777Experiência +20%^000000
-[Nv 2] ^777777Experiência +40%^000000
-[Nv 3] ^777777Experiência +60%^000000
-[Nv 4] ^777777Experiência +80%^000000
-[Nv 5] ^777777Experiência +100%^000000
+Descrição:
+^777777Aumenta a EXP adquirida ao derrotar o monstro alinhado pelas Estrelas.
+Só pode ser usada em um dia ESTELAR (números múltiplos de 5).^000000
+Nível l Experiência
+[Nv 1] ^777777+10%^000000
+[Nv 2] ^777777+20%^000000
+[Nv 3] ^777777+30%^000000
+[Nv 4] ^777777+40%^000000
+[Nv 5] ^777777+50%^000000
 #
 SG_DEVIL#
 Sombra Solar, Lunar e Estelar
-Nível Máximo: 10
-^777777Pré requisitos: Nível de Base 50^000000
+Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Esta habilidade será ativada quando o personagem chegar em Classe 50. Aumenta a Velocidade de Ataque, ao custo de perder permanentemente o campo de visão.^000000
-[Nv 1] ^777777VelATQ +3%^000000
-[Nv 2] ^777777VelATQ +6%^000000
-[Nv 3] ^777777VelATQ +9%^000000
-[Nv 4] ^777777VelATQ +12%^000000
-[Nv 5] ^777777VelATQ +15%^000000
-[Nv 6] ^777777VelATQ +18%^000000
-[Nv 7] ^777777VelATQ +21%^000000
-[Nv 8] ^777777VelATQ +24%^000000
-[Nv 9] ^777777VelATQ +27%^000000
-[Nv 10] ^777777VelATQ +30%^000000
+Descrição:
+^777777Ao atingir o nível de classe 50, aumenta a velocidade de ataque ao custo de reduzir o campo de visão.^000000
+Nível l Velocidade de ataque
+[Nv 1] ^777777+2%^000000
+[Nv 2] ^777777+3%^000000
+[Nv 3] ^777777+4%^000000
+[Nv 4] ^777777+5%^000000
+[Nv 5] ^777777+6%^000000
+[Nv 6] ^777777+7%^000000
+[Nv 7] ^777777+8%^000000
+[Nv 8] ^777777+9%^000000
+[Nv 9] ^777777+10%^000000
+[Nv 10] ^777777+11%^000000
 #
 SG_FRIEND#
 Auxílio Solar, Lunar e Estelar
-Nível Máximo: 3
+Nível máximo: ^7777773^000000
 Tipo: ^777777Passiva^000000
-Alvo: ^777777Membro do Grupo da Classe Monge^000000
-Descrição: ^777777Aumenta a chance de um personagem de uma classe Monge lançar Combo Triplo quando o jogador usar Contrachute, enquanto que O Último Dragão do Monge aumenta a chance do Mestre de Taekwon lançar Contrachute.
-[Nv 1] ^777777+100% de Chance^000000
-[Nv 2] ^777777+150% de Chance^000000
-[Nv 3] ^777777+200% de Chance^000000
+Descrição:
+^777777Ao atacar com 'Contrachute', o Monge do seu grupo terá mais chances de usar 'Combo Triplo'.
+Se o Monge do seu grupo atacar com 'O Último Dragão', aumenta as suas chances de ativar 'Postura do Contrachute'.^000000
 #
 SG_KNOWLEDGE#
 Transmissão Solar, Lunar e Estelar 
-Nível Máximo: 10
+Nível máximo: ^7777773^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o Limite Máximo de Carga em áreas Solares, Lunares e Estelares. O efeito desta habilidade é cancelado quando o usuário sai da área alinhada como Solar, Lunar ou Estelar.^000000
-[Lv 1] ^777777Peso Máximo +10%^000000
-[Lv 2] ^777777Peso Máximo +20%^000000
-[Lv 3] ^777777Peso Máximo +30%^000000
-[Lv 4] ^777777Peso Máximo +40%^000000
-[Lv 5] ^777777Peso Máximo +50%^000000
-[Lv 6] ^777777Peso Máximo +60%^000000
-[Lv 7] ^777777Peso Máximo +70%^000000
-[Lv 8] ^777777Peso Máximo +80%^000000
-[Lv 9] ^777777Peso Máximo +90%^000000
-[Lv 10] ^777777Peso Máximo +100%^000000
+Descrição:
+^777777Ao se conectar no jogo dentro de um mapa com alinhamento solar, lunar ou estelar, a Capacidade de Carga será aumentada.
+O efeito é cancelado ao mudar de mapa.^000000
+Nível l Peso máximo
+[Lv 1] ^777777+10%^000000
+[Lv 2] ^777777+20%^000000
+[Lv 3] ^777777+30%^000000
+[Lv 4] ^777777+40%^000000
+[Lv 5] ^777777+50%^000000
+[Lv 6] ^777777+60%^000000
+[Lv 7] ^777777+70%^000000
+[Lv 8] ^777777+80%^000000
+[Lv 9] ^777777+90%^000000
+[Lv 10] ^777777+100%^000000
 #
 SG_FUSION#
 União Solar, Lunar e Estelar
-^777777Pré requisitos: Transmissão Solar Lunar e Estelar 9^000000
-Tipo: ^777777Despertar^000000
-Descrição: ^777777Desperta o potencial oculto do usuário por 10 minutos enquanto estiver no status Espírito, 
-concedendo a ele ataques com 100% de Precisão que ignoram a Defesa do inimigo, e maior Velocidade de Movimento. 
-No entanto, 2% do HP do usuário será drenado a cada ataque contra monstros, e 8% será drenado a cada ataque contra outros jogadores.
-Nesse status, atacar com o HP restante do usuário a menos de 20% do HP Máximo vai matá-lo instantaneamente.
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Transmissão Solar Lunar e Estelar 9^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cancela o estado de 'Espírito do Mestre Taekwon' para flutuar do chão por 10 minutos.
+Enquanto estiver voando, a velocidade de movimento será aumentada.
+Reduz em 75% a efetividade de cura recebida.
+Desativa a regeneração natural de HP e SP.
+Ataques físicos ignoram a DEF e a esquiva do alvo.^000000
+Ao realizar ataques físicos:
+^777777Em monstros, cada ataque drenará 2% do seu HP.
+Em personagens, drenará 8% do seu HP.^000000
 #
 SL_ALCHEMIST#
 Espírito do Alquimista
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Alquimista de todos os tempos, e concede seus poderes temporariamente a um Alquimista-alvo
-melhorando sua habilidade Arremessar Poção, que é afetada pelo Nível Base, e permitindo o uso das habilidades Arremessar Poção da Fúria Selvagem e Criação Espiritual de Poções.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 sec^000000
-[Nv 2] ^777777360 SP, 200 sec^000000
-[Nv 3] ^777777260 SP, 250 sec^000000
-[Nv 4] ^777777160 SP, 300 sec^000000
-[Nv 5] ^77777760 SP, 350 sec^000000
+Descrição:
+^777777Invoca o espírito do maior Alquimista de todos os tempos, concedendo efeitos positivos temporariamente a um Alquimista e suas evoluções.^000000
+Efeitos no alvo:
+^777777Habilita [Arremessar Poção da Fúria Selvagem].
+Habilita [Criação Espiritual de Poções] de acordo com os membros do grupo.
+Aumenta a efetividade de cura de [Arremessar Poção] de acordo com o nível base.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 AM_BERSERKPITCHER#
 Arremessar Poção da Fúria Selvagem
+Nível máximo: ^7777771^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Força a ingestão de Poções da Fúria Selvagem por qualquer classe. No entanto, a duração do aumento na VelATQ por esta habilidade é apenas a metade da do item Poção da Fúria Selvagem.
-^00BB00Cada uso consome 2 Poções da Fúria Selvagem.^000000
+Pré requisitos:
+^777777Receber 'Espírito do Alquimista'^000000
+Descrição:
+^777777Atira 2 Poções da Fúria Selvagem no alvo, ignorando as restrições de classe do item.
+Não surte efeito em personagens de nível 84 ou menor.^000000
 #
 SL_MONK#
 Espírito do Monge
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Monge mais obstinado de todos os tempos, e concede seus poderes temporariamente a um Monge-alvo, melhorando sua habilidade O Último Dragão para que inflija dano colateral aos inimigos numa área de 5 x 5 células.
-O Espírito do Monge também permite que os Monges usem habilidades de combo com consumo de SP reduzido e recuperem SP durante o status de Fúria.^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito do maior Monge de todos os tempos, concedendo efeitos positivos temporariamente a um Monge e suas evoluções.^000000
+Efeitos no alvo:
+^777777Permite que 'O Último Dragão' atinja alvos na área de 5x5 células.
+Permite regenerar SP mesmo em estado de 'Fúria Interior'.
+Combos de Monge e Mestre consumirão menos SP.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_STAR#
-Espírito do Mestre de Taekwon
-Nível Máximo: 5
+Espírito do Mestre Taekwon
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Mestre de Taekwon de todos os tempos, e concede seus poderes temporariamente a um Mestre Taekwon-alvo, 
-permitindo que ele use a habilidade União Solar, Lunar e Estelar.^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito do maior Mestre Taekwon de todos os tempos, concedendo efeitos positivos temporariamente a um Mestre Taekwon e suas evoluções.^000000
+Efeitos no alvo:
+^777777Permite o uso da habilidade 'União Solar, Lunar e Estelar'.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_SAGE#
 Espírito do Sábio
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Sábio de todos os tempos, e concede seus poderes temporariamente a um Sábio-alvo, melhorando sua habilidade Desejo Arcano para que lance as habilidades de Lanças/Relâmpago mais altas.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito do maior Sábio de todos os tempos, concedendo efeitos positivos temporariamente a um Sábio e suas evoluções.^000000
+Efeitos no alvo:
+^777777Permite que 'Desejo Arcano' autoconjure 'Lanças de Fogo', 'Lanças de Gelo' e 'Relâmpago' no maior nível aprendido pelo personagem.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_CRUSADER#
 Espírito do Templário
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Templário mais valente de todos os tempos, e concede seus poderes temporariamente a um Templário-alvo.
-Enquanto durar esta habilidade, Escudo Bumerangue será conjurado pela metade do tempo, causará o dobro de dano e nunca errará seu alvo.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito do maior Templário de todos os tempos, concedendo efeitos positivos temporariamente a um Templário e suas evoluções.^000000
+Efeitos no alvo:
+^777777Aumenta o dano de 'Escudo Bumerangue'.
+Ignora a esquiva do alvo ao usar 'Escudo Bumerangue'.
+Reduz o tempo de pós-conjuração de 'Escudo Bumerangue'.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_SUPERNOVICE#
 Espírito do Superaprendiz
-^777777Pré requisitos: Espírito do Mestre de Taekwon 1^000000
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Superaprendiz mais incrível de todos os tempos, e concede seus poderes temporariamente ao Superaprendiz-alvo.
-Ao ser conjurada esta habilidade, o Superaprendiz terá uma pequena chance de invocar um Anjo da Guarda que apagará seu registro de mortes anteriores.
-Superaprendizes com Nível Base 90 ou maior podem usar qualquer equipamento para a cabeça, não importa o local, e no Nível Base 96 e acima, eles podem 
-se equipar com algumas armas de Nível 4, como Espadas de Uma Mão, Maças, Machados, Cajados e Adagas.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Mestre Taekwon 1^000000
+Descrição:
+^777777Invoca o espírito do maior Superaprendiz de todos os tempos, concedendo efeitos positivos temporariamente a um Superaprendiz e suas evoluções.^000000
+Efeitos no alvo:
+^777777No momento da invocação, concede uma pequena chance de invocar o Anjo da Guarda para apagar o registro de mortes.
+Alvos no nível base 90 ou mais poderão usar qualquer equipamento para cabeça, sem restrições.
+Alvos no nível base 96 ou mais poderão equipar algumas armas de nível 4.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_KNIGHT#
 Espírito do Cavaleiro
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Templário 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Cavaleiro de todos os tempos, e concede seus poderes temporariamente ao Cavaleiro-alvo.
-Enquanto durar esta habilidade, o uso de Rapidez com Uma Mão será permitido, se a habilidade Rapidez com Duas Mãos em nível 10 estiver dominada.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Templário 1^000000
+Descrição:
+^777777Invoca o espírito do maior Cavaleiro de todos os tempos, concedendo efeitos positivos temporariamente a um Cavaleiro e suas evoluções.^000000
+Efeitos no alvo:
+^777777Habilita 'Rapidez com Uma Mão' se tiver aprendido 'Rapidez com Duas Mãos' no nível 10.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_WIZARD#
 Espírito do Bruxo
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Sábio 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Bruxo mais poderoso de todos os tempos, e concede seus poderes temporariamente ao Bruxo-alvo.
-Enquanto durar esta habilidade, o Bruxo-alvo poderá usar algumas habilidades sem consumir Gemas.
-O uso das habilidades sem Gemas aumenta o consumo de SP em 50%.
-Se o usuário possuir um Fragmento de Cristal, será utilizado.
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Sábio 1^000000
+Descrição:
+^777777Invoca o espírito do maior Bruxo de todos os tempos, concedendo efeitos positivos temporariamente a um Bruxo e suas evoluções.^000000
+Efeitos no alvo:
+^777777Anula o gasto de gemas ao usar habilidades.
+Consumo de SP e conjuração variável +50%.
+Consome 1 'Fragmento de Cristal' para não receber o dano refletido de um alvo com 'Kaite'.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_PRIEST#
 Espírito do Sacerdote
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Monge 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Sacerdote mais devoto de todos os tempos, e concede seus poderes temporariamente ao Sacerdote-alvo. 
-Enquanto durar a habilidade, Luz Divina do Sacerdote-alvo, terá seu Poder de Ataque e custo em SP multiplicados por cinco.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Monge 1^000000
+Descrição:
+^777777Invoca o espírito do maior Sacerdote de todos os tempos, concedendo efeitos positivos temporariamente a um Sacerdote e suas evoluções.^000000
+Efeitos no alvo:
+^777777Dano de 'Luz Divina' +500%.
+Consumo de SP de 'Luz Divina' +500%.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_BARDDANCER#
-Espírito do Artista
-Nível Máximo: 5
+Espírito dos Artistas
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior artista de todos os tempos, e concede seus poderes temporariamente ao Bardo ou Odalisca-alvo.
-Enquanto durar a habilidade, Bardos e Odaliscas terão maior Velocidade de Movimento, receberão o mesmo efeito que os membros do grupo para executar 
-habilidades de Música ou Dança, e poderão fazer combos com Assovio, Sibilo, Crepúsculo Sangrento, Não Me Abandones, Poema de Bragi, Beijo da Sorte, Maçãs de Indun e Dança Cigana. 
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito dos maiores Artistas de todos os tempos, concedendo efeitos positivos temporariamente a um Bardo ou Odalisca e suas evoluções.^000000
+Efeitos no alvo:
+^777777As próprias músicas e danças afetarão o artista.
+Aumenta a velocidade de movimento durante uma performance.
+Permite que Bardos aprendam danças de Odaliscas consumindo 50% a mais de SP.
+Permite que Odaliscas aprendam músicas de Bardos consumindo 50% a mais de SP.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_ROGUE#
 Espírito do Arruaceiro
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Mercenário 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Arruaceiro mais sorrateiro de todos os tempos, e concede seus poderes temporariamente ao Arruaceiro-alvo, 
-melhorando o aumento da Velocidade de Movimento e de FOR do status de Furtividade. Enquanto durar esta habilidade, o Arruaceiro não será afetado por 
-feitiços de Desencantar, e receberá mais HP e SP de poções criadas por um Alquimista entre os Dez Melhores do Ranking.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Mercenário 1^000000
+Descrição:
+^777777Invoca o espírito do maior Arruaceiro de todos os tempos, concedendo efeitos positivos temporariamente a um Arruaceiro e suas evoluções.^000000
+Efeitos no alvo:
+^777777Permite que 'Preservar' forneça imunidade a 'Desencantar'.
+Aumenta a efetividade de cura de qualquer poção criada por Alquimistas do ranking.
+Aumenta a velocidade de movimento e o bônus de Espreitar.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_ASSASIN#
 Espírito do Mercenário
-Nível Máximo: 5
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Mercenário mais misterioso de todos os tempos, e concede seus poderes temporariamente ao Mercenário-alvo.
-Enquanto durar esta habilidade, Lâminas Destruidoras terá um aumento de 100% no dano, e uma demora menor.
-Ao utilizar Lâminas Destruidoras durante o efeito, o SP consumido será 100% maior.
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Descrição:
+^777777Invoca o espírito do maior Mercenário de todos os tempos, concedendo efeitos positivos temporariamente a um Mercenário e suas evoluções.^000000
+Efeitos no alvo:
+^777777Dano de 'Lâminas Destruidoras' +100%.
+Consumo de SP de 'Lâminas Destruidoras' +100%.
+Tempo de pós-conjuração de 'Lâminas Destruidoras' -50%.
+Na Guerra do Emperium, não há redução na pós-conjuração e o dano será de 25%.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_BLACKSMITH#
 Espírito do Ferreiro
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Alquimista 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do Ferreiro mais eficiente de todos os tempos, e concede seus poderes temporariamente ao Ferreiro-alvo. 
-Enquanto durar esta habilidade, o uso de Adrenalina Concentrada será ativado, se o Ferreiro tiver dominado Adrenalina Pura.
-Adrenalina Concentrada pode ser usada em todas as armas, exceto as do tipo Arco, e não pode ser usada junto com habilidades 
-com efeitos similares como Rapidez com Uma/Duas Mãos ou Lança, Adrenalina Pura, Sombra ou Proteção Solar, Lunar e Estelar, ou Crepúsculo Sangrento.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito do Alquimista 1^000000
+Descrição:
+^777777Invoca o espírito do maior Ferreiro de todos os tempos, concedendo efeitos positivos temporariamente a um Ferreiro e suas evoluções.^000000
+Efeitos no alvo:
+^777777Habilita 'Adrenalina Concentrada' se o alvo tiver aprendido 'Adrenalina Pura' no nível 5.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 BS_ADRENALINE2#
 Adrenalina Concentrada
-^777777Pré requisitos: Adrenalina Pura 5,
-Sob efeito de Espírito^000000
+Nível máximo: ^7777771^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Aumenta a Velocidade de Ataque de qualquer tipo de arma, exceto Arcos. Não pode ser usada junto com habilidades que tenham efeitos similares, como Adrenalina Pura, Rapidez com Uma/Duas Mãos ou Lança, Crepúsculo Sangrento e Sombra ou Proteção Solar, Lunar e Estelar. Consome 64 SP e dura 150 segundos.^000000
+Pré requisitos:
+^777777Adrenalina Pura 5^000000
+^777777Receber 'Espírito do Ferreiro'.^000000
+Descrição:
+^777777Aumenta a velocidade de ataque ao equipar qualquer arma, exceto arcos.
+O efeito não é cumulativo com habilidades semelhantes, como 'Adrenalina Pura'.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^77777764^000000
 #
 SL_HUNTER#
 Espírito do Caçador
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Artista 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Caçador de todos os tempos, e concede seus poderes temporariamente ao Caçador-alvo, melhorando temporariamente sua habilidade Flagelo das Feras de acordo com sua FOR.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito dos Artistas 1^000000
+Descrição:
+^777777Invoca o espírito do maior Caçador de todos os tempos, concedendo efeitos positivos temporariamente a um Caçador e suas evoluções.^000000
+Efeitos no alvo:
+^777777Melhora 'Flagelo das Feras' de acordo com a FOR.
+Habilita 'Ataque da Fera' se o alvo tiver aprendido 'Rajada de Flechas' no nível 10.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_SOULLINKER#
 Espírito do Espiritualista
-Nível Máximo: 5
-^777777Pré requisitos: Espírito do Mestre Taekwon 1^000000
+Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Invoca o espírito do maior Espiritualista de todos os tempos, e concede seus poderes temporariamente ao Espiritualista-alvo, permitindo temporariamente o uso das habilidades da categoria [Ka-] em qualquer personagem.
-^FFFFFF_^000000
-Consumo de SP e Duração por Nível
-[Nv 1] ^777777460 SP, 150 s^000000
-[Nv 2] ^777777360 SP, 200 s^000000
-[Nv 3] ^777777260 SP, 250 s^000000
-[Nv 4] ^777777160 SP, 300 s^000000
-[Nv 5] ^77777760 SP, 350 s^000000
+Pré requisitos:
+^777777Espírito dos Mestre Taekwon 1^000000
+Descrição:
+^777777Invoca o espírito do maior Espiritualista de todos os tempos, concedendo efeitos positivos temporariamente a outros Espiritualistas e suas evoluções.
+Não pode ser conjurada no próprio usuário.^000000
+Efeitos no alvo:
+^777777Permite usar 'Kaite', 'Kaahi', 'Kaizel' e 'Kaupe' em qualquer personagem.^000000
+Nível l Duração l Custo de SP
+[Nv 1] ^777777150 segundos^000000 l ^777777460^000000
+[Nv 2] ^777777200 segundos^000000 l ^777777360^000000
+[Nv 3] ^777777250 segundos^000000 l ^777777260^000000
+[Nv 4] ^777777300 segundos^000000 l ^777777160^000000
+[Nv 5] ^777777350 segundos^000000 l ^77777760^000000
 #
 SL_KAIZEL#
 Kaizel
-Nível Máximo: 7
-^777777Pré requisitos: Espírito do Sacerdote 1^000000
+Nível máximo: ^7777777^000000
 Tipo: ^777777Suporte^000000
-Categoria [Ka-]: ^777777Só pode ser usada com familiares e outros Espiritualistas^000000
-Descrição: ^777777Revive instantaneamente um personagem derrotado, que ficará sob o status Kyrie Eleison por 2 segundos até despertar.
-Dura 30 minutos, e é cancelada se o alvo ressuscitar. A conjuração da habilidade não é afetada pela DEX do usuário.
-Esta habilidade fica desativada durante a Guerra do Emperium.^000000
-^FFFFFF_^000000
-Consumo de SP, Tempo de Conjuração e HP Restaurado ao Reviver
-[Nv 1] ^777777120 SP, 4,5 s, 10% do HP Máximo^000000
-[Nv 2] ^777777110 SP, 4 s, 20% do HP Máximo^000000
-[Nv 3] ^777777100 SP, 3,5 s, 30% do HP Máximo^000000
-[Nv 4] ^77777790 SP, 3 s, 40% do HP Máximo^000000
-[Nv 5] ^77777780 SP, 2,5 s, 50% do HP Máximo^000000
-[Nv 6] ^77777770 SP, 2,5 s, 60% do HP Máximo^000000
-[Nv 7] ^77777760 SP, 2,5 s, 70% do HP Máximo^000000
+Alvo: ^777777Usuário, familiares e Espiritualistas^000000
+Pré requisitos:
+^777777Espírito dos Sacerdote 1^000000
+Descrição:
+^777777Permite ressuscitar com um valor de HP regenerado, recebendo Kyrie Eleison nos primeiros 3 segundos de vida.
+Dura 30 minutos ou até morrer.
+Não funciona na Guerra do Emperium.^000000
+Nível l HP regenerado l Conjuração l Custo de SP
+[Nv 1] ^77777710%^000000 l ^7777774,5 segundos^000000 l ^777777120^000000
+[Nv 2] ^77777720%^000000 l ^7777774,0 segundos^000000 l ^777777110^000000
+[Nv 3] ^77777730%^000000 l ^7777773,5 segundos^000000 l ^777777100^000000
+[Nv 4] ^77777740%^000000 l ^7777773,0 segundos^000000 l ^77777790^000000
+[Nv 5] ^77777750%^000000 l ^7777772,5 segundos^000000 l ^77777780^000000
+[Nv 6] ^77777760%^000000 l ^7777772,5 segundos^000000 l ^77777770^000000
+[Nv 7] ^77777770%^000000 l ^7777772,5 segundos^000000 l ^77777760^000000
 #
 SL_KAAHI#
 Kaahi
-Nível Máximo: 7
-^777777Pré requisitos: Espírito do Sacerdote 1,
-Espírito do Monge 1, Espírito do Templário 1^000000
+Nível máximo: ^7777777^000000
 Tipo: ^777777Suporte^000000
-Categoria [Ka-]: ^777777Só pode ser usada com familiares e outros Espiritualistas^000000
-Descrição: ^777777Consome uma certa quantidade de SP para restaurar HP a cada vez que um inimigo usar um ataque normal.
-^000000Não pode ser utilizada com o HP cheio. 
-Custo em SP por ataque: ^7777775 a 35^000000
-HP Recuperado: ^777777200 a 1.400^000000
+Alvo: ^777777Usuário, familiares e Espiritualistas^000000
+Pré requisitos:
+^777777Espírito dos Monge 1^000000
+^777777Espírito dos Templário 1^000000
+Descrição:
+^777777Drena o próprio SP para recuperar um valor fixo de HP ao ser alvo de ataques físicos normais.
+Dura 5 minutos ou até morrer.
+Não é ativada se o HP estiver cheio.^000000
+Nível l HP regenerado l SP drenado
+[Nv 1] ^777777200^000000 l ^7777775^000000
+[Nv 2] ^777777400^000000 l ^77777710^000000
+[Nv 3] ^777777600^000000 l ^77777715^000000
+[Nv 4] ^777777800^000000 l ^77777720^000000
+[Nv 5] ^7777771.000^000000 l ^77777725^000000
+[Nv 6] ^7777771.200^000000 l ^77777730^000000
+[Nv 7] ^7777771.400^000000 l ^77777735^000000
 #
 SL_KAUPE#
 Kaupe
-Nível Máximo: 3
-^777777Pré requisitos: Espírito do Mercenário 1,
-Espírito do Arruaceiro 1^000000
+Nível máximo: ^7777773^000000
 Tipo: ^777777Suporte^000000
-Categoria [Ka-]: ^777777Só pode ser usada com familiares e outros Espiritualistas^000000
-Descrição: ^777777O status Kaupe dá a chance de se esquivar de um ataque físico de um inimigo, e dura 10 minutos, ou até que o personagem consiga se esquivar de um ataque.
-^FFFFFF_^000000
-Consumo de SP e Chance de Esquiva por Nível
-[Nv 1] ^77777720 SP, +33% na Esquiva^000000
-[Nv 2] ^77777730 SP, +66% na Esquiva^000000
-[Nv 3] ^77777740 SP, +100% na Esquiva^000000
+Alvo: ^777777Usuário, familiares e Espiritualistas^000000
+Pré requisitos:
+^777777Espírito dos Arruaceiro 1^000000
+^777777Espírito dos Mercenário 1^000000
+Descrição:
+^777777Concede a chance de bloquear um único ataque.
+Dura 10 minutos ou até o bloqueio do ataque.^000000
+Nível l Custo de SP l Chance de bloquear
+[Nv 1] ^77777720^000000 l ^77777733%^000000
+[Nv 2] ^77777730^000000 l ^77777766%^000000
+[Nv 3] ^77777740^000000 l ^777777100%^000000
 #
 SL_KAITE#
 Kaite
-^777777Pré requisitos: Espírito do Bruxo 1,
-Espírito do Sábio 1^000000
-Tipo: ^777777Suporte^000000
-Categoria [Ka-]: ^777777Só pode ser usada com familiares e outros Espiritualistas^000000
-Descrição: ^777777Enquanto ativada, refletirá a maioria dos Ataques Mágicos de volta a quem os lançou e receberá 400% de dano de Ataques Físicos.
-Feitiços de Cura lançados por outros personagens serão refletidos e vão curar quem os lançou. Feitiços de Cura lançados pelo próprio personagem afetado pelo Kaite serão refletidos mas não curarão ninguém.
-Os feitiços de chão não podem ser refletidos. Os feitiços de monstros de alto nível não podem ser refletidos, embora esta habilidade tenha 100% de chance de refletir feitiços de outros jogadores, não importando o nível.^000000
-[Nv 1] ^7777771 Reflexão, Tempo de Conjuração de 6 s, duração de 1 minuto^000000
-[Nv 2] ^7777771 Reflexão, Tempo de Conjuração de 5,5 s, duração de 2 minutos^000000
-[Nv 3] ^7777771 Reflexão, Tempo de Conjuração de 5 s, duração de 3 minutos^000000
-[Nv 4] ^7777771 Reflexão, Tempo de Conjuração de 4,5 s, duração de 4 minutos^000000
-[Nv 5] ^7777772 Reflexões, Tempo de Conjuração de 4 s, duração de 5 minutos^000000
-[Nv 6] ^7777772 Reflexões, Tempo de Conjuração de 3,5 s, duração de 6 minutos^000000
-[Nv 7] ^7777772 Reflexões, Tempo de Conjuração de 3 s, duração de 10 minutos^000000
+Nível máximo: ^7777777^000000
+Tipo: ^777777Ativa^000000
+Alvo: ^777777Usuário, familiares e Espiritualistas^000000
+Pré requisitos:
+^777777Espírito dos Bruxo 1^000000
+^777777Espírito dos Sábio 1^000000
+Descrição:
+^777777Concede 50% de chance de refletir 1 ou 2 magias de alvo único.
+Enquanto estiver ativa, você receberá +400% dos danos físicos que sofrer.
+Não reflete magias de monstros do nível 81 ou mais e de Chefes.
+Em outros personagens, não existe restrição.
+Não pode ser usada simultaneamente com 'Assumptio'.^000000
+Nível l Reflexão l Conjuração l Duração
+[Nv 1] ^7777771 magia^000000 l ^7777776,0 segundos^000000 l ^7777771 minuto^000000
+[Nv 2] ^7777771 magia^000000 l ^7777775,5 segundos^000000 l ^7777772 minutos^000000
+[Nv 3] ^7777771 magia^000000 l ^7777775,0 segundos^000000 l ^7777773 minutos^000000
+[Nv 4] ^7777771 magia^000000 l ^7777774,5 segundos^000000 l ^7777774 minutos^000000
+[Nv 5] ^7777772 magias^000000 l ^7777774,0 segundos^000000 l ^7777775 minutos^000000
+[Nv 6] ^7777772 magias^000000 l ^7777773,5 segundos^000000 l ^7777776 minutos^000000
+[Nv 7] ^7777772 magias^000000 l ^7777773,0 segundos^000000 l ^77777710 minutos^000000
 #
 SL_KAINA#
 Kaina
-Nível Máximo: 7
-^777777Pré requisitos: Retiro Rápido 1^000000
+Nível máximo: ^7777777^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Aumenta o SP máximo e melhora a eficiência da habilidade Retiro Rápido. No Nível Base 70, esta habilidade reduz o consumo de SP das habilidades Estin, Estun e Esma em 3%, proporcionalmente ao nível da habilidade Kaina. No Nível Base 80, o consumo de SP é reduzido em 5%, e no Nível 90, em 7%.
-^FFFFFF_^000000
-Eficiência de Retiro Rápido e Aumento de SP Máximo por Nível
-[Nv 1] ^777777+40% em Retiro Rápido, +30 em SP Máximo^000000
-[Nv 2] ^777777+50% em Retiro Rápido, +60 em SP Máximo^000000
-[Nv 3] ^777777+60% em Retiro Rápido, +90 em SP Máximo^000000
-[Nv 4] ^777777+70% em Retiro Rápido, +120 em SP Máximo^000000
-[Nv 5]^FFFFFF ^777777+80% em Retiro Rápido, +150 em SP Máximo^000000
-[Nv 6] ^777777+90% em Retiro Rápido, +180 em SP Máximo^000000
-[Nv 7]^FFFFFF ^777777+100% em Retiro Rápido, +210 em SP Máximo^000000
+Pré requisitos:
+^777777Retiro Rápido 1^000000
+Descrição:
+^777777Aumenta o SP máx., garante um bônus de regeneração em 'Retiro Rápido' e reduz o consumo de SP de 'Estin', 'Estun' e 'Esma' de acordo com seu nível base.^000000
+No nível base 70:
+^777777Reduz o consumo de SP em 3% a cada nível de Kaina.^000000
+No nível base 80:
+^777777Reduz o consumo de SP em 5% a cada nível de Kaina.^000000
+No nível base 90:
+^777777Reduz o consumo de SP em 7% a cada nível de Kaina.^000000
+Nível l SP máx. l Bônus de Retiro Rápido
+[Nv 1] ^777777+30^000000 l ^777777+40%^000000
+[Nv 2] ^777777+60^000000 l ^777777+50%^000000
+[Nv 3] ^777777+90^000000 l ^777777+60%^000000
+[Nv 4] ^777777+120^000000 l ^777777+70%^000000
+[Nv 5] ^777777+150^000000 l ^777777+80%^000000
+[Nv 6] ^777777+180^000000 l ^777777+90%^000000
+[Nv 7] ^777777+210^000000 l ^777777+100%^000000
 #
 SL_STIN#
 Estin
-Nível Máximo: 7
-^777777Pré requisitos: Espírito do Bruxo 1^000000
-Tipo: ^777777Ataque Mágico^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Empurra um monstro-alvo 2 células para trás. Somente monstros Pequenos sofrem dano desta habilidade, que assume a propriedade elemental da habilidade Brisa Leve se for lançada. 
-No nível de habilidade 7, Estin terá uma demora de 3 segundos para permitir o uso da habilidade Esma.^000000
-[Nv 1] ^77777718 SP, 10% de Dano^000000
-[Nv 2] ^77777720 SP, 20% de Dano^000000
-[Nv 3] ^77777722 SP, 30% de Dano^000000
-[Nv 4] ^77777724 SP, 40% de Dano^000000
-[Nv 5] ^77777726 SP, 50% de Dano^000000
-[Nv 6] ^77777728 SP, 60% de Dano^000000
-[Nv 7] ^77777730 SP, 70% de Dano^000000
+Nível máximo: ^7777777^000000
+Tipo: ^777777Ofensiva^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Espírito do Bruxo 1^000000
+Descrição:
+^777777Invoca uma lâmina espiritual, empurrando monstros para trás e causando dano mágico em alvos pequenos.
+A lâmina assume a propriedade elemental da Brisa Leve.
+No nível 7, permite usar 'Esma' 3 segundos após a conjuração de 'Estin'.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^77777710%^000000 l ^77777718^000000
+[Nv 2] ^77777720%^000000 l ^77777720^000000
+[Nv 3] ^77777730%^000000 l ^77777722^000000
+[Nv 4] ^77777740%^000000 l ^77777724^000000
+[Nv 5] ^77777750%^000000 l ^77777726^000000
+[Nv 6] ^77777760%^000000 l ^77777728^000000
+[Nv 7] ^77777770%^000000 l ^77777730^000000
 #
 SL_STUN#
 Estun
-Nível Máximo: 7
-^777777Pré requisitos: Espírito do Bruxo 1^000000
-Tipo: ^777777Ataque Mágico^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Atordoa um monstro por 2 segundos quando atingido. Somente monstros Médios sofrem Atordoamento por esta habilidade, que assume a propriedade elemental da habilidade Brisa Leve se for lançada. 
-Monstros de tamanho Pequeno ou Grande apenas sofrem dano normal.
-No nível de habilidade 7, Estun terá uma demora de 3 segundos para permitir o uso da habilidade Esma.^000000
-[Nv 1] ^77777718 SP, 5% de Dano^000000
-[Nv 2] ^77777720 SP, 10% de Dano^000000
-[Nv 3] ^77777722 SP, 15% de Dano^000000
-[Nv 4] ^77777724 SP, 20% de Dano^000000
-[Nv 5] ^77777726 SP, 25% de Dano^000000
-[Nv 6] ^77777728 SP, 30% de Dano^000000
-[Nv 7] ^77777730 SP, 35% de Dano^000000
+Nível máximo: ^7777777^000000
+Tipo: ^777777Ofensiva^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Espírito do Bruxo 1^000000
+Descrição:
+^777777Invoca uma fumaça espiritual, infligindo atordoamento em monstros Médios e causando dano mágico em alvos de todos os tamanhos.
+A fumaça assume a propriedade elemental da Brisa Leve.
+No nível 7, permite usar 'Esma' 3 segundos após a conjuração de 'Estun'.^000000
+Nível l Dano l Custo de SP
+[Nv 1] ^7777775%^000000 l ^77777718^000000
+[Nv 2] ^77777710%^000000 l ^77777720^000000
+[Nv 3] ^77777715%^000000 l ^77777722^000000
+[Nv 4] ^77777720%^000000 l ^77777724^000000
+[Nv 5] ^77777725%^000000 l ^77777726^000000
+[Nv 6] ^77777730%^000000 l ^77777728^000000
+[Nv 7] ^77777735%^000000 l ^77777730^000000
 #
 SL_SMA#
 Esma
-Nível Máximo: 10
-^777777Pré requisitos: Estin 7, Estun 7^000000
-Tipo: ^777777Ataque Mágico^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Esta habilidade só pode ser usada se seu requisito de uso estiver satisfeito.
-Um raio inflige dano calculado como (40 + Nível Base)% de um ataque normal, que assumirá a propriedade elemental aplicada pela habilidade Brisa Leve^000000
-^FFFFFF_^000000
-Consumo de SP e Número de Raios Atirados
-[Nv 1]:^777777 8 SP, 1 Raio^000000
-[Nv 2]:^777777 16 SP, 2 Raios^000000
-[Nv 3]:^777777 24 SP, 3 Raios^000000
-[Nv 4]:^777777 32 SP, 4 Raios^000000
-[Nv 5]: ^777777 40 SP, 5 Raios^000000
-[Nv 6]:^777777 48 SP, 6 Raios^000000
-[Nv 7]:^777777 56 SP, 7 Raios^000000
-[Nv 8]:^777777 64 SP, 8 Raios^000000
-[Nv 9]:^777777 72 SP, 9 Raios^000000
-[Nv 10]:^777777 80 SP, 10 Raios^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ofensiva^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Estin 7^000000
+^777777Estun 7^000000
+Descrição:
+^777777Após conjurar 'Estin', 'Estun' ou 'Eske', o personagem terá 3 segundos para invocar até 10 círculos espirituais que causam dano mágico no alvo.
+Os círculos assumem a propriedade elemental da Brisa Leve.^000000
+Nível l Círculos l Custo de SP
+[Nv 1] ^7777771^000000 l ^7777778^000000
+[Nv 2] ^7777772^000000 l ^77777716^000000
+[Nv 3] ^7777773^000000 l ^77777724^000000
+[Nv 4] ^7777774^000000 l ^77777732^000000
+[Nv 5] ^7777775^000000 l ^77777740^000000
+[Nv 6] ^7777776^000000 l ^77777748^000000
+[Nv 7] ^7777777^000000 l ^77777756^000000
+[Nv 8] ^7777778^000000 l ^77777764^000000
+[Nv 9] ^7777779^000000 l ^77777772^000000
+[Nv 10] ^7777710^000000 l ^77777780^000000
 #
 SL_SWOO#
 Eswoo
-Nível Máximo: 7
-^777777Pré requisitos: Espírito do Sacerdote 1^000000
-Tipo: ^777777Magia de estado^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Encolhe temporariamente um monstro para reduzir sua Velocidade de Movimento.
-Chefes só ficarão encolhidos por 1/5 da duração normal da habilidade. 
-Se esta habilidade for lançada sobre um monstro que já estiver encolhido, o usuário ficará Atordoado, e o monstro-alvo se recuperará do status Encolhido mais rapidamente.^000000
-^FFFFFF_^000000
-Consumo de SP e Duração da Habilidade por Nível
-[Nv 1]:^777777 75 SP, 1 s^000000
-[Nv 2]:^777777 65 SP, 2 s^000000
-[Nv 3]:^777777 55 SP, 3 s^000000
-[Nv 4]:^777777 45 SP, 4 s^000000
-[Nv 5]:^777777 35 SP, 5 s^000000
-[Nv 6]:^777777 25 SP, 6 s^000000
-[Nv 7]:^777777 15 SP, 7 s^000000
+Nível máximo: ^7777777^000000
+Tipo: ^777777Ativa^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Espírito do Sacerdote 1^000000
+Descrição:
+^777777Encolhe um monstro normal ou chefe para reduzir a velocidade de movimento.
+Se conjurada novamente em um monstro encolhido, o usuário ficará sob atordoamento temporariamente.^000000
+Nível l Duração em Monstros l Duração em Chefes l Custo de SP
+[Nv 1] ^7777771 segundo^000000 l ^7777770,2 segundos^000000 l ^77777775^000000
+[Nv 2] ^7777772 segundos^000000 l ^7777770,4 segundos^000000 l ^77777765^000000
+[Nv 3] ^7777773 segundos^000000 l ^7777770,6 segundos^000000 l ^77777755^000000
+[Nv 4] ^7777774 segundos^000000 l ^7777770,8 segundos^000000 l ^77777745^000000
+[Nv 5] ^7777775 segundos^000000 l ^7777771,0 segundos^000000 l ^77777735^000000
+[Nv 6] ^7777776 segundos^000000 l ^7777771,2 segundos^000000 l ^77777725^000000
+[Nv 7] ^7777777 segundos^000000 l ^7777771,4 segundos^000000 l ^77777715^000000
 #
 SL_SKE#
 Eske
-Nível Máximo: 3
-^777777Pré requisitos: Espírito do Cavaleiro 1^000000
-Tipo: ^777777Magia de estado^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Multiplica por 4 o Poder de Ataque do monstro-alvo, mas reduz sua Defesa à metade. 
-Esta habilidade é seguida por uma demora de 3 segundos, durante a qual a habilidade ^00BB00Esma^777777 pode ser usada.^000000
-[Nv 1]:^777777 45 SP, Tempo de Conjuração de 3 s, duração de 10 s^000000
-[Nv 2]:^777777 30 SP, Tempo de Conjuração de 2 s, duração de 20 s^000000
-[Nv 3]:^777777 15 SP, Tempo de Conjuração de 1 s, duração de 30 s^000000
+Nível máximo: ^7777773^000000
+Tipo: ^777777Ativa^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Espírito do Cavaleiro 1^000000
+Descrição:
+^777777Força um monstro a ficar com DEF -50% e ATQ +300%.
+Após a conjuração, o personagem tem 3 segundos para usar 'Esma'.^000000
+Nível l Duração l Custo de SP l Conjuração
+[Nv 1] ^77777710 segundos^000000 l ^77777745^000000 l ^7777773 segundos^000000 
+[Nv 2] ^77777720 segundos^000000 l ^77777730^000000 l ^7777772 segundos^000000
+[Nv 3] ^77777730 segundos^000000 l ^77777715^000000 l ^7777771 segundo^000000
 #
 SL_SKA#
 Eska
-Nível Máximo: 3
-^777777Pré requisitos: Espírito do Monge 1^000000
-Tipo: ^777777Magia de estado^000000
-Categoria [Es-]: ^777777Só pode ser usada em monstros.^000000
-Descrição: ^777777Força sobre o monstro um estado similar ao da habilidade Corpo Fechado dos Monges, no qual as Velocidades de Movimento e de Ataque são reduzidas, mas a Defesa e a Defesa Mágica são temporariamente melhoradas.^000000
-[Nv 1]:^777777 100 SP, Tempo de Conjuração de 3 s, duração de 10 s^000000
-[Nv 2]:^777777 80 SP, Tempo de Conjuração de 2 s, duração de 20 s^000000
-[Nv 3]:^777777 60 SP, Tempo de Conjuração de 1 s, duração de 30 s^000000
+Nível máximo: ^7777773^000000
+Tipo: ^777777Ativa^000000
+Alvo: ^777777Apenas monstros^000000
+Pré requisitos:
+^777777Espírito do Monge 1^000000
+Descrição:
+^777777Força um monstro fixar um valor de DEF e DEFM e reduzir a velocidade de ataque e de movimento.^000000
+Nível l Duração l Custo de SP l Conjuração
+[Nv 1] ^77777710 segundos^000000 l ^777777100^000000 l ^7777773 segundos^000000 
+[Nv 2] ^77777720 segundos^000000 l ^77777780^000000 l ^7777772 segundos^000000
+[Nv 3] ^77777730 segundos^000000 l ^77777760^000000 l ^7777771 segundo^000000
 #
 ST_PRESERVE#
 Preservar
