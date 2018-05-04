@@ -72,6 +72,7 @@ sub new {
 		storage_item_add 093B
 		storage_item_remove 0963
 		sync 0887
+		char_create 0970
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 

@@ -56,6 +56,7 @@ sub new {
 		sync 035F
 		item_list_window_selected 0281
 		storage_password 0860
+		char_create 0A39
 	);
 	
 	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
