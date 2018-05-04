@@ -71361,3 +71361,18 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20017#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Dress Hat!
+300 Fabric
+100 Pieces of Black Cloth
+50 Sea-Otter Fur
+25 Soft Silk
+1 Rose Quartz
+1 Dress Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
