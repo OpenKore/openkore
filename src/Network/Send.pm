@@ -1502,4 +1502,29 @@ sub sendClanChat {
     $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
 }
 
+sub sendbankcheck {
+	my ($self, $accountID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_check',
+		charID => $accountID,
+	}));
+}
+sub sendbankwithdraw {
+	my ($self, $accountID , $zenyamount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_withdraw',
+		charID => $accountID,
+		zenywithdraw => $zenyamount,
+	}));
+}
+
+sub sendbankdeposit {
+	my ($self, $accountID , $zenyamount) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_deposit',
+		charID => $accountID,
+		zenydeposit => $zenyamount,
+	}));
+}
+
 1;

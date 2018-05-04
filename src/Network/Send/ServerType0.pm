@@ -155,6 +155,9 @@ sub new {
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0998' => ['send_equip', 'a2 V', [qw(ID type)]],#8
 		'09A1' => ['sync_received_characters'],
+		'09A7' => ['banking_deposit', 'a4 V', [qw(charID zenydeposit)]],
+		'09A9' => ['banking_withdraw', 'a4 V', [qw(charID zenywithdraw)]],	
+		'09AB' => ['banking_check', 'a4', [qw(charID)]],
 		'09D0' => ['gameguard_reply'],
 		'09D4' => ['sell_buy_complete'],
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],

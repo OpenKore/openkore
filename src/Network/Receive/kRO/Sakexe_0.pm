@@ -505,6 +505,9 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+		'09A6' => ['banking_status', 'V2 v',[qw(zeny reason)]],
+		'09A8' => ['banking_status_deposit', 'v V2 V',[qw(reason inbank onhand)]],
+		'09AA' => ['banking_status_withdraw', 'v V2 V',[qw(reason inbank onhand)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],

@@ -5265,4 +5265,43 @@ sub clan_leave {
 	}
 }
 
+sub banking_status {
+	my ($self, $args) = @_;
+	foreach (qw(zeny reason)) {
+        $bank{$_} = $args->{$_};
+   }		
+    $bank{zeny} = $args->{zeny};
+	$bank{reason} = $args->{zeny};
+	my $msg = center(T("[Bank Storage]"), 60, '-') ."\n" .
+		TF("In Bank : (%d) Zeny \n" .
+			"On Hand : (%d) Zeny \n",				
+		$bank{zeny}, $char->{zeny});
+		$msg .= ('-'x60) . "\n";
+		message $msg, "info";
+}
+
+sub banking_status_withdraw {
+	my ($self, $args) = @_;
+	if ($args->{reason} == 0x0) {
+		message TF("[BankStatus:Withdraw] : Success | [Bank Storage] : %s Zeny.\n", $args->{inbank}), "success";
+	} elsif ($args->{reason} == 0x1) {
+		error TF("[BankStatus:Withdraw] : NO MONEY FOR WITHDRAW | [Bank Storage] : %s Zeny.\n", $args->{inbank});
+	} elsif ($args->{reason} == 0x2) {
+		error TF("[BankStatus:Withdraw] : OVERFLOW | [Bank Storage]: %s Zeny.\n", $args->{inbank});
+	}
+}
+
+sub banking_status_deposit {
+	my ($self, $args) = @_;
+	if ($args->{reason} == 0x0) {
+		message TF("[BankStatus:Deposit] : Success | [Bank Storage]: %s Zeny.\n", $args->{inbank}), "success";
+	} elsif ($args->{reason} == 0x1) {
+		error TF("[BankStatus:Deposit] : Error (Try it again) | [Bank Storage]: %s Zeny.\n", $args->{inbank});		
+	} elsif ($args->{reason} == 0x2) {
+		error TF("[BankStatus:Deposit] : NO MONEY FOR Deposit | [Bank Storage]: %s Zeny.\n", $args->{inbank});
+	} elsif ($args->{reason} == 0x3) {
+		error TF("[BankStatus:Deposit] : OVERFLOW | [Bank Storage]: %s Zeny.\n", $args->{inbank});
+	}
+}
+
 1;
