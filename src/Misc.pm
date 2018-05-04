@@ -1327,7 +1327,7 @@ sub charSelectScreen {
 			} elsif ( $masterServer->{'charCreationType'} == 3 ) {
 				$message
 					= T( "Please enter the desired properties for your characters, in this form:\n" )
-					. T( "(slot) \"(name)\" (hairstyle) (haircolor)] (sex)\n" )
+					. T( "(slot) \"(name)\" (hairstyle) (haircolor) (sex)\n" )
 					. T( "Sex should be one of 'M' or 'F' (default is 'F').\n" );
 			} elsif ( $masterServer->{'charCreationType'} == 2 || $messageSender->{packet_lut}{'char_create'} eq "0970" ) {
 				$message = T("Please enter the desired properties for your characters, in this form:\n" .

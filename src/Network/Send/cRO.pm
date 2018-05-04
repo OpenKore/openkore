@@ -22,8 +22,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
-	$self->{char_create_version} = 1;
-
 	my %handlers = qw(
 		master_login 0AAC
 		character_move 035F
