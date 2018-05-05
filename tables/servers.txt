@@ -567,12 +567,3 @@ addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 
-[sctnightcore/Test Server]
-ip 35.198.195.158
-port 6900
-version 51
-master_version 2
-serverType kRO_RagexeRE_2017_06_14b
-serverEncoding Western
-charBlockSize 147
-addTableFolders kRO/RagexeRE_2017_06_14b;translated;translated/kRO_english;kRO
