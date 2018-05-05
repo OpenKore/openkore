@@ -1198,7 +1198,6 @@ sub actor_info {
 	return unless changeToInGameState();
 
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
-
 	my $player = $playersList->getByID($args->{ID});
 	if ($player) {
 		# 0095: This packet tells us the names of players who aren't in a guild.
@@ -1212,7 +1211,7 @@ sub actor_info {
 		$player->{party}{name} = bytesToString($args->{partyName}) if defined $args->{partyName};
 		$player->{guild}{name} = bytesToString($args->{guildName}) if defined $args->{guildName};
 		$player->{guild}{title} = bytesToString($args->{guildTitle}) if defined $args->{guildTitle};
-
+		$player->{title}{ID} = $args->{titleID} if defined $args->{titleID};
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
 		Plugins::callHook('charNameUpdate', {player => $player});
@@ -5263,6 +5262,13 @@ sub clan_leave {
 		message TF("[Clan] You leaved $clan{clan_name}");
 		undef %clan;
 	}
+}
+
+
+sub change_title {
+	my ($self, $args) = @_;
+	#TODO : <result>.B
+	message TF("You changed Title_ID :  %s.\n", $args->{title_id}), "info";
 }
 
 1;

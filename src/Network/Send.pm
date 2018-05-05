@@ -1502,4 +1502,13 @@ sub sendClanChat {
     $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
 }
 
+sub sendchangetitle {
+    my ($self, $title_id) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_change_title',
+        ID => $title_id,
+    }));
+	debug "Sent Change Title.\n", "sendPacket", 2;	
+}
+
 1;
