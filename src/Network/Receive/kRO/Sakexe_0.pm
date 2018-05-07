@@ -487,7 +487,6 @@ sub new {
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
-		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
@@ -2343,9 +2342,7 @@ sub received_characters {
 
 	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
 	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
-	
-	$timeout{charlogin}{time} = time;
-	
+
 	undef $conState_tries;
 
 	Plugins::callHook('parseMsg/recvChars', $args->{options});
@@ -2398,21 +2395,13 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		#$chars[$slot]{sex} = $accountSex2;
-		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+		$chars[$slot]{sex} = $accountSex2;
+
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
 		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
 		$chars[$slot]{map_name} = $mapname;
 		$chars[$slot]{map_name} =~ s/\.gat//g;
-		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
-			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
-			$chars[$slot]{exp} = join '', reverse split / /, $chars[$slot]{exp};
-			$chars[$slot]{exp} = hex $chars[$slot]{exp};
-			$chars[$slot]{exp_job} = getHex($chars[$slot]{exp_job});
-			$chars[$slot]{exp_job} = join '', reverse split / /, $chars[$slot]{exp_job};
-			$chars[$slot]{exp_job} = hex $chars[$slot]{exp_job};
-		}		
 	}
 
 	message T("Received characters from Character Server\n"), "connection";
