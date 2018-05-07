@@ -2406,7 +2406,7 @@ sub received_characters {
 
 	message T("Received characters from Character Server\n"), "connection";
 
-	$messageSender->sendBanCheck($accountID) if(grep { $args->{switch} eq $_ } qw( 099D ));
+	#$messageSender->sendBanCheck($accountID) if(grep { $args->{switch} eq $_ } qw( 099D ));
 		
 	if ($masterServer->{pinCode}) {
 		message T("Waiting for PIN code request\n"), "connection";
