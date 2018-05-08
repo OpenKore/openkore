@@ -71,7 +71,7 @@ sub new {
 		sync 0944
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 # packet_keys(0x09366971,0x005672F1,0x6F3712AE);

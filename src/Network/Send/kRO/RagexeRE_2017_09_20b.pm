@@ -71,7 +71,7 @@ sub new {
 		sync 088E
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #		#if PACKETVER == 20170920 //
