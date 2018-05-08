@@ -2923,7 +2923,7 @@ Classes: ^777777Espadachins e evoluções^000000
 Lança que absorve o espírito dos inimigos que mata.
 ^0000ffRegenera 5 de SP a cada oponente morto.^000000
 A cada ataque físico:
-^0000ffRegenera 1 e SP.^000000
+^0000ffRegenera 1 de SP.^000000
 Tipo: ^777777Lança^000000
 Ataque: ^77777795^000000
 Peso: ^777777100^000000
@@ -8779,16 +8779,18 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 2509#
 Capa fina e macia, feita de tecido verde extremamente resistente. Diz a lenda que elas foram feitas pelos elfos de Alfheim, que usavam apenas as capas como proteção.
 ^0000ffVIT +10.^000000
-^FF6347Conjunto [Bastão do Sobrevivente]^000000
-^0000ffHP máx +300.^000000
-^0000ffATQM -5%.^000000
-^0000ffATQM +1% por refino até o +10.^000000
-^0000ffResistência a propriedade Neutro +3% por refino até o +10.^000000
-Classe: ^777777Capa^000000
+^FF6347Conjunto^000000
+^FF6347[Bastão do Sobrevivente]^000000
+^0000ffHP máx. +300.^000000
+^0000ffDano mágico -5%^000000
+A cada refino até o +10:
+^0000ffDano mágico +1%.^000000
+^0000ffResistência a propriedade Neutro +3%.^000000
+Tipo: ^777777Capa^000000
 Defesa: ^77777710^000000
 Peso: ^77777755^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Mago e suas evoluções, Espiritualista^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
 #
 1721#
 Besta formada por um arco transversal e um compartimento contendo os virotes já engatilhados. É uma arma muito pesada e desengonçada, difícil de se armar e com um resultado final inferior ao de um bom arco. Mas a escolha é sua!
@@ -11184,11 +11186,12 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4165#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Inseto for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Inseto com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4166#
@@ -11200,9 +11203,9 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4167#
-Ao derrotar monstros da raça Bruto em ataques físicos:
+Ao derrotar monstros da raça Bruto com ataques físicos de curta distância:
 ^0000ffRegenera 5 de SP.^000000
-Ao desequipar:
+Ao desequipar a arma:
 ^0000ffDrena 5 de SP.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
@@ -11310,11 +11313,12 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4180#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Dragão for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Dragão com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4181#
@@ -11326,11 +11330,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4182#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Demônio for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Demônio com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4183#
@@ -12054,11 +12059,12 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4274#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Morto-Vivo for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Morto-Vivo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4275#
@@ -12173,11 +12179,12 @@ Utilização: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4289#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Planta for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Planta com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4290#
@@ -12315,19 +12322,21 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4307#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Peixe for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Peixe com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4308#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Neutro for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Amorfo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4309#
@@ -12385,11 +12394,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4316#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Anjo for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Anjo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4317#
@@ -12489,11 +12499,12 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4329#
-^0000ffGanha 5 de SP cada vez que um monstro Humanoide for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Humanoide com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4330#
@@ -19830,12 +19841,14 @@ Peso: ^7777771^000000
 ^0000ffDEF -30.^000000
 ^0000ffEsquiva -30.^000000
 ^0000ffMantém [Investigar] ativo.^000000
+A cada ataque físico:
+^0000ffDrena 1 de SP do usuário.^000000
 ^FF6347Investigar:^000000
 ^0000ffAnula a defesa física do alvo.^000000
 ^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
 ^0000ffEfeitos de ignorar DEF são aplicados antes de [Investigar].^000000
 Tipo: ^777777Carta^000000
-Ataque: ^777777Arma^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4400#
@@ -21766,7 +21779,7 @@ Ao realizar ataques físicos:
 ^0000ff10% de chance de autoconjurar [Ataque Vital] nv. 3.^000000
 Tipo: ^777777Lança^000000
 Ataque: ^777777140^000000
-Peso: ^77777790^000000
+Peso: ^777777420^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
 Classes: ^777777Espadachins T. e evoluções^000000
@@ -36150,7 +36163,7 @@ Classe : ^777777Shura^000000
 1930#
 Uma flauta feita a partir de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffConjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos^000000
 A cada refino a partir do +6:
 ^0000ffCusto de SP de [Melodia de Morfeu] e [Sinfonia dos Ventos] -4.^000000
 Tipo: ^777777Instrumento Musical^000000
@@ -36164,7 +36177,7 @@ Classes: ^777777Trovadores e evoluções^000000
 1984#
 Um chicote muito flexível feito de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffConjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos^000000
 A cada refino a partir do +6:
 ^0000ffCusto de SP de [Melodia de Morfeu] e [Ritmo Contagiante] -4.^000000
 Tipo: ^777777Chicote^000000
@@ -42356,10 +42369,11 @@ Classes: ^777777Todas as Classes^000000
 #
 18893#
 Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana. De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
-^0000ffHP máx. +7%.^000000
-^0000ffSP máx. +3%.^000000
 ^0000ffRecuperação de HP da Carne +200%.^000000
 ^0000ffResistência as raças Dragão e Humanoide +8%.^000000
+Refino +12 ou mais:
+^0000ffHP máx. +7%.^000000
+^0000ffSP máx. +3%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
@@ -58760,9 +58774,9 @@ Classes: ^777777Todas^000000
 5967#
 Cansado da vida na Praia Kokomo, esse Galapago decidiu viajar mundo afora em seu guarda-sol voador (?!). Agora, cabe a você impressioná-lo visitando os locais mais exóticos do mundo!
 ^0000ffAGI +1.^000000
-Ao realizar ataques físicos:
-^0000ff5% de chance de autoconjurar [Ataque Aéreo] nv. 1 ou no nível aprendido.^000000
-A cada 3 de SOR base:
+Ao aprender [Ataque Aéreo] nv. 1:
+^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Ataque Aéreo] no nível aprendido.^000000
+A cada 3 de SOR base até o 120:
 ^0000ffChance de autoconjuração +0,1%.^000000
 A cada nível aprendido de [Ataque Aéreo]:
 ^0000ffChance de autoconjuração +0,2%.^000000
@@ -58776,7 +58790,7 @@ A cada nível aprendido de [Garras de Aço]:
 ^0000ffRecuperação de HP de Suco de Cenoura, Maçã e Banana +1.000%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Grifo]^000000
-^0000ffDano físico +5%.^000000
+^0000ffDano físico -5%.^000000
 ^0000ffVelocidade de ataque +1.^000000
 ^0000ffVelocidade de ataque +3%.^000000
 Arma do tipo Arco com refino +10 ou mais:
@@ -58894,6 +58908,25 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-08--------------------
+//*****************************************************
+31177#
+Com uma aparência que imita elementos naturais — como as pétalas de uma flor e as asas de uma borboleta —, esse chapéu representa a grande e generosa Mãe Natureza, cujo poder permeia entre amor, delicadeza e força.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31433#
+Inspirada no amor ágape de uma mãe por seus filhos, a Auréola Benevolente é símbolo de compreensão, carinho e afeto maternos. Delicado e brilhante, esse item carrega a imagem do amor puro e zeloso, deixando você cercado de uma aura protetora.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
