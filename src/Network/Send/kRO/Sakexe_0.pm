@@ -99,12 +99,12 @@ sub new {
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
-		'0846' => ['reqcashtabcode', 'v', [qw(ID)]],	
+		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],	
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
 		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
-		'08C1' => ['marcostart'],#2
-		'08C2' => ['marcostop'],#2
+		'08C1' => ['macro_start'],#2
+		'08C2' => ['macro_stop'],#2
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist

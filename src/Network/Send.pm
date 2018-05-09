@@ -1511,7 +1511,7 @@ sub sendchangetitle {
 	debug "Sent Change Title.\n", "sendPacket", 2;	
 }
 
-sub sendrecallsso {
+sub sendRecallSso {
 	my ($self, $accountID) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'recall_sso',
@@ -1519,7 +1519,7 @@ sub sendrecallsso {
 	}));
 }
 
-sub sendremoveaidsso {
+sub sendRemoveAidSso {
 	my ($self, $accountID) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'remove_aid_sso',
@@ -1527,24 +1527,24 @@ sub sendremoveaidsso {
 	}));
 }
 
-sub sendmarcostart {
+sub sendMacroStart {
 	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({
-		switch => 'marcostart',
+		switch => 'macro_start',
 	}));
 }
 
-sub sendmarcostop {
+sub sendMacroStop {
 	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({
-		switch => 'marcostop',
+		switch => 'macro_stop',
 	}));
 }
 
-sub sendreqcashtabcode {
+sub sendReqCashTabCode {
 	my ($self, $tabID) = @_;
 	$self->sendToServer($self->reconstruct({
-		switch => 'reqcashtabcode',
+		switch => 'req_cash_tabcode',
 		ID => $tabID,
 	}));
 }
