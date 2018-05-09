@@ -452,8 +452,8 @@ sub new {
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]], # 32
-		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]], # 6
-		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]], # 36
+		'02DE' => ['battleground_score', 'v v', [qw(score_a score_b)]], # 6
+		'02DF' => ['battleground_position', 'a4 Z24 v v v', [qw(ID name job x y)]], # 36
 		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], # 34
 		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 33
 		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]], # -1 # int[] mapInfoTable
@@ -4285,20 +4285,6 @@ sub instance_window_leave {
 	}
 }
 
-# 02DC
-# TODO
-sub battleground_message {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-}
-
-# 02DD
-# TODO
-sub battleground_emblem {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-}
-
 # 02EF
 # TODO
 sub font {
@@ -4521,6 +4507,63 @@ sub achievement_update {
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
+}
+
+sub battleground_score {
+	my ($self, $args) = @_;
+	message TF("Battleground score - Team A: %s VS Team B: %s .\n", $args->{score_a}, $args->{score_b}), "info";
+}
+
+sub battleground_message {
+	my ($self, $args) = @_;
+	my ($chatMsgUser, $chatMsg); # Type: String
+
+	return unless changeToInGameState();
+	$chatMsgUser = bytesToString($args->{name});
+	$chatMsg = bytesToString($args->{message});
+
+	chatLog("BG", "$chatMsgUser : $chatMsg\n") if ($config{'logBgChat'});
+	# Translation Comment: Guild Chat
+	message TF("[BG]%s %s\n", $chatMsgUser, $chatMsg), "bgchat";
+	# Only queue this if it's a real chat message
+	ChatQueue::add('bg', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+
+	Plugins::callHook('packet_bgMsg', {
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
+	});
+}
+
+
+sub battleground_emblem {
+	my ($self, $args) = @_;
+	my $bgemblem->{emblemID} = $args->{emblemID} if defined $args->{emblemID};
+    my $bgemblem->{name} = bytesToString($args->{name}) if defined $args->{name};
+	my $bgemblem->{team} = $args->{team} if defined $args->{team};
+}
+
+sub battleground_position {
+	my ($self, $args) = @_;
+	
+    my $bgposition->{ID} = $args->{ID} if defined $args->{ID};
+    my $bgposition->{name} = bytesToString($args->{name}) if defined $args->{name};
+	my $bgposition->{job} = $args->{job} if defined $args->{job};
+	my $bgposition->{x} = $args->{x} if defined $args->{x};
+	my $bgposition->{y} = $args->{y} if defined $args->{y};
+	message TF("[Battleground Position]:Name:%s Job:%s [X:%s/Y:%s] .\n",$bgposition->{name}, $bgposition->{job},$bgposition->{x},$bgposition->{y}), "info";
+}
+
+sub battleground_hp {
+	my ($self, $args) = @_;
+	
+    my $bghp->{ID} = $args->{ID} if defined $args->{ID};
+    my $bghp->{name} = bytesToString($args->{name}) if defined $args->{name};
+	my $bghp->{hp} = $args->{hp} if defined $args->{hp};
+	my $bghp->{maxhp} = $args->{maxhp} if defined $args->{maxhp};
+	my $charname = defined $bghp->{name} ? $bghp->{name} : T('N/A');
+	
+	message TF("[Battleground HP]:[ID:%s]Name:%s [HP:%s/%s] .\n",$bghp->{ID},$charname, $bghp->{hp},$bghp->{maxhp}), "info";
+
 }
 
 
