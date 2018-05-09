@@ -4550,7 +4550,7 @@ sub battleground_position {
 	my $bgposition->{job} = $args->{job} if defined $args->{job};
 	my $bgposition->{x} = $args->{x} if defined $args->{x};
 	my $bgposition->{y} = $args->{y} if defined $args->{y};
-	message TF("[Battleground Position]:Name:%s Job:%s [X:%s/Y:%s] .\n",$bgposition->{name}, $bgposition->{job},$bgposition->{x},$bgposition->{y}), "info";
+	message TF("[Battleground Position]Name:%s Job:%s [X:%s/Y:%s] .\n",$bgposition->{name}, $bgposition->{job},$bgposition->{x},$bgposition->{y}), "info";
 }
 
 sub battleground_hp {
