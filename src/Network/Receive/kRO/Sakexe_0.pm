@@ -4581,7 +4581,6 @@ sub battleground_hp {
 		$battleground->{playerhp}{maxhp} = $args->{maxhp} if defined $args->{maxhp};
 		#updatePlayerNameCache($battleground->{playerhp});
 		}
-	}		
 	#message TF("[Battleground HP]:[ID:%s]Name:%s [HP:%s/%s] .\n",$bghp->{ID},$charname, $bghp->{hp},$bghp->{maxhp}), "info";
 
 }

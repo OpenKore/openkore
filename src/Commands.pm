@@ -6918,6 +6918,7 @@ sub cmdBattleground {
 					[$bg_team{$battleground->{emblem}{team}},$name, $jobs_lut{$battleground->{position}{job}}, $battleground->{playerhp}{hp}, $battleground->{playerhp}{maxhp},$battleground->{position}{x},$battleground->{position}{y}]);
 			}
 			$msg .= ('-'x79) . "\n";
+			message $msg, "info";
 	} elsif ($args[0] eq "sc") {
 		my $msg = center(T(" Battleground Score "), 40, '-') ."\n" .
 			TF("Team A : %s\n" .
