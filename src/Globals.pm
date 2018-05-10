@@ -132,10 +132,7 @@ our (
 );
 our %spells_lut;
 our %timeout;
-our %bg_team = (
-	0 => 'Team A',
-	1 => 'Team B',
-);
+
 
 our %jobs_lut = (
 	0 => 'Novice',
@@ -571,6 +568,11 @@ our $achievementList;
 our $Blacksmith_Blessing = 6635;
 our $captcha_state = 0;
 our $battlegroundList;
+our %bg_team = (
+	0 => 'Team A',
+	1 => 'Team B',
+);
+our %score;
 our %quests_lut;
 
 our @deadTime;
