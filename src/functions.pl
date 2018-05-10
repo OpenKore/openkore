@@ -528,7 +528,7 @@ sub finalInitialization {
 	$slavesList = new ActorList('Actor::Slave');
 	$venderItemList = InventoryList->new;
 	$storeList = InventoryList->new;
-	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList,$battlegroundList) {
+	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
 		$list->onClearBegin()->add(undef, \&actorListClearing);
