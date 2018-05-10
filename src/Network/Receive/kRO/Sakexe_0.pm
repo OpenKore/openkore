@@ -4543,28 +4543,28 @@ sub battleground_message {
 sub battleground_emblem {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	my $battleground = $playersList->getByID($args->{ID});
 	if ($battleground) {
 		$battleground->{emblem}{info} = 1;
 		$battleground->{emblem}{ID} = $args->{ID} if defined $args->{ID};
 		$battleground->{emblem}{name} = bytesToString($args->{name}) if defined $args->{name};
 		$battleground->{emblem}{team} = $args->{team} if defined $args->{team};
-		updatePlayerNameCache($battleground->{emblem});
+		#updatePlayerNameCache($battleground->{emblem});
 	}	
 }
 
 sub battleground_position {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	my $battleground = $playersList->getByID($args->{ID});
 	if ($battleground) {
-		$battleground->{info} = 1;
+		$battleground->{position}{info} = 1;
 		$battleground->{position}{ID} = $args->{ID} if defined $args->{ID};
 		$battleground->{position}{name} = bytesToString($args->{name}) if defined $args->{name};
 		$battleground->{position}{job} = $args->{job} if defined $args->{job};
 		$battleground->{position}{x} = $args->{x} if defined $args->{x};
 		$battleground->{position}{y} = $args->{y} if defined $args->{y};
-		updatePlayerNameCache($battleground->{position});
+		#updatePlayerNameCache($battleground->{position});
 	}	
 	#message TF("[Battleground Position]Name:%s [Job:%s][X:%s/Y:%s] .\n",$bgposition->{name}, $jobs_lut{$bgposition->{job}},$bgposition->{x},$bgposition->{y}), "info";
 }
@@ -4572,14 +4572,14 @@ sub battleground_position {
 sub battleground_hp {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	my $battleground = $playersList->getByID($args->{ID});
 	if ($battleground) {
 		$battleground->{playerhp}{info} = 1;
 		$battleground->{playerhp}{ID} = $args->{ID} if defined $args->{ID};
 		$battleground->{playerhp}{name} = bytesToString($args->{name}) if defined $args->{name};
 		$battleground->{playerhp}{hp} = $args->{hp} if defined $args->{hp};
 		$battleground->{playerhp}{maxhp} = $args->{maxhp} if defined $args->{maxhp};
-		updatePlayerNameCache($battleground->{playerhp});
+		#updatePlayerNameCache($battleground->{playerhp});
 		}
 	}		
 	#message TF("[Battleground HP]:[ID:%s]Name:%s [HP:%s/%s] .\n",$bghp->{ID},$charname, $bghp->{hp},$bghp->{maxhp}), "info";

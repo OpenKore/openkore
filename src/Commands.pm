@@ -6908,7 +6908,7 @@ sub cmdBattleground {
 		my $maxplp;
 		$msg = center(T(" Battleground Player List "), 79, '-') ."\n".
 			T("# Team  		Name					Job				HP		MaxHP		X 		Y\n");
-		for my $battleground (@$battlegroundList) {
+		for my $battleground (@$playersList) {
 			my ($name);
 			$name = $battleground->{position}{name};
 			$maxplp++;
