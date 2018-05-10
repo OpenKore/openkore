@@ -242,6 +242,7 @@ sub initHandlers {
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
 	clan				=> \&cmdClan,
+	sct				=> \&cmdBattleground,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -6893,6 +6894,41 @@ sub cmdClan {
 		$msg .= ('-'x40) . "\n";
 		message $msg, "info";
 	}
+}
+
+sub cmdBattleground {
+    my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	my $msg;
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	if ($args[0] eq "pl") {
+		my $maxplp;
+		$msg = center(T(" Battleground Player List "), 79, '-') ."\n".
+			T("# Team  		Name					Job				HP		MaxHP		X 		Y\n");
+		for my $battleground (@$battlegroundList) {
+			my ($name);
+			$name = $battleground->{position}{name};
+			$maxplp++;
+
+				$msg .= swrite(
+				"@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<<< @<<<<<<<< @<<<<< @<<<<<< ",
+					[$bg_team{$battleground->{emblem}{team}},$name, $jobs_lut{$battleground->{position}{job}}, $battleground->{playerhp}{hp}, $battleground->{playerhp}{maxhp},$battleground->{position}{x},$battleground->{position}{y}]);
+			}
+			$msg .= ('-'x79) . "\n";
+	} elsif ($args[0] eq "sc") {
+		my $msg = center(T(" Battleground Score "), 40, '-') ."\n" .
+			TF("Team A : %s\n" .
+				"Team B : %s\n" .
+		$score{a}, $score{b});
+		$msg .= ('-'x40) . "\n";
+		message $msg, "info";
+	} else {
+	error T("Syntax Error in function '**' (Battle Ground)\n" .
+			"Usage: ***** < pl | sc >\n");
+	}		
 }
 
 1;

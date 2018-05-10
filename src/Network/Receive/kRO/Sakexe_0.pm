@@ -451,7 +451,7 @@ sub new {
 		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]], # 10
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1
-		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]], # 32
+		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(ID name team)]], # 32
 		'02DE' => ['battleground_score', 'v v', [qw(score_a score_b)]], # 6
 		'02DF' => ['battleground_position', 'a4 Z24 v v v', [qw(ID name job x y)]], # 36
 		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], # 34
@@ -4511,7 +4511,12 @@ sub achievement_reward_ack {
 
 sub battleground_score {
 	my ($self, $args) = @_;
-	message TF("Battleground score - Team A: %s VS Team B: %s .\n", $args->{score_a}, $args->{score_b}), "info";
+    foreach (qw(score_a score_b)) {
+        $score{$_} = $args->{$_};
+    }
+	$score{a} = $args->{score_a};
+	$score{b} = $args->{score_b};
+	#message TF("Battleground score - Team A: %s VS Team B: %s .\n", $args->{score_a}, $args->{score_b}), "info";
 }
 
 sub battleground_message {
@@ -4524,7 +4529,7 @@ sub battleground_message {
 
 	chatLog("BG", "$chatMsgUser : $chatMsg\n") if ($config{'logBgChat'});
 	# Translation Comment: Guild Chat
-	message TF("[BG]%s %s\n", $chatMsgUser, $chatMsg), "bgchat";
+	message TF("[BG]%s : %s\n", $chatMsgUser, $chatMsg), "bgchat";
 	# Only queue this if it's a real chat message
 	ChatQueue::add('bg', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
 
@@ -4537,32 +4542,47 @@ sub battleground_message {
 
 sub battleground_emblem {
 	my ($self, $args) = @_;
-	my $bgemblem->{emblemID} = $args->{emblemID} if defined $args->{emblemID};
-    my $bgemblem->{name} = bytesToString($args->{name}) if defined $args->{name};
-	my $bgemblem->{team} = $args->{team} if defined $args->{team};
+	return unless changeToInGameState();
+	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	if ($battleground) {
+		$battleground->{emblem}{info} = 1;
+		$battleground->{emblem}{ID} = $args->{ID} if defined $args->{ID};
+		$battleground->{emblem}{name} = bytesToString($args->{name}) if defined $args->{name};
+		$battleground->{emblem}{team} = $args->{team} if defined $args->{team};
+		updatePlayerNameCache($battleground->{emblem});
+	}	
 }
 
 sub battleground_position {
 	my ($self, $args) = @_;
-	
-    my $bgposition->{ID} = $args->{ID} if defined $args->{ID};
-    my $bgposition->{name} = bytesToString($args->{name}) if defined $args->{name};
-	my $bgposition->{job} = $args->{job} if defined $args->{job};
-	my $bgposition->{x} = $args->{x} if defined $args->{x};
-	my $bgposition->{y} = $args->{y} if defined $args->{y};
-	message TF("[Battleground Position]Name:%s [Job:%s][X:%s/Y:%s] .\n",$bgposition->{name}, $jobs_lut{$bgposition->{job}},$bgposition->{x},$bgposition->{y}), "info";
+	return unless changeToInGameState();
+	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	if ($battleground) {
+		$battleground->{info} = 1;
+		$battleground->{position}{ID} = $args->{ID} if defined $args->{ID};
+		$battleground->{position}{name} = bytesToString($args->{name}) if defined $args->{name};
+		$battleground->{position}{job} = $args->{job} if defined $args->{job};
+		$battleground->{position}{x} = $args->{x} if defined $args->{x};
+		$battleground->{position}{y} = $args->{y} if defined $args->{y};
+		updatePlayerNameCache($battleground->{position});
+	}	
+	#message TF("[Battleground Position]Name:%s [Job:%s][X:%s/Y:%s] .\n",$bgposition->{name}, $jobs_lut{$bgposition->{job}},$bgposition->{x},$bgposition->{y}), "info";
 }
 
 sub battleground_hp {
 	my ($self, $args) = @_;
-	
-    my $bghp->{ID} = $args->{ID} if defined $args->{ID};
-    my $bghp->{name} = bytesToString($args->{name}) if defined $args->{name};
-	my $bghp->{hp} = $args->{hp} if defined $args->{hp};
-	my $bghp->{maxhp} = $args->{maxhp} if defined $args->{maxhp};
-	my $charname = defined $bghp->{name} ? $bghp->{name} : T('N/A');
-	
-	message TF("[Battleground HP]:[ID:%s]Name:%s [HP:%s/%s] .\n",$bghp->{ID},$charname, $bghp->{hp},$bghp->{maxhp}), "info";
+	return unless changeToInGameState();
+	my $battleground = $battlegroundList->getByID($args->{ID}  if (defined $ID);
+	if ($battleground) {
+		$battleground->{playerhp}{info} = 1;
+		$battleground->{playerhp}{ID} = $args->{ID} if defined $args->{ID};
+		$battleground->{playerhp}{name} = bytesToString($args->{name}) if defined $args->{name};
+		$battleground->{playerhp}{hp} = $args->{hp} if defined $args->{hp};
+		$battleground->{playerhp}{maxhp} = $args->{maxhp} if defined $args->{maxhp};
+		updatePlayerNameCache($battleground->{playerhp});
+		}
+	}		
+	#message TF("[Battleground HP]:[ID:%s]Name:%s [HP:%s/%s] .\n",$bghp->{ID},$charname, $bghp->{hp},$bghp->{maxhp}), "info";
 
 }
 
