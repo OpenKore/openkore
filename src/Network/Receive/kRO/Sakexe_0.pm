@@ -4572,14 +4572,14 @@ sub battleground_position {
 
 sub battleground_hp {
 	my ($self, $args) = @_;
-	my $battleground_position = $playersList->getByID($args->{ID});
+	my $battleground_hp = $playersList->getByID($args->{ID});
 	
-	if ($battleground_position) {
-		$battleground_position->setName(bytesToString($args->{name}));
-		$battleground_position->{info} = 1;
-		$battleground_position->{playerhp}{hp} = $args->{hp};
-		$battleground_position->{playerhp}{maxhp} = $args->{max_hp};
-		updatePlayerNameCache($battleground_position);
+	if ($battleground_hp) {
+		$battleground_hp->setName(bytesToString($args->{name}));
+		$battleground_hp->{info} = 1;
+		$battleground_hp->{playerhp}{hp} = $args->{hp};
+		$battleground_hp->{playerhp}{maxhp} = $args->{max_hp};
+		updatePlayerNameCache($battleground_hp);
 	}
 }
 

@@ -6913,11 +6913,11 @@ sub cmdBattleground {
 		for my $battleground (@$playersList) {
 			my ($name,$job,$hp,$maxhp,$x,$y);
 			$name = $battleground_position->name;
-			$job = $jobs_lut{$battleground->{position}{job}};
-			$hp = $battleground->{playerhp}{hp};
-			$maxhp = $battleground->{playerhp}{maxhp};
-			$x = $battleground->{position}{x};
-			$y = $battleground->{position}{y};
+			$job = $jobs_lut{$battleground_position->{position}{job}};
+			$hp = $battleground_hp->{playerhp}{hp};
+			$maxhp = $battleground_hp->{playerhp}{maxhp};
+			$x = $battleground_position->{position}{x};
+			$y = $battleground_position->{position}{y};
 			$maxplp++;
 
 				$msg .= swrite(

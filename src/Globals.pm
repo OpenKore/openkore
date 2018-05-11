@@ -482,6 +482,10 @@ our %bg_team = (
 	1 => '[B]',
 );
 our %bgscore;
+our $battleground;
+our $battleground_position; 
+our $battleground_emblem; 
+our $battleground_hp;
 
 # Network
 our $remote_socket;	# Unused, but required for outdated plugins
