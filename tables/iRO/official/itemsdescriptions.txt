@@ -59089,6 +59089,30 @@ Costume Magic Circle
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+14944#
+Open the box to receive one of the following costumes!
+Costume Floating Ice
+Costume Astro Circle
+Costume Stormy Cloud
+Costume Magician Knit Hat
+Costume White Drooping Cat
+Costume Baby Penguin
+Costume Fluffy Angel Cape
+Costume Fluffy Heart Earmuffs
+Costume Snow Bear Hood
+Costume Penguin Cap
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+14948#
+You will receive one of the items within the special box.
+^ff0000Cannot trade with other users.^000000
+Weight : ^7777771^000000
+
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -60167,13 +60191,13 @@ Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
 15139#
-^808080Ritualistic clothing that appears to offend animals far and wide.^000000
-Class: Armor
-Defense: 30
-Property: Neutral
-Weight: 120
-Required Level: 70
-Required Jobs: All Jobs
+Ritualistic clothing that appears to offend animals far and wide.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 5
 Additional Mdef + 1 per upgrade level of the item.
 Reduces damage taken from Brute race enemies by 5%.
@@ -60223,6 +60247,19 @@ Mdef + 5
 Additional Mdef + 1 per upgrade level of the item.
 Reduces damage taken from Plant race enemies by 5%.
 Reduces damage taken from Plant race enemies by an additional 1% per upgrade level of the item.
+#
+15144#
+Ritualistic clothing that appears to repel insects.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Additional Mdef + 1 per upgrade level of the item.
+Reduces damage taken from Insect race enemies by 5%.
+Reduces damage taken from Insect race enemies by an additional 1% per upgrade level of the item.
 #
 15145#
 ^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to absorb all kinds of energy.^000000
@@ -73606,7 +73643,7 @@ Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^808080100^000000
-Requires Level: ^80808080^000000
+Requires Level: ^80808090^000000
 Usable By: ^808080All Jobs^000000
 ^800080Set Bonus^000000
 ^008080Anopheles Card^000000
@@ -73718,6 +73755,31 @@ Increases the recovery rate of recovery items by 5%.
 Increases the recovery rate of recovery items by an additional 10%, if the users base Int is 108 or higher.
 Increases the recovery rate of recovery items by an additional 15%, if the users base Int is 120 or higher.
 Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
+#
+19329#
+A hand dropped by a psychic who was chasing after a powerful demon. It will surround you with fear once you equip it.
+
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808018^000000
+Weight: ^808080100^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 10%
+Reduces the fixed casting time of ^0000FFLion's Howl^000000 by 100%.
+The users casting cannot be interrupted outside of WoE.
+Increases the damage of ^0000FFLion's Howl^000000 by 20%.
+If upgrade level is +7 or higher,
+Additional Aspd + 5%
+Increases the damage of ^0000FFLion's Howl^000000 by an additional 30%.
+If upgrade level is +9 or higher,
+Additional Aspd + 5%
+Increases the damage of ^0000FFLion's Howl^000000 by an additional 50%.
+If upgrade level is +10 or higher,
+Reduces the variable casting time of ^0000FFLion's Howl^000000, ^0000FFMental Strength^000000, ^0000FFSummon Spirit Sphere^000000 and ^0000FFZen^000000 by 50%, if ^0000FFLightning Ride^000000 is at maximum level.
+Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+Reduces the cooldown of ^0000FFLion's Howl^000000 by 9.5 seconds, if ^0000FFEarth Shaker^000000 is at maximum level.
+Increases physical damage on boss monsters by 50%, if ^0000FFRampage Blast^000000 is at maximum level.
 #
 19377#
 A marinated beef dish
@@ -80255,6 +80317,23 @@ Atk + 5%
 Aspd + 10%
 Increases critical damage on targets by 10%.
 #
+20831#
+An item made by an adventurer's grudge. It can collect magic and withdraw it freely.
+Class: ^808080Garment^000000
+Defense: ^80808040^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Int + 5
+If upgrade level is +5 or higher,
+Matk + 5 for every 60 base Int.
+If upgrade level is +7 or higher,
+Additional Matk + 5 for every 10 base Int.
+^800080Set Bonus^000000
+^008080Adventurer's Spirit^000000
+^008080Antique Book Card^000000
+Disables the following effects of ^008080Antique Book Card^000000, Matk + 5 for every 10 base Int.
+#
 20834#
 ^808080A cape worn by the drifting gunmen of the west. It looks pretty durable.^000000
 Class: Garment
@@ -81235,6 +81314,17 @@ Max HP + 4000
 Reduces the fixed casting time of skills by 25%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
+#
+22094#
+These shoes were worn by a man who made a living out of taking care of gardens. These shoes contains the man's many years of experience.
+
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Plant race monsters by 5%.
+Increases the experience given from Plant race monsters by an additional 1% per upgrade level of the item.
 #
 22103#
 ^808080A leg made from lost technology found in the research building ruins.^000000
@@ -86459,11 +86549,11 @@ Matk + 5%
 Reduces damage taken from Water property attacks by 10%.
 #
 28521#
-^808080A ring worn by the giant who was the protector of ancient temples.^000000
-Class: Accessory
-Weight: 50
-Required Level: 100
-Required Jobs: All Jobs
+A ring worn by the giant who was the protector of ancient temples.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 5% if the users base Str is 120 or higher.
 Max SP + 5% if the users base Str is 120 or higher.
 Atk + 50 if the users base Str is 120 or higher.
@@ -86478,7 +86568,6 @@ Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by 5%.
 If ^008080Giant Axe^000000 upgrade level is +9 or higher,
 Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by an additional 10%.
 Increases physical damage on boss monsters by an additional 10%.
-
 #
 28531#
 ^808080A pair of gloves once owned by a legendary blacksmith. They allow the wearer to use their physical prowess more efficiently.^000000
@@ -86560,6 +86649,16 @@ Increases the damage of ^0000FFArrow Shower^000000 and ^0000FFDouble Strafe^0000
 Increases the damage of ^0000FFSevere Rainstorm^000000 by 2% for every 10 base levels.
 Reduces the SP cost of ^0000FFImprovised Song^000000 by 18.
 #
+28575#
+A component from a robot. It has the power to increase concentration.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+Perfect Hit + 20%
+Aspd + 10%
+Increases physical damage on Neutral, Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property targets by 5%.
+#
 28600#
 Attack: 0
 Property: N/A
@@ -86628,6 +86727,25 @@ Increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000 and ^00
 ^008080Elemental Robe^000000
 Adds a 5% chance of casting ^0000FFLevel 5 Fire Ball^000000 on the target when performing a magical attack, if a higher level of this skill is known, it will be cast instead.
 Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bolt^000000; Matk + 50.
+#
+28618#
+A book that contains the writings of the Sun God, it has the power to attract materials from space.
+Class: ^808080Book^000000
+Attack: ^808080180^000000
+Magic Attack: ^808080170^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Priest Jobs, Sage Jobs^000000
+Max HP + 200 per upgrade level of the item.
+Max SP + 50 per upgrade level of the item.
+Aspd + 1% per upgrade level of the item.
+Adds a 10% chance of casting ^0000FFMeteor Storm^000000 on the target when performing a physical attack, where the level of the skill is 3.
+If upgrade level is +8 or higher,
+Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target when performing a physical attack, where the level of the skill is 4.
+If upgrade level is +10 or higher,
+Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target when performing a physical attack, where the level of the skill is 5.
 #
 28700#
 Attack: 0
@@ -88830,21 +88948,97 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31420#
-^808080When equipped, EXP increases by 25% when defeating monsters during December 2017.
-Increases the healing rate of Carrots by 100%
-Increases drops by 15%
-Enables the dropping of Carrots when defeating monsters
-
-(The above options will be removed on the 31st of December, 2017.)
-^ff0000Cannot trade with other users.^000000
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777771^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+This poring shines as bright as any star!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of December.^000000
+Adds a chance of gaining ^008080Carrot^000000 when a monster is killed.
+Increases the recovery rate of ^008080Carrot^000000 consumables by 100%.
+Increases the experience given from monsters by 25%.
+Increases the drop rate of items by 15%.
+#
+31432#
+Floating ice directly extracted from the Ice Cave. It has a connection to a mysterious seal inside of the cave.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31433#
+The universe on top of your head. You can now even enjoy astronomical observations on cloudy days.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31434#
+A small stormy rain cloud that follows you everywhere.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31435#
+A knit hat that is said to have been used by a magician who worshiped the dead.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31436#
+A cute kitty doll which can be worn on top of the head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31437#
+A baby penguin doll which looks exactly like a real baby penguin. It's just like living with a baby penguin.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31438#
+A fluffy pink cape with angel wings attached.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31439#
+Heart shaped earmuffs, a must have during the winter season!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31440#
+A fluffy snow bear hood with a blue trim. Great for winter!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31441#
+A wonderfully made cap with a cool penguin design.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31455#
 A helm made with secret ingredients from doggo. It's made with soft and warm fur to give it a cute look. It can't get cuter than this.

@@ -71376,3 +71376,17 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20018#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Red Deviruchi Hat!
+100 Fabric
+100 Red Herbs
+50 Burning Hairs
+20 Worn-out Magic Scroll
+1 Red Deviruchi Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
