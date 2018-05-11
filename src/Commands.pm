@@ -3858,7 +3858,7 @@ sub cmdPlayerList {
 		message $msg, "list";
 		return;
 	}
-
+	
 	if ($args ne "") {
 		my Actor::Player $player = Match::player($args) if ($playersList);
 		if (!$player) {
@@ -6900,6 +6900,7 @@ sub cmdBattleground {
     my (undef, $args_string) = @_;
     my (@args) = parseArgs($args_string, 3);
 	my $msg;
+	
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
@@ -6907,29 +6908,36 @@ sub cmdBattleground {
 	if ($args[0] eq "pl") {
 		my $maxplp;
 		$msg = center(T(" Battleground Player List "), 79, '-') ."\n".
-			T("# Team  		Name					Job				HP		MaxHP		X 		Y\n");
+			T("# Name		Job		HP		MaxHP\n");
 		for my $battleground (@$playersList) {
-			my ($name);
-			$name = $battleground->{position}{name};
+			my ($name,$job,$hp,$maxhp,$x,$y);
+			$name = $battleground->name;
+			$job = $jobs_lut{$battleground->{position}{job}};
+			$hp = $battleground->{playerhp}{hp};
+			$maxhp = $battleground->{playerhp}{maxhp};
+			$x = $battleground->{position}{x};
+			$y = $battleground->{position}{y};
 			$maxplp++;
 
 				$msg .= swrite(
-				"@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<<< @<<<<<<<< @<<<<< @<<<<<< ",
-					[$bg_team{$battleground->{emblem}{team}},$name, $jobs_lut{$battleground->{position}{job}}, $battleground->{playerhp}{hp}, $battleground->{playerhp}{maxhp},$battleground->{position}{x},$battleground->{position}{y}]);
+				"@<<<<<<<<<< @<<<<<<<<< @<<<<<< @<<<<<<",
+					[$name, $job, $hp, $maxhp,$x,$y]);
 			}
 			$msg .= ('-'x79) . "\n";
 			message $msg, "info";
+			return;
 	} elsif ($args[0] eq "sc") {
-		my $msg = center(T(" Battleground Score "), 40, '-') ."\n" .
-			TF("Team A : %s\n" .
-				"Team B : %s\n" .
-		$score{a}, $score{b});
-		$msg .= ('-'x40) . "\n";
+		my $msg = center(T(" Battleground Score "), 45, '-') ."\n" .
+			TF("Team A: %s .\n" .
+				"Team B: %s .\n" .
+		$bgscore{a}, $bgscore{b});
+		$msg .= ('-'x45) . "\n";
 		message $msg, "info";
+		return;
 	} else {
 	error T("Syntax Error in function '**' (Battle Ground)\n" .
 			"Usage: ***** < pl | sc >\n");
-	}		
+	}
 }
 
 1;
