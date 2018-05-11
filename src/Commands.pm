@@ -6907,11 +6907,12 @@ sub cmdBattleground {
 	}
 	if ($args[0] eq "pl") {
 		my $maxplp;
+		
 		$msg = center(T(" Battleground Player List "), 79, '-') ."\n".
 			T("# Name		Job		HP		MaxHP\n");
 		for my $battleground (@$playersList) {
 			my ($name,$job,$hp,$maxhp,$x,$y);
-			$name = $battleground->name;
+			$name = $battleground_position->name;
 			$job = $jobs_lut{$battleground->{position}{job}};
 			$hp = $battleground->{playerhp}{hp};
 			$maxhp = $battleground->{playerhp}{maxhp};
@@ -6923,9 +6924,10 @@ sub cmdBattleground {
 				"@<<<<<<<<<< @<<<<<<<<< @<<<<<< @<<<<<<",
 					[$name, $job, $hp, $maxhp,$x,$y]);
 			}
-			$msg .= ('-'x79) . "\n";
-			message $msg, "info";
-			return;
+		$msg .= TF("Total Battleground players: %s\n",$maxplp) if $maxplp;
+		$msg .= ('-'x79) . "\n";
+		message $msg, "info";
+		return;
 	} elsif ($args[0] eq "sc") {
 		my $msg = center(T(" Battleground Score "), 45, '-') ."\n" .
 			TF("Team A: %s .\n" .

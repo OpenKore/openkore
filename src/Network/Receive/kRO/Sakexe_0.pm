@@ -4544,13 +4544,13 @@ sub battleground_message {
 sub battleground_emblem {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $battleground = $playersList->getByID($args->{ID});
+	my $battleground_emblem = $playersList->getByID($args->{ID});
 	
-	if ($battleground) {
-		$battleground->setName(bytesToString($args->{name}));
-		$battleground->{emblem}{info} = 1;
-		$battleground->{emblem}{team} = $args->{team};
-		updatePlayerNameCache($battleground);
+	if ($battleground_emblem) {
+		$battleground_emblem->setName(bytesToString($args->{name}));
+		$battleground_emblem->{emblem}{info} = 1;
+		$battleground_emblem->{emblem}{team} = $args->{team};
+		updatePlayerNameCache($battleground_emblem);
 		
 	}
 }
@@ -4558,28 +4558,28 @@ sub battleground_emblem {
 sub battleground_position {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my $battleground = $playersList->getByID($args->{ID});
+	my $battleground_position = $playersList->getByID($args->{ID});
 	
-	if ($battleground) {
-		$battleground->setName(bytesToString($args->{name}));
-		$battleground->{info} = 1;
-		$battleground->{position}{job} = $args->{job};
-		$battleground->{position}{x} = $args->{x};
-		$battleground->{position}{y} = $args->{y};
-		updatePlayerNameCache($battleground);
+	if ($battleground_position) {
+		$battleground_position->setName(bytesToString($args->{name}));
+		$battleground_position->{info} = 1;
+		$battleground_position->{position}{job} = $args->{job};
+		$battleground_position->{position}{x} = $args->{x};
+		$battleground_position->{position}{y} = $args->{y};
+		updatePlayerNameCache($battleground_position);
 	}
 }
 
 sub battleground_hp {
 	my ($self, $args) = @_;
-	my $battleground = $playersList->getByID($args->{ID});
+	my $battleground_position = $playersList->getByID($args->{ID});
 	
-	if ($battleground) {
-		$battleground->setName(bytesToString($args->{name}));
-		$battleground->{info} = 1;
-		$battleground->{playerhp}{hp} = $args->{hp};
-		$battleground->{playerhp}{maxhp} = $args->{max_hp};
-		updatePlayerNameCache($battleground);
+	if ($battleground_position) {
+		$battleground_position->setName(bytesToString($args->{name}));
+		$battleground_position->{info} = 1;
+		$battleground_position->{playerhp}{hp} = $args->{hp};
+		$battleground_position->{playerhp}{maxhp} = $args->{max_hp};
+		updatePlayerNameCache($battleground_position);
 	}
 }
 
