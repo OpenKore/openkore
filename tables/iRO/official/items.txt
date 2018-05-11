@@ -6892,6 +6892,8 @@
 14924#Overseas_Care_Package_XVI#
 14930#Overseas_Care_Package_Remix_I#
 14940#Mystical_Costume_Box#
+14944#May_Costume_Box#
+14948#2018_May_Special_Box#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -6991,10 +6993,11 @@
 15130#Dragon_Mail#
 15135#Dragon_Cloth#
 15138#Egir_Armour#
-15139#Shepherd_Cloth#
+15139#Shepherd_Clothes#
 15140#Natural_Clothes#
 15142#Orca_Clothes#
 15143#Vermin_Cloth#
+15144#Agriculture_Clothes#
 15145#Evil_Dragon_Armor#
 15146#Flattery_Robe#
 15147#Abusive_Robe#
@@ -8153,6 +8156,7 @@
 19306#Heart_Card_in_Mouth#
 19326#Book_of_Soyga#
 19327#Seraphim_Feather#
+19329#Devil's_Hand#
 19377#Shiny_Marinade_Beef#
 19378#Chile_Shrimp_Gratin#
 19379#Red_Mushroom_Wine#
@@ -8825,6 +8829,7 @@
 20820#Elemental_Cape#
 20821#Golden_Scarf#
 20822#Mine_Worker's_Backpack#
+20831#Adventurer's_Spirit#
 20834#Drifter's_Cape#
 20836#Skin_of_Lindwyrm#
 20837#Skin_of_Gwiber#
@@ -8889,6 +8894,7 @@
 22083#Doram_Shoes#
 22084#Luxurious_Doram_Shoes#
 22085#Elegant_Doram_Shoes#
+22094#Gardener_Shoes#
 22103#Excelion_Leg#
 22104#Pororoca_Shoes#
 22107#Modified_Str_Boots#
@@ -9350,11 +9356,13 @@
 28564#Valkyrie_Drop#
 28565#Perverse_Demon_Mask#
 28573#Emerald_Ring#
+28575#Verus_Core#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
 28605#Vicious_Mind_Book#
 28608#Elemental_Origin#
+28618#Book_of_the_Sun_God#
 28700#Ru_Gold_Dagger#
 28701#Ru_Gold_Knife#
 28702#Ru_Gold_Ashura#
@@ -9627,5 +9635,15 @@
 31398#Costume_Blinking_Small_Eyes#
 31399#Costume_Darkness_Veil#
 31408#Costume_Ragnarok_Rush_Goat#
-31420#Costume:_Shining_Santa_Poring#
+31420#Costume_Shining_Santa_Poring#
+31432#Costume_Floating_Ice#
+31433#Costume_Astro_Circle#
+31434#Costume_Stormy_Cloud#
+31435#Costume_Magician_Knit_Hat#
+31436#Costume_White_Drooping_Cat#
+31437#Costume_Baby_Penguin#
+31438#Costume_Fluffy_Angel_Cape#
+31439#Costume_Fluffy_Heart_Earmuffs#
+31440#Costume_Snow_Bear_Hood#
+31441#Costume_Penguin_Cap#
 31455#Costume_Super_Cute_Dog#
