@@ -142,12 +142,17 @@ sub new {
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
+		'0842' => ['recall_sso', 'V', [qw(ID)]],
+		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
+		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
 		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
 		'084A' => ['cash_shop_close'],#2
 		'08B5' => ['pet_capture', 'a4', [qw(ID)]],
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08BA' => ['new_pin_password','a4 Z*', [qw(accountID pin)]],
+		'08C1' => ['macro_start'],#2
+		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
