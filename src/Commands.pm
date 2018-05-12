@@ -2648,14 +2648,16 @@ sub cmdGuild {
 		}
 
 	} elsif ($arg1 eq "info") {
+		my $zeny = $guild{zeny} ? $guild{zeny}: T('N/A');
 		my $msg = center(T(" Guild Information "), 40, '-') ."\n" .
 			TF("Name    : %s\n" .
 				"Lv      : %d\n" .
 				"Exp     : %d/%d\n" .
 				"Master  : %s\n" .
-				"Connect : %d/%d\n",
+				"Connect : %d/%d\n" .
+				"Zeny	: %d\n",
 			$guild{name}, $guild{lv}, $guild{exp}, $guild{exp_next}, $guild{master},
-			$guild{conMember}, $guild{maxMember});
+			$guild{conMember}, $guild{maxMember}, $zeny);
 		for my $ally (keys %{$guild{ally}}) {
 			# Translation Comment: List of allies. Keep the same spaces of the - Guild Information - tag.
 			$msg .= TF("Ally    : %s (%s)\n", $guild{ally}{$ally}, $ally);
