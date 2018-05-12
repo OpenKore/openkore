@@ -3614,6 +3614,7 @@ sub guild_info {
 			$guild{name} = bytesToString($args->{name});
 			$guild{master} = $args->{master_id};
 			$guild{members}++; # count ourselves in the guild members count
+	}
 }
 
 sub guild_invite_result {
