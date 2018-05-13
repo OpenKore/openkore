@@ -22,7 +22,7 @@ sub new {
 	
 	my %packets = (
 		'0AC0' => ['rodex_refresh_maillist', 'V2 a16', [qw(mailID unknown)]],
-		'0AC1' => ['rodex_open_mailbox', 'V2 a8 a16', [qw(mailID unknown)]],
+		'0AC1' => ['rodex_open_mailbox', 'V2 a16', [qw(mailID unknown)]],
 		'085A' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0838' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0811' => ['actor_look_at', 'v C', [qw(head body)]],
