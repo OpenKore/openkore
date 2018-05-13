@@ -246,7 +246,7 @@ sub getPlayerID {
 # get monster array index
 sub getMonsterID {
 	foreach my $ml (@{$monstersList}) {
-		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0] || $ml->{name_given});
+		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0] || $ml->{name_given} eq $_[0]);
 	}
 	return -1
 }
