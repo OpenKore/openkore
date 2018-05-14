@@ -550,8 +550,10 @@ sub new {
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
+		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_id)]], # 114
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA5' => ['test_guild_members_list'], # -1
 		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port unknown)]], # 156
@@ -4525,4 +4527,27 @@ sub achievement_reward_ack {
 
 
 
+sub test_guild_members_list {
+	my ($self, $args) = @_;
+
+	my ($jobID);
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $c = 0;
+	delete $guild{member};
+	for (my $i = 0; $i < $msg_size; $i+=34){
+		$guild{member}[$c]{ID}    = substr($msg, $i, 4);
+		$guild{member}[$c]{charID}	  = substr($msg, $i+4, 4);
+		$jobID = unpack('v', substr($msg, $i + 14, 2));
+		$guild{member}[$c]{jobID} = $jobID;
+		$guild{member}[$c]{lv}   = unpack('v', substr($msg, $i + 18, 2));
+		$guild{member}[$c]{contribution} = unpack('V', substr($msg, $i + 22, 4));
+		$guild{member}[$c]{online} = unpack('v', substr($msg, $i + 26, 2));
+		my $gtIndex = unpack('V', substr($msg, $i + 30, 4));
+		$guild{member}[$c]{lastlogin} = unpack('V', substr($msg, $i + 34,4));
+		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
+		$c++;
+	}
+
+}
 1;

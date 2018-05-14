@@ -3593,12 +3593,28 @@ sub guild_create_result {
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
-	foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up name master castles_string)) {
-		$guild{$_} = $args->{$_};
+	if($args->{switch} eq "0150") {
+		foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up name master castles_string)) {
+			$guild{$_} = $args->{$_};
+			}
+			$guild{name} = bytesToString($args->{name});
+			$guild{master} = bytesToString($args->{master});
+			$guild{members}++; # count ourselves in the guild members count
+	} elsif ($args->{switch} eq "01B6") { 
+		foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)) {
+			$guild{$_} = $args->{$_};
+			}
+			$guild{name} = bytesToString($args->{name});
+			$guild{master} = bytesToString($args->{master});
+			$guild{members}++;
+	} elsif ($args->{switch} eq "0A84") {
+		foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_id)) {
+			$guild{$_} = $args->{$_};
+			}		
+			$guild{name} = bytesToString($args->{name});
+			$guild{master} = $args->{master_id};
+			$guild{members}++; # count ourselves in the guild members count
 	}
-	$guild{name} = bytesToString($args->{name});
-	$guild{master} = bytesToString($args->{master});
-	$guild{members}++; # count ourselves in the guild members count
 }
 
 sub guild_invite_result {
