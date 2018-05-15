@@ -58,7 +58,7 @@ Other communities are not affiliated to openkore.com
 ## Other Links
 
 1. [Openkore History](http://openkore.com/index.php/OpenKore)
-2. [Legacy Changelog](https://github.com/OpenKore/openkore/LegacyChangelog.md)
+2. [Legacy Changelog](https://github.com/OpenKore/openkore/blob/master/LegacyChangelog.md)
 3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
 4. [Feature Requests and TODO Wiki](http://openkore.com/index.php/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
 
