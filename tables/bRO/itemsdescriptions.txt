@@ -8,8 +8,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000014.05.2018.^000000
-Este item será removido no dia ^ff000015.05.2018.^000000
+Promoção limitada até o dia ^ff000022.05.2018.^000000
+Este item será removido no dia ^ff000023.05.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -15430,15 +15430,23 @@ Peso: ^7777771^000000
 
 12913#
 Uma caixa contendo 20 Pergaminhos de Bênção em nível 10.
-Pergaminho de Bênção - ^000088Permite o uso da habilidade "Bênção" em nível 10.^000000
 Peso: ^7777771^000000
+--------------------------
+^000088Detalhes do item:^000000
+Pergaminho mágico criado com a essência de magia antiga.
+^0000ffAtiva [Bênção] nv. 10.^000000
 Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
+Peso: ^7777771^000000
 #
 12914#
 Uma caixa contendo 20 Pergaminhos de Aumentar Agilidade em nível 10.
-Pergaminho de Aumentar Agilidade - ^000088Permite o uso da habilidade "Aumentar Agilidade" em nível 10.^000000
 Peso: ^7777771^000000
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
+--------------------------
+^000088Detalhes do item:^000000
+Pergaminho mágico criado com a essência de magia antiga.
+^0000ffAtiva [Aumentar Agilidade] nv. 10.^000000
+Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
+Peso: ^7777771^000000
 #
 12915#
 Uma caixa contendo 20 Poções Pergaminhos de Aspersio.
@@ -16751,11 +16759,12 @@ Peso: ^7777772^000000
 Propriedade:^777777Fogo^000000
 #
 13259#
-Uma kunai embebida em um veneno letal e que possui uma pequena chance de causar [Envenenamento] em um inimigo alvejado com um ataque físico de longo alcance.
-Tipo: ^777777Arma de Arremesso^000000
-Força de Ataque: ^77777730^000000
+Uma kunai embebida em um veneno letal.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento.^000000
+Tipo: ^777777Kunai^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Veneno^000000
 Peso: ^7777772^000000
-Propriedade:^777777Veneno^000000
 #
 7521#
 Uma conta, imbuída da propriedade Fogo, usada por Ninjas como um catalisador durante a execução de suas habilidades.
@@ -19498,10 +19507,11 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4358#
-Carta Seyren Windsor.
-FOR -6. Adiciona uma FOR igual ao nível de aprimoramento do capacete.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+^0000ffFOR -6.^000000
+A cada refino:
+^0000ffFOR +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4359#
@@ -19589,10 +19599,11 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4370#
-Carta Dimik.
-VIT -5. Adiciona uma VIT igual ao nível de aprimoramento da vestimenta.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffVIT -5.^000000
+A cada refino:
+^0000ffVIT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4371#
@@ -19621,11 +19632,12 @@ Equipado em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4373#
-Carta Donzela Verde.
-SOR -5. Oferece um bônus de SOR e de Crítico igual ao nível de aprimoramento da capa equipada.
-(O bônus por nível de aprimoramento só será válido até o nível +10 do equipamento)
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+^0000ffSOR -5.^000000
+A cada refino até o +10:
+^0000ffSOR +1.^000000
+^0000ffCRIT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4374#
@@ -19818,17 +19830,19 @@ Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4396#
-Carta Odium de Thanatos.
-AGI -5. Adiciona uma AGI igual ao nível de aprimoramento dos sapatos equipados.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Calçado^000000
+^0000ffAGI -5.^000000
+A cada refino:
+^0000ffAGI +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4397#
-Carta Despero de Thanatos.
-INT -6. Adiciona uma INT igual ao nível de aprimoramento do escudo equipado.
-^FFFFFF   ^000000 Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Escudo^000000
+^0000ffINT -6.^000000
+A cada refino:
+^0000ffINT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4398#
@@ -21778,7 +21792,7 @@ Ao derrotar monstros da raça Bruto:
 Ao realizar ataques físicos:
 ^0000ff10% de chance de autoconjurar [Ataque Vital] nv. 3.^000000
 Tipo: ^777777Lança^000000
-Ataque: ^777777140^000000
+Ataque: ^777777180^000000
 Peso: ^777777420^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
@@ -25631,15 +25645,23 @@ Classes que utilizam:  ^7777772a. Classe Transcendental^000000
 #
 2386#
 Uma armadura milagrosa que pode alterar sua capacidade de acordo com habilidade do usuário.
-Aumenta HP e SP dependendo do nível de base.
-Ao sofrer ataque mágico, a armadura tem uma pequena chance de ativar sua habilidade de anular qualquer tipo de magia contra seu usuário por 2 segundos.
-Se usada por Espadachim/Mercador/Gatuno, DEF + 3
-Se usada por Mago/Noviço/Arqueiro, DEFM + 5
+^0000ffA cada nível base:^000000
+^0000ffHP máx. +7.^000000
+A cada 2 níveis base:
+^0000ffSP máx. +1.^000000
+Ao sofrer danos mágicos:
+^0000ff1% de chance de ativar um [efeito] por 2 segundos.^000000
+Espadachins, Mercadores, Gatunos e evoluções:
+^0000ffDEF +3.^000000
+Magos, Noviços, Arqueiros e evoluções:
+^0000ffDEFM +5.^000000
+^CD3278Efeito:^000000
+^0000ffImpede de ser afetado por habilidades mágicas, incluindo as não-ofensivas..^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777170^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^7777772a. Classe Transcendental^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2387#
 Armadura muito leve que permite que você galope o mais rápido que puder. Parece uma camiseta de corrida, mas funciona bem como armadura.
@@ -40627,8 +40649,8 @@ Classe: ^777777Todas as Classes^000000
 #
 13208#
 Um tipo de artrópode. Quando se enrola, fica muito duro.
-Durante o ataque, ele atordoa com um fluxo normal.
-Tipo: ^777777Munição^000000
+^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Atordoamento.^000000
+Tipo: ^777777Projétil^000000
 Ataque: ^77777750^000000
 Propriedade: ^777777Neutro^000000
 Peso: ^7777770.5^000000
@@ -41140,18 +41162,21 @@ Há 50 Moedas Classe E na bolsa.
 Peso: ^7777771^000000
 #
 13068#
-^000088Item de Aluguel^000000
-Peixe do mar. Pode ser cozido em comidas diferentes. Realmente, muito congelado.
-+ 100 de ATQM.
-Quando estiver atacando em uma curta distância, dá +30 de ATQ por 7 s com certa taxa.
-Quando houver um ataque mágico, + 20 de ATQM por 7 s com certa taxa.
-Quando o nível de base for mais de 100, adicione + 10 de ATQ, + 10 de ATQM.
+^000088Item de aluguel^000000
+Peixe do mar que pode ser trabalhado em formas diferentes. Está muito congelado.
+^0000ffATQM +100.^000000
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar [ATQ +30] por 7 segundos.^000000
+Ao realizar ataques mágicos:
+^0000ff1,5% de chance de ativar [ATQM +20] por 7 segundos.^000000
+Nv. base 100 ou mais:
+^0000ffATQ e ATQM +10.^000000
 Tipo: ^777777Adaga^000000
-Ataque : ^777777160^000000
+Ataque: ^777777160^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classe: ^777777Espadachim, Mago, Arqueiro, Mercador, Gatuno e respectivas evoluções, Espiritualista, Ninja^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Gatunos, Mercadores, Ninjas, Espiritualistas e evoluções^000000
 #
 13291#
 Equinoderme , estrela-do-mar. Parece uma estrela. É duro, então, pode ser usado como um shuriken.
@@ -41163,22 +41188,20 @@ Peso: ^7777770.5^000000
 Tipo: ^777777Neutro^000000
 #
 13292#
-Uma lula que está seca há muito tempo.
-Pode ser usada como uma kunai.
-Chance de causar o status 'Cegueira'.
+Uma lula que está seca há muito tempo. Pode ser usada como uma kunai.
+^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Cegueira.^000000
 Tipo: ^777777Kunai^000000
-Ataque : ^77777750^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
 Peso: ^7777772^000000
-Tipo: ^777777Neutro^000000
 #
 13293#
-Um peixe voador. Há um rumor de que ele voa com uma grande nadadeira.
-Ele está congelado, então, é possível usá-lo como um kunai.
-Chance de causar o status 'Sangramento'.
+Um peixe voador que está congelado. É possível usá-lo como um kunai.
+^0000ffAo realizar ataques físicos a distância, 0,3% de chance de autoconjurar [Ferimento Mortal] nv. 1.^000000
 Tipo: ^777777Kunai^000000
-Ataque : ^77777750^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
 Peso: ^7777772^000000
-Tipo: ^777777Neutro^000000
 #
 16015#
 Um taco no formato de uma pata de gato. Apesar de fofinho e parecer delicado, causa grande dano.
@@ -41196,17 +41219,18 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Noviços, Mercadores e
 ^000088Item de aluguel^000000
 Um grande peixe do mar. Muito popular, pode ser usado em diversas receitas. Está muito congelado.
 ^a400cdIndestrutível em batalha.^000000
-^0000ffAo realizar ataques físicos, chance de autoconjurar [Golpe Fulminante] nv. 5 ou no nível aprendido.^000000
-^0000ffAo realizar ataques físicos, chance de infligir [Atordoamento] no oponente.^000000
-^0000ffAo realizar ataques físicos, chance de receber [Congelamento].^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de infligir Hipotermia no usuário.^000000
+^0000ff15% de chance de infligir Atordoamento no oponente.^000000
+^0000ff2% de chance de autoconjurar [Golpe Fulminante] nv. 5.^000000
 Nv. base 100 ou mais:
 ^0000ffATQ +20.^000000
 Tipo: ^777777Maça^000000
-Ataque : ^777777180^000000
+Ataque: ^777777180^000000
 Peso: ^7777770^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classes: ^777777Espadachins, Noviços, Mercadores  e evoluções^000000
+Classes: ^777777Espadachins, Noviços, Mercadores e evoluções^000000
 #
 12531#
 Uma caixa contendo 100 Poções Brancas
@@ -58924,6 +58948,24 @@ Classes: ^777777Todas^000000
 #
 31433#
 Inspirada no amor ágape de uma mãe por seus filhos, a Auréola Benevolente é símbolo de compreensão, carinho e afeto maternos. Delicado e brilhante, esse item carrega a imagem do amor puro e zeloso, deixando você cercado de uma aura protetora.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+//*****************************************************
+//------------Aplicar em 2018-05-15--------------------
+//*****************************************************
+31435#
+A lã de primeira e a confecção em ponto meia duplo fazem desse gorro um acessório bem quentinho, resistente e, acima de tudo, estiloso. É um item de moda bastante comum entre os aventureiros que frequentam o Starbonks pra tomar um ou outro Poringccino.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31332#
+O elmo da capitã da Ordem dos Khalitzburg que, no passado, reluzia uma viva cor azul. A maldição da valquíria necromante Himelmez levou não só a vida de toda a ordem, como também a cor original desse elmo.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
