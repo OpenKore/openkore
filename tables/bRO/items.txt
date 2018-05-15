@@ -68,7 +68,7 @@
 4448#Carta Cornus#
 4449#Carta Sombra Obscura#
 4450#Carta Banshee Master#
-4451#Carta Ant Buyanne#
+4451#Carta Entweihen Crothen#
 4452#Carta Larva de Centopéia#
 4453#Carta Leão da Montanha#
 12717#Curare#
@@ -2163,7 +2163,7 @@
 4304#Carta Tamruan#
 4305#Carta General Tartaruga#
 4306#Carta Sapo-Cururu#
-4307#Carta Besouro-Rei#
+4307#Carta Encouraçado#
 4308#Carta Trilobita#
 4309#Carta Parasita#
 4310#Carta Panzer Goblin#
@@ -8223,4 +8223,9 @@
 //*****************************************************
 31177#Chapéu Mãe Natureza#
 31433#Auréola Benevolente#
+//*****************************************************
+//------------Aplicar em 2018-05-15--------------------
+//*****************************************************
+31435#Gorro de Tricô Hipster#
+31332#Elmo Negro da Khalitzburg#
 //file end
