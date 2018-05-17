@@ -12790,3 +12790,46 @@ Something fatal showed up from festival eggs. You can capture those bugs from my
 16128#Repay from good work#SG_FEEL#QUE_NOIMAGE#
 Helped twice on catching fatal bugs. Festival guide mentioned about special repay. Let's do it once more.#
 #
+
+
+//Ramadan event 2014
+
+9273#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+Find the ^f57d7dcrazy scientist in Yuno and check if the rumor is true^000000.#
+Crazy Scientist#
+
+9274#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+You received the flashlight from the crazy scientist. Go back to Aladdin.#
+Go back to Aladdin.#
+
+9275#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+The flashlight was not the magic lamp. Talk to Aladdin again.#
+Talk with Aladdin.#
+
+9276#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+^f57d7dSomeone told a miner found the lamp from the Mt. Mjolnir^000000. Check this rumor.#
+Miner from Mt.Mjolnir#
+
+9277#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+The miner will give you the lamp if you bring ^f57d7d30  Lantern^000000.#
+Collect 30 Lantern#
+
+9278#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+You received the Lamp from the miner from Mt. Mjolnir. Talk to Aladdin again.#
+Go back to Aladdin.#
+
+9279#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+The Lantern was not the magic lamp, too. Talk to Aladdin again.#
+Talk with Aladdin.#
+
+9280#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+North-East side of Morror field, someone found^f57d7d Strange shadow ^000000with the muttering sound, let's find the truth.#
+Strange shadow#
+
+9281#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+Get the carpet#
+#
+
+9282#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
+Get the lamp#
+#
