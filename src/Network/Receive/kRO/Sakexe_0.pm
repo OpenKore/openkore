@@ -536,7 +536,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
-		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
+		'0A18' => ['map_loaded', 'V a3 x2 v C', [qw(syncMapSync coords unknown sex)]], # unknow > font ? 
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
@@ -1607,74 +1607,6 @@ sub identify_list {
 	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
 
-sub inventory_item_added {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-
-	my ($index, $amount, $fail) = ($args->{ID}, $args->{amount}, $args->{fail});
-
-	if (!$fail) {
-		my $item = $char->inventory->getByID($index);
-		if (!$item) {
-			# Add new item
-			$item = new Actor::Item();
-			$item->{ID} = $index;
-			$item->{nameID} = $args->{nameID};
-			$item->{type} = $args->{type};
-			$item->{type_equip} = $args->{type_equip};
-			$item->{amount} = $amount;
-			$item->{identified} = $args->{identified};
-			$item->{broken} = $args->{broken};
-			$item->{upgrade} = $args->{upgrade};
-			$item->{cards} = ($args->{switch} eq '029A') ? $args->{cards} + $args->{cards_ext}: $args->{cards};
-			if ($args->{switch} eq '029A') {
-				$args->{cards} .= $args->{cards_ext};
-			} elsif ($args->{switch} eq '02D4') {
-				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
-			}
-			$item->{name} = itemName($item);
-			$char->inventory->add($item);
-		} else {
-			# Add stackable item
-			$item->{amount} += $amount;
-		}
-
-		$itemChange{$item->{name}} += $amount;
-		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
-			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
-		message "$disp\n", "drop";
-		$disp .= " (". $field->baseName . ")\n";
-		itemLog($disp);
-
-		Plugins::callHook('item_gathered',{item => $item->{name}});
-
-		$args->{item} = $item;
-
-		# TODO: move this stuff to AI()
-		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
-			$ai_v{'npc_talk'}{'talk'} = 'buy';
-			$ai_v{'npc_talk'}{'time'} = time;
-		}
-
-		if (AI::state == AI::AUTO) {
-			# Auto-drop item
-			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				$messageSender->sendDrop($item->{ID}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
-			}
-		}
-
-	} elsif ($fail == 6) {
-		message T("Can't loot item...wait...\n"), "drop";
-	} elsif ($fail == 2) {
-		message T("Cannot pickup item (inventory full)\n"), "drop";
-	} elsif ($fail == 1) {
-		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
-	} else {
-		message TF("Cannot pickup item (failure code %d)\n", $fail), "drop";
-	}
-}
 
 # TODO: test extracted unpack string
 sub inventory_items_nonstackable {
