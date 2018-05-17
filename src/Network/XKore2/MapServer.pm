@@ -761,6 +761,8 @@ sub map_login {
 				switch => 'account_id',
 				accountID => $args->{accountID},
 			}));
+		} elsif ($masterServer->{serverType} eq 'iRO_Classic') {
+			$client->send($args->{accountID});
 		} else {
 			# BUGGY $client->send($args->{accountID});
 		}
