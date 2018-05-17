@@ -33625,11 +33625,13 @@ Weight : ^7777770^000000
 #
 18777#
 Genie's Lamp Replica. There is still Genie's spirit inside.
-LUK +10
+During the event period:
+All stats +3
+Add a chance to obtain Milk, Honey, Ramadan and Ketupat when killing monsters.
 Class : ^777777Headgear^000000
 Defense : ^7777773^000000
-Location : ^777777Upper ^000000W
-eight : ^77777710^000000
+Location : ^777777Upper ^000000
+Weight : ^77777710^000000
 Job : ^777777All^000000
 #
 11714#
@@ -34309,17 +34311,6 @@ Sushi and Raw Fish's HP recovery increases by 5%
 HP recovery increases by 5% per Cloak Refinement. Drop rate also increases.
 Class : ^777777Helm^000000 Def : ^77777710^000000
 Weight : ^77777730^000000
-Required LvL : ^77777740^000000
-Job : ^777777All^000000
-#
-18626#
-A hat of cool and gooey Gelato put on top of head.
-MHP + 2000, MSP + 200.
-When phy AKT is given to you or your enemy, LV1 Storm Gast is aroused.
-(Option disappears after Event Period)
-
-Class : ^777777Helm^000000 Def : ^7777772^000000
-Location : ^777777Upper ^000000Weight : ^77777720^000000
 Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
