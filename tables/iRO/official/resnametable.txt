@@ -2121,3 +2121,8 @@ e_niflheim.rsw#niflheim.rsw#
 1@slw.gat#1@slw.gat#
 1@slw.rsw#1@slw.rsw#
 삯샺샎엍웤샌붺\map\1@slw.bmp#삯샺샎엍웤샌붺\map\1@slw.bmp#
+
+enew_1-3.gnd#new_zone03.gnd#
+enew_1-3.gat#new_zone03.gat#
+enew_1-3.rsw#new_zone03.rsw#
+삯샺샎엍웤샌붺\map\enew_1-3.bmp#삯샺샎엍웤샌붺\map\new_zone03.bmp#
