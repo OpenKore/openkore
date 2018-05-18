@@ -6893,7 +6893,7 @@
 14930#Overseas_Care_Package_Remix_I#
 14940#Mystical_Costume_Box#
 14944#May_Costume_Box#
-14948#2018_May_Special_Box#
+14948#Overseas_Care_Package_XVIII#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -8998,12 +8998,12 @@
 22847#Prontera_Badge#
 22848#Prison_Key#
 22849#Prontera_Time_Crystal#
-22868#Costume_Enchantment_Stone_Box_5#
+22868#Costume_Enchant_Stone_Box_5#
 22870#Christmas_Package#
 22881#Hunting_Rope#
 22899#City_Map#
 22901#Mysterious_Blue_Box#
-22905#Costume_Enchantment_Stone_Box_6#
+22905#Costume_Enchant_Stone_Box_6#
 22971#Mad_Bunny_Scroll#
 22984#Kahluna_Milk#
 22985#Basil#
