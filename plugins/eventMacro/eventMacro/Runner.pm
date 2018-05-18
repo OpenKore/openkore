@@ -696,7 +696,7 @@ sub define_next_valid_command {
 						}
 						
 						#Start of another if/switch/case/while block
-						if ( $self->{current_line} =~ /^(if|switch|case|while).*{$/ ) {
+						if ( $self->{current_line} =~ /^(if|switch|case|while|else).*{$/ ) {
 							$block_count++;
 							
 						#End of an if block or start of else block
