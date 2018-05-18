@@ -22797,18 +22797,17 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4229#
-Tower Keeper Card.
-Int +1, after using skill Reduce Skill Interval by 5%.
-^6A5ACDClocktower Card Set^000000
-^3CB371Tower Keeper Card^000000
-^3CB371Punk Card^000000
-^3CB371Alarm Card^000000
-^3CB371Clock Card^000000
-DEF +3
-MDEF +3
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Weight: ^8080801^000000
+Int + 1
+Reduces the variable casting time of skills by 5%.
+^800080Set Bonus^000000
+^008080Alarm Card^000000
+^008080Clock Card^000000
+^008080Punk Card^000000
+^008080Tower Keeper Card^000000
+Def + 3
+Mdef + 3
 #
 4230#
 Shinobi Card.
@@ -59105,13 +59104,20 @@ Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
 14948#
-You will receive one of the items within the special box.
-^ff0000Cannot trade with other users.^000000
-Weight : ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+When opened gives one of the following
+Agriculture Clothes [1]
+Adventurer's Spirit [1]
+Verus Core [1]
+Devil's Hand
+Gardener Shoes
+Book of the Sun God [4]
+Military Mail [1]
+Dragon Cloth [1]
+(8) Blacksmith Blessing
+(5) Bloody Branch
+(10) Citizen Oda’s Miracle Elixir
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 15000#
 Dark Plated Armor covered with sharp bones.
@@ -71106,14 +71112,15 @@ Required Level : ^77777750^000000
 Job : ^777777All^000000
 #
 18880#
-^808080placeholder
-A perfectly balanced hat worn by the Evil Snake Lord.
-The yin yang symbol and magic orbs harness the balance necessary to wear this hat.
-^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
+A perfectly balanced hat worn by the Evil Snake Lord. The yin yang symbol and magic orbs harness the balance necessary to wear this hat.
+Class: ^808080Headgear^000000
+Defense: ^8080804^000000
+Weight: ^80808050^000000
+Requires Level: ^808080175^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 3
+Max HP + 5%
+Max SP + 5%
 #
 18882#
 A headgear that is shaped like a gourd bowl used for drawing water.
@@ -73496,7 +73503,9 @@ All Stats + 1
 #
 19246#
 A necklace designed specifically for Royal Guards. It stands for the act of protecting others.
-Class: ^808080Accessory^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
 Weight: ^80808030^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080All Jobs^000000
@@ -73766,9 +73775,9 @@ Weight: ^808080100^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Aspd + 10%
-Reduces the fixed casting time of ^0000FFLion's Howl^000000 by 100%.
-The users casting cannot be interrupted outside of WoE.
+Reduces the fixed casting time of skills by 50%.
 Increases the damage of ^0000FFLion's Howl^000000 by 20%.
+The users casting cannot be interrupted outside of WoE.
 If upgrade level is +7 or higher,
 Additional Aspd + 5%
 Increases the damage of ^0000FFLion's Howl^000000 by an additional 30%.
@@ -73776,10 +73785,10 @@ If upgrade level is +9 or higher,
 Additional Aspd + 5%
 Increases the damage of ^0000FFLion's Howl^000000 by an additional 50%.
 If upgrade level is +10 or higher,
-Reduces the variable casting time of ^0000FFLion's Howl^000000, ^0000FFMental Strength^000000, ^0000FFSummon Spirit Sphere^000000 and ^0000FFZen^000000 by 50%, if ^0000FFLightning Ride^000000 is at maximum level.
-Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+Reduces the variable casting time of ^0000FFLion's Howl^000000, ^0000FFMental Strength^000000 and ^0000FFSummon Spirit Sphere^000000 by 50%, if ^0000FFLightning Ride^000000 is at maximum level.
 Reduces the cooldown of ^0000FFLion's Howl^000000 by 9.5 seconds, if ^0000FFEarth Shaker^000000 is at maximum level.
 Increases physical damage on boss monsters by 50%, if ^0000FFRampage Blast^000000 is at maximum level.
+Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
 19377#
 A marinated beef dish
@@ -81073,20 +81082,17 @@ Increases the experience given from Undead race monsters by 5%.
 Increases the experience given from Undead race monsters by an additional 1% per upgrade level of the item.
 #
 22055#
-^808080A magical pair of shoes containing the power of fire.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Shoes
-Defense: 12
-Weight: 25
-Required Level: 90
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A magical pair of shoes containing the power of fire.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808025^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 1% per upgrade level of the item.
 Max SP + 1% per upgrade level of the item.
 Mdef + 3
 Reduces damage taken from Fire property attacks by 5%.
-^FFFFFF_^000000
+Increases the drop rate of items by 10% if the user has active vip.
 ^800080Set Bonus^000000
 ^008080Sharel Manteau^000000
 ^008080Sharel Shoes^000000
@@ -81187,20 +81193,17 @@ Weight : ^77777740^000000
 Job : ^777777All except for Novice^000000
 #
 22069#
-^808080A pair of shoes with mystical powers.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Shoes
-Defense: 12
-Weight: 25
-Required Level: 90
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A pair of shoes with mystical powers.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808025^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 1% per upgrade level of the item.
 Max SP + 1% per upgrade level of the item.
 Mdef + 3
 Reduces damage taken from Neutral property attacks by 5%.
-^FFFFFF_^000000
+Increases the drop rate of items by 10% if the user has active vip.
 ^800080Set Bonus^000000
 ^008080Lian Robe^000000
 ^008080Lian Shoes^000000
@@ -82390,27 +82393,39 @@ Class: General
 Weight: 1
 #
 22868#
-A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
-ASPD Stone (Garment), ATK Stone (Slot 1), MATK Stone (Slot 1), ATK Stone (Slot 2), MATK Stone (Slot 2), STR Stone (Slot 1), INT Stone (Slot 1), AGI Stone (Slot 1), DEX Stone (Slot 1), VIT Stone (Slot 1), LUK Stone (Slot 1), STR Stone (Slot 2), INT Stone (Slot 2), AGI Stone (Slot 2), DEX Stone (Slot 2), VIT Stone (Slot 2), LUK Stone (Slot 2), HP Stone (Slot 2), SP Stone (Slot 2), HP Stone (Slot 3), Big Stone (Slot 1), Medium Stone (Slot 1), Small Stone (Slot 1), Recovery Stone (Slot 1), Recovery Skill Stone (Slot 1), Recovery Stone (Slot 2), Recovery Stone (Slot 3), HIT Stone (Slot 3), FLEE Stone (Slot 3)
-Take the enchantment stone inside and bring it to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^7777771^000000
-^808080A box that contains enchantment stones for costume equipment.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Box
-Weight: 1
-^FFFFFF_^000000
-This box contains one of the following at random:
-^008080ATK Stone (Upper)^000000 x1
-^008080MATK Stone (Upper)^000000 x1
-^008080STR Stone (Middle)^000000 x1
-^008080INT Stone (Middle)^000000 x1
-^008080AGI Stone (Middle)^000000 x1
-^008080DEX Stone (Middle)^000000 x1
-^008080VIT Stone (Middle)^000000 x1
-^008080LUK Stone (Middle)^000000 x1
-^008080HP Stone (Lower)^000000 x1
-^008080SP Absorption Stone (Upper)^000000 x1
+A box that contains enchantment stones for costume equipment.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Opening this will give you one of the following enchantment stones:
+^008080ASPD Stone (Garment)^000000
+^008080ATK Stone (Slot 1)^000000
+^008080MATK Stone (Slot 1)^000000
+^008080ATK Stone (Slot 2)^000000
+^008080MATK Stone (Slot 2)^000000
+^008080STR Stone (Slot 1)^000000
+^008080INT Stone (Slot 1)^000000
+^008080AGI Stone (Slot 1)^000000
+^008080DEX Stone (Slot 1)^000000
+^008080VIT Stone (Slot 1)^000000
+^008080LUK Stone (Slot 1)^000000
+^008080STR Stone (Slot 2)^000000
+^008080INT Stone (Slot 2)^000000
+^008080AGI Stone (Slot 2)^000000
+^008080DEX Stone (Slot 2)^000000
+^008080VIT Stone (Slot 2)^000000
+^008080LUK Stone (Slot 2)^000000
+^008080HP Stone (Slot 2)^000000
+^008080SP Stone (Slot 2)^000000
+^008080HP Stone (Slot 3)^000000
+^008080Big Stone (Slot 1)^000000
+^008080Medium Stone (Slot 1)^000000
+^008080Small Stone (Slot 1)^000000
+^008080Recovery Stone (Slot 1)^000000
+^008080Recovery Skill Stone (Slot 1)^000000
+^008080Recovery Stone (Slot 2)^000000
+^008080Recovery Stone (Slot 3)^000000
+^008080HIT Stone (Slot 3)^000000
+^008080FLEE Stone (Slot 3)^000000
 #
 22870#
 You could feel Christmas cheer from this fancy package.
@@ -82441,58 +82456,41 @@ Class: Item Giver
 Weight: 0
 #
 22905#
-A box that contains enchantment stones for costume equipment. Opening this will give you one of the following enchantment stones:
-STR_Stone(slot_1)
-INT_Stone(slot_1)
-AGI_Stone(slot_1)
-DEX_Stone(slot_1)
-VIT_Stone(slot_1)
-LUK_Stone(slot_1)
-ATK_Stone(slot_2)
-MATK_Stone(slot_2)
-HIT_Stone(slot_3)
-FLEE_Stone(slot_3)
-Recovery_Stone(slot_1)
-Recovery_Skill_Stone(slot_1)
-Recovery_Stone(slot_2)
-HP+1%_Stone(slot_2)
-SP_Stone(slot_2)
-Recovery_Stone(slot_3)
-Bing_Stone(slot_1)
-Medium_Stone(slot_1)
-Small_Stone(slot_1)
-ASPD_Stone(Garment)
-ATK_Stone(Upper)
-MATK_Stone(Upper)
-STR_Stone(Middle)
-INT_Stone(Middle)
-AGI_Stone(Middle)
-DEX_Stone(Middle)
-VIT_Stone(Middle)
-LUK_Stone(Middle)
-HP_Stone(Lower)
-HP_Absorption_Stone(Garment)
-SP_Absorption_Stone(Garment)
-Weight : ^7777771^000000
-^808080A box that contains enchantment stones for costume equipment.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Box
-Weight: 1
-^FFFFFF_^000000
-This box contains one of the following at random:
-^008080ATK Stone (Upper)^000000 x1
-^008080MATK Stone (Upper)^000000 x1
-^008080STR Stone (Middle)^000000 x1
-^008080INT Stone (Middle)^000000 x1
-^008080AGI Stone (Middle)^000000 x1
-^008080DEX Stone (Middle)^000000 x1
-^008080VIT Stone (Middle)^000000 x1
-^008080LUK Stone (Middle)^000000 x1
-^008080HP Stone (Lower)^000000 x1
-^008080HP Absorption Stone (Garment)^000000 x1
-^008080SP Absorption Stone (Garment)^000000 x1
-^008080SP Absorption Stone (Upper)^000000 x1
+A box that contains enchantment stones for costume equipment.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Opening this will give you one of the following enchantment stones:
+^008080HP Absorption Stone (Garment)^000000
+^008080SP Absorption Stone (Garment)^000000
+^008080ASPD Stone(Garment)^000000
+^008080ATK Stone (Slot 1)^000000
+^008080MATK Stone (Slot 1)^000000
+^008080ATK Stone (Slot 2)^000000
+^008080MATK Stone (Slot 2)^000000
+^008080STR Stone (Slot 1)^000000
+^008080INT Stone (Slot 1)^000000
+^008080AGI Stone (Slot 1)^000000
+^008080DEX Stone (Slot 1)^000000
+^008080VIT Stone (Slot 1)^000000
+^008080LUK Stone (Slot 1)^000000
+^008080STR Stone (Slot 2)^000000
+^008080INT Stone (Slot 2)^000000
+^008080AGI Stone (Slot 2)^000000
+^008080DEX Stone (Slot 2)^000000
+^008080VIT Stone (Slot 2)^000000
+^008080LUK Stone (Slot 2)^000000
+^008080HP Stone (Slot 2)^000000
+^008080SP Stone (Slot 2)^000000
+^008080HP Stone (Slot 3)^000000
+^008080Big Stone (Slot 1)^000000
+^008080Medium Stone (Slot 1)^000000
+^008080Small Stone (Slot 1)^000000
+^008080Recovery Stone (Slot 1)^000000
+^008080Recovery Skill Stone (Slot 1)^000000
+^008080Recovery Stone (Slot 2)^000000
+^008080Recovery Stone (Slot 3)^000000
+^008080HIT Stone (Slot 3)^000000
+^008080FLEE Stone (Slot 3)^000000
 #
 22971#
 Limited time offer.
@@ -86017,12 +86015,11 @@ Increases the recovery rate of ^008080Candy^000000 and ^008080Candy Cane^000000 
 Disables all the effects of ^008080Lover in Mouth^000000.
 #
 28430#
-^808080A beautiful ring engraved with a cross. It belonged to a leader with a special role.^000000
-Type: Equipment
-Class: Accessory
-Weight: 40
-Required Level: 90
-Required Jobs: All Jobs
+A beautiful ring engraved with a cross. It belonged to a leader with a special role.
+Class: ^808080Accessory^000000
+Weight: ^80808040^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Luk + 2
 Perfect Dodge + 5
 Increases the recovery rate of recovery skills by 15%.
@@ -86059,7 +86056,7 @@ Reduces the SP cost of ^0000FFEpiclesis^000000 by 100.
 ^008080Heal3^000000
 Luk + 2
 Perfect Dodge + 5
-Reduces the cast delay delay of ^0000FFHigh Heal^000000 by 1 second.
+Reduces the cooldown time of ^0000FFHigh Heal^000000 by 1 second.
 Increases the recovery rate of recovery skills by 3%.
 Reduces the SP cost of skills by 5%.
 #
@@ -86605,12 +86602,11 @@ Requires Level: ^808080100^000000
 SP Recovery + 50%
 Reduces the variable casting time of skills by 10%.
 Reduces the variable casting time of ^0000FFOratio^000000 by 50%.
+Reduces the fixed casting time of skills by 50%.
 Reduces the cast delay of skills by 5%.
 Increases magical damage on Small, Medium and Large size targets by 3% per level of ^0000FFImpositio Manus^000000 known.
 Enables ^0000FFLevel 2 Odin's Power^000000, if ^0000FFImpositio Manus^000000 is at maximum level.
 Increases the damage of ^0000FFMagnus Exorcismus^000000 by 3% for every 2 base levels.
-^F4AD42Arch Bishop Bonus^000000
-Reduces the fixed casting time of skills by 50%.
 #
 28565#
 A demon mask found nearby a Buddha statue in Payon. Some say it has been used for some kind of ritual.
