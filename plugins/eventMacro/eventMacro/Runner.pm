@@ -1453,19 +1453,63 @@ sub parse_call {
 
 
 #From here functions are meant to parse code and check order (I haven't even looked at them yet)
+#This function checks the if , while, switch case, and elsif statement
+#format accepted:
+#if ( [!|not] firstargument condition lastargument) {
+# do something
+#}
+#ex: if ( 2 > 1) {
+#	do anything
+#}
+#or: if (! 10 > 1) {
+# do something
+#}
+# use of [!/not] is optional, and will invert the result
 sub statement {
 	my ($self, $temp_multi) = @_;
-	my ($first, $cond, $last) = $temp_multi =~ /^\s*"?(.*?)"?\s+([<>=!~]+?)\s+"?(.*?)"?\s*$/;
-	if (!defined $first || !defined $cond || !defined $last) {
-		$self->error("syntax error in if statement");
+	my ($negate, $first) = $temp_multi =~ /^\s*(\!|not)?\s*"?([^=<>\!~"]+)"?\s*/; #checks the first argument
+	my ($cond) = $temp_multi =~ /[^=<>\!~"]+"?\s*(==|=~|<=|>=|!=|<|>|!|=|~)/; #checks the condition
+	my ($last) = $temp_multi =~ /[^=<>\!~"]+"?\s*(?:==|=~|<=|>=|!=|<|>|!|=|~)\s*"?([^=~"]+)"?\s*$/; #checks the last argument
+	
+	$first =~ s/^\s+|\s+$//; #trim whitespace in the beginning and end of string
+	$last =~ s/^\s+|\s+$//; #trim whitespace in the beginning and end of string
+	
+	if (defined $first && !defined $cond && !defined $last) {
+		# if there is only the first argument, it is treated here
+		my $pfirst = $self->parse_command(refined_macroKeywords($first));
+		return if (defined $self->error);
+
+		if ($negate) {
+			return !cmpr($pfirst);  # return the opposite value of cmpr
+		} else {
+			return cmpr($pfirst); # return the normal value of cmpr
+		}
+	} elsif (!defined $first) {
+		$self->error("syntax error in statement: missing first argument\n".
+		"first argument = missing, Condition: '$cond', last argument: '$last'");
+	} elsif (!defined $cond) {
+		$self->error("syntax errror in statement: missing condition (<= >= =~ =! ~ )");
+	} elsif (!defined $last) {
+		$self->error("syntax errror in statement: missing last argument\n".
+		"1st argument: '$first', Condition: '$cond', last argument:  missing");
 	} else {
+		#when has first argument, condition and last argument, it is treated here
 		my $pfirst = $self->parse_command(refined_macroKeywords($first));
 		my $plast = $self->parse_command(refined_macroKeywords($last));
 		return if (defined $self->error);
-		unless (defined $pfirst && defined $plast) {
-			$self->error("either '$first' or '$last' has failed");
-		} elsif (cmpr($pfirst, $cond, $plast)) {
-			return 1;
+		
+		if (!defined $pfirst ) {
+			$self->error("'$first' has failed, check syntax");
+
+		} elsif (!defined $plast) {
+			$self->error("'$last' has failed, check syntax");
+
+		} elsif ($negate) {
+			return !cmpr($pfirst, $cond, $plast); # return the opposite value of cmpr
+
+		} elsif (!$negate) {
+			return cmpr($pfirst, $cond, $plast); #return the normal value of cmpr
+
 		}
 	}
 	return 0
