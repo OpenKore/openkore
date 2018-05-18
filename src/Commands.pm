@@ -242,6 +242,7 @@ sub initHandlers {
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
 	clan				=> \&cmdClan,
+	sct				=> \&cmdBattleground,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -3857,7 +3858,7 @@ sub cmdPlayerList {
 		message $msg, "list";
 		return;
 	}
-
+	
 	if ($args ne "") {
 		my Actor::Player $player = Match::player($args) if ($playersList);
 		if (!$player) {
@@ -6892,6 +6893,52 @@ sub cmdClan {
 		$clan{clan_name}, $clan{clan_master}, $clan{onlineuser}, $clan{totalmembers}, $clan{clan_map}, $clan{alliance_count}, $clan{ally_names}, $clan{antagonist_count}, $clan{antagonist_names});
 		$msg .= ('-'x40) . "\n";
 		message $msg, "info";
+	}
+}
+
+sub cmdBattleground {
+    my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	my $msg;
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	if ($args[0] eq "pl") {
+		my $maxplp;
+		
+		$msg = center(T(" Battleground Player List "), 79, '-') ."\n".
+			T("# Name		Job		HP		MaxHP\n");
+		for my $battleground (@$playersList) {
+			my ($name,$job,$hp,$maxhp,$x,$y);
+			$name = $battleground_position->name;
+			$job = $jobs_lut{$battleground_position->{position}{job}};
+			$hp = $battleground_hp->{playerhp}{hp};
+			$maxhp = $battleground_hp->{playerhp}{maxhp};
+			$x = $battleground_position->{position}{x};
+			$y = $battleground_position->{position}{y};
+			$maxplp++;
+
+				$msg .= swrite(
+				"@<<<<<<<<<< @<<<<<<<<< @<<<<<< @<<<<<<",
+					[$name, $job, $hp, $maxhp,$x,$y]);
+			}
+		$msg .= TF("Total Battleground players: %s\n",$maxplp) if $maxplp;
+		$msg .= ('-'x79) . "\n";
+		message $msg, "info";
+		return;
+	} elsif ($args[0] eq "sc") {
+		my $msg = center(T(" Battleground Score "), 45, '-') ."\n" .
+			TF("Team A: %s .\n" .
+				"Team B: %s .\n" .
+		$bgscore{a}, $bgscore{b});
+		$msg .= ('-'x45) . "\n";
+		message $msg, "info";
+		return;
+	} else {
+	error T("Syntax Error in function '**' (Battle Ground)\n" .
+			"Usage: ***** < pl | sc >\n");
 	}
 }
 
