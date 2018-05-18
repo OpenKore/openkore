@@ -71390,3 +71390,19 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20019#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Taurus Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+1 Gemstone
+100 Emeralds
+1000 Zeny
+1 Taurus Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
