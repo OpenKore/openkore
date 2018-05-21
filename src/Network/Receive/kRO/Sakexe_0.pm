@@ -431,7 +431,7 @@ sub new {
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
-		'02C1' => ['main_chat', 'v a4 a4 a*', [qw(len accountID color message)]], # -1		
+		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
