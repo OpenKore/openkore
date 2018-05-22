@@ -339,8 +339,9 @@ sub new {
 		'0201' => ['friend_list'], # -1
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
 		'0206' => ($rpackets{'0206'} == 11)
-			? ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]], # 11
-			: ['friend_logon', 'a4 a4 C Z24', [qw(friendAccountID friendCharID isNotOnline charname)]], # 35 >= 20180221
+			? ['friend_logon', 'a4 a4 C', [qw(friendAccountID friendCharID isNotOnline)]] # 11
+			: ['friend_logon', 'a4 a4 C Z24', [qw(friendAccountID friendCharID isNotOnline charname)]] # 35 >= 20180221
+		,	
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]], # 34
 		'0209' => ['friend_response', 'v a4 a4 Z24', [qw(type accountID charID name)]], # 36
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
