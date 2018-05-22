@@ -520,7 +520,7 @@ sub actor_display {
 				NPC_EVT_TYPE, 'Actor::NPC', # both NPCs and portals
 				NPC_PET_TYPE, 'Actor::Pet',
 				NPC_HO_TYPE, 'Actor::Slave',
-				# NPC_MERSOL_TYPE? # not encountered
+				NPC_MERSOL_TYPE, 'Actor::Slave',
 				# NPC_ELEMENTAL_TYPE? # not encountered
 			}->{$args->{object_type}};
 		}
