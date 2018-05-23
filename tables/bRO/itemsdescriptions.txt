@@ -28909,14 +28909,15 @@ Classes que utilizam: ^777777Todas^000000
 #
 5469#
 Um símbolo do lema "um por todos e todos por um", surgido com a criação da Expedição da Aliança. Inspirados nesse lema, três inseparáveis Justiceiros, junto com um jovem e habilidoso Espadachim, fundaram os Mosqueteiros, para mostrar a todos que a união faz a força.
-FOR + 2
-Chance usar a habilidade Adrenalina Pura em nível 1 sempre que causar dano físico.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffFOR +2.^000000
+Ao realizar ataques físicos:
+^0000ff0,7% de chance de autoconjurar [Adrenalina Pura] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 14260#
 Uma caixa contendo um Anel do Anjo Caído [A]. Manuseie com cuidado.
@@ -42380,16 +42381,21 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
 18892#
-Você fez um encontro imediato de 3º grau com esse estranho Poring quando ele tentava ligar essa máquina oval. Agora ele resolveu equilibrar este disco em cima da sua cabeça, e parece estar contente em “voar” por aí acendendo luzinhas enquanto você corre de um lado para o outro. O mais surpreendente é que este Poring é capaz de falar algumas palavras e fica repetindo o tempo todo: “Poring... Chamado Urgente... Minha casa!”
-DEFM, Crítico, Precisão, Esquiva e Esquiva perfeita + 5
-Caso refinado em +7, reduz o tempo de conjuração em 5%
-Caso refinado em +9, o tempo de uso entre habilidades será reduzido em 5%,  Velocidade de Ataque + 5%
-Tipo : ^777777Equipamento para Cabeça^000000
+Você fez um encontro imediato de 3º grau com esse estranho Poring quando ele tentava ligar essa máquina oval. Agora ele resolveu equilibrar este disco em cima da sua cabeça, e parece estar contente em 'voar' por aí acendendo luzinhas. O mais surpreendente é que este Poring é capaz de falar algumas palavras e fica repetindo o tempo todo: 'Poring... Chamado Urgente... Minha casa!'
+^0000ffDEFM +5. CRIT +5.^000000
+^0000ffPrecisão +5. Esquiva +5.^000000
+^0000ffEsquiva perfeita +5.^000000
+Refino +7 ou mais:
+^0000ffConjuração variável -5%.^000000
+Refino +9 ou mais:
+^0000ffPós-conjuração -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^777777100^000000
-Nível Necessário : ^77777710^000000
-Classes: ^777777Todas as Classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 18893#
 Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana. De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
@@ -46482,13 +46488,19 @@ Classes : ^777777Todas^000000
 #
 18832#
 Para alguns, este é apenas um adorável chapéu feito em homenagem ao filhote de um dos MVPs mais famosos de Rune-Midgard. Contudo, você sabe a verdade. Você fez um pacto com este pequeno Bafomé Jr. para que ele ficasse selado para sempre nesta forma pequenina e em troca você o levaria para conhecer o mundo. Agora que ele está emprestando seu poder para você, resta saber se será capaz de cuidar do bafinho, antes que o pai dele venha cuidar de você!
-Chance de conjurar a habilidade Adrenalina Pura nível 2 sempre que atacar fisicamente.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa : ^7777770^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+^0000ffAo realizar ataques físicos:^000000
+^0000ff0,5% de chance de autoconjurar [Adrenalina Pura] nv. 2.^000000
+^FF6347Conjunto^000000
+^CD3278Mascote [Bafomé Jr.]^000000
+^0000ffChance de autoconjurar [Adrenalina Pura] +0,5% adicional.^000000
+Lealdade Alta:
+^0000ffChance de autoconjurar [Adrenalina Pura] +0,5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5654#
 Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o “bullying”. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
@@ -49726,189 +49738,186 @@ ATQM +5%.
 HPM +5%.
 #
 4908#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +1
-ATQ +3
-INT -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +1. INT -1.^000000
+^0000ffATQ +3.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4909#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +2
-ATQ +6
-INT -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +2. INT -2.^000000
+^0000ffATQ +6.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4910#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +4
-ATQ +12
-INT -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +4. INT -4.^000000
+^0000ffATQ +12.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4911#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +1
-ATQM +3
-FOR -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +1. FOR -1.^000000
+^0000ffATQM +3.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4912#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +2
-ATQM +6
-FOR -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +2. FOR -2.^000000
+^0000ffATQM +6.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4901#
 DEFM +7
 #
 4913#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +4
-ATQM +12
-FOR -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +4. FOR -4.^000000
+^0000ffATQM +12.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4902#
 DEF +18
 #
 4914#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +1
-Esquiva +2
-VIT -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +1. VIT -1.^000000
+^0000ffEsquiva +2.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4903#
 DEF +21
 #
 4915#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +2
-Esquiva +4
-VIT -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +2. VIT -2.^000000
+^0000ffEsquiva +4.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4904#
 ATQ +6%.
 #
 4916#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +4
-Esquiva +8
-VIT -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +4. VIT -4.^000000
+^0000ffEsquiva +8.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4905#
 ATQ +7%.
 #
 4917#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +1
-DEF +3
-DEFM +2
-AGI -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +1. AGI -1.^000000
+^0000ffDEF +3. DEFM +2.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4906#
 ATQM +6%.
 #
 4918#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +2
-DEF +6
-DEFM +4
-AGI -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +2. AGI -2.^000000
+^0000ffDEF +6. DEFM +4.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4907#
 ATQM +7%.
 #
 4919#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +4
-DEF +12
-DEFM +8
-AGI -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +4. AGI -4.^000000
+^0000ffDEF +12. DEFM +8.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4920#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +1
-Precisão +2
-SOR -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +1. SOR -1.^000000
+^0000ffPrecisão +2.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4921#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +2
-Precisão +4
-SOR -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +2. SOR -2.^000000
+^0000ffPrecisão +4.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4922#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +4
-Precisão +8
-SOR -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +4. SOR -4.^000000
+^0000ffPrecisão +8.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4923#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +1
-CRIT +1
-DES -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +1. DES -1.^000000
+^0000ffCRIT +1.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4924#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +2
-CRIT +2
-DES -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +2. DES -2.^000000
+^0000ffCRIT +2.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4925#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +4
-CRIT +4
-DES -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +4. DES -4.^000000
+^0000ffCRIT +4.^000000
+^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4559#
@@ -58953,6 +58962,7 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
 //*****************************************************
 //------------Aplicar em 2018-05-15--------------------
 //*****************************************************
@@ -58968,6 +58978,33 @@ Classes: ^777777Todas^000000
 O elmo da capitã da Ordem dos Khalitzburg que, no passado, reluzia uma viva cor azul. A maldição da valquíria necromante Himelmez levou não só a vida de toda a ordem, como também a cor original desse elmo.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-23--------------------
+//*****************************************************
+31407#
+Um novo tom de cor para aqueles que adoram os longos cabelos da Alice. O único problema é que, agora, se misturar com as outras Alices na Fábrica de Robôs da Academia Kiel Hyre não vai ser mais possível...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31117#
+Uma gálea banhada a ouro, forte e reluzente como a armadura dos soldados de um antigo e poderoso Império. Pode até parecer meio antiquada para alguns, mas te dará a mesma sensação de proteção e coragem que dava àqueles antigos guerreiros.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31260#
+Um novo modelo de Rastreador projetado por uma brilhante cientista. Ela realizou algumas modificações, como o ajuste de idioma de acordo com o usuário e um sistema mais potente. Assim, as chances de ele explodir serão mínimas quando você se deparar com um inimigo cujo poder é de mais de 8 mil!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
