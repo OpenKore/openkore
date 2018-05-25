@@ -6842,21 +6842,18 @@ Enables ^0000FFLevel 3 Turn Undead^000000.
 Adds a 10% chance of casting ^0000FFLevel 3 Turn Undead^000000 on the target when performing a physical attack.
 #
 1541#
-^808080A large silver mace, made for exorcisms.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Mace
-Attack: 120
-Property: Holy
-Weight: 90
-Weapon Level: 4
-Required Level: 60
-Required Job: Acolyte Jobs
-^FFFFFF_^000000
+A large silver mace, made for exorcisms.
+Class: ^808080Mace^000000
+Attack: ^808080120^000000
+Property: ^808080Holy^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Acolyte Jobs^000000
 Increases physical damage on Demon race targets by 10%.
 Increases physical damage on Shadow property targets by 10%.
-Adds a 1% chance of casting ^0000FFSignum Crusis^000000 on the target when performing a physical attack. The level of the skill is 1 per upgrade level of the item up to a maximum upgrade level of 10.
-Adds a 10% chance of ATK + 50 for 20 seconds when performing a physical attack.
+Adds a 1% chance of casting ^0000FFSignum Crusis^000000 on the target when performing a physical attack, where the level of the skill is equal to per upgrade level of the item up to a maximum upgrade level of 10.
+Adds a 10% chance of buffing the user for 20 seconds when performing a physical attack; Atk + 50.
 #
 1542#
 A deadly mace that is usually worn by the best fighter. It is especially designed for battles against human.
@@ -7966,21 +7963,18 @@ Increases the recovery rate of ^0000FFHeal^000000 and ^0000FFSanctuary^000000 by
 Increases the recovery rate of recovery skills by 1% per upgrade level of the ^008080Healing Staff^000000.
 #
 1626#
-^808080A staff inset with a gem that constantly emits waves that can disrupt the MDEF on enemies.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 80
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 70
-Required Job: Transcendent Mage Jobs, Transcendent Acolyte Jobs
-^FFFFFF_^000000
-INT + 4
-MATK + 145
-Pierces 10% of MDEF on Boss, Normal, Player protocol targets when performing a magical attack.
-Pierces an additional 1% of MDEF on Boss, Normal, Player protocol targets when performing a magical attack per upgrade level of the item.
+A staff inset with a gem that constantly emits waves that can disrupt the magical defense on enemies.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808080^000000
+Magic Attack: ^808080145^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080High Priest Jobs, High Wizard Jobs, Champion Jobs, Scholar Jobs^000000
+Int + 4
+Bypass 10% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+Bypass an additional 1% of hard magic defense of normal monsters and boss monsters when performing a magical attack per upgrade level of the item.
 #
 1628#
 ^FF0000Account Bound^000000
@@ -10581,32 +10575,22 @@ Required Level : ^777777120^000000
 Job : ^777777Sura^000000
 #
 1837#
-^808080An arm-length gauntlet with giant claws attached to it. The claws can penetrate even the thickest gloves.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 100
-Property: Neutral
-Weight: 150
-Weapon Level: 3
-Required Level: 50
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-ASPD - 5%
-Pierces 100% of DEF on Boss, Normal, Player protocol targets when performing a physical attack.
-ASPD + 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If ^0000FFChain Crush Combo^000000 is at maximum level,
-ATK + 40.
-^FFFFFF_^000000
-If ^0000FFGlacier Fist^000000 is at maximum level,
-ATK + 20.
-^FFFFFF_^000000
-If ^0000FFRaging Quadruple Blow^000000 is at maximum level,
-ATK + 20.
-^FFFFFF_^000000
-If ^0000FFRaging Thrust^000000 is at maximum level,
-ATK + 20.
+An arm-length gauntlet with giant claws attached to it. The claws can penetrate even the thickest gloves.
+Class: ^808080Knuckle^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Atk + 40, if ^0000FFChain Crush Combo^000000 is at maximum level.
+Additional Atk + 20, if ^0000FFGlacier Fist^000000 is at maximum level.
+Additional Atk + 20, if ^0000FFRaging Quadruple Blow^000000 is at maximum level.
+Additional Atk + 20, if ^0000FFRaging Thrust^000000 is at maximum level.
+Aspd - 5%
+Aspd + 1% per 2 upgrade levels of the item.
+Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+This item is indestructible in battle.
 #
 1839#
 ^FF0000This item requires translation.^000000
@@ -20730,6 +20714,7 @@ Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs^000000
 Int + 3
 Matk + 30
+Mdef + 5
 Enables ^0000FFLevel 1 Hiding^000000.
 #
 2988#
@@ -31010,18 +30995,18 @@ Applicable Jobs : ^777777All^000000
 #
 5208#
 A hat designed to mimic the look of a terrible magic book which attacks people.
-When physically melee attacking, there is a 5% chance to recover 8% of your damage as HP.
-When physically melee attacking, there is a 1% chance to recover 4% of your damage as SP.
-Drains 10 HP every 5 seconds while equipped.
-^ffffff_^000000
-^ff0000If refined to +9 or higher, the HP and SP recovery is doubled^000000
-Slot : ^7777771^000000
-Class : ^777777Headgear^000000
-Location : ^777777Upper^000000
-Defense : ^7777773^000000
-Weight : ^77777730^000000
-Level : ^77777740^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808030^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Adds a 5% chance of restoring 8% of damage as HP when performing a physical attack.
+Adds a 1% chance of restoring 4% of damage as SP when performing a physical attack.
+Drains 10 HP from the user every 5 seconds.
+If upgrade level is +9 or higher,
+Adds an additional 8% of the damage dealt as HP when performing a physical attack.
+Adds an additional 4% of the damage dealt as SP when performing a physical attack.
 #
 5209#
 A yellow basball cap worn to keep the sun from your eyes.
@@ -36282,7 +36267,7 @@ Weight: ^80808030^000000
 Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
 Luk + 1
-Adds a 5% chance of endowing the users weapon with Holy property for 60 seconds.
+Adds a 5% chance of casting ^0000FFLevel 1 Aspersio^000000 on the user when performing a physical attack.
 #
 5879#
 Sunglasses shaped like Poring.
@@ -39216,8 +39201,9 @@ Dust came into the box together with insects.
 Weight : ^7777770^000000
 #
 6882#
-Splendid feather shaped bait. Fishes who see this would rush into it knowing it as a food.
-Weight : ^7777770^000000
+A Special Monster Token that can be redeemed at the Kafra Headquarters
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 6892#
 This dropped from an ant.
@@ -65481,6 +65467,20 @@ Amistr Bags are account bound. Can be enchanted during an Amistr Bag Event
 Visit Prontera 146 192 for more details
 #
 17385#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When Opened Gives one of the following,
+
+Battle Manual X3 6cnt
+Enriched Oridecon x 40
+Enriched Elunium x 40
+Safe to 10 Certificate x 3
+Elemental Towel
+Valkyrie Knife
+Anemos Shield
+Celine's Brooch
+Luminous Blue Stone
 #
 17386#
 #
@@ -73120,14 +73120,15 @@ If the users base Agi is 90 or higher,
 Increases resistance to ^800000Silence^000000 and ^800000Stun^000000 by an additional 30%.
 #
 19114#
-^808080A luxurious ribbon made with soft silk.^000000
-Class: Headgear
-Position: Upper
-Defense: 15
-Weight: 30
-Required Level: 70
-Required Jobs: All Jobs
+A luxurious ribbon made with soft silk.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808015^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 Reduces damage taken from Earth property attacks by 20%.
+This item is indestructible in battle.
 If upgrade level is +5 or higher,
 Reduces damage taken from Small, Medium and Large size enemies by 2%.
 If upgrade level is +7 or higher,
@@ -78158,7 +78159,7 @@ Required Job: All Jobs
 #
 20284#
 A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.
-^FF0000This hat was originally awarded to Kami Kali, Kritical Assassin, Milky Thief, Myzery and Nirvanna21 for contributing to the community.^000000
+^FF0000This hat was originally awarded to Kami Kali, Kritical Assassin, Milky Thief, Myzery, Nirvanna21 and Xellie for contributing to the community.^000000
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -79479,18 +79480,15 @@ Increases the damage of Water property magical attacks on targets by an addition
 Reduces the damage of Wind property magical attacks on targets by 10%.
 #
 20730#
-^808080A loyal servant of the gods sacrificed himself while wearing this hood.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 80
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A loyal servant of the gods sacrificed himself while wearing this hood.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808050^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
 Str + 2
 Max HP + 10%
-Increases damage taken from Neutral, Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost, Undead property attacks by 20%.
+Increases damage taken from Neutral, Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attacks by 20%.
 Prevents the user from being knocked back.
 #
 20732#
@@ -80855,22 +80853,14 @@ Required Level : ^77777799^000000
 Job : ^777777Novice Class^000000
 #
 22016#
-^808080These shoes were worn by a man who lived as an assassin. These shoes contains the man's many years of experience.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Shoes
-Defense: 10
-Weight: 30
-Required Level: 30
-Required Jobs: All Jobs
-^FFFFFF_^000000
+These shoes were worn by a man who lived as an assassin. These shoes contains the man's many years of experience.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 Increases the experience given from Demi-Human race monsters by 5%.
 Increases the experience given from Demi-Human race monsters by an additional 1% per upgrade level of the item.
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Assassin's Despair^000000
-^008080Assassin's Shoes^000000
-Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 22017#
 ^808080These shoes were worn by a man who made a living out of catching fish. They contain the man's many years of experience.^000000
@@ -85247,24 +85237,16 @@ Weight: 0
 Weapon Level: 0
 #
 28320#
-^808080A sculpture expressing the despair of an assassin who had to kill his beloved one.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Weight: 10
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A sculpture expressing the despair of an assassin who had to kill his beloved one.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Aspd + 1
-^FFFFFF_^000000
 ^800080Set Bonus^000000
 ^008080Assassin's Despair^000000
-^008080Assassin's Mask^000000
+^008080Assassin's Skull Mask^000000
 Increases physical damage on Demi-Human race targets by 10%.
-^800080Set Bonus^000000
-^008080Assassin's Despair^000000
-^008080Assassin's Muffler^000000
-Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 ^800080Set Bonus^000000
 ^008080Assassin's Despair^000000
 ^008080Assassin's Shoes^000000
@@ -86199,7 +86181,7 @@ Increases the damage of ^0000FFShattering Storm^000000 by 10% per level of ^0000
 Reduces the SP cost of ^0000FFFire Dance^000000 by 5.
 Reduces the SP cost of ^0000FFFire Rain^000000 by 4 per level of ^0000FFFire Rain^000000 known.
 Reduces the SP cost of ^0000FFMass Spiral^000000 by 2 per level of ^0000FFMass Spiral^000000 known.
-Adds a 100% chance of buffing the user for 50 seconds when using ^0000FFCrimson Marker^000000; Adds a 1% chance of casting ^0000FFLevel 1 Dragon Tail^000000 on the target when performing a physical attack per level of ^0000FFDragon Tail^000000 known, if a higher level of this skill is known, it will be cast instead.
+Adds a 100% chance of buffing the user for 50 seconds when using ^0000FFCrimson Marker^000000; Adds a 1% chance of casting ^0000FFLevel 1 Dragon Tail^000000 on the target when performing a physical attack per level of ^0000FFDragon Tail^000000 known, if a higher level of this skill is known, it will be cast instead, if the user has a Grenade Launcher equipped.
 #
 28491#
 ^808080A dagger with a wide variety of applications. Particularly useful for hunting in the mountains.^000000
