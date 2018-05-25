@@ -71406,3 +71406,101 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20020#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Demon Mask!
+200 Skel-Bones
+100 Solid Shells
+50 Tooth of Bats
+25 Little Evil Horns
+5 Scarlet Dyestuffs
+1000 Zeny
+1 Demon Mask Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+
+
+20025#
+A box that contains
+10 Job Battle Manuals.
+^FF0000This box is account bound. The items inside can be traded and stored.^000000
+^ffffff_^000000
+This well written,
+detailed manual
+explains effective
+battle methods.
+^ff0000This item is account bound^000000
+^000088Job EXP rate increases to
+150% for 30 minutes.
+This bonus stacks with VIP and Battle Manuals to give an additional job bonus.^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+Box Weight : ^7777771^000000
+#
+
+20026#
+A box that contains 10 Classic Bubble Gum
+Description:
+Sweet, tasty bubble
+gum. Item drop rate
+increases by 100%
+for 30 minutes.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+20027#
+A box that contains 500 Classic Giant Flywing
+Description:
+An enchanted, giant
+wing from an ancient
+creatures. Enables
+instant teleportation
+of many people when^FFFFFF       ^000000 used by a Party Master.
+^ffffff_^000000
+This item can be traded and put into storage.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+20023#
+A box that contains 10 Classic Max Weight up Scroll
+Description:
+A Gym Pass that can be
+given to a special
+NPC to learn a skill
+that will increase your^FFFFFF   ^000000 Maximum Weight
+Capacity by 200 for
+each skill level.
+This special skill
+can only be learned
+up to Level 10.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
+
+20024#
+A box that contains:Neuralizer^000000
+Pressing the button
+on this stick will
+flash blinding light
+that seems to cause
+memory loss. Resets
+the Skill Tree and
+gives the corresponding^FFFFFF   ^000000 number of Skill Points.
+This item can only be
+used in town, and the
+character must carry
+0 weight, and cannot be^FFFFFF   ^000000 equipped with a Pushcart,
+Falcon, or PecoPeco.
+Cannot be used by
+Novice Class.
+^ffffff_^000000
+Weight : ^7777770^000000
+Box Weight : ^7777770^000000
+#
