@@ -4113,7 +4113,7 @@
 6867#Big_Bugbox#
 6868#Medium_Bugbox#
 6869#Dust#
-6882#Special_Bait#
+6882#Monster_Token#
 6892#Invasion_Book#
 6893#To_Serve_Man#
 6894#Champion_Badge#
@@ -7525,7 +7525,7 @@
 17382#Overseas_Care_Package_IX#
 17383#Blast_from_the_Past_Box#
 17384#Amistr_Bag_Box#
-17385#Liberation_Shoes_Shadow_Box#
+17385#OCP_Remix_IV#
 17386#Chemical_Shoes_Shadow_Box#
 17387#Clamorous_Shoes_Shadow_Box#
 17388#Insecticide_Shoes_Shadow_Box#
