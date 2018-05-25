@@ -6956,3 +6956,10 @@
 20017#Dress_Hat_Certificate#
 20018#Red_Deviruchi_Hat_Certificate#
 20019#Taurus_Crown_Certificate#
+20020#Demon_Mask_Certificate#
+
+20025#Job_Battle_Manual_10_Box#
+20026#Bubble_Gum_10_Box#
+20027#Giant_Flywing_500_Box#
+20023#Max_Weight_up_Scroll_10_Box#
+20024#Neuralizer_Box#
