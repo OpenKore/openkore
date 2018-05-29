@@ -22835,11 +22835,15 @@ Peso: ^7777770^000000
 #
 14289#
 Caixa que contém um Cupom de Tintura.
-^ffffff_^000000
-Cupom de Tintura
-Cupom que o Estilista Especial pede em troca para tingir suas roupas. Você pode encontrá-lo em Prontera, nas coordenadas 105,66.
-^ffffff_^000000
+Pode ser negociada.
 Peso: ^7777771^000000
+--------------------------
+Descrição do Cupom:
+--------------------------
+Cupom usado para tingir roupas.
+^0000ffPermite mudar a cor da roupa de um personagem.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Peso: ^7777770^000000
 #
 6047#
 Cupom usado para remover a tintura das roupas.
@@ -22854,10 +22858,16 @@ Peso: ^7777770^000000
 #
 14290#
 Caixa que contém um Cupom Removedor.
-^ffffff_^000000
+Pode ser negociada.
 Peso: ^7777771^000000
+--------------------------
+Descrição do Cupom:
+--------------------------
+Cupom usado para remover a tintura das roupas.
+^0000ffPermite retornar à cor original da roupa de um personagem.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Peso: ^7777770^000000
 #
-
 1273#
 Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
 Esse katar é uma versão melhorada, mas instável, do Rugido Sangrento original, e, portanto é reconhecidamente eficaz contra humanos. Há rumores de que ao fim de 7 dias, ele dá um rugido bestial assustador antes de desaparecer para sempre.
@@ -41056,10 +41066,9 @@ Um arpão de caça especial para caçar polvos gigantes.
 Peso: ^7777770^000000
 #
 6443#
-[^ff0000Frágil^000000]
 Um lubrificante de alta corrosão. Lendário por derreter a superfície de um objeto para que qualquer coisa possa ser separada.
-É perfeito para retirar cartas MVP de alguns equipamentos, inclusive de Elmos contendo uma carta Abelha-Rainha. A chance de remoção é 100%.
-^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+^0000ffGarante 100% de chance de remover uma carta de MVP de alguns equipamentos.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 11536#
@@ -44605,24 +44614,33 @@ Uma pequena marmita que contém todos os seus lanches favoritos que sua mãe pre
 Peso: ^77777720^000000
 #
 18756#
-Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros, que ainda é muito popular em Amatsu. Os Shiba Inus são ancestrais dos mais conhecidos Akitas, e o seu nome, no dialeto de Amatsu significa “pequeno cão”. Apesar do tamanho, os Shiba Inus são bastante independentes e ótimos cães de caça, usados para encontrar pequenos animais. Dizem as lendas que o um cão desta raça é a única coisa que pode deter a fúria do Atroce, já que quando ainda era humano, este guerreiro amaldiçoado tinha uma paixão especial por essa raça.
-ATQ + 30.
-Se equipado com o Coleira da Fidelidade [1], há uma chance de mudar sua forma para um Atroce enquanto receber e causar dano, aumentando o ataque enquanto transformado. A chance de mudar a forma aumenta de acordo com o nível de refinamento. Drena 5 de SP a cada segundo.
-Tipo : ^777777Equipamento para Cabeça^000000
+Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros, que ainda é muito popular em Amatsu. Os Shiba Inus são ancestrais dos mais conhecidos Akitas, e o seu nome, no dialeto de Amatsu significa 'pequeno cão'. Apesar do tamanho, os Shiba Inus são bastante independentes e ótimos cães de caça, usados para encontrar pequenos animais. Dizem as lendas que o um cão desta raça é a única coisa que pode deter a fúria do Atroce, já que quando ainda era humano, este guerreiro amaldiçoado tinha uma paixão especial por essa raça.
+^0000ffATQ +30.^000000
+^0000ffDano físico contra a raça Bruto +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Coleira da Fidelidade]^000000
+^0000ffATQ +30.^000000
+Ao receber ou realizar ataques físicos:
+^0000ffChance de se transformar em Atroce por alguns segundos.^000000
+^CD3278Durante a transformação:^000000
+^0000ffATQ +30.^000000
+^0000ffDrena 5 de SP por segundo.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^77777740^000000
-Nível Necessário : ^77777750^000000
-Classes : ^777777Todas^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 2959#
 Você pode ler o nome Hachiko nesta coleira. De acordo com as lendas, essa coleira foi usada por um cão da raça Shiba Inu que pertenceu ao Atroce, antes dele se tornar um licantropo amaldiçoado, quando ainda era um guerreiro humano. Dizem que ainda existe um laço profundo ligando este item ao MVP. Será verdade? Você sente apenas uma forte sensação de lealdade ao segurar esta coleira. O que acontecerá se você usá-la?
-AGI +2.
-Tipo : ^777777Acessório^000000
+^0000ffAGI +2.^000000
+^0000ffResistência a raça Bruto +3%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777730^000000
-Nível Necessário : ^77777750^000000
-Classe : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 //----------------------------------------------------------
 //--Aplicar em 08-07-2014 - Todos os servidores
@@ -48710,6 +48728,7 @@ Classes: ^777777Todas ^000000
 //*****************************************************
 20154#
 Se você adora quando as árvores ficam douradas no outono e as folhas secas caem, carregue essa sensação com você o ano inteiro com essas belas folhas encantadas.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49086,6 +49105,7 @@ Classes: ^777777Todas ^000000
 #
 20404#
 Você nitidamente foi abençoado pela família Poring e recebeu a graça gelatinosa dos angelings e seus primos celestiais. Só não sei porque, já que vi você despedaçar vários poporings inocentes, sem falar do coitado do drops!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49127,7 +49147,8 @@ Peso: ^7777771^000000
 //------------Aplicar em 2016-07-12--------------------
 //*****************************************************
 19871#
-Sabe aquela música que quando você escuta não sai mais da sua cabeça? Aquela música do momento, tipo a “Ai se eu te dropo”, “Show das Odaliscas” ou “Hode Hode”? Pois é, sabemos que nesse exato instante você tem uma música dessas na sua cabeça. Tá na sua cara!
+Sabe aquela música que quando você escuta não sai mais da sua cabeça? Aquela música do momento, tipo a 'Ai se eu te dropo', 'Show das Odaliscas' ou 'Hode Hode'? Pois é, sabemos que nesse exato instante você tem uma música dessas na sua cabeça. Tá na sua cara!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49170,6 +49191,7 @@ Classes: ^777777Todas ^000000
 #
 20209#
 E pensar que você estava todo feliz soprando com um frasquinho de bolhas de sabão quando um goblin arteiro deu um tapa nas suas costas e fez você engolir tudo. Agora você está assim, “soltando” bolhas de sabão por onde passa... Vamos apenas torcer pra que esse sabão não seja de Veins!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49191,6 +49213,7 @@ Classes: ^777777Todas ^000000
 #
 20240#
 Quando você descobriu que tinha o poder de fazer nevar ao seu redor, por algum motivo sentiu uma incontrolável vontade de sair correndo escada acima cantando “Livre estou, livre estou...”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
@@ -49699,7 +49722,7 @@ A força de muitas tempestades estão contidas neste arco.
 ^0000ffTempo de recarga -2 segundos.^000000
 Tipo: ^777777Arco^000000
 Ataque: ^777777160^000000
-Peso: ^77777730^000000
+Peso: ^777777150^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Sentinelas, Musas e Trovadores^000000
@@ -50121,6 +50144,7 @@ Classes: ^777777Todas ^000000
 #
 20285#
 Agora você não precisará mais viajar até a Ilha-Nação dos ninjas para experimentar a paz e beleza proporcionadas pela “chuva” de pétalas das cerejeiras. Com essa aura mágica, será como se você carregasse Amatsu o tempo todo com você! A não ser, é claro, que esse seja um efeito colateral por você ter sido possuído por um youkai.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
@@ -50662,6 +50686,7 @@ Classes: ^777777Todas^000000
 #
 20435#
 Um enfeite para a cabeça na forma de belas flores que emitem uma aura roxa fantasmagórica. Sob a luz da lua, o efeito deste pingente se torna ainda mais misteriosa. Desde que começou a usá-lo, você passou a sonhar com o universo e um tipo de grande e misterioso morcego.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -50700,6 +50725,7 @@ Classes: ^777777Todas^000000
 #
 5914#
 Após realizar um pacto com o povo das fadas, você passou a ser visto como um aliado dos Esplêndidos e foi abençoado por seu rei. Agora, por onde quer que você ande, você é acompanhado por pequenas fadinhas etéreas em forma de borboletas. As vezes parece que uma delas fica roxa e o nome Psyloque vem à sua cabeça, mas é só impressão.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -50729,6 +50755,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 20099#
 Parabéns, você atraiu a atenção dos Esplêndidos e agora, por algum motivo, essa fadinha brilhante gostou de você! Também conhecidas como Ljósálfar na mitologia, ou “elfo luminoso”, esse pequeno Esplêndido vai deixar o seu dia mais iluminado!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -51594,6 +51621,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 31040#
 Uma tiara com plumas que pertenceu a uma lendária garota mágica. Alguns acreditam que sua dona original era a poderosa maga Sarakura Dropa-Cartas, outros que era a garota Maloka Magika. Aparentemente, um Noviço que era apaixonado por ela encantou a tiara para realizar seu desejo e agora sempre que seu usuário precisa de ajuda, a garota mágica e seu báculo são conjurados.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 ^ff0000Desabilitado temporariamente:^000000
 ^0000ffAo usar [Primeiros Socorros]: Se transforma em Nasarin por 10 segundos.^000000
 Tipo: ^777777Visual^000000
@@ -51776,6 +51804,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 18742#
 O brilho de uma Lua de Cristal agora banha você dia e noite, fazendo você acreditar que tudo pode ser, só basta acreditar. Afinal, tudo o que tiver que ser, será. Já dizia a musa Chocha que uma Lua de Cristal pode fazer de você uma estrela, quando você já sabe brilhar. Pelo visto vale tudo pra fazer da sua vida cheia de emoção!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -51869,6 +51898,7 @@ Peso: ^7777771^000000
 //*****************************************************
 20062#
 Você pode ser considerada uma pessoa de sorte. Até mesmo nos cantos mais sombrios de Nifhelm, o sol parece sempre brilhar sobre a sua cabeça! Às vezes parece até que o sol ri como um bebê e nesse momento você se pega a cantar “Dink Week, Cigana, Lelé, Pow...”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -51978,6 +52008,7 @@ Classes: ^777777Aprendizes, Superaprendizes, Mercadores, Espadachins, Noviços e
 #
 5930#
 Uma tiara dada à Lucya, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Lucya utilizou esta tiara para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta tiara foi encantada pela Valquíria Lexus, e possui o poder da transformação.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffDano mágico contra as propriedades Veneno, Sagrado, Sombrio, Fantasma e Maldito +5%.^000000
 Ao realizar ataques físicos:
 ^0000ff5% de chance de autoconjurar [Luz Divina] nv. 1.^000000
@@ -51999,6 +52030,7 @@ Classes: ^777777Todas^000000
 #
 19109#
 Uma tiara de penas e flores coloridas, confeccionada para uma verdadeira popstar! A tiara é encantada magicamente para imitar os efeitos dos canhões de luzes e de refletores em shows de pop. Há a chance de ter um holofote rosa só para você ao realizar ataques físicos.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffSP máx. +50.^000000
 ^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
 Tipo: ^777777Equipamento para cabeça^000000
@@ -52048,6 +52080,7 @@ Classes: ^777777Todas^000000
 #
 5979#
 Este adereço traz uma ilusão de penas encantadas, e fará com que penas brancas caiam a sua volta a todo o momento. Este elemento estético muito utilizado em animações orientais já chega a estar meio batido, mas vai trazer todo o drama necessário para que você se sinta como o protagonista de um anime da Clampi.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -52301,6 +52334,7 @@ Classes: ^777777Todas^000000
 #
 20487#
 Sua vida ultimamente anda cercada de flores, cercada de música e você frequentemente se põe a cantar: “Nós somos as estrelas/Que tentam chegar ao céu/ Você é minha estrela/ Aquele amor insubstituível/ Que sobe como poeira/ Nós estamos numa jornada para as estrelas!”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -52328,6 +52362,7 @@ Classes: ^777777Todas^000000
 #
 20439#
 Após treinar com o Cavaleiro Zodiacal de Virgem, Xaka, você conseguiu alcançar seus oito sentidos e elevar seu cosmo até liberar sua aura, que agora brilha como o brilho do sol! Afinal, como já diziam Çandi e Júlior, é nas constelações que a luta vai começar, e aqui o bem e o mal, até um deles ganhar, silêncio nas estrelas e um grito ecoando no ar!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -54883,6 +54918,7 @@ Classes: ^777777Todas^000000
 #
 31316#
 Você está sempre cercado por uma aura de borboletas púrpuras. Seriam elas um sinal de que na verdade você teria descendência Esplêndida, com sangue de Alfeim correndo em suas veias? Ou será que você vai se transformar em uma ninja mutante capaz de ler mentes e criar espadas psíquicas? Talvez seja apenas o seu perfume. O que importa é que o efeito é legal!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -55765,6 +55801,7 @@ Classes: ^777777Todas^000000
 #
 18744#
 Qualquer um vai poder brilhar como um diamante com esta pequena amostra do brilho da galáxia. Vindas direto da Via Láctea para mostrar que você não precisa de joias para brilhar, esses pedacinhos do Universo são meramente visuais, mas vão te dar aquele merecido banho de glamour!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -57145,6 +57182,7 @@ Classes: ^777777Todas^000000
 #
 19022#
 Você finalmente obteve o lendário Cristal Filosofal! Famoso por transformar chumbo em ouro ou até conceder a imortalidade, essa preciosidade foi almejada por várias pessoas e feras feridas: desde Nicolas Flamel até o Waldir-Morte e os irmãos El Ricos.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffTolerância a Cegueira +100%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Chapéu de Filir]^000000
@@ -57510,6 +57548,7 @@ Classes: ^777777Todas^000000
 #
 20457#
 Este adereço fará com que penas coloridas ilusórias caiam à sua volta a todo momento. As penas coloridas são em homenagem às aves em extinção da fauna de Brasilis.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
@@ -57818,6 +57857,7 @@ Classes: ^777777Todas^000000
 #
 31325#
 Quando uma Rainha Scaraba renuncia de seu cargo, sua coroa é enterrada nos cantos mais escuros do Túnel Kamidal. O que não contavam é que arqueólogos logo encontrariam esse local em suas escavações, o que tornaria esse acessório uma grande moda entre os aventureiros.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo e Baixo^000000
 Peso: ^7777770^000000
@@ -57925,6 +57965,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 18741#
 Essas chamas esverdeadas aquecem e iluminam tudo em seu caminho. Apesar de existirem diversas crenças e lendas a respeito do fogo esmeralda, já foi comprovado que o fenômeno surge a partir da inflamação de gases emitidos por um Poporing. Não pergunte quais gases são esses.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -58683,8 +58724,8 @@ Refino +5 ou mais:
 ^0000ffDano físico a distância +3% adicional.^000000
 Refino +7 ou mais:
 ^0000ffHP e SP máx. +10% adicional.^000000
-^0000ffDano crítico +3% adicional.^000000
-^0000ffDano físico a distância +10% adicional.^000000
+^0000ffDano crítico +5% adicional.^000000
+^0000ffDano físico a distância +5% adicional.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Malha da Luz]^000000
 ^0000ffAumenta a velocidade de movimento.^000000
@@ -59005,6 +59046,40 @@ Classes: ^777777Todas^000000
 Um novo modelo de Rastreador projetado por uma brilhante cientista. Ela realizou algumas modificações, como o ajuste de idioma de acordo com o usuário e um sistema mais potente. Assim, as chances de ele explodir serão mínimas quando você se deparar com um inimigo cujo poder é de mais de 8 mil!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-29--------------------
+//*****************************************************
+18959#
+Há pelo menos uma década, livros com histórias sobre monstros de um mundo digital fizeram o maior sucesso em Amatsu. As crianças daquela época cresceram, mas essas histórias incríveis continuaram de tal forma que até confeccionaram um chapéu no formato da titica dos monstros. O que não fazem pela nostalgia...
+^a400cdIndestrutível em batalha.^000000
+^a400cdNão pode ser refinado.^000000
+^0000ffResistência a Personagens +13%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Chon Chon de Aço]^000000
+^0000ffTolerância a Congelamento +100%.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff1% de chance de autoconjurar [Beijo do Inverno] nv. 2.^000000
+^FF6347Conjunto^000000
+^FF6347Sandálias [1]^000000
+^FF6347[Carta Chon Chon]^000000
+^0000ffHP e SP máx. +4%.^000000
+A cada refino do calçado:
+^0000ffHP e SP máx. +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777120^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19294#
+Desenvolvida e fabricada em Malangdo, não há ninguém que não conheça a estilosa linha de fones de ouvido Nekobits. Há quem diga que a marca aposta mais em aparência do que qualidade sonora, mas se estilo é a sua prioridade, por que não? Afinal, essas orelhinhas são puro requinte!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
