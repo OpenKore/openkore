@@ -8234,4 +8234,9 @@
 31407#Peruca Rosa de Alice#
 31117#Gálea Dourada#
 31260#Rastreador Sofisticado#
+//*****************************************************
+//------------Aplicar em 2018-05-29--------------------
+//*****************************************************
+18959#Chapéu de Dighi-titica#
+19294#Fones de Ouvido Nekobits#
 //file end
