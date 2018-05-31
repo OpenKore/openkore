@@ -12791,7 +12791,6 @@ Something fatal showed up from festival eggs. You can capture those bugs from my
 Helped twice on catching fatal bugs. Festival guide mentioned about special repay. Let's do it once more.#
 #
 
-
 //Ramadan event 2014
 
 9273#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
@@ -12833,3 +12832,13 @@ Get the carpet#
 9282#Grant your wishes.#SG_FEEL#QUE_NOIMAGE#
 Get the lamp#
 #
+
+
+//20180418 horror toy factory
+12330#Skull face girl#SG_FEEL#QUE_NOIMAGE#
+You have heard the story of a strange looking girl.#
+Skull face girl#
+
+12331#Delay of Toy Factory#SG_FEEL#QUE_NOIMAGE#
+There is a delay on Toy Factory entrance. You cannot enter for 23 hours.#
+Delay of Toy Factory#

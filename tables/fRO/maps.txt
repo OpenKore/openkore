@@ -903,3 +903,9 @@ moro_cav.rsw#Flame Cave#
 1@glast.rsw#Old Glast Heim#
 1@air1.rsw#Airship#
 1@air2.rsw#Airship#
+
+mora.rsw#Rafle Village, Mora#
+malangdo.rsw#Malangdo#
+mal_in01.rsw#Dalam Malangdo#
+mal_in02.rsw#Dalam Malangdo Kapal#
+mal_dun01.rsw#Starry Coral Area#
