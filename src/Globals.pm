@@ -316,7 +316,14 @@ our %jobs_lut = (
 	4212 => 'Oboro',
 	4215 => 'Rebellion',
 	4218 => 'Summoner',
-
+	
+	4239 => 'Star Emperor',
+	4240 => 'Soul Reaper',
+	4241 => 'Baby Star Emperor',
+	4242 => 'Baby Soul Reaper',
+	#4243 => 'Star Emperor',#Job_Star_Emperor2:      4243
+	#4244 => 'Soul Reaper', #Job_Baby_Star_Emperor2: 4244
+	
 	# Homunculus
 	6001 => 'Lif',
 	6002 => 'Amistr',
