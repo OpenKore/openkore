@@ -316,7 +316,11 @@ our %jobs_lut = (
 	4212 => 'Oboro',
 	4215 => 'Rebellion',
 	4218 => 'Summoner',
-
+	#Need check !#####
+	#4220 => 'Baby Summoner', #JOB_BABY_SUMMONER = 4220,
+	#4222 => 'Baby Ninja', #JOB_BABY_NINJA = 4222,
+	#4238 => 'Baby Star Gladiator', #JOB_BABY_STAR_GLADIATOR2 = 4238,
+	##################
 	# Homunculus
 	6001 => 'Lif',
 	6002 => 'Amistr',
