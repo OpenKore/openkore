@@ -32161,7 +32161,7 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 18620#
-A pink heart-shaped eye patch. Seems like going well with a nurse’s cap.
+A pink heart-shaped eye patch. Seems like going well with a nurse¡¯s cap.
 Class : ^777777Headgear^000000 Defense : ^7777772^000000
 Location : ^777777Mid^000000 Weight : ^7777775^000000
 Required Level : ^77777720^000000
@@ -33625,13 +33625,11 @@ Weight : ^7777770^000000
 #
 18777#
 Genie's Lamp Replica. There is still Genie's spirit inside.
-During the event period:
-All stats +3
-Add a chance to obtain Milk, Honey, Ramadan and Ketupat when killing monsters.
+LUK +10
 Class : ^777777Headgear^000000
 Defense : ^7777773^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
+Location : ^777777Upper ^000000W
+eight : ^77777710^000000
 Job : ^777777All^000000
 #
 11714#
@@ -34311,6 +34309,17 @@ Sushi and Raw Fish's HP recovery increases by 5%
 HP recovery increases by 5% per Cloak Refinement. Drop rate also increases.
 Class : ^777777Helm^000000 Def : ^77777710^000000
 Weight : ^77777730^000000
+Required LvL : ^77777740^000000
+Job : ^777777All^000000
+#
+18626#
+A hat of cool and gooey Gelato put on top of head.
+MHP + 2000, MSP + 200.
+When phy AKT is given to you or your enemy, LV1 Storm Gast is aroused.
+(Option disappears after Event Period)
+
+Class : ^777777Helm^000000 Def : ^7777772^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
 Required LvL : ^77777740^000000
 Job : ^777777All^000000
 #
@@ -52484,7 +52493,7 @@ Job : ^777777All Jobs^000000
 A hat that is provided only for members of the Paradise Team.
 It's designed to go well with a suit.
 Class : ^777777Helmet^000000 Defense : ^7777775^000000
-삧쒡: ^777777Upper ^000000 Weight : ^7777770^000000
+À§Ä¡: ^777777Upper ^000000 Weight : ^7777770^000000
 Required Level : ^77777712^000000
 Job : ^777777All Jobs^000000
 #
@@ -54457,7 +54466,7 @@ Weight : ^7777770^000000
 #
 
 
-// ---------- Ep13.3 쓹붺욮뻆샌엛 ------------
+// ---------- Ep13.3 Äù½ºÆ®¾ÆÀÌÅÛ ------------
 12580#
 A trial product which has been researched from the Geffen Magic Academy for a long time.
 This magical scroll is able to search which items are on sale, which items are being purchased, and can locate the searched vendor.
@@ -56739,7 +56748,7 @@ Transparent item which imprisons Buwaya's Spirit. Rumor says you can hear Buwaya
 Weight : ^7777771^000000
 #
 
-//-------뷉뾬샇좸뛻 쏟낡 뻆샌엛------------
+//-------½É¿¬ÀÇÈ¸¶û Ãß°¡ ¾ÆÀÌÅÛ------------
 1293#
 *Stats during WoE & PVP
 Reduces the target's Def and Mdef to 1 on successful hit. This effect does not work with skills.
@@ -57147,7 +57156,7 @@ Weapon Level : ^7777774^000000
 Required Level : ^77777795^000000
 Job : ^777777Swordman Class^000000
 #
-//믽듸4쏾
+//»ý´ø4Ãþ
 1290#
 The Katar that the accessin who never lose targets in any situation used. He even used his luck to focus on the target.
 Increases Hit Success rate depending on Base Luck.
@@ -61420,4 +61429,177 @@ Weight : ^77777710^000000
 An enchanted herb which increases magical attack strength when eatenn.
 MATK+30 for 1 minute
 Weight : ^7777775^000000
+#
+
+
+//-------- Horror Toy Factory ----------------------
+
+12490#
+A spelled musical note memorized a carol song.
+Weight: ^7777770^000000
+#
+2486#
+A pair of shoes helps the user to melt into the dark easily because it was made up of darkness, the opponent of light.
+The wizard who made this Shadow Walk imbued a magic to protect the wearer of itself.
+Add the chance of auto casting Cloaking Lv.2 on an enemy when receiving Magical Damage.
+If the user has a higher skill level, it will cast at the level he/she learned.
+MDEF + 10
+Type: ^777777Footwear^000000 DEF: ^7777770^000000
+Weight: ^777777200^000000
+Lv. req.: ^77777775^000000
+Class: ^777777All Transcendent classes except for Novice line^000000
+#
+2976#
+A spooky red lantern.
+MSP - 300. Enables to use skill Sight Lv.1.
+Add the chance of gaining Alchol, Detrimindexta, and Karvodailnirol items each time a monster is killed.
+Type: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777720^000000
+Lv. req.: ^777777100^000000
+Class: ^777777All classes^000000
+#
+11563#
+Blacktea still having its warmth. It recovers about ^000088 100 SP^000000.
+Weight: ^7777772^000000
+#
+11564#
+A sweet biscuit due to honey spread. It also has a good match with a cup of tea. It recovers about ^000088 1000 HP^000000.
+Weight: ^7777772^000000
+#
+7640#
+Butterfly-like hairpin. Used for fastening long hair, it buffs girliness.
+Weight: ^7777771^000000
+#
+2977#
+A desperately broken gem bearing odd spell power with grudge.
+MSP + 200. Enables to use skill Scream Lv.3.
+If equipped with Kind Heart, be cautious that the heart of abandoned doll will be deluged.
+Type: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Lv. req.: ^777777110^000000
+Class: ^777777All classes^000000
+#
+13442#
+A very old and worn-out umbrella. Dunno how old it is. Feels spell power.
+MATK + 80. Increases additional MATK per upgrade level.
+Enables to use skill Soul Strike Lv.10.
+Type: ^777777Sword^000000 ATK: ^777777120^000000
+Weight: ^77777750^000000
+Weapon Lv.: ^7777773^000000
+Lv. req.: ^77777780^000000
+Class: ^777777Swordsman line/Merchant line/Thief line^000000
+#
+18848#
+A beautiful rose that nobody knows when it was picked and docorated, but it still keeps freshness all the time.
+MATK + 20, Increases additional MATK per upgrade level.
+Recovers 100 HP after each kill with magical damage.
+Loses 50 HP per every 5 seconds.
+Type: ^777777Headgear^000000 DEF: ^7777770^000000
+Location: ^777777Upper ^000000Weight: ^77777720^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+19686#
+A hairband has a motif of a Santa doll.
+Possessed by Antonio with a certain chance when doing physical or magical attack.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+7642#
+A coin estimated to be soiled by old bloodstain. The black stain was also dried due to its age.
+Weight: ^7777770^000000
+#
+19687#
+A beautiful rose that nobody knows when it was picked and docorated, but it still keeps freshness all the time.
+Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
+Location: ^777777Upper^000000Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+7643#
+A sheet of old letter crumpled and bloodstained in places. Managed to recognize the writings.
+"Maybe I might have made up an awesome piece. What I made seems to be my daughter, not a doll.
+When this letter comes to you, all of my work may be going to be done. I'd like to show my last work, no, my daughter to you."
+Weight: ^7777771^000000
+#
+7644#
+A clean and unsealed letter even seemed not to be sent.
+"I've kept talking to a doll because I cannot stand this will be the last doll craft when I started to make the millionth doll.
+Haha, I'm getting silly as I grow old. Do you understand how I feel, my friend?"
+Weight: ^7777770^000000
+#
+19701#
+A hat noblewomen enjoy wearing. It is said the wearers want to drink blacktea.
+Type: ^777777Costume equipment^000000
+Location: ^777777Upper^000000 Weight: ^7777770^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+2978#
+A gem bearing warm light having cozy and mild spell power in it.
+MHP + 500. Recovers 300 HP per every 10 seconds.
+If equipped with Hurt Mind, be cautious that the heart of abandoned doll will be deluged.
+Type: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Lv. req.: ^777777110^000000
+Class: ^777777All classes^000000
+#
+18849#
+A luxurious, gold-rimmed ribbon. It has been with Kimi since it was littered.
+DEX + 3, MATK + 40, Increases additional MATK per upgrade level.
+Recovers 200 HP after each kill with magical damage.
+Loses 50 HP per every 5 seconds.
+Type: ^777777Headgear^000000 DEF: ^7777770^000000
+Location: ^777777Upper^000000Weight: ^77777720^000000
+Lv. req.: ^7777771^000000
+Class: ^777777All classes^000000
+#
+22534#
+A fast closed small box created by her dreadful loneliness. Now it can be opened.
+Weight: ^777777100^000000
+#
+16029#
+As a sacred cross-shaped blunt weapon bearing God's blessing, the power for conviction was reinforced.
+Add the chance of auto casting Turn Undead Lv.6 on an enemy with low chances when attacking.
+Recovers 1 SP when hitting Undead monsters.
+Recovers 12 SP after each Undead monster kill with melee damage.
+MATK + 150.
+Type: ^777777Blunt weapon^000000 ATK: ^777777195^000000
+Weight: ^777777150^000000 Property: ^777777Holy^000000
+Weapon Lv.: ^7777774^000000
+Lv. req.: ^77777740^000000
+Class: ^777777Transcendent Acolyte line^000000
+#
+2980#
+A glove dwelling dark power. Enables to move dolls vividly by controlling the strands of magical thread connected to the tips of fingers.
+MSP + 200, MHP + 500.
+Enables to use skill Fiber Lock Lv.1.
+Auto casts Kimi's confused heart on an enemy when doing or receiving damage.
+Type: ^777777Accessory^000000 DEF: ^7777770^000000
+Weight: ^77777710^000000
+Lv. req.: ^777777110^000000
+Class: ^777777All classes^000000
+#
+22516#
+Dark red fluid seems to have hardened and became solid.
+Many would mistake it for a beautiful red gem unless they take a look carefully. Feels ominous power.
+Weight: ^7777771^000000
+#
+6683#
+A flower feels no moist at all. It would be crumbled with a rustling sound if it touched.
+Weight: ^7777771^000000
+#
+4828#
+MATK + 24. Decreases Variable Cast Time by 10%.
+#
+4829#
+MATK + 27. Decreases Variable Cast Time by 10%.
+#
+4830#
+MATK + 30. Decreases Variable Cast Time by 10%.
+#
+4825#
+ATK + 50, HIT + 15.
 #
