@@ -71504,3 +71504,18 @@ Novice Class.
 Weight : ^7777770^000000
 Box Weight : ^7777770^000000
 #
+
+20028#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Guildsman Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1000 Zeny
+1 Guildsman Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
