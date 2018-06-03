@@ -2193,6 +2193,7 @@ sub processFollow {
 				$args->{'ID'} = $player->{ID};
 				$args->{'following'} = 1;
 				$args->{'name'} = $player->name;
+				AI::clear(qw/move route/);
  				message TF("Found my master - %s\n", $player->name), "follow";
 				last;
 			}			
@@ -2200,6 +2201,7 @@ sub processFollow {
 	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}} && !${$players{$args->{'ID'}}}{'dead'} && ($players{$args->{'ID'}}->name eq $config{followTarget})) {
 		$args->{'following'} = 1;
 		delete $args->{'ai_follow_lost'};
+		AI::clear(qw/move route/);
  		message TF("Found my master!\n"), "follow"
 	}
 
