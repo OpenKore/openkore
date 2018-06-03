@@ -72,242 +72,242 @@ Arrow 3000 1 0
 ##### WORTHLESS GEARS #####
 # Worthless gears which are sold by default
 
-2305 0 0 1 # Adventurer's Suit
-2211 0 0 1 # Bandana
-2217 0 0 1 # Biretta
-2405 0 0 1 # Boots
-2103 0 0 1 # Buckler
-2227 0 0 1 # Cap
-2314 0 0 1 # Chain Mail
-2233 0 0 1 # Circlet
-2309 0 0 1 # Coat
-2310 0 0 1 # Coat [1]
-2302 0 0 1 # Cotton Shirt
-Cotton Shirt [1] 0 0 1
+Adventurer's Suit 0 0 1 # 2305
+Bandana 0 0 1 # 2211
+Biretta 0 0 1 # 2217
+Boots 0 0 1 # 2405
+Buckler 0 0 1 # 2103
+Cap 0 0 1 # 2227
+Chain Mail 0 0 1 # 2314
+Circlet 0 0 1 # 2233
+Coat 0 0 1 # 2309
+"Coat [1]" 0 0 1 # 2310
+Cotton Shirt 0 0 1 # 2302
+"Cotton Shirt [1]" 0 0 1
 #Crystal Pumps 0 0 1
-2613 0 0 1 # Diamond Ring
-2205 0 0 1 # Diver Goggles
-2212 0 0 1 # Eye Patch
-2612 0 0 1 # Flower Ring
-2219 0 0 1 # Flu Mask
-2316 0 0 1 # Full Plate
-2231 0 0 1 # Gemmed Sallet
-2204 0 0 1 # Glasses
-2610 0 0 1 # Gold Ring
-2101 0 0 1 # Guard
-2210 0 0 1 # Hair Band
-2221 0 0 1 # Hat
-2228 0 0 1 # Helm
-2409 0 0 1 # High Heels
-2501 0 0 1 # Hood
-2502 0 0 1 # Hood [1]
-2303 0 0 1 # Jacket
-2304 0 0 1 # Jacket [1]
-2505 0 0 1 # Manteau
-2307 0 0 1 # Mantle
-2308 0 0 1 # Mantle [1]
-2107 0 0 1 # Mirror Shield
-2278 0 0 1 # Mr. Smile
-2503 0 0 1 # Muffler
-2313 0 0 1 # Padded Armor
-2371 0 0 1 # Pantie
-2208 0 0 1 # Ribbon
-2209 0 0 1 # Ribbon [1]
-2840 0 0 1 # Rosary
-2325 0 0 1 # Saint's Robe
-2401 0 0 1 # Sandals
-2402 0 0 1 # Sandals [1]
-2323 0 0 1 # Scapulare
-2408 0 0 1 # Shackles
-2105 0 0 1 # Shield
-2403 0 0 1 # Shoes
-2321 0 0 1 # Silk Robe
-2611 0 0 1 # Silver Ring
-2332 0 0 1 # Silver Robe
-2333 0 0 1 # Silver Robe [1]
-2715 0 0 1 # Skull Ring
-2335 0 0 1 # Thief Clothes
-2330 0 0 1 # Tights
-2223 0 0 1 # Turban
-2328 0 0 1 # Wooden Mail
-2329 0 0 1 # Wooden Mail [1]
+Diamond Ring 0 0 1 # 2613
+Diver Goggles 0 0 1 # 2205
+Eye Patch 0 0 1 # 2212
+Flower Ring 0 0 1 # 2612
+Flu Mask 0 0 1 # 2219
+Full Plate 0 0 1 # 2316
+Gemmed Sallet 0 0 1 # 2231
+Glasses 0 0 1 # 2204
+Gold Ring 0 0 1 # 2610
+Guard 0 0 1 # 2101
+Hair Band 0 0 1 # 2210
+Hat 0 0 1 # 2221
+Helm 0 0 1 # 2228
+High Heels 0 0 1 # 2409
+Hood 0 0 1 # 2501
+"Hood [1]" 0 0 1 # 2502
+Jacket 0 0 1 # 2303
+"Jacket [1]" 0 0 1 # 2304
+Manteau 0 0 1 # 2505
+Mantle 0 0 1 # 2307
+"Mantle [1]" 0 0 1 # 2308
+Mirror Shield 0 0 1 # 2107
+Mr. Smile 0 0 1 # 2278
+Muffler 0 0 1 # 2503
+Padded Armor 0 0 1 # 2313
+Pantie 0 0 1 # 2371
+Ribbon 0 0 1 # 2208
+"Ribbon [1]" 0 0 1 # 2209
+Rosary 0 0 1 # 2840
+Saint's Robe 0 0 1 # 2325
+Sandals 0 0 1 # 2401
+"Sandals [1]" 0 0 1 # 2402
+Scapulare 0 0 1 # 2323
+Shackles 0 0 1 # 2408
+Shield 0 0 1 # 2105
+Shoes 0 0 1 # 2403
+Silk Robe 0 0 1 # 2321
+Silver Ring 0 0 1 # 2611
+Silver Robe 0 0 1 # 2332
+"Silver Robe [1]" 0 0 1 # 2333
+Skull Ring 0 0 1 # 2715
+Thief Clothes 0 0 1 # 2335
+Tights 0 0 1 # 2330
+Turban 0 0 1 # 2223
+Wooden Mail 0 0 1 # 2328
+"Wooden Mail [1]" 0 0 1 # 2329
 
 
 ##### WORTHLESS WEAPONS #####
 # Worthless weapons which are sold by default
 
-Arbalest Bow [1] 0 0 1
-1612 0 0 1 # Arc Wand
-1610 0 0 1 # Arc Wand [1]
-1303 0 0 1 # Axe
-1301 0 0 1 # Axe [3]
-1302 0 0 1 # Axe [4]
-1156 0 0 1 # Bastard Sword
-1154 0 0 1 # Bastard Sword [2]
-1353 0 0 1 # Battle Axe
-1351 0 0 1 # Battle Axe [3]
-1352 0 0 1 # Battle Axe [4]
-2627 0 0 1 # Belt [1]
-#Bible [2] 0 0 1
-1467 0 0 1 # Bill Guisarme
-1109 0 0 1 # Blade
-1107 0 0 1 # Blade [3]
-1108 0 0 1 # Blade [4]
-1703 0 0 1 # Bow
-1701 0 0 1 # Bow [3]
-1702 0 0 1 # Bow [4]
-1160 0 0 1 # Broad Sword [1]
-1359 0 0 1 # Buster
-1357 0 0 1 # Buster [1]
-1519 0 0 1 # Chain [2]
+"Arbalest Bow [1]" 0 0 1
+Arc Wand 0 0 1 # 1612
+"Arc Wand [1]" 0 0 1 # 1610
+Axe 0 0 1 # 1303
+"Axe [3]" 0 0 1 # 1301
+"Axe [4]" 0 0 1 # 1302
+Bastard Sword 0 0 1 # 1156
+"Bastard Sword [2]" 0 0 1 # 1154
+Battle Axe 0 0 1 # 1353
+"Battle Axe [3]" 0 0 1 # 1351
+"Battle Axe [4]" 0 0 1 # 1352
+"Belt [1]" 0 0 1 # 2627
+"#Bible [2]" 0 0 1
+Bill Guisarme 0 0 1 # 1467
+Blade 0 0 1 # 1109
+"Blade [3]" 0 0 1 # 1107
+"Blade [4]" 0 0 1 # 1108
+Bow 0 0 1 # 1703
+"Bow [3]" 0 0 1 # 1701
+"Bow [4]" 0 0 1 # 1702
+"Broad Sword [1]" 0 0 1 # 1160
+Buster 0 0 1 # 1359
+"Buster [1]" 0 0 1 # 1357
+"Chain [2]" 0 0 1 # 1519
 #Chemeti Whip 0 0 1
-1809 0 0 1 # Claw [1]
-1810 0 0 1 # Claw [2]
-1172 0 0 1 # Claymore
-1503 0 0 1 # Club
-1501 0 0 1 # Club [3]
-1502 0 0 1 # Club [4]
-1706 0 0 1 # Composite Bow
-1704 0 0 1 # Composite Bow [3]
-1712 0 0 1 # Cross Bow
-Cross Bow [2] 0 0 1
-1206 0 0 1 # Cutter
-1204 0 0 1 # Cutter [3]
-1205 0 0 1 # Cutter [4]
-1215 0 0 1 # Dagger
-1213 0 0 1 # Dagger [2]
-1214 0 0 1 # Dagger [3]
-1222 0 0 1 # Damascus [1]
-1212 0 0 1 # Dirk
-1210 0 0 1 # Dirk [2]
-1211 0 0 1 # Dirk [3]
-1106 0 0 1 # Falchion
-1104 0 0 1 # Falchion [3]
-1811 0 0 1 # Finger [1]
-1812 0 0 1 # Finger [2]
-1808 0 0 1 # Fist
-1808 0 0 1 # Fist [1]
-1510 0 0 1 # Flail [2]
-1511 0 0 1 # Flail [3]
-1149 0 0 1 # Flamberge
-1714 0 0 1 # Gakkung Bow [1]
-#Girl's Diary [1] 0 0 1
-1221 0 0 1 # Gladius
-1219 0 0 1 # Gladius [2]
-1456 0 0 1 # Glaive
-1454 0 0 1 # Glaive [2]
-1455 0 0 1 # Glaive [3]
-1709 0 0 1 # Great Bow
-1707 0 0 1 # Great Bow [2]
-1708 0 0 1 # Great Bow [3]
-1453 0 0 1 # Guisarme
-1451 0 0 1 # Guisarme [2]
-1908 0 0 1 # Guitar
-1908 0 0 1 # Guitar [1]
-1911 0 0 1 # Gumoongoh [1]
-1912 0 0 1 # Gumoongoh [2]
-1123 0 0 1 # Haedonggum [1]
-Hallberd [1] 0 0 1
-Hallberd [2] 0 0 1
-1356 0 0 1 # Hammer
-1354 0 0 1 # Hammer [2]
-1355 0 0 1 # Hammer [3]
-1909 0 0 1 # Harp [1]
-1910 0 0 1 # Harp [2]
-1255 0 0 1 # Jamadhar
-1403 0 0 1 # Javelin
-1401 0 0 1 # Javelin [3]
-1402 0 0 1 # Javelin [4]
-1250 0 0 1 # Jur [2]
-1118 0 0 1 # Katana
-1116 0 0 1 # Katana [3]
-1117 0 0 1 # Katana [4]
-1252 0 0 1 # Katar [1]
-1203 0 0 1 # Knife
-1201 0 0 1 # Knife [3]
-1202 0 0 1 # Knife [4]
-1803 0 0 1 # Knuckle Dusters [2]
-1804 0 0 1 # Knuckle Dusters [3]
-1412 0 0 1 # Lance
+"Claw [1]" 0 0 1 # 1809
+"Claw [2]" 0 0 1 # 1810
+Claymore 0 0 1 # 1172
+Club 0 0 1 # 1503
+"Club [3]" 0 0 1 # 1501
+"Club [4]" 0 0 1 # 1502
+Composite Bow 0 0 1 # 1706
+"Composite Bow [3]" 0 0 1 # 1704
+Cross Bow 0 0 1 # 1712
+"Cross Bow [2]" 0 0 1
+Cutter 0 0 1 # 1206
+"Cutter [3]" 0 0 1 # 1204
+"Cutter [4]" 0 0 1 # 1205
+Dagger 0 0 1 # 1215
+"Dagger [2]" 0 0 1 # 1213
+"Dagger [3]" 0 0 1 # 1214
+"Damascus [1]" 0 0 1 # 1222
+Dirk 0 0 1 # 1212
+"Dirk [2]" 0 0 1 # 1210
+"Dirk [3]" 0 0 1 # 1211
+Falchion 0 0 1 # 1106
+"Falchion [3]" 0 0 1 # 1104
+"Finger [1]" 0 0 1 # 1811
+"Finger [2]" 0 0 1 # 1812
+Fist 0 0 1 # 1808
+"Fist [1]" 0 0 1 # 1808
+"Flail [2]" 0 0 1 # 1510
+"Flail [3]" 0 0 1 # 1511
+Flamberge 0 0 1 # 1149
+"Gakkung Bow [1]" 0 0 1 # 1714
+"#Girl's Diary [1]" 0 0 1
+Gladius 0 0 1 # 1221
+"Gladius [2]" 0 0 1 # 1219
+Glaive 0 0 1 # 1456
+"Glaive [2]" 0 0 1 # 1454
+"Glaive [3]" 0 0 1 # 1455
+Great Bow 0 0 1 # 1709
+"Great Bow [2]" 0 0 1 # 1707
+"Great Bow [3]" 0 0 1 # 1708
+Guisarme 0 0 1 # 1453
+"Guisarme [2]" 0 0 1 # 1451
+Guitar 0 0 1 # 1908
+"Guitar [1]" 0 0 1 # 1908
+"Gumoongoh [1]" 0 0 1 # 1911
+"Gumoongoh [2]" 0 0 1 # 1912
+"Haedonggum [1]" 0 0 1 # 1123
+"Hallberd [1]" 0 0 1
+"Hallberd [2]" 0 0 1
+Hammer 0 0 1 # 1356
+"Hammer [2]" 0 0 1 # 1354
+"Hammer [3]" 0 0 1 # 1355
+"Harp [1]" 0 0 1 # 1909
+"Harp [2]" 0 0 1 # 1910
+Jamadhar 0 0 1 # 1255
+Javelin 0 0 1 # 1403
+"Javelin [3]" 0 0 1 # 1401
+"Javelin [4]" 0 0 1 # 1402
+"Jur [2]" 0 0 1 # 1250
+Katana 0 0 1 # 1118
+"Katana [3]" 0 0 1 # 1116
+"Katana [4]" 0 0 1 # 1117
+"Katar [1]" 0 0 1 # 1252
+Knife 0 0 1 # 1203
+"Knife [3]" 0 0 1 # 1201
+"Knife [4]" 0 0 1 # 1202
+"Knuckle Dusters [2]" 0 0 1 # 1803
+"Knuckle Dusters [3]" 0 0 1 # 1804
+Lance 0 0 1 # 1412
 #Lariat Whip 0 0 1
-1905 0 0 1 # Lute [2]
-1906 0 0 1 # Lute [3]
-1506 0 0 1 # Mace
-1504 0 0 1 # Mace [3]
-#Mace [4] 0 0 1
-1209 0 0 1 # Main Gauche
-1207 0 0 1 # Main Gauche [3]
-1903 0 0 1 # Mandolin [2]
-1904 0 0 1 # Mandolin [3]
-1513 0 0 1 # Morning Star [1]
-1514 0 0 1 # Morning Star [2]
-2628 0 0 1 # Novice Armlet [1]
-2340 0 0 1 # Novice Breastplate [1]
-1309 0 0 1 # Orcish Axe
-1124 0 0 1 # Orcish Sword
-1459 0 0 1 # Partizan
-1457 0 0 1 # Partizan [1]
-1458 0 0 1 # Partizan [2]
-1409 0 0 1 # Pike
-1407 0 0 1 # Pike [3]
-1957 0 0 1 # Rante Whip
-1957 0 0 1 # Rante Whip [1]
-1112 0 0 1 # Rapier
-1110 0 0 1 # Rapier [2]
-1111 0 0 1 # Rapier [3]
-1721 0 0 1 # Repeating Crossbow [1]
-1122 0 0 1 # Ring Pommel Saber [2]
-1603 0 0 1 # Rod
-1601 0 0 1 # Rod [3]
-#Rod [4] 0 0 1
-1950 0 0 1 # Rope [3]
-#Rope [4] 0 0 1
-1126 0 0 1 # Saber [2]
-Scimiter [2] 0 0 1
-Scimiter [3] 0 0 1
-1153 0 0 1 # Slayer
-1151 0 0 1 # Slayer [2]
-1152 0 0 1 # Slayer [3]
-1507 0 0 1 # Smasher [2]
-1508 0 0 1 # Smasher [3]
-1406 0 0 1 # Spear
-1404 0 0 1 # Spear [3]
-1405 0 0 1 # Spear [4]
-1609 0 0 1 # Staff
-1607 0 0 1 # Staff [2]
-1218 0 0 1 # Stiletto
-1216 0 0 1 # Stiletto [2]
-1217 0 0 1 # Stiletto [3]
-1805 0 0 1 # Studded Knuckles [2]
-1806 0 0 1 # Studded Knuckles [3]
-1103 0 0 1 # Sword
-1101 0 0 1 # Sword [3]
-1102 0 0 1 # Sword [4]
-1518 0 0 1 # Sword Mace
-1958 0 0 1 # Tail Whip [1]
-1959 0 0 1 # Tail Whip [2]
-1462 0 0 1 # Trident
-1460 0 0 1 # Trident [2]
-1121 0 0 1 # Tsurugi
-1119 0 0 1 # Tsurugi [1]
-1120 0 0 1 # Tsurugi [2]
-1362 0 0 1 # Two-handed Axe
-Two-handed Axe [1] 0 0 1
-1159 0 0 1 # Two-handed Sword
-Two-handed Sword [1] 0 0 1
-1901 0 0 1 # Violin [3]
-#Violin [4] 0 0 1
-1801 0 0 1 # Waghnak [3]
-1802 0 0 1 # Waghnak [4]
-1606 0 0 1 # Wand
-1604 0 0 1 # Wand [2]
-1605 0 0 1 # Wand [3]
-#War Axe [1] 0 0 1
-1960 0 0 1 # Whip [1]
-1961 0 0 1 # Whip [2]
-1953 0 0 1 # Whip [3]
-1954 0 0 1 # Wire Whip [2]
-1955 0 0 1 # Wire Whip [3]
+"Lute [2]" 0 0 1 # 1905
+"Lute [3]" 0 0 1 # 1906
+Mace 0 0 1 # 1506
+"Mace [3]" 0 0 1 # 1504
+"#Mace [4]" 0 0 1
+Main Gauche 0 0 1 # 1209
+"Main Gauche [3]" 0 0 1 # 1207
+"Mandolin [2]" 0 0 1 # 1903
+"Mandolin [3]" 0 0 1 # 1904
+"Morning Star [1]" 0 0 1 # 1513
+"Morning Star [2]" 0 0 1 # 1514
+"Novice Armlet [1]" 0 0 1 # 2628
+"Novice Breastplate [1]" 0 0 1 # 2340
+Orcish Axe 0 0 1 # 1309
+Orcish Sword 0 0 1 # 1124
+Partizan 0 0 1 # 1459
+"Partizan [1]" 0 0 1 # 1457
+"Partizan [2]" 0 0 1 # 1458
+Pike 0 0 1 # 1409
+"Pike [3]" 0 0 1 # 1407
+Rante Whip 0 0 1 # 1957
+"Rante Whip [1]" 0 0 1 # 1957
+Rapier 0 0 1 # 1112
+"Rapier [2]" 0 0 1 # 1110
+"Rapier [3]" 0 0 1 # 1111
+"Repeating Crossbow [1]" 0 0 1 # 1721
+"Ring Pommel Saber [2]" 0 0 1 # 1122
+Rod 0 0 1 # 1603
+"Rod [3]" 0 0 1 # 1601
+"#Rod [4]" 0 0 1
+"Rope [3]" 0 0 1 # 1950
+"#Rope [4]" 0 0 1
+"Saber [2]" 0 0 1 # 1126
+"Scimiter [2]" 0 0 1
+"Scimiter [3]" 0 0 1
+Slayer 0 0 1 # 1153
+"Slayer [2]" 0 0 1 # 1151
+"Slayer [3]" 0 0 1 # 1152
+"Smasher [2]" 0 0 1 # 1507
+"Smasher [3]" 0 0 1 # 1508
+Spear 0 0 1 # 1406
+"Spear [3]" 0 0 1 # 1404
+"Spear [4]" 0 0 1 # 1405
+Staff 0 0 1 # 1609
+"Staff [2]" 0 0 1 # 1607
+Stiletto 0 0 1 # 1218
+"Stiletto [2]" 0 0 1 # 1216
+"Stiletto [3]" 0 0 1 # 1217
+"Studded Knuckles [2]" 0 0 1 # 1805
+"Studded Knuckles [3]" 0 0 1 # 1806
+Sword 0 0 1 # 1103
+"Sword [3]" 0 0 1 # 1101
+"Sword [4]" 0 0 1 # 1102
+Sword Mace 0 0 1 # 1518
+"Tail Whip [1]" 0 0 1 # 1958
+"Tail Whip [2]" 0 0 1 # 1959
+Trident 0 0 1 # 1462
+"Trident [2]" 0 0 1 # 1460
+Tsurugi 0 0 1 # 1121
+"Tsurugi [1]" 0 0 1 # 1119
+"Tsurugi [2]" 0 0 1 # 1120
+Two-handed Axe 0 0 1 # 1362
+"Two-handed Axe [1]" 0 0 1
+Two-handed Sword 0 0 1 # 1159
+"Two-handed Sword [1]" 0 0 1
+"Violin [3]" 0 0 1 # 1901
+"#Violin [4]" 0 0 1
+"Waghnak [3]" 0 0 1 # 1801
+"Waghnak [4]" 0 0 1 # 1802
+Wand 0 0 1 # 1606
+"Wand [2]" 0 0 1 # 1604
+"Wand [3]" 0 0 1 # 1605
+"#War Axe [1]" 0 0 1
+"Whip [1]" 0 0 1 # 1960
+"Whip [2]" 0 0 1 # 1961
+"Whip [3]" 0 0 1 # 1953
+"Wire Whip [2]" 0 0 1 # 1954
+"Wire Whip [3]" 0 0 1 # 1955
 
 
 ##### STANDARD LOOT #####
@@ -563,36 +563,36 @@ Songpyun 0 0 1
 
 ##### UNSTORAGEABLE ITEMS #####
 
-"Bowman Scroll 1" 0 0 0
-"Bowman Scroll 2" 0 0 0
-"Bowman Scroll 3" 0 0 0
-"Bowman Scroll 4" 0 0 0
-"Bowman Scroll 5" 0 0 0
-"Bowman Scroll 6" 0 0 0
-"Bowman Scroll 7" 0 0 0
-"Bowman Scroll 8" 0 0 0
-"Bowman Scroll 9" 0 0 0
-"Bowman Scroll 10" 0 0 0
-"Fencer Scroll 1" 0 0 0
-"Fencer Scroll 2" 0 0 0
-"Fencer Scroll 3" 0 0 0
-"Fencer Scroll 4" 0 0 0
-"Fencer Scroll 5" 0 0 0
-"Fencer Scroll 6" 0 0 0
-"Fencer Scroll 7" 0 0 0
-"Fencer Scroll 8" 0 0 0
-"Fencer Scroll 9" 0 0 0
-"Fencer Scroll 10" 0 0 0
-"Spearman Scroll 1" 0 0 0
-"Spearman Scroll 2" 0 0 0
-"Spearman Scroll 3" 0 0 0
-"Spearman Scroll 4" 0 0 0
-"Spearman Scroll 5" 0 0 0
-"Spearman Scroll 6" 0 0 0
-"Spearman Scroll 7" 0 0 0
-"Spearman Scroll 8" 0 0 0
-"Spearman Scroll 9" 0 0 0
-"Spearman Scroll 10" 0 0 0
+Bowman Scroll 1 0 0 0
+Bowman Scroll 2 0 0 0
+Bowman Scroll 3 0 0 0
+Bowman Scroll 4 0 0 0
+Bowman Scroll 5 0 0 0
+Bowman Scroll 6 0 0 0
+Bowman Scroll 7 0 0 0
+Bowman Scroll 8 0 0 0
+Bowman Scroll 9 0 0 0
+Bowman Scroll 10 0 0 0
+Fencer Scroll 1 0 0 0
+Fencer Scroll 2 0 0 0
+Fencer Scroll 3 0 0 0
+Fencer Scroll 4 0 0 0
+Fencer Scroll 5 0 0 0
+Fencer Scroll 6 0 0 0
+Fencer Scroll 7 0 0 0
+Fencer Scroll 8 0 0 0
+Fencer Scroll 9 0 0 0
+Fencer Scroll 10 0 0 0
+Spearman Scroll 1 0 0 0
+Spearman Scroll 2 0 0 0
+Spearman Scroll 3 0 0 0
+Spearman Scroll 4 0 0 0
+Spearman Scroll 5 0 0 0
+Spearman Scroll 6 0 0 0
+Spearman Scroll 7 0 0 0
+Spearman Scroll 8 0 0 0
+Spearman Scroll 9 0 0 0
+Spearman Scroll 10 0 0 0
 
 
 671 0 0 0 0 0 # Gold_Coin
