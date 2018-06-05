@@ -8239,4 +8239,14 @@
 //*****************************************************
 18959#Chapéu de Dighi-titica#
 19294#Fones de Ouvido Nekobits#
+//*****************************************************
+//------------Aplicar em 2018-06-05--------------------
+//*****************************************************
+31451#Laço Azul Listrado#
+31474#Cabelo Longo Preto#
+15136#Vestígio de Tatenashi#
+22070#Salto Alto de Gala#
+20517#Miau-chila de Bichano#
+28534#Amuleto da Coragem#
+28535#Amuleto da Sabedoria#
 //file end

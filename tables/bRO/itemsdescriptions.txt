@@ -16441,198 +16441,206 @@ Uma parte do manuscrito perdido de Joshua. Está repleto de conteúdo significat
 // ---------- Classe Adicional - Justiceiro -----------
 13100#
 Uma pistola de seis tiros que é a arma mais básica de um Justiceiro.
-^0000ffPrecisão – 10.^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777730^000000
+Ataque: ^77777730^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13101#
-Uma pistola de seis tiros que é a arma mais básica para um Justiceiro.
-^0000ffPrecisão – 10. ^000000
+Uma pistola de seis tiros que é a arma mais básica de um Justiceiro.
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777730^000000
+Ataque: ^77777730^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13102#
 Uma pistola vermelho-sangue que dizem ser amaldiçoada.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777745^000000
+Ataque: ^77777745^000000
 Peso: ^77777745^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13103#
 Uma pistola vermelho-sangue que dizem ser amaldiçoada.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777745^000000
+Ataque: ^77777745^000000
 Peso: ^77777745^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13104#
 Uma pistola rara que só é produzida para atender a encomendas especiais. A gravação com o nome de seu criador pode ser usada por especialistas para autenticar a origem dessa arma.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13105#
 Uma pistola rara que só é produzida para atender a encomendas especiais. A gravação com o nome de seu criador pode ser usada por especialistas para autenticar a origem dessa arma.
-^0000ffPrecisão – 10.^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
+
 #
 13106#
 Uma bela pistola decorativa, essa arma dourada chama a atenção de todos.
-Permite uma pequena chance de conjurar automaticamente a habilidade "Cara ou Coroa" a cada ataque. A Conjuração Automática Cara ou Coroa será igual ao nível de habilidade Cara ou Coroa aprendido pelo usuário.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Cara ou Coroa] no nível aprendido.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777720^000000
+Ataque: ^77777720^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777712^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13150#
 Uma arma de fogo equipada com um cano longo que aumenta seu alcance e a precisão de seus disparos.
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13151#
 Um rifle de alto desempenho que dispara projéteis poderosos a longas distâncias.
-^0000ffPrecisão +10, Crítico +10. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13152#
 Um rifle de alto desempenho que dispara projéteis poderosos a longas distâncias.
-^0000ffPrecisão +10, Crítico +10. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13153#
 Um rifle avançado que dispara projéteis com maior poder explosivo. Assim como o crepúsculo representa o fim do dia, essa arma representa o fim de seus alvos.
-^0000ffPrecisão +10, Crítico +10%. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^77777775^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777756^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13154#
-Uma espingarda poderosa que soa como um trovão a cada disparo. Causa dano colateral.
+Uma espingarda poderosa que soa como um trovão a cada disparo. ^CD3278Mantém [Espalhar Dano] ativo.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777135^000000
+Ataque: ^777777135^000000
 Peso: ^77777790^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777714^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13155#
-Uma espingarda escura e elegante que foi modificada para disparar rapidamente por seus dois canos, aumentando seu poder de ataque. Causa dano colateral.
+Uma espingarda escura e elegante que foi modificada para disparar rapidamente por seus dois canos, aumentando seu poder de ataque.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777180^000000
+Ataque: ^777777180^000000
 Peso: ^77777790^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13156#
 A espingarda mais poderosa disponível no momento, esta arma é conhecida como ''A melhor amiga de um Justiceiro".
-Cada disparo causa dano colateral e ela possui uma pequena chance de conjurar um Disparo Espalhado Nível 6.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Disparo Espalhado] nv. 6.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777210^000000
+Ataque: ^777777210^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13157#
 Uma Metralhadora Gatling cujo nome traz à mente a imagem de um viajante solitário.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777750^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777750^000000
 Peso: ^777777230^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13158#
 Uma Metralhadora Gatling que carrega enorme poder destrutivo.
-Adiciona +10 Crítico contra monstros Brutos.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777775^000000
+^0000ffCRIT +10 em oponentes da raça Bruto.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777775^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777768^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13159#
-Uma Metralhadora Gatling que carrega de um enorme poder destrutivo.
-Adiciona +10 Crítico contra monstros Brutos.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777775^000000
+Uma Metralhadora Gatling que carrega enorme poder destrutivo.
+^0000ffCRIT +10 em oponentes da raça Bruto.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777775^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777768^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13160#
-Um Lança-Granadas de alto desempenho, modelo topo de linha. Cada ataque físico de curto alcance possui uma pequena chance de destruir a armadura do inimigo.
+Um Lança-Granadas de alto desempenho, modelo topo de linha.
+^0000ffAo realizar ataques físicos, 2% de chance de destruir a armadura do oponente.^000000
 Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777220^000000
+Ataque: ^777777220^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777752^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13161#
 Um Lança-Granadas de alto desempenho, modelo topo de linha.
-Cada ataque físico de curto alcance possui uma pequena chance de destruir a armadura do inimigo.
+^0000ffAo realizar ataques físicos, 2% de chance de destruir a armadura do oponente.^000000
 Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777220^000000
+Ataque: ^777777220^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777752^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13162#
-Um Lança-Granadas que impulsiona seus projéteis com chamas infernais.
-Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777280^000000
+Um Lança-Granadas que impulsiona seus projéteis com chamas infernais Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777280^000000
 Peso: ^777777125^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13200#
 Um pequeno projétil de metal que pode ser disparado de uma arma para causar danos aos inimigos.
@@ -20032,75 +20040,94 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 13163#
 Um rifle de precisão com um tambor alongado para melhorar a precisão.
-Crítico +20, VelATQ -3%. Gera uma pequena chance de lançar automaticamente Rastrear Alvo nv. 5 a cada ataque físico.
+^0000ffCRIT +20.^000000
+^0000ffVelocidade de ataque -3%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Rastrear o Alvo] nv. 5.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13164#
 Um rifle de precisão com um tambor alongado para melhorar a precisão.
-Crítico +20, VelATQ -3%. Gera uma pequena chance de lançar automaticamente Rastrear Alvo nv. 5 a cada ataque físico.
+^0000ffCRIT +20.^000000
+^0000ffVelocidade de ataque -3%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Rastrear o Alvo] nv. 5.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13165#
 Um rifle com um tambor mais curto, apropriado para combates a curta distância, como na selva ou em ambiente interno.
-Crítico +4, VelATQ +10%. Reduz a Precisão em um valor igual a 1/3 da DES básica do personagem.
+^0000ffCRIT +4.^000000
+^0000ffVelocidade de ataque +10%.^000000
+A cada 3 de DES base:
+^0000ffPrecisão -1.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777170^000000
+Ataque: ^777777170^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13166#
 Um rifle com um tambor mais curto, apropriado para combates a curta distância, como na selva ou em ambiente interno.
-Crítico +4, VelATQ +10%. Reduz a Precisão em um valor igual a 1/3 da DES básica do personagem.
+^0000ffCRIT +4.^000000
+^0000ffVelocidade de ataque +10%.^000000
+A cada 3 de DES base:
+^0000ffPrecisão -1.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777170^000000
+Ataque: ^777777170^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13167#
-O tambor da Leão-de-Chácara original é feito de puro Oridecon, tornando-a muito durável. DES +1.
-Dano colateral: Acrescenta uma pequena chance de lançar automaticamente Disparo Espalhado nv. 6 a cada ataque.
-Aumentar o nível de aprimoramento da arma equipada acrescenta um bônus de DEF.^FFFFFF   ^000000
+A espingarda mais poderosa disponível no momento, esta arma é conhecida como ''A melhor amiga de um Justiceiro".
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffDES +1.^000000
+A cada refino:
+^0000ffDEF +1.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Disparo Espalhado] nv. 6.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777200^000000
+Ataque: ^777777200^000000
 Peso: ^777777130^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13168#
 Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão.
-Precisão -5.
-Dano colateral: Aumenta a VelATQ em 20%.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -5.^000000
+^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13169#
-Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão. Precisão -5.
-Dano colateral: Aumenta a VelATQ em 20%.
+Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -5.^000000
+^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 2677#
 Um belo anel imbuído de estranhos poderes espirituais, que gera efeitos surpreendentes quando usado com os itens certos.
@@ -22034,28 +22061,30 @@ Classes: ^777777Ciganas e evoluções^000000
 #
 
 13107#
-A alta precisão e rajadas rápidas fazem desta pistola uma arma especial.
-Ela foi feita em homenagem aos Justiceiros que exploram terrenos selvagens.
-A Precisão e a VelATQ aumentam dependendo da
-AGI do usuário.
-Tipo de Item: ^777777Pistola^000000
-Força de ataque: ^77777768^000000
+A alta precisão e rajadas rápidas fazem desta pistola uma arma especial. Ela foi feita em homenagem aos Justiceiros que exploram terrenos selvagens.
+^0000ffA cada 10 de AGI base:^000000
+^0000ffPrecisão +1.^000000
+A cada 14 de AGI base:
+^0000ffVelocidade de ataque +1%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^77777768^000000
 Peso: ^77777758^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 
 13170#
-Um rifle com eficiência maximizada. O cano belamente forjado atrai os Justiceiros, e seu tiro fatal perfura o inimigo.
-No entanto, sua desvantagem é sua demora para recarregar e atirar.
-Precisão + 20, Crítico + 50, VelATQ reduzida.
-Tipo de Item: ^777777Rifle^000000
-Força de ataque: ^777777138^000000
+Um rifle com eficiência maximizada. O cano belamente forjado atrai os Justiceiros, e seu tiro fatal perfura o inimigo. No entanto, sua desvantagem é sua demora para recarregar e atirar.
+^0000ffCRIT +50.^000000
+^0000ffPrecisão +20.^000000
+^0000ffVelocidade de ataque -5%.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777138^000000
 Peso: ^77777777^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 
 // ------------ 11.3 ??? ??? --------------
@@ -22842,7 +22871,6 @@ Descrição do Cupom:
 --------------------------
 Cupom usado para tingir roupas.
 ^0000ffPermite mudar a cor da roupa de um personagem.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 6047#
@@ -35464,16 +35492,29 @@ Classe : ^777777Todas^000000
 
 
 2168#
-Um exótico escudo retangular. Nele há uma gema mágica, encantada para defender contra ataques físicos.
-Se refinado em +6:
-^0000ffResistência a propriedade Neutro +1% por refino até o +12.^000000
-Se refinado em +9 ou mais:
-^0000ffResistência a Fogo, Água, Terra e Vento +5%.^000000
-Tipo : ^777777Escudo^000000
+Um exótico escudo retangular. Nele há uma gema mágica, encantada para defender contra ataques.
+^0000ffRefino +5 ou mais:^000000
+^0000ffResistência a propriedade Neutro +1%.^000000
+Refino +6 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +7 ou mais:
+^0000ffResistência a propriedade Neutro +6% adicional.^000000
+Refino +8 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +9 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+^0000ffResistência as propriedades Fogo, Água, Terra e Vento +5%.^000000
+Refino +10 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +12 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Tipo: ^777777Escudo^000000
 Defesa: ^77777755^000000
-Peso : ^77777770^000000
-Nível necessário : ^7777771^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 
 12690#
@@ -40034,14 +40075,14 @@ Classe: ^777777Aprendiz/Espadachim/Mago/Arqueiro/Mercador/Gatuno e suas respecti
 #
 13114#
 Um revólver feito pelo Grupo Éden. É adequado para um atirador experiente.
-Precisão - 5.
-Não pode ser aprimorado.
+^a400cdNão pode ser refinado.^000000
+^0000ffPrecisão -5.^000000
 Tipo: ^777777Pistola^000000
 Ataque: ^77777776^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
-Nível Necessário: ^77777760^000000
-Classe: ^777777Justiceiro^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13310#
 Uma Shuriken Huuma feita pelo Grupo Éden. É adequada somente para Ninjas experientes.
@@ -49764,7 +49805,7 @@ HPM +5%.
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +1. INT -1.^000000
 ^0000ffATQ +3.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49773,7 +49814,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +2. INT -2.^000000
 ^0000ffATQ +6.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49782,7 +49823,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +4. INT -4.^000000
 ^0000ffATQ +12.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49791,7 +49832,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +1. FOR -1.^000000
 ^0000ffATQM +3.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49800,7 +49841,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +2. FOR -2.^000000
 ^0000ffATQM +6.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49812,7 +49853,7 @@ DEFM +7
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +4. FOR -4.^000000
 ^0000ffATQM +12.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49824,7 +49865,7 @@ DEF +18
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +1. VIT -1.^000000
 ^0000ffEsquiva +2.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49836,7 +49877,7 @@ DEF +21
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +2. VIT -2.^000000
 ^0000ffEsquiva +4.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49848,7 +49889,7 @@ ATQ +6%.
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +4. VIT -4.^000000
 ^0000ffEsquiva +8.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49860,7 +49901,7 @@ ATQ +7%.
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +1. AGI -1.^000000
 ^0000ffDEF +3. DEFM +2.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49872,7 +49913,7 @@ ATQM +6%.
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +2. AGI -2.^000000
 ^0000ffDEF +6. DEFM +4.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49884,7 +49925,7 @@ ATQM +7%.
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +4. AGI -4.^000000
 ^0000ffDEF +12. DEFM +8.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49893,7 +49934,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +1. SOR -1.^000000
 ^0000ffPrecisão +2.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49902,7 +49943,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +2. SOR -2.^000000
 ^0000ffPrecisão +4.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49911,7 +49952,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +4. SOR -4.^000000
 ^0000ffPrecisão +8.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49920,7 +49961,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +1. DES -1.^000000
 ^0000ffCRIT +1.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49929,7 +49970,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +2. DES -2.^000000
 ^0000ffCRIT +2.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -49938,7 +49979,7 @@ Peso: ^7777771^000000
 Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +4. DES -4.^000000
 ^0000ffCRIT +4.^000000
-^ff0000Uma vez combinado, será perdido em processos de reset de encantamento e remoção de carta.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
 Tipo: ^777777Encantamento^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
@@ -59082,6 +59123,176 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-05--------------------
+//*****************************************************
+31451#
+Um laço azul-claro com algumas listras brancas e pequenas rendas ao redor. Delicado e charmoso, ele vai manter o seu visual discreto e simples.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31474#
+Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira preta... Mesmo que isso seja apenas uma peruca! Se você sempre quis se sentir como a lendária guerreira Sailor Arte, habilidosa dominadora do fogo, com essa peruca não tem erro!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15136#
+Pertencente a uma brava guerreira que lutou com honra até o seu último suspiro, esse revestimento carrega os vestígios de uma batalha feroz, tornando-se um verdadeiro símbolo de força e bravura.
+^0000ffHP máx. +100.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Archdam]^000000
+A cada 2 refinos:
+^0000ffDano de [Choque Rápido] e [Sacrifício do Mártir] +5%.^000000
+^FF6347Conjunto^000000
+^FF6347Qualquer 1 das cartas abaixo^000000
+^FF6347[Carta Anolian] ou^000000
+^FF6347[Carta Soldado] ou^000000
+^FF6347[Carta Loli Ruri] ou^000000
+^FF6347[Carta Fornalha Velha] ou^000000
+^FF6347[Carta Novus Dourado] ou^000000
+^FF6347[Carta Planta Carnívora] ou^000000
+^FF6347[Carta Leopardo Filhote]^000000
+No refino +5:
+^0000ffAltera a propriedade da armadura para Terra.^000000
+No refino +6:
+^0000ffAltera a propriedade da armadura para Água.^000000
+No refino +7:
+^0000ffAltera a propriedade da armadura para Vento.^000000
+No refino +8:
+^0000ffAltera a propriedade da armadura para Fogo.^000000
+No refino +9:
+^0000ffAltera a propriedade da armadura para Sombrio.^000000
+No refino +10:
+^0000ffAltera a propriedade da armadura para Sagrado.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^7777770^000000
+Peso: ^77777760^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+22070#
+Feito com requinte e elegância, seis raras rosas azuis e fitas brancas de um caro cetim moldam esse par de sapatos. Dizem que pela tamanha extravagância, eles podem ter pertencido a uma antiga rainha detestada pelo seu povo. Mas depois que ela perdeu a cabeça, os sapatos ficaram sem dono
+^0000ffSP máx. +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Fendark]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Trilobita]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Nereida]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Ferrão]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Lagarta]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Encouraçado]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Zumbi Mestre]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Diabolik]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Anjo Fajuto]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Furador]^000000
+A cada 3 refinos:
+^0000ffATQ e ATQM +10.^000000
+Ao derrotar monstros com ataques físicos:
+^0000ffRecupera 30 de HP e 3 de SP.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20517#
+Uma mochila indispensável pra você, que é conhecido como o “louco dos gatos” e não vê a hora de adotar seu quadragésimo sexto felino. Ao menos este aqui não vai encher sua roupa de pelos ou tentar destruir seu sofá!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28534#
+Um amuleto vermelho, que representa a coragem e o poder dos mais destemidos aventureiros. Só de usá-lo, você já sente seu espírito ser inundado por uma bravura inabalável.
+^0000ffATQ da arma +3%.^000000
+^0000ffDano mágico +3%.^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffCusto de SP das habilidades -3%.^000000
+^0000ff1% de chance de converter 3% do dano físico causado em HP.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffRecupera 300 de HP por segundo.^000000
+Tipo: ^777777Acessório Esquerdo^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28535#
+Um amuleto azul, que representa a reflexão e sabedoria dos aventureiros de pensamento mais iluminado. Só de usá-lo, você já sente sua mente se apoderar de um vasto conhecimento.
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+^0000ffCusto de SP das habilidades -7%.^000000
+^0000ffDano mágico de todas as propriedades +3%.^000000
+^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffRecupera 100 de SP por segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Amuleto da Coragem]^000000
+^0000ffPós-conjuração -3%.^000000
+^0000ffConjuração fixa -0,1 segundo.^000000
+Tipo: ^777777Acessório Direito^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 //file end
