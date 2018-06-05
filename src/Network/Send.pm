@@ -1450,10 +1450,10 @@ sub sendEnteringVender {
 }
 
 sub sendUnequip {
-    my ($self, $itemIndex) = @_;
+    my ($self, $ID) = @_;
     $self->sendToServer($self->reconstruct({
         switch => 'send_unequip_item',
-        Index => $itemIndex,
+        ID => $ID,
     }));
 }
 
