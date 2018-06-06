@@ -5278,13 +5278,13 @@ sub pet_evolution_result {
 		error TF("Pet Evolution is Error.\n");
 	#PET_EVOL_NO_CALLPET = 0x1,
 	#PET_EVOL_NO_PETEGG = 0x2,
-	} elsif ($args->{reason} == 0x3) {
+	} elsif ($args->{result} == 0x3) {
 		error TF("Unequip pet accessories first to start evolution.\n");
-	} elsif ($args->{reason} == 0x4) {
+	} elsif ($args->{result} == 0x4) {
 		error TF("Insufficient materials for evolution.\n");
-	} elsif ($args->{reason} == 0x5) {	
+	} elsif ($args->{result} == 0x5) {	
 		error TF("Loyal Intimacy is required to evolve.\n");
-	} elsif ($args->{reason} == 0x6) {
+	} elsif ($args->{result} == 0x6) {
 		message TF("Pet Evolution is Success.\n"), "success";
 	}
 }
