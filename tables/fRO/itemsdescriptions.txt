@@ -39686,19 +39686,21 @@ Job : ^777777All^000000
 17710#
 ^ff0000Cannot be traded.^000000
 An egg that contains a hair extension (Upper Costume) colored in Blue, Yellow, Red or Green.
-The available extensions are:
+The available items are:
 - Hair Bun
 - Roll Twin
 - Long Pony
+- Costume Eleanor Wig
 Weight : ^7777771^000000
 #
 17711#
 ^ff0000Cannot be traded.^000000
 An egg that contains a hair extension (Upper Costume) colored in Black, White, Brown or Purple.
-The available extensions are:
+The available items are:
 - Hair Bun
 - Roll Twin
 - Long Pony
+- Costume Eleanor Wig
 Weight : ^7777771^000000
 #
 
