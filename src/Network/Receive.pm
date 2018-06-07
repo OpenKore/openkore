@@ -5275,7 +5275,7 @@ sub change_title {
 sub pet_evolution_result {
 	my ($self, $args) = @_;
 	if ($args->{result} == 0x0) {
-		error TF("Pet Evolution is Error.\n");
+		error TF("Pet evolution error.\n");
 	#PET_EVOL_NO_CALLPET = 0x1,
 	#PET_EVOL_NO_PETEGG = 0x2,
 	} elsif ($args->{result} == 0x3) {
@@ -5285,7 +5285,7 @@ sub pet_evolution_result {
 	} elsif ($args->{result} == 0x5) {	
 		error TF("Loyal Intimacy is required to evolve.\n");
 	} elsif ($args->{result} == 0x6) {
-		message TF("Pet Evolution is Success.\n"), "success";
+		message TF("Pet evolution success.\n"), "success";
 	}
 }
 
