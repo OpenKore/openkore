@@ -600,6 +600,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A18' => ['map_loaded', 'V a3 x2 v C', [qw(syncMapSync coords unknown sex)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
@@ -609,7 +610,7 @@ sub new {
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A34' => ['senbei_amount', 'V', [qw(amount)]], #new senbei system (new cash currency)
 		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
-		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewid)]],#favorite use x ? 
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
@@ -1916,6 +1917,7 @@ sub inventory_item_added {
 				$item->{expire} = $args->{expire} if (exists $args->{expire}); #a4 or V1 unpacking?
 			}
 			$item->{options} = $args->{options};
+			$item->{viewid} = $args->{viewid};
 			$item->{name} = itemName($item);
 			$char->inventory->add($item);
 		} else {
