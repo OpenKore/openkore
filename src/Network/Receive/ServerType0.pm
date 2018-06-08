@@ -544,6 +544,7 @@ sub new {
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
+		'097F' => ['cart_list', 'v x2 a4', [qw(len unknow ID)]], # -1
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0985' => ['skill_post_delaylist2', 'v a*', [qw(packet_len msg)]],
