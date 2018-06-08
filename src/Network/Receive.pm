@@ -5271,4 +5271,29 @@ sub change_title {
 	message TF("You changed Title_ID :  %s.\n", $args->{title_id}), "info";
 }
 
+sub cart_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 8;
+	my $cart_pack = 'C';
+	my $k = 0;
+	my $cart_len = length pack $cart_pack;
+	my $message = center(T("[CartID List]"), 40, '-') ."\n".
+		T("#   CartID\n");
+		
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$cart_len) {
+		my $cartID->{ID} = unpack($cart_pack, substr($msg, $i, $cart_len));
+	$message .= swrite(
+		"@<< @>>>",
+		[$k, $cartID->{ID}]);
+	
+	$k++;
+	}
+	$message .= sprintf("%s\n", ('-'x40));
+	message($message, "list");
+	message T("You can now use the 'cart change <cartid>' command.\n"), "info";
+}
+
+
 1;

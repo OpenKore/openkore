@@ -20,6 +20,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0980' => ['send_select_cart', 'a4 C', [qw(ID type)]],
 		'0869' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'095A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0936' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -80,6 +81,15 @@ sub new {
 
 
 	return $self;
+}
+
+sub sendChangeCart {
+	my ($self, $accountID,$type) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'send_select_cart',
+		ID => $accountID,
+		type => $type,
+	}));
 }
 
 
