@@ -71519,3 +71519,18 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20029#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Bunny Band!
+100 Golden Hair
+100 Burning Hair
+5 Elastic Bands
+5 Wooden Hearts
+1000 Zeny
+1 Evolved Bunny Band Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#

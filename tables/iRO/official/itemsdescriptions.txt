@@ -10537,8 +10537,9 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808050^000000
 Usable By: ^808080Acolyte Jobs^000000
 Atk + 1% per upgrade level of the item.
+This item is indestructible in battle.
 If upgrade level is +10 or higher,
-Increases physical damage on Small, Medium and Large size targets by 100%.
+Recovers all damage lost from size penalties.
 #
 1836#
 ^808080This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
@@ -39201,9 +39202,9 @@ Dust came into the box together with insects.
 Weight : ^7777770^000000
 #
 6882#
-A Special Monster Token that can be redeemed at the Kafra Headquarters
-^FF0000Account Bound^000000
-Weight: ^8080801^000000
+A special monster token that can be redeemed at the Kafra Headquarters.
+^FF0000Character Bound^000000
+Weight: ^8080800^000000
 #
 6892#
 This dropped from an ant.
@@ -59089,6 +59090,23 @@ Costume Penguin Cap
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+14947#
+Open the box to receive one costume!
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When Opened Gives one of the following
+Costume Sitting Pope
+Costume Seraphim Coronet
+Costume Toy Syringe
+Costume Pale Moon Hat
+Costume Sting Silk Ribbon
+Costume Blue Rose Eyepatch
+Costume Lolita Two Side Up
+Costume Blue Frill Ribbon
+Costume White Cat
+Costume Large Ribbon Muffler (Black)
+#
 14948#
 When opened gives one of the following
 Agriculture Clothes [1]
@@ -68439,12 +68457,20 @@ Job : ^777777All jobs^000000
 #
 18563#
 The hairband of girls that decorated with love feather and lace.
-Skill delay -5%, SP comsuption -10%;
-Skill delay and SP comsuption -3% for every 3 refining levels.
-Class: Headgear Defense: 0
-Location: Upper Weight: 30
-Required Level: 50
-Jobs: All
+
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Reduces the cast delay of skills by 5%.
+Reduces the SP cost of skills by 10%.
+Reduces the cast delay of skills and the SP cost of skills by an additional 3% per 3 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Heart Wing Hairband^000000
+^008080Love Piece^000000
+Reduces/Increases the fixed casting time of skills by 10%.
 #
 18564#
 A love that can never be stopped.
@@ -68456,6 +68482,10 @@ Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs^000000
 Increases the SP cost of skills by 15%.
 The users casting cannot be interrupted outside of WoE.
+^800080Set Bonus^000000
+^008080Heart Wing Hairband^000000
+^008080Love Piece^000000
+Reduces/Increases the fixed casting time of skills by 10%.
 #
 18565#
 This is an exact replica of the hat worn by O'Riley the Leprechaun.
@@ -68893,14 +68923,15 @@ Required Level : ^77777720^000000
 Jobs: ^777777All Except Novice^000000
 #
 18616#
-Your parents forgot to tell you that sticking your tongue out at people was rude, and this is the result.  Sometimes you just gotta be you!
-Cannot be Damaged
-Class : ^777777Headgear^000000
-Location: ^777777Lower^000000
-Defense: ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^77777720^000000
-Jobs: ^777777All Except Novice^000000
+Your parents forgot to tell you that sticking your tongue out at people was rude, and this is the result. Sometimes you just gotta be you!
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Matk + 2%
+Reduces the variable casting time of skills by 3%.
 #
 18617#
 Onigiri is a delicacy found only on the island nation of Amatsu. Various flavors accentuate the slightly sweet rice.
@@ -69805,15 +69836,37 @@ Level Requirement : ^77777730^000000
 Job : ^777777All^000000
 #
 18720#
-A helm which increases the magical powers of the wearer by controlling the brainwaves.
-It has voice recognition function and interacts with other equipments.
+A helm which increases the magical powers of the wearer by controlling the brainwaves. It has voice recognition function and interacts with other equipment.
 Class: ^808080Headgear^000000
-Position: ^808080Middle^000000
-Attack: ^8080800^000000
+Defense: ^8080800^000000
 Weight: ^80808030^000000
-Weapon Level: ^8080800^000000
 Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
+Matk + 3%
+^800080Set Bonus^000000
+^008080Hypnotist's Staff^000000
+^008080Magical Booster^000000
+Matk + 20 per upgrade level of ^008080Hypnotist's Staff^000000.
+If ^008080Hypnotist's Staff^000000 upgrade level is +10 or higher,
+Additional Matk + 50
+Reduces the cast delay of skills by 10%.
+^800080Set Bonus^000000
+^008080Magical Booster^000000
+^008080Piercing Staff^000000
+Matk +15 per upgrade level of ^008080Piercing Staff^000000.
+If ^008080Piercing Staff^000000 upgrade level is +10 or higher,
+Additional Matk + 50
+Reduces the variable casting time of skills by 10%.
+^800080Set Bonus^000000
+^008080Magical Booster^000000
+^008080Southern Cross^000000
+Increases magical damage on boss monsters by 2%.
+If ^008080Southern Cross^000000 upgrade level is +5 or higher,
+Increases magical damage on boss monsters by an additional 3%.
+Increases damage taken from normal monsters by 5%.
+If ^008080Southern Cross^000000 upgrade level is +7 or higher,
+Increases magical damage on boss monsters by an additional 4%.
+Increases damage taken from normal monsters by an additional 5%.
 #
 18727#
 a hat from Sedora. Big botton is cute
@@ -71636,29 +71689,79 @@ Reduces the cast delay of skills by 5%.
 Reduces the variable casting time of skills by 10%.
 #
 18937#
-^808080A component left by a robotic doll which mourned the death of its owner. It's filled with their memories of love.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 10
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A component left by a robotic doll which mourned the death of its owner. It's filled with their memories of love.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 2%
 Mdef + 7
-^FFFFFF_^000000
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 01^000000
+Int + 8
+Max SP + 5%
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 01^000000
+^008080Vesper Core 01 [1]^000000
+Int + 8
+Max SP + 5%
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 01 [1]^000000
+Int + 8
+Max SP + 5%
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 02^000000
+Str + 7
+Atk + 20
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 02^000000
+^008080Vesper Core 02 [1]^000000
+Str + 7
+Atk + 20
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 02 [1]^000000
+Str + 7
+Atk + 20
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 03^000000
+Agi + 7
+Flee + 15
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 03^000000
+^008080Vesper Core 03 [1]^000000
+Agi + 7
+Flee + 15
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 03 [1]^000000
+Agi + 7
+Flee + 15
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 04^000000
-Dex + 8
+Dex + 7
 Hit + 10
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
-^008080Vesper Gear 04^000000
-Dex + 1 for every 20 base levels.
-Reduces the variable casting time of skills by 5%.
+^008080Vesper Core 04^000000
+^008080Vesper Core 04 [1]^000000
+Dex + 7
+Hit + 10
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 04 [1]^000000
+Dex + 7
+Hit + 10
 #
 18944#
 A balloon made afte a small and shy devil.
@@ -72727,31 +72830,38 @@ Jobs : ^777777All^000000
 #
 19038#
 A Crown that celebrates the 12th Anniversary of Ragnarok Online.
-Item Set
-12th Anniversary Crown
-12th Anniversary ElvenEars
-If worn together the following bonuses may be gain.
-+7 or Higher
-Crit +12
-Hit +12
-+9 or Higher
+Class: ^808080Headgear^000000
+Defense: ^80808012^000000
+Weight: ^80808012^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^00808012th Anniversary Crown^000000
+^00808012th Anniversary Elven Ears^000000
+If ^00808012th Anniversary Crown^000000 upgrade level is +7 or higher,
+Crit + 12
+Hit + 12
+If ^00808012th Anniversary Crown^000000 upgrade level is +9 or higher,
 Max HP + 1200
 Max SP + 120
-Weight : ^7777771^000000
 #
 19039#
 Elven Ears that celebrate the 12th Anniversary of Ragnarok Online.
-Item Set
-12th Anniversary Crown
-12th Anniversary ElvenEars
-If worn together the following bonuses may be gain.
-+7 or Higher
-Crit +120
-Hit +12
-+9 or Higher
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808012^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^00808012th Anniversary Crown^000000
+^00808012th Anniversary Elven Ears^000000
+If ^00808012th Anniversary Crown^000000 upgrade level is +7 or higher,
+Crit + 12
+Hit + 12
+If ^00808012th Anniversary Crown^000000 upgrade level is +9 or higher,
 Max HP + 1200
 Max SP + 120
-Weight : ^7777771^000000
 #
 19048#
 ^808080A pair of tights empowered with the four great elements.^000000
@@ -77999,18 +78109,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20239#
-A large ribbon muffler
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Lower ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
-Large Ribbon Meffler
-^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
-^b4b4b4Exchangeable for Costume Enchantment Stone Box6.^000000
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A big ribbon muffler you can wear around your neck.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20240#
 A present of snow
@@ -86302,15 +86406,14 @@ Reduces damage taken from Demi-Human race enemies by an additional 2% for every 
 Increases the recovery rate of recovery skills by 10% for every combined sum of 80 base Int and Dex.
 #
 28503#
-^808080A replica of a device used by an individual who could call down god's thunder.^000000
-Class: Accessory
-Weight: 10
-Required Level: 100
-Required Jobs: All Jobs
+A replica of a device used by an individual who could call down god's thunder.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 5%
 Atk + 5%
 Aspd + 5%
-Reduces the variable casting time of ^0000FFHell Gate^000000 by 3% for every 20 base levels.
 Reduces the variable casting time of ^0000FFLightning Ride^000000 by 5% for every 15 base levels.
 Reduces the cooldown of ^0000FFPower Absorb^000000 by 3 seconds.
 Increases the damage of ^0000FFLightning Ride^000000 by 5%.
@@ -86518,13 +86621,15 @@ If upgrade level is +7 or higher,
 Increases magical damage on boss monster targets by 20%.
 #
 28520#
-^808080Egir, the God of Sea's Ring. It has the power to see all things.^000000
-Class: Accessory
-Weight: 50
-Required Level: 100
-Required Jobs: All Jobs
+Egir, the God of Sea's Ring. It has the power to see all things.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Atk + 5%
 Matk + 5%
+Mdef + 5
 Reduces damage taken from Water property attacks by 10%.
 #
 28521#
@@ -88902,6 +89007,14 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31397#
+A pope-looking doll.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 31398#
 Don't turn your back, don't look away and whatever you do, don't blink.
 Class: ^808080Costume^000000
@@ -88922,6 +89035,14 @@ Celebrating the release of Ragnarok Rush with these majestic goat horns that rep
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31416#
+A beautiful coronet decorated with seraphim feathers.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
@@ -89014,6 +89135,70 @@ Usable By: ^808080All Jobs^000000
 A wonderfully made cap with a cool penguin design.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31446#
+It is not known what exactly is contained within this syringe.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31447#
+A hat which is sealed with the executors wing.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31448#
+A luxurious ribbon made with soft silk.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31449#
+An eye patch that uses an elegant blue rose to cover the eye.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31450#
+Stylish Wig. A hair extension that looks like a lolita two side up.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31451#
+A big blue frilly ribbon.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31452#
+This white cat took a liking to you and now it won't leave you alone. Aren't you lucky!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31453#
+A big ribbon muffler you can wear around your neck.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
