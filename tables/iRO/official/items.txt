@@ -6893,6 +6893,7 @@
 14930#Overseas_Care_Package_Remix_I#
 14940#Mystical_Costume_Box#
 14944#May_Costume_Box#
+14947#Anniversary_2018_Costume_Box#
 14948#Overseas_Care_Package_XVIII#
 15000#Bone_Plate#
 15002#Rune_Plate#
@@ -8104,7 +8105,7 @@
 19036#(null)#
 19037#(null)#
 19038#12th_Anniversary_Crown#
-19039#12th_Anniversary_ElvenEars#
+19039#12th_Anniversary_Elven_Ears#
 19048#Elemental_Tights#
 19079#Celestial_Woman's_Flower#
 19081#Faceworm_Egg_Shell#
@@ -9632,9 +9633,11 @@
 31394#Costume_White_Wizard_Hat#
 31395#Costume_Book_of_Magic#
 31396#Costume_Sorcerer_Hood#
+31397#Costume_Sitting_Pope#
 31398#Costume_Blinking_Small_Eyes#
 31399#Costume_Darkness_Veil#
 31408#Costume_Ragnarok_Rush_Goat#
+31416#Costume_Seraphim_Coronet#
 31420#Costume_Shining_Santa_Poring#
 31432#Costume_Floating_Ice#
 31433#Costume_Astro_Circle#
@@ -9646,4 +9649,12 @@
 31439#Costume_Fluffy_Heart_Earmuffs#
 31440#Costume_Snow_Bear_Hood#
 31441#Costume_Penguin_Cap#
+31446#Costume_Toy_Syringe#
+31447#Costume_Pale_Moon_Hat#
+31448#Costume_Sting_Silk_Ribbon#
+31449#Costume_Blue_Rose_Eyepatch#
+31450#Costume_Lolita_Two_Side_Up#
+31451#Costume_Blue_Frill_Ribbon#
+31452#Costume_White_Cat#
+31453#Costume_Large_Ribbon_Muffler_(Black)#
 31455#Costume_Super_Cute_Dog#
