@@ -13,6 +13,7 @@
 package Network::Send::kRO::RagexeRE_2017_04_19b;
 
 use strict;
+
 use base qw(Network::Send::kRO::RagexeRE_2017_04_12a);
 
 sub new {
@@ -20,6 +21,8 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
+		'0AC0' => ['rodex_refresh_maillist', 'V2 a16', [qw(mailID unknown)]],
+		'0AC1' => ['rodex_open_mailbox', 'V2 a16', [qw(mailID unknown)]],
 		'085A' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0838' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0811' => ['actor_look_at', 'v C', [qw(head body)]],
@@ -47,6 +50,8 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
+		rodex_refresh_maillist 0AC0
+		rodex_open_mailbox 0AC1
 		actor_action 085A
 		actor_info_request 0838
 		actor_look_at 0811
@@ -81,6 +86,24 @@ sub new {
 
 
 	return $self;
+}
+
+
+sub rodex_refresh_maillist {
+	my ($self, $mailID, $unknown) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_refresh_maillist',
+		mailID => $mailID,
+		unknown => $unknown,
+	}));
+}
+
+sub rodex_open_mailbox {
+	my ($self, $mailID, $unknown) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'rodex_open_mailbox',
+		unknown => $unknown,
+	}));
 }
 
 1;
