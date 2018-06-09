@@ -5271,4 +5271,22 @@ sub change_title {
 	message TF("You changed Title_ID :  %s.\n", $args->{title_id}), "info";
 }
 
+
+sub pet_evolution_result {
+	my ($self, $args) = @_;
+	if ($args->{result} == 0x0) {
+		error TF("Pet evolution error.\n");
+	#PET_EVOL_NO_CALLPET = 0x1,
+	#PET_EVOL_NO_PETEGG = 0x2,
+	} elsif ($args->{result} == 0x3) {
+		error TF("Unequip pet accessories first to start evolution.\n");
+	} elsif ($args->{result} == 0x4) {
+		error TF("Insufficient materials for evolution.\n");
+	} elsif ($args->{result} == 0x5) {	
+		error TF("Loyal Intimacy is required to evolve.\n");
+	} elsif ($args->{result} == 0x6) {
+		message TF("Pet evolution success.\n"), "success";
+	}
+}
+
 1;
