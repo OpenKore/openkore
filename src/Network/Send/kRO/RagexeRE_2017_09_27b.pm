@@ -71,7 +71,7 @@ sub new {
 		sync 0945
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #elif PACKETVER == 20170927 // 2017-09-27bRagexeRE or 2017-09-27dRagexeRE
