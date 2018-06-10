@@ -343,6 +343,11 @@ sub reconstruct_account_server_info {
 			stringToBytes($_->{name}),
 			@{$_}{qw(users state property unknown)},
 		) } @{$args->{servers}};
+	} elsif(exists $packetParser->{packet_lut}{account_server_info} && $packetParser->{packet_lut}{account_server_info} eq "0AC9") {
+		$args->{serverInfo} = pack '(a154)*', map { pack(
+			'a20 V a2 a126',
+			@{$_}{qw(name users unknown ip_port)},
+		) } @{$args->{servers}};
 	} else {
 		$args->{serverInfo} = pack '(a32)*', map { pack(
 			'a4 v Z20 v2 x2',
