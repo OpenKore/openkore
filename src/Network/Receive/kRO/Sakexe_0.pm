@@ -553,9 +553,9 @@ sub new {
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
-		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
-		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
-		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port unknown)]], # 156
+		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
+		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
+		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADE' => ['flag', 'V', [qw(unknown)]],
