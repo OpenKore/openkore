@@ -332,10 +332,9 @@ sub parse_account_server_info {
 
 sub reconstruct_account_server_info {
 	my ($self, $args) = @_;
-	
 	$args->{lastLoginIP} = inet_aton($args->{lastLoginIP});
 
-	if(exists $packetParser->{packet_lut}{account_server_info} && $packetParser->{packet_lut}{account_server_info} eq "0AC4") {
+	if($args->{'switch'} eq "0AC4") {
 		$args->{serverInfo} = pack '(a160)*', map { pack(
 			'a4 v Z20 v3 a128',
 			inet_aton($_->{ip}),
@@ -343,7 +342,7 @@ sub reconstruct_account_server_info {
 			stringToBytes($_->{name}),
 			@{$_}{qw(users state property unknown)},
 		) } @{$args->{servers}};
-	} elsif(exists $packetParser->{packet_lut}{account_server_info} && $packetParser->{packet_lut}{account_server_info} eq "0AC9") {
+	} elsif($args->{'switch'} eq "0AC9") {
 		$args->{serverInfo} = pack '(a154)*', map { pack(
 			'a20 V a2 a126',
 			@{$_}{qw(name users unknown ip_port)},
