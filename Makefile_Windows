@@ -60,7 +60,7 @@ Translation:
 Win32:
 	$(CPP) -c -o $(WIN32_DIR)$(PATH_SEPARATOR)utils.os $(WIN32_DIR)$(PATH_SEPARATOR)utils.cpp $(CFLAGS)
 	xsubpp $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.xs > $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.xs.cpp
-	$(CPP) -c -o $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.os $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.xs.cpp $(CFLAGS) -I$(INCLUDE)
+	$(CPP) -c -o $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.os $(WIN32_DIR)$(PATH_SEPARATOR)wrapper.xs.cpp $(CFLAGS) -fpermissive -I$(INCLUDE)
 
 Utils:
 	$(CPP) -c -o $(UTILS_DIR)$(PATH_SEPARATOR)http-reader.os $(UTILS_DIR)$(PATH_SEPARATOR)http-reader.cpp $(CFLAGS)
