@@ -2490,8 +2490,8 @@ Only numbers can be input.#
 You cannot withdraw while exchange window and shop are activated.#
 Shortcut#
 Item Comparison#
-the Weapon is not suitable for the bullet you are equipping.#
-the bullet is not suitable for the weapon you are equipping.#
+Esta Arma não é adequada para o tipo de Projétil equipado.#
+Este Projétil não é adequado para o tipo de Arma equipada.#
 the item is not register to sell. Please register the item you want to sell#
 ITEM#
 You cannot use the Guild storage.#
@@ -2995,4 +2995,4 @@ Moving to destination.#
 #
 #
 #
-Você precisa de pelo menos %d Projéteis para usar essa skill.#
+Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
