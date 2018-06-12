@@ -8252,7 +8252,7 @@
 //*****************************************************
 //------------Aplicar em 2018-06-12--------------------
 //*****************************************************
-28737#Espada Mística#
+28737#Adaga Mística#
 19274#Fone Descolado#
 19300#Quepe do Cão-mandante#
 31460#Lanternas da Serenidade#
@@ -8264,7 +8264,6 @@
 13230#Projétil_Congelante#
 13231#Projétil_Venenoso#
 13232#Projétil_Cegante#
-13208#Tatu_Bola#
 13215#Projétil_Perfurador#
 13216#Projétil_Incandescente#
 13217#Projétil_Glacial#

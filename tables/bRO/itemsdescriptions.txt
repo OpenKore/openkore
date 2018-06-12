@@ -16664,39 +16664,39 @@ Peso: ^7777770.2^000000
 Propriedade:^777777Neutro^000000
 #
 13203#
-Um projétil de Lança-Granadas que carrega a propriedade Fogo.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Fogo^000000
 #
 13204#
-Um projétil de Lança-Granadas que carrega a propriedade Vento.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Vento^000000
 #
 13205#
-Um projétil de Lança-Granadas contendo um veneno mortal. Possui uma pequena chance de causar [Envenenamento] nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Veneno^000000
 #
 13206#
-Um projétil de Lança-Granadas que carrega a propriedade Sombrio. Possui uma pequena chance de causar Cegueira nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Sombrio^000000
 #
 13207#
-Um projétil de Lança-Granadas que carrega a propriedade Água.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Água^000000
 #
 // ------------------ ???? ???? ------------------------
 13250#
@@ -40699,14 +40699,6 @@ Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classe: ^777777Todas as Classes^000000
 #
-13208#
-Um tipo de artrópode. Quando se enrola, fica muito duro.
-^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Atordoamento.^000000
-Tipo: ^777777Projétil^000000
-Ataque: ^77777750^000000
-Propriedade: ^777777Neutro^000000
-Peso: ^7777770.5^000000
-#
 16740#
 Uma caixa que tem uma Proteção do Deus do Mar. (Disponível por 23 horas)
 ^000088Item de Aluguel^000000
@@ -59289,7 +59281,7 @@ Classes: ^777777Todas^000000
 //------------Aplicar em 2018-06-12--------------------
 //*****************************************************
 28737#
-Forjada há muitos séculos, essa bela espada foi uma arma letal nas mãos dos mais habilidosos ninjas. Sua aparência faz jus ao poder da sua lâmina, capaz de retalhar os inimigos com graça e rapidez.
+Forjada há muitos séculos, essa bela adaga foi uma arma letal nas mãos dos mais habilidosos ninjas. Sua aparência faz jus ao poder da sua lâmina, capaz de retalhar os inimigos com graça e rapidez.
 ^0000ffEsquiva +10.^000000
 ^0000ffRecarga de [Corte Espiritual] e [Kunai Explosiva] -1 segundo.^000000
 Refino +7 ou mais:
