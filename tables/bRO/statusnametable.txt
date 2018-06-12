@@ -305,7 +305,6 @@ EFST_AKAITSUKI Luar Sinistro
 EFST_MYSTICPOWDER Pó Místico
 EFST_ACARAJE Acarajé
 EFST_M_LIFEPOTION Água Milagrosa
-EFST_FLOWER_LEAF Ç³¼ºÇÑ ²É°¡Áö
 EFST_RAY_OF_PROTECTION Luz Protetora
 EFST_GLASTHEIM_ATK Ataque Temporal
 EFST_GLASTHEIM_DEF Defesa Temporal
@@ -324,10 +323,6 @@ EFST_GVG_SLEEP Fada do Sonho
 EFST_GVG_CURSE Fada da Sorte
 EFST_GVG_SILENCE Fada da Música
 EFST_GVG_BLIND Fada da Luz
-EFST_JP_EVENT01 ¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ¹°¸®µ¥¹ÌÁö Ãß°¡
-EFST_JP_EVENT02 ¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô ÁÖ´Â ¸¶¹ýµ¥¹ÌÁö Ãß°¡
-EFST_JP_EVENT03 ¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­ ¹Þ´Â µ¥¹ÌÁö °¨¼Ò
-EFST_JP_EVENT04 ¾îÆÐ·ù ¸ó½ºÅÍ¿¡°Ô¼­ ¾ò´Â °æÇèÄ¡ Áõ°¡
 EFST_GEFFEN_MAGIC1 Bênção da Lydia Aumenta o dano físico contra Humanoides
 EFST_GEFFEN_MAGIC2 Bênção da Fenrir Aumenta o dano mágico contra Humanoides
 EFST_GEFFEN_MAGIC3 Bênção de Chaos Aumenta a resistência contra Humanoides
