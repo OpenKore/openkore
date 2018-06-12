@@ -152,7 +152,7 @@ InjectDLL (DWORD ProcID, const char *dll)
 	}
 
 	LPVOID pAttachProcessMemory = NULL;
-	DWORD dwBytesWritten = 0;
+	SIZE_T dwBytesWritten = 0;
 	char * dllRemove;
 
 	/* Allocate a piece of memory in ragexe. */
