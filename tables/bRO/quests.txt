@@ -1298,25 +1298,25 @@ Corra e traga 5 Minérios de Ferro e 1 Fracon para Cougar. #
 
 
 //°Ç½½¸µ°Å
-6020#Carta do Mestre Miller#SG_FEEL#QUE_NOIMAGE#
-Leve a carta para o Sr. Chifre de Touro Inteligente em Payon. #
-#
+6020#Mudança de Classe: Justiceiros#SG_FEEL#QUE_NOIMAGE#
+Leve a carta para o Sr. Sábio Chifre de Touro em Payon.#
+Fale com o Sábio Chifre de Touro.#
 
-6021#Amuleto do Chifre de Touro Inteligente#SG_FEEL#QUE_NOIMAGE#
-'Posso fazer um amuleto que vai demonstrar o seu desejo de se tornar um guerreiro da terra, para que você apresente aos treinadores de Justiceiros.' #
-1 Esporo de Cogumelo, 1 Tronco e 1 Erva Verde #
+6021#Mudança de Classe: Justiceiros#SG_FEEL#QUE_NOIMAGE#
+'Posso fazer um amuleto que vai demonstrar o seu desejo de se tornar um guerreiro da terra, para que você apresente aos treinadores de Justiceiros.'#
+Colete 3 Esporos de Cogumelo e 3 Ervas Verdes.#
 
-6022#Criando um Amuleto#SG_FEEL#QUE_NOIMAGE#
+6022#Mudança de Classe: Justiceiros#SG_FEEL#QUE_NOIMAGE#
 Isso vai levar algum tempo. Fale com ele mais tarde. #
-#
+Fale com o Sábio Chifre de Touro.#
 
-6023#Favor para Chifre de Touro Inteligente#SG_FEEL#QUE_NOIMAGE#
+6023#Mudança de Classe: Justiceiros#SG_FEEL#QUE_NOIMAGE#
 'Estou com sede e gostaria de um copo de leite gelado. Poderia me trazer?' #
-#
+Traga 1 Leite.#
 
-6024#Mudança de Classe: Justiceiro#SG_FEEL#QUE_NOIMAGE#
+6024#Mudança de Classe: Justiceiros#SG_FEEL#QUE_NOIMAGE#
 'Eeh Yeah Eeh Hooom, Maaaaarrraaa Neeey... Yippee Yippee Yai Yocaiyay! Leve isto até Miller, o Raposa Negra.' #
-#
+Dirija-se ao Mestre Miller.#
 
 
 
@@ -12343,3 +12343,28 @@ Use o Transportador para sair.#
 12368#Operação Sucata#SG_FEEL#QUE_NOIMAGE#
 A pilha de sucatas na sua frente é, na verdade, um Robô da Fábrica Ferdinando. Apesar de velho, parece que ele está funcionando, basta trazer 1 Tanque Velho para reiniciá-lo.#
 Traga 1 Tanque Velho.#
+
+//Rebellion Update
+12340#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+Me confundiram com um procurado. Preciso visitar o bar secreto em Einbroch, onde o cartaz de procurado foi colocado, e tentar esclarecer isso!#
+Fale com o <NAVI>[Segurança]<INFO>einbroch,54,97,0,000,0</INFO></NAVI>.#
+
+12341#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+A única forma de tirar os Insurgentes do meu encalço é me tornando um deles. Bem, vamos lá fazer os testes.#
+Inicie o teste.#
+
+12342#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+Inicie o processo na Máquina para coletar ^CD32785 Fragmentos de Aço^000000 da fornalha e usá-los para tentar montar uma arma de fogo na sala de montagem ao lado, clicando na Bigorna. Você terá que repetir o processo se não conseguir terminar a tempo.#
+Realize os procedimentos acima.#
+
+12343#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+Com o disfarce ativo, ande pelas salas para encontrar até 10 ilusões com o nome de ^CD3278Alvo^000000 dentro do tempo limite.#
+Elimite 10 ^CD3278Alvos^000000.#
+
+12344#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+Se acertar mais de 3 ilusões com o nome ^CD3278Não-alvo^000000, você falhará no teste. Evite acertá-las a todo custo!#
+Evite eliminar 3 ^CD3278Não-alvos^000000.#
+
+12345#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
+Visite Ivan Sidorenko, o lendário Insurgente, e conclua seu processo de Mudança de Classe.#
+Fale com Ivan.#
