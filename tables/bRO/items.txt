@@ -4084,7 +4084,7 @@
 1178#Schweizersabel#
 1179#Executora#
 13031#Quebrador de Espadas#
-13032#Partidor de Cota de Malha#
+13032#Destruidor de Malha#
 13033#Adaga do Algoz#
 1540#Grande Cruz#
 5351#Girassol#
@@ -8249,4 +8249,104 @@
 20517#Miau-chila de Bichano#
 28534#Amuleto da Coragem#
 28535#Amuleto da Sabedoria#
+//*****************************************************
+//------------Aplicar em 2018-06-12--------------------
+//*****************************************************
+28737#Adaga Mística#
+19274#Fone Descolado#
+19300#Quepe do Cão-mandante#
+31460#Lanternas da Serenidade#
+//*****************************************************
+//--------------------REBELLION------------------------
+//*****************************************************
+13228#Projétil_de_Fogo#
+13229#Projétil_Relâmpago#
+13230#Projétil_Congelante#
+13231#Projétil_Venenoso#
+13232#Projétil_Cegante#
+13215#Projétil_Perfurador#
+13216#Projétil_Incandescente#
+13217#Projétil_Glacial#
+13218#Projétil_de_Eletrochoque#
+13219#Projétil_Tectônico#
+13220#Projétil_de_Purificação#
+13221#Projétil_de_Prata#
+13222#Projétil_Sanguinário#
+13223#Cápsula_de_Chamas_#
+13224#Cápsula_de_Relâmpagos#
+13225#Cápsula_Venenosa#
+13226#Cápsula_Cegante#
+13227#Cápsula_Congelante#
+13210#Munição_P#
+13213#Munição_SG#
+13212#Munição_G#
+13211#Munição_M#
+13214#Munição_XG#
+13200#Projétil#
+13201#Projétil_de_Prata_Excedente#
+13202#Projétil_Sanguinário_Excedente#
+13203#Cápsula_de_Chamas_Excedente#
+13204#Cápsula_de_Relâmpagos_Excedente#
+13205#Cápsula_Venenosa_Excedente#
+13206#Cápsula_Cegante_Excedente#
+13207#Cápsula_Congelante_Excedente#
+7663#Projétil_Revestido#
+7664#Granada_Aderente#
+7665#Míssil_Cauda_de_Dragão#
+6746#Fragmento_de_Ferro#
+6747#Fragmento_de_Aço#
+28201#Cruz_Meridional#
+28202#Cruz_Meridional#
+13120#Pistolas_Céu-Inferno#
+13122#Pistola_Altair-Ares#
+13189#Rifle_de_Precisão#
+13190#Rifle_de_Atraso#
+13192#Espingarda_Disparo_Mortal#
+13193#Espingarda_de_Trovoada#
+13194#Espingarda_da_Destruição#
+13124#Pistola_Altair-Ares#
+13195#Rifle_de_Atraso#
+13196#Espingarda_da_Destruição#
+13197#Minimetralhadora#
+13198#Metralhadora_da_Tempestade#
+13199#Metralhadora_da_Tempestade#
+13118#Chama_Efêmera#
+13119#Chama_da_Liberdade#
+28200#Lança-Granadas_Caos_Total#
+23123#Cartucho_de_Projétil_de_Fogo#
+23124#Cartucho_de_Projétil_Relâmpago#
+23125#Cartucho_de_Projétil_Congelante#
+23126#Cartucho_de_Projétil_Venenoso#
+23127#Cartucho_de_Projétil_Cegante#
+22737#Cartucho_de_Projétil_Sanguinário#
+22738#Cartucho_de_Projétil_de_Prata#
+22739#Pacote_de_Cápsulas_de_Relâmpago#
+22740#Pacote_de_Cápsulas_Cegantes#
+22741#Pacote_de_Cápsulas_Venenosas#
+22742#Pacote_de_Cápsulas_Congelantes#
+22743#Pacote_de_Cápsulas_de_Chamas#
+22744#Cartucho_de_Projétil_Perfurador#
+22745#Cartucho_de_Projétil_Incandescente#
+22746#Cartucho_de_Projétil_Glacial#
+22747#Cartucho_de_Projétil_de_Eletrochoque#
+22748#Cartucho_de_Projétil_Tectônico#
+22749#Cartucho_de_Projétil_de_Purificação#
+22107#Botas Modificadas FOR#
+22108#Botas Modificadas INT#
+22109#Botas Modificadas AGI#
+22110#Botas Modificadas VIT#
+22111#Botas Modificadas DES#
+22112#Botas Modificadas SOR#
+22113#Botas Modificadas FOR#
+22114#Botas Modificadas INT#
+22115#Botas Modificadas AGI#
+22116#Botas Modificadas VIT#
+22117#Botas Modificadas DES#
+22118#Botas Modificadas SOR#
+13116#Revólver_para_Iniciantes#
+13181#Escopeta_para_Iniciantes#
+13182#Gatling_para_Iniciantes#
+13183#Lança-Granadas_para_Iniciantes#
+13180#Rifle_para_Iniciantes#
+25187#Projétil_Pesado#
 //file end
