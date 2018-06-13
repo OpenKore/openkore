@@ -6092,336 +6092,377 @@ A FOR do usuário afeta a quantidade de dano infligida.^000000
 #
 GS_GLITTERING#
 Cara ou Coroa
-Nível Máximo: 5
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 1 Zeny para jogar Cara ou Coroa com uma 
-moeda. Se o resultado for Cara, o usuário ganha uma moeda. Mas se 
-o resultado for Coroa, usuário perde uma moeda. O usuário pode 
-ter um máximo de 10 moedas, e aumentando o nível dessa habilidade 
-também aumenta as chances de se conseguir o resultado positivo. As 
-moedas do Justiceiro são mostradas como esferas brilhantes ao redor do usuário.^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 1 zeny para dar a chance de conseguir
+1 moeda, num máximo de 10 moedas.
+Em casos de falha, o personagem perde 1 moeda.
+Chances de conseguir moedas melhoram conforme
+o nível da habilidade aumenta.^000000
 #
 GS_FLING#
 Atirar Moedas
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 1^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Atira moedas contra um inimigo 
-para causar dano e reduzir sua Defesa. A habilidade 
-Atirar Moedas consome até 5 moedas em um único uso e a 
-redução na Defesa do inimigo é proporcional ao número de moedas gastas.^000000
+Nível Máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Atira até 5 moedas para reduzir a DEF
+do alvo por 30 segundos.
+A redução da DEF é proporcional ao
+ao número de moedas gastas.^000000
 #
 GS_TRIPLEACTION#
 Ataque Triplo
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 1, Ataque Concentrado 1, Reação em Cadeia 10 
-Descrição: ^777777Gasta 01 moeda para disparar contra 
-um inimigo 3 vezes durante um único ataque.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+Consome 1 moeda para disparar 3 vezes
+no alvo, independente da arma usada.^000000
 #
 GS_BULLSEYE#
 Ataque Certeiro
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 5, Ataque Concentrado 5, Rastrear o Alvo 10 ^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Consome 01 moeda para causar 500% de 
-dano contra monstros Humanóides e Brutos.
-A habilidade possui uma chance de 0,1% de causar o efeito Coma em 
-todos^FFFFFF  ^777777 os inimigos, exceto  Monstros Chefes.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Dispara um projétil que causa 500% de dano
+em monstros das raças Humanoide e Bruto
+com 0,1% de chance de infligir coma.
+Não funciona em monstros Chefes.^000000
 #
 GS_MADNESSCANCEL#
 Resistência Final
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 4, Ataque Concentrado 1, Reação em Cadeia 3, Rajada Certeira 7, 
-Desperado 5, Ataque Gatling 10^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 04 moedas para ativar o 
-status Resistência Final, que imobiliza o usuário, 
-mas altera seus atributos ATQ +100 e VelATQ +20%. 
-A Resistência Final tem a duração de 15 segundos 
-e não pode ser utilizada junto da habilidade Pânico do Justiceiro.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 4^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 1 moeda para tornar-se
+imóvel, garantindo ATQ +100 e
+velocidade de ataque +20% por 15 segundos.
+Não pode ser usada junto com
+'Pânico do Justiceiro'.^000000
 #
 GS_ADJUSTMENT#
 Pânico do Justiceiro
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 4, Ataque Concentrado 5, Desarmar 5, Rastrear Alvo 7 ^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 02 moedas para ativar o status 
-Pânico do Justiceiro, em que o usuário recebe um bônus de 
-Taxa de Esquiva +30 e reduz os danos sofridos por ataques 
-físicos de longa distância em 20%, mas tem sua Precisão 
-afetada em -30. Essa habilidade tem duração de 20 segundos^FFFFFF ^777777 e não pode ser utilizada junto com a Resistência Final.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 4^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 2 moedas para garantir esquiva +30,
+precisão -30 e resistência a danos físicos
+a distância +20 por 20 segundos.
+Não pode ser usada junto com
+'Resistência Final'.^000000
 #
 GS_INCREASING#
 Aumentar Precisão
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 2, Olhos de Serpente 10^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 04 moedas para alterar os atributos do usuário 
-em Precisão +20, DES +4 e AGI +4 durante 1 minuto.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 4 moedas para garantir
+precisão +20, AGI e DES +4 por 1 minuto.^000000
 #
 GS_MAGICALBULLET#
 Bala Mágica
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 1^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 01 moeda para efetuar um disparo 
-mágico que não usa nenhum tipo de projétil e causa um dano com 
-a propriedade Fantasma igual à soma dos atributos ATQ + ATQM do usuário.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 01 moeda para adicionar o ATQM
+nos ataques físicos básicos por 30 segundos
 #
 GS_CRACKER#
 Tiro Bombinha
-Nível Máximo: 1
-^777777Pré requisitos: Cara ou Coroa 1^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Consome 01 moeda para disparar um projétil que 
-assusta o inimigo, causando o status Atordoar. Quanto mais 
-próximo o alvo estiver do usuário, maiores são as chances do 
-ataque causar o status Atordoar.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Cara ou Coroa 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Assusta o inimigo tentando atordoá-lo.
+Quanto mais próximo o alvo estiver,
+maiores as chances de atordoamento.
+Consome 1 moeda.^000000
 #
 GS_SINGLEACTION#
 Ataque Concentrado
-Nível Máximo: 1
-Tipo:^777777Passiva^000000
-Descrição: ^777777Uma habilidade essencial para os Justiceiros, o 
-Ataque Concentrado permite que o usuário dispare suas armas com maior 
-velocidade e precisão. Aumentar o nível dessa habilidade aumenta a 
-Precisão e a Velocidade de Ataque do usuário.^000000 
-[Nv 1]: ^777777Precisão +2, VelATQ +1%^FFFFFF   ^000000 
-[Nv 2]: ^777777Precisão +4, VelATQ +1%^000000 
-[Nv 3]: ^777777Precisão +6, VelATQ +2%^FFFFFF   ^000000 
-[Nv 4]: ^777777Precisão +8, VelATQ +2%^000000 
-[Nv 5]: ^777777Precisão +10, VelATQ +3%^FFFFFF   ^000000 
-[Nv 6]: ^777777Precisão +12, VelATQ +3%^000000 
-[Nv 7]: ^777777Precisão +14, VelATQ +4%^FFFFFF   ^000000 
-[Nv 8]: ^777777Precisão +16, VelATQ +4%^000000 
-[Nv 9]: ^777777Precisão +18, VelATQ +5%^FFFFFF   ^000000 
-[Nv 10]: ^777777Precisão +20, VelATQ +5%^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Aumenta a precisão e a
+velocidade de ataque ao usar pistolas.^000000
+Nível l Vel. Atq. l Precisão
+[Nv 1]: ^777777 +1%^000000 l ^777777 +2^000000
+[Nv 2]: ^777777 +1%^000000 l ^777777 +4^000000
+[Nv 3]: ^777777 +2%^000000 l ^777777 +6^000000
+[Nv 4]: ^777777 +2%^000000 l ^777777 +8^000000
+[Nv 5]: ^777777 +3%^000000 l ^777777 +10^000000
+[Nv 6]: ^777777 +3%^000000 l ^777777 +12^000000
+[Nv 7]: ^777777 +4%^000000 l ^777777 +14^000000
+[Nv 8]: ^777777 +4%^000000 l ^777777 +16^000000
+[Nv 9]: ^777777 +5%^000000 l ^777777 +18^000000
+[Nv 10]: ^777777 +5%^000000 l ^777777 +20^000000
 #
 GS_SNAKEEYE#
 Olhos de Serpente
-Nível Máximo: 1
-Tipo:^777777Passiva^000000
-Descrição: ^777777Aumenta o alcance e a Precisão dos ataques do usuário 
-quando equipado com uma arma da Classe Arma de Fogo.^000000 
-[Nv 1]: ^777777Precisão +1, Alcance +1^000000 
-[Nv 2]: ^777777Precisão +2, Alcance +2^000000 
-[Nv 3]: ^777777Precisão +3, Alcance +3^000000 
-[Nv 4]: ^777777Precisão +4, Alcance +4^000000 
-[Nv 5]: ^777777Precisão +5, Alcance +5^000000 
-[Nv 6]: ^777777Precisão +6, Alcance +6^000000 
-[Nv 7]: ^777777Precisão +7, Alcance +7^000000 
-[Nv 8]: ^777777Precisão +8, Alcance +8^000000 
-[Nv 9]: ^777777Precisão +9, Alcance +9^000000 
-[Nv 10]: ^777777Precisão +10, Alcance +10^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Melhora a precisão e o alcance
+de algumas habilidades de Justiceiros.^000000 
+Nível l Precisão l Alcance
+[Nv 1]: ^777777 +1^000000 l ^777777 +1^000000
+[Nv 2]: ^777777 +2^000000 l ^777777 +2^000000
+[Nv 3]: ^777777 +3^000000 l ^777777 +3^000000
+[Nv 4]: ^777777 +4^000000 l ^777777 +4^000000
+[Nv 5]: ^777777 +5^000000 l ^777777 +5^000000
+[Nv 6]: ^777777 +6^000000 l ^777777 +6^000000
+[Nv 7]: ^777777 +7^000000 l ^777777 +7^000000
+[Nv 8]: ^777777 +8^000000 l ^777777 +8^000000
+[Nv 9]: ^777777 +9^000000 l ^777777 +9^000000
+[Nv 10]: ^777777 +10^000000 l ^777777 +10^000000
 #
 GS_CHAINACTION#
 Reação em Cadeia
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 1^000000
-Tipo:^777777Passiva^000000
-Descrição: ^777777Cria a chance de disparar dois projéteis em um 
-único ataque contra o inimigo selecionado quando o usuário está 
-equipado com uma arma da Classe Pistola. Aumentar o nível dessa 
-habilidade aumenta a chance de sucesso dos disparos duplos.^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Ataque Concentrado 1^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Cria a chance de disparar um projétil
+adicional em ataques a distância,
+sem consumir munição extra. Aumentar o nível
+da habilidade aumenta a chance de sucesso.^000000
 #
 GS_TRACKING#
 Rastrear Alvo
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 5^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Trava a mira em um inimigo para causar danos 
-devastadores. Aumentar o nível dessa habilidade aumenta o Tempo 
-de Conjuração e o dano causado. É necessário utilizar armas das 
-classes Pistola ou Rifle^FFFFFF    ^777777 para usar a habilidade Rastrear Alvo.^000000 
-Dano Total Causado e Tempo de Conjuração por Nível da Habilidade 
-[Nv 1]: ^777777Dano 300%, 1,2 seg^000000 
-[Nv 2]: ^777777Dano 400%, 1,4  seg^000000 
-[Nv 3]: ^777777Dano 500%, 1,6  seg^000000 
-[Nv 4]: ^777777Dano 600%, 1,8  seg^000000 
-[Nv 5]: ^777777Dano 700%, 2  seg^000000 
-[Nv 6]: ^777777Dano 800%, 2,2  seg^000000 
-[Nv 7]: ^777777Dano 900%, 2,4  seg^000000 
-[Nv 8]: ^777777Dano 1.000%, 2,6  seg^000000 
-[Nv 9]: ^777777Dano 1.100%, 2,8  seg^000000 
-[Nv 10]: ^777777Dano 1.200%, 3  seg^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Ataque Concentrado 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas ou Rifles.^000000
+^777777Mira em um alvo para causar dano
+físico a distância.^000000
+Nível l Dano l Conjuração
+[Nv 1]: ^777777300%^000000 l ^7777770,6 segundos^000000
+[Nv 2]: ^777777400%^000000 l ^7777770,7 segundos^000000
+[Nv 3]: ^777777500%^000000 l ^7777770,8 segundos^000000
+[Nv 4]: ^777777600%^000000 l ^7777770,9 segundos^000000
+[Nv 5]: ^777777700%^000000 l ^7777771,0 segundos^000000
+[Nv 6]: ^777777800%^000000 l ^7777771,1 segundos^000000
+[Nv 7]: ^777777900%^000000 l ^7777771,2 segundos^000000
+[Nv 8]: ^7777771.000%^000000 l ^7777771,3 segundos^000000
+[Nv 9]: ^7777771.100%^000000 l ^7777771,4 segundos^000000
+[Nv 10]: ^7777771.200%^000000 l ^7777771,5 segundos^000000
 #
 GS_DISARM#
 Desarmar
-Nível Máximo: 5
-^777777Pré requisitos: Ataque Concentrado 5, Rastrear Alvo 7^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Dispara contra os braços do inimigo para 
-incapacitá-lo de atacar. A taxa de sucesso do ataque 
-aumenta junto com o nível da habilidade. Essa habilidade 
-reduz o atributo ATQ em 25% quando usada contra monstros, 
-mas não tem efeito contra Monstros Chefes. A habilidade 
-Desarmar tem um alcance de 7 células e requer que o usuário esteja equipado com uma arma das classes Pistola ou Rifle.^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Rastrear Alvo 7^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas ou Rifles.^000000
+^777777Atira nas mãos do alvo para tentar remover
+a arma por 30 segundos. Em monstros, ATQ -25%.
+Não funciona em monstros Chefes.^000000
 #
 GS_PIERCINGSHOT#
 Ferir Alvo
-Nível Máximo: 5
-^777777Pré requisitos: Ataque Concentrado 5, Rastrear Alvo 5^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Dispara um projétil perfurador de Defesa 
-que tem chance de causar o efeito Sangramento no alvo. 
-Requer o uso de uma arma das classes Pistola ou Rifle.^000000
-Total de Dano Causado por Pistolas, Rifles e chance de causar Sangramento por Nível da Habilidade 
-[Nv 1]: ^777777ATQ 120%(180%), 3%^000000 
-[Nv 2]: ^777777ATQ 140%(210%), 6%^000000 
-[Nv 3]: ^777777ATQ 160%(240%), 9%^000000 
-[Nv 4]: ^777777ATQ 180%(270%), 12%^000000 
-[Nv 5]: ^777777ATQ 200%(300%), 15%^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Rastrear Alvo 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas ou Rifles.^000000
+^777777Atira contra um oponente, ignorando a DEF
+e infligindo sangramento com uma certa chance.^000000
+Nível l Dano (Pistola) l Dano (Rifle) l Chance
+[Nv 1]: ^777777220%^000000 l ^777777280%^000000 l ^7777773%^000000
+[Nv 2]: ^777777240%^000000 l ^777777310%^000000 l ^7777776%^000000
+[Nv 3]: ^777777260%^000000 l ^777777340%^000000 l ^7777779%^000000
+[Nv 4]: ^777777280%^000000 l ^777777370%^000000 l ^77777712%^000000
+[Nv 5]: ^777777300%^000000 l ^777777400%^000000 l ^77777715%^000000
 #
 GS_RAPIDSHOWER#
 Rajada Certeira
-Nível Máximo: 10
-^777777Pré requisitos:  Ataque Concentrado 1, Reação em Cadeia 3 ^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Consome 5 projéteis para disparar uma 
-rajada de 5 disparos contra o inimigo. Requer o uso de 
-uma arma da Classe Pistola.^000000 
-[Nv 1]: ^777777ATQ 550%^000000 
-[Nv 2]: ^777777ATQ 600%^000000 
-[Nv 3]: ^777777ATQ 650%^000000 
-[Nv 4]: ^777777ATQ 700%^000000 
-[Nv 5]: ^777777ATQ 750%^000000 
-[Nv 6]: ^777777ATQ 800%^000000 
-[Nv 7]: ^777777ATQ 850%^000000 
-[Nv 8]: ^777777ATQ 900%^000000 
-[Nv 9]: ^777777ATQ 950%^000000 
-[Nv 10]: ^777777ATQ 1000%^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Reação em Cadeia 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Dispara 5 tiros a distância no alvo.
+Consome 1 Projétil.^000000
+Nível l Dano l SP
+[Nv 1]: ^777777550%^000000 l ^77777722^000000
+[Nv 2]: ^777777600%^000000 l ^77777724^000000
+[Nv 3]: ^777777650%^000000 l ^77777726^000000
+[Nv 4]: ^777777700%^000000 l ^77777728^000000
+[Nv 5]: ^777777750%^000000 l ^77777730^000000
+[Nv 6]: ^777777800%^000000 l ^77777732^000000
+[Nv 7]: ^777777850%^000000 l ^77777734^000000
+[Nv 8]: ^777777900%^000000 l ^77777736^000000
+[Nv 9]: ^777777950%^000000 l ^77777738^000000
+[Nv 10]: ^7777771.000%^000000 l ^77777740^000000
 #
 GS_DESPERADO#
 Desperado
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 1, Reação em Cadeia 3, Rajada Certeira  5^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Consome 10 
-projéteis para executar um ataque ao acaso que pode 
-atingir os inimigos que estejam dentro da uma área 
-de efeito de 7 células ao redor do usuário. Cada uso 
-possui uma quantidade máxima de 10 ataques e requer o uso 
-de uma arma da Classe Pistola.^000000 
-[Nv 1]: ^777777ATQ 100%^000000 
-[Nv 2]: ^777777ATQ 150%^000000 
-[Nv 3]: ^777777ATQ 200%^000000 
-[Nv 4]: ^777777ATQ 250%^000000 
-[Nv 5]: ^777777ATQ 300%^000000 
-[Nv 6]: ^777777ATQ 350%^000000 
-[Nv 7]: ^777777ATQ 400%^000000 
-[Nv 8]: ^777777ATQ 450%^000000 
-[Nv 9]: ^777777ATQ 500%^000000 
-[Nv 10]: ^777777ATQ 550%^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Rajada Certeira 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Atira a distância até 10 vezes nos alvos
+ao redor do usuário, consumindo 10 projéteis.^000000
+Nível l Dano l SP
+[Nv 1]: ^777777100%^000000 l ^77777732^000000
+[Nv 2]: ^777777150%^000000 l ^77777734^000000
+[Nv 3]: ^777777200%^000000 l ^77777736^000000
+[Nv 4]: ^777777250%^000000 l ^77777738^000000
+[Nv 5]: ^777777300%^000000 l ^77777740^000000
+[Nv 6]: ^777777350%^000000 l ^77777742^000000
+[Nv 7]: ^777777400%^000000 l ^77777744^000000
+[Nv 8]: ^777777450%^000000 l ^77777746^000000
+[Nv 9]: ^777777500%^000000 l ^77777748^000000
+[Nv 10]: ^777777550%^000000 l ^77777750^000000
 #
 GS_GATLINGFEVER#
 Ataque Gatling
-Nível Máximo: 10
-^777777Pré requisitos: Rajada Certeira 7, Desperado 5^000000
-Tipo:^777777Suporte^000000
-Descrição: ^777777Aumenta temporariamente a Velocidade de Ataque e o dano 
-causado ao custo da redução^FFFFFF  ^777777 da Taxa 
-de Esquiva e da Velocidade de Movimento. O status Ataque Gatling 
-é cancelado quando essa habilidade é usada duas vezes. Requer o uso 
-de uma arma da Classe Metralhadora Gatling.^000000 
-[Nv 1]: ^777777ATQ +30, VelATQ +1%^000000 
-^777777-5% Esquiva, duração 30 Seg^000000 
-[Nv 2]: ^777777ATQ +40, VelATQ +2%^000000 
-^777777-10% Esquiva, duração 45 Seg^000000 
-[Nv 3]: ^777777ATQ +50, VelATQ +3%^000000 
-^777777-15% Esquiva, duração 60 Seg^000000 
-[Nv 4]: ^777777ATQ +60, VelATQ +4%^000000 
-^777777-20% Esquiva, duração 75 Seg^000000 
-[Nv 5]: ^777777ATQ +70, VelATQ +5%^000000 
-^777777-25% Esquiva, duração 90 Seg^000000 
-[Nv 6]: ^777777ATQ +80, VelATQ +6%^000000 
-^777777-30% Esquiva, duração 105 Seg^000000 
-[Nv 7]: ^777777ATQ +90, VelATQ +7%^000000 
-^777777-35% Esquiva, duração 120 Seg^000000 
-[Nv 8]: ^777777ATQ +100, VelATQ +8%^000000 
-^777777-40% Esquiva, duração 135 Seg^000000 
-[Nv 9]: ^777777ATQ +110, VelATQ +9%^000000 
-^777777-45% Esquiva, duração 150 Seg^000000 
-[Nv 10]: ^777777ATQ +120, VelATQ +10%^000000 
-^777777-50% Esquiva, duração 165 Seg^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Desperado 5^000000
+^777777Rajada Certeira 7^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Somente com Metralhadoras.^000000
+^777777Aumenta o dano e a velocidade de ataque
+ao custo de perder esquiva e movimento.
+O efeito é cancelado ao ser reusada.^000000
+[Nv 1]: ^777777Vel. ATQ +1%^000000 l ^777777Dano +30^000000
+          ^777777Esquiva -5^000000 l ^77777730 segundos^000000
+[Nv 2]: ^777777Vel. ATQ +2%^000000 l ^777777Dano +40^000000
+         ^777777Esquiva -10^000000 l ^77777745 segundos^000000
+[Nv 3]: ^777777Vel. ATQ +3%^000000 l ^777777Dano +50^000000
+         ^777777Esquiva -15^000000 l ^77777760 segundos^000000
+[Nv 4]: ^777777Vel. ATQ +4%^000000 l ^777777Dano +60^000000
+         ^777777Esquiva -20^000000 l ^77777775 segundos^000000
+[Nv 5]: ^777777Vel. ATQ +5%^000000 l ^777777Dano +70^000000
+         ^777777Esquiva -25^000000 l ^77777790 segundos^000000
+[Nv 6]: ^777777Vel. ATQ +6%^000000 l ^777777Dano +80^000000
+         ^777777Esquiva -30^000000 l ^777777105 segundos^000000
+[Nv 7]: ^777777Vel. ATQ +7%^000000 l ^777777Dano +90^000000
+         ^777777Esquiva -35^000000 l ^777777120 segundos^000000
+[Nv 8]: ^777777Vel. ATQ +8%^000000 l ^777777Dano +100^000000
+         ^777777Esquiva -40^000000 l ^777777135 segundos^000000
+[Nv 9]: ^777777Vel. ATQ +9%^000000 l ^777777Dano +110^000000
+         ^777777Esquiva -45^000000 l ^777777150 segundos^000000
+[Nv 10]: ^777777Vel. ATQ +10%^000000 l ^777777Dano +120^000000
+           ^777777Esquiva -50^000000 l ^777777165 segundos^000000
 #
 GS_DUST#
 Controle de Multidão
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 5^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Executa um ataque de curto alcance que 
-empurra o inimigo 5 células para trás. Requer o uso de uma arma 
-da Classe Espingarda.^000000 
-[Nv 1]: ^777777ATQ 150%^000000 
-[Nv 2]: ^777777ATQ 200%^000000 
-[Nv 3]: ^777777ATQ 250%^000000 
-[Nv 4]: ^777777ATQ 300%^000000 
-[Nv 5]: ^777777ATQ 350%^000000 
-[Nv 6]: ^777777ATQ 400%^000000 
-[Nv 7]: ^777777ATQ 450%^000000 
-[Nv 8]: ^777777ATQ 500%^000000 
-[Nv 9]: ^777777ATQ 550%^000000 
-[Nv 10]: ^777777ATQ 600%^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Ataque Concentrado 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas.^000000
+^777777Dispara em um alvo a curta distância,
+empurrando-o 5 células para trás.^000000
+Nível l Dano l SP
+[Nv 1]: ^777777150%^000000 l ^7777773^000000
+[Nv 2]: ^777777200%^000000 l ^7777776^000000
+[Nv 3]: ^777777250%^000000 l ^7777779^000000
+[Nv 4]: ^777777300%^000000 l ^77777712^000000
+[Nv 5]: ^777777350%^000000 l ^77777715^000000
+[Nv 6]: ^777777400%^000000 l ^77777718^000000
+[Nv 7]: ^777777450%^000000 l ^77777721^000000
+[Nv 8]: ^777777500%^000000 l ^77777724^000000
+[Nv 9]: ^777777550%^000000 l ^77777727^000000
+[Nv 10]: ^777777600%^000000 l ^77777730^000000
 #
 GS_FULLBUSTER#
 Ataque Total
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 5, Controle de Multidão 3^00000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Causa danos devastadores ao inimigo ao 
-disparar vários projéteis de uma vez. Essa habilidade possui 
-uma pequena chance de causar o status Cegueira e consome até 10 
-projéteis por uso. Requer o uso de uma arma da Classe Espingarda.^000000 
-Dano Total Causado e Consumo de Munição por Nível da Habilidade 
-[Nv 1]: ^777777ATQ 400%, 2 Projéteis^000000 
-[Nv 2]: ^777777ATQ 500%, 2 Projéteis^000000 
-[Nv 3]: ^777777ATQ 600%, 4 Projéteis^000000 
-[Nv 4]: ^777777ATQ 700%, 4 Projéteis^000000 
-[Nv 5]: ^777777ATQ 800%, 6 Projéteis^000000 
-[Nv 6]: ^777777ATQ 900%, 6 Projéteis^000000 
-[Nv 7]: ^777777ATQ 1.000%, 8 Projéteis^000000 
-[Nv 8]: ^777777ATQ 1.100%, 8 Projéteis^000000 
-[Nv 9]: ^777777ATQ 1.200%, 10 Projéteis^000000 
-[Nv 10]: ^777777ATQ 1.300%, 10 Projéteis^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Controle de Multidão 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas.^000000
+^777777Explode 2 projéteis no alvo,
+criando uma chance de infligir
+cegueira no usuário.^000000
+Nível l Dano l SP
+[Nv 1]: ^777777400%^000000 l ^77777720^000000
+[Nv 2]: ^777777500%^000000 l ^77777725^000000
+[Nv 3]: ^777777600%^000000 l ^77777730^000000
+[Nv 4]: ^777777700%^000000 l ^77777735^000000
+[Nv 5]: ^777777800%^000000 l ^77777740^000000
+[Nv 6]: ^777777900%^000000 l ^77777745^000000
+[Nv 7]: ^7777771.000%^000000 l ^77777750^000000
+[Nv 8]: ^7777771.100%^000000 l ^77777755^000000
+[Nv 9]: ^7777771.200%^000000 l ^77777760^000000
+[Nv 10]: ^7777771.300%^000000 l ^77777765^000000
 #
 GS_SPREADATTACK#
 Disparo Espalhado
-Nível Máximo: 10
-^777777Pré requisitos: Ataque concentrado 5, Controle da Multidão 3, Ataque Total 5^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Consome 5 projéteis para executar um ataque que cobre 
-uma grande área de efeito. Requer o uso de uma arma da Classe Espingarda.^000000 
-[Nv 1]: ^777777ATQ 220%, 3*3 células^000000 
-[Nv 2]: ^777777ATQ 240%, 3*3 células^000000 
-[Nv 3]: ^777777ATQ 260%, 3*3 células^000000 
-[Nv 4]: ^777777ATQ 280%, 5*5 células^000000 
-[Nv 5]: ^777777ATQ 300%, 5*5 células^000000 
-[Nv 6]: ^777777ATQ 320%, 5*5 células^000000 
-[Nv 7]: ^777777ATQ 340%, 7*7 células^000000 
-[Nv 8]: ^777777ATQ 360%, 7*7 células^000000 
-[Nv 9]: ^777777ATQ 380%, 7*7 células^000000 
-[Nv 10]: ^777777ATQ 400%, 9*9 células^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Ataque concentrado 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas ou Lança-Granadas.^000000
+^777777Atira 5 projéteis em um alvo
+atingindo oponentes ao redor dele.^000000 
+Nível l Dano l Área
+[Nv 1]: ^777777230%^000000 l ^7777773x3 células^000000
+[Nv 2]: ^777777260%^000000 l ^7777773x3 células^000000
+[Nv 3]: ^777777290%^000000 l ^7777773x3 células^000000
+[Nv 4]: ^777777320%^000000 l ^7777775x5 células^000000
+[Nv 5]: ^777777350%^000000 l ^7777775x5 células^000000
+[Nv 6]: ^777777380%^000000 l ^7777775x5 células^000000
+[Nv 7]: ^777777410%^000000 l ^7777777x7 células^000000
+[Nv 8]: ^777777440%^000000 l ^7777777x7 células^000000
+[Nv 9]: ^777777470%^000000 l ^7777777x7 células^000000
+[Nv 10]: ^777777500%^000000 l ^7777779x9 células^000000
 #
 GS_GROUNDDRIFT#
 Mina do Justiceiro
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Concentrado 5, Controle da Multidão 3, Ataque Total 5, Disparo Espalhado 7^000000
-Tipo:^777777Ofensiva^000000
-Descrição: ^777777Planta Esferas de Projéteis no solo 
-que explodem automaticamente quando um inimigo se aproxima. 
-O efeito da explosão varia de acordo com o tipo de munição 
-utilizada. Requer o uso de uma^FFFFFF   ^777777 arma da Classe Lança-Granadas.^000000 
-Bônus de Ataque e Duração da Mina por Nível da Habilidade 
-[Nv 1]: ^777777ATQ +220%, 3 Seg^000000 
-[Nv 2]: ^777777ATQ +240%, 6 Seg^000000 
-[Nv 3]: ^777777ATQ +260%, 9 Seg^000000 
-[Nv 4]: ^777777ATQ +280%, 12 Seg^000000 
-[Nv 5]: ^777777ATQ +300%, 15 Seg^000000 
-[Nv 6]: ^777777ATQ +320%, 18 Seg^000000 
-[Nv 7]: ^777777ATQ +340%, 21 Seg^000000 
-[Nv 8]: ^777777ATQ +360%, 24 Seg^000000 
-[Nv 9]: ^777777ATQ +380%, 27 Seg^000000 
-[Nv 10]: ^777777ATQ +400, 30 Seg^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Disparo Espalhado 7^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Lança-Granadas.^000000
+^777777Lança uma mina no chão que explodirá
+caso um oponente se aproximar, causando
+dano físico na área de 3x3 células.
+Até 25 minas podem ser lançadas.^000000 
+Nível l Dano l Duração da mina
+[Nv 1]: ^777777220%^000000 l ^7777773 segundos^000000
+[Nv 2]: ^777777240%^000000 l ^7777776 segundos^000000
+[Nv 3]: ^777777260%^000000 l ^7777779 segundos^000000
+[Nv 4]: ^777777280%^000000 l ^77777712 segundos^000000
+[Nv 5]: ^777777300%^000000 l ^77777715 segundos^000000
+[Nv 6]: ^777777320%^000000 l ^77777718 segundos^000000
+[Nv 7]: ^777777340%^000000 l ^77777721 segundos^000000
+[Nv 8]: ^777777360%^000000 l ^77777724 segundos^000000
+[Nv 9]: ^777777380%^000000 l ^77777727 segundos^000000
+[Nv 10]: ^777777400%^000000 l ^77777730 segundos^000000
 #
 NJ_TOBIDOUGU#
 Prática de Arremesso de Shuriken
@@ -9239,16 +9280,21 @@ Descrição: ^777777 Atinge o solo para causar dano e Atordoar inimigos em área
 #
 SR_FALLENEMPIRE#
 Ruína
-Nível Máximo: 5
-^777777Pré requisitos: Punho do Dragão 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Ataque com o punho e ombro que causa grande dano dependente do Peso do usuário. O alvo é imobilizado por algum tempo. A habilidade só pode ser usada após Punho do Dragão.
-As habilidades Garra de Tigre e Portões do Inferno podem ser usadas logo após Ruína. Consome 2 Esferas Espirituais. ^000000
-[Nv 1]: ^777777 ATQ 250% / Imobilizado por 0.5 segundos ^000000
-[Nv 2]: ^777777 ATQ 400% / Imobilizado por 1 segundos ^000000
-[Nv 3]: ^777777 ATQ 550% / Imobilizado por 1.5 segundos ^000000
-[Nv 4]: ^777777 ATQ 700% / Imobilizado por 2 segundos ^000000
-[Nv 5]: ^777777 ATQ 850% / Imobilizado por 2.5 segundos^000000
+Nível Máximo: ^7777775^000000
+Pré requisitos:
+^777777Punho do Dragão 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Após Punho do Dragão, apoia o alvo no ombro para causar dano físico corpo a corpo, imobilizando-o temporariamente.
+Haverá um bônus de dano de acordo com o tamanho e peso do oponente.
+Após Ruína, Garra de Tigre e Portões do Inferno podem ser usadas em seguida. 
+Consome 2 Esferas Espirituais.^000000
+Nível l Dano l Duração da imobilização
+[Nv 1]: ^777777250%^000000 l ^7777770.5 segundos^000000
+[Nv 2]: ^777777400%^000000 l ^7777771.0 segundos^000000
+[Nv 3]: ^777777550%^000000 l ^7777771.5 segundos^000000
+[Nv 4]: ^777777700%^000000 l ^7777772.0 segundos^000000
+[Nv 5]: ^777777850%^000000 l ^7777772.5 segundos^000000
 #
 SR_TIGERCANNON#
 Garra de Tigre
@@ -11632,7 +11678,8 @@ MER_INVINCIBLEOFF2#
 !!
 Nível Máximo : 1
 Descrição : Desativa sua invencibilidade.
-#GC_DARKCROW#
+#
+GC_DARKCROW#
 Garra Sombria
 Nível Máximo : 5
 ^777777Pré requisito : Passo Sombrio 5 ^000000
@@ -11815,5 +11862,383 @@ Nível Máximo : 1
 Alcance: 2 células.
 Duração: 10 segundos.
 Tempo de recarga: 30 segundos.
-Descrição : Desativa o vínculo do Demônio Morroc com o Fanático das Trevas, permitindo atacá-lo com precisão."
+Descrição : Desativa o vínculo do Demônio Morroc com o Fanático das Trevas, permitindo atacá-lo com precisão.
+#
+RL_FALLEN_ANGEL#
+Salto Etéreo
+Nível máximo: ^7777771^000000
+Pré-requisitos:
+^777777Desperado 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Consome 1 Moeda para mover-se instantaneamente.
+Nos próximos 2 segundos após o uso,
+'Desperado' causará mais dano.
+Se houver obstáculos, a habilidade falha.^000000
+#
+RL_S_STORM#
+Rajada Estilhaçante
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Desarmar 1^000000
+^777777Controle de Multidão 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas.^000000
+^777777Consome 1 bala para causar dano físico
+com chance de destruir o elmo do alvo.
+A chance é aumentada pelo nível da habilidade
+e pela DES do usuário, mas pode ser reduzida
+pela AGI e nível base do alvo.
+Não afeta Elmos indestrutíveis ou revestidos.^000000
+Nível l Dano l Área l SP
+[Nv. 1]: ^7777771.900%^000000 l ^7777775x5 células^000000 l ^77777750^000000
+[Nv. 2]: ^7777772.100%^000000 l ^7777775x5 células^000000 l ^77777755^000000
+[Nv. 3]: ^7777772.300%^000000 l ^7777775x5 células^000000 l ^77777760^000000
+[Nv. 4]: ^7777772.500%^000000 l ^7777775x5 células^000000 l ^77777765^000000
+[Nv. 5]: ^7777772.700%^000000 l ^7777777x7 células^000000 l ^77777770^000000
+#
+RL_MASS_SPIRAL#
+Espiral Perfurante
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Ferir Alvo 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Rifles.^000000
+^777777Consome 1 Projétil Revestido para causar
+dano físico com chance de infligir
+Sangramento no alvo selecionado.^000000
+Nível l Chance l Dano
+[Nv. 1]: ^77777740%^000000 l ^777777200%^000000
+[Nv. 2]: ^77777750%^000000 l ^777777400%^000000
+[Nv. 3]: ^77777760%^000000 l ^777777600%^000000
+[Nv. 4]: ^77777770%^000000 l ^777777800%^000000
+[Nv. 5]: ^77777780%^000000 l ^7777771.000%^000000
+#
+RL_E_CHAIN#
+Reação Ilimitada
+Nível máximo: ^77777710^000000
+Pré-requisitos:
+^777777Cara ou Coroa 1^000000
+^777777Reação em Cadeia 10^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 1 moeda para ativar 'Reação em Cadeia'
+em qualquer arma de fogo. O nível ativado de
+'Reação em Cadeia' será o mesmo nível
+aprendido de 'Reação Ilimitada'.^000000
+Nível l Duração
+[Nv. 1]: ^77777745 segundos^000000
+[Nv. 2]: ^77777760 segundos^000000
+[Nv. 3]: ^77777775 segundos^000000
+[Nv. 4]: ^77777790 segundos^000000
+[Nv. 5]: ^777777105 segundos^000000
+[Nv. 6]: ^777777120 segundos^000000
+[Nv. 7]: ^777777135 segundos^000000
+[Nv. 8]: ^777777150 segundos^000000
+[Nv. 9]: ^777777165 segundos^000000
+[Nv. 10]: ^777777180 segundos^000000
+#
+RL_H_MINE#
+Arremessar Granada
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Mina do Justiceiro 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Lança-Granadas.^000000
+^777777Atira 1 Granada Aderente no alvo
+para causar dano instantaneamente.
+A granada será presa no alvo por 50 segundos.
+Dentro desse tempo, é possível usar 'Ignição'
+para causar dano extra de propriedade Fogo
+no alvo e oponentes ao redor.
+Até 5 granadas podem ser fixadas em alvos diferentes.
+Se nenhuma granada for detonada nesse tempo,
+a granada se desprende do alvo.^000000
+Nível l Dano l Dano Extra
+[Nv. 1]: ^777777400%^000000 l ^777777800%^000000
+[Nv. 2]: ^777777600%^000000 l ^7777771.100%^000000
+[Nv. 3]: ^777777800%^000000 l ^7777771.400%^000000
+[Nv. 4]: ^7777771.000%^000000 l ^7777771.700%^000000
+[Nv. 5]: ^7777771.200%^000000 l ^7777772.000%^000000
+#
+RL_FIRE_RAIN#
+Disparo Labareda
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Ataque Gatling 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Metralhadoras.^000000
+^777777Dispara em uma área de 3x10 células,
+com chance de remover habilidades de terreno
+no alcance da labareda.
+Consome 10 projéteis, mas para conjurar a
+habilidade, você precisa ter 11 projéteis.
+Nível l Dano l Chance de remover
+[Nv. 1]: ^7777773.800%^000000 l ^77777720%^000000
+[Nv. 2]: ^7777774.100%^000000 l ^77777725%^000000
+[Nv. 3]: ^7777774.400%^000000 l ^77777730%^000000
+[Nv. 4]: ^7777774.700%^000000 l ^77777735%^000000
+[Nv. 5]: ^7777775.000%^000000 l ^77777740%^000000
+#
+RL_FLICKER#
+Ignição
+Nível máximo: ^7777771^000000
+Pré-requisitos:
+^777777Cara ou Coroa 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Consome 1 Moeda para ativar todas as Granadas
+e Armadilhas Aderentes do usuário na tela.^000000
+#
+RL_FIREDANCE#
+Descarregar Tambor
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Desperado 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Pistolas.^000000
+^777777Consome 5 projéteis para causar dano físico
+na área de 7x7 células ao seu redor.
+O dano aumenta com o nível de 'Desperado'.^000000
+Nível l Dano l SP
+[Nv. 1]: ^777777200%^000000 l ^77777712^000000
+[Nv. 2]: ^777777400%^000000 l ^77777714^000000
+[Nv. 3]: ^777777600%^000000 l ^77777716^000000
+[Nv. 4]: ^777777800%^000000 l ^77777718^000000
+[Nv. 5]: ^7777771.000%^000000 l ^77777720^000000
+#
+RL_BANISHING_BUSTER#
+Tiro Neutralizante
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Rajada Estilhaçante 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas.^000000
+^777777Dispara 1 projétil para causar dano
+físico com chance de remover efeitos
+positivos e negativos do alvo.^000000
+Nível l Dano l Chance
+[Nv. 1]: ^7777772.300%^000000 l ^77777760%^000000
+[Nv. 2]: ^7777772.600%^000000 l ^77777770%^000000
+[Nv. 3]: ^7777772.900%^000000 l ^77777780%^000000
+[Nv. 4]: ^7777773.200%^000000 l ^77777790%^000000
+[Nv. 5]: ^7777773.500%^000000 l ^777777100%^000000
+#
+RL_AM_BLAST#
+Explosão Antimatéria
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Espiral Perfurante 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Rifles.^000000
+^777777Atira 1 projétil para causar dano
+físico com chance de infligir um efeito que
+reduz a resistência a raça Humanoide do alvo.^000000
+Nível l Chance l Resistência l Duração
+[Nv. 1]: ^77777730%^000000 l ^777777-10%^000000 l ^7777776 segundos^000000
+[Nv. 2]: ^77777740%^000000 l ^777777-20%^000000 l ^7777777 segundos^000000
+[Nv. 3]: ^77777750%^000000 l ^777777-30%^000000 l ^7777778 segundos^000000
+[Nv. 4]: ^77777760%^000000 l ^777777-40%^000000 l ^7777779 segundos^000000
+[Nv. 5]: ^77777770%^000000 l ^777777-50%^000000 l ^77777710 segundos^000000
+#
+RL_QD_SHOT#
+Saque Rápido
+Nível máximo: ^7777771^000000
+Pré-requisitos:
+^777777Reação em Cadeia 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Assim que 'Reação em Cadeia' ativar,
+é possível ativar 'Saque Rápido' para causar
+dano extra no alvo e nos oponentes
+marcados em brasa na área 21x21 células.
+Tiros adicionais aumentam com o nv. de classe.^000000
+#
+RL_D_TAIL#
+Lançar Míssil
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Marcar em Brasa 1^000000
+^777777Arremessar Granada 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Lança-Granadas.^000000
+^777777Lança um míssil nos alvos marcados em brasa.
+Se houver mais de um alvo marcado,
+o míssil atingirá todos os alvos na tela.
+Se não existirem alvos marcados, não há dano.
+Consome 1 Míssil Cauda de Dragão.^000000
+Nível l Dano
+[Nv. 1]: ^7777775.000%^000000
+[Nv. 2]: ^7777776.000%^000000
+[Nv. 3]: ^7777777.000%^000000
+[Nv. 4]: ^7777778.000%^000000
+[Nv. 5]: ^7777779.000%^000000
+#
+RL_R_TRIP#
+Expurgar
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Disparo Labareda 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Metralhadoras.^000000
+^777777Atira enquanto gira em torno de si.
+Alvos atingidos serão empurrados 3 células.
+Haverá um dano extra se os alvos
+se chocarem contra uma parede.
+Consome 5 projéteis, mas para conjurar a
+habilidade, você precisa ter 6 projéteis.^000000
+Nível l Dano l Área
+[Nv. 1]: ^7777771.300%^000000 l ^7777777x7 células^000000
+[Nv. 2]: ^7777771.600%^000000 l ^7777777x7 células^000000
+[Nv. 3]: ^7777771.900%^000000 l ^7777779x9 células^000000
+[Nv. 4]: ^7777772.200%^000000 l ^77777711x11 células^000000
+[Nv. 5]: ^7777772.500%^000000 l ^77777713x13 células^000000
+#
+RL_HEAT_BARREL#
+Furor
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Farta Fortuna 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome todas as moedas ativas
+Para aumentar sua velocidade de ataque,
+conjuração fixa e reduzir a precisão.
+É cancelada ao trocar de equipamentos.
+Não pode ser usada junto com Proteção Platina
+e Resistência Final. Dura 1 minuto.^000000
+Nível l Vel. atq. l Precisão
+[Nv. 1]: ^777777 +1^000000 l ^777777 -30^000000
+[Nv. 2]: ^777777 +2^000000 l ^777777 -35^000000
+[Nv. 3]: ^777777 +3^000000 l ^777777 -40^000000
+[Nv. 4]: ^777777 +4^000000 l ^777777 -45^000000
+[Nv. 5]: ^777777 +5^000000 l ^777777 -50^000000
+#
+RL_SLUGSHOT#
+Calibre Letal
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Tiro Neutralizante 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Espingardas.^000000
+^777777Consome 1 Projétil Pesado para causar dano
+e empurrar um alvo 6 células para trás.
+Possui um alcance de 9 células, porém
+ao tentar atingir alvos com distância
+maior que 3 células, haverá uma perda de
+precisão a cada célula distante.^000000
+Nível l Dano l Precisão
+[Nv. 1]: ^7777771.200% em monstros^000000 l ^777777 -10%^000000
+         ^7777772.000% em personagens^000000
+[Nv. 2]: ^7777772.400% em monstros^000000 l ^777777 -9%^000000
+         ^7777774.000% em personagens^000000
+[Nv. 3]: ^7777773.600% em monstros^000000 l ^777777 -8%^000000
+         ^7777776.000% em personagens^000000
+[Nv. 4]: ^7777774.800% em monstros^000000 l ^777777 -7%^000000
+         ^7777778.000% em personagens^000000
+[Nv. 5]: ^7777776.000% em monstros^000000 l ^777777 -6%^000000
+         ^77777710.000% em personagens^000000
+#
+RL_HAMMER_OF_GOD#
+Execução
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Farta Fortuna 1^000000
+^777777Explosão Antimatéria 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Somente com Rifles.^000000
+^777777Atinge alvos marcados em brasa
+e nos oponentes ao redor da área de 5x5.
+Se não houver alvos marcados, a habilidade
+atingirá uma célula aleatória da tela.
+Consome 1 projétil e todas as suas moedas.
+Haverá 100% de chance de Atordoar oponentes.
+Nível l Dano l Duração do Atordoamento
+[Nv. 1]: ^7777774.200%^000000 l ^7777773 segundos^000000
+[Nv. 2]: ^7777775.600%^000000 l ^7777773 segundos^000000
+[Nv. 3]: ^7777777.000%^000000 l ^7777774 segundos^000000
+[Nv. 4]: ^7777778.400%^000000 l ^7777774 segundos^000000
+[Nv. 5]: ^7777779.800%^000000 l ^7777775 segundos^000000
+#
+RL_C_MARKER#
+Marcar em Brasa
+Nível máximo: ^7777771^000000
+Pré-requisitos:
+^777777Cara ou Coroa 1^000000
+Descrição:
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Marca um alvo para exibi-lo no mini mapa.
+Alvos marcados perderão 10 pontos de esquiva
+e são afetados por 'Saque Rápido',
+'Lançar Míssil' e 'Execução'.
+Consome 1 moeda por marcação.
+Cada marca dura 50 segundos.^000000
+#
+RL_P_ALTER#
+Proteção Platina
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Farta Fortuna 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Somente com Projéteis Sagrados.^000000
+^777777Consome todas as moedas para ativar uma proteção
+que bloqueia ataques recebidos.
+Seu ATQ aumenta conforme o nível da
+habilidade e as moedas consumidas.
+Trocar equipamentos cancela o bônus.
+Não pode ser usada junto com 'Furor' e
+'Resistência Final'.^000000
+Nível l Bloqueios l Duração l HP da Proteção
+[Nv. 1]: ^7777774^000000 l ^77777730 segundos^000000 l ^7777775%^000000
+[Nv. 2]: ^7777775^000000 l ^77777745 segundos^000000 l ^77777710%^000000
+[Nv. 3]: ^7777776^000000 l ^77777760 segundos^000000 l ^77777715%^000000
+[Nv. 4]: ^7777777^000000 l ^77777775 segundos^000000 l ^77777720%^000000
+[Nv. 5]: ^7777778^000000 l ^77777790 segundos^000000 l ^77777725%^000000
+#
+RL_RICHS_COIN#
+Farta Fortuna
+Nível máximo: ^7777771^000000
+Pré-requisitos:
+^777777Cara ou Coroa 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Consome 100 zenys para criar 10 Moedas.
+Aprender a habilidade permite que
+'Cara ou Coroa' não consuma mais
+moedas em caso de falha.^000000
+#
+RL_B_TRAP#
+Armadilha Aderente
+Nível máximo: ^7777775^000000
+Pré-requisitos:
+^777777Ignição 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Consome 1 Armadilha Especial para reduzir a
+velocidade de movimento dos inimigos.
+Ao usar 'Ignição', a armadilha causará dano
+de acordo com sua DES e o HP do alvo.
+A duração do movimento depende da FOR e HP
+do alvo, com mínimo de 4 segundos.
+Apenas 1 armadilha por vez, por 10 segundos.^000000
+Nível l Área l Duração do movimento
+[Nv. 1]: ^7777773x3^000000 l ^7777774 + 6 segundos^000000
+[Nv. 2]: ^7777775x5^000000 l ^7777774 + 7 segundos^000000
+[Nv. 3]: ^7777775x5^000000 l ^7777774 + 8 segundos^000000
+[Nv. 4]: ^7777777x7^000000 l ^7777774 + 9 segundos^000000
+[Nv. 5]: ^7777777x7^000000 l ^7777774 + 10 segundos^000000"
 #
