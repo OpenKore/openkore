@@ -16,7 +16,8 @@
 # The majority of private servers use eAthena, this is a clone of kRO
 package Network::Receive::kRO;
 use strict;
-
+use Network::Receive qw(:actor_type :connection :stat_info :party_invite :party_leave :exp_origin);
 use base 'Network::Receive';
+
 
 1;
