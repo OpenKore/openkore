@@ -5924,19 +5924,4 @@ sub pet_evolution_result {
 	}
 }
 
-sub elemental_info {
-    my ($self, $args) = @_;
-    my $elemental = $elementalsList->getByID($args->{'ID'});
-	
-	if(!$elemental) {
-		$elemental->{ID} = $args->{'ID'};
-	}
-    $elemental->{hp} = $args->{hp};
-	$elemental->{hp_max} = $args->{hp_max};
-	$elemental->{sp} = $args->{sp};
-	$elemental->{sp_max} = $args->{sp_max};
-	
-	$elementalsList->add($elemental);
-}
-
 1;
