@@ -1027,8 +1027,14 @@ sub stat_info {
 		'02A2' => $char->{mercenary},
 		'07DB' => $char->{homunculus},
 		'0ACB' => $char,
-		'081E' => exists $args->{ID} && Actor::get($args->{ID}), # Sorcerer's Spirit
 	}->{$args->{switch}};
+
+	if($args->{switch} eq "081E") {
+		if(!$char->{elemental}) {
+			$char->{elemental} = new Actor::Elemental;
+		}
+		$actor = $char->{elemental}; # Sorcerer's Spirit
+	}
 
 	unless ($actor) {
 		warning sprintf "Actor is unknown or not ready for stat information (switch %s, type %d, val %d)\n", @{$args}{qw(switch type val)};
@@ -1384,6 +1390,15 @@ sub actor_display {
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
+	} elsif ($object_class eq 'Actor::Elemental') {
+		# Actor is a Elemental
+		$actor = $elementalsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Elemental();
+			$actor->{appear_time} = time;
+			$actor->{name} = bytesToString($args->{name});
+			$mustAdd = 1;
+		}
 	}
 
 	#### Step 2: update actor information ####
@@ -1534,7 +1549,11 @@ typedef enum <unnamed-tag> {
 		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
 			$slavesList->add($actor);
 			Plugins::callHook('add_slave_list', $actor);
-		}
+		} elsif (UNIVERSAL::isa($actor, "Actor::Elemental")) {
+			$elementalsList->add($actor);
+			Plugins::callHook('add_elemental_list', $actor);
+
+		} 
 	}
 
 
@@ -1573,6 +1592,9 @@ typedef enum <unnamed-tag> {
 
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug sprintf("Elemental Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 
 		} else {
 			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
@@ -1641,6 +1663,9 @@ typedef enum <unnamed-tag> {
 			# Neither can this.
 			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('npc_moved', $actor);
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug "Elemental Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		        Plugins::callHook('pet_moved', $actor);
 		} else {
 			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		}
@@ -1658,6 +1683,8 @@ typedef enum <unnamed-tag> {
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
 			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('NPC')) {
 			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} else {
@@ -6028,4 +6055,19 @@ sub pet_evolution_result {
 	}
 }
 
+sub elemental_info {
+	my ($self, $args) = @_;
+
+	my $actor = $elementalsList->getByID($args->{ID});
+	if (!defined $actor) {	
+		
+	}
+	if(!$char->{elemental}) {
+			$char->{elemental} = new Actor::Elemental;
+		}
+	foreach (qw(ID hp hp_max sp sp_max)) {
+		$char->{elemental}{$_} = $args->{$_};
+	}
+	
+}
 1;
