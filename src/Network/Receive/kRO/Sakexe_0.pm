@@ -16,7 +16,7 @@
 package Network::Receive::kRO::Sakexe_0;
 
 use strict;
-use Network::Receive::kRO qw(:actor_type :connection :stat_info :party_invite :party_leave :exp_origin);
+use Network::Receive::kRO;
 use base qw(Network::Receive::kRO);
 ############# TEMPORARY?
 use Time::HiRes qw(time usleep);
