@@ -476,8 +476,9 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
-		'07FC' => ['party_leader', 'V2', [qw(old new)]],
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -561,6 +562,7 @@ sub new {
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
+		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADE' => ['flag', 'V', [qw(unknown)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
