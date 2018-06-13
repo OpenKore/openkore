@@ -1005,7 +1005,9 @@ sub actorAddedRemovedVars {
 		return ('npc', \@npcsID, \%npcs);
 	} elsif ($actor->isa ('Actor::Slave')) {
 		return ('slave', \@slavesID, \%slaves);
-	} else {
+	} elsif ($actor->isa ('Actor::Elemental')) {
+		return ('elemental', \@elementalsID, \%elementals);
+	}else {
 		return (undef, undef, undef);
 	}
 }
@@ -1108,6 +1110,7 @@ sub actorListClearing {
 	undef %npcs;
 	undef %pets;
 	undef %slaves;
+	undef %elementals;
 	undef @itemsID;
 	undef @playersID;
 	undef @monstersID;
@@ -1115,6 +1118,7 @@ sub actorListClearing {
 	undef @npcsID;
 	undef @petsID;
 	undef @slavesID;
+	undef @elementalsID;
 }
 
 sub avoidGM_talk {

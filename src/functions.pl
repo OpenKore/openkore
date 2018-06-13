@@ -517,6 +517,7 @@ sub finalInitialization {
 		tie %npcs, 'Tie::ActorHash';
 		tie %portals, 'Tie::ActorHash';
 		tie %slaves, 'Tie::ActorHash';
+		tie %elementals, 'Tie::ActorHash';
 	}
 
 	$itemsList = new ActorList('Actor::Item');
@@ -526,9 +527,10 @@ sub finalInitialization {
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
 	$slavesList = new ActorList('Actor::Slave');
+	$elementalsList = new ActorList('Actor::Elemental');
 	$venderItemList = InventoryList->new;
 	$storeList = InventoryList->new;
-	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
+	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList, $elementalsList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
 		$list->onClearBegin()->add(undef, \&actorListClearing);
@@ -677,6 +679,7 @@ sub initMapChangeVars {
 	$portalsList->clear();
 	$npcsList->clear();
 	$slavesList->clear();
+	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
 
