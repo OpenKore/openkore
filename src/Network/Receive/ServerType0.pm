@@ -13,7 +13,7 @@
 package Network::Receive::ServerType0;
 
 use strict;
-use Network::Receive ();
+use Network::Receive qw(:actor_type :connection :stat_info :party_invite :party_leave :exp_origin);
 use base qw(Network::Receive);
 use Time::HiRes qw(time usleep);
 
