@@ -8,8 +8,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000022.05.2018.^000000
-Este item será removido no dia ^ff000023.05.2018.^000000
+Promoção limitada até o dia ^ff000025.06.2018.^000000
+Este item será removido no dia ^ff000026.06.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -16664,39 +16664,39 @@ Peso: ^7777770.2^000000
 Propriedade:^777777Neutro^000000
 #
 13203#
-Um projétil de Lança-Granadas que carrega a propriedade Fogo.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Fogo^000000
 #
 13204#
-Um projétil de Lança-Granadas que carrega a propriedade Vento.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Vento^000000
 #
 13205#
-Um projétil de Lança-Granadas contendo um veneno mortal. Possui uma pequena chance de causar [Envenenamento] nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Veneno^000000
 #
 13206#
-Um projétil de Lança-Granadas que carrega a propriedade Sombrio. Possui uma pequena chance de causar Cegueira nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Sombrio^000000
 #
 13207#
-Um projétil de Lança-Granadas que carrega a propriedade Água.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Água^000000
 #
 // ------------------ ???? ???? ------------------------
 13250#
@@ -40699,14 +40699,6 @@ Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classe: ^777777Todas as Classes^000000
 #
-13208#
-Um tipo de artrópode. Quando se enrola, fica muito duro.
-^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Atordoamento.^000000
-Tipo: ^777777Projétil^000000
-Ataque: ^77777750^000000
-Propriedade: ^777777Neutro^000000
-Peso: ^7777770.5^000000
-#
 16740#
 Uma caixa que tem uma Proteção do Deus do Mar. (Disponível por 23 horas)
 ^000088Item de Aluguel^000000
@@ -59183,64 +59175,54 @@ Feito com requinte e elegância, seis raras rosas azuis e fitas brancas de um ca
 ^0000ffSP máx. +50.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Fendark]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Trilobita]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Nereida]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Ferrão]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Lagarta]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Encouraçado]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Zumbi Mestre]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Diabolik]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Anjo Fajuto]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Furador]^000000
-A cada 3 refinos:
+A cada 3 refinos do Salto:
 ^0000ffATQ e ATQM +10.^000000
-Ao derrotar monstros com ataques físicos:
-^0000ffRecupera 30 de HP e 3 de SP.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^7777770^000000
 Peso: ^77777720^000000
@@ -59294,5 +59276,918 @@ Defesa: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-12--------------------
+//*****************************************************
+28737#
+Forjada há muitos séculos, essa bela adaga foi uma arma letal nas mãos dos mais habilidosos ninjas. Sua aparência faz jus ao poder da sua lâmina, capaz de retalhar os inimigos com graça e rapidez.
+^0000ffEsquiva +10.^000000
+^0000ffRecarga de [Corte Espiritual] e [Kunai Explosiva] -1 segundo.^000000
+Refino +7 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Refino +9 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777120^000000
+Propriedade: ^777777Fantasma^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Gatunos, Mercadores, Ninjas e evoluções^000000
+#
+19274#
+Moderno e discreto, esse fone se ajusta perfeitamente ao tamanho da sua cabeça. Por isso, ele não cai de jeito nenhum, e você ainda pode curtir um som no meio da briga.
+^0000ffPós-conjuração -5%.^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+Ao derrotar monstros com qualquer tipo de ataque:
+^0000ffRecupera 5 de SP.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+19300#
+As grandes orelhas de cachorro podem até amenizar a imagem importante desse quepe, mas isso não impede que ele imponha respeito ou demonstre o valor da mais alta patente.
+^0000ffATQ +15 a cada 2 refinos.^000000
+Refino +7 ou mais:
+^0000ffATQ +30.^000000
+Refino +9 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +11 ou mais:
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Katar de Cinzas]^000000
+A cada 2 refinos:
+^0000ffATQ +20.^000000
+^FF6347Conjunto^000000
+^FF6347[Tufão]^000000
+A cada 2 refinos:
+^0000ffDano de [Fúria do Furacão] +15%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777735^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31460#
+Em homenagem à sentinela Desirèe Olivier, dedicados artesãos confeccionaram lanternas flutuantes que parecem subir aos céus, como símbolo de abrigo para a sua alma. Após tantos anos de dedicação, uma das maiores guerreiras que desbravou Rune-Midgard lutando contra inúmeros obstáculos agora encontrará repouso e serenidade. Que seu bravo espírito seja guia e inspiração para a sua jornada.
+^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão, vendido em NPC e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//--------------------REBELLION------------------------
+//*****************************************************
+13228#
+Um projétil envolto em Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Fogo^000000
+Peso: ^7777770.2^000000
+#
+13229#
+Um projétil envolto em Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Vento^000000
+Peso: ^7777770.2^000000
+#
+13230#
+Um projétil envolto em Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Água^000000
+Peso: ^7777770.2^000000
+#
+13231#
+Um projétil coberto de Veneno.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Veneno^000000
+Peso: ^7777770.2^000000
+#
+13232#
+Um projétil envolto em poder Sombrio.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Sombrio^000000
+Peso: ^7777770.2^000000
+#
+13208#
+Um tipo de artrópode. Quando se enrola, fica muito duro.
+^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Atordoamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^7777770.2^000000
+#
+13215#
+Este projétil pode penetrar a armadura mais espessa.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13216#
+Um projétil envolto em poder de Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Fogo^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13217#
+Um projétil envolto em poder de Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Água^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13218#
+Um projétil envolto em poder de Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Vento^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13219#
+Um projétil envolto em poder de Terra
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Terra^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13220#
+Um projétil de prata embebido em água benta.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Sagrado^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13221#
+Um pequeno projétil de prata repleto de poder Sagrado.
+Tipo: ^777777Munição^000000
+Ataque: ^77777715^000000
+Propriedade: ^777777Sagrado^000000
+Peso: ^7777770.2^000000
+#
+13222#
+Um projétil vermelho de sangue.
+^0000ffAo realizar ataques físicos a distância, 1% de chance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^7777770.1^000000
+#
+13223#
+Um projétil de Lança-Granadas que carrega a propriedade Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Fogo^000000
+Peso: ^7777770.5^000000
+#
+13224#
+Um projétil de Lança-Granadas que carrega a propriedade Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Vento^000000
+Peso: ^7777770.5^000000
+#
+13225#
+Um projétil de Lança-Granadas que carrega um veneno mortal.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Veneno^000000
+Peso: ^7777770.5^000000
+#
+13226#
+Um projétil de Lança-Granadas que carrega a escuridão.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Sombrio^000000
+Peso: ^7777770.5^000000
+#
+13227#
+Um projétil de Lança-Granadas que carrega a propriedade Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Água^000000
+Peso: ^7777770.5^000000
+#
+13210#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777725^000000
+#
+13211#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777750^000000
+#
+13212#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777775^000000
+#
+13213#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^777777100^000000
+#
+13214#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+Você deve estar se perguntando do que é feito, porque é muito caro e pesado.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^777777120^000000
+#
+7663#
+Um projétil completamente revestido. A penetração é maximizada para causar alto dano.
+^0000ffCatalisador de [Espiral Perfurante], não é necessário equipar.^000000
+Peso: ^7777770.2^000000
+#
+7664#
+Um lançador de minas que pode ser usado com um Lança-Granadas.
+^0000ffCatalisador de [Arremessar Granada], não é necessário equipar.^000000
+Peso: ^7777770.3^000000
+#
+7665#
+Míssil apelidado de "Cauda Maligna". Ele rastreia o alvo e causa dano.
+^0000ffCatalisador de [Lançar Míssil], não é necessário equipar.^000000
+Peso: ^77777710^000000
+#
+6746#
+^ff0000Este item está vinculado à conta.^000000
+Um pedaço de ferro não acabado de alguma forja. Devido  à sua forma fora do padrão, ele não pode ser usado para montagem.
+Peso: ^7777770^000000
+#
+6747#
+^ff0000Este item está vinculado à conta.^000000
+Pedaço de uma arma padrão. Perfeito para ser usado na produção de um revólver.
+Peso: ^7777770^000000
+#
+28201#
+Este lança-granadas foi nomeado a partir da Cruz Meridional, que simboliza a morte.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de infligir Maldição no oponente.^000000
+^0000ff10% de chance de autoconjurar [Impacto Cruzado] nv. 1.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777480^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777141^000000
+Classes: ^777777Insurgentes^000000
+#
+28202#
+Este lança-granadas foi nomeado a partir da Cruz Meridional, que simboliza a morte.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de infligir Maldição no oponente.^000000
+^0000ff10% de chance de autoconjurar [Impacto Cruzado] nv. 1.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777480^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777141^000000
+Classes: ^777777Insurgentes^000000
+#
+13120#
+Um par de armas com corpo branco e cano vermelho.
+^0000ffDano de [Desperado] +20%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de infligir Incêndio no oponente.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777150^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13122#
+Uma arma de alta qualidade cujo design é focado no desempenho.
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano físico a distância +30%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777200^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13189#
+Este rifle de assalto de tamanho médio tem poder de fogo e precisão superiores.
+^0000ffCRIT +30.^000000
+^0000ffPrecisão +20.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777240^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777105^000000
+Classes: ^777777Insurgentes^000000
+#
+13190#
+Este rifle modificado dispara projéteis com tratamento especial que causam efeito de atraso além do dano.
+^0000ffCRIT +15.^000000
+^0000ffPrecisão +10.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777260^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13192#
+Uma espingarda cujo poder de fogo devastador é atenuado pela sua miserável precisão.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -50.^000000
+^0000ffAlcance de 5 células.^000000
+^0000ffVelocidade de ataque -10%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777400^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777108^000000
+Classes: ^777777Insurgentes^000000
+#
+13193#
+Uma companheira para a espingarda Rolling Stone, essa arma é equipada com um dispositivo especial para causar dano extra.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -10.^000000
+^0000ffVelocidade de ataque -10%.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Tempestade de Raios] nv. 5.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777280^000000
+Peso: ^777777180^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777120^000000
+Classes: ^777777Insurgentes^000000
+#
+13194#
+Esta espingarda semiautomática fornece melhor cadência, mas pouco dano.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -25.^000000
+^0000ffVelocidade de ataque +25%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777250^000000
+Peso: ^777777140^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13124#
+Uma arma de alta qualidade cujo design é focado no desempenho.
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano físico a distância +30%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777200^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13195#
+Este rifle modificado dispara projéteis com tratamento especial que causam efeito de atraso além do dano.
+^0000ffCRIT +15.^000000
+^0000ffPrecisão +10.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777260^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13196#
+Esta espingarda semiautomática fornece melhor cadência, mas pouco dano.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -25.^000000
+^0000ffVelocidade de ataque +25%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777250^000000
+Peso: ^777777140^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13197#
+Uma versão modificada da Gatling produzida em massa. É bem útil se considerarmos sua qualidade.
+^0000ffCRIT +5.^000000
+^0000ffPrecisão -5.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777220^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777772^000000
+Nível mínimo: ^777777106^000000
+Classes: ^777777Insurgentes^000000
+#
+13198#
+Esta poderosa Gatling pode disparar uma chuva de projéteis em uma fração de segundo.
+^0000ffCRIT +10.^000000
+^0000ffPrecisão -25.^000000
+^0000ffDano físico a distância +20%.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777250^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777774^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13199#
+Esta poderosa Gatling pode disparar uma chuva de projéteis em uma fração de segundo.
+^0000ffCRIT +10.^000000
+^0000ffPrecisão -25.^000000
+^0000ffDano físico a distância +20%.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777250^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777774^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13118#
+^ff0000Este item é vinculado à conta.^000000
+Uma pistola montada de forma amadora.
+Tipo: ^777777Pistola^000000
+Ataque: ^7777770^000000
+Peso: ^77777710^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiro e evoluções^000000
+#
+13119#
+^ff0000Este item é vinculado à conta.^000000
+Fabricada de forma amadora, mas forjada com os melhores materiais; possui um ar estranho devido ao toque artesanal.
+Tipo: ^777777Pistola^000000
+Ataque: ^777777100^000000
+Peso: ^77777710^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Justiceiro e evoluções^000000
+#
+28200#
+Uma Lança-Granadas de metal que tem o poder de perfurar e matar inimigos.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira ou Atordoamento no oponente.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777410^000000
+Peso: ^777777240^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777110^000000
+Classes: ^777777Insurgentes^000000
+#
+23123#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis de fogo.
+Peso: ^77777725^000000
+#
+23124#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis de relâmpago.
+Peso: ^77777725^000000
+#
+23125#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis congelantes.
+Peso: ^77777725^000000
+#
+23126#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis venenosos.
+Peso: ^77777725^000000
+#
+23127#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis cegantes.
+Peso:^77777725^000000
+#
+22737#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis sanguinários.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22738#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de prata.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22739#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Vento.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22740#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Sombrio.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22741#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propridade Veneno.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22742#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Água.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22743#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Fogo.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22744#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis perfuradores.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22745#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis incandescentes.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22746#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis glaciais.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22747#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de eletrochoque.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22748#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis tectônicos.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22749#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de purificação.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22107#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22108#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22109#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22110#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22111#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22112#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22113#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000.
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgente, Kagerou, Oboro^000000
+#
+22114#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22115#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22116#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22117#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22118#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+13116#
+Uma arma de recuo reduzido para que possa ser manejada por iniciantes. Infelizmente, isso fez com que seu ataque se tornasse mais baixo.
+^0000ffPrecisão -5.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^77777720^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13181#
+Uma escopeta remodelada para iniciantes, mas a mudança no peso aumentou seu recuo.
+^CD3278Mantém [Espalhar Dano] ativo.^000000.
+Tipo: ^777777Espingarda^000000
+Ataque: ^77777780^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13182#
+Uma Gatling de disparos múltiplos para iniciantes. Fácil de usar, mas bem pesada.
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777740^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13183#
+Um Lança-Granadas feito especialmente para iniciantes. Para iniciantes!
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^77777740^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13180#
+Uma arma de tamanho reduzido, mas com um cano maior para maior alcance e precisão. Mais fácil de usar do que uma pistola.
+Tipo: ^777777Rifle^000000
+Ataque: ^77777750^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+25187#
+Um projétil tão caro e pesado que você vai ficar se perguntando do que ele é feito.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Peso: ^777777120^000000
 #
 //file end
