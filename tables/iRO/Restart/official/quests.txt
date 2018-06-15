@@ -22464,4 +22464,49 @@ Hunt the monster listed#
 
 63108#Hunting Board#SG_FEEL#QUE_NOIMAGE#
 Hunt the monster listed#
+
+63162#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring a Poring Egg back to the Poring Con Volunteer.#
+#
+
+63164#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring 15 Apple Juices to the Poring Con Volunteer.#
+#
+
+63166#Poring Con#SG_FEEL#QUE_NOIMAGE#
+You completed the Poring Con entrance quest! Keep your badge safe, you'll need it for the con!#
+#
+
+63167#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Help Cosplayer Freya with some much needed cosplay supplies: 30 Fluff, 20 Blue Hair, 20 Yarn, 1 Darkgreen Dyestuffs and 1 Adventurer's Suit.#
+#
+
+63168#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to Cosplayer Freya again. She's got some good news!#
+#
+
+63170#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Take some cosplay photos and bring them back to Astra and Jelloshaker.#
+#
+
+63176#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the other convention workers to investigate Campitor's wereabouts.#
+#
+
+63177#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the Monster Cosplayer? She might know where Camp is.#
+#
+
+63178#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor went to meet a band in Juno?#
+#
+
+63179#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor might be right outside Juno according to the Band Members.#
+#
+
+63180#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Maybe the Poring Con Volunteer at the entrance knows about Camp?#
+#
+
 #
