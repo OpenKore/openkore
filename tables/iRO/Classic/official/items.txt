@@ -6966,3 +6966,4 @@
 
 20028#Guildsman_Recruiter_Hat_Certificate#
 20029#Evolved_Bunny_Band_Certificate#
+20030#Vanilmirth_Hat_Certificate#
