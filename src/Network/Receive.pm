@@ -1691,6 +1691,10 @@ typedef enum <unnamed-tag> {
 			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		}
 	}
+	
+	if($char->{elemental}{ID} eq $actor->{ID}) {
+		$char->{elemental}{ID} = $actor->{ID};
+	}
 }
 
 sub actor_died_or_disappeared {
@@ -6058,16 +6062,13 @@ sub pet_evolution_result {
 sub elemental_info {
 	my ($self, $args) = @_;
 
-	my $actor = $elementalsList->getByID($args->{ID});
-	if (!defined $actor) {	
-		
+	$char->{elemental} = Actor::get($args->{ID}) if ($char->{elemental}{ID} ne $args->{ID});
+	if (!defined $char->{elemental}) {	
+		$char->{elemental} = new Actor::Elemental;
 	}
-	if(!$char->{elemental}) {
-			$char->{elemental} = new Actor::Elemental;
-		}
-	foreach (qw(ID hp hp_max sp sp_max)) {
+
+	foreach (@{$args->{KEYS}}) {
 		$char->{elemental}{$_} = $args->{$_};
 	}
-	
 }
 1;
