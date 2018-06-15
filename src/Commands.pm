@@ -41,7 +41,7 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use I18N qw(stringToBytes bytesToString);
+use I18N qw(stringToBytes);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 our %handlers;
@@ -6918,12 +6918,30 @@ sub cmdElemental {
 				"Position: %s,%s\n",
 			unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
 			$jobs_lut{$char->{elemental}{jobID}},  
-			$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}{hpPercent}),
-			$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}{spPercent}),
+			$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}->hp_percent()),
+			$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}->sp_percent()),
 			$char->{elemental}{'pos'}{'x'},$char->{elemental}{'pos'}{'y'},
 		);
 		$msg .= ('-'x50) . "\n";
 		message $msg, "info";
+	} elsif ($args[0] eq "list") {
+		my $msg = center(T(" Elemental List "), 79, '-') ."\n".
+		T("#    Name                                Lv Dist Coord\n");
+		for my $elemental (@$elementalsList) {
+			my ($name, $dist, $pos);
+			$name = $jobs_lut{$elemental->{jobID}};
+			$dist = distance($elemental->{pos_to}, $elemental->{pos_to});
+			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
+			$pos = '(' . $elemental->{pos_to}{x} . ', ' . $elemental->{pos_to}{y} . ')';
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+				[$elemental->{binID}, $name, $elemental->{lv}, $dist, $pos]);
+		}
+		if (my $elementalsTotal = $elementalsList && $elementalsList->size) {
+			$msg .= TF("Total elementals: %s \n", $elementalsTotal);
+		} else	{$msg .= T("There are no elementals near you.\n");}
+		$msg .= '-' x 79 . "\n";
+		message $msg, "list";
 	} else {
 		error T("Error in function 'elemental')\n" .
 			"Usage: elemental <info|list>\n");

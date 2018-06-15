@@ -1841,6 +1841,34 @@ sub actor_died_or_disappeared {
 
 		$slavesList->remove($slave);
 
+	} elsif (defined $elementalsList->getByID($ID)) {
+		my $elemental = $elementalsList->getByID($ID);
+		if ($args->{type} == 1) {
+			message TF("ElementalDied: %s (%d) %s\n", $jobs_lut{$elemental->{jobID}}, $elemental->{binID}, $elemental->{actorType});
+			$elemental->{state} = 4;
+		} else {
+			if ($args->{type} == 0) {
+				debug "Elemental Disappeared: " . $jobs_lut{$elemental->{jobID}} . " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+				$elemental->{disappeared} = 1;
+			} elsif ($args->{type} == 2) {
+				debug "Elemental Disconnected: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+				$elemental->{disconnected} = 1;
+			} elsif ($args->{type} == 3) {
+				debug "Elemental Teleported: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+				$elemental->{teleported} = 1;
+			} else {
+				debug "Elemental Disappeared in an unknown way: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
+				$elemental->{disappeared} = 1;
+			}
+
+			$elemental->{gone_time} = time;
+			Plugins::callHook('elemental_disappeared', {elemental => $elemental});
+		}
+		if($char->{elemental}{ID} eq $ID) {
+			$char->{elemental} = undef;
+		}
+		$elementalsList->remove($elemental);
+
 	} else {
 		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
 	}
