@@ -41,7 +41,7 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use I18N qw(stringToBytes);
+use I18N qw(stringToBytes bytesToString);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 our %handlers;
@@ -101,6 +101,7 @@ sub initHandlers {
 	dumpnow				=> \&cmdDumpNow,
 	e					=> \&cmdEmotion,
 	eq					=> \&cmdEquip,
+	elemental			=> \&cmdElemental,
 	eval				=> \&cmdEval,
 	exp					=> \&cmdExp,
 	falcon				=> \&cmdFalcon,
@@ -6895,4 +6896,37 @@ sub cmdClan {
 	}
 }
 
+sub cmdElemental {
+	my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	} elsif(!$char->{elemental}) {
+		error TF("You don't have any elemental. You must use Skill to call Elemental\n");
+		return;
+	}
+	
+	if ($args[0] eq "info" || $args[0] eq "") {
+
+	my $msg = center(T(" Elemental Information "), 50, '-') ."\n" .
+			TF("ID: %s (%s)\n".
+				"Name : %s \n" .
+				"HP: %s/%s (%s\%)\n" .
+				"SP: %s/%s (%s\%)\n".
+				"Position: %s,%s\n",
+			unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
+			$jobs_lut{$char->{elemental}{jobID}},  
+			$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}{hpPercent}),
+			$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}{spPercent}),
+			$char->{elemental}{'pos'}{'x'},$char->{elemental}{'pos'}{'y'},
+		);
+		$msg .= ('-'x50) . "\n";
+		message $msg, "info";
+	} else {
+		error T("Error in function 'elemental')\n" .
+			"Usage: elemental <info|list>\n");
+	}
+}
 1;
