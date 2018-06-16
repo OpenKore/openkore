@@ -8,8 +8,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000014.05.2018.^000000
-Este item será removido no dia ^ff000015.05.2018.^000000
+Promoção limitada até o dia ^ff000025.06.2018.^000000
+Este item será removido no dia ^ff000026.06.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -2923,7 +2923,7 @@ Classes: ^777777Espadachins e evoluções^000000
 Lança que absorve o espírito dos inimigos que mata.
 ^0000ffRegenera 5 de SP a cada oponente morto.^000000
 A cada ataque físico:
-^0000ffRegenera 1 e SP.^000000
+^0000ffRegenera 1 de SP.^000000
 Tipo: ^777777Lança^000000
 Ataque: ^77777795^000000
 Peso: ^777777100^000000
@@ -8779,16 +8779,18 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 2509#
 Capa fina e macia, feita de tecido verde extremamente resistente. Diz a lenda que elas foram feitas pelos elfos de Alfheim, que usavam apenas as capas como proteção.
 ^0000ffVIT +10.^000000
-^FF6347Conjunto [Bastão do Sobrevivente]^000000
-^0000ffHP máx +300.^000000
-^0000ffATQM -5%.^000000
-^0000ffATQM +1% por refino até o +10.^000000
-^0000ffResistência a propriedade Neutro +3% por refino até o +10.^000000
-Classe: ^777777Capa^000000
+^FF6347Conjunto^000000
+^FF6347[Bastão do Sobrevivente]^000000
+^0000ffHP máx. +300.^000000
+^0000ffDano mágico -5%^000000
+A cada refino até o +10:
+^0000ffDano mágico +1%.^000000
+^0000ffResistência a propriedade Neutro +3%.^000000
+Tipo: ^777777Capa^000000
 Defesa: ^77777710^000000
 Peso: ^77777755^000000
 Nível necessário: ^77777775^000000
-Classes que utilizam: ^777777Mago e suas evoluções, Espiritualista^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
 #
 1721#
 Besta formada por um arco transversal e um compartimento contendo os virotes já engatilhados. É uma arma muito pesada e desengonçada, difícil de se armar e com um resultado final inferior ao de um bom arco. Mas a escolha é sua!
@@ -11184,11 +11186,12 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4165#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Inseto for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Inseto com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4166#
@@ -11200,9 +11203,9 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4167#
-Ao derrotar monstros da raça Bruto em ataques físicos:
+Ao derrotar monstros da raça Bruto com ataques físicos de curta distância:
 ^0000ffRegenera 5 de SP.^000000
-Ao desequipar:
+Ao desequipar a arma:
 ^0000ffDrena 5 de SP.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
@@ -11310,11 +11313,12 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4180#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Dragão for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Dragão com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4181#
@@ -11326,11 +11330,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4182#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Demônio for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Demônio com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4183#
@@ -12054,11 +12059,12 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4274#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Morto-Vivo for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Morto-Vivo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4275#
@@ -12173,11 +12179,12 @@ Utilização: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4289#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Planta for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Planta com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4290#
@@ -12315,19 +12322,21 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4307#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Peixe for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Peixe com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4308#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Neutro for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Amorfo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4309#
@@ -12385,11 +12394,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4316#
-^0000ffGanha 5 de SP cada vez que um monstro do tipo Anjo for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Anjo com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4317#
@@ -12489,11 +12499,12 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4329#
-^0000ffGanha 5 de SP cada vez que um monstro Humanoide for derrotado por um Ataque Físico corpo-a-corpo.
-Gasta 5 de SP ao desequipar a arma.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+Ao derrotar monstros da raça Humanoide com ataques físicos de curta distância:
+^0000ffRegenera 5 de SP.^000000
+Ao desequipar a arma:
+^0000ffDrena 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4330#
@@ -15419,15 +15430,23 @@ Peso: ^7777771^000000
 
 12913#
 Uma caixa contendo 20 Pergaminhos de Bênção em nível 10.
-Pergaminho de Bênção - ^000088Permite o uso da habilidade "Bênção" em nível 10.^000000
 Peso: ^7777771^000000
+--------------------------
+^000088Detalhes do item:^000000
+Pergaminho mágico criado com a essência de magia antiga.
+^0000ffAtiva [Bênção] nv. 10.^000000
 Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
+Peso: ^7777771^000000
 #
 12914#
 Uma caixa contendo 20 Pergaminhos de Aumentar Agilidade em nível 10.
-Pergaminho de Aumentar Agilidade - ^000088Permite o uso da habilidade "Aumentar Agilidade" em nível 10.^000000
 Peso: ^7777771^000000
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
+--------------------------
+^000088Detalhes do item:^000000
+Pergaminho mágico criado com a essência de magia antiga.
+^0000ffAtiva [Aumentar Agilidade] nv. 10.^000000
+Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
+Peso: ^7777771^000000
 #
 12915#
 Uma caixa contendo 20 Poções Pergaminhos de Aspersio.
@@ -16422,198 +16441,206 @@ Uma parte do manuscrito perdido de Joshua. Está repleto de conteúdo significat
 // ---------- Classe Adicional - Justiceiro -----------
 13100#
 Uma pistola de seis tiros que é a arma mais básica de um Justiceiro.
-^0000ffPrecisão – 10.^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777730^000000
+Ataque: ^77777730^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13101#
-Uma pistola de seis tiros que é a arma mais básica para um Justiceiro.
-^0000ffPrecisão – 10. ^000000
+Uma pistola de seis tiros que é a arma mais básica de um Justiceiro.
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777730^000000
+Ataque: ^77777730^000000
 Peso: ^77777740^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777710^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13102#
 Uma pistola vermelho-sangue que dizem ser amaldiçoada.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777745^000000
+Ataque: ^77777745^000000
 Peso: ^77777745^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13103#
 Uma pistola vermelho-sangue que dizem ser amaldiçoada.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777745^000000
+Ataque: ^77777745^000000
 Peso: ^77777745^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13104#
 Uma pistola rara que só é produzida para atender a encomendas especiais. A gravação com o nome de seu criador pode ser usada por especialistas para autenticar a origem dessa arma.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13105#
 Uma pistola rara que só é produzida para atender a encomendas especiais. A gravação com o nome de seu criador pode ser usada por especialistas para autenticar a origem dessa arma.
-^0000ffPrecisão – 10.^000000
+^0000ffPrecisão -10.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777770^000000
+Ataque: ^77777770^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
+
 #
 13106#
 Uma bela pistola decorativa, essa arma dourada chama a atenção de todos.
-Permite uma pequena chance de conjurar automaticamente a habilidade "Cara ou Coroa" a cada ataque. A Conjuração Automática Cara ou Coroa será igual ao nível de habilidade Cara ou Coroa aprendido pelo usuário.
-^0000ffPrecisão – 10. ^000000
+^0000ffPrecisão -10.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Cara ou Coroa] no nível aprendido.^000000
 Tipo: ^777777Pistola^000000
-Força de Ataque: ^77777720^000000
+Ataque: ^77777720^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777712^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13150#
 Uma arma de fogo equipada com um cano longo que aumenta seu alcance e a precisão de seus disparos.
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^77777750^000000
+Ataque: ^77777750^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13151#
 Um rifle de alto desempenho que dispara projéteis poderosos a longas distâncias.
-^0000ffPrecisão +10, Crítico +10. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13152#
 Um rifle de alto desempenho que dispara projéteis poderosos a longas distâncias.
-^0000ffPrecisão +10, Crítico +10. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777120^000000
+Ataque: ^777777120^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777724^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13153#
 Um rifle avançado que dispara projéteis com maior poder explosivo. Assim como o crepúsculo representa o fim do dia, essa arma representa o fim de seus alvos.
-^0000ffPrecisão +10, Crítico +10%. ^000000
+^0000ffCRIT +10.^000000
+^0000ffPrecisão +10.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^77777775^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777756^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13154#
-Uma espingarda poderosa que soa como um trovão a cada disparo. Causa dano colateral.
+Uma espingarda poderosa que soa como um trovão a cada disparo. ^CD3278Mantém [Espalhar Dano] ativo.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777135^000000
+Ataque: ^777777135^000000
 Peso: ^77777790^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777714^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13155#
-Uma espingarda escura e elegante que foi modificada para disparar rapidamente por seus dois canos, aumentando seu poder de ataque. Causa dano colateral.
+Uma espingarda escura e elegante que foi modificada para disparar rapidamente por seus dois canos, aumentando seu poder de ataque.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777180^000000
+Ataque: ^777777180^000000
 Peso: ^77777790^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777735^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13156#
 A espingarda mais poderosa disponível no momento, esta arma é conhecida como ''A melhor amiga de um Justiceiro".
-Cada disparo causa dano colateral e ela possui uma pequena chance de conjurar um Disparo Espalhado Nível 6.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Disparo Espalhado] nv. 6.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777210^000000
+Ataque: ^777777210^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13157#
 Uma Metralhadora Gatling cujo nome traz à mente a imagem de um viajante solitário.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777750^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777750^000000
 Peso: ^777777230^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13158#
 Uma Metralhadora Gatling que carrega enorme poder destrutivo.
-Adiciona +10 Crítico contra monstros Brutos.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777775^000000
+^0000ffCRIT +10 em oponentes da raça Bruto.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777775^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777768^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13159#
-Uma Metralhadora Gatling que carrega de um enorme poder destrutivo.
-Adiciona +10 Crítico contra monstros Brutos.
-Tipo: ^777777Metralhadora Gatling^000000
-Força de Ataque: ^77777775^000000
+Uma Metralhadora Gatling que carrega enorme poder destrutivo.
+^0000ffCRIT +10 em oponentes da raça Bruto.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777775^000000
 Peso: ^777777250^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777768^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13160#
-Um Lança-Granadas de alto desempenho, modelo topo de linha. Cada ataque físico de curto alcance possui uma pequena chance de destruir a armadura do inimigo.
+Um Lança-Granadas de alto desempenho, modelo topo de linha.
+^0000ffAo realizar ataques físicos, 2% de chance de destruir a armadura do oponente.^000000
 Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777220^000000
+Ataque: ^777777220^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777752^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13161#
 Um Lança-Granadas de alto desempenho, modelo topo de linha.
-Cada ataque físico de curto alcance possui uma pequena chance de destruir a armadura do inimigo.
+^0000ffAo realizar ataques físicos, 2% de chance de destruir a armadura do oponente.^000000
 Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777220^000000
+Ataque: ^777777220^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777752^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13162#
-Um Lança-Granadas que impulsiona seus projéteis com chamas infernais.
-Tipo: ^777777Lança-Granadas^000000
-Força de Ataque: ^777777280^000000
+Um Lança-Granadas que impulsiona seus projéteis com chamas infernais Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777280^000000
 Peso: ^777777125^000000
-Nível da Arma: ^7777772^000000
+Nível da arma: ^7777772^000000
 Nível necessário: ^77777765^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13200#
 Um pequeno projétil de metal que pode ser disparado de uma arma para causar danos aos inimigos.
@@ -16637,39 +16664,39 @@ Peso: ^7777770.2^000000
 Propriedade:^777777Neutro^000000
 #
 13203#
-Um projétil de Lança-Granadas que carrega a propriedade Fogo.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Fogo^000000
 #
 13204#
-Um projétil de Lança-Granadas que carrega a propriedade Vento.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Vento^000000
 #
 13205#
-Um projétil de Lança-Granadas contendo um veneno mortal. Possui uma pequena chance de causar [Envenenamento] nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Veneno^000000
 #
 13206#
-Um projétil de Lança-Granadas que carrega a propriedade Sombrio. Possui uma pequena chance de causar Cegueira nos inimigos.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Sombrio^000000
 #
 13207#
-Um projétil de Lança-Granadas que carrega a propriedade Água.
-Tipo: ^777777Munição^000000
-Força de Ataque: ^77777750^000000
+Munição antiga que não é mais encontrada em lugar algum e não possui mais utilidade.
+--------------------------
+Você pode trocá-la com o NPC Mercador Kenny <NAVI>[Navegar]<INFO>izlude_in,73,104,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770.5^000000
-Propriedade:^777777Água^000000
 #
 // ------------------ ???? ???? ------------------------
 13250#
@@ -16740,11 +16767,12 @@ Peso: ^7777772^000000
 Propriedade:^777777Fogo^000000
 #
 13259#
-Uma kunai embebida em um veneno letal e que possui uma pequena chance de causar [Envenenamento] em um inimigo alvejado com um ataque físico de longo alcance.
-Tipo: ^777777Arma de Arremesso^000000
-Força de Ataque: ^77777730^000000
+Uma kunai embebida em um veneno letal.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento.^000000
+Tipo: ^777777Kunai^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Veneno^000000
 Peso: ^7777772^000000
-Propriedade:^777777Veneno^000000
 #
 7521#
 Uma conta, imbuída da propriedade Fogo, usada por Ninjas como um catalisador durante a execução de suas habilidades.
@@ -19487,10 +19515,11 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4358#
-Carta Seyren Windsor.
-FOR -6. Adiciona uma FOR igual ao nível de aprimoramento do capacete.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+^0000ffFOR -6.^000000
+A cada refino:
+^0000ffFOR +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4359#
@@ -19578,10 +19607,11 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4370#
-Carta Dimik.
-VIT -5. Adiciona uma VIT igual ao nível de aprimoramento da vestimenta.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffVIT -5.^000000
+A cada refino:
+^0000ffVIT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4371#
@@ -19610,11 +19640,12 @@ Equipado em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4373#
-Carta Donzela Verde.
-SOR -5. Oferece um bônus de SOR e de Crítico igual ao nível de aprimoramento da capa equipada.
-(O bônus por nível de aprimoramento só será válido até o nível +10 do equipamento)
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+^0000ffSOR -5.^000000
+A cada refino até o +10:
+^0000ffSOR +1.^000000
+^0000ffCRIT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4374#
@@ -19807,17 +19838,19 @@ Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4396#
-Carta Odium de Thanatos.
-AGI -5. Adiciona uma AGI igual ao nível de aprimoramento dos sapatos equipados.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Calçado^000000
+^0000ffAGI -5.^000000
+A cada refino:
+^0000ffAGI +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4397#
-Carta Despero de Thanatos.
-INT -6. Adiciona uma INT igual ao nível de aprimoramento do escudo equipado.
-^FFFFFF   ^000000 Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Escudo^000000
+^0000ffINT -6.^000000
+A cada refino:
+^0000ffINT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4398#
@@ -19830,12 +19863,14 @@ Peso: ^7777771^000000
 ^0000ffDEF -30.^000000
 ^0000ffEsquiva -30.^000000
 ^0000ffMantém [Investigar] ativo.^000000
+A cada ataque físico:
+^0000ffDrena 1 de SP do usuário.^000000
 ^FF6347Investigar:^000000
 ^0000ffAnula a defesa física do alvo.^000000
 ^0000ffAumenta o ataque igual a 50% da defesa anulada.^000000
 ^0000ffEfeitos de ignorar DEF são aplicados antes de [Investigar].^000000
 Tipo: ^777777Carta^000000
-Ataque: ^777777Arma^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4400#
@@ -20005,75 +20040,94 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 13163#
 Um rifle de precisão com um tambor alongado para melhorar a precisão.
-Crítico +20, VelATQ -3%. Gera uma pequena chance de lançar automaticamente Rastrear Alvo nv. 5 a cada ataque físico.
+^0000ffCRIT +20.^000000
+^0000ffVelocidade de ataque -3%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Rastrear o Alvo] nv. 5.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13164#
 Um rifle de precisão com um tambor alongado para melhorar a precisão.
-Crítico +20, VelATQ -3%. Gera uma pequena chance de lançar automaticamente Rastrear Alvo nv. 5 a cada ataque físico.
+^0000ffCRIT +20.^000000
+^0000ffVelocidade de ataque -3%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Rastrear o Alvo] nv. 5.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777150^000000
+Ataque: ^777777150^000000
 Peso: ^777777100^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13165#
 Um rifle com um tambor mais curto, apropriado para combates a curta distância, como na selva ou em ambiente interno.
-Crítico +4, VelATQ +10%. Reduz a Precisão em um valor igual a 1/3 da DES básica do personagem.
+^0000ffCRIT +4.^000000
+^0000ffVelocidade de ataque +10%.^000000
+A cada 3 de DES base:
+^0000ffPrecisão -1.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777170^000000
+Ataque: ^777777170^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13166#
 Um rifle com um tambor mais curto, apropriado para combates a curta distância, como na selva ou em ambiente interno.
-Crítico +4, VelATQ +10%. Reduz a Precisão em um valor igual a 1/3 da DES básica do personagem.
+^0000ffCRIT +4.^000000
+^0000ffVelocidade de ataque +10%.^000000
+A cada 3 de DES base:
+^0000ffPrecisão -1.^000000
 Tipo: ^777777Rifle^000000
-Força de Ataque: ^777777170^000000
+Ataque: ^777777170^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13167#
-O tambor da Leão-de-Chácara original é feito de puro Oridecon, tornando-a muito durável. DES +1.
-Dano colateral: Acrescenta uma pequena chance de lançar automaticamente Disparo Espalhado nv. 6 a cada ataque.
-Aumentar o nível de aprimoramento da arma equipada acrescenta um bônus de DEF.^FFFFFF   ^000000
+A espingarda mais poderosa disponível no momento, esta arma é conhecida como ''A melhor amiga de um Justiceiro".
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffDES +1.^000000
+A cada refino:
+^0000ffDEF +1.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Disparo Espalhado] nv. 6.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^777777200^000000
+Ataque: ^777777200^000000
 Peso: ^777777130^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13168#
 Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão.
-Precisão -5.
-Dano colateral: Aumenta a VelATQ em 20%.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -5.^000000
+^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13169#
-Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão. Precisão -5.
-Dano colateral: Aumenta a VelATQ em 20%.
+Uma espingarda serrada que atira rapidamente como uma pistola, ao custo de uma menor precisão.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -5.^000000
+^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Espingarda^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 2677#
 Um belo anel imbuído de estranhos poderes espirituais, que gera efeitos surpreendentes quando usado com os itens certos.
@@ -21765,8 +21819,8 @@ Ao derrotar monstros da raça Bruto:
 Ao realizar ataques físicos:
 ^0000ff10% de chance de autoconjurar [Ataque Vital] nv. 3.^000000
 Tipo: ^777777Lança^000000
-Ataque: ^777777140^000000
-Peso: ^77777790^000000
+Ataque: ^777777180^000000
+Peso: ^777777420^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777765^000000
 Classes: ^777777Espadachins T. e evoluções^000000
@@ -22007,28 +22061,30 @@ Classes: ^777777Ciganas e evoluções^000000
 #
 
 13107#
-A alta precisão e rajadas rápidas fazem desta pistola uma arma especial.
-Ela foi feita em homenagem aos Justiceiros que exploram terrenos selvagens.
-A Precisão e a VelATQ aumentam dependendo da
-AGI do usuário.
-Tipo de Item: ^777777Pistola^000000
-Força de ataque: ^77777768^000000
+A alta precisão e rajadas rápidas fazem desta pistola uma arma especial. Ela foi feita em homenagem aos Justiceiros que exploram terrenos selvagens.
+^0000ffA cada 10 de AGI base:^000000
+^0000ffPrecisão +1.^000000
+A cada 14 de AGI base:
+^0000ffVelocidade de ataque +1%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^77777768^000000
 Peso: ^77777758^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 
 13170#
-Um rifle com eficiência maximizada. O cano belamente forjado atrai os Justiceiros, e seu tiro fatal perfura o inimigo.
-No entanto, sua desvantagem é sua demora para recarregar e atirar.
-Precisão + 20, Crítico + 50, VelATQ reduzida.
-Tipo de Item: ^777777Rifle^000000
-Força de ataque: ^777777138^000000
+Um rifle com eficiência maximizada. O cano belamente forjado atrai os Justiceiros, e seu tiro fatal perfura o inimigo. No entanto, sua desvantagem é sua demora para recarregar e atirar.
+^0000ffCRIT +50.^000000
+^0000ffPrecisão +20.^000000
+^0000ffVelocidade de ataque -5%.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777138^000000
 Peso: ^77777777^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Justiceiro^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 
 // ------------ 11.3 ??? ??? --------------
@@ -22808,11 +22864,14 @@ Peso: ^7777770^000000
 #
 14289#
 Caixa que contém um Cupom de Tintura.
-^ffffff_^000000
-Cupom de Tintura
-Cupom que o Estilista Especial pede em troca para tingir suas roupas. Você pode encontrá-lo em Prontera, nas coordenadas 105,66.
-^ffffff_^000000
+Pode ser negociada.
 Peso: ^7777771^000000
+--------------------------
+Descrição do Cupom:
+--------------------------
+Cupom usado para tingir roupas.
+^0000ffPermite mudar a cor da roupa de um personagem.^000000
+Peso: ^7777770^000000
 #
 6047#
 Cupom usado para remover a tintura das roupas.
@@ -22827,10 +22886,16 @@ Peso: ^7777770^000000
 #
 14290#
 Caixa que contém um Cupom Removedor.
-^ffffff_^000000
+Pode ser negociada.
 Peso: ^7777771^000000
+--------------------------
+Descrição do Cupom:
+--------------------------
+Cupom usado para remover a tintura das roupas.
+^0000ffPermite retornar à cor original da roupa de um personagem.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Peso: ^7777770^000000
 #
-
 1273#
 Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
 Esse katar é uma versão melhorada, mas instável, do Rugido Sangrento original, e, portanto é reconhecidamente eficaz contra humanos. Há rumores de que ao fim de 7 dias, ele dá um rugido bestial assustador antes de desaparecer para sempre.
@@ -25618,15 +25683,23 @@ Classes que utilizam:  ^7777772a. Classe Transcendental^000000
 #
 2386#
 Uma armadura milagrosa que pode alterar sua capacidade de acordo com habilidade do usuário.
-Aumenta HP e SP dependendo do nível de base.
-Ao sofrer ataque mágico, a armadura tem uma pequena chance de ativar sua habilidade de anular qualquer tipo de magia contra seu usuário por 2 segundos.
-Se usada por Espadachim/Mercador/Gatuno, DEF + 3
-Se usada por Mago/Noviço/Arqueiro, DEFM + 5
+^0000ffA cada nível base:^000000
+^0000ffHP máx. +7.^000000
+A cada 2 níveis base:
+^0000ffSP máx. +1.^000000
+Ao sofrer danos mágicos:
+^0000ff1% de chance de ativar um [efeito] por 2 segundos.^000000
+Espadachins, Mercadores, Gatunos e evoluções:
+^0000ffDEF +3.^000000
+Magos, Noviços, Arqueiros e evoluções:
+^0000ffDEFM +5.^000000
+^CD3278Efeito:^000000
+^0000ffImpede de ser afetado por habilidades mágicas, incluindo as não-ofensivas..^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777170^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^7777772a. Classe Transcendental^000000
+Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2387#
 Armadura muito leve que permite que você galope o mais rápido que puder. Parece uma camiseta de corrida, mas funciona bem como armadura.
@@ -28874,14 +28947,15 @@ Classes que utilizam: ^777777Todas^000000
 #
 5469#
 Um símbolo do lema "um por todos e todos por um", surgido com a criação da Expedição da Aliança. Inspirados nesse lema, três inseparáveis Justiceiros, junto com um jovem e habilidoso Espadachim, fundaram os Mosqueteiros, para mostrar a todos que a união faz a força.
-FOR + 2
-Chance usar a habilidade Adrenalina Pura em nível 1 sempre que causar dano físico.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+^0000ffFOR +2.^000000
+Ao realizar ataques físicos:
+^0000ff0,7% de chance de autoconjurar [Adrenalina Pura] nv. 1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 14260#
 Uma caixa contendo um Anel do Anjo Caído [A]. Manuseie com cuidado.
@@ -35418,16 +35492,29 @@ Classe : ^777777Todas^000000
 
 
 2168#
-Um exótico escudo retangular. Nele há uma gema mágica, encantada para defender contra ataques físicos.
-Se refinado em +6:
-^0000ffResistência a propriedade Neutro +1% por refino até o +12.^000000
-Se refinado em +9 ou mais:
-^0000ffResistência a Fogo, Água, Terra e Vento +5%.^000000
-Tipo : ^777777Escudo^000000
+Um exótico escudo retangular. Nele há uma gema mágica, encantada para defender contra ataques.
+^0000ffRefino +5 ou mais:^000000
+^0000ffResistência a propriedade Neutro +1%.^000000
+Refino +6 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +7 ou mais:
+^0000ffResistência a propriedade Neutro +6% adicional.^000000
+Refino +8 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +9 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+^0000ffResistência as propriedades Fogo, Água, Terra e Vento +5%.^000000
+Refino +10 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Refino +12 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+Tipo: ^777777Escudo^000000
 Defesa: ^77777755^000000
-Peso : ^77777770^000000
-Nível necessário : ^7777771^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 
 12690#
@@ -36150,7 +36237,7 @@ Classe : ^777777Shura^000000
 1930#
 Uma flauta feita a partir de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffConjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Sinfonia dos Ventos] -2 segundos^000000
 A cada refino a partir do +6:
 ^0000ffCusto de SP de [Melodia de Morfeu] e [Sinfonia dos Ventos] -4.^000000
 Tipo: ^777777Instrumento Musical^000000
@@ -36164,7 +36251,7 @@ Classes: ^777777Trovadores e evoluções^000000
 1984#
 Um chicote muito flexível feito de uma grossa raiz.
 ^0000ffATQM +50.^000000
-^0000ffConjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos000000
+^0000ffConjuração variável de [Melodia de Morfeu] e [Ritmo Contagiante] -2 segundos^000000
 A cada refino a partir do +6:
 ^0000ffCusto de SP de [Melodia de Morfeu] e [Ritmo Contagiante] -4.^000000
 Tipo: ^777777Chicote^000000
@@ -39988,14 +40075,14 @@ Classe: ^777777Aprendiz/Espadachim/Mago/Arqueiro/Mercador/Gatuno e suas respecti
 #
 13114#
 Um revólver feito pelo Grupo Éden. É adequado para um atirador experiente.
-Precisão - 5.
-Não pode ser aprimorado.
+^a400cdNão pode ser refinado.^000000
+^0000ffPrecisão -5.^000000
 Tipo: ^777777Pistola^000000
 Ataque: ^77777776^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777773^000000
-Nível Necessário: ^77777760^000000
-Classe: ^777777Justiceiro^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Justiceiros e evoluções^000000
 #
 13310#
 Uma Shuriken Huuma feita pelo Grupo Éden. É adequada somente para Ninjas experientes.
@@ -40612,14 +40699,6 @@ Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classe: ^777777Todas as Classes^000000
 #
-13208#
-Um tipo de artrópode. Quando se enrola, fica muito duro.
-Durante o ataque, ele atordoa com um fluxo normal.
-Tipo: ^777777Munição^000000
-Ataque: ^77777750^000000
-Propriedade: ^777777Neutro^000000
-Peso: ^7777770.5^000000
-#
 16740#
 Uma caixa que tem uma Proteção do Deus do Mar. (Disponível por 23 horas)
 ^000088Item de Aluguel^000000
@@ -41020,10 +41099,9 @@ Um arpão de caça especial para caçar polvos gigantes.
 Peso: ^7777770^000000
 #
 6443#
-[^ff0000Frágil^000000]
 Um lubrificante de alta corrosão. Lendário por derreter a superfície de um objeto para que qualquer coisa possa ser separada.
-É perfeito para retirar cartas MVP de alguns equipamentos, inclusive de Elmos contendo uma carta Abelha-Rainha. A chance de remoção é 100%.
-^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+^0000ffGarante 100% de chance de remover uma carta de MVP de alguns equipamentos.^000000
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Peso: ^7777770^000000
 #
 11536#
@@ -41127,18 +41205,21 @@ Há 50 Moedas Classe E na bolsa.
 Peso: ^7777771^000000
 #
 13068#
-^000088Item de Aluguel^000000
-Peixe do mar. Pode ser cozido em comidas diferentes. Realmente, muito congelado.
-+ 100 de ATQM.
-Quando estiver atacando em uma curta distância, dá +30 de ATQ por 7 s com certa taxa.
-Quando houver um ataque mágico, + 20 de ATQM por 7 s com certa taxa.
-Quando o nível de base for mais de 100, adicione + 10 de ATQ, + 10 de ATQM.
+^000088Item de aluguel^000000
+Peixe do mar que pode ser trabalhado em formas diferentes. Está muito congelado.
+^0000ffATQM +100.^000000
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar [ATQ +30] por 7 segundos.^000000
+Ao realizar ataques mágicos:
+^0000ff1,5% de chance de ativar [ATQM +20] por 7 segundos.^000000
+Nv. base 100 ou mais:
+^0000ffATQ e ATQM +10.^000000
 Tipo: ^777777Adaga^000000
-Ataque : ^777777160^000000
+Ataque: ^777777160^000000
 Peso: ^7777770^000000
-Nível da Arma: ^7777771^000000
+Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classe: ^777777Espadachim, Mago, Arqueiro, Mercador, Gatuno e respectivas evoluções, Espiritualista, Ninja^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Gatunos, Mercadores, Ninjas, Espiritualistas e evoluções^000000
 #
 13291#
 Equinoderme , estrela-do-mar. Parece uma estrela. É duro, então, pode ser usado como um shuriken.
@@ -41150,22 +41231,20 @@ Peso: ^7777770.5^000000
 Tipo: ^777777Neutro^000000
 #
 13292#
-Uma lula que está seca há muito tempo.
-Pode ser usada como uma kunai.
-Chance de causar o status 'Cegueira'.
+Uma lula que está seca há muito tempo. Pode ser usada como uma kunai.
+^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Cegueira.^000000
 Tipo: ^777777Kunai^000000
-Ataque : ^77777750^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
 Peso: ^7777772^000000
-Tipo: ^777777Neutro^000000
 #
 13293#
-Um peixe voador. Há um rumor de que ele voa com uma grande nadadeira.
-Ele está congelado, então, é possível usá-lo como um kunai.
-Chance de causar o status 'Sangramento'.
+Um peixe voador que está congelado. É possível usá-lo como um kunai.
+^0000ffAo realizar ataques físicos a distância, 0,3% de chance de autoconjurar [Ferimento Mortal] nv. 1.^000000
 Tipo: ^777777Kunai^000000
-Ataque : ^77777750^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
 Peso: ^7777772^000000
-Tipo: ^777777Neutro^000000
 #
 16015#
 Um taco no formato de uma pata de gato. Apesar de fofinho e parecer delicado, causa grande dano.
@@ -41183,17 +41262,18 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Noviços, Mercadores e
 ^000088Item de aluguel^000000
 Um grande peixe do mar. Muito popular, pode ser usado em diversas receitas. Está muito congelado.
 ^a400cdIndestrutível em batalha.^000000
-^0000ffAo realizar ataques físicos, chance de autoconjurar [Golpe Fulminante] nv. 5 ou no nível aprendido.^000000
-^0000ffAo realizar ataques físicos, chance de infligir [Atordoamento] no oponente.^000000
-^0000ffAo realizar ataques físicos, chance de receber [Congelamento].^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de infligir Hipotermia no usuário.^000000
+^0000ff15% de chance de infligir Atordoamento no oponente.^000000
+^0000ff2% de chance de autoconjurar [Golpe Fulminante] nv. 5.^000000
 Nv. base 100 ou mais:
 ^0000ffATQ +20.^000000
 Tipo: ^777777Maça^000000
-Ataque : ^777777180^000000
+Ataque: ^777777180^000000
 Peso: ^7777770^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^77777750^000000
-Classes: ^777777Espadachins, Noviços, Mercadores  e evoluções^000000
+Classes: ^777777Espadachins, Noviços, Mercadores e evoluções^000000
 #
 12531#
 Uma caixa contendo 100 Poções Brancas
@@ -42343,23 +42423,29 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
 18892#
-Você fez um encontro imediato de 3º grau com esse estranho Poring quando ele tentava ligar essa máquina oval. Agora ele resolveu equilibrar este disco em cima da sua cabeça, e parece estar contente em “voar” por aí acendendo luzinhas enquanto você corre de um lado para o outro. O mais surpreendente é que este Poring é capaz de falar algumas palavras e fica repetindo o tempo todo: “Poring... Chamado Urgente... Minha casa!”
-DEFM, Crítico, Precisão, Esquiva e Esquiva perfeita + 5
-Caso refinado em +7, reduz o tempo de conjuração em 5%
-Caso refinado em +9, o tempo de uso entre habilidades será reduzido em 5%,  Velocidade de Ataque + 5%
-Tipo : ^777777Equipamento para Cabeça^000000
+Você fez um encontro imediato de 3º grau com esse estranho Poring quando ele tentava ligar essa máquina oval. Agora ele resolveu equilibrar este disco em cima da sua cabeça, e parece estar contente em 'voar' por aí acendendo luzinhas. O mais surpreendente é que este Poring é capaz de falar algumas palavras e fica repetindo o tempo todo: 'Poring... Chamado Urgente... Minha casa!'
+^0000ffDEFM +5. CRIT +5.^000000
+^0000ffPrecisão +5. Esquiva +5.^000000
+^0000ffEsquiva perfeita +5.^000000
+Refino +7 ou mais:
+^0000ffConjuração variável -5%.^000000
+Refino +9 ou mais:
+^0000ffPós-conjuração -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^777777100^000000
-Nível Necessário : ^77777710^000000
-Classes: ^777777Todas as Classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 18893#
 Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana. De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
-^0000ffHP máx. +7%.^000000
-^0000ffSP máx. +3%.^000000
 ^0000ffRecuperação de HP da Carne +200%.^000000
 ^0000ffResistência as raças Dragão e Humanoide +8%.^000000
+Refino +12 ou mais:
+^0000ffHP máx. +7%.^000000
+^0000ffSP máx. +3%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
@@ -44561,24 +44647,33 @@ Uma pequena marmita que contém todos os seus lanches favoritos que sua mãe pre
 Peso: ^77777720^000000
 #
 18756#
-Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros, que ainda é muito popular em Amatsu. Os Shiba Inus são ancestrais dos mais conhecidos Akitas, e o seu nome, no dialeto de Amatsu significa “pequeno cão”. Apesar do tamanho, os Shiba Inus são bastante independentes e ótimos cães de caça, usados para encontrar pequenos animais. Dizem as lendas que o um cão desta raça é a única coisa que pode deter a fúria do Atroce, já que quando ainda era humano, este guerreiro amaldiçoado tinha uma paixão especial por essa raça.
-ATQ + 30.
-Se equipado com o Coleira da Fidelidade [1], há uma chance de mudar sua forma para um Atroce enquanto receber e causar dano, aumentando o ataque enquanto transformado. A chance de mudar a forma aumenta de acordo com o nível de refinamento. Drena 5 de SP a cada segundo.
-Tipo : ^777777Equipamento para Cabeça^000000
+Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros, que ainda é muito popular em Amatsu. Os Shiba Inus são ancestrais dos mais conhecidos Akitas, e o seu nome, no dialeto de Amatsu significa 'pequeno cão'. Apesar do tamanho, os Shiba Inus são bastante independentes e ótimos cães de caça, usados para encontrar pequenos animais. Dizem as lendas que o um cão desta raça é a única coisa que pode deter a fúria do Atroce, já que quando ainda era humano, este guerreiro amaldiçoado tinha uma paixão especial por essa raça.
+^0000ffATQ +30.^000000
+^0000ffDano físico contra a raça Bruto +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Coleira da Fidelidade]^000000
+^0000ffATQ +30.^000000
+Ao receber ou realizar ataques físicos:
+^0000ffChance de se transformar em Atroce por alguns segundos.^000000
+^CD3278Durante a transformação:^000000
+^0000ffATQ +30.^000000
+^0000ffDrena 5 de SP por segundo.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo ^000000
-Peso : ^77777740^000000
-Nível Necessário : ^77777750^000000
-Classes : ^777777Todas^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 2959#
 Você pode ler o nome Hachiko nesta coleira. De acordo com as lendas, essa coleira foi usada por um cão da raça Shiba Inu que pertenceu ao Atroce, antes dele se tornar um licantropo amaldiçoado, quando ainda era um guerreiro humano. Dizem que ainda existe um laço profundo ligando este item ao MVP. Será verdade? Você sente apenas uma forte sensação de lealdade ao segurar esta coleira. O que acontecerá se você usá-la?
-AGI +2.
-Tipo : ^777777Acessório^000000
+^0000ffAGI +2.^000000
+^0000ffResistência a raça Bruto +3%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777730^000000
-Nível Necessário : ^77777750^000000
-Classe : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 //----------------------------------------------------------
 //--Aplicar em 08-07-2014 - Todos os servidores
@@ -46444,13 +46539,19 @@ Classes : ^777777Todas^000000
 #
 18832#
 Para alguns, este é apenas um adorável chapéu feito em homenagem ao filhote de um dos MVPs mais famosos de Rune-Midgard. Contudo, você sabe a verdade. Você fez um pacto com este pequeno Bafomé Jr. para que ele ficasse selado para sempre nesta forma pequenina e em troca você o levaria para conhecer o mundo. Agora que ele está emprestando seu poder para você, resta saber se será capaz de cuidar do bafinho, antes que o pai dele venha cuidar de você!
-Chance de conjurar a habilidade Adrenalina Pura nível 2 sempre que atacar fisicamente.
-Tipo : ^777777Equipamento para Cabeça^000000
-Defesa : ^7777770^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+^0000ffAo realizar ataques físicos:^000000
+^0000ff0,5% de chance de autoconjurar [Adrenalina Pura] nv. 2.^000000
+^FF6347Conjunto^000000
+^CD3278Mascote [Bafomé Jr.]^000000
+^0000ffChance de autoconjurar [Adrenalina Pura] +0,5% adicional.^000000
+Lealdade Alta:
+^0000ffChance de autoconjurar [Adrenalina Pura] +0,5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5654#
 Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o “bullying”. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
@@ -48660,6 +48761,7 @@ Classes: ^777777Todas ^000000
 //*****************************************************
 20154#
 Se você adora quando as árvores ficam douradas no outono e as folhas secas caem, carregue essa sensação com você o ano inteiro com essas belas folhas encantadas.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49036,6 +49138,7 @@ Classes: ^777777Todas ^000000
 #
 20404#
 Você nitidamente foi abençoado pela família Poring e recebeu a graça gelatinosa dos angelings e seus primos celestiais. Só não sei porque, já que vi você despedaçar vários poporings inocentes, sem falar do coitado do drops!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49077,7 +49180,8 @@ Peso: ^7777771^000000
 //------------Aplicar em 2016-07-12--------------------
 //*****************************************************
 19871#
-Sabe aquela música que quando você escuta não sai mais da sua cabeça? Aquela música do momento, tipo a “Ai se eu te dropo”, “Show das Odaliscas” ou “Hode Hode”? Pois é, sabemos que nesse exato instante você tem uma música dessas na sua cabeça. Tá na sua cara!
+Sabe aquela música que quando você escuta não sai mais da sua cabeça? Aquela música do momento, tipo a 'Ai se eu te dropo', 'Show das Odaliscas' ou 'Hode Hode'? Pois é, sabemos que nesse exato instante você tem uma música dessas na sua cabeça. Tá na sua cara!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49120,6 +49224,7 @@ Classes: ^777777Todas ^000000
 #
 20209#
 E pensar que você estava todo feliz soprando com um frasquinho de bolhas de sabão quando um goblin arteiro deu um tapa nas suas costas e fez você engolir tudo. Agora você está assim, “soltando” bolhas de sabão por onde passa... Vamos apenas torcer pra que esse sabão não seja de Veins!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
@@ -49141,6 +49246,7 @@ Classes: ^777777Todas ^000000
 #
 20240#
 Quando você descobriu que tinha o poder de fazer nevar ao seu redor, por algum motivo sentiu uma incontrolável vontade de sair correndo escada acima cantando “Livre estou, livre estou...”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
@@ -49649,7 +49755,7 @@ A força de muitas tempestades estão contidas neste arco.
 ^0000ffTempo de recarga -2 segundos.^000000
 Tipo: ^777777Arco^000000
 Ataque: ^777777160^000000
-Peso: ^77777730^000000
+Peso: ^777777150^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Sentinelas, Musas e Trovadores^000000
@@ -49688,189 +49794,186 @@ ATQM +5%.
 HPM +5%.
 #
 4908#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +1
-ATQ +3
-INT -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +1. INT -1.^000000
+^0000ffATQ +3.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4909#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +2
-ATQ +6
-INT -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +2. INT -2.^000000
+^0000ffATQ +6.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4910#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-FOR +4
-ATQ +12
-INT -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffFOR +4. INT -4.^000000
+^0000ffATQ +12.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4911#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +1
-ATQM +3
-FOR -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +1. FOR -1.^000000
+^0000ffATQM +3.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4912#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +2
-ATQM +6
-FOR -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +2. FOR -2.^000000
+^0000ffATQM +6.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4901#
 DEFM +7
 #
 4913#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-INT +4
-ATQM +12
-FOR -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffINT +4. FOR -4.^000000
+^0000ffATQM +12.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4902#
 DEF +18
 #
 4914#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +1
-Esquiva +2
-VIT -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +1. VIT -1.^000000
+^0000ffEsquiva +2.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4903#
 DEF +21
 #
 4915#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +2
-Esquiva +4
-VIT -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +2. VIT -2.^000000
+^0000ffEsquiva +4.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4904#
 ATQ +6%.
 #
 4916#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-AGI +4
-Esquiva +8
-VIT -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffAGI +4. VIT -4.^000000
+^0000ffEsquiva +8.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4905#
 ATQ +7%.
 #
 4917#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +1
-DEF +3
-DEFM +2
-AGI -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +1. AGI -1.^000000
+^0000ffDEF +3. DEFM +2.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4906#
 ATQM +6%.
 #
 4918#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +2
-DEF +6
-DEFM +4
-AGI -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +2. AGI -2.^000000
+^0000ffDEF +6. DEFM +4.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4907#
 ATQM +7%.
 #
 4919#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-VIT +4
-DEF +12
-DEFM +8
-AGI -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffVIT +4. AGI -4.^000000
+^0000ffDEF +12. DEFM +8.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4920#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +1
-Precisão +2
-SOR -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +1. SOR -1.^000000
+^0000ffPrecisão +2.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4921#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +2
-Precisão +4
-SOR -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +2. SOR -2.^000000
+^0000ffPrecisão +4.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4922#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-DES +4
-Precisão +8
-SOR -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffDES +4. SOR -4.^000000
+^0000ffPrecisão +8.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4923#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +1
-CRIT +1
-DES -1
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +1. DES -1.^000000
+^0000ffCRIT +1.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4924#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +2
-CRIT +2
-DES -2
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +2. DES -2.^000000
+^0000ffCRIT +2.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4925#
-Essência do Rei Demoníaco Morroc. Contém parte de sua habilidade.
-SOR +4
-CRIT +4
-DES -4
-^ff0000Atenção: Item especial para Slot. Pode ser removido de alguns itens em malangdo, contúdo não será recuperado no processo.^000000
-Equipado em: ^777777Slots Disponíveis^000000
+Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
+^0000ffSOR +4. DES -4.^000000
+^0000ffCRIT +4.^000000
+^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
+Tipo: ^777777Encantamento^000000
+Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
 4559#
@@ -50074,6 +50177,7 @@ Classes: ^777777Todas ^000000
 #
 20285#
 Agora você não precisará mais viajar até a Ilha-Nação dos ninjas para experimentar a paz e beleza proporcionadas pela “chuva” de pétalas das cerejeiras. Com essa aura mágica, será como se você carregasse Amatsu o tempo todo com você! A não ser, é claro, que esse seja um efeito colateral por você ter sido possuído por um youkai.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo^000000
@@ -50615,6 +50719,7 @@ Classes: ^777777Todas^000000
 #
 20435#
 Um enfeite para a cabeça na forma de belas flores que emitem uma aura roxa fantasmagórica. Sob a luz da lua, o efeito deste pingente se torna ainda mais misteriosa. Desde que começou a usá-lo, você passou a sonhar com o universo e um tipo de grande e misterioso morcego.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -50653,6 +50758,7 @@ Classes: ^777777Todas^000000
 #
 5914#
 Após realizar um pacto com o povo das fadas, você passou a ser visto como um aliado dos Esplêndidos e foi abençoado por seu rei. Agora, por onde quer que você ande, você é acompanhado por pequenas fadinhas etéreas em forma de borboletas. As vezes parece que uma delas fica roxa e o nome Psyloque vem à sua cabeça, mas é só impressão.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -50682,6 +50788,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 20099#
 Parabéns, você atraiu a atenção dos Esplêndidos e agora, por algum motivo, essa fadinha brilhante gostou de você! Também conhecidas como Ljósálfar na mitologia, ou “elfo luminoso”, esse pequeno Esplêndido vai deixar o seu dia mais iluminado!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -51547,6 +51654,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 31040#
 Uma tiara com plumas que pertenceu a uma lendária garota mágica. Alguns acreditam que sua dona original era a poderosa maga Sarakura Dropa-Cartas, outros que era a garota Maloka Magika. Aparentemente, um Noviço que era apaixonado por ela encantou a tiara para realizar seu desejo e agora sempre que seu usuário precisa de ajuda, a garota mágica e seu báculo são conjurados.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 ^ff0000Desabilitado temporariamente:^000000
 ^0000ffAo usar [Primeiros Socorros]: Se transforma em Nasarin por 10 segundos.^000000
 Tipo: ^777777Visual^000000
@@ -51729,6 +51837,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 18742#
 O brilho de uma Lua de Cristal agora banha você dia e noite, fazendo você acreditar que tudo pode ser, só basta acreditar. Afinal, tudo o que tiver que ser, será. Já dizia a musa Chocha que uma Lua de Cristal pode fazer de você uma estrela, quando você já sabe brilhar. Pelo visto vale tudo pra fazer da sua vida cheia de emoção!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -51822,6 +51931,7 @@ Peso: ^7777771^000000
 //*****************************************************
 20062#
 Você pode ser considerada uma pessoa de sorte. Até mesmo nos cantos mais sombrios de Nifhelm, o sol parece sempre brilhar sobre a sua cabeça! Às vezes parece até que o sol ri como um bebê e nesse momento você se pega a cantar “Dink Week, Cigana, Lelé, Pow...”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -51931,6 +52041,7 @@ Classes: ^777777Aprendizes, Superaprendizes, Mercadores, Espadachins, Noviços e
 #
 5930#
 Uma tiara dada à Lucya, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Lucya utilizou esta tiara para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta tiara foi encantada pela Valquíria Lexus, e possui o poder da transformação.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffDano mágico contra as propriedades Veneno, Sagrado, Sombrio, Fantasma e Maldito +5%.^000000
 Ao realizar ataques físicos:
 ^0000ff5% de chance de autoconjurar [Luz Divina] nv. 1.^000000
@@ -51952,6 +52063,7 @@ Classes: ^777777Todas^000000
 #
 19109#
 Uma tiara de penas e flores coloridas, confeccionada para uma verdadeira popstar! A tiara é encantada magicamente para imitar os efeitos dos canhões de luzes e de refletores em shows de pop. Há a chance de ter um holofote rosa só para você ao realizar ataques físicos.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffSP máx. +50.^000000
 ^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
 Tipo: ^777777Equipamento para cabeça^000000
@@ -52001,6 +52113,7 @@ Classes: ^777777Todas^000000
 #
 5979#
 Este adereço traz uma ilusão de penas encantadas, e fará com que penas brancas caiam a sua volta a todo o momento. Este elemento estético muito utilizado em animações orientais já chega a estar meio batido, mas vai trazer todo o drama necessário para que você se sinta como o protagonista de um anime da Clampi.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -52254,6 +52367,7 @@ Classes: ^777777Todas^000000
 #
 20487#
 Sua vida ultimamente anda cercada de flores, cercada de música e você frequentemente se põe a cantar: “Nós somos as estrelas/Que tentam chegar ao céu/ Você é minha estrela/ Aquele amor insubstituível/ Que sobe como poeira/ Nós estamos numa jornada para as estrelas!”
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -52281,6 +52395,7 @@ Classes: ^777777Todas^000000
 #
 20439#
 Após treinar com o Cavaleiro Zodiacal de Virgem, Xaka, você conseguiu alcançar seus oito sentidos e elevar seu cosmo até liberar sua aura, que agora brilha como o brilho do sol! Afinal, como já diziam Çandi e Júlior, é nas constelações que a luta vai começar, e aqui o bem e o mal, até um deles ganhar, silêncio nas estrelas e um grito ecoando no ar!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -54836,6 +54951,7 @@ Classes: ^777777Todas^000000
 #
 31316#
 Você está sempre cercado por uma aura de borboletas púrpuras. Seriam elas um sinal de que na verdade você teria descendência Esplêndida, com sangue de Alfeim correndo em suas veias? Ou será que você vai se transformar em uma ninja mutante capaz de ler mentes e criar espadas psíquicas? Talvez seja apenas o seu perfume. O que importa é que o efeito é legal!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
@@ -55718,6 +55834,7 @@ Classes: ^777777Todas^000000
 #
 18744#
 Qualquer um vai poder brilhar como um diamante com esta pequena amostra do brilho da galáxia. Vindas direto da Via Láctea para mostrar que você não precisa de joias para brilhar, esses pedacinhos do Universo são meramente visuais, mas vão te dar aquele merecido banho de glamour!
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -57098,6 +57215,7 @@ Classes: ^777777Todas^000000
 #
 19022#
 Você finalmente obteve o lendário Cristal Filosofal! Famoso por transformar chumbo em ouro ou até conceder a imortalidade, essa preciosidade foi almejada por várias pessoas e feras feridas: desde Nicolas Flamel até o Waldir-Morte e os irmãos El Ricos.
+^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
 ^0000ffTolerância a Cegueira +100%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Chapéu de Filir]^000000
@@ -57463,6 +57581,7 @@ Classes: ^777777Todas^000000
 #
 20457#
 Este adereço fará com que penas coloridas ilusórias caiam à sua volta a todo momento. As penas coloridas são em homenagem às aves em extinção da fauna de Brasilis.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
@@ -57771,6 +57890,7 @@ Classes: ^777777Todas^000000
 #
 31325#
 Quando uma Rainha Scaraba renuncia de seu cargo, sua coroa é enterrada nos cantos mais escuros do Túnel Kamidal. O que não contavam é que arqueólogos logo encontrariam esse local em suas escavações, o que tornaria esse acessório uma grande moda entre os aventureiros.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo e Baixo^000000
 Peso: ^7777770^000000
@@ -57878,6 +57998,7 @@ Classes: ^777777Todas^000000
 //*****************************************************
 18741#
 Essas chamas esverdeadas aquecem e iluminam tudo em seu caminho. Apesar de existirem diversas crenças e lendas a respeito do fogo esmeralda, já foi comprovado que o fenômeno surge a partir da inflamação de gases emitidos por um Poporing. Não pergunte quais gases são esses.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -58636,8 +58757,8 @@ Refino +5 ou mais:
 ^0000ffDano físico a distância +3% adicional.^000000
 Refino +7 ou mais:
 ^0000ffHP e SP máx. +10% adicional.^000000
-^0000ffDano crítico +3% adicional.^000000
-^0000ffDano físico a distância +10% adicional.^000000
+^0000ffDano crítico +5% adicional.^000000
+^0000ffDano físico a distância +5% adicional.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Malha da Luz]^000000
 ^0000ffAumenta a velocidade de movimento.^000000
@@ -58760,9 +58881,9 @@ Classes: ^777777Todas^000000
 5967#
 Cansado da vida na Praia Kokomo, esse Galapago decidiu viajar mundo afora em seu guarda-sol voador (?!). Agora, cabe a você impressioná-lo visitando os locais mais exóticos do mundo!
 ^0000ffAGI +1.^000000
-Ao realizar ataques físicos:
-^0000ff5% de chance de autoconjurar [Ataque Aéreo] nv. 1 ou no nível aprendido.^000000
-A cada 3 de SOR base:
+Ao aprender [Ataque Aéreo] nv. 1:
+^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Ataque Aéreo] no nível aprendido.^000000
+A cada 3 de SOR base até o 120:
 ^0000ffChance de autoconjuração +0,1%.^000000
 A cada nível aprendido de [Ataque Aéreo]:
 ^0000ffChance de autoconjuração +0,2%.^000000
@@ -58776,7 +58897,7 @@ A cada nível aprendido de [Garras de Aço]:
 ^0000ffRecuperação de HP de Suco de Cenoura, Maçã e Banana +1.000%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Grifo]^000000
-^0000ffDano físico +5%.^000000
+^0000ffDano físico -5%.^000000
 ^0000ffVelocidade de ataque +1.^000000
 ^0000ffVelocidade de ataque +3%.^000000
 Arma do tipo Arco com refino +10 ou mais:
@@ -58896,5 +59017,1177 @@ Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-08--------------------
+//*****************************************************
+31177#
+Com uma aparência que imita elementos naturais — como as pétalas de uma flor e as asas de uma borboleta —, esse chapéu representa a grande e generosa Mãe Natureza, cujo poder permeia entre amor, delicadeza e força.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31433#
+Inspirada no amor ágape de uma mãe por seus filhos, a Auréola Benevolente é símbolo de compreensão, carinho e afeto maternos. Delicado e brilhante, esse item carrega a imagem do amor puro e zeloso, deixando você cercado de uma aura protetora.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-15--------------------
+//*****************************************************
+31435#
+A lã de primeira e a confecção em ponto meia duplo fazem desse gorro um acessório bem quentinho, resistente e, acima de tudo, estiloso. É um item de moda bastante comum entre os aventureiros que frequentam o Starbonks pra tomar um ou outro Poringccino.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31332#
+O elmo da capitã da Ordem dos Khalitzburg que, no passado, reluzia uma viva cor azul. A maldição da valquíria necromante Himelmez levou não só a vida de toda a ordem, como também a cor original desse elmo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-23--------------------
+//*****************************************************
+31407#
+Um novo tom de cor para aqueles que adoram os longos cabelos da Alice. O único problema é que, agora, se misturar com as outras Alices na Fábrica de Robôs da Academia Kiel Hyre não vai ser mais possível...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31117#
+Uma gálea banhada a ouro, forte e reluzente como a armadura dos soldados de um antigo e poderoso Império. Pode até parecer meio antiquada para alguns, mas te dará a mesma sensação de proteção e coragem que dava àqueles antigos guerreiros.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31260#
+Um novo modelo de Rastreador projetado por uma brilhante cientista. Ela realizou algumas modificações, como o ajuste de idioma de acordo com o usuário e um sistema mais potente. Assim, as chances de ele explodir serão mínimas quando você se deparar com um inimigo cujo poder é de mais de 8 mil!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-05-29--------------------
+//*****************************************************
+18959#
+Há pelo menos uma década, livros com histórias sobre monstros de um mundo digital fizeram o maior sucesso em Amatsu. As crianças daquela época cresceram, mas essas histórias incríveis continuaram de tal forma que até confeccionaram um chapéu no formato da titica dos monstros. O que não fazem pela nostalgia...
+^a400cdIndestrutível em batalha.^000000
+^a400cdNão pode ser refinado.^000000
+^0000ffResistência a Personagens +13%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Chon Chon de Aço]^000000
+^0000ffTolerância a Congelamento +100%.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff1% de chance de autoconjurar [Beijo do Inverno] nv. 2.^000000
+^FF6347Conjunto^000000
+^FF6347Sandálias [1]^000000
+^FF6347[Carta Chon Chon]^000000
+^0000ffHP e SP máx. +4%.^000000
+A cada refino do calçado:
+^0000ffHP e SP máx. +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777120^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19294#
+Desenvolvida e fabricada em Malangdo, não há ninguém que não conheça a estilosa linha de fones de ouvido Nekobits. Há quem diga que a marca aposta mais em aparência do que qualidade sonora, mas se estilo é a sua prioridade, por que não? Afinal, essas orelhinhas são puro requinte!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-05--------------------
+//*****************************************************
+31451#
+Um laço azul-claro com algumas listras brancas e pequenas rendas ao redor. Delicado e charmoso, ele vai manter o seu visual discreto e simples.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31474#
+Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira preta... Mesmo que isso seja apenas uma peruca! Se você sempre quis se sentir como a lendária guerreira Sailor Arte, habilidosa dominadora do fogo, com essa peruca não tem erro!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15136#
+Pertencente a uma brava guerreira que lutou com honra até o seu último suspiro, esse revestimento carrega os vestígios de uma batalha feroz, tornando-se um verdadeiro símbolo de força e bravura.
+^0000ffHP máx. +100.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Archdam]^000000
+A cada 2 refinos:
+^0000ffDano de [Choque Rápido] e [Sacrifício do Mártir] +5%.^000000
+^FF6347Conjunto^000000
+^FF6347Qualquer 1 das cartas abaixo^000000
+^FF6347[Carta Anolian] ou^000000
+^FF6347[Carta Soldado] ou^000000
+^FF6347[Carta Loli Ruri] ou^000000
+^FF6347[Carta Fornalha Velha] ou^000000
+^FF6347[Carta Novus Dourado] ou^000000
+^FF6347[Carta Planta Carnívora] ou^000000
+^FF6347[Carta Leopardo Filhote]^000000
+No refino +5:
+^0000ffAltera a propriedade da armadura para Terra.^000000
+No refino +6:
+^0000ffAltera a propriedade da armadura para Água.^000000
+No refino +7:
+^0000ffAltera a propriedade da armadura para Vento.^000000
+No refino +8:
+^0000ffAltera a propriedade da armadura para Fogo.^000000
+No refino +9:
+^0000ffAltera a propriedade da armadura para Sombrio.^000000
+No refino +10:
+^0000ffAltera a propriedade da armadura para Sagrado.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^7777770^000000
+Peso: ^77777760^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+22070#
+Feito com requinte e elegância, seis raras rosas azuis e fitas brancas de um caro cetim moldam esse par de sapatos. Dizem que pela tamanha extravagância, eles podem ter pertencido a uma antiga rainha detestada pelo seu povo. Mas depois que ela perdeu a cabeça, os sapatos ficaram sem dono
+^0000ffSP máx. +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Fendark]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Trilobita]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Nereida]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Ferrão]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Lagarta]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Encouraçado]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Zumbi Mestre]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Diabolik]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Anjo Fajuto]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Furador]^000000
+A cada 3 refinos do Salto:
+^0000ffATQ e ATQM +10.^000000
+^0000ffRecupera 30 de HP e 3 de SP ao derrotar monstros com ataques físicos.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20517#
+Uma mochila indispensável pra você, que é conhecido como o “louco dos gatos” e não vê a hora de adotar seu quadragésimo sexto felino. Ao menos este aqui não vai encher sua roupa de pelos ou tentar destruir seu sofá!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28534#
+Um amuleto vermelho, que representa a coragem e o poder dos mais destemidos aventureiros. Só de usá-lo, você já sente seu espírito ser inundado por uma bravura inabalável.
+^0000ffATQ da arma +3%.^000000
+^0000ffDano mágico +3%.^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffCusto de SP das habilidades -3%.^000000
+^0000ff1% de chance de converter 3% do dano físico causado em HP.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffRecupera 300 de HP por segundo.^000000
+Tipo: ^777777Acessório Esquerdo^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28535#
+Um amuleto azul, que representa a reflexão e sabedoria dos aventureiros de pensamento mais iluminado. Só de usá-lo, você já sente sua mente se apoderar de um vasto conhecimento.
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+^0000ffCusto de SP das habilidades -7%.^000000
+^0000ffDano mágico de todas as propriedades +3%.^000000
+^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffRecupera 100 de SP por segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Amuleto da Coragem]^000000
+^0000ffPós-conjuração -3%.^000000
+^0000ffConjuração fixa -0,1 segundo.^000000
+Tipo: ^777777Acessório Direito^000000
+Defesa: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-12--------------------
+//*****************************************************
+28737#
+Forjada há muitos séculos, essa bela adaga foi uma arma letal nas mãos dos mais habilidosos ninjas. Sua aparência faz jus ao poder da sua lâmina, capaz de retalhar os inimigos com graça e rapidez.
+^0000ffEsquiva +10.^000000
+^0000ffRecarga de [Corte Espiritual] e [Kunai Explosiva] -1 segundo.^000000
+Refino +7 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Refino +9 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777120^000000
+Propriedade: ^777777Fantasma^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Gatunos, Mercadores, Ninjas e evoluções^000000
+#
+19274#
+Moderno e discreto, esse fone se ajusta perfeitamente ao tamanho da sua cabeça. Por isso, ele não cai de jeito nenhum, e você ainda pode curtir um som no meio da briga.
+^0000ffPós-conjuração -5%.^000000
+^0000ffCusto de SP das habilidades -5%.^000000
+Ao derrotar monstros com qualquer tipo de ataque:
+^0000ffRecupera 5 de SP.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+19300#
+As grandes orelhas de cachorro podem até amenizar a imagem importante desse quepe, mas isso não impede que ele imponha respeito ou demonstre o valor da mais alta patente.
+^0000ffATQ +15 a cada 2 refinos.^000000
+Refino +7 ou mais:
+^0000ffATQ +30.^000000
+Refino +9 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +11 ou mais:
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Katar de Cinzas]^000000
+A cada 2 refinos:
+^0000ffATQ +20.^000000
+^FF6347Conjunto^000000
+^FF6347[Tufão]^000000
+A cada 2 refinos:
+^0000ffDano de [Fúria do Furacão] +15%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777735^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31460#
+Em homenagem à sentinela Desirèe Olivier, dedicados artesãos confeccionaram lanternas flutuantes que parecem subir aos céus, como símbolo de abrigo para a sua alma. Após tantos anos de dedicação, uma das maiores guerreiras que desbravou Rune-Midgard lutando contra inúmeros obstáculos agora encontrará repouso e serenidade. Que seu bravo espírito seja guia e inspiração para a sua jornada.
+^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão, vendido em NPC e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//--------------------REBELLION------------------------
+//*****************************************************
+13228#
+Um projétil envolto em Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Fogo^000000
+Peso: ^7777770.2^000000
+#
+13229#
+Um projétil envolto em Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Vento^000000
+Peso: ^7777770.2^000000
+#
+13230#
+Um projétil envolto em Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Água^000000
+Peso: ^7777770.2^000000
+#
+13231#
+Um projétil coberto de Veneno.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Veneno^000000
+Peso: ^7777770.2^000000
+#
+13232#
+Um projétil envolto em poder Sombrio.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777720^000000
+Propriedade: ^777777Sombrio^000000
+Peso: ^7777770.2^000000
+#
+13208#
+Um tipo de artrópode. Quando se enrola, fica muito duro.
+^0000ffAo realizar ataques físicos a distância, 10% de chance de infligir Atordoamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^7777770.2^000000
+#
+13215#
+Este projétil pode penetrar a armadura mais espessa.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Neutro^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13216#
+Um projétil envolto em poder de Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Fogo^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13217#
+Um projétil envolto em poder de Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Água^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13218#
+Um projétil envolto em poder de Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Vento^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13219#
+Um projétil envolto em poder de Terra
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Terra^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13220#
+Um projétil de prata embebido em água benta.
+Tipo: ^777777Munição^000000
+Ataque: ^77777740^000000
+Propriedade: ^777777Sagrado^000000
+Nível mínimo: ^777777100^000000
+Peso: ^7777770.2^000000
+#
+13221#
+Um pequeno projétil de prata repleto de poder Sagrado.
+Tipo: ^777777Munição^000000
+Ataque: ^77777715^000000
+Propriedade: ^777777Sagrado^000000
+Peso: ^7777770.2^000000
+#
+13222#
+Um projétil vermelho de sangue.
+^0000ffAo realizar ataques físicos a distância, 1% de chance de infligir Sangramento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^7777770.1^000000
+#
+13223#
+Um projétil de Lança-Granadas que carrega a propriedade Fogo.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Fogo^000000
+Peso: ^7777770.5^000000
+#
+13224#
+Um projétil de Lança-Granadas que carrega a propriedade Vento.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Vento^000000
+Peso: ^7777770.5^000000
+#
+13225#
+Um projétil de Lança-Granadas que carrega um veneno mortal.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Envenenamento no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Veneno^000000
+Peso: ^7777770.5^000000
+#
+13226#
+Um projétil de Lança-Granadas que carrega a escuridão.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira no oponente.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Sombrio^000000
+Peso: ^7777770.5^000000
+#
+13227#
+Um projétil de Lança-Granadas que carrega a propriedade Água.
+Tipo: ^777777Munição^000000
+Ataque: ^77777750^000000
+Propriedade: ^777777Água^000000
+Peso: ^7777770.5^000000
+#
+13210#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777725^000000
+#
+13211#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777750^000000
+#
+13212#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^77777775^000000
+#
+13213#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^777777100^000000
+#
+13214#
+Um projétil que pode ser usado como disparo normal, mas não causa dano alto.
+Você deve estar se perguntando do que é feito, porque é muito caro e pesado.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Tipo: ^777777Munição^000000
+Ataque: ^77777730^000000
+Propriedade: ^777777Neutro^000000
+Peso: ^777777120^000000
+#
+7663#
+Um projétil completamente revestido. A penetração é maximizada para causar alto dano.
+^0000ffCatalisador de [Espiral Perfurante], não é necessário equipar.^000000
+Peso: ^7777770.2^000000
+#
+7664#
+Um lançador de minas que pode ser usado com um Lança-Granadas.
+^0000ffCatalisador de [Arremessar Granada], não é necessário equipar.^000000
+Peso: ^7777770.3^000000
+#
+7665#
+Míssil apelidado de "Cauda Maligna". Ele rastreia o alvo e causa dano.
+^0000ffCatalisador de [Lançar Míssil], não é necessário equipar.^000000
+Peso: ^77777710^000000
+#
+6746#
+^ff0000Este item está vinculado à conta.^000000
+Um pedaço de ferro não acabado de alguma forja. Devido  à sua forma fora do padrão, ele não pode ser usado para montagem.
+Peso: ^7777770^000000
+#
+6747#
+^ff0000Este item está vinculado à conta.^000000
+Pedaço de uma arma padrão. Perfeito para ser usado na produção de um revólver.
+Peso: ^7777770^000000
+#
+28201#
+Este lança-granadas foi nomeado a partir da Cruz Meridional, que simboliza a morte.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de infligir Maldição no oponente.^000000
+^0000ff10% de chance de autoconjurar [Impacto Cruzado] nv. 1.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777480^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777141^000000
+Classes: ^777777Insurgentes^000000
+#
+28202#
+Este lança-granadas foi nomeado a partir da Cruz Meridional, que simboliza a morte.
+^0000ffAo realizar ataques físicos:^000000
+^0000ff3% de chance de infligir Maldição no oponente.^000000
+^0000ff10% de chance de autoconjurar [Impacto Cruzado] nv. 1.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777480^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777141^000000
+Classes: ^777777Insurgentes^000000
+#
+13120#
+Um par de armas com corpo branco e cano vermelho.
+^0000ffDano de [Desperado] +20%.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de infligir Incêndio no oponente.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777150^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13122#
+Uma arma de alta qualidade cujo design é focado no desempenho.
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano físico a distância +30%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777200^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13189#
+Este rifle de assalto de tamanho médio tem poder de fogo e precisão superiores.
+^0000ffCRIT +30.^000000
+^0000ffPrecisão +20.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777240^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777105^000000
+Classes: ^777777Insurgentes^000000
+#
+13190#
+Este rifle modificado dispara projéteis com tratamento especial que causam efeito de atraso além do dano.
+^0000ffCRIT +15.^000000
+^0000ffPrecisão +10.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777260^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13192#
+Uma espingarda cujo poder de fogo devastador é atenuado pela sua miserável precisão.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -50.^000000
+^0000ffAlcance de 5 células.^000000
+^0000ffVelocidade de ataque -10%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777400^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777108^000000
+Classes: ^777777Insurgentes^000000
+#
+13193#
+Uma companheira para a espingarda Rolling Stone, essa arma é equipada com um dispositivo especial para causar dano extra.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -10.^000000
+^0000ffVelocidade de ataque -10%.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Tempestade de Raios] nv. 5.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777280^000000
+Peso: ^777777180^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777120^000000
+Classes: ^777777Insurgentes^000000
+#
+13194#
+Esta espingarda semiautomática fornece melhor cadência, mas pouco dano.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -25.^000000
+^0000ffVelocidade de ataque +25%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777250^000000
+Peso: ^777777140^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13124#
+Uma arma de alta qualidade cujo design é focado no desempenho.
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano físico a distância +30%.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777200^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13195#
+Este rifle modificado dispara projéteis com tratamento especial que causam efeito de atraso além do dano.
+^0000ffCRIT +15.^000000
+^0000ffPrecisão +10.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Diminuir Agilidade] nv. 1 no oponente.^000000
+Tipo: ^777777Rifle^000000
+Ataque: ^777777260^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13196#
+Esta espingarda semiautomática fornece melhor cadência, mas pouco dano.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+^0000ffPrecisão -25.^000000
+^0000ffVelocidade de ataque +25%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777250^000000
+Peso: ^777777140^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13197#
+Uma versão modificada da Gatling produzida em massa. É bem útil se considerarmos sua qualidade.
+^0000ffCRIT +5.^000000
+^0000ffPrecisão -5.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777220^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777772^000000
+Nível mínimo: ^777777106^000000
+Classes: ^777777Insurgentes^000000
+#
+13198#
+Esta poderosa Gatling pode disparar uma chuva de projéteis em uma fração de segundo.
+^0000ffCRIT +10.^000000
+^0000ffPrecisão -25.^000000
+^0000ffDano físico a distância +20%.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777250^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777774^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13199#
+Esta poderosa Gatling pode disparar uma chuva de projéteis em uma fração de segundo.
+^0000ffCRIT +10.^000000
+^0000ffPrecisão -25.^000000
+^0000ffDano físico a distância +20%.^000000
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777250^000000
+Peso: ^777777250^000000
+Nível da arma: ^7777774^000000
+Nível mínimo: ^777777140^000000
+Classes: ^777777Insurgentes^000000
+#
+13118#
+^ff0000Este item é vinculado à conta.^000000
+Uma pistola montada de forma amadora.
+Tipo: ^777777Pistola^000000
+Ataque: ^7777770^000000
+Peso: ^77777710^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiro e evoluções^000000
+#
+13119#
+^ff0000Este item é vinculado à conta.^000000
+Fabricada de forma amadora, mas forjada com os melhores materiais; possui um ar estranho devido ao toque artesanal.
+Tipo: ^777777Pistola^000000
+Ataque: ^777777100^000000
+Peso: ^77777710^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Justiceiro e evoluções^000000
+#
+28200#
+Uma Lança-Granadas de metal que tem o poder de perfurar e matar inimigos.
+^0000ffAo realizar ataques físicos a distância, 5% de chance de infligir Cegueira ou Atordoamento no oponente.^000000
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^777777410^000000
+Peso: ^777777240^000000
+Nível da arma: ^7777773^000000
+Nível mínimo: ^777777110^000000
+Classes: ^777777Insurgentes^000000
+#
+23123#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis de fogo.
+Peso: ^77777725^000000
+#
+23124#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis de relâmpago.
+Peso: ^77777725^000000
+#
+23125#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis congelantes.
+Peso: ^77777725^000000
+#
+23126#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis venenosos.
+Peso: ^77777725^000000
+#
+23127#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Um cartucho que contém 500 projéteis cegantes.
+Peso:^77777725^000000
+#
+22737#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis sanguinários.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22738#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de prata.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22739#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Vento.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22740#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Sombrio.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22741#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propridade Veneno.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22742#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Água.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22743#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 cápsulas com propriedade Fogo.
+^ffffff_^000000
+Peso: ^77777735^000000
+#
+22744#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis perfuradores.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22745#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis incandescentes.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22746#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis glaciais.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22747#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de eletrochoque.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22748#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis tectônicos.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22749#
+^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
+^ffffff_^000000
+Contém 500 projéteis de purificação.
+^ffffff_^000000
+Peso: ^77777725^000000
+#
+22107#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22108#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22109#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22110#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22111#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22112#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22113#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQ +7.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000.
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgente, Kagerou, Oboro^000000
+#
+22114#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffATQM +10.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+INT base 120 ou mais:
+^0000ffATQM +60.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22115#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22116#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +10.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +8%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22117#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDES +3.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+DES base 120 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777725^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+22118#
+Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas. 
+^0000ffDEFM +5.^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +30.^000000
+A cada 3 refinos:
+^0000ffDano crítico +3%.^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +10.^000000
+SOR base 120 ou mais:
+^0000ffDano crítico +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Pele da Rainha Verme]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^77777760^000000
+Nível mínimo: ^77777799^000000
+Classes: ^777777Insurgentes, Kagerou, Oboro^000000
+#
+13116#
+Uma arma de recuo reduzido para que possa ser manejada por iniciantes. Infelizmente, isso fez com que seu ataque se tornasse mais baixo.
+^0000ffPrecisão -5.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^77777720^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13181#
+Uma escopeta remodelada para iniciantes, mas a mudança no peso aumentou seu recuo.
+^CD3278Mantém [Espalhar Dano] ativo.^000000.
+Tipo: ^777777Espingarda^000000
+Ataque: ^77777780^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13182#
+Uma Gatling de disparos múltiplos para iniciantes. Fácil de usar, mas bem pesada.
+Tipo: ^777777Metralhadora^000000
+Ataque: ^77777740^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13183#
+Um Lança-Granadas feito especialmente para iniciantes. Para iniciantes!
+Tipo: ^777777Lança-Granadas^000000
+Ataque: ^77777740^000000
+Peso: ^777777150^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+13180#
+Uma arma de tamanho reduzido, mas com um cano maior para maior alcance e precisão. Mais fácil de usar do que uma pistola.
+Tipo: ^777777Rifle^000000
+Ataque: ^77777750^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777771^000000
+Nível mínimo: ^7777771^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
+25187#
+Um projétil tão caro e pesado que você vai ficar se perguntando do que ele é feito.
+^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
+Peso: ^777777120^000000
 #
 //file end

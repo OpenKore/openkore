@@ -3893,10 +3893,11 @@ sub cmdPlayerList {
 		my $headTop = headgearName($player->{headgear}{top});
 		my $headMid = headgearName($player->{headgear}{mid});
 		my $headLow = headgearName($player->{headgear}{low});
-
+		
 		$msg = center(T(" Player Info "), 67, '-') ."\n" .
 			$player->name . " (" . $player->{binID} . ")\n" .
 		TF("Account ID: %s (Hex: %s)\n" .
+			"Title ID : %s\n" .
 			"Party: %s\n" .
 			"Guild: %s\n" .
 			"Guild title: %s\n" .
@@ -3909,7 +3910,7 @@ sub cmdPlayerList {
 			"Upper headgear: %-19s Middle headgear: %-19s\n" .
 			"Lower headgear: %-19s Hair color:      %-19s\n" .
 			"Walk speed: %s secs per block\n",
-		$player->{nameID}, $hex,
+		$player->{nameID}, $hex, $player->{title}{ID} ? $player->{title}{ID}: 'N/A',
 		($player->{party} && $player->{party}{name} ne '') ? $player->{party}{name} : '',
 		($player->{guild}) ? $player->{guild}{name} : '',
 		($player->{guild}) ? $player->{guild}{title} : '',

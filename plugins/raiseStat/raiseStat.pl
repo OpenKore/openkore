@@ -192,6 +192,14 @@ sub validateSteps {
 				return 0;
 			}
 			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
+		} elsif ($step =~ /^(str|vit|dex|int|luk|agi)\s+(\d+)$/) {
+			my $stat = $1;
+			my $value = $2;
+			if ($value > 99 && !$config{statsAdd_over_99}) {
+				error $translator->translatef("Stat '%s' is more then 99 and 'statsAdd_over_99' is disabled; disabling statsAddAuto\n", $step);
+				return 0;
+			}
+			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
 		} else {
 			error $translator->translatef("Unknown stat '%s'; disabling statsAddAuto\n", $step);
 			return 0;

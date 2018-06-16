@@ -1527,10 +1527,10 @@ sub sendEnteringVender {
 }
 
 sub sendUnequip {
-    my ($self, $itemIndex) = @_;
+    my ($self, $ID) = @_;
     $self->sendToServer($self->reconstruct({
         switch => 'send_unequip_item',
-        Index => $itemIndex,
+        ID => $ID,
     }));
 }
 
@@ -1578,5 +1578,72 @@ sub sendClanChat {
 	$message = $char->{name}." : ".$message;
     $self->sendToServer($self->reconstruct({switch => 'clan_chat', len => length($message) + 4,message => $message}));
 }
+
+sub sendchangetitle {
+    my ($self, $title_id) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_change_title',
+        ID => $title_id,
+    }));
+	debug "Sent Change Title.\n", "sendPacket", 2;	
+}
+
+sub sendRecallSso {
+	my ($self, $accountID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'recall_sso',
+		ID => $accountID,
+	}));
+}
+
+sub sendRemoveAidSso {
+	my ($self, $accountID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'remove_aid_sso',
+		ID => $accountID,
+	}));
+}
+
+sub sendMacroStart {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_start',
+	}));
+}
+
+sub sendMacroStop {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_stop',
+	}));
+}
+
+sub sendReqCashTabCode {
+	my ($self, $tabID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'req_cash_tabcode',
+		ID => $tabID,
+	}));
+}
+
+sub parse_pet_evolution {
+	my ($self, $args) = @_;
+	@{$args->{items}} = map {{ itemIndex => unpack('v', $_), amount => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
+}
+
+sub reconstruct_pet_evolution {
+	my ($self, $args) = @_;
+	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(itemIndex amount)} } @{$args->{items}};
+}
+
+sub sendPetEvolution {
+	my ($self, $peteggid, $r_array) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_evolution',
+		ID => $peteggid,
+		items => $r_array,
+	}));
+}
+
 
 1;

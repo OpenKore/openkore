@@ -27,7 +27,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 charCreationType 1
-sendCryptKeys 0x43026F1A, 0x79150862, 0x2F3C18FE
+sendCryptKeys 0x675A0E29, 0x19F20130, 0x48BF76F2
 
 
 
@@ -49,7 +49,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 charCreationType 1
-sendCryptKeys 0x43026F1A, 0x79150862, 0x2F3C18FE
+sendCryptKeys 0x675A0E29, 0x19F20130, 0x48BF76F2
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -105,7 +105,7 @@ addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
 charCreationType 4
-sendCryptKeys 0x0CF64CF6, 0x4CF64CF6, 0x4CF64CF6
+sendCryptKeys 0x45FB652B, 0x342B342B, 0x042B342B
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -150,7 +150,7 @@ pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 charCreationType 3
-sendCryptKeys 0x65483D19, 0x54B77F4C, 0x1D9D3AAB
+sendCryptKeys 0x63A07DEC, 0x6ADE2572, 0x4D5B6094
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]

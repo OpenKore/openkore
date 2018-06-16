@@ -696,7 +696,7 @@ sub define_next_valid_command {
 						}
 						
 						#Start of another if/switch/case/while block
-						if ( $self->{current_line} =~ /^(if|switch|case|while).*{$/ ) {
+						if ( $self->{current_line} =~ /^(if|switch|case|while|else).*{$/ ) {
 							$block_count++;
 							
 						#End of an if block or start of else block
@@ -1706,7 +1706,7 @@ sub find_and_define_key_index {
 
 # substitute variables
 sub substitue_variables {
-	my ($self, $received) = @_;
+	my ($self, $received, $get_entire_array_or_hash) = @_;
 	
 	my $remaining = $received;
 	my $substituted;
@@ -1746,10 +1746,18 @@ sub substitue_variables {
 					$var_value = $eventMacro->get_scalar_var($var->{real_name});
 					
 				} elsif ($var->{type} eq 'array') {
-					$var_value = $eventMacro->get_array_size($var->{real_name});
+					if ($get_entire_array_or_hash) {
+						$var_value = $var->{display_name};
+					} else {
+						$var_value = $eventMacro->get_array_size($var->{real_name});
+					}
 					
 				} elsif ($var->{type} eq 'hash') {
-					$var_value = $eventMacro->get_hash_size($var->{real_name});
+					if ($get_entire_array_or_hash) {
+						$var_value = $var->{display_name};
+					} else {
+						$var_value = $eventMacro->get_hash_size($var->{real_name});
+					}
 				}
 				$var_value = '' unless (defined $var_value);
 				
@@ -1950,8 +1958,52 @@ sub parse_command {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$parsed = $self->substitue_variables($val);
-			my $sub1 = "main::".$sub."(".$parsed.")";
+			$parsed = $self->substitue_variables($val, 1);
+			
+			#spliting $parsed to check if there is an array or hash
+			my (@array_holder, %hash_holder);
+			foreach (split /\s*,\s*/ , $parsed) {
+				#if don't have quotation marks and it is not a number or a variable, add the quotation marks
+				if ($_ !~ /"[^"]+"/ && $_ !~ /^\s*\d+\s*$/ && $_ !~ /$array_variable_qr|$hash_variable_qr/) { 
+					$parsed =~ s/$_/"$_"/;
+					
+				#elsif it is a variable or a number but has quotation marks, remove it
+				} elsif ($_ =~ /"\s*$array_variable_qr\s*"|"\s*$hash_variable_qr\s*"/ || $_ =~ /"\s*\d+\s*"/) {
+					#first remove quotation from $_
+					$_ =~ s/\"//g; 
+					#after remove quotation from $parsed, using the $_ to find the correct place to remove
+					$parsed =~ s/\"$_\"/$_/;
+					#strange but it works
+				}
+				
+				if (my $var = find_variable($_)) {
+					#there is an array or a hash to pass to sub
+					if ($var->{type} eq 'array') {
+						#if array exists, gets the content and insert on array holder
+						#then insert array_holder on $parsed
+						if ($eventMacro->{Array_Variable_List_Hash}{ $var->{real_name}}) {
+							@array_holder = @{ $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}} };
+							$parsed =~ s/$var->{real_name}/array_holder/;
+						} else {
+							$self->error ("Array '" . $var->{display_name} . "' does not exist");
+						}
+						
+					} elsif ($var->{type} eq 'hash') {
+						#if hash exists, gets the content and insert on hash holder
+						#then insert hash_holder on $parsed
+						if ($eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}) {
+							%hash_holder = %{ $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}} };
+							$parsed =~ s/$var->{real_name}/hash_holder/;
+						} else {
+							$self->error ("Hash '" . $var->{display_name} . "' does not exist");
+						}
+					} else {
+						$self->error("Could not define variable type on calling sub");
+						return "";
+					}
+				}
+			}
+			my $sub1 = 'main::'.$sub.'('.$parsed.')';
 			$result = eval($sub1);
 			if ($@) {
 				message "[eventMacro] Error in eval '".$@."'\n";
