@@ -1706,7 +1706,7 @@ sub find_and_define_key_index {
 
 # substitute variables
 sub substitue_variables {
-	my ($self, $received) = @_;
+	my ($self, $received, $get_entire_array_or_hash) = @_;
 	
 	my $remaining = $received;
 	my $substituted;
