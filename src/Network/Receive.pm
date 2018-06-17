@@ -1260,7 +1260,7 @@ sub actor_display {
 				NPC_PET_TYPE, 'Actor::Pet',
 				NPC_HO_TYPE, 'Actor::Slave',
 				NPC_MERSOL_TYPE, 'Actor::Slave',
-				NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
+				# NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
 			}->{$args->{object_type}};
 		}
 
