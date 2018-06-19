@@ -8349,4 +8349,12 @@
 13183#Lança-Granadas_para_Iniciantes#
 13180#Rifle_para_Iniciantes#
 25187#Projétil_Pesado#
+//*****************************************************
+//------------Aplicar em 2018-06-19--------------------
+//*****************************************************
+31048#Par de Lírios#
+20048#Tiara Elegante#
+20212#Boneco de Loki e Nidhogg#
+21042#Espada Onimaru#
+15370#Gálea de Unicórnio#
 //file end

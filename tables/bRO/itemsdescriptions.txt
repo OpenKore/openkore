@@ -12476,11 +12476,11 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4326#
-^0000ffAdiciona-se uma chance de ganhar o item ‘Sushi’ ou ‘Peixe Cru’ toda vez em que um monstro do tipo Peixe for derrotado.
-O Sushi e o Peixe Cru ganhos recuperam 50% a mais de HP.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+^0000ffRecuperação de HP de Sushi e Peixe Cru +50%.^000000
+Ao derrotar monstros da raça Peixe:
+^0000ff3% de chance de derrubar Sushi ou Peixe Cru.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4327#
@@ -31100,13 +31100,15 @@ Classes: ^777777Todas^000000
 5770#
 Um Pouring geladinho que pula em sua cabeça.
 ^0000ffAGI +3.^000000
-^0000ffChance de 3% de encantar a arma com propriedade Vento por 3 minutos quando realizar ataque físico.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+Ao realizar ataques físicos:
+^0000ff0,3% de chance de encantar a arma com propriedade Vento por 3 minutos.^000000
+^0000ffO efeito de encantar tem recarga de 3 minutos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 16591#
 Um ovo flamejante como o sol. Ao ser segurado, passa a sensação de que você está nas praias de Brasilis. ^0000ffAberto, revela um presente especial aleatório.^000000
@@ -36610,6 +36612,7 @@ Um chapéu feito em homenagem ao temível MVP de Brasilis, Boitatá, a cobra de 
 ^0000ffAo realizar ataques físicos:^000000
 ^0000ff1% de chance de autoconjurar [Lâminas Destruidoras] nv. 5.^000000
 ^0000ff1% de chance de encantar a arma com propriedade Fogo por 3 minutos.^000000
+^0000ffO efeito de encantar tem recarga de 3 minutos.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Couraça do Boitatá]^000000
 ^0000ffINT +3. FOR +3.^000000
@@ -40590,15 +40593,17 @@ Nível Necessário : ^77777720^000000
 Classes : ^777777Todas exceto Aprendiz^000000
 #
 18855#
-Pouca gente em Rune-Midgard sabe, mas foi um nativo da ilha-nação de Brasilis quem inventou os balões dirigíveis! Conhecido como Dantos Sumont, este intrépido inventor sempre podia ser visto com este chapéu na cabeça enquanto realizava suas proezas aéreas. Existe uma certa polêmica se Dantos realmente foi o “pai da aviação”, mas ninguém nega que ele foi a primeira pessoa a contornar a Torre de Geffen a bordo de um dirigível, apesar de seu voo em outra máquina voadora, batizada como Ave de Rapina, ter chamado mais atenção.
-^0000FFAGI + 3, INT + 3.
-Pequena chance de Encantar a arma com propriedade 'Vento' por três minutos ao realizar ataques físicos de curta distância.^000000
-Tipo : ^777777Equipamento para Cabeça^000000
+Pouca gente em Rune-Midgard sabe, mas foi um nativo da ilha-nação de Brasilis quem inventou os balões dirigíveis! Conhecido como Dantos Sumont, este intrépido inventor sempre podia ser visto com este chapéu na cabeça enquanto realizava suas proezas aéreas. Existe uma certa polêmica se Dantos realmente foi o 'pai da aviação', mas ninguém nega que ele foi a primeira pessoa a contornar a Torre de Geffen a bordo de um dirigível, apesar de seu voo em outra máquina voadora, batizada como Ave de Rapina, ter chamado mais atenção.
+^0000ffAGI +3. INT +3.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de encantar a arma com propriedade Vento por 3 minutos.^000000
+^0000ffO efeito de encantar tem recarga de 3 minutos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777710^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18675#
 Esse chapéu em formato de maçã verde emite um aroma doce e agradável. Criado pelo visionário Steve Trampos, o chapéu logo passou a ser chamado pelos fashionistas de Rune-Midgard de “ai-Hat” depois de um incidente no qual um Peco Peco mordeu um pedaço de uma destas maçãs.
@@ -41311,14 +41316,19 @@ Classe: ^777777Todas^000000
 #
 18727#
 Criado pela famosa estilista marinha, Leira, este chapéu é uma cópia exata do simpático capuz usado pela fada aquática, Sedora. Para sua sorte, diferente dos tentáculos da Sedora, que queimam como os de água-viva, os do seu chapéu são feitos de pano, e ainda carregam encantamentos que o protegerão contra seres aquáticos.
-^0000FFDiminui em 5% o dano recebido por monstros do tipo Peixe.
-Recuperação usando os itens Sushi e Peixe Cru +50%
-Se refinado acima do +7, recuperação usando o item Peixe Cru +100%. ^000000
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffResistência a raça Peixe +5%.^000000
+^0000ffRecuperação de HP de Sushi e Peixe Cru +50%.^000000
+Refino +7 ou mais:
+^0000ffRecuperação de HP de Sushi e Peixe Cru +100% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Lontra]^000000
+^0000ffRecuperação de HP de Sushi e Peixe Cru +50% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777713^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000Nível Necessário : ^77777710^000000
-Classe: ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 18692#
 Se você usa esta peruca, não é preciso que lhe esclareçam tudo no Preto ou Branco, nem que expliquem o ABC de como as coisas funcionam. Midgard é um lugar sombrio, e muitas vezes parece que Eles Não Se Importam com a Gente. Mas apesar das coisas às vezes serem como um Thriller de horror, você sabe que é capaz de ajudar a Curar o Mundo. Basta colocar sua cara de Bad boy e encarar os desafios! Sem esquecer, é claro, do estilo, coisa que você tem de sobra, parecendo até um Andarilho da Lua, como dizem seus amigos, Billi e Jean. Afinal, como a peruca indica, você é um membro do grupo musical, Jeca são Five!^0000FFDES + 2, SOR + 1.^000000 Tipo : ^777777Equipamento para Cabeça^000000
@@ -44652,7 +44662,6 @@ Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros
 ^0000ffDano físico contra a raça Bruto +10%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Coleira da Fidelidade]^000000
-^0000ffATQ +30.^000000
 Ao receber ou realizar ataques físicos:
 ^0000ffChance de se transformar em Atroce por alguns segundos.^000000
 ^CD3278Durante a transformação:^000000
@@ -46554,15 +46563,17 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 5654#
-Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o “bullying”. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
-FOR +2
-Ao realizar ataques físico, há uma chance de encantar sua arma com a propriedade sagrado por 90 segundos.
-Tipo : ^777777Equipamento para cabeça^000000
+Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o 'bullying'. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
+^0000ffFOR +2.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de encantar a arma com propriedade Sagrado por 90 segundos.^000000
+^0000ffO efeito de encantar tem recarga de 90 segundos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo ^000000
-Peso : ^77777720^000000
-Nível necessário : ^77777710^000000
-Profissões que utilizam : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 2154#
 Um escudo feito de plástico. Não subestime esse brinquedo!
@@ -57829,20 +57840,25 @@ Classes: ^777777Todas^000000
 #
 28434#
 Luvas de couro sem dedo, perfeitas para uma briga de rua. Elas foram uma vez usadas por um trio de lutadores que saía à noite para fazer justiça com as próprias mãos nas Ruas da Fúria. Calce-as e sinta o poder para desferir murros poderosos!
+--------------------------
 ^0000ffFOR +2.^000000
 ^0000ffSP máx. +100.^000000
 ^0000ffDano físico contra todas as raças +2%.^000000
 ^0000ffHabilita [Absorver Esferas Espirituais] nv. 1.^000000
+--------------------------
 FOR base 100 ou mais:
 ^0000ffDano físico contra todas as raças +5% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Espírito do Lutador 1]^000000
 ^0000ffSP máx. +100 adicional.^000000
 ^0000ffDano físico contra todas as raças +5% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Espírito do Lutador 2]^000000
 ^0000ffSP máx. +100 adicional.^000000
 ^0000ffDano físico contra todas as raças +5% adicional.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777740^000000
@@ -58034,19 +58050,24 @@ Classes: ^777777Todas^000000
 //*****************************************************
 28433#
 Um cristal que irradia uma bela luz azulada, que dizem trazer bons resultados em combate aos sortudos. Ele foi polido até atingir uma forma oval perfeita.
+--------------------------
 ^0000ffCRIT +5.^000000
 ^0000ffDano crítico +2%.^000000
 ^0000ffVelocidade de ataque +5%.^000000
 ^0000ffHabilita [Chama Reveladora] nv. 1.^000000
+--------------------------
 SOR base 100 ou mais:
 ^0000ffCRIT +10 adicional.^000000
 ^0000ffDano crítico +10% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Pedra de Crítico 1]^000000
 ^0000ffDano crítico +10% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Pedra de Crítico 2]^000000
 ^0000ffDano crítico +10% adicional.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777740^000000
@@ -58245,20 +58266,25 @@ Classes: ^777777Todas^000000
 //*****************************************************
 28437#
 Um par de luvas criado pelos alquimistas mais dedicados que, seguindo fielmente os conceitos filosóficos dessa prática, confeccionaram-no em prol da restauração do seu corpo e espírito.
+--------------------------
 ^0000ffINT +2.^000000
 ^0000ffDano mágico +2%.^000000
 ^0000ffHabilita [Curar] nv. 3.^000000
 ^0000ffCusto de SP das habilidades -5%.^000000
+--------------------------
 INT base 100 ou mais:
 ^0000ffDano mágico +5% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Pedra de Encantamento 1]^000000
 ^0000ffConjuração variável -5%.^000000
 ^0000ffDano mágico contra todas as raças +5%.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Pedra de Encantamento 2]^000000
 ^0000ffConjuração variável -5%.^000000
 ^0000ffDano mágico contra todas as raças +5%.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^77777740^000000
 Peso: ^77777740^000000
@@ -58707,20 +58733,25 @@ Classes: ^777777Todas^000000
 #
 28438#
 Um lindo e misterioso colar com um grande pingente; dentro dele, há um tipo desconhecido de pó de fada. Além de exalar um doce perfume, é um belo artefato para completar seu visual.
+--------------------------
 ^0000ffDES +2.^000000
 ^0000ffPós-conjuração -5%.^000000
 ^0000ffDano físico a distância +2%.^000000
 ^0000ffHabilita [Impacto Explosivo] nv. 3.^000000
+--------------------------
 DES base 100 ou mais:
 ^0000ffDano físico a distância +5% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Mira Apurada 1]^000000
 ^0000ffPós-conjuração -5% adicional.^000000
 ^0000ffDano físico a distância +5% adicional.^000000
+--------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Mira Apurada 2]^000000
 ^0000ffPós-conjuração -5% adicional.^000000
 ^0000ffDano físico a distância +5% adicional.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777740^000000
@@ -58955,6 +58986,7 @@ Classes: ^777777Todas^000000
 #
 19163#
 Uma adorável bonequinha da Succubus para deixar em cima da cabeça. Apesar de ser de grande ajuda, não deixe que esses olhinhos grandes te enganem.
+^a400cdNão pode ser refinado.^000000
 ^0000ffRecupera 500 de HP e 50 de SP ao derrotar monstros com qualquer tipo de ataque.^000000
 Ao desequipar:
 ^0000ffDrena 5.000 de HP e 500 de SP.^000000
@@ -60189,5 +60221,82 @@ Classes: ^777777Justiceiros e evoluções^000000
 Um projétil tão caro e pesado que você vai ficar se perguntando do que ele é feito.
 ^0000ffCatalisador de [Calibre Letal], não é necessário equipar.^000000
 Peso: ^777777120^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-19--------------------
+//*****************************************************
+31048#
+De exuberante ar campestre, esse par de lírios acompanhado de fitas marrons em cetim exala um perfume forte e inebriante. Poucos em Rune-Midgard conhecem a lenda dos lírios do campo: segundo ela, essa flor tem a capacidade de reconciliar os amantes separados; então, se você precisar, não perca a chance!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20048#
+Uma delicada tiara adornada de flores e folhas silvestres, com a adição de uma fita azul e um pequeno pingente pendurados em cada ponta. Foi encontrada na Floresta Encantada, e até hoje muitos se perguntam qual criatura teria a sensibilidade de criar uma peça tão encantadora...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20212#
+Um par de bonecos para enfeitar a sua cabeça! Os rumores foram tantos que o ‘ship’ mais famoso de Rune-Midgard ganhou dois bonecos em homenagem a eles — e no estilo mais fofo possível. Se antes as teorias conspiratórias sobre o ‘ship’ já não saíam da sua cabeça, agora é que não vão sair mesmo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+21042#
+Uma misteriosa espada que se acredita ter sido forjada em tempos muito antigos. Para fazer jus ao nome, sua lâmina carrega uma força demoníaca muito poderosa.
+-------------------------
+A cada 3 de FOR base até o 120:
+^0000ffATQ +2.^000000
+-------------------------
+FOR base 95 ou mais:
+^0000ffATQ +55.^000000
+FOR base 108 ou mais:
+^0000ffATQ +95 adicional.^000000
+FOR base 120 ou mais:
+^0000ffATQ +175 adicional.^000000
+-------------------------
+Refino +8 ou mais:
+^0000ffTorna a arma indestrutível em batalha.^000000
+^0000ffAo realizar ataques físicos, 2% de chance de autoconjurar [Espíritos dos Amaldiçoados] nv. 2.^000000
+Refino +11 ou mais:
+^0000ffAo usar [Frenesi], consome 5.000 zenys para autoconjurar [Força Violentíssima] nv.  5.^000000
+-------------------------
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^77777775^000000
+Peso: ^777777420^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
+#
+15370#
+Um antigo e numeroso exército montado em unicórnios usava esse elmo em sinal do afeto e companheirismo que os soldados tinham por sua fiel montaria. As criaturas mágicas protegiam os soldados, e eles retribuíam da mesma forma.
+^0000ffDEFM +6.^000000
+^0000ffHabilita [Crux Magnum] nv. 1.^000000
+^0000ffResistência a propriedade Sombrio +15%.^000000
+A cada nível de [Fé]:
+^0000ffResistência a propriedade Sagrado^000000 ^ff0000-2%.^000000
+Refino +7 ou mais:
+^0000ffHabilita [Crux Magnum] nv. 7.^000000
+Refino +8 ou mais:
+^0000ffHabilita [Crux Magnum] nv. 8.^000000
+^0000ffResistência a propriedade Sagrado +5%.^000000
+^0000ffResistência a propriedade Sombrio +5% adicional.^000000
+Refino +9 ou mais:
+^0000ffHabilita [Crux Magnum] nv. 9.^000000
+Refino +10 ou mais:
+^0000ffHabilita [Crux Magnum] nv. 10.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777716^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
 #
 //file end
