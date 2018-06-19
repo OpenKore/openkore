@@ -6903,48 +6903,87 @@ sub cmdElemental {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
-	} elsif(!$char->{elemental}) {
-		error TF("You don't have any elemental. You must use Skill to call Elemental\n");
-		return;
 	}
-	
-	if ($args[0] eq "info" || $args[0] eq "") {
 
-	my $msg = center(T(" Elemental Information "), 50, '-') ."\n" .
-			TF("ID: %s (%s)\n".
-				"Name : %s \n" .
-				"HP: %s/%s (%s\%)\n" .
-				"SP: %s/%s (%s\%)\n".
-				"Position: %s,%s\n",
+	if ($args[0] eq "info" || $args[0] eq "") {
+		if(!$char->{elemental}{ID}) {
+			error TF("You don't have any elemental. You must use Skill to call Elemental\n");
+			return;
+		}
+
+		my $msg = center(T(" Elemental Information "), 50, '-') ."\n" .
+				TF("ID: %s (%s)\n".
+					"Name : %s \n".
+					"HP: %s/%s (%s\%)\n".
+					"SP: %s/%s (%s\%)\n".
+					"Position: %s,%s\n",
+				unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
+				$char->{elemental}{name},
+				$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}->hp_percent()),
+				$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}->sp_percent()),
+				$char->{elemental}{'pos'}{'x'},$char->{elemental}{'pos'}{'y'},
+			);
+			$msg .= ('-'x50) . "\n";
+			message $msg, "info";
+
+	} elsif ($args[0] eq "list" && $args[1] =~ /\d+/) {
+		my $elemental = $elementalsList->get($args[1]);
+		if(!$elemental) {
+			error TF("Elemental \"%s\" does not exist.\n", $args[1]);
+		} else {
+			my $pos = calcPosition($elemental);
+			my $mypos = calcPosition($char);
+			my $dist = sprintf("%.1f", distance($pos, $mypos));
+			$dist =~ s/\.0$//;
+
+			my $msg = center(T(" Elemental Info "), 67, '-') ."\n" .
+						
+			TF("%s (%s) \n".
+				"ID: %s (Hex: %s)\n" .
+				"Position: %s, %s  Distance: %-17s\n" .
+				"Level: %-7d\n" .
+				"Class: %s\n" .
+				"Walk speed: %s secs per block\n",
+			$elemental->{name}, $elemental->{binID},
 			unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
-			$jobs_lut{$char->{elemental}{jobID}},  
-			$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}->hp_percent()),
-			$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}->sp_percent()),
-			$char->{elemental}{'pos'}{'x'},$char->{elemental}{'pos'}{'y'},
-		);
-		$msg .= ('-'x50) . "\n";
-		message $msg, "info";
+			$pos->{x}, $pos->{y}, $dist,
+			$elemental->{lv}, 
+			$jobs_lut{$elemental->{jobID}},
+			$elemental->{walk_speed});
+
+			$msg .= '-' x 67 . "\n";
+			message $msg, "info";
+			return;
+		}
 	} elsif ($args[0] eq "list") {
 		my $msg = center(T(" Elemental List "), 79, '-') ."\n".
 		T("#    Name                                Lv Dist Coord\n");
 		for my $elemental (@$elementalsList) {
 			my ($name, $dist, $pos);
 			$name = $jobs_lut{$elemental->{jobID}};
-			$dist = distance($elemental->{pos_to}, $elemental->{pos_to});
-			$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
-			$pos = '(' . $elemental->{pos_to}{x} . ', ' . $elemental->{pos_to}{y} . ')';
+			my $elementalpos = calcPosition($elemental);
+			my $mypos = calcPosition($char);
+			$dist = sprintf("%.1f", distance($elementalpos, $mypos));
+			$dist =~ s/\.0$//;
+			$pos = '(' . $elemental->{pos}{x} . ', ' . $elemental->{pos}{y} . ')';
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
 				[$elemental->{binID}, $name, $elemental->{lv}, $dist, $pos]);
 		}
+
 		if (my $elementalsTotal = $elementalsList && $elementalsList->size) {
 			$msg .= TF("Total elementals: %s \n", $elementalsTotal);
 		} else	{$msg .= T("There are no elementals near you.\n");}
+
 		$msg .= '-' x 79 . "\n";
 		message $msg, "list";
+
 	} else {
 		error T("Error in function 'elemental')\n" .
-			"Usage: elemental <info|list>\n");
+			"Usage: elemental <info|list [elemental index]>\n
+				info: show info from self elemental.\n
+				list: list all elementals on screen.\n
+				list <index number> show informations about a specific elemental");
 	}
 }
 1;

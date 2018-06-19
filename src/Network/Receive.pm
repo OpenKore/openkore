@@ -1396,9 +1396,9 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Elemental();
 			$actor->{appear_time} = time;
-			$actor->{name} = bytesToString($args->{name});
 			$mustAdd = 1;
 		}
+		$actor->{name} = $jobs_lut{$args->{type}};
 	}
 
 	#### Step 2: update actor information ####
@@ -1693,7 +1693,7 @@ typedef enum <unnamed-tag> {
 	}
 	
 	if($char->{elemental}{ID} eq $actor->{ID}) {
-		$char->{elemental}{ID} = $actor->{ID};
+		$char->{elemental} = $actor;
 	}
 }
 
@@ -1843,30 +1843,22 @@ sub actor_died_or_disappeared {
 
 	} elsif (defined $elementalsList->getByID($ID)) {
 		my $elemental = $elementalsList->getByID($ID);
-		if ($args->{type} == 1) {
-			message TF("ElementalDied: %s (%d) %s\n", $jobs_lut{$elemental->{jobID}}, $elemental->{binID}, $elemental->{actorType});
-			$elemental->{state} = 4;
+		if ($args->{type} == 0) {
+			message "Elemental Disappeared: " .$elemental->{name}. " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+			$elemental->{disappeared} = 1;
 		} else {
-			if ($args->{type} == 0) {
-				debug "Elemental Disappeared: " . $jobs_lut{$elemental->{jobID}} . " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
-				$elemental->{disappeared} = 1;
-			} elsif ($args->{type} == 2) {
-				debug "Elemental Disconnected: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
-				$elemental->{disconnected} = 1;
-			} elsif ($args->{type} == 3) {
-				debug "Elemental Teleported: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
-				$elemental->{teleported} = 1;
-			} else {
-				debug "Elemental Disappeared in an unknown way: ".$jobs_lut{$elemental->{jobID}}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
-				$elemental->{disappeared} = 1;
-			}
-
-			$elemental->{gone_time} = time;
-			Plugins::callHook('elemental_disappeared', {elemental => $elemental});
+			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
+			$elemental->{disappeared} = 1;
 		}
+
+		$elemental->{gone_time} = time;
+		Plugins::callHook('elemental_disappeared', {elemental => $elemental});
+
+
 		if($char->{elemental}{ID} eq $ID) {
 			$char->{elemental} = undef;
 		}
+
 		$elementalsList->remove($elemental);
 
 	} else {
@@ -2072,6 +2064,19 @@ sub actor_info {
 		Plugins::callHook('slaveNameUpdate', {slave => $slave});
 	}
 
+	my $elemental = $elementals{$args->{ID}};
+	if ($elemental) {
+		my $name = bytesToString($args->{name});
+		$elemental->{name_given} = $name;
+		$elemental->setName($name);
+		$elemental->{info} = 1;
+		if ($config{debug} >= 2) {
+			my $binID = binFind(\@elementalsID, $args->{ID});
+			debug "elemental Info: $elemental->{name_given} ($binID)\n", "parseMsg", 2;
+		}
+		Plugins::callHook('elementalNameUpdate', {elemental => $elemental});
+	}
+	
 	# TODO: $args->{ID} eq $accountID
 }
 
