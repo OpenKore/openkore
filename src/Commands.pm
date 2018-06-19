@@ -6957,7 +6957,7 @@ sub cmdElemental {
 		}
 	} elsif ($args[0] eq "list") {
 		my $msg = center(T(" Elemental List "), 79, '-') ."\n".
-		T("#    Name                                Lv Dist Coord\n");
+		T("#    Name                Lv   Dist  Coord\n");
 		for my $elemental (@$elementalsList) {
 			my ($name, $dist, $pos);
 			$name = $jobs_lut{$elemental->{jobID}};
@@ -6967,7 +6967,7 @@ sub cmdElemental {
 			$dist =~ s/\.0$//;
 			$pos = '(' . $elemental->{pos}{x} . ', ' . $elemental->{pos}{y} . ')';
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<< @<<<<<<<<<< @<<< @<<<<<<<<<",
+				"@<<< @<<<<<<<<<<<<<<<<<< @<<< @<<   @<<<<<<<<<<",
 				[$elemental->{binID}, $name, $elemental->{lv}, $dist, $pos]);
 		}
 
