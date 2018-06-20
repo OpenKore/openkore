@@ -145,8 +145,8 @@ public:
 private:
 	static const int sm_alog[256];
 	static const int sm_log[256];
-	static const char sm_S[256];
-    static const char sm_Si[256];
+	static const signed char sm_S[256];
+    static const signed char sm_Si[256];
     static const int sm_T1[256];
     static const int sm_T2[256];
     static const int sm_T3[256];
@@ -159,7 +159,7 @@ private:
     static const int sm_U2[256];
     static const int sm_U3[256];
     static const int sm_U4[256];
-    static const char sm_rcon[30];
+    static const signed char sm_rcon[30];
     static const int sm_shifts[3][4][2];
 	//Error Messages
 	static char const* sm_szErrorMsg1;
