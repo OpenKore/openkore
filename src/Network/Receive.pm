@@ -4860,7 +4860,6 @@ sub map_change {
 		ai_clientSuspend(0, 10);
 	} else {
 		$messageSender->sendMapLoaded();
-		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO)); # request to unfreeze char alisonrag
 		# $messageSender->sendSync(1);
 		$timeout{ai}{time} = time;
 	}
@@ -5308,9 +5307,16 @@ sub received_character_ID_and_Map {
 		}
 	}
 
-	$map_ip = makeIP($args->{mapIP});
-	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-	$map_port = $args->{mapPort};
+	if($args->{'mapUrl'} =~ /.*\:\d+/) {
+		$map_ip = $args->{mapUrl};
+		$map_ip =~ s/:[0-9]+//;
+		$map_port = $args->{mapPort};
+	} else {
+		$map_ip = makeIP($args->{mapIP});
+		$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
+		$map_port = $args->{mapPort};
+	}
+
 	message TF("----------Game Info----------\n" .
 		"Char ID: %s (%s)\n" .
 		"MAP Name: %s\n" .
