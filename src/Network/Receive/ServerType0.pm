@@ -954,6 +954,8 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO )); # request to unfreeze char alisonrag
 }
 
 sub area_spell {
@@ -1775,8 +1777,15 @@ sub map_changed {
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
 
-	$map_ip = makeIP($args->{IP});
-	$map_port = $args->{port};
+	if($args->{'url'} =~ /.*\:\d+/) {
+		$map_ip = $args->{url};
+		$map_ip =~ s/:[0-9]+//;
+		$map_port = $args->{port};
+	} else {
+		$map_ip = makeIP($args->{IP});
+		$map_port = $args->{port};
+	}
+
 	message(swrite(
 		"---------Map  Info----------", [],
 		"MAP Name: @<<<<<<<<<<<<<<<<<<",
@@ -1840,7 +1849,6 @@ sub map_changed {
 		oldMap => $oldMap,
 	});
 	$timeout{ai}{time} = time;
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO)); # request to unfreeze char alisonrag
 }
 
 sub memo_success {
