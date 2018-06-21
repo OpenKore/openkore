@@ -22509,4 +22509,12 @@ Campitor might be right outside Juno according to the Band Members.#
 Maybe the Poring Con Volunteer at the entrance knows about Camp?#
 #
 
+63187#Poring Con - Cosplay Scavenger Hunt#SG_FEEL#QUE_NOIMAGE#
+There is a 22 hour cooldown on this quest.#
+Come back to hunt for cosplays again later!#
+
+63188#Poring Con - Help Cosplayer Freya#SG_FEEL#QUE_NOIMAGE#
+There is a 22 hour cooldown on this quest.#
+Come back to help Freya again!#
+
 #
