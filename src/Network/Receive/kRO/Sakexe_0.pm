@@ -553,6 +553,8 @@ sub new {
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
+		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
