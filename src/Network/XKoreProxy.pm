@@ -583,7 +583,7 @@ sub modifyPacketIn {
 		}
 		$self->serverDisconnect(1);
 		
-	} elsif($switch eq "0092" || $switch eq "0AC7") { # In Game Map-server changed
+	} elsif($switch eq "0092" || $switch eq "0AC7" || $switch eq "0A4C") { # In Game Map-server changed
 		my $mapInfo;
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
