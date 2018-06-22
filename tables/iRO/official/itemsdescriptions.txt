@@ -65527,6 +65527,25 @@ Luminous Blue Stone
 17391#
 #
 17392#
+^FF0000Account Bound^000000
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+When opened gives one of the the following
+
+Malach's Skin [1]
+Hibram's Gloves [1]
+Wing Headphone
+Tengu Scroll
+Jinn Marin Balloon
+Wakwak Manteau [1]
+Blacksmith's Gloves [1]
+(4) Safe to 7 Chance Box
+(2) Safe to 10 Certificate
+(6) Blacksmith Blessing
+(6) Battle Manual X3
+
+
 #
 17393#
 'Swaaaag!' - Magus
