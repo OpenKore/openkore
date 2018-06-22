@@ -18,7 +18,30 @@ use base qw(Network::Receive::kRO::RagexeRE_2017_04_26d);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+			'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
+			'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+			'0ABD' => ['party_lv', 'a4 v2', [qw(ID job lv)]],
+		);
+		
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self; 
+}
+
+sub party_lv {
+    my ($self, $args) = @_;
+
+    my $ID = $args->{ID};
+    
+    if ($char->{party}{users}{$ID}) {
+        $char->{party}{users}{$ID}{job} = $args->{job};
+        $char->{party}{users}{$ID}{lv} = $args->{lv};
+        $char->{party}{users}{$ID}{online} = 1;
+    }
 }
 
 1;

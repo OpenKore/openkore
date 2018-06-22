@@ -15,6 +15,8 @@ package Network::Receive::kRO::RagexeRE_2016_12_07e;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2016_08_24a);
+use I18N qw(bytesToString);
+use Globals;
 
 sub new {
 	my ($class) = @_;
@@ -23,6 +25,8 @@ sub new {
 	my %packets = (
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0AA5' => ['guild_members_list'],
 	);
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
@@ -30,6 +34,33 @@ sub new {
 	return $self;
 }
 
+sub guild_members_list {
+	my ($self, $args) = @_;
+
+	my ($jobID);
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $guild_pack = 'a4 V x6 v2 V v x2 V V';
+	my $guild_len = length pack $guild_pack;
+	my $c = 0;
+	my $gtIndex;
+	delete $guild{member};
+	for (my $i = 4; $i < $msg_size; $i+=$guild_len){
+		($guild{member}[$c]{ID},
+		$guild{member}[$c]{charID},
+		$guild{member}[$c]{jobID},
+		$guild{member}[$c]{lv},
+		$guild{member}[$c]{contribution},
+		$guild{member}[$c]{online},
+		$gtIndex,
+		$guild{member}[$c]{lastlogin}) = unpack($guild_pack, substr($msg, $i, $guild_len)); # TODO: what are the unknown x's?
+
+		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
+		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
+		$guild{member}[$c]{name} = $guild{member}[$c]{charID}; #TODO get member name !! 
+		$c++;
+	}
+}
 
 1;
 =pod
