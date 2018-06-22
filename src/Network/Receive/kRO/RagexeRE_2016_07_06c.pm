@@ -15,12 +15,34 @@ package Network::Receive::kRO::RagexeRE_2016_07_06c;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2016_04_14b);
+use I18N qw(bytesToString);
+use Globals;
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+			'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
+			'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_id)]],
+		);
+		
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self; 
 }
 
+sub guild_info {
+	my ($self, $args) = @_;
+	# Guild Info
+	foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_id)) {
+		$guild{$_} = $args->{$_};
+	}
+	$guild{name} = bytesToString($args->{name});
+	$guild{master} = $args->{master_id}; #TODO get master name !
+	$guild{members}++; # count ourselves in the guild members count
+}
 1;
 =pod
 // 20160706

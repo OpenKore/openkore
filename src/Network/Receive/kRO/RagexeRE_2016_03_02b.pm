@@ -18,7 +18,16 @@ use base qw(Network::Receive::kRO::RagexeRE_2016_02_17b);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+		'0A51' => ['receive_char', 'v a4 v2 Z24', [qw(len ID job lv name)]],
+		);
+		
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self;
 }
 
 1;

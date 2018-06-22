@@ -18,8 +18,19 @@ use base qw(Network::Receive::kRO::RagexeRE_2017_02_08b);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+		my %packets = (
+			'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
+		);
+		
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self; 
 }
+
+
 
 1;
 =pod
