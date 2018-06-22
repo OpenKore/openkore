@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2016_12_07e;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_08_24a);
+use base qw(Network::Send::kRO::RagexeRE_2016_10_26b);
 
 sub new {
 	my ($class) = @_;
