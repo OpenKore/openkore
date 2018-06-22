@@ -71550,3 +71550,18 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20044#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Skull Hood!
+200 Skel-Bones
+100 Old White Cloth
+50 Black Hair
+5 Black Dyestuffs
+1000 Zeny
+1 Skull Hood Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
