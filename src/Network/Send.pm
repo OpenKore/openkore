@@ -1568,5 +1568,15 @@ sub sendPetEvolution {
 	}));
 }
 
+sub sendMakeItemRequest {
+	my ($self, $nameID, $material_nameID1, $material_nameID2, $material_nameID3) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'make_item_request',
+		nameID => $nameID,
+		material_nameID1 => $material_nameID1,
+		material_nameID2 => $material_nameID2,
+		material_nameID3 => $material_nameID3,
+	}));
+}
 
 1;
