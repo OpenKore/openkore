@@ -246,7 +246,7 @@ sub new {
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
-		'018D' => ['forge_list'],
+		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # ex. due to ice wall
@@ -2879,7 +2879,10 @@ sub skill_use_failed {
 		13 => T('Need this within the water'),
 		19 => T('Full Amulet'),
 		29 => TF('Must have at least %s of base XP', '1%'),
-		83 => T('Location not allowed to create chatroom/market')
+		71 => T('Missing Required Item'), # (item name) required x amount
+		78 => T('Required Equiped Weapon Class'),
+		83 => T('Location not allowed to create chatroom/market'),
+		84 => T('Need more bullet'),
 		);
 
 	my $errorMessage;
