@@ -7006,7 +7006,7 @@ sub cmdCreate {
 		message TF("Item with 'create' index: %s not found.\n", $arg[0]), "info";
 	} else {
 		error T("Error in function 'create'\n" .
-			"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 2 nameID>\n".
+			"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 3 nameID>\n".
 			"material # nameID: can be 0 or undefined.\n");
 	}
 
