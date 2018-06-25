@@ -104,6 +104,7 @@ sub new {
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'023B' => ['storage_password'],
+		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
@@ -1220,13 +1221,6 @@ sub sendBattlegroundChat {
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
-sub sendCooking {
-	my ($self, $type, $nameID) = @_;
-	my $msg = pack("v3", 0x025B, $type, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Cooking.\n", "sendPacket", 2;
-}
-
 sub sendWeaponRefine {
 	my ($self, $ID) = @_;
 	# FIXME
@@ -1260,4 +1254,3 @@ sub sendAchievementGetReward {
 }
 
 1;
-
