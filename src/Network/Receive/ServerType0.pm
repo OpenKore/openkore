@@ -2355,21 +2355,6 @@ sub received_characters {
 	}
 }
 
-sub refine_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 1) {
-		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 2) {
-		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 3) {
-		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
-	} else {
-		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
-	}
-}
-
 sub rank_points {
 	my ( $self, $args ) = @_;
 
