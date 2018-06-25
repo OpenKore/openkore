@@ -6017,8 +6017,9 @@ sub cmdShowEquip {
 	}
 }
 
-# 025a <packet len>.W <mk type>.W { <name id>.W }*
-# cook type:
+# Answer to mixing item selection dialog (CZ_REQ_MAKINGITEM).
+# 025b <mk type>.W <name id>.W
+# mk type:
 #     1 = cooking
 #     2 = arrow
 #     3 = elemental
