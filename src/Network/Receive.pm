@@ -6110,4 +6110,29 @@ sub elemental_info {
 		$char->{elemental}{$_} = $args->{$_};
 	}
 }
+
+# 025A
+sub cooking_list {
+	my ($self, $args) = @_;
+	undef $cookingList;
+	my $k = 0;
+	my $msg;
+
+	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
+	for (my $i = 0; $i < length($args->{item_list}); $i += 2) {
+		my $nameID = unpack('v', substr($args->{item_list}, $i, 2));
+		$cookingList->[$k] = $nameID;
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
+		$k++;
+	}
+	$msg .= sprintf("%s\n", ('-'x79));
+
+	message($msg, "list");
+	message T("You can now use the 'cook' command.\n"), "info";
+
+	Plugins::callHook('cooking_list', {
+		cooking_list => $cookingList,
+	});
+}
+
 1;
