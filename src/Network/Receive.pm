@@ -6115,9 +6115,10 @@ sub elemental_info {
 sub cooking_list {
 	my ($self, $args) = @_;
 	undef $cookingList;
+	undef $currentCookingType;
 	my $k = 0;
 	my $msg;
-
+	$currentCookingType = $args->{type};
 	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
 	for (my $i = 0; $i < length($args->{item_list}); $i += 2) {
 		my $nameID = unpack('v', substr($args->{item_list}, $i, 2));

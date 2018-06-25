@@ -369,7 +369,7 @@ sub new {
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]],
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]],
 		'0259' => ['gameguard_grant', 'C', [qw(server)]],
-		'025A' => ['cooking_list', 'v2 a*', [qw(len unknown item_list)]],
+		'025A' => ['cooking_list', 'v2 a*', [qw(len type item_list)]],
 		'025D' => ['auction_my_sell_stop', 'V', [qw(flag)]],
 		'025F' => ['auction_windows', 'V C4 v', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
 		'0260' => ['mail_window', 'v', [qw(flag)]],

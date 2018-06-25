@@ -29,7 +29,7 @@ use base qw(Task::WithSubtask);
 use Task::Chained;
 use Task::SitStand;
 
-use Globals qw($net $char $messageSender $accountID %timeout $lastSkillUsedID);
+use Globals qw($net $char $messageSender $accountID %timeout);
 use Network;
 use Plugins;
 use Skill;
@@ -293,7 +293,6 @@ sub castSkill {
 
 	$self->{castTries}++;
 	$self->{castWaitTimer}{time} = time;
-	$lastSkillUsedID = $skillID;
 }
 
 # TODO:
