@@ -6035,14 +6035,8 @@ sub cmdCooking {
 	my ($cmd, $arg) = @_;
 	if ($arg =~ /^\d+/ && defined $cookingList->[$arg]) { # viewID/nameID can be 0
 		my $type = 1;
-		if($lastSkillUsedID > 0) {
-			if ($lastSkillUsedID == 2495) {
-				$type = 4;
-			} elsif ($lastSkillUsedID == 2496) {
-				$type = 5;
-			} elsif ($lastSkillUsedID == 2497) {
-				$type = 6;
-			}
+		if(defined $currentCookingType && $currentCookingType > 0) {
+			$type = $currentCookingType;
 		}
 		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
 	} elsif (!$arg) {
