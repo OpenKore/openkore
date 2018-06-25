@@ -354,7 +354,7 @@ sub new {
 		'021E' => ['less_effect', 'V', [qw(flag)]], # 6
 		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
 		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
-		'0221' => ['upgrade_list'], # -1
+		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
 		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
 		'0226' => ['top10_taekwon_rank'], # 282
@@ -3736,22 +3736,6 @@ sub blade_stop {
 sub divorced {
 	my ($self, $args) = @_;
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
-}
-
-# 0221
-# TODO: test new unpack string
-sub upgrade_list {
-	my ($self, $args) = @_;
-	my $msg;
-	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
 }
 
 # 0223

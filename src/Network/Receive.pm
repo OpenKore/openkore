@@ -6110,4 +6110,28 @@ sub elemental_info {
 		$char->{elemental}{$_} = $args->{$_};
 	}
 }
+
+# 0221
+sub upgrade_list {
+	my ($self, $args) = @_;
+	undef $refineList;
+	my $k = 0;
+	my $msg;
+
+	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
+
+	for (my $i = 0; $i < length($args->{item_list}); $i += 13) {
+		my ($index, $nameID) = unpack('a2 x6 C', substr($args->{item_list}, $i, 13));
+		my $item = $char->inventory->getByID($index);
+		$refineList->[$k] = unpack('v', $item->{ID});
+		$msg .= swrite(sprintf("\@%s - \@%s (\@%s)", ('<'x2), ('<'x50), ('<'x3)), [$k, itemName($item), $item->{binID}]);
+		$k++;
+	}
+
+	$msg .= sprintf("%s\n", ('-'x79));
+
+	message($msg, "list");
+	message T("You can now use the 'refine' command.\n"), "info";
+}
+
 1;
