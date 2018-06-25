@@ -6045,7 +6045,7 @@ sub cmdCooking {
 			}
 		}
 		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
-	} elsif (!arg) {
+	} elsif (!$arg) {
 		message TF("Syntax error in function 'cook' (Cook food)\n" .
 					"Usage: cook [list index]\n";
 	} else {
