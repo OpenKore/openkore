@@ -100,6 +100,7 @@ sub new {
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
+		'0222' => ['refine_item', 'V', [qw(ID)]],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
@@ -1220,14 +1221,6 @@ sub sendBattlegroundChat {
 	my $msg = pack("v2 Z*", 0x02DB, length($message)+4, stringToBytes($message));
 	$self->sendToServer($msg);
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
-}
-
-sub sendWeaponRefine {
-	my ($self, $ID) = @_;
-	# FIXME
-	my $msg = pack("v V", 0x0222, unpack('v', $ID));
-	$self->sendToServer($msg);
-	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
 
 # this is different from kRO

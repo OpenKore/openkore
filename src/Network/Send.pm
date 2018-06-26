@@ -1568,6 +1568,19 @@ sub sendPetEvolution {
 	}));
 }
 
+sub sendWeaponRefine {
+	my ($self, $ID) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'refine_item',
+		ID => $ID,
+	});
+	
+	$self->sendToServer($msg);
+
+	debug "Sent Weapon Refine.\n", "sendPacket", 2;
+}
+
 sub sendCooking {
 	my ($self, $type, $nameID) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -1587,6 +1600,7 @@ sub sendMakeItemRequest {
 		material_nameID2 => $material_nameID2,
 		material_nameID3 => $material_nameID3,
 	}));
+  debug "Sent Make Item Request.\n", "sendPacket", 2;
 }
 
 1;

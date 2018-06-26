@@ -336,7 +336,7 @@ sub new {
 		'021A' => ['top10_alchemist_rank'],
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
-		'0221' => ['upgrade_list'],
+		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
 		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
@@ -3992,21 +3992,6 @@ sub blade_stop {
 sub divorced {
 	my ($self, $args) = @_;
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
-}
-
-# 0221
-# TODO -> Check If we use correct unpack string
-sub upgrade_list {
-	my ($self, $args) = @_;
-	my $msg;
-	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my ($index, $nameID) = unpack('a2 x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
 }
 
 # 0223

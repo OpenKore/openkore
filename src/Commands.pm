@@ -6053,11 +6053,16 @@ sub cmdWeaponRefine {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my ($cmd, $arg) = @_;
-	if(my $item = Match::inventoryItem($arg)) {
-		$messageSender->sendWeaponRefine($item->{ID});
+
+	my ($cmd, $args) = @_;
+
+	if ($args =~ /^\d+/ && defined $refineList->[$args]) {
+		$messageSender->sendWeaponRefine($refineList->[$args]);
+	} elsif($args =~ /^\d+/) {
+		message TF("Item with 'refine' index: %s not found.\n", $args), "info";
 	} else {
-		message TF("Item with name or id: %s not found.\n", $arg), "info";
+		error T("Error in function 'refine'\n".
+			"Usage: refine <index number>\n");
 	}
 }
 
