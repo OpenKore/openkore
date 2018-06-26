@@ -2550,8 +2550,8 @@ List only shows recent 100 items.#
 Guild Storage is closing after 2 min of usage.#
 Incorrect GameSamba ID. Please Try Again.#
 %s [%doption] : %d #
-Coin is required.#
-%d coin(s) required.#
+Moedas são necessárias.#
+%d Moedas(s) necessárias.#
 Uma metralhadora deve estar equipada.#
 Uma espingarda deve estar equipada.#
 Um rifle deve estar equipado.#
@@ -2560,7 +2560,7 @@ Um projétil sagrado deve estar equipado.#
 Histórico da Venda#
 Histórico da Compra#
 Um lança granada deve estar equipado.#
-the skill effect such as [Hit Barrel],[Last Stand],[Platinum Altar] cannot be duplicated to use.#
+Não pode ser usada junto com [Furor], [Proteção Platina] e [Pânico do Justiceiro].#
 This skill cannot be used in this map.#
 When you are using the guild storage, all the items in the storage will be disappeared.#
 http://ragnarok.gamesamba.com/#
