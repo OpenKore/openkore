@@ -1124,6 +1124,30 @@ sub next {
 					}
 					
 					$eventMacro->set_full_array($var->{real_name}, \@new_array);
+				} elsif ($value =~ /\w+\s*\(.*\)$/) {
+					my $real_value = $self->parse_command($value);
+					
+					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
+						if (ref($real_value) eq 'ARRAY') {
+							#if is a array ref, have to convert into a hash ref
+							my %hash = @{$real_value};
+							$real_value = \%hash;
+						}
+						$eventMacro->set_full_hash($var->{real_name}, $real_value);
+						
+					} elsif (ref($real_value) eq '' && $real_value && $var->{type} eq 'array') { 
+						#elsif real value is defined is because something were returned, so it will make an array of that
+						my @array = split (/,/, $real_value); 
+						$eventMacro->set_full_array($var->{real_name}, \@array);
+						
+					} elsif(ref($real_value) eq 'ARRAY' && $var->{type} eq 'array') {
+						$eventMacro->set_full_array($var->{real_name}, $real_value);
+						
+					} else {
+						# $real_value not defined, some error happened
+						$self->error("Unable to set array or hash, empty value! (value: '$real_value')");
+						return;
+					}
 				}
 				
 			} else {
@@ -2006,10 +2030,20 @@ sub parse_command {
 			my $sub1 = 'main::'.$sub.'('.$parsed.')';
 			$result = eval($sub1);
 			if ($@) {
-				message "[eventMacro] Error in eval '".$@."'\n";
+				warning "[eventMacro] Error in eval '".$@."'\n";
 			}
 			return unless defined $result;
-			$val = q4rx $val;		
+			my @testArray = eval($sub1);
+			my %testHash  = eval($sub1);
+			if (scalar(@testArray) > 1 ) {
+				#if this is true, user returned an array or hash that is not a reference
+				#but the code demands a reference
+				$result = \@testArray;
+			}
+			if (ref($result) eq 'ARRAY' || ref($result) eq 'HASH' || ref($result) eq 'SCALAR') {
+				return $result;
+			}
+			$val = q4rx $val;
 			$command =~ s/$sub\s*\(\s*$val\s*\)/$result/g
 		}
 	}
