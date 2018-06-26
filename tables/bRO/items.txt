@@ -8357,4 +8357,12 @@
 20212#Boneco de Loki e Nidhogg#
 21042#Espada Onimaru#
 15370#Gálea de Unicórnio#
+//*****************************************************
+//------------Aplicar em 2018-06-26--------------------
+//*****************************************************
+19640#Lacinho Charmoso#
+31490#Cachecol de Poring#
+31382#Touca de Patinhas#
+13464#Garra Mágica de Brinquedo#
+28379#Anel Sombrio#
 //file end
