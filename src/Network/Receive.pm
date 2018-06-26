@@ -6075,7 +6075,7 @@ sub clan_leave {
 	my ($self, $args) = @_;
 	
 	if($clan{clan_name}) {
-		message TF("[Clan] You leaved $clan{clan_name}");
+		message TF("[Clan] You left %s\n", $clan{clan_name});
 		undef %clan;
 	}
 }
