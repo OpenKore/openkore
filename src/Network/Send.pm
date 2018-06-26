@@ -1576,6 +1576,7 @@ sub sendCooking {
 		type => $type,
 	}));
 	debug "Sent Cooking.\n", "sendPacket", 2;
+}
 
 sub sendMakeItemRequest {
 	my ($self, $nameID, $material_nameID1, $material_nameID2, $material_nameID3) = @_;
@@ -1586,7 +1587,6 @@ sub sendMakeItemRequest {
 		material_nameID2 => $material_nameID2,
 		material_nameID3 => $material_nameID3,
 	}));
-
 }
 
 1;
