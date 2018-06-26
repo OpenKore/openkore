@@ -261,7 +261,7 @@ sub new {
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
-		'018D' => ['forge_list'], # -1
+		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]], # -1
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
