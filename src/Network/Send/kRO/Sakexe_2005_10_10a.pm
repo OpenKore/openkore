@@ -27,14 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x025b,6,cooking,0
-sub sendCooking {
-	my ($self, $type, $nameID) = @_;
-	my $msg = pack('v3', 0x025B, $type, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Cooking.\n", "sendPacket", 2;
-}
-
 =pod
 //2005-10-10aSakexe
 0x020e,32

@@ -1581,4 +1581,26 @@ sub sendWeaponRefine {
 	debug "Sent Weapon Refine.\n", "sendPacket", 2;
 }
 
+sub sendCooking {
+	my ($self, $type, $nameID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'cook_request',
+		nameID => $nameID,
+		type => $type,
+	}));
+	debug "Sent Cooking.\n", "sendPacket", 2;
+}
+
+sub sendMakeItemRequest {
+	my ($self, $nameID, $material_nameID1, $material_nameID2, $material_nameID3) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'make_item_request',
+		nameID => $nameID,
+		material_nameID1 => $material_nameID1,
+		material_nameID2 => $material_nameID2,
+		material_nameID3 => $material_nameID3,
+	}));
+  debug "Sent Make Item Request.\n", "sendPacket", 2;
+}
+
 1;

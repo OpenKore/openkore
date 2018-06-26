@@ -90,6 +90,7 @@ sub initHandlers {
 	closebuyshop		=> \&cmdCloseBuyShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
+	create				=> \&cmdCreate,
 	damage				=> \&cmdDamage,
 	dead				=> \&cmdDeadTime,
 	deal				=> \&cmdDeal,
@@ -6017,14 +6018,31 @@ sub cmdShowEquip {
 	}
 }
 
+# Answer to mixing item selection dialog (CZ_REQ_MAKINGITEM).
+# 025b <mk type>.W <name id>.W
+# mk type:
+#     1 = cooking
+#     2 = arrow
+#     3 = elemental
+#     4 = GN_MIX_COOKING
+#     5 = GN_MAKEBOMB
+#     6 = GN_S_PHARMACY
 sub cmdCooking {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
+
 	my ($cmd, $arg) = @_;
 	if ($arg =~ /^\d+/ && defined $cookingList->[$arg]) { # viewID/nameID can be 0
-		$messageSender->sendCooking(1, $cookingList->[$arg]); # type 1 is for cooking
+		my $type = 1;
+		if(defined $currentCookingType && $currentCookingType > 0) {
+			$type = $currentCookingType;
+		}
+		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
+	} elsif (!$arg) {
+		message TF("Syntax error in function 'cook' (Cook food)\n" .
+					"Usage: cook [list index]\n");
 	} else {
 		message TF("Item with 'Cooking List' index: %s not found.\n", $arg), "info";
 	}
@@ -6991,4 +7009,30 @@ sub cmdElemental {
 				list <index number> show informations about a specific elemental");
 	}
 }
+
+sub cmdCreate {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my ($cmd, $args) = @_;
+	my @arg = parseArgs($args);
+
+	if ($arg[0] =~ /^\d+/ && defined $makableList->[$arg[0]]) { # viewID/nameID can be 0
+		$arg[1] = 0 if !defined $arg[1];
+		$arg[2] = 0 if !defined $arg[2];
+		$arg[3] = 0 if !defined $arg[3];
+		$messageSender->sendMakeItemRequest($makableList->[$arg[0]], $arg[1], $arg[2], $arg[3]);
+	} elsif($arg[0] =~ /^\d+/) {
+		message TF("Item with 'create' index: %s not found.\n", $arg[0]), "info";
+	} else {
+		error T("Error in function 'create'\n" .
+			"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 3 nameID>\n".
+			"material # nameID: can be 0 or undefined.\n");
+	}
+
+	undef $makableList;
+}
+
 1;

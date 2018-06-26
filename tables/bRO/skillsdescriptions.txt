@@ -4392,11 +4392,16 @@ Conteúdo: ^777777Consome 10% do HP para recuperar certa quantidade de SP.^00000
 #
 PF_SOULCHANGE#
 Exalar Alma
-Nível Máximo: 1
-^777777Pré requisitos: Espelho Mágico 3,
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Espelho Mágico 3
 Desconcentrar 2^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Troca o SP restante do usuário pela quantidade de SP do alvo. O SP recebido é igual a metade do SP do alvo. Não é possível ganhar mais que o SP máximo do alvo ou do usuário.^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ao segurar a tecla SHIFT,
+troca 50% do seu SP atual
+por 50% de SP do membro
+de seu grupo.^000000
 #
 PF_SOULBURN#
 Sifão de Alma
@@ -6095,11 +6100,11 @@ Cara ou Coroa
 Nível máximo: ^7777775^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^777777Consome 1 zeny para dar a chance de conseguir
+^777777Consome 1 zeny para dar a chance de ter
 1 moeda, num máximo de 10 moedas.
-Em casos de falha, o personagem perde 1 moeda.
-Chances de conseguir moedas melhoram conforme
-o nível da habilidade aumenta.^000000
+Em casos de falha, você perde 1 moeda.
+As chances aumentam conforme
+o nível da habilidade.^000000
 #
 GS_FLING#
 Atirar Moedas
@@ -6120,7 +6125,7 @@ Pré requisitos:
 ^777777Cara ou Coroa 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-Consome 1 moeda para disparar 3 vezes
+^777777Consome 1 moeda para disparar 3 vezes
 no alvo, independente da arma usada.^000000
 #
 GS_BULLSEYE#
@@ -6155,7 +6160,7 @@ Pré requisitos:
 ^777777Cara ou Coroa 4^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^777777Consome 2 moedas para garantir esquiva +30,
+^777777Consome 2 moedas para ter esquiva +30,
 precisão -30 e resistência a danos físicos
 a distância +20 por 20 segundos.
 Não pode ser usada junto com
@@ -6178,7 +6183,7 @@ Pré requisitos:
 ^777777Cara ou Coroa 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^777777Consome 01 moeda para adicionar o ATQM
+^777777Consome 1 moeda para adicionar o ATQM
 nos ataques físicos básicos por 30 segundos
 #
 GS_CRACKER#
@@ -6198,9 +6203,8 @@ Ataque Concentrado
 Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
 Descrição:
-^008080Somente com Pistolas.^000000
 ^777777Aumenta a precisão e a
-velocidade de ataque ao usar pistolas.^000000
+velocidade de ataque.^000000
 Nível l Vel. Atq. l Precisão
 [Nv 1]: ^777777 +1%^000000 l ^777777 +2^000000
 [Nv 2]: ^777777 +1%^000000 l ^777777 +4^000000
@@ -6242,7 +6246,7 @@ Descrição:
 ^008080Somente com Pistolas.^000000
 ^777777Cria a chance de disparar um projétil
 adicional em ataques a distância,
-sem consumir munição extra. Aumentar o nível
+sem consumir munição extra. Aumentar o nv.
 da habilidade aumenta a chance de sucesso.^000000
 #
 GS_TRACKING#
@@ -6276,7 +6280,8 @@ Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Pistolas ou Rifles.^000000
 ^777777Atira nas mãos do alvo para tentar remover
-a arma por 30 segundos. Em monstros, ATQ -25%.
+a arma por 30 segundos.
+Em monstros, ATQ -25%.
 Não funciona em monstros Chefes.^000000
 #
 GS_PIERCINGSHOT#
@@ -6288,7 +6293,7 @@ Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Pistolas ou Rifles.^000000
 ^777777Atira contra um oponente, ignorando a DEF
-e infligindo sangramento com uma certa chance.^000000
+e chance de infligir Sangramento.^000000
 Nível l Dano (Pistola) l Dano (Rifle) l Chance
 [Nv 1]: ^777777220%^000000 l ^777777280%^000000 l ^7777773%^000000
 [Nv 2]: ^777777240%^000000 l ^777777310%^000000 l ^7777776%^000000
@@ -6425,7 +6430,7 @@ Pré requisitos:
 ^777777Ataque concentrado 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas ou Lança-Granadas.^000000
+^008080Apenas com Espingardas ou Lança-Granadas.^000000
 ^777777Atira 5 projéteis em um alvo
 atingindo oponentes ao redor dele.^000000 
 Nível l Dano l Área
@@ -7454,22 +7459,36 @@ Descrição: ^777777O Ferus ruge, fazendo oponentes próximos receberem o efeito
 #
 RK_RUNEMASTERY#
 Perícia em Runas
-Nível Máximo:  10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
-Descrição: ^777777Esta habilidade permite ao Cavaleiro Rúnico criar Runas mágicas. Aumenta a chance de criação de Runas, e potencializa
-seus efeitos. Tipos diferentes podem ser criados em cada nível da habilidade.
-01 Runa Bruta e 01 Galho Antigo serão consumidos na criação, e materiais adicionais serão necessários. 
-A partir do nível 5 de habilidade, é possível criar de 1 a 2 Runas por vez, e a partir do nível 10, é possível criar de 1 a 3 Runas.^000000
-[Nv 1]: ^777777Runa Thurisaz - 1 Cabelo Azul , 1 Garra de Lobo do Deserto ^000000
-[Nv 2]: ^777777Runa Isa - 1 Coração Incandescente ^000000
-[Nv 3]: ^777777Runa Wyrd - 1 Partículas de Luz, 1 Corrente, 1 Canino de Dragão ^000000
-[Nv 4]: ^777777Runa Hagalaz - 1 Casca Arredondada, 1 Pele de Dragão ^000000
-[Nv 5]: ^777777Runa Othila - 1 Partículas de Luz, 1 Dente de Ogro ^000000
-[Nv 6]: ^777777Runa Uruz - 1 Cabelo Horrendo, 1 Mel^000000
-[Nv 7]: ^777777Runa Raido - 1 Partículas de Luz, 1 Gema Vermelha ^000000
-[Nv 8]: ^777777Runa Nauthiz - 1 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo ^000000
-[Nv 9]: ^777777Runa Berkana - 1 Armadura de Dullahan ^000000
-[Nv 10] : ^777777Aumenta a chance de sucesso ao criar Runas^000000
+Descrição:
+^777777Permite criar runas mágicas
+a partir de uma Runa Bruta,
+um Galho Antigo e materiais.
+Aumentar o nível da habilidade
+aumentam as chances de sucesso,
+e o número de runas criadas.^000000
+Nível l Runa l Habilidade l Itens
+[Nv 1]: ^777777Runa Thurisaz^000000 l ^777777Força Titânica^000000
+        ^7777771 Cabelo Azul, 1 Garra de Lobo do Deserto^000000
+[Nv 2]: ^777777Runa Isa^000000 l ^777777Vitalidade Rúnica^000000
+        ^7777771 Coração Incandescente^000000
+[Nv 3]: ^777777Runa Wyrd^000000 l ^777777Explosão Rúnica^000000
+        ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
+[Nv 4]: ^777777Runa Hagalaz^000000 l ^777777Escamas Rochosas^000000
+        ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
+[Nv 5]: ^777777Runa Othila^000000 l ^777777Aura de Combate^000000
+        ^7777771 Partículas de Luz, 1 Dente de Ogro^000000
+[Nv 6]: ^777777Runa Uruz^000000 l ^777777Regeneração Espiritual^000000
+        ^7777771 Cabelo Horrendo, 1 Mel^000000
+[Nv 7]: ^777777Runa Raido^000000 l ^777777Golpe Titânico^000000
+        ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
+[Nv 8]: ^777777Runa Nauthiz^000000 l ^777777Purificação^000000
+        ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
+[Nv 9]: ^777777Runa Berkana^000000 l ^777777Escudos Milenares^000000
+        ^7777771 Armadura de Dullahan^000000
+[Nv 10]: ^777777Runa Luxanima^000000 l ^777777Luz da Alma^000000
+         ^7777773 Partículas de Luz, 3 Ouro^000000
 #
 RK_MILLENNIUMSHIELD#
 #
@@ -9586,16 +9605,24 @@ Descrição: ^777777 Emite um alto ruído, reduzindo HP e SP do alvo. Causa mais
 #
 WM_REVERBERATION#
 Ressonância
-Nível Máximo: 5
-^777777Pré requisitos: Dissonância ou Dança do Ventre 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Cria uma área de ondas sonoras em 3 x 3 células que causa dano a oponentes que entrarem na área ou quando a habilidade encerrar. 
-Esta habilidade pode ser removida por ataques mágicos ou ataques físicos de longo alcance. No máximo 3 áreas de Ressonância podem ser colocadas no chão.^000000
-[Nv 1]: ^777777 ATQ 400% + ATQM 200% ^000000
-[Nv 2]: ^777777 ATQ 500% + ATQM 300%  ^000000
-[Nv 3]: ^777777 ATQ 600% + ATQM 400%   ^000000
-[Nv 4]: ^777777 ATQ 700% + ATQM 500%   ^000000
-[Nv 5]: ^777777 ATQ 800% + ATQM 600%   ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Dissonância 5^000000 ou
+^777777Dança do Ventre 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Cria uma onda sonora na área
+de 3x3 células que causa
+dano físico e mágico nos
+alvos que se aproximarem.
+Também pode ser ativada
+por [Ativar Ressonância].^000000
+Nível l ATQ l ATQM l SP
+[Nv 1]: ^777777400%^000000 l ^777777200%^000000 l ^77777728^000000
+[Nv 2]: ^777777500%^000000 l ^777777300%^000000 l ^77777732^000000
+[Nv 3]: ^777777600%^000000 l ^777777400%^000000 l ^77777738^000000
+[Nv 4]: ^777777700%^000000 l ^777777500%^000000 l ^77777742^000000
+[Nv 5]: ^777777800%^000000 l ^777777600%^000000 l ^77777748^000000
 #
 WM_DOMINION_IMPULSE#
 Ativar Ressonância
@@ -9631,16 +9658,25 @@ Não pode ser utilizada contra monstros tipo Chefe. O tempo de paralisia dos alv
 #
 WM_VOICEOFSIREN#
 Canto da Sereia
-Nível Máximo: 5
-^777777Pré requisitos: Poema de Nifflheim 3 ^000000
-Tipo: ^777777  Efeito negativo^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Canção que impede que monstros e jogadores ataquem o usuário que entrar na área de 11 x 11 células. 
-Jogadores afetados não poderão selecionar o usuário para atacar. Monstros afetados não atacarão o usuário. Alvos afetados mostrarão o emote de Amor. A duração da habilidade pode ser reduzida dependendo do nível do adversário. A habilidade é cancelada se o alvo afetado receber dano.^000000
-[Nv 1]: ^777777 Alcance da habilidade 5 x 5 células  / 15 segundos de duração  ^000000
-[Nv 2]: ^777777 Alcance da habilidade 7 x 7 células / 18 segundos de duração  ^000000
-[Nv 3]: ^777777 Alcance da habilidade 9 x 9 células / 21 segundos de duração   ^000000
-[Nv 4]: ^777777 Alcance da habilidade 11 x 11 células / 24 segundos de duração   ^000000
-[Nv 5]: ^777777 Alcance da habilidade 13 x 13 células / 27 segundos de duração   ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Poema de Nifflheim 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Um canto que tem chance
+de infligir [Sedução] nos alvos
+na área ao seu redor.
+A área, a chance de inflição
+e a duração do efeito nos alvos
+aumentam de acordo com o
+nível da habilidade.^000000
+Nível l Duração l Área
+[Nv 1]: ^77777715 segundos^000000 l ^7777775x5 células^000000
+[Nv 2]: ^77777718 segundos^000000 l ^7777777x7 células^000000
+[Nv 3]: ^77777721 segundos^000000 l ^7777779x9 células^000000
+[Nv 4]: ^77777724 segundos^000000 l ^77777711x11 células^000000
+[Nv 5]: ^77777727 segundos^000000 l ^77777713x13 células^000000
 #
 WM_DEADHILLHERE#
 Réquiem de Orfeu
@@ -11872,7 +11908,7 @@ Pré-requisitos:
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Somente com Pistolas.^000000
-^777777Consome 1 Moeda para mover-se instantaneamente.
+^777777Consome 1 Moeda para mover-se.
 Nos próximos 2 segundos após o uso,
 'Desperado' causará mais dano.
 Se houver obstáculos, a habilidade falha.^000000
@@ -11882,7 +11918,7 @@ Rajada Estilhaçante
 Nível máximo: ^7777775^000000
 Pré-requisitos:
 ^777777Desarmar 1^000000
-^777777Controle de Multidão 1^000000
+^777777Disparo Espalhado 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Espingardas.^000000
@@ -11925,10 +11961,10 @@ Pré-requisitos:
 ^777777Reação em Cadeia 10^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^777777Consome 1 moeda para ativar 'Reação em Cadeia'
-em qualquer arma de fogo. O nível ativado de
-'Reação em Cadeia' será o mesmo nível
-aprendido de 'Reação Ilimitada'.^000000
+^777777Consome 1 moeda para ativar
+'Reação em Cadeia' em qualquer arma de fogo.
+O nível ativado de 'Reação em Cadeia' será
+o mesmo aprendido de 'Reação Ilimitada'.^000000
 Nível l Duração
 [Nv. 1]: ^77777745 segundos^000000
 [Nv. 2]: ^77777760 segundos^000000
@@ -11951,12 +11987,14 @@ Descrição:
 ^008080Somente com Lança-Granadas.^000000
 ^777777Atira 1 Granada Aderente no alvo
 para causar dano instantaneamente.
-A granada será presa no alvo por 50 segundos.
-Dentro desse tempo, é possível usar 'Ignição'
-para causar dano extra de propriedade Fogo
+A granada ficará presa no alvo
+por 50 segundos e dentro desse
+tempo, é possível usar 'Ignição' para
+causar dano extra de propriedade Fogo
 no alvo e oponentes ao redor.
-Até 5 granadas podem ser fixadas em alvos diferentes.
-Se nenhuma granada for detonada nesse tempo,
+Até 5 granadas podem ser presas
+em alvos diferentes. Se nenhuma
+granada for detonada nesse tempo,
 a granada se desprende do alvo.^000000
 Nível l Dano l Dano Extra
 [Nv. 1]: ^777777400%^000000 l ^777777800%^000000
@@ -11974,10 +12012,10 @@ Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Metralhadoras.^000000
 ^777777Dispara em uma área de 3x10 células,
-com chance de remover habilidades de terreno
-no alcance da labareda.
+com chance de remover habilidades
+de terreno no alcance da labareda.
 Consome 10 projéteis, mas para conjurar a
-habilidade, você precisa ter 11 projéteis.
+habilidade, você precisa ter 11 projéteis.^000000
 Nível l Dano l Chance de remover
 [Nv. 1]: ^7777773.800%^000000 l ^77777720%^000000
 [Nv. 2]: ^7777774.100%^000000 l ^77777725%^000000
@@ -11992,8 +12030,9 @@ Pré-requisitos:
 ^777777Cara ou Coroa 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
-^777777Consome 1 Moeda para ativar todas as Granadas
-e Armadilhas Aderentes do usuário na tela.^000000
+^777777Consome 1 Moeda para ativar todas
+as Granadas e Armadilhas Aderentes
+do usuário na tela.^000000
 #
 RL_FIREDANCE#
 Descarregar Tambor
@@ -12060,7 +12099,8 @@ Descrição:
 é possível ativar 'Saque Rápido' para causar
 dano extra no alvo e nos oponentes
 marcados em brasa na área 21x21 células.
-Tiros adicionais aumentam com o nv. de classe.^000000
+Tiros adicionais aumentam de acordo
+com o nível de classe.^000000
 #
 RL_D_TAIL#
 Lançar Míssil
@@ -12071,10 +12111,13 @@ Pré-requisitos:
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Lança-Granadas.^000000
-^777777Lança um míssil nos alvos marcados em brasa.
+^777777Lança um míssil nos alvos
+marcados em brasa.
 Se houver mais de um alvo marcado,
-o míssil atingirá todos os alvos na tela.
-Se não existirem alvos marcados, não há dano.
+o míssil atingirá todos os alvos
+marcados em brasa na tela.
+Se não existirem alvos marcados,
+a habilidade não causa dano.
 Consome 1 Míssil Cauda de Dragão.^000000
 Nível l Dano
 [Nv. 1]: ^7777775.000%^000000
@@ -12115,8 +12158,9 @@ Descrição:
 Para aumentar sua velocidade de ataque,
 conjuração fixa e reduzir a precisão.
 É cancelada ao trocar de equipamentos.
-Não pode ser usada junto com Proteção Platina
-e Resistência Final. Dura 1 minuto.^000000
+Não pode ser usada simultaneamente com
+'Proteção Platina' e 'Resistência Final'
+Dura 1 minuto.^000000
 Nível l Vel. atq. l Precisão
 [Nv. 1]: ^777777 +1^000000 l ^777777 -30^000000
 [Nv. 2]: ^777777 +2^000000 l ^777777 -35^000000
@@ -12163,8 +12207,8 @@ Descrição:
 e nos oponentes ao redor da área de 5x5.
 Se não houver alvos marcados, a habilidade
 atingirá uma célula aleatória da tela.
-Consome 1 projétil e todas as suas moedas.
-Haverá 100% de chance de Atordoar oponentes.
+Consome todas as suas moedas.
+Há chances de Atordoar oponentes.^000000
 Nível l Dano l Duração do Atordoamento
 [Nv. 1]: ^7777774.200%^000000 l ^7777773 segundos^000000
 [Nv. 2]: ^7777775.600%^000000 l ^7777773 segundos^000000
@@ -12181,7 +12225,7 @@ Descrição:
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Marca um alvo para exibi-lo no mini mapa.
-Alvos marcados perderão 10 pontos de esquiva
+Alvos marcados perdem Esquiva
 e são afetados por 'Saque Rápido',
 'Lançar Míssil' e 'Execução'.
 Consome 1 moeda por marcação.
@@ -12195,8 +12239,9 @@ Pré-requisitos:
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Somente com Projéteis Sagrados.^000000
-^777777Consome todas as moedas para ativar uma proteção
-que bloqueia ataques recebidos.
+^777777Consome todas as moedas para ativar
+uma proteção que bloqueia
+alguns ataques recebidos.
 Seu ATQ aumenta conforme o nível da
 habilidade e as moedas consumidas.
 Trocar equipamentos cancela o bônus.
@@ -12232,8 +12277,8 @@ Descrição:
 velocidade de movimento dos inimigos.
 Ao usar 'Ignição', a armadilha causará dano
 de acordo com sua DES e o HP do alvo.
-A duração do movimento depende da FOR e HP
-do alvo, com mínimo de 4 segundos.
+A duração do movimento depende da FOR
+e HP do alvo, com mínimo de 4 segundos.
 Apenas 1 armadilha por vez, por 10 segundos.^000000
 Nível l Área l Duração do movimento
 [Nv. 1]: ^7777773x3^000000 l ^7777774 + 6 segundos^000000
