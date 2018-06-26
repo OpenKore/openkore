@@ -671,6 +671,7 @@ sub initMapChangeVars {
 	undef $rodexWrite;
 	undef $skillExchangeItem;
 	undef $refineUI;
+	undef $currentCookingType;
 	$captcha_state = 0;
 
 	$itemsList->clear();
