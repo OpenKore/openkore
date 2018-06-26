@@ -14148,43 +14148,52 @@ Peso: ^7777771^000000
 
 // --- effect box ---
 12027#
-Restaura uma quantidade de HP igual a 9% do HP Máximo do usuário, mas cada uso tem uma chance de 30% de causar o efeito Maldição no usuário por 30 segundos.
-^FFFFFF ^000000
+Caixa contendo o poder da risada.
+^0000ffRecupera 9% de HP.^000000
+^0000ff3% de chance de receber Maldição por 30 segundos.^000000
 Peso: ^77777720^000000
 #
 12028#
-Aumenta a Velocidade de Movimento do usuário em 100% durante 20 segundos.
-^FFFFFF ^000000
+Caixa contendo o poder da velocidade de um trovão cortando os céus.
+^0000ffAumenta a velocidade de movimento.^000000
+Duração: ^77777720 segundos^000000
 Peso: ^77777720^000000
 #
 12029#
-Invoca automaticamente Concentração Nível 1 no usuário.
-^FFFFFF ^000000
+Caixa contendo o poder da meditação.
+^0000ffConjura [Concentração] nv. 1.^000000
 Peso: ^77777720^000000
 #
 12030#
-Adiciona +20 ATQ por 60 segundos.
-^ffffff_^000000
+Caixa contendo o poder de um sentimento.
+^0000ffATQ +20.^000000
+^a400cdEfeito pode ser sobreposto com outros bônus semelhantes.^000000
+Duração: ^77777760 segundos^000000
 Peso: ^77777720^000000
 #
 12031#
-Adiciona +20 ATQM por 60 segundos.
-^ffffff_^000000
+Caixa contendo o poder de uma noite mal dormida.
+^0000ffATQM +20.^000000
+^a400cdEfeito pode ser sobreposto com outros bônus semelhantes.^000000
+Duração: ^77777760 segundos^000000
 Peso: ^77777720^000000
 #
 12032#
-Atribui à arma do usuário a propriedade ^6996ADÁgua^000000 por 3 minutos.
-^ffffff_^000000
+Caixa contendo o poder das chuvas de verão.
+^0000ffEncanta a arma com a propriedade Água.^000000
+Duração: ^7777773 minutos^000000
 Peso: ^77777720^000000
 #
 12033#
-Permite ao usuário detectar qualquer inimigo oculto por 30 segundos.
-^ffffff_^000000
+Caixa contendo o poder da luz do sol.
+^0000ffPermite detectar usuários escondidos.^000000
+Duração: ^77777730 segundos^000000
 Peso: ^77777720^000000
 #
 12034#
-Restaura uma quantidade de SP igual a 9% do SP Máximo do usuário, mas cada uso tem uma chance de causar o efeito Silêncio no usuário por 30 segundos.
-^ffffff_^000000
+Caixa contendo o poder da fatiga.
+^0000ffRecupera 9% de SP.^000000
+^0000ff3% de chance de receber Silêncio por 30 segundos.^000000
 Peso: ^77777720^000000
 #
 
@@ -33862,38 +33871,44 @@ Peso: ^7777777^000000
 #
 12429#
 Um prato exótico e suculento de churrasco de Selvagem.
-FOR + 20.
-Duração: 5 mins.
+^0000ffFOR +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12430#
 Coquetel de cor vermelha. Talvez contenha sangue de lobo.
-INT + 20.
-Duração: 5 mins.
+^0000ffINT +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12431#
 Carne de sabor forte e marcante. Uma delícia!
-VIT + 20.
-Duração: 5 mins.
+^0000ffVIT +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12432#
 Fantástica combinação de chá gelado refrescante.
-DES + 20.
-Duração: 5 mins.
+^0000ffDES +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12433#
 Uma especialidade de Arunafeltz com vegetais frescos.
-AGI + 20.
-Duração: 5 mins.
+^0000ffAGI +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12434#
 Macarrão decorado com a melhor parte do Petite. Uma especialidade de Geffen.
-SOR + 20.
-Duração: 5 min.
+^0000ffSOR +20.^000000
+^a400cdEfeito acumulativo com outros bônus semelhantes.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^7777775^000000
 #
 12435#
@@ -46571,7 +46586,7 @@ Ao realizar ataques físicos:
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
-Peso: ^77777730^000000
+Peso: ^77777720^000000
 Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
@@ -59356,11 +59371,11 @@ A cada refino do +11 até o +15:
 ^0000ffConjuração fixa -0,1 segundo.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Katar de Cinzas]^000000
-A cada 2 refinos:
+A cada 2 refinos da arma:
 ^0000ffATQ +20.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Tufão]^000000
-A cada 2 refinos:
+A cada 2 refinos da arma:
 ^0000ffDano de [Fúria do Furacão] +15%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
@@ -60297,6 +60312,74 @@ Equipa em: ^777777Topo^000000
 Defesa: ^77777716^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-06-26--------------------
+//*****************************************************
+19640#
+Um lacinho fino e delicado para toda e qualquer ocasião. Seu estilo discreto e fofinho é a última moda entre os jovens de Amatsu, que costumam combiná-lo com acessórios e roupas da mesma cor.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31490#
+De primeira ele parece esquisito e gelatinoso demais para um cachecol, mas não se deixe levar por primeiras impressões. Com a textura de um Poring por fora, ele se encaixa perfeitamente no seu pescoço, e por dentro é forrado de uma lã bem quentinha e aconchegante. É vantagem dupla!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31382#
+Seja no friozinho do outono ou no friozão do inverno, a touca com longas patas de gato é confortável, quentinha e diferentona. E se estiver entediado, pode brincar com as patinhas, mas se o vento gelado bater, você pode usá-las para cobrir melhor o rosto. O verdadeiro significado de “unir o útil ao agradável”!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+13464#
+Uma garra de plástico que é bem mais do que parece. Apesar do nome, ela não está para brincadeira!
+^0000ffAo realizar ataques físicos, 7% chance de autoconjurar [Furto] nv. 1 ou no nível aprendido.^000000
+A cada refino até o +10:
+^0000ffAumenta a chance de autoconjurar [Furto].^000000
+Refino +11 ou mais:
+^0000ffAnula a chance de autoconjurar [Furto].^000000
+Nv. base 100 ou mais,
+refino +7 ou mais:
+^0000ffHabilita [Ataque Surpresa] nv. 5.^000000
+Nv. base 100 ou mais,
+refino +9 ou mais:
+^0000ffHabilita [Apunhalar] nv. 10.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777100^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Aprendizes, Superaprendizes e evoluções^000000
+#
+28379#
+Adornado de espinhos e de uma linda esfera vermelha, ele é ainda mais poderoso nas mãos certas.
+^0000ffA cada nível de base:^000000
+^0000ffDano de [Apunhalar] +2%.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Afanar] nv. 1 ou no nível aprendido.^000000
+Ao aprender [Ataque Surpresa] nv. 1:
+^0000ffAo realizar ataques físicos, 0,3% de chance de infligir Atordoamento nos oponentes.^000000
+A cada nível aprendido de [Ataque Surpresa]:
+^0000ffChance de infligir Atordoamento +0,3%.^000000
+Ao usar [Escapar]:
+^0000ffAtiva um [efeito] não cumulativo por 20 segundos.^000000
+^CD3278Efeito:^000000
+A cada 3 níveis de base:
+^0000ffDano de [Disparo Triplo] +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777720^000000
 Classes: ^777777Todas^000000
 #
 //file end
