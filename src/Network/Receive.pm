@@ -3391,21 +3391,28 @@ sub npc_chat {
 	# TODO hook
 }
 
-sub forge_list {
+# 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
+sub makable_item_list {
 	my ($self, $args) = @_;
-
-	message T("========Forge List========\n");
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
-		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		message "$viewID $items_lut{$viewID}\n";
-		# always 0x0012
-		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# ???
-		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
+	undef $makableList;
+	my $k = 0;
+	my $msg;
+	$msg .= center(" " . T("Create Item List") . " ", 79, '-') . "\n";
+	for (my $i = 0; $i < length($args->{item_list}); $i += 8) {
+		my $nameID = unpack("v", substr($args->{item_list}, $i, 2));
+		$makableList->[$k] = $nameID;
+		$msg .= swrite(sprintf("\@%s \@%s (\@%s)", ('>'x2), ('<'x50), ('<'x6)), [$k, itemNameSimple($nameID), $nameID]);
+		$k++;
 	}
-	message "=========================\n";
+	$msg .= sprintf("%s\n", ('-'x79));
+	message($msg, "list");
+	message T("You can now use the 'create' command.\n"), "info";
+
+	Plugins::callHook('makable_item_list', {
+		item_list => $makableList,
+	});
 }
- 
+
 sub storage_opened {
 	my ($self, $args) = @_;
 	$char->storage->open($args);

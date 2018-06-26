@@ -90,6 +90,7 @@ sub initHandlers {
 	closebuyshop		=> \&cmdCloseBuyShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
+	create				=> \&cmdCreate,
 	damage				=> \&cmdDamage,
 	dead				=> \&cmdDeadTime,
 	deal				=> \&cmdDeal,
@@ -7003,4 +7004,30 @@ sub cmdElemental {
 				list <index number> show informations about a specific elemental");
 	}
 }
+
+sub cmdCreate {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my ($cmd, $args) = @_;
+	my @arg = parseArgs($args);
+
+	if ($arg[0] =~ /^\d+/ && defined $makableList->[$arg[0]]) { # viewID/nameID can be 0
+		$arg[1] = 0 if !defined $arg[1];
+		$arg[2] = 0 if !defined $arg[2];
+		$arg[3] = 0 if !defined $arg[3];
+		$messageSender->sendMakeItemRequest($makableList->[$arg[0]], $arg[1], $arg[2], $arg[3]);
+	} elsif($arg[0] =~ /^\d+/) {
+		message TF("Item with 'create' index: %s not found.\n", $arg[0]), "info";
+	} else {
+		error T("Error in function 'create'\n" .
+			"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 3 nameID>\n".
+			"material # nameID: can be 0 or undefined.\n");
+	}
+
+	undef $makableList;
+}
+
 1;
