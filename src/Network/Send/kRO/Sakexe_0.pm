@@ -88,6 +88,7 @@ sub new {
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02F1' => ['notify_progress_bar_complete'],

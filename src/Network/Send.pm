@@ -1568,6 +1568,16 @@ sub sendPetEvolution {
 	}));
 }
 
+sub sendCooking {
+	my ($self, $type, $nameID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'cook_request',
+		nameID => $nameID,
+		type => $type,
+	}));
+	debug "Sent Cooking.\n", "sendPacket", 2;
+}
+
 sub sendMakeItemRequest {
 	my ($self, $nameID, $material_nameID1, $material_nameID2, $material_nameID3) = @_;
 	$self->sendToServer($self->reconstruct({

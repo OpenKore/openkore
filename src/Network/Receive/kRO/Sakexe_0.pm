@@ -390,7 +390,7 @@ sub new {
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
-		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
+		'025A' => ['cooking_list', 'v2 a*', [qw(len type item_list)]],
 		'025F' => ['auction_windows', 'V', [qw(flag)]], # 6
 		'0260' => ['mail_window', 'V', [qw(flag)]], # 6
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]], # 8
@@ -2242,21 +2242,6 @@ sub received_characters {
 	}
 }
 
-sub refine_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 1) {
-		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 2) {
-		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 3) {
-		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
-	} else {
-		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
-	}
-}
-
 sub blacksmith_points {
 	my ($self, $args) = @_;
 	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -3768,25 +3753,6 @@ sub upgrade_message {
 	} elsif($args->{type} == 3) {
 		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
 	}
-}
-
-# 025A
-# TODO
-sub cooking_list {
-	my ($self, $args) = @_;
-	undef $cookingList;
-	my $k = 0;
-	my $msg;
-	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
-	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $nameID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
-		$cookingList->[$k] = $nameID;
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
-		$k++;
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-	message T("You can now use the 'cook' command.\n"), "info";
 }
 
 # 02CB

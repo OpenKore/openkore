@@ -6018,14 +6018,31 @@ sub cmdShowEquip {
 	}
 }
 
+# Answer to mixing item selection dialog (CZ_REQ_MAKINGITEM).
+# 025b <mk type>.W <name id>.W
+# mk type:
+#     1 = cooking
+#     2 = arrow
+#     3 = elemental
+#     4 = GN_MIX_COOKING
+#     5 = GN_MAKEBOMB
+#     6 = GN_S_PHARMACY
 sub cmdCooking {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
+
 	my ($cmd, $arg) = @_;
 	if ($arg =~ /^\d+/ && defined $cookingList->[$arg]) { # viewID/nameID can be 0
-		$messageSender->sendCooking(1, $cookingList->[$arg]); # type 1 is for cooking
+		my $type = 1;
+		if(defined $currentCookingType && $currentCookingType > 0) {
+			$type = $currentCookingType;
+		}
+		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
+	} elsif (!$arg) {
+		message TF("Syntax error in function 'cook' (Cook food)\n" .
+					"Usage: cook [list index]\n");
 	} else {
 		message TF("Item with 'Cooking List' index: %s not found.\n", $arg), "info";
 	}
