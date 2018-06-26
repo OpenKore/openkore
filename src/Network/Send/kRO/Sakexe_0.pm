@@ -79,6 +79,7 @@ sub new {
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
+		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
@@ -88,6 +89,7 @@ sub new {
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
+		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02F1' => ['notify_progress_bar_complete'],

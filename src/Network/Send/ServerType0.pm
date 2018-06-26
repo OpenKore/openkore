@@ -86,6 +86,7 @@ sub new {
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
+		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
@@ -105,6 +106,7 @@ sub new {
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'023B' => ['storage_password'],
+		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
@@ -1221,13 +1223,6 @@ sub sendBattlegroundChat {
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
-sub sendCooking {
-	my ($self, $type, $nameID) = @_;
-	my $msg = pack("v3", 0x025B, $type, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Cooking.\n", "sendPacket", 2;
-}
-
 # this is different from kRO
 sub sendCaptchaInitiate {
 	my ($self) = @_;
@@ -1253,4 +1248,3 @@ sub sendAchievementGetReward {
 }
 
 1;
-
