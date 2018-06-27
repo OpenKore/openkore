@@ -1339,10 +1339,13 @@ sub processAutoStorage {
 						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
 					} elsif ($config{'storageAuto_npc_type'} eq "3") {
 						message T("Using storage steps defined in config.\n"), "info";
+					} elsif ($config{'storageAuto_npc_type'} eq "iRO_novip") {
+						$config{'storageAuto_npc_steps'} = "c r1 c r0";
+					} elsif ($config{'storageAuto_npc_type'} eq "iRO_vip") {
+						$config{'storageAuto_npc_steps'} = "c r1 c r1";
 					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
 						error T("Something is wrong with storageAuto_npc_type in your config.\n");
 					}
-					
 					my $realpos = {};
 					getNPCInfo($config{storageAuto_npc}, $realpos);
 
