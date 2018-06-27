@@ -5450,7 +5450,7 @@ sub party_allow_invite {
 
 sub party_chat {
 	my ($self, $args) = @_;
-	my $msg = $args->{message};
+	my $msg = bytesToString($args->{message});
 
 	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
