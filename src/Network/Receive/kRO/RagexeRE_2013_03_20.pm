@@ -24,13 +24,11 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'082D' => ['received_characters_info', 'x2 C5 x20', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
-		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
 		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 V v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
 		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -38,38 +36,22 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],#-1
 		'08C8' => ['changeToInGameState'],
 	);
-	
+
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
 
+	my %handlers = qw(
+		received_characters 099D
+		received_characters_info 082D
+		sync_received_characters 09A0
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	return $self;
-}
-
-sub sync_received_characters {
-	my ($self, $args) = @_;
-
-	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
-
-	unless ($net->clientAlive) {
-		for (1..$args->{sync_Count}) {
-			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
-		}
-	}
-}
-sub received_characters_info {
-	my ($self, $args) = @_;
-
-	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
-	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
-	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
-	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
-	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
-
-	$timeout{charlogin}{time} = time;
 }
 
 sub parse_items_nonstackable {
