@@ -1140,7 +1140,7 @@ sub next {
 						my @array = split (/,/, $real_value); 
 						$eventMacro->set_full_array($var->{real_name}, \@array);
 						
-					} elsif(ref($real_value) eq 'ARRAY' && $var->{type} eq 'array') {
+					} elsif((ref($real_value) eq 'ARRAY' || ref($real_value) eq 'SCALAR') && $var->{type} eq 'array') {
 						$eventMacro->set_full_array($var->{real_name}, $real_value);
 						
 					} else {
