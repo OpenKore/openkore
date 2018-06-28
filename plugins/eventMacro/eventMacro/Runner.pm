@@ -2028,17 +2028,18 @@ sub parse_command {
 				}
 			}
 			my $sub1 = 'main::'.$sub.'('.$parsed.')';
-			$result = eval($sub1);
+			my @testArray = eval($sub1);
 			if ($@) {
 				warning "[eventMacro] Error in eval '".$@."'\n";
 			}
-			return unless defined $result;
-			my @testArray = eval($sub1);
-			my %testHash  = eval($sub1);
+			return unless defined @testArray;
 			if (scalar(@testArray) > 1 ) {
 				#if this is true, user returned an array or hash that is not a reference
 				#but the code demands a reference
 				$result = \@testArray;
+			} else {
+				#can be a normal scalar value, or a reference to anything
+				$result = $testArray[0];
 			}
 			if (ref($result) eq 'ARRAY' || ref($result) eq 'HASH' || ref($result) eq 'SCALAR') {
 				return $result;
