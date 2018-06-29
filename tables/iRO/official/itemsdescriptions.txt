@@ -79297,6 +79297,13 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+20399#
+^FF0000The mask carries the grudge of its previous owner.^000000
+Type: ^808080Shadow Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
 20405#
 ^808080A scarf which once belonged to an old hero.^000000
 Class: Costume
