@@ -6968,3 +6968,4 @@
 20029#Evolved_Bunny_Band_Certificate#
 20030#Vanilmirth_Hat_Certificate#
 20044#Skull_Hood_Certificate#
+20045#King_Tiger_Doll_Hat_Certificate#
