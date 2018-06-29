@@ -749,6 +749,143 @@ sub connection_refused {
 	error TF("The server has denied your connection (error: %d).\n", $args->{error}), 'connection';
 }
 
+sub received_characters {
+	return if ($net->getState() == Network::IN_GAME);
+	my ($self, $args) = @_;
+	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
+
+	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{premium_start_slot} = $args->{premium_start_slot} if (exists $args->{premium_start_slot});
+	$charSvrSet{premium_end_slot} = $args->{premium_end_slot} if (exists $args->{premium_end_slot});
+
+	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
+	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
+	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
+
+	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
+	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
+
+	undef $conState_tries;
+
+	Plugins::callHook('parseMsg/recvChars', $args->{options});
+	if ($args->{options} && exists $args->{options}{charServer}) {
+		$charServer = $args->{options}{charServer};
+	} else {
+		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
+	}
+
+	# PACKET_HC_ACCEPT_ENTER2 contains no character info
+	return unless exists $args->{charInfo};
+
+	my $blockSize = $self->received_characters_blockSize();
+	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
+		#exp display bugfix - chobit andy 20030129
+		my $unpack_string = $self->received_characters_unpackString;
+		# TODO: What would be the $unknown ?
+		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
+			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
+			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
+			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
+		$chars[$slot] = new Actor::You;
+
+		# Re-use existing $char object instead of re-creating it.
+		# Required because existing AI sequences (eg, route) keep a reference to $char.
+		$chars[$slot] = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $cID;
+
+		$chars[$slot]{ID} = $accountID;
+		$chars[$slot]{charID} = $cID;
+		$chars[$slot]{exp} = $exp;
+		$chars[$slot]{zeny} = $zeny;
+		$chars[$slot]{exp_job} = $jobExp;
+		$chars[$slot]{lv_job} = $jobLevel;
+		$chars[$slot]{lastJobLvl} = $jobLevel;#This is for counting exp
+		$chars[$slot]{hp} = $hp;
+		$chars[$slot]{hp_max} = $maxHp;
+		$chars[$slot]{sp} = $sp;
+		$chars[$slot]{sp_max} = $maxSp;
+		$chars[$slot]{jobID} = $jobId;
+		$chars[$slot]{hair_style} = $hairstyle;
+		$chars[$slot]{lv} = $level;
+		$chars[$slot]{lastBaseLvl} = $level;#This is for counting exp
+		$chars[$slot]{headgear}{low} = $headLow;
+		$chars[$slot]{headgear}{top} = $headTop;
+		$chars[$slot]{headgear}{mid} = $headMid;
+		$chars[$slot]{hair_color} = $hairColor;
+		$chars[$slot]{clothes_color} = $clothesColor;
+		$chars[$slot]{name} = $name;
+		$chars[$slot]{str} = $str;
+		$chars[$slot]{agi} = $agi;
+		$chars[$slot]{vit} = $vit;
+		$chars[$slot]{int} = $int;
+		$chars[$slot]{dex} = $dex;
+		$chars[$slot]{luk} = $luk;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+
+		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
+		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
+		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
+		$chars[$slot]{map_name} = $mapname;
+		$chars[$slot]{map_name} =~ s/\.gat//g;
+		if(grep { $masterServer->{charBlockSize} eq $_ } qw( 155 )) {
+			$chars[$slot]{exp} = getHex($chars[$slot]{exp});
+			$chars[$slot]{exp} = join '', reverse split / /, $chars[$slot]{exp};
+			$chars[$slot]{exp} = hex $chars[$slot]{exp};
+			$chars[$slot]{exp_job} = getHex($chars[$slot]{exp_job});
+			$chars[$slot]{exp_job} = join '', reverse split / /, $chars[$slot]{exp_job};
+			$chars[$slot]{exp_job} = hex $chars[$slot]{exp_job};
+		}
+	}
+
+	# FIXME better support for multiple received_characters packets
+	## Note to devs: If other official servers support > 3 characters, then
+	## you should add these other serverTypes to the list compared here:
+	if (($args->{switch} eq '099D') && 
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO cRO ))
+	) {
+		$net->setState(1.5);
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+			$charSvrSet{sync_CountDown}--;
+		}
+		return;
+	}
+
+	message T("Received characters from Character Server\n"), "connection";
+
+	# gradeA says it's supposed to send this packet here, but
+	# it doesn't work...
+	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
+	
+	if ($masterServer->{pinCode}) {
+		message T("Waiting for PIN code request\n"), "connection";
+		$timeout{'charlogin'}{'time'} = time;
+		
+	} elsif ($masterServer->{pauseCharLogin}) {
+		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
+			$timeout{'char_login_pause'}{'timeout'} = 2;
+		}
+		$timeout{'char_login_pause'}{'time'} = time;
+		
+	} else {
+		CharacterLogin();
+	}
+}
+
+sub sync_received_characters {
+	my ($self, $args) = @_;
+
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+
+	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+
+	unless ($net->clientAlive) {
+		for (1..$args->{sync_Count}) {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+		}
+	}
+}
+
 our %stat_info_handlers = (
 	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
 	VAR_EXP, sub {
