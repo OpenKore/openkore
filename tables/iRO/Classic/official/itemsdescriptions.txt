@@ -71565,3 +71565,18 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20045#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 King Tiger Doll Hat!
+200 Fluff
+100 Golden Hair
+50 Sea-Otter Fur
+5 Striped Socks
+1000 Zeny
+1 King Tiger Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
