@@ -3468,7 +3468,7 @@ sub auction_result {
 	} elsif ($flag == 9) {
 		message T("You cannot place more than 5 bids at a time.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3540,7 +3540,7 @@ sub auction_my_sell_stop {
 	} elsif ($flag == 2) {
 		message T("Bid number is incorrect.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3582,7 +3582,7 @@ sub guild_alliance {
 	} elsif ($args->{flag} == 4) {
 		message T("You have too many alliances.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3602,7 +3602,7 @@ sub manner_message {
 	} elsif ($args->{flag} == 5) {
 		message T("You got a good point.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3634,7 +3634,7 @@ sub taekwon_packets {
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3645,7 +3645,7 @@ sub guild_master_member {
 		message T("You are not a guildmaster.\n"), "info";
 		return;
 	} else {
-		warning TF("type: %s gave unknown results in: %s\n", $args->{type}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
 		return;
 	}
 	message T("You are a guildmaster.\n"), "info";
@@ -3780,7 +3780,7 @@ sub instance_window_leave {
 	} elsif ($args->{type} == 4) {
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3878,7 +3878,7 @@ sub boss_map_info {
 		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
 	} else {
 		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
