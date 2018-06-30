@@ -7002,7 +7002,7 @@ sub cmdElemental {
 		message $msg, "list";
 
 	} else {
-		error T("Error in function 'elemental')\n" .
+		error T("Error in function 'elemental'\n" .
 			"Usage: elemental <info|list [elemental index]>\n
 				info: show info from self elemental.\n
 				list: list all elementals on screen.\n
