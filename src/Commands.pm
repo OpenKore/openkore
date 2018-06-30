@@ -6042,7 +6042,7 @@ sub cmdCooking {
 		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
 	} elsif (!$arg) {
 		message TF("Syntax error in function 'cook' (Cook food)\n" .
-					"Usage: cook [list index]\n");
+					"Usage: cook [<list index>]\n");
 	} else {
 		message TF("Item with 'Cooking List' index: %s not found.\n", $arg), "info";
 	}
@@ -6930,7 +6930,7 @@ sub cmdElemental {
 
 	if ($args[0] eq "info" || $args[0] eq "") {
 		if(!$char->{elemental}{ID}) {
-			error TF("You don't have any elemental. You must use Skill to call Elemental\n");
+			error TF("You don't have any elemental. Call an Elemental first.\n");
 			return;
 		}
 
@@ -7002,11 +7002,11 @@ sub cmdElemental {
 		message $msg, "list";
 
 	} else {
-		error T("Error in function 'elemental')\n" .
-			"Usage: elemental <info|list [elemental index]>\n
+		error T("Error in function 'elemental'\n" .
+			"Usage: elemental <info|list [<elemental index>]>\n
 				info: show info from self elemental.\n
 				list: list all elementals on screen.\n
-				list <index number> show informations about a specific elemental");
+				list <index number> show information about a specific elemental");
 	}
 }
 
