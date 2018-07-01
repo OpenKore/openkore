@@ -6186,7 +6186,7 @@ sub refine_result {
 # 0223
 sub upgrade_message {
 	my ($self, $args) = @_;
-	my $item = itemNameSimple($args->{nameID});
+	my $item = itemNameSimple($args->{itemID});
 	if($args->{type} == 0) { # Success
 		message TF("Weapon upgraded: %s\n", $item), "info";
 	} elsif($args->{type} == 1) { # Fail
