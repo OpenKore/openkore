@@ -355,7 +355,7 @@ sub new {
 		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
 		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
 		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]], # 8
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
 		'0226' => ['top10_taekwon_rank'], # 282
 		'0227' => ['gameguard_request'], # 18 ??
