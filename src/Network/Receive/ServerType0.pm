@@ -337,7 +337,7 @@ sub new {
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
 		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
