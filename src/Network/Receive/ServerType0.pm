@@ -3994,21 +3994,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0223
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) { # Success
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) { # Fail
-		message TF("Weapon not upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-		# message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) { # Fail Lvl
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) { # Fail Item
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
