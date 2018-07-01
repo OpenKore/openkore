@@ -3723,22 +3723,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0223
-# TODO: can we use itemName? and why is type 0 equal to type 1?
-# doesn't seem to be used by eA
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) {
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) {
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
