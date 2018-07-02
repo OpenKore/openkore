@@ -1496,25 +1496,50 @@ sub statement {
 }
 
 sub particle {
-	# I need to test this main code alot becoz it will be disastrous if something goes wrong
-	# in the if statement block below
+	#this sub is the first part to check statements on macros
+	#first it check if there is parentheses, if it has , then calls:
+	#sub txtposition (to split correctly statements inside parentheses
+	#sub bracket (to check if there is a macroKeyword
+	#sub multi to check if there is '&&' or '||' on statement
 
 	my ($self, $text) = @_;
-	my @brkt;
+	my (@brkt, $regex, $regexHolder, $lengthOfRegex);
 
+	warning("nipo: text before regex replace: $text\n");
+	if ($text =~ /(\/[^\/]+\/\w?)/) {
+		#here we remove the regex from the \$text , because if regex has '(' or ')' 
+		#it will confuse sub txtPosition, so it is better to remove and set a temporary holder
+		$regex = $1;
+		$lengthOfRegex = length($regex);
+		for (my $i; $i < $lengthOfRegex; $i++) {
+			$regexHolder .= "x";
+		}
+		$text =~ s/\/[^\/]+\/\w?/$regexHolder/;
+	}
+	warning("nipo: text AFTER regex replace: $text\n");
 	if ($text =~ /\(/) {
+		#statement has parentheses, it means that we have to split the statements
+		#and treat every one seperatedly
 		@brkt = $self->txtPosition($text);
-		$brkt[0] = $self->multi($brkt[0]) if !bracket($brkt[0]) && $brkt[0] =~ /[\(\)]/ eq "";
+			if (!bracket($brkt[0]) && $brkt[0] =~ /[\(\)]/ eq "") {
+			$brkt[0] =~ s/x{$lengthOfRegex}/$regex/;
+			$brkt[0] = $self->multi($brkt[0]);
+		}
+		$text =~ s/x{$lengthOfRegex}/$regex/;
 		$text = extracted($text, @brkt);
 	}
 
-	unless ($text =~ /\(/) {return $text}
+	unless ($text =~ /\(/) {
+		$text =~ s/x{$lengthOfRegex}/$regex/;
+		warning("nipo: text after all: $text\n");
+		return $text;
+	}
 	$text = $self->particle($text);
 }
 
 sub multi {
 	my ($self, $text) = @_;
-	my ($i, $n, $ok, $ok2) = (0, 0, 1, 0);
+	my ($currentMulti, $lastMulti, $ok) = (0, 0, 1);
 	my %save;
 
 	while ($text =~ /(\|{2}|\&{2})/g) {
@@ -1523,20 +1548,19 @@ sub multi {
 		# cant use the simbol '&&' or '||' together. Infact, it must be saperated
 		# by using round brackets '(' and ')' in the 1st place
 
-		$save{$i} = $1;
-		if ($i > 0) {
-			$n = $i - 1;
-			if ($save{$i} ne $save{$n}) {
+		$save{$currentMulti} = $1; #$currentMulti saves the && or ||
+		if ($currentMulti > 0) {
+			$lastMulti = $currentMulti - 1;
+			if ($save{$currentMulti} ne $save{$lastMulti}) {
 				my $s = $text;
 				$ok = 0;
-				#$s =~ s/($save{$i})/\($1\) <-- HERE/g;    # Later maybe? ;p
-				$self->error("Wrong Conditions: ($save{$n} vs $save{$i})");
+				$self->error("Wrong Conditions: ($save{$lastMulti} vs $save{$currentMulti})");
 			}
 		}
-		$i++
+		$currentMulti++
 	}
 
-	if ($save{$n} eq "||" && $ok && $i > 0) {
+	if ($save{$lastMulti} eq "||" && $ok && $currentMulti > 0) {
 		my @split = split(/\s*\|{2}\s*/, $text);
 		foreach my $e (@split) {
 			next if $e eq "0";
@@ -1545,7 +1569,7 @@ sub multi {
 		}
 		return 0
 	}
-	elsif ($save{$n} eq "&&" && $ok && $i > 0) {
+	elsif ($save{$lastMulti} eq "&&" && $ok && $currentMulti > 0) {
 		my @split = split(/\s*\&{2}\s*/, $text);
 		foreach my $e (@split) {
 			next if $e eq "1";
@@ -1555,7 +1579,7 @@ sub multi {
 		}
 		return 1
 	}
-	elsif ($i == 0) {
+	elsif ($currentMulti == 0) {
 		return $text if $text =~ /^[0-1]$/;
 		return $self->statement($text)
 	}
@@ -1570,25 +1594,25 @@ sub txtPosition {
 	my ($self, $text) = @_;
 	my ($start, $i) = (0, 0);
 	my (@save, @new, $first, $last);
-	my @w = split(//, $text);
+	my @characters = split(//, $text);
 
-	foreach my $e (@w) {
-		if ($e eq ")" && $start) {
+	foreach my $char (@characters) {
+		if ($char eq ")" && $start) {
 			 $last = $i; last
 		}
-		elsif ($e eq "(") {
+		elsif ($char eq "(") {
 			if ($start) {undef @save; undef $first}
 			$start = 1; $first = $i;
 		}
-		else {if ($start) {push @save, $e}}
+		else {if ($start) {push @save, $char}}
 		$i++
 	}
 
 	$self->error("You probably missed 1 or more closing round-\nbracket ')' in the statement") if !defined $last;
 
-	$new[0] = join('', @save);
-	$new[1] = $first;
-	$new[2] = $last;
+	$new[0] = join('', @save); #stateement without parentheses
+	$new[1] = $first; #exact place where opening parentheses was (very important)
+	$new[2] = $last; #exact place where closeing parentheses was (very important)
 	return @new
 }
 
@@ -1617,7 +1641,7 @@ sub extracted {
 }
 
 sub refined_macroKeywords {
-	# To make sure if there is really no more @special keywords
+	# To make sure if there is really no more &special keywords
 
 	my @pair = $_[0] =~ /$macro_keywords_character($macroKeywords)\s*\(\s*(.*)\s*\)/i;
 	return $_[0] unless @pair;
@@ -1628,14 +1652,15 @@ sub refined_macroKeywords {
 }
 
 sub bracket {
-	# Scans $text for @special keywords
-
+	# Scans $text for &special keywords
+	# ir returns 1 if it has, and 0 if don't have a &special keyword
+	
 	my ($text, $dbg) = @_;
 	my @brkt; my $i = 0;
 
 	while ($text =~ /($macro_keywords_character)?($macroKeywords)?\s*\(\s*([^\)]+)\s*/g) {
-		my ($first, $second, $third) = ($1, $2, $3);
-		unless (defined $first && defined $second && !bracket($third, 1)) {
+		my ($keyCharacter, $keyword, $valueInsideParentesis) = ($1, $2, $3);
+		unless (defined $keyCharacter && defined $keyword && !bracket($valueInsideParentesis)) {
 			message "Bracket Detected: $text <-- HERE\n", "menu" if ($dbg);
 			$brkt[$i] = 1;
 		} else {
