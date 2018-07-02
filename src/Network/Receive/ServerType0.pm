@@ -867,7 +867,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -878,7 +878,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
