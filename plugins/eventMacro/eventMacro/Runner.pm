@@ -1505,7 +1505,6 @@ sub particle {
 	my ($self, $text) = @_;
 	my (@brkt, $regex, $regexHolder, $lengthOfRegex);
 
-	warning("nipo: text before regex replace: $text\n");
 	if ($text =~ /(\/[^\/]+\/\w?)/) {
 		#here we remove the regex from the \$text , because if regex has '(' or ')' 
 		#it will confuse sub txtPosition, so it is better to remove and set a temporary holder
@@ -1516,7 +1515,6 @@ sub particle {
 		}
 		$text =~ s/\/[^\/]+\/\w?/$regexHolder/;
 	}
-	warning("nipo: text AFTER regex replace: $text\n");
 	if ($text =~ /\(/) {
 		#statement has parentheses, it means that we have to split the statements
 		#and treat every one seperatedly
@@ -1531,7 +1529,6 @@ sub particle {
 
 	unless ($text =~ /\(/) {
 		$text =~ s/x{$lengthOfRegex}/$regex/;
-		warning("nipo: text after all: $text\n");
 		return $text;
 	}
 	$text = $self->particle($text);

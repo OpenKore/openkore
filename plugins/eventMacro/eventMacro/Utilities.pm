@@ -84,7 +84,6 @@ sub cmpr {
 			return 1 if ($first eq lc($member));
 		}
 	} elsif ($cond eq "=~" && ($second =~ /^\/[^\/]+\/\w?\s*$/ || $second =~ /^"[^"]+"\s*$/)) {
-		warning "nipo: is a regex, calling sub match\n";
 		return match($first, $second);
 	}
 
@@ -122,13 +121,11 @@ sub match {
 		my ($match, $modifier) = ($1, $2);
 		
 		if ($text =~ /$match/ || ($modifier eq 'i' && $text =~ /$match/i)) {
-			warning "nipo: regex match! creating variables of regex groups if exists\n";
 			no strict;
 			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 			use strict;
 			return 1
 		}
-		warning "nipo: regex NOT MATCH, tex: '$text', regex: '$match$modifier'\n";
 	}
 	return 0
 }
