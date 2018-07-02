@@ -867,19 +867,15 @@ our %stat_info_handlers = (
 	},
 	VAR_HP, sub {
 		$_[0]{hp} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_MAXHP, sub {
 		$_[0]{hp_max} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_SP, sub {
 		$_[0]{sp} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_MAXSP, sub {
 		$_[0]{sp_max} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_POINT, sub { $_[0]{points_free} = $_[1] },
 	#VAR_HAIRCOLOR
@@ -1964,10 +1960,10 @@ sub actor_action {
 			}
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 		} elsif ($args->{sourceID} eq $args->{targetID}) {
 			message("$status $msg");
@@ -4302,9 +4298,6 @@ sub slave_calcproperty_handler {
 =cut
 
 	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
-	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
 }
 
 sub gameguard_grant {
