@@ -12368,3 +12368,44 @@ Evite eliminar 3 ^CD3278Não-alvos^000000.#
 12345#Mudança de Classe: Insurgente#SG_FEEL#QUE_NOIMAGE#
 Visite Ivan Sidorenko, o lendário Insurgente, e conclua seu processo de Mudança de Classe.#
 Fale com Ivan.#
+
+//2018 Carnival Event
+2412#Limpando a cidade#SG_FEEL#QUE_NOIMAGE#
+Tereza Limpeza precisa de ajuda para limpar a cidade, será necessário clicar nos montinhos de areia até conseguir peças de carrinho suficientes.#
+Colete 5 Peças de Carrinho para a Tereza Limpeza.#
+
+2413#Limpando a praia (Completo)#SG_FEEL#QUE_NOIMAGE#
+Tereza Limpeza precisa descansar um pouco.#
+Volte após 3 horas.#
+
+2414#Estoque de comida#SG_FEEL#QUE_NOIMAGE#
+O Chef precisa de alguns pratos e culinária para fornecer comida aos participantes do festival.#
+Traga um prato de culinária de nível 5 ou 6 para o Chef.#
+
+2415#Estoque de comida (Completo)#SG_FEEL#QUE_NOIMAGE#
+O Chef precisa descansar um pouco.#
+Volte após 3 horas.#
+
+2416#Muleque perdido#SG_FEEL#QUE_NOIMAGE#
+Um garoto loiro de vestes brancas se perdeu na multidão. Procure pela cidade até encontrá-lo.#
+Encontre a criança.#
+
+2417#Muleque perdido (Completo)#SG_FEEL#QUE_NOIMAGE#
+Você tem um pouco de preocupação com a criança andando por aí com um pai desatento... melhor voltar depois pra conferir se está tudo bem.#
+Volte após 3 horas.#
+
+2418#Muleque perdido#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o garoto desaparecido! Hora de comunicar ao pai.#
+Retorne ao Pai.#
+
+2419#Invasão de Tubarões!#SG_FEEL#QUE_NOIMAGE#
+Turistas adoram nadar de noite... melhor protegê-los de qualquer ameaça!#
+Elimine 3 Sharkiras.#
+
+2420#Invasão de Tubarões! (Completo)#SG_FEEL#QUE_NOIMAGE#
+Turistas seguros! Vamos voltar mais tarde para ver se está tudo bem.#
+Volte após 3 horas.#
+
+2421#Votação#SG_FEEL#QUE_NOIMAGE#
+Em um ato de cidadania, você votou! Aguarde os resultados e boa sorte!#
+Voto comfirmado.#
