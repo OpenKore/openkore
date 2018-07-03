@@ -9731,16 +9731,28 @@ Descrição: ^777777  Permite que o usuário conjure uma magia de Mago ou Bruxo 
 #
 WM_GLOOMYDAY#
 Ode a Hela
-Nível Máximo: 5
-^777777Pré requisitos: Improviso 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta o ATQ de habilidades específicas e penaliza o usuário com redução da Esquiva e da Vel. de ATQ.
-Habilidades que podem ser afetadas: [Brandir Lança / Perfurar em Espiral / Punição Divina / Escudo Bumerangue / Choque Rápido / Escudo Compressor]. Se o alvo não possui uma destas habilidades, ele só receberá a penalidade em Esquiva e Vel. de ATQ. Pode ser usada em membros do grupo ou do clã do usuário. ^000000
-[Nv 1]: ^777777 Esquiva -25 / Vel. de ATQ -20% ^000000
-[Nv 2]: ^777777 Esquiva -30 / Vel. de ATQ -25% ^000000
-[Nv 3]: ^777777 Esquiva -35 / Vel. de ATQ -30% ^000000
-[Nv 4]: ^777777 Esquiva -40 / Vel. de ATQ -35% ^000000
-[Nv 5]: ^777777 Esquiva -45 / Vel. de ATQ -40% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Improviso 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Melhora o dano de algumas
+habilidades ao custo de reduzir
+esquiva e velocidade de ataque.
+Há uma pequena chance de
+retirar a montaria do alvo.^000000
+Habilidades afetadas:
+^777777Brandir Lança, Choque Rápido,
+Perfurar em Espiral, Punição Divina,
+Escudo Compressor, Escudo Bumerangue
+e Lança das Mil Pontas.^000000
+Nv. l Esquiva l Velocidade de ataque
+[Nv 1]: ^777777-25^000000 l ^777777-20%^000000
+[Nv 2]: ^777777-30^000000 l ^777777-25%^000000
+[Nv 3]: ^777777-35^000000 l ^777777-30%^000000
+[Nv 4]: ^777777-40^000000 l ^777777-35%^000000
+[Nv 5]: ^777777-45^000000 l ^777777-40%^000000
 #
 WM_GREAT_ECHO#
 Brado de Odin 
@@ -11918,7 +11930,7 @@ Rajada Estilhaçante
 Nível máximo: ^7777775^000000
 Pré-requisitos:
 ^777777Desarmar 1^000000
-^777777Disparo Espalhado 1^000000
+^777777Controle de Multidão 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Espingardas.^000000
@@ -11962,7 +11974,7 @@ Pré-requisitos:
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Consome 1 moeda para ativar
-'Reação em Cadeia' em qualquer arma de fogo.
+'Reação em Cadeia' em qualquer arma.
 O nível ativado de 'Reação em Cadeia' será
 o mesmo aprendido de 'Reação Ilimitada'.^000000
 Nível l Duração
