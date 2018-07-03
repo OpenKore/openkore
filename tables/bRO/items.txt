@@ -8365,4 +8365,35 @@
 31382#Touca de Patinhas#
 13464#Garra Mágica de Brinquedo#
 28379#Anel Sombrio#
+//*****************************************************
+//------------Aplicar em 2018-07-03--------------------
+//*****************************************************
+19612#Fones Audio-Poring#
+31027#Orelhas de Urso Enfeitadas#
+31493#Peruca Branca de Waifu#
+28502#Lenço Infame#
+28947#Escudo de Gaia#
+2979#Morango Cristalizado#
+//*****************************************************
+//---------------QUEST DE CARNAVAL-2018----------------
+//*****************************************************
+2998#Bracelete Suntuoso#
+18940#Chapéu das Chamas#
+18941#Boina do Zéfiro#
+18942#Gorro Frígido#
+18943#Cartola da Natureza#
+22082#Sapatos Luxuosos#
+28906#Escudo do Fogo#
+28907#Escudo do Vento#
+28908#Escudo da Água#
+28909#Escudo da Terra#
+25482#Cartão da Liga da Terra#
+25483#Cartão da Liga do Fogo#
+25484#Cartão da Liga da Água#
+25485#Cartão da Liga do Vento#
+25486#Insígnia do Orgulho Vermelho#
+25487#Insígnia do Orgulho Azul#
+25488#Insígnia do Orgulho Verde#
+25489#Insígnia do Orgulho Amarelo#
+22822#Bolsa com Roupa de Banho#
 //file end

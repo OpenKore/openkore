@@ -8,8 +8,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000025.06.2018.^000000
-Este item será removido no dia ^ff000026.06.2018.^000000
+Promoção limitada até o dia ^ff000016.07.2018.^000000
+Este item será removido no dia ^ff000017.07.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -13157,7 +13157,7 @@ Ataque: ^777777110^000000
 Peso: ^77777790^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes: ^777777Todas, exceto Noviços e evoluções^000000
+Classes: ^777777Aprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Espiritualistas, Ninjas e evoluções^000000
 #
 13002#
 Uma adaga com uma estranha lâmina escura. Aqueles que a seguram sentem instintivamente o perigo e o risco de usar esta arma.
@@ -15640,8 +15640,6 @@ Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
 #
 
 // ?? ?????
-5098#
-#
 5215#
 Ornamento encantado em forma de asas de anjo.
 ^0000ffDES +1, INT +1, DEFM +3.
@@ -23816,7 +23814,7 @@ Ataque: ^777777110^000000
 Peso: ^77777790^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777760^000000
-Classes: ^777777Todas, exceto Noviços e evoluções^000000
+Classes: ^777777Aprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Espiritualistas, Ninjas e evoluções^000000
 #
 1275#
 Katar feito de gelo encantado.
@@ -60381,5 +60379,348 @@ Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777720^000000
 Classes: ^777777Todas^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-07-03--------------------
+//*****************************************************
+19612#
+Com uma frequência que vai de 5 a 40.000 Hz, o headphone Audio-Poring é perfeito para reproduzir as suas músicas favoritas nos mínimos detalhes. Sair e se aventurar curtindo o som que quiser, por que não? Colorido, excêntrico e potente — ele não vai te decepcionar.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo e Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31027#
+Parece até que estas adoráveis orelhinhas de urso vieram direto do estoque esquecido de uma loja de produtos natalinos, não? Bom, e vieram mesmo, mas os laços são tão bonitos que você nem deveria se preocupar com a época em que vai usar. E se perguntarem, é só responder: ‘Natal? Nunca nem vi’.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31493#
+A coleção de Delso Kamyura não para! Inspirado nas autênticas celebridades de Amatsu, o cabeleireiro apresenta a sua mais nova peruca completamente platinada. Ele também teve todo o cuidado de deixar as madeixas fortes e sedosas, levando o charme de Amatsu por toda a Rune-Midgard!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28502#
+O lenço que cobre o rosto para te proteger também mostra que você é aquele que enfrentará qualquer um sem medo. Abaixar a cabeça, jamais!
+^0000ffHabilita [Desconcentrar] nv. 2.^000000
+^FF6347Conjunto^000000
+^FF6347[Óculos] ou^000000
+^FF6347[Óculos Escuros]^000000
+A cada 80 de FOR+SOR base:
+^0000ffCRIT +5.^000000
+^0000ffDano físico +6%.^000000
+^0000ffDano crítico +10%.^000000
+A cada 80 de INT+DES base:
+^0000ffATQM +120.^000000
+^0000ffConjuração variável -3%.^000000
+^0000ffEfetividade de cura +10%.^000000
+A cada 80 de AGI+VIT base:
+^0000ffHP máx. +5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffResistência a personagens +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28947#
+Com a proteção da deusa de uma antiga civilização, todo o poder de Terra será inútil contra você.
+^0000ffDEFM +10.^000000
+^0000ffResistência a propriedade Terra +10%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Terra +5%.^000000
+Refino +8 ou mais:
+^0000ffResistência a propriedade Terra +15% adicional.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Terra +10% adicional.^000000
+Refino +10 ou mais:
+^6A5ACDFOR base 90 ou mais:^000000
+^0000ffATQ +50.^000000
+^6A5ACDAGI base 90 ou mais:^000000
+^0000ffVelocidade de ataque +5%.^000000
+^6A5ACDVIT base 90 ou mais:^000000
+^0000ffEfetividade de cura recebida +10%.^000000
+^0000ffRecuperação de HP por itens +10%.^000000
+^6A5ACDINT base 90 ou mais:^000000
+^0000ffATQM +30.^000000
+^6A5ACDDES base 90 ou mais:^000000
+^0000ffConjuração variável -5%.^000000
+^6A5ACDSOR base 90 ou mais:^000000
+^0000ffDano crítico +5%.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^777777150^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+2979#
+Colhido de um campo sagrado de Valquírias, esse pequeno morango foi cristalizado para que mantivesse os poderes concedidos por elas para sempre.
+^0000ffTodos os atributos +1.^000000
+Ao receber danos físicos:
+^0000ff2% de chance de autoconjurar [Congelar] nv. 3.^000000
+^FF6347Conjunto^000000
+^FF6347[Chapéu de Moranguinho]^000000
+^0000ffHP máx. +15%.^000000
+^0000ffResistência a propriedade Fogo +10%.^000000
+^0000ffDano físico a distância +30%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
+#
+//*****************************************************
+//---------------QUEST DE CARNAVAL-2018----------------
+//*****************************************************
+2998#
+Um bracelete misterioso capaz de despertar efeitos desconhecidos quando usado junto de certos equipamentos elementais.
+^0000ffResistência a propriedade Sagrado +10%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+18940#
+Um chapéu que arde em chamas que perduram por toda a eternidade. Tome cuidado para colocá-lo!
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a propriedade Fogo +5%.^000000
+^0000ffResistência a propriedade Água -5%.^000000
+Ao sofrer danos físicos ou mágicos:
+^0000ff1% de chance de drenar 30 de SP do usuário.^000000
+^0000ff1% de chance de infligir Incêndio no oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffDano físico e mágico +9%.^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +5% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+18941#
+Uma boina encantada com o poder do Zéfiro, um vento tão forte que é capaz de derrubar até a mais firme das fortalezas.
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a propriedade Vento +5%.^000000
+^0000ffResistência a propriedade Terra -5%.^000000
+Ao sofrer danos físicos ou mágicos:
+^0000ff1% de chance de drenar 30 de SP do usuário.^000000
+^0000ff1% de chance de infligir Medo no oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffResistência danos físicos a distância +5%.^000000
+^0000ffResistência a magias de todas as propriedades +5%.^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +5% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+18942#
+As poderosas propriedades mágicas deste gorro se dão graças a uma bênção concedida por entidades do fundo do mar.
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+^0000ffResistência a propriedade Vento -5%.^000000
+Ao sofrer danos físicos ou mágicos:
+^0000ff1% de chance de drenar 30 de SP do usuário.^000000
+^0000ff3% de chance de infligir Cristalização no oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffConjuração variável -15%.^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +5% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+18943#
+Imbuído com o poder da terra, essa cartola possui os poderes dos espíritos da mãe natureza.
+^a400cdIndestrutível em batalha.^000000
+^0000ffResistência a propriedade Terra +5%.^000000
+^0000ffResistência a propriedade Fogo -5%.^000000
+Ao sofrer danos físicos ou mágicos:
+^0000ff1% de chance de drenar 30 de SP do usuário.^000000
+^0000ff1% de chance de infligir Sono Profundo no oponente.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffHP máx. +5%.^000000
+^0000ffRecuperação de HP da [Poção Compacta Branca] +10%.^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+Refino +7 ou mais:
+^0000ffResistência a raça Humanoide +5% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+22082#
+Um par de sapatos com joias preciosas na ponta. Se essas joias são mágicas de fato ou só decoração, ninguém sabe. Melhor não arriscar tirá-las!
+^0000ffResistência as propriedades Neutro, Fogo, Água, Vento e Terra +5%.^000000
+Refino +5 ou mais:
+^0000ffDano físico e mágico contra oponentes de propriedade Neutro, Fogo, Água, Vento e Terra +5%.^000000
+Refino +7 ou mais:
+^0000ffDano físico e mágico contra oponentes de propriedade Neutro, Fogo, Água, Vento e Terra +10% adicional.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777712^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28906#
+Um escudo que representa o elemento Fogo. Foi forjado em altíssima temperatura.
+^0000ffDEFM +5.^000000
+^0000ffResistência a propriedade Fogo +25%.^000000
+Refino +5 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffDano físico a distância +20%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^77777780^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28907#
+Um escudo que representa o elemento Vento. Após a forja, foi resfriado com o sopro dos quatro ventos.
+^0000ffDEFM +5.^000000
+^0000ffResistência a propriedade Vento +25%.^000000
+Refino +5 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffAumenta a velocidade de movimento.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^77777780^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28908#
+Um escudo que representa o elemento Água. Após a forja, foi resfriado com as águas mais geladas de Rune-Midgard.
+^0000ffDEFM +5.^000000
+^0000ffResistência a propriedade Água +25%.^000000
+Refino +5 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffPós-conjuração -20%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^77777780^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28909#
+Um escudo que representa o elemento Terra. Foi forjado com materiais encontrados nos solos mais ricos de Rune-Midgard.
+^0000ffDEFM +5.^000000
+^0000ffResistência a propriedade Terra +25%.^000000
+Refino +5 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Bracelete Suntuoso]^000000
+^0000ffSP máx. +20%.^000000
+^0000ffCusto de SP das habilidades -20%.^000000
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^77777780^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+25482#
+Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
+A card that symbolizes team that adventurer selected.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25483#
+Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25484#
+Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25485#
+Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25486#
+Insígnia do Festival da Diversidade de Brasilis que representa a Liga dos Heróis do Fogo.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25487#
+Insígnia do Festival da Diversidade de Brasilis que representa a Liga dos Heróis da Água.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25488#
+Insígnia do Festival da Diversidade de Brasilis que representa a Liga dos Heróis do Vento.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+25489#
+Insígnia do Festival da Diversidade de Brasilis que representa a Liga dos Heróis da Terra.
+^ff0000Esse item será removido após o término do evento.^000000
+^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
+Peso: ^7777770^000000
+#
+22822#
+Uma bolsa com uma roupa de banho novinha em folha. Tá esperando o quê? Vai lá dar um mergulho!
+^0000ffVeste o personagem com uma Roupa de Verão.^000000
+^0000ffImpossível atacar ou usar habilidades com essa roupa.^000000
+Tipo: ^777777Roupa^000000
+Duração: ^77777710 minutos^000000
+Peso: ^77777710^000000
 #
 //file end
