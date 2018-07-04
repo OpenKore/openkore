@@ -5422,7 +5422,7 @@ sub party_join {
 	my $actor = $char->{party}{users}{$info->{ID}} && %{$char->{party}{users}{$info->{ID}}} ? $char->{party}{users}{$info->{ID}} : new Actor::Party;
 
 	$actor->{admin} = !$info->{'role'};
-	delete $actor->{statuses} unless $actor->{'online'} = !$info-{'type'};
+	delete $actor->{statuses} unless $actor->{'online'} = !$info->{'type'};
 	$actor->{pos}{x} = $info->{'x'};
 	$actor->{pos}{y} = $info->{'y'};
 	$actor->{map} = $info->{'map'};
