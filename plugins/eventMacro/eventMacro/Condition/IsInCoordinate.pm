@@ -15,8 +15,6 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{validators_index} = {};
-	
 	$self->{is_on_stand_by} = 0;
 	
 	$self->{fulfilled_coordinate} = undef;
