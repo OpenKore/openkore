@@ -159,6 +159,10 @@ sub loadDataFiles {
 		loader => [\&parseItemsControl, \%items_control],
 		internalName => 'items_control.txt',
 		autoSearch => 0);
+	Settings::addControlFile(Settings::getBuyerShopFilename(),
+		loader => [\&parseShopControl, \%buyer_shop],
+		internalName => 'buyer_shop.txt',
+		autoSearch => 0);
 	Settings::addControlFile(Settings::getShopFilename(),
 		loader => [\&parseShopControl, \%shop],
 		internalName => 'shop.txt',

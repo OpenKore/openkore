@@ -198,6 +198,9 @@ our @EXPORT = (
 	makeShop
 	openShop
 	closeShop
+	makeBuyerShop
+	openBuyerShop
+	closeBuyerShop
 	inLockMap
 	parseReload
 	setCharDeleteDate/,
@@ -4629,6 +4632,95 @@ sub closeShop {
 	$timeout{'ai_shop'}{'time'} = time;
 	Plugins::callHook("shop_closed");
 	message T("Shop closed.\n");
+}
+
+sub makeBuyerShop {
+	if ($buyershopstarted) {
+		error T("A shop has already been opened.\n");
+		return;
+	}
+
+	return unless $char;
+
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
+		error T("You don't have the Buying Store skill.\n");
+		return;
+	}
+
+	if (!$buyer_shop{title_line}) {
+		error T("Your buyer shop does not have a title.\n");
+		return;
+	}
+
+	my @items = ();
+	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
+
+	# Iterate through items to be sold
+	shuffleArray(\@{$buyer_shop{items}}) if ($config{'shop_random'} eq "2");
+	my %used_items;
+	for my $sale (@{$buyer_shop{items}}) {
+		my $cart_item;
+		for my $item (@{$char->cart}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{binID}};
+			$cart_item = $used_items{$item->{binID}} = $item;
+			last;
+		}
+		next unless ($cart_item);
+
+		# Found item to vend
+		my $amount = $cart_item->{amount};
+
+		my %item;
+		$item{name} = $cart_item->{name};
+		$item{ID} = $cart_item->{ID};
+			if ($sale->{priceMax}) {
+				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+			} else {
+				$item{price} = $sale->{price};
+			}
+		$item{amount} =
+			$sale->{amount} && $sale->{amount} < $amount ?
+			$sale->{amount} : $amount;
+		push(@items, \%item);
+
+		# We can't vend anymore items
+		last if @items >= $max_items;
+	}
+
+	if (!@items) {
+		error T("There are no items to sell.\n");
+		return;
+	}
+	shuffleArray(\@items) if ($config{'shop_random'} eq "1");
+	return @items;
+}
+
+sub openBuyerShop {
+	my @items = makeBuyerShop();
+	my @buyershopnames;
+	return unless @items;
+	@buyershopnames = split(/;;/, $buyer_shop{title_line});
+	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
+	$buyer_shop{title} = ($config{shopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
+	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, items => \@items});
+	$messageSender->sendOpenShop($buyer_shop{title}, \@items);
+	message T("Trying to set up buyer shop...\n"), "vending";
+	$buyershopstarted = 1;
+}
+
+sub closeBuyerShop {
+	if (!$buyershopstarted) {
+		error T("A shop has not been opened.\n");
+		return;
+	}
+
+	$messageSender->sendCloseShop();
+
+	$buyershopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("buyer_shop_closed");
+	message T("Buyer Shop closed.\n");
 }
 
 ##
