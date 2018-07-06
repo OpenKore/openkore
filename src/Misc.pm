@@ -4642,49 +4642,59 @@ sub makeBuyerShop {
 
 	return unless $char;
 
-	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
-		error T("You don't have the Buying Store skill.\n");
-		return;
-	}
+	my $max_items = 2;
 
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
+		my $item = $char->inventory->getByNameID(12548);
+		if(!$item) {
+			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+			return;
+		} else {
+			$item->use;
+		}
+	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
+		error T("You don't have Bulk Buyer Shop License.\n");
+		return;
+	} else { # have skill and item
+		my $skill = new Skill(auto => "ALL_BUYING_STORE");
+		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
+		$max_items = 5;
+	}
+	
 	if (!$buyer_shop{title_line}) {
 		error T("Your buyer shop does not have a title.\n");
 		return;
 	}
 
 	my @items = ();
-	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
 
 	# Iterate through items to be sold
 	shuffleArray(\@{$buyer_shop{items}}) if ($config{'shop_random'} eq "2");
 	my %used_items;
 	for my $sale (@{$buyer_shop{items}}) {
-		my $cart_item;
-		for my $item (@{$char->cart}) {
+		my $inventory_item;
+		for my $item (@{$char->inventory}) {
 			next unless $item->{name} eq $sale->{name};
 			next if $used_items{$item->{binID}};
-			$cart_item = $used_items{$item->{binID}} = $item;
+			$inventory_item = $used_items{$item->{binID}} = $item;
 			last;
 		}
-		next unless ($cart_item);
+		next unless ($inventory_item);
 
-		# Found item to vend
-		my $amount = $cart_item->{amount};
+	
 
 		my %item;
-		$item{name} = $cart_item->{name};
-		$item{ID} = $cart_item->{ID};
+		$item{name} = $inventory_item->{name};
+		$item{nameID} = $inventory_item->{nameID};
 			if ($sale->{priceMax}) {
 				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
 			} else {
 				$item{price} = $sale->{price};
 			}
-		$item{amount} =
-			$sale->{amount} && $sale->{amount} < $amount ?
-			$sale->{amount} : $amount;
+		$item{amount} = $sale->{amount};
 		push(@items, \%item);
 
-		# We can't vend anymore items
+		# We can't buy anymore items
 		last if @items >= $max_items;
 	}
 
@@ -4699,23 +4709,34 @@ sub makeBuyerShop {
 sub openBuyerShop {
 	my @items = makeBuyerShop();
 	my @buyershopnames;
+	my $limitZeny = 0;
 	return unless @items;
 	@buyershopnames = split(/;;/, $buyer_shop{title_line});
 	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
 	$buyer_shop{title} = ($config{shopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
-	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, items => \@items});
-	$messageSender->sendOpenShop($buyer_shop{title}, \@items);
+
+	foreach my $item (@items) {
+		$limitZeny += ($item->{amount} * $item->{price});
+	}
+
+	if($limitZeny > $char->{zeny}) {
+		$limitZeny = $char->{zeny};
+	}
+
+	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
+	
 	message T("Trying to set up buyer shop...\n"), "vending";
 	$buyershopstarted = 1;
 }
 
 sub closeBuyerShop {
 	if (!$buyershopstarted) {
-		error T("A shop has not been opened.\n");
+		error T("A Buyer Shop has not been opened.\n");
 		return;
 	}
 
-	$messageSender->sendCloseShop();
+	$messageSender->sendbuyBulkCloseShop();
 
 	$buyershopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;

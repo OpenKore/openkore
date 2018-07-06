@@ -88,6 +88,7 @@ sub initHandlers {
 	clearlog			=> \&cmdChatLogClear,
 	closeshop			=> \&cmdCloseShop,
 	closebuyshop		=> \&cmdCloseBuyShop,
+	closebuyershop		=> \&cmdCloseBuyerShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
 	create				=> \&cmdCreate,
@@ -1371,6 +1372,14 @@ sub cmdCloseBuyShop {
 	}
 	$messageSender->sendCloseBuyShop();
 	message T("Buying shop closed.\n", "BuyShop");
+}
+
+sub cmdCloseBuyerShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	main::closeBuyerShop();
 }
 
 sub cmdConf {
@@ -3465,30 +3474,15 @@ sub cmdOpenShop {
 }
 
 sub cmdOpenBuyerShop {
+	my (undef, $args) = @_;
+
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
 
-	my $skill = new Skill(auto => "ALL_BUYING_STORE");
+	main::openBuyerShop();
 
-	require Task::UseSkill;
-	my $skillTask = new Task::UseSkill(
-		actor => $skill->getOwner,
-		skill => $skill,
-		priority => Task::USER_PRIORITY
-	);
-	my $task = new Task::Chained(
-		name => 'openBuyerShop',
-		tasks => [
-			new Task::ErrorReport(task => $skillTask),
-			Task::Timeout->new(
-				function => sub {main::openBuyerShop()},
-				seconds => $timeout{ai_shop_useskill_delay}{timeout} ? $timeout{ai_shop_useskill_delay}{timeout} : 5,
-			)
-		]
-	);
-	$taskManager->add($task);
 }
 
 sub cmdParty {
