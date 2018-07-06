@@ -191,7 +191,7 @@ sub parseArguments {
 		'mon_control=s',      \$mon_control_file,
 		'items_control=s',    \$items_control_file,
 		'shop=s',             \$shop_file,
-		'buyer_shop=s',		  \$buyer_shop_file;
+		'buyer_shop=s',		  \$buyer_shop_file,
 		'chat-log=s',         \$base_chat_log_file,
 		'console-log=s',      \$base_console_log_file,
 		'storage-log=s',      \$base_storage_log_file,

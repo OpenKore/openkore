@@ -757,10 +757,24 @@ sub sendBuyBulkOpenShop {
 		limitZeny => $limitZeny,
 		result => $result,
 		storeName => $storeName,
-		itemInfo => @items,
+		items => @items,
 	}));
 
 	debug "Sent Buyer openShop Request\n", "sendPacket", 2;
+}
+
+sub reconstruct_buy_bulk_openShop {
+	my ($self, $args) = @_;
+	$args->{itemInfo} = pack '(a8)*', map { pack 'v2 V', @{$_}{qw(nameID amount price)} } @{$args->{items}};
+}
+
+sub sendbuyBulkCloseShop {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_closeShop',
+	}));
+
+	debug "Sent Buyer closeShop Request\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {
