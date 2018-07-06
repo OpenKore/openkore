@@ -33,7 +33,7 @@ sub new {
 ##
 # float $elemental->hp_percent()
 #
-# Returns your HP percentage (between 0 and 100).
+# Returns elemental HP percentage (between 0 and 100).
 sub hp_percent {
 	my ($self) = @_;
 
@@ -43,7 +43,7 @@ sub hp_percent {
 ##
 # float $elemental->sp_percent()
 #
-# Returns your SP percentage (between 0 and 100).
+# Returns elemental SP percentage (between 0 and 100).
 sub sp_percent {
 	my ($self) = @_;
 
