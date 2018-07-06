@@ -151,6 +151,7 @@ sub initHandlers {
 	ml					=> \&cmdMonsterList,
 	move				=> \&cmdMove,
 	nl					=> \&cmdNPCList,
+	openbuyershop		=> \&cmdOpenBuyerShop,
 	openshop			=> \&cmdOpenShop,
 	p					=> \&cmdChat,
 	party				=> \&cmdParty,
@@ -3461,6 +3462,33 @@ sub cmdOpenShop {
 
 		main::openShop();
 	}
+}
+
+sub cmdOpenBuyerShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my $skill = new Skill(auto => "ALL_BUYING_STORE");
+
+	require Task::UseSkill;
+	my $skillTask = new Task::UseSkill(
+		actor => $skill->getOwner,
+		skill => $skill,
+		priority => Task::USER_PRIORITY
+	);
+	my $task = new Task::Chained(
+		name => 'openBuyerShop',
+		tasks => [
+			new Task::ErrorReport(task => $skillTask),
+			Task::Timeout->new(
+				function => sub {main::openBuyerShop()},
+				seconds => $timeout{ai_shop_useskill_delay}{timeout} ? $timeout{ai_shop_useskill_delay}{timeout} : 5,
+			)
+		]
+	);
+	$taskManager->add($task);
 }
 
 sub cmdParty {

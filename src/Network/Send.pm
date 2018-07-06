@@ -746,6 +746,23 @@ sub sendEnteringBuyer {
 	debug "Sent Entering Buyer: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendBuyBulkOpenShop {
+	my ($self, $limitZeny, $result, $storeName, @items) = @_;
+
+	my $len = 89 + (($#items + 1) * 8);
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_openShop',
+		len => $len,
+		limitZeny => $limitZeny,
+		result => $result,
+		storeName => $storeName,
+		itemInfo => @items,
+	}));
+
+	debug "Sent Buyer openShop Request\n", "sendPacket", 2;
+}
+
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 ### need to check Hook###
