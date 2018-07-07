@@ -28,63 +28,63 @@ sub between {
 }
 
 sub cmpr {
-	my ($first, $cond, $second) = @_;
+	my ($first, $cond, $last) = @_;
 	
-	if (defined $first && !defined $cond && !defined $second) {
+	if (defined $first && !defined $cond && !defined $last) {
 		return $first;
 
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
-		if ($second =~ /^-?[\d.]+$/) {
+		if ($last =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
-				return ((between($first1, $second, $first2)) ? 0 : 1);
+				return ((between($first1, $last, $first2)) ? 0 : 1);
 				
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($first1, $second, $first2);
+				return between($first1, $last, $first2);
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
+		error "cmpr: wrong # of arguments ($first) ($cond) ($last)\n--> ($last) <-- maybe should be numeric?\n", "eventMacro";
 		
-	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
-		my ($second1, $second2) = ($1, $2);
+	} elsif ($last =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
+		my ($last1, $last2) = ($1, $2);
 		if ($first =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
-				return ((between($second1, $first, $second2)) ? 0 : 1);
+				return ((between($last1, $first, $last2)) ? 0 : 1);
 				
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
-				return between($second1, $first, $second2);
+				return between($last1, $first, $last2);
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 			}
 		}
-		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
+		error "cmpr: wrong # of arguments ($first) ($cond) ($last)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
 		
-	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
-		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
-		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
-		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
-		return ($first > $second  ? 1 : 0) if ($cond eq ">");
-		return ($first < $second  ? 1 : 0) if ($cond eq "<");
-		return ($first != $second ? 1 : 0) if ($cond eq "!=");
+	} elsif ($first =~ /^-?[\d.]+$/ && $last =~ /^-?[\d.]+$/) {
+		return ($first == $last ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
+		return ($first >= $last ? 1 : 0) if ($cond eq ">=");
+		return ($first <= $last ? 1 : 0) if ($cond eq "<=");
+		return ($first  > $last ? 1 : 0) if ($cond eq ">");
+		return ($first  < $last ? 1 : 0) if ($cond eq "<");
+		return ($first != $last ? 1 : 0) if ($cond eq "!=");
 		
 	} elsif (($cond eq "=" || $cond eq "==")) {
-		return ($first eq $second ? 1 : 0);
+		return ($first eq $last ? 1 : 0);
 		
-	} elsif ($cond eq "!=" && $first ne $second) {
-		return ($first ne $second ? 1 : 0);
+	} elsif ($cond eq "!=" && $first ne $last) {
+		return ($first ne $last ? 1 : 0);
 		
 	} elsif ($cond eq "~") {
 		$first = lc($first);
-		foreach my $member (split(/\s*,\s*/, $second)) {
+		foreach my $member (split(/\s*,\s*/, $last)) {
 			return 1 if ($first eq lc($member));
 		}
 		
-	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
-		return match($first, $second, 1);
+	} elsif ($cond eq "=~" && $last =~ /^\/.*?\/\w?\s*$/) {
+		return match($first, $last, 1);
 	}
 
 	return 0;
@@ -105,21 +105,17 @@ sub q4rx2 {
 }
 
 sub match {
-	my ($text, $kw, $cmpr) = @_;
+	my ($text, $regex, $createLastMatchVar) = @_;
 
-	unless (defined $text && defined $kw) {
+	unless (defined $text && defined $regex) {
 		# this produces a warning but that's what we want
-		error "match: wrong # of arguments ($text) ($kw)\n", "eventMacro";
+		error "match: wrong # of arguments ($text) ($regex)\n", "eventMacro";
 		return 0
 	}
 
-	if ($kw =~ /^"(.*?)"$/) {
-		return $text eq $1
-	}
-
-	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
+	if ($regex =~ /^\/(.*?)\/(\w?)$/) {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
-			if (!defined $cmpr) {
+			if (!defined $createLastMatchVar) {
 				no strict;
 				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 				use strict;
