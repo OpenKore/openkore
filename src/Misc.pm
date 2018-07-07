@@ -4643,30 +4643,11 @@ sub makeBuyerShop {
 	return unless $char;
 
 	my $max_items = 2;
-
-	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
-		my $item = $char->inventory->getByNameID(12548);
-		if(!$item) {
-			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
-			return;
-		} else {
-			$item->use;
-		}
-	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
-		error T("You don't have Bulk Buyer Shop License.\n");
-		return;
-	} else { # have skill and item
-		my $skill = new Skill(auto => "ALL_BUYING_STORE");
-		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
-		$max_items = 5;
-	}
-	
-	if (!$buyer_shop{title_line}) {
-		error T("Your buyer shop does not have a title.\n");
-		return;
-	}
-
 	my @items = ();
+	
+	if($char->inventory->getByNameID(6377)) {
+		$max_items = 2;
+	}
 
 	# Iterate through items to be sold
 	shuffleArray(\@{$buyer_shop{items}}) if ($config{'shop_random'} eq "2");
@@ -4680,8 +4661,6 @@ sub makeBuyerShop {
 			last;
 		}
 		next unless ($inventory_item);
-
-	
 
 		my %item;
 		$item{name} = $inventory_item->{name};
@@ -4702,7 +4681,30 @@ sub makeBuyerShop {
 		error T("There are no items to sell.\n");
 		return;
 	}
+
 	shuffleArray(\@items) if ($config{'shop_random'} eq "1");
+
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
+		my $item = $char->inventory->getByNameID(12548);
+		if(!$item) {
+			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+			return;
+		} else {
+			$item->use;
+		}
+	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
+		error T("You don't have Bulk Buyer Shop License.\n");
+		return;
+	} else { # have skill and item
+		my $skill = new Skill(auto => "ALL_BUYING_STORE");
+		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
+	}
+	
+	if (!$buyer_shop{title_line}) {
+		error T("Your buyer shop does not have a title.\n");
+		return;
+	}
+
 	return @items;
 }
 
@@ -4736,7 +4738,7 @@ sub closeBuyerShop {
 		return;
 	}
 
-	$messageSender->sendbuyBulkCloseShop();
+	$messageSender->sendCloseBuyShop();
 
 	$buyershopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
