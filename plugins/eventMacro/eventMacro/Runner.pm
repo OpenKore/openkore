@@ -1492,23 +1492,21 @@ sub parse_call {
 sub statement {
 	my ($self, $temp_multi) = @_;
 	
-	my ($negate, $first, $cond, $last) = $temp_multi =~ 
-		/
-		^\s?(\!|not)?                 #negated
-		\s?"?(.+?)"?                  #first
-		\s?(==|=~|<=|>=|!=|<|>|!|=|~) #cond
-		\s?"?(.+?)"?\s*$              #last
-		/x;
+	my ($negate) = $temp_multi =~ /^\s?(\!\s?|not\s+)/;
+	my ($first)  = $temp_multi =~ /^\s?$negate\s?(".+"|[^=<>\!~"]+)\s?/;
+	my ($cond)   = $temp_multi =~ /^\s?$negate\s?$first\s?(==|=~|<=|>=|!=|<|>|!|=|~)/; #checks the condition
+	my ($last)   = $temp_multi =~ /^\s?$negate\s?$first\s?$cond\s?(".+"|.+)\s?$/; #checks the last argument
 	
-	if (!defined $first) {
-		#if is not defined $first, then it may be a statment which has only $first
-		($negate, $first) = $temp_multi =~ /^\s?(\!|not)?\s?"?(.+?)"?\s?$/;
-	}
+	# trim whitespace of all variables
+	$negate =~ s/^\s|\s$//g;
+	$first  =~ s/^\s|\s$//g; 
+	$cond   =~ s/^\s|\s$//g;
+	$last   =~ s/^\s|\s$//g;
+
+	$first =~ s/"//g; # remove quotation marks of first argument
+	$last  =~ s/"//g; # remove quotation marks of last argument
 	
-	$first =~ s/^\s+|\s+$//g; #trim whitespace in the beginning and end of string
-	$last =~ s/^\s+|\s+$//g; #trim whitespace in the beginning and end of string
-	
-	if (defined $first && !defined $cond && !defined $last) {
+	if ($first && !$cond && !$last) {
 		# if there is only the first argument, it is treated here
 		my $parsedFirst = $self->parse_command(refined_macroKeywords($first));
 		return if (defined $self->error);
@@ -1518,32 +1516,26 @@ sub statement {
 		} else {
 			return cmpr($parsedFirst); # return the normal value of cmpr
 		}
-	} elsif (!defined $first) {
+	} elsif (!$first) {
 		$self->error("syntax error in statement: missing first argument\n".
-		"first argument = missing, Condition: '$cond', last argument: '$last'");
-	} elsif (!defined $cond) {
-		$self->error("syntax errror in statement: missing condition (<= >= =~ =! ~ )");
-	} elsif (!defined $last) {
+		"first argument: none, Condition: '$cond', last argument: '$last'");
+	} elsif (!$cond) {
+		$self->error("syntax errror in statement: missing condition ( <= >= =~ != ~ > < = == )\n") .
+		"first argument: '$first', Condition: none, last argument: '$last'";
+	} elsif (!$last) {
 		$self->error("syntax errror in statement: missing last argument\n".
-		"1st argument: '$first', Condition: '$cond', last argument:  missing");
+		"1st argument: '$first', Condition: '$cond', last argument:  none");
 	} else {
 		#when has first argument, condition and last argument, it is treated here
 		my $parsedFirst = $self->parse_command(refined_macroKeywords($first));
 		my $parsedLast = $self->parse_command(refined_macroKeywords($last));
 		return if (defined $self->error);
-		
-		if (!defined $parsedFirst ) {
-			$self->error("'$first' has failed, check syntax");
-
-		} elsif (!defined $parsedLast) {
-			$self->error("'$last' has failed, check syntax");
-
-		} elsif ($negate) {
+		if ($negate) {
 			return !cmpr($parsedFirst, $cond, $parsedLast); # return the opposite value of cmpr
-
-		} elsif (!$negate) {
+			
+		} else (!$negate) {
 			return cmpr($parsedFirst, $cond, $parsedLast); #return the normal value of cmpr
-
+			
 		}
 	}
 	return 0
