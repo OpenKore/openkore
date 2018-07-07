@@ -6188,6 +6188,7 @@ sub open_buying_store_fail { #0x812
 	} else {
 		message TF("Failed opening your buying store.\n");
 	}
+	$buyershopstarted = 0;
 }
 
 1;
