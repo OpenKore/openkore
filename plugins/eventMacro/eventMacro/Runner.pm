@@ -1533,7 +1533,7 @@ sub statement {
 		if ($negate) {
 			return !cmpr($parsedFirst, $cond, $parsedLast); # return the opposite value of cmpr
 			
-		} else (!$negate) {
+		} else {
 			return cmpr($parsedFirst, $cond, $parsedLast); #return the normal value of cmpr
 			
 		}
