@@ -179,6 +179,7 @@ sub iterate {
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
+	processAutoBuyerShopOpen();
 	processRepairAuto();
 	processFeed();
 	Benchmark::end("AI (part 4)") if DEBUG;
@@ -3323,6 +3324,29 @@ sub processAutoShopOpen {
 		} else {
 			main::openShop();
 		}
+	}
+}
+
+##### AUTO BUYER SHOP OPEN #####
+sub processAutoBuyerShopOpen {
+	if ($config{'buyerShopAuto_open'} && !AI::isIdle) {
+		$timeout{ai_shop}{time} = time;
+	}
+
+	if ($config{'buyerShopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && timeOut($timeout{ai_buyer_shopCheck}) && !$buyershopstarted
+		&& $field->baseName eq $config{'lockMap'} && !$taskManager->countTasksByName('openShop')) {
+		if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
+			my $item = $char->inventory->getByNameID(12548);
+			if(!$item) {
+				error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+				return;
+			}
+		} elsif(!$char->inventory->getByNameID(6377)) {
+			error T("You don't have Bulk Buyer Shop License.\n");
+			return;
+		}
+		main::openBuyerShop();
+		$timeout{ai_buyer_shopCheck}{time} = time;
 	}
 }
 
