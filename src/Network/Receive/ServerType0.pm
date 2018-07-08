@@ -955,7 +955,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO )); # request to unfreeze char alisonrag
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO )); # request to unfreeze char alisonrag
 }
 
 sub area_spell {
