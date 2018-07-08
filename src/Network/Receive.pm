@@ -6176,4 +6176,19 @@ sub refine_result {
 	}
 }
 
+sub open_buying_store_fail { #0x812
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+	if($result == 1){
+		message TF("Failed to open Purchasing Store.\n"),"info";
+	} elsif ($result == 2){
+		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
+	} elsif ($result == 8){
+		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
+	} else {
+		message TF("Failed opening your buying store.\n");
+	}
+	$buyershopstarted = 0;
+}
+
 1;

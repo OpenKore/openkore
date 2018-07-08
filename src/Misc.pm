@@ -198,6 +198,9 @@ our @EXPORT = (
 	makeShop
 	openShop
 	closeShop
+	makeBuyerShop
+	openBuyerShop
+	closeBuyerShop
 	inLockMap
 	parseReload
 	setCharDeleteDate/,
@@ -4629,6 +4632,118 @@ sub closeShop {
 	$timeout{'ai_shop'}{'time'} = time;
 	Plugins::callHook("shop_closed");
 	message T("Shop closed.\n");
+}
+
+sub makeBuyerShop {
+	if ($buyershopstarted) {
+		error T("A shop has already been opened.\n");
+		return;
+	}
+
+	return unless $char;
+
+	my $max_items = 2;
+	my @items = ();
+	
+	if($char->inventory->getByNameID(6377)) {
+		$max_items = 2;
+	}
+
+	# Iterate through items to be sold
+	shuffleArray(\@{$buyer_shop{items}}) if ($config{'buyerShop_random'} eq "2");
+	my %used_items;
+	for my $sale (@{$buyer_shop{items}}) {
+		my $inventory_item;
+		for my $item (@{$char->inventory}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{binID}};
+			$inventory_item = $used_items{$item->{binID}} = $item;
+			last;
+		}
+		next unless ($inventory_item);
+
+		my %item;
+		$item{name} = $inventory_item->{name};
+		$item{nameID} = $inventory_item->{nameID};
+			if ($sale->{priceMax}) {
+				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+			} else {
+				$item{price} = $sale->{price};
+			}
+		$item{amount} = $sale->{amount};
+		push(@items, \%item);
+
+		# We can't buy anymore items
+		last if @items >= $max_items;
+	}
+
+	if (!@items) {
+		error T("There are no items to sell.\n");
+		return;
+	}
+
+	shuffleArray(\@items) if ($config{'buyerShop_random'} eq "1");
+
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
+		my $item = $char->inventory->getByNameID(12548);
+		if(!$item) {
+			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+			return;
+		} else {
+			$item->use;
+		}
+	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
+		error T("You don't have Bulk Buyer Shop License.\n");
+		return;
+	} else { # have skill and item
+		my $skill = new Skill(auto => "ALL_BUYING_STORE");
+		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
+	}
+	
+	if (!$buyer_shop{title_line}) {
+		error T("Your buyer shop does not have a title.\n");
+		return;
+	}
+
+	return @items;
+}
+
+sub openBuyerShop {
+	my @items = makeBuyerShop();
+	my @buyershopnames;
+	my $limitZeny = 0;
+	return unless @items;
+	@buyershopnames = split(/;;/, $buyer_shop{title_line});
+	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
+	$buyer_shop{title} = ($config{buyerShopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
+
+	foreach my $item (@items) {
+		$limitZeny += ($item->{amount} * $item->{price});
+	}
+
+	if($limitZeny > $char->{zeny}) {
+		$limitZeny = $char->{zeny};
+	}
+
+	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
+	
+	message T("Trying to set up buyer shop...\n"), "vending";
+	$buyershopstarted = 1;
+}
+
+sub closeBuyerShop {
+	if (!$buyershopstarted) {
+		error T("A Buyer Shop has not been opened.\n");
+		return;
+	}
+
+	$messageSender->sendCloseBuyShop();
+
+	$buyershopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("buyer_shop_closed");
+	message T("Buyer Shop closed.\n");
 }
 
 ##
