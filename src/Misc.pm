@@ -4650,7 +4650,7 @@ sub makeBuyerShop {
 	}
 
 	# Iterate through items to be sold
-	shuffleArray(\@{$buyer_shop{items}}) if ($config{'shop_random'} eq "2");
+	shuffleArray(\@{$buyer_shop{items}}) if ($config{'buyerShop_random'} eq "2");
 	my %used_items;
 	for my $sale (@{$buyer_shop{items}}) {
 		my $inventory_item;
@@ -4682,7 +4682,7 @@ sub makeBuyerShop {
 		return;
 	}
 
-	shuffleArray(\@items) if ($config{'shop_random'} eq "1");
+	shuffleArray(\@items) if ($config{'buyerShop_random'} eq "1");
 
 	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
 		my $item = $char->inventory->getByNameID(12548);
@@ -4715,7 +4715,7 @@ sub openBuyerShop {
 	return unless @items;
 	@buyershopnames = split(/;;/, $buyer_shop{title_line});
 	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
-	$buyer_shop{title} = ($config{shopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
+	$buyer_shop{title} = ($config{buyerShopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
 
 	foreach my $item (@items) {
 		$limitZeny += ($item->{amount} * $item->{price});
