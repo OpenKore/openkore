@@ -88,6 +88,7 @@ sub initHandlers {
 	clearlog			=> \&cmdChatLogClear,
 	closeshop			=> \&cmdCloseShop,
 	closebuyshop		=> \&cmdCloseBuyShop,
+	closebuyershop		=> \&cmdCloseBuyerShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
 	create				=> \&cmdCreate,
@@ -151,6 +152,7 @@ sub initHandlers {
 	ml					=> \&cmdMonsterList,
 	move				=> \&cmdMove,
 	nl					=> \&cmdNPCList,
+	openbuyershop		=> \&cmdOpenBuyerShop,
 	openshop			=> \&cmdOpenShop,
 	p					=> \&cmdChat,
 	party				=> \&cmdParty,
@@ -1370,6 +1372,14 @@ sub cmdCloseBuyShop {
 	}
 	$messageSender->sendCloseBuyShop();
 	message T("Buying shop closed.\n", "BuyShop");
+}
+
+sub cmdCloseBuyerShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	main::closeBuyerShop();
 }
 
 sub cmdConf {
@@ -3461,6 +3471,18 @@ sub cmdOpenShop {
 
 		main::openShop();
 	}
+}
+
+sub cmdOpenBuyerShop {
+	my (undef, $args) = @_;
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	main::openBuyerShop();
+
 }
 
 sub cmdParty {
