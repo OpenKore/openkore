@@ -3333,7 +3333,7 @@ sub processAutoBuyerShopOpen {
 		$timeout{ai_shop}{time} = time;
 	}
 
-	if ($config{'buyerShopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && timeOut($timeout{ai_buyer_shopCheck}) && !$buyershopstarted
+	if ($config{'buyerShopAuto_open'} && AI::isIdle && $net->getState() == Network::IN_GAME && !$char->{sitting} && timeOut($timeout{ai_shop}) && timeOut($timeout{ai_buyer_shopCheck}) && !$buyershopstarted
 		&& $field->baseName eq $config{'lockMap'} && !$taskManager->countTasksByName('openShop')) {
 		if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
 			my $item = $char->inventory->getByNameID(12548);
