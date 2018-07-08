@@ -81,7 +81,7 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is incorrect. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} else {
-		debug("login_pin_code_request: unknown flag $args->{flag}\n");
+		debug("login_pin_code_request: unknown flag $args->{state}\n");
 	}
 
 	$timeout{master}{time} = time;
