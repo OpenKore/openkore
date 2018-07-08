@@ -4861,13 +4861,13 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
+		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO )); # request to unfreeze char alisonrag
 		$timeout{ai}{time} = time;
 	}
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-
 	$timeout{ai}{time} = time;
 }
 
