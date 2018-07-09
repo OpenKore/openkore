@@ -4861,6 +4861,7 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
+#TODO : Need check classic iRO		
 		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO iRO_Restart )); # request to unfreeze char alisonrag
 		$timeout{ai}{time} = time;
 	}
