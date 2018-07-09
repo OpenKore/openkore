@@ -4646,7 +4646,7 @@ sub makeBuyerShop {
 	my @items = ();
 	
 	if($char->inventory->getByNameID(6377)) {
-		$max_items = 2;
+		$max_items = 5;
 	}
 
 	# Iterate through items to be sold
