@@ -31,7 +31,6 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		item_use 0439
 		sync 0360
 		character_move 035F
 		actor_info_request 0368
