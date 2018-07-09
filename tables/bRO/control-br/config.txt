@@ -340,6 +340,7 @@ logDead 0
 
 chatTitleOversize 0
 shopTitleOversize 0
+buyerShopTitleOversize 0
 
 sleepTime 10000
 
