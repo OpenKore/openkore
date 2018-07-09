@@ -1,4 +1,4 @@
-#############################################################################################
+ai_shop_useskill_delay#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -165,7 +165,7 @@ ai_cartAutoCheck 3
 ai_avoidcheck 0.5
 ai_shop 4
 ai_shop_useskill_delay 5
-
+ai_buyer_shopCheck 60
 # atraso entre repairAuto
 ai_repair 4
 
