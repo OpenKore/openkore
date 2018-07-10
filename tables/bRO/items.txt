@@ -8396,4 +8396,12 @@
 25488#Insígnia do Orgulho Verde#
 25489#Insígnia do Orgulho Amarelo#
 22822#Bolsa com Roupa de Banho#
+//*****************************************************
+//------------Aplicar em 2018-07-10--------------------
+//*****************************************************
+31488#Balão de MVP#
+31406#Peruca Platinada da Nidhogg#
+15345#Armadura do Dragão Azul#
+19159#Bacinete Fortificado#
+28501#Chifres de Kirin#
 //file end
