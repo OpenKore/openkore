@@ -6162,7 +6162,7 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Consome 2 moedas para ter esquiva +30,
 precisão -30 e resistência a danos físicos
-a distância +20 por 20 segundos.
+a distância +20% por 20 segundos.
 Não pode ser usada junto com
 'Resistência Final'.^000000
 #
@@ -9503,105 +9503,157 @@ Consome 2 Esferas Espirituais. Não pode ser usada em conjunto com Chakra da Ene
 #
 WA_SWING_DANCE#
 Ritmo Contagiante
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta a vel. de movimento e de ATQ do usuário e membros do grupo por 60 segundos. 
-O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta a
+velocidade de ataque e movimento
+do usuário e membros do grupo.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 WA_SYMPHONY_OF_LOVER#
 Balada Sinfônica
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta a MDEF do usuário e membros do grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta a
+DEFM do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 WA_MOONLIT_SERENADE#
 Serenata ao Luar
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta o ATQM do usuário e membros do grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta o
+ATQM do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_RUSH_WINDMILL#
 Sinfonia dos Ventos
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Aumenta o ATQ do usuário e membros grupo por 60 segundos.
-O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, aumenta o
+ATQ do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_ECHOSONG#
 Canção de Balder
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777 Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Aumenta a DEF do usuário e membros grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, aumenta a
+DEF do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_HARMONIZE#
 Harmonizar
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777 Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Equiliza os Atributos do usuário e do alvo por 60 segundos. ^000000
-[Nv 1]: ^777777 Reduz até 10 pontos de Bônus de Atributos^000000
-[Nv 2]: ^777777 Reduz até 15 pontos de Bônus de Atributos^000000
-[Nv 3]: ^777777 Reduz até 20 pontos de Bônus de Atributos^000000
-[Nv 4]: ^777777 Reduz até 25 pontos de Bônus de Atributos^000000
-[Nv 5]: ^777777 Reduz até 30 pontos de Bônus de Atributos^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, reduz
+todos os atributos do alvo
+e do usuário.^000000
+Nível l Atributos
+[Nv 1]: ^777777-10^000000
+[Nv 2]: ^777777-15^000000
+[Nv 3]: ^777777-20^000000
+[Nv 4]: ^777777-25^000000
+[Nv 5]: ^777777-30^000000
 #
 WM_LESSON#
 Domínio Musical
-Nível Máximo: 10
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777 Aumenta a velocidade de recuperação de SP e SP Máx. Se a habilidade for utilizada em nível 5 ou acima, permite o uso de canções e duetos de classe 3 enquanto usa habilidades de classe 2. ^000000
-[Nv 1]: ^777777 SP Máx. +30  ^000000
-[Nv 2]: ^777777 SP Máx. +60   ^000000
-[Nv 3]: ^777777 SP Máx. +90  ^000000
-[Nv 4]: ^777777 SP Máx. +120  ^000000
-[Nv 5]: ^777777 SP Máx. +150  / Permite o uso de canções de classe 3 e classe 2 ^000000
-[Nv 6]: ^777777 SP Máx. +180  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 7]: ^777777 SP Máx. +200  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 8]: ^777777 SP Máx. +240  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 9]: ^777777 SP Máx. +270  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 10]: ^777777 SP Máx. +300 / Permite o uso de canções de classe 3 e classe 2^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o SP máx. e a
+regeneração de SP a cada
+10 segundos enquanto imóvel.
+Do nível 5 em diante, permite
+usar outras músicas e danças
+enquanto dança ou toca.^000000
+Nível l SP máx.
+[Nv 1]: ^777777+30^000000
+[Nv 2]: ^777777+60^000000
+[Nv 3]: ^777777+90^000000
+[Nv 4]: ^777777+120^000000
+[Nv 5]: ^777777+150^000000
+[Nv 6]: ^777777+180^000000
+[Nv 7]: ^777777+200^000000
+[Nv 8]: ^777777+240^000000
+[Nv 9]: ^777777+270^000000
+[Nv 10]: ^777777+300^000000
 #
 WM_METALICSOUND#
 Ruído Estridente
-Nível Máximo: 5
-^777777Pré requisitos: Ativar Ressonância 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777 Emite um alto ruído, reduzindo HP e SP do alvo. Causa mais dano a oponentes que estiverem o estado negativo Sono. Aumenta o dano de acordo com o nível da habilidade Domínio Musical. ^000000
-[Nv 1]: ^777777 ATQM 120% + Dano adicional dependendo de Domínio Musical ^000000
-[Nv 2]: ^777777 ATQM 240% + Dano adicional dependendo de Domínio Musical  ^000000
-[Nv 3]: ^777777 ATQM 360% + Dano adicional dependendo de Domínio Musical  ^000000
-[Nv 4]: ^777777 ATQM 480% + Dano adicional dependendo de Domínio Musical ^000000
-[Nv 5]: ^777777 ATQM 600% + Dano adicional dependendo de Domínio Musical ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ativar Ressonância 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano mágico de
+propriedade Neutro e drena
+um pouco de SP do alvo.
+Alvos em Sono Profundo
+receberão mais dano.^000000
+Nível l ATQM l Recarga l SP
+[Nv 1]: ^777777120%^000000 l ^7777772,0 segundos^000000 l ^77777764^000000
+[Nv 2]: ^777777240%^000000 l ^7777772,5 segundos^000000 l ^77777768^000000
+[Nv 3]: ^777777360%^000000 l ^7777773,0 segundos^000000 l ^77777772^000000
+[Nv 4]: ^777777480%^000000 l ^7777773,5 segundos^000000 l ^77777776^000000
+[Nv 5]: ^777777600%^000000 l ^7777774,0 segundos^000000 l ^77777780^000000
 #
 WM_REVERBERATION#
 Ressonância
@@ -9626,35 +9678,58 @@ Nível l ATQ l ATQM l SP
 #
 WM_DOMINION_IMPULSE#
 Ativar Ressonância
-Nível Máximo: 1
-^777777Pré requisitos: Ressonância 1 ^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777 Ativa o efeito de Ressonâncias que estiverem no chão em área de 11 x 11 células. Pode também ativar Ressonâncias de outros jogadores nesta área. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Ressonância 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ativa todas as Ressonâncias
+da área de 11x11 células,
+incluindo as de oponentes.^000000
 #
 WM_SEVERE_RAINSTORM#
 Temporal de Mil Flechas
-Nível Máximo: 5
-^777777Pré requisitos: Estilingue ou Flecha Melódica 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Habilidade usada apenas com Flechas. Atira uma sequência de flechas para o ar para gerar um temporaral de flechas em área de 11 x 11 células. Aumenta o dano dependendo da AGI e DES do usuário. Consome 20 flechas para ativar esta habilidade.^000000
-[Nv 1]: ^777777 100% ATQ / Duração de 0.9 segundos ^000000
-[Nv 2]: ^777777 150% ATQ  / Duração de 1.5 segundos  ^000000
-[Nv 3]: ^777777 200% ATQ  / Duração de 2.1 segundos   ^000000
-[Nv 4]: ^777777 250% ATQ  / Duração de 2.7 segundos  ^000000
-[Nv 5]: ^777777 300% ATQ  / Duração de 3 segundos  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Estilingue 5^000000 ou
+^777777Flecha Melódica 5^000000
+Tipo: ^777777 Ofensiva^000000
+Descrição:
+^008080Apenas com Arcos.^000000
+^777777Consome 20 flechas para causar
+dano físico a distância
+na área de 11x11 células
+durante 3 segundos.
+O dano é influenciado pela
+DES e AGI do usuário.^000000
+Nível l Recarga l SP
+[Nv 1]: ^7777775,0 segundos^000000 l ^77777780^000000
+[Nv 2]: ^7777775,5 segundos^000000 l ^77777790^000000
+[Nv 3]: ^7777776,0 segundos^000000 l ^777777100^000000
+[Nv 4]: ^7777776,5 segundos^000000 l ^777777110^000000
+[Nv 5]: ^7777777,0 segundos^000000 l ^777777120^000000
 #
 WM_POEMOFNETHERWORLD#
 Poema de Nifflheim
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Cria um som fúnebre em área de 3 x 3 células que paraliza oponentes. No máximo 5 campos de Poema de Nifflheim podem ser criados ao mesmo tempo.
-Não pode ser utilizada contra monstros tipo Chefe. O tempo de paralisia dos alvos depende do nível dos mesmos. Consome 1 Pastilha Refrescante. ^000000
-[Nv 1]: ^777777 Duração do efeito 8 segundos. / Duração do campo 9 segundos. ^000000
-[Nv 2]: ^777777 Duração do efeito 10 segundos. / Duração do campo 11 segundos. ^000000
-[Nv 3]: ^777777 Duração do efeito 12 segundos. / Duração do campo 13 segundos. ^000000
-[Nv 4]: ^777777 Duração do efeito 14 segundos. / Duração do campo 15 segundos. ^000000
-[Nv 5]: ^777777 Duração do efeito 16 segundos. / Duração do campo 17 segundos. ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Pastilha Refrescante
+para criar uma armadilha.
+Oponentes que se aproximarem
+da área de 3x3 células do poema
+ficarão imóveis temporariamente.
+Apenas 5 poemas ativos por vez.
+Não funciona contra Chefes.^000000
+Nv. l Tempo (imóvel) l Tempo (poema)
+[Nv 1]: ^7777778 segundos^000000 l ^7777779 segundos^000000
+[Nv 2]: ^77777710 segundos^000000 l ^77777711 segundos^000000
+[Nv 3]: ^77777712 segundos^000000 l ^77777713 segundos^000000
+[Nv 4]: ^77777714 segundos^000000 l ^77777715 segundos^000000
+[Nv 5]: ^77777716 segundos^000000 l ^77777717 segundos^000000
 #
 WM_VOICEOFSIREN#
 Canto da Sereia
@@ -9670,7 +9745,8 @@ na área ao seu redor.
 A área, a chance de inflição
 e a duração do efeito nos alvos
 aumentam de acordo com o
-nível da habilidade.^000000
+nível da habilidade.
+Funciona apenas em PvP/GdE.^000000
 Nível l Duração l Área
 [Nv 1]: ^77777715 segundos^000000 l ^7777775x5 células^000000
 [Nv 2]: ^77777718 segundos^000000 l ^7777777x7 células^000000
@@ -9680,54 +9756,76 @@ Nível l Duração l Área
 #
 WM_DEADHILLHERE#
 Réquiem de Orfeu
-Nível Máximo: 5
-^777777Pré requisitos: Sibilo de Eir 3 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. A habilidade revive personagens derrotados. O alvo revivido recebe HP equivalente ao SP que possuía. 
-Se o alvo possui SP 0, ele será revivido com 1 de HP. Consome 1 Lágrimas de Arrependimento ^000000
-[Nv 1]: ^777777 Chance de sucesso 90% / Consome 50% do SP do alvo revivido^000000
-[Nv 2]: ^777777 Chance de sucesso 92% / Consome 40% do SP do alvo revivido  ^000000
-[Nv 3]: ^777777 Chance de sucesso 94% / Consome 30% do SP do alvo revivido  ^000000
-[Nv 4]: ^777777 Chance de sucesso 96% / Consome 20% do SP do alvo revivido ^000000
-[Nv 5]: ^777777 Chance de sucesso 98% / Consome 10% do SP do alvo revivido ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Sibilo de Eir 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Lágrima de Arrependiento
+para ter a chance de reviver
+outros personagens, drenando SP
+do alvo para recuperar em HP.
+Nível l Chance l SP drenado
+[Nv 1]: ^77777790%^000000 l ^77777750%^000000
+[Nv 2]: ^77777792%^000000 l ^77777740%^000000
+[Nv 3]: ^77777794%^000000 l ^77777730%^000000
+[Nv 4]: ^77777796%^000000 l ^77777720%^000000
+[Nv 5]: ^77777798%^000000 l ^77777710%^000000
 #
 WM_LULLABY_DEEPSLEEP#
 Melodia de Morfeu
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777 Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Obriga todos os adversários a entrar em estado de Sono Profundo.
-Neste estado, os usuários afetados são imobilizados e impedidos de atacar, utilizar habilidades e itens, e falar. A habilidade é cancelada se o alvo afetado receber dano. 
-Ataques recebidos no estado de Sono Profundo causam 50% mais dano. Usuários afetados por este estado recuperam 3% do HP e SP a cada 2 segundos. ^000000
-[Nv 1]: ^777777 Alcance 11 x 11 células ^000000
-[Nv 2]: ^777777 Alcance 13 x 13 células^000000
-[Nv 3]: ^777777 Alcance 15 x 15 células^000000
-[Nv 4]: ^777777 Alcance 17 x 17 células^000000
-[Nv 5]: ^777777 Alcance 19 x 19 células^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de infligir
+[Sono Profundo] nos oponentes
+ao redor do usuário.^000000
+Nível l Área l SP
+[Nv 1]: ^77777711x11 células^000000 l ^77777780^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777790^000000
+[Nv 3]: ^77777715x15 células^000000 l ^777777100^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777110^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777120^000000
 #
 WM_SIRCLEOFNATURE#
 Sibilo de Eir
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Permite que uma quantidade de SP seja consumida do alvo para que receba HP em troca. Se o HP do alvo chega a zero, a habilidade é cancelada.^000000
-[Nv 1]: ^777777 Alcance da habilidade 7 x 7  / 4 SP consumido por segundo / 40 HP obtido por segundo^000000
-[Nv 2]: ^777777 Alcance da habilidade 9 x 9 / 8 SP consumido por segundo / 80 HP obtido por segundo^000000
-[Nv 3]: ^777777 Alcance da habilidade 11 x 11 / 12 SP consumido por segundo / 120 HP obtido por segundo^000000
-[Nv 4]: ^777777 Alcance da habilidade 13 x 13 / 16 SP consumido por segundo / 160 HP obtido por segundo^000000
-[Nv 5]: ^777777 Alcance da habilidade 15 x 15 / 20 SP consumido por segundo / 200 HP obtido por segundo^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Drena SP para recuperar
+um pouco de HP por segundo
+do usuário e dos membros
+do grupo por 60 segundos.^000000
+Nv. l Dreno de SP l Rec. de HP l Área
+[Nv 1]: ^7777774^000000 l ^77777740^000000 l ^7777777x7 células^000000
+[Nv 2]: ^7777778^000000 l ^77777780^000000 l ^7777779x9 células^000000
+[Nv 3]: ^77777712^000000 l ^777777120^000000 l ^77777711x11 células^000000
+[Nv 4]: ^77777716^000000 l ^777777160^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777720^000000 l ^777777200^000000 l ^77777715x15 células^000000
 #
 WM_RANDOMIZESPELL#
 Improviso
-Nível Máximo: 5
-^777777Pré requisitos: Poema de Nifflheim 1 ^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777  Permite que o usuário conjure uma magia de Mago ou Bruxo aleatoriamente. Todos os itens pré-requisitos destas magias não são necessários.^000000
-[Nv 1]: ^777777 Ativa aleatoriamente magias de nível 5^000000
-[Nv 2]: ^777777 Ativa aleatoriamente magias de nível 6 ^000000
-[Nv 3]: ^777777 Ativa aleatoriamente magias de nível 7 ^000000
-[Nv 4]: ^777777 Ativa aleatoriamente magias de nível 8 ^000000
-[Nv 5]: ^777777 Ativa aleatoriamente magias de nível 9 ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Poema de Nifflheim 1^000000
+Tipo: ^777777Ativa^000000
+^777777Ativa uma magia de
+Mago ou Bruxo aleatoriamente.
+As magias não consomem gema
+ou outros pré-requisitos.^000000
+Nível l Nv. da magia
+[Nv 1]: ^7777775^000000
+[Nv 2]: ^7777776^000000
+[Nv 3]: ^7777777^000000
+[Nv 4]: ^7777778^000000
+[Nv 5]: ^7777779^000000
 #
 WM_GLOOMYDAY#
 Ode a Hela
@@ -9755,117 +9853,217 @@ Nv. l Esquiva l Velocidade de ataque
 [Nv 5]: ^777777-45^000000 l ^777777-40%^000000
 #
 WM_GREAT_ECHO#
-Brado de Odin 
-Nível Máximo: 5
-^777777Pré requisitos: Ruído Estridente 1 ^000000
-Tipo: ^777777  Ofensiva / Dueto ^000000
-Descrição: ^777777  O usuário canta uma canção que causa dano a todos os oponentes no alcance da habilidade. 
-Aumenta o ATQ e reduz o consumo de SP conforme aumenta o número de Musas e Trovadores no grupo. O SP para a ativação da habilidade é consumido ao mesmo tempo para Musas e Trovadores. Consome 1 Pastilha Refrescante. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 5 x 5 / ATQ 600% ^000000
-[Nv 2]: ^777777 Alcance da habilidade 7 x 7 / ATQ 800%^000000
-[Nv 3]: ^777777 Alcance da habilidade 7 x 7 / ATQ 1000% ^000000
-[Nv 4]: ^777777 Alcance da habilidade 9 x 9 / ATQ 1200% ^000000
-[Nv 5]: ^777777 Alcance da habilidade 9 x 9 / ATQ 1400% ^000000
+Brado de Odin
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ruído Estridente 1^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^777777Consome 1 Pastilha Refrescante
+para causar dano físico
+a distância na área escolhida.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Dano
+[Nv 1]: ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^7777777x7 células^000000 l ^777777800%^000000
+[Nv 3]: ^7777777x7 células^000000 l ^7777771.000%^000000
+[Nv 4]: ^7777779x9 células^000000 l ^7777771.200%^000000
+[Nv 5]: ^7777779x9 células^000000 l ^7777771.400%^000000
 #
 WM_SONG_OF_MANA#
 Canção de Alfheim
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar , Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Recupera 10 de SP a cada 5 segundos do usuário e membros do grupo. Aumenta a quantidade de SP recuperada se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 11 x 11 / 30 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance da habilidade 13 x 13 / 60 segundos de duração ^000000
-[Nv 3]: ^777777 Alcance da habilidade 15 x 15 / 90 segundos de duração ^000000
-[Nv 4]: ^777777 Alcance da habilidade 17 x 17 / 120 segundos de duração ^000000
-[Nv 5]: ^777777 Alcance da habilidade 19 x 19 / 150 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Usuário e membros do grupo
+poderão recuperar 10 de SP
+a cada 5 segundos.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777730 segundos^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777760 segundos^000000
+[Nv 3]: ^77777715x15 células^000000 l ^77777790 segundos^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777120 segundos^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777150 segundos^000000
 #
 WM_DANCE_WITH_WUG#
 Dança com Lobos
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar, Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta a Vel. de ATQ e reduz um pouco o tempo fixo de conjuração de usuário e membros do grupo na área de efeito.
-Aumenta o dano de ataques físicos em longas distâncias e o dano do Worg. Aumenta o efeito se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 11 x 11 / Duração: 30 sec. ^000000
-[Nv 2]: ^777777 Alcance da habilidade 13 x 13 / Duração: 60 sec. ^000000
-[Nv 3]: ^777777 Alcance da habilidade 15 x 15 / Duração: 90 sec. ^000000
-[Nv 4]: ^777777 Alcance da habilidade 17 x 17 / Duração: 120 sec. ^000000
-[Nv 5]: ^777777 Alcance da habilidade 19 x 19 / Duração: 150 sec. ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Reduz a conjuração fixa e
+aumenta a velocidade de ataque
+do usuário e membros do grupo.
+Em evoluções de Arqueiro,
+aumenta o dano físico a
+distância e o dano com o Worg.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777730 segundos^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777760 segundos^000000
+[Nv 3]: ^77777715x15 células^000000 l ^77777790 segundos^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777120 segundos^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777150 segundos^000000
 #
 WM_SOUND_OF_DESTRUCTION#
 Prelúdio do Ragnarök
-Nível Máximo: 5
-^777777Pré requisitos: Embalos de Sábado a Noite 3 , Cântico da Iluminação 3  ^000000
-Tipo: ^777777  Especial / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Cancela uma canção ou dueto do alvo e dos oponentes ao redor do alvo. A chance de sucesso depende da DES e INT do oponente, do nível da canção/dueto do oponente e do nível de Prelúdio do Ragnarök do usuário. Aumenta a chance de sucesso se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 1 alvo e imediações em área de 5 x 5  ^000000
-[Nv 2]: ^777777 1 alvo e imediações em área de 5 x 5  ^000000
-[Nv 3]: ^777777 1 alvo e imediações em área de 7 x 7  ^000000
-[Nv 4]: ^777777 1 alvo e imediações em área de 7 x 7  ^000000
-[Nv 5]: ^777777 1 alvo e imediações em área de 9 x 9  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Embalos de Sábado a Noite 3,
+Cântico da Iluminação 3^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Causa dano fixo no alvo
+com chance de cancelar uma
+música ou dança dos artistas
+na área selecionada.
+O coral é melhorado com o
+núm. de artistas no grupo.
+Funciona apenas em PvP/GdE.^000000
+Nível l Dano l Área
+[Nv 1]: ^7777771.000^000000 l ^7777779x9 células^000000
+[Nv 2]: ^7777772.000^000000 l ^7777779x9 células^000000
+[Nv 3]: ^7777773.000^000000 l ^77777711x11 células^000000
+[Nv 4]: ^7777774.000^000000 l ^77777713x13 células^000000
+[Nv 5]: ^7777775.000^000000 l ^77777715x15 células^000000
 #
 WM_SATURDAY_NIGHT_FEVER#
 Embalos de Sábado a Noite
-Nível Máximo: 5
-^777777Pré requisitos: Dança com Lobos 1 ^000000
-Tipo: ^777777  Especial / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Todos os personagens na tela do usuário, inclusive ele mesmo, entram em Transe. Neste estado, os personagens perdem HP e SP continuamente, e a Esquiva e DEF caem significativamente, mas o ATQ é aumentado.
-Enquanto o dueto estiver ativo, os usuários não poderão usar itens ou outras habilidades. Alvos afetados se sentarão por 3 segundos após o término do estado de Transe. Se a habilidade afetar mais que 7 pessoas ao mesmo tempo, o Deus da Loucura aparecerá para causar 9999 de dano em todos os personagens afetados por Transe. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 7 x 7 / ATQ +100 / DEF -20% / Esquiva -50%  ^000000
-[Nv 2]: ^777777 Alcance da habilidade 9 x 9 / ATQ +200 / DEF -30% / Esquiva -60%  ^000000
-[Nv 3]: ^777777 Alcance da habilidade 11 x 11 / ATQ +300 / DEF -40% / Esquiva -70%  ^000000
-[Nv 4]: ^777777 Alcance da habilidade 13 x 13 / ATQ +400 / DEF -50% / Esquiva -80%  ^000000
-[Nv 5]: ^777777 Alcance da habilidade 15 x 15 / ATQ +500 / DEF -60% / Esquiva -90%  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Dança com Lobos 1^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de aumentar
+o ATQ, reduzir a DEF e a esquiva
+de todos os personagens na área.
+Drena 1% de HP e SP e
+impede o uso de itens.
+Após o efeito, todos sentarão.
+Se mais de 7 pessoas forem
+afetadas, todas receberão
+9.999 de dano fixo.
+O coral é melhorado com o
+núm. de artistas no grupo.
+Funciona apenas em PvP/GdE.^000000
+Nv. l ATQ l DEF l Esqv l Área
+[Nv 1]: ^777777+100^000000 l ^777777-20%^000000 l ^777777-50%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^777777+200^000000 l ^777777-30%^000000 l ^777777-60%^000000 l ^7777779x9 células^000000
+[Nv 3]: ^777777+300^000000 l ^777777-40%^000000 l ^777777-70%^000000 l ^77777711x11 células^000000
+[Nv 4]: ^777777+400^000000 l ^777777-50%^000000 l ^777777-80%^000000 l ^77777713x13 células^000000
+[Nv 5]: ^777777+500^000000 l ^777777-60%^000000 l ^777777-90%^000000 l ^77777715x15 células^000000
 #
 WM_LERADS_DEW#
 Orvalho de Idun
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar, Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta temporariamente o HP Máx de usuário e membros do grupo perto. Não afeta usuários em Frenesi. Aumenta o bônus se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 HP Máx. +200 / 20 seg / Alcance 11 x 11^000000
-[Nv 2]: ^777777 HP Máx. +400  / 30 seg / Alcance 11 x 11^000000
-[Nv 3]: ^777777 HP Máx. +600  / 40 seg / Alcance 13 x 13^000000
-[Nv 4]: ^777777 HP Máx. +800  / 50 seg / Alcance 13 x 13^000000
-[Nv 5]: ^777777 HP Máx. +1000  / 60 seg / Alcance 15 x 15^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Usuário e membros do grupo
+terão bônus no HP máx.
+Não afeta alvos em Frenesi.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração l HP máx.
+[Nv 1]: ^77777711x11 células^000000 l ^77777720 segundos^000000 l ^777777+200^000000
+[Nv 2]: ^77777711x11 células^000000 l ^77777730 segundos^000000 l ^777777+400^000000
+[Nv 3]: ^77777713x13 células^000000 l ^77777740 segundos^000000 l ^777777+600^000000
+[Nv 4]: ^77777713x13 células^000000 l ^77777750 segundos^000000 l ^777777+800^000000
+[Nv 5]: ^77777715x15 células^000000 l ^77777760 segundos^000000 l ^777777+1.000^000000
 #
 WM_MELODYOFSINK#
 Cântico da Iluminação
-Nível Máximo: 5
-^777777Pré requisitos: Canção de Alfheim 1^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Rapidamente diminui o SP de todos os inimigos em volta do usuário e reduz a INT dos inimigos drasticamente.
-O efeito da habilidade é aumentado se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Chance de Sucesso 20% / 20 segundos de duração ^000000
-[Nv 2]: ^777777 Chance de Sucesso 25% / 30 segundos de duração ^000000
-[Nv 3]: ^777777 Chance de Sucesso 30% / 40 segundos de duração ^000000
-[Nv 4]: ^777777 Chance de Sucesso 35% / 50 segundos de duração ^000000
-[Nv 5]: ^777777 Chance de Sucesso 40% / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Canção de Alfheim 1^000000
+Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de reduzir
+a INT e drenar SP de todos
+os personagens da área.
+Não tem efeito fora do PvP/GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Chance l Duração l Área
+[Nv 1]: ^77777720%^000000 l ^77777720 segundos^000000 l ^77777711x11 células^000000
+[Nv 2]: ^77777725%^000000 l ^77777730 segundos^000000 l ^77777711x11 células^000000
+[Nv 3]: ^77777730%^000000 l ^77777740 segundos^000000 l ^77777713x13 células^000000
+[Nv 4]: ^77777735%^000000 l ^77777750 segundos^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777740%^000000 l ^77777760 segundos^000000 l ^77777715x15 células^000000
 #
 WM_BEYOND_OF_WARCRY#
 Clamor de Batalha
-Nível Máximo: 5
-^777777Pré requisitos: Orvalho de Idun 1^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Diminiu o HP Máx de todos inimigos atingidos, porém aumenta a força e a Taxa de Crítico dos alvos. 
-Aumenta o bônus se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Chance de Sucesso 20% / 20 segundos de duração ^000000
-[Nv 2]: ^777777 Chance de Sucesso 25% / 30 segundos de duração ^000000
-[Nv 3]: ^777777 Chance de Sucesso 30% / 40 segundos de duração ^000000
-[Nv 4]: ^777777 Chance de Sucesso 35% / 50 segundos de duração ^000000
-[Nv 5]: ^777777 Chance de Sucesso 40% / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Orvalho de Idun 1^000000
+Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de reduzir
+o HP máx. e aumentar
+a FOR e o CRIT de todos
+os personagens da área.
+Não tem efeito fora do PvP/GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Chance l Duração l Área
+[Nv 1]: ^77777720%^000000 l ^77777720 segundos^000000 l ^77777711x11 células^000000
+[Nv 2]: ^77777725%^000000 l ^77777730 segundos^000000 l ^77777711x11 células^000000
+[Nv 3]: ^77777730%^000000 l ^77777740 segundos^000000 l ^77777713x13 células^000000
+[Nv 4]: ^77777735%^000000 l ^77777750 segundos^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777740%^000000 l ^77777760 segundos^000000 l ^77777715x15 células^000000
 #
 WM_UNLIMITED_HUMMING_VOICE#
 Murmúrio Perene
-Nível Máximo: 5
-^777777Pré requisitos: Prelúdio do Ragnarök 1 , Clamor de Batalha 1^000000
-Tipo: ^777777  Efeito positivo / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Os alvos na área de efeito não poderão ter suas conjurações interrompidas. Aumenta o consumo de SP em 15%. Reduz a penalidade de consumo de SP se o grupo possuir mais Musas e Trovadores. Não pode ser utilizada dentro de Castelos^000000
-[Level 1] : ^777777 Alcance 11 x 11 / Duração 60 Seg ^000000
-[Level 2] : ^777777 Alcance 11 x 11 / Duração 90 Seg ^000000
-[Level 3] : ^777777 Alcance 13 x 13 / Duração 120 Seg ^000000
-[Level 4] : ^777777 Alcance 13 x 13 / Duração 150 Seg ^000000
-[Level 5] : ^777777 Alcance 15 x 15 / Duração 180 Seg ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Prelúdio do Ragnarök 1,
+Clamor de Batalha 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Todos os alvos na área
+consumirão 15% mais de SP,
+mas a conjuração de habilidades
+não será interrompida.
+Não funciona na GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777760 segundos^000000
+[Nv 2]: ^77777711x11 células^000000 l ^77777790 segundos^000000
+[Nv 3]: ^77777713x13 células^000000 l ^777777120 segundos^000000
+[Nv 4]: ^77777713x13 células^000000 l ^777777150 segundos^000000
+[Nv 5]: ^77777715x15 células^000000 l ^777777180 segundos^000000
 #
 SO_FIREWALK#
 Passos da Salamandra
@@ -11773,29 +11971,43 @@ Descrição : ^777777Ensina seu Dragão a soprar gelo. Pode causar Hipotermia e 
 #
 NC_MAGMA_ERUPTION#
 Erupção de Magma
-Nível Máximo : 5
-^777777Pré requisito : Sabedoria de Hefesto 1  ^000000
-Tipo : ^777777  Ativo ^000000
-Descrição : ^777777 Cria um forte impacto que faz explodir lava do chão.^000000
-^777777 Atinge 7x7 células. Chance de causar Atordoamento e Incêndio. A área selecionada ficará ativa por 5 segundos.^000000
-[Nível 1] : ^777777 A cada 5.0 segundos, 1000 de dano fixo, chance de incêndio 10% ^000000
-[Nível 2] : ^777777 A cada 5.0 segundos, 1200 de dano fixo, chance de incêndio 20% ^000000
-[Nível 3] : ^777777 A cada 5.0 segundos, 1400 de dano fixo, chance de incêndio 30% ^000000
-[Nível 4] : ^777777 A cada 5.0 segundos, 1600 de dano fixo, chance de incêndio 40% ^000000
-[Nível 5] : ^777777 A cada 5.0 segundos, 1800 de dano fixo, chance de incêndio 50% ^000000
+Nível máximo: ^7777775^000000
+Pré requisito:
+^777777Sabedoria de Hefesto 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Cria um forte impacto
+na área de 7x7 células,
+criando um vulcão em erupção
+por 5 segundos, causando dano
+fixo a cada 0,5 segundos e
+com chance de causar Incêndio.^000000
+Nv. l Dano fixo l Chance l SP
+[Nv 1]: ^7777771.000^000000 l ^77777710%^00000 l ^77777760^00000
+[Nv 2]: ^7777771.200^000000 l ^77777720%^00000 l ^77777770^00000
+[Nv 3]: ^7777771.400^000000 l ^77777730%^00000 l ^77777780^00000
+[Nv 4]: ^7777771.600^000000 l ^77777740%^00000 l ^77777790^00000
+[Nv 5]: ^7777771.800^000000 l ^77777750%^00000 l ^777777100^00000
 #
 WM_FRIGG_SONG#
 Canção de Frigga
-Nível Máximo : 5
-^777777Pré requisito : Domínio Musical 2 ^000000
-Tipo : ^777777 Ativo / Efeito Positivo ^000000
-Descrição : ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta e recupera o HP do alvo. Consome uma unidade de Lágrimas de Arrependimento.^000000
-^777777 Em áreas de PvP e GdE, somente membros do seu grupo serão afetados.^000000
-[Nível 1] : ^777777 Área de 7 x 7, HP + 5%, Recupera 100 de HP por segundo.^000000
-[Nível 2] : ^777777 Área de 9 x 9, HP + 10%, Recupera 120 de HP por segundo.^000000
-[Nível 3] : ^777777 Área de 11 x 11, HP + 15%, Recupera 140 de HP por segundo.^000000
-[Nível 4] : ^777777 Área de 13 x 13, HP + 20%, Recupera 160 de HP por segundo.^000000
-[Nível 5] : ^777777 Área de 15 x 15, HP + 25%, Recupera 180 de HP por segundo.^000000
+Nível máximo: ^7777775^000000
+Pré requisito:
+^777777Domínio Musical 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Lágrima de Arrependimento
+para aumentar o HP máx. e
+regenerar HP por segundo
+dos alvos ao redor.
+Só afeta o grupo em PvP/GdE.^000000
+Nv. l HP regen. l HP máx. l Área
+[Nv 1]: ^777777100^000000 l ^777777+5%^00000 l ^7777777x7 células^00000
+[Nv 2]: ^777777120^000000 l ^777777+10%^00000 l ^7777779x9 células^00000
+[Nv 3]: ^777777140^000000 l ^777777+15%^00000 l ^77777711x11 células^00000
+[Nv 4]: ^777777160^000000 l ^777777+20%^00000 l ^77777713x13 células^00000
+[Nv 5]: ^777777180^000000 l ^777777+25%^00000 l ^77777715x15 células^00000
 #
 SO_ELEMENTAL_SHIELD#
 Escudo Elemental
