@@ -43760,7 +43760,7 @@ Classes: ^777777Todas^000000
 #
 16555#
 Uma caixa contendo 1 Pedra das Valquírias.
-Pedra das Valquírias - uma pedra negra e afiada, possuidora de um poder extremo. É capaz de resetar os atributos de um personagem.
+Pedra das Valquírias - uma pedra vermelha e afiada, possuidora de um poder extremo. É capaz de resetar os atributos de um personagem.
 ^ff0000Atenção! Esse item pode ser negociado, colocado no carrinho, colocado no armazém, mas não pode ser derrubado no chão.^000000
 Peso: ^7777771^000000
 #
@@ -60413,15 +60413,15 @@ O lenço que cobre o rosto para te proteger também mostra que você é aquele q
 ^FF6347Conjunto^000000
 ^FF6347[Óculos] ou^000000
 ^FF6347[Óculos Escuros]^000000
-A cada 80 de FOR+SOR base:
+A cada vez que FOR e SOR base somarem 80:
 ^0000ffCRIT +5.^000000
 ^0000ffDano físico +6%.^000000
 ^0000ffDano crítico +10%.^000000
-A cada 80 de INT+DES base:
+A cada vez que INT e DES base somarem 80:
 ^0000ffATQM +120.^000000
 ^0000ffConjuração variável -3%.^000000
 ^0000ffEfetividade de cura +10%.^000000
-A cada 80 de AGI+VIT base:
+A cada vez que AGI e VIT base somarem 80:
 ^0000ffHP máx. +5%.^000000
 ^0000ffVelocidade de ataque +5%.^000000
 ^0000ffResistência a personagens +2%.^000000
@@ -60434,26 +60434,30 @@ Classes: ^777777Todas^000000
 #
 28947#
 Com a proteção da deusa de uma antiga civilização, todo o poder de Terra será inútil contra você.
+--------------------------
 ^0000ffDEFM +10.^000000
 ^0000ffResistência a propriedade Terra +10%.^000000
 ^0000ffDano físico e mágico contra oponentes de propriedade Terra +5%.^000000
+--------------------------
 Refino +8 ou mais:
 ^0000ffResistência a propriedade Terra +15% adicional.^000000
 ^0000ffDano físico e mágico contra oponentes de propriedade Terra +10% adicional.^000000
+--------------------------
 Refino +10 ou mais:
-^6A5ACDFOR base 90 ou mais:^000000
+^008080FOR base 90 ou mais:^000000
 ^0000ffATQ +50.^000000
-^6A5ACDAGI base 90 ou mais:^000000
+^008080AGI base 90 ou mais:^000000
 ^0000ffVelocidade de ataque +5%.^000000
-^6A5ACDVIT base 90 ou mais:^000000
+^008080VIT base 90 ou mais:^000000
 ^0000ffEfetividade de cura recebida +10%.^000000
 ^0000ffRecuperação de HP por itens +10%.^000000
-^6A5ACDINT base 90 ou mais:^000000
+^008080INT base 90 ou mais:^000000
 ^0000ffATQM +30.^000000
-^6A5ACDDES base 90 ou mais:^000000
+^008080DES base 90 ou mais:^000000
 ^0000ffConjuração variável -5%.^000000
-^6A5ACDSOR base 90 ou mais:^000000
+^008080SOR base 90 ou mais:^000000
 ^0000ffDano crítico +5%.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
 Defesa: ^777777150^000000
 Peso: ^77777750^000000
@@ -60668,7 +60672,6 @@ Classes: ^777777Todas^000000
 #
 25482#
 Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
-A card that symbolizes team that adventurer selected.
 ^ff0000Esse item será removido após o término do evento.^000000
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 Peso: ^7777770^000000
@@ -60722,5 +60725,93 @@ Uma bolsa com uma roupa de banho novinha em folha. Tá esperando o quê? Vai lá
 Tipo: ^777777Roupa^000000
 Duração: ^77777710 minutos^000000
 Peso: ^77777710^000000
+#
+//*****************************************************
+//------------Aplicar em 2018-07-10--------------------
+//*****************************************************
+31488#
+Você sempre imaginou que MVP significasse “Most Valuable Player”, ou seja, Jogador Mais Valioso, né? Na verdade, a sigla significa “Menos Vergonhoso Possível” (mentira), e te lembra de que você não fez mais que sua obrigação em ganhar aquele MVP com aquele tanto de Bombas Ácidas que usou.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31406#
+Achou que a Nidhogg não ia ficar platinada? Pois achou errado!  É só colocar essa peruca e você terá uma vontade imensa de sair por aí desfilando com esse belíssimo penteado platinado perguntando para as pessoas se elas acham um “nozinho na sua lace”.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15345#
+Uma poderosa armadura feita com escamas e presas de um dragão marinho. Há quem diga que as escamas da armadura são encantadas com a essência do poderoso dragão azul de olhos brancos.
+^0000ffTodos os atributos +1.^000000
+^0000ffCusto de SP das habilidades -10%.^000000
+Refino +6 ou mais:
+^0000ffConjuração variável -5%.^000000
+^0000ffDano mágico contra Chefes +10%.^000000
+^0000ffCusto de SP das habilidades -5% adicional.^000000
+Refino +11 ou mais:
+^0000ffConjuração variável -5% adicional.^000000
+^0000ffDano mágico contra Chefes +10% adicional.^000000
+^0000ffCusto de SP das habilidades -5% adicional.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777100^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19159#
+Um elmo reforçado feito de aço encantado e cobre maciço. Este capacete fornece a proteção necessária para enfrentar os mais poderosos oponentes.
+^0000ffVIT +5.^000000
+^0000ffRegeneração natural de HP -10%.^000000
+Refino +7 ou mais:
+^0000ffDEF +100.^000000
+^0000ffHabilita [Bloqueio] nv. 1.^000000
+Refino +8 ou mais:
+^0000ffHabilita [Bloqueio] nv. 2.^000000
+^0000ffResistência a monstros da raça Humanoide +10%.^000000
+A cada refino a partir do +9:
+^0000ffNv. de [Bloqueio] +1.^000000
+^CD3278Superaprendizes:^000000
+Refino +8 ou mais:
+^0000ffHabilita [Corpo Fechado] nv. 5.^000000
+^008080Desequipar o item cancela [Corpo Fechado].^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Defesa: ^77777759^000000
+Peso: ^77777742^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Todas^000000
+#
+28501#
+Chifres decepados de um poderoso Kirin. Dizem que os Kirin, benevolentes criaturas quiméricas, simbolizam bons presságios.
+--------------------------
+^0000ffAGI +2.^000000
+^0000ffVelocidade de ataque +2%.^000000
+^0000ffHabilita [Aumentar Agilidade] nv. 3.^000000
+^0000ffResistência as raças Demônio e Morto-Vivo +2%.^000000
+^0000ffResistência as raças Humanoide, Peixe e Bruto +1%.^000000
+--------------------------
+AGI base 100 ou mais:
+^0000ffVelocidade de ataque +5% adicional.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Anti-Atraso 1]^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffResistência as raças Humanoide, Demônio, Morto-Vivo, Peixe e Bruto +1%.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Anti-Atraso 2]^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffResistência as raças Humanoide, Demônio, Morto-Vivo, Peixe e Bruto +1%.^000000
+--------------------------
+Tipo: ^777777Acessório000000
+Defesa: ^7777773^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 //file end
