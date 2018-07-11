@@ -14,8 +14,6 @@ sub _hooks {
 	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','packet/map_property3'];
 }
 
-my $map_qr = qr/\w+\d*_?(?:\d|\w)*/;
-
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
@@ -37,34 +35,30 @@ sub _parse_syntax {
 	my $member_index = 0;
 	foreach my $member (split(/\s*,\s*/, $condition_code)) {
 		my ($map, $coord_x, $coord_y);
-		if ($member =~ /^(?:($map_qr)|(?:(\S+)\s+(\S+))|($map_qr)\s+(?:(\S+)\s+(\S+)))$/) {
-			$map = $1 || $4;
-			$coord_x = $2 || $5;
-			$coord_y = $3 || $6;
-		}
+		my @parts = split(/\s+/, $condition_code);
 		
-		my $has_coords;
-		my $has_map;
+		my $has_coords = 0;
+		my $has_map = 0;
 		
-		if (!defined $coord_x && !defined $coord_y && !defined $map) {
+		if (@parts == 0 || @parts > 3) {
 			$self->{error} = "List member '".$member."' must have a map and/or a coordinate";
 			return 0;
 			
-		} elsif (!defined $coord_x && !defined $coord_y && defined $map) {
+		} elsif (@parts == 1) {
 			$has_map = 1;
-			$has_coords = 0;
+			$map = $parts[0];
 			
-		} elsif (defined $coord_x && defined $coord_y && !defined $map) {
-			$has_map = 0;
+		} elsif (@parts == 2) {
 			$has_coords = 1;
+			$coord_x = $parts[0];
+			$coord_y = $parts[1];
 			
-		} elsif (defined $coord_x && defined $coord_y && defined $map) {
+		} elsif (@parts == 3) {
 			$has_map = 1;
 			$has_coords = 1;
-			
-		} else {
-			$self->{error} = "List member '".$member."' has a strange syntax";
-			return 0;
+			$map = $parts[0];
+			$coord_x = $parts[1];
+			$coord_y = $parts[2];
 		}
 		
 		if ($has_coords) {

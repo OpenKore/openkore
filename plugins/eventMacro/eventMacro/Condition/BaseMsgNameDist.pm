@@ -28,7 +28,7 @@ sub _parse_syntax {
 	if ($condition_code =~ /^(\/.*?\/\w?)\s+(\/.*?\/\w?)\s+(.*?)$/) {
 		my $message_regex = $1;
 		my $name_regex = $2;
-		my $dist = $2;
+		my $dist = $3;
 		
 		unless (defined $message_regex && defined $name_regex) {
 			$self->{error} = "Condition code '".$condition_code."' must have a message regex, a name regex and a numeric comparison defined";
