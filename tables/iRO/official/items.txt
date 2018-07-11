@@ -1820,9 +1820,9 @@
 2860#Aqua_Orb#
 2861#Crimson_Orb#
 2862#Forest_Orb#
-2864#Light_Of_Cure#
-2865#Seal_Of_Cathedral#
-2866#Ring_Of_Archbishop#
+2864#Light_of_Cure#
+2865#Seal_of_Cathedral#
+2866#Ring_of_Archbishop#
 2872#G_Honor_Certificate#
 2873#Cat_Hand_Glove#
 2874#Buffalo_Horn#
@@ -5042,7 +5042,7 @@
 9059#Tikbalang_Egg#
 9062#Novice_Poring_Egg#
 9099#Teddy_Bear_Egg#
-9101#Portable_cage_for_Scatleton#
+9101#Scatleton's_Portable_Cage#
 9113#Skelion_Egg#
 10001#Skull_Helm#
 10002#Monster_Oxygen_Mask#
@@ -7016,6 +7016,7 @@
 15179#Mine_Worker's_Vest#
 15180#Hippie_Clothes#
 15189#Fallen_Warrior_Armor#
+15195#Illusion_Puente_Robe#
 15196#Sea_Dragon_Armor#
 15204#Abyss_Dress#
 15205#Medical_Scrubs#
@@ -7057,6 +7058,7 @@
 16041#Vicious_Mind_Mace#
 16051#Valkyrie_Hammer#
 16060#Liquor_Bottle#
+16063#Illusion_Long_Mace#
 16131#Lady_Tanee_Doll_Box#
 16132#Lunatic_Hat_Box#
 16133#Sunshine_Staff_Box#
@@ -8145,6 +8147,7 @@
 19207#Classic_Token_of_Siegfried_10_Box#
 19208#Classic_Small_Life_Potion_10_Box#
 19209#Classic_Giant_Flywing_500_Box#
+19210#Illusion_Apple_of_Archer#
 19212#Malangdo_Pirate_Hat#
 19221#Golden_Angel_Hairband#
 19246#Royal_Guard_Necklace#
@@ -8231,7 +8234,7 @@
 19532#placeholder#
 19533#placeholder#
 19534#placeholder#
-19535#placeholder#
+19535#Costume_Sinsuncho_Hat#
 19536#Costume:_Rose_Corsage#
 19537#C_Gryphon_Hat#
 19538#Costume:_Full_Moon#
@@ -8547,7 +8550,7 @@
 20014#Costume:_Lincoln_Hat#
 20015#Costume:_Lincoln_Beard#
 20016#Costume:_Cool_Dinner_Hat#
-20018#Long_Wolf_Ears#
+20018#Costume_Long_Wolf_Ears#
 20019#Costume:_Beret_Of_Artist#
 20021#Greenish_Shoes#
 20022#Soul_Shoes#
@@ -8747,7 +8750,7 @@
 20391#Costume_Silent_Executor#
 20392#Costume_Sniper_Goggle#
 20393#Costume_Dip_Schmidt_Helm#
-20397#Jakk#
+20397#Costume_Jakk#
 20398#Costume_Niffleheim_Bunny_Hat#
 20399#Costume:_Crow_Tengu_Mask#
 20405#Costume_Eremes'_Scarf#
@@ -8774,6 +8777,7 @@
 20499#Costume_Cat_Ear_Hat#
 20500#Costume:_Archangel_Wing#
 20515#Costume_Magic_Circle#
+20519#Costume_Full_Bloom_Cherry_Tree#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -8797,8 +8801,8 @@
 20733#Upgrade_Part_-_Engine#
 20734#Manteau_Of_Leafwind#
 20735#Manteau_Of_Flame_Heart#
-20743#Airship‘s_Cloak#
-20744#Felrock‘s_Cloak#
+20743#Airship's_Cloak#
+20744#Felrock's_Cloak#
 20745#Manteau_Of_Mistic_Froz#
 20746#Costume:_Rudra's_Grace#
 20747#Manteau_Great_Nature#
@@ -8840,6 +8844,7 @@
 20834#Drifter's_Cape#
 20836#Skin_of_Lindwyrm#
 20837#Skin_of_Gwiber#
+20838#Illusion_Muffler#
 20841#Golden_Angel_Wings#
 20845#Malach's_Skin#
 20846#Temporal_Manteau#
@@ -8881,7 +8886,7 @@
 22042#Talaria_Shoes#
 22043#Supplement_Part_Agi#
 22044#Upgrade_Part_-_Booster#
-22046#Airship‘s_Boots#
+22046#Airship's_Boots#
 22047#Felrock‘s_Boots#
 22049#Sol_Shoes#
 22050#Gardener_Shoes#
@@ -8918,6 +8923,7 @@
 22117#Modified_Dex_Boots#
 22118#Modified_Luk_Boots#
 22131#Spurred_Boots#
+22133#Illusion_Shoes#
 22134#Enforcer_Shoes#
 22138#Devil_Worshipper_Shoes#
 22141#YSF01_Greaves#
@@ -9031,6 +9037,7 @@
 23164#Granpa_Speed_potion#
 23189#Small_Doll_Needle#
 23202#Mulled_Wine#
+23228#Hazy_Mooncake#
 23251#Rose_Bundle_A#
 23252#Orleans's_Bundle_A#
 23253#Black_Shiba_Inu_Bundle_A#
@@ -9074,6 +9081,7 @@
 23658#Lamor_Bundle_B#
 23660#Dogly_Bottle_Z#
 23799#Overseas_Care_Package_XIX#
+23800#July_Costume_Box#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
 24014#Shadow_Shoes#
@@ -9233,7 +9241,13 @@
 25252#Sprig_of_Holly#
 25253#A_box_containing_sugar#
 25254#Firewood#
+25256#Hazy_Dream_Fragment#
+25257#Bloody_Love_Letter#
+25258#Broken_Arrow#
+25259#Recruitment_Leaflet#
 25260#Fragment_of_Purple_Ore#
+25271#Illusion_Stone#
+25272#Illusion_Gemstone#
 25276#Clean_Bone#
 25277#Deadly_Poison_Powder#
 25278#Bandit's_Scarf#
@@ -9253,9 +9267,12 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
+26007#Illusion_Spectral_Spear#
 26100#Paradise_Foxtail_II#
 26101#Paradise_Foxtail_III#
 26107#Elder_Staff#
+26109#Illusion_Staff_of_Bordeaux#
+26110#Candy_Cane_Rod#
 26200#Hippie_Rope#
 27012#Kick_Step_Card#
 27013#Kick_And_Kick_Card#
@@ -9266,6 +9283,13 @@
 27018#GC109_Card#
 27019#DR815_Card#
 27020#T_W_O_Card#
+27081#Angry_Moonlight_Flower_Card#
+27082#Angry_Nine_Tail_Card#
+27083#Resentful_Bongun_Card#
+27084#Resentful_Sohee_Card#
+27085#Resentful_Munak_Card#
+27086#Resentful_Soldier_Card#
+27088#Fury_Hero_Card#
 27147#Humanoid_Chimera_Card#
 27148#Material_Type_Chimera_Card#
 27149#Heart_Hunter_Card#
@@ -9382,6 +9406,7 @@
 28706#Vicious_Mind_Dagger#
 28717#Valkyrie_Knife#
 28721#Monokage#
+28725#Illusion_Moonlight_Dagger#
 28900#Royal_Guard_Shield#
 28901#Mad_Bunny_Special#
 28902#Mad_Bunny_Special#
@@ -9500,7 +9525,7 @@
 31025#Immortal_Wind_Ghost_Card#
 31026#Stephen_Jack_Ernest_Wolf_Card#
 31027#Costume_Pretty_Bear#
-31028#Black_Cat_Hoodie#
+31028#Costume_Black_Cat_Hoodie#
 31029#Costume_Pig_Nose#
 31030#Costume_Tiger_Face#
 31040#Costume_Magical_Feather#
@@ -9669,3 +9694,10 @@
 31452#Costume_White_Cat#
 31453#Costume_Large_Ribbon_Muffler_(Black)#
 31455#Costume_Super_Cute_Dog#
+31470#Costume_Tengu_Scroll#
+31471#Costume_Celestial_Woman_Flower#
+31472#Costume_Fairy_Feathers#
+31473#Costume_Tipsy#
+31474#Costume_Straight_Long(Black)#
+31475#Costume_Black_Fox_Ear_Ribbon#
+31476#Costume_Yellow_Cherry_Blossom_Hat#
