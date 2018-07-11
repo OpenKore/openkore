@@ -6575,29 +6575,24 @@ Usable By: ^808080Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
 This item is indestructible in battle.
 #
 1521#
-^808080A simple flail that consists of a thin mace attached to a chain of iron links.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Mace
-Attack: 84
-Property: Neutral
-Weight: 80
-Weapon Level: 2
-Required Level: 14
-Required Job: Swordman Jobs, Merchant Jobs, Acolyte Jobs
+A simple flail that consists of a thin mace attached to a chain of iron links.
+Class: ^808080Mace^000000
+Attack: ^80808084^000000
+Property: ^808080Neutral^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
 #
 1522#
-^808080A huge, unwieldy club that can knock enemies unconscious.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Mace
-Attack: 140
-Property: Neutral
-Weight: 200
-Weapon Level: 3
-Required Level: 27
-Required Job: Acolyte Jobs
-^FFFFFF_^000000
+A huge, unwieldy club that can knock enemies unconscious.
+Class: ^808080Mace^000000
+Attack: ^808080140^000000
+Property: ^808080Neutral^000000
+Weight: ^808080200^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Acolyte Jobs^000000
 Adds a 10% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
 #
 1523#
@@ -7812,28 +7807,54 @@ Max HP + 300
 MATK + 120
 #
 1618#
-^808080A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 50
-Property: Neutral
-Weight: 100
-Weapon Level: 3
-Required Level: 24
-Required Job: Mage Jobs, Soul Linker
-^FFFFFF_^000000
-DEX + 3
-Max HP + 300
-MATK + 120
-^FFFFFF_^000000
-^800080Set Bonus^000000
+A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Dex + 3
+Max HP + 400
+800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Rod [1]^000000
 Max HP + 300
-MATK - 5%
-MATK + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
+Matk - 5%
+Matk + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
 Reduces damage taken from Neutral property attacks by 3% per upgrade level of the ^008080Survivor's Manteau^000000.
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 3%.
+Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
+Additional Matk + 2%
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
+Additional Matk + 2%
+^800080Set Bonus^000000
+^008080Survivor's Rod [1]^000000
+^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1619#
 ^808080A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.^000000
@@ -7852,28 +7873,54 @@ Max HP + 300
 MATK + 120
 #
 1620#
-^808080A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 50
-Property: Neutral
-Weight: 100
-Weapon Level: 3
-Required Level: 24
-Required Job: Mage Jobs, Soul Linker
-^FFFFFF_^000000
-INT + 3
-Max HP + 300
-MATK + 120
-^FFFFFF_^000000
-^800080Set Bonus^000000
+A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Int + 3
+Max HP + 400
+800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Rod [1]^000000
 Max HP + 300
-MATK - 5%
-MATK + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
+Matk - 5%
+Matk + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
 Reduces damage taken from Neutral property attacks by 3% per upgrade level of the ^008080Survivor's Manteau^000000.
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 3%.
+Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1]^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
+Additional Matk + 2%
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
+Additional Matk + 2%
+^800080Set Bonus^000000
+^008080Survivor's Rod [1]^000000
+^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1621#
 ^808080A staff with a hypnotizing effect that can even make a Novice feel just like a High Wizard. Sort of.^000000
@@ -16249,25 +16296,46 @@ Job : ^777777Rune Knight^000000
 #
 2477#
 Shoes that have long been known to be from the world of darkness.
-LUK + 3, MSP + 30.
-If worn with Sapha Hood, Cloth and Ring,
-Flee +10, Critical +15, Critical +40%
-Increases damage of Cross Impact by 20%
-Increases SP costs of skills by 10%
-Class : ^777777Shoes^000000
-Defense : ^77777718^000000
-Weight : ^77777740^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+Class: ^808080Shoes^000000
+Defense: ^80808018^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Luk + 3
+Max SP + 30
+
+^800080Set Bonus^000000
+^008080Sapha's Cloth [1]^000000
+^008080Sapha Hood^000000
+^008080Sapha Shoes [1]^000000
+^008080Sapha Ring^000000
+Flee +10
+Crit +15
+Increases critical damage on targets by 40%.
+Increases the damage of ^0000FFCross Impact^000000 by 20%.
+Increases the SP cost of skills by 10%.
 #
 2478#
 An assassin's famous historical relic.
-FLEE + 3, INT + 2.
-Class : ^777777Shoes^000000
-Defense : ^77777718^000000
-Weight : ^77777740^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+Class: ^808080Shoes^000000
+Defense: ^80808018^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Int + 2
+Flee + 3
+^800080Set Bonus^000000
+^008080Nab's Cloth [1]^000000
+^008080Nab Shoes [1]^000000
+^008080Nab Hood^000000
+^008080Nab Ring^000000
+Adds a chance of casting ^0000FFLevel 1 Soul Destroyer^000000 on the target when performing a physical attack.
+If higher level of this skill is learned then it will be cast instead.
+--Increases damage to all monster sizes by 10% ?????? Where did this come from?
+Atk + 10%
+Matk + 10%
+Atk + 30, if the user's base Str is 120 or higher.
+Crit - 20
 #
 2479#
 Shoes of the brilliant archer guild known as Icarus.
@@ -17307,26 +17375,47 @@ Increases critical damage on targets by an additional 5% if the users base Luk i
 Reduces damage taken from Neutral property attacks by an additional 5% if the users base Vit is 90 or higher.
 #
 2577#
-A manteau that contains the reliquery remains of an ancient Assassin
-FLEE + 12, Inflict 1% more damage with Critical attacks per refine level.
-If worn with Sapha Cloth, Shoes and Ring,
-Flee +10, Critical +15, Critical +40%
-Increases damage of Cross Impact by 20%
-Increases SP costs of skills by 10%
-Class : ^777777Garment^000000
-Defense : ^77777713^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+A manteau that contains the reliquary remains of an ancient Assassin.
+Class: ^808080Garment^000000
+Defense: ^80808013^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Flee + 12
+--Inflict 1% more damage with Critical attacks per refine level.
+Increases critical damage on targets by 1% per upgrade level of ^008080Sapha Hood^000000.
+^800080Set Bonus^000000
+^008080Sapha's Cloth [1]^000000
+^008080Sapha Hood^000000
+^008080Sapha Shoes [1]^000000
+^008080Sapha Ring^000000
+Flee +10
+Crit +15
+Increases critical damage on targets by 40%.
+Increases the damage of ^0000FFCross Impact^000000 by 20%.
+Increases the SP cost of skills by 10%.
 #
 2578#
-An ancient relic that belonged to an unknown Assassin
-Increases Flee and Attack Power per refine level times 2
-Class : ^777777Garment^000000
-Defense : ^77777713^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+An ancient relic that belonged to an unknown Assassin.
+Class: ^808080Garment^000000
+Defense: ^80808013^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Increases Flee and Attack Power per 2 upgrade levels of the item.
+--Increases Flee and Attack Power per refine level times 2
+^800080Set Bonus^000000
+^008080Nab's Cloth [1]^000000
+^008080Nab Shoes [1]^000000
+^008080Nab Hood^000000
+^008080Nab Ring^000000
+Adds a chance of casting ^0000FFLevel 1 Soul Destroyer^000000 on the target when performing a physical attack.
+If higher level of this skill is learned then it will be cast instead.
+--Increases damage to all monster sizes by 10% ?????? Where did this come from?
+Atk + 10%
+Matk + 10%
+Atk + 30, if the user's base Str is 120 or higher.
+Crit - 20
 #
 2579#
 a shawl with magical needlework in it
@@ -19922,37 +20011,31 @@ Required Level : ^777777100^000000
 Job : ^777777Warlock^000000
 #
 2864#
-^ff0000This item cannot be traded between accounts.^000000
 An old but shiny gold ring entwined with rings. It is rumored to be a relic of a saint.
-VIT + 2, Increases the effectiveness of healing skills by 2%.
-Allows the user to enchant items with effects related to Highness Heal.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^777777110^000000
-Job : ^777777Archbishop^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Arch Bishop^000000
+Vit + 2
+Increases the recovery rate of recovery skills by 2%.
 #
 2865#
-^ff0000This item cannot be traded between accounts.^000000
 A thick ring mounted with a purple stone, given to a training priest.
-INT + 2, Increases the effectiveness of healing skills by 2%.
-Allows the user to enchant items with effects related to Coluseo Heal.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^777777110^000000
-Job : ^777777Archbishop^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Arch Bishop^000000
+Int + 2
+Increases the recovery rate of recovery skills by 2%.
 #
 2866#
-^ff0000This item cannot be traded between accounts.^000000
 A ring mounted with clear mysterious stone. It is rumored to be a relic of a religious leader.
-DEX + 2, Increases the effectiveness of healing skills by 2%.
-Allows the user to enchant items with effects related to the effectiveness of healing skills.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^777777110^000000
-Job : ^777777Archbishop^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Arch Bishop^000000
+Dex + 2
+Increases the recovery rate of recovery skills by 2%.
 #
 2872#
 a certificate  that gurantees cat gamer members. It has ability to record matches.
@@ -20024,24 +20107,43 @@ Job : ^777777Rune Knight^000000
 #
 2886#
 A ring that has long been known to be from the world of darkness.
-If worn with Sapha Hood, Shoes and Cloth,
-Flee +10, Critical +15, Critical +40%
-Increases damage of Cross Impact by 20%
-Increases SP costs of skills by 10%
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Crit + 3
+Reduces the SP cost of ^0000FFDark Illusion^000000 by 5%.
+^800080Set Bonus^000000
+^008080Sapha's Cloth [1]^000000
+^008080Sapha Hood^000000
+^008080Sapha Shoes [1]^000000
+^008080Sapha Ring^000000
+Flee +10
+Crit +15
+Increases critical damage on targets by 40%.
+Increases the damage of ^0000FFCross Impact^000000 by 20%.
+Increases the SP cost of skills by 10%.
 #
 2887#
-An assassin's famous historical relic
-ATK + 10, MATK + 20.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+An assassin's famous historical relic.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Atk + 10
+Matk + 20
+^800080Set Bonus^000000
+^008080Nab's Cloth [1]^000000
+^008080Nab Shoes [1]^000000
+^008080Nab Hood^000000
+^008080Nab Ring^000000
+Adds a chance of casting ^0000FFLevel 1 Soul Destroyer^000000 on the target when performing a physical attack.
+If higher level of this skill is learned then it will be cast instead.
+--Increases damage to all monster sizes by 10% ?????? Where did this come from?
+Atk + 10%
+Matk + 10%
+Atk + 30, if the user's base Str is 120 or higher.
+Crit - 20
 #
 2890#
 An accessory that belonged to the
@@ -20567,75 +20669,103 @@ Job : ^777777All Classes^000000
 #
 2966#
 A ring made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-ATK + 1%.
-If worn with the RWC 2012 Pendant, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-A ring made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-ATK + 1%.
-If worn with the RWC 2012 Pendant, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 1%
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080RWC 2012 Pendant^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080Chambered RWC 2012 Pendant [1]^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080RWC Memory Knife [1]^000000
+^008080RWC 2012 Ring^000000
+Atk + 10 per upgrade level of ^008080RWC Memory Knife [1]^000000.
+
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080RWC Commemorative Pin [1]^000000
+Atk + 1% per 2 upgrade levels of ^008080RWC Commemorative Pin [1]^000000.
 #
 2967#
 A ring made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-ATK + 1%.
-If worn with the RWC 2012 Pendant, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-A ring made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-ATK + 1%.
-If worn with the RWC 2012 Pendant, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 1%
+^800080Set Bonus^000000
+^008080Chambered RWC 2012 Ring [1]^000000
+^008080RWC 2012 Pendant^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080Chambered RWC 2012 Ring [1]^000000
+^008080Chambered RWC 2012 Pendant [1]^000000
+Atk + 4%
+Matk + 4%
 #
 2968#
 A pendant made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-Matk +1%.
-If worn with the RWC 2012 Ring, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-A pendant made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-Matk +1%.
-If worn with the RWC 2012 Ring, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk + 1%
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080RWC 2012 Pendant^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080Chambered RWC 2012 Ring [1]^000000
+^008080RWC 2012 Pendant^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080RWC Memory Knife [1]^000000
+^008080RWC 2012 Pendant^000000
+Matk + 10 per upgrade level of ^008080RWC Memory Knife [1]^000000.
+
+^800080Set Bonus^000000
+^008080RWC 2012 Pendant^000000
+^008080RWC Commemorative Pin [1]^000000
+Matk + 1% per 2 upgrade levels of ^008080RWC Commemorative Pin [1]^000000.
 #
 2969#
 A pendant made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-Matk +1%.
-If worn with the RWC 2012 Ring, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
-A pendant made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
-Matk +1%.
-If worn with the RWC 2012 Ring, Atk +4% & Matk +4%.
-Type : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk + 1%
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080Chambered RWC 2012 Pendant [1]^000000
+Atk + 4%
+Matk + 4%
+
+^800080Set Bonus^000000
+^008080Chambered RWC 2012 Ring [1]^000000
+^008080Chambered RWC 2012 Pendant [1]^000000
+Atk + 4%
+Matk + 4%
 #
 2971#
 A silver-colored watch with connecting chain.
@@ -20809,22 +20939,18 @@ Reduces the SP cost of skills by 10%.
 Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
 #
 2996#
-^808080Designed to strengthen the gun barrels of Madogears for enhanced firepower, this part is easy to assemble and disassemble.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
-Weight: 50
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-ATK + 4%
-HIT + 10
+Designed to strengthen the gun barrels of Madogears for enhanced firepower, this part is easy to assemble and disassemble.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Atk + 4%
+Hit + 10
 Increases the damage of ^0000FFKnuckle Boost^000000 by 25%.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
-^008080Upgrade_Part - Booster^000000
-^008080Upgrade_Part - Engine^000000
-^008080Upgrade_Part - Gun Barrel^000000
+^008080Upgrade_Part - Booster [1]^000000
+^008080Upgrade_Part - Engine [1]^000000
+^008080Upgrade_Part - Gun Barrel [1]^000000
 ^008080Upgrade_Part - Plate^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
@@ -34282,17 +34408,15 @@ Jobs : ^777777All^000000
 #
 5574#
 A popular snack while taking tests. It makes one look more studious but, it's days may be numbered if it stays in somebody's mouth any longer.
-^FFFFFF_^000000
-^FF0000Concept created during the Summer 2008 Create a headgear Contest.
-Created by Samias^000000
-^FFFFFF_^000000
-Dex +2, Hit +3%
-Class :^777777 Headgear^000000
-Defense:^777777 0^000000
-Location :^777777 Lower^000000
-Weight :^777777 10^000000
-Required Level :^777777 10^000000
-Jobs :^777777 All^000000
+^FF0000Concept created during the Summer 2008 Create a headgear Contest.^000000
+Class: ^808080Headgear^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Dex + 2
+Hit + 3
+^67CDC9Concept by Samias.^000000
 #
 5575#
 A hat made modeled on rice ball. It will give souvenir to you for the picnic.
@@ -36591,15 +36715,29 @@ Equippable by Assassins Only
 #
 5949#
 This stylish hat is always in seasons. When worn it fills it's wearer with a sense of confidence.
-Increases Resistance to Demi Human by 10%
-Weight : ^7777771^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
 #
 5963#
 These headphones are the latest style in the more hip regions of Rune Midgard.
-Increases MATK by a % equal to the refine level of the item.
-If refined to greater than +6 Increases the damage of Reverbration by 30% and subtracts 18 from the SP Cost
-If refined to greater than +9 decreases the after cast delay of Metallic Sound
-Weight : ^7777771^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^80808024^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 3
+Matk + 1% per upgrade level of the item.
+If upgrade level is +7 or higher,
+Increases the damage of ^0000FFReverberation^000000 by 30%.
+Reduces the SP cost of ^0000FFReverberation^000000 by 18.
+If upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFMetallic Sound^000000 by 2 seconds.
 #
 5968#
 A hat worn by a nurse who took care of people who were hurt everyday.
@@ -38622,7 +38760,15 @@ The purest form of Energy Crystal.
 Weight : ^7777771^000000
 #
 6635#
-Currently has no known use. However you feel like you should save it for later, as it appears to have some value.
+The hope from blacksmith around the world is mounted in this bottle.
+Weight: ^8080801^000000
+Take this bottle to Blessed Hammer (moc_paraup 12, 175) in Eden second floor with HD Ores to refine an equipment without reducing the refining level or breaking if fail.
+This item will consume regardless fail or success, the amount needed is increased corresponding to refine level.
+Required number of bottles:
++7 refine -> +8 refine: 1 ea
++8 refine -> +9 refine: 2 ea
++9 refine -> +10 refine: 4 ea
+Only apply to a maximum of +10 refine.
 #
 6636#
 A stone with strength.
@@ -39205,7 +39351,8 @@ Weight : ^7777770^000000
 #
 6869#
 An all access pass to Poring Con!
-Weight: ^8080801^000000
+^FF0000Character Bound^000000
+Weight: ^8080800^000000
 #
 6882#
 A special monster token that can be redeemed at the Kafra Headquarters.
@@ -45014,23 +45161,20 @@ If summoned,
 Max SP + 150
 #
 9101#
-^808080An egg where the cute pet Scatleton is sleeping.^000000
-^FF0000Once the pet egg has been named, it can never be undone. This is marked by a Beloved prefix.^000000
-^FFFFFF_^000000
-Type: Monster Egg
-Weight: 0
-Food Required: ITEM
-^FFFFFF_^000000
-^800080While Summoned^000000
-Increases the recovery rate of ^008080ITEM^000000 consumables by 1031%.
+A cage in which a cute Scatleton pet rests. It can be lured out using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Fresh Fish
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
 #
 9113#
-^808080An egg in which a Skelion Cute Pet rests. Can be hatched by using a [Pet Incubator].
-Type : ^777777Monster Egg^000000
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+An egg in which a cute Skelion pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Yummy Meat
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
 #
 10001#
 A pristine helmet made from an animal skull.
@@ -51811,43 +51955,55 @@ Additional MATK + 50
 #
 13089#
 A broken razor-like leg that was severed from a Faceworm. It's sustained with potent time-warping energy.
-MATK +50.
+Class: ^808080Dagger^000000
+Attack: ^808080110^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Poison^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
+Matk + 50
 Creates a high chance of casting the illusion of Faceworm while you are attacking.
-Class: ^777777Dagger^000000
-Attack: ^777777110^000000
-Weight: ^77777750^000000
-Attribute: ^777777Poison^000000
-Weapon Level: ^7777773^000000
-Required Level: ^77777724^000000
-Jobs: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
 #
 13090#
 A broken razor-like leg that was severed from a Faceworm. It's sustained with potent time-warping energy.
-INT + 3, MATK + 120.
+Class: ^808080Dagger^000000
+Attack: ^808080180^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Super Novice, Rune Knight, Mechanic, Guillotine Cross, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sorcerer, Maestro, Wanderer, Kagerou/Oboro^000000
+Int + 3
+Matk + 120
 Creates a low chance of casting the illusion of Faceworm Queen while you are attacking.
-Class: ^777777Dagger^000000
-Attack: ^777777180^000000
-Weight: ^77777750^000000
-Attribute: ^777777Neutral^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777100^000000
-Jobs: ^777777Novice/Swordsman Classes/Mage Classes/Archer Classes/Merchant Classes/Thief Classes/Soul Linker/Ninja^000000
 #
 13092#
-A dagger richly decorated with gold throughout the handle created for the 2012 RWC (Ragnarok World Championship)
-Increases Atk and Matk power +20 for every three refine levels
-If refined to +6 or higher, Increases Atk and Matk damage to all monsters.
-If refined to +9 or higher, additional Atk and Matk increase damage to all monsters and has a low chance of auto-casting lvl 1 Weapon Perfection
-^0000ffSet Bonus^000000
-If equipped with RWC 2012 Ring grants +10 Atk for every upgrade level
-If equipped with RWC 2012 Pendant grants +10 MAtk for every upgrade level
-^ff0000These set bonuses do not work with the card-slotted RWC accessories^000000
-Type : ^777777Dagger^000000
-Attack : ^77777750^000000
-Weight : ^77777765^000000
-Weapon Level : ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All except Acolyte Class^000000
+A dagger richly decorated with gold throughout the handle created for the 2012 RWC (Ragnarok World Championship).
+Class: ^808080Dagger^000000
+Attack: ^80808050^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
+Atk +20 and Matk +20 per 3 upgrade levels of ^008080RWC Memory Knife [1]^000000.
+If upgrade level is +6 or higher, Atk + 5% and Matk + 5%.
+
+If upgrade level is +9 or higher, Atk + 5% and Matk + 5%.
+Adds a low chance of casting ^0000FFLevel 1 Weapon Perfection^000000 on the user when performing a physical attack.
+^800080Set Bonus^000000
+^008080RWC Memory Knife [1]^000000
+^008080RWC 2012 Ring^000000
++10 Atk per upgrade level of ^008080RWC Memory Knife [1]^000000.
+
+^800080Set Bonus^000000
+^008080RWC Memory Knife [1]^000000
+^008080RWC 2012 Pendant^000000
++10 MAtk per upgrade level of ^008080RWC Memory Knife [1]^000000.
+
+^ff0000These set bonuses do not work with the card-slotted RWC accessories.^000000
 #
 13093#
 This dagger, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -59370,33 +59526,48 @@ When using Spear Dynamo has of chance adding 2 Aspd while physically attacking f
 Increases SP costs of skills by 10%.
 #
 15038#
-Armor that contains the reliquery remains of an ancient Assassin.
-LUK + 3, Has a chance of auto-casting Meteor Assault level 1 while physically attacking.
-If higher level of this skill is learned then it will be cast.
-If worn with Sapha Hood, Shoes and Ring,
-Flee +10, Critical +15, Critical +40%
-Increases damage of Cross Impact by 20%
-Increases SP costs of skills by 10%
-Class : ^777777Armor^000000
-Defense : ^77777745^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+Armor that contains the reliquary remains of an ancient Assassin.
+Class: ^808080Armor^000000
+Defense: ^80808045^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Luk + 3
+--Has a chance of auto-casting Meteor Assault level 1 while physically attacking.
+Adds a chance of casting ^0000FFLevel 1 Meteor Assault^000000 on the target when performing a physical attack.
+If higher level of this skill is learned then it will be cast instead.
+^800080Set Bonus^000000
+^008080Sapha's Cloth [1]^000000
+^008080Sapha Hood^000000
+^008080Sapha Shoes [1]^000000
+^008080Sapha Ring^000000
+Flee +10
+Crit +15
+Increases critical damage on targets by 40%.
+Increases the damage of ^0000FFCross Impact^000000 by 20%.
+Increases the SP cost of skills by 10%.
 #
 15039#
 An assassin's famous historical relic.
-STR + 2, INT + 2.
-If worn with Greaves, shoes and accessory,
-Has a chance of auto-casting Soul Destroyer level 1 while physically attacking.
-If higher level of this skill is learned then it will be cast.
-If base STR is 120, +30 Atk.
-Increases damage to all monster sizes by 10%
-CRI - 20.
-Class : ^777777Armor^000000
-Defense : ^77777745^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777Guillotine Cross^000000
+Class: ^808080Armor^000000
+Defense: ^80808045^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Str + 2
+Int + 2
+^800080Set Bonus^000000
+^008080Nab's Cloth [1]^000000
+^008080Nab Shoes [1]^000000
+^008080Nab Hood^000000
+^008080Nab Ring^000000
+Adds a chance of casting ^0000FFLevel 1 Soul Destroyer^000000 on the target when performing a physical attack.
+If higher level of this skill is learned then it will be cast instead.
+--Increases damage to all monster sizes by 10% ?????? Where did this come from?
+Atk + 10%
+Matk + 10%
+Atk + 30, if the user's base Str is 120 or higher.
+Crit - 20
 #
 15040#
 ^808080A striped uniform that any prisoner will wear. There are some blood spots here and there, but they are old and faded.^000000
@@ -59984,16 +60155,25 @@ Required LV : ^77777750^000000
 Job : ^777777all jobs^000000
 #
 15116#
-Armor worn by traveler riding the Airship.
-It is an object robbed by monsters during the Airship attack incident.
-refining impossible, Trade impossible.
-If equipped together with Airship armor, Airship cloak, Airship boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration.
-Type : ^777777Armor^000000    Defense : ^777777100^000000
-Weight : ^7777770^000000
-Required Level : ^777777125^000000
-Job : ^777777All^000000
-MaxHP + 1000, MaxSP + 100, MDEF + 10.
-All State + 1.
+Armor worn by traveler riding the Airship. It is an object robbed by monsters during the Airship attack incident.
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^808080100^000000
+Weight: ^8080800^000000
+Requires Level: ^808080125^000000
+Usable By: ^808080Super Novice, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer, Kagerou/Oboro, Rebel, Doram^000000
+Max HP + 1000
+Max SP + 100
+Mdef + 10
+All Stats + 1
+This item cannot be upgraded.
+^800080Set Bonus^000000
+^008080Airship‘s Cloak [1]^000000
+^008080Airship's Armor^000000
+^008080Airship's Boots^000000
+Max HP + 25%
+Max SP + 25%
+Increased Movement Speed.
 #
 15117#
 Airship captain Felrock‘s possessions.
@@ -60673,6 +60853,19 @@ Additional Atk + 5 for every 10 base Str.
 If ^008080Fallen Warrior Manteau^000000 upgrade level is +8 or higher,
 Additional Atk + 7 for every 10 base Str.
 #
+15195#
+A snow-white robe on which spells are embroidered.
+Class: ^808080Armor^000000
+Defense: ^80808052^000000
+Weight: ^80808040^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Reduces the fixed casting time of skills by 3%.
+Increases the recovery rate of recovery skills by 5%.
+Increases the recovery rate of recovery skills by an additional 1% per upgrade level of the item.
+Increases the recovery rate of recovery items by 5%.
+Increases the recovery rate of recovery items by an additional 1% per upgrade level of the item.
+#
 15196#
 ^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to enhance magical abilities.^000000
 Class: Armor
@@ -61153,19 +61346,16 @@ Reduces the SP cost of skills by 1% per upgrade level of the item.
 This item is indestructible in battle.
 #
 16033#
-^808080Kick and Kick's severed arm that works as effectively as any standard-issue weapon.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Mace
-Attack: 195
-Property: Neutral
-Weight: 300
-Weapon Level: 4
-Required Level: 130
-Required Job: Rune Knight, Royal Guard, Mechanic, Geneticist, Arch Bishop, Sura
-^FFFFFF_^000000
-CRIT + 20
-This item is indestructible in battle.
+Kick and Kick's severed arm that works as effectively as any standard-issue weapon.
+^FF0000This item is indestructible in battle.^000000
+Class: ^808080Mace^000000
+Attack: ^808080195^000000
+Property: ^808080Neutral^000000
+Weight: ^808080300^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Rune Knight, Mechanic, Arch Bishop, Royal Guard, Geneticist, Sura^000000
+Crit + 20
 #
 16036#
 Attack: 0
@@ -61277,6 +61467,30 @@ Required Level: 100
 Required Jobs: Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs
 Adds a 3% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack per upgrade level of the item.
 This item is indestructible in battle.
+#
+16063#
+A long, thin mace built like a spear.
+Class: ^808080Mace^000000
+Attack: ^808080185^000000
+Property: ^808080Neutral^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Acolyte Jobs^000000
+Attack Range + 3
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces damage taken from long-ranged attacks by an additional 3% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Illusion Long Mace^000000
+^008080Illusion Puente Robe^000000
+Matk + 100
+Increases the recovery rate of recovery skills by 20%.
+If ^008080Illusion Long Mace^000000 and ^008080Illusion Puente Robe^000000 upgrade level is +7 or higher,
+Additional Matk + 50
+If the combined upgrade levels of ^008080Illusion Long Mace^000000 and ^008080Illusion Puente Robe^000000 are +18 or higher,
+Increases the recovery rate of recovery skills by an additional 15%.
+If the combined upgrade levels of ^008080Illusion Long Mace^000000 and ^008080Illusion Puente Robe^000000 are +22 or higher,
+Reduces the global delay of skills by 15%.
 #
 16131#
 #
@@ -69019,25 +69233,16 @@ Job : ^777777All^000000
 #
 18626#
 A delectable frozen treat served with a cherry on top.
-MaxHP +300
-Enables use of Level 1 Frost Driver
-If refined to +7 or higher, Enables use of level 5 Frost Driver
-Class : ^777777Headgear^000000
-Location: ^777777Upper^000000
-Defense: ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^77777720^000000
-Jobs: ^777777All^000000
-A delectable frozen treat served with a cherry on top.
-MaxHP +300
-Enables use of Level 1 Frost Driver
-If refined to +7 or higher, Enables use of level 5 Frost Driver
-Class : ^777777Headgear^000000
-Location: ^777777Upper^000000
-Defense: ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^77777720^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 300
+Enables ^0000FFLevel 1 Frost Diver^000000.
+If upgrade level is +7 or higher,
+Enables ^0000FFLevel 5 Frost Diver^000000.
 #
 18627#
 A dried leaf thinking of hometown.
@@ -73636,6 +73841,17 @@ This item can be traded and put into storage.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+19210#
+A headgear made in the honor of the legendary archer who shot an apple, on top of a friend's head, from a long distance.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808020^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Dex + 3
+Additional Dex + 1 per 2 upgrade levels of the item.
+#
 19212#
 ^808080The cat ears makes this a cute hat to wear.^000000
 Class: Headgear
@@ -74702,6 +74918,9 @@ Jobs: ^777777All^000000
 19534#
 #
 19535#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 19536#
 Korusaju decorated with beautiful roses. .
@@ -74817,11 +75036,11 @@ Job : ^777777All^000000
 #
 19550#
 Wear this when you want to look cute for your beloved.
-Class : ^777777Costume^000000
-Location : ^777777Middle ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19551#
 Modeled after the long ears of a fairy, when worn you can hear fairys playing in the blue forest.
@@ -77181,10 +77400,12 @@ Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 20018#
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Resembles the ears of a very powerful and ancient Wolf God.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20019#
 ^ff0000Cannot be traded with other accounts.^000000
@@ -79279,16 +79500,13 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20397#
-^808080A helmet that can transform you into Jakk. It is so precise that even Jakk‘s friends are tricked. The way it is produced is confidential...^000000
-^FFFFFF_^000000
-Type: Headgear
-Position: Middle, Lower
-Defense: 0
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
-^FFFFFF_^000000
-Adds a 3.1% chance of transforming into Jakk for 10 seconds when receiving a physical or magical attack.
+A helmet that can transform you into Jakk. It is so precise that even Jakk‘s friends are tricked. The way it is produced is confidential...
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Adds a 3.1% chance of transforming the user into Jakk for 10 seconds when receiving a physical or magical attack.
 #
 20398#
 A hat from famous Healer of Niflheim, Hylozoist.
@@ -79299,7 +79517,6 @@ Job : ^777777All^000000
 #
 20399#
 ^FF0000The mask carries the grudge of its previous owner.^000000
-Type: ^808080Shadow Equipment^000000
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -79478,6 +79695,11 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+20519#
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20700#
 Egir's Manteau. It looks defending your body
 can not be destroyed
@@ -79569,12 +79791,13 @@ Reduces damage taken from Neutral property attacks by 5%.
 #
 20707#
 Wings made from a legendary mythical beast of an East Asian culture.
-ALL Status + 1
-Resistance to Demi-human monsters + 5%
-Series : ^777777Garment^000000 Defense : ^77777718^000000
-Weight : ^7777770^000000
-Level Requirement : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Garment^000000
+Defense: ^80808018^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 20709#
 ^000088Rental Item^000000
@@ -79724,22 +79947,17 @@ Increases damage taken from Neutral, Water, Earth, Fire, Wind, Poison, Holy, Sha
 Prevents the user from being knocked back.
 #
 20732#
-^808080This mechanical device heals wounds and rejuvenates your body.^000000
-^FFFFFF_^000000
-Type: Garment
-Defense: 20
-Weight: 50
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
+This mechanical device heals wounds and rejuvenates your body.
+Class: ^808080Garment^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
 Max HP + 6%
 Max HP + 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher,
-HP Recovery + 50%
-^FFFFFF_^000000
+If upgrade level is +9 or higher, HP Recovery + 50%.
 ^800080Set Bonus^000000
-^008080Supplement Part Con^000000
+^008080Supplement Part Con [1]^000000
 ^008080Supplement Part Str^000000
 Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
 #
@@ -79795,27 +80013,46 @@ Required LV : ^77777771^000000
 Job : ^777777All^000000
 #
 20743#
-Cloak worn by traveler riding the Airship.
-It is an object robbed by monsters during the Airship attack incident.
-Nothing tolerance 10% increase, Flee + 20, Floating Casting 20% decrease.
-refining impossible, Trade impossible.
-Type : ^777777Robe^000000  Defense : ^77777725^000000
-Weight : ^7777770^000000
-Required Level : ^777777125^000000
-Job : ^777777All^000000
+Cloak worn by traveler riding the Airship. It is an object robbed by monsters during the Airship attack incident.
+^FF0000Account Bound^000000
+Class: ^808080Garment^000000
+Defense: ^80808025^000000
+Weight: ^8080800^000000
+Requires Level: ^808080125^000000
+Usable By: ^808080Super Novice, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer, Kagerou/Oboro, Rebel, Doram^000000
+Flee + 20
+Reduces damage taken from Neutral property attacks by 10%.
+Reduces the variable casting time of skills by 20%.
+This item cannot be upgraded.
+^800080Set Bonus^000000
+^008080Airship‘s Cloak [1]^000000
+^008080Airship's Armor^000000
+^008080Airship's Boots^000000
+Max HP + 25%
+Max SP + 25%
+Increased Movement Speed.
 #
 20744#
-Airship captain Felrock‘s possessions.
-Resolved the airship attack incident and acquired as a trophy.
-Neutral tolerance 10% increase, Flee + 20.
-Floating Casting 10% decrease.
-If 7 refined, Variable Cast time 10% decrease.
-If 9 refined, Variable Cast time 10% decrease.
-If 12 refined, Variable Cast time 5% decrease.
-Type : ^777777Robe^000000    Defense : ^77777712^000000
-Weight : ^77777740^000000
-Required Level : ^777777125^000000
-Job : ^777777All^000000
+Airship captain Felrock's possessions. Resolved the airship attack incident and acquired as a trophy.
+Class: ^808080Garment^000000
+Defense: ^80808012^000000
+Weight: ^80808040^000000
+Requires Level: ^808080125^000000
+Usable By: ^808080Super Novice, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer, Kagerou/Oboro, Rebel, Doram^000000
+Flee + 20
+Reduces damage taken from Neutral property attacks by 10%.
+Reduces the variable casting time of skills by 10%.
+If upgrade level is +7 or higher, reduces the variable casting time of skills by an additional 10%.
+If upgrade level is +9 or higher, reduces the variable casting time of skills by an additional 10%.
+If upgrade level is +12 or higher, reduces the variable casting time of skills by an additional 5%.
+^800080Set Bonus^000000
+^008080Felrock‘s Cloak [1]^000000
+^008080Ferlock's Armor^000000
+^008080Ferlock's Boots^000000
+Max HP + 25%
+Max SP + 25%
+Increased Movement Speed.
+If the combined upgrade levels of ^008080Felrock‘s Cloak [1]^000000,  ^008080Ferlock's Armor^000000 and ^008080Ferlock's Boots^000000 are +30 or higher, additional Max HP + 5% and Max SP + 5%.
 #
 20745#
 ^000088Rental Item^000000
@@ -79965,17 +80202,32 @@ Increases physical and magical damage on Formless race targets by 5%.
 #
 20756#
 Egir, the God of Sea's Helm. It is said to protect wearer with sacred power of the Sea.
-Indestructible
-MHP + 500.
-MSP + 50.
-Recovers 10 SP every time defeating Fish type enemy, when equipping Egir Helm and Egir Cloak together..
-Sushi or Raw Fish drops at a certain rate when killing Fish type monster.
-Sushi and Raw Fish's HP recovery increases by 5%
-HP recovery increases by 5% per Cloak Refinement. Drop rate also increases.
-Class : ^777777Costume^000000 Def : ^77777710^000000
-Weight : ^77777730^000000
-Required LvL : ^77777740^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Garment^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 500
+Max SP + 50
+Adds a chance of gaining ^008080Sushi^000000 or ^008080Raw Fish^000000 when a Fish race monster is killed.
+Increases the drop rate of these items per upgrade level of ^008080Egir Manteau [1]^000000.
+Increases the recovery rate of ^008080Sushi^000000 and ^008080Raw Fish^000000 consumables by 5%.
+Increases the recovery rate of these items by an additional 5% per upgrade level of ^008080Egir Manteau [1]^000000.
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+Restores 10 SP to the user when a Fish race monster is killed by a short-ranged attack.
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+^008080Egir Armour [1]^000000
+^008080Egir Shoes [1]^000000
+Max HP + 1000
+Max SP + 100
+Increases the experience given from Fish race monsters by 20%.
+Increases physical and magical damage on Fish race targets by 50%.
+Reduces damage taken from water property attacks by 50%.
 #
 20757#
 ^ff0000Cannot be traded with others.^000000
@@ -80626,6 +80878,18 @@ Reduces the cast delay of skills by 1% for every combined sum of 20 base Int and
 If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a physical attack.
 #
+20838#
+A warm scarf that is worn around the neck and shoulders.
+Class: ^808080Garment^000000
+Defense: ^8080808^000000
+Weight: ^80808040^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max HP + 100
+Additional Max HP + 100 per upgrade level of the item.
+Max SP + 10
+Additional Max SP + 5 per upgrade level of the item.
+#
 20841#
 A pair of wings from a golden angel.
 Class: ^808080Garment^000000
@@ -81170,23 +81434,18 @@ Mdef + 5
 Aspd + 1
 #
 22043#
-^808080Mechanical boots that keep you light on your feet. They are much lighter than they look.^000000
-^FFFFFF_^000000
-Type: Shoes
-Defense: 25
-Weight: 35
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-ASPD + 6%
-^FFFFFF_^000000
-If upgrade level is +4 or higher,
-ASPD + 1%
-^FFFFFF_^000000
+Mechanical boots that keep you light on your feet. They are much lighter than they look.
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808035^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Aspd + 6%
+If upgrade level is +4 or higher, Aspd + 1%
 ^800080Set Bonus^000000
-^008080Supplement Part Agi^000000
+^008080Supplement Part Agi [1]^000000
 ^008080Supplement Part Str^000000
-ATK + 30
+Atk + 30
 #
 22044#
 ^808080Designed to significantly improve Movement Speed, this Madogear part is easy to assemble and disassemble.^000000
@@ -81210,15 +81469,23 @@ Reduces the SP cost of ^0000FFAcceleration^000000 by 20.
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 22046#
-Boots worn by traveler riding the Airship.
-It is an object robbed by monsters during the Airship attack incident.
-AGI + 1.
-Attack rate increase (Delay after attack 10% reduction).
-refining impossible, Trade impossible.
-Type : ^777777Shoes^000000  Defense : ^77777726^000000
-Weight : ^7777770^000000
-Required Level : ^777777125^000000
-Job : ^777777All^000000
+Boots worn by traveler riding the Airship. It is an object robbed by monsters during the airship attack incident.
+^FF0000Account Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808026^000000
+Weight: ^8080800^000000
+Requires Level: ^808080125^000000
+Usable By: ^808080Super Novice, Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer, Kagerou/Oboro, Rebel, Doram^000000
+Agi + 1
+Aspd + 10%
+This item cannot be upgraded.
+^800080Set Bonus^000000
+^008080Airship‘s Cloak [1]^000000
+^008080Airship's Armor^000000
+^008080Airship's Boots^000000
+Max HP + 25%
+Max SP + 25%
+Increased Movement Speed.
 #
 22047#
 Airship captain Felrock‘s possessions.
@@ -81869,6 +82136,18 @@ Additional Max SP + 5%
 If upgrade level is +9 or higher,
 Additional Max SP + 5%
 Increased Movement Speed.
+#
+22133#
+A pair of shoes made of supple, high quality leather.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808040^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max HP + 100
+Additional Max HP + 100 per upgrade level of the item.
+Max SP + 10
+Additional Max SP + 5 per upgrade level of the item.
 #
 22134#
 These blood soaked shoes releases a terrible aura.
@@ -82872,6 +83151,10 @@ A health drink to prevent flu.
 
 Weight : ^7777774^000000
 #
+23228#
+A soft pastry shaped like the moon. Children love it. It looks hazy at certain angles.
+Weight: ^8080801^000000
+#
 23251#
 ^808080A box that contains a Rose of Eden and Angelic Ring.^000000
 ^FF0000Account Bound^000000
@@ -83214,6 +83497,19 @@ Safety Glasses
 Blacksmith Blessing x 8
 3X Battlemanual x 5
 HE Bubblegum x 5
+#
+23800#
+Weight: ^8080800^000000
+When opened gives one of the following.
+Costume Tengu Scroll
+Costume Celestial Woman Flower
+Costume Fairy Feathers
+Costume Tipsy
+Costume Straight Long (Black)
+Costume Black Fox Ear Ribbon
+Costume Yellow Cherry Blossom Hat
+Costume Full Bloom Cherry Tree
+Costume Sinsuncho Hat
 #
 24012#
 Gloves worn to enhance attacking accuracy.
@@ -84772,9 +85068,33 @@ Well dried wood. It looks burn well.
 
 Weight : ^7777770^000000
 #
+25256#
+A fragment of crystallized spiritual imprint. It works like a mirror, reflecting the image of a lost memory.
+Weight: ^8080801^000000
+#
+25257#
+The names of its sender and recipient are smudged beyond recognition. "You left in the dead of winter with a promise to come back in the next spring. Flowers have bloomed and withered, and you are still not here. Dear Moon, please send my regards to my beloved.".
+Weight: ^8080801^000000
+#
+25258#
+An arrow found from soldiers who died fighting for their village. It radiates with negative energy.
+Weight: ^8080801^000000
+#
+25259#
+Used for recruiting members of a monster subjugation party. "There's a settlement full of deceptive foxes and other wicked monsters in the middle of a mountain...".
+Weight: ^8080801^000000
+#
 25260#
 ^808080A fragment of purple ore. It radiates mana.^000000
 Weight: 0
+#
+25271#
+A mysterious ore that is rarely found. Rumor has it that this clear ore lets those who gaze into it experience lifelike illusions. Only the wisest can see the true value of this ore.
+Weight: ^8080800^000000
+#
+25272#
+A mysterious ore that is rarely found. Looking at this ore, I can't help but wonder how valuable it is and if there's someone I could talk to about its value.
+Weight: ^8080801^000000
 #
 25276#
 ^808080A small bone that is has been licked clean.^000000
@@ -84899,6 +85219,37 @@ A bottle containing a scent which is irresistible to doggo. It contains somethin
 Class: ^808080Pet Tame^000000
 Weight: ^8080800^000000
 #
+26007#
+The creator of this formidable Two-Handed Spear sacrificed his own life to forge it, resulting in a curse that will try to dominate the wearer's soul.
+Class: ^808080Two-Handed Spear^000000
+Attack: ^808080240^000000
+Property: ^808080Neutral^000000
+Weight: ^808080200^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Swordman Jobs^000000
+Increases physical damage on Demon race targets by 20%.
+Increases physical damage on Demon race targets by an additional 3% per 2 upgrade levels of the item.
+Increases physical damage on Shadow and Undead property targets by 20%.
+Increases physical damage on Shadow and Undead property targets by an additional 3% per 2 upgrade levels of the item.
+Reduces damage taken from Demon and Undead race enemies by 10%.
+Reduces damage taken from Demon and Undead race enemies by an additional 3% per 2 upgrade levels of the item.
+Reduces damage taken from Shadow property attacks by 10%.
+Reduces damage taken from Shadow property attacks by an additional 3% per 2 upgrade levels of the item.
+Restores 50 HP to the user when a monster is killed by a physical attack.
+Restores 1 SP to the user when a monster is killed by a physical attack per 2 upgrade levels of the item.
+Adds a 10% chance of inflicting ^800000Chaos^000000 on the user when performing a short-ranged attack.
+^800080Set Bonus^000000
+^008080Illusion Shoes^000000
+^008080Illusion Spectral Spear^000000
+Aspd + 8%
+If ^008080Illusion Shoes^000000 and ^008080Illusion Spectral Spear^000000 upgrade level is +7 or higher,
+Increases the damage of ^0000FFBanishing Point^000000 by 20%.
+If the combined upgrade levels of ^008080Illusion Shoes^000000 and ^008080Illusion Spectral Spear^000000 are +18 or higher,
+Increases long-ranged damage on targets by 10%.
+If the combined upgrade levels of ^008080Illusion Shoes^000000 and ^008080Illusion Spectral Spear^000000 are +22 or higher,
+Increases the damage of ^0000FFBanishing Point^000000 by an additional 30%.
+#
 26100#
 ^808080A foxtail crafted by the Paradise Group. A basic item for experienced summoners.^000000
 ^FF0000Character Bound^000000
@@ -84952,6 +85303,48 @@ If upgrade level is +7 or higher,
 Increases the recovery rate of recovery skills by an additional 5%.
 If upgrade level is +9 or higher,
 Increases the recovery rate of recovery skills by an additional 10%.
+#
+26109#
+A short, simply designed staff; like a baton. A jewel, with the power of justice, is set on it.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808060^000000
+Magic Attack: ^808080180^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080High Wizard Jobs, Scholar Jobs^000000
+Int + 3
+Dex + 2
+Matk + 5%, if ^0000FFDragonology^000000 is at maximum level.
+Additional Matk + 1% per 3 upgrade levels of the item, if ^0000FFDragonology^000000 is at maximum level.
+Reduces the SP cost of skills by 15%, if ^0000FFDragonology^000000 is at maximum level.
+Reduces the SP cost of skills by an additional 5% per 3 upgrade levels of the item, if ^0000FFDragonology^000000 is at maximum level.
+^800080Set Bonus^000000
+^008080Illusion Muffler^000000
+^008080Illusion Staff of Bordeaux^000000
+Increases the damage of ^0000FFPsychic Wave^000000 by 10%.
+If ^008080Illusion Muffler^000000 and ^008080Illusion Staff of Bordeaux^000000 upgrade level is +7 or higher,
+Increases the damage of ^0000FFEarth Grave^000000 by 40%.
+If the combined upgrade levels of ^008080Illusion Muffler^000000 and ^008080Illusion Staff of Bordeaux^000000 are +18 or higher,
+Increases the damage of Neutral and Earth property magical attacks on targets by 10%.
+If the combined upgrade levels of ^008080Illusion Muffler^000000 and ^008080Illusion Staff of Bordeaux^000000 are +22 or higher,
+Increases the damage of Water property magical attacks on targets by 10%.
+#
+26110#
+A rod that is shaped like a candy cane. Its handle is a little bit melted on top as if someone licked on it.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808010^000000
+Magic Attack: ^808080140^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Novice Jobs, Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Int + 2
+Flee + 2 per upgrade level of the item.
+If upgrade level is +10 or higher,
+Perfect Dodge + 10
 #
 26200#
 ^808080Rope that embodies the wielder's yearning for personal freedom. Old and worn, it bends and thrashes more flexibly than new rope.^000000
@@ -85046,6 +85439,87 @@ Increase casting rates for each +3 refined.
 Class : ^777777Card^000000
 Compound on : ^777777Weapon^000000
 Weight : ^7777771^000000
+#
+27081#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Enables ^0000FFLevel 4 Gloria Domini^000000.
+^800080Set Bonus^000000
+^008080Angry Moonlight Flower Card^000000
+^008080Moonlight Flower Card^000000
+Adds a 7% chance of buffing the user for 5 seconds when performing a short-ranged attack; Perfect Dodge + 10.
+#
+27082#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Crit + 5
+Increases critical damage on targets by 10%.
+If upgrade level is +10 or higher,
+Additional Crit + 10
+^800080Set Bonus^000000
+^008080Angry Nine Tail Card^000000
+^008080Nine Tail Card^000000
+Adds a 2% chance of buffing the user for 5 seconds when performing a short-ranged attack; Flee + 10.
+#
+27083#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Atk + 20
+Matk + 20
+^800080Set Bonus^000000
+^008080Bongun Card^000000
+^008080Resentful Bongun Card^000000
+Adds a 2% chance of buffing the user for 5 seconds when receiving a short-ranged attack; Increases damage taken from Munak by 100%.
+#
+27084#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Matk + 10
+If upgrade level is +10 or higher,
+Matk + 2%
+^800080Set Bonus^000000
+^008080Resentful Sohee Card^000000
+^008080Sohee Card^000000
+Adds a 2% chance of buffing the user for 5 seconds when performing a magical attack; SP Recovery + 100%.
+#
+27085#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 15
+Matk + 15
+^800080Set Bonus^000000
+^008080Girl's Diary^000000
+^008080Resentful Munak Card^000000
+Atk + 100
+Matk + 100
+^800080Set Bonus^000000
+^008080Munak Card^000000
+^008080Resentful Munak Card^000000
+Adds a 2% chance of buffing the user for 5 seconds when performing a short-ranged attack; Adds a 50% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
+#
+27086#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a 3% chance of casting ^0000FFLevel 5 Double Strafe^000000 on the target when performing a physical attack when using a bow.
+If upgrade level is +10 or higher,
+Increases physical damage on targets by 20% when using a bow.
+^800080Set Bonus^000000
+^008080Archer Skeleton Card^000000
+^008080Resentful Soldier Card^000000
+Adds a 2% chance of buffing the user for 5 seconds when performing a physical attack; Aspd + 1.
+#
+27088#
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Atk + 2%
+Adds a 0.5% chance of buffing the user for 5 seconds when performing a short-ranged attack; Adds a permanent ^0000FFLevel 1 Endure^000000 effect to the compounded item.
 #
 27147#
 Class: ^808080Card^000000
@@ -87185,6 +87659,20 @@ Increases long-ranged damage on targets by an additional 3%.
 Increases the damage of ^0000FFKunai Explosion^000000 by 20%.
 Increases the damage of ^0000FFKunai Splash^000000 by 50%.
 #
+28725#
+A dagger imbued with lunar spirit and the power to drain an enemy's soul.
+Class: ^808080Dagger^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
+Max SP + 10%
+Restores 3 SP to the user when performing a physical attack.
+If upgrade level is +10 or higher,
+Restores an additional 7 SP to the user when performing a physical attack.
+#
 28900#
 ^808080The official shield of the Prontera Royal Guard.^000000
 ^FFFFFF_^000000
@@ -88054,10 +88542,11 @@ Jobs : ^777777All Jobs^000000
 #
 31028#
 A cute black hoodie with soft fluffy cat ears.
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper Middle ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31029#
 A mask that looks like the nose of a Savage Babe.
@@ -89446,4 +89935,62 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 ^FF0000The following effects are active during the month of February.^000000
 Increases the recovery rate of ^008080Meat^000000 consumables by 2018%.
+#
+31470#
+A magically radiated scroll that is dropped by a disciplined Tengu. It is said mysterious events may occur in various places when using this scroll.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31471#
+Carefully hand raised flower by celestial maidens for decorative purposes.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31472#
+A hair adornment with small flowers decorating transparent insect like wings.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31473#
+A blushing impression to when one feels tipsy.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31474#
+Costume hair that makes you unusual feeling when attached.
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31475#
+Cute costume modeled on the ears of fox.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31476#
+Springlike costume hat modeled on leaves of cherry blossom. Waving of cherry blossom ornament is absolutely cute.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
