@@ -92,7 +92,7 @@ ip 128.241.92.162
 port 6800
 master_version 1
 version 18
-serverType iRO
+serverType iRO_Renewal
 serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
