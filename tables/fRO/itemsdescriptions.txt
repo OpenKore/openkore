@@ -30206,21 +30206,7 @@ Give it to the Bandit Manchot in the Market House who's the only one to be able 
 Weight : ^7777771^000000
 #
 2636#
-A ring-shaped pass which allows you to collect Lotto Balls when killing monsters in the following dungeons.
-Izlude Dungeon
-Mjolnir Dead Pit
-Dewata Dungeon
-Einbroch Mine
-Geffenia
-Gonryun Dungeon
-Ice Dungeon
-Magma Dungeon
-Rachel Sanctuary
-Orc Dungeon
-Bifrost Tower
-Aldebaran Guild Dungeon
-Payon Guild Dungeon
-Prontera Guild Dungeon
+A ring-shaped pass which allows you to collect Lotto Balls when killing monsters.
 
 Weight : ^7777770^000000
 #
