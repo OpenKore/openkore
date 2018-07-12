@@ -26,6 +26,8 @@ sub new {
 		'0A37' => ['inventory_item_added', 'a2 v V C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],#nameID 2 byte => 4 byte
 		'0A0A' => ['storage_item_added', 'a2 V2 C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],#nameID 2 byte => 4 byte
 		'0110' => ['skill_use_failed', 'v V2 C2', [qw(skillID btype itemID fail type)]],#unknown = > itemID
+		'0A0B' => ['cart_item_added', 'a2 V2 C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],#nameID 2 byte => 4 byte
+
 		);
 	
 	foreach my $switch (keys %packets) {
