@@ -16,5 +16,17 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2018_06_21a);
 
 
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		'010A' => ['mvp_item', 'V', [qw(itemID)]], #itemID 2 byte => 4 byte
+	);
+	
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 
+	return $self;
+}
 1;
