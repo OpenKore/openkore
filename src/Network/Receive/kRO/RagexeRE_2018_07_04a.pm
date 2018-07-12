@@ -24,6 +24,7 @@ sub new {
 		'0B02' => ['login_error', 'V Z20', [qw(type date)]],#if PACKETVER >= 20180627 Need to copy to sT20180627
 		'0ADD' => ['item_exists', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],#nameID 2 byte => 4 byte
 		'0A37' => ['inventory_item_added', 'a2 v V C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],#nameID 2 byte => 4 byte
+		'0A0A' => ['storage_item_added', 'a2 V2 C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],#nameID 2 byte => 4 byte
 
 		);
 	
