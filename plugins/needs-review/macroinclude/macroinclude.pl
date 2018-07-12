@@ -8,8 +8,6 @@
 # 
 # Use config option:
 # macroinclude macro
-# or
-# macroinclude eventMacro
 #
 # Usage:
 # include off all 
@@ -40,14 +38,10 @@ sub main {
 	# Choose file block.
 	if ($config{macroinclude} eq 'macro'){
 		$mcr = $config{macro_file} || 'macros.txt';
-	}elsif($config{macroinclude} eq 'eventMacro'){
-		$mcr = $config{eventMacro_file} || 'eventMacros.txt';
-	}else{
+	} else{
 		if($config{macro_file}){
 			$mcr = $config{macro_file};
-		}elsif($config{eventMacro_file}){
-			$mcr = $config{eventMacro_file};
-		}else{
+		} else{
 			$mcr = 'macros.txt';
 		}
 	}
