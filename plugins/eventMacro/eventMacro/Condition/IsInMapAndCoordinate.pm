@@ -35,7 +35,7 @@ sub _parse_syntax {
 	my $member_index = 0;
 	foreach my $member (split(/\s*,\s*/, $condition_code)) {
 		my ($map, $coord_x, $coord_y);
-		my @parts = split(/\s+/, $condition_code);
+		my @parts = split(/\s+/, $member);
 		
 		my $has_coords = 0;
 		my $has_map = 0;
