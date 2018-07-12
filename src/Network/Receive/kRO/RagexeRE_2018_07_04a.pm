@@ -21,6 +21,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'010A' => ['mvp_item', 'V', [qw(itemID)]], #itemID 2 byte => 4 byte
+		'0B02' => ['login_error', 'V Z20', [qw(type date)]],#if PACKETVER >= 20180627 Need to copy to sT20180627
 	);
 	
 	foreach my $switch (keys %packets) {
