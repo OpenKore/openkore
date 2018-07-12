@@ -76,10 +76,6 @@ sub new {
 	$self->set_arrays_size_to_zero();
 	$self->set_hashes_size_to_zero();
 
-	if ($char && $net && $net->getState() == Network::IN_GAME) {
-		$self->check_all_conditions();
-	}
-
 	return $self;
 }
 
