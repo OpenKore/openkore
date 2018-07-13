@@ -6267,4 +6267,14 @@ sub search_store_pos {
 	message TF("Selected store is at (%d, %d)\n", $args->{x}, $args->{y});
 }
 
+sub skill_msg {
+	my ($self, $args) = @_;
+	if ($msgTable[++$args->{msgid}]) { # show message from msgstringtable.txt -> [<Skill_Name>] <Message>
+		my $skill = new Skill(idn => $args->{id});
+		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
+	} else {
+		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
+}
+
 1;

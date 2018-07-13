@@ -4582,13 +4582,6 @@ sub msg_string {
 	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
 }
 
-sub skill_msg {
-	my ($self, $args) = @_;
-	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
-
-	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
-}
-
 sub quest_all_list2 {
 	my ($self, $args) = @_;
 	$questList = {};
