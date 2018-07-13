@@ -6895,6 +6895,7 @@
 14944#May_Costume_Box#
 14947#Anniversary_2018_Costume_Box#
 14948#Overseas_Care_Package_XVIII#
+14971#Overseas_Care_Package_XX#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -8176,8 +8177,8 @@
 19384#Steamed_Alligator_with_Vegetable#
 19385#Special_Royal_Jelly_Herbal_Tea#
 19386#Soul_Haunted_Bread#
-19387#Assorted_Shish_Kebob#
-19388#Sumptuous_Feast#
+19387#Experimental_Goat_Cap#
+19388#Suptuous_Feast#
 19389#Bearfoot_Special#
 19390#Incredibly_Spicy_Curry#
 19391#Royal_Family_Tea#
@@ -8242,7 +8243,7 @@
 19540#Costume:_Rabbit_Earmuffs#
 19541#Costume:_White_Romantic_Flower#
 19542#Costume:_Devil_Whisper#
-19543#Oliver_Wolf_Hood#
+19543#Costume_Oliver_Wolf_Hood#
 19544#Costume:_Tare_Neko_Cru#
 19545#Costume:_Boy's_Cap#
 19546#Costume:_Valkyrie_Helm#
@@ -8408,16 +8409,16 @@
 19805#Costume:_Taboo_Curse_Scroll#
 19806#Costume_Full_Bloom_Hairpin#
 19807#Costume:_Majestic_Helmet#
-19808#Blazing_Sun_Costume#
-19809#Purple_Cowboy_Hat_Costume#
+19808#Costume_Blazing_Sun#
+19809#Costume_Purple_Cowboy_Hat#
 19810#Ifrit's_Ear_Costume#
 19811#Beer_Cap_Costume#
 19812#Large_Hibiscus_Costume#
-19813#Icecream_Hat_Costume#
+19813#Costume_Icecream_Hat#
 19814#Shiny_Wig_Costume#
-19815#Lolita_Ten_Gallon_Ha#
+19815#Costume_Lolita_Ten_Gallon_Hat#
 19816#Pecopeco_Cap_Costume#
-19817#Ifrits_Breath_Costume#
+19817#Costume_Ifrit's_Breath#
 19818#Costume:_Droop_Morocc_Minion#
 19819#Costume:_Necromencer_Hood#
 19820#C_Bone_Hat#
@@ -8476,7 +8477,7 @@
 19910#Costume_Halloween_hat#
 19911#Costume_Triangle_roof_hat#
 19912#Costume_Cat_Eyes#
-19914#Felrock‘s_Hat#
+19914#Costume_Ferlock's_Hat#
 19915#Costume_Little_Devil_S_Horn#
 19917#Costume:_Gloomy_Pumpkin_Hat#
 19918#Costume:_Lude_Mask#
@@ -8533,7 +8534,7 @@
 19991#Costume_Galanthus_Guard#
 19992#Costume_Chilly_Breath#
 19994#saLUsalo_Hat#
-19996#Horse_King#
+19996#Costume_Horse_King#
 19997#Costume:_Bomb_Hat#
 19998#Costume:_Dragon_Turtle_Hat#
 20001#Hardened_Coat#
@@ -8850,6 +8851,8 @@
 20846#Temporal_Manteau#
 20856#YSF01_Manteau#
 20859#Phreeoni_Wings#
+20860#Battle_Surcoat#
+20861#Sword_Wing_J#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
@@ -8908,6 +8911,7 @@
 22085#Elegant_Doram_Shoes#
 22094#Gardener_Shoes#
 22095#Gravekeeper_Shoes#
+22097#Dragon_Trainer_Shoes#
 22103#Excelion_Leg#
 22104#Pororoca_Shoes#
 22107#Modified_Str_Boots#
@@ -9698,6 +9702,8 @@
 31471#Costume_Celestial_Woman_Flower#
 31472#Costume_Fairy_Feathers#
 31473#Costume_Tipsy#
-31474#Costume_Straight_Long(Black)#
+31474#Costume_Straight_Long_(Black)#
 31475#Costume_Black_Fox_Ear_Ribbon#
 31476#Costume_Yellow_Cherry_Blossom_Hat#
+32203#Accelerator_Chip#
+32204#Immortal_Dog_Tag#
