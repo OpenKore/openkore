@@ -6969,3 +6969,5 @@
 20030#Vanilmirth_Hat_Certificate#
 20044#Skull_Hood_Certificate#
 20045#King_Tiger_Doll_Hat_Certificate#
+20046#Purple_Cowboy_Hat_Certificate#
+20047#Pisces_Crown_Certificate#
