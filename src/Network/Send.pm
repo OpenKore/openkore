@@ -1682,4 +1682,12 @@ sub sendSearchStoreSelect {
 	debug "Sent search store select request\n", "sendPacket", 2;
 }
 
+sub sendNoviceDoriDori {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'novice_dori_dori'}));
+	
+	debug "Sent Novice Dori Dori\n", "sendPacket", 2;
+}
+
 1;
