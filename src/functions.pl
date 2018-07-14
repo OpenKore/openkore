@@ -677,6 +677,9 @@ sub initMapChangeVars {
 	undef $refineUI;
 	undef $currentCookingType;
 	$captcha_state = 0;
+	$universalCatalog{open} = 0;
+	$universalCatalog{has_next} = 0;
+	delete $universalCatalog{type};
 
 	$itemsList->clear();
 	$monstersList->clear();
@@ -688,7 +691,8 @@ sub initMapChangeVars {
 	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
-
+	
+	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();
 	@unknownNPCs = ();
 	@sellList = ();

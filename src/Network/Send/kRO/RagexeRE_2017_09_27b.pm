@@ -42,6 +42,9 @@ sub new {
 		'089B' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'089A' => ['storage_password'],
 		'0945' => ['sync', 'V', [qw(time)]],		
+		'08AD' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'088B' => ['search_store_request_next_page'],
+		'0875' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -69,6 +72,9 @@ sub new {
 		storage_item_remove 089B
 		storage_password 089A
 		sync 0945
+		search_store_info 08AD
+		search_store_request_next_page 088B
+		search_store_select 0875
 	);
 	
 	

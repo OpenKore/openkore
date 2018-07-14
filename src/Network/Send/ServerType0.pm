@@ -145,6 +145,10 @@ sub new {
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
+		'0835' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0838' => ['search_store_request_next_page'],
+		'083B' => ['search_store_close'],
+		'083C' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],
