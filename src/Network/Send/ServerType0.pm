@@ -95,6 +95,7 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
+		'01E7' => ['novice_dori_dori'],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],

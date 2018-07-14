@@ -85,6 +85,7 @@ sub new {
 		'012E' => ['shop_close'], # len 2
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
+		'01E7' => ['novice_dori_dori'],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
@@ -1277,12 +1278,6 @@ sub sendBanCheck {
 # TODO
 
 # 0x01e6,26
-
-# 0x01e7,2,sndoridori,0
-sub sendSuperNoviceDoriDori {
-	$_[0]->sendToServer(pack('v', 0x01E7));
-	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
-}
 
 # 0x01e8,28,createparty2,2
 sub sendPartyOrganize {

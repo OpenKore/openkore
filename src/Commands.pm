@@ -1693,13 +1693,11 @@ sub cmdDoriDori {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $headdir;
-	if ($char->{look}{head} == 2) {
-		$headdir = 1;
-	} else {
-		$headdir = 2;
-	}
+	
+	my $headdir = ($char->{look}{head} == 2) ? 1 : 2;
+	
 	$messageSender->sendLook($char->{look}{body}, $headdir);
+	$messageSender->sendNoviceDoriDori();
 }
 
 sub cmdDrop {
