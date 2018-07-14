@@ -307,14 +307,8 @@ sub new {
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
-		'01C4' => ($rpackets{'01C4'} == 22) # or 32 PACKETVER_RE_NUM >= 20180704
-			? ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]] # 22
-			: ['storage_item_added', 'a2 V2 C4 a16', [qw(ID amount nameID type identified broken upgrade cards)]] # 30
-		,	
-		'01C5' => ($rpackets{'01C5'} == 22) # or 32 PACKETVER_RE_NUM >= 20180704
-			? ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
-			: ['cart_item_added', 'a2 V2 C4 a16', [qw(ID amount nameID type identified broken upgrade cards)]], # 30
-		,
+		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
+		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ($rpackets{'01C8'} == 11) # or 13 PACKETVER_RE_NUM >= 20180704
 			? ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]] # 11
