@@ -176,8 +176,13 @@ sub new {
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
-		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
+		'0110' => ($rpackets{'0110'} == 10 )# or 14 PACKETVER_RE_NUM >= 20180704
+			? ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]] # 10
+			: ['skill_use_failed', 'v V2 C2', [qw(skillID btype fail type)]] # 12			
+		'010A' => ($rpackets{'010A'} == 4 )# or 6 PACKETVER_RE_NUM >= 20180704
+			? ['mvp_item', 'v', [qw(itemID)]] # 2
+			: ['mvp_item', 'V', [qw(itemID)]] # 4	
+		,
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
 		'010C' => ['mvp_other', 'a4', [qw(ID)]], # 6
 		'010D' => ['mvp_item_trow'], # 2
@@ -262,7 +267,10 @@ sub new {
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
 		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]], # -1
-		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
+		'018F' => ($rpackets{'018F'} == 6) # or 8 PACKETVER_RE_NUM >= 20180704
+			? ['refine_result', 'v2', [qw(fail nameID)]] # 4
+			: ['refine_result', 'v V', [qw(fail nameID)]] # 6		
+		,	
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
 		'0194' => ['character_name', 'a4 Z24', [qw(ID name)]], # 30
@@ -277,7 +285,10 @@ sub new {
 			? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
 			: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
 		,
-		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
+		'01A3' => ($rpackets{'01A3'} == 5) # or 7 PACKETVER_RE_NUM >= 20180704
+			? ['pet_food', 'C v', [qw(success foodID)]] # 3
+			: ['pet_food', 'C V', [qw(success foodID)]] # 5
+		,
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]], # 11
 		'01A6' => ['egg_list'], # -1
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]], # 10
@@ -296,10 +307,19 @@ sub new {
 		'01C1' => ['remaintime_reply', 'V3', [qw(result expire_date remain_time)]], # 14
 		'01C2' => ['remaintime_info', 'V2', [qw(type remain_time)]], # 10
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
-		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
-		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
+		'01C4' => ($rpackets{'01C4'} == 22) # or 32 PACKETVER_RE_NUM >= 20180704
+			? ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]] # 22
+			: ['storage_item_added', 'a2 V2 C4 a16', [qw(ID amount nameID type identified broken upgrade cards)]] # 30
+		,	
+		'01C5' => ($rpackets{'01C5'} == 22) # or 32 PACKETVER_RE_NUM >= 20180704
+			? ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
+			: ['cart_item_added', 'a2 V2 C4 a16', [qw(ID amount nameID type identified broken upgrade cards)]], # 30
+		,
 		'01C7' => ['encryption_acknowledge'], # 2
-		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
+		'01C8' => ($rpackets{'01C8'} == 11) # or 13 PACKETVER_RE_NUM >= 20180704
+			? ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]] # 11
+			: ['item_used', 'a2 V a4 v C', [qw(ID itemID actorID remaining success)]] # 13
+		,
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
@@ -311,8 +331,8 @@ sub new {
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
 		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
-		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
-		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
+		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
+		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]], # 30
@@ -355,7 +375,10 @@ sub new {
 		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
 		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
 		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
+		'0223' => ($rpackets{'0223'} == 8) # or 10 PACKETVER_RE_NUM >= 20180704
+			? ['upgrade_message', 'a4 v', [qw(type itemID)]] # 6
+			: ['upgrade_message', 'a4 V', [qw(type itemID)]] # 8
+		,
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
 		'0226' => ['top10_taekwon_rank'], # 282
 		'0227' => ['gameguard_request'], # 18 ??
@@ -370,7 +393,10 @@ sub new {
 			? ['homunculus_property', 'Z24 C v16 V2 v', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill)]] # 69
 			: ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]] # 71
 		,
-		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
+		'022F' => ($rpackets{'022F'} == 5) # or 7 PACKETVER_RE_NUM >= 20180704
+			? ['homunculus_food', 'C v', [qw(success foodID)]], # 3
+			: ['homunculus_food', 'C V', [qw(success foodID)]], # 5
+		,
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]], # 12
 		'0235' => ['skills_list'], # -1 # homunculus skills
 		'0238' => ['top10_pk_rank'], #  282
@@ -407,8 +433,14 @@ sub new {
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
-		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
+		'0298' => ($rpackets{'0298'} == 6) # or 10 PACKETVER_RE_NUM >= 20180704
+			? ['rental_time', 'v V', [qw(nameID seconds)]] # 6
+			: ['rental_time', 'V2', [qw(nameID seconds)]] # 8
+		,
+		'0299' => ($rpackets{'0299'} == 6) # or 8 PACKETVER_RE_NUM >= 20180704
+			? ['rental_expired', 'v2', [qw(unknown nameID)]] # 4
+			: ['rental_expired', 'v V', [qw(unknown nameID)]] # 6
+		,
 		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
 		'029B' => ($rpackets{'029B'} == 72) # or 80
 			? ['mercenary_init', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]] # 72
@@ -428,7 +460,10 @@ sub new {
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
+		'02B8' => ($rpackets{'02B8'} == 22) #  or 32 PACKETVER_RE_NUM >= 20180704
+			? ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]] # 20
+			: ['party_show_picker', 'a4 V C3 a16 v C', [qw(sourceID nameID identified broken upgrade cards location type)]] # 30
+		,
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
@@ -488,11 +523,25 @@ sub new {
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
+		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
+		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
+		'0818' => ['buying_store_items_list', 'v a4 a4 V', [qw(len buyerID buyingStoreID zeny)]],
+		'081B' => ($rpackets{'080F'} == 10) #  or 12 PACKETVER_RE_NUM >= 20180704
+			? ['buying_store_update', 'v2 V', [qw(itemID count zeny)]]	#8
+			: ['buying_store_update', 'V v V', [qw(itemID count zeny)]] #10
+		,
 		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
+		'0824' => ($rpackets{'0824'} == 6) #  or 8 PACKETVER_RE_NUM >= 20180704
+			? ['buying_store_fail', 'v2', [qw(result itemID)]] #4
+			: ['buying_store_fail', 'v V', [qw(result itemID)]] #6
+		,
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
-		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
+		'084B' => ($rpackets{'084B'} == 19) #  or 21 PACKETVER_RE_NUM >= 20180704
+			? ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]] #17
+			: ['item_appeared', 'a4 V v C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]] #19
+		,
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
@@ -513,6 +562,7 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
@@ -534,9 +584,18 @@ sub new {
 		'0A00' => ['hotkeys', 'C a*', [qw(rotate hotkeys)]],
 		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
 		'0A07' => ['rodex_remove_item', 'C a2 v2', [qw(result ID amount weight)]],   # 9
-		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
-		'0A0A' => ['storage_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
-		'0A0B' => ['cart_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+		'0A09' => ($rpackets{'0A09'} == 45) #  or 55 PACKETVER_RE_NUM >= 20180704
+			? ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]] #43
+			: ['deal_add_other', 'V C V C3 a16 a25', [qw(nameID type amount identified broken upgrade cards options)]] #53
+		,
+		'0A0A' => ($rpackets{'0A0A'} == 47) #  or 57 PACKETVER_RE_NUM >= 20180704
+			? ['storage_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+			: ['storage_item_added', 'a2 V2 C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+		,
+		'0A0B' => ($rpackets{'0A0B'} == 47) #  or 57 PACKETVER_RE_NUM >= 20180704
+			? ['cart_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]] #45
+			: ['cart_item_added', 'a2 V2 C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]] #55
+		,
 		'0A0C' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
 		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -566,10 +625,15 @@ sub new {
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
-		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
+	#	'0ADC' => ['flag', 'V', [qw(unknown)]],
+		'0ADD' => ($rpackets{'0ADD'} == 22) #  or 24 PACKETVER_RE_NUM >= 20180704
+			? ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #24
+			: ['item_exists', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #22
+		,
+	#	'0ADE' => ['flag', 'V', [qw(unknown)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0B02' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		};
 
 	# Item RECORD Struct's
