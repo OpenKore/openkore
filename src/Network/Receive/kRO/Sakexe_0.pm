@@ -608,7 +608,10 @@ sub new {
 		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
-		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0A37' => ($rpackets{'0A37'} == 59) #  or 69 PACKETVER_RE_NUM >= 20180704
+			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 a3', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite view_id)]] #57
+			: ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 a3', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite view_id)]] #67
+		,
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
