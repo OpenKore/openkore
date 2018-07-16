@@ -1313,7 +1313,8 @@ sub sendReqRemainTime {
 
 sub sendBlockingPlayerCancel {
 	my ($self) = @_;
-
+	# XKore mode 1 / 3.
+	return if ($self->{net}->version == 1);
 	my $msg = $self->reconstruct({
 		switch => 'blocking_play_cancel',
 	});
