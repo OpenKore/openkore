@@ -4037,7 +4037,7 @@ sub instance_window_join {
 }
 
 # 02CE
-#0 = "The Memorial Dungeon reservation has been canceled."
+#0 = "The Memorial Dungeon reservation has been canceled/updated."
 #    Re-innit Window, in some rare cases.
 #1 = "The Memorial Dungeon expired; it has been destroyed."
 #2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
@@ -4047,8 +4047,10 @@ sub instance_window_join {
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
-	if($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+	
+	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
+		debug T("Received Memory Dungeon reservation update\n");
+	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
 	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
