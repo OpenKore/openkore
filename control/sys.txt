@@ -44,7 +44,7 @@ panelTwo_fontsize 8
 #   1 : load all plugins
 #   2 : only load plugins that are listed in loadPlugins_list
 #   3 : load all plugins except those listed in skipPlugins_list
-loadPlugins 2
+loadPlugins 1
 
 # loadPlugins_list <list>
 #   if loadPlugins is set to 2, this comma-separated list of plugin names (filename without the extension)
