@@ -4540,23 +4540,26 @@ Criação de Máquina de Batalha
 #
 ST_CHASEWALK#
 Espreitar
-Nível Máximo: 5
-^777777Pré requisitos: Esconderijo 5, Tunel de Fuga 3^000000
-Tipo: ^777777Suporte^000000
-Resultado : ^777777Quando o jogador estiver usando esta habilidade ele não poderá ser detectado.
-Diferentemente da habilidade 'Esconderijo', um jogador usando Espreitar sofre dano de magias de ataque de área.
-Quando o jogador se mover, ele deixará pegadas. Não pode ser usada contra monstros do tipo inseto, demônio e Chefe.
-Esta habilidade pode ser utilizada durante a Guerra do Emperium.^000000
-[Nv 1]: ^77777712 SP/10 segundos, 70% da Vel. de Movimento
- +1 FOR após os primeiros 10 segundos^000000
-[Nv 2]: ^77777714 SP/10 segundos, 75% da Vel. de Movimento
- +2 FOR após os primeiros 10 segundos^000000
-[Nv 3]: ^77777716 SP/10 segundos, 80% da Vel. de Movimento
- +4 FOR após os primeiros 10 segundos^000000
-[Nv 4]: ^77777718 SP/10 segundos, 85% da Vel. de Movimento
- +8 FOR após os primeiros 10 segundos^000000
-[Nv 5]: ^77777720 SP/10 segundos, 90% da Vel. de Movimento
- +16 FOR após os primeiros 10 segundos^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Esconderijo 5^000000
+^777777Tunel de Fuga 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Esconde-se para evitar a detecção
+de habilidades como 'Revelação', porém
+ainda sofrerá dano de magias em área.
+Após 10 segundos invisível, um bônus
+de FOR será concedido por 30 segundos.
+Enquanto estiver ativa, o movimento é
+reduzido e drena SP a cada 10 segundos.
+Na GdE, drena mais SP que o normal.^000000
+Nv. l SP drenado l Movimento l FOR
+[Nv 1]: ^77777712^000000 l ^77777770%^000000 l ^777777+1^000000
+[Nv 2]: ^77777714^000000 l ^77777775%^000000 l ^777777+2^000000
+[Nv 3]: ^77777716^000000 l ^77777780%^000000 l ^777777+4^000000
+[Nv 4]: ^77777718^000000 l ^77777785%^000000 l ^777777+8^000000
+[Nv 5]: ^77777720^000000 l ^77777790%^000000 l ^777777+16^000000
 #
 ST_REJECTSWORD#
 Instinto de Defesa
@@ -9693,7 +9696,7 @@ Nível máximo: ^7777775^000000
 Pré requisitos:
 ^777777Estilingue 5^000000 ou
 ^777777Flecha Melódica 5^000000
-Tipo: ^777777 Ofensiva^000000
+Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Apenas com Arcos.^000000
 ^777777Consome 20 flechas para causar
@@ -9765,7 +9768,7 @@ Descrição:
 ^777777Consome 1 Lágrima de Arrependiento
 para ter a chance de reviver
 outros personagens, drenando SP
-do alvo para recuperar em HP.
+do alvo para recuperar em HP.^000000
 Nível l Chance l SP drenado
 [Nv 1]: ^77777790%^000000 l ^77777750%^000000
 [Nv 2]: ^77777792%^000000 l ^77777740%^000000
@@ -9881,7 +9884,7 @@ Serenata ao Luar 1^000000 ou
 ^777777Harmonizar 1
 Sinfonia dos Ventos 1 e
 Canção de Balder 1^000000
-Tipo: ^^777777Suporte^000000 / ^CD3278Coral^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
 ^777777Usuário e membros do grupo
@@ -9906,7 +9909,7 @@ Serenata ao Luar 1^000000 ou
 ^777777Harmonizar 1
 Sinfonia dos Ventos 1 e
 Canção de Balder 1^000000
-Tipo: ^^777777Suporte^000000 / ^CD3278Coral^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
 ^777777Reduz a conjuração fixa e
@@ -10384,15 +10387,23 @@ Descrição: ^777777 Gira o carrinho para criar um tornado em área que causa da
 #
 GN_CARTCANNON#
 Canhão de Prótons
-Nível Máximo: 5
-^777777Pré requisitos: Aprimorar Carrinho 2^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Atira com um canhão de prótons equipado no carrinho. Causa dano elevado a um alvo e oponentes ao redor. Necessita de um carrinho equipado. O dano é aumentado dependendo do Ataque, nível de Aprimorar Carrinho e INT do usuário. Consome 1 Bala de Canhão. ^000000
-[Nv 1]: ^777777 ATQ 60% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 2]: ^777777 ATQ 120% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 3]: ^777777 ATQ 180% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 4]: ^777777 ATQ 240% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 5]: ^777777 ATQ 300% + Bônus pelo nível de Aprimorar Carrinho ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Aprimorar Carrinho 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância
+ignorando a DEF dos alvos atingidos.
+O dano é aumentado pela INT do usuário
+e pelo nível de 'Aprimorar Carrinho'.
+Necessita de um carrinho e consome
+1 Bala de Canhão equipada.^000000
+Nv. l Área l ATQ l SP
+[Nv 1]: ^7777773x3 células^000000 l ^777777 60%^000000 l ^77777740^000000
+[Nv 2]: ^7777773x3 células^000000 l ^777777120%^000000 l ^77777742^000000
+[Nv 3]: ^7777775x5 células^000000 l ^777777180%^000000 l ^77777746^000000
+[Nv 4]: ^7777775x5 células^000000 l ^777777240%^000000 l ^77777748^000000
+[Nv 5]: ^7777777x7 células^000000 l ^777777300%^000000 l ^77777750^000000
 #
 GN_CARTBOOST#
 Propulsão do Carrinho
@@ -12003,11 +12014,11 @@ regenerar HP por segundo
 dos alvos ao redor.
 Só afeta o grupo em PvP/GdE.^000000
 Nv. l HP regen. l HP máx. l Área
-[Nv 1]: ^777777100^000000 l ^777777+5%^00000 l ^7777777x7 células^00000
-[Nv 2]: ^777777120^000000 l ^777777+10%^00000 l ^7777779x9 células^00000
-[Nv 3]: ^777777140^000000 l ^777777+15%^00000 l ^77777711x11 células^00000
-[Nv 4]: ^777777160^000000 l ^777777+20%^00000 l ^77777713x13 células^00000
-[Nv 5]: ^777777180^000000 l ^777777+25%^00000 l ^77777715x15 células^00000
+[Nv 1]: ^777777100^000000 l ^777777+5%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^777777120^000000 l ^777777+10%^000000 l ^7777779x9 células^000000
+[Nv 3]: ^777777140^000000 l ^777777+15%^000000 l ^77777711x11 células^000000
+[Nv 4]: ^777777160^000000 l ^777777+20%^000000 l ^77777713x13 células^000000
+[Nv 5]: ^777777180^000000 l ^777777+25%^000000 l ^77777715x15 células^000000
 #
 SO_ELEMENTAL_SHIELD#
 Escudo Elemental
@@ -12074,15 +12085,25 @@ Descrição : ^777777 Otimiza a Telecinese para melhorar o ataque mágico e o te
 #
 ALL_FULL_THROTTLE#
 Maximizar Poder
-Nível Máximo : 5
-^777777Pré requisito : Terceiras Classes  ^000000
-Descrição : ^777777 Aumenta o poder enquanto consome seu HP. Após o uso, causa fadiga extrema. ^000000
-^777777 Ao usar, +20% em todos os atributos, recupera todo o HP, aumenta a Velocidade de Movimento. O efeito não pode ser removido por Desencantar e Gênese. ^000000
-[Nível 1] : ^777777 Duração: 10 segundos / Consome 6% do SP por segundo ^000000
-[Nível 2] : ^777777 Duração: 15 segundos / Consome 4% do SP por segundo ^000000
-[Nível 3] : ^777777 Duração: 20 segundos / Consome 3% do SP por segundo ^000000
-[Nível 4] : ^777777 Duração: 25 segundos / Consome 2% do SP por segundo ^000000
-[Nível 5] : ^777777 Duração: 30 segundos / Consome 1% do SP por segundo ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Classe 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Recupera 100% do HP, acelera o
+movimento e fornece +20% em todos os
+seus atributos ao custo de sofrer 'Fadiga'
+por 10 segundos após o término do efeito.
+Drena SP por segundo enquanto ativa.
+Possui 50 minutos de recarga.^000000
+Fadiga:
+^777777Reduz o movimento e o HP e SP
+não serão regenerados naturalmente.^000000
+Nv. l Duração l Dreno de SP
+[Nv 1]: ^77777710 segundos^000000 l ^7777776%^000000
+[Nv 2]: ^77777715 segundos^000000 l ^7777774%^000000
+[Nv 3]: ^77777720 segundos^000000 l ^7777773%^000000
+[Nv 4]: ^77777725 segundos^000000 l ^7777772%^000000
+[Nv 5]: ^77777730 segundos^000000 l ^7777771%^000000
 #
 GN_ILLUSIONDOPING#
 Alucinógeno

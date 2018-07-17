@@ -3080,38 +3080,38 @@ Vá a Lighthalzen em Schwaltzvalt. #
 
 10066#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Ouvimos o relato do comandante da Expedição. #
-Fale com Sigaitz. #
+Fale com Sikaiz. #
 
 10067#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
-Pergunte ao comandante Sigaitz. #
-Continue perguntando a Sigaitz. #
+Pergunte ao comandante Sikaiz. #
+Continue perguntando a Sikaiz. #
 
 10068#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
-Atenda ao pedido de Sigaitz. #
+Atenda ao pedido de Sikaiz. #
 Fale com os gerentes da Expedição da Aliança em Rune-Midgard. #
 
 10069#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Você precisa terminar de falar com os gerentes de Rune-Midgard. #
-Volte a Sigaitz. #
+Volte a Sikaiz. #
 
 10070#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Você precisa saber sobre a Expedição da Aliança. #
 Continue questionando. #
 
 10071#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
-Responda ao pedido de Sigaitz. #
+Responda ao pedido de Sikaiz. #
 Fale com o gerente em Sessrumnir em Rachel. #
 
 10072#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Você terminou de falar com o gerente de Arunafeltz. #
-Volte a Sigaitz. #
+Volte a Sikaiz. #
 
 10073#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
 Eu devo ouvir o que nós devemos fazer para realizar a missão. #
 Registre-se para a Expedição da Aliança. #
 
 10074#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
-Responda ao pedido de Sigaitz. #
+Responda ao pedido de Sikaiz. #
 Encontre os oficiais. #
 
 10075#Outra Dimensão#SG_FEEL#QUE_NOIMAGE#
