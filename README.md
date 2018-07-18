@@ -37,6 +37,7 @@ To run OpenKore you will need:
 | `thRO` | Thai RO | EAC | Need Verification | N/A |
 | `mRO` | Malaysian RO | EAC | Not Working | N/A |
 | `phRO` | Philippines RO | EAC | Not Working | N/A |
+| `ruRO` | Russian RO | **** | Need Verification | N/A |
 | `twRO` | Taiwanese RO | Cdclient | Not working | windhamwong |
 
 ## Contributing
