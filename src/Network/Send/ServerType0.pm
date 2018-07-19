@@ -194,6 +194,7 @@ sub new {
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
+		'0AE8' => ['change_dress'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
