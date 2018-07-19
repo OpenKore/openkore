@@ -6277,4 +6277,10 @@ sub skill_msg {
 	}
 }
 
+#TODO !
+sub overweight_percent {
+	my ($self, $args) = @_;
+
+}
+
 1;
