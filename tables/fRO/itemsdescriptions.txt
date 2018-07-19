@@ -30206,8 +30206,7 @@ Give it to the Bandit Manchot in the Market House who's the only one to be able 
 Weight : ^7777771^000000
 #
 2636#
-A ring-shaped pass which allows you to collect Lotto Balls when killing monsters.
-
+A ring-shaped pass which allows you to collect Lotto Balls when killing monsters in the following dungeons.
 Weight : ^7777770^000000
 #
 2637#
@@ -39791,8 +39790,8 @@ Weight : ^7777774^000000
 #
 11580#
 ^ff0000Item cannot be traded between account.^000000
-Sweet candy ^000088Recover 45 HP^000000.
-
+Sweet candy
+^000088Recover 45 HP^000000.
 Weight : ^7777773^000000
 #
 11581#
@@ -39983,6 +39982,97 @@ Weight : ^7777770^000000
 A box obtained from the Happy Pet Vending Machine.
 Open it to get your reward.
 Weight : ^7777770^000000
+#
+
+17735#
+^ff0000Cannot trade with other users.^000000
+An egg that contains one horrifying costume from the list below:
+Costume Night Sky of Memory
+Costume Vampire Familiar
+Costume Bat Stole
+Costume Bloody Vicious Stop Bandage
+Costume Niflheim Bunny Hat
+Costume Hoplite Helmet
+Costume Little Devil S Horn
+Costume Assassin Skull Mask
+Costume Blue Magician Hat
+Costume Ghostring Tall  Hat
+
+Weight : ^7777771^000000
+#
+20451#
+A beautiful magician hat with a star on it.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31120#
+A costume that makes you feel like being a Vampire. One of the most popular item during Halloween .
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31121#
+A black scarf with bat wings attached on it.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31122#
+Tight bandages for wounds of the eyes. It seems that they were already used.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+20398#
+A hat from famous Healer of Niflheim, Hylozoist
+Characteristics are soft hair, floating chilly air, red button like rabbit's eye and X shaped mouth.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31117#
+A Helm used in ancient western country that was famous for close formation and tight defense.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+19915#
+Young and growing devil's horn.
+
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31118#
+A mask worn by a group of eastern assassins. It's shaped like a skull to notify targets of their imminent death.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31119#
+Talented Wizard's magic hat. It looks weird, but works just fine.
+
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
+#
+31123#
+Tall hat with flying Ghostring. Cute shabby tall hat.
+Wearing this hat makes feel horrifying. Well just feeling.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Equip : ^777777All Jobs^000000
 #
 
 
