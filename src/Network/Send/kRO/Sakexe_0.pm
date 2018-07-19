@@ -135,6 +135,7 @@ sub new {
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
+		'0AE8' => ['change_dress'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
