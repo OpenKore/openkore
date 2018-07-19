@@ -508,7 +508,11 @@ sub new {
 		'082A' => ['char_delete2_accept_result', 'V V', [qw(charID result)]], # 10
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],
@@ -2301,7 +2305,7 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO_Renewal iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
 
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
@@ -2322,7 +2326,7 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO cRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO_Renewal iRO idRO bRO cRO ))
 	) {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
@@ -4033,7 +4037,7 @@ sub instance_window_join {
 }
 
 # 02CE
-#0 = "The Memorial Dungeon reservation has been canceled."
+#0 = "The Memorial Dungeon reservation has been canceled/updated."
 #    Re-innit Window, in some rare cases.
 #1 = "The Memorial Dungeon expired; it has been destroyed."
 #2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
@@ -4043,8 +4047,10 @@ sub instance_window_join {
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
-	if($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+	
+	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
+		debug T("Received Memory Dungeon reservation update\n");
+	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
 	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
@@ -4576,13 +4582,6 @@ sub msg_string {
 	my ($self, $args) = @_;
 	message TF("index: %s para1: %s\n", $args->{ID}, $args->{para1}), "info";
 	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
-}
-
-sub skill_msg {
-	my ($self, $args) = @_;
-	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
-
-	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
 sub quest_all_list2 {

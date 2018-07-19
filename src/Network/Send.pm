@@ -31,7 +31,7 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite);
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog);
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -1313,7 +1313,8 @@ sub sendReqRemainTime {
 
 sub sendBlockingPlayerCancel {
 	my ($self) = @_;
-
+	# XKore mode 1 / 3.
+	return if ($self->{net}->version == 1);
 	my $msg = $self->reconstruct({
 		switch => 'blocking_play_cancel',
 	});
@@ -1623,6 +1624,71 @@ sub sendMakeItemRequest {
 		material_nameID3 => $material_nameID3,
 	}));
   debug "Sent Make Item Request.\n", "sendPacket", 2;
+}
+
+sub sendSearchStoreClose {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'search_store_close'}));
+	
+	$universalCatalog{open} = 0;
+	
+	debug "Sent search store close\n", "sendPacket", 2;
+}
+
+sub sendSearchStoreSearch {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'search_store_info',
+		type => $args->{type},
+		max_price => $args->{max_price},
+		min_price => $args->{min_price},
+		item_list => \@{$args->{item_list}},
+		card_list => \@{$args->{card_list}},
+	}));
+	
+	debug "Sent search store search\n", "sendPacket", 2;
+}
+
+sub reconstruct_search_store_info {
+	my ($self, $args) = @_;
+	
+	$args->{item_count} = scalar(@{$args->{item_list}});
+	$args->{card_count} = scalar(@{$args->{card_list}});
+	
+	my @id_list = (@{$args->{item_list}}, @{$args->{card_list}});
+
+	$args->{item_card_list} = pack "(a*)*", map { pack "v", $_ } @id_list;
+}
+
+sub sendSearchStoreRequestNextPage {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'search_store_request_next_page'}));
+	
+	debug "Sent search store next page request\n", "sendPacket", 2;
+}
+
+sub sendSearchStoreSelect {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'search_store_select',
+		accountID => $args->{accountID},
+		storeID => $args->{storeID},
+		nameID => $args->{nameID},
+	}));
+	
+	debug "Sent search store select request\n", "sendPacket", 2;
+}
+
+sub sendNoviceDoriDori {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'novice_dori_dori'}));
+	
+	debug "Sent Novice Dori Dori\n", "sendPacket", 2;
 }
 
 1;

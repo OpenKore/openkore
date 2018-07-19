@@ -6192,4 +6192,89 @@ sub open_buying_store_fail { #0x812
 	$buyershopstarted = 0;
 }
 
+sub search_store_open {
+	my ($self, $args) = @_;
+	
+	debug TF("Opened %s for searching open vendors in this map.\n", 
+		$args->{type} ? T("Universal Catalog Gold") : T("Universal Catalog Silver")),
+		2, "search_store";
+	message TF("You can now search open vendors in this map. Searches remaining: %d\n", $args->{amount});
+	
+	$universalCatalog{open} = 1;
+	$universalCatalog{type} = $args->{type};
+}
+
+sub search_store_fail {
+	my ($self, $args) = @_;
+	
+	error TF("Search store failed. Reason #%d\n", $args->{reason});
+	
+	if ($args->{reason} == 0) {
+		error $msgTable[1804] . "\n";
+	} elsif ($args->{reason} == 1) {
+		error $msgTable[1785] . "\n";
+	} elsif ($args->{reason} == 2) {
+		error $msgTable[1799] . "\n";
+	} elsif ($args->{reason} == 3) {
+		error $msgTable[1801] . "\n";
+	} elsif ($args->{reason} == 4) {
+		error $msgTable[1798] . "\n";
+	} else {
+		error "Unknown reason\n";
+	}
+}
+
+sub search_store_result {
+	my ($self, $args) = @_;
+	my $unpackString = "a4 a4 a80 v C V v C a16";
+	
+	@{$universalCatalog{list}} = () if $args->{first_page};
+	$universalCatalog{has_next} = $args->{has_next};
+	
+	my @universalCatalogPage;
+	
+	for (my $i = 0; $i < length($args->{storeInfo}); $i += 106) {
+		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards) = unpack($unpackString, substr($args->{storeInfo}, $i));
+		
+		my @cards = unpack "v4", $cards;
+		
+		my $universalCatalogInfo = {
+			storeID => $storeID,
+			accountID => $accountID,
+			shopName => $shopName,
+			nameID => $nameID,
+			itemType => $itemType,
+			price => $price,
+			amount => $amount,
+			refine => $refine,
+			cards_nameID => $cards,
+			cards => \@cards,
+		};
+		
+		push(@universalCatalogPage, $universalCatalogInfo);
+		Plugins::callHook("search_store", $universalCatalogInfo);
+	}
+	
+	return unless scalar @universalCatalogPage;
+	
+	push(@{$universalCatalog{list}}, \@universalCatalogPage);
+	Misc::searchStoreInfo(scalar(@{$universalCatalog{list}}) - 1);
+}
+
+sub search_store_pos {
+	my ($self, $args) = @_;
+	
+	message TF("Selected store is at (%d, %d)\n", $args->{x}, $args->{y});
+}
+
+sub skill_msg {
+	my ($self, $args) = @_;
+	if ($msgTable[++$args->{msgid}]) { # show message from msgstringtable.txt -> [<Skill_Name>] <Message>
+		my $skill = new Skill(idn => $args->{id});
+		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
+	} else {
+		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
+}
+
 1;

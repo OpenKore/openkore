@@ -86,13 +86,16 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID/,
+	itemNameToID
+	itemNameToIDList
+	containsItemNameToIDList/,
 
 	# File Parsing and Writing
 	qw/chatLog
 	shopLog
 	monsterLog
-	deadLog/,
+	deadLog
+	searchStoreInfo/,
 
 	# Logging
 	qw/itemLog/,
@@ -2060,6 +2063,40 @@ sub itemNameToID {
 			return $hashID;
 		}
 	}
+}
+
+sub itemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if ($itemName eq lc($items_lut{$hashID})) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
+}
+
+sub containsItemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if (index(lc($items_lut{$hashID}), $itemName) != -1) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
 }
 
 ##
@@ -4856,6 +4893,27 @@ sub CharacterLogin {
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
+}
+
+sub searchStoreInfo {
+	my ($page) = @_;
+	
+	message T("============================================== Search Store Result ==============================================\n");
+	message TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
+	message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+		["#", T("Shop Name"), T("Item"), T("Price"), T("Amount")]));
+	
+	for (my $i = 0; $i < scalar(@{${$universalCatalog{list}}[$page]}); ++$i) {
+		message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+				[$i, ${$universalCatalog{list}}[$page][$i]{shopName},
+				itemName({
+					nameID => ${$universalCatalog{list}}[$page][$i]{nameID},
+					cards => ${$universalCatalog{list}}[$page][$i]{cards_nameID},
+					upgrade => ${$universalCatalog{list}}[$page][$i]{refine}
+				}), formatNumber(${$universalCatalog{list}}[$page][$i]{price}), ${$universalCatalog{list}}[$page][$i]{amount}]), "list");
+	}
+	
+	message T("=================================================================================================================\n");
 }
 
 return 1;
