@@ -6277,4 +6277,14 @@ sub skill_msg {
 	}
 }
 
+sub partylv_info {
+    my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{lv} = $args->{lv};
+	}
+}
+
+
 1;
