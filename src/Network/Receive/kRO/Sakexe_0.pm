@@ -565,6 +565,7 @@ sub new {
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
@@ -4028,6 +4029,13 @@ sub achievement_reward_ack {
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
+sub party_dead {
+	my ($self, $args) = @_;
 
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
 
 1;
