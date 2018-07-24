@@ -14,7 +14,6 @@ package Network::Send::idRO::Renewal;
 
 use strict;
 use base qw(Network::Send::idRO);
-use Utils qw(getHex);
 
 sub sendMasterSecureLogin {
 	my ($self, $username, $password, $salt, $version, $master_version, $type, $account) = @_;
@@ -33,7 +32,7 @@ sub sendMasterSecureLogin {
 	my @msg;
 
 	for(my $i = 0; $i < length($packet); $i++) {
-		push @msg, 0x.getHex(substr($packet, $i, 1));
+		push @msg, 0x.unpack("C*", substr($packet, $i, 1));
 	}
 	
 	$self->sendToServer($self->encrypt_packet(@msg));
@@ -48,8 +47,8 @@ sub sendMasterSecureLogin {
 # yy yy yy yy = encryption second phase
 # xx xx xx xx = encryption first phase
 
-# '01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
-
+# Algoritm Code by @FF
+# Converted to opekore by @alisonrag
 # Here we convert 01DD to 0A75
 sub encrypt_packet {
 	my ($self, @msg) = @_;
@@ -125,6 +124,9 @@ sub encrypt_packet {
 	my @mini_key = ( 0x38, 0x59, 0x00, 0x00 );
 	my @container;
 	my $final_packet;
+
+	# Undef Packet ID
+	($msg[0], $msg[1]) = 0x00;
 
 	# First Phase (19th - 47th byte)
 	for (my $i = 0; $i < 47; $i++) {
