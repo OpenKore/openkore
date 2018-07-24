@@ -16,7 +16,7 @@ use strict;
 use Globals qw($messageSender %timeout %config);
 use Log qw(message debug);
 
-use base qw(Network::Receive::ServerType0);
+use base qw(Network::Receive::idRO);
 use Translation qw(T TF);
 use Utils qw(formatNumber swrite timeOut);
 use Misc qw(center itemName);
