@@ -8029,8 +8029,8 @@ Gobonge#
 
 //- 문어동굴
 4197#Gurita#SG_FEEL#QUE_NOIMAGE#
-Gurita Muncul setiap 3 jam sekali.#
-muncul kembali dalam: 3 hours#
+Gurita Muncul setiap 24 jam sekali.#
+muncul kembali dalam: 24 hours#
 
 // 2010 말랑도 - 냥이 게이머즈
 5058#Emosi pemain-(1)#SG_FEEL#QUE_NOIMAGE#
@@ -10345,6 +10345,7 @@ Jack beristirahat#
 Kalahkan 10 runaway Jacks di field map atau dungeon, kumpulkan 10 Pumpkin Decorations dan 20 Dried white stems kepada Hororong..#
 Kirimkan Jack ke Nifelheim#
 
+
 // 2015 Christmas
 9432#Antonio's Proposal#SG_FEEL#QUE_NOIMAGE#
 People are saying Antonio is looking for an Adventurer at Prontera. Sounds like a secret mission will be there....#
@@ -10357,3 +10358,808 @@ Collect 7 dolls, remodel them, return to Jakk#
 9434#One at a time#SG_FEEL#QUE_NOIMAGE#
 Doll collecting quest can be performed only once a day.#
 Quest resets 04:00 each day#
+
+19048#Ossas Daily Login#SG_FEEL#QUE_NOIMAGE#
+Kini Ossas sudah belajar menghitung hari-hari. Dia semakin pintar! Kamu dapat berbicara kembali ke ^0000FFOssas^000000 untuk mengambil hadiah Daily Login setiap pergantian hari yaitu pukul ^00008800.00 Wib^000000#
+Daily Login ^0000FFOssas^000000 reset setiap hari pukul 00.00 Wib#
+
+// Maulid
+19067#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Perintah Sultan Octa#
+Temukan NPC Penjaga Utara Sograt untuk memulai quest#
+
+19068#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Perintah NPC Penjaga Utara#
+Temukan NPC penjaga Timur Sograt untuk memulai Quest selanjutnya#
+
+19069#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Perintah NPC Penjaga Timur#
+Temukan NPC penjaga Barat Sograt untuk memulai Quest selanjutnya#
+
+19070#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Perintah NPC Penjaga Barat#
+Temukan NPC penjaga Selatan Sograt untuk memulai Quest selanjutnya#
+
+19071#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Perintah NPC Penjaga Selatan#
+Temukan NPC Octa untuk menerima hadiah darinya#
+
+// Maulid 2
+19072#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Pesan dari NPC Sultan Octa#
+Temukan NPC BOY di Alberta untuk memulai quest lanjutan#
+
+19073#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC Boy#
+Temui NPC Ibu Boy dan bawakan bahan bahan yang dibutuhkan untuk membuat Ketupat Sayur#
+
+19074#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC Ibu Boy#
+Temui NPC Nenek Boy dan bawakan 5 buah ketupat sayur untuknya#
+
+19075#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC Nenek Boy#
+Temui NPC Kakek Boy untuk memberitahu bahwa ada hidangan kesukaannya dirumah#
+
+19076#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC kakek Boy#
+Carikan Water of Blessing dari reruntuhan Morocc#
+
+19077#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC kakek Boy#
+Temui NPC Ibu Boy untuk mendapatkan hadiah sebagai ucapan rasa terima kasih sang Kakek#
+
+19078#Event Maulid 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan NPC kakek Boy-2#
+Temui NPC Ibu Boy untuk mendapatkan hadiah sebagai ucapan rasa terima kasih sang Kakek#
+
+// Quest Natal
+19079#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan Santa Claus#
+Temui NPC Suster Jane & Kenakan Granpa Beard dan Santa hat#
+
+19080#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan pertama Suster Jane#
+Bawakan 20 Candy Cane, 20 Piece of Cake, 1 Forbiden Candle dan temui NPC Jane kembali#
+
+19081#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Milia#
+Bawakan kado untuk Milia di Prontera#
+
+19082#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Suster Jane#
+Temui NPC Suster Jane untuk mendapatkan Quest selanjutnya#
+
+19083#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan kedua Suster Jane#
+Bawakan Main Gauche [4] 1, Elastic Band 40, Piece of Bamboo 40, Sharp Paper 30 dan temui NPC Jane kembali#
+
+19084#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Joe#
+Temui NPC Joe dan berikan kado untuknya#
+
+19085#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Suster Jane(2)#
+Temui NPC Suster Jane untuk mendapatkan Quest selanjutnya#
+
+19086#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Permintaan ketiga Suster Jane#
+Bawakan Torn Magic Book 1, Worn-out Magic Scroll  1, Bookclip in Memory 1 dan temui NPC Jane kembali#
+
+19087#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Julia#
+Temui NPC Julia dan berikan kado untuknya#
+
+19088#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Suster Jane(3)#
+Temui NPC Suster Jane untuk mendapatkan Quest selanjutnya#
+
+19089#Event Delivery Gift 2017#SG_FEEL#QUE_NOIMAGE#
+Temui NPC Santa Claus#
+Temui NPC Santa Claus untuk mendapatkan hadiah#
+
+// Eden Quest 
+
+4167#Dragon Tail Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Dragon Tail di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4168#Spring Rabbit Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Spring Rabbit di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4169#Pest Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Pest di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4170#Bathory Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Bathory di Clock Tower dan kembali ke markas Eden Group lantai 2.#
+#
+
+4171#Alarm Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Alarm di Clock Tower dan kembali ke markas Eden Group lantai 2.#
+#
+
+4172#Baba Yaga Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Baba Yaga di Moscovia dan kembali ke markas Eden Group lantai 2.#
+#
+
+4173#Yao Jun Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Yao Jun di Louyang dan kembali ke markas Eden Group lantai 2.#
+#
+
+4174#Firelock Soldier Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Firelock Soldier di Amatsu dan kembali ke markas Eden Group lantai 2.#
+#
+
+4175#Zipper Bear Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Zipper Bear di Kunlun dan kembali ke markas Eden Group lantai 2.#
+#
+
+4176#Ground Petite Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Ground Petite disekitar Geffen dan kembali ke markas Eden Group lantai 2.#
+#
+
+4177#Rafflesia Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Rafflesia disekitar Lighthalzen dan kembali ke markas Eden Group lantai 2.#
+#
+
+4178#Venomous Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Venomous disekitar Einbroch dan kembali ke markas Eden Group lantai 2.#
+#
+
+4179#Pitman Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Pitman disekitar Einbroch dan kembali ke markas Eden Group lantai 2.#
+#
+
+4180#Yellow Novus Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Yellow Novus disekitar Einbroch dan kembali ke markas Eden Group lantai 2.#
+#
+
+4181#Solider Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Solider di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4182#Freezer Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Freezer di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4183#Heater Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Heater di Turtle Island dan kembali ke markas Eden Group lantai 2.#
+#
+
+4184#Injustice Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Injustice di Glast Heim dan kembali ke markas Eden Group lantai 2.#
+#
+
+4185#Rybio Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Rybio di Glast Heim dan kembali ke markas Eden Group lantai 2.#
+#
+
+4186#Dark Priest Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Dark Priest di Glast Heim dan kembali ke markas Eden Group lantai 2.#
+#
+
+4187#Stapo Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Stapo di Veins dan kembali ke markas Eden Group lantai 2.#
+#
+
+4188#Roween Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Roween di Rachel dan kembali ke markas Eden Group lantai 2.#
+#
+
+4189#Siroma Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Siroma di Ice Dungeon dan kembali ke markas Eden Group lantai 2.#
+#
+
+4190#Shinobi Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Shinobi di Amatsu dan kembali ke markas Eden Group lantai 2.#
+#
+
+4191#Evil Nymph Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Evil Nymph di Kunlun dan kembali ke markas Eden Group lantai 2.#
+#
+
+4192#Deviruchi Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Deviruchi di Geffen Dungeon dan kembali ke markas Eden Group lantai 2.#
+#
+
+4193#Mineral Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Mineral di Geffen Dungeon dan kembali ke markas Eden Group lantai 2.#
+#
+
+4194#Kaho Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Kaho di Thor Volcano dan kembali ke markas Eden Group lantai 2.#
+#
+
+4195#Neraid Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Neraid di Comodo Dungeon dan kembali ke markas Eden Group lantai 2.#
+#
+
+4196#Disguise Hunting#SG_FEEL#QUE_NOIMAGE#
+Kalahkan 30 monster Disguise di Nifflheim dan kembali ke markas Eden Group lantai 2.#
+#
+
+4198#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Dragon Tail.#
+#
+
+4199#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Spring Rabbit.#
+#
+
+4200#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Pest.#
+#
+
+4201#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Bathory.#
+#
+
+4202#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Alarm.#
+#
+
+4203#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Baba Yaga.#
+#
+
+4204#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Yao Jun.#
+#
+
+4205#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Firelock Soldier.#
+#
+
+4206#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Zipper Bear.#
+#
+
+4207#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Ground Petite.#
+#
+
+4208#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Rafflesia.#
+#
+
+4209#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Venomous.#
+#
+
+4210#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Pitman.#
+#
+
+4211#86-90 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Yellow Novus.#
+#
+
+4212#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Solider.#
+#
+
+4213#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Freezer.#
+#
+
+4214#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Heater.#
+#
+
+4215#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Injustice.#
+#
+
+4216#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Rybio.#
+#
+
+4217#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Dark Priest.#
+#
+
+4218#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Stapo.#
+#
+
+4219#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Roween.#
+#
+
+4220#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Siroma.#
+#
+
+4221#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Shinobi.#
+#
+
+4222#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Evil Nymph.#
+#
+
+4223#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Deviruchi.#
+#
+
+4224#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Mineral.#
+#
+
+4225#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Kaho.#
+#
+
+4226#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Neraid.#
+#
+
+4227#91-99 Mission Board Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang Quest Hunt Disguise.#
+#
+
+
+//-headgear quest 2012
+5161#Permintaan koleksi level rendah[Cooldown]#SG_FEEL#QUE_NOIMAGE#
+Permintaan koleksi level rendah dari Riset Energy Crystal hanya bisa dilakukan 1 kali dalam sehari.#
+Waktu menunggu - 23 Jam#
+
+5162#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Requiem, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5163#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Bathory, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5164#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Spring Rabbit, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5165#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Sleeper, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5166#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Evil Druid, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5167#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Petit, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5168#Permintaan koleksi level rendah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level rendah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Clock, Kamu bisa mendapatkan 10 Rough Energy Crystal.#
+#
+
+5169#Permintaan koleksi level menengah[Cooldown]#SG_FEEL#QUE_NOIMAGE#
+Permintaan koleksi level menengah dari Riset Energy Crystal hanya bisa dilakukan 1 kali dalam sehari.#
+Waktu menunggu - 23 Jam#
+
+5170#Permintaan koleksi level menengah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level menengah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Siroma, Kamu bisa mendapatkan 10 Purified Energy Crystals.#
+#
+
+5171#Permintaan koleksi level menengah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level menengah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Dark Priest, Kamu bisa mendapatkan 10 Purified Energy Crystals.#
+#
+
+5172#Permintaan koleksi level menengah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level menengah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Stapo, Kamu bisa mendapatkan 10 Purified Energy Crystals.#
+#
+
+5173#Permintaan koleksi level menengah#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level menengah dari Riset Energy Crystal] Jika kamu mengalahkan 100 Solider, Kamu bisa mendapatkan 10 Purified Energy Crystals.#
+#
+
+5174#Permintaan koleksi level tinggi[Cooldown]#SG_FEEL#QUE_NOIMAGE#
+Permintaan koleksi level tinggi dari Riset Energy Crystal hanya bisa dilakukan 1 kali dalam sehari.#
+Waktu menunggu - 23 Jam#
+
+5175#Permintaan koleksi level tinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Desert Wolf, Kamu bisa mendapatkan 5 High Purity Energy crystals.#
+#
+
+5176#Permintaan koleksi level tinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Medusa, Kamu bisa mendapatkan 5 High Purity Energy crystals.#
+#
+
+5177#Permintaan koleksi level tinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Pinguicula, Kamu bisa mendapatkan 5 High Purity Energy crystals.#
+#
+
+5178#Permintaan koleksi level tinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Majoruros, Kamu bisa mendapatkan 5 High Purity Energy crystals.#
+#
+5179#Permintaan koleksi level tertinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tertinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Raydric, Kamu bisa mendapatkan 10 High Purity Energy crystals.#
+#
+
+5180#Permintaan koleksi level tertinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tertinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Naga, Kamu bisa mendapatkan 10 High Purity Energy crystals.#
+#
+
+5181#Permintaan koleksi level tertinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tertinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Ancient Mummy, Kamu bisa mendapatkan 10 High Purity Energy crystals.#
+#
+
+5182#Permintaan koleksi level tertinggi#SG_FEEL#QUE_NOIMAGE#
+[Permintaan level tertinggi dari Riset Energy Crystal] Jika kamu mengalahkan 100 Ancient Mimic, Kamu bisa mendapatkan 10 High Purity Energy crystals.#
+#
+
+//----- 2012 투구강화 퀘스트(추가)
+5222#Menyimpan energy crystal#SG_FEEL#QUE_NOIMAGE#
+Menyimpan Rough energy crystal kedalam tubuh. ^FF0000*Kembalilah ke Reno jika Buff menghilang.*^000000#
+#
+
+5223#Menyimpan energy crystal#SG_FEEL#QUE_NOIMAGE#
+Menyimpan Purified energy crystal kedalam tubuh. ^FF0000*Kembalilah ke Reno jika Buff menghilang.*^000000#
+#
+
+5224#Menyimpan energy crystal#SG_FEEL#QUE_NOIMAGE#
+Menyimpan High Purity energy crystal kedalam tubuh. ^FF0000*Kembalilah ke Reno jika Buff menghilang.*^000000#
+#
+
+5225#Menyimpan energy crystal[Cooldown]#SG_FEEL#QUE_NOIMAGE#
+Jika kamu mau menyimpan^0000FFRough Energy Crystal^000000 lagi di dalam tubuhmu, kamu harus menunggu^FF0000 20 jam^000000lagi.#
+Waktu menunggu - 20 Jam#
+
+5226#Saving energy crystal[Stand by]#SG_FEEL#QUE_NOIMAGE#
+Jika kamu mau menyimpan^0000FF Purified Energy Crystal^000000 lagi di dalam tubuhmu, kamu harus menunggu^FF0000 20 jam^000000lagi.#
+Waktu menunggu - 20 Jam#
+
+5227#Saving energy crystal[Stand by]#SG_FEEL#QUE_NOIMAGE#
+Jika kamu mau menyimpan^0000FFHigh Purity Energy Crystal^000000 lagi di dalam tubuhmu, kamu harus menunggu^FF0000 20 jam^000000lagi.#
+Waktu menunggu - 20 Jam#
+
+//리벨리온
+12340#Falsely accused#SG_FEEL#QUE_NOIMAGE#
+I seem to have been mistaken for someone else. Let's go to the secret bar in Einbroch where they distributed the wanted posters.#
+Job Change to Rebellion#
+
+
+12341#A New Challenge#SG_FEEL#QUE_NOIMAGE#
+I have decided to be come a Rebellion. Let's pass their tests.#
+Job Change to Rebellion#
+
+
+12342#Weapon Assembly#SG_FEEL#QUE_NOIMAGE#
+Collet 5 Steel Artifacts that fits the standard and head to the next room to assemble the weapon. You will fail the test if I don't succeed within the time limit.#
+Job Change to Rebellion#
+
+
+12343#A Proper Sniper#SG_FEEL#QUE_NOIMAGE#
+Hit 10 Standard-Issue Targets. Let's finish it quickly within the time limit. #
+Job Change to Rebellion#
+
+
+12344#An Improper Sniper#SG_FEEL#QUE_NOIMAGE#
+If you hit 3 Defective Targets, you wil fail the test. Don't shoot them! #
+Job Change to Rebellion#
+
+
+12345#Becoming a Rebellion#SG_FEEL#QUE_NOIMAGE#
+Let's visit the legendary rebellion Ivan Sidorenko and complete the final test.#
+Job Change to Rebellion#
+
+//-----update 13022018------
+19090#Munak's Letter Delivery#SG_FEEL#QUE_NOIMAGE#
+Permintaan Princess Munak#
+Berikan Surat untuk Prince Bongun di Louyang#
+
+19091#Flame Heart Quest#SG_FEEL#QUE_NOIMAGE#
+Permintaan Prince Bongun#
+Dapatkan Flame Heart dan temui Prince Bongun#
+
+19092#Bongun's beautiful paintings#SG_FEEL#QUE_NOIMAGE#
+Permintaan Prince Bongun#
+Berikan Lukisan buatan Bongun kepada Princess Munak di Payon#
+
+19093#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 1 - Ground Floor^000000 : Kalahkan 100 ^000088Pere2^000000, ^000088Pere3^000000, ^000088Pere4^000000. ^000088Pere2^000000 memiliki pita putih di kepalanya. ^000088Pere3^000000 dan ^000088Pere4^000000 yang membawa alat musik. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 100 ^FF0000PERE2^000000, 100 ^FF0000PERE3^000000, 100 ^FF0000PERE4^000000#
+
+19094#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 2 - Main Hall^000000 : Kalahkan 100 ^000088Novice Arhi^000000, ^000088Mage Dio Anemos^000000, ^000088Thief Shoplifter^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 100 ^0000FFArhi^000000, 100 ^0000FFDio Anemos^000000, 100 ^0000FFShoplifter^000000#
+
+19095#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 3 - Main Hall^000000 : Kalahkan 100 ^000088Monk Faymont^000000, ^000088MWizard Ordre^000000, ^000088Crusader Blut Hase^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 100 ^0000FFFaymont^000000, 100 ^0000FFOrdre^000000, 100 ^0000FFBlut Hase^000000#
+
+19096#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 4 - Main Hall^000000 : Kalahkan 50 ^000088Kagerou Kuro Akuma^000000, ^000088MArchBishop Licheniyes^000000, ^000088Wanderer Odoric^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 50 ^0000FFKuro Akuma^000000, 50 ^0000FFLicheniyes^000000, 50 ^0000FFOdoric^000000#
+
+19097#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 5 - Main Hall^000000 : Kalahkan 20 ^000088Alphonse^000000 dan 100 ^000088Alphonse Junior^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 20 ^0000FFAlphonse^000000, 100 ^0000FFAlphonse Jr^000000#
+
+19098#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 6 - Ground Floor^000000 : Kalahkan Mini-Boss ^000088Jitterbug^000000 dan ^000088[MVP] Grand Pere^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 1 ^0000FFJitterbug^000000, 1 ^0000FFGrand Pere^000000#
+
+19099#Hall of Nightmare Quest#SG_FEEL#QUE_NOIMAGE#
+^0000FFQuest Level 7 - Ground Floor^000000 : Kalahkan Mini-Boss ^000088Alchemist Fay Kanavian^000000 dan ^000088[MVP] Fenrir^000000. Laporkan kepada Grandmaster Avarel apabila kamu telah menyelesaikannya#
+Kalahkan 1 ^0000FFFay Kanavian^000000, 1 ^0000FFFenrir^000000#
+
+19100#Hall of Nightmare Timer#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang atau mengambil quest lagi. Tetapi, kamu masih tetap dapat melapor quest yang telah diselesaikan#
+#
+
+//---Eden Quest 100 - 110
+13002#Brigan collecting#SG_FEEL#QUE_NOIMAGE#
+Collect 50 Brigan pieces from Turtle Island or Glastheim and bring it back to Gelkah at Eden Group.#
+Bring back 50 ^FF0000Brigan^000000#
+
+13003#Carat Request#SG_FEEL#QUE_NOIMAGE#
+This request is from a merchant of Morroc. Carats are selling ice cream all year long and he can't make any profit. The Eden Group team knows that is not the real reason but a request is request.#
+Hunt ^FF000030 Carat^000000 and return to Gelkah#
+
+13004#Carat Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13005#Arclouse Request#SG_FEEL#QUE_NOIMAGE#
+Do you know there are beans used as food here in Rune Midgard? When an Arclouse rolls, it resembles a bean.#
+Hunt ^FF0000 22 Arclouse^000000 and return to Gelkah#
+
+13006#Arclouse Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13007#Anolian Request#SG_FEEL#QUE_NOIMAGE#
+Glastheim seems to be a good sacred place not only to adventurers but also to monks. I have no idea what really attracts them there.#
+Hunt ^FF000030 Anolian^000000 and return to Gelkah#
+
+13008#Anolian Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13009#Sting Request#SG_FEEL#QUE_NOIMAGE#
+Have you heard about a monk's pilgrimage? There are so many Stings in the underground waterway and cave so they disturb the peaceful monks.#
+Hunt ^FF000030 Sting^000000 and return to Gelkah#
+
+13010#Sting Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13011#Majoruros Request#SG_FEEL#QUE_NOIMAGE#
+The monk's pilgrimage destination is on the 2nd floor of the Glastheim castle underground cave. it is not an easy journey but will be a good experience.#
+Hunt ^FF000030 Majoruros^000000 and return to Gelkah#
+
+13012#Majoruros Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13013#Pinguicula Request#SG_FEEL#QUE_NOIMAGE#
+Pinguicula is one of the first monsters that adventurers encounter when they step into the Ash Vacuum. They expect us to reduce monsters around the Expedition Camp.#
+Hunt ^FF000030 Pinguicula^000000 and return to Gelkah#
+
+13014#Pinguicula Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13015#Luciola Vespa Request#SG_FEEL#QUE_NOIMAGE#
+Rohtert was stung by one of these bee-like monsters so he made a request to exterminate them...#
+Hunt ^FF000030 Luciola Vespa^000000 and return to Gelkah#
+
+13016#Luciola Vespa Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13017#Desert Wolf Request#SG_FEEL#QUE_NOIMAGE#
+The Ice cave is directly north of Rachel. The problem is that the Wolves frighten tourists when they are heading to see the Ice cave.#
+Hunt ^FF000030 Desert Wolf^000000 and return to Gelkah#
+
+13018#Desert Wolf Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13019#Snowier Request#SG_FEEL#QUE_NOIMAGE#
+People who have been to ice dungeon say there are noisy monsters disturbing their visits. Please clear them if you can put up with it.#
+Hunt ^FF000030 Snowier^000000 and return to Gelkah#
+
+13020#Snowier Request timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13021#Ice Titan Request#SG_FEEL#QUE_NOIMAGE#
+Have you been to Ice cave north of Rachel? There are monsters called as Ice Titans deep in the dungeon. Scholars want to determine if they are golems or not.#
+Hunt ^FF000030 Ice Titan^000000 and return to Gelkah#
+
+13022#Ice Titan Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13023#Nightmare Terror Request#SG_FEEL#QUE_NOIMAGE#
+This request is from a client that is sad because the magma dungeon is full of monsters when she came back to return after breaking up with her lover.#
+Hunt ^FF000030 Nightmare Terror^000000 and return to Gelkah#
+
+13024#Nightmare Terror Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13025#Flying Deleter Request#SG_FEEL#QUE_NOIMAGE#
+A client showed a wonderful dance to a lover. One day, they were attacked from a Deleter while they are dancing in the magma dungeon.#
+Hunt ^FF000030 Deleter^000000 and return to Gelkah#
+
+13026#Deleter Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13040#Loli Ruri Request#SG_FEEL#QUE_NOIMAGE#
+A secret society requested the protection of the Eden Group from the Loli Ruris because they believe that they have mental powers.#
+Hunt ^FF000030 Loli Ruri^000000 and return to Gelkah#
+
+13041#Loli Ruri Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13042#Medusa Request#SG_FEEL#QUE_NOIMAGE#
+This is a request from a hair designer in Alberta. He wants to know if the snakes on the Medusa's head are really snakes or fancy hair...#
+Hunt ^FF000030 Medusa^000000 and return to Gelkah#
+
+13043#Medusa Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+13044#Anubis Request#SG_FEEL#QUE_NOIMAGE#
+An anonymous client sent a request to help clear monsters in Sphinx dungeon because adventurers hardly visit Morocc anymore. The monsters seem to be running rampant there.#
+Hunt ^FF000020 Anubis^000000 and return to Gelkah#
+
+13045#Anubis Request Timer#SG_FEEL#QUE_NOIMAGE#
+Wait for the timer to expire before re-accepting this request#
+#
+
+19101#Quest Special Paskah#SG_FEEL#QUE_NOIMAGE#
+^0000FFCorinthian^000000 : Kalahkan 50 ^000088Howard Alt-Eisen^000000, 50 ^000088Big Bell^000000, dan 100 ^000088Spring Rabbit^000000. Laporkan kepada Corinthian apabila kamu telah menyelesaikannya#
+Kalahkan 50 ^0000FFHarword^000000, 50 ^0000FFBig Bell^000000, 100 ^0000FFSpring Rabbit^000000#
+
+//--- Daily Quest 10 April 2018
+
+19102#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19103#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19104#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19105#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19106#Delay Bounty#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 3 jam sebelum bisa mengulang atau mengambil quest lagi.#
+#
+
+19107#Delay VIP Bounty#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 24 jam sebelum bisa mengulang atau mengambil VIP Bounty lagi#
+#
+
+19108#Delay Bounty Permit#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam sebelum bisa menggunakan Bounty Permit lagi di NPC Seraphina#
+#
+
+//--- Daily Quest 24 April 2018
+
+19109#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19110#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19111#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19112#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19113#Hunting Mission Quest#SG_FEEL#QUE_NOIMAGE#
+Kamu memiliki misi untuk mengalahkan monster-monster kuat yang berada di Nightmare Clock Tower#
+Kalahkan 300 ^ff0000Big Bell^000000 dan 300 ^ff0000Time Keeper^000000#
+
+19114#Hunting Mission Quest#SG_FEEL#QUE_NOIMAGE#
+Kamu memiliki misi untuk mengalahkan monster-monster kuat yang berada di Dungeon Scaraba#
+Kalahkan 300 ^ff0000Rake Scaraba^000000 dan 300 ^ff0000Antler Scaraba^000000#
+
+19115#Hunting Mission Quest#SG_FEEL#QUE_NOIMAGE#
+Kamu memiliki misi untuk mengalahkan monster-monster kuat yang berada di Eclage Tower#
+Kalahkan 300 ^ff0000Cenere^000000 dan 300 ^ff0000Antique Book^000000#
+
+// ----------- QUEST PERIODE RAMADHAN 2018 ---------
+
+19116#Quest Ketupat#SG_FEEL#QUE_NOIMAGE#
+Bahan untuk membuat 1 buah ketupat adalah : 5 Rice Pouch, 5 Potongan Daun Kelapa, 5 Water, dan 1 Pot#
+Buatlah ketupat di NPC Puspita yang ada di Alberta#
+
+19117#Kalahkan iblis di bulan Ramadhan#SG_FEEL#QUE_NOIMAGE#
+^0000FFBarmund^000000 : Bulan suci Ramadhan telah tiba, tapi ada beberapa iblis jahat yang mencoba mengacaukannya. Kalahkan mereka, hai pejuang!#
+Kalahkan 1 ^0000FFEvil Fanatics^000000, dan 1 ^0000FFTorturous Redeemer^000000#
+
+19118#Ramadhan Special Daily Login#SG_FEEL#QUE_NOIMAGE#
+Bulan suci Ramadhan telah tiba ! Kamu dapat mengambil hadiah-hadiah menarik setiap hari saat sahur dan berbuka puasa#
+Claim hadiahmu di NPC Ramadhan setiap pukul 02.00 - 04.00 wib pagi dan pukul 18.00 - 20.00 sore#
+
+//--- Daily Quest 05 Juni 2018
+
+19119#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19120#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19121#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19122#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 03 Juli 2018
+
+19123#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19124#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19125#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19126#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 10 Juli 2018
+
+19127#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19128#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19129#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19130#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 17 Juli 2018
+
+19131#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19132#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19133#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19134#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
