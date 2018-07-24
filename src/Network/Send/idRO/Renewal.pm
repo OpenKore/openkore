@@ -31,9 +31,9 @@ sub sendMasterSecureLogin {
 	});
 	
 	my @msg;
-	
+
 	for(my $i = 0; $i < length($packet); $i++) {
-		@msg[$i] = 0x.getHex(substr($packet, $i, 1));
+		push @msg, 0x.getHex(substr($packet, $i, 1));
 	}
 	
 	$self->sendToServer($self->encrypt_packet(@msg));
@@ -129,13 +129,13 @@ sub encrypt_packet {
 	# First Phase (19th - 47th byte)
 	for (my $i = 0; $i < 47; $i++) {
 		if ($counter == 4) { $counter = 0; }
-		@encrypted_packet[$i] = (($msg[$i] ^ $i) ^ $mini_key[$counter]) ^ 0x3F;
+		$encrypted_packet[$i + 20] = (($msg[$i] ^ $i) ^ $mini_key[$counter]) ^ 0x3F;
 		$counter++;
 	}
 	
 	# Second Phase (5th - 8th byte)
 	for (my $i = 0; $i < 59; $i++) {
-		$hex_indexer = ((@encrypted_packet[$i + 8] ^ ($temporary_calc & 0xFF)) * 4);
+		$hex_indexer = (($encrypted_packet[$i + 8] ^ ($temporary_calc & 0xFF)) * 4);
 
 		for (my $b = 0; $b < 4; $b++) {
 			$container[$b] = $key[$hex_indexer + $b];
@@ -151,11 +151,11 @@ sub encrypt_packet {
 	$container[3] = (($temporary_calc >> 24) & 0xFF);
 	
 	for (my	 $i = 0; $i < 4; $i++) {
-		@encrypted_packet[$i + 4] = $container[$i];
+		$encrypted_packet[$i + 4] = $container[$i];
 	}
 	
 	for(my $i = 0; $i < scalar @encrypted_packet; $i++) {
-		$final_packet .= pack("H*", @encrypted_packet[$i]);
+		$final_packet .= pack("C*", $encrypted_packet[$i]);
 	}
 
 	return $final_packet;
