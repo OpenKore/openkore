@@ -28,11 +28,12 @@ To run OpenKore you will need:
 | --- | --- | --- | --- | --- |
 | `iRO` | International(US) RO | **** | Botable, Weekly Update | allanon |
 | `bRO` | Brazilian RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| `idRO` | Indonesian RO | **** | Botable only RE_server | sctnightcore(temp)
+| `idRO` | Indonesian RO (Renewal) | **** | Botable | alisonrag, sctnightcore |
+| `idRO` | Indonesian RO (classic) | **** | Not Working | N/A  |
 | `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
-| `cRO` | Chinese RO | nProtect | Botable, Weekly Update  | alisonrag, sctnightcore |
+| `cRO` | Chinese RO | nProtect | Botable, Weekly Update | alisonrag, sctnightcore |
 | `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | Cdclient | Need Verification |  N/A|
+| `kRO` | Korea RO | Cdclient | Need Verification |  N/A |
 | `jRO` | Japanese RO | HShield | Need Verification | N/A |
 | `thRO` | Thai RO | EAC | Need Verification | N/A |
 | `mRO` | Malaysian RO | EAC | Not Working | N/A |
