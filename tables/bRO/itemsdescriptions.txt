@@ -23022,6 +23022,7 @@ Uma diadema abençoada por Freya, mãe de Baldur.
 ^0000ffDEFM +10.^000000
 ^0000ffSP máx. +50.^000000
 ^FF6347Conjunto^000000
+^FF6347[Bênção de Odin]^000000
 ^FF6347[Escudo das Valquírias]^000000
 ^0000ffDEF +2.^000000
 ^0000ffDEFM +5 adicional.^000000
@@ -53112,6 +53113,15 @@ Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas ^000000
+#
+20142#
+Inspirados nos motociclistas que fazem parte da Gang Z, esses óculos escuros são supermodernos e perfeitos para você esbanjar estilo em cima de qualquer montaria. É só colocá-los, fazer cara de mau e aproveitar a viagem aonde quer que você vá.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
 20144#
