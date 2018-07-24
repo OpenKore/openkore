@@ -6417,6 +6417,7 @@
 20134#Elmo do Cavaleiro Branco#
 20135#Coroa dos 11 Anos e um Segredo#
 20136#Orelhas dos 11 Anos e um Segredo#
+20142#Óculos de Motociclista#
 20144#Orelhas de Elfo Ancestral#
 20145#Visor do Ciborgue#
 20148#Chapéu do Dartanham#
