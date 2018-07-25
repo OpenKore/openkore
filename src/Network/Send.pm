@@ -1691,4 +1691,11 @@ sub sendNoviceDoriDori {
 	debug "Sent Novice Dori Dori\n", "sendPacket", 2;
 }
 
+sub sendChangeDress {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'change_dress'}));
+	
+	debug "Sent Change Dress\n", "sendPacket", 2;
+}
 1;
