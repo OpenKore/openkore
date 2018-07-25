@@ -3868,7 +3868,7 @@
 11717#Yogurt#
 11718#Sushi_Kebab#
 11719#Bisket_Dessert#
-5881#Wei?ier_Hat#
+5881#Weißier_Hat#
 7674#Mysterious_Ingredient#
 17335#Mysterious_Ingredient_Box#
 22624#Riesen_Bretzel#
@@ -4871,6 +4871,18 @@
 23189#Small_Doll_Needle#
 23296#D.Burger#
 23297#Lovely_Egg_Box#
+
+17735#CostamaHorrorII#
+20451#Costume_Night Sky of Memory#
+31120#Costume_Vampire Familiar#
+31121#Costume_Bat Stole#
+31122#Costume_Bloody Vicious Stop Bandage#
+20398#Costume_Nifflheim_Bunny Hat#
+31117#Costume_Hoplite_Helmet#
+19915#Costume_Little Devil_S_Horn#
+31118#Costume_Assassin_Skull Mask#
+31119#Costume_Blue_Magician_Hat#
+31123#Costume_Ghostring_Tall_Hat#
 
 
 // -------------- Item End ------------

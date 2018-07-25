@@ -6280,7 +6280,15 @@ sub skill_msg {
 #TODO !
 sub overweight_percent {
 	my ($self, $args) = @_;
+}
 
+sub partylv_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{lv} = $args->{lv};
+	}
 }
 
 1;

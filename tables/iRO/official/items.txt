@@ -7536,7 +7536,7 @@
 17388#Insecticide_Shoes_Shadow_Box#
 17389#Fisher_Shoes_Shadow_Box#
 17390#Seraphim_Shoes_Shadow_Box#
-17391#Beholder_Shoes_Shadow_Box#
+17391#Overseas_Care_Package_Remix_VI#
 17392#Overseas_Care_Package_Remix_V#
 17393#Poring_Con_Swag_Bag#
 17428#Bunny_Egg#
@@ -8341,7 +8341,7 @@
 19695#Costume:_Kettle_Hat#
 19696#Costume:_Mochiring_Hat#
 19697#Costume:_Rudolf_Santa_Hat#
-19701#C_Red_Bonnet#
+19701#Costume_Red_Bonnet#
 19702#Costume_Santa's_Hat#
 19707#Costume:_Polar_Bear_Cap#
 19709#Costume:_Yellow_Ribbon#
@@ -8352,7 +8352,7 @@
 19715#Costume:_Scarf#
 19716#Costume:_Alice_Doll#
 19717#Costume:_Ribbon_Pink#
-19718#Costume:_Gothic_Headdress#
+19718#Costume_Gothic_Headdress#
 19721#Costume:_Darkness_Helm#
 19722#Costume:_Black_Glasses#
 19723#Costume:_Sacred_Torch_Coronet#
@@ -8489,7 +8489,7 @@
 19925#Costume:_One_Eyed_Glasses#
 19926#Ribbon_Black_Costume#
 19927#Costume:_Drooping_Gray_Kitty#
-19928#Costume:_Gothic_Heartwing_Hairband#
+19928#Costume_Gothic_Heartwing_Hairband#
 19929#Costume_Classic_Ribbon#
 19930#Costume:_Angel_Mini_Silk_Hat#
 19936#Costume_Gigantic_Water_Cap#
@@ -8579,7 +8579,7 @@
 20099#Costume:_Ljosalfar#
 20100#Costume:Volume_Feather_Hat#
 20106#Costume_Classic_Hat#
-20113#Costume:_Star_Reading_Hat#
+20113#Costume_Star_Reading_Hat#
 20121#Rental_Underneath_Saber#
 20122#Rental_Underneath_Gladius#
 20123#Rental_Underneath_Chain#
@@ -9566,7 +9566,7 @@
 31120#Costume_Vampire_Familiar#
 31121#Costume_Bat_Stole#
 31122#Costume_Bloody_Vicious_Stop_Bandage#
-31123#Costume_Ｇhostring_Tall_Hat#
+31123#Costume_Ghostring_Tall_Hat#
 31125#Costume_Queen_Anz_Revenge#
 31132#Costume_Christmas_Wreath#
 31140#Costume_Black_Cowboy_Hat#
