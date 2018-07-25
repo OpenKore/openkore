@@ -337,7 +337,7 @@ sub new {
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
 		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
@@ -3998,21 +3998,6 @@ sub blade_stop {
 sub divorced {
 	my ($self, $args) = @_;
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
-}
-
-# 0223
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) { # Success
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) { # Fail
-		message TF("Weapon not upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-		# message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) { # Fail Lvl
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) { # Fail Item
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
 }
 
 # 02CB
