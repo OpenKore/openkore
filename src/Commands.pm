@@ -88,6 +88,7 @@ sub initHandlers {
 	clearlog			=> \&cmdChatLogClear,
 	closeshop			=> \&cmdCloseShop,
 	closebuyshop		=> \&cmdCloseBuyShop,
+	closebuyershop		=> \&cmdCloseBuyerShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
 	create				=> \&cmdCreate,
@@ -151,6 +152,7 @@ sub initHandlers {
 	ml					=> \&cmdMonsterList,
 	move				=> \&cmdMove,
 	nl					=> \&cmdNPCList,
+	openbuyershop		=> \&cmdOpenBuyerShop,
 	openshop			=> \&cmdOpenShop,
 	p					=> \&cmdChat,
 	party				=> \&cmdParty,
@@ -248,6 +250,8 @@ sub initHandlers {
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
 	analysis			=> \&cmdExchangeItem,
+	
+	searchstore				=> \&cmdSearchStore,
 	);
 }
 
@@ -1372,6 +1376,14 @@ sub cmdCloseBuyShop {
 	message T("Buying shop closed.\n", "BuyShop");
 }
 
+sub cmdCloseBuyerShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	main::closeBuyerShop();
+}
+
 sub cmdConf {
 	my (undef, $args) = @_;
 	my ( $force, $arg1, $arg2 ) = $args =~ /^(-f\s+)?(\S+)\s*(.*)$/;
@@ -1681,13 +1693,11 @@ sub cmdDoriDori {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $headdir;
-	if ($char->{look}{head} == 2) {
-		$headdir = 1;
-	} else {
-		$headdir = 2;
-	}
+	
+	my $headdir = ($char->{look}{head} == 2) ? 1 : 2;
+	
 	$messageSender->sendLook($char->{look}{body}, $headdir);
+	$messageSender->sendNoviceDoriDori();
 }
 
 sub cmdDrop {
@@ -2130,11 +2140,11 @@ sub cmdSlave {
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 		
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->{hpPercent}) . '%)';
-		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->{spPercent})."%)";
+		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->hp_percent) . '%)';
+		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->sp_percent)."%)";
 		my $exp_string = (
 			defined $slave->{exp}
-			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->{expPercent})."%)"
+			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->exp_percent)."%)"
 			: (
 				defined $slave->{kills}
 				? T("Kills: ") . formatNumber($slave->{kills})
@@ -3461,6 +3471,18 @@ sub cmdOpenShop {
 
 		main::openShop();
 	}
+}
+
+sub cmdOpenBuyerShop {
+	my (undef, $args) = @_;
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	main::openBuyerShop();
+
 }
 
 sub cmdParty {
@@ -7033,6 +7055,203 @@ sub cmdCreate {
 	}
 
 	undef $makableList;
+}
+
+sub cmdSearchStore {
+	my ($cmd, $args) = @_;
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	my @args = parseArgs($args);
+	
+	if (!$universalCatalog{open}) {
+		error T("Error in function 'searchstore' (universal catalog)\n".
+				"No catalog in use. You can't use this yet.\n");
+		return;
+	}
+	
+	if ($args[0] eq "close") {
+		$messageSender->sendSearchStoreClose();
+		message T("Closed search store catalog\n");
+		return;
+	}
+	
+	if ($args[0] eq "next") {
+		if ($universalCatalog{has_next}) {
+			$messageSender->sendSearchStoreRequestNextPage();
+			message T("Requested next page of search store catalog\n");
+			return;
+		}
+		error T("Error in function 'searchstore' (universal catalog)\n".
+				"Already reached the end. There's no next page\n");
+		return;
+	}
+	
+	if ($args[0] eq "buy") {
+		if ($universalCatalog{type} == 0) {
+			error T("Error in function 'searchstore' (universal catalog)\n".
+					"You cannot buy with the Silver Catalog.\n");
+			return;
+		}
+		
+		if ($venderItemList->size() == 0 || !defined $venderID || !defined $venderCID) {
+			error T("Error in function 'searchstore' (universal catalog)\n".
+					"No store selected. Please select a store with 'searchstore select' first\n");
+			return;
+		}
+		
+		if ($args[1] eq "end") {
+			$venderItemList->clear;
+			undef $venderID;
+			undef $venderCID;
+			
+			return;
+		}
+		
+		if ($args[1] eq "view") {
+			$messageSender->sendEnteringVender($venderID);
+			return;
+		}
+		
+		if (scalar @args > 1) {
+			my $item = $venderItemList->get($args[1]);
+			
+			if (!$item) {
+				error TF("Error in function 'searchstore' (universal catalog)\n".
+						"Item %s does not exist\n", $args[1]);
+				return;
+			}
+			
+			my $amount = (scalar @args > 2 && $args[2] >= 0) ? $args[2] : 1;
+			
+			$messageSender->sendBuyBulkVender( $venderID, [ { itemIndex => $item->{ID}, amount => $amount } ], $venderCID );
+			
+			return;
+		}
+		
+		error T("Error in function 'searchstore buy' (Buy using a Gold Search Catalog\n".
+				"Syntax: buy [view|end|<item #> [<amount>]]\n");
+	}
+	
+	if ($args[0] eq "view") {
+		if (!scalar(@{$universalCatalog{list}})) {
+			error T("Error in function 'searchstore view' (store search view page)\n".
+					"No info available yet\n");
+			return;
+		} elsif ($args[1] + 1 > scalar(@{$universalCatalog{list}})) {
+			error TF("Error in function 'searchstore view' (store search view page)\n".
+					"Page %d out of bounds (valid bounds: 0..%d)\n", $args[1], scalar(@{$universalCatalog{list}}) - 1);
+			return;
+		} else {
+			Misc::searchStoreInfo($args[1]);
+			return;
+		}
+	}
+	
+	if ($args[0] eq "search") {
+		my $searchMethod;
+		
+		if ($args[1] eq "match") {
+			$searchMethod = \&containsItemNameToIDList;
+		} elsif ($args[1] eq "exact") {
+			$searchMethod = \&itemNameToIDList;
+		} else {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			
+			return;
+		}
+		
+		my @ids = $searchMethod->($args[2]);
+		my @cards;
+		my @price;
+		my $type = 0;
+		
+		if (!scalar(@ids)) {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Item '%s' not found\n", $args[2]);
+			return;
+		}
+		
+		if ($args[3] eq "card") {
+			@cards = $searchMethod->($args[4]);
+			
+			if ($args[5] eq "price") {
+				@price = split '..', $args[6];
+			}
+		} elsif ($args[3] eq "price") {
+			@price = split '..', $args[4];
+			
+			if ($args[5] eq "card") {
+				@cards = $searchMethod->($args[6]);
+			}
+		} else {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			
+			return;
+		}
+		
+		if ($args[-1] eq "buy") {
+			$type = 1;
+		}
+		
+		# Limit search size
+		# I'm not sure about the max size, this needs more testing or might be server-specific, but must exist - lututui
+		if (scalar @ids + scalar @cards > 15) {
+			error $msgTable[1785] . "\n";
+			return;
+		}
+		
+		$messageSender->sendSearchStoreSearch({
+			item_list => \@ids,
+			card_list => \@cards,
+			min_price => $price[0],
+			max_price => $price[1],
+			type => $type
+		});
+		
+		return;
+	}
+	
+	if ($args[0] eq "select") {
+		if (scalar @args > 2) {
+			if ($args[1] > scalar(@{$universalCatalog{list}}) - 1) {
+				error TF("Error in function 'searchstore select' (store search select store)\n".
+					"Page %d out of bounds (valid bounds: [0,%d])\n", $args[1], scalar(@{$universalCatalog{list}}) - 1);
+				return;
+			}
+			
+			if ($args[2]> scalar(${$universalCatalog{list}}[$args[1]]) - 1) {
+				error TF("Error in function 'searchstore select' (store search select store)\n".
+					"Item %d out of bounds (valid bounds: [0,%d])\n", $args[1], scalar(${$universalCatalog{list}}[$args[1]]) - 1);
+				return;
+			}
+			
+			$messageSender->sendSearchStoreSelect({
+				accountID => ${$universalCatalog{list}}[$args[1]][$args[2]]{accountID},
+				storeID => ${$universalCatalog{list}}[$args[1]][$args[2]]{storeID},
+				nameID => ${$universalCatalog{list}}[$args[1]][$args[2]]{nameID},
+			});
+			
+			return;
+		}
+		
+		error T("Error in function 'searchstore select' (select store)\n" .
+				"Syntax: searchstore select <page #> <store #> \n");
+		return;
+	}
+	
+	error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
+			"searchstore close : Closes search store catalog\n" .
+			"searchstore next : Requests catalog next page\n" . 
+			"searchstore view <page #> : Shows catalog page # (0-indexed)\n" . 
+			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
+			"searchstore select <page #> <store #> : Selects a store\n" .
+			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
 }
 
 1;

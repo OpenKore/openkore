@@ -114,7 +114,7 @@ sub parse_items_stackable {
 	my ($self, $args) = @_;
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 		if ($item->{flag} == 0) {
 			$item->{identified} = 0;
 		} elsif ($item->{flag} == 1 || $item->{flag} == 3) {

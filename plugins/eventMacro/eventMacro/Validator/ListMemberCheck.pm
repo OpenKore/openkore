@@ -72,9 +72,5 @@ sub validate {
 	return 0;
 }
 
-sub _get_code_regex {
-	return 0;
-}
-
 
 1;

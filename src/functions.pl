@@ -159,6 +159,10 @@ sub loadDataFiles {
 		loader => [\&parseItemsControl, \%items_control],
 		internalName => 'items_control.txt',
 		autoSearch => 0);
+	Settings::addControlFile(Settings::getBuyerShopFilename(),
+		loader => [\&parseShopControl, \%buyer_shop],
+		internalName => 'buyer_shop.txt',
+		autoSearch => 0);
 	Settings::addControlFile(Settings::getShopFilename(),
 		loader => [\&parseShopControl, \%shop],
 		internalName => 'shop.txt',
@@ -673,6 +677,9 @@ sub initMapChangeVars {
 	undef $refineUI;
 	undef $currentCookingType;
 	$captcha_state = 0;
+	$universalCatalog{open} = 0;
+	$universalCatalog{has_next} = 0;
+	delete $universalCatalog{type};
 
 	$itemsList->clear();
 	$monstersList->clear();
@@ -684,12 +691,14 @@ sub initMapChangeVars {
 	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
-
+	
+	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();
 	@unknownNPCs = ();
 	@sellList = ();
 
 	$shopstarted = 0;
+	$buyershopstarted = 0;
 	$timeout{ai_shop}{time} = time;
 	$timeout{ai_storageAuto}{time} = time + 5;
 	$timeout{ai_buyAuto}{time} = time + 5;

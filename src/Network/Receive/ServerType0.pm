@@ -508,7 +508,11 @@ sub new {
 		'082A' => ['char_delete2_accept_result', 'V V', [qw(charID result)]], # 10
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],
@@ -602,6 +606,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
@@ -622,16 +627,18 @@ sub new {
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
-		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]],
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
@@ -867,7 +874,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -878,7 +885,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -954,8 +961,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO )); # request to unfreeze char alisonrag
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal )); # request to unfreeze char alisonrag
 }
 
 sub area_spell {
@@ -2302,7 +2308,7 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO_Renewal iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
 
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
@@ -2323,7 +2329,7 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO cRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO_Renewal iRO idRO bRO cRO ))
 	) {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
@@ -2810,10 +2816,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -4019,7 +4025,7 @@ sub instance_window_join {
 }
 
 # 02CE
-#0 = "The Memorial Dungeon reservation has been canceled."
+#0 = "The Memorial Dungeon reservation has been canceled/updated."
 #    Re-innit Window, in some rare cases.
 #1 = "The Memorial Dungeon expired; it has been destroyed."
 #2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
@@ -4029,8 +4035,10 @@ sub instance_window_join {
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
-	if($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+	
+	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
+		debug T("Received Memory Dungeon reservation update\n");
+	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
 	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
@@ -4317,20 +4325,6 @@ sub open_buying_store { #0x810
 	message TF("Your buying store can buy %d items \n", $amount);
 }
 
-sub open_buying_store_fail { #0x812
-	my ($self, $args) = @_;
-	my $result = $args->{result};
-	if($result == 1){
-		message TF("Failed to open Purchasing Store.\n"),"info";
-	} elsif ($result == 2){
-		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
-	} elsif ($result == 8){
-		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
-	} else {
-		message TF("Failed opening your buying store.\n");
-	}
-}
-
 sub open_buying_store_item_list {
 	my ($self, $args) = @_;
 
@@ -4576,13 +4570,6 @@ sub msg_string {
 	my ($self, $args) = @_;
 	message TF("index: %s para1: %s\n", $args->{ID}, $args->{para1}), "info";
 	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
-}
-
-sub skill_msg {
-	my ($self, $args) = @_;
-	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
-
-	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
 sub quest_all_list2 {

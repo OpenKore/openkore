@@ -476,6 +476,7 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
@@ -483,6 +484,7 @@ sub new {
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
@@ -491,6 +493,10 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
@@ -541,6 +547,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
@@ -559,14 +566,18 @@ sub new {
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		};
@@ -770,7 +781,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -781,7 +792,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -1251,7 +1262,6 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 	
 	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
 		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
@@ -2683,10 +2693,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -4006,6 +4016,13 @@ sub achievement_reward_ack {
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
+sub party_dead {
+	my ($self, $args) = @_;
 
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
 
 1;

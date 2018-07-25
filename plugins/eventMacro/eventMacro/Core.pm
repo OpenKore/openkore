@@ -76,10 +76,6 @@ sub new {
 	$self->set_arrays_size_to_zero();
 	$self->set_hashes_size_to_zero();
 
-	if ($char && $net && $net->getState() == Network::IN_GAME) {
-		$self->check_all_conditions();
-	}
-
 	return $self;
 }
 
@@ -165,6 +161,13 @@ sub get_automacro_checking_status {
 sub create_macro_list {
 	my ($self, $macro) = @_;
 	while (my ($name,$lines) = each %{$macro}) {
+		####################################
+		#####Bad Name Check
+		####################################
+		if ($name =~ /\s/) {
+			error "[eventMacro] Ignoring macro '$name'. You cannot use spaces in macro names.\n";
+			next AUTOMACRO;
+		}
 		my $currentMacro = new eventMacro::Macro($name, $lines);
 		$self->{Macro_List}->add($currentMacro);
 	}
@@ -177,6 +180,14 @@ sub create_automacro_list {
 		my ($currentAutomacro, %currentConditions, %currentParameters, $has_event_type_condition, $event_type_condition_name);
 		$has_event_type_condition = 0;
 		$event_type_condition_name = undef;
+		
+		####################################
+		#####Bad Name Check
+		####################################
+		if ($name =~ /\s/) {
+			error "[eventMacro] Ignoring automacro '$name'. You cannot use spaces in automacro names.\n";
+			next AUTOMACRO;
+		}
 		
 		####################################
 		#####No Conditions Check

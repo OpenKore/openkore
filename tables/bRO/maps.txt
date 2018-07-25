@@ -4,28 +4,28 @@ gld_dun04.rsw#Calabouço do Feudo de Britoniah#
 gld_dun03.rsw#Calabouço do Feudo das Valquírias#
 gld_dun02.rsw#Calabouço do Feudo de Luina#
 gld_dun01.rsw#Calabouço do Feudo do Bosque Celestial#
-payg_cas05.rsw#Palácio da Colina][BC5#
-payg_cas04.rsw#Palácio Escarlate][BC4#
-payg_cas03.rsw#Palácio da Sombra][BC3#
-payg_cas02.rsw#Palácio do Lago Sagrado][BC2#
-payg_cas01.rsw#Palácio do Sol][BC1#
+payg_cas05.rsw#Palácio da Colina[BC5]#
+payg_cas04.rsw#Palácio Escarlate[BC4]#
+payg_cas03.rsw#Palácio da Sombra[BC3]#
+payg_cas02.rsw#Palácio do Lago Sagrado[BC2]#
+payg_cas01.rsw#Palácio do Sol[BC1]#
 pay_gld.rsw#Feudo do Bosque Celestial#
-aldeg_cas05.rsw#Acrux][L5#
-aldeg_cas04.rsw#Rigel][L4#
-aldeg_cas03.rsw#Canopus][L3#
-aldeg_cas02.rsw#Astrum][L2#
-aldeg_cas01.rsw#Sirius][L1#
+aldeg_cas05.rsw#Acrux[L5]#
+aldeg_cas04.rsw#Rigel[L4]#
+aldeg_cas03.rsw#Canopus[L3]#
+aldeg_cas02.rsw#Astrum[L2]#
+aldeg_cas01.rsw#Sirius[L1]#
 alde_gld.rsw#Feudo de Luina#
-gefg_cas05.rsw#Arima][B5#
-gefg_cas04.rsw#Saffran][B4#
-gefg_cas03.rsw#Ruaden][B3#
-gefg_cas02.rsw#Trapesac][B2#
-gefg_cas01.rsw#Arsulf][B1#
-prtg_cas05.rsw#Gondul][V5#
-prtg_cas04.rsw#Skoegul][V4#
-prtg_cas03.rsw#Brynhildr][V3#
-prtg_cas02.rsw#Hrist][V2#
-prtg_cas01.rsw#Kriemhild][V1#
+gefg_cas05.rsw#Arima[B5]#
+gefg_cas04.rsw#Saffran[B4]#
+gefg_cas03.rsw#Ruaden[B3]#
+gefg_cas02.rsw#Trapesac[B2]#
+gefg_cas01.rsw#Arsulf[B1]#
+prtg_cas05.rsw#Gondul[V5]#
+prtg_cas04.rsw#Skoegul[V4]#
+prtg_cas03.rsw#Brynhildr[V3]#
+prtg_cas02.rsw#Hrist[V2]#
+prtg_cas01.rsw#Kriemhild[V1]#
 prt_gld.rsw#Feudo das Valquírias#
 tur_dun01.rsw#Ilha da Tartaruga#
 tur_dun02.rsw#Calabouço da Ilha da Tartaruga#
@@ -928,3 +928,4 @@ un_myst.rsw#Túnel do Abrigo#
 //Clock Tower Nightmare
 c_tower2_.rsw#Torre do Relógio Distorcida 2º Andar#
 c_tower3_.rsw#Torre do Relógio Distorcida 3º Andar#
+brz_n.rsw#Brasilis (Noite)#

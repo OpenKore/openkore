@@ -99,8 +99,4 @@ sub between {
 	$_[0] <= $_[1] && $_[1] <= $_[2];
 }
 
-sub _get_code_regex {
-	return '(?:<|<=|=|==|!=|!|>=|>|)\s*(?:-?\d+(?:\.\d+)?%?|(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters))(?:\s*\.\.\s*(?:-?\d+(?:\.\d+)?%?|(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)))?';
-}
-
 1;

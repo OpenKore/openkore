@@ -867,19 +867,15 @@ our %stat_info_handlers = (
 	},
 	VAR_HP, sub {
 		$_[0]{hp} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_MAXHP, sub {
 		$_[0]{hp_max} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_SP, sub {
 		$_[0]{sp} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_MAXSP, sub {
 		$_[0]{sp_max} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_POINT, sub { $_[0]{points_free} = $_[1] },
 	#VAR_HAIRCOLOR
@@ -1964,10 +1960,10 @@ sub actor_action {
 			}
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 		} elsif ($args->{sourceID} eq $args->{targetID}) {
 			message("$status $msg");
@@ -4302,9 +4298,6 @@ sub slave_calcproperty_handler {
 =cut
 
 	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
-	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
 }
 
 sub gameguard_grant {
@@ -4868,13 +4861,14 @@ sub map_change {
 	} else {
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
+
+		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal )); # request to unfreeze char alisonrag
 		$timeout{ai}{time} = time;
 	}
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-
 	$timeout{ai}{time} = time;
 }
 
@@ -5422,7 +5416,7 @@ sub party_join {
 	my $actor = $char->{party}{users}{$info->{ID}} && %{$char->{party}{users}{$info->{ID}}} ? $char->{party}{users}{$info->{ID}} : new Actor::Party;
 
 	$actor->{admin} = !$info->{'role'};
-	delete $actor->{statuses} unless $actor->{'online'} = !$info-{'type'};
+	delete $actor->{statuses} unless $actor->{'online'} = !$info->{'type'};
 	$actor->{pos}{x} = $info->{'x'};
 	$actor->{pos}{y} = $info->{'y'};
 	$actor->{map} = $info->{'map'};
@@ -6196,6 +6190,118 @@ sub upgrade_message {
 		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
 	} elsif($args->{type} == 3) { # Fail Item
 		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
+
+sub open_buying_store_fail { #0x812
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+	if($result == 1){
+		message TF("Failed to open Purchasing Store.\n"),"info";
+	} elsif ($result == 2){
+		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
+	} elsif ($result == 8){
+		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
+	} else {
+		message TF("Failed opening your buying store.\n");
+	}
+	$buyershopstarted = 0;
+}
+
+sub search_store_open {
+	my ($self, $args) = @_;
+	
+	debug TF("Opened %s for searching open vendors in this map.\n", 
+		$args->{type} ? T("Universal Catalog Gold") : T("Universal Catalog Silver")),
+		2, "search_store";
+	message TF("You can now search open vendors in this map. Searches remaining: %d\n", $args->{amount});
+	
+	$universalCatalog{open} = 1;
+	$universalCatalog{type} = $args->{type};
+}
+
+sub search_store_fail {
+	my ($self, $args) = @_;
+	
+	error TF("Search store failed. Reason #%d\n", $args->{reason});
+	
+	if ($args->{reason} == 0) {
+		error $msgTable[1804] . "\n";
+	} elsif ($args->{reason} == 1) {
+		error $msgTable[1785] . "\n";
+	} elsif ($args->{reason} == 2) {
+		error $msgTable[1799] . "\n";
+	} elsif ($args->{reason} == 3) {
+		error $msgTable[1801] . "\n";
+	} elsif ($args->{reason} == 4) {
+		error $msgTable[1798] . "\n";
+	} else {
+		error "Unknown reason\n";
+	}
+}
+
+sub search_store_result {
+	my ($self, $args) = @_;
+	my $unpackString = "a4 a4 a80 v C V v C a16";
+	
+	@{$universalCatalog{list}} = () if $args->{first_page};
+	$universalCatalog{has_next} = $args->{has_next};
+	
+	my @universalCatalogPage;
+	
+	for (my $i = 0; $i < length($args->{storeInfo}); $i += 106) {
+		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards) = unpack($unpackString, substr($args->{storeInfo}, $i));
+		
+		my @cards = unpack "v4", $cards;
+		
+		my $universalCatalogInfo = {
+			storeID => $storeID,
+			accountID => $accountID,
+			shopName => $shopName,
+			nameID => $nameID,
+			itemType => $itemType,
+			price => $price,
+			amount => $amount,
+			refine => $refine,
+			cards_nameID => $cards,
+			cards => \@cards,
+		};
+		
+		push(@universalCatalogPage, $universalCatalogInfo);
+		Plugins::callHook("search_store", $universalCatalogInfo);
+	}
+	
+	return unless scalar @universalCatalogPage;
+	
+	push(@{$universalCatalog{list}}, \@universalCatalogPage);
+	Misc::searchStoreInfo(scalar(@{$universalCatalog{list}}) - 1);
+}
+
+sub search_store_pos {
+	my ($self, $args) = @_;
+	
+	message TF("Selected store is at (%d, %d)\n", $args->{x}, $args->{y});
+}
+
+sub skill_msg {
+	my ($self, $args) = @_;
+	if ($msgTable[++$args->{msgid}]) { # show message from msgstringtable.txt -> [<Skill_Name>] <Message>
+		my $skill = new Skill(idn => $args->{id});
+		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
+	} else {
+		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
+}
+
+#TODO !
+sub overweight_percent {
+	my ($self, $args) = @_;
+}
+
+sub partylv_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{lv} = $args->{lv};
 	}
 }
 

@@ -2032,7 +2032,7 @@ sub parse_command {
 			if ($@) {
 				warning "[eventMacro] Error in eval '".$@."'\n";
 			}
-			return unless defined @testArray;
+			return unless scalar(@testArray);
 			if (scalar(@testArray) > 1 ) {
 				#if this is true, user returned an array or hash that is not a reference
 				#but the code demands a reference
