@@ -85,6 +85,7 @@ sub new {
 		'012E' => ['shop_close'], # len 2
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
+		'01E7' => ['novice_dori_dori'],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
@@ -97,8 +98,14 @@ sub new {
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
+		'0811' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
+		'0815' => ['buy_bulk_closeShop'],
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
+		'0835' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0838' => ['search_store_request_next_page'],
+		'083B' => ['search_store_close'],
+		'083C' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
@@ -128,6 +135,7 @@ sub new {
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
+		'0AE8' => ['change_dress'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -1271,12 +1279,6 @@ sub sendBanCheck {
 # TODO
 
 # 0x01e6,26
-
-# 0x01e7,2,sndoridori,0
-sub sendSuperNoviceDoriDori {
-	$_[0]->sendToServer(pack('v', 0x01E7));
-	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
-}
 
 # 0x01e8,28,createparty2,2
 sub sendPartyOrganize {

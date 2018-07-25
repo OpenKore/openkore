@@ -4540,23 +4540,26 @@ Criação de Máquina de Batalha
 #
 ST_CHASEWALK#
 Espreitar
-Nível Máximo: 5
-^777777Pré requisitos: Esconderijo 5, Tunel de Fuga 3^000000
-Tipo: ^777777Suporte^000000
-Resultado : ^777777Quando o jogador estiver usando esta habilidade ele não poderá ser detectado.
-Diferentemente da habilidade 'Esconderijo', um jogador usando Espreitar sofre dano de magias de ataque de área.
-Quando o jogador se mover, ele deixará pegadas. Não pode ser usada contra monstros do tipo inseto, demônio e Chefe.
-Esta habilidade pode ser utilizada durante a Guerra do Emperium.^000000
-[Nv 1]: ^77777712 SP/10 segundos, 70% da Vel. de Movimento
- +1 FOR após os primeiros 10 segundos^000000
-[Nv 2]: ^77777714 SP/10 segundos, 75% da Vel. de Movimento
- +2 FOR após os primeiros 10 segundos^000000
-[Nv 3]: ^77777716 SP/10 segundos, 80% da Vel. de Movimento
- +4 FOR após os primeiros 10 segundos^000000
-[Nv 4]: ^77777718 SP/10 segundos, 85% da Vel. de Movimento
- +8 FOR após os primeiros 10 segundos^000000
-[Nv 5]: ^77777720 SP/10 segundos, 90% da Vel. de Movimento
- +16 FOR após os primeiros 10 segundos^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Esconderijo 5^000000
+^777777Tunel de Fuga 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Esconde-se para evitar a detecção
+de habilidades como 'Revelação', porém
+ainda sofrerá dano de magias em área.
+Após 10 segundos invisível, um bônus
+de FOR será concedido por 30 segundos.
+Enquanto estiver ativa, o movimento é
+reduzido e drena SP a cada 10 segundos.
+Na GdE, drena mais SP que o normal.^000000
+Nv. l SP drenado l Movimento l FOR
+[Nv 1]: ^77777712^000000 l ^77777770%^000000 l ^777777+1^000000
+[Nv 2]: ^77777714^000000 l ^77777775%^000000 l ^777777+2^000000
+[Nv 3]: ^77777716^000000 l ^77777780%^000000 l ^777777+4^000000
+[Nv 4]: ^77777718^000000 l ^77777785%^000000 l ^777777+8^000000
+[Nv 5]: ^77777720^000000 l ^77777790%^000000 l ^777777+16^000000
 #
 ST_REJECTSWORD#
 Instinto de Defesa
@@ -6162,7 +6165,7 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Consome 2 moedas para ter esquiva +30,
 precisão -30 e resistência a danos físicos
-a distância +20 por 20 segundos.
+a distância +20% por 20 segundos.
 Não pode ser usada junto com
 'Resistência Final'.^000000
 #
@@ -6358,25 +6361,25 @@ Descrição:
 ao custo de perder esquiva e movimento.
 O efeito é cancelado ao ser reusada.^000000
 [Nv 1]: ^777777Vel. ATQ +1%^000000 l ^777777Dano +30^000000
-          ^777777Esquiva -5^000000 l ^77777730 segundos^000000
+           ^777777Esquiva -5^000000 l ^77777730 segundos^000000
 [Nv 2]: ^777777Vel. ATQ +2%^000000 l ^777777Dano +40^000000
-         ^777777Esquiva -10^000000 l ^77777745 segundos^000000
+          ^777777Esquiva -10^000000 l ^77777745 segundos^000000
 [Nv 3]: ^777777Vel. ATQ +3%^000000 l ^777777Dano +50^000000
-         ^777777Esquiva -15^000000 l ^77777760 segundos^000000
+          ^777777Esquiva -15^000000 l ^77777760 segundos^000000
 [Nv 4]: ^777777Vel. ATQ +4%^000000 l ^777777Dano +60^000000
-         ^777777Esquiva -20^000000 l ^77777775 segundos^000000
+          ^777777Esquiva -20^000000 l ^77777775 segundos^000000
 [Nv 5]: ^777777Vel. ATQ +5%^000000 l ^777777Dano +70^000000
-         ^777777Esquiva -25^000000 l ^77777790 segundos^000000
+          ^777777Esquiva -25^000000 l ^77777790 segundos^000000
 [Nv 6]: ^777777Vel. ATQ +6%^000000 l ^777777Dano +80^000000
-         ^777777Esquiva -30^000000 l ^777777105 segundos^000000
+          ^777777Esquiva -30^000000 l ^777777105 segundos^000000
 [Nv 7]: ^777777Vel. ATQ +7%^000000 l ^777777Dano +90^000000
-         ^777777Esquiva -35^000000 l ^777777120 segundos^000000
+          ^777777Esquiva -35^000000 l ^777777120 segundos^000000
 [Nv 8]: ^777777Vel. ATQ +8%^000000 l ^777777Dano +100^000000
-         ^777777Esquiva -40^000000 l ^777777135 segundos^000000
+          ^777777Esquiva -40^000000 l ^777777135 segundos^000000
 [Nv 9]: ^777777Vel. ATQ +9%^000000 l ^777777Dano +110^000000
-         ^777777Esquiva -45^000000 l ^777777150 segundos^000000
+          ^777777Esquiva -45^000000 l ^777777150 segundos^000000
 [Nv 10]: ^777777Vel. ATQ +10%^000000 l ^777777Dano +120^000000
-           ^777777Esquiva -50^000000 l ^777777165 segundos^000000
+            ^777777Esquiva -50^000000 l ^777777165 segundos^000000
 #
 GS_DUST#
 Controle de Multidão
@@ -7176,14 +7179,23 @@ Descrição: ^777777Abre uma Loja que permite deixar uma lista de itens que o us
 #
 ALL_GUARDIAN_RECALL#
 Chamado do Guardião
-Nível Máximo: 1
-Tipo: ^777777Suporte^bb0000^000000
-Descrição: ^777777Teleporta para a cidade de Mora. Tempo de conjuração fixo de 3 segundos. Intervalo de uso de 5 minutos.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para Mora.^000000
 #
 ALL_ODINS_POWER#
 Poder de Odin
-Descrição: [Nv 1]^777777+70 ATQ e ATQM por 60 segundos, -20 DEF e MDEF ao mesmo tempo. ^000000
-Descrição: [Nv 2]^777777+100 ATQ e ATQM por 60 segundos, -40 DEF e MDEF ao mesmo tempo. ^000000
+Nível máximo: ^7777772^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o ATQ e ATQM.
+Reduz a DEF e DEFM.
+Dura 60 segundos.^000000
+Nível l DEF e DEFM l ATQ e ATQM
+[Nv 1]: ^777777-20^000000 l ^777777+70^000000
+[Nv 2]: ^777777-40^000000 l ^777777+100^000000
 #
 KN_CHARGEATK#
 Avanço Ofensivo
@@ -7470,25 +7482,25 @@ aumentam as chances de sucesso,
 e o número de runas criadas.^000000
 Nível l Runa l Habilidade l Itens
 [Nv 1]: ^777777Runa Thurisaz^000000 l ^777777Força Titânica^000000
-        ^7777771 Cabelo Azul, 1 Garra de Lobo do Deserto^000000
+      ^7777771 Cabelo Azul, 1 Garra de Lobo do Deserto^000000
 [Nv 2]: ^777777Runa Isa^000000 l ^777777Vitalidade Rúnica^000000
-        ^7777771 Coração Incandescente^000000
+      ^7777771 Coração Incandescente^000000
 [Nv 3]: ^777777Runa Wyrd^000000 l ^777777Explosão Rúnica^000000
-        ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
+      ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
 [Nv 4]: ^777777Runa Hagalaz^000000 l ^777777Escamas Rochosas^000000
-        ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
+      ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
 [Nv 5]: ^777777Runa Othila^000000 l ^777777Aura de Combate^000000
-        ^7777771 Partículas de Luz, 1 Dente de Ogro^000000
+      ^7777771 Partículas de Luz, 1 Dente de Ogro^000000
 [Nv 6]: ^777777Runa Uruz^000000 l ^777777Regeneração Espiritual^000000
-        ^7777771 Cabelo Horrendo, 1 Mel^000000
+      ^7777771 Cabelo Horrendo, 1 Mel^000000
 [Nv 7]: ^777777Runa Raido^000000 l ^777777Golpe Titânico^000000
-        ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
+      ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
 [Nv 8]: ^777777Runa Nauthiz^000000 l ^777777Purificação^000000
-        ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
+      ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
 [Nv 9]: ^777777Runa Berkana^000000 l ^777777Escudos Milenares^000000
-        ^7777771 Armadura de Dullahan^000000
+      ^7777771 Armadura de Dullahan^000000
 [Nv 10]: ^777777Runa Luxanima^000000 l ^777777Luz da Alma^000000
-         ^7777773 Partículas de Luz, 3 Ouro^000000
+       ^7777773 Partículas de Luz, 3 Ouro^000000
 #
 RK_MILLENNIUMSHIELD#
 #
@@ -8474,309 +8486,499 @@ Descrição: ^777777   Adiciona a chance de afetar oponentes que entrarem na ár
 #
 NC_MADOLICENCE#
 Licença de Pilotagem
-Nível Máximo: 5
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Aprende a pilotar um M.E.C.H.A. Aumenta o ATQ usando a armadura. Reduz a velocidade de movimento no M.E.C.H.A. se a habilidade não estiver maximizada.^000000
-[Nv 1]: ^777777 ATQ do M.E.C.H.A. +15  / Redução na vel. de movimento 40% ^000000
-[Nv 2]: ^777777 ATQ do M.E.C.H.A. +30  / Redução na vel. de movimento 30% ^000000
-[Nv 3]: ^777777 ATQ do M.E.C.H.A. +45  / Redução na vel. de movimento 20% ^000000
-[Nv 4]: ^777777 ATQ do M.E.C.H.A. +60  / Redução na vel. de movimento 10% ^000000
-[Nv 5]: ^777777 ATQ do M.E.C.H.A. +75  / Redução na vel. de movimento 0% ^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite pilotar um M.E.C.H.A.
+Aumentar o nível da habilidade
+recupera o movimento e garante
+bônus de ATQ apenas ao pilotar.^000000
+Nível l ATQ l Movimento
+[Nv 1]: ^777777+15^000000 l ^77777760%^000000
+[Nv 2]: ^777777+30^000000 l ^77777770%^000000
+[Nv 3]: ^777777+45^000000 l ^77777780%^000000
+[Nv 4]: ^777777+60^000000 l ^77777790%^000000
+[Nv 5]: ^777777+75^000000 l ^777777100%^000000
 #
 NC_BOOSTKNUCKLE#
 Punho Foguete
-Nível Máximo: 5
-^777777Pré requisitos:  Licença de Pilotagem 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Ativa um foguete que arremessa o punho em um oponente. Ataque à distância que aumenta de acordo com a DES do usuário. Alcance de 11 células.^000000
-[Nv 1]: ^777777 ATQ 300% ^000000
-[Nv 2]: ^777777 ATQ 400% ^000000
-[Nv 3]: ^777777 ATQ 500% ^000000
-[Nv 4]: ^777777 ATQ 600% ^000000
-[Nv 5]: ^777777 ATQ 700% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Licença de Pilotagem 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+com 11 células de alcance.
+O dano é aumentado pela DES do usuário.^000000
+Nível l ATQ l SP
+[Nv 1]: ^777777300%^000000 l ^7777773^000000
+[Nv 2]: ^777777400%^000000 l ^7777776^000000
+[Nv 3]: ^777777500%^000000 l ^7777779^000000
+[Nv 4]: ^777777600%^000000 l ^7777772^000000
+[Nv 5]: ^777777700%^000000 l ^77777715^000000
 #
 NC_PILEBUNKER#
-Bate-Estaca
-Nível Máximo: 3
-^777777Pré requisitos:  Punho Foguete 2 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777   Substitui o punho por um bate estaca para atacar oponentes. Adiciona a chance de ignorar a defesa do oponente. Necessita de um Bate-Estacas equipado. O ataque aumenta de acordo com a FOR do usuário.^000000
-[Nv 1]: ^777777 ATQ 400% / Chance de ighorar habilidades de Defensa magica em 40%^000000
-[Nv 2]: ^777777 ATQ 500% / Chance de ighorar habilidades de Defensa magica em 55%^000000
-[Nv 3]: ^777777 ATQ 600% / Chance de ighorar habilidades de Defensa magica em 70%^000000
+Bate Estaca
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Punho Foguete 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de curta
+distância com chance de remover
+efeitos positivos do alvo.
+O dano é aumentado pela FOR do usuário.^000000
+^000088Precisa de 1 Bate-Estacas.^000000
+Nível l Chance
+[Nv 1]: ^77777740%^000000
+[Nv 2]: ^77777755%^000000
+[Nv 3]: ^77777770%^000000
 #
 NC_VULCANARM#
 Metralhadora
-Nível Máximo: 3
-^777777Pré requisitos:  Punho Foguete 2 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Atira com uma metralhadora do M.E.C.H.A. Consome 1 Cápsula Incandescente. 
-O ataque aumenta de acordo com a DES do usuário. Alcance de 13 células. ^000000
-[Nv 1]: ^777777 ATQ 70% ^000000
-[Nv 2]: ^777777 ATQ 140% ^000000
-[Nv 3]: ^777777 ATQ 210% ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Punho Foguete 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+com 13 células de alcance.
+O dano é aumentado pela DES do usuário.^000000
+^000088Consome 1 Cápsula Incandescente.^000000
+Nível l ATQ l SP
+[Nv 1]:  ^77777770%^000000 l ^7777772^000000
+[Nv 2]: ^777777140%^000000 l ^7777774^000000
+[Nv 3]: ^777777210%^000000 l ^7777776^000000
 #
 NC_FLAMELAUNCHER#
-Lança-Chamas
-Nível Máximo: 3
-^777777Pré requisitos: Metralhadora 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Incendeia o chão com um Lança-Chamas, que causa dano e tem chance de afetar oponentes com o efeito Incêndio. Necessita de um Lança-Chamas equipado. ^000000
-[Nv 1]: ^777777 Dano de Fogo 600% / Chance de 30% de ativar o efeito Incêndio^000000
-[Nv 2]: ^777777 Dano de Fogo 900% / Chance de 40% de ativar o efeito Incêndio^000000
-[Nv 3]: ^777777 Dano de Fogo 1200% / Chance de 50% de ativar o efeito Incêndio^000000
+Lança Chamas
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Metralhadora 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de
+propriedade Fogo com chance de
+infligir [Incêndio] na área.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Lança-Chamas.^000000
+Nível l Chance l Área l ATQ
+[Nv 1]: ^77777730%^000000 l ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^77777740%^000000 l ^7777777x7 células^000000 l ^777777900%^000000
+[Nv 3]: ^77777750%^000000 l ^7777779x9 células^000000 l ^7777771.200%^000000
 #
 NC_COLDSLOWER#
 Gás Criogênico
-Nível Máximo: 3
-^777777Pré requisitos:  Metralhadora 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Utiliza o gás criogênico para causar dano e os efeitos negativos Hipotermia e Congelamento aos alvos no alcance da habilidade. Consome 1 Cápsula de Nitrogênio Líquido. ^000000
-[Nv 1]: ^777777 Propriedade Água ATQ 600 % / Alcance 5 x 5 células ^000000
-[Nv 2]: ^777777 Propriedade Água ATQ 900 % / Alcance 7 x 7 células ^000000
-[Nv 3]: ^777777 Propriedade Água ATQ 1200 % / Alcance 9 x 9 células ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Metralhadora 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de
+propriedade Água com chance de
+infligir [Hipotermia] ou
+[Congelamento] na área.^000000
+^000088Consome 1 Combustível.
+Consome 1 Cápsula de Nitrogênio.^000000
+Nível l Área l ATQ
+[Nv 1]: ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^7777777x7 células^000000 l ^777777900%^000000
+[Nv 3]: ^7777779x9 células^000000 l ^7777771.200%^000000
 #
 NC_ARMSCANNON#
 Canhão
-Nível Máximo: 3
-^777777Pré requisitos: Lança-Chamas 2 / Gás Criogênico 2  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Atira uma bala com o canhão do M.E.C.H.A., causando dano elevado. O dano é reduzido em alvos maiores. Causa dano em área de acordo com o nível da habilidade.
-A propriedade do ataque pode ser alterada com as diferentes balas de canhão. Consome 1 Combustível Diferenciado Leve e 1 Bala de Canhão. ^000000
-[Nv 1]: ^777777 ATQ em Pequenos 700%, Médios 650%, Grandes 600%. Alcance de 7 x 7 células ^000000
-[Nv 2]: ^777777 ATQ em Pequenos 1100%, Médios 1000%, Grandes 900%. Alcance de 5 x 5 células ^000000
-[Nv 3]: ^777777 ATQ em Pequenos 1500%, Médios 1350%, Grandes 1200%. Alcance de 3 x 3 células ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Lança-Chamas 2^000000
+^777777Gás Criogênico 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+que é afetado pelo Tamanho
+dos alvos na área selecionada.
+A propridade do dano muda
+de acordo com a Bala equipada.^000000
+^000088Consome 1 Combustível.
+Consome 1 Bala de Canhão.^000000
+Nível l Área l ATQ (P/M/G)
+[Nv 1]: ^7777777x7 células^000000 l ^777777700%^000000 / ^777777650%^000000 / ^777777600%^000000
+[Nv 2]: ^7777775x5 células^000000 l ^7777771.100%^000000 / ^7777771.000%^000000 / ^777777900%^000000
+[Nv 3]: ^7777773x3 células^000000 l ^7777771.500%^000000 / ^7777771.350%^000000 / ^7777771.200%^000000
 #
 NC_ACCELERATION#
 Aceleração
-Nível Máximo: 3
-^777777Pré requisitos: Licença de Pilotagem 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Aumenta temporariamente a vel. de movimento do M.E.C.H.A. Necessita de um Acelerador equipado. Consome 1 Combustível Diferenciado Leve. ^000000
-[Nv 1]: ^777777 Duração de 60 sec. ^000000
-[Nv 2]: ^777777 Duração de 90 sec. ^000000
-[Nv 3]: ^777777 Duração de 120 sec. ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Licença de Pilotagem 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Melhora o movimento.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Acelerador.^000000
+Nível l Duração l SP
+[Nv 1]: ^77777760 segundos^000000 l ^77777720^000000
+[Nv 2]: ^77777790 segundos^000000 l ^77777740^000000
+[Nv 3]: ^777777120 segundos^000000 l ^77777760^000000
 #
 NC_HOVERING#
 Planar
-Nível Máximo: 1
-^777777Pré requisitos:  Aceleração 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Permite que o M.E.C.H.A. plane para evitar armadilhas e ataques mágicos no chão. 
-Necessita de um Planador equipado. Consome 1 Combustível Diferenciado Leve. ^000000
-[Nv 1]: ^777777 Duração de 90 segundos ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Aceleração 1 ^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Por 90 segundos, evita ceras
+armadilhas e magias de terreno.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Planador.^000000
 #
 NC_F_SIDESLIDE#
 Propulsão Traseira
-Nível Máximo: 1
-^777777Pré requisitos:  Planar  1 ^000000
-Tipo: ^777777  Movimento ^000000
-Descrição: ^777777O M.E.C.H.A. avança 7 células em velocidade aumentada. Consome 1 Combustível Diferenciado Leve. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Planar  1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Anda 7 células para frente.^000000
+^000088Consome 1 Combustível.^000000
 #
 NC_B_SIDESLIDE#
 Propulsão Dianteira
-Nível Máximo: 1
+Nível máximo: ^7777771^000000
+Pré requisitos:
 ^777777Pré requisitos:  Planar  1 ^000000
-Tipo: ^777777  Movimento ^000000
-Descrição: ^777777  M.E.C.H.A. recua 7 células em velocidade aumentada. Consome 1 Combustível Diferenciado Leve. ^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Anda 7 células para trás.^000000
+^000088Consome 1 Combustível.^000000
 #
 NC_MAINFRAME#
 Reforçar Estrutura
-Nível Máximo: 4
-^777777Pré requisitos:  Licença de Pilotagem 4 ^000000
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Muda a estrutura do M.E.C.H.A. para aumentar sua defesa e o limite de superaquecimento.^000000
-[Nv 1]: ^777777 Defesa +40 / Limite de superaquecimento + 200 ^000000
-[Nv 2]: ^777777 Defesa +60 / Limite de superaquecimento + 280 ^000000
-[Nv 3]: ^777777 Defesa +80 / Limite de superaquecimento + 360 ^000000
-[Nv 4]: ^777777 Defesa +100 / Limite de superaquecimento + 450 ^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Licença de Pilotagem 4^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a DEF e o limite
+de Superaquecimento ao pilotar.^000000
+Superaquecimento:
+^777777Drena HP continuamente.
+Cada dano recebido gera 1 ponto
+de aquecimento, iniciando o efeito
+com 150 pontos ou com o limite
+definido pela habilidade.^000000
+Nível l DEF l Limite
+[Nv 1]: ^777777+40^000000 l ^777777200^000000
+[Nv 2]: ^777777+60^000000 l ^777777280^000000
+[Nv 3]: ^777777+80^000000 l ^777777360^000000
+[Nv 4]: ^777777+100^000000 l ^777777450^000000
 #
 NC_SELFDESTRUCTION#
 Autodestruição
-Nível Máximo: 3
-^777777Pré requisitos:  Reforçar Estrutura 2 ^000000
-Tipo: ^777777  Ofensiva  ^000000
-Descrição: ^777777  Aciona o modo de autodestruição do M.E.C.H.A., causando grande dano em área. 
-Consome todo o SP do usuário e desequipa o M.E.C.H.A. Necessita de um Detonador. ^000000
-[Nv 1]: ^777777 Alcance 5 x 5 células^000000
-[Nv 2]: ^777777 Alcance 7 x 7 células^000000
-[Nv 3]: ^777777 Alcance 9 x 9 células^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Reforçar Estrutura 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Consome todo o SP para
+remover o M.E.C.H.A. e causar
+dano físico que ignora esquiva.^000000
+^000088Consome 3 Combustíveis.
+Precisa de 1 Detonador.^000000
+Nível l Área
+[Nv 1]: ^7777775x5 células^000000
+[Nv 2]: ^7777777x7 células^000000
+[Nv 3]: ^7777779x9 células^000000
 #
 NC_SHAPESHIFT#
 Reconfigurar Elemento
-Nível Máximo: 4
-^777777Pré requisitos:  Reforçar Estrutura 2  ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Muda a propriedade do M.E.C.H.A. Necessita de um Reconfigurador. Consome 2 Combustíveis Diferenciados Leves e 1 pedra elemental.^000000
-[Nv 1]: ^777777 Muda para Fogo / Consome 3 Coração Flamejante^000000
-[Nv 2]: ^777777 Muda para Terra / Consome 3 Natureza Grandiosa^000000
-[Nv 3]: ^777777 Muda para Vento / Consome 3 Vento Bruto^000000
-[Nv 4]: ^777777 Muda para Água / Consome 3 Gelo Místico^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Reforçar Estrutura 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Encanta a armadura equipada
+com uma propriedade elemental.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Reconfigurador.^000000
+Nível l Propriedade l Item necessário
+[Nv 1]: ^777777Fogo^000000  l ^7777773 Fragmentos Escarlates^000000
+[Nv 2]: ^777777Terra^000000 l ^7777773 Fragmentos Verdes^000000
+[Nv 3]: ^777777Vento^000000 l ^7777773 Fragmentos Amarelos^000000
+[Nv 4]: ^777777Água^000000  l ^7777773 Fragmentos Azuis^000000
 #
 NC_EMERGENCYCOOL#
 Resfriamento
-Nível Máximo: 1
-^777777Pré requisitos:  Autodestruição 2  ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Imediatamente resfria o M.E.C.H.A. retirando o efeito de superaquecimento. Necessita de um Resfriador. Consome 1 Combustíveis Diferenciados Leves.  ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Autodestruição 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Reduz pontos de Superaquecimento.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Termoregulador.^000000
 #
 NC_INFRAREDSCAN#
 Sensor Infravermelho
-Nível Máximo: 1
-^777777Pré requisitos:  Reconfigurar Elemento  2  ^000000
-Tipo: ^777777  Detecção ^000000
-Descrição: ^777777 Utiliza o sensor em uma área de 15 x 15 células ao redor do usuário para detectar oponentes ocultos. Reduz a taxa de Esquiva de oponentes em 30% por 5 segundos com chance sucesso de 50%. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Reconfigurar Elemento 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Reduz a esquiva em 20%
+dos alvos na área de 15x15 células.
+Revela oponentes escondidos.^000000
 #
 NC_ANALYZE#
 Analisar
-Nível Máximo: 3
-^777777Pré requisitos:  Sensor Infravermelho 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777 Analisa o oponente e diminui a defesa física e mágica do alvo. Alcance de 9 células e duração de 20 segundos. Consome 1 Combustível Diferenciado Leve.  ^000000
-[Nv 1]: ^777777 Redução na DEF e MDEF 14% ^000000
-[Nv 2]: ^777777 Redução na DEF e MDEF 28% ^000000
-[Nv 3]: ^777777 Redução na DEF e MDEF 42% ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Sensor Infravermelho 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Por 20 segundos,
+reduz a DEF e DEFM do alvo.^000000
+^000088Consome 1 Combustível.^000000
+Nível l DEF e DEFM
+[Nv 1]: ^777777-14%^000000
+[Nv 2]: ^777777-28%^000000
+[Nv 3]: ^777777-42%^000000
 #
 NC_MAGNETICFIELD#
 Campo Magnético
-Nível Máximo: 3
-^777777Pré requisitos:  Resfriamento 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777Chance de imobilizar os inimigos na área utilizando um campo magnético. Se usuário ou alvo estão Planando, eles não sofrerão o efeito.
-Se o oponente receber dano do tipo Terra, o status é automaticamente cancelado.
-Reduz continuamente o SP dos oponentes afetados.  Necessita de um Gerador de Magnetismo. Consome 2 Combustíveis Diferenciados Leves.  ^000000
-[Nv 1]: ^777777 Duração 4 seg / Consume 50 SP por seg. ^000000
-[Nv 2]: ^777777 Duração 6 seg / Consume 50 SP por seg. ^000000
-[Nv 3]: ^777777 Duração 8 seg / Consume 50 SP por seg. ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Resfriamento 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Imobiliza o usuário e oponentes na
+área de 5x5 células, drenando
+50 SP por segundo os alvos.
+Oponentes atingidos por ataques de
+propriedade Terra serão libertados.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Gerador de Magnetismo.^000000
+Nível l Duração l SP
+[Nv 1]: ^7777774 segundos^000000 l ^77777760^000000
+[Nv 2]: ^7777776 segundos^000000 l ^77777770^000000
+[Nv 3]: ^7777778 segundos^000000 l ^77777780^000000
 #
 NC_NEUTRALBARRIER#
 Campo Protetor
-Nível Máximo: 3
-^777777Pré requisitos:  Campo Magnético 2 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Aumenta a defesa e defesa mágica do alvo e alvos na área. O campo também protege contra ataques de longo alcance porém habilidades que não erram o alvo ou em área podem ultrapassar esta barreira. Necessita de um Gerador de Barreira. Consome 1 Combustível Diferenciado Leve.  ^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 15% / 30 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 20% / 45 segundos de duração ^000000
-[Nv 3]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 25% / 60 segundos de duração ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Campo Magnético 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Bloqueia certos danos físicos
+a distância e aumenta a DEF e DEFM
+dos alvos na área de 5x5 células.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Gerador de Barreira.^000000
+Nível l Duração l DEF e DEFM
+[Nv 1]: ^77777730 segundos^000000 l ^777777+15%^000000
+[Nv 2]: ^77777745 segundos^000000 l ^777777+20%^000000
+[Nv 3]: ^77777760 segundos^000000 l ^777777+25%^000000
 #
 NC_STEALTHFIELD#
 Campo de Invisibilidade
-Nível Máximo: 3
-^777777Pré requisitos:  Analisar 3 / Campo Protetor 2 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Permite que alvos ao redor do usuário ganhem o estado Esconderijo. Os personagens ficam translúcidos e imunes a ataques físicos e mágicos. 
-Reduz continuamente o SP do usuário, e diminui 20% a vel. de movimento. A habilidade pode ser cancelada se usada novamente. Necessita de um Gerador de Camuflagem. Consome 2 Combustíveis Diferenciados Leves. ^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / 15 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células / 20 segundos de duração^000000
-[Nv 3]: ^777777 Alcance 3 x 3 células / 25 segundos de duração^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Analisar 3^000000
+^777777Campo Protetor 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Com exceção do usuário, alvos na
+área de 5x5 células ficarão em estado de
+Esconderijo e serão imunes a ataques.
+Reduz o movimento e drena SP do usuário.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Gerador de Camuflagem.^000000
+Nível l Duração l SP
+[Nv 1]: ^77777715 segundos^000000 l ^77777780^000000
+[Nv 2]: ^77777720 segundos^000000 l ^777777100^000000
+[Nv 3]: ^77777725 segundos^000000 l ^777777120^000000
 #
 NC_REPAIR#
 Reparar
-Nível Máximo: 5
-^777777Pré requisitos:  Licença de Pilotagem 2 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Permite reparar (recuperar) o próprio M.E.C.H.A. ou outros. 
-Necessita de um Kit de Reparação. Consome 1 Combustível Diferenciado Leve. Alcance de 5 células.  ^000000
-[Nv 1]: ^777777 Recuperação de HP 4% ^000000
-[Nv 2]: ^777777 Recuperação de HP 7% ^000000
-[Nv 3]: ^777777 Recuperação de HP 13% ^000000
-[Nv 4]: ^777777 Recuperação de HP 17% ^000000
-[Nv 5]: ^777777 Recuperação de HP 23% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Licença de Pilotagem 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Regenera o HP do usuário e de
+outros M.E.C.H.A. usando um reparador.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Kit de Reparação.^000000
+Nível l HP regen. l Item necessário
+[Nv 1]:  ^7777774%^000000 l ^777777Reparador Leve^000000
+[Nv 2]:  ^7777777%^000000 l ^777777Reparador Leve^000000
+[Nv 3]: ^77777713%^000000 l ^777777Reparador Moderado^000000
+[Nv 4]: ^77777717%^000000 l ^777777Reparador Moderado^000000
+[Nv 5]: ^77777723%^000000 l ^777777Reparador Avançado^000000
 #
 NC_TRAININGAXE#
 Maestria com Machados
-Nível Máximo: 10
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Aumenta o ATQ e Precisão quando o usuário utiliza um Machado. ^000000
-[Nv 1]: ^777777 ATQ +5 / Precisão +3  ^000000
-[Nv 2]: ^777777 ATQ +10 / Precisão +6  ^000000
-[Nv 3]: ^777777 ATQ +15 / Precisão +9  ^000000
-[Nv 4]: ^777777 ATQ +20 / Precisão +12 ^000000
-[Nv 5]: ^777777 ATQ +25 / Precisão +15  ^000000
-[Nv 6]: ^777777 ATQ +30 / Precisão +18  ^000000
-[Nv 7]: ^777777 ATQ +35 / Precisão +21  ^000000
-[Nv 8]: ^777777 ATQ +40 / Precisão +24  ^000000
-[Nv 9]: ^777777 ATQ +45 / Precisão +27  ^000000
-[Nv 10]: ^777777 ATQ +50 / Precisão +30  ^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ e a precisão
+do usuário ao usar Machados^000000
+Nível l ATQ l Precisão
+[Nv 1]:  ^777777+5^000000 l ^777777+3^000000
+[Nv 2]: ^777777+10^000000 l ^777777+6^000000
+[Nv 3]: ^777777+15^000000 l ^777777+9^000000
+[Nv 4]: ^777777+20^000000 l ^777777+12^000000
+[Nv 5]: ^777777+25^000000 l ^777777+15^000000
+[Nv 6]: ^777777+30^000000 l ^777777+18^000000
+[Nv 7]: ^777777+35^000000 l ^777777+21^000000
+[Nv 8]: ^777777+40^000000 l ^777777+24^000000
+[Nv 9]: ^777777+45^000000 l ^777777+27^000000
+[Nv 10]: ^777777+50^000000 l ^777777+30^000000
 #
 NC_RESEARCHFE#
 Sabedoria de Hefesto
-Nível Máximo: 5
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777 Aumenta a resistência e o ATQ contra monstros da propriedade Fogo e Terra.^000000
-[Nv 1]: ^777777 Resistência +10 / ATQ +10  ^000000
-[Nv 2]: ^777777 Resistência +20 / ATQ +20  ^000000
-[Nv 3]: ^777777 Resistência +30 / ATQ +30  ^000000
-[Nv 4]: ^777777 Resistência +40 / ATQ +40 ^000000
-[Nv 5]: ^777777 Resistência +50 / ATQ +50  ^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a resistência e o ATQ
+contra monstros de Fogo e Terra.^000000
+Nível l ATQ l Resistência
+[Nv 1]: ^777777+10^000000 l ^777777+10%^000000
+[Nv 2]: ^777777+20^000000 l ^777777+20%^000000
+[Nv 3]: ^777777+30^000000 l ^777777+30%^000000
+[Nv 4]: ^777777+40^000000 l ^777777+40%^000000
+[Nv 5]: ^777777+50^000000 l ^777777+50%^000000
 #
 NC_AXEBOOMERANG#
 Arremesso de Machado
-Nível Máximo: 5
-^777777Pré requisitos:  Maestria com Machados 1  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Arremessa um machado que derruba oponentes e causa dano à distância. Quanto maior o peso do Machado, maior o dano.^000000
-[Nv 1]: ^777777 ATQ 300% + Peso do Machado / Alcance de 5 células  ^000000
-[Nv 2]: ^777777 ATQ 350% + Peso do Machado / Alcance de 6 células  ^000000
-[Nv 3]: ^777777 ATQ 400% + Peso do Machado / Alcance de 7 células  ^000000
-[Nv 4]: ^777777 ATQ 450% + Peso do Machado / Alcance de 8 células ^000000
-[Nv 5]: ^777777 ATQ 500% + Peso do Machado / Alcance de 9 células  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Maestria com Machados 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância
+e empurra o alvo para trás.
+O peso do machado afeta o dano.^000000
+Nível l ATQ l Alcance
+[Nv 1]: ^777777300%^000000 l ^7777775 células^000000
+[Nv 2]: ^777777350%^000000 l ^7777776 células^000000
+[Nv 3]: ^777777400%^000000 l ^7777777 células^000000
+[Nv 4]: ^777777450%^000000 l ^7777778 células^000000
+[Nv 5]: ^777777500%^000000 l ^7777779 células^000000
 #
 NC_POWERSWING#
 Brandir Machado
-Nível Máximo: 5
-^777777Pré requisitos:  Arremesso de Machado 3  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Utiliza o machado para causar Atordoamento a um alvo único. Adiciona uma pequena chance de conjurar Arremesso de Machado se o usuário tiver a habilidade. Aumenta o ATQ de acordo com a FOR e DES do usuário. ^000000
-[Nv 1]: ^777777 ATQ 400%  ^000000
-[Nv 2]: ^777777 ATQ 500%  ^000000
-[Nv 3]: ^777777 ATQ 600%  ^000000
-[Nv 4]: ^777777 ATQ 700%  ^000000
-[Nv 5]: ^777777 ATQ 800%  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Arremesso de Machado 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico com chance de
+infligir [Atordoamento] no alvo.
+Há uma pequena chance de autoconjurar
+Arremesso de Machado ao usar a habilidade.
+O dano é afetado por FOR e DES do usuário.^000000
+Nível l ATQ l SP
+[Nv 1]: ^777777400%^000000 l ^77777720^000000
+[Nv 2]: ^777777500%^000000 l ^77777722^000000
+[Nv 3]: ^777777600%^000000 l ^77777724^000000
+[Nv 4]: ^777777700%^000000 l ^77777726^000000
+[Nv 5]: ^777777800%^000000 l ^77777728^000000
 #
 NC_AXETORNADO#
 Fúria do Furacão
-Nível Máximo: 5
-^777777Pré requisitos:  Maestria com Machados 1  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Cria um furacão com o machado causando dano a oponentes próximos. Aumenta o ATQ de acordo com a VIT do usuário. 
-O dano é aumentado se a arma equipada for da propriedade Vento, mas uma quantidade de HP do usuário é consumida.^000000
-[Nv 1] : ^777777 ATQ 300%, Alcance 5 x 5  cel / Consome 20 HP ^000000
-[Nv 2] : ^777777 ATQ 400%, Alcance 5 x 5  cel / Consome 40 HP ^000000
-[Nv 3] : ^777777 ATQ 500%, Alcance 7 x 7  cel / Consome 60 HP ^000000
-[Nv 4] : ^777777 ATQ 600%, Alcance 7 x 7  cel / Consome 80 HP ^000000
-[Nv 5] : ^777777 ATQ 700%, Alcance 7 x 7  cel / Consome 100 HP ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Maestria com Machados 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Gira o machado para causar dano
+físico ao redor do usuário.
+O dano é afetado pela VIT do usuário e
+se a arma for de propriedade Vento.
+Consome um pouco de HP ao ser usada.^000000
+Nível l ATQ l Área l HP l SP
+[Nv 1]: ^777777300%^000000 l ^7777775x5 células^000000 l ^77777720^000000 l ^77777718^000000
+[Nv 2]: ^777777400%^000000 l ^7777775x5 células^000000 l ^77777740^000000 l ^77777720^000000
+[Nv 3]: ^777777500%^000000 l ^7777777x7 células^000000 l ^77777760^000000 l ^77777722^000000
+[Nv 4]: ^777777600%^000000 l ^7777777x7 células^000000 l ^77777780^000000 l ^77777724^000000
+[Nv 5]: ^777777700%^000000 l ^7777777x7 células^000000 l ^777777100^000000 l ^77777726^000000
 #
 NC_SILVERSNIPER#
 Artilharia Caçadora
-Nível Máximo: 5
-^777777Pré requisitos:  Sabedoria de Hefesto 2  ^000000
-Tipo: ^777777  Ofensiva / Artilharia ^000000
-Descrição: ^777777  Monta uma Artilharia no chão que utiliza ataques físicos de longa distância. No máximo 2 Artilharias podem estar no chão ao mesmo tempo. Consome 2 Aços e 1 Ferro. Necessita de 1 Martelo de Oridecon e 1 Mini Fornalha. ^000000
-[Nv 1]: ^777777 ATQ 0 / 20 segundos de duração ^000000
-[Nv 2]: ^777777 ATQ +200  / 30 segundos de duração ^000000
-[Nv 3]: ^777777 ATQ +400  / 40 segundos de duração ^000000
-[Nv 4]: ^777777 ATQ +800  / 50 segundos de duração ^000000
-[Nv 5]: ^777777 ATQ +1000  / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Sabedoria de Hefesto 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria uma Artilharia de ataques
+físicos de longas distâncias.
+Apenas 2 Artilharias podem fcar ativas.^000000
+^000088Consome 1 Ferro e 2 Aços.
+Precisa de 1 Mini-Fornalha.
+Precisa de 1 Martelo de Oridecon.^000000
+Nível l Duração l ATQ
+[Nv 1]: ^77777720 segundos^000000 l ^7777770^000000
+[Nv 2]: ^77777730 segundos^000000 l ^777777200^000000
+[Nv 3]: ^77777740 segundos^000000 l ^777777400^000000
+[Nv 4]: ^77777750 segundos^000000 l ^777777800^000000
+[Nv 5]: ^77777760 segundos^000000 l ^7777771.000^000000
 #
 NC_MAGICDECOY#
 Artilharia Arcana
-Nível Máximo: 5
-^777777Pré requisitos:  Artilharia Caçadora  2  ^000000
-Tipo: ^777777  Ofensiva / Artilharia ^000000
-Descrição: ^777777  Monta uma Artilharia no chão que utiliza ataques mágicos. No máximo 2 Artilharias podem estar no chão ao mesmo tempo. Consome 2 Ferros, 1 Brigan e 1 pedra elemental. Necessita de 1 Martelo de Oridecon e 1 Mini Fornalha. ^000000
-[Nv 1]: ^777777 ATQM 300  / 20 segundos de duração ^000000
-[Nv 2]: ^777777 ATQM 350  / 30 segundos de duração ^000000
-[Nv 3]: ^777777 ATQM 400  / 40 segundos de duração ^000000
-[Nv 4]: ^777777 ATQM 450  / 50 segundos de duração ^000000
-[Nv 5]: ^777777 ATQM 500  / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Artilharia Caçadora  2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria uma Artilharia de ataques
+mágicos baseado no Fragmento usado.
+Apenas 2 Artilharias podem fcar ativas.^000000
+Fragmentos de cada propriedade:
+^7777772 Frag. Azuis^000000 l ^777777Água^000000
+^7777772 Frag. Verdes^000000 l ^777777Terra^000000
+^7777772 Frag. Amarelos^000000 l ^777777Vento^000000
+^7777772 Frag. Escarlate^000000 l ^777777Fogo^000000
+^000088Consome 2 Ferros e 1 Brigan.
+Precisa de 1 Mini-Fornalha.
+Precisa de 1 Martelo de Oridecon.^000000
+Nível l Duração l ATQ
+[Nv 1]: ^77777720 segundos^000000 l ^777777300^000000
+[Nv 2]: ^77777730 segundos^000000 l ^777777350^000000
+[Nv 3]: ^77777740 segundos^000000 l ^777777400^000000
+[Nv 4]: ^77777750 segundos^000000 l ^777777450^000000
+[Nv 5]: ^77777760 segundos^000000 l ^777777500^000000
 #
 NC_DISJOINT#
 Remover Artilharia
-Nível Máximo: 1
-^777777Pré requisitos:  Artilharia Caçadora 1  ^000000
-Tipo: ^777777  Suporte / Artilharia ^000000
-Descrição: ^777777  Remove uma Artilharia Caçadora do chão, que pode ser própria ou de outros em até 5 células de distância. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Artilharia Caçadora 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Consome 1 Chave Inglesa para
+remover uma Artilharia do usuário
+ou de outros Mecânicos.^000000
 #
 SC_FATALMENACE#
 Acerto de Contas
@@ -9503,105 +9705,157 @@ Consome 2 Esferas Espirituais. Não pode ser usada em conjunto com Chakra da Ene
 #
 WA_SWING_DANCE#
 Ritmo Contagiante
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta a vel. de movimento e de ATQ do usuário e membros do grupo por 60 segundos. 
-O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta a
+velocidade de ataque e movimento
+do usuário e membros do grupo.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 WA_SYMPHONY_OF_LOVER#
 Balada Sinfônica
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta a MDEF do usuário e membros do grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta a
+DEFM do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 WA_MOONLIT_SERENADE#
 Serenata ao Luar
-Nível Máximo: 5
-^777777Pré requisitos: Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes. Aumenta o ATQM do usuário e membros do grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes.^000000
+^777777Por 60 segundos, aumenta o
+ATQM do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_RUSH_WINDMILL#
 Sinfonia dos Ventos
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Aumenta o ATQ do usuário e membros grupo por 60 segundos.
-O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, aumenta o
+ATQ do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_ECHOSONG#
 Canção de Balder
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777 Efeito positivo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Aumenta a DEF do usuário e membros grupo por 60 segundos. O bônus é aumentado de acordo com o nível da habilidade e nível de classe do usuário. ^000000
-[Nv 1]: ^777777 Alcance 15 x 15 células ^000000
-[Nv 2]: ^777777 Alcance 17 x 17 células ^000000
-[Nv 3]: ^777777 Alcance 19 x 19 células ^000000
-[Nv 4]: ^777777 Alcance 21 x 21 células ^000000
-[Nv 5]: ^777777 Alcance 23 x 23 células ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, aumenta a
+DEF do usuário e membros do
+grupo. O bônus aumenta conforme
+o nível de classe do usuário.^000000
+Nível l Área
+[Nv 1]: ^77777715x15 células^000000
+[Nv 2]: ^77777717x17 células^000000
+[Nv 3]: ^77777719x19 células^000000
+[Nv 4]: ^77777721x21 células^000000
+[Nv 5]: ^77777723x23 células^000000
 #
 MI_HARMONIZE#
 Harmonizar
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1, Melodia de Morfeu 1 ^000000
-Tipo: ^777777 Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Instrumentos Musicais. Equiliza os Atributos do usuário e do alvo por 60 segundos. ^000000
-[Nv 1]: ^777777 Reduz até 10 pontos de Bônus de Atributos^000000
-[Nv 2]: ^777777 Reduz até 15 pontos de Bônus de Atributos^000000
-[Nv 3]: ^777777 Reduz até 20 pontos de Bônus de Atributos^000000
-[Nv 4]: ^777777 Reduz até 25 pontos de Bônus de Atributos^000000
-[Nv 5]: ^777777 Reduz até 30 pontos de Bônus de Atributos^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Melodia de Morfeu 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Instrumentos Musicais.^000000
+^777777Por 60 segundos, reduz
+todos os atributos do alvo
+e do usuário.^000000
+Nível l Atributos
+[Nv 1]: ^777777-10^000000
+[Nv 2]: ^777777-15^000000
+[Nv 3]: ^777777-20^000000
+[Nv 4]: ^777777-25^000000
+[Nv 5]: ^777777-30^000000
 #
 WM_LESSON#
 Domínio Musical
-Nível Máximo: 10
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777 Aumenta a velocidade de recuperação de SP e SP Máx. Se a habilidade for utilizada em nível 5 ou acima, permite o uso de canções e duetos de classe 3 enquanto usa habilidades de classe 2. ^000000
-[Nv 1]: ^777777 SP Máx. +30  ^000000
-[Nv 2]: ^777777 SP Máx. +60   ^000000
-[Nv 3]: ^777777 SP Máx. +90  ^000000
-[Nv 4]: ^777777 SP Máx. +120  ^000000
-[Nv 5]: ^777777 SP Máx. +150  / Permite o uso de canções de classe 3 e classe 2 ^000000
-[Nv 6]: ^777777 SP Máx. +180  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 7]: ^777777 SP Máx. +200  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 8]: ^777777 SP Máx. +240  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 9]: ^777777 SP Máx. +270  / Permite o uso de canções de classe 3 e classe 2^000000
-[Nv 10]: ^777777 SP Máx. +300 / Permite o uso de canções de classe 3 e classe 2^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o SP máx. e a
+regeneração de SP a cada
+10 segundos enquanto imóvel.
+Do nível 5 em diante, permite
+usar outras músicas e danças
+enquanto dança ou toca.^000000
+Nível l SP máx.
+[Nv 1]: ^777777+30^000000
+[Nv 2]: ^777777+60^000000
+[Nv 3]: ^777777+90^000000
+[Nv 4]: ^777777+120^000000
+[Nv 5]: ^777777+150^000000
+[Nv 6]: ^777777+180^000000
+[Nv 7]: ^777777+200^000000
+[Nv 8]: ^777777+240^000000
+[Nv 9]: ^777777+270^000000
+[Nv 10]: ^777777+300^000000
 #
 WM_METALICSOUND#
 Ruído Estridente
-Nível Máximo: 5
-^777777Pré requisitos: Ativar Ressonância 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777 Emite um alto ruído, reduzindo HP e SP do alvo. Causa mais dano a oponentes que estiverem o estado negativo Sono. Aumenta o dano de acordo com o nível da habilidade Domínio Musical. ^000000
-[Nv 1]: ^777777 ATQM 120% + Dano adicional dependendo de Domínio Musical ^000000
-[Nv 2]: ^777777 ATQM 240% + Dano adicional dependendo de Domínio Musical  ^000000
-[Nv 3]: ^777777 ATQM 360% + Dano adicional dependendo de Domínio Musical  ^000000
-[Nv 4]: ^777777 ATQM 480% + Dano adicional dependendo de Domínio Musical ^000000
-[Nv 5]: ^777777 ATQM 600% + Dano adicional dependendo de Domínio Musical ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ativar Ressonância 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano mágico de
+propriedade Neutro e drena
+um pouco de SP do alvo.
+Alvos em Sono Profundo
+receberão mais dano.^000000
+Nível l ATQM l Recarga l SP
+[Nv 1]: ^777777120%^000000 l ^7777772,0 segundos^000000 l ^77777764^000000
+[Nv 2]: ^777777240%^000000 l ^7777772,5 segundos^000000 l ^77777768^000000
+[Nv 3]: ^777777360%^000000 l ^7777773,0 segundos^000000 l ^77777772^000000
+[Nv 4]: ^777777480%^000000 l ^7777773,5 segundos^000000 l ^77777776^000000
+[Nv 5]: ^777777600%^000000 l ^7777774,0 segundos^000000 l ^77777780^000000
 #
 WM_REVERBERATION#
 Ressonância
@@ -9626,35 +9880,58 @@ Nível l ATQ l ATQM l SP
 #
 WM_DOMINION_IMPULSE#
 Ativar Ressonância
-Nível Máximo: 1
-^777777Pré requisitos: Ressonância 1 ^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777 Ativa o efeito de Ressonâncias que estiverem no chão em área de 11 x 11 células. Pode também ativar Ressonâncias de outros jogadores nesta área. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Ressonância 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ativa todas as Ressonâncias
+da área de 11x11 células,
+incluindo as de oponentes.^000000
 #
 WM_SEVERE_RAINSTORM#
 Temporal de Mil Flechas
-Nível Máximo: 5
-^777777Pré requisitos: Estilingue ou Flecha Melódica 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Habilidade usada apenas com Flechas. Atira uma sequência de flechas para o ar para gerar um temporaral de flechas em área de 11 x 11 células. Aumenta o dano dependendo da AGI e DES do usuário. Consome 20 flechas para ativar esta habilidade.^000000
-[Nv 1]: ^777777 100% ATQ / Duração de 0.9 segundos ^000000
-[Nv 2]: ^777777 150% ATQ  / Duração de 1.5 segundos  ^000000
-[Nv 3]: ^777777 200% ATQ  / Duração de 2.1 segundos   ^000000
-[Nv 4]: ^777777 250% ATQ  / Duração de 2.7 segundos  ^000000
-[Nv 5]: ^777777 300% ATQ  / Duração de 3 segundos  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Estilingue 5^000000 ou
+^777777Flecha Melódica 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Arcos.^000000
+^777777Consome 20 flechas para causar
+dano físico a distância
+na área de 11x11 células
+durante 3 segundos.
+O dano é influenciado pela
+DES e AGI do usuário.^000000
+Nível l Recarga l SP
+[Nv 1]: ^7777775,0 segundos^000000 l ^77777780^000000
+[Nv 2]: ^7777775,5 segundos^000000 l ^77777790^000000
+[Nv 3]: ^7777776,0 segundos^000000 l ^777777100^000000
+[Nv 4]: ^7777776,5 segundos^000000 l ^777777110^000000
+[Nv 5]: ^7777777,0 segundos^000000 l ^777777120^000000
 #
 WM_POEMOFNETHERWORLD#
 Poema de Nifflheim
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Cria um som fúnebre em área de 3 x 3 células que paraliza oponentes. No máximo 5 campos de Poema de Nifflheim podem ser criados ao mesmo tempo.
-Não pode ser utilizada contra monstros tipo Chefe. O tempo de paralisia dos alvos depende do nível dos mesmos. Consome 1 Pastilha Refrescante. ^000000
-[Nv 1]: ^777777 Duração do efeito 8 segundos. / Duração do campo 9 segundos. ^000000
-[Nv 2]: ^777777 Duração do efeito 10 segundos. / Duração do campo 11 segundos. ^000000
-[Nv 3]: ^777777 Duração do efeito 12 segundos. / Duração do campo 13 segundos. ^000000
-[Nv 4]: ^777777 Duração do efeito 14 segundos. / Duração do campo 15 segundos. ^000000
-[Nv 5]: ^777777 Duração do efeito 16 segundos. / Duração do campo 17 segundos. ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Pastilha Refrescante
+para criar uma armadilha.
+Oponentes que se aproximarem
+da área de 3x3 células do poema
+ficarão imóveis temporariamente.
+Apenas 5 poemas ativos por vez.
+Não funciona contra Chefes.^000000
+Nível l Tempo (imóvel) l Tempo (poema)
+[Nv 1]: ^7777778 segundos^000000 l ^7777779 segundos^000000
+[Nv 2]: ^77777710 segundos^000000 l ^77777711 segundos^000000
+[Nv 3]: ^77777712 segundos^000000 l ^77777713 segundos^000000
+[Nv 4]: ^77777714 segundos^000000 l ^77777715 segundos^000000
+[Nv 5]: ^77777716 segundos^000000 l ^77777717 segundos^000000
 #
 WM_VOICEOFSIREN#
 Canto da Sereia
@@ -9670,7 +9947,8 @@ na área ao seu redor.
 A área, a chance de inflição
 e a duração do efeito nos alvos
 aumentam de acordo com o
-nível da habilidade.^000000
+nível da habilidade.
+Funciona apenas em PvP/GdE.^000000
 Nível l Duração l Área
 [Nv 1]: ^77777715 segundos^000000 l ^7777775x5 células^000000
 [Nv 2]: ^77777718 segundos^000000 l ^7777777x7 células^000000
@@ -9680,180 +9958,314 @@ Nível l Duração l Área
 #
 WM_DEADHILLHERE#
 Réquiem de Orfeu
-Nível Máximo: 5
-^777777Pré requisitos: Sibilo de Eir 3 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. A habilidade revive personagens derrotados. O alvo revivido recebe HP equivalente ao SP que possuía. 
-Se o alvo possui SP 0, ele será revivido com 1 de HP. Consome 1 Lágrimas de Arrependimento ^000000
-[Nv 1]: ^777777 Chance de sucesso 90% / Consome 50% do SP do alvo revivido^000000
-[Nv 2]: ^777777 Chance de sucesso 92% / Consome 40% do SP do alvo revivido  ^000000
-[Nv 3]: ^777777 Chance de sucesso 94% / Consome 30% do SP do alvo revivido  ^000000
-[Nv 4]: ^777777 Chance de sucesso 96% / Consome 20% do SP do alvo revivido ^000000
-[Nv 5]: ^777777 Chance de sucesso 98% / Consome 10% do SP do alvo revivido ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Sibilo de Eir 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Lágrima de Arrependiento
+para ter a chance de reviver
+outros personagens, drenando SP
+do alvo para recuperar em HP.^000000
+Nível l Chance l SP drenado
+[Nv 1]: ^77777790%^000000 l ^77777750%^000000
+[Nv 2]: ^77777792%^000000 l ^77777740%^000000
+[Nv 3]: ^77777794%^000000 l ^77777730%^000000
+[Nv 4]: ^77777796%^000000 l ^77777720%^000000
+[Nv 5]: ^77777798%^000000 l ^77777710%^000000
 #
 WM_LULLABY_DEEPSLEEP#
 Melodia de Morfeu
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777 Efeito negativo ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Obriga todos os adversários a entrar em estado de Sono Profundo.
-Neste estado, os usuários afetados são imobilizados e impedidos de atacar, utilizar habilidades e itens, e falar. A habilidade é cancelada se o alvo afetado receber dano. 
-Ataques recebidos no estado de Sono Profundo causam 50% mais dano. Usuários afetados por este estado recuperam 3% do HP e SP a cada 2 segundos. ^000000
-[Nv 1]: ^777777 Alcance 11 x 11 células ^000000
-[Nv 2]: ^777777 Alcance 13 x 13 células^000000
-[Nv 3]: ^777777 Alcance 15 x 15 células^000000
-[Nv 4]: ^777777 Alcance 17 x 17 células^000000
-[Nv 5]: ^777777 Alcance 19 x 19 células^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de infligir
+[Sono Profundo] nos oponentes
+ao redor do usuário.^000000
+Nível l Área l SP
+[Nv 1]: ^77777711x11 células^000000 l ^77777780^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777790^000000
+[Nv 3]: ^77777715x15 células^000000 l ^777777100^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777110^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777120^000000
 #
 WM_SIRCLEOFNATURE#
 Sibilo de Eir
-Nível Máximo: 5
-^777777Pré requisitos: Domínio Musical 1 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Permite que uma quantidade de SP seja consumida do alvo para que receba HP em troca. Se o HP do alvo chega a zero, a habilidade é cancelada.^000000
-[Nv 1]: ^777777 Alcance da habilidade 7 x 7  / 4 SP consumido por segundo / 40 HP obtido por segundo^000000
-[Nv 2]: ^777777 Alcance da habilidade 9 x 9 / 8 SP consumido por segundo / 80 HP obtido por segundo^000000
-[Nv 3]: ^777777 Alcance da habilidade 11 x 11 / 12 SP consumido por segundo / 120 HP obtido por segundo^000000
-[Nv 4]: ^777777 Alcance da habilidade 13 x 13 / 16 SP consumido por segundo / 160 HP obtido por segundo^000000
-[Nv 5]: ^777777 Alcance da habilidade 15 x 15 / 20 SP consumido por segundo / 200 HP obtido por segundo^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Domínio Musical 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Drena SP para recuperar
+um pouco de HP por segundo
+do usuário e dos membros
+do grupo por 60 segundos.^000000
+Nível l Dreno de SP l Rec. de HP l Área
+[Nv 1]: ^7777774^000000 l ^77777740^000000 l ^7777777x7 células^000000
+[Nv 2]: ^7777778^000000 l ^77777780^000000 l ^7777779x9 células^000000
+[Nv 3]: ^77777712^000000 l ^777777120^000000 l ^77777711x11 células^000000
+[Nv 4]: ^77777716^000000 l ^777777160^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777720^000000 l ^777777200^000000 l ^77777715x15 células^000000
 #
 WM_RANDOMIZESPELL#
 Improviso
-Nível Máximo: 5
-^777777Pré requisitos: Poema de Nifflheim 1 ^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777  Permite que o usuário conjure uma magia de Mago ou Bruxo aleatoriamente. Todos os itens pré-requisitos destas magias não são necessários.^000000
-[Nv 1]: ^777777 Ativa aleatoriamente magias de nível 5^000000
-[Nv 2]: ^777777 Ativa aleatoriamente magias de nível 6 ^000000
-[Nv 3]: ^777777 Ativa aleatoriamente magias de nível 7 ^000000
-[Nv 4]: ^777777 Ativa aleatoriamente magias de nível 8 ^000000
-[Nv 5]: ^777777 Ativa aleatoriamente magias de nível 9 ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Poema de Nifflheim 1^000000
+Tipo: ^777777Ativa^000000
+^777777Ativa uma magia de
+Mago ou Bruxo aleatoriamente.
+As magias não consomem gema
+ou outros pré-requisitos.^000000
+Nível l Nv. da magia
+[Nv 1]: ^7777775^000000
+[Nv 2]: ^7777776^000000
+[Nv 3]: ^7777777^000000
+[Nv 4]: ^7777778^000000
+[Nv 5]: ^7777779^000000
 #
 WM_GLOOMYDAY#
 Ode a Hela
-Nível Máximo: 5
-^777777Pré requisitos: Improviso 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta o ATQ de habilidades específicas e penaliza o usuário com redução da Esquiva e da Vel. de ATQ.
-Habilidades que podem ser afetadas: [Brandir Lança / Perfurar em Espiral / Punição Divina / Escudo Bumerangue / Choque Rápido / Escudo Compressor]. Se o alvo não possui uma destas habilidades, ele só receberá a penalidade em Esquiva e Vel. de ATQ. Pode ser usada em membros do grupo ou do clã do usuário. ^000000
-[Nv 1]: ^777777 Esquiva -25 / Vel. de ATQ -20% ^000000
-[Nv 2]: ^777777 Esquiva -30 / Vel. de ATQ -25% ^000000
-[Nv 3]: ^777777 Esquiva -35 / Vel. de ATQ -30% ^000000
-[Nv 4]: ^777777 Esquiva -40 / Vel. de ATQ -35% ^000000
-[Nv 5]: ^777777 Esquiva -45 / Vel. de ATQ -40% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Improviso 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Melhora o dano de algumas
+habilidades ao custo de reduzir
+esquiva e velocidade de ataque.
+Há uma pequena chance de
+retirar a montaria do alvo.^000000
+Habilidades afetadas:
+^777777Brandir Lança, Choque Rápido,
+Perfurar em Espiral, Punição Divina,
+Escudo Compressor, Escudo Bumerangue
+e Lança das Mil Pontas.^000000
+Nível l Esquiva l Velocidade de ataque
+[Nv 1]: ^777777-25^000000 l ^777777-20%^000000
+[Nv 2]: ^777777-30^000000 l ^777777-25%^000000
+[Nv 3]: ^777777-35^000000 l ^777777-30%^000000
+[Nv 4]: ^777777-40^000000 l ^777777-35%^000000
+[Nv 5]: ^777777-45^000000 l ^777777-40%^000000
 #
 WM_GREAT_ECHO#
-Brado de Odin 
-Nível Máximo: 5
-^777777Pré requisitos: Ruído Estridente 1 ^000000
-Tipo: ^777777  Ofensiva / Dueto ^000000
-Descrição: ^777777  O usuário canta uma canção que causa dano a todos os oponentes no alcance da habilidade. 
-Aumenta o ATQ e reduz o consumo de SP conforme aumenta o número de Musas e Trovadores no grupo. O SP para a ativação da habilidade é consumido ao mesmo tempo para Musas e Trovadores. Consome 1 Pastilha Refrescante. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 5 x 5 / ATQ 600% ^000000
-[Nv 2]: ^777777 Alcance da habilidade 7 x 7 / ATQ 800%^000000
-[Nv 3]: ^777777 Alcance da habilidade 7 x 7 / ATQ 1000% ^000000
-[Nv 4]: ^777777 Alcance da habilidade 9 x 9 / ATQ 1200% ^000000
-[Nv 5]: ^777777 Alcance da habilidade 9 x 9 / ATQ 1400% ^000000
+Brado de Odin
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ruído Estridente 1^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^777777Consome 1 Pastilha Refrescante
+para causar dano físico
+a distância na área escolhida.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Dano
+[Nv 1]: ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^7777777x7 células^000000 l ^777777800%^000000
+[Nv 3]: ^7777777x7 células^000000 l ^7777771.000%^000000
+[Nv 4]: ^7777779x9 células^000000 l ^7777771.200%^000000
+[Nv 5]: ^7777779x9 células^000000 l ^7777771.400%^000000
 #
 WM_SONG_OF_MANA#
 Canção de Alfheim
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar , Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Recupera 10 de SP a cada 5 segundos do usuário e membros do grupo. Aumenta a quantidade de SP recuperada se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 11 x 11 / 30 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance da habilidade 13 x 13 / 60 segundos de duração ^000000
-[Nv 3]: ^777777 Alcance da habilidade 15 x 15 / 90 segundos de duração ^000000
-[Nv 4]: ^777777 Alcance da habilidade 17 x 17 / 120 segundos de duração ^000000
-[Nv 5]: ^777777 Alcance da habilidade 19 x 19 / 150 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Usuário e membros do grupo
+poderão recuperar 10 de SP
+a cada 5 segundos.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777730 segundos^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777760 segundos^000000
+[Nv 3]: ^77777715x15 células^000000 l ^77777790 segundos^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777120 segundos^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777150 segundos^000000
 #
 WM_DANCE_WITH_WUG#
 Dança com Lobos
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar, Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta a Vel. de ATQ e reduz um pouco o tempo fixo de conjuração de usuário e membros do grupo na área de efeito.
-Aumenta o dano de ataques físicos em longas distâncias e o dano do Worg. Aumenta o efeito se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 11 x 11 / Duração: 30 sec. ^000000
-[Nv 2]: ^777777 Alcance da habilidade 13 x 13 / Duração: 60 sec. ^000000
-[Nv 3]: ^777777 Alcance da habilidade 15 x 15 / Duração: 90 sec. ^000000
-[Nv 4]: ^777777 Alcance da habilidade 17 x 17 / Duração: 120 sec. ^000000
-[Nv 5]: ^777777 Alcance da habilidade 19 x 19 / Duração: 150 sec. ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Reduz a conjuração fixa e
+aumenta a velocidade de ataque
+do usuário e membros do grupo.
+Em evoluções de Arqueiro,
+aumenta o dano físico a
+distância e o dano com o Worg.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777730 segundos^000000
+[Nv 2]: ^77777713x13 células^000000 l ^77777760 segundos^000000
+[Nv 3]: ^77777715x15 células^000000 l ^77777790 segundos^000000
+[Nv 4]: ^77777717x17 células^000000 l ^777777120 segundos^000000
+[Nv 5]: ^77777719x19 células^000000 l ^777777150 segundos^000000
 #
 WM_SOUND_OF_DESTRUCTION#
 Prelúdio do Ragnarök
-Nível Máximo: 5
-^777777Pré requisitos: Embalos de Sábado a Noite 3 , Cântico da Iluminação 3  ^000000
-Tipo: ^777777  Especial / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Cancela uma canção ou dueto do alvo e dos oponentes ao redor do alvo. A chance de sucesso depende da DES e INT do oponente, do nível da canção/dueto do oponente e do nível de Prelúdio do Ragnarök do usuário. Aumenta a chance de sucesso se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 1 alvo e imediações em área de 5 x 5  ^000000
-[Nv 2]: ^777777 1 alvo e imediações em área de 5 x 5  ^000000
-[Nv 3]: ^777777 1 alvo e imediações em área de 7 x 7  ^000000
-[Nv 4]: ^777777 1 alvo e imediações em área de 7 x 7  ^000000
-[Nv 5]: ^777777 1 alvo e imediações em área de 9 x 9  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Embalos de Sábado a Noite 3,
+Cântico da Iluminação 3^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Causa dano fixo no alvo
+com chance de cancelar uma
+música ou dança dos artistas
+na área selecionada.
+O coral é melhorado com o
+núm. de artistas no grupo.
+Funciona apenas em PvP/GdE.^000000
+Nível l Dano l Área
+[Nv 1]: ^7777771.000^000000 l ^7777779x9 células^000000
+[Nv 2]: ^7777772.000^000000 l ^7777779x9 células^000000
+[Nv 3]: ^7777773.000^000000 l ^77777711x11 células^000000
+[Nv 4]: ^7777774.000^000000 l ^77777713x13 células^000000
+[Nv 5]: ^7777775.000^000000 l ^77777715x15 células^000000
 #
 WM_SATURDAY_NIGHT_FEVER#
 Embalos de Sábado a Noite
-Nível Máximo: 5
-^777777Pré requisitos: Dança com Lobos 1 ^000000
-Tipo: ^777777  Especial / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Todos os personagens na tela do usuário, inclusive ele mesmo, entram em Transe. Neste estado, os personagens perdem HP e SP continuamente, e a Esquiva e DEF caem significativamente, mas o ATQ é aumentado.
-Enquanto o dueto estiver ativo, os usuários não poderão usar itens ou outras habilidades. Alvos afetados se sentarão por 3 segundos após o término do estado de Transe. Se a habilidade afetar mais que 7 pessoas ao mesmo tempo, o Deus da Loucura aparecerá para causar 9999 de dano em todos os personagens afetados por Transe. ^000000
-[Nv 1]: ^777777 Alcance da habilidade 7 x 7 / ATQ +100 / DEF -20% / Esquiva -50%  ^000000
-[Nv 2]: ^777777 Alcance da habilidade 9 x 9 / ATQ +200 / DEF -30% / Esquiva -60%  ^000000
-[Nv 3]: ^777777 Alcance da habilidade 11 x 11 / ATQ +300 / DEF -40% / Esquiva -70%  ^000000
-[Nv 4]: ^777777 Alcance da habilidade 13 x 13 / ATQ +400 / DEF -50% / Esquiva -80%  ^000000
-[Nv 5]: ^777777 Alcance da habilidade 15 x 15 / ATQ +500 / DEF -60% / Esquiva -90%  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Dança com Lobos 1^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de aumentar
+o ATQ, reduzir a DEF e a esquiva
+de todos os personagens na área.
+Drena 1% de HP e SP e
+impede o uso de itens.
+Após o efeito, todos sentarão.
+Se mais de 7 pessoas forem
+afetadas, todas receberão
+9.999 de dano fixo.
+O coral é melhorado com o
+núm. de artistas no grupo.
+Funciona apenas em PvP/GdE.^000000
+Nível l ATQ l DEF l Esqv l Área
+[Nv 1]: ^777777+100^000000 l ^777777-20%^000000 l ^777777-50%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^777777+200^000000 l ^777777-30%^000000 l ^777777-60%^000000 l ^7777779x9 células^000000
+[Nv 3]: ^777777+300^000000 l ^777777-40%^000000 l ^777777-70%^000000 l ^77777711x11 células^000000
+[Nv 4]: ^777777+400^000000 l ^777777-50%^000000 l ^777777-80%^000000 l ^77777713x13 células^000000
+[Nv 5]: ^777777+500^000000 l ^777777-60%^000000 l ^777777-90%^000000 l ^77777715x15 células^000000
 #
 WM_LERADS_DEW#
 Orvalho de Idun
-Nível Máximo: 5
-^777777Pré requisitos: Ritmo Contagiante/Harmonizar, Balada Sinfônica/Sinfonia dos Ventos, Serenata ao Luar/Canção de Balder 1  ^000000
-Tipo: ^777777  Efeito positivo / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta temporariamente o HP Máx de usuário e membros do grupo perto. Não afeta usuários em Frenesi. Aumenta o bônus se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 HP Máx. +200 / 20 seg / Alcance 11 x 11^000000
-[Nv 2]: ^777777 HP Máx. +400  / 30 seg / Alcance 11 x 11^000000
-[Nv 3]: ^777777 HP Máx. +600  / 40 seg / Alcance 13 x 13^000000
-[Nv 4]: ^777777 HP Máx. +800  / 50 seg / Alcance 13 x 13^000000
-[Nv 5]: ^777777 HP Máx. +1000  / 60 seg / Alcance 15 x 15^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Ritmo Contagiante 1,
+Balada Sinfônica 1 e
+Serenata ao Luar 1^000000 ou
+^777777Harmonizar 1
+Sinfonia dos Ventos 1 e
+Canção de Balder 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Usuário e membros do grupo
+terão bônus no HP máx.
+Não afeta alvos em Frenesi.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração l HP máx.
+[Nv 1]: ^77777711x11 células^000000 l ^77777720 segundos^000000 l ^777777+200^000000
+[Nv 2]: ^77777711x11 células^000000 l ^77777730 segundos^000000 l ^777777+400^000000
+[Nv 3]: ^77777713x13 células^000000 l ^77777740 segundos^000000 l ^777777+600^000000
+[Nv 4]: ^77777713x13 células^000000 l ^77777750 segundos^000000 l ^777777+800^000000
+[Nv 5]: ^77777715x15 células^000000 l ^77777760 segundos^000000 l ^777777+1.000^000000
 #
 WM_MELODYOFSINK#
 Cântico da Iluminação
-Nível Máximo: 5
-^777777Pré requisitos: Canção de Alfheim 1^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Rapidamente diminui o SP de todos os inimigos em volta do usuário e reduz a INT dos inimigos drasticamente.
-O efeito da habilidade é aumentado se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Chance de Sucesso 20% / 20 segundos de duração ^000000
-[Nv 2]: ^777777 Chance de Sucesso 25% / 30 segundos de duração ^000000
-[Nv 3]: ^777777 Chance de Sucesso 30% / 40 segundos de duração ^000000
-[Nv 4]: ^777777 Chance de Sucesso 35% / 50 segundos de duração ^000000
-[Nv 5]: ^777777 Chance de Sucesso 40% / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Canção de Alfheim 1^000000
+Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de reduzir
+a INT e drenar SP de todos
+os personagens da área.
+Não tem efeito fora do PvP/GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Chance l Duração l Área
+[Nv 1]: ^77777720%^000000 l ^77777720 segundos^000000 l ^77777711x11 células^000000
+[Nv 2]: ^77777725%^000000 l ^77777730 segundos^000000 l ^77777711x11 células^000000
+[Nv 3]: ^77777730%^000000 l ^77777740 segundos^000000 l ^77777713x13 células^000000
+[Nv 4]: ^77777735%^000000 l ^77777750 segundos^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777740%^000000 l ^77777760 segundos^000000 l ^77777715x15 células^000000
 #
 WM_BEYOND_OF_WARCRY#
 Clamor de Batalha
-Nível Máximo: 5
-^777777Pré requisitos: Orvalho de Idun 1^000000
-Tipo: ^777777  Efeito positivo / Dueto^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Diminiu o HP Máx de todos inimigos atingidos, porém aumenta a força e a Taxa de Crítico dos alvos. 
-Aumenta o bônus se o grupo possuir mais Musas e Trovadores. ^000000
-[Nv 1]: ^777777 Chance de Sucesso 20% / 20 segundos de duração ^000000
-[Nv 2]: ^777777 Chance de Sucesso 25% / 30 segundos de duração ^000000
-[Nv 3]: ^777777 Chance de Sucesso 30% / 40 segundos de duração ^000000
-[Nv 4]: ^777777 Chance de Sucesso 35% / 50 segundos de duração ^000000
-[Nv 5]: ^777777 Chance de Sucesso 40% / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Orvalho de Idun 1^000000
+Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Concede a chance de reduzir
+o HP máx. e aumentar
+a FOR e o CRIT de todos
+os personagens da área.
+Não tem efeito fora do PvP/GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Chance l Duração l Área
+[Nv 1]: ^77777720%^000000 l ^77777720 segundos^000000 l ^77777711x11 células^000000
+[Nv 2]: ^77777725%^000000 l ^77777730 segundos^000000 l ^77777711x11 células^000000
+[Nv 3]: ^77777730%^000000 l ^77777740 segundos^000000 l ^77777713x13 células^000000
+[Nv 4]: ^77777735%^000000 l ^77777750 segundos^000000 l ^77777713x13 células^000000
+[Nv 5]: ^77777740%^000000 l ^77777760 segundos^000000 l ^77777715x15 células^000000
 #
 WM_UNLIMITED_HUMMING_VOICE#
 Murmúrio Perene
-Nível Máximo: 5
-^777777Pré requisitos: Prelúdio do Ragnarök 1 , Clamor de Batalha 1^000000
-Tipo: ^777777  Efeito positivo / Dueto ^000000
-Descrição: ^777777  Habilidade usada apenas com Chicotes / Instrumentos Musicais. Os alvos na área de efeito não poderão ter suas conjurações interrompidas. Aumenta o consumo de SP em 15%. Reduz a penalidade de consumo de SP se o grupo possuir mais Musas e Trovadores. Não pode ser utilizada dentro de Castelos^000000
-[Level 1] : ^777777 Alcance 11 x 11 / Duração 60 Seg ^000000
-[Level 2] : ^777777 Alcance 11 x 11 / Duração 90 Seg ^000000
-[Level 3] : ^777777 Alcance 13 x 13 / Duração 120 Seg ^000000
-[Level 4] : ^777777 Alcance 13 x 13 / Duração 150 Seg ^000000
-[Level 5] : ^777777 Alcance 15 x 15 / Duração 180 Seg ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Prelúdio do Ragnarök 1,
+Clamor de Batalha 1^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Todos os alvos na área
+consumirão 15% mais de SP,
+mas a conjuração de habilidades
+não será interrompida.
+Não funciona na GdE.
+O coral é melhorado com o
+núm. de artistas no grupo.^000000
+Nível l Área l Duração
+[Nv 1]: ^77777711x11 células^000000 l ^77777760 segundos^000000
+[Nv 2]: ^77777711x11 células^000000 l ^77777790 segundos^000000
+[Nv 3]: ^77777713x13 células^000000 l ^777777120 segundos^000000
+[Nv 4]: ^77777713x13 células^000000 l ^777777150 segundos^000000
+[Nv 5]: ^77777715x15 células^000000 l ^777777180 segundos^000000
 #
 SO_FIREWALK#
 Passos da Salamandra
@@ -10174,15 +10586,23 @@ Descrição: ^777777 Gira o carrinho para criar um tornado em área que causa da
 #
 GN_CARTCANNON#
 Canhão de Prótons
-Nível Máximo: 5
-^777777Pré requisitos: Aprimorar Carrinho 2^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Atira com um canhão de prótons equipado no carrinho. Causa dano elevado a um alvo e oponentes ao redor. Necessita de um carrinho equipado. O dano é aumentado dependendo do Ataque, nível de Aprimorar Carrinho e INT do usuário. Consome 1 Bala de Canhão. ^000000
-[Nv 1]: ^777777 ATQ 60% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 2]: ^777777 ATQ 120% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 3]: ^777777 ATQ 180% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 4]: ^777777 ATQ 240% + Bônus pelo nível de Aprimorar Carrinho ^000000
-[Nv 5]: ^777777 ATQ 300% + Bônus pelo nível de Aprimorar Carrinho ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Aprimorar Carrinho 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância
+ignorando a DEF dos alvos atingidos.
+O dano é aumentado pela INT do usuário
+e pelo nível de 'Aprimorar Carrinho'.
+Necessita de um carrinho e consome
+1 Bala de Canhão equipada.^000000
+Nível l Área l ATQ l SP
+[Nv 1]: ^7777773x3 células^000000 l  ^77777760%^000000 l ^77777740^000000
+[Nv 2]: ^7777773x3 células^000000 l ^777777120%^000000 l ^77777742^000000
+[Nv 3]: ^7777775x5 células^000000 l ^777777180%^000000 l ^77777746^000000
+[Nv 4]: ^7777775x5 células^000000 l ^777777240%^000000 l ^77777748^000000
+[Nv 5]: ^7777777x7 células^000000 l ^777777300%^000000 l ^77777750^000000
 #
 GN_CARTBOOST#
 Propulsão do Carrinho
@@ -10384,9 +10804,11 @@ ALL_ODINS_RECALL#
 #
 RETURN_TO_ELDICASTES#
 Para El Dicastes
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Retorna a El Dicastes, Capital dos Manuks. 5 minutos de intervalo entre conjurações.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para El Dicastes.^000000
 #
 HLIF_HEAL#
 Cura pelas Mãos
@@ -11684,9 +12106,11 @@ Essa habilidade não pode ser usada em monstros.
 #
 ECLAGE_RECALL#
 Para Eclage
-Nível Máximo : 1
-Tipo de habilidade : ^777777Suporte^bb0000^000000
-Descrição : ^777777Teleporta para a cidade de Eclage. Conjuração fixa de 3 segundos. 5 minute reuse time.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para Eclage.^000000
 #
 MC_CARTDECORATE#
 Decorar Carrinho
@@ -11761,29 +12185,42 @@ Descrição : ^777777Ensina seu Dragão a soprar gelo. Pode causar Hipotermia e 
 #
 NC_MAGMA_ERUPTION#
 Erupção de Magma
-Nível Máximo : 5
-^777777Pré requisito : Sabedoria de Hefesto 1  ^000000
-Tipo : ^777777  Ativo ^000000
-Descrição : ^777777 Cria um forte impacto que faz explodir lava do chão.^000000
-^777777 Atinge 7x7 células. Chance de causar Atordoamento e Incêndio. A área selecionada ficará ativa por 5 segundos.^000000
-[Nível 1] : ^777777 A cada 5.0 segundos, 1000 de dano fixo, chance de incêndio 10% ^000000
-[Nível 2] : ^777777 A cada 5.0 segundos, 1200 de dano fixo, chance de incêndio 20% ^000000
-[Nível 3] : ^777777 A cada 5.0 segundos, 1400 de dano fixo, chance de incêndio 30% ^000000
-[Nível 4] : ^777777 A cada 5.0 segundos, 1600 de dano fixo, chance de incêndio 40% ^000000
-[Nível 5] : ^777777 A cada 5.0 segundos, 1800 de dano fixo, chance de incêndio 50% ^000000
+Nível máximo: ^7777775^000000
+Pré requisito:
+^777777Sabedoria de Hefesto 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Cria um forte impacto numa área
+de 7x7 células, criando um vulcão
+em erupção por 5 segundos.
+A cada 0,5 segundos, causa dano
+fixo com chance de causar Incêndio.^000000
+Nível l Dano fixo l Chance l SP
+[Nv 1]: ^7777771.000^000000 l ^77777710%^000000 l ^77777760^000000
+[Nv 2]: ^7777771.200^000000 l ^77777720%^000000 l ^77777770^000000
+[Nv 3]: ^7777771.400^000000 l ^77777730%^000000 l ^77777780^000000
+[Nv 4]: ^7777771.600^000000 l ^77777740%^000000 l ^77777790^000000
+[Nv 5]: ^7777771.800^000000 l ^77777750%^000000 l ^777777100^000000
 #
 WM_FRIGG_SONG#
 Canção de Frigga
-Nível Máximo : 5
-^777777Pré requisito : Domínio Musical 2 ^000000
-Tipo : ^777777 Ativo / Efeito Positivo ^000000
-Descrição : ^777777 Habilidade usada apenas com Chicotes / Instrumentos Musicais. Aumenta e recupera o HP do alvo. Consome uma unidade de Lágrimas de Arrependimento.^000000
-^777777 Em áreas de PvP e GdE, somente membros do seu grupo serão afetados.^000000
-[Nível 1] : ^777777 Área de 7 x 7, HP + 5%, Recupera 100 de HP por segundo.^000000
-[Nível 2] : ^777777 Área de 9 x 9, HP + 10%, Recupera 120 de HP por segundo.^000000
-[Nível 3] : ^777777 Área de 11 x 11, HP + 15%, Recupera 140 de HP por segundo.^000000
-[Nível 4] : ^777777 Área de 13 x 13, HP + 20%, Recupera 160 de HP por segundo.^000000
-[Nível 5] : ^777777 Área de 15 x 15, HP + 25%, Recupera 180 de HP por segundo.^000000
+Nível máximo: ^7777775^000000
+Pré requisito:
+^777777Domínio Musical 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Consome 1 Lágrima de Arrependimento
+para aumentar o HP máx. e
+regenerar HP por segundo
+dos alvos ao redor.
+Só afeta o grupo em PvP/GdE.^000000
+Nível l HP regen. l HP máx. l Área
+[Nv 1]: ^777777100^000000 l ^777777+5%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^777777120^000000 l ^777777+10%^000000 l ^7777779x9 células^000000
+[Nv 3]: ^777777140^000000 l ^777777+15%^000000 l ^77777711x11 células^000000
+[Nv 4]: ^777777160^000000 l ^777777+20%^000000 l ^77777713x13 células^000000
+[Nv 5]: ^777777180^000000 l ^777777+25%^000000 l ^77777715x15 células^000000
 #
 SO_ELEMENTAL_SHIELD#
 Escudo Elemental
@@ -11850,15 +12287,25 @@ Descrição : ^777777 Otimiza a Telecinese para melhorar o ataque mágico e o te
 #
 ALL_FULL_THROTTLE#
 Maximizar Poder
-Nível Máximo : 5
-^777777Pré requisito : Terceiras Classes  ^000000
-Descrição : ^777777 Aumenta o poder enquanto consome seu HP. Após o uso, causa fadiga extrema. ^000000
-^777777 Ao usar, +20% em todos os atributos, recupera todo o HP, aumenta a Velocidade de Movimento. O efeito não pode ser removido por Desencantar e Gênese. ^000000
-[Nível 1] : ^777777 Duração: 10 segundos / Consome 6% do SP por segundo ^000000
-[Nível 2] : ^777777 Duração: 15 segundos / Consome 4% do SP por segundo ^000000
-[Nível 3] : ^777777 Duração: 20 segundos / Consome 3% do SP por segundo ^000000
-[Nível 4] : ^777777 Duração: 25 segundos / Consome 2% do SP por segundo ^000000
-[Nível 5] : ^777777 Duração: 30 segundos / Consome 1% do SP por segundo ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Classe 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Recupera 100% do HP, acelera o
+movimento e fornece +20% em todos os
+seus atributos ao custo de sofrer 'Fadiga'
+por 10 segundos após o término do efeito.
+Drena SP por segundo enquanto ativa.
+Possui 50 minutos de recarga.^000000
+Fadiga:
+^777777Reduz o movimento e o HP e SP
+não serão regenerados naturalmente.^000000
+Nv. l Duração l Dreno de SP
+[Nv 1]: ^77777710 segundos^000000 l ^7777776%^000000
+[Nv 2]: ^77777715 segundos^000000 l ^7777774%^000000
+[Nv 3]: ^77777720 segundos^000000 l ^7777773%^000000
+[Nv 4]: ^77777725 segundos^000000 l ^7777772%^000000
+[Nv 5]: ^77777730 segundos^000000 l ^7777771%^000000
 #
 GN_ILLUSIONDOPING#
 Alucinógeno
@@ -11918,7 +12365,7 @@ Rajada Estilhaçante
 Nível máximo: ^7777775^000000
 Pré-requisitos:
 ^777777Desarmar 1^000000
-^777777Disparo Espalhado 1^000000
+^777777Controle de Multidão 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Espingardas.^000000
@@ -11945,7 +12392,9 @@ Descrição:
 ^008080Somente com Rifles.^000000
 ^777777Consome 1 Projétil Revestido para causar
 dano físico com chance de infligir
-Sangramento no alvo selecionado.^000000
+Sangramento no alvo selecionado.
+O dano aumenta de acordo com
+a DEF do oponente.^000000
 Nível l Chance l Dano
 [Nv. 1]: ^77777740%^000000 l ^777777200%^000000
 [Nv. 2]: ^77777750%^000000 l ^777777400%^000000
@@ -11962,7 +12411,7 @@ Pré-requisitos:
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Consome 1 moeda para ativar
-'Reação em Cadeia' em qualquer arma de fogo.
+'Reação em Cadeia' em qualquer arma.
 O nível ativado de 'Reação em Cadeia' será
 o mesmo aprendido de 'Reação Ilimitada'.^000000
 Nível l Duração
@@ -12184,15 +12633,15 @@ maior que 3 células, haverá uma perda de
 precisão a cada célula distante.^000000
 Nível l Dano l Precisão
 [Nv. 1]: ^7777771.200% em monstros^000000 l ^777777 -10%^000000
-         ^7777772.000% em personagens^000000
+                ^7777772.000% em personagens^000000
 [Nv. 2]: ^7777772.400% em monstros^000000 l ^777777 -9%^000000
-         ^7777774.000% em personagens^000000
+                ^7777774.000% em personagens^000000
 [Nv. 3]: ^7777773.600% em monstros^000000 l ^777777 -8%^000000
-         ^7777776.000% em personagens^000000
+                ^7777776.000% em personagens^000000
 [Nv. 4]: ^7777774.800% em monstros^000000 l ^777777 -7%^000000
-         ^7777778.000% em personagens^000000
+                ^7777778.000% em personagens^000000
 [Nv. 5]: ^7777776.000% em monstros^000000 l ^777777 -6%^000000
-         ^77777710.000% em personagens^000000
+                ^77777710.000% em personagens^000000
 #
 RL_HAMMER_OF_GOD#
 Execução

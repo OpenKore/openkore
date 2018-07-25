@@ -26,7 +26,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x6117117E, 0x3E862E86, 0x1AC62C86
+sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
 
 [Brazil - bRO: Thor]
 ip 200.229.50.3
@@ -45,7 +45,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x6117117E, 0x3E862E86, 0x1AC62C86
+sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -92,14 +92,14 @@ ip 128.241.92.162
 port 6800
 master_version 1
 version 18
-serverType iRO
+serverType iRO_Renewal
 serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x53EF5272, 0x21FE74FA, 0x36A4391C
+sendCryptKeys 0x55A054E1, 0x24F91F78, 0x34B32C2F
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -142,7 +142,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x3D51286A, 0x00273ED1, 0x6BE776F6
+sendCryptKeys 0x2FFD19DB, 0x08D2502F, 0x302F418A
 
 
 
