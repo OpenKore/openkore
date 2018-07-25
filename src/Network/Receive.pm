@@ -6190,6 +6190,8 @@ sub upgrade_message {
 		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
 	} elsif($args->{type} == 3) { # Fail Item
 		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
+	}
+}
 
 sub open_buying_store_fail { #0x812
 	my ($self, $args) = @_;
