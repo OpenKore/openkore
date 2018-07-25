@@ -6277,6 +6277,11 @@ sub skill_msg {
 	}
 }
 
+#TODO !
+sub overweight_percent {
+	my ($self, $args) = @_;
+}
+
 sub partylv_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
