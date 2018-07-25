@@ -6361,25 +6361,25 @@ Descrição:
 ao custo de perder esquiva e movimento.
 O efeito é cancelado ao ser reusada.^000000
 [Nv 1]: ^777777Vel. ATQ +1%^000000 l ^777777Dano +30^000000
-          ^777777Esquiva -5^000000 l ^77777730 segundos^000000
+           ^777777Esquiva -5^000000 l ^77777730 segundos^000000
 [Nv 2]: ^777777Vel. ATQ +2%^000000 l ^777777Dano +40^000000
-         ^777777Esquiva -10^000000 l ^77777745 segundos^000000
+          ^777777Esquiva -10^000000 l ^77777745 segundos^000000
 [Nv 3]: ^777777Vel. ATQ +3%^000000 l ^777777Dano +50^000000
-         ^777777Esquiva -15^000000 l ^77777760 segundos^000000
+          ^777777Esquiva -15^000000 l ^77777760 segundos^000000
 [Nv 4]: ^777777Vel. ATQ +4%^000000 l ^777777Dano +60^000000
-         ^777777Esquiva -20^000000 l ^77777775 segundos^000000
+          ^777777Esquiva -20^000000 l ^77777775 segundos^000000
 [Nv 5]: ^777777Vel. ATQ +5%^000000 l ^777777Dano +70^000000
-         ^777777Esquiva -25^000000 l ^77777790 segundos^000000
+          ^777777Esquiva -25^000000 l ^77777790 segundos^000000
 [Nv 6]: ^777777Vel. ATQ +6%^000000 l ^777777Dano +80^000000
-         ^777777Esquiva -30^000000 l ^777777105 segundos^000000
+          ^777777Esquiva -30^000000 l ^777777105 segundos^000000
 [Nv 7]: ^777777Vel. ATQ +7%^000000 l ^777777Dano +90^000000
-         ^777777Esquiva -35^000000 l ^777777120 segundos^000000
+          ^777777Esquiva -35^000000 l ^777777120 segundos^000000
 [Nv 8]: ^777777Vel. ATQ +8%^000000 l ^777777Dano +100^000000
-         ^777777Esquiva -40^000000 l ^777777135 segundos^000000
+          ^777777Esquiva -40^000000 l ^777777135 segundos^000000
 [Nv 9]: ^777777Vel. ATQ +9%^000000 l ^777777Dano +110^000000
-         ^777777Esquiva -45^000000 l ^777777150 segundos^000000
+          ^777777Esquiva -45^000000 l ^777777150 segundos^000000
 [Nv 10]: ^777777Vel. ATQ +10%^000000 l ^777777Dano +120^000000
-           ^777777Esquiva -50^000000 l ^777777165 segundos^000000
+            ^777777Esquiva -50^000000 l ^777777165 segundos^000000
 #
 GS_DUST#
 Controle de Multidão
@@ -7179,14 +7179,23 @@ Descrição: ^777777Abre uma Loja que permite deixar uma lista de itens que o us
 #
 ALL_GUARDIAN_RECALL#
 Chamado do Guardião
-Nível Máximo: 1
-Tipo: ^777777Suporte^bb0000^000000
-Descrição: ^777777Teleporta para a cidade de Mora. Tempo de conjuração fixo de 3 segundos. Intervalo de uso de 5 minutos.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para Mora.^000000
 #
 ALL_ODINS_POWER#
 Poder de Odin
-Descrição: [Nv 1]^777777+70 ATQ e ATQM por 60 segundos, -20 DEF e MDEF ao mesmo tempo. ^000000
-Descrição: [Nv 2]^777777+100 ATQ e ATQM por 60 segundos, -40 DEF e MDEF ao mesmo tempo. ^000000
+Nível máximo: ^7777772^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o ATQ e ATQM.
+Reduz a DEF e DEFM.
+Dura 60 segundos.^000000
+Nível l DEF e DEFM l ATQ e ATQM
+[Nv 1]: ^777777-20^000000 l ^777777+70^000000
+[Nv 2]: ^777777-40^000000 l ^777777+100^000000
 #
 KN_CHARGEATK#
 Avanço Ofensivo
@@ -7473,25 +7482,25 @@ aumentam as chances de sucesso,
 e o número de runas criadas.^000000
 Nível l Runa l Habilidade l Itens
 [Nv 1]: ^777777Runa Thurisaz^000000 l ^777777Força Titânica^000000
-        ^7777771 Cabelo Azul, 1 Garra de Lobo do Deserto^000000
+      ^7777771 Cabelo Azul, 1 Garra de Lobo do Deserto^000000
 [Nv 2]: ^777777Runa Isa^000000 l ^777777Vitalidade Rúnica^000000
-        ^7777771 Coração Incandescente^000000
+      ^7777771 Coração Incandescente^000000
 [Nv 3]: ^777777Runa Wyrd^000000 l ^777777Explosão Rúnica^000000
-        ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
+      ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
 [Nv 4]: ^777777Runa Hagalaz^000000 l ^777777Escamas Rochosas^000000
-        ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
+      ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
 [Nv 5]: ^777777Runa Othila^000000 l ^777777Aura de Combate^000000
-        ^7777771 Partículas de Luz, 1 Dente de Ogro^000000
+      ^7777771 Partículas de Luz, 1 Dente de Ogro^000000
 [Nv 6]: ^777777Runa Uruz^000000 l ^777777Regeneração Espiritual^000000
-        ^7777771 Cabelo Horrendo, 1 Mel^000000
+      ^7777771 Cabelo Horrendo, 1 Mel^000000
 [Nv 7]: ^777777Runa Raido^000000 l ^777777Golpe Titânico^000000
-        ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
+      ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
 [Nv 8]: ^777777Runa Nauthiz^000000 l ^777777Purificação^000000
-        ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
+      ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
 [Nv 9]: ^777777Runa Berkana^000000 l ^777777Escudos Milenares^000000
-        ^7777771 Armadura de Dullahan^000000
+      ^7777771 Armadura de Dullahan^000000
 [Nv 10]: ^777777Runa Luxanima^000000 l ^777777Luz da Alma^000000
-         ^7777773 Partículas de Luz, 3 Ouro^000000
+       ^7777773 Partículas de Luz, 3 Ouro^000000
 #
 RK_MILLENNIUMSHIELD#
 #
@@ -8477,309 +8486,499 @@ Descrição: ^777777   Adiciona a chance de afetar oponentes que entrarem na ár
 #
 NC_MADOLICENCE#
 Licença de Pilotagem
-Nível Máximo: 5
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Aprende a pilotar um M.E.C.H.A. Aumenta o ATQ usando a armadura. Reduz a velocidade de movimento no M.E.C.H.A. se a habilidade não estiver maximizada.^000000
-[Nv 1]: ^777777 ATQ do M.E.C.H.A. +15  / Redução na vel. de movimento 40% ^000000
-[Nv 2]: ^777777 ATQ do M.E.C.H.A. +30  / Redução na vel. de movimento 30% ^000000
-[Nv 3]: ^777777 ATQ do M.E.C.H.A. +45  / Redução na vel. de movimento 20% ^000000
-[Nv 4]: ^777777 ATQ do M.E.C.H.A. +60  / Redução na vel. de movimento 10% ^000000
-[Nv 5]: ^777777 ATQ do M.E.C.H.A. +75  / Redução na vel. de movimento 0% ^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite pilotar um M.E.C.H.A.
+Aumentar o nível da habilidade
+recupera o movimento e garante
+bônus de ATQ apenas ao pilotar.^000000
+Nível l ATQ l Movimento
+[Nv 1]: ^777777+15^000000 l ^77777760%^000000
+[Nv 2]: ^777777+30^000000 l ^77777770%^000000
+[Nv 3]: ^777777+45^000000 l ^77777780%^000000
+[Nv 4]: ^777777+60^000000 l ^77777790%^000000
+[Nv 5]: ^777777+75^000000 l ^777777100%^000000
 #
 NC_BOOSTKNUCKLE#
 Punho Foguete
-Nível Máximo: 5
-^777777Pré requisitos:  Licença de Pilotagem 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Ativa um foguete que arremessa o punho em um oponente. Ataque à distância que aumenta de acordo com a DES do usuário. Alcance de 11 células.^000000
-[Nv 1]: ^777777 ATQ 300% ^000000
-[Nv 2]: ^777777 ATQ 400% ^000000
-[Nv 3]: ^777777 ATQ 500% ^000000
-[Nv 4]: ^777777 ATQ 600% ^000000
-[Nv 5]: ^777777 ATQ 700% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Licença de Pilotagem 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+com 11 células de alcance.
+O dano é aumentado pela DES do usuário.^000000
+Nível l ATQ l SP
+[Nv 1]: ^777777300%^000000 l ^7777773^000000
+[Nv 2]: ^777777400%^000000 l ^7777776^000000
+[Nv 3]: ^777777500%^000000 l ^7777779^000000
+[Nv 4]: ^777777600%^000000 l ^7777772^000000
+[Nv 5]: ^777777700%^000000 l ^77777715^000000
 #
 NC_PILEBUNKER#
-Bate-Estaca
-Nível Máximo: 3
-^777777Pré requisitos:  Punho Foguete 2 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777   Substitui o punho por um bate estaca para atacar oponentes. Adiciona a chance de ignorar a defesa do oponente. Necessita de um Bate-Estacas equipado. O ataque aumenta de acordo com a FOR do usuário.^000000
-[Nv 1]: ^777777 ATQ 400% / Chance de ighorar habilidades de Defensa magica em 40%^000000
-[Nv 2]: ^777777 ATQ 500% / Chance de ighorar habilidades de Defensa magica em 55%^000000
-[Nv 3]: ^777777 ATQ 600% / Chance de ighorar habilidades de Defensa magica em 70%^000000
+Bate Estaca
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Punho Foguete 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de curta
+distância com chance de remover
+efeitos positivos do alvo.
+O dano é aumentado pela FOR do usuário.^000000
+^000088Precisa de 1 Bate-Estacas.^000000
+Nível l Chance
+[Nv 1]: ^77777740%^000000
+[Nv 2]: ^77777755%^000000
+[Nv 3]: ^77777770%^000000
 #
 NC_VULCANARM#
 Metralhadora
-Nível Máximo: 3
-^777777Pré requisitos:  Punho Foguete 2 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Atira com uma metralhadora do M.E.C.H.A. Consome 1 Cápsula Incandescente. 
-O ataque aumenta de acordo com a DES do usuário. Alcance de 13 células. ^000000
-[Nv 1]: ^777777 ATQ 70% ^000000
-[Nv 2]: ^777777 ATQ 140% ^000000
-[Nv 3]: ^777777 ATQ 210% ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Punho Foguete 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+com 13 células de alcance.
+O dano é aumentado pela DES do usuário.^000000
+^000088Consome 1 Cápsula Incandescente.^000000
+Nível l ATQ l SP
+[Nv 1]:  ^77777770%^000000 l ^7777772^000000
+[Nv 2]: ^777777140%^000000 l ^7777774^000000
+[Nv 3]: ^777777210%^000000 l ^7777776^000000
 #
 NC_FLAMELAUNCHER#
-Lança-Chamas
-Nível Máximo: 3
-^777777Pré requisitos: Metralhadora 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Incendeia o chão com um Lança-Chamas, que causa dano e tem chance de afetar oponentes com o efeito Incêndio. Necessita de um Lança-Chamas equipado. ^000000
-[Nv 1]: ^777777 Dano de Fogo 600% / Chance de 30% de ativar o efeito Incêndio^000000
-[Nv 2]: ^777777 Dano de Fogo 900% / Chance de 40% de ativar o efeito Incêndio^000000
-[Nv 3]: ^777777 Dano de Fogo 1200% / Chance de 50% de ativar o efeito Incêndio^000000
+Lança Chamas
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Metralhadora 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de
+propriedade Fogo com chance de
+infligir [Incêndio] na área.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Lança-Chamas.^000000
+Nível l Chance l Área l ATQ
+[Nv 1]: ^77777730%^000000 l ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^77777740%^000000 l ^7777777x7 células^000000 l ^777777900%^000000
+[Nv 3]: ^77777750%^000000 l ^7777779x9 células^000000 l ^7777771.200%^000000
 #
 NC_COLDSLOWER#
 Gás Criogênico
-Nível Máximo: 3
-^777777Pré requisitos:  Metralhadora 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Utiliza o gás criogênico para causar dano e os efeitos negativos Hipotermia e Congelamento aos alvos no alcance da habilidade. Consome 1 Cápsula de Nitrogênio Líquido. ^000000
-[Nv 1]: ^777777 Propriedade Água ATQ 600 % / Alcance 5 x 5 células ^000000
-[Nv 2]: ^777777 Propriedade Água ATQ 900 % / Alcance 7 x 7 células ^000000
-[Nv 3]: ^777777 Propriedade Água ATQ 1200 % / Alcance 9 x 9 células ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Metralhadora 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico de
+propriedade Água com chance de
+infligir [Hipotermia] ou
+[Congelamento] na área.^000000
+^000088Consome 1 Combustível.
+Consome 1 Cápsula de Nitrogênio.^000000
+Nível l Área l ATQ
+[Nv 1]: ^7777775x5 células^000000 l ^777777600%^000000
+[Nv 2]: ^7777777x7 células^000000 l ^777777900%^000000
+[Nv 3]: ^7777779x9 células^000000 l ^7777771.200%^000000
 #
 NC_ARMSCANNON#
 Canhão
-Nível Máximo: 3
-^777777Pré requisitos: Lança-Chamas 2 / Gás Criogênico 2  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Atira uma bala com o canhão do M.E.C.H.A., causando dano elevado. O dano é reduzido em alvos maiores. Causa dano em área de acordo com o nível da habilidade.
-A propriedade do ataque pode ser alterada com as diferentes balas de canhão. Consome 1 Combustível Diferenciado Leve e 1 Bala de Canhão. ^000000
-[Nv 1]: ^777777 ATQ em Pequenos 700%, Médios 650%, Grandes 600%. Alcance de 7 x 7 células ^000000
-[Nv 2]: ^777777 ATQ em Pequenos 1100%, Médios 1000%, Grandes 900%. Alcance de 5 x 5 células ^000000
-[Nv 3]: ^777777 ATQ em Pequenos 1500%, Médios 1350%, Grandes 1200%. Alcance de 3 x 3 células ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Lança-Chamas 2^000000
+^777777Gás Criogênico 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Causa dano físico a distância
+que é afetado pelo Tamanho
+dos alvos na área selecionada.
+A propridade do dano muda
+de acordo com a Bala equipada.^000000
+^000088Consome 1 Combustível.
+Consome 1 Bala de Canhão.^000000
+Nível l Área l ATQ (P/M/G)
+[Nv 1]: ^7777777x7 células^000000 l ^777777700%^000000 / ^777777650%^000000 / ^777777600%^000000
+[Nv 2]: ^7777775x5 células^000000 l ^7777771.100%^000000 / ^7777771.000%^000000 / ^777777900%^000000
+[Nv 3]: ^7777773x3 células^000000 l ^7777771.500%^000000 / ^7777771.350%^000000 / ^7777771.200%^000000
 #
 NC_ACCELERATION#
 Aceleração
-Nível Máximo: 3
-^777777Pré requisitos: Licença de Pilotagem 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Aumenta temporariamente a vel. de movimento do M.E.C.H.A. Necessita de um Acelerador equipado. Consome 1 Combustível Diferenciado Leve. ^000000
-[Nv 1]: ^777777 Duração de 60 sec. ^000000
-[Nv 2]: ^777777 Duração de 90 sec. ^000000
-[Nv 3]: ^777777 Duração de 120 sec. ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Licença de Pilotagem 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Melhora o movimento.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Acelerador.^000000
+Nível l Duração l SP
+[Nv 1]: ^77777760 segundos^000000 l ^77777720^000000
+[Nv 2]: ^77777790 segundos^000000 l ^77777740^000000
+[Nv 3]: ^777777120 segundos^000000 l ^77777760^000000
 #
 NC_HOVERING#
 Planar
-Nível Máximo: 1
-^777777Pré requisitos:  Aceleração 1 ^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Permite que o M.E.C.H.A. plane para evitar armadilhas e ataques mágicos no chão. 
-Necessita de um Planador equipado. Consome 1 Combustível Diferenciado Leve. ^000000
-[Nv 1]: ^777777 Duração de 90 segundos ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Aceleração 1 ^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Por 90 segundos, evita ceras
+armadilhas e magias de terreno.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Planador.^000000
 #
 NC_F_SIDESLIDE#
 Propulsão Traseira
-Nível Máximo: 1
-^777777Pré requisitos:  Planar  1 ^000000
-Tipo: ^777777  Movimento ^000000
-Descrição: ^777777O M.E.C.H.A. avança 7 células em velocidade aumentada. Consome 1 Combustível Diferenciado Leve. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Planar  1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Anda 7 células para frente.^000000
+^000088Consome 1 Combustível.^000000
 #
 NC_B_SIDESLIDE#
 Propulsão Dianteira
-Nível Máximo: 1
+Nível máximo: ^7777771^000000
+Pré requisitos:
 ^777777Pré requisitos:  Planar  1 ^000000
-Tipo: ^777777  Movimento ^000000
-Descrição: ^777777  M.E.C.H.A. recua 7 células em velocidade aumentada. Consome 1 Combustível Diferenciado Leve. ^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Anda 7 células para trás.^000000
+^000088Consome 1 Combustível.^000000
 #
 NC_MAINFRAME#
 Reforçar Estrutura
-Nível Máximo: 4
-^777777Pré requisitos:  Licença de Pilotagem 4 ^000000
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Muda a estrutura do M.E.C.H.A. para aumentar sua defesa e o limite de superaquecimento.^000000
-[Nv 1]: ^777777 Defesa +40 / Limite de superaquecimento + 200 ^000000
-[Nv 2]: ^777777 Defesa +60 / Limite de superaquecimento + 280 ^000000
-[Nv 3]: ^777777 Defesa +80 / Limite de superaquecimento + 360 ^000000
-[Nv 4]: ^777777 Defesa +100 / Limite de superaquecimento + 450 ^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Licença de Pilotagem 4^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a DEF e o limite
+de Superaquecimento ao pilotar.^000000
+Superaquecimento:
+^777777Drena HP continuamente.
+Cada dano recebido gera 1 ponto
+de aquecimento, iniciando o efeito
+com 150 pontos ou com o limite
+definido pela habilidade.^000000
+Nível l DEF l Limite
+[Nv 1]: ^777777+40^000000 l ^777777200^000000
+[Nv 2]: ^777777+60^000000 l ^777777280^000000
+[Nv 3]: ^777777+80^000000 l ^777777360^000000
+[Nv 4]: ^777777+100^000000 l ^777777450^000000
 #
 NC_SELFDESTRUCTION#
 Autodestruição
-Nível Máximo: 3
-^777777Pré requisitos:  Reforçar Estrutura 2 ^000000
-Tipo: ^777777  Ofensiva  ^000000
-Descrição: ^777777  Aciona o modo de autodestruição do M.E.C.H.A., causando grande dano em área. 
-Consome todo o SP do usuário e desequipa o M.E.C.H.A. Necessita de um Detonador. ^000000
-[Nv 1]: ^777777 Alcance 5 x 5 células^000000
-[Nv 2]: ^777777 Alcance 7 x 7 células^000000
-[Nv 3]: ^777777 Alcance 9 x 9 células^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Reforçar Estrutura 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Consome todo o SP para
+remover o M.E.C.H.A. e causar
+dano físico que ignora esquiva.^000000
+^000088Consome 3 Combustíveis.
+Precisa de 1 Detonador.^000000
+Nível l Área
+[Nv 1]: ^7777775x5 células^000000
+[Nv 2]: ^7777777x7 células^000000
+[Nv 3]: ^7777779x9 células^000000
 #
 NC_SHAPESHIFT#
 Reconfigurar Elemento
-Nível Máximo: 4
-^777777Pré requisitos:  Reforçar Estrutura 2  ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Muda a propriedade do M.E.C.H.A. Necessita de um Reconfigurador. Consome 2 Combustíveis Diferenciados Leves e 1 pedra elemental.^000000
-[Nv 1]: ^777777 Muda para Fogo / Consome 3 Coração Flamejante^000000
-[Nv 2]: ^777777 Muda para Terra / Consome 3 Natureza Grandiosa^000000
-[Nv 3]: ^777777 Muda para Vento / Consome 3 Vento Bruto^000000
-[Nv 4]: ^777777 Muda para Água / Consome 3 Gelo Místico^000000
+Nível máximo: ^7777774^000000
+Pré requisitos:
+^777777Reforçar Estrutura 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Encanta a armadura equipada
+com uma propriedade elemental.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Reconfigurador.^000000
+Nível l Propriedade l Item necessário
+[Nv 1]: ^777777Fogo^000000  l ^7777773 Fragmentos Escarlates^000000
+[Nv 2]: ^777777Terra^000000 l ^7777773 Fragmentos Verdes^000000
+[Nv 3]: ^777777Vento^000000 l ^7777773 Fragmentos Amarelos^000000
+[Nv 4]: ^777777Água^000000  l ^7777773 Fragmentos Azuis^000000
 #
 NC_EMERGENCYCOOL#
 Resfriamento
-Nível Máximo: 1
-^777777Pré requisitos:  Autodestruição 2  ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Imediatamente resfria o M.E.C.H.A. retirando o efeito de superaquecimento. Necessita de um Resfriador. Consome 1 Combustíveis Diferenciados Leves.  ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Autodestruição 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Reduz pontos de Superaquecimento.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Termoregulador.^000000
 #
 NC_INFRAREDSCAN#
 Sensor Infravermelho
-Nível Máximo: 1
-^777777Pré requisitos:  Reconfigurar Elemento  2  ^000000
-Tipo: ^777777  Detecção ^000000
-Descrição: ^777777 Utiliza o sensor em uma área de 15 x 15 células ao redor do usuário para detectar oponentes ocultos. Reduz a taxa de Esquiva de oponentes em 30% por 5 segundos com chance sucesso de 50%. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Reconfigurar Elemento 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Reduz a esquiva em 20%
+dos alvos na área de 15x15 células.
+Revela oponentes escondidos.^000000
 #
 NC_ANALYZE#
 Analisar
-Nível Máximo: 3
-^777777Pré requisitos:  Sensor Infravermelho 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777 Analisa o oponente e diminui a defesa física e mágica do alvo. Alcance de 9 células e duração de 20 segundos. Consome 1 Combustível Diferenciado Leve.  ^000000
-[Nv 1]: ^777777 Redução na DEF e MDEF 14% ^000000
-[Nv 2]: ^777777 Redução na DEF e MDEF 28% ^000000
-[Nv 3]: ^777777 Redução na DEF e MDEF 42% ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Sensor Infravermelho 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Por 20 segundos,
+reduz a DEF e DEFM do alvo.^000000
+^000088Consome 1 Combustível.^000000
+Nível l DEF e DEFM
+[Nv 1]: ^777777-14%^000000
+[Nv 2]: ^777777-28%^000000
+[Nv 3]: ^777777-42%^000000
 #
 NC_MAGNETICFIELD#
 Campo Magnético
-Nível Máximo: 3
-^777777Pré requisitos:  Resfriamento 1 ^000000
-Tipo: ^777777  Efeito negativo ^000000
-Descrição: ^777777Chance de imobilizar os inimigos na área utilizando um campo magnético. Se usuário ou alvo estão Planando, eles não sofrerão o efeito.
-Se o oponente receber dano do tipo Terra, o status é automaticamente cancelado.
-Reduz continuamente o SP dos oponentes afetados.  Necessita de um Gerador de Magnetismo. Consome 2 Combustíveis Diferenciados Leves.  ^000000
-[Nv 1]: ^777777 Duração 4 seg / Consume 50 SP por seg. ^000000
-[Nv 2]: ^777777 Duração 6 seg / Consume 50 SP por seg. ^000000
-[Nv 3]: ^777777 Duração 8 seg / Consume 50 SP por seg. ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Resfriamento 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Imobiliza o usuário e oponentes na
+área de 5x5 células, drenando
+50 SP por segundo os alvos.
+Oponentes atingidos por ataques de
+propriedade Terra serão libertados.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Gerador de Magnetismo.^000000
+Nível l Duração l SP
+[Nv 1]: ^7777774 segundos^000000 l ^77777760^000000
+[Nv 2]: ^7777776 segundos^000000 l ^77777770^000000
+[Nv 3]: ^7777778 segundos^000000 l ^77777780^000000
 #
 NC_NEUTRALBARRIER#
 Campo Protetor
-Nível Máximo: 3
-^777777Pré requisitos:  Campo Magnético 2 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Aumenta a defesa e defesa mágica do alvo e alvos na área. O campo também protege contra ataques de longo alcance porém habilidades que não erram o alvo ou em área podem ultrapassar esta barreira. Necessita de um Gerador de Barreira. Consome 1 Combustível Diferenciado Leve.  ^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 15% / 30 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 20% / 45 segundos de duração ^000000
-[Nv 3]: ^777777 Alcance 3 x 3 células / Aumenta DEF e MDEF em 25% / 60 segundos de duração ^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Campo Magnético 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Bloqueia certos danos físicos
+a distância e aumenta a DEF e DEFM
+dos alvos na área de 5x5 células.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Gerador de Barreira.^000000
+Nível l Duração l DEF e DEFM
+[Nv 1]: ^77777730 segundos^000000 l ^777777+15%^000000
+[Nv 2]: ^77777745 segundos^000000 l ^777777+20%^000000
+[Nv 3]: ^77777760 segundos^000000 l ^777777+25%^000000
 #
 NC_STEALTHFIELD#
 Campo de Invisibilidade
-Nível Máximo: 3
-^777777Pré requisitos:  Analisar 3 / Campo Protetor 2 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777 Permite que alvos ao redor do usuário ganhem o estado Esconderijo. Os personagens ficam translúcidos e imunes a ataques físicos e mágicos. 
-Reduz continuamente o SP do usuário, e diminui 20% a vel. de movimento. A habilidade pode ser cancelada se usada novamente. Necessita de um Gerador de Camuflagem. Consome 2 Combustíveis Diferenciados Leves. ^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / 15 segundos de duração ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células / 20 segundos de duração^000000
-[Nv 3]: ^777777 Alcance 3 x 3 células / 25 segundos de duração^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Analisar 3^000000
+^777777Campo Protetor 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Com exceção do usuário, alvos na
+área de 5x5 células ficarão em estado de
+Esconderijo e serão imunes a ataques.
+Reduz o movimento e drena SP do usuário.^000000
+^000088Consome 2 Combustíveis.
+Precisa de 1 Gerador de Camuflagem.^000000
+Nível l Duração l SP
+[Nv 1]: ^77777715 segundos^000000 l ^77777780^000000
+[Nv 2]: ^77777720 segundos^000000 l ^777777100^000000
+[Nv 3]: ^77777725 segundos^000000 l ^777777120^000000
 #
 NC_REPAIR#
 Reparar
-Nível Máximo: 5
-^777777Pré requisitos:  Licença de Pilotagem 2 ^000000
-Tipo: ^777777  Recuperação ^000000
-Descrição: ^777777 Permite reparar (recuperar) o próprio M.E.C.H.A. ou outros. 
-Necessita de um Kit de Reparação. Consome 1 Combustível Diferenciado Leve. Alcance de 5 células.  ^000000
-[Nv 1]: ^777777 Recuperação de HP 4% ^000000
-[Nv 2]: ^777777 Recuperação de HP 7% ^000000
-[Nv 3]: ^777777 Recuperação de HP 13% ^000000
-[Nv 4]: ^777777 Recuperação de HP 17% ^000000
-[Nv 5]: ^777777 Recuperação de HP 23% ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Licença de Pilotagem 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^008080Apenas com M.E.C.H.A.^000000
+^777777Regenera o HP do usuário e de
+outros M.E.C.H.A. usando um reparador.^000000
+^000088Consome 1 Combustível.
+Precisa de 1 Kit de Reparação.^000000
+Nível l HP regen. l Item necessário
+[Nv 1]:  ^7777774%^000000 l ^777777Reparador Leve^000000
+[Nv 2]:  ^7777777%^000000 l ^777777Reparador Leve^000000
+[Nv 3]: ^77777713%^000000 l ^777777Reparador Moderado^000000
+[Nv 4]: ^77777717%^000000 l ^777777Reparador Moderado^000000
+[Nv 5]: ^77777723%^000000 l ^777777Reparador Avançado^000000
 #
 NC_TRAININGAXE#
 Maestria com Machados
-Nível Máximo: 10
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777  Aumenta o ATQ e Precisão quando o usuário utiliza um Machado. ^000000
-[Nv 1]: ^777777 ATQ +5 / Precisão +3  ^000000
-[Nv 2]: ^777777 ATQ +10 / Precisão +6  ^000000
-[Nv 3]: ^777777 ATQ +15 / Precisão +9  ^000000
-[Nv 4]: ^777777 ATQ +20 / Precisão +12 ^000000
-[Nv 5]: ^777777 ATQ +25 / Precisão +15  ^000000
-[Nv 6]: ^777777 ATQ +30 / Precisão +18  ^000000
-[Nv 7]: ^777777 ATQ +35 / Precisão +21  ^000000
-[Nv 8]: ^777777 ATQ +40 / Precisão +24  ^000000
-[Nv 9]: ^777777 ATQ +45 / Precisão +27  ^000000
-[Nv 10]: ^777777 ATQ +50 / Precisão +30  ^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ e a precisão
+do usuário ao usar Machados^000000
+Nível l ATQ l Precisão
+[Nv 1]:  ^777777+5^000000 l ^777777+3^000000
+[Nv 2]: ^777777+10^000000 l ^777777+6^000000
+[Nv 3]: ^777777+15^000000 l ^777777+9^000000
+[Nv 4]: ^777777+20^000000 l ^777777+12^000000
+[Nv 5]: ^777777+25^000000 l ^777777+15^000000
+[Nv 6]: ^777777+30^000000 l ^777777+18^000000
+[Nv 7]: ^777777+35^000000 l ^777777+21^000000
+[Nv 8]: ^777777+40^000000 l ^777777+24^000000
+[Nv 9]: ^777777+45^000000 l ^777777+27^000000
+[Nv 10]: ^777777+50^000000 l ^777777+30^000000
 #
 NC_RESEARCHFE#
 Sabedoria de Hefesto
-Nível Máximo: 5
-Tipo: ^777777  Passiva ^000000
-Descrição: ^777777 Aumenta a resistência e o ATQ contra monstros da propriedade Fogo e Terra.^000000
-[Nv 1]: ^777777 Resistência +10 / ATQ +10  ^000000
-[Nv 2]: ^777777 Resistência +20 / ATQ +20  ^000000
-[Nv 3]: ^777777 Resistência +30 / ATQ +30  ^000000
-[Nv 4]: ^777777 Resistência +40 / ATQ +40 ^000000
-[Nv 5]: ^777777 Resistência +50 / ATQ +50  ^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a resistência e o ATQ
+contra monstros de Fogo e Terra.^000000
+Nível l ATQ l Resistência
+[Nv 1]: ^777777+10^000000 l ^777777+10%^000000
+[Nv 2]: ^777777+20^000000 l ^777777+20%^000000
+[Nv 3]: ^777777+30^000000 l ^777777+30%^000000
+[Nv 4]: ^777777+40^000000 l ^777777+40%^000000
+[Nv 5]: ^777777+50^000000 l ^777777+50%^000000
 #
 NC_AXEBOOMERANG#
 Arremesso de Machado
-Nível Máximo: 5
-^777777Pré requisitos:  Maestria com Machados 1  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Arremessa um machado que derruba oponentes e causa dano à distância. Quanto maior o peso do Machado, maior o dano.^000000
-[Nv 1]: ^777777 ATQ 300% + Peso do Machado / Alcance de 5 células  ^000000
-[Nv 2]: ^777777 ATQ 350% + Peso do Machado / Alcance de 6 células  ^000000
-[Nv 3]: ^777777 ATQ 400% + Peso do Machado / Alcance de 7 células  ^000000
-[Nv 4]: ^777777 ATQ 450% + Peso do Machado / Alcance de 8 células ^000000
-[Nv 5]: ^777777 ATQ 500% + Peso do Machado / Alcance de 9 células  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Maestria com Machados 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância
+e empurra o alvo para trás.
+O peso do machado afeta o dano.^000000
+Nível l ATQ l Alcance
+[Nv 1]: ^777777300%^000000 l ^7777775 células^000000
+[Nv 2]: ^777777350%^000000 l ^7777776 células^000000
+[Nv 3]: ^777777400%^000000 l ^7777777 células^000000
+[Nv 4]: ^777777450%^000000 l ^7777778 células^000000
+[Nv 5]: ^777777500%^000000 l ^7777779 células^000000
 #
 NC_POWERSWING#
 Brandir Machado
-Nível Máximo: 5
-^777777Pré requisitos:  Arremesso de Machado 3  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Utiliza o machado para causar Atordoamento a um alvo único. Adiciona uma pequena chance de conjurar Arremesso de Machado se o usuário tiver a habilidade. Aumenta o ATQ de acordo com a FOR e DES do usuário. ^000000
-[Nv 1]: ^777777 ATQ 400%  ^000000
-[Nv 2]: ^777777 ATQ 500%  ^000000
-[Nv 3]: ^777777 ATQ 600%  ^000000
-[Nv 4]: ^777777 ATQ 700%  ^000000
-[Nv 5]: ^777777 ATQ 800%  ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Arremesso de Machado 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico com chance de
+infligir [Atordoamento] no alvo.
+Há uma pequena chance de autoconjurar
+Arremesso de Machado ao usar a habilidade.
+O dano é afetado por FOR e DES do usuário.^000000
+Nível l ATQ l SP
+[Nv 1]: ^777777400%^000000 l ^77777720^000000
+[Nv 2]: ^777777500%^000000 l ^77777722^000000
+[Nv 3]: ^777777600%^000000 l ^77777724^000000
+[Nv 4]: ^777777700%^000000 l ^77777726^000000
+[Nv 5]: ^777777800%^000000 l ^77777728^000000
 #
 NC_AXETORNADO#
 Fúria do Furacão
-Nível Máximo: 5
-^777777Pré requisitos:  Maestria com Machados 1  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Cria um furacão com o machado causando dano a oponentes próximos. Aumenta o ATQ de acordo com a VIT do usuário. 
-O dano é aumentado se a arma equipada for da propriedade Vento, mas uma quantidade de HP do usuário é consumida.^000000
-[Nv 1] : ^777777 ATQ 300%, Alcance 5 x 5  cel / Consome 20 HP ^000000
-[Nv 2] : ^777777 ATQ 400%, Alcance 5 x 5  cel / Consome 40 HP ^000000
-[Nv 3] : ^777777 ATQ 500%, Alcance 7 x 7  cel / Consome 60 HP ^000000
-[Nv 4] : ^777777 ATQ 600%, Alcance 7 x 7  cel / Consome 80 HP ^000000
-[Nv 5] : ^777777 ATQ 700%, Alcance 7 x 7  cel / Consome 100 HP ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Maestria com Machados 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Gira o machado para causar dano
+físico ao redor do usuário.
+O dano é afetado pela VIT do usuário e
+se a arma for de propriedade Vento.
+Consome um pouco de HP ao ser usada.^000000
+Nível l ATQ l Área l HP l SP
+[Nv 1]: ^777777300%^000000 l ^7777775x5 células^000000 l ^77777720^000000 l ^77777718^000000
+[Nv 2]: ^777777400%^000000 l ^7777775x5 células^000000 l ^77777740^000000 l ^77777720^000000
+[Nv 3]: ^777777500%^000000 l ^7777777x7 células^000000 l ^77777760^000000 l ^77777722^000000
+[Nv 4]: ^777777600%^000000 l ^7777777x7 células^000000 l ^77777780^000000 l ^77777724^000000
+[Nv 5]: ^777777700%^000000 l ^7777777x7 células^000000 l ^777777100^000000 l ^77777726^000000
 #
 NC_SILVERSNIPER#
 Artilharia Caçadora
-Nível Máximo: 5
-^777777Pré requisitos:  Sabedoria de Hefesto 2  ^000000
-Tipo: ^777777  Ofensiva / Artilharia ^000000
-Descrição: ^777777  Monta uma Artilharia no chão que utiliza ataques físicos de longa distância. No máximo 2 Artilharias podem estar no chão ao mesmo tempo. Consome 2 Aços e 1 Ferro. Necessita de 1 Martelo de Oridecon e 1 Mini Fornalha. ^000000
-[Nv 1]: ^777777 ATQ 0 / 20 segundos de duração ^000000
-[Nv 2]: ^777777 ATQ +200  / 30 segundos de duração ^000000
-[Nv 3]: ^777777 ATQ +400  / 40 segundos de duração ^000000
-[Nv 4]: ^777777 ATQ +800  / 50 segundos de duração ^000000
-[Nv 5]: ^777777 ATQ +1000  / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Sabedoria de Hefesto 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria uma Artilharia de ataques
+físicos de longas distâncias.
+Apenas 2 Artilharias podem fcar ativas.^000000
+^000088Consome 1 Ferro e 2 Aços.
+Precisa de 1 Mini-Fornalha.
+Precisa de 1 Martelo de Oridecon.^000000
+Nível l Duração l ATQ
+[Nv 1]: ^77777720 segundos^000000 l ^7777770^000000
+[Nv 2]: ^77777730 segundos^000000 l ^777777200^000000
+[Nv 3]: ^77777740 segundos^000000 l ^777777400^000000
+[Nv 4]: ^77777750 segundos^000000 l ^777777800^000000
+[Nv 5]: ^77777760 segundos^000000 l ^7777771.000^000000
 #
 NC_MAGICDECOY#
 Artilharia Arcana
-Nível Máximo: 5
-^777777Pré requisitos:  Artilharia Caçadora  2  ^000000
-Tipo: ^777777  Ofensiva / Artilharia ^000000
-Descrição: ^777777  Monta uma Artilharia no chão que utiliza ataques mágicos. No máximo 2 Artilharias podem estar no chão ao mesmo tempo. Consome 2 Ferros, 1 Brigan e 1 pedra elemental. Necessita de 1 Martelo de Oridecon e 1 Mini Fornalha. ^000000
-[Nv 1]: ^777777 ATQM 300  / 20 segundos de duração ^000000
-[Nv 2]: ^777777 ATQM 350  / 30 segundos de duração ^000000
-[Nv 3]: ^777777 ATQM 400  / 40 segundos de duração ^000000
-[Nv 4]: ^777777 ATQM 450  / 50 segundos de duração ^000000
-[Nv 5]: ^777777 ATQM 500  / 60 segundos de duração ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Artilharia Caçadora  2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria uma Artilharia de ataques
+mágicos baseado no Fragmento usado.
+Apenas 2 Artilharias podem fcar ativas.^000000
+Fragmentos de cada propriedade:
+^7777772 Frag. Azuis^000000 l ^777777Água^000000
+^7777772 Frag. Verdes^000000 l ^777777Terra^000000
+^7777772 Frag. Amarelos^000000 l ^777777Vento^000000
+^7777772 Frag. Escarlate^000000 l ^777777Fogo^000000
+^000088Consome 2 Ferros e 1 Brigan.
+Precisa de 1 Mini-Fornalha.
+Precisa de 1 Martelo de Oridecon.^000000
+Nível l Duração l ATQ
+[Nv 1]: ^77777720 segundos^000000 l ^777777300^000000
+[Nv 2]: ^77777730 segundos^000000 l ^777777350^000000
+[Nv 3]: ^77777740 segundos^000000 l ^777777400^000000
+[Nv 4]: ^77777750 segundos^000000 l ^777777450^000000
+[Nv 5]: ^77777760 segundos^000000 l ^777777500^000000
 #
 NC_DISJOINT#
 Remover Artilharia
-Nível Máximo: 1
-^777777Pré requisitos:  Artilharia Caçadora 1  ^000000
-Tipo: ^777777  Suporte / Artilharia ^000000
-Descrição: ^777777  Remove uma Artilharia Caçadora do chão, que pode ser própria ou de outros em até 5 células de distância. ^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Artilharia Caçadora 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Consome 1 Chave Inglesa para
+remover uma Artilharia do usuário
+ou de outros Mecânicos.^000000
 #
 SC_FATALMENACE#
 Acerto de Contas
@@ -9727,7 +9926,7 @@ da área de 3x3 células do poema
 ficarão imóveis temporariamente.
 Apenas 5 poemas ativos por vez.
 Não funciona contra Chefes.^000000
-Nv. l Tempo (imóvel) l Tempo (poema)
+Nível l Tempo (imóvel) l Tempo (poema)
 [Nv 1]: ^7777778 segundos^000000 l ^7777779 segundos^000000
 [Nv 2]: ^77777710 segundos^000000 l ^77777711 segundos^000000
 [Nv 3]: ^77777712 segundos^000000 l ^77777713 segundos^000000
@@ -9806,7 +10005,7 @@ Descrição:
 um pouco de HP por segundo
 do usuário e dos membros
 do grupo por 60 segundos.^000000
-Nv. l Dreno de SP l Rec. de HP l Área
+Nível l Dreno de SP l Rec. de HP l Área
 [Nv 1]: ^7777774^000000 l ^77777740^000000 l ^7777777x7 células^000000
 [Nv 2]: ^7777778^000000 l ^77777780^000000 l ^7777779x9 células^000000
 [Nv 3]: ^77777712^000000 l ^777777120^000000 l ^77777711x11 células^000000
@@ -9848,7 +10047,7 @@ Habilidades afetadas:
 Perfurar em Espiral, Punição Divina,
 Escudo Compressor, Escudo Bumerangue
 e Lança das Mil Pontas.^000000
-Nv. l Esquiva l Velocidade de ataque
+Nível l Esquiva l Velocidade de ataque
 [Nv 1]: ^777777-25^000000 l ^777777-20%^000000
 [Nv 2]: ^777777-30^000000 l ^777777-25%^000000
 [Nv 3]: ^777777-35^000000 l ^777777-30%^000000
@@ -9970,7 +10169,7 @@ afetadas, todas receberão
 O coral é melhorado com o
 núm. de artistas no grupo.
 Funciona apenas em PvP/GdE.^000000
-Nv. l ATQ l DEF l Esqv l Área
+Nível l ATQ l DEF l Esqv l Área
 [Nv 1]: ^777777+100^000000 l ^777777-20%^000000 l ^777777-50%^000000 l ^7777777x7 células^000000
 [Nv 2]: ^777777+200^000000 l ^777777-30%^000000 l ^777777-60%^000000 l ^7777779x9 células^000000
 [Nv 3]: ^777777+300^000000 l ^777777-40%^000000 l ^777777-70%^000000 l ^77777711x11 células^000000
@@ -10398,8 +10597,8 @@ O dano é aumentado pela INT do usuário
 e pelo nível de 'Aprimorar Carrinho'.
 Necessita de um carrinho e consome
 1 Bala de Canhão equipada.^000000
-Nv. l Área l ATQ l SP
-[Nv 1]: ^7777773x3 células^000000 l ^777777 60%^000000 l ^77777740^000000
+Nível l Área l ATQ l SP
+[Nv 1]: ^7777773x3 células^000000 l  ^77777760%^000000 l ^77777740^000000
 [Nv 2]: ^7777773x3 células^000000 l ^777777120%^000000 l ^77777742^000000
 [Nv 3]: ^7777775x5 células^000000 l ^777777180%^000000 l ^77777746^000000
 [Nv 4]: ^7777775x5 células^000000 l ^777777240%^000000 l ^77777748^000000
@@ -10605,9 +10804,11 @@ ALL_ODINS_RECALL#
 #
 RETURN_TO_ELDICASTES#
 Para El Dicastes
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Retorna a El Dicastes, Capital dos Manuks. 5 minutos de intervalo entre conjurações.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para El Dicastes.^000000
 #
 HLIF_HEAL#
 Cura pelas Mãos
@@ -11905,9 +12106,11 @@ Essa habilidade não pode ser usada em monstros.
 #
 ECLAGE_RECALL#
 Para Eclage
-Nível Máximo : 1
-Tipo de habilidade : ^777777Suporte^bb0000^000000
-Descrição : ^777777Teleporta para a cidade de Eclage. Conjuração fixa de 3 segundos. 5 minute reuse time.^000000
+Tipo: ^777777Ativa^000000
+Conjuração fixa: ^7777773 segundos^000000
+Tempo de recarga: ^7777775 minutos^000000
+Descrição:
+^777777Teleporta para Eclage.^000000
 #
 MC_CARTDECORATE#
 Decorar Carrinho
@@ -11987,18 +12190,17 @@ Pré requisito:
 ^777777Sabedoria de Hefesto 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^777777Cria um forte impacto
-na área de 7x7 células,
-criando um vulcão em erupção
-por 5 segundos, causando dano
-fixo a cada 0,5 segundos e
-com chance de causar Incêndio.^000000
-Nv. l Dano fixo l Chance l SP
-[Nv 1]: ^7777771.000^000000 l ^77777710%^00000 l ^77777760^00000
-[Nv 2]: ^7777771.200^000000 l ^77777720%^00000 l ^77777770^00000
-[Nv 3]: ^7777771.400^000000 l ^77777730%^00000 l ^77777780^00000
-[Nv 4]: ^7777771.600^000000 l ^77777740%^00000 l ^77777790^00000
-[Nv 5]: ^7777771.800^000000 l ^77777750%^00000 l ^777777100^00000
+^777777Cria um forte impacto numa área
+de 7x7 células, criando um vulcão
+em erupção por 5 segundos.
+A cada 0,5 segundos, causa dano
+fixo com chance de causar Incêndio.^000000
+Nível l Dano fixo l Chance l SP
+[Nv 1]: ^7777771.000^000000 l ^77777710%^000000 l ^77777760^000000
+[Nv 2]: ^7777771.200^000000 l ^77777720%^000000 l ^77777770^000000
+[Nv 3]: ^7777771.400^000000 l ^77777730%^000000 l ^77777780^000000
+[Nv 4]: ^7777771.600^000000 l ^77777740%^000000 l ^77777790^000000
+[Nv 5]: ^7777771.800^000000 l ^77777750%^000000 l ^777777100^000000
 #
 WM_FRIGG_SONG#
 Canção de Frigga
@@ -12013,7 +12215,7 @@ para aumentar o HP máx. e
 regenerar HP por segundo
 dos alvos ao redor.
 Só afeta o grupo em PvP/GdE.^000000
-Nv. l HP regen. l HP máx. l Área
+Nível l HP regen. l HP máx. l Área
 [Nv 1]: ^777777100^000000 l ^777777+5%^000000 l ^7777777x7 células^000000
 [Nv 2]: ^777777120^000000 l ^777777+10%^000000 l ^7777779x9 células^000000
 [Nv 3]: ^777777140^000000 l ^777777+15%^000000 l ^77777711x11 células^000000
@@ -12190,7 +12392,9 @@ Descrição:
 ^008080Somente com Rifles.^000000
 ^777777Consome 1 Projétil Revestido para causar
 dano físico com chance de infligir
-Sangramento no alvo selecionado.^000000
+Sangramento no alvo selecionado.
+O dano aumenta de acordo com
+a DEF do oponente.^000000
 Nível l Chance l Dano
 [Nv. 1]: ^77777740%^000000 l ^777777200%^000000
 [Nv. 2]: ^77777750%^000000 l ^777777400%^000000
@@ -12429,15 +12633,15 @@ maior que 3 células, haverá uma perda de
 precisão a cada célula distante.^000000
 Nível l Dano l Precisão
 [Nv. 1]: ^7777771.200% em monstros^000000 l ^777777 -10%^000000
-         ^7777772.000% em personagens^000000
+                ^7777772.000% em personagens^000000
 [Nv. 2]: ^7777772.400% em monstros^000000 l ^777777 -9%^000000
-         ^7777774.000% em personagens^000000
+                ^7777774.000% em personagens^000000
 [Nv. 3]: ^7777773.600% em monstros^000000 l ^777777 -8%^000000
-         ^7777776.000% em personagens^000000
+                ^7777776.000% em personagens^000000
 [Nv. 4]: ^7777774.800% em monstros^000000 l ^777777 -7%^000000
-         ^7777778.000% em personagens^000000
+                ^7777778.000% em personagens^000000
 [Nv. 5]: ^7777776.000% em monstros^000000 l ^777777 -6%^000000
-         ^77777710.000% em personagens^000000
+                ^77777710.000% em personagens^000000
 #
 RL_HAMMER_OF_GOD#
 Execução
