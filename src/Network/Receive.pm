@@ -6177,6 +6177,20 @@ sub refine_result {
 	}
 }
 
+# 0223
+sub upgrade_message {
+	my ($self, $args) = @_;
+	my $item = itemNameSimple($args->{itemID});
+	if($args->{type} == 0) { # Success
+		message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 1) { # Fail
+		message TF("Weapon not upgraded: %s\n", $item), "info";
+		# message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 2) { # Fail Lvl
+		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
+	} elsif($args->{type} == 3) { # Fail Item
+		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
+
 sub open_buying_store_fail { #0x812
 	my ($self, $args) = @_;
 	my $result = $args->{result};
