@@ -468,8 +468,8 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
 			if ($config{quitOnMaxReconnections} && $config{quitOnMaxReconnections} <= $reconnectCount) {
-				error T("Auto disconnecting on MaxReconnections!\n");
-				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"));
+				error T("Auto quiting on MaxReconnections!\n");
+				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto quit! ***\n"));
 				$quit = 1;
 				return;
 			}
@@ -620,8 +620,8 @@ sub checkConnection {
 		if(!$self->serverAlive()) {
 			Plugins::callHook('disconnected');
 			if ($config{quitOnDisconnect}) {
-				error T("Auto disconnecting on Disconnect!\n");
-				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+				error T("Auto quiting on Disconnect!\n");
+				chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 				$quit = 1;
 			} else {
 				message TF("Disconnected from Map Server, connecting to Account Server in %s seconds...\n", $timeout{reconnect}{timeout}), "connection";
@@ -635,7 +635,7 @@ sub checkConnection {
 			error T("Timeout on Map Server, "), "connection";
 			Plugins::callHook('disconnected');
 			if ($config{quitOnDisconnect}) {
-				error T("Auto disconnecting on Disconnect!\n");
+				error T("Auto quiting on Disconnect!\n");
 				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
 				$quit = 1;
 			} else {

@@ -245,8 +245,8 @@ sub checkConnection {
 		error T("Timeout on Map Server, "), "connection";
 		Plugins::callHook('disconnected');
 		if ($config{quitOnDisconnect}) {
-			error T("Auto disconnecting on Disconnect!\n");
-			chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+			error T("Auto quiting on Disconnect!\n");
+			chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 			$quit = 1;
 		} else {
 			error "waiting actions for the Ragnarok Online client\n";

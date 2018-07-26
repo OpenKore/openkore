@@ -4130,7 +4130,10 @@ sub errors {
 
 	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME);
 	if ($net->getState() == Network::IN_GAME &&
-		($config{quitOnDisconnect} > 1 || ($config{quitOnDisconnect} && $args->{type} != 3 && $args->{type} != 10))) {
+		($config{quitOnDisconnect} > 1 ||
+		($config{quitOnDisconnect} &&
+		$args->{type} != 3 &&
+		$args->{type} != 10))) {
 		error T("Auto quiting on Disconnect!\n");
 		chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 		$quit = 1;
