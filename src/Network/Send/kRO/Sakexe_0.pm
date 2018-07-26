@@ -1375,7 +1375,7 @@ sub SendPrivateairShiprequest {
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'Private_airShip_request',
-		Map_name => $mapname,
+		Map_name => stringToBytes($mapname),
 		ItemID => $ItemID,
 	}));
 }
