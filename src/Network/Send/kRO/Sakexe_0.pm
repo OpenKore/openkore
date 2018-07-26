@@ -132,6 +132,7 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
+		'0A49' => ['Private_airShip_request', 'Z16 v' ,[qw(Map_name ItemID)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
@@ -1369,5 +1370,13 @@ sub sendFriendRemove {
 # 0x0208,11,friendslistreply,2:6:10
 # sendFriendReject:0/sendFriendAccept:1
 
-
+sub SendPrivateairShiprequest {
+	my ($self, $args,$mapname,$ItemID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'Private_airShip_request',
+		Map_name => $mapname,
+		ItemID => $ItemID,
+	}));
+}
 1;
