@@ -1863,49 +1863,51 @@ removeActorWithDistance
 #║ 特殊情況 AI 處理 設定 ║
 #║                       ║
 #═════════════════════════
-dcOnDeath 0
+quitOnDeath 0
+noRespawnAfterDeath 0
 # 當角色死亡時，-1 = 不做任何事、0 = 過一段時間後回城、 2 = 直接斷線［結束自動練功］
 
-dcOnDualLogin 0
+quitOnDualLogin 0
+reconnectTimeAfterDualLogin 20
 # 遇到相同帳號登入時的反應。0 = 立刻重連、 1 = 立刻斷線結束、 >1以上 = 斷線幾秒後重連
 
-dcOnDisconnect 0
+quitOnDisconnect 0
 # 網路不通時的反應。0 = 不反應，持續連線。
 
-dcOnEmptyArrow 0
+quitOnEmptyArrow 0
 # 箭矢用光時是否斷線結束 如沒設定自動取箭矢  人物只會走到魔物面前不做任何事情重複再重複的走
 # 很容易就被識為外掛
 
-dcOnMaxReconnections 0
+quitOnMaxReconnections 0
 # 連線失敗最多幾次後就放棄結束。0 = 永不放棄、>1以上 = 次數
 
-dcOnMute 0
+quitOnMute 0
 # 被禁言時是否斷線結束 ［魔物沉默術，綠水可解，或系統禁言］
 # 註：關係到法師系角色的施法，還有無限瞬移。
 
-dcOnPM 0
+quitOnPM 0
 # 被密語時是否斷線結束
 
-dcOnZeny 0
+quitOnZenyLowerThan 0
 # 身上 zeny 少於多少錢時自動斷線結束。0 = 忽略、>1以上 = zeny 數目
 # 註：有時候自動買物來練功，可能會買到沒錢，而 kore 又一直買而陷入迴圈。
 
-dcOnStorageFull 0
+quitOnStorageFull 0
 # 自動存倉完成後若身上負重仍高於設定值時［表示倉庫可能滿了］是否自動斷線結束
 # 註：倉庫最大只能存 300 樣物品，每樣物品最高數量 3萬個
 
-dcOnPlayer 0
+quitOnPlayerNearby 0
 # 有任何玩家出現在視線範圍內時是否要斷線結束
 # 註：假如是掛見不得人的地圖的話，例如：未開放地圖，PVP 夢靨模式。
 
-dcOnLevel 0
+quitOnBaseLevel 0
 # 基本等級升級時是否要斷線結速
 
-dcOnJobLevel 0
+quitOnJobLevel 0
 # 技能等級升級時是否要斷線結速
 
-dcOnServerShutDown 0
-dcOnServerClose 0
+quitOnServerShutDown 0
+quitOnServerClose 0
 #════════════════════════════
 #║                          ║
 #║ 人工生命體 傭兵 寵物設定 ║

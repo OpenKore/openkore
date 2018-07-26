@@ -917,7 +917,7 @@ sub arrow_none {
 	my $type = $args->{type};
 	if ($type == 0) {
 		delete $char->{'arrow'};
-		if ($config{'dcOnEmptyArrow'}) {
+		if ($config{'quitOnEmptyArrow'}) {
 			error T("Auto disconnecting on EmptyArrow!\n");
 			chatLog("k", T("*** Your Arrows is ended, auto disconnect! ***\n"));
 			$messageSender->sendQuit();
@@ -2127,9 +2127,9 @@ sub private_message {
 		Msg => $privMsg
 	});
 
-	if ($config{dcOnPM} && AI::state == AI::AUTO) {
-		message T("Auto disconnecting on PM!\n");
-		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
+	if ($config{quitOnPM} && AI::state == AI::AUTO) {
+		message T("Auto quiting on PM!\n");
+		chatLog("k", T("*** You were PM'd, auto quit! ***\n"));
 		$messageSender->sendQuit();
 		quit();
 	}

@@ -157,21 +157,23 @@ cachePlayerNames_maxSize 100
 
 clientSight 20
 
-dcPause 1
-dcOnDeath 0
-dcOnDualLogin 0
-dcOnDisconnect 0
-dcOnEmptyArrow 0
-dcOnMaxReconnections 0
-dcOnMute 0
-dcOnPM 0
-dcOnZeny 0
-dcOnStorageFull 1
-dcOnPlayer 0
-dcOnServerShutDown 0
-dcOnServerClose 0
-dcOnJobLevel
-dcOnLevel
+pauseOnQuit 1
+quitOnDeath 0
+noRespawnAfterDeath 0
+quitOnDualLogin 0
+reconnectTimeAfterDualLogin 20
+quitOnDisconnect 0
+quitOnEmptyArrow 0
+quitOnMaxReconnections 0
+quitOnMute 0
+quitOnPM 0
+quitOnZenyLowerThan 0
+quitOnStorageFull 1
+quitOnPlayerNearby 0
+quitOnServerShutDown 0
+quitOnServerClose 0
+quitOnJobLevel
+quitOnBaseLevel
 
 follow 0
 followCheckLOS 0

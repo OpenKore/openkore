@@ -467,7 +467,7 @@ sub checkConnection {
 			undef $secureLoginKey;
 
 		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
-			if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
+			if ($config{quitOnMaxReconnections} && $config{quitOnMaxReconnections} <= $reconnectCount) {
 				error T("Auto disconnecting on MaxReconnections!\n");
 				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"));
 				$quit = 1;
@@ -619,7 +619,7 @@ sub checkConnection {
 	} elsif ($self->getState() == Network::IN_GAME) {
 		if(!$self->serverAlive()) {
 			Plugins::callHook('disconnected');
-			if ($config{dcOnDisconnect}) {
+			if ($config{quitOnDisconnect}) {
 				error T("Auto disconnecting on Disconnect!\n");
 				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
 				$quit = 1;
@@ -634,7 +634,7 @@ sub checkConnection {
 		} elsif (timeOut($timeout{play})) {
 			error T("Timeout on Map Server, "), "connection";
 			Plugins::callHook('disconnected');
-			if ($config{dcOnDisconnect}) {
+			if ($config{quitOnDisconnect}) {
 				error T("Auto disconnecting on Disconnect!\n");
 				chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
 				$quit = 1;

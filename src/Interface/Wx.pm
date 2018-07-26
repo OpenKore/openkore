@@ -1134,7 +1134,7 @@ sub onAdvancedConfig {
 	$cfg->addCategory('items', 'Grid', ['itemsTakeAuto', 'itemsTakeAuto_party', 'itemsGatherAuto', 'itemsMaxWeight', 'itemsMaxWeight_sellOrStore', 'itemsMaxNum_sellOrStore', 'cartMaxWeight']);
 	$cfg->addCategory('sellAuto', 'Grid', ['sellAuto', 'sellAuto_npc', 'sellAuto_standpoint', 'sellAuto_distance']);
 	$cfg->addCategory('storageAuto', 'Grid', ['storageAuto', 'storageAuto_npc', 'storageAuto_distance', 'storageAuto_npc_type', 'storageAuto_npc_steps', 'storageAuto_password', 'storageAuto_keepOpen', 'storageAuto_useChatCommand', 'relogAfterStorage']);
-	$cfg->addCategory('disconnect', 'Grid', ['dcOnDeath', 'dcOnDualLogin', 'dcOnDisconnect', 'dcOnEmptyArrow', 'dcOnMute', 'dcOnPM', 'dcOnZeny', 'dcOnStorageFull', 'dcOnPlayer']);
+	$cfg->addCategory('quiting', 'Grid', ['quitOnDeath', 'quitOnDualLogin', 'quitOnDisconnect', 'quitOnEmptyArrow', 'quitOnMute', 'quitOnPM', 'quitOnZenyLowerThan', 'quitOnStorageFull', 'quitOnPlayerNearby']);
 
 	$cfg->onChange(sub {
 		my ($key, $value) = @_;
