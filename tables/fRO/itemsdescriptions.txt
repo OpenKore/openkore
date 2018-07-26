@@ -30188,7 +30188,8 @@ Required Level : ^77777745^000000
 Job : ^777777All^000000
 #
 16195#
-[Rental] A box holding a Protovich Band.
+[Rental]
+When you open this box, you will receive a Protovich Band that will disappear after 7 days.
 Weight : ^7777771^000000
 #
 5386#
@@ -40045,7 +40046,6 @@ Equip : ^777777All Jobs^000000
 #
 19915#
 Young and growing devil's horn.
-
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
@@ -40060,7 +40060,6 @@ Equip : ^777777All Jobs^000000
 #
 31119#
 Talented Wizard's magic hat. It looks weird, but works just fine.
-
 Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
