@@ -403,7 +403,7 @@ sub new {
 		'02AA' => ['cash_password_request', 'v', [qw(info)]], #TODO: PACKET_ZC_REQ_CASH_PASSWORD
 		'02AC' => ['cash_password_result', 'v2', [qw(info count)]], #TODO: PACKET_ZC_RESULT_CASH_PASSWORD
 		# mRO PIN code Check
-		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]],
+		'02AD' => ['login_pin_code_request', 'v V', [qw(state key)]],
 		# Packet Prefix encryption Support
 		'02AE' => ['initialize_message_id_encryption', 'V2', [qw(param1 param2)]],
 		# tRO new packets (2008-09-16Ragexe12_Th)

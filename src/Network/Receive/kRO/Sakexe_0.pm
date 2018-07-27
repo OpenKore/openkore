@@ -421,7 +421,7 @@ sub new {
 		'02A6' => ['gameguard_request'], # 22		
 		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
 		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
-		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
+		'02AD' => ['login_pin_code_request', 'v V', [qw(state key)]],# 8
 		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
 		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
