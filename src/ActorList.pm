@@ -41,6 +41,7 @@ use Actor::Portal;
 use Actor::Pet;
 use Actor::Slave;
 use Actor::Unknown;
+use Actor::Elemental;
 
 ### CATEGORY: Class ActorList
 

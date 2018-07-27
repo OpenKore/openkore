@@ -1,4 +1,4 @@
-//영웅의흔적
+﻿//영웅의흔적
 1@face.gnd#1@face.gnd#
 1@face.gat#1@face.gat#
 1@face.rsw#1@face.rsw#

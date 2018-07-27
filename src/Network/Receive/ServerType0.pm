@@ -246,7 +246,7 @@ sub new {
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
-		'018D' => ['forge_list'],
+		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # ex. due to ice wall
@@ -336,8 +336,8 @@ sub new {
 		'021A' => ['top10_alchemist_rank'],
 		'021B' => ['blacksmith_points', 'V2', [qw(points total)]],
 		'021C' => ['alchemist_point', 'V2', [qw(points total)]],
-		'0221' => ['upgrade_list'],
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]],
+		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]],
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]],
 		'0226' => ['top10_taekwon_rank'],
 		'0227' => ['gameguard_request'],
@@ -369,7 +369,7 @@ sub new {
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]],
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]],
 		'0259' => ['gameguard_grant', 'C', [qw(server)]],
-		'025A' => ['cooking_list', 'v', [qw(type)]],
+		'025A' => ['cooking_list', 'v2 a*', [qw(len type item_list)]],
 		'025D' => ['auction_my_sell_stop', 'V', [qw(flag)]],
 		'025F' => ['auction_windows', 'V C4 v', [qw(flag unknown1 unknown2 unknown3 unknown4 unknown5)]],
 		'0260' => ['mail_window', 'v', [qw(flag)]],
@@ -508,7 +508,11 @@ sub new {
 		'082A' => ['char_delete2_accept_result', 'V V', [qw(charID result)]], # 10
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
 		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],
@@ -566,7 +570,7 @@ sub new {
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
-		'09AA' => ['pet_evolution_result', 'v V',[qw(len result)]],
+		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
@@ -602,6 +606,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
@@ -615,21 +620,25 @@ sub new {
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
+		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
-		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]],
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
@@ -865,7 +874,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -876,7 +885,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -952,6 +961,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal )); # request to unfreeze char alisonrag
 }
 
 sub area_spell {
@@ -1773,8 +1783,15 @@ sub map_changed {
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
 
-	$map_ip = makeIP($args->{IP});
-	$map_port = $args->{port};
+	if($args->{'url'} =~ /.*\:\d+/) {
+		$map_ip = $args->{url};
+		$map_ip =~ s/:[0-9]+//;
+		$map_port = $args->{port};
+	} else {
+		$map_ip = makeIP($args->{IP});
+		$map_port = $args->{port};
+	}
+
 	message(swrite(
 		"---------Map  Info----------", [],
 		"MAP Name: @<<<<<<<<<<<<<<<<<<",
@@ -1838,7 +1855,6 @@ sub map_changed {
 		oldMap => $oldMap,
 	});
 	$timeout{ai}{time} = time;
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO)); # request to unfreeze char alisonrag
 }
 
 sub memo_success {
@@ -2292,7 +2308,7 @@ sub received_characters {
 		$chars[$slot]{int} = $int;
 		$chars[$slot]{dex} = $dex;
 		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
+		$chars[$slot]{sex} = ($masterServer->{charBlockSize} >= 145 && (grep { $masterServer->{serverType} eq $_ } qw( iRO_Renewal iRO kRO cRO Zero ))) && (unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) =~ /^0|1$/)? unpack( 'C', substr($args->{RAW_MSG}, $i + $blockSize -1)) : $accountSex2;
 
 		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
 		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
@@ -2313,7 +2329,7 @@ sub received_characters {
 	## Note to devs: If other official servers support > 3 characters, then
 	## you should add these other serverTypes to the list compared here:
 	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO idRO bRO cRO ))
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO_Renewal iRO idRO bRO cRO ))
 	) {
 		$net->setState(1.5);
 		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
@@ -2342,21 +2358,6 @@ sub received_characters {
 		
 	} else {
 		CharacterLogin();
-	}
-}
-
-sub refine_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 1) {
-		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 2) {
-		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 3) {
-		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
-	} else {
-		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
 	}
 }
 
@@ -2815,10 +2816,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -2869,7 +2870,10 @@ sub skill_use_failed {
 		13 => T('Need this within the water'),
 		19 => T('Full Amulet'),
 		29 => TF('Must have at least %s of base XP', '1%'),
-		83 => T('Location not allowed to create chatroom/market')
+		71 => T('Missing Required Item'), # (item name) required x amount
+		78 => T('Required Equiped Weapon Class'),
+		83 => T('Location not allowed to create chatroom/market'),
+		84 => T('Need more bullet'),
 		);
 
 	my $errorMessage;
@@ -3734,7 +3738,7 @@ sub auction_result {
 	} elsif ($flag == 9) {
 		message T("You cannot place more than 5 bids at a time.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3807,7 +3811,7 @@ sub auction_my_sell_stop {
 	} elsif ($flag == 2) {
 		message T("Bid number is incorrect.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3849,7 +3853,7 @@ sub guild_alliance {
 	} elsif ($args->{flag} == 4) {
 		message T("You have too many alliances.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3869,7 +3873,7 @@ sub manner_message {
 	} elsif ($args->{flag} == 5) {
 		message T("You got a good point.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3901,7 +3905,7 @@ sub taekwon_packets {
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3912,7 +3916,7 @@ sub guild_master_member {
 		message T("You are not a guildmaster.\n"), "info";
 		return;
 	} else {
-		warning TF("type: %s gave unknown results in: %s\n", $args->{type}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
 		return;
 	}
 	message T("You are a guildmaster.\n"), "info";
@@ -3996,55 +4000,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0221
-# TODO -> Check If we use correct unpack string
-sub upgrade_list {
-	my ($self, $args) = @_;
-	my $msg;
-	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my ($index, $nameID) = unpack('a2 x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-}
-
-# 0223
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) { # Success
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) { # Fail
-		message TF("Weapon not upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-		# message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) { # Fail Lvl
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) { # Fail Item
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
-# 025A
-# TODO
-sub cooking_list {
-	my ($self, $args) = @_;
-	undef $cookingList;
-	my $k = 0;
-	my $msg;
-	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
-	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $nameID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
-		$cookingList->[$k] = $nameID;
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
-		$k++;
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-	message T("You can now use the 'cook' command.\n"), "info";
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
@@ -4070,7 +4025,7 @@ sub instance_window_join {
 }
 
 # 02CE
-#0 = "The Memorial Dungeon reservation has been canceled."
+#0 = "The Memorial Dungeon reservation has been canceled/updated."
 #    Re-innit Window, in some rare cases.
 #1 = "The Memorial Dungeon expired; it has been destroyed."
 #2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
@@ -4080,8 +4035,10 @@ sub instance_window_join {
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	# TYPE_NOTIFY =  0x0; Ihis one will make Window, as Client logic do.
-	if($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+	
+	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
+		debug T("Received Memory Dungeon reservation update\n");
+	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
 	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
@@ -4090,7 +4047,7 @@ sub instance_window_leave {
 	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4215,7 +4172,7 @@ sub boss_map_info {
 		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
 	} else {
 		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4366,20 +4323,6 @@ sub open_buying_store { #0x810
 	my($self, $args) = @_;
 	my $amount = $args->{amount};
 	message TF("Your buying store can buy %d items \n", $amount);
-}
-
-sub open_buying_store_fail { #0x812
-	my ($self, $args) = @_;
-	my $result = $args->{result};
-	if($result == 1){
-		message TF("Failed to open Purchasing Store.\n"),"info";
-	} elsif ($result == 2){
-		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
-	} elsif ($result == 8){
-		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
-	} else {
-		message TF("Failed opening your buying store.\n");
-	}
 }
 
 sub open_buying_store_item_list {
@@ -4627,13 +4570,6 @@ sub msg_string {
 	my ($self, $args) = @_;
 	message TF("index: %s para1: %s\n", $args->{ID}, $args->{para1}), "info";
 	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
-}
-
-sub skill_msg {
-	my ($self, $args) = @_;
-	message TF("id: %s msgid: %s\n", $args->{id}, $args->{msgid}), "info";
-
-	#	'07E6' => ['skill_msg', 'v V', [qw(id msgid)]], #TODO: PACKET_ZC_MSG_SKILL     **msgtable
 }
 
 sub quest_all_list2 {

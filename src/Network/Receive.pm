@@ -867,19 +867,15 @@ our %stat_info_handlers = (
 	},
 	VAR_HP, sub {
 		$_[0]{hp} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_MAXHP, sub {
 		$_[0]{hp_max} = $_[1];
-		$_[0]{hpPercent} = $_[0]{hp_max} ? 100 * $_[0]{hp} / $_[0]{hp_max} : undef;
 	},
 	VAR_SP, sub {
 		$_[0]{sp} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_MAXSP, sub {
 		$_[0]{sp_max} = $_[1];
-		$_[0]{spPercent} = $_[0]{sp_max} ? 100 * $_[0]{sp} / $_[0]{sp_max} : undef;
 	},
 	VAR_POINT, sub { $_[0]{points_free} = $_[1] },
 	#VAR_HAIRCOLOR
@@ -1027,8 +1023,14 @@ sub stat_info {
 		'02A2' => $char->{mercenary},
 		'07DB' => $char->{homunculus},
 		'0ACB' => $char,
-		'081E' => exists $args->{ID} && Actor::get($args->{ID}), # Sorcerer's Spirit
 	}->{$args->{switch}};
+
+	if($args->{switch} eq "081E") {
+		if(!$char->{elemental}) {
+			$char->{elemental} = new Actor::Elemental;
+		}
+		$actor = $char->{elemental}; # Sorcerer's Spirit
+	}
 
 	unless ($actor) {
 		warning sprintf "Actor is unknown or not ready for stat information (switch %s, type %d, val %d)\n", @{$args}{qw(switch type val)};
@@ -1260,7 +1262,7 @@ sub actor_display {
 				NPC_PET_TYPE, 'Actor::Pet',
 				NPC_HO_TYPE, 'Actor::Slave',
 				NPC_MERSOL_TYPE, 'Actor::Slave',
-				NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
+				# NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
 			}->{$args->{object_type}};
 		}
 
@@ -1384,6 +1386,15 @@ sub actor_display {
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
+	} elsif ($object_class eq 'Actor::Elemental') {
+		# Actor is a Elemental
+		$actor = $elementalsList->getByID($args->{ID});
+		if (!defined $actor) {
+			$actor = new Actor::Elemental();
+			$actor->{appear_time} = time;
+			$mustAdd = 1;
+		}
+		$actor->{name} = $jobs_lut{$args->{type}};
 	}
 
 	#### Step 2: update actor information ####
@@ -1534,7 +1545,11 @@ typedef enum <unnamed-tag> {
 		} elsif (UNIVERSAL::isa($actor, "Actor::Slave")) {
 			$slavesList->add($actor);
 			Plugins::callHook('add_slave_list', $actor);
-		}
+		} elsif (UNIVERSAL::isa($actor, "Actor::Elemental")) {
+			$elementalsList->add($actor);
+			Plugins::callHook('add_elemental_list', $actor);
+
+		} 
 	}
 
 
@@ -1573,6 +1588,9 @@ typedef enum <unnamed-tag> {
 
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug sprintf("Elemental Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
 
 		} else {
 			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
@@ -1641,6 +1659,9 @@ typedef enum <unnamed-tag> {
 			# Neither can this.
 			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		        Plugins::callHook('npc_moved', $actor);
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug "Elemental Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		        Plugins::callHook('pet_moved', $actor);
 		} else {
 			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		}
@@ -1658,11 +1679,17 @@ typedef enum <unnamed-tag> {
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
 			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+		} elsif ($actor->isa('Actor::Elemental')) {
+			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} elsif ($actor->isa('NPC')) {
 			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		} else {
 			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
 		}
+	}
+	
+	if($char->{elemental}{ID} eq $actor->{ID}) {
+		$char->{elemental} = $actor;
 	}
 }
 
@@ -1810,6 +1837,26 @@ sub actor_died_or_disappeared {
 
 		$slavesList->remove($slave);
 
+	} elsif (defined $elementalsList->getByID($ID)) {
+		my $elemental = $elementalsList->getByID($ID);
+		if ($args->{type} == 0) {
+			message "Elemental Disappeared: " .$elemental->{name}. " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+			$elemental->{disappeared} = 1;
+		} else {
+			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
+			$elemental->{disappeared} = 1;
+		}
+
+		$elemental->{gone_time} = time;
+		Plugins::callHook('elemental_disappeared', {elemental => $elemental});
+
+
+		if($char->{elemental}{ID} eq $ID) {
+			$char->{elemental} = undef;
+		}
+
+		$elementalsList->remove($elemental);
+
 	} else {
 		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
 	}
@@ -1913,10 +1960,10 @@ sub actor_action {
 			}
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent}) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent) . " $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 
 		} elsif ($char->{slaves} && $char->{slaves}{$args->{targetID}}) {
-			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent}) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+			message(sprintf("[%3d/%3d]", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent) . " $msg", $args->{damage} > 0 ? "attacked" : "attackedMiss");
 
 		} elsif ($args->{sourceID} eq $args->{targetID}) {
 			message("$status $msg");
@@ -2013,6 +2060,19 @@ sub actor_info {
 		Plugins::callHook('slaveNameUpdate', {slave => $slave});
 	}
 
+	my $elemental = $elementals{$args->{ID}};
+	if ($elemental) {
+		my $name = bytesToString($args->{name});
+		$elemental->{name_given} = $name;
+		$elemental->setName($name);
+		$elemental->{info} = 1;
+		if ($config{debug} >= 2) {
+			my $binID = binFind(\@elementalsID, $args->{ID});
+			debug "elemental Info: $elemental->{name_given} ($binID)\n", "parseMsg", 2;
+		}
+		Plugins::callHook('elementalNameUpdate', {elemental => $elemental});
+	}
+	
 	# TODO: $args->{ID} eq $accountID
 }
 
@@ -3327,21 +3387,28 @@ sub npc_chat {
 	# TODO hook
 }
 
-sub forge_list {
+# 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
+sub makable_item_list {
 	my ($self, $args) = @_;
-
-	message T("========Forge List========\n");
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
-		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		message "$viewID $items_lut{$viewID}\n";
-		# always 0x0012
-		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# ???
-		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
+	undef $makableList;
+	my $k = 0;
+	my $msg;
+	$msg .= center(" " . T("Create Item List") . " ", 79, '-') . "\n";
+	for (my $i = 0; $i < length($args->{item_list}); $i += 8) {
+		my $nameID = unpack("v", substr($args->{item_list}, $i, 2));
+		$makableList->[$k] = $nameID;
+		$msg .= swrite(sprintf("\@%s \@%s (\@%s)", ('>'x2), ('<'x50), ('<'x6)), [$k, itemNameSimple($nameID), $nameID]);
+		$k++;
 	}
-	message "=========================\n";
+	$msg .= sprintf("%s\n", ('-'x79));
+	message($msg, "list");
+	message T("You can now use the 'create' command.\n"), "info";
+
+	Plugins::callHook('makable_item_list', {
+		item_list => $makableList,
+	});
 }
- 
+
 sub storage_opened {
 	my ($self, $args) = @_;
 	$char->storage->open($args);
@@ -4231,9 +4298,6 @@ sub slave_calcproperty_handler {
 =cut
 
 	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
-	$slave->{hpPercent}    = $slave->{hp_max} ? ($slave->{hp} / $slave->{hp_max}) * 100 : undef;
-	$slave->{spPercent}    = $slave->{sp_max} ? ($slave->{sp} / $slave->{sp_max}) * 100 : undef;
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : undef;
 }
 
 sub gameguard_grant {
@@ -4796,15 +4860,15 @@ sub map_change {
 		ai_clientSuspend(0, 10);
 	} else {
 		$messageSender->sendMapLoaded();
-		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO)); # request to unfreeze char alisonrag
 		# $messageSender->sendSync(1);
+
+		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal )); # request to unfreeze char alisonrag
 		$timeout{ai}{time} = time;
 	}
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-
 	$timeout{ai}{time} = time;
 }
 
@@ -5244,9 +5308,16 @@ sub received_character_ID_and_Map {
 		}
 	}
 
-	$map_ip = makeIP($args->{mapIP});
-	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-	$map_port = $args->{mapPort};
+	if($args->{'mapUrl'} =~ /.*\:\d+/) {
+		$map_ip = $args->{mapUrl};
+		$map_ip =~ s/:[0-9]+//;
+		$map_port = $args->{mapPort};
+	} else {
+		$map_ip = makeIP($args->{mapIP});
+		$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
+		$map_port = $args->{mapPort};
+	}
+
 	message TF("----------Game Info----------\n" .
 		"Char ID: %s (%s)\n" .
 		"MAP Name: %s\n" .
@@ -5345,7 +5416,7 @@ sub party_join {
 	my $actor = $char->{party}{users}{$info->{ID}} && %{$char->{party}{users}{$info->{ID}}} ? $char->{party}{users}{$info->{ID}} : new Actor::Party;
 
 	$actor->{admin} = !$info->{'role'};
-	delete $actor->{statuses} unless $actor->{'online'} = !$info-{'type'};
+	delete $actor->{statuses} unless $actor->{'online'} = !$info->{'type'};
 	$actor->{pos}{x} = $info->{'x'};
 	$actor->{pos}{y} = $info->{'y'};
 	$actor->{map} = $info->{'map'};
@@ -5373,7 +5444,7 @@ sub party_allow_invite {
 
 sub party_chat {
 	my ($self, $args) = @_;
-	my $msg = $args->{message};
+	my $msg = bytesToString($args->{message});
 
 	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
@@ -5998,7 +6069,7 @@ sub clan_leave {
 	my ($self, $args) = @_;
 	
 	if($clan{clan_name}) {
-		message TF("[Clan] You leaved $clan{clan_name}");
+		message TF("[Clan] You left %s\n", $clan{clan_name});
 		undef %clan;
 	}
 }
@@ -6025,6 +6096,214 @@ sub pet_evolution_result {
 		error TF("Loyal Intimacy is required to evolve.\n");
 	} elsif ($args->{result} == 0x6) {
 		message TF("Pet evolution success.\n"), "success";
+	}
+}
+
+sub elemental_info {
+	my ($self, $args) = @_;
+
+	$char->{elemental} = Actor::get($args->{ID}) if ($char->{elemental}{ID} ne $args->{ID});
+	if (!defined $char->{elemental}) {	
+		$char->{elemental} = new Actor::Elemental;
+	}
+
+	foreach (@{$args->{KEYS}}) {
+		$char->{elemental}{$_} = $args->{$_};
+	}
+}
+
+# 0221
+sub upgrade_list {
+	my ($self, $args) = @_;
+	undef $refineList;
+	my $k = 0;
+	my $msg;
+
+	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
+
+	for (my $i = 0; $i < length($args->{item_list}); $i += 13) {
+		my ($index, $nameID) = unpack('a2 x6 C', substr($args->{item_list}, $i, 13));
+		my $item = $char->inventory->getByID($index);
+		$refineList->[$k] = unpack('v', $item->{ID});
+		$msg .= swrite(sprintf("\@%s - \@%s (\@%s)", ('<'x2), ('<'x50), ('<'x3)), [$k, itemName($item), $item->{binID}]);
+		$k++;
+	}
+
+	$msg .= sprintf("%s\n", ('-'x79));
+
+	message($msg, "list");
+	message T("You can now use the 'refine' command.\n"), "info";
+}
+
+# 025A
+sub cooking_list {
+	my ($self, $args) = @_;
+	undef $cookingList;
+	undef $currentCookingType;
+	my $k = 0;
+	my $msg;
+	$currentCookingType = $args->{type};
+	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
+	for (my $i = 0; $i < length($args->{item_list}); $i += 2) {
+		my $nameID = unpack('v', substr($args->{item_list}, $i, 2));
+		$cookingList->[$k] = $nameID;
+		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
+		$k++;
+	}
+	$msg .= sprintf("%s\n", ('-'x79));
+
+	message($msg, "list");
+	message T("You can now use the 'cook' command.\n"), "info";
+
+	Plugins::callHook('cooking_list', {
+		cooking_list => $cookingList,
+	});
+}
+
+sub refine_result {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
+	} elsif ($args->{fail} == 1) {
+		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
+	} elsif ($args->{fail} == 2) {
+		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
+	} elsif ($args->{fail} == 3) {
+		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
+	} elsif ($args->{fail} == 6) {
+		message TF("You successfully cook a item (ID %s)!\n", $args->{nameID});
+	} else {
+		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
+	}
+}
+
+# 0223
+sub upgrade_message {
+	my ($self, $args) = @_;
+	my $item = itemNameSimple($args->{itemID});
+	if($args->{type} == 0) { # Success
+		message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 1) { # Fail
+		message TF("Weapon not upgraded: %s\n", $item), "info";
+		# message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 2) { # Fail Lvl
+		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
+	} elsif($args->{type} == 3) { # Fail Item
+		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
+	}
+}
+
+sub open_buying_store_fail { #0x812
+	my ($self, $args) = @_;
+	my $result = $args->{result};
+	if($result == 1){
+		message TF("Failed to open Purchasing Store.\n"),"info";
+	} elsif ($result == 2){
+		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
+	} elsif ($result == 8){
+		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
+	} else {
+		message TF("Failed opening your buying store.\n");
+	}
+	$buyershopstarted = 0;
+}
+
+sub search_store_open {
+	my ($self, $args) = @_;
+	
+	debug TF("Opened %s for searching open vendors in this map.\n", 
+		$args->{type} ? T("Universal Catalog Gold") : T("Universal Catalog Silver")),
+		2, "search_store";
+	message TF("You can now search open vendors in this map. Searches remaining: %d\n", $args->{amount});
+	
+	$universalCatalog{open} = 1;
+	$universalCatalog{type} = $args->{type};
+}
+
+sub search_store_fail {
+	my ($self, $args) = @_;
+	
+	error TF("Search store failed. Reason #%d\n", $args->{reason});
+	
+	if ($args->{reason} == 0) {
+		error $msgTable[1804] . "\n";
+	} elsif ($args->{reason} == 1) {
+		error $msgTable[1785] . "\n";
+	} elsif ($args->{reason} == 2) {
+		error $msgTable[1799] . "\n";
+	} elsif ($args->{reason} == 3) {
+		error $msgTable[1801] . "\n";
+	} elsif ($args->{reason} == 4) {
+		error $msgTable[1798] . "\n";
+	} else {
+		error "Unknown reason\n";
+	}
+}
+
+sub search_store_result {
+	my ($self, $args) = @_;
+	my $unpackString = "a4 a4 a80 v C V v C a16";
+	
+	@{$universalCatalog{list}} = () if $args->{first_page};
+	$universalCatalog{has_next} = $args->{has_next};
+	
+	my @universalCatalogPage;
+	
+	for (my $i = 0; $i < length($args->{storeInfo}); $i += 106) {
+		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards) = unpack($unpackString, substr($args->{storeInfo}, $i));
+		
+		my @cards = unpack "v4", $cards;
+		
+		my $universalCatalogInfo = {
+			storeID => $storeID,
+			accountID => $accountID,
+			shopName => $shopName,
+			nameID => $nameID,
+			itemType => $itemType,
+			price => $price,
+			amount => $amount,
+			refine => $refine,
+			cards_nameID => $cards,
+			cards => \@cards,
+		};
+		
+		push(@universalCatalogPage, $universalCatalogInfo);
+		Plugins::callHook("search_store", $universalCatalogInfo);
+	}
+	
+	return unless scalar @universalCatalogPage;
+	
+	push(@{$universalCatalog{list}}, \@universalCatalogPage);
+	Misc::searchStoreInfo(scalar(@{$universalCatalog{list}}) - 1);
+}
+
+sub search_store_pos {
+	my ($self, $args) = @_;
+	
+	message TF("Selected store is at (%d, %d)\n", $args->{x}, $args->{y});
+}
+
+sub skill_msg {
+	my ($self, $args) = @_;
+	if ($msgTable[++$args->{msgid}]) { # show message from msgstringtable.txt -> [<Skill_Name>] <Message>
+		my $skill = new Skill(idn => $args->{id});
+		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
+	} else {
+		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
+}
+
+#TODO !
+sub overweight_percent {
+	my ($self, $args) = @_;
+}
+
+sub partylv_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{lv} = $args->{lv};
 	}
 }
 

@@ -261,7 +261,7 @@ sub new {
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
-		'018D' => ['forge_list'], # -1
+		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]], # -1
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
@@ -354,8 +354,8 @@ sub new {
 		'021E' => ['less_effect', 'V', [qw(flag)]], # 6
 		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
 		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
-		'0221' => ['upgrade_list'], # -1
-		'0223' => ['upgrade_message', 'a4 v', [qw(type itemID)]], # 8
+		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]], # 8
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
 		'0226' => ['top10_taekwon_rank'], # 282
 		'0227' => ['gameguard_request'], # 18 ??
@@ -390,7 +390,7 @@ sub new {
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
-		'025A' => ['cooking_list', 'v', [qw(type)]], # -1
+		'025A' => ['cooking_list', 'v2 a*', [qw(len type item_list)]],
 		'025F' => ['auction_windows', 'V', [qw(flag)]], # 6
 		'0260' => ['mail_window', 'V', [qw(flag)]], # 6
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]], # 8
@@ -476,6 +476,7 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
@@ -483,6 +484,7 @@ sub new {
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
@@ -491,6 +493,10 @@ sub new {
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
@@ -513,7 +519,7 @@ sub new {
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
-		'09AA' => ['pet_evolution_result', 'v V',[qw(len result)]],
+		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -541,6 +547,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
@@ -553,18 +560,24 @@ sub new {
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
+		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		};
@@ -768,7 +781,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -779,7 +792,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -1249,7 +1262,6 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
 	
 	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
 		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
@@ -2240,21 +2252,6 @@ sub received_characters {
 	}
 }
 
-sub refine_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 1) {
-		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 2) {
-		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 3) {
-		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
-	} else {
-		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
-	}
-}
-
 sub blacksmith_points {
 	my ($self, $args) = @_;
 	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -2696,10 +2693,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -3481,7 +3478,7 @@ sub auction_result {
 	} elsif ($flag == 9) {
 		message T("You cannot place more than 5 bids at a time.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3553,7 +3550,7 @@ sub auction_my_sell_stop {
 	} elsif ($flag == 2) {
 		message T("Bid number is incorrect.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3595,7 +3592,7 @@ sub guild_alliance {
 	} elsif ($args->{flag} == 4) {
 		message T("You have too many alliances.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3615,7 +3612,7 @@ sub manner_message {
 	} elsif ($args->{flag} == 5) {
 		message T("You got a good point.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3647,7 +3644,7 @@ sub taekwon_packets {
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3658,7 +3655,7 @@ sub guild_master_member {
 		message T("You are not a guildmaster.\n"), "info";
 		return;
 	} else {
-		warning TF("type: %s gave unknown results in: %s\n", $args->{type}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
 		return;
 	}
 	message T("You are a guildmaster.\n"), "info";
@@ -3736,57 +3733,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0221
-# TODO: test new unpack string
-sub upgrade_list {
-	my ($self, $args) = @_;
-	my $msg;
-	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-}
-
-# 0223
-# TODO: can we use itemName? and why is type 0 equal to type 1?
-# doesn't seem to be used by eA
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) {
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) {
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
-# 025A
-# TODO
-sub cooking_list {
-	my ($self, $args) = @_;
-	undef $cookingList;
-	my $k = 0;
-	my $msg;
-	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
-	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $nameID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
-		$cookingList->[$k] = $nameID;
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
-		$k++;
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-	message T("You can now use the 'cook' command.\n"), "info";
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
@@ -3828,7 +3774,7 @@ sub instance_window_leave {
 	} elsif ($args->{type} == 4) {
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -3926,7 +3872,7 @@ sub boss_map_info {
 		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
 	} else {
 		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4070,6 +4016,13 @@ sub achievement_reward_ack {
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
+sub party_dead {
+	my ($self, $args) = @_;
 
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
 
 1;

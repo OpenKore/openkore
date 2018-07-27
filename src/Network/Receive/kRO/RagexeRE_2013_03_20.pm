@@ -39,7 +39,7 @@ sub new {
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],#-1
-		'08C8' => ['changeToInGameState'],
+		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 	);
 	
 	foreach my $switch (keys %packets) {
@@ -96,7 +96,7 @@ sub parse_items_stackable {
 	my ($self, $args) = @_;
 	$self->parse_items($args, $self->items_stackable($args), sub {
 		my ($item) = @_;
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 		if ($item->{flag} == 0) {
 			$item->{identified} = 0;
 		} elsif ($item->{flag} == 1 || $item->{flag} == 3) {

@@ -30,4 +30,24 @@ sub new {
 	return $class->SUPER::new('Elemental');
 }
 
+##
+# float $elemental->hp_percent()
+#
+# Returns elemental HP percentage (between 0 and 100).
+sub hp_percent {
+	my ($self) = @_;
+
+	return main::percent_hp($self);
+}
+
+##
+# float $elemental->sp_percent()
+#
+# Returns elemental SP percentage (between 0 and 100).
+sub sp_percent {
+	my ($self) = @_;
+
+	return main::percent_sp($self);
+}
+
 1;

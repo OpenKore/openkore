@@ -1,0 +1,14 @@
+# Este arquivo controla quais itens serão colocados na sua loja de compra.
+# Para ativar a Loja de Compras, defina a chave 'buyerShopAuto' no
+# config.txt como 1.
+#
+# A primeira linha do seu arquivo é o título da loja.
+# As linhas subsequentes seguem o seguinte formato (delimitado por TAB):
+# <nome>	<preço>		<quantidade>
+#
+# Você deve ter a habilidade ALL_BUYING_STORE (Loja de Compras!) e uma Licença de Loja de Compras ou uma Licença Falsa de Loja.
+#
+# Exemplo:
+# Minha Loja de Compras;;Minha Loja de Compras legal;;Minha boa Loja de Compras
+# Jellopy	1,000	5
+# Mel	3,500	30

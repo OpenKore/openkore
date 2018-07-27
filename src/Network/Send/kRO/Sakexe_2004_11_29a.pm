@@ -82,13 +82,6 @@ sub sendSkillUseLocInfo {
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-sub sendWeaponRefine {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a2', 0x0222, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Weapon Refine.\n", "sendPacket", 2;
-}
-
 1;
 
 =pod

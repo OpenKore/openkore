@@ -33,6 +33,9 @@ sub new {
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0860' => ['storage_password'],
+		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0835' => ['search_store_request_next_page'],
+		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -57,6 +60,9 @@ sub new {
 		item_list_window_selected 0281
 		storage_password 0860
 		char_create 0A39
+		search_store_info 0819
+		search_store_request_next_page 0835
+		search_store_select 0838
 	);
 	
 	

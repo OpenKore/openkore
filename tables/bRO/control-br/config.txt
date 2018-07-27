@@ -238,6 +238,9 @@ shopAuto_open 0
 shop_random 0
 shop_useSkill 1
 
+buyerShopAuto_open 0
+buyerShop_random 0
+
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
@@ -337,6 +340,7 @@ logDead 0
 
 chatTitleOversize 0
 shopTitleOversize 0
+buyerShopTitleOversize 0
 
 sleepTime 10000
 

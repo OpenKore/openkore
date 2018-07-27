@@ -28,15 +28,17 @@ To run OpenKore you will need:
 | --- | --- | --- | --- | --- |
 | `iRO` | International(US) RO | **** | Botable, Weekly Update | allanon |
 | `bRO` | Brazilian RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| `idRO` | Indonesian RO | **** | Botable only RE_server | sctnightcore(temp)
+| `idRO` | Indonesian RO (Renewal) | **** | Botable | alisonrag, sctnightcore |
+| `idRO` | Indonesian RO (classic) | **** | Not Working | N/A  |
 | `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
-| `cRO` | Chinese RO | nProtect | Botable, Weekly Update  | alisonrag, sctnightcore |
+| `cRO` | Chinese RO | nProtect | Botable, Weekly Update | alisonrag, sctnightcore |
 | `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | Cdclient | Need Verification |  N/A|
+| `kRO` | Korea RO | Cdclient | Need Verification |  N/A |
 | `jRO` | Japanese RO | HShield | Need Verification | N/A |
 | `thRO` | Thai RO | EAC | Need Verification | N/A |
-| `mRO` | Malaysian RO | Cdclient | Not Working | N/A |
-| `phRO` | Philippines RO | Cdclient | Not Working | N/A |
+| `mRO` | Malaysian RO | EAC | Not Working | N/A |
+| `phRO` | Philippines RO | EAC | Not Working | N/A |
+| `ruRO` | Russian RO | **** | Need Verification | N/A |
 | `twRO` | Taiwanese RO | Cdclient | Not working | windhamwong |
 
 ## Contributing
@@ -50,7 +52,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [IRC Channel](https://webchat.freenode.net/?channels=openkore) 
 * [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
-* [Taiwanese Community](http://optw.nva-hk.com/forum.php)
+
 ## Warning
 
 Other communities are not affiliated to openkore.com

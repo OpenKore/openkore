@@ -1,61 +1,25 @@
-=pod
-macroinclude - вкл-выкл директив !include в файле macros.txt
-http://rofan.ru/viewtopic.php?f=27&t=8318
-manticora
+# macroinclude plugin by manticora
+# Version 2.0 rewrited by Mortimal
+# 
+# Created for alljobs macro
+# Last update 21.08.2017
+# 
+# on/off !include in macros.txt
+# 
+# Use config option:
+# macroinclude macro
+#
+# Usage:
+# include off all 
+# include on Novice
+# include on Archer
+# include on vedro
+# include list
 
-on/off !include in macros.txt
-include off all - выключить (закомментировать) все директивы !include в macros.txt
-include on Novice - включить все директивы, в которых есть строка Novice
-include on Archer
-include on vedro
-include list - вывести список всех !include
-после этого, естесственно, надо сделать reload macros.txt
-
-include
-Usage:
-include on <filename or pattern>
-include on all
-include off <filename or pattern>
-include off all
-include list
-include list
-
-------on-------
-!include ..\cfg_macros\Novice_1-Start.txt
-!include ..\cfg_macros\Novice_2-Teachers.txt
-!include ..\cfg_macros\Novice_3-ZoneSelect.txt
-!include ..\cfg_macros\Novice_4-Tests.txt
-!include ..\cfg_macros\Swordman_1-Quest.txt
-!include ..\cfg_macros\Archer_1-Quest.txt
-!include ..\cfg_macros\Thief_1-Quest.txt
-!include ..\cfg_macros\Taekwon_1-Quest.txt
-!include ..\cfg_macros\Merchant_1-Quest.txt
-!include ..\cfg_macros\Acolyte_1-Quest.txt
-!include ..\cfg_macros\Mage_1-Quest.txt
-!include ..\cfg_macros\Ninja_1-Quest.txt
-!include ..\cfg_macros\Gunslinger_1-Quest.txt
-!include ..\cfg_macros\vedro.txt
-!include ..\cfg_macros\Thief_2-Training.txt
-!include ..\cfg_macros\Acolyte_2-Training.txt
-!include ..\cfg_macros\Mage_2-Training.txt
-!include ..\cfg_macros\Merchant_2-Training.txt
-!include ..\cfg_macros\Archer_2-Training.txt
-!include ..\cfg_macros\Swordman_2-Training.txt
-!include autokach.mcs
-!include ..\cfg_macros\Quest_1-SledyBoja.txt
-!include ..\cfg_macros\Quest_2-Soki.txt
-!include ..\cfg_macros\Quest_4-Diribabl.txt
-
-------off------
-include off Acoly
-#!include ..\cfg_macros\Acolyte_1-Quest.txt
-#!include ..\cfg_macros\Acolyte_2-Training.txt
-
-=cut
 package macroinclude;
 use Plugins;
 use Globals;
-use Log qw(message);
+use Log qw(message error debug);
 
 Plugins::register('macroinclude','On-Off !include in macros.txt. manticora', \&Unload); 
 
@@ -63,76 +27,132 @@ my $chooks = Commands::register(['include', 'macros.txt, !include on/off', \&mai
 
 sub Unload {
    Commands::unregister($chooks);
-   message "macro include on off plugin unloading\n", 'success'
+   message "Macroinclude plugin unloading.\n", 'success'
 }
 
 sub main {
 	my ($cmd, $args) = @_;
 	my ($key, $filename) = split(" ", $args);
-	my @lines = ();
-	my $needrewrite = 0;
-	my $macro_file = Settings::getControlFilename($config{macro_file} || 'macros.txt');
+	my $mcr;
+	
+	# Choose file block.
+	if ($config{macroinclude} eq 'macro'){
+		$mcr = $config{macro_file} || 'macros.txt';
+	} else{
+		if($config{macro_file}){
+			$mcr = $config{macro_file};
+		} else{
+			$mcr = 'macros.txt';
+		}
+	}
+	
+	my $macro_file = Settings::getControlFilename($mcr);
 
+	
 	if ($macro_file eq "") {
-		message "The macros.txt file is not found\nmacro plugin is not installed\nmacroinclude plugin dont work\n",'list';
+		error "The macros.txt file is not found.".
+			  "    Macroinclude plugin terminated.";
 		return 0;
 	}
 	
-	open(my $fp,"<:utf8",$macro_file);	my @lines = <$fp>;	close($fp);
-	if ($key eq 'list') {
-		my $on = "\n------on-------\n";
-		my $off = "\n------off------\n";
-		foreach (@lines) {
-			$on .= $_ if /^!include/;
-			$off .= $_ if /^#[# ]*!include/;
-		}	
-		message "$on$off", 'list';
-	} elsif ($key eq 'on') {
-		if ($filename eq 'all') {
-			foreach (@lines) {
-				if (/^#[# ]*!include/) {
-					$needrewrite = 1;
-					s/^#[# ]*!/!/g;
-					message "$_", 'list';
-				}
-			}
-		} elsif ($filename) {
-			foreach (@lines) {
-				if (/^#[# ]*!include .*$filename.*/) {
-					$needrewrite = 1;
-					s/^#[# ]*!/!/g;
-					message "$_", 'list';
-				}
-			} 
-		} else { message "Usage: include on ( all | <filename> )\n",'list'}
-	} elsif ($key eq 'off') {
-		if ($filename eq 'all') {
-			foreach (@lines) {
-				if (/^!include/) {
-					$needrewrite = 1;
-					s/^!/#!/g;
-					message "$_", 'list';
-				}
-			}
-		} elsif ($filename)	{
-			foreach (@lines) {
-				if (/^!include .*$filename.*/) {
-					$needrewrite = 1;
-					s/^!/#!/g;
-					message "$_", 'list';
-				}
-			}
-		} else { message "Usage: include off ( all | <filename> )\n",'list'}
-	} else {
-		message "Usage:\n".
-				"include on <filename or pattern>\n".
-				"include on all\n".
-				"include off <filename or pattern>\n".
-				"include off all\n".
-				"include list\n", 'list';
+	my @newlines;
+	my $chng = 0;
+	
+	open(FILE,$macro_file);
+	my @lines = <FILE>;
+	close(FILE);
+	chomp @lines;
+	
+	if($key eq ''
+	   ||($key ne 'list'
+		  && $key ne 'on'
+		  && $key ne 'off'
+		 )
+	  )
+	{
+		error "Syntax Error in function include. Key not found.\n".
+				"Usage: include <key> <filename or pattern>\n".
+				"         include on <filename or pattern>\n".
+				"         include on all\n".
+				"         include off <filename or pattern>\n".
+				"         include off all\n".
+				"         include list\n";
 	}
-	if ($needrewrite) { open (my $fp,">:utf8",$macro_file); print $fp join ("", @lines); close($fp); }
-	return 1;
+	elsif ($key eq 'list')
+	{
+		message "------------on-------------\n", 'list';
+		foreach my $line (@lines)
+		{
+			if (my @file = $line =~ /^!include\s(.*)/)
+			{
+				message "$file[0]\n", 'list';
+				$chng = 1;
+			}
+		}
+		$chng?$chng = 0:0;
+		message "------------off------------\n", 'list';
+		foreach my $line (@lines)
+		{
+			if (my @file = $line =~ /^#.*!include\s(.*)/)
+			{
+				message "$file[0]\n", 'list';
+				$chng = 1;
+			}
+		}
+		$chng?$chng = 0:message "\n", 'list';
+		message "---------------------------\n", 'list';
+	} 
+	else
+	{
+		if (!$filename)
+		{
+			error "Syntax Error in function include. Not found <filename or pattern>\n".
+				"Usage: include on <filename or pattern>\n".
+				"       include on all\n".
+				"       include off <filename or pattern>\n".
+				"       include off all\n".
+				"       include list\n";
+		}
+		else
+		{
+			message "Changed:\n", 'list';
+			foreach my $line (@lines)
+			{
+				if ($key eq 'on'
+					&& $line =~ /^#.*!include/
+					&& ($filename eq "all" 
+						|| $line =~ /$filename/
+					   )
+				   )
+				{
+					$line =~ s/^#.*!/!/g;
+					message "$line\n", 'list';
+					$chng = 1;
+				}
+				elsif($key eq 'off' 
+					  && $line =~ /^!include/
+					  && ($filename eq "all" 
+						  || $line =~ /$filename/
+					     )
+					 )
+				{
+					$line =~ s/^!/#!/g;
+					message "$line\n", 'list';
+					$chng = 1;
+				}
+				push (@newlines, $line);
+			}
+			if ($chng){
+				open (FILE,">$macro_file");
+				print FILE join ("\n", @newlines);
+				close(FILE);
+				Commands::run("reload $mcr");
+			}
+			else
+			{
+				message "--NONE--\n", 'list';
+			}
+		}
+	}
 }
-
 return 1;

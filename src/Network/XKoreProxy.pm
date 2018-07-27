@@ -550,11 +550,11 @@ sub modifyPacketIn {
 			}
 		} else {
 			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort)]}} = unpack('a4 Z16 a4 v', substr($msg, 2));
-			if(!$masterServer->{'private'}) {
-				$mapInfo->{mapIP} = inet_ntoa($mapInfo->{mapIP});
-			} else {
-				$mapInfo->{mapIP} = $masterServer->{ip};
-			}
+		}
+		if(!$masterServer->{'private'}) {
+			$mapInfo->{mapIP} = inet_ntoa($mapInfo->{mapIP});
+		} else {
+			$mapInfo->{mapIP} = $masterServer->{ip};
 		}
 
 		$msg = $packetParser->reconstruct({
@@ -583,7 +583,7 @@ sub modifyPacketIn {
 		}
 		$self->serverDisconnect(1);
 		
-	} elsif($switch eq "0092" || $switch eq "0AC7") { # In Game Map-server changed
+	} elsif($switch eq "0092" || $switch eq "0AC7" || $switch eq "0A4C") { # In Game Map-server changed
 		my $mapInfo;
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;

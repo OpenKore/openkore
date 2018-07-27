@@ -27,7 +27,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 charCreationType 1
-sendCryptKeys 0x675A0E29, 0x19F20130, 0x48BF76F2
+sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
 
 
 
@@ -49,7 +49,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 charCreationType 1
-sendCryptKeys 0x675A0E29, 0x19F20130, 0x48BF76F2
+sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
 
 ## http://euro-ro.net/
 [Europe - euRO]
@@ -97,7 +97,7 @@ ip 128.241.92.162
 port 6800
 master_version 1
 version 18
-serverType iRO
+serverType iRO_Renewal
 serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
@@ -105,7 +105,7 @@ addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
 charCreationType 4
-sendCryptKeys 0x45FB652B, 0x342B342B, 0x042B342B
+sendCryptKeys 0x55A054E1, 0x24F91F78, 0x34B32C2F
 
 [International - iRO: Sakray]
 # http://playragnarok.com
@@ -150,7 +150,7 @@ pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 charCreationType 3
-sendCryptKeys 0x63A07DEC, 0x6ADE2572, 0x4D5B6094
+sendCryptKeys 0x2FFD19DB, 0x08D2502F, 0x302F418A
 
 # TODO: needs a servertype & table folder
 [Japan - jRO: Verdandi]
