@@ -6177,6 +6177,22 @@ sub refine_result {
 	}
 }
 
+# 0223
+sub upgrade_message {
+	my ($self, $args) = @_;
+	my $item = itemNameSimple($args->{itemID});
+	if($args->{type} == 0) { # Success
+		message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 1) { # Fail
+		message TF("Weapon not upgraded: %s\n", $item), "info";
+		# message TF("Weapon upgraded: %s\n", $item), "info";
+	} elsif($args->{type} == 2) { # Fail Lvl
+		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
+	} elsif($args->{type} == 3) { # Fail Item
+		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
+	}
+}
+
 sub open_buying_store_fail { #0x812
 	my ($self, $args) = @_;
 	my $result = $args->{result};
@@ -6274,6 +6290,20 @@ sub skill_msg {
 		message "[".$skill->getName."] $msgTable[$args->{msgid}]\n", "info";
 	} else {
 		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
+	}
+}
+
+#TODO !
+sub overweight_percent {
+	my ($self, $args) = @_;
+}
+
+sub partylv_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{lv} = $args->{lv};
 	}
 }
 

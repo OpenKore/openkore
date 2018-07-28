@@ -370,8 +370,8 @@ sub new {
 		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
 		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
 		'0223' => ($rpackets{'0223'} == 8) # or 10 PACKETVER_RE_NUM >= 20180704
-			? ['upgrade_message', 'a4 v', [qw(type itemID)]] # 6
-			: ['upgrade_message', 'a4 V', [qw(type itemID)]] # 8
+			? ['upgrade_message', 'V v', [qw(type itemID)]], # 6
+			: ['upgrade_message', 'V2', [qw(type itemID)]] # 8
 		,
 		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
 		'0226' => ['top10_taekwon_rank'], # 282
@@ -600,6 +600,7 @@ sub new {
 		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
@@ -621,18 +622,22 @@ sub new {
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
-	#	'0ADC' => ['flag', 'V', [qw(unknown)]],
 		'0ADD' => ($rpackets{'0ADD'} == 22) #  or 24 PACKETVER_RE_NUM >= 20180704
 			? ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #24
 			: ['item_exists', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #22
 		,
-	#	'0ADE' => ['flag', 'V', [qw(unknown)]],
+		'0ADC' => ['flag', 'V', [qw(unknown)]],
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0B02' => ['login_error', 'C Z20', [qw(type date)]], # 23
@@ -3789,22 +3794,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0223
-# TODO: can we use itemName? and why is type 0 equal to type 1?
-# doesn't seem to be used by eA
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) {
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) {
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
@@ -4088,6 +4077,13 @@ sub achievement_reward_ack {
 	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
+sub party_dead {
+	my ($self, $args) = @_;
 
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
 
 1;

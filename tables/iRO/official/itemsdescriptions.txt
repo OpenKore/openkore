@@ -32345,13 +32345,14 @@ Weight : ^77777730^000000
 #
 5325#
 A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
-ATK, MATK + 2%, Dex + 1
-^ff0000this item is account bound^000000
-Class : ^777777Headgear^000000    Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777720^000000
-Required Level : ^77777710^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Atk and Matk + 2%.
+Dex + 1
 #
 5326#
 placeholder
@@ -32743,7 +32744,13 @@ placeholder
 placeholder
 #
 5370#
-placeholder
+A hair band made by orchid and it smells like a scent of a flower.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808020^000000
+Usable By: ^808080All Jobs^000000
+INT + 1
 #
 5371#
 A hat worn by capable judges striving for justice.
@@ -36369,15 +36376,14 @@ Job : ^777777All jobs^000000
 #
 5877#
 These colors don't run, but you will (faster) when wearing this Old Glory adorned hat.
-Increase Movement when equipped.
-If upgraded to +7 or higher, FLEE +10, LUK +10.
-^ff0000Account Bound^000000
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increased Movement Speed.
+If upgrade level is +7 or higher, Luk + 10 and Flee + 10.
 #
 5878#
 A blue rose which shouldn't exist. Geneticists dream of being able to make this.
@@ -65734,6 +65740,21 @@ Luminous Blue Stone
 17390#
 #
 17391#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When Opened gives one of the following
+Wing Of Beelzebub
+Prize Medals x 2000
+Battle Manual X 3 6cnt
+Bloody Dead Branch x 5
+Assassin Muffler
+Assassin Shoes
+Assassin Accessory
+Imperial Glove
+Imperial Ring
+Hero Cape
+
 #
 17392#
 ^FF0000Account Bound^000000
@@ -68376,18 +68397,13 @@ Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
 #
 18507#
-A fashion accessory
-that gives ears that
-vaunted, elvish look.
-For some, it is an
-incredible turn-on.
-^CC0000This item is Account Bound^000000
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Jobs : ^777777All^000000
+A fashion accessory that gives ears that vaunted, elvish look. For some, it is an incredible turn-on.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 #
 18508#
 A hat which is very unique and rare, made from the feathers of a legendary bird Garuda.
@@ -74959,6 +74975,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19541#
+A white little petal.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19542#
 You can get strong power if you resist its sweetness!
@@ -75785,13 +75807,12 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19701#
-^808080A hat noblewomen enjoy wearing. It is said the wearers want to drink blacktea.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat noblewomen enjoy wearing. It is said the wearers want to drink black tea.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19702#
 ^808080More cute and charming santa's hat. Must have for this season!.
@@ -75879,15 +75900,11 @@ Job : ^777777all jobs^000000
 #
 19718#
 A hair band with Gothic frills.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
-A hair band with Gothic frills.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19721#
 ^808080This headgear with dark wings that stretch menacingly to both sides.^000000
@@ -76902,12 +76919,11 @@ Job : ^777777All^000000
 #
 19928#
 Gothic style hairband with small heart wing and lace decoration.
-^ff0000Until July 25, 2014 this will give 20% extra EXP for monsters killed on spotlight maps^000000
-Class : ^777777Costume : ^7777770^000000
-Location : ^777777Upper Middle ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19929#
 ^808080A classic ribbon.^000000
@@ -77637,13 +77653,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20113#
-^808080.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A costume hat said to have been loved by a navigator.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20121#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -79502,7 +79517,7 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20397#
-A helmet that can transform you into Jakk. It is so precise that even Jakk‘s friends are tricked. The way it is produced is confidential...
+A helmet that can transform you into Jakk. It is so precise that even Jakk's friends are tricked. The way it is produced is confidential...
 Class: ^808080Costume^000000
 Position: ^808080Middle, Lower^000000
 Weight: ^8080800^000000
@@ -87305,11 +87320,11 @@ Increases the damage of Water, Earth, Fire, Wind and Ghost property magical atta
 Bypass 50% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack.
 #
 28513#
-^808080A high quality brooch that is made by one of the best craftsman in the world. It has been together with Celine since she was created.^000000
-Class: Accessory
-Weight: 50
-Required Level: 100
-Required Jobs: All Jobs
+A high quality brooch that is made by one of the best craftsman in the world. It has been together with Celine since she was created.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 500
 Max SP + 250
 Matk + 5%
@@ -87333,10 +87348,10 @@ Reduces damage taken from Demi-Human race enemies by an additional 2%.
 Atk + 50
 Matk + 50
 Aspd + 2
-Adds a X% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
-Adds a X% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
-Adds a X% chance of casting ^0000FFLevel 1 Recognized Spell^000000 on the user when performing a magical attack.
-Adds a X% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the attacker when receiving a physical or magical attack.
+Adds a 2% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
+Adds a 2% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
+Adds a 1% chance of casting ^0000FFLevel 1 Recognized Spell^000000 on the user when performing a magical attack.
+Adds a 5% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the attacker when receiving a physical or magical attack.
 ^800080Set Bonus^000000
 ^008080Celine's Brooch^000000
 ^008080Lush Rose^000000
@@ -88895,12 +88910,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 31123#
-Tall hat with flying Ghostring. Cute shabby tall hat.
-Wearing this hat makes feel horrifying. Well…just feeling.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A cute shabby tall hat with a flying Ghostring. It makes its' wearer feel haunted.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31125#
 ^808080A hat worn by a notorious pirate in the past. The hat was always covered with blood due to the pirate's cruelty.^000000
