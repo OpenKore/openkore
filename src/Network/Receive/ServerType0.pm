@@ -4176,16 +4176,6 @@ sub boss_map_info {
 	}
 }
 
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
-}
-
 sub GM_req_acc_name {
 	my ($self, $args) = @_;
 	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
