@@ -1344,6 +1344,7 @@ sub guild_member_setting_list {
 		# TODO: isn't there a nyble unpack or something and is this even correct?
 		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
 		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
 		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
 	}
 }
