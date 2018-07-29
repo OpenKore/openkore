@@ -3877,11 +3877,6 @@ sub boss_map_info {
 	}
 }
 
-sub GM_req_acc_name {
-	my ($self, $args) = @_;
-	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
-}
-
 #newly added in Sakexe_0.pm
 
 # 00B3
