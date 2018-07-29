@@ -3878,16 +3878,6 @@ sub manner_message {
 	}
 }
 
-sub GM_silence {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
-	}
-	else {
-		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
-	}
-}
-
 # TODO test if we must use ID to know if the packets are meant for us.
 # ID is monsterID
 sub taekwon_packets {
