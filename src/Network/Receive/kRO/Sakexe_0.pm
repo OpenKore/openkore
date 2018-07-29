@@ -3884,19 +3884,6 @@ sub GM_req_acc_name {
 
 #newly added in Sakexe_0.pm
 
-# 00CB
-sub sell_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("Sell failed.\n");
-	} else {
-		message T("Sell completed.\n"), "success";
-	}
-	if (AI::is("sellAuto")) {
-		AI::args->{recv_sell_packet} = 1;
-	}
-}
-
 # 00B3
 # TODO: add real client messages and logic?
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
