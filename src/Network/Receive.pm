@@ -6403,4 +6403,90 @@ sub quit_response {
 	}
 }
 
+sub private_airship_type {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message TF("Use Private Airship success.\n"),"info";
+	} elsif ($args->{fail} == 1) {
+		message TF("Please try PivateAirship again.\n"),"info";
+	} elsif ($args->{fail} == 2) {
+		message TF("You do not have enough Item to use PivateAirship.\n"), "info";
+	} elsif ($args->{fail} == 3) {
+		message TF("Destination map is invalid.\n"),"info";
+	} elsif ($args->{fail} == 4) {
+		message TF("Source map is invalid.\n"),"info";
+	} elsif ($args->{fail} == 5) {
+		message TF("Item unavailable for use PivateAirship.\n"),"info";
+}
+
+# 00CB
+sub sell_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("Sell failed.\n");
+	} else {
+		message T("Sell completed.\n"), "success";
+	}
+	if (AI::is("sellAuto")) {
+		AI::args->{recv_sell_packet} = 1;
+	}
+}
+
+sub GM_req_acc_name {
+	my ($self, $args) = @_;
+	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
+}
+
+# 0293
+sub boss_map_info {
+	my ($self, $args) = @_;
+	my $bossName = bytesToString($args->{name});
+
+	if ($args->{flag} == 0) {
+		message T("You cannot find any trace of a Boss Monster in this area.\n"), "info";
+	} elsif ($args->{flag} == 1) {
+		message TF("MVP Boss %s is now on location: (%d, %d)\n", $bossName, $args->{x}, $args->{y}), "info";
+	} elsif ($args->{flag} == 2) {
+		message TF("MVP Boss %s has been detected on this map!\n", $bossName), "info";
+	} elsif ($args->{flag} == 3) {
+		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
+	} else {
+		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
+	}
+}
+
+sub adopt_reply {
+	my ($self, $args) = @_;
+	if($args->{type} == 0) {
+		message T("You cannot adopt more than 1 child.\n"), "info";
+	} elsif($args->{type} == 1) {
+		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
+	} elsif($args->{type} == 2) {
+		message T("You cannot adopt a married person.\n"), "info";
+	}
+}
+
+sub guild_master_member {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0xd7) {
+	} elsif ($args->{type} == 0x57) {
+		message T("You are not a guildmaster.\n"), "info";
+		return;
+	} else {
+		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
+		return;
+	}
+	message T("You are a guildmaster.\n"), "info";
+}
+
+sub GM_silence {
+	my ($self, $args) = @_;
+	if ($args->{flag}) {
+		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
+	} else {
+		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
+	}
+}
+
 1;
