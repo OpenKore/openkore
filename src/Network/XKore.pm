@@ -244,9 +244,9 @@ sub checkConnection {
 		$self->setState(Network::NOT_CONNECTED);
 		error T("Timeout on Map Server, "), "connection";
 		Plugins::callHook('disconnected');
-		if ($config{dcOnDisconnect}) {
-			error T("Auto disconnecting on Disconnect!\n");
-			chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		if ($config{quitOnDisconnect}) {
+			error T("Auto quiting on Disconnect!\n");
+			chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 			$quit = 1;
 		} else {
 			error "waiting actions for the Ragnarok Online client\n";

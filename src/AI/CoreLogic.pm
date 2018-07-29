@@ -971,14 +971,14 @@ sub processDead {
 		}
 	}
 
-	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
+	if (AI::action eq "dead" && !$config{noRespawnAfterDeath} && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
 		$messageSender->sendRestart(0);
 		$char->{'dead_time'} = time;
 	}
 
-	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		error T("Auto disconnecting on death!\n");
-		chatLog("k", T("*** You died, auto disconnect! ***\n"));
+	if (AI::action eq "dead" && $config{quitOnDeath}) {
+		error T("Auto quiting on death!\n");
+		chatLog("k", T("*** You died, auto quiting! ***\n"));
 		$messageSender->sendQuit();
 		quit();
 	}
@@ -1378,10 +1378,10 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				
 				# if storage is full disconnect if it says so in conf
-				if($char->storage->wasOpenedThisSession() && $char->storage->isFull() && $config{'dcOnStorageFull'}) {
+				if($char->storage->wasOpenedThisSession() && $char->storage->isFull() && $config{'quitOnStorageFull'}) {
 					$messageSender->sendQuit();
-					error T("Auto disconnecting on StorageFull!\n");
-					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
+					error T("Auto quiting on StorageFull!\n");
+					chatLog("k", T("*** Your storage is full , quit! ***\n"));
 					quit();
 				}
 
@@ -1547,10 +1547,10 @@ sub processAutoStorage {
 			$messageSender->sendStorageClose() unless $config{storageAuto_keepOpen};
 			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error T("Character is still overweight after storageAuto (storage is full?)\n");
-				if ($config{dcOnStorageFull}) {
+				if ($config{quitOnStorageFull}) {
 					$messageSender->sendQuit();
-					error T("Auto disconnecting on StorageFull!\n");
-					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
+					error T("Auto quiting on StorageFull!\n");
+					chatLog("k", T("*** Your storage is full , quit! ***\n"));
 					quit();
 				}
 			}
@@ -3352,12 +3352,12 @@ sub processAutoBuyerShopOpen {
 
 sub processDcOnPlayer {
 	# Disconnect when a player is detected
-	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{dcOnPlayer}
+	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{quitOnPlayerNearby}
 		&& ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 		&& !isSafe() && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 			$messageSender->sendQuit();
-			error T("Auto disconnecting on Player!\n");
-			chatLog("k", T("*** Nearby is another player, auto disconnect! ***\n"));
+			error T("Auto quiting, Player detected!\n");
+			chatLog("k", T("*** there is a player nearby, auto quit! ***\n"));
 			quit();
 	}
 }

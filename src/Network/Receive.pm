@@ -858,9 +858,9 @@ our %stat_info_handlers = (
 
 		return unless $actor->isa('Actor::You');
 
-		if ($config{dcOnMute} && $actor->{muted}) {
-			error TF("Auto disconnecting, %s have been muted for %s minutes!\n", $actor, $actor->{mute_period}/60);
-			chatLog("k", TF("*** %s have been muted for %d minutes, auto disconnect! ***\n", $actor, $actor->{mute_period}/60));
+		if ($config{quitOnMute} && $actor->{muted}) {
+			error TF("Auto quiting, %s have been muted for %s minutes!\n", $actor, $actor->{mute_period}/60);
+			chatLog("k", TF("*** %s have been muted for %d minutes, auto quit! ***\n", $actor, $actor->{mute_period}/60));
 			$messageSender->sendQuit();
 			quit();
 		}
@@ -889,12 +889,12 @@ our %stat_info_handlers = (
 		return unless $actor->isa('Actor::You');
 
 		Plugins::callHook('base_level_changed', {
-			level	=> $actor->{lv}
+			level => $actor->{lv}
 		});
 
-		if ($config{dcOnLevel} && $actor->{lv} >= $config{dcOnLevel}) {
-			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
-			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
+		if ($config{quitOnBaseLevel} && $actor->{lv} >= $config{quitOnBaseLevel}) {
+			message TF("quiting on base level %s!\n", $config{quitOnBaseLevel});
+			chatLog("k", TF("quiting on base level %s!\n", $config{quitOnBaseLevel}));
 			quit();
 		}
 	},
@@ -927,10 +927,10 @@ our %stat_info_handlers = (
 		});
 
 
-		if ($config{dcOnZeny} && $actor->{zeny} <= $config{dcOnZeny}) {
+		if ($config{quitOnZenyLowerThan} && $actor->{zeny} <= $config{quitOnZenyLowerThan}) {
 			$messageSender->sendQuit();
-			error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
-			chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
+			error (TF("Auto quiting due to zeny lower than %s!\n", $config{quitOnZenyLowerThan}));
+			chatLog("k", TF("*** You have less than %s zenys, auto quit! ***\n", $config{quitOnZenyLowerThan}));
 			quit();
 		}
 	},
@@ -997,9 +997,9 @@ our %stat_info_handlers = (
 			level	=> $actor->{lv_job}
 		});
 
-		if ($config{dcOnJobLevel} && $actor->{lv_job} >= $config{dcOnJobLevel}) {
-			message TF("Disconnecting on job level %d!\n", $config{dcOnJobLevel});
-			chatLog("k", TF("Disconnecting on job level %d!\n", $config{dcOnJobLevel}));
+		if ($config{quitOnJobLevel} && $actor->{lv_job} >= $config{quitOnJobLevel}) {
+			message TF("quiting on job level %d!\n", $config{quitOnJobLevel});
+			chatLog("k", TF("quiting on job level %d!\n", $config{quitOnJobLevel}));
 			quit();
 		}
 	},
@@ -1702,7 +1702,7 @@ sub actor_died_or_disappeared {
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
 		Plugins::callHook('self_died');
-		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || AI::state == AI::OFF;
+		closeShop() unless !$shopstarted || $config{'noRespawnAfterDeath'} || AI::state == AI::OFF;
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
@@ -4130,12 +4130,12 @@ sub errors {
 
 	Plugins::callHook('disconnected') if ($net->getState() == Network::IN_GAME);
 	if ($net->getState() == Network::IN_GAME &&
-		($config{dcOnDisconnect} > 1 ||
-		($config{dcOnDisconnect} &&
+		($config{quitOnDisconnect} > 1 ||
+		($config{quitOnDisconnect} &&
 		$args->{type} != 3 &&
 		$args->{type} != 10))) {
-		error T("Auto disconnecting on Disconnect!\n");
-		chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		error T("Auto quiting on Disconnect!\n");
+		chatLog("k", T("*** You disconnected, auto quit! ***\n"));
 		$quit = 1;
 	}
 
@@ -4149,31 +4149,31 @@ sub errors {
 	}
 	if ($args->{type} == 0) {
 		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
-		if ($config{'dcOnServerShutDown'} == 1) {
-			error T("Auto disconnecting on ServerShutDown!\n");
-			chatLog("k", T("*** Server shutting down , auto disconnect! ***\n"));
+		if ($config{'quitOnServerShutDown'} == 1) {
+			error T("Auto quiting on ServerShutDown!\n");
+			chatLog("k", T("*** Server shutting down , auto quit! ***\n"));
 			$quit = 1;
 		} else {
 			error T("Server shutting down\n"), "connection";
 		}
 	} elsif ($args->{type} == 1) {
-		if($config{'dcOnServerClose'} == 1) {
-			error T("Auto disconnecting on ServerClose!\n");
-			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
+		if($config{'quitOnServerClose'} == 1) {
+			error T("Auto quiting on ServerClose!\n");
+			chatLog("k", T("*** Server is closed , auto quit! ***\n"));
 			$quit = 1;
 		} else {
 			error T("Error: Server is closed\n"), "connection";
 		}
 	} elsif ($args->{type} == 2) {
-		if ($config{'dcOnDualLogin'} == 1) {
+		if ($config{'quitOnDualLogin'}) {
 			error (TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"%s will now immediately 	disconnect.\n", $Settings::NAME));
-			chatLog("k", T("*** DualLogin, auto disconnect! ***\n"));
+				"%s will now immediately quit.\n", $Settings::NAME));
+			chatLog("k", T("*** DualLogin, auto quit! ***\n"));
 			quit();
-		} elsif ($config{'dcOnDualLogin'} >= 2) {
+		} elsif ($config{'reconnectTimeAfterDualLogin'} >= 1) {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n");
-			message TF("Reconnecting, wait %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
-			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
+			message TF("Reconnecting, wait %s seconds...\n", $config{'reconnectTimeAfterDualLogin'}), "connection";
+			$timeout_ex{'master'}{'timeout'} = $config{'reconnectTimeAfterDualLogin'};
 		} else {
 			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
 		}
