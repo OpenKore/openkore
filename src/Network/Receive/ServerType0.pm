@@ -4182,19 +4182,6 @@ sub GM_req_acc_name {
 	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
 }
 
-# 00CB
-sub sell_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("Sell failed.\n");
-	} else {
-		message T("Sell completed.\n"), "success";
-	}
-	if (AI::is("sellAuto")) {
-		AI::args->{recv_sell_packet} = 1;
-	}
-}
-
 # 018B
 sub quit_response {
 	my ($self, $args) = @_;

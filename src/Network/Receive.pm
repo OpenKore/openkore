@@ -6419,4 +6419,17 @@ sub private_airship_type {
 		message TF("Item unavailable for use PivateAirship.\n"),"info";
 }
 
+# 00CB
+sub sell_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		error T("Sell failed.\n");
+	} else {
+		message T("Sell completed.\n"), "success";
+	}
+	if (AI::is("sellAuto")) {
+		AI::args->{recv_sell_packet} = 1;
+	}
+}
+
 1;
