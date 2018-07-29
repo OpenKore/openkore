@@ -4011,11 +4011,6 @@ sub achievement_update {
 	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
 }
 
-sub achievement_reward_ack {
-	my ($self, $args) = @_;
-	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
-}
-
 sub party_dead {
 	my ($self, $args) = @_;
 

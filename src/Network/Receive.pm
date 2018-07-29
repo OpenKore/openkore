@@ -6307,4 +6307,9 @@ sub partylv_info {
 	}
 }
 
+sub achievement_reward_ack {
+	my ($self, $args) = @_;
+	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
+}
+
 1;
