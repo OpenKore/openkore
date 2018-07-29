@@ -1471,6 +1471,7 @@ sub guild_member_setting_list {
 		$gtIndex = unpack("V1", substr($msg, $i, 4));
 		$guild{positions}[$gtIndex]{invite} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x01) ? 1 : '';
 		$guild{positions}[$gtIndex]{punish} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x100) ? 1 : '';
 		$guild{positions}[$gtIndex]{feeEXP} = unpack("V1", substr($msg, $i + 12, 4));
 	}
 }
@@ -3929,7 +3930,8 @@ sub guild_emblem_update {
 }
 
 # 0174
-# TODO
+# TODO 
+# TODO &0x100 = allow guild storage
 sub guild_position_changed {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
