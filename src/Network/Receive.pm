@@ -6432,4 +6432,9 @@ sub sell_result {
 	}
 }
 
+sub GM_req_acc_name {
+	my ($self, $args) = @_;
+	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
+}
+
 1;
