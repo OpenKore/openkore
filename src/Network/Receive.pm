@@ -6417,6 +6417,7 @@ sub private_airship_type {
 		message TF("Source map is invalid.\n"),"info";
 	} elsif ($args->{fail} == 5) {
 		message TF("Item unavailable for use PivateAirship.\n"),"info";
+	}
 }
 
 # 00CB
