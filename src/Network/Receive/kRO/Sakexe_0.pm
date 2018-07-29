@@ -3841,17 +3841,6 @@ sub cash_buy_fail {
 	debug "cash_buy_fail $args->{cash_points} $args->{kafra_points} $args->{fail}\n";
 }
 
-sub adopt_reply {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message T("You cannot adopt more than 1 child.\n"), "info";
-	} elsif($args->{type} == 1) {
-		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
-	} elsif($args->{type} == 2) {
-		message T("You cannot adopt a married person.\n"), "info";
-	}
-}
-
 # TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
 sub adopt_request {
 	my ($self, $args) = @_;

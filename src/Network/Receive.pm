@@ -6456,4 +6456,15 @@ sub boss_map_info {
 	}
 }
 
+sub adopt_reply {
+	my ($self, $args) = @_;
+	if($args->{type} == 0) {
+		message T("You cannot adopt more than 1 child.\n"), "info";
+	} elsif($args->{type} == 1) {
+		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
+	} elsif($args->{type} == 2) {
+		message T("You cannot adopt a married person.\n"), "info";
+	}
+}
+
 1;
