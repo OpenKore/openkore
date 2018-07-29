@@ -3910,19 +3910,6 @@ sub taekwon_packets {
 	}
 }
 
-sub guild_master_member {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0xd7) {
-	} elsif ($args->{type} == 0x57) {
-		message T("You are not a guildmaster.\n"), "info";
-		return;
-	} else {
-		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
-		return;
-	}
-	message T("You are a guildmaster.\n"), "info";
-}
-
 # 0151
 # TODO
 sub guild_emblem_img {
