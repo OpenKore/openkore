@@ -620,6 +620,7 @@ sub new {
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4A' => ['private_airship_type', 'V', [qw(type)]],
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
@@ -4624,6 +4625,22 @@ sub monster_hp_info_tiny {
 		
 		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
+}
+
+sub private_airship_type {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message TF("Use Private Airship success.\n"),"info";
+	} elsif ($args->{fail} == 1) {
+		message TF("Please try PivateAirship again.\n"),"info";
+	} elsif ($args->{fail} == 2) {
+		message TF("You do not have enough Item to use PivateAirship.\n"), "info";
+	} elsif ($args->{fail} == 3) {
+		message TF("Destination map is invalid.\n"),"info";
+	} elsif ($args->{fail} == 4) {
+		message TF("Source map is invalid.\n"),"info";
+	} elsif ($args->{fail} == 5) {
+		message TF("Item unavailable for use PivateAirship.\n"),"info";
 }
 
 1;
