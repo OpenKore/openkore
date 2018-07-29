@@ -6480,4 +6480,13 @@ sub guild_master_member {
 	message T("You are a guildmaster.\n"), "info";
 }
 
+sub GM_silence {
+	my ($self, $args) = @_;
+	if ($args->{flag}) {
+		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
+	} else {
+		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
+	}
+}
+
 1;
