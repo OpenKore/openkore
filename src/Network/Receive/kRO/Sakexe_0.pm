@@ -3896,16 +3896,6 @@ sub sell_result {
 	}
 }
 
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
-}
-
 # 00B3
 # TODO: add real client messages and logic?
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
@@ -3928,92 +3918,6 @@ sub disconnect_character {
 
 sub character_block_info {
 	#TODO
-}
-
-sub quest_all_list2 {
-	my ($self, $args) = @_;
-	$questList = {};
-	my $msg;
-	my ($questID, $active, $time_start, $time, $mission_amount);
-	my $i = 0;
-	my ($mobID, $count, $amount, $mobName);
-	while ($i < $args->{RAW_MSG_SIZE} - 8) {
-		$msg = substr($args->{message}, $i, 15);
-		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		$i += 15;
-
-		if ($mission_amount > 0) {
-			for (my $j = 0 ; $j < $mission_amount ; $j++) {
-				$msg = substr($args->{message}, $i, 32);
-				($mobID, $count, $amount, $mobName) = unpack('V v2 Z24', $msg);
-				my $mission = \%{$quest->{missions}->{$mobID}};
-				$mission->{mobID} = $mobID;
-				$mission->{count} = $count;
-				$mission->{amount} = $amount;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName} = bytesToString($mobName);
-				debug "- $mobID $count / $amount $mobName\n", "info";
-				$i += 32;
-			}
-		}
-	}
-}
-
-sub achievement_list {
-	my ($self, $args) = @_;
-	
-	$achievementList = {};
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen = 22;
-	my $achieve_pack = 'V C V10 V C';
-	my $achieve_len = length pack $achieve_pack;
-	
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
-		my $achieve;
-
-		($achieve->{ach_id},
-		$achieve->{completed},
-		$achieve->{objective1},
-		$achieve->{objective2},
-		$achieve->{objective3},
-		$achieve->{objective4},
-		$achieve->{objective5},
-		$achieve->{objective6},
-		$achieve->{objective7},
-		$achieve->{objective8},
-		$achieve->{objective9},
-		$achieve->{objective10},
-		$achieve->{completed_at},
-		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
-		
-		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
-	}
-}
-
-sub achievement_update {
-	my ($self, $args) = @_;
-	
-	my $achieve;
-	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
-	
-	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
-}
-
-sub achievement_reward_ack {
-	my ($self, $args) = @_;
-	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
 }
 
 sub party_dead {
