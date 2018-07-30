@@ -522,6 +522,7 @@ sub new {
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
+		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count info)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -3857,6 +3858,53 @@ sub party_dead {
 	if ($args->{isDead} == 1) {
 		message TF("Party member %s is dead.\n", $string), "info";
 	}	
+}
+
+sub guild_storage_log {
+	my ($self, $args) = @_;
+	my $msg = $args->{info};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 6;
+	my $guildstotage_pack = 'a4 v V C V a8 C v a8 Z24 Z24 C';
+	my $k = 0;
+	my $guildstotage_len = length pack $guildstotage_pack;
+	my $gstorage;
+	
+	my %gstorage_action = (
+		0 => T('Put'),
+		1 => T('Get'),
+	);
+		
+	if ($args->{result} == 0 || $args->{result} == 1) {
+		my $message = center(T("[ Guild Storage LOG ]"), 40, '-') ."\n".
+			T("# Name				Item		Amount		Action			Time\n");
+		for (my $i = $headerlen; $i < $msg_size; $i+=$guildstotage_len) {
+		($gstorage->{ID}, #ACCID
+		 $gstorage->{ItemID},
+		 $gstorage->{Amount},
+		 $gstorage->{Action},
+		 $gstorage->{Refine},
+		 $gstorage->{Uniqueid},
+		 $gstorage->{Identify},
+		 $gstorage->{Itemtype},
+		 $gstorage->{Card},
+		 $gstorage->{Time},
+		 $gstorage->{Attribute}) = unpack($guildstotage_pack, substr($msg, $i, $guildstotage_len));
+		
+		$message .= swrite(
+			"@<< @>>>>>>>>>>>>>>>>> @>>>>>>>>>>>> @>>> @>>> @>>>>> @>>>>>>>>>>",
+			[$k, bytesToString($gstorage->{Charname}),itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
+			$k++;
+		}
+		$message .= sprintf("%s\n", ('-'x40));
+		message($message, "list");
+	
+	} elsif ($args->{result} == 2) {
+		message TF("Guild Storage empty.\n"), "info";
+	} elsif ($args->{result} == 3) {
+		message TF("You are not currently using Guild Storage. Please try later.\n"), "info";
+	}
+	
 }
 
 1;
