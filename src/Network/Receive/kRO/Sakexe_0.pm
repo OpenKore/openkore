@@ -3888,12 +3888,13 @@ sub guild_storage_log {
 		 $gstorage->{Identify},
 		 $gstorage->{Itemtype},
 		 $gstorage->{Card},
+		 $gstorage->{name},
 		 $gstorage->{Time},
 		 $gstorage->{Attribute}) = unpack($guildstotage_pack, substr($msg, $i, $guildstotage_len));
 		
 		$message .= swrite(
 			"@<< @>>>>>>>>>>>>>>>>>> @>>>>>>>>>>>>>> @>>> @>>> @>>>>> @>>>>>>>>>>>",
-			[$k, bytesToString($gstorage->{Charname}),itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
+			[$k, bytesToString($gstorage->{name}),itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
 			$k++;
 		}
 		$message .= sprintf("%s\n", ('-'x40));
