@@ -3877,7 +3877,7 @@ sub guild_storage_log {
 		
 	if ($args->{result} == 0 || $args->{result} == 1) {
 		my $message = center(T("[ Guild Storage LOG ]"), 40, '-') ."\n".
-			T("# Name				Item		Amount		Action			Time\n");
+			T("# Name				Item		Amount		Action			Time	\n");
 		for (my $i = $headerlen; $i < $msg_size; $i+=$guildstotage_len) {
 		($gstorage->{ID}, #ACCID
 		 $gstorage->{ItemID},
@@ -3892,7 +3892,7 @@ sub guild_storage_log {
 		 $gstorage->{Attribute}) = unpack($guildstotage_pack, substr($msg, $i, $guildstotage_len));
 		
 		$message .= swrite(
-			"@<< @>>>>>>>>>>>>>>>>> @>>>>>>>>>>>> @>>> @>>> @>>>>> @>>>>>>>>>>",
+			"@<< @>>>>>>>>>>>>>>>>>> @>>>>>>>>>>>>>> @>>> @>>> @>>>>> @>>>>>>>>>>>",
 			[$k, bytesToString($gstorage->{Charname}),itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
 			$k++;
 		}
