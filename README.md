@@ -10,7 +10,7 @@ To run OpenKore you will need:
 
 ## Quickstart
 
-1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. Alternatively, you can also git clone it with the following command.
+1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. Alternatively, you can also git clone it with the following command:
 
 ```
 git clone https://github.com/OpenKore/openkore.git
