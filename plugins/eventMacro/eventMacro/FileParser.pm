@@ -58,7 +58,7 @@ sub parseMacroFile {
 				%block = (name => $value, type => "sub");
 			} else {
 				%block = (type => "bogus");
-				warning "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n";
+				error "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n";
 			}
 			next;
 
@@ -84,7 +84,7 @@ sub parseMacroFile {
 				if (isNewCommandBlock($_)) {
 					$macroCountOpenBlock++
 				} elsif (!$macroCountOpenBlock && isNewWrongCommandBlock($_)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next;
 				}
 				push(@{$macro{$block{name}}}, $_);
@@ -115,7 +115,7 @@ sub parseMacroFile {
 			} elsif (/call [^{]/ && !$macro{$block{loadmacro_name}}) {
 				my ($key, $value, $param) = $_ =~ /^(call)\s+(\S+)(?:\s*(.*))?/;
 				if (!defined $key || !defined $value) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
 					next;
 				}
 				#check if macro is being called with params or not
@@ -132,7 +132,7 @@ sub parseMacroFile {
 				if (isNewCommandBlock($_)) {
 					$macroCountOpenBlock++
 				} elsif (!$macroCountOpenBlock && isNewWrongCommandBlock($_)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next
 				}
 
@@ -140,7 +140,7 @@ sub parseMacroFile {
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				if (!defined $key || !defined $value) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
 					next;
 				}
 				if (exists $parameters{$key}) {
@@ -180,13 +180,13 @@ sub parseMacroFile {
 
 		my ($key, $value) = $_ =~ /(?:^(.*?)\s|})+(.*)/;
 		unless (defined $key) {
-			warning "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
+			error "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
 			next
 		}
 	}
 	
 	if (%block) {
-		warning TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
+		error TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
 		return 0;
 	}
 	return {macros => \%macro, automacros => \%automacro};
@@ -199,9 +199,12 @@ sub sub_execute {
 	my $run = "sub ".$name." {".$arg."}";
 	eval($run);			# cycle the macro sub between macros only
 	$run = "eval ".$run;
-	Commands::run($run);		# exporting sub to the &main::sub, becarefull on your sub name
-					# dont name your new sub equal to any &main::sub, you should take
-					# the risk yourself.
+	
+	# exporting sub to the &main::sub, becarefull on your sub name
+	# dont name your new sub equal to any &main::sub, you should take
+	# the risk yourself.
+	Commands::run($run);
+	
 	message "[eventMacro] registering sub '".$name."'.\n", "menu";
 }
 

@@ -208,7 +208,7 @@ sub create_automacro_list {
 		PARAMETER: foreach my $parameter (@{$value->{'parameters'}}) {
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
-				warning "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
+				error "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
 				next AUTOMACRO;
 			}
 			###Parameter: call with or without param
@@ -216,7 +216,7 @@ sub create_automacro_list {
 				my ($macro_name, $params) = ($1 , $2); 
 				
 				if (!$self->{Macro_List}->getByName($macro_name) ) {
-					warning "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
+					error "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
 					next AUTOMACRO;
 				} else {
 					unless (defined $params) {
@@ -278,7 +278,7 @@ sub create_automacro_list {
 		
 		###Recheck Parameter call
 		if (!exists $currentParameters{'call'}) {
-			warning "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
+			error "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
 			next AUTOMACRO;
 		}
 		
