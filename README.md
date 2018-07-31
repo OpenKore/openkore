@@ -10,7 +10,12 @@ To run OpenKore you will need:
 
 ## Quickstart
 
-1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
+1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. Alternatively, you can also git clone it with the following command.
+
+```
+git clone https://github.com/OpenKore/openkore.git
+```
+
 2. Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
 3. Run openkore.pl (you can run start.exe or wxstart.exe if you use Windows).
 
