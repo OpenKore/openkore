@@ -3876,20 +3876,20 @@ sub guild_storage_log {
 		my $message = center(T("[ Guild Storage LOG ]"), 80, '-') ."\n".
 			T("#  Name                  Item-Name      Amount   Action            Time\n");
 		for (my $i = 8; $i < $msg_size; $i+=83) {
-		$gstorage->{Idx} = unpack('a4', substr($msg, $i, 4));
-		$gstorage->{ItemID} = unpack('v', substr($msg, $i+4, 2));
-		$gstorage->{Amount} = unpack('v', substr($msg, $i+6, 4));
-		$gstorage->{Action} = unpack('C', substr($msg, $i+10, 1));
-		$gstorage->{Refine} = unpack('V', substr($msg, $i+11, 4));
-		$gstorage->{UniqueID} = unpack('a8', substr($msg, $i+15, 8));
-		$gstorage->{Identify} = unpack('C', substr($msg, $i+23, 1));
-		$gstorage->{Itemtype} = unpack('v', substr($msg, $i+24, 2));
-		$gstorage->{Card} = unpack('a8', substr($msg, $i+26, 8));
-		$gstorage->{CharName} = bytesToString(unpack('Z24', substr($msg, $i+34, 24)));
-		$gstorage->{Time} = bytesToString(unpack('Z24', substr($msg, $i+58, 24)));
-		$gstorage->{Attribute} = unpack('C', substr($msg, $i+82, 1));
-		$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x17), ('<'x17), ('<'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{CharName},itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
-		$k++;
+			$gstorage->{idx} = unpack('a4', substr($msg, $i, 4));
+			$gstorage->{itemid} = unpack('v', substr($msg, $i+4, 2));
+			$gstorage->{amount} = unpack('v', substr($msg, $i+6, 4));
+			$gstorage->{action} = unpack('C', substr($msg, $i+10, 1));
+			$gstorage->{refine} = unpack('V', substr($msg, $i+11, 4));
+			$gstorage->{uniqueid} = unpack('a8', substr($msg, $i+15, 8));
+			$gstorage->{identify} = unpack('C', substr($msg, $i+23, 1));
+			$gstorage->{itemtype} = unpack('v', substr($msg, $i+24, 2));
+			$gstorage->{card} = unpack('a8', substr($msg, $i+26, 8));
+			$gstorage->{charname} = bytesToString(unpack('Z24', substr($msg, $i+34, 24)));
+			$gstorage->{time} = bytesToString(unpack('Z24', substr($msg, $i+58, 24)));
+			$gstorage->{attribute} = unpack('C', substr($msg, $i+82, 1));
+			$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x17), ('<'x17), ('<'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{charname},itemNameSimple($gstorage->{itemid}),$gstorage->{amount},$gstorage_action{$gstorage->{action}},$gstorage->{time}]);
+			$k++;
 		}
 		$message .= sprintf("%s\n", ('-'x80));
 		message($message, "list");
