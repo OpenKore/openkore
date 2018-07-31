@@ -199,9 +199,12 @@ sub sub_execute {
 	my $run = "sub ".$name." {".$arg."}";
 	eval($run);			# cycle the macro sub between macros only
 	$run = "eval ".$run;
-	Commands::run($run);	# exporting sub to the &main::sub, becarefull on your sub name
-							# dont name your new sub equal to any &main::sub, you should take
-							# the risk yourself.
+	
+	# exporting sub to the &main::sub, becarefull on your sub name
+	# dont name your new sub equal to any &main::sub, you should take
+	# the risk yourself.
+	Commands::run($run);
+	
 	message "[eventMacro] registering sub '".$name."'.\n", "menu";
 }
 
