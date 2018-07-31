@@ -3873,7 +3873,7 @@ sub guild_storage_log {
 	);
 		
 	if ($args->{result} == 0 || $args->{result} == 1) {
-		my $message = center(T("[ Guild Storage LOG ]"), 70, '-') ."\n".
+		my $message = center(T("[ Guild Storage LOG ]"), 80, '-') ."\n".
 			T("#  Name                  Item-Name      Amount   Action            Time\n");
 		for (my $i = 8; $i < $msg_size; $i+=83) {
 		$gstorage->{Idx} = unpack('a4', substr($msg, $i, 4));
@@ -3891,7 +3891,7 @@ sub guild_storage_log {
 		$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x17), ('<'x17), ('<'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{CharName},itemNameSimple($gstorage->{ItemID}),$gstorage->{Amount},$gstorage_action{$gstorage->{Action}},$gstorage->{Time}]);
 		$k++;
 		}
-		$message .= sprintf("%s\n", ('-'x70));
+		$message .= sprintf("%s\n", ('-'x80));
 		message($message, "list");
 	
 	} elsif ($args->{result} == 2) {
