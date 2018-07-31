@@ -1178,15 +1178,16 @@ sub processAutoStorage {
 			next unless ($config{"getAuto_$i"});
 			next if ($config{"getAuto_$i"."_disabled"});
 			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
-				foreach (keys %items_lut) {
-					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
-						configModify("getAuto_$i", $items_lut{$_});
+				foreach my $nameID (keys %items_lut) {
+					if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
+						configModify("getAuto_$i", $items_lut{$nameID});
 					}
 				}
 			}
 
-			my $item = $char->inventory->getByName($config{"getAuto_$i"});
-			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}); # total amount of the same name items
+			my $item = $char->inventory->getByName($config{"getAuto_$i"}) || $char->inventory->getByNameID($config{"getAuto_$i"});
+			# total amount of the same name items
+			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}) || $char->inventory->sumByNameID($config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
 			    !$config{"getAuto_${i}_passive"} &&
@@ -1196,7 +1197,8 @@ sub processAutoStorage {
 			    ) &&
 				checkSelfCondition("getAuto_$i")
 			) {
-				if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
+				if ($char->storage->isReady() && 
+					!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
 =pod
 					#This works only for last getAuto item
 					if ($config{"getAuto_${i}_dcOnEmpty"}) {
@@ -1206,7 +1208,8 @@ sub processAutoStorage {
 					}
 =cut
 				} else {
-					if ($char->storage->wasOpenedThisSession() && !$char->storage->getByName($config{"getAuto_$i"})) {
+					if ($char->storage->wasOpenedThisSession() && 
+						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1223,7 +1226,7 @@ sub processAutoStorage {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 
 		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
+		if ((!defined($routeIndex) || $attackOnRoute > 1 || AI::isIdle) && $needitem ne "" &&
 			$char->inventory->isReady()){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
@@ -1486,10 +1489,10 @@ sub processAutoStorage {
 						$args->{index}++;
 						next;
 					}
-					my $invItem = $char->inventory->getByName($itemName);
-					my $invAmount = $char->inventory->sumByName($itemName);
-					my $storeItem = $char->storage->getByName($itemName);
-					my $storeAmount = $char->storage->sumByName($itemName);
+					my $invItem = $char->inventory->getByName($itemName) || $char->inventory->getByNameID($itemName);
+					my $invAmount = $char->inventory->sumByName($itemName) || $char->inventory->sumByNameID($itemName);
+					my $storeItem = $char->storage->getByName($itemName) || $char->storage->getByNameID($itemName);
+					my $storeAmount = $char->storage->sumByName($itemName) || $char->storage->sumByNameID($itemName);
 					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{binID} : undef;
 					$item{inventory}{amount} = $invItem ? $invAmount : 0;
