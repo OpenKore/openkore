@@ -6468,6 +6468,7 @@
 20285#Aura de Amatsu#
 20286#Óculos da Persona#
 20287#Cabeleira do Rei do Rock Saiadim#
+20290#Cartola Carcomida#
 20295#Visor de Quartzo-Poring#
 20298#Orelhas Brancas de Lunático#
 20299#Torta de Baunilha#
@@ -6917,6 +6918,7 @@
 31433#Auréola Benevolente#
 31435#Gorro de Tricô Hipster#
 31437#Pequeno Pinguim#
+31438#Capa Angelical#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
 31460#Lanternas da Serenidade#
