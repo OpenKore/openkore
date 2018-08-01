@@ -1923,6 +1923,10 @@ sub parse_command {
 		} elsif ($keyword eq 'listlength') {
 			$result = getListLenght($parsed);
 			
+		} elsif ($keyword eq 'strip') {
+			$parsed =~ s/\(|\)//g;
+			$result = $parsed;
+			
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
