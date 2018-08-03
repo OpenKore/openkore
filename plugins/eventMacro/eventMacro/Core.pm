@@ -205,6 +205,11 @@ sub create_automacro_list {
 			next AUTOMACRO;
 		}
 		
+		if (exists $value->{'duplicatedAutomacro'}) {
+			error "[eventMacro] Ignoring automacro '$name'. Automacros can't have same name\n";
+			next AUTOMACRO;
+		}
+		
 		PARAMETER: foreach my $parameter (@{$value->{'parameters'}}) {
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
@@ -220,7 +225,7 @@ sub create_automacro_list {
 					next AUTOMACRO;
 				} else {
 					unless (defined $params) {
-					$parameter->{'value'} = $macro_name;
+						$parameter->{'value'} = $macro_name;
 					}
 					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 				}

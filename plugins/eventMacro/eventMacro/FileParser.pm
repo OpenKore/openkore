@@ -53,6 +53,10 @@ sub parseMacroFile {
 				%block = (name => $value, type => "macro");
 				$macro{$value} = [];
 			} elsif ($key eq 'automacro') {
+				if (exists $automacro{$value}) {
+					#this is to detect automacros that have same name
+					$automacro{$value}{'duplicatedAutomacro'} = 1;
+				} 
 				%block = (name => $value, type => "automacro");
 			} elsif ($key eq 'sub') {
 				%block = (name => $value, type => "sub");
@@ -197,7 +201,7 @@ sub sub_execute {
 	
 	my ($name, $arg) = @_;
 	my $run = "sub ".$name." {".$arg."}";
-	eval($run);			# cycle the macro sub between macros only
+	eval($run); # cycle the macro sub between macros only
 	$run = "eval ".$run;
 	
 	# exporting sub to the &main::sub, becarefull on your sub name
