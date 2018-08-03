@@ -51,7 +51,11 @@ sub parseMacroFile {
 			my ($key, $value) = $_ =~ /^(.*?)\s+(.*?)\s*{$/;
 			if ($key eq 'macro') {
 				%block = (name => $value, type => "macro");
-				$macro{$value} = [];
+				if (exists $macro{$value}) {
+					$macro{$value}{'duplicatedMacro'} = 1;
+				} else {
+					$macro{$value} = {};
+				}
 			} elsif ($key eq 'automacro') {
 				if (exists $automacro{$value}) {
 					#this is to detect automacros that have same name
@@ -79,7 +83,7 @@ sub parseMacroFile {
 		} elsif (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
 				if ($macroCountOpenBlock) {
-					push(@{$macro{$block{name}}}, '}');
+					push(@{$macro{$block{name}}{lines}}, '}');
 					$macroCountOpenBlock--;
 				} else {
 					undef %block;
@@ -91,7 +95,7 @@ sub parseMacroFile {
 					error "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next;
 				}
-				push(@{$macro{$block{name}}}, $_);
+				push(@{$macro{$block{name}}{lines}}, $_);
 			}
 			
 			next;
@@ -103,7 +107,7 @@ sub parseMacroFile {
 			if ($_ eq "}") {
 				if ($block{loadmacro}) {
 					if ($macroCountOpenBlock) {
-						push(@{$macro{$block{loadmacro_name}}}, '}');
+						push(@{$macro{$block{loadmacro_name}}{lines}}, '}');
 						
 						if ($macroCountOpenBlock) {
 							$macroCountOpenBlock--;
@@ -131,7 +135,7 @@ sub parseMacroFile {
 				$block{loadmacro} = 1;
 				$block{loadmacro_name} = "tempMacro".$tempmacro++;
 				push(@{$automacro{$block{name}}{parameters}}, {key => 'call', value => $block{loadmacro_name}});
-				$macro{$block{loadmacro_name}} = []
+				$macro{$block{loadmacro_name}} = {}
 			} elsif ($block{loadmacro}) {
 				if (isNewCommandBlock($_)) {
 					$macroCountOpenBlock++
@@ -140,7 +144,7 @@ sub parseMacroFile {
 					next
 				}
 
-				push(@{$macro{$block{loadmacro_name}}}, $_);
+				push(@{$macro{$block{loadmacro_name}}{lines}}, $_);
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				if (!defined $key || !defined $value) {
