@@ -35,8 +35,6 @@ sub new {
 	$self->{finished} = 0;
 	$self->{macro_block} = 0;
 	
-	$self->{subline_index} = undef;
-	$self->{sublines_array} = [];
 	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
 	$self->{line_index} = 0;
 	
@@ -489,47 +487,10 @@ sub line_script {
 	return @{$self->{lines_array}}[$line_index];
 }
 
-# Sets/Gets the current subline index
-sub subline_index {
-	my ($self, $subline_index) = @_;
-	if (defined $subline_index) {
-		$self->{subline_index} = $subline_index;
-	}
-	return $self->{subline_index};
-}
-
-# Gets the script of the given subline
-sub subline_script {
-	my ($self, $subline_index) = @_;
-	return @{$self->{sublines_array}}[$subline_index];
-}
-
-# Defines the sublines variables
-sub sublines_start {
-	my ($self) = @_;
-	my $full_line = $self->line_script($self->line_index);
-	debug "[eventMacro] Line '".$full_line."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
-	@{$self->{sublines_array}} = split(/\s*;\s*/, $full_line);
-	$self->subline_index(0);
-}
-
-# Undefines the sublines variables
-sub sublines_end {
-	my ($self) = @_;
-	debug "[eventMacro] Finished all sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."', continuing with next line.\n", "eventMacro", 2;
-	undef $self->{sublines_array};
-	undef $self->{subline_index};
-	$self->next_line;
-}
-
-# Advances a line or a subline
+# Advances a line
 sub next_line {
 	my ($self) = @_;
-	if (defined $self->{subline_index}) {
-		$self->{subline_index}++;
-	} else {
-		$self->{line_index}++;
-	}
+	$self->{line_index}++;
 }
 
 # Sets/Gets the error message
@@ -548,11 +509,7 @@ sub error_message {
 	  "[eventMacro] Error in macro '".$self->{name}."'\n".
 	  "[eventMacro] Line index of the error '".$self->line_index."'\n".
 	  "[eventMacro] Script of the line '".$self->line_script($self->line_index)."'\n";
-	if (defined $self->subline_index) {
-		$error_message .= 
-		  "[eventMacro] Subline index of the error '".$self->subline_index."'\n".
-		  "[eventMacro] Script of the subline '".$self->subline_script($self->subline_index)."'\n";
-	}
+	  
 	$error_message .= "[eventMacro] Error message '".$self->error."'\n";
 	return $error_message;
 }
@@ -569,22 +526,6 @@ sub define_current_line {
 			return;
 		}
 		$self->define_current_line;
-	
-	#Inside subline script
-	} elsif (defined $self->subline_index) {
-	
-		#End of subline script
-		if ($self->subline_index == scalar(@{$self->{sublines_array}})) {
-			$self->sublines_end;
-			$self->define_current_line;
-		} else {
-			$self->{current_line} = $self->subline_script($self->subline_index);
-		}
-		
-	#Start of subline script
-	} elsif ($self->line_script($self->line_index) =~ /;/) {
-		$self->sublines_start();
-		$self->{current_line} = $self->subline_script($self->subline_index);
 		
 	#Normal script
 	} else {
@@ -606,10 +547,10 @@ sub define_next_valid_command {
 		if ($check_need) {
 			$self->define_current_line;
 			return "" if ($self->{finished});
-			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command.\n", "eventMacro", 3;
+			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command.\n", "eventMacro", 3;
 			debug "[eventMacro] Script '".$self->{current_line}."'.\n", "eventMacro", 3;
 		} else {
-			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command after it was cleaned.\n", "eventMacro", 3;
+			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command after it was cleaned.\n", "eventMacro", 3;
 			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
 			$check_need = 1;
 		}
@@ -725,7 +666,7 @@ sub define_next_valid_command {
 							}
 						}
 						
-						debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
+						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
 						
 					}
 				}
@@ -818,7 +759,7 @@ sub define_next_valid_command {
 									return;
 								}
 								
-								debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
+								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
 								
 								if (isNewCommandBlock($self->{current_line})) {
 									$block_count++;
@@ -853,7 +794,7 @@ sub define_next_valid_command {
 					return;
 				}
 				
-				debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
+				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
 				
 				if (isNewCommandBlock($self->{current_line})) {
 					$open_blocks++;
@@ -884,7 +825,7 @@ sub define_next_valid_command {
 						return;
 					}
 								
-					debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
 					
 					if (isNewCommandBlock($self->{current_line})) {
 						$block_count++;
@@ -939,11 +880,6 @@ sub define_next_valid_command {
 			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 			if (exists $self->{label}->{$label}) {
 				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3;
-				if (defined $self->{subline_index}) {
-					debug "[eventMacro] Finishing prematurely sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."' because of flow command.\n", "eventMacro", 2;
-					undef $self->{sublines_array};
-					undef $self->{subline_index};
-				}
 				$self->line_index($self->{label}->{$label});
 			} else {
 				$self->error("Cannot find label '$label'");
@@ -967,7 +903,7 @@ sub next {
 	#We must finish the subcall before returning to this macro
 	return $self->manage_subcall if (defined $self->{subcall});
 
-	#   All non command [sub]lines must be checked and parsed in only one 'next' cycle
+	#   All non command lines must be checked and parsed in only one 'next' cycle
 	# define_next_valid_command makes sure the current line is a valid macro command
 	# all flow control ('if', 'else', 'goto', 'while', etc) must be parsed by it.
 	$self->define_next_valid_command;
@@ -975,8 +911,8 @@ sub next {
 	return "" if ($self->{finished});
 	
 	#Some debug messages
-	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
-	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index.".\n", "eventMacro", 2;
+	debug "[eventMacro] Line script '".$self->{current_line}."'.\n", "eventMacro", 2;
 		
 	##########################################
 	# set variable: variable = value
