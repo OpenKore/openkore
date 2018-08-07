@@ -6283,6 +6283,7 @@
 19724#Kafra V.I.P.#
 19726#Rosa da Sedução#
 19729#Tiara de Gatinha Kafra#
+19738#Chapéu do Xerloque#
 19742#Milagre de Asgard#
 19746#Capuz do Coração Gelado#
 19751#Coroa da Luz e Trevas#
@@ -6644,6 +6645,7 @@
 22149#Botas com Espigões#
 22172#Botas Aladas#
 22182#Sapatos da Penitência#
+22189#Sapato Social#
 22507#Velho Pergaminho#
 22508#Emblema do Éden#
 22511#Carta Fenris Fenrir#
@@ -6844,6 +6846,7 @@
 31055#Sopra-Poring de Sabão#
 31057#Cachecol Preto do Eremes#
 31062#Peruca de Eleanor #
+31087#Barba Viking#
 31088#Chapéu de Bicho Papão#
 31089#Fúria dos Shuras#
 31093#Lanterna das Fadas#
@@ -6910,6 +6913,7 @@
 31383#Peruca Azul de Waifu#
 31387#Jakk Aventureiro#
 31390#Chapéu da Nevasca#
+31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
 31396#Capuz Trevoso#
 31399#Véu da Madrugada#
