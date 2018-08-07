@@ -33358,8 +33358,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000025.06.2018.^000000
-Este item será removido no dia ^ff000026.06.2018.^000000
+Promoção limitada até o dia ^ff000027.08.2018.^000000
+Este item será removido no dia ^ff000028.08.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -51943,6 +51943,15 @@ Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
 #
+19738#
+O chapéu do famoso detetive Xerloque Rolmes é uma verdadeira inspiração àqueles que admiram sua inteligência e astúcia na solução dos crimes mais obscuros de Prontera.
+Tipo: ^777777Visual^000000
+Defesa : ^7777770^000000
+Equipa em: ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classe : ^777777Todas^000000
+#
 19742#
 Você foi abençoado pelos deuses e recebeu a proteção das valquírias para ter este lindo visual, tudo graças à sua incrível e insuperável humildade!
 ^0000ffEXP adquirida por monstros +1%.^000000
@@ -54402,6 +54411,7 @@ Classes: ^777777Todas^000000
 #
 20504#
 Essas pequenas e fofas asinhas rosadas são praticamente a marca registrada da famosa estilista Motoyo Doidage, também conhecida por registrar as aventuras de sua melhor amiga, a maga e colecionadora de molhos de soja, Sarakura Dropa-Cartas. Praticamente em todas as roupas que fez para Sarakura, Motoyo incluía essas asinhas, até mesmo nas armas.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Capa^000000
@@ -55967,6 +55977,32 @@ Arma com refino +12 ou mais:
 ^0000ffDano de [Adoramus] +20%.^000000
 ^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +20% adicional.^000000
 ^0000ffDano físico e mágico contra as propriedades Sombrio e Maldito +20% adicional.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+22189#
+Um par de sapatos chique e elegante que dizem ter pertencido a um homem poderoso. Após a morte dele, eles foram passados para as gerações seguintes, sendo usados tanto pelos filhos quanto pelas filhas.
+^0000ffDEFM +15.^000000
+^0000ffHP e SP máx. +3%.^000000
+^0000ffRecarga de [Praefatio] -1 segundo.^000000
+A cada nível de [Canto Candidus]:
+^0000ffVelocidade de ataque +4%.^000000
+A cada nível de [Sacramentum]:
+^0000ffDEF +50.^000000
+^0000ffResistência a raça Humanoide +2%.^000000
+A cada nível de [Curatio]:
+^0000ffEfetividade de cura +5%.^000000
+A cada nível de [Praefatio]:
+^0000ffPós-conjuração -6%.^000000
+Refino +5 ou mais:
+^0000ffHP e SP máx. +7% adicional.^000000
+^0000ffCusto de SP de habilidades -3%.^000000
+Refino +7 ou mais:
+^0000ffHP e SP máx. +10% adicional.^000000
+^0000ffCusto de SP de habilidades -5% adicional.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777715^000000
 Peso: ^77777750^000000
@@ -58280,6 +58316,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31087#
+Um modelo fiel da barba dos antigos Vikings. Embora estivessem sempre munidos de vestimentas pesadas, armas e armaduras, a barba robusta sempre foi seu grande símbolo de força e seriedade, além de uma tradição passada para seus queridos filhos.
+Tipo: ^777777Visual^000000
+Defesa : ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classe : ^777777Todas^000000
+#
 31088#
 Um chapéu criado por um chapeleiro fantasma de Nifflheim.
 Dizem que sua inspiração para este chapéu foram os pesadelos que as crianças de Rune-Midgard tinham quando seus pais contavam as histórias do bicho-papão.
@@ -58864,6 +58909,15 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31394#
+Um chapéu divertido e engraçado, inspirado em uma antiga história sobre um pai amoroso e simples que trabalhava arduamente durante o dia, mas ao chegar em casa, vestia-se de mágico para alegrar suas filhas e mostrar a elas que sempre estariam protegidas pela magia dele.
+Tipo: ^777777Visual^000000
+Defesa : ^7777770^000000
+Equipa em: ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classe : ^777777Todas^000000
 #
 31395#
 Uma série de livros elementais que flutuam ao seu redor, para que você sempre tenha à mão o conhecimento de como manejar o fogo sem queimar seu manto ou conjurar rajadas de vento sem mandar o próprio chapéu pelos ares.
