@@ -366,42 +366,6 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-# https://ro.exe.in.th/
-[Thailand - tRO Free life server (Alice(new), Poring)]
-ip 122.155.11.242
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-pauseCharServer 1
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
-
-# https://ro.exe.in.th/
-[Thailand - tRO Free life server (Yoyo, Picky)]
-ip 122.155.11.241
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
-
-
 ####################
 # Private RO Servers
 
