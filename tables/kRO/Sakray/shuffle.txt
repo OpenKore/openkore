@@ -1,4 +1,4 @@
-# kRO Zero Date: 2018-07-18
+# kRO Sakray Date: 2018-07-18
 0089 0437 # actor_action
 0113 0438 # skill_use
 0437 035F # character_move
