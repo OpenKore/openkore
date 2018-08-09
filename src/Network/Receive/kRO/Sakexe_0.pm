@@ -3888,7 +3888,7 @@ sub guild_storage_log {
 			$gstorage->{charname} = bytesToString(unpack('Z24', substr($msg, $i+34, 24)));
 			$gstorage->{time} = bytesToString(unpack('Z24', substr($msg, $i+58, 24)));
 			$gstorage->{attribute} = unpack('C', substr($msg, $i+82, 1));
-			$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x17), ('<'x17), ('<'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{charname},itemNameSimple($gstorage->{itemid}),$gstorage->{amount},$gstorage_action{$gstorage->{action}},$gstorage->{time}]);
+			$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('<'x2), ('>'x17), ('<'x17), ('>'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{charname},itemNameSimple($gstorage->{itemid}),$gstorage->{amount},$gstorage_action{$gstorage->{action}},$gstorage->{time}]);
 			$k++;
 		}
 		$message .= sprintf("%s\n", ('-'x80));
