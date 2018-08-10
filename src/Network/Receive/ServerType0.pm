@@ -575,7 +575,7 @@ sub new {
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
 		'09CF' => ['gameguard_request'],
-		'09DA' => ['guild_storage_log', 'v3', [qw(size result count)]], # -1
+		'09DA' => ['guild_storage_log', 'v3', [qw(len result count)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -4555,48 +4555,6 @@ sub monster_hp_info_tiny {
 		
 		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
-}
-
-sub guild_storage_log {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $k = 0;
-	my $gstorage;
-	
-	my %gstorage_action = (
-		0 => T('Get'),
-		1 => T('Put'),
-	);
-		
-	if ($args->{result} == 0 || $args->{result} == 1) {
-		my $message = center(T("[ Guild Storage LOG ]"), 80, '-') ."\n".
-			T("#  Name                  Item-Name      Amount   Action            Time\n");
-		for (my $i = 8; $i < $msg_size; $i+=83) {
-			$gstorage->{idx} = unpack('a4', substr($msg, $i, 4));
-			$gstorage->{itemid} = unpack('v', substr($msg, $i+4, 2));
-			$gstorage->{amount} = unpack('v', substr($msg, $i+6, 4));
-			$gstorage->{action} = unpack('C', substr($msg, $i+10, 1));
-			$gstorage->{refine} = unpack('V', substr($msg, $i+11, 4));
-			$gstorage->{uniqueid} = unpack('a8', substr($msg, $i+15, 8));
-			$gstorage->{identify} = unpack('C', substr($msg, $i+23, 1));
-			$gstorage->{itemtype} = unpack('v', substr($msg, $i+24, 2));
-			$gstorage->{card} = unpack('a8', substr($msg, $i+26, 8));
-			$gstorage->{charname} = bytesToString(unpack('Z24', substr($msg, $i+34, 24)));
-			$gstorage->{time} = bytesToString(unpack('Z24', substr($msg, $i+58, 24)));
-			$gstorage->{attribute} = unpack('C', substr($msg, $i+82, 1));
-			$message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('<'x2), ('>'x17), ('<'x17), ('>'x7), ('<'x7), ('>'x22)), [$k,$gstorage->{charname},itemNameSimple($gstorage->{itemid}),$gstorage->{amount},$gstorage_action{$gstorage->{action}},$gstorage->{time}]);
-			$k++;
-		}
-		$message .= sprintf("%s\n", ('-'x80));
-		message($message, "list");
-	
-	} elsif ($args->{result} == 2) {
-		message TF("Guild Storage empty.\n"), "info";
-	} elsif ($args->{result} == 3) {
-		message TF("You are not currently using Guild Storage. Please try later.\n"), "info";
-	}
-	
 }
 
 
