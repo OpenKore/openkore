@@ -71626,3 +71626,50 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20049#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gray Drooping Cat!
+150 Black Hair
+150 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Gray Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20050#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Bell Ribbon!
+200 Fabric
+25 Elastic Bands
+4 Pincher of Beetles
+3 Gold
+1 Scarlet Dyestuffs
+1000 Zeny
+1 Bell Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20051#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Friend Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1000 Zeny
+1 Friend Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
