@@ -3570,6 +3570,7 @@
 5907#Sea_Captain_Hat#
 5912#Costume_Servant_Deviling#
 5916#Exorcist_Glasses#
+5918#Gambler's_Seal#
 5921#Monster_Fish_Gills#
 5924#Dragon_Knight_Eye_Patch#
 5933#Crow_Tengu_Mask#
@@ -6779,7 +6780,7 @@
 14511#Light_Berserk_Potion#
 14512#Meteor_Storm_Scroll#
 14513#Storm_Gust_Scroll#
-14514#Lord_of_Vermilion_Scroll#
+14514#Level_10_Lord_of_Vermilion#
 14515#Lex_Aeterna_Scroll#
 14516#Magnificat_Scroll#
 14517#Chemical_Protection_Helm_Scroll#
@@ -6896,6 +6897,8 @@
 14947#Anniversary_2018_Costume_Box#
 14948#Overseas_Care_Package_XVIII#
 14971#Overseas_Care_Package_XX#
+14977#Overseas_Care_Package_XXI#
+14979#MVP_August_Costume_Box#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -7008,6 +7011,7 @@
 15156#Elegant_Doram_Suit#
 15163#Agenda_Robe#
 15164#Consultation_Robe#
+15165#Pure_White_Marching_Hat#
 15166#Rosary's_Necklace#
 15169#Kardui_Robe#
 15175#Fire_Dragon_Armor#
@@ -7225,8 +7229,8 @@
 16550#Ephemeral_Mjolnir_Trade_Box#
 16551#Ephemeral_Megingjard_Trade_Box#
 16554#Elven_Sunglasses_Box#
-16555#Playspan_Reset_Stone_Box#
-16556#Reset_Stone_Box#
+16555#Playspan_Magical_Stone_Box#
+16556#Magical_Stone_Box#
 16564#Dragon_Scroll#
 16565#Capricorn_Crown_Box#
 16566#Capricorn_Crown_Box#
@@ -7846,7 +7850,7 @@
 18674#Planewing_Hat#
 18675#Green_Apple_Hat#
 18676#Hexagon_Spectacles#
-18677#_Cherry_Twig_In_Mouth_#
+18677#Cherry_Twig_In_Mouth_#
 18678#Leek_In_Mouth#
 18679#Abacus_In_Mouth#
 18680#Frog_Hat#
@@ -8147,7 +8151,7 @@
 19206#Classic_Insurance_10_Box#
 19207#Classic_Token_of_Siegfried_10_Box#
 19208#Classic_Small_Life_Potion_10_Box#
-19209#Classic_Giant_Flywing_500_Box#
+19209#Illusion_Nurse_Cap#
 19210#Illusion_Apple_of_Archer#
 19212#Malangdo_Pirate_Hat#
 19221#Golden_Angel_Hairband#
@@ -8458,6 +8462,7 @@
 19882#Costume:_Flowerpot_Mask#
 19883#Costume:_Piamette_Hood#
 19884#Costume_Vanargandr_Helm#
+19886#Costume_Luxury_Sunglasses#
 19892#Costume:_Night_Sparrow_Hat#
 19893#Costume:_Ordinary_Black_Magician_Hat#
 19894#Costume:_Shrine_Maiden_Hat#
@@ -8576,6 +8581,10 @@
 20071#Costume_Warg_in_Mouth#
 20085#Costume_Green_Clover_Hat#
 20091#(null)#
+20094#Costume_Green_Ribbon_Headband#
+20095#Costume_Red_Ribbon_Headband#
+20096#Costume_Blue_Ribbon_Headband#
+20097#Costume_White_Ribbon_Headband#
 20099#Costume:_Ljosalfar#
 20100#Costume:Volume_Feather_Hat#
 20106#Costume_Classic_Hat#
@@ -8835,6 +8844,7 @@
 20808#Sight_Amistr_Bag#
 20809#Improve_Concentration_Amistr_Bag#
 20811#Hiding_Amistr_Bag#
+20812#Kirin_Wing#
 20813#Cloak_of_Survival#
 20814#Wakwak_Manteau#
 20815#Seraphim_Robe#
@@ -8853,6 +8863,8 @@
 20859#Phreeoni_Wings#
 20860#Battle_Surcoat#
 20861#Sword_Wing_J#
+20931#Prism_Rangers_Scarf#
+20932#Old_Morroc_Shawl#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
@@ -8912,6 +8924,7 @@
 22094#Gardener_Shoes#
 22095#Gravekeeper_Shoes#
 22097#Dragon_Trainer_Shoes#
+22099#Mechanic_Shoes#
 22103#Excelion_Leg#
 22104#Pororoca_Shoes#
 22107#Modified_Str_Boots#
@@ -9572,6 +9585,7 @@
 31140#Costume_Black_Cowboy_Hat#
 31141#Costume_Cactus_Flower_Corsage#
 31144#Costume_Native_Feather_Headband#
+31155#Costume_Spinning_Eyes#
 31158#Costume_Squirrel_Ear_Hat#
 31160#Costume_Rune_Helm#
 31161#Costume_Tiger_Mask#
@@ -9705,5 +9719,14 @@
 31474#Costume_Straight_Long_(Black)#
 31475#Costume_Black_Fox_Ear_Ribbon#
 31476#Costume_Yellow_Cherry_Blossom_Hat#
+31486#Costume_Diver's_Goggles#
+31487#Costume_Eye_Bandage#
+31488#Costume_MVP#
+31489#Costume_Bouquet_Hat#
+31490#Costume_Poring_Muffler#
+31491#Costume_Orange_Tabby_Cat#
+31492#Costume_Cat_Ears_Cape_Brown#
+31493#Costume_Volume_Low_Twin_(White)#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
+32206#Prontera_Militia_Glove#
