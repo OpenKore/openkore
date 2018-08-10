@@ -36597,6 +36597,37 @@ Usable By: ^808080All Jobs^000000
 Increases physical damage on Demon race targets by 5%.
 Reduces damage taken from Demon race enemies by 5%.
 #
+5918#
+A Seal once owned by a legendary gambler. Only those who know what true luck is, will be able to get the seal.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Crit + 3
+Increases critical damage on targets by 3%.
+Reduces damage taken from ^0000FFArrow Storm^000000 and ^0000FFGates of Hell^000000 by 10%.
+Reduces critical damage on targets by an additional 2% for every 10 base Dex.
+Additional Crit + 1, Atk and Matk + 2 for every 10 base Luk.
+Additional Crit + 5 and increases critical damage on targets by an additional 10%, if the users base Luk is 108 or higher.
+Additional Crit + 10, increases critical damage on targets by an additional 17% and reduces damage taken from ^0000FFArrow Storm^000000 and ^0000FFGates of Hell^000000 by an additional 30%, if the users base Luk is 120 or higher.
+^800080Set Bonus^000000
+^008080Gambler's Seal^000000
+^008080Heart Card in Mouth^000000
+Aspd + 1
+Additional Aspd + 1, if the users base Luk is 108 or higher.
+Additional Aspd + 2, if the users base Luk is 120 or higher.
+Increases critical damage on targets by 2%.
+Increases critical damage on targets by an additional 2%, if the users base Luk is 108 or higher.
+Increases critical damage on targets by an additional 4%, if the users base Luk is 120 or higher.
+Increases critical damage on targets by an additional 2% for every 10 base Dex.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Luk is 108 or higher.
+Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Luk is 120 or higher.
+Reduces damage taken from ^0000FFCritical Slash^000000 by 100%.
+Enables Splash Attacks, if the users base Luk is 120 or higher.
+#
 5921#
 Gills of a black and red monster fish.
 Class: ^808080Headgear^000000
@@ -37937,20 +37968,17 @@ Weight : ^7777771^000000
 #
 6320#
 This item is used to access various Premium Services.
-^ffffff_^000000
-All third class job changes require ^006400[1 Reset Stone]^000000 or ^ff0000VIP Status^000000 on the account.
-^ffffff_^000000
-Sam Status is accepting Reset Stones to reset your stat points.
-You can find him in Payon around 180 115.
-Reset Stones Required per level:
-Base Lvl ^0000FF1  ~ 40 ^006400[1 Reset Stone]^000000
-Base Lvl ^0000FF41 ~ 70 ^006400[2 Reset Stone]^000000
-Base Lvl ^0000FF71 ~ 90 ^006400[3 Reset Stone]^000000
-Base Lvl ^0000FF91 ~ 110 ^006400[4 Reset Stone]^000000
-Base Lvl ^0000FF111 ~ 125 ^006400[5 Reset Stone]^000000
-Base Lvl ^0000FF126 ~ 140 ^006400[6 Reset Stone]^000000
-Base Lvl ^0000FF141 ~ 150 ^006400[7 Reset Stone]^000000
-Weight : ^7777770^000000
+Weight: ^8080801^000000
+^000000All third class job changes require ^006400[1 Magical Stone]^000000 or ^ff0000VIP Status^000000 on the account.
+Sam Status is accepting Magical Stones to reset your stat points. You can find him in Payon around 180 115.
+Magical Stones Required per level:
+Base Lvl ^0000FF1  ~ 40 ^006400[1 Magical Stone]^000000
+Base Lvl ^0000FF41 ~ 70 ^006400[2 Magical Stone]^000000
+Base Lvl ^0000FF71 ~ 90 ^006400[3 Magical Stone]^000000
+Base Lvl ^0000FF91 ~ 110 ^006400[4 Magical Stone]^000000
+Base Lvl ^0000FF111 ~ 125 ^006400[5 Magical Stone]^000000
+Base Lvl ^0000FF126 ~ 140 ^006400[6 Magical Stone]^000000
+Base Lvl ^0000FF141 ~ 150 ^006400[7 Magical Stone]^000000
 #
 6321#
 A sturdy helm with hooked horns. Can be sold to Item Collectors.
@@ -58465,6 +58493,10 @@ Weight : ^77777720^000000
 14513#
 #
 14514#
+A spell scroll made with the essence of ancient magic.
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Casts ^0000FFLevel 10 Lord of Vermilion^000000.
 #
 14515#
 #
@@ -59275,6 +59307,44 @@ Mask of Hero
 (5) Bloody Branch
 (10) Citizen Oda’s Miracle Elixir
 (8) HE Bubble Gum
+#
+14977#
+When opened receive one of the following,
+
+Imperial Feather
+Gambler's Seal
+Royal Guard Necklace
+Prontera Militia Glove [1]
+Prism Rangers Scarf
+Old Morroc Shawl [1]
+Pure White Marching Hat [1]
+Mechanic Shoes [1]
+(8) Blacksmith Blessing
+(5) Bloody Dead Branch
+(10) Oda's Miracle Elixir
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+14979#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When Opened Gives one of the following
+Costume Green Ribbon Headband
+Costume Red Ribbon Headband
+Costume Blue Ribbon Headband
+Costume White Ribbon Headband
+Costume Bouquet Hat
+Costume Cat Ears Cape Brown
+Costume Diver's Goggles
+Costume Eye Bandage
+Costume Luxury Sunglasses
+Costume MVP
+Costume Orange Tabby Cat
+Costume Poring Muffler
+Costume Spinning Eyes
+Costume Volume Low Twin (White)
+
 #
 15000#
 Dark Plated Armor covered with sharp bones.
@@ -60641,6 +60711,17 @@ Luk + 1 per upgrade level of ^008080Consultation Robe^000000.
 Reduces damage taken from Neutral, Fire and Shadow property attacks by 10%.
 If ^008080Consultation Robe^000000 upgrade level is +10 or higher,
 Reduces damage taken from Neutral property attacks by an additional 10%.
+#
+15165#
+Str + 2
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
+When performing a physical attack, adds a chance of endowing the users weapon with Ghost property for 60 seconds.
+Adds an additional chance to endow the weapon per upgrade level of ^008080Pure White Marching Hat^000000.
 #
 15166#
 ^808080The holy rosary which has received its powers from the apostle of God. It's filled with mysterious powers.^000000
@@ -62558,50 +62639,39 @@ Jobs: ^777777All^000000
 Weight : ^7777771^000000
 #
 16555#
-A box that contains 1 Reset Stone inside.
-^ff0000This item is not refundable.
-Can be traded and stored.^000000
-Description:
+A box that contains 1 Magical Stone inside.
+^FF0000This item is not refundable^000000
+Attack: ^8080800^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080800^000000
 This item is used to access various Premium Services.
-^ffffff_^000000
-All third class job changes require ^006400[1 Reset Stone]^000000 or ^ff0000VIP Status^000000 on the account.
-^ffffff_^000000
-Sam Status is accepting Reset Stones to reset your stat points.
-You can find him in Payon around 180 115.
-Reset Stones Required per level:
-Base Lvl ^0000FF1  ~ 40 ^006400[1 Reset Stone]^000000
-Base Lvl ^0000FF41 ~ 70 ^006400[2 Reset Stone]^000000
-Base Lvl ^0000FF71 ~ 90 ^006400[3 Reset Stone]^000000
-Base Lvl ^0000FF91 ~ 110 ^006400[4 Reset Stone]^000000
-Base Lvl ^0000FF111 ~ 125 ^006400[5 Reset Stone]^000000
-Base Lvl ^0000FF126 ~ 140 ^006400[6 Reset Stone]^000000
-Base Lvl ^0000FF141 ~ 150 ^006400[7 Reset Stone]^000000
-Weight : ^7777770^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+^000000All third class job changes require ^006400[1 Magical Stone]^000000 or ^ff0000VIP Status^000000 on the account.
+Sam Status is accepting Magical Stones to reset your stat points. You can find him in Payon around 180 115.
+Magical Stones Required per level:
+Base Lvl ^0000FF1  ~ 40 ^006400[1 Magical Stone]^000000
+Base Lvl ^0000FF41 ~ 70 ^006400[2 Magical Stone]^000000
+Base Lvl ^0000FF71 ~ 90 ^006400[3 Magical Stone]^000000
+Base Lvl ^0000FF91 ~ 110 ^006400[4 Magical Stone]^000000
+Base Lvl ^0000FF111 ~ 125 ^006400[5 Magical Stone]^000000
+Base Lvl ^0000FF126 ~ 140 ^006400[6 Magical Stone]^000000
+Base Lvl ^0000FF141 ~ 150 ^006400[7 Magical Stone]^000000
 #
 16556#
-A box that contains 1 Reset Stone inside.
-^ff0000This item is not refundable.
-Can only be put into storage.^000000
-Description:
+A box that contains 1 Magical Stone inside.
+^FF0000Account Bound^000000
+^FF0000This item is not refundable^000000
+Weight: ^8080801^000000
 This item is used to access various Premium Services.
-^ffffff_^000000
-All third class job changes require ^006400[1 Reset Stone]^000000 or ^ff0000VIP Status^000000 on the account.
-^ffffff_^000000
-Sam Status is accepting Reset Stones to reset your stat points.
-You can find him in Payon around 180 115.
-Reset Stones Required per level:
-Base Lvl ^0000FF1  ~ 40 ^006400[1 Reset Stone]^000000
-Base Lvl ^0000FF41 ~ 70 ^006400[2 Reset Stone]^000000
-Base Lvl ^0000FF71 ~ 90 ^006400[3 Reset Stone]^000000
-Base Lvl ^0000FF91 ~ 110 ^006400[4 Reset Stone]^000000
-Base Lvl ^0000FF111 ~ 125 ^006400[5 Reset Stone]^000000
-Base Lvl ^0000FF126 ~ 140 ^006400[6 Reset Stone]^000000
-Base Lvl ^0000FF141 ~ 150 ^006400[7 Reset Stone]^000000
-Weight : ^7777770^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+^000000All third class job changes require ^006400[1 Magical Stone]^000000 or ^ff0000VIP Status^000000 on the account.
+Sam Status is accepting Magical Stones to reset your stat points. You can find him in Payon around 180 115.
+Magical Stones Required per level:
+Base Lvl ^0000FF1  ~ 40 ^006400[1 Magical Stone]^000000
+Base Lvl ^0000FF41 ~ 70 ^006400[2 Magical Stone]^000000
+Base Lvl ^0000FF71 ~ 90 ^006400[3 Magical Stone]^000000
+Base Lvl ^0000FF91 ~ 110 ^006400[4 Magical Stone]^000000
+Base Lvl ^0000FF111 ~ 125 ^006400[5 Magical Stone]^000000
+Base Lvl ^0000FF126 ~ 140 ^006400[6 Magical Stone]^000000
+Base Lvl ^0000FF141 ~ 150 ^006400[7 Magical Stone]^000000
 #
 16564#
 #
@@ -69738,22 +69808,14 @@ Required Level : ^77777710^000000
 Job : ^777777All^000000
 #
 18677#
-A beautiful sakura twig
-additional 2% damage to plant type of monster
-unable to refine.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777720^000000
-Req Level : ^77777720^000000
-Jobs : ^777777All except Novice^000000
-A pretty cherry twig, everyone wants to have it.
-Damage to plant type monster +2%
-Unable to refine.
-Series : ^777777Headgear^000000    Defense : ^7777770^000000
-Location : ^777777Lower^000000  Weight : ^77777720^000000
-Level Requirement :  ^77777720^000000
-Job : ^777777All Job Except Novice^000000
+A pretty cherry twig. Everyone wants to have it.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Increases physical damage on Plant race targets by 2%.
 #
 18678#
 A freshly picked leek vegetable.
@@ -69828,20 +69890,13 @@ Level Requirement :  ^777777None^000000
 Job : ^777777All^000000
 #
 18682#
-An accessory attached below eye
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Mid^000000
-Weight : ^77777710^000000
-Req Level : ^777777none^000000
-Jobs : ^777777All Jobs^000000
-The tears won't stop
-Class : ^777777headgear^000000
-Def : ^7777771^000000
-Location : ^777777mid^000000
-Weight : ^77777710^000000
-Req Level : ^777777none^000000
-Jobs : ^777777All^000000
+The tears won't stop.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18683#
 A carrot which was found near a dead rabbit
@@ -73847,17 +73902,21 @@ the item effect will disappear.
 Weight : ^7777771^000000
 #
 19209#
-A box that contains 500 Classic Giant Flywing
-Description:
-An enchanted, giant
-wing from an ancient
-creatures. Enables
-instant teleportation
-of many people when^FFFFFF       ^000000 used by a Party Master.
-^ffffff_^000000
-This item can be traded and put into storage.
-^ffffff_^000000
-Weight : ^7777771^000000
+A cap worn by nurses both great and small.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808020^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Acolyte Jobs^000000
+Int + 1
+Additional Int + 1 and heal effectiveness +3%
+every 2 Refine levels
+^800080Set Bonus^000000
+^008080Illusion Nurse Cap^000000
+^008080Illusion Puente Robe^000000
+Increase movement speed,
+increase heal effectiveness by an additional 10%
 #
 19210#
 A headgear made in the honor of the legendary archer who shot an apple, on top of a friend's head, from a long distance.
@@ -76450,10 +76509,11 @@ Job : ^777777all jobs^000000
 #
 19825#
 A bandage covers scars of eyes.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19826#
 ^808080Earrings made with ice and extra chemicals. Why is it so chilly when you wear it?^000000
@@ -76675,6 +76735,13 @@ Job : ^777777all jobs^000000
 Type: Costume
 Position: Upper
 Weight: 0
+#
+19886#
+Be the coolest one in the sun with these stylish sunglasses.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
 #
 19892#
 A hat named after the mysterious bird that sings at night.
@@ -77630,6 +77697,34 @@ Location : ^777777Bottom ^000000
 Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
+#
+20094#
+A fancy green hair ribbon.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+20095#
+A fancy red hair ribbon.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+20096#
+A fancy blue hair ribbon.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+20097#
+A fancy white hair ribbon.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
 #
 20099#
 This fairy loves to bless adventurers with good luck!
@@ -78639,12 +78734,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20286#
-^808080Glasses rimmed under the lens only. They fit any types of coordination nicely either cool or cute.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Glasses rimmed under the lens only. They fit any types of coordination nicely either cool or cute.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20287#
 ^808080A hat resembles the man's hairdo who always looks for someone to fight with.^000000
@@ -80717,6 +80812,16 @@ Restores 3 SP to the user when performing a physical or magical attack.
 If upgrade level is +12 or higher/lower,
 The users casting cannot be interrupted outside of WoE.
 #
+20812#
+Wings made from a legendary mythical beast of an East Asian culture.
+Class: ^808080Garment^000000
+Defense: ^80808018^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+
+
+#
 20813#
 A cloak that will increase the chance of survival in any circumstances.
 Class: ^808080Garment^000000
@@ -81097,6 +81202,64 @@ Jobs : ^777777All Jobs^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
+#
+20931#
+Scarf emitting rainbow light. You can feel power of 4 elements.
+Class: ^808080Garment^000000
+Defense: ^80808012^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi-Human race enemies by 5%.
+Max HP and Max SP + 2%.
+Increases long-ranged damage on targets by 2%.
+If ^008080Prism Rangers Scarf^000000 upgrade level is +5 or higher, additional Max HP and Max SP + 3%.
+Increases long-ranged damage on targets by an additional 3%.
+If ^008080Prism Rangers Scarf^000000 upgrade level is +7 or higher, additional Max HP and Max SP + 5%.
+Increases long-ranged damage on targets by an additional 5%.
+Reduces the cooldown of ^0000FFNo Limits^000000 by 180 seconds, if ^0000FFWarg Ride^000000 is at maximum level.
+Reduces the global delay of skills by 10% if ^0000FFCamouflage^000000 is at maximum level.
+Reduces the cooldown of ^0000FFArrow Storm^000000 by 0.2 seconds.
+Increases long-ranged damage on targets by an additional 2% per level of ^0000FFAimed Bolt^000000 known.
+Increases the damage of ^0000FFArrow Storm^000000 by 1%.
+When ^008080Prism Rangers Scarf^000000 is unequipped, ^0000FFNo Limits^000000 effect is disabled.
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Fire Arrow^000000
+Reduces damage taken from Fire property attacks by 75%.
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Crystal Arrow^000000
+Reduces damage taken from Water property attacks by 75%.
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Arrow of Wind^000000
+Reduces damage taken from Wind property attacks by 75%.
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Stone Arrow^000000
+Reduces damage taken from Earth property attacks by 75%.
+#
+20932#
+Thing that used by presbyter of ancient Morocc It is absolutely light and well ventilated.
+Class: ^808080Garment^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 5%
+Flee + 10
+If upgrade level is +7 or higher, additional Flee + 20.
+If upgrade level is +8 or higher, additional Flee + 30 and restores 100% HP and SP to the user when resurrected.
+If upgrade level is +9 or higher, additional Flee + 40.
+If upgrade level is +10 or higher, Perfect Dodge + 25.
+^800080Set Bonus^000000
+^008080Old Morroc Shawl^000000
+^008080Osiris Card^000000
+Additional Max HP + 15%
+Reduces damage taken from Fire property attacks by 50%.
+Reduces damage taken from Shadow property attacks by 100%.
+Immune to ^800000Curse^000000.
 #
 21001#
 *Stats during WoE & PVP
@@ -81899,6 +82062,16 @@ Usable By: ^808080All Jobs^000000
 Increases the experience given from Dragon race monsters by 5%.
 Increases the experience given from Dragon race monsters by an additional 1% per upgrade level of the item.
 
+#
+22099#
+These shoes were worn by a man who made a living out of engineering. They contain the man's many years of experience.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Formless race monsters by 5%.
+Increases the experience given from Formless race monsters by an additional 1% per upgrade level of the item.
 #
 22103#
 ^808080A leg made from lost technology found in the research building ruins.^000000
@@ -85591,7 +85764,8 @@ Class: ^808080Card^000000
 Compounds On: ^808080Headgear^000000
 Weight: ^8080801^000000
 Atk + 2%
-Adds a 0.5% chance of buffing the user for 5 seconds when performing a short-ranged attack; Adds a permanent ^0000FFLevel 1 Endure^000000 effect to the compounded item.
+Adds a 0.5% chance of buffing the user for 5 seconds when performing a short-ranged attack.
+Buff: ^0000FFLevel 1 Endure^000000.
 #
 27147#
 Class: ^808080Card^000000
@@ -87123,26 +87297,26 @@ Aspd + 1
 Aspd + 1
 #
 28502#
-^808080A scarf worn during a revolt. It gives the user the courage they need to never yield to anyone!^000000
-Class: Headgear
-Position: Lower
-Defense: 0
-Weight: 10
-Required Level: 100
-Required Jobs: All Jobs
+A scarf worn during a revolt. It gives the user the courage they need to never yield to anyone!
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Enables ^0000FFLevel 2 Spell Breaker^000000.
 ^800080Set Bonus^000000
 ^008080Glasses^000000 or ^008080Sunglasses^000000
 ^008080Mob Scarf^000000
-Max HP + 5% for every combined sum of 80 base Agi and Vit.
-Atk + 6% for every combined sum of 80 base Str and Luk.
-Matk + 120 for every combined sum of 80 base Int and Dex.
-Crit + 5 for every combined sum of 80 base Str and Luk.
-Aspd + 5% for every combined sum of 80 base Agi and Vit.
-Reduces the variable casting time of skills by 3% for every combined sum of 80 base Int and Dex.
-Increases critical damage on targets by 10% for every combined sum of 80 base Str and Luk.
 Reduces damage taken from Demi-Human race enemies by 2%.
+Max HP + 5% for every combined sum of 80 base Agi and Vit.
+Aspd + 5% for every combined sum of 80 base Agi and Vit.
 Reduces damage taken from Demi-Human race enemies by an additional 2% for every combined sum of 80 base Agi and Vit.
+Atk + 6% for every combined sum of 80 base Str and Luk.
+Crit + 5 for every combined sum of 80 base Str and Luk.
+Increases critical damage on targets by 10% for every combined sum of 80 base Str and Luk.
+Matk + 120 for every combined sum of 80 base Int and Dex.
+Reduces the variable casting time of skills by 3% for every combined sum of 80 base Int and Dex.
 Increases the recovery rate of recovery skills by 10% for every combined sum of 80 base Int and Dex.
 #
 28503#
@@ -88962,6 +89136,14 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+31155#
+And around and around they go!
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
 31158#
 ^808080A cute hat with pointy squirrel ears. You will feel like a cute squirrel once you wear it.^000000
 Class: Costume
@@ -90064,6 +90246,64 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31486#
+Sturdy goggles worn by ocean divers.
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31487#
+Yar har fiddle dee dee. You are a pirate!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31488#
+Experience the exciting MVP feeling with this unique costume.
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31489#
+It's flowers on your head! In the shape of a lovely hat.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31490#
+Now you can be extra stylish with this cute Costume Poring Muffler! Made of 100% organic Jellopy.
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31491#
+A cute, orange tabby cat that will happily join you on your adventures through Rune Midgard.
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31492#
+An adorable brown cape. Oh look! It also has cat ears.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31493#
+A voluminous, white pigtail wig. Super trendy!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
 32203#
 Class: ^808080Accessory^000000
 Weight: ^80808010^000000
@@ -90104,4 +90344,14 @@ If refinement level of [Lindy Hop] is 9 or higher,
 CRI +50
 Physical Attack damage to Boss Monsters increase by 25%.
 
+#
+32206#
+Gloves provided from Prontera. Wearer becomes indomitable.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 5%
+Reduces damage taken from Demi-Human race enemies by 3%.
+Reduces damage taken from Fire, Water, Wind and Earth property attacks by 5%.
 #
