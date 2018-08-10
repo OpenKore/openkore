@@ -6490,4 +6490,43 @@ sub GM_silence {
 	}
 }
 
+
+sub guild_storage_log {
+    my ($self, $args) = @_;
+
+    if ($args->{result} == 0 || $args->{result} == 1) {
+        my %action = (
+            0 => T('Get'),
+            1 => T('Put'),
+        );
+ 
+        my $storage_info = {
+            len => 83,
+            types => 'a4 v V C V a8 C v a8 Z24 Z24 C',
+            keys => [qw(ID nameID amount action upgrade uniqueID identified type_equip cards charName time attribute)],
+        };
+ 
+        my $message = center(T("[ Guild Storage LOG ]"), 80, '-') ."\n".
+            T("#  Name                     Item-Name                                         Amount  Action          Time\n");
+ 
+        my $index = 0;
+        for (my $i = 0; $i < length($args->{log}); $i+= $storage_info->{len}) {
+            my $item;      
+            @{$item}{@{$storage_info->{keys}}} = unpack($storage_info->{types}, substr($args->{log}, $i, $storage_info->{len}));           
+            $item->{charName} = bytesToString($item->{charName});
+            $item->{time} = bytesToString($item->{time});
+            $message .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s \@%s", ('<'x2), ('<'x24), ('<'x48), ('<'x6), ('<'x7), ('<'x20)), [$index, $item->{charName}, itemName($item), $item->{amount}, $action{$item->{action}}, $item->{time}]);
+            $index++;
+        }
+
+        $message .= sprintf("%s\n", ('-'x80));
+        message($message, "list");
+ 
+    } elsif ($args->{result} == 2) {
+        message TF("Guild Storage empty.\n"), "info";
+    } elsif ($args->{result} == 3) {
+        message TF("You are not currently using Guild Storage. Please try later.\n"), "info";
+    }
+}
+
 1;
