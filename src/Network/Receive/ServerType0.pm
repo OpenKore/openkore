@@ -403,7 +403,7 @@ sub new {
 		'02AA' => ['cash_password_request', 'v', [qw(info)]], #TODO: PACKET_ZC_REQ_CASH_PASSWORD
 		'02AC' => ['cash_password_result', 'v2', [qw(info count)]], #TODO: PACKET_ZC_RESULT_CASH_PASSWORD
 		# mRO PIN code Check
-		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]],
+		'02AD' => ['login_pin_code_request', 'v V', [qw(state key)]],
 		# Packet Prefix encryption Support
 		'02AE' => ['initialize_message_id_encryption', 'V2', [qw(param1 param2)]],
 		# tRO new packets (2008-09-16Ragexe12_Th)
@@ -525,7 +525,7 @@ sub new {
 		'08B4' => ['pet_capture_process'],
 		'08B6' => ['pet_capture_result', 'C', [qw(success)]],
 		#'08B9' => ['account_id', 'x4 V v', [qw(accountID unknown)]], # len: 12 Conflict with the struct (found in twRO 29032013)
-		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID state)]],
 		'08BB' => ['login_pin_new_code_result', 'v V', [qw(flag seed)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
@@ -647,6 +647,7 @@ sub new {
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID state flag)]],		
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 

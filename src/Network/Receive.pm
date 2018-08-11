@@ -2806,7 +2806,7 @@ sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
 
-	if($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
+	if($args->{state} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
 		$timeout{master}{time} = time;
 		return;
 	}
@@ -2819,7 +2819,7 @@ sub login_pin_code_request {
 	# 5 - invalid (official servers?)
 	# 7 - disabled?
 	# 8 - incorrect
-	if ($args->{flag} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
+	if ($args->{state} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
 		message T("PIN code is correct.\n"), "success";
 		# call charSelectScreen
 		if (charSelectScreen(1) == 1) {
@@ -2827,7 +2827,7 @@ sub login_pin_code_request {
 			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 			$sentWelcomeMessage = 1;
 		}
-	} elsif ($args->{flag} == 1) {
+	} elsif ($args->{state} == 1) {
 		# PIN code query request.
 		$accountID = $args->{accountID};
 		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
@@ -2835,7 +2835,7 @@ sub login_pin_code_request {
 		message T("Server requested PIN password in order to select your character.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
-	} elsif ($args->{flag} == 2) {
+	} elsif ($args->{state} == 2) {
 		# PIN code has never been set before, so set it.
 		warning T("PIN password is not set for this account.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
@@ -2845,7 +2845,7 @@ sub login_pin_code_request {
 			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
 		}
 		$messageSender->sendLoginPinCode($args->{seed}, 1);
-	} elsif ($args->{flag} == 3) {
+	} elsif ($args->{state} == 3) {
 		# should we use the same one again? is it possible?
 		warning T("PIN password expired.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
@@ -2855,13 +2855,13 @@ sub login_pin_code_request {
 			error T("Your PIN should never contain anything but exactly 4 numbers.\n");
 		}
 		$messageSender->sendLoginPinCode($args->{seed}, 1);
-	} elsif ($args->{flag} == 5) {
+	} elsif ($args->{state} == 5) {
 		# PIN code invalid.
 		error T("PIN code is invalid, don't use sequences or repeated numbers.\n");
 		# configModify('loginPinCode', '', 1);
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
-	} elsif ($args->{flag} == 7) {
+	} elsif ($args->{state} == 7) {
 		# PIN code disabled.
 		$accountID = $args->{accountID};
 		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
@@ -2873,7 +2873,7 @@ sub login_pin_code_request {
 			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 			$sentWelcomeMessage = 1;
 		}
-	} elsif ($args->{flag} == 8) {
+	} elsif ($args->{state} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
 		#configModify('loginPinCode', '', 1);
@@ -2882,6 +2882,13 @@ sub login_pin_code_request {
 	} else {
 		debug("login_pin_code_request: unknown flag $args->{flag}\n");
 	}
+#################################
+#	TODO !	
+#	+enum pincode_login_response2 {
+#    PINCODE_LOGIN_FLAG_LOCKED = 0,
+#    PINCODE_LOGIN_FLAG_WRONG  = 2,
+#};
+####################################
 
 	$timeout{master}{time} = time;
 }

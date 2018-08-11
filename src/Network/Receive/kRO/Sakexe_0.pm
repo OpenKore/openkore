@@ -421,7 +421,7 @@ sub new {
 		'02A6' => ['gameguard_request'], # 22		
 		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
 		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
-		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
+		'02AD' => ['login_pin_code_request', 'v V', [qw(state key)]],# 8
 		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
 		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
@@ -504,7 +504,7 @@ sub new {
 		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
-		'08B9' => ['login_pin_code_request2', 'V a4 v', [qw(seed accountID flag)]],
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID state)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -583,6 +583,7 @@ sub new {
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID state flag)]],
 		};
 
 	# Item RECORD Struct's
