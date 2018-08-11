@@ -647,7 +647,8 @@ sub new {
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
-		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],		
+		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
+		'0B03' => ['show_eq', 'v Z24 v7 v2 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color body_style sex equips_info)]],		
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
