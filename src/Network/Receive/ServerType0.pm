@@ -2020,6 +2020,7 @@ sub item_skill {
 sub map_changed {
 	my ($self, $args) = @_;
 	$net->setState(4);
+	%pet = ();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
