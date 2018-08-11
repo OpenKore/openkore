@@ -2666,6 +2666,7 @@ sub pet_info2 {
 	if ($type == 0) {
 		# You own pet with this ID
 		$pet{ID} = $ID;
+		message("Pet ID: ".unpack("V1", $ID)."\n");
 	} elsif ($type == 5) {
 		# You own no pet.
 		return unless ($pet{ID} && ($pet{ID} eq $ID));
