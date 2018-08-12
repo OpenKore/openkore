@@ -87,6 +87,7 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
@@ -1352,14 +1353,6 @@ sub sendRepairItem {
 # TODO
 
 # 0x0201,-1
-
-# 0x0203,10,friendslistremove,2:6
-sub sendFriendRemove {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack('v a4 a4', 0x0203, $accountID, $charID);
-	$self->sendToServer($msg);
-	debug "Sent Remove a friend\n", "sendPacket";
-}
 
 # 0x0204,18
 
