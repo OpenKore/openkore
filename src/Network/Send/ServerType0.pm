@@ -98,6 +98,7 @@ sub new {
 		'01E7' => ['novice_dori_dori'],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
@@ -489,16 +490,6 @@ sub sendEmotion {
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
 	$self->sendToServer($msg);
 	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
-# 0x0208,11,friendslistreply,2:6:10
-# Reject:0/Accept:1
-
-sub sendFriendRemove {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack("C*", 0x03, 0x02) . $accountID . $charID;
-	$self->sendToServer($msg);
-	debug "Sent Remove a friend\n", "sendPacket";
 }
 
 =pod

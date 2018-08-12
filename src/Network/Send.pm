@@ -1698,4 +1698,17 @@ sub sendChangeDress {
 	
 	debug "Sent Change Dress\n", "sendPacket", 2;
 }
+
+sub sendFriendRemove {
+	my ($self, $accountID, $charID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'friend_remove',
+		accountID => $accountID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Remove a friend\n", "sendPacket";
+}
+
 1;
