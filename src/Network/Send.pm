@@ -1737,4 +1737,17 @@ sub sendAdoptRequest {
 	debug "Sent Adoption Request.\n", "sendPacket", 2;
 }
 
+sub sendAdoptReply {
+	my ($self, $parentID1, $parentID2, $result) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'adopt_reply_request',
+		parentID1 => $parentID1,
+		parentID2 => $parentID2,
+		result => $result
+	}));
+	
+	debug "Sent Adoption Reply.\n", "sendPacket", 2;
+}
+
 1;

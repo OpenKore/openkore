@@ -96,6 +96,7 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01E7' => ['novice_dori_dori'],
+		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
 		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
@@ -1034,13 +1035,6 @@ sub sendWho {
 	my $msg = pack("v", 0x00C1);
 	$self->sendToServer($msg);
 	debug "Sent Who\n", "sendPacket", 2;
-}
-
-sub SendAdoptReply {
-	my ($self, $parentID1, $parentID2, $result) = @_;
-	my $msg = pack("v V3", 0x01F7, $parentID1, $parentID2, $result);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Reply.\n", "sendPacket", 2;
 }
 
 # 0x0213 has no info on eA
