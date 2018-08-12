@@ -1726,4 +1726,15 @@ sub sendRepairItem {
 	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
+sub sendAdoptRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'adopt_request',
+		ID => $ID,
+	}));
+	
+	debug "Sent Adoption Request.\n", "sendPacket", 2;
+}
+
 1;

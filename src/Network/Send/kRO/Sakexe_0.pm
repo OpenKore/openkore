@@ -1323,14 +1323,6 @@ sub SendAdoptReply {
 
 # 0x01f8,2
 
-# 0x01f9,6,adoptrequest,0
-sub SendAdoptRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack('v V', 0x01F9, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Request.\n", "sendPacket", 2;
-}
-
 # 0x01fa,48
 # TODO
 
