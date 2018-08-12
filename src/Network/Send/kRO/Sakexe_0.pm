@@ -86,6 +86,8 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
+		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
+		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
@@ -1312,14 +1314,6 @@ sub sendSuperNoviceExplosion {
 # 0x01f4,32
 # 0x01f5,9
 # 0x01f6,34
-
-# 0x01f7,14,adoptreply,0
-sub SendAdoptReply {
-	my ($self, $parentID1, $parentID2, $result) = @_;
-	my $msg = pack('v V3', 0x01F7, $parentID1, $parentID2, $result);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Reply.\n", "sendPacket", 2;
-}
 
 # 0x01f8,2
 
