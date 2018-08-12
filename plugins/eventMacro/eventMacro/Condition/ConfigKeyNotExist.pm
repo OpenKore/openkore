@@ -4,7 +4,7 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals;
+use Globals qw/%config/;
 use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
@@ -39,9 +39,6 @@ sub _parse_syntax {
 				$var_exists_hash->{$var->{display_name}} = undef;
 			}
 		} else {
-			if (get_real_key($member)) {
-				$member = get_real_key($member);
-			}
 			$self->{members_array}->[$member_index] = $member;
 		}
 	}
@@ -61,45 +58,27 @@ sub validate_condition {
 	
 	if ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
-		$self->check_keys;
 		
 	} elsif ($callback_type eq 'hook') {
 		
 		if ($callback_name eq 'configModify') {
 			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
-			return $self->SUPER::validate_condition if (!defined $args->{val});
-			
-			$self->{fulfilled_key} = undef;
-			$self->{fulfilled_member_index} = undef;
-			foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
-				my $key = $self->{members_array}->[$member_index];
-				$key = get_real_key($key) if get_real_key($key);
-				next unless (defined $key);
-				next if (get_real_key($key)); #if it is defined, then the config exists
-				next if (exists $config{$key} || $key eq $args->{key});
-				$self->{fulfilled_key} = $key;
-				$self->{fulfilled_member_index} = $member_index;
-				last;
-			}
-			
-		} else {
-			$self->check_keys;
+			return $self->SUPER::validate_condition if (!defined $args->{val});	
 		}
-		
-	} else {
-		$self->check_keys;
-	}
+	} 
+	$self->check_keys;
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
 
 sub check_keys {
-	my ( $self, $list ) = @_;
+	my ( $self ) = @_;
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 		my $key = $self->{members_array}->[$member_index];
 		$key = get_real_key($key) if (get_real_key($key));
+		next if (get_real_key($key)); #if it is defined, then the config exists
 		next unless (defined $key);
 		next if (exists $config{$key});
 		$self->{fulfilled_key} = $key;
@@ -109,7 +88,7 @@ sub check_keys {
 }
 
 sub get_real_key {
-	$_[0] =~ s/\.+/\./; # Filter Out Unnececary dot's
+	$_[0] =~ s/\.+/\./; # Filter Out unnecessary dot's
 	my ($label, $param) = split /\./, $_[0], 2; # Split the label form parameter
 	foreach (%::config) {
 		if ($_ =~ /_\d+_label/){ # we only need those blocks witch have labels
@@ -121,7 +100,6 @@ sub get_real_key {
 					$real_key .= $param;
 				}
 				return $real_key;
-				last;
 			};
 		};
 	};
