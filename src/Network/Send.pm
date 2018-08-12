@@ -1711,4 +1711,19 @@ sub sendFriendRemove {
 	debug "Sent Remove a friend\n", "sendPacket";
 }
 
+sub sendRepairItem {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'repair_item',
+		index => $args->{ID},
+		nameID => $args->{nameID},
+		status => $args->{status},
+		status2 => $args->{status2},
+		listID => $args->{listID},
+	}));
+	
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
+}
+
 1;
