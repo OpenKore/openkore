@@ -86,6 +86,7 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
+		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
@@ -1338,14 +1339,6 @@ sub SendAdoptRequest {
 
 # 0x01fc,-1
 
-# 0x01fd,4,repairitem,2
-sub sendRepairItem {
-	my ($self, $args) = @_;
-	my $msg = pack('C2 a2 v V2 C', 0x01FD, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
-	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
-}
-
 # 0x01fe,5
 # 0x01ff,10
 
@@ -1359,9 +1352,6 @@ sub sendRepairItem {
 # 0x0205,26
 # 0x0206,11
 # 0x0207,34
-
-# 0x0208,11,friendslistreply,2:6:10
-# sendFriendReject:0/sendFriendAccept:1
 
 sub SendPrivateairShiprequest {
 	my ($self, $args,$mapname,$ItemID) = @_;

@@ -97,6 +97,7 @@ sub new {
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01E7' => ['novice_dori_dori'],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
+		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
@@ -907,13 +908,6 @@ sub sendRemoveAttachments {
 	my $msg = pack("C*", 0x2A, 0x01);
 	$_[0]->sendToServer($msg);
 	debug "Sent remove attachments\n", "sendPacket", 2;
-}
-
-sub sendRepairItem {
-	my ($self, $args) = @_;
-	my $msg = pack("C2 a2 v V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
-	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
 }
 
 sub sendSellBulk {
