@@ -1698,4 +1698,56 @@ sub sendChangeDress {
 	
 	debug "Sent Change Dress\n", "sendPacket", 2;
 }
+
+sub sendFriendRemove {
+	my ($self, $accountID, $charID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'friend_remove',
+		accountID => $accountID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Remove a friend\n", "sendPacket";
+}
+
+sub sendRepairItem {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'repair_item',
+		index => $args->{ID},
+		nameID => $args->{nameID},
+		status => $args->{status},
+		status2 => $args->{status2},
+		listID => $args->{listID},
+	}));
+	
+	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
+}
+
+sub sendAdoptRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'adopt_request',
+		ID => $ID,
+	}));
+	
+	debug "Sent Adoption Request.\n", "sendPacket", 2;
+}
+
+sub sendAdoptReply {
+	my ($self, $parentID1, $parentID2, $result) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'adopt_reply_request',
+		parentID1 => $parentID1,
+		parentID2 => $parentID2,
+		result => $result
+	}));
+	
+	debug "Sent Adoption Reply.\n", "sendPacket", 2;
+}
+
 1;
