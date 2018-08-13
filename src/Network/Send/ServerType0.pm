@@ -96,8 +96,12 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01E7' => ['novice_dori_dori'],
+		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
+		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
+		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'021D' => ['less_effect'], # TODO
@@ -489,16 +493,6 @@ sub sendEmotion {
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
 	$self->sendToServer($msg);
 	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
-# 0x0208,11,friendslistreply,2:6:10
-# Reject:0/Accept:1
-
-sub sendFriendRemove {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack("C*", 0x03, 0x02) . $accountID . $charID;
-	$self->sendToServer($msg);
-	debug "Sent Remove a friend\n", "sendPacket";
 }
 
 =pod
@@ -918,13 +912,6 @@ sub sendRemoveAttachments {
 	debug "Sent remove attachments\n", "sendPacket", 2;
 }
 
-sub sendRepairItem {
-	my ($self, $args) = @_;
-	my $msg = pack("C2 a2 v V2 C1", 0xFD, 0x01, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
-	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
-}
-
 sub sendSellBulk {
 	my $self = shift;
 	my $r_array = shift;
@@ -1048,20 +1035,6 @@ sub sendWho {
 	my $msg = pack("v", 0x00C1);
 	$self->sendToServer($msg);
 	debug "Sent Who\n", "sendPacket", 2;
-}
-
-sub SendAdoptReply {
-	my ($self, $parentID1, $parentID2, $result) = @_;
-	my $msg = pack("v V3", 0x01F7, $parentID1, $parentID2, $result);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Reply.\n", "sendPacket", 2;
-}
-
-sub SendAdoptRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack("v V", 0x01F9, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Request.\n", "sendPacket", 2;
 }
 
 # 0x0213 has no info on eA

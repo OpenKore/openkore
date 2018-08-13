@@ -86,7 +86,11 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
+		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
+		'01F9' => ['adopt_request', 'V', [qw(ID)]],
+		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
+		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
@@ -1311,23 +1315,7 @@ sub sendSuperNoviceExplosion {
 # 0x01f5,9
 # 0x01f6,34
 
-# 0x01f7,14,adoptreply,0
-sub SendAdoptReply {
-	my ($self, $parentID1, $parentID2, $result) = @_;
-	my $msg = pack('v V3', 0x01F7, $parentID1, $parentID2, $result);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Reply.\n", "sendPacket", 2;
-}
-
 # 0x01f8,2
-
-# 0x01f9,6,adoptrequest,0
-sub SendAdoptRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack('v V', 0x01F9, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Adoption Request.\n", "sendPacket", 2;
-}
 
 # 0x01fa,48
 # TODO
@@ -1337,14 +1325,6 @@ sub SendAdoptRequest {
 
 # 0x01fc,-1
 
-# 0x01fd,4,repairitem,2
-sub sendRepairItem {
-	my ($self, $args) = @_;
-	my $msg = pack('C2 a2 v V2 C', 0x01FD, $args->{ID}, $args->{nameID}, $args->{status}, $args->{status2}, $args->{listID});
-	$self->sendToServer($msg);
-	debug ("Sent repair item: ".$args->{ID}."\n", "sendPacket", 2);
-}
-
 # 0x01fe,5
 # 0x01ff,10
 
@@ -1353,22 +1333,11 @@ sub sendRepairItem {
 
 # 0x0201,-1
 
-# 0x0203,10,friendslistremove,2:6
-sub sendFriendRemove {
-	my ($self, $accountID, $charID) = @_;
-	my $msg = pack('v a4 a4', 0x0203, $accountID, $charID);
-	$self->sendToServer($msg);
-	debug "Sent Remove a friend\n", "sendPacket";
-}
-
 # 0x0204,18
 
 # 0x0205,26
 # 0x0206,11
 # 0x0207,34
-
-# 0x0208,11,friendslistreply,2:6:10
-# sendFriendReject:0/sendFriendAccept:1
 
 sub SendPrivateairShiprequest {
 	my ($self, $args,$mapname,$ItemID) = @_;
