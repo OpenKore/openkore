@@ -2274,10 +2274,52 @@
 4556#Carta Fenrir#
 4557#Carta Fenris#
 4559#Carta do Rei Morroc#
+4560#Carta Alphoccio Basil#
+4561#Carta Celia Alde#
+4562#Carta Chen Liu#
+4563#Carta Flamel Emul#
+4564#Carta Gertie Wie#
+4565#Carta Randel Lawrence#
+4566#Carta Trentini#
+4567#Carta Menestrel Alphoccio#
+4568#Carta Professora Celia#
+4569#Carta Mestre Chen#
+4570#Carta Criador Flamel#
+4571#Carta Desordeira Gertie#
+4572#Carta Paladino Randel#
+4573#Carta Cigana Trentini#
+4574#Carta General Daehyun#
+4575#Carta Samurai Soheon#
+4576#Carta Gioia#
+4577#Carta Elvira#
+4578#Carta Pyuriel Furiosa#
+4579#Carta Guerreira Laura#
+4580#Carta Guardião Morto Kades#
+4581#Carta Rudo#
+4582#Carta Bungisngis#
+4583#Carta Engkanto#
+4584#Carta Manananggal#
+4585#Carta Mangkukulam#
+4586#Carta Tikbalang#
+4587#Carta Tiyanak#
+4588#Carta Wakwak#
+4589#Carta Jejeling#
+4590#Carta Bangungot#
+4591#Carta Bakonawa#
+4592#Carta Buwaya#
+4593#Carta Menblatt#
+4594#Carta Petal#
+4595#Carta Cenere#
+4596#Carta Antigo Livro Danificado#
+4597#Carta Lichtern Azul#
+4598#Carta Lichtern Amarelo#
+4599#Carta Lichtern Vermelho#
+4600#Carta Lichtern Verde#
 4601#Carta Amdarais#
 4603#Carta Origem da Maldição#
 4605#Carta Cavaleiro Desmorto#
 4606#Carta Cavaleira Desmorta#
+4607#Carta Gerente de Bifröst#
 4624#Carta Tao Gunka Selada#
 4625#Carta Vigia do Tempo#
 4626#Carta Marca-Tempo#
@@ -3137,6 +3179,7 @@
 5930#Tiara da Valquíria Mágica#
 5931#Chapéu de Poltergeist#
 5933#Máscara do Tengu Corvo#
+5945#Lápis Mastigado#
 5967#Galapago Voador#
 5975#Boneca da Jirtas#
 5978#Vacina da Cura#
@@ -6646,6 +6689,7 @@
 22172#Botas Aladas#
 22182#Sapatos da Penitência#
 22189#Sapato Social#
+22191#Sapato Infernal#
 22507#Velho Pergaminho#
 22508#Emblema do Éden#
 22511#Carta Fenris Fenrir#
@@ -6873,6 +6917,7 @@
 31166#Capuz de Ursinho#
 31167#Orelhas Pretas de Lunático#
 31168#Abafadores de Orelha de Carneiro#
+31169#Chapéu do Agreste#
 31176#Boina de Ursinho#
 31177#Chapéu Mãe Natureza#
 31178#Cachecol em Chamas#
@@ -6904,6 +6949,7 @@
 31314#Chifres de Oni Adornados#
 31315#Estola Angelical#
 31316#Revoada de Borboletas#
+31318#Deviruchi Inflável#
 31325#Coroa da Rainha Scaraba#
 31329#Peruca de Alice#
 31331#Bao-Bao da Donzela Verde#

@@ -27,7 +27,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x617840AB, 0x2E4C4F40, 0x04426639
+sendCryptKeys 0x5C6B1429, 0x7D6B5A7C, 0x55AD2C5F
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -47,7 +47,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x617840AB, 0x2E4C4F40, 0x04426639
+sendCryptKeys 0x5C6B1429, 0x7D6B5A7C, 0x55AD2C5F
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
