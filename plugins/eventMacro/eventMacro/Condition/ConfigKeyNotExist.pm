@@ -4,9 +4,9 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals qw/%config/;
+use Globals qw( %config );
 use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
 	['configModify','pos_load_config.txt','in_game'];
@@ -60,27 +60,27 @@ sub validate_condition {
 		$self->update_vars($callback_name, $args);
 		
 	} elsif ($callback_type eq 'hook') {
-		
 		if ($callback_name eq 'configModify') {
+			$self->check_keys($args->{key});
+			
 			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
-			return $self->SUPER::validate_condition if (!defined $args->{val});	
+			return $self->SUPER::validate_condition if (!defined $args->{val});
 		}
-	} 
+	}
 	$self->check_keys;
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
 
 sub check_keys {
-	my ( $self ) = @_;
+	my ( $self, $key_from_arg ) = @_;
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 		my $key = $self->{members_array}->[$member_index];
-		$key = get_real_key($key) if (get_real_key($key));
-		next if (get_real_key($key)); #if it is defined, then the config exists
 		next unless (defined $key);
-		next if (exists $config{$key});
+		$key = get_real_key($key) if ($key =~ /\./); #if have a dot, probably is a label
+		next if (exists $config{$key} || $key eq $key_from_arg );
 		$self->{fulfilled_key} = $key;
 		$self->{fulfilled_member_index} = $member_index;
 		last;
@@ -88,11 +88,12 @@ sub check_keys {
 }
 
 sub get_real_key {
+	# Basic Support for "label" in blocks. Thanks to "piroJOKE" (from Commands.pm, sub cmdConf)
 	$_[0] =~ s/\.+/\./; # Filter Out unnecessary dot's
-	my ($label, $param) = split /\./, $_[0], 2; # Split the label form parameter
-	foreach (%::config) {
-		if ($_ =~ /_\d+_label/){ # we only need those blocks witch have labels
-			if ($::config{$_} eq $label) {
+	my ($label, $param) = split /\./, $_[0], 2; # Split the label from parameter
+	foreach (keys %config) {
+		if ($_ =~ /_\d+_label/){ # we only need those blocks which have labels
+			if ($config{$_} eq $label) {
 				my ($real_key, undef) = split /_label/, $_, 2;
 				# "<label>.block" param support. Thanks to "vit"
 				if ($param ne "block") {
@@ -100,11 +101,12 @@ sub get_real_key {
 					$real_key .= $param;
 				}
 				return $real_key;
-			};
-		};
-	};
+			}
+		}
+	}
+	#if not found any label, return UNchanged key
+	return $_[0];
 }
-
 
 sub get_new_variable_list {
 	my ($self) = @_;
