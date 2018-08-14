@@ -20790,6 +20790,331 @@ Tipo de item: ^777777Carta^000000
 Equipado em: ^777777Calçados^000000
 Peso: ^7777771^000000
 #
+4560#
+^0000ffEsquiva +20.^000000
+^0000ffHabilita [Poema de Bragi] nv. 10 em chicotes.^000000
+VIT base 110 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4561#
+^0000ffDano mágico +7%.^000000
+Ao receber danos mágicos:
+^0000ff10% de chance de autoconjurar [Proteger Terreno] nv. 5.^000000
+DES base 110 ou mais:
+^0000ffDano mágico +7% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4562#
+^0000ffDano físico +7%.^000000
+Ao receber danos físicos:
+^0000ff10% de chance de autoconjurar [Impacto Psíquico] nv. 5.^000000
+AGI base 110 ou mais:
+^0000ffDano físico +7% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4563#
+^0000ffCRIT +20.^000000
+Ao receber danos físicos:
+^0000ff10% de chance de consumir 1 Frasco de Ácido para autoconjurar [Terror Ácido] nv. 5.^000000
+FOR base 110 ou mais:
+^0000ffCRIT +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4564#
+^0000ffPrecisão +20.^000000
+Ao receber danos físicos:
+^0000ff10% de chance de autoconjurar [Remoção Total] nv. 1.^000000
+SOR base 110 ou mais:
+^0000ffPrecisão +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4565#
+^0000ffHP máx. +10%.^000000
+Ao receber danos mágicos:
+^0000ff10% de chance de autoconjurar [Crux Magnum] nv. 10.^000000
+INT base 110 ou mais:
+^0000ffHP máx. +10% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4566#
+^0000ffEsquiva +20.^000000
+^0000ffHabilita [Beijo da Sorte] nv. 10 em instrumentos musicais.^000000
+VIT base 110 ou mais:
+^0000ffEsquiva +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4567#
+^0000ffEsquiva +10.^000000
+Bardos e evoluções:
+^0000ffHP máx. +10%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4568#
+^0000ffEsquiva +10.^000000
+^0000ffHabilita [Abracadabra] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4569#
+^0000ffEsquiva +10.^000000
+^0000ffHabilita [Invocar Esfera Espiritual] nv. 2.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4570#
+^0000ffEsquiva +10.^000000
+^0000ffRecuperação de HP da [Poção Vermelha Compacta], [Poção Amarela Compacta] e [Poção Branca Compacta] +200%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4571#
+^0000ffEsquiva +10.^000000
+^0000ffHabilita [Confinamento] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4572#
+^0000ffEsquiva +10.^000000
+^0000ffHabilita [Bloqueio] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4573#
+^0000ffEsquiva +10.^000000
+Odaliscas e evoluções:
+^0000ffHP máx. +10%.^000000
+^0000ffSP máx. +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4574#
+^0000ffATQ +100 em Espadas de uma ou duas mãos.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
+#
+4575#
+^0000ffATQ +10.^000000
+Adaga com refino +10 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Adaga com refino +14 ou mais:
+^0000ffVelocidade de ataque +1 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
+#
+4576#
+^0000ffDano mágico de propriedade Vento e Fantasma +100%.^000000
+^0000ffResistência a todas as propriedades^000000 ^ff0000-30%^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4577#
+^0000ffDano mágico de propriedade Vento e Fantasma +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso ^7777771^000000
+#
+4578#
+^0000ffDano crítico +30%.^000000
+^0000ffResistência a todas as raças^000000 ^ff0000-10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
+#
+4579#
+^0000ffATQ +20 e CRIT +10 em Maças.^000000
+A cada refino da maça:
+^0000ffATQ e CRIT +1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
+#
+4580#
+^0000ffResistência as propriedades Fantasma e Sagrado^000000 ^ff0000-100%.^000000
+^0000ffResistência as propriedades Fogo, Terra, Água, Vento, Sombrio e Maldito +50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4581#
+Ao receber danos físicos:
+^0000ff3% de chance de drenar 40 de SP para ativar um [efeito] por 3 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffAGI +44.^000000
+^0000ffAtiva [Vigor].^000000
+^0000ffAumenta a velocidade de movimento.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso ^7777771^000000
+#
+4582#
+A cada 2 refinos:
+^0000ffHP máx. +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4583#
+^0000ffIgnora 30% da DEF da raça Planta.^000000
+^0000ffDano físico e mágico contra monstros de propriedade Veneno +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4584#
+^0000ffSP máx.^000000 ^ff0000-1%.^000000
+A cada ataque físico:
+^0000ffRecupera 1 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
+#
+4585#
+^0000ffSP máx. +10%.^000000
+A cada monstro morto:
+^0000ffDrena 666 de HP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4586#
+^0000ffATQM +10.^000000
+^0000ffDano mágico de propriedade Vento +5%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Vento +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4587#
+^0000ffCRIT +12 em oponentes da raça Humanoide, Bruto e Peixe.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso ^7777771^000000
+#
+4588#
+^0000ffATQ +5 a cada 10 de FOR base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4589#
+^0000ffHP máx. +200 a cada 10 de VIT base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4590#
+^0000ffINT +4.^000000
+Ao receber danos mágicos:
+^0000ffAltas chances de autoconjurar [Sussurro de Morfeu] nv. 4.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4591#
+^0000ffFOR +4.^000000
+Ao receber danos físicos:
+^0000ffAltas chances de autoconjurar [Sangria] nv. 4.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso ^7777771^000000
+#
+4592#
+^0000ffVIT +4.^000000
+Ao receber danos mágicos:
+^0000ffAltas chances de autoconjurar [Olhar da Medusa] nv. 4.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+
+Peso ^7777771^000000
+#
+4593#
+^0000ffDano físico a distância +1% a cada 10 de DES base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4594#
+^0000ffDano crítico +2% a cada 10 de SOR base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4595#
+^0000ffVelocidade de ataque +2% a cada 10 de AGI base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4596#
+^0000ffATQM +5 a cada 10 de INT base.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso ^7777771^000000
+#
+4597#
+^0000ffATQM +10.^000000
+^0000ffDano mágico de propriedade Água +5%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Água +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4598#
+^0000ffATQM +10.^000000
+^0000ffDano mágico de propriedade Fantasma +5%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Fantasma +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4599#
+^0000ffATQM +10.^000000
+^0000ffDano mágico de propriedade Fogo +5%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Fogo +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
+4600#
+^0000ffATQM +10.^000000
+^0000ffDano mágico de propriedade Terra +5%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Terra +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso ^7777771^000000
+#
 4601#
 ^0000ffDano físico +15%.^000000
 ^0000ffDano mágico +15%.^000000
@@ -20839,6 +21164,16 @@ Ao desequipar:
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
+#
+4607#
+^0000ffATQ e ATQM +5.^000000
+Livro com refino +10 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Livro com refino +14 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso ^7777771^000000
 #
 4624#
 HP Máximo + 50%, DEF -50%, DEFM - 50%.
@@ -28346,6 +28681,16 @@ Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^7777773^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+5945#
+Alguém de natureza destrutiva mastigou o lápis até deixar nele marcas profundas de dente. Ao menos conseguiram impedir os seus atos de destruição contra os demais materiais de escritório.
+^0000ffAo realizar ataques físicos, 2% de chance de encantar a arma com propriedade Fogo por 60 segundos.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
 5967#
@@ -56009,6 +56354,33 @@ Peso: ^77777750^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+22191#
+Um par de sapatos tão ardente quanto a sua inspiração: um temido deus cujas mãos controlavam a guerra e a morte.
+--------------------------
+^0000ffATQM +5 por refino.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Carta Flor do Luar]^000000
+^0000ffHabilita [Curar] nv. 10.^000000
+Até o nível base 99:
+^0000ffATQM +5 por refino.^000000
+^000088A cada refino até o +10:^000000
+^0000ffDEFM +3.^000000
+^000088Refino +11 ou mais:^000000
+^0000ffDEFM +30.^000000
+Nível base 100 ou mais:
+^0000ffATQM +15 por refino.^000000
+^000088A cada refino até o +10:^000000
+^0000ffDEFM +5.^000000
+^000088Refino +11 ou mais:^000000
+^0000ffDEFM +50.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+Defesa: ^77777718^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
 22507#
 Esse pergaminho deteriorado possui poder temporal capaz de teleportar para uma área aleatória.
 Peso: ^7777771^000000
@@ -58556,6 +58928,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31169#
+Direto do interior do deserto de Morroc, esse chapéu carrega a essência da cultura agreste de Rune-Midgard. Com ele, qualquer um sabe o quanto você é forte igual rapadura, e que não aceita desaforo de nenhum cabra ruim.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31176#
 Macia e fofinha, essa boina de ursinho é ideal para os adeptos de um visual mais kawaii, como costumam dizer os jovens de Amatsu.
 Você sente como se o ursinho te observasse o tempo todo. Lendas dizem que quando sua energia acaba, o fofinho Freddy Tazbear cria vida para te assombrar.
@@ -58827,6 +59207,14 @@ Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31318#
+Um adorável Deviruchi que tem, pelo menos, duas vezes o tamanho da sua cabeça. Ele te acompanha por todos os lados, balançando-se pra frente e pra trás, repleto de gás hélio. Mas não, nem pense em desinflá-lo só para sugar o gás e sair por aí com a voz engraçada.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 31325#
 Quando uma Rainha Scaraba renuncia de seu cargo, sua coroa é enterrada nos cantos mais escuros do Túnel Kamidal. O que não contavam é que arqueólogos logo encontrariam esse local em suas escavações, o que tornaria esse acessório uma grande moda entre os aventureiros.
