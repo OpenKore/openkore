@@ -5,7 +5,6 @@ use strict;
 use base 'eventMacro::Condition';
 
 use Globals qw( %config );
-use eventMacro::Data;
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
