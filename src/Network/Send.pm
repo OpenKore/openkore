@@ -1750,4 +1750,14 @@ sub sendAdoptReply {
 	debug "Sent Adoption Reply.\n", "sendPacket", 2;
 }
 
+sub sendPrivateAirshipRequest {
+	my ($self, $args) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'private_airship_request',
+		map_name => stringToBytes($args->{map_name}),
+		nameID => $args->{nameID},
+	}));
+}
+
 1;
