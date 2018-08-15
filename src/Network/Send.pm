@@ -1751,12 +1751,12 @@ sub sendAdoptReply {
 }
 
 sub sendPrivateAirshipRequest {
-	my ($self, $args) = @_;
+	my ($self, $map_name, $nameID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'private_airship_request',
-		map_name => stringToBytes($args->{map_name}),
-		nameID => $args->{nameID},
+		map_name => stringToBytes($map_name),
+		nameID => $nameID,
 	}));
 }
 
