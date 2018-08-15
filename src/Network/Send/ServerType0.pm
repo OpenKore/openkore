@@ -964,12 +964,6 @@ sub sendStorageGetToCart {
 	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
-sub sendSuperNoviceDoriDori {
-	my $msg = pack("C*", 0xE7, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
-}
-
 # 0x011b,20,useskillmap,2:4
 sub sendWarpTele { # type: 26=tele, 27=warp
 	my ($self, $skillID, $map) = @_;
