@@ -86,6 +86,7 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
+		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
@@ -1298,12 +1299,6 @@ sub sendPartyOrganize {
 # 0x01ea,6
 # 0x01eb,10
 # 0x01ec,26
-
-# 0x01ed,2,snexplosionspirits,0
-sub sendSuperNoviceExplosion {
-	$_[0]->sendToServer(pack('v', 0x01ED));
-	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
-}
 
 # 0x01ee,-1
 # 0x01ef,-1

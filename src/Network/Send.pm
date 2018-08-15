@@ -1760,4 +1760,12 @@ sub sendPrivateAirshipRequest {
 	}));
 }
 
+sub sendNoviceExplosionSpirits {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'novice_explosion_spirits'}));
+	
+	debug "Sent Novice Explosion Spirits\n", "sendPacket", 2;
+}
+
 1;
