@@ -83,6 +83,7 @@ sub new {
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
@@ -1138,14 +1139,6 @@ sub sendArrowCraft {
 	my $msg = pack('v2', 0x01AE, $nameID);
 	$self->sendToServer($msg);
 	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
-}
-
-# 0x01af,4,changecart,2
-sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
-	my ($self, $lvl) = @_;
-	my $msg = pack('v2', 0x01AF, $lvl);
-	$self->sendToServer($msg);
-	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
 }
 
 # 0x01b0,11

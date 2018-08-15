@@ -89,6 +89,7 @@ sub new {
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
+		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01C0' => ['request_remain_time'],
@@ -846,14 +847,6 @@ sub sendPetName {
 	my $msg = pack('v a24', 0x01A5, stringToBytes($name));
 	$self->sendToServer($msg);
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
-}
-
-# 0x01af,4,changecart,2
-sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
-	my ($self, $lvl) = @_;
-	my $msg = pack('v2', 0x01AF, $lvl);
-	$self->sendToServer($msg);
-	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
 }
 
 sub sendPreLoginCode {

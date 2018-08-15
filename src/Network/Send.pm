@@ -1779,4 +1779,16 @@ sub sendBanCheck {
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
+sub sendChangeCart {
+	my ($self, $lvl) = @_;
+	
+	# lvl: 1..5
+	$self->sendToServer($self->reconstruct({
+		switch => 'change_cart',
+		lvl => $lvl,
+	}));
+	
+	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
+}
+
 1;
