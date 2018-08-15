@@ -89,6 +89,7 @@ sub new {
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
+		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
@@ -254,13 +255,6 @@ sub sendAlignment {
 		type => $alignment,
 	}));
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
-}
-
-sub sendArrowCraft {
-	my ($self, $nameID) = @_;
-	my $msg = pack("C*", 0xAE, 0x01) . pack("v*", $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
 }
 
 # 0x0089,7,actionrequest,2:6

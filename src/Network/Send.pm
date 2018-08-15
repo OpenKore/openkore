@@ -1791,4 +1791,15 @@ sub sendChangeCart {
 	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
 }
 
+sub sendArrowCraft {
+	my ($self, $nameID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'make_arrow',
+		nameID => $nameID,
+	}));
+	
+	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
+}
+
 1;

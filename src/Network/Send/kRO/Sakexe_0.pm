@@ -83,6 +83,7 @@ sub new {
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
@@ -1132,14 +1133,6 @@ sub sendPetEmotion{
 # 0x01ab,12
 # 0x01ac,6
 # 0x01ad,-1
-
-# 0x01ae,4,selectarrow,2
-sub sendArrowCraft {
-	my ($self, $nameID) = @_;
-	my $msg = pack('v2', 0x01AE, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
-}
 
 # 0x01b0,11
 # 0x01b1,7
