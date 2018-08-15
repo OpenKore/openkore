@@ -85,6 +85,7 @@ sub new {
 		'012E' => ['shop_close'], # len 2
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
+		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
@@ -1215,13 +1216,6 @@ sub sendGMSummon {
 
 # 0x01cc,9
 # 0x01cd,30
-
-# 0x01ce,6,autospell,2
-sub sendAutoSpell {
-	my ($self, $ID) = @_;
-	my $msg = pack('v V', 0x01CE, $ID);
-	$self->sendToServer($msg);
-}
 
 # 0x01cf,28
 # 0x01d0,8

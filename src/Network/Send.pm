@@ -1802,4 +1802,13 @@ sub sendArrowCraft {
 	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
 }
 
+sub sendAutoSpell {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auto_spell',
+		ID => $ID,
+	}));
+}
+
 1;
