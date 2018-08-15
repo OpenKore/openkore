@@ -1768,4 +1768,15 @@ sub sendNoviceExplosionSpirits {
 	debug "Sent Novice Explosion Spirits\n", "sendPacket", 2;
 }
 
+sub sendBanCheck {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'ban_check',
+		accountID => $ID,
+	}));
+	
+	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
+}
+
 1;

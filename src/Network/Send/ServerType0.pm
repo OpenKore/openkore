@@ -282,15 +282,6 @@ sub sendAutoSpell {
 	$self->sendToServer($msg);
 }
 
-sub sendBanCheck {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'ban_check',
-		accountID => $ID,
-	}));
-	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
-}
-
 # 0x00c8,-1,npcbuylistsend,2:4
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;

@@ -1237,15 +1237,6 @@ sub sendAutoSpell {
 	$self->sendToServer($msg);
 }
 
-sub sendBanCheck {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'ban_check',
-		accountID => $ID,
-	}));
-	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
-}
-
 # 0x01cf,28
 # 0x01d0,8
 # 0x01d1,14
