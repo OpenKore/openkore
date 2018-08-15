@@ -20897,7 +20897,7 @@ Peso ^7777771^000000
 #
 4572#
 ^0000ffEsquiva +10.^000000
-^0000ffHabilita [Bloqueio] nv. 1.^000000
+^0000ffHabilita [Bloqueio] nv. 3.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso ^7777771^000000
@@ -20998,7 +20998,7 @@ Peso ^7777771^000000
 4585#
 ^0000ffSP máx. +10%.^000000
 A cada monstro morto:
-^0000ffDrena 666 de HP do usuário.^000000
+^0000ffAnula o efeito de recuperar em até 666 de HP ao derrotar monstros com ataques físicos de curta distância.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso ^7777771^000000
@@ -21049,7 +21049,7 @@ Peso ^7777771^000000
 4592#
 ^0000ffVIT +4.^000000
 Ao receber danos mágicos:
-^0000ffAltas chances de autoconjurar [Olhar da Medusa] nv. 4.^000000
+^0000ffChances de autoconjurar [Olhar da Medusa] nv. 4.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 
@@ -56362,7 +56362,7 @@ Um par de sapatos tão ardente quanto a sua inspiração: um temido deus cujas m
 ^FF6347Conjunto^000000
 ^FF6347[Carta Flor do Luar]^000000
 ^0000ffHabilita [Curar] nv. 10.^000000
-Até o nível base 99:
+No nível base 99:
 ^0000ffATQM +5 por refino.^000000
 ^000088A cada refino até o +10:^000000
 ^0000ffDEFM +3.^000000
