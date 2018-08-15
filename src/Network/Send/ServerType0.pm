@@ -94,6 +94,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01C0' => ['request_remain_time'],
+		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
@@ -269,12 +270,6 @@ sub sendAttackStop {
 	# Don't use this function, use Misc::stopAttack() instead!
 	#sendMove ($char->{'pos_to'}{'x'}, $char->{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
-}
-
-sub sendAutoSpell {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xce, 0x01, $ID, 0x00, 0x00, 0x00);
-	$self->sendToServer($msg);
 }
 
 # 0x00c8,-1,npcbuylistsend,2:4
