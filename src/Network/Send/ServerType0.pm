@@ -96,6 +96,7 @@ sub new {
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01E7' => ['novice_dori_dori'],
+		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
@@ -967,13 +968,6 @@ sub sendSuperNoviceDoriDori {
 	my $msg = pack("C*", 0xE7, 0x01);
 	$_[0]->sendToServer($msg);
 	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
-}
-
-# TODO: is this the sn mental ingame triggered trough the poem?
-sub sendSuperNoviceExplosion {
-	my $msg = pack("C*", 0xED, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
 }
 
 # 0x011b,20,useskillmap,2:4
