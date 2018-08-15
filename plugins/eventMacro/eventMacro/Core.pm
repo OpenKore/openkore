@@ -830,8 +830,9 @@ sub get_scalar_var {
 		}
 		
 		# Field-related variables.
-		elsif ( $variable_name eq '.map' )    { return $field ? $field->baseName : ''; }
-		elsif ( $variable_name eq '.incity' ) { return $field && $field->isCity ? 1 : 0; }
+		elsif ( $variable_name eq '.map' )      { return $field ? $field->baseName : ''; }
+		elsif ( $variable_name eq '.incity' )   { return $field && $field->isCity ? 1 : 0; }
+		elsif ( $variable_name eq '.inlockmap') { return $field && $field->baseName eq $config{lockMap} ? 1 : 0; }
 
 		# Character-related variables.
 		elsif ( $variable_name eq '.job' )          { return $char && $jobs_lut{ $char->{jobID} } || ''; }
@@ -854,6 +855,9 @@ sub get_scalar_var {
 			return '' if !$char;
 			return join ',', keys %{ $char->{statuses} } ;
 		}
+		
+		# Inventory-related variables.
+		elsif( $variable_name eq '.inventoryitems' )      { return $char && $char->inventory->isReady ? $char->inventory->size : 0; }
 
 		# Cart-related variables.
 		elsif ( $variable_name eq '.cartweight' )       { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
@@ -861,6 +865,7 @@ sub get_scalar_var {
 		elsif ( $variable_name eq '.cartmaxweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight_max} : 0; }
 		elsif ( $variable_name eq '.cartitems' )        { return $char && $char->cart->isReady ? $char->cart->items        : 0; }
 		elsif ( $variable_name eq '.cartmaxitems' )     { return $char && $char->cart->isReady ? $char->cart->items_max    : 0; }
+		elsif ( $variable_name eq '.shopopen' )         { return $char && $shopstarted ? 1 : 0}
 
 		# Storage-related variables.
 		elsif ( $variable_name eq '.storageopen' )     { return $char && $char->storage->isReady              ? 1                         : 0; }
