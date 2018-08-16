@@ -305,14 +305,6 @@ sub sendGMMessage {
 # 0x00bd,44
 # 0x00be,5
 
-# 0x00bf,3,emotion,2
-sub sendEmotion {
-	my ($self, $ID) = @_;
-	my $msg = pack('v C', 0x00BF, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
 # 0x00c0,7
 
 # 0x00c1,2,howmanyconnections,0
