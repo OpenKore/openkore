@@ -1876,4 +1876,18 @@ sub sendGetIgnoreList {
 	debug "Sent get Ignore List.\n", "sendPacket", 2;
 }
 
+sub sendChatRoomCreate {
+	my ($self, $title, $limit, $public, $password) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_create',
+		limit => $limit,
+		public => $public,
+		password => stringToBytes($password),
+		title => stringToBytes($title),
+	}));
+	
+	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
+}
+
 1;
