@@ -1822,4 +1822,11 @@ sub sendEmotion {
 	debug "Sent Emotion\n", "sendPacket", 2;
 }
 
+sub sendWho {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'request_user_count'}));
+	debug "Sent Who (User Count)\n", "sendPacket", 2;
+}
+
 1;

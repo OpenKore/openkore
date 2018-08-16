@@ -64,6 +64,7 @@ sub new {
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
+		'00C1' => ['request_user_count'],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -983,13 +984,6 @@ sub sendTop10Taekwon {
 	my $msg = pack("v", 0x0225);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
-}
-
-sub sendWho {
-	my $self = shift;
-	my $msg = pack("v", 0x00C1);
-	$self->sendToServer($msg);
-	debug "Sent Who\n", "sendPacket", 2;
 }
 
 # 0x0213 has no info on eA

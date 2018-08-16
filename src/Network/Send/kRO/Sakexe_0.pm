@@ -61,6 +61,8 @@ sub new {
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
+		'00BF' => ['send_emotion', 'C', [qw(ID)]],
+		'00C1' => ['request_user_count'],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -306,12 +308,6 @@ sub sendGMMessage {
 # 0x00be,5
 
 # 0x00c0,7
-
-# 0x00c1,2,howmanyconnections,0
-sub sendWho {
-	$_[0]->sendToServer(pack('v', 0x00C1));
-	debug "Sent Who\n", "sendPacket", 2;
-}
 
 # 0x00c2,6
 # 0x00c3,8
