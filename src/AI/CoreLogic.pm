@@ -626,7 +626,8 @@ sub processEscapeUnknownMaps {
 				ai_route($field->baseName, $randX, $randY,
 					 maxRouteTime => $config{route_randomWalk_maxRouteTime},
 					 attackOnRoute => 2,
-					 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
+					 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
+					 isRandomWalk => 1);
 			}
 		}
 	}
@@ -2154,7 +2155,8 @@ sub processRandomWalk {
 			ai_route($field->baseName, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,
-				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
+				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
+				isRandomWalk => 1);
 		}
 	}
 }
@@ -2975,6 +2977,9 @@ sub processAutoAttack {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
 			ai_setSuspend(0);
+			
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+			
 			$char->attack($attackTarget);
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
