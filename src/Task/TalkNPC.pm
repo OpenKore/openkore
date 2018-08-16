@@ -788,6 +788,10 @@ sub cancelTalk {
 		$self->conversation_end;
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 		
+	} elsif (!$ai_v{'npc_talk'}{'talk'}) {
+		$self->conversation_end;
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+		
 	}
 	
 }
