@@ -1890,4 +1890,16 @@ sub sendChatRoomCreate {
 	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
 
+sub sendChatRoomJoin {
+	my ($self, $ID, $password) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_join',
+		ID => $ID,
+		password => stringToBytes($password),
+	}));
+	
+	debug "Sent Join Chat Room: ".getHex($ID).", $password\n", "sendPacket", 2;
+}
+
 1;
