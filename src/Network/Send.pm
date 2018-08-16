@@ -1811,4 +1811,15 @@ sub sendAutoSpell {
 	}));
 }
 
+sub sendEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'emotion',
+		ID => $ID,
+	}));
+	
+	debug "Sent Emotion\n", "sendPacket", 2;
+}
+
 1;

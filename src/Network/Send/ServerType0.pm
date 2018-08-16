@@ -63,6 +63,7 @@ sub new {
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
+		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -468,13 +469,6 @@ sub sendDealTrade {
 	my $msg = pack("C*", 0xEF, 0x00);
 	$_[0]->sendToServer($msg);
 	debug "Sent Deal Trade\n", "sendPacket", 2;
-}
-
-sub sendEmotion {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
-	$self->sendToServer($msg);
-	debug "Sent Emotion\n", "sendPacket", 2;
 }
 
 =pod
