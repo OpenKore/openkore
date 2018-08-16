@@ -67,6 +67,7 @@ sub new {
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
+		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -362,17 +363,6 @@ sub sendGMKillAll {
 # 0x00d2,4
 
 # 0x00d4,-1
-
-# 0x00d5,-1,createchatroom,2:4:6:7:15
-sub sendChatRoomCreate {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	$title = stringToBytes($title);
-
-	my $msg = pack('v3 C Z8 a*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), $title);
-	$self->sendToServer($msg);
-	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
 
 # 0x00d6,3
 # 0x00d7,-1
