@@ -550,10 +550,10 @@ sub modifyPacketIn {
 			}
 		} else {
 			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort)]}} = unpack('a4 Z16 a4 v', substr($msg, 2));
-		}
-		if(!$masterServer->{'private'}) {
 			$mapInfo->{mapIP} = inet_ntoa($mapInfo->{mapIP});
-		} else {
+		}
+
+		if($masterServer->{'private'}) {
 			$mapInfo->{mapIP} = $masterServer->{ip};
 		}
 
