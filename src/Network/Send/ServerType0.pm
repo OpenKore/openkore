@@ -66,6 +66,7 @@ sub new {
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -634,20 +635,6 @@ sub sendIdentify {
 		ID => $ID,
 	}));
 	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
-}
-
-sub sendIgnore {
-	my $self = shift;
-	my $name = shift;
-	my $flag = shift;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName = $binName . chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0xCF, 0x00) . $binName . pack("C*", $flag);
-
-	$self->sendToServer($msg);
-	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
 }
 
 sub sendIgnoreAll {
