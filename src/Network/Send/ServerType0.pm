@@ -63,6 +63,12 @@ sub new {
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
+		'00BF' => ['send_emotion', 'C', [qw(ID)]],
+		'00C1' => ['request_user_count'],
+		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
+		'00D0' => ['ignore_all', 'C', [qw(flag)]],
+		'00D3' => ['get_ignore_list'],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -470,42 +476,12 @@ sub sendDealTrade {
 	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
-sub sendEmotion {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
-	$self->sendToServer($msg);
-	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
 =pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
 	my $msg = pack("C*", 0x93, 0x01) . $ID;
 	$self->sendToServer($msg);
 	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
-
-sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
-	my ($self, $ID, $type) = @_;
-	my $msg = pack('v a4 C', 0x00C5, $ID , $type);
-	$self->sendToServer($msg);
-	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-=pod
-sub sendGetStoreList {
-	my ($self, $ID, $type) = @_;
-	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x00);
-	$self->sendToServer($msg);
-	debug "Sent get store list: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendGetSellList {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x01);
-	$self->sendToServer($msg);
-	debug "Sent sell to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 =cut
 
@@ -661,36 +637,6 @@ sub sendIdentify {
 		ID => $ID,
 	}));
 	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
-}
-
-sub sendIgnore {
-	my $self = shift;
-	my $name = shift;
-	my $flag = shift;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName = $binName . chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0xCF, 0x00) . $binName . pack("C*", $flag);
-
-	$self->sendToServer($msg);
-	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
-}
-
-sub sendIgnoreAll {
-	my $self = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0xD0, 0x00).pack("C*", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
-}
-
-sub sendIgnoreListGet {
-	my $self = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0xD3, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent get Ignore List: $flag\n", "sendPacket", 2;
 }
 
 sub sendMemo {
@@ -989,13 +935,6 @@ sub sendTop10Taekwon {
 	my $msg = pack("v", 0x0225);
 	$self->sendToServer($msg);
 	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
-}
-
-sub sendWho {
-	my $self = shift;
-	my $msg = pack("v", 0x00C1);
-	$self->sendToServer($msg);
-	debug "Sent Who\n", "sendPacket", 2;
 }
 
 # 0x0213 has no info on eA

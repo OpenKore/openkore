@@ -61,6 +61,12 @@ sub new {
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
+		'00BF' => ['send_emotion', 'C', [qw(ID)]],
+		'00C1' => ['request_user_count'],
+		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
+		'00D0' => ['ignore_all', 'C', [qw(flag)]],
+		'00D3' => ['get_ignore_list'],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -305,33 +311,11 @@ sub sendGMMessage {
 # 0x00bd,44
 # 0x00be,5
 
-# 0x00bf,3,emotion,2
-sub sendEmotion {
-	my ($self, $ID) = @_;
-	my $msg = pack('v C', 0x00BF, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Emotion\n", "sendPacket", 2;
-}
-
 # 0x00c0,7
-
-# 0x00c1,2,howmanyconnections,0
-sub sendWho {
-	$_[0]->sendToServer(pack('v', 0x00C1));
-	debug "Sent Who\n", "sendPacket", 2;
-}
 
 # 0x00c2,6
 # 0x00c3,8
 # 0x00c4,6
-
-# 0x00c5,7,npcbuysellselected,2:6
-sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
-	my ($self, $ID, $type) = @_;
-	my $msg = pack('v a4 C', 0x00C5, $ID , $type);
-	$self->sendToServer($msg);
-	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x00c6,-1
 # 0x00c7,-1
@@ -374,31 +358,8 @@ sub sendGMKillAll {
 	$_[0]->sendToServer(pack('v', 0x00CE));
 }
 
-# 0x00cf,27,wisexin,2:26
-sub sendIgnore {
-	my ($self, $name, $flag) = @_;
-	my $name = stringToBytes($name);
-	my $msg = pack('v Z24 C', 0x00CF, $name, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
-}
-
-# 0x00d0,3,wisall,2
-sub sendIgnoreAll {
-	my ($self, $flag) = @_;
-	my $msg = pack('v C', 0x00D0, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
-}
-
 # 0x00d1,4
 # 0x00d2,4
-
-# 0x00d3,2,wisexlist,0
-sub sendIgnoreListGet {
-	$_[0]->sendToServer(pack('v', 0x00D3));
-	debug "Sent get Ignore List Get.\n", "sendPacket", 2;
-}
 
 # 0x00d4,-1
 

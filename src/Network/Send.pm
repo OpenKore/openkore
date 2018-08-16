@@ -1811,4 +1811,69 @@ sub sendAutoSpell {
 	}));
 }
 
+sub sendEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'emotion',
+		ID => $ID,
+	}));
+	
+	debug "Sent Emotion\n", "sendPacket", 2;
+}
+
+sub sendWho {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'request_user_count'}));
+	debug "Sent Who (User Count)\n", "sendPacket", 2;
+}
+
+sub sendNPCBuySellList { 
+	my ($self, $ID, $type) = @_;
+	
+	# type: 0 get store list
+	# type: 1 get sell list
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_buy_sell_list',
+		ID => $ID,
+		type => $type,
+	}));
+	
+	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendIgnore {
+	my ($self, $name, $flag) = @_;
+	
+	my $nameToBytes = stringToBytes($name);
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'ignore_player',
+		name => $nameToBytes,
+		flag => $flag,
+	}));
+	
+	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
+}
+
+sub sendIgnoreAll {
+	my ($self, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'ignore_all',
+		flag => $flag,
+	}));
+	
+	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
+}
+
+sub sendGetIgnoreList {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'get_ignore_list'}));
+	
+	debug "Sent get Ignore List.\n", "sendPacket", 2;
+}
+
 1;
