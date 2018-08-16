@@ -68,6 +68,7 @@ sub new {
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
 		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
+		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -367,14 +368,6 @@ sub sendGMKillAll {
 # 0x00d6,3
 # 0x00d7,-1
 # 0x00d8,6
-
-# 0x00d9,14,chataddmember,2:6
-sub sendChatRoomJoin {
-	my ($self, $ID, $password) = @_;
-	my $msg = pack('v a4 Z8', 0x00D9, $ID, stringToBytes($password));
-	$self->sendToServer($msg);
-	debug "Sent Join Chat Room: ".getHex($ID).", $password\n", "sendPacket", 2;
-}
 
 # 0x00da,3
 # 0x00db,-1
