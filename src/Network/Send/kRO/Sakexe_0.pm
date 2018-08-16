@@ -83,9 +83,13 @@ sub new {
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
+		'01AF' => ['change_cart', 'v', [qw(lvl)]],
+		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01E7' => ['novice_dori_dori'],
+		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
@@ -136,7 +140,7 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
-		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(Map_name ItemID)]],
+		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
@@ -1131,22 +1135,6 @@ sub sendPetEmotion{
 # 0x01ac,6
 # 0x01ad,-1
 
-# 0x01ae,4,selectarrow,2
-sub sendArrowCraft {
-	my ($self, $nameID) = @_;
-	my $msg = pack('v2', 0x01AE, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
-}
-
-# 0x01af,4,changecart,2
-sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
-	my ($self, $lvl) = @_;
-	my $msg = pack('v2', 0x01AF, $lvl);
-	$self->sendToServer($msg);
-	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
-}
-
 # 0x01b0,11
 # 0x01b1,7
 
@@ -1229,22 +1217,6 @@ sub sendGMSummon {
 # 0x01cc,9
 # 0x01cd,30
 
-# 0x01ce,6,autospell,2
-sub sendAutoSpell {
-	my ($self, $ID) = @_;
-	my $msg = pack('v V', 0x01CE, $ID);
-	$self->sendToServer($msg);
-}
-
-sub sendBanCheck {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'ban_check',
-		accountID => $ID,
-	}));
-	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
-}
-
 # 0x01cf,28
 # 0x01d0,8
 # 0x01d1,14
@@ -1299,12 +1271,6 @@ sub sendPartyOrganize {
 # 0x01eb,10
 # 0x01ec,26
 
-# 0x01ed,2,snexplosionspirits,0
-sub sendSuperNoviceExplosion {
-	$_[0]->sendToServer(pack('v', 0x01ED));
-	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
-}
-
 # 0x01ee,-1
 # 0x01ef,-1
 # 0x01f0,-1
@@ -1339,13 +1305,4 @@ sub sendSuperNoviceExplosion {
 # 0x0206,11
 # 0x0207,34
 
-sub SendPrivateairShiprequest {
-	my ($self, $args,$mapname,$ItemID) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'private_airship_request',
-		Map_name => stringToBytes($mapname),
-		ItemID => $ItemID,
-	}));
-}
 1;

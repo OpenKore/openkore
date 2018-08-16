@@ -1750,4 +1750,65 @@ sub sendAdoptReply {
 	debug "Sent Adoption Reply.\n", "sendPacket", 2;
 }
 
+sub sendPrivateAirshipRequest {
+	my ($self, $map_name, $nameID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'private_airship_request',
+		map_name => stringToBytes($map_name),
+		nameID => $nameID,
+	}));
+}
+
+sub sendNoviceExplosionSpirits {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'novice_explosion_spirits'}));
+	
+	debug "Sent Novice Explosion Spirits\n", "sendPacket", 2;
+}
+
+sub sendBanCheck {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'ban_check',
+		accountID => $ID,
+	}));
+	
+	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
+}
+
+sub sendChangeCart {
+	my ($self, $lvl) = @_;
+	
+	# lvl: 1..5
+	$self->sendToServer($self->reconstruct({
+		switch => 'change_cart',
+		lvl => $lvl,
+	}));
+	
+	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
+}
+
+sub sendArrowCraft {
+	my ($self, $nameID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'make_arrow',
+		nameID => $nameID,
+	}));
+	
+	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
+}
+
+sub sendAutoSpell {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auto_spell',
+		ID => $ID,
+	}));
+}
+
 1;

@@ -89,13 +89,17 @@ sub new {
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
+		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
+		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01C0' => ['request_remain_time'],
+		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 		'01E7' => ['novice_dori_dori'],
+		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
@@ -192,7 +196,7 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
-		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(Map_name ItemID)]],
+		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
@@ -254,13 +258,6 @@ sub sendAlignment {
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
 }
 
-sub sendArrowCraft {
-	my ($self, $nameID) = @_;
-	my $msg = pack("C*", 0xAE, 0x01) . pack("v*", $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Arrowmake: $nameID\n", "sendPacket", 2;
-}
-
 # 0x0089,7,actionrequest,2:6
 
 sub sendAttackStop {
@@ -273,21 +270,6 @@ sub sendAttackStop {
 	# Don't use this function, use Misc::stopAttack() instead!
 	#sendMove ($char->{'pos_to'}{'x'}, $char->{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
-}
-
-sub sendAutoSpell {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xce, 0x01, $ID, 0x00, 0x00, 0x00);
-	$self->sendToServer($msg);
-}
-
-sub sendBanCheck {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'ban_check',
-		accountID => $ID,
-	}));
-	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
 # 0x00c8,-1,npcbuylistsend,2:4
@@ -856,14 +838,6 @@ sub sendPetName {
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
-# 0x01af,4,changecart,2
-sub sendChangeCart { # lvl: 1, 2, 3, 4, 5
-	my ($self, $lvl) = @_;
-	my $msg = pack('v2', 0x01AF, $lvl);
-	$self->sendToServer($msg);
-	debug "Sent Cart Change to : $lvl\n", "sendPacket", 2;
-}
-
 sub sendPreLoginCode {
 	# no server actually needs this, but we might need it in the future?
 	my $self = shift;
@@ -961,19 +935,6 @@ sub sendStorageGetToCart {
 	$msg = pack("C*", 0x28, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-sub sendSuperNoviceDoriDori {
-	my $msg = pack("C*", 0xE7, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
-}
-
-# TODO: is this the sn mental ingame triggered trough the poem?
-sub sendSuperNoviceExplosion {
-	my $msg = pack("C*", 0xED, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
 }
 
 # 0x011b,20,useskillmap,2:4
@@ -1225,16 +1186,6 @@ sub sendAchievementGetReward {
 	my ($self, $ach_id) = @_;
 	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
 	$self->sendToServer($msg);
-}
-
-sub SendPrivateairShiprequest {
-	my ($self, $args,$mapname,$ItemID) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'private_airship_request',
-		Map_name => stringToBytes($mapname),
-		ItemID => $ItemID,
-	}));
 }
 
 1;
