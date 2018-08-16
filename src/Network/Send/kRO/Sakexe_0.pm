@@ -69,6 +69,7 @@ sub new {
 		'00D3' => ['get_ignore_list'],
 		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
+		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -373,17 +374,6 @@ sub sendGMKillAll {
 # 0x00db,-1
 # 0x00dc,28
 # 0x00dd,29
-
-# 0x00de,-1,chatroomstatuschange,2:4:6:7:15
-sub sendChatRoomChange {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	$title = stringToBytes($title);
-
-	my $msg = pack('v3 C Z8 a*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), $title);
-	$self->sendToServer($msg);
-	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
 
 # 0x00df,-1
 

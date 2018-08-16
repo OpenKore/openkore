@@ -71,6 +71,7 @@ sub new {
 		'00D3' => ['get_ignore_list'],
 		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
+		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -354,19 +355,6 @@ sub sendChatRoomBestow {
 	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $binName;
 	$self->sendToServer($msg);
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
-}
-
-sub sendChatRoomChange {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	my $titleBytes = stringToBytes($title);
-	my $passwordBytes = stringToBytes($password);
-	$passwordBytes = substr($passwordBytes, 0, 8) if (length($passwordBytes) > 8);
-	$passwordBytes = $passwordBytes . chr(0) x (8 - length($passwordBytes));
-
-	my $msg = pack("C*", 0xDE, 0x00).pack("v*", length($titleBytes) + 15, $limit).pack("C*",$public).$passwordBytes.$titleBytes;
-	$self->sendToServer($msg);
-	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
 
 sub sendChatRoomKick {
