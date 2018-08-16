@@ -1843,4 +1843,18 @@ sub sendNPCBuySellList {
 	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendIgnore {
+	my ($self, $name, $flag) = @_;
+	
+	my $nameToBytes = stringToBytes($name);
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'ignore_player',
+		name => $nameToBytes,
+		flag => $flag,
+	}));
+	
+	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
+}
+
 1;

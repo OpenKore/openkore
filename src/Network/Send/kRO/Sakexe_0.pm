@@ -64,6 +64,7 @@ sub new {
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -353,15 +354,6 @@ sub sendGMKick {
 # 0x00ce,2,killall,0
 sub sendGMKillAll {
 	$_[0]->sendToServer(pack('v', 0x00CE));
-}
-
-# 0x00cf,27,wisexin,2:26
-sub sendIgnore {
-	my ($self, $name, $flag) = @_;
-	my $name = stringToBytes($name);
-	my $msg = pack('v Z24 C', 0x00CF, $name, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
 }
 
 # 0x00d0,3,wisall,2
