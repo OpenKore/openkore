@@ -67,6 +67,7 @@ sub new {
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
+		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -635,14 +636,6 @@ sub sendIdentify {
 		ID => $ID,
 	}));
 	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
-}
-
-sub sendIgnoreAll {
-	my $self = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0xD0, 0x00).pack("C*", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
 }
 
 sub sendIgnoreListGet {
