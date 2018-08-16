@@ -6530,4 +6530,36 @@ sub guild_storage_log {
     }
 }
 
+sub banking_status {
+	my ($self, $args) = @_;
+	my $msg = center(T("[Bank Storage]"), 60, '-') ."\n" .
+		TF("In Bank : %s Zeny.\n" .
+			"On Hand : %s Zeny.\n",				
+		$args-{inbank}, $char->{zeny});
+		$msg .= ('-'x60) . "\n";
+		message $msg, "info";
+}
+ sub banking_status_withdraw {
+	my ($self, $args) = @_;
+	if ($args->{reason} == 0x0) {
+		message TF("Withdraw Success \n","success";
+	} elsif ($args->{reason} == 0x1) {
+		error TF("No Money for Withdraw.\n");
+	} elsif ($args->{reason} == 0x2) {
+		error TF("Money in the bank overflow.\n");
+	}
+}
+ sub banking_status_deposit {
+	my ($self, $args) = @_;
+	if ($args->{reason} == 0x0) {
+		message TF("Deposit Success.\n", "success";
+	} elsif ($args->{reason} == 0x1) {
+		error TF("Deposit Error (Try it again).\n");		
+	} elsif ($args->{reason} == 0x2) {
+		error TF("No Money For Deposit.\n");
+	} elsif ($args->{reason} == 0x3) {
+		error TF("Money in the bank overflow.\n");
+	}
+}
+
 1;

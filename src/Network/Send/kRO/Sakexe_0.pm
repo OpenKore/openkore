@@ -162,6 +162,9 @@ sub new {
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
+		'09A7' => ['banking_deposit', 'a4 V', [qw(accountID zeny)]],
+		'09A9' => ['banking_withdraw', 'a4 V', [qw(accountID zeny)]],
+		'09AB' => ['banking_check', 'a4', [qw(accountID)]],		
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
 		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
