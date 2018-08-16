@@ -66,6 +66,7 @@ sub new {
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
+		'00D3' => ['get_ignore_list'],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -359,12 +360,6 @@ sub sendGMKillAll {
 
 # 0x00d1,4
 # 0x00d2,4
-
-# 0x00d3,2,wisexlist,0
-sub sendIgnoreListGet {
-	$_[0]->sendToServer(pack('v', 0x00D3));
-	debug "Sent get Ignore List Get.\n", "sendPacket", 2;
-}
 
 # 0x00d4,-1
 

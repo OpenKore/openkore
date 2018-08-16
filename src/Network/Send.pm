@@ -1868,4 +1868,12 @@ sub sendIgnoreAll {
 	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
 }
 
+sub sendGetIgnoreList {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'get_ignore_list'}));
+	
+	debug "Sent get Ignore List.\n", "sendPacket", 2;
+}
+
 1;
