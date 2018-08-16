@@ -1829,4 +1829,18 @@ sub sendWho {
 	debug "Sent Who (User Count)\n", "sendPacket", 2;
 }
 
+sub sendNPCBuySellList { 
+	my ($self, $ID, $type) = @_;
+	
+	# type: 0 get store list
+	# type: 1 get sell list
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_buy_sell_list',
+		ID => $ID,
+		type => $type,
+	}));
+	
+	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 1;

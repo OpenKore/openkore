@@ -63,6 +63,7 @@ sub new {
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
+		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -312,14 +313,6 @@ sub sendGMMessage {
 # 0x00c2,6
 # 0x00c3,8
 # 0x00c4,6
-
-# 0x00c5,7,npcbuysellselected,2:6
-sub sendNPCBuySellList { # type:0 get store list, type:1 get sell list
-	my ($self, $ID, $type) = @_;
-	my $msg = pack('v a4 C', 0x00C5, $ID , $type);
-	$self->sendToServer($msg);
-	debug "Sent get ".($type ? "buy" : "sell")." list to NPC: ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x00c6,-1
 # 0x00c7,-1
