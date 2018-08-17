@@ -785,7 +785,7 @@ sub route {
 	} else {
 		$task = new Task::Route(@params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute);
+	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk);
 	
 	$self->queue('route', $task);
 }
