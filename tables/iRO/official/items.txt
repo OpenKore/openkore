@@ -7539,7 +7539,7 @@
 17387#Clamorous_Shoes_Shadow_Box#
 17388#Insecticide_Shoes_Shadow_Box#
 17389#Fisher_Shoes_Shadow_Box#
-17390#Seraphim_Shoes_Shadow_Box#
+17390#OCP_Remix_VII#
 17391#Overseas_Care_Package_Remix_VI#
 17392#Overseas_Care_Package_Remix_V#
 17393#Poring_Con_Swag_Bag#
@@ -7554,6 +7554,7 @@
 17459#Steam_Starter_Package_1#
 17460#Steam_Starter_Package_2#
 17461#Early_Winter_Costume_Box#
+17470#Silvervine_100_Sale_Box#
 17476#OCP_Remix_III#
 17480#Saint_Patrick_Day_Groove_Box#
 17481#Overseas_Care_Package_Remix_II#
@@ -8523,7 +8524,7 @@
 19972#Costume_Casket_of_Protection#
 19973#Costume_Bone_Circlet#
 19974#Costume_Camouflage_Bunny_Hood#
-19976#Cat_Santa_Hat#
+19976#Costume_Cat_Santa_Hat#
 19977#Costume_Golden_Exclamation#
 19978#Costume_Silver_Exclamation#
 19979#Costume_Golden_Question#
