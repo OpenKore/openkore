@@ -20,8 +20,7 @@ package Network::Receive::kRO::RagexeRE_2009_09_22a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2009_08_25a);
 
-use Log qw(warning error debug);
-
+use Log qw(warning debug);
 use Globals qw($captcha_state);
 
 sub new {

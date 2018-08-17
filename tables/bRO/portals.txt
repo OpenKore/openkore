@@ -285,14 +285,14 @@ moc_fild07 380 202 moc_fild20 208 207 c r2
 
 # Dimensional Gorge (Episode 12)
 # moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
-moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
-moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 38 174 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 38 183 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 189 21 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 200 21 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 354 183 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 354 174 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 203 336 moc_fild21 38 193 0 c r1 c c c
+#moc_fild20 215 336 moc_fild21 38 193 0 c r1 c c c
 moc_fild21 26 196 moc_fild20 349 179
 moc_fild22 32 196 moc_fild20 349 179
 
@@ -2775,7 +2775,6 @@ geffen 132 66 moc_para01 31 14 c c r0
 geffen_in 160 104 moc_para01 31 14 c c r0
 gonryun 145 120 moc_para01 31 14 c c r0
 hugel 93 153 moc_para01 31 14 c c r0
-izlude 134 98 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
 lighthalzen 164 86 moc_para01 31 14 c c r0
 louyang 227 107 moc_para01 31 14 c c r0
@@ -2793,29 +2792,24 @@ veins 220 109 moc_para01 31 14 c c r0
 yuno 144 189 moc_para01 31 14 c c r0
 
 # Eden HQ
-moc_para01 47 39 moc_para01 106 14 c r0
-moc_para01 102 92 moc_para01 111 33
+moc_para01 48 39 moc_para01 106 14
+moc_para01 107 12 moc_para01 48 35
+moc_para01 100 27 moc_para01 47 85
+moc_para01 49 86 moc_para01 103 27
 moc_para01 113 32 moc_para01 105 92
-moc_para01 107 12 moc_para01 47 37
-moc_para01 47 161 moc_para01 47 18
+moc_para01 102 92 moc_para01 111 33
 moc_para01 57 27 moc_para01 162 26
 moc_para01 158 26 moc_para01 55 27
-#moc_para01 57 27 moc_para01 107 12
-# moc_para01 100 27 moc_para01 47 85
-# moc_para01 49 86 moc_para01 103 27
-# moc_para01 113 32 moc_para01 105 92
-# moc_para01 102 92 moc_para01 113 32
-# moc_para01 57 27 moc_para01 107 12
-# moc_para01 158 26 moc_para01 57 27
-# #moc_para01 48 16 moc_para01 48 164
-# moc_para01 48 16 moc_paraup 48 164
-# #moc_para01 47 161 moc_para01 47 18
-# moc_paraup 47 161 moc_para01 47 18
-# #moc_para01 41 187 moc_para01 179 93
-# moc_paraup 41 187 moc_paraup 179 93
-# #moc_para01 179 90 moc_para01 41 185
-# moc_paraup 179 90 moc_paraup 41 185
+moc_para01 48 16 moc_para01 48 164
+moc_para01 47 161 moc_para01 47 18
+moc_para01 41 187 moc_para01 179 93
+moc_para01 179 90 moc_para01 41 185
+moc_para01 29 187 moc_para01 180 159
+moc_para01 180 156 moc_para01 29 185
+moc_para01 17 187 moc_para01 132 159
+moc_para01 132 156 moc_para01 17 185
 moc_para01 30 10 prontera 116 72
+#moc_para01 44 19 moc_fild20 342 198 0 c r0 c #Requires paying 50k first
 
 # Malangdo
 malangdo 219 86 alberta 192 150 1000 c c r1
@@ -2933,3 +2927,44 @@ moc_prydb1 103 54 moc_prydn1 93 96 5000 c r0 c c r0 c c r0 c c r0 c
 moc_prydn1 94 98 moc_prydb1 100 57 0 c r0 c
 moc_prydn1 223 9 moc_prydn2 192 8
 moc_prydn2 195 8 moc_prydn1 220 9
+
+
+# dewata #need add step npc talk 
+dewata 44 252 dew_fild01 373 212
+dew_fild01 375 212 dewata 46 256
+dew_fild01 57 273 dew_in01 15 33
+dew_fild01 48 65 dew_dun02 302 30
+dew_dun02 305 30 dew_fild01 50 65
+
+# Lasagna #need add step npc talk 
+lasa_fild02 348 244 lasa_dun01 24 143
+lasa_dun01 18 143 lasa_fild02 344 243
+lasa_dun_q 190 14 lasa_dun01 152 98
+lasa_dun01 157 98 lasa_dun02 22 171
+lasa_dun02 18 171 lasa_dun01 153 98
+lasa_dun02 146 58 lasa_dun03 190 18
+lasa_dun03,190,15 lasa_dun02,146 54
+lasa_fild01 134 381 lasagna 153 58
+lasagna 150 54 lasa_fild01 131 378
+lasa_fild01 341 375 lasagna 327 56
+lasagna 327 51 lasa_fild01 344 371
+lasagna 358 91 lasa_fild02 20 98
+lasa_fild02 16 98 lasagna 355 92
+lasa_in01 159 61 lasagna 68 202
+conch_in 60 61 lasagna 206 323
+conch_in 51 60 conch_in 31 60
+conch_in 34 60 conch_in 53 59
+conch_in 63 53 conch_in 63 33
+conch_in 63 35 conch_in 64 55
+conch_in 64 66 conch_in 63 89
+conch_in 63 87 conch_in 63 64
+conch_in 101 53 conch_in 101 33
+conch_in 101 35 conch_in 102 55
+conch_in 101 66 conch_in 101 89
+conch_in 102 87 conch_in 101 64
+conch_in 137 53 conch_in 139 33
+conch_in 139 35 conch_in 138 55
+conch_in 137 66 conch_in 139 89
+conch_in 140 87 conch_in 137 64
+conch_in 142 60 conch_in 162 61
+conch_in 159 61 conch_in 140 59

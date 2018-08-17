@@ -20,7 +20,7 @@ package Network::Send::kRO::Sakexe_2005_06_08a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_05_31a);
 
-use Log qw(message warning error debug);
+use Log qw(debug);
 use I18N qw(stringToBytes);
 
 sub new {

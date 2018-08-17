@@ -76,10 +76,6 @@ sub new {
 	$self->set_arrays_size_to_zero();
 	$self->set_hashes_size_to_zero();
 
-	if ($char && $net && $net->getState() == Network::IN_GAME) {
-		$self->check_all_conditions();
-	}
-
 	return $self;
 }
 
@@ -111,7 +107,7 @@ sub unload {
 	$self->clear_queue();
 	$self->clean_hooks();
 	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
-	Plugins::delHook($self->{AI_state_change_Hook_Handle});
+	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
 }
 
 sub clean_hooks {
@@ -164,8 +160,23 @@ sub get_automacro_checking_status {
 
 sub create_macro_list {
 	my ($self, $macro) = @_;
-	while (my ($name,$lines) = each %{$macro}) {
-		my $currentMacro = new eventMacro::Macro($name, $lines);
+	foreach my $name (keys %{$macro}) {
+		####################################
+		#####Bad Name Check
+		####################################
+		if ($name =~ /\s/) {
+			error "[eventMacro] Ignoring macro '$name'. You cannot use spaces in macro names.\n";
+			next;
+		}
+		
+		####################################
+		#####Duplicated Name Check
+		####################################
+		if (exists $macro->{$name}{'duplicatedMacro'}) {
+			error "[eventMacro] Ignoring macro '$name'. Macros can't have same name.\n";
+			next;
+		}
+		my $currentMacro = new eventMacro::Macro($name, $macro->{$name}{lines});
 		$self->{Macro_List}->add($currentMacro);
 	}
 }
@@ -177,6 +188,14 @@ sub create_automacro_list {
 		my ($currentAutomacro, %currentConditions, %currentParameters, $has_event_type_condition, $event_type_condition_name);
 		$has_event_type_condition = 0;
 		$event_type_condition_name = undef;
+		
+		####################################
+		#####Bad Name Check
+		####################################
+		if ($name =~ /\s/) {
+			error "[eventMacro] Ignoring automacro '$name'. You cannot use spaces in automacro names.\n";
+			next AUTOMACRO;
+		}
 		
 		####################################
 		#####No Conditions Check
@@ -194,10 +213,18 @@ sub create_automacro_list {
 			next AUTOMACRO;
 		}
 		
+		######################################
+		#####Duplicated name Check
+		######################################
+		if (exists $value->{'duplicatedAutomacro'}) {
+			error "[eventMacro] Ignoring automacro '$name'. Automacros can't have same name\n";
+			next AUTOMACRO;
+		}
+		
 		PARAMETER: foreach my $parameter (@{$value->{'parameters'}}) {
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
-				warning "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
+				error "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
 				next AUTOMACRO;
 			}
 			###Parameter: call with or without param
@@ -205,11 +232,11 @@ sub create_automacro_list {
 				my ($macro_name, $params) = ($1 , $2); 
 				
 				if (!$self->{Macro_List}->getByName($macro_name) ) {
-					warning "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
+					error "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
 					next AUTOMACRO;
 				} else {
 					unless (defined $params) {
-					$parameter->{'value'} = $macro_name;
+						$parameter->{'value'} = $macro_name;
 					}
 					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 				}
@@ -267,7 +294,7 @@ sub create_automacro_list {
 		
 		###Recheck Parameter call
 		if (!exists $currentParameters{'call'}) {
-			warning "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
+			error "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
 			next AUTOMACRO;
 		}
 		

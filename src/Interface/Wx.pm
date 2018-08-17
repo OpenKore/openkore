@@ -965,17 +965,17 @@ sub updateItemList {
 			$self->{spBar}->SetForegroundColour (new Wx::Colour ((100 - $value) * 2.55, $value * 1.27, 50));
 		}
 		if ($char->{exp_max}) {
-			$value = $char->{exp} / $char->{exp_max} * 100;
+			$value = $char->exp_base_percent;
 			$self->{expBar}->SetValue ($value);
 			$self->{expBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp}), formatNumber ($char->{exp_max}), $value);
 		}
 		if ($char->{exp_job_max}) {
-			$value = $char->{exp_job} / $char->{exp_job_max} * 100;
+			$value = $char->exp_job_percent;
 			$self->{jobExpBar}->SetValue ($value);
 			$self->{jobExpBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{exp_job}), formatNumber ($char->{exp_job_max}), $value);
 		}
 		if ($char->{weight_max}) {
-			$value = $char->{weight} / $char->{weight_max} * 100;
+			$value = $char->weight_percent;
 			$self->{weightBar}->SetValue ($value);
 			$self->{weightBar}->SetToolTip (sprintf '%s / %s (%.2f%)', formatNumber ($char->{weight}), formatNumber ($char->{weight_max}), $value);
 			if ($char->statusActive('EFST_WEIGHTOVER90')) {

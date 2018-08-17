@@ -12353,60 +12353,60 @@ Hunt 30 Gibbet monsters at the Valley of Gyoll east of Nifflheim#
 Bring 5 Ectoplasm and 5 Poisonous Powders to the Witch in Nifflheim.#
 #
 
-62200#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Go to the Brasilis Inn and find Monsieur Pierrot.#
+62200#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Go to the Payon Inn and find Monsieur Pierrot.#
 #
 
-62201#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to Major Molotov at the Brasilis Inn bar.#
+62201#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to Major Molotov at the Payon Inn bar.#
 #
 
-62202#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62202#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Bring 25 bottles of ^ff0000Milk^000000,  15 ^ff0000Strawberries^000000 and 20 ^ff0000Iron Ore^000000s to Major Molotov#
 #
 
-62203#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Rachel Delegation Miss Mansur at the Brasilis Inn#
+62203#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Rachel Delegation Miss Mansur at the Payon Inn#
 #
 
-62204#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Race Aslan to the Eastern Corner of the southern center part of Brasilis.#
+62204#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Race Aslan to the entrance of Payon.#
 #
 
-62205#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Return to Madame Mansur at Brasilis Inn#
+62205#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Return to Madame Mansur at Payon Inn#
 #
 
-62206#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Madame Mansur needs to convince the remaining delegates to come to Brasilis for the games. Return to her next week when the new delegates arrive.#
+62206#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Madame Mansur needs to convince the remaining delegates to come to Payon for the games. Return to her next week when the new delegates arrive.#
 #
 
-62207#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62207#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Look for the Weapon Shop Manager and speak to him.#
 #
 
-62208#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62208#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to the Port Malaya delegate Lawrence Llaguno.#
 #
 
-62209#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Brasilis delegate.#
+62209#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+Speak to the Payon delegate.#
 #
 
-62210#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62210#Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
 Return to Terra Track or Franklin Field and let them know that you are done speaking to the delegates.#
 #
 
 70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to joust the famous Fencing Master. Though, if you give him 1 Eden Merit Badge he will let you skip waiting.#
+You must wait 3 hours before attempting to joust the famous Fencing Master.#
 #
 
 70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must weight 3 hours before attempting to test your strength. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must weight 3 hours before attempting to test your strength.#
 #
 
 70226#Summer Sports Obstacle Timer#SG_FEEL#QUE_SUMMERGAMES#
-You must wait 3 hours before attempting to tackle the obstacle course again. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
+You must wait 3 hours before attempting to tackle the obstacle course again.#
 #
 
 70231#Back to School#SG_FEEL#QUE_NOIMAGE#
@@ -21986,42 +21986,289 @@ Hunt the Dream Demon.#
 You can try again tomorrow.#
 #
 
-62967#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62967#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Santa Claws, he's on the 2nd claw from the right.#
 #
 
-62968#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62968#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Get Santa Claws 1 Yarn and 10 Fresh fish, once you've acquired them, bring them to Grumpy Helper by his side.#
 #
 
-62969#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62969#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Looks like Grumpy Helper is no help at all, go back to Santa Claws and speak to him again.#
 #
 
-62970#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62970#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 May as well take things into your own hands at this rate! Speak to the Cheerful Helper. He seems pretty excited about Christmas.#
 #
 
-62971#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62971#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Gather 20 Wrapping Paper and 20 Wrapping Lace for the Cheerful Helper.#
 #
 
-62972#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62972#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Go back to Retired Santa and ask him for help in making Christmas gifts.#
 #
 
-62973#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62973#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Go to the sleigh below the tree in Lute. Retired Santa said there are some gifts over there.#
 #
 
-62974#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62974#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Good Job! Now take these gifts to the northeast sleigh and load them up for delivery.#
 #
 
-62975#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62975#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 You've successfully placed all of the gifts on the sleigh. Go back to Retired Santa to tell him the good news!#
 #
 
-62976#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
+62976#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Retired Santa again tomorrow to help save Christmas again!#
+#
+
+
+
+// 12뿹 뒫닉 쏠솦
+
+14849#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You wanna a make snow flower bouquet? Then, collect 10 magical snow flowers and come back here.#
+10 magical snow flower#
+
+14850#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+Find the Snow flower illusionist. If you are interested find the place.#
+To snow flower illusionist#
+
+14851#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find Coti and Ulsi.#
+To Coti#
+
+14852#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Did you find a special card from your gift box? Then bring it to Twinkle. You will receive a special gift.#
+To Twinkle#
+
+14853#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 magical snow flowers to make a snow flower bouquet. Please don't forget 1 carrot for decorating the snowman. - Marine#
+10 Snow flower, 1 carrot#
+
+14854#Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The magical snow flower effect is still remains. Please comeback after the dawn. - Marine#
+Waiting time#
+
+14855#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! Donate 10 warm cotton!#
+10 Warm cotton#
+
+14856#Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping seems be be finished by dawn so please come back after dawn! - Coti#
+Waiting time#
+
+14857#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is WINTER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters W. I. N. T. E. R.. Total of 6 letters. - Twinkle#
+Collect WINTER card#
+
+14858#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S. N. O. W. Total of 4 letters. - Twinkle#
+Collect SNOW card#
+
+14859#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. E. S. T. I. V. A. L. Total of 8 letters. - Twinkle#
+Collect FESTIVAL card#
+
+14860#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FLOWER!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. L. O. W. E. R. Total of 6 letter. - Twinkle#
+Collect FLOWER card#
+
+14861#Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Alphabet card exchange is once a day. Okay? So please comeback after dawn! - Twinkle#
+Waiting time#
+
+
+62977#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62978#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62979#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62980#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62981#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62982#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62983#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62984#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62985#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62986#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62987#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62988#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62989#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62990#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62991#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62992#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62993#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62994#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62995#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62996#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62997#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62998#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62999#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+63000#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63001#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63002#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+63003#Hunting Board#SG_FEEL#QUE_NOIMAGE#
+Hunt the monster listed#
+#
+
+62962#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Hunt the following monsters for Norman.#
+#
+
+62963#Amistr Bag Event#SG_FEEL#QUE_NOIMAGE#
+Norman can't make another bag until hes had a chance to rest.#
+#
+
+//Valentines Day 2018
+63029#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again about bringing chocolates to Niflheim.#
+#
+
+63030#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Bring Ingrid the ingredients she needs to make the chocolates. She needs 30 Cacao, 10 Honey, 5 Milk, 3 Red Spice, and 3 Cooking Oil.#
+#
+
+63031#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to see if she's done making the chocolates.#
+#
+
+63032#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go to Niflheim and search for Rupert. He can be anywhere...#
+#
+
+63034#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Dullahans to gain Rupert's trust.#
+#
+
+63035#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Rupert again when you're ready.#
+#
+
+63036#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go back to Ingrid and tell her the good news!#
+#
+
+63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to conclude your adventure.#
+#
+
+63162#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring a Poring Egg back to the Poring Con Volunteer.#
+#
+
+63164#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring 15 Apple Juices to the Poring Con Volunteer.#
+#
+
+63166#Poring Con#SG_FEEL#QUE_NOIMAGE#
+You completed the Poring Con entrance quest! Keep your badge safe, you'll need it for the con!#
+#
+
+63167#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Help Cosplayer Freya with some much needed cosplay supplies: 30 Fluff, 20 Blue Hair, 20 Yarn, 1 Darkgreen Dyestuffs and 1 Adventurer's Suit.#
+#
+
+63168#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to Cosplayer Freya again. She's got some good news!#
+#
+
+63170#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Take some cosplay photos and bring them back to Astra and Jelloshaker.#
+#
+
+63176#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the other convention workers to investigate Campitor's wereabouts.#
+#
+
+63177#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the Monster Cosplayer? She might know where Camp is.#
+#
+
+63178#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor went to meet a band in Juno?#
+#
+
+63179#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor might be right outside Juno according to the Band Members.#
+#
+
+63180#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Maybe the Poring Con Volunteer at the entrance knows about Camp?#
 #

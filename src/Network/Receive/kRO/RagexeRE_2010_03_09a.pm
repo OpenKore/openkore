@@ -19,10 +19,10 @@ package Network::Receive::kRO::RagexeRE_2010_03_09a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2010_03_03a);
-use Globals qw(@articles $articles $buyerID @buyerItemList %buyerLists @buyerListsID $buyingStoreID %itemTypes_lut @selfBuyerItemList);
+use Globals qw($buyerID @buyerItemList %buyerLists @buyerListsID $buyingStoreID %itemTypes_lut @selfBuyerItemList);
 use Log qw(debug message);
 use Misc qw(center itemName);
-use Translation;
+use Translation qw(T TF);
 use Utils qw(formatNumber swrite);
 use Utils::DataStructures qw(binRemove);
 
@@ -53,9 +53,6 @@ sub open_buying_store_item_list {
 
 	#started a shop.
 	message TF("Buying Shop opened!\n"), "BuyShop";
-# what is:
-#	@articles = ();
-#	$articles = 0;
 	my $index = 0;
 
 	for (my $i = $headerlen; $i < $msg_size; $i += 9) {

@@ -20,7 +20,7 @@ package Network::Send::kRO::Sakexe_2007_10_02a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
-use Log qw(message debug);
+use Log qw(debug);
 use I18N qw(stringToBytes);
 use Globals qw($masterServer);
 
@@ -43,13 +43,6 @@ sub sendCashShopBuy {
 	my $msg = pack('v v2 V', 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendQuestState {
-	my ($self, $questID, $state) = @_;
-	my $msg = pack('v V C', 0x02B6, $questID, $state);
-	$self->sendToServer($msg);
-	debug "Sent Quest State.\n", "sendPacket", 2;
 }
 
 sub sendHotkey {

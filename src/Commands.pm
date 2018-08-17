@@ -84,11 +84,14 @@ sub initHandlers {
 	chist				=> \&cmdChist,
 	cil					=> \&cmdItemLogClear,
 	cl					=> \&cmdChatRoom,
+	cln					=> \&cmdChat,
 	clearlog			=> \&cmdChatLogClear,
 	closeshop			=> \&cmdCloseShop,
 	closebuyshop		=> \&cmdCloseBuyShop,
+	closebuyershop		=> \&cmdCloseBuyerShop,
 	conf				=> \&cmdConf,
 	connect				=> \&cmdConnect,
+	create				=> \&cmdCreate,
 	damage				=> \&cmdDamage,
 	dead				=> \&cmdDeadTime,
 	deal				=> \&cmdDeal,
@@ -100,6 +103,7 @@ sub initHandlers {
 	dumpnow				=> \&cmdDumpNow,
 	e					=> \&cmdEmotion,
 	eq					=> \&cmdEquip,
+	elemental			=> \&cmdElemental,
 	eval				=> \&cmdEval,
 	exp					=> \&cmdExp,
 	falcon				=> \&cmdFalcon,
@@ -148,6 +152,7 @@ sub initHandlers {
 	ml					=> \&cmdMonsterList,
 	move				=> \&cmdMove,
 	nl					=> \&cmdNPCList,
+	openbuyershop		=> \&cmdOpenBuyerShop,
 	openshop			=> \&cmdOpenShop,
 	p					=> \&cmdChat,
 	party				=> \&cmdParty,
@@ -240,10 +245,13 @@ sub initHandlers {
 	southwest			=> \&cmdManualMove,
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
+	clan				=> \&cmdClan,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
 	analysis			=> \&cmdExchangeItem,
+	
+	searchstore				=> \&cmdSearchStore,
 	);
 }
 
@@ -1368,6 +1376,14 @@ sub cmdCloseBuyShop {
 	message T("Buying shop closed.\n", "BuyShop");
 }
 
+sub cmdCloseBuyerShop {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	main::closeBuyerShop();
+}
+
 sub cmdConf {
 	my (undef, $args) = @_;
 	my ( $force, $arg1, $arg2 ) = $args =~ /^(-f\s+)?(\S+)\s*(.*)$/;
@@ -1677,13 +1693,11 @@ sub cmdDoriDori {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $headdir;
-	if ($char->{look}{head} == 2) {
-		$headdir = 1;
-	} else {
-		$headdir = 2;
-	}
+	
+	my $headdir = ($char->{look}{head} == 2) ? 1 : 2;
+	
 	$messageSender->sendLook($char->{look}{body}, $headdir);
+	$messageSender->sendNoviceDoriDori();
 }
 
 sub cmdDrop {
@@ -2126,11 +2140,11 @@ sub cmdSlave {
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 		
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
-		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->{hpPercent}) . '%)';
-		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->{spPercent})."%)";
+		my $hp_string = $slave->{hp}. '/' .$slave->{hp_max} . ' (' . sprintf("%.2f",$slave->hp_percent) . '%)';
+		my $sp_string = $slave->{sp}."/".$slave->{sp_max}." (".sprintf("%.2f",$slave->sp_percent)."%)";
 		my $exp_string = (
 			defined $slave->{exp}
-			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->{expPercent})."%)"
+			? T("Exp: ") . formatNumber($slave->{exp})."/".formatNumber($slave->{exp_max})." (".sprintf("%.2f",$slave->exp_percent)."%)"
 			: (
 				defined $slave->{kills}
 				? T("Kills: ") . formatNumber($slave->{kills})
@@ -3459,6 +3473,18 @@ sub cmdOpenShop {
 	}
 }
 
+sub cmdOpenBuyerShop {
+	my (undef, $args) = @_;
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	main::openBuyerShop();
+
+}
+
 sub cmdParty {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = parseArgs($args, 2);
@@ -3891,10 +3917,11 @@ sub cmdPlayerList {
 		my $headTop = headgearName($player->{headgear}{top});
 		my $headMid = headgearName($player->{headgear}{mid});
 		my $headLow = headgearName($player->{headgear}{low});
-
+		
 		$msg = center(T(" Player Info "), 67, '-') ."\n" .
 			$player->name . " (" . $player->{binID} . ")\n" .
 		TF("Account ID: %s (Hex: %s)\n" .
+			"Title ID : %s\n" .
 			"Party: %s\n" .
 			"Guild: %s\n" .
 			"Guild title: %s\n" .
@@ -3907,7 +3934,7 @@ sub cmdPlayerList {
 			"Upper headgear: %-19s Middle headgear: %-19s\n" .
 			"Lower headgear: %-19s Hair color:      %-19s\n" .
 			"Walk speed: %s secs per block\n",
-		$player->{nameID}, $hex,
+		$player->{nameID}, $hex, $player->{title}{ID} ? $player->{title}{ID}: 'N/A',
 		($player->{party} && $player->{party}{name} ne '') ? $player->{party}{name} : '',
 		($player->{guild}) ? $player->{guild}{name} : '',
 		($player->{guild}) ? $player->{guild}{title} : '',
@@ -5295,11 +5322,21 @@ sub cmdUseSkill {
 	my @args = parseArgs($args_string);
 
 	if ($cmd eq 'sl') {
-		my $x = $args[1];
-		my $y = $args[2];
-		if (@args < 3 || @args > 4) {
+		my ($x, $y);
+		
+		if (scalar @args < 3) {
+			$x = $char->position->{x};
+			$y = $char->position->{y};
+			$level = $args[1];
+		} else {
+			$x = $args[1];
+			$y = $args[2];
+			$level = $args[3];
+		}
+		
+		if (@args < 1 || @args > 4) {
 			error T("Syntax error in function 'sl' (Use Skill on Location)\n" .
-				"Usage: sl <skill #> <x> <y> [level]\n");
+				"Usage: sl <skill #> [<x> <y>] [level]\n");
 			return;
 		} elsif ($x !~ /^\d+$/ || $y !~ /^\d+/) {
 			error T("Error in function 'sl' (Use Skill on Location)\n" .
@@ -5307,7 +5344,6 @@ sub cmdUseSkill {
 			return;
 		} else {
 			$target = { x => $x, y => $y };
-			$level = $args[3];
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
@@ -6004,14 +6040,31 @@ sub cmdShowEquip {
 	}
 }
 
+# Answer to mixing item selection dialog (CZ_REQ_MAKINGITEM).
+# 025b <mk type>.W <name id>.W
+# mk type:
+#     1 = cooking
+#     2 = arrow
+#     3 = elemental
+#     4 = GN_MIX_COOKING
+#     5 = GN_MAKEBOMB
+#     6 = GN_S_PHARMACY
 sub cmdCooking {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
+
 	my ($cmd, $arg) = @_;
 	if ($arg =~ /^\d+/ && defined $cookingList->[$arg]) { # viewID/nameID can be 0
-		$messageSender->sendCooking(1, $cookingList->[$arg]); # type 1 is for cooking
+		my $type = 1;
+		if(defined $currentCookingType && $currentCookingType > 0) {
+			$type = $currentCookingType;
+		}
+		$messageSender->sendCooking($type, $cookingList->[$arg]); # type 1 is for cooking
+	} elsif (!$arg) {
+		message TF("Syntax error in function 'cook' (Cook food)\n" .
+					"Usage: cook [<list index>]\n");
 	} else {
 		message TF("Item with 'Cooking List' index: %s not found.\n", $arg), "info";
 	}
@@ -6022,11 +6075,16 @@ sub cmdWeaponRefine {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my ($cmd, $arg) = @_;
-	if(my $item = Match::inventoryItem($arg)) {
-		$messageSender->sendWeaponRefine($item->{ID});
+
+	my ($cmd, $args) = @_;
+
+	if ($args =~ /^\d+/ && defined $refineList->[$args]) {
+		$messageSender->sendWeaponRefine($refineList->[$args]);
+	} elsif($args =~ /^\d+/) {
+		message TF("Item with 'refine' index: %s not found.\n", $args), "info";
 	} else {
-		message TF("Item with name or id: %s not found.\n", $arg), "info";
+		error T("Error in function 'refine'\n".
+			"Usage: refine <index number>\n");
 	}
 }
 
@@ -6853,6 +6911,347 @@ sub cmdRefineUI {
 		error T("Invalid usage!\n");
 		return;
 	}
+}
+
+sub cmdClan {
+    my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	} elsif(!$clan{clan_name}) {
+		error TF("You must be in a Real Clan to use command '%s'\n", shift);
+		return;
+	}
+
+	if ($args[0] eq "info" || $args[0] eq "") {
+		my $msg = center(T(" Clan Information "), 40, '-') ."\n" .
+			TF("ClanName : %s\n" .
+				"Clan Master Name : %s\n" .
+				"Number of Members : %s/%s\n".
+				"Castles Owned : %s\n" .
+				"Ally Clan Count : %s\n" .
+				"Ally Clan Names: %s\n" .
+				"Hostile Clan Count: %s\n" .
+				"Hostile Clan Names: %s\n",				
+		$clan{clan_name}, $clan{clan_master}, $clan{onlineuser}, $clan{totalmembers}, $clan{clan_map}, $clan{alliance_count}, $clan{ally_names}, $clan{antagonist_count}, $clan{antagonist_names});
+		$msg .= ('-'x40) . "\n";
+		message $msg, "info";
+	}
+}
+
+sub cmdElemental {
+	my (undef, $args_string) = @_;
+    my (@args) = parseArgs($args_string, 3);
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if ($args[0] eq "info" || $args[0] eq "") {
+		if(!$char->{elemental}{ID}) {
+			error TF("You don't have any elemental. Call an Elemental first.\n");
+			return;
+		}
+
+		my $msg = center(T(" Elemental Information "), 50, '-') ."\n" .
+				TF("ID: %s (%s)\n".
+					"Name : %s \n".
+					"HP: %s/%s (%s\%)\n".
+					"SP: %s/%s (%s\%)\n".
+					"Position: %s,%s\n",
+				unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
+				$char->{elemental}{name},
+				$char->{elemental}{hp}, $char->{elemental}{hp_max}, sprintf("%.2f",$char->{elemental}->hp_percent()),
+				$char->{elemental}{sp}, $char->{elemental}{sp_max}, sprintf("%.2f",$char->{elemental}->sp_percent()),
+				$char->{elemental}{'pos'}{'x'},$char->{elemental}{'pos'}{'y'},
+			);
+			$msg .= ('-'x50) . "\n";
+			message $msg, "info";
+
+	} elsif ($args[0] eq "list" && $args[1] =~ /\d+/) {
+		my $elemental = $elementalsList->get($args[1]);
+		if(!$elemental) {
+			error TF("Elemental \"%s\" does not exist.\n", $args[1]);
+		} else {
+			my $pos = calcPosition($elemental);
+			my $mypos = calcPosition($char);
+			my $dist = sprintf("%.1f", distance($pos, $mypos));
+			$dist =~ s/\.0$//;
+
+			my $msg = center(T(" Elemental Info "), 67, '-') ."\n" .
+						
+			TF("%s (%s) \n".
+				"ID: %s (Hex: %s)\n" .
+				"Position: %s, %s  Distance: %-17s\n" .
+				"Level: %-7d\n" .
+				"Class: %s\n" .
+				"Walk speed: %s secs per block\n",
+			$elemental->{name}, $elemental->{binID},
+			unpack('V',$char->{elemental}{ID}), getHex($char->{elemental}{ID}),
+			$pos->{x}, $pos->{y}, $dist,
+			$elemental->{lv}, 
+			$jobs_lut{$elemental->{jobID}},
+			$elemental->{walk_speed});
+
+			$msg .= '-' x 67 . "\n";
+			message $msg, "info";
+			return;
+		}
+	} elsif ($args[0] eq "list") {
+		my $msg = center(T(" Elemental List "), 79, '-') ."\n".
+		T("#    Name                Lv   Dist  Coord\n");
+		for my $elemental (@$elementalsList) {
+			my ($name, $dist, $pos);
+			$name = $jobs_lut{$elemental->{jobID}};
+			my $elementalpos = calcPosition($elemental);
+			my $mypos = calcPosition($char);
+			$dist = sprintf("%.1f", distance($elementalpos, $mypos));
+			$dist =~ s/\.0$//;
+			$pos = '(' . $elemental->{pos}{x} . ', ' . $elemental->{pos}{y} . ')';
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<< @<<< @<<   @<<<<<<<<<<",
+				[$elemental->{binID}, $name, $elemental->{lv}, $dist, $pos]);
+		}
+
+		if (my $elementalsTotal = $elementalsList && $elementalsList->size) {
+			$msg .= TF("Total elementals: %s \n", $elementalsTotal);
+		} else	{$msg .= T("There are no elementals near you.\n");}
+
+		$msg .= '-' x 79 . "\n";
+		message $msg, "list";
+
+	} else {
+		error T("Error in function 'elemental'\n" .
+			"Usage: elemental <info|list [<elemental index>]>\n
+				info: show info from self elemental.\n
+				list: list all elementals on screen.\n
+				list <index number> show information about a specific elemental");
+	}
+}
+
+sub cmdCreate {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my ($cmd, $args) = @_;
+	my @arg = parseArgs($args);
+
+	if ($arg[0] =~ /^\d+/ && defined $makableList->[$arg[0]]) { # viewID/nameID can be 0
+		$arg[1] = 0 if !defined $arg[1];
+		$arg[2] = 0 if !defined $arg[2];
+		$arg[3] = 0 if !defined $arg[3];
+		$messageSender->sendMakeItemRequest($makableList->[$arg[0]], $arg[1], $arg[2], $arg[3]);
+	} elsif($arg[0] =~ /^\d+/) {
+		message TF("Item with 'create' index: %s not found.\n", $arg[0]), "info";
+	} else {
+		error T("Error in function 'create'\n" .
+			"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 3 nameID>\n".
+			"material # nameID: can be 0 or undefined.\n");
+	}
+
+	undef $makableList;
+}
+
+sub cmdSearchStore {
+	my ($cmd, $args) = @_;
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	my @args = parseArgs($args);
+	
+	if (!$universalCatalog{open}) {
+		error T("Error in function 'searchstore' (universal catalog)\n".
+				"No catalog in use. You can't use this yet.\n");
+		return;
+	}
+	
+	if ($args[0] eq "close") {
+		$messageSender->sendSearchStoreClose();
+		message T("Closed search store catalog\n");
+		return;
+	}
+	
+	if ($args[0] eq "next") {
+		if ($universalCatalog{has_next}) {
+			$messageSender->sendSearchStoreRequestNextPage();
+			message T("Requested next page of search store catalog\n");
+			return;
+		}
+		error T("Error in function 'searchstore' (universal catalog)\n".
+				"Already reached the end. There's no next page\n");
+		return;
+	}
+	
+	if ($args[0] eq "buy") {
+		if ($universalCatalog{type} == 0) {
+			error T("Error in function 'searchstore' (universal catalog)\n".
+					"You cannot buy with the Silver Catalog.\n");
+			return;
+		}
+		
+		if ($venderItemList->size() == 0 || !defined $venderID || !defined $venderCID) {
+			error T("Error in function 'searchstore' (universal catalog)\n".
+					"No store selected. Please select a store with 'searchstore select' first\n");
+			return;
+		}
+		
+		if ($args[1] eq "end") {
+			$venderItemList->clear;
+			undef $venderID;
+			undef $venderCID;
+			
+			return;
+		}
+		
+		if ($args[1] eq "view") {
+			$messageSender->sendEnteringVender($venderID);
+			return;
+		}
+		
+		if (scalar @args > 1) {
+			my $item = $venderItemList->get($args[1]);
+			
+			if (!$item) {
+				error TF("Error in function 'searchstore' (universal catalog)\n".
+						"Item %s does not exist\n", $args[1]);
+				return;
+			}
+			
+			my $amount = (scalar @args > 2 && $args[2] >= 0) ? $args[2] : 1;
+			
+			$messageSender->sendBuyBulkVender( $venderID, [ { itemIndex => $item->{ID}, amount => $amount } ], $venderCID );
+			
+			return;
+		}
+		
+		error T("Error in function 'searchstore buy' (Buy using a Gold Search Catalog\n".
+				"Syntax: buy [view|end|<item #> [<amount>]]\n");
+	}
+	
+	if ($args[0] eq "view") {
+		if (!scalar(@{$universalCatalog{list}})) {
+			error T("Error in function 'searchstore view' (store search view page)\n".
+					"No info available yet\n");
+			return;
+		} elsif ($args[1] + 1 > scalar(@{$universalCatalog{list}})) {
+			error TF("Error in function 'searchstore view' (store search view page)\n".
+					"Page %d out of bounds (valid bounds: 0..%d)\n", $args[1], scalar(@{$universalCatalog{list}}) - 1);
+			return;
+		} else {
+			Misc::searchStoreInfo($args[1]);
+			return;
+		}
+	}
+	
+	if ($args[0] eq "search") {
+		my $searchMethod;
+		
+		if ($args[1] eq "match") {
+			$searchMethod = \&containsItemNameToIDList;
+		} elsif ($args[1] eq "exact") {
+			$searchMethod = \&itemNameToIDList;
+		} else {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			
+			return;
+		}
+		
+		my @ids = $searchMethod->($args[2]);
+		my @cards;
+		my @price;
+		my $type = 0;
+		
+		if (!scalar(@ids)) {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Item '%s' not found\n", $args[2]);
+			return;
+		}
+		
+		if ($args[3] eq "card") {
+			@cards = $searchMethod->($args[4]);
+			
+			if ($args[5] eq "price") {
+				@price = split '..', $args[6];
+			}
+		} elsif ($args[3] eq "price") {
+			@price = split '..', $args[4];
+			
+			if ($args[5] eq "card") {
+				@cards = $searchMethod->($args[6]);
+			}
+		} else {
+			error TF("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			
+			return;
+		}
+		
+		if ($args[-1] eq "buy") {
+			$type = 1;
+		}
+		
+		# Limit search size
+		# I'm not sure about the max size, this needs more testing or might be server-specific, but must exist - lututui
+		if (scalar @ids + scalar @cards > 15) {
+			error $msgTable[1785] . "\n";
+			return;
+		}
+		
+		$messageSender->sendSearchStoreSearch({
+			item_list => \@ids,
+			card_list => \@cards,
+			min_price => $price[0],
+			max_price => $price[1],
+			type => $type
+		});
+		
+		return;
+	}
+	
+	if ($args[0] eq "select") {
+		if (scalar @args > 2) {
+			if ($args[1] > scalar(@{$universalCatalog{list}}) - 1) {
+				error TF("Error in function 'searchstore select' (store search select store)\n".
+					"Page %d out of bounds (valid bounds: [0,%d])\n", $args[1], scalar(@{$universalCatalog{list}}) - 1);
+				return;
+			}
+			
+			if ($args[2]> scalar(${$universalCatalog{list}}[$args[1]]) - 1) {
+				error TF("Error in function 'searchstore select' (store search select store)\n".
+					"Item %d out of bounds (valid bounds: [0,%d])\n", $args[1], scalar(${$universalCatalog{list}}[$args[1]]) - 1);
+				return;
+			}
+			
+			$messageSender->sendSearchStoreSelect({
+				accountID => ${$universalCatalog{list}}[$args[1]][$args[2]]{accountID},
+				storeID => ${$universalCatalog{list}}[$args[1]][$args[2]]{storeID},
+				nameID => ${$universalCatalog{list}}[$args[1]][$args[2]]{nameID},
+			});
+			
+			return;
+		}
+		
+		error T("Error in function 'searchstore select' (select store)\n" .
+				"Syntax: searchstore select <page #> <store #> \n");
+		return;
+	}
+	
+	error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
+			"searchstore close : Closes search store catalog\n" .
+			"searchstore next : Requests catalog next page\n" . 
+			"searchstore view <page #> : Shows catalog page # (0-indexed)\n" . 
+			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
+			"searchstore select <page #> <store #> : Selects a store\n" .
+			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
 }
 
 1;

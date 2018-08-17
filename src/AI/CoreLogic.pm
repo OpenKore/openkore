@@ -179,6 +179,7 @@ sub iterate {
 	processAvoid();
 	processSendEmotion();
 	processAutoShopOpen();
+	processAutoBuyerShopOpen();
 	processRepairAuto();
 	processFeed();
 	Benchmark::end("AI (part 4)") if DEBUG;
@@ -420,6 +421,7 @@ sub processDrop {
 ##### PORTALREADD #####
 # Automatically adds the last missing portals to portals_lut
 sub processReAddMissingPortals {
+	return unless ($config{route_reAddMissingPortals});
 	return unless (@portals_lut_missed);
 	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
 	my $portal = shift(@portals_lut_missed);
@@ -785,7 +787,7 @@ sub processTake {
 			} else {
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
@@ -1040,6 +1042,25 @@ sub processTransferItems {
 			redo;
 		}
 
+		#verify if we can carry the amount of item
+		#if you're sending to storage, doesn't need to check weight
+		#if there is no information about weight, there's no point in check
+		if ($row->{target} ne 'storage' && $item->weight() && $config{itemsCheckWeight}) {
+			my $freeWeight;
+			if ($row->{target} eq 'inventory') {
+				$freeWeight = int ($char->{weight_max} - $char->{weight});
+			} else { #if target not inventory, then is cart!
+				$freeWeight = int ($char->cart->{weight_max} - $char->cart->{weight});
+			}
+			my $weightNeeded = min( $item->{amount}, $row->{amount} || $item->{amount} ) * ($item->weight()/10);
+			
+			if ($weightNeeded > $freeWeight) {
+				#need to low down the amount
+				$row->{amount} = $freeWeight / ( $item->weight()/10 );
+				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
+			}		
+		}
+
 		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
 			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
 			redo;
@@ -1128,7 +1149,8 @@ sub processAutoStorage {
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
 		  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
+		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
+			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore}))
 		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()) {
 
 		# Initiate autostorage when the weight limit has been reached
@@ -1154,25 +1176,29 @@ sub processAutoStorage {
 		Misc::checkValidity("AutoStorage part 1");
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
+			next if ($config{"getAuto_$i"."_disabled"});
 			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
-				foreach (keys %items_lut) {
-					if ((lc($items_lut{$_}) eq lc($config{"getAuto_$i"})) && ($items_lut{$_} ne $config{"getAuto_$i"})) {
-						configModify("getAuto_$i", $items_lut{$_});
+				foreach my $nameID (keys %items_lut) {
+					if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
+						configModify("getAuto_$i", $items_lut{$nameID});
 					}
 				}
 			}
 
-			my $item = $char->inventory->getByName($config{"getAuto_$i"});
-			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}); # total amount of the same name items
+			my $item = $char->inventory->getByName($config{"getAuto_$i"}) || $char->inventory->getByNameID($config{"getAuto_$i"});
+			# total amount of the same name items
+			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}) || $char->inventory->sumByNameID($config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
 			    !$config{"getAuto_${i}_passive"} &&
 			    (!$item ||
 				 ($amount <= $config{"getAuto_${i}_minAmount"} &&
 				  $amount < $config{"getAuto_${i}_maxAmount"})
-			    )
+			    ) &&
+				checkSelfCondition("getAuto_$i")
 			) {
-				if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
+				if ($char->storage->isReady() && 
+					!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
 =pod
 					#This works only for last getAuto item
 					if ($config{"getAuto_${i}_dcOnEmpty"}) {
@@ -1182,7 +1208,8 @@ sub processAutoStorage {
 					}
 =cut
 				} else {
-					if ($char->storage->wasOpenedThisSession() && !$char->storage->getByName($config{"getAuto_$i"})) {
+					if ($char->storage->wasOpenedThisSession() && 
+						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1199,7 +1226,7 @@ sub processAutoStorage {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 
 		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1) && $needitem ne "" &&
+		if ((!defined($routeIndex) || $attackOnRoute > 1 || AI::isIdle) && $needitem ne "" &&
 			$char->inventory->isReady()){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
@@ -1213,10 +1240,12 @@ sub processAutoStorage {
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
 		AI::dequeue;
-		if ($forcedByBuy) {
-			AI::queue("sellAuto", {forcedByBuy => 1});
-		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
-			AI::queue("sellAuto", {forcedByStorage => 1});
+		if ($config{sellAuto} && ai_sellAutoCheck()) {
+			if ($forcedByBuy) {
+				AI::queue("sellAuto", {forcedByBuy => 1});
+			} elsif (!$forcedBySell) {
+				AI::queue("sellAuto", {forcedByStorage => 1});
+			}
 		}
 
 	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
@@ -1447,7 +1476,9 @@ sub processAutoStorage {
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
-					if (!$config{"getAuto_$args->{index}"}) {
+					if (!$config{"getAuto_$args->{index}"}
+						|| $config{"getAuto_$args->{index}_disabled"}
+						|| !checkSelfCondition($config{"getAuto_$args->{index}"})) {
 						$args->{index}++;
 						next;
 					}
@@ -1458,10 +1489,10 @@ sub processAutoStorage {
 						$args->{index}++;
 						next;
 					}
-					my $invItem = $char->inventory->getByName($itemName);
-					my $invAmount = $char->inventory->sumByName($itemName);
-					my $storeItem = $char->storage->getByName($itemName);
-					my $storeAmount = $char->storage->sumByName($itemName);
+					my $invItem = $char->inventory->getByName($itemName) || $char->inventory->getByNameID($itemName);
+					my $invAmount = $char->inventory->sumByName($itemName) || $char->inventory->sumByNameID($itemName);
+					my $storeItem = $char->storage->getByName($itemName) || $char->storage->getByNameID($itemName);
+					my $storeAmount = $char->storage->sumByName($itemName) || $char->storage->sumByNameID($itemName);
 					$item{name} = $itemName;
 					$item{inventory}{index} = $invItem ? $invItem->{binID} : undef;
 					$item{inventory}{amount} = $invItem ? $invAmount : 0;
@@ -2166,6 +2197,7 @@ sub processFollow {
 				$args->{'ID'} = $player->{ID};
 				$args->{'following'} = 1;
 				$args->{'name'} = $player->name;
+				AI::clear(qw/move route/);
  				message TF("Found my master - %s\n", $player->name), "follow";
 				last;
 			}			
@@ -2173,6 +2205,7 @@ sub processFollow {
 	} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}} && !${$players{$args->{'ID'}}}{'dead'} && ($players{$args->{'ID'}}->name eq $config{followTarget})) {
 		$args->{'following'} = 1;
 		delete $args->{'ai_follow_lost'};
+		AI::clear(qw/move route/);
  		message TF("Found my master!\n"), "follow"
 	}
 
@@ -2605,7 +2638,8 @@ sub processPartySkillUse {
 					}
 					
 					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
-					next if (($char->{party}{users}{$ID} ne $playersList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
+					my $player = $playersList->getByID($ID);
+					next if (($char->{party}{users}{$ID}{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 				
 				my $player = Actor::get($ID);
@@ -2888,7 +2922,7 @@ sub processAutoAttack {
 					next;
 				}
 
-				my $control = mon_control($monster->{name});
+				my $control = mon_control($monster->{name}, $monster->{nameID});
 				if (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
@@ -2970,7 +3004,7 @@ sub processItemsTake {
 		foreach (@itemsID) {
 			next unless $_;
 			my $item = $items{$_};
-			next if (pickupitems($item->{name}) eq "0" || pickupitems($item->{name}) == -1);
+			next if (pickupitems($item->{name}, $item->{nameID}) eq "0" || pickupitems($item->{name}, $item->{nameID}) == -1);
 
 			$dist = distance($item->{pos}, AI::args->{pos});
 			$dist_to = distance($item->{pos}, AI::args->{pos_to});
@@ -3001,16 +3035,17 @@ sub processItemsAutoGather {
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
-		foreach my $item (@itemsID) {
-			next if ($item eq ""
-				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
-				|| $items{$item}{take_failed} >= 1
-				|| pickupitems(lc($items{$item}{name})) eq "0"
-				|| pickupitems(lc($items{$item}{name})) == -1 );
-			if (!positionNearPlayer($items{$item}{pos}, 12) &&
-			    !positionNearPortal($items{$item}{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
-				gather($item);
+		foreach (@itemsID) {
+			next unless $_;
+			my $item = $items{$_};
+			next if (!timeOut($item->{appear_time}, $timeout{ai_items_gather_start}{timeout})
+				|| $item->{take_failed} >= 1
+				|| pickupitems($item->{name}, $item->{nameID}) eq "0"
+				|| pickupitems($item->{name}, $item->{nameID}) == -1 );
+			if (!positionNearPlayer($item->{pos}, 12) &&
+			    !positionNearPortal($item->{pos}, 10)) {
+				message TF("Gathering: %s (%s)\n", $item->{name}, $item->{binID});
+				gather($_);
 				last;
 			}
 		}
@@ -3056,7 +3091,7 @@ sub processItemsGather {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};
 				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 			}
 
 		} else {
@@ -3292,6 +3327,29 @@ sub processAutoShopOpen {
 		} else {
 			main::openShop();
 		}
+	}
+}
+
+##### AUTO BUYER SHOP OPEN #####
+sub processAutoBuyerShopOpen {
+	if ($config{'buyerShopAuto_open'} && !AI::isIdle) {
+		$timeout{ai_shop}{time} = time;
+	}
+
+	if ($config{'buyerShopAuto_open'} && AI::isIdle && $net->getState() == Network::IN_GAME && !$char->{sitting} && timeOut($timeout{ai_shop}) && timeOut($timeout{ai_buyer_shopCheck}) && !$buyershopstarted
+		&& $field->baseName eq $config{'lockMap'} && !$taskManager->countTasksByName('openShop')) {
+		if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
+			my $item = $char->inventory->getByNameID(12548);
+			if(!$item) {
+				error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+				return;
+			}
+		} elsif(!$char->inventory->getByNameID(6377)) {
+			error T("You don't have Bulk Buyer Shop License.\n");
+			return;
+		}
+		main::openBuyerShop();
+		$timeout{ai_buyer_shopCheck}{time} = time;
 	}
 }
 

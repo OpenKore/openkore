@@ -20,27 +20,9 @@ package Network::Receive::kRO::Sakexe_2008_12_10a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2008_11_26a);
 
-use Log qw(debug);
-
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0442' => [sage_autospell => 'x2 V a*', [qw(why autoshadowspell_list)]], # -1
-		# 0x0443 is sent packet # TODO: add
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2008-12-10aSakexe
-0x0442,-1
-0x0443,8
-=cut
 
 1;

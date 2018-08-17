@@ -32,11 +32,11 @@ use constant {
 	
 	DATE_FORMAT_KEY => "vendingLog_dateFormat",
 	
-	DATE_FORMAT_VALUE_X_MEANING => [ "h:m:s", "y-m-d", "Mon d h:m:s y" ],
+	DATE_FORMAT_VALUE_X_MEANING => [ "y-m-d", "h:m:s", "Mon d h:m:s y" ],
 };
 
 my $translator = new Translation(PLUGIN_PODIR, $sys{locale});
-my $main_command = Commands::register([COMMAND_HANDLE, $translator->translate("Command used by vendingLog plugin"), \&onCommandCall]);
+my $main_command;
 my $terminateWhenDone = 0;
 
 my %shopLog;
@@ -186,7 +186,7 @@ sub prepareMessage {
 			$name = (exists $knownNames{$key}) ? $knownNames{$key} : $translator->translate("Unknown");
 			
 			for ($i = 0; $i < scalar @{$shopLog{$key}{item}}; ++$i) {
-				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
+				$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<",
 						[$offset+$i+1, ${$shopLog{$key}{item}}[$i], formatNumber(${$shopLog{$key}{amount}}[$i]),
 						formatNumber(${$shopLog{$key}{zenyEarned}}[$i]), $name,
 						getFormattedDateShort(${$shopLog{$key}{time}}[$i], $config{&DATE_FORMAT_KEY})]);
@@ -204,7 +204,7 @@ sub prepareMessage {
 	if ($offset == 0) {
 		$msg .= center($translator->translate(" Nothing sold yet "), 79, ' ') ."\n";
 	} else {
-		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>>>>>>>>>>",
+		$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<",
 					[undef, $translator->translate("Total"), formatNumber($totalAmount), formatNumber($totalZeny), undef, undef]);
 	}
 
@@ -242,6 +242,8 @@ sub onInitialized {
 	
 	$hooks{shop_sold}->hook();
 	$hooks{shop_close}->hook();
+	
+	$main_command = Commands::register([COMMAND_HANDLE, $translator->translate("Command used by vendingLog plugin"), \&onCommandCall]);
 }
 
 sub onUnload {
@@ -268,9 +270,6 @@ sub onReload {
 	onUnload();
 
 	warning $translator->translatef("%s Reloading plugin...\n", PLUGIN_PREFIX);
-	
-	$hooks{shop_sold}->hook();
-	$hooks{shop_close}->hook();
 	
 	onInitialized();
 	

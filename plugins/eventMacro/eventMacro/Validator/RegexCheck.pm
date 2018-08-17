@@ -181,8 +181,4 @@ sub validate {
 	return 0;
 }
 
-sub _get_code_regex {
-	return '\/.*?\/\w?';
-}
-
 1;

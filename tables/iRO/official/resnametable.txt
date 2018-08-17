@@ -136,6 +136,10 @@ edic_dun01l.gat#dic_dun01.gat#
 edic_dun01l.rsw#dic_dun01.rsw#
 삯샺샎엍웤샌붺\map\edic_dun01l.bmp#삯샺샎엍웤샌붺\map\dic_dun01.bmp#
 
+edic_dun01.gnd#dic_dun01.gnd#
+edic_dun01.gat#dic_dun01.gat#
+edic_dun01.rsw#dic_dun01.rsw#
+삯샺샎엍웤샌붺\map\edic_dun01.bmp#삯샺샎엍웤샌붺\map\dic_dun01.bmp#
 edic_dun02l.gnd#dic_dun02.gnd#
 edic_dun02l.gat#dic_dun02.gat#
 edic_dun02l.rsw#dic_dun02.rsw#
@@ -693,6 +697,11 @@ eairplane1.rsw#airplane.rsw#
 1@summon.gat#guild_vs5.gat#
 1@summon.rsw#guild_vs5.rsw#
 삯샺샎엍웤샌붺\map\1@summon.bmp#삯샺샎엍웤샌붺\map\guild_vs5.bmp#
+
+2@summon.gnd#guild_vs5.gnd#
+2@summon.gat#guild_vs5.gat#
+2@summon.rsw#guild_vs5.rsw#
+삯샺샎엍웤샌붺\map\2@summon.bmp#삯샺샎엍웤샌붺\map\guild_vs5.bmp#
 
 1@spx5.gnd#in_sphinx5.gnd#
 1@spx5.gat#in_sphinx5.gat#
@@ -2106,3 +2115,19 @@ e_niflheim.gnd#niflheim.gnd#
 e_niflheim.gat#niflheim.gat#
 e_niflheim.rsw#niflheim.rsw#
 삯샺샎엍웤샌붺\map\e_niflheim.bmp#삯샺샎엍웤샌붺\map\niflheim.bmp#
+
+//201502 16.2
+1@swat.gnd#1@swat.gnd#
+1@swat.gat#1@swat.gat#
+1@swat.rsw#1@swat.rsw#
+삯샺샎엍웤샌붺\map\1@swat.bmp#삯샺샎엍웤샌붺\map\1@swat.bmp#
+
+1@slw.gnd#1@slw.gnd#
+1@slw.gat#1@slw.gat#
+1@slw.rsw#1@slw.rsw#
+삯샺샎엍웤샌붺\map\1@slw.bmp#삯샺샎엍웤샌붺\map\1@slw.bmp#
+
+enew_1-3.gnd#new_zone03.gnd#
+enew_1-3.gat#new_zone03.gat#
+enew_1-3.rsw#new_zone03.rsw#
+삯샺샎엍웤샌붺\map\enew_1-3.bmp#삯샺샎엍웤샌붺\map\new_zone03.bmp#

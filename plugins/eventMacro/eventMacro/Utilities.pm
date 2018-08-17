@@ -204,6 +204,8 @@ sub getQuestStatus {
 			$result->{$quest_id} = 'incomplete';
         } elsif ( grep { $_->{goal} && $_->{count} < $_->{goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
+        } elsif ( grep { !$_->{goal} && $_->{count} == 0 } values %{ $quest->{missions} } ) {
+			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';
 		}
@@ -243,8 +245,8 @@ sub getPlayerID {
 
 # get monster array index
 sub getMonsterID {
-	foreach my $ml (@{$monstersList->getItems()}) {
-		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0]);
+	foreach my $ml (@{$monstersList}) {
+		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0] || $ml->{name_given} eq $_[0]);
 	}
 	return -1
 }

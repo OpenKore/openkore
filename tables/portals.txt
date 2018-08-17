@@ -2181,6 +2181,7 @@ ra_in01 241 299 ra_in01 193 312
 ra_in01 185 303 ra_in01 194 249
 ra_in01 357 61 ra_in01 310 62
 ra_in01 297 59 ra_in01 339 116
+ra_temin 28 319 ra_san01 139 139
 ra_temin 130 93 ra_temin 239 258
 ra_temin 206 93 ra_temin 312 258
 ra_temin 275 332 ra_temin 27 305
@@ -2189,6 +2190,7 @@ ra_temsky 99 118 ra_temsky 99 140
 ra_temsky 112 143 ra_temsky 141 139
 ra_temsky 87 143 ra_temsky 58 139
 ra_temple 120 22 rachel 150 243
+ra_temple 119 180 ra_temin 169 23
 ra_in01 237 202 rachel 81 38
 ra_in01 181 202 rachel 61 38
 ra_in01 250 38 rachel 217 60
@@ -2932,6 +2934,10 @@ geffen_in 160 104 moc_para01 31 14 c c r0
 payon_in02 58 58 moc_para01 31 14 c c r0
 izlude 134 97 moc_para01 31 14 c c r0
 izlude_in 68 162 moc_para01 31 14 c c r0
+dicastes01 186 206 moc_para01 31 14 c r0 n
+mora 41 133 moc_para01 31 14 c r0 n
+mora 108 117 moc_para01 31 14 c r0 n
+harboro1 90 221 moc_para01 31 14 c r0 n
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
@@ -3033,15 +3039,15 @@ mal_in02 142 60 mal_in02 162 61
 xmas 139 307 evt_xmas 129 129 0 c r1
 
 #EP-14.2
-// mora <-> bif_fild02
+# mora <-> bif_fild02
 mora 182 74 bif_fild02 286 327
 bif_fild02 285 332 mora 179 74 0 c r0 n 
 
-//  bif_fild02 <-> ecl_fild01
+#  bif_fild02 <-> ecl_fild01
 bif_fild02 292 351 ecl_fild01 205 76
 ecl_fild01 207 72 bif_fild02 294 350
 
-// ecl_fild01 <-> ecl_tdun0.*
+# ecl_fild01 <-> ecl_tdun0.*
 ecl_fild01 182 82 ecl_tdun01 60 13
 ecl_tdun01 61 11 ecl_fild01 182 85
 ecl_tdun01 67 106 ecl_tdun02 60 88
@@ -3053,11 +3059,11 @@ ecl_tdun04 26 26 ecl_tdun03 50 44
 ecl_tdun04 34 17 ecl_fild01 183 73
 ecl_fild01 183 70 ecl_tdun04 33 19
 
-// eclage <-> ecl_fild01
+# eclage <-> ecl_fild01
 eclage 98 26 ecl_fild01 99 317
 ecl_fild01 97 322 eclage 100 28
 
-// eclage <-> ecl_in01
+# eclage <-> ecl_in01
 eclage 299 309 ecl_in01 47 11
 ecl_in01 47 8 eclage 297 307
 
@@ -3106,7 +3112,7 @@ casp_in01 262 203 casp_in01 191 201
 casp_auct02 40 36 caspen 151 198
 casp_dun01 23 38 caspen 267 277
 
-//Museum
+#Museum
 brasilis 146 162 bra_in01 17 137
 bra_in01 17 134  brasilis 148 161
 bra_in01 50 145  bra_in01 81 143
@@ -3116,7 +3122,7 @@ bra_in01 79 169  bra_in01 46 170
 bra_in01 138 174 bra_in01 12 183
 bra_in01 206 98  bra_in01 138 176
 
-//Inn
+#Inn
 brasilis 274 153 bra_in01 38 9
 bra_in01 39 7 brasilis 273 151
 bra_in01 52 27 bra_in01 85 26
@@ -3130,11 +3136,71 @@ bra_in01 25 70  bra_in01 32 26
 bra_in01 31 74  bra_in01 148 59
 bra_in01 148 57 bra_in01 31 72
 
-//Dungeon
+#Dungeon
 bra_dun01 199 35 bra_dun02 261 263
 bra_dun02 261 265 bra_dun01 199 37
 
-//Dungeon Access
+#Dungeon Access
 bra_in01 144 187 bra_in01 0 206 102 c r0 n
 bra_in01 206 188 bra_dun01 87 47 0 n
 bra_dun01 87 43 bra_in01 206 185 0 n
+
+# dewata 
+dewata 44 252 dew_fild01 373 212
+dew_fild01 375 212 dewata 46 256
+dew_fild01 57 273 dew_in01 15 33
+dew_fild01 48 65 dew_dun02 302 30
+dew_dun02 305 30 dew_fild01 50 65
+
+# Lasagna
+izlude 195 213 lasagna 206 297 2000 c c r0 n
+lasagna 205 325 lasagna 193 209 2000 c c r1 n
+lasagna 205 325 malangdo 193 209 2000 c c r2 n
+lasa_fild02 348 244 lasa_dun01 24 143
+lasa_dun01 18 143 lasa_fild02 344 243
+lasa_dun_q 190 14 lasa_dun01 152 98
+lasa_dun01 157 98 lasa_dun02 22 171
+lasa_dun02 18 171 lasa_dun01 153 98
+lasa_dun02 146 58 lasa_dun03 190 18
+lasa_dun03,190,15 lasa_dun02,146 54
+lasa_fild01 134 381 lasagna 153 58
+lasagna 150 54 lasa_fild01 131 378
+lasa_fild01 341 375 lasagna 327 56
+lasagna 327 51 lasa_fild01 344 371
+lasagna 358 91 lasa_fild02 20 98
+lasa_fild02 16 98 lasagna 355 92
+lasa_in01 159 61 lasagna 68 202
+conch_in 60 61 lasagna 206 323
+conch_in 51 60 conch_in 31 60
+conch_in 34 60 conch_in 53 59
+conch_in 63 53 conch_in 63 33
+conch_in 63 35 conch_in 64 55
+conch_in 64 66 conch_in 63 89
+conch_in 63 87 conch_in 63 64
+conch_in 101 53 conch_in 101 33
+conch_in 101 35 conch_in 102 55
+conch_in 101 66 conch_in 101 89
+conch_in 102 87 conch_in 101 64
+conch_in 137 53 conch_in 139 33
+conch_in 139 35 conch_in 138 55
+conch_in 137 66 conch_in 139 89
+conch_in 140 87 conch_in 137 64
+conch_in 142 60 conch_in 162 61
+conch_in 159 61 conch_in 140 59
+
+# Rock Ridge
+alberta 240 103 harboro1 70 215 10000 c r0 n
+harboro1 60 215 alberta 172 131 c r0 n
+harboro1 241 218 har_in01 18 18
+harboro1 362 206 rockrdg1 37 246
+rockmi1 247 16 rockrdg2 304 350
+rockrdg2 304 350 rockmi1 247 19
+harboro1 312 193 har_in01 26 87
+har_in01 26 90 harboro1 312 193
+har_in01 18 15 harboro1 241 218
+har_in01 34 28 harboro1 241 218
+har_in01 99 30 har_in01 34 31
+har_in01 34 28 har_in01 99 27
+rockrdg1 33 246 harboro1 362 206
+rockrdg1 371 206 rockrdg2 31 207
+rockrdg2 27 207 rockrdg1 371 206

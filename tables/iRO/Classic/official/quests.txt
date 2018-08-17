@@ -12203,59 +12203,59 @@ Hunt 30 Gibbet monsters at the Valley of Gyoll east of Nifflheim#
 Bring 5 Ectoplasm and 5 Poisonous Powders to the Witch in Nifflheim.#
 #
 
-62200#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Go to the Geffen Inn and find Monsieur Pierrot.#
+62200#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Go to the Payon Inn and find Monsieur Pierrot.#
 #
 
-62201#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to Major Molotov at the Geffen Inn bar.#
+62201#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to Major Molotov at the Payon Inn bar.#
 #
 
-62202#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62202#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Bring 25 bottles of ^ff0000Milk^000000,  15 ^ff0000Strawberries^000000 and 20 ^ff0000Iron Ore^000000s to Major Molotov#
 #
 
-62203#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Rachel Delegation Miss Mansur at the Geffen Inn#
+62203#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to the Rachel Delegation Miss Mansur at the Payon Inn#
 #
 
-62204#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Race Aslan to the Eastern Corner of the southern fountain at Geffen.#
+62204#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Race Aslan to the entrance of Payon.#
 #
 
-62205#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Return to Madame Mansur at Geffen Inn#
+62205#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Return to Madame Mansur at Payon Inn#
 #
 
-62206#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Madame Mansur needs to convince the remaining delegates to come to Geffen for the games. Return to her next week when the new delegates arrive.#
+62206#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Madame Mansur needs to convince the remaining delegates to come to Payon for the games. Return to her next week when the new delegates arrive.#
 #
 
-62207#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62207#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Look for the Weapon Shop Manager and speak to him.#
 #
 
-62208#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62208#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Return to the Port Malaya delegate Lawrence Llaguno.#
 #
 
-62209#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
-Speak to the Brasilis delegate.#
+62209#Sports Festa#SG_FEEL#QUE_NOIMAGE#
+Speak to the Payon delegate.#
 #
 
-62210#Summer Sports Festa#SG_FEEL#QUE_SUMMERGAMES#
+62210#Sports Festa#SG_FEEL#QUE_NOIMAGE#
 Return to Terra Track or Franklin Field and let them know that you are done speaking to the delegates.#
 #
 
-70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
+70224#Sports Fencing Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to joust the famous Fencing Master. Though, if you give him 1 Eden Merit Badge he will let you skip waiting.#
 #
 
-70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
+70225#Sports Punching Bag Timer#SG_FEEL#QUE_NOIMAGE#
 You must weight 3 hours before attempting to test your strength. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
 #
 
-70226#Summer Sports Obstacle Timer#SG_FEEL#QUE_SUMMERGAMES#
+70226#Sports Obstacle Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to tackle the obstacle course again. Though, if you have 1 Eden Merit Badge it will let you skip waiting.#
 #
 
@@ -13051,11 +13051,11 @@ Kill the large orc wandering somewhere in the sewers.#
 Please wait three hours before playing again#
 #
 
-70224#Summer Sports Fencing Timer#SG_FEEL#QUE_SUMMERGAMES#
+70224#Summer Sports Fencing Timer#SG_FEEL#QUE_NOIMAGE#
 You must wait 3 hours before attempting to joust the famous Fencing Master. #
 #
 
-70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_SUMMERGAMES#
+70225#Summer Sports Punching Bag Timer#SG_FEEL#QUE_NOIMAGE#
 You must weight 3 hours before attempting to test your strength.#
 #
 
@@ -14038,4 +14038,81 @@ You've successfully placed all of the gifts on the sleigh. Go back to Retired Sa
 
 62976#Bah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Retired Santa again tomorrow to help save Christmas again!#
+#
+
+63029#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again about bringing chocolates to Niflheim.#
+#
+
+63030#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Bring Ingrid the ingredients she needs to make the chocolates. She needs 30 Cacao, 10 Honey, 5 Milk, 3 Red Spice, and 3 Cooking Oil.#
+#
+
+63031#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to see if she's done making the chocolates.#
+#
+
+63032#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go to Niflheim and search for Rupert. He can be anywhere...#
+#
+
+63034#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Dullahans to gain Rupert's trust.#
+#
+
+63035#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Rupert again when you're ready.#
+#
+
+63036#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Go back to Ingrid and tell her the good news!#
+#
+
+63037#My Dearest Possession#SG_FEEL#QUE_NOIMAGE#
+Speak to Ingrid again to conclude your adventure.#
+#
+
+
+63162#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring a Poring Egg back to the Poring Con Volunteer.#
+#
+
+63164#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Bring 15 Apple Juices to the Poring Con Volunteer.#
+#
+
+63166#Poring Con#SG_FEEL#QUE_NOIMAGE#
+You completed the Poring Con entrance quest! Keep your badge safe, you'll need it for the con!#
+#
+
+63167#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Help Cosplayer Freya with some much needed cosplay supplies: 30 Fluff, 20 Blue Hair, 20 Yarn, 1 Darkgreen Dyestuffs and 1 Adventurer's Suit.#
+#
+
+63168#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to Cosplayer Freya again. She's got some good news!#
+#
+
+63170#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Take some cosplay photos and bring them back to Astra and Jelloshaker.#
+#
+
+63176#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the other convention workers to investigate Campitor's wereabouts.#
+#
+
+63177#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Speak to the Monster Cosplayer? She might know where Camp is.#
+#
+
+63178#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor went to meet a band in Juno?#
+#
+
+63179#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Campitor might be right outside Juno according to the Band Members.#
+#
+
+63180#Poring Con#SG_FEEL#QUE_NOIMAGE#
+Maybe the Poring Con Volunteer at the entrance knows about Camp?#
 #

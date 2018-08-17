@@ -22,23 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2005_03_28a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0227' => ['gameguard_request'], # 18
-		# 0x0228 is sent packet
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2005-04-04aSakexe
-0x0227,18
-0x0228,18
-=cut
 
 1;

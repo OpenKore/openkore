@@ -212,8 +212,7 @@ sub onClientData {
 	ParsePacket($self, $client, $msg, $index, $packet_id, $switch);
 }
 
-sub ParsePacket
-{
+sub ParsePacket {
 	my ($self, $client, $msg, $index, $packet_id, $switch) = @_;
 
 	#my $packed_switch = quotemeta substr($msg, 0, 2);
@@ -225,12 +224,14 @@ sub ParsePacket
 	$host = '127.0.0.1' if ($host eq 'localhost');
 	my @ipElements = split /\./, $host;
 	
+	visualDump($msg, "$switch") if ($config{debug});
+	
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
 	# countries' clients (except probably oRO). The best way to support other clients would be: use a barebones
 	# eAthena or Freya as the emulator, or figure out the correct packet switches and include them in the
 	# if..elsif..else blocks.
-	if (($switch eq '01DB') || ($switch eq '0204')) { # client sends login packet 0204 packet thanks to elhazard
+	if ($switch eq '01DB' || $switch eq '0204') { # client sends login packet 0204 packet thanks to elhazard
 
 		# '01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		my $data = pack("C*", 0xdc, 0x01, 0x14) . pack("x17");
@@ -535,7 +536,7 @@ sub ParsePacket
 		# save servers.txt info
 		$clientdata{$index}{serverType} = "1 or 2";
 
-	} elsif (($switch eq '0436' || $switch eq '022D') &&
+	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{maploginPacket}) &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&

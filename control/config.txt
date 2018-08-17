@@ -183,6 +183,7 @@ itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeAuto_new 0
 itemsTakeGreed 0
+itemsCheckWeight 1
 
 lockMap
 lockMap_x
@@ -204,7 +205,10 @@ route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 15
+route_removeMissingPortals_NPC 1
+route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
+route_reAddMissingPortals 1
 
 runFromTarget 0
 runFromTarget_dist 6
@@ -220,6 +224,9 @@ memo4
 shopAuto_open 0
 shop_random 0
 shop_useSkill 1
+
+buyerShopAuto_open 0
+buyerShop_random 0
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
@@ -311,6 +318,7 @@ logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
+logShop 1
 logEmoticons
 logConsole 1
 logAppendUsername 1
@@ -320,6 +328,7 @@ logDead 1
 
 chatTitleOversize 0
 shopTitleOversize 0
+buyerShopTitleOversize 0
 
 sleepTime 10000
 
@@ -726,6 +735,7 @@ getAuto {
 	minAmount
 	maxAmount
 	passive
+	disabled 0
 }
 
 ######## Debugging options; only useful for developers ########
