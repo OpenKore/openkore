@@ -19172,10 +19172,10 @@ Jobs : ^777777All Transcendent Jobs except Novice^000000
 #
 2764#
 A small sized fishing rod.
-Decrease fishing casting time by 3 seconds.
-Class : ^777777Fishing Rod^000000
-Weight : ^77777725^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808025^000000
+Usable By: ^808080All Jobs^000000
 #
 2765#
 A fine figure of a Novice. A mere glance at it makes you feel like you have more strength.
@@ -36248,12 +36248,10 @@ Required Level : ^77777740^000000
 Jobs : ^777777All^000000
 #
 5855#
-A real master never blames his tools.
-Though it is a normal fishing rod, it feels like I can chatch every fish in the sea.
-Class : ^777777Accessory^000000 Defense : ^7777770^000000
-Weight : ^7777770^000000
-Req LvL : ^7777770^000000
-Job : ^777777All^000000
+A real master never blames his tools. Though it is a normal fishing rod, it feels like I can catch every fish in the sea.
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
 #
 5856#
 #
@@ -65808,6 +65806,22 @@ Luminous Blue Stone
 17389#
 #
 17390#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following,
+?Heart Card In Mouth
+Cylinder Hairband
+Giant's Protection
+?Lunar Rainbow
+Crown of Deceit
+Gangster Scarf
+Magical Ring
+Shadow Ring
+?Party Hard Pack
+?Battle Manual X3 6cnt
+Bloody Branch 6cnt
+HE Bubble Gum 6cnt
 #
 17391#
 ^FF0000Account Bound^000000
@@ -65999,6 +66013,11 @@ Costume Snow Rabbit Knit Hat
 Costume Galanthus Guard
 Costume Chilly Breath
 Weight : ^7777771^000000
+#
+17470#
+A box containing 100 Silvervine Fruits. These are used as currency to exchange for special items or services.
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17476#
 Class: ^808080Item Giver^000000
@@ -72603,28 +72622,13 @@ Required Level : ^7777771^000000
 Jobs: ^777777All Except Novice^000000
 #
 19005#
-A box that contains 1 Classic Bunny Band 2 Week Rental
-Description:
-^000088Rental Item^000000
-A hairband that gives
-one the appearance of
-having rabbit ears,
-a lasting symbol of
-extremely good luck.
-Reduces damage from
-Demihuman monsters
-by 10%. MDEF +5
-This item cannot be Dropped or Traded.
-Class : ^777777Headgear^000000
-Defense: ^77777713^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
-- 1% Damage when hit by a Human-type monster
-Class : ^777777Headgear^000000 Defense : ^7777775^000000
-Location : ^777777Lower ^000000Weight : ^77777720^000000
-Required LVL : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi Human race enemies by 1%.
 #
 19006#
 A box that contains 1 Classic Combat Knife 2 Week Rental
@@ -77217,13 +77221,14 @@ Usable By: ^808080All Jobs^000000
 #
 19976#
 A hat which cats of Malangdo wear during the Christmas season.
-During December increases atk speed by 10% and Increases movement Speed
-Class : ^777777Head Gear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of December.^000000
+Aspd + 10%
+Increased Movement Speed.
 #
 19977#
 Golden exclamation mark.
@@ -78769,13 +78774,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20294#
-^808080A hat commemorating the inauguration of 29th head of Maximilian family among the babe of the babes. It symbolize courage against the big as one of the small.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat commemorating the inauguration of 29th head of Maximilian family among the babe of the babes. It symbolize courage against the big as one of the small.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20295#
 ^808080Sunglasses with the lenses modeled after Poring. An essential item for drawing everybody's attention.^000000
@@ -78868,13 +78872,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20312#
-^808080An eye patch modeled after the evil eye of Demon Baron.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+^808080An eye patch modeled after the evil eye of Demon Baron.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20313#
 ^808080It feels that a lot of data in CDs flow into the brain through the mouth.^000000
