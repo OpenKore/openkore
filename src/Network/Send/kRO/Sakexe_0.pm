@@ -61,7 +61,7 @@ sub new {
 		'00B8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'00B9' => ['npc_talk_continue', 'a4', [qw(ID)]],
 		'00BB' => ['send_add_status_point', 'v2', [qw(statusID Amount)]],
-		'00BF' => ['send_emotion', 'C', [qw(ID)]],
+		'00BF' => ['emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
