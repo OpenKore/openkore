@@ -1815,7 +1815,7 @@ sub sendEmotion {
 	my ($self, $ID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
-		switch => 'emotion',
+		switch => 'send_emotion',
 		ID => $ID,
 	}));
 	
