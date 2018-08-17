@@ -70702,7 +70702,7 @@ Character Bound
 #
 
 19951#
-This blank certificate can be used with, forgery tokens, to forge a hat certificate. Look for Hank in Morroc.
+This blank certificate can be used with forgery tokens to forge a hat certificate. Look for Hank in Morroc.
 Weight: 1
 Character Bound
 #
@@ -71672,4 +71672,24 @@ It is Tier 1
 It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
+#
+
+20052#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Cancer Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+200 Rubys
+1 Cancer Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20053#
+A box that contains: 1x Blank Certificate^000000
+This blank certificate can be used with forgery tokens to forge a hat certificate. Look for Hank in Morroc.
+^ffffff_^000000
 #

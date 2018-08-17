@@ -6975,3 +6975,6 @@
 20049#Gray_Drooping_Cat_Certificate#
 20050#Bell_Ribbon_Certificate#
 20051#Friend_Recruiter_Certificate#
+20052#Cancer_Diadem_Certificate#
+
+20053#Blank_Certificate_Box#
