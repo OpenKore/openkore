@@ -2023,4 +2023,15 @@ sub sendStorageClose {
 	debug "Sent Storage Close\n", "sendPacket", 2;
 }
 
+sub sendPartyJoinRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request',
+		ID => $ID,
+	}));
+	
+	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 1;

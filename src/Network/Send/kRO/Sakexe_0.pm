@@ -82,6 +82,7 @@ sub new {
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'00F7' => ['storage_close'],
+		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
@@ -423,14 +424,6 @@ sub sendPartyOrganize {
 
 # 0x00fa,3
 # 0x00fb,-1
-
-# 0x00fc,6,partyinvite,2
-sub sendPartyJoinRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x00FC, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x00fd,27
 # 0x00fe,30
