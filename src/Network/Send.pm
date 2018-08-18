@@ -1939,4 +1939,12 @@ sub sendChatRoomKick {
 	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
 }
 
+sub sendChatRoomLeave {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'chat_room_leave'}));
+	
+	debug "Sent Leave Chat Room\n", "sendPacket", 2;
+}
+
 1;
