@@ -320,15 +320,6 @@ sub sendCardMergeRequest {
 	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
 }
 
-sub sendCartGet {
-	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'cart_get',
-		ID => $ID,
-		amount => $amount,
-	}));
-}
-
 sub sendCharCreate {
 	my ($self, $slot, $name,
 	    $str, $agi, $vit, $int, $dex, $luk,

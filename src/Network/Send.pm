@@ -2094,4 +2094,16 @@ sub sendCartAdd {
 	debug "Sent Cart Add: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
 
+sub sendCartGet {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_get',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Cart Get: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
 1;
