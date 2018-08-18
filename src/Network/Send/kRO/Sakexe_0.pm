@@ -91,6 +91,7 @@ sub new {
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'011D' => ['memo_request'],
+		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
@@ -528,12 +529,6 @@ sub sendStorageAddFromCart {
 	my $msg = pack('v', 0x0129) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x012a,2,removeoption,0
-sub sendCompanionRelease {
-	$_[0]->sendToServer(pack('v', 0x012A));
-	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
 # 0x012b,2

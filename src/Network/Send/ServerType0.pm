@@ -96,6 +96,7 @@ sub new {
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
@@ -356,12 +357,6 @@ sub sendCharDelete {
 	my $msg = pack("C*", 0x68, 0x00) .
 			$charID . pack("a40", stringToBytes($email));
 	$self->sendToServer($msg);
-}
-
-sub sendCompanionRelease {
-	my $msg = pack("C*", 0x2A, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
 =pod
