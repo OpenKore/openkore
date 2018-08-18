@@ -2074,4 +2074,12 @@ sub sendMemo {
 	debug "Sent Memo\n", "sendPacket", 2;
 }
 
+sub sendCompanionRelease {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'companion_release'}));
+	
+	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
+}
+
 1;
