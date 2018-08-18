@@ -1947,4 +1947,15 @@ sub sendChatRoomLeave {
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
 }
 
+sub sendDeal {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_initiate',
+		ID => $ID,
+	}));
+	
+	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 1;

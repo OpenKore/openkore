@@ -73,6 +73,7 @@ sub new {
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
 		'00E3' => ['chat_room_leave'],
+		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -381,14 +382,6 @@ sub sendGMKillAll {
 # 0x00df,-1
 
 # 0x00e1,30
-
-# 0x00e4,6,traderequest,2
-sub sendDeal {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x00E4, $ID);
-	$_[0]->sendToServer($msg);
-	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
-}
 
 # 0x00e5,26
 

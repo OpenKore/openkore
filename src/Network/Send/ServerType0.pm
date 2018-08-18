@@ -75,6 +75,7 @@ sub new {
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
 		'00E3' => ['chat_room_leave'],
+		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -358,13 +359,6 @@ sub sendCurrentDealCancel {
 	my $msg = pack("C*", 0xED, 0x00);
 	$_[0]->sendToServer($msg);
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
-
-sub sendDeal {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xE4, 0x00) . $ID;
-	$_[0]->sendToServer($msg);
-	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendDealReply {
