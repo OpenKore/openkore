@@ -91,6 +91,7 @@ sub new {
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'011D' => ['memo_request'],
+		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -494,14 +495,6 @@ sub sendWarpTele { # type: 26=tele, 27=warp
 # 0x0123,-1
 # 0x0124,21
 # 0x0125,8
-
-# 0x0126,8,putitemtocart,2:4
-sub sendCartAdd {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v', 0x0126) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Cart Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
 
 # 0x0127,8,getitemfromcart,2:4
 sub sendCartGet {
