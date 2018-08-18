@@ -77,6 +77,7 @@ sub new {
 		'00E6' => ['deal_reply', 'C', [qw(action)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00EB' => ['deal_finalize'],
+		'00ED' => ['deal_cancel'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
@@ -393,12 +394,6 @@ sub sendGMKillAll {
 # 0x00ea,5
 
 # 0x00ec,3
-
-# 0x00ed,2,tradecancel,0
-sub sendCurrentDealCancel {
-	$_[0]->sendToServer(pack('v', 0x00ED));
-	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
 
 # 0x00ee,2
 
