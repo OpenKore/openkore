@@ -72,6 +72,7 @@ sub new {
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
+		'00E3' => ['chat_room_leave'],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -380,12 +381,6 @@ sub sendGMKillAll {
 # 0x00df,-1
 
 # 0x00e1,30
-
-# 0x00e3,2,chatleave,0
-sub sendChatRoomLeave {
-	$_[0]->sendToServer(pack('v', 0x00E3));
-	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
 
 # 0x00e4,6,traderequest,2
 sub sendDeal {

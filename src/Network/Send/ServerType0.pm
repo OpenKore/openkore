@@ -74,6 +74,7 @@ sub new {
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
+		'00E3' => ['chat_room_leave'],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -345,13 +346,6 @@ sub sendCharDelete {
 	my $msg = pack("C*", 0x68, 0x00) .
 			$charID . pack("a40", stringToBytes($email));
 	$self->sendToServer($msg);
-}
-
-sub sendChatRoomLeave {
-	my $self = shift;
-	my $msg = pack("C*", 0xE3, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Leave Chat Room\n", "sendPacket", 2;
 }
 
 sub sendCompanionRelease {
