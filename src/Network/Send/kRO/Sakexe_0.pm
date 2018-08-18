@@ -78,6 +78,7 @@ sub new {
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00EB' => ['deal_finalize'],
 		'00ED' => ['deal_cancel'],
+		'00EF' => ['deal_trade'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
@@ -396,12 +397,6 @@ sub sendGMKillAll {
 # 0x00ec,3
 
 # 0x00ee,2
-
-# 0x00ef,2,tradecommit,0
-sub sendDealTrade {
-	$_[0]->sendToServer(pack('v', 0x00EF));
-	debug "Sent Deal Trade\n", "sendPacket", 2;
-}
 
 # 0x00f0,3
 # 0x00f1,2

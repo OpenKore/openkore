@@ -80,6 +80,7 @@ sub new {
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00EB' => ['deal_finalize'],
 		'00ED' => ['deal_cancel'],
+		'00EF' => ['deal_trade'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
@@ -355,12 +356,6 @@ sub sendCompanionRelease {
 	my $msg = pack("C*", 0x2A, 0x01);
 	$_[0]->sendToServer($msg);
 	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
-}
-
-sub sendDealTrade {
-	my $msg = pack("C*", 0xEF, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
 =pod

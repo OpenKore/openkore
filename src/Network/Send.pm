@@ -2007,4 +2007,12 @@ sub sendCurrentDealCancel {
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
 }
 
+sub sendDealTrade {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'deal_trade'}));
+	
+	debug "Sent Deal Trade\n", "sendPacket", 2;
+}
+
 1;
