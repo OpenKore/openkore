@@ -102,6 +102,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -777,15 +778,6 @@ sub sendGuildAlly {
 
 # 0x0176,106
 # 0x0177,-1
-
-# 0x0178,4,itemidentify,2
-sub sendIdentify {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack('v', 0x0178) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
-}
 
 # 0x0179,5
 
