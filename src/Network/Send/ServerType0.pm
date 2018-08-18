@@ -72,6 +72,7 @@ sub new {
 		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
+		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -343,18 +344,6 @@ sub sendCharDelete {
 	my $msg = pack("C*", 0x68, 0x00) .
 			$charID . pack("a40", stringToBytes($email));
 	$self->sendToServer($msg);
-}
-
-sub sendChatRoomBestow {
-	my ($self, $name) = @_;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-
-	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $binName;
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
 
 sub sendChatRoomKick {
