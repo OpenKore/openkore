@@ -1928,4 +1928,15 @@ sub sendChatRoomBestow {
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
 
+sub sendChatRoomKick {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_kick',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
+}
+
 1;
