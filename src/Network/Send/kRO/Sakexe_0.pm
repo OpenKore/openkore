@@ -71,6 +71,7 @@ sub new {
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
+		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -379,14 +380,6 @@ sub sendGMKillAll {
 # 0x00df,-1
 
 # 0x00e1,30
-
-# 0x00e2,26,kickfromchat,2
-sub sendChatRoomKick {
-	my ($self, $name) = @_;
-	my $msg = pack('v Z24', 0x00E2, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
-}
 
 # 0x00e3,2,chatleave,0
 sub sendChatRoomLeave {
