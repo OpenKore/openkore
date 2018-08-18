@@ -2082,4 +2082,16 @@ sub sendCompanionRelease {
 	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
+sub sendCartAdd {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_add',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Cart Add: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
 1;
