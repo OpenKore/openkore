@@ -74,6 +74,7 @@ sub new {
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
 		'00E3' => ['chat_room_leave'],
 		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
+		'00E6' => ['deal_reply', 'C', [qw(action)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -384,23 +385,6 @@ sub sendGMKillAll {
 # 0x00e1,30
 
 # 0x00e5,26
-
-# 0x00e6,3,tradeack,2
-sub sendDealReply {
-	#Reply to a trade-request.
-	# Type values:
-	# 0: Char is too far
-	# 1: Character does not exist
-	# 2: Trade failed
-	# 3: Accept
-	# 4: Cancel
-	# Weird enough, the client should only send 3/4
-	# and the server is the one that can reply 0~2
-	my ($self, $action) = @_;
-	my $msg = pack('v C', 0x00E6, $action);
-	$_[0]->sendToServer($msg);
-	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
-}
 
 # 0x00e7,3
 

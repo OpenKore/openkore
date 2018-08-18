@@ -1970,4 +1970,25 @@ sub sendDeal {
 	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendDealReply {
+	my ($self, $action) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_reply',
+		
+		# Action values:
+		# 0: Char is too far
+		# 1: Character does not exist
+		# 2: Trade failed
+		# 3: Accept
+		# 4: Cancel
+		#
+		# Weird enough, the client should only send 3/4
+		# and the server is the one that can reply 0~2 - technologyguild, Dec 2009
+		action => $action,
+	}));
+	
+	debug "Sent Deal Reply (Action: $action)\n", "sendPacket", 2;
+}
+
 1;
