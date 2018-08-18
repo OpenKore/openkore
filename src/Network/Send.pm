@@ -1876,4 +1876,119 @@ sub sendGetIgnoreList {
 	debug "Sent get Ignore List.\n", "sendPacket", 2;
 }
 
+sub sendChatRoomCreate {
+	my ($self, $title, $limit, $public, $password) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_create',
+		limit => $limit,
+		public => $public,
+		password => stringToBytes($password),
+		title => stringToBytes($title),
+	}));
+	
+	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
+}
+
+sub sendChatRoomJoin {
+	my ($self, $ID, $password) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_join',
+		ID => $ID,
+		password => stringToBytes($password),
+	}));
+	
+	debug "Sent Join Chat Room: ".getHex($ID).", $password\n", "sendPacket", 2;
+}
+
+sub sendChatRoomChange {
+	my ($self, $title, $limit, $public, $password) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_create',
+		limit => $limit,
+		public => $public,
+		password => stringToBytes($password),
+		title => stringToBytes($title),
+	}));
+	
+	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
+}
+
+sub sendChatRoomBestow {
+	my ($self, $name) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_bestow',
+		name => stringToBytes($name),
+		
+		# There are two roles:
+		# 	0 means 'admin'
+		# 	1 means 'normal (not-admin)'
+		#
+		# Weirdly, you can only bestow the chat window if you are admin (role 0),
+		# and in the official client you cannot try to bestow the chat window UNLESS
+		# you're admin - so it always sends role 0
+		# In rA and Hercules, this info is not used at all, instead it's checked whether
+		# you're actually the chat window admin or not. This might be exploitable in 
+		# official servers (by lying that you're admin when you're not) but I never cared
+		# enough to test - lututui, Aug 2018
+		role => 0,
+	}));
+	
+	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
+}
+
+sub sendChatRoomKick {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_kick',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
+}
+
+sub sendChatRoomLeave {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'chat_room_leave'}));
+	
+	debug "Sent Leave Chat Room\n", "sendPacket", 2;
+}
+
+sub sendDeal {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_initiate',
+		ID => $ID,
+	}));
+	
+	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendDealReply {
+	my ($self, $action) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'deal_reply',
+		
+		# Action values:
+		# 0: Char is too far
+		# 1: Character does not exist
+		# 2: Trade failed
+		# 3: Accept
+		# 4: Cancel
+		#
+		# Weird enough, the client should only send 3/4
+		# and the server is the one that can reply 0~2 - technologyguild, Dec 2009
+		action => $action,
+	}));
+	
+	debug "Sent Deal Reply (Action: $action)\n", "sendPacket", 2;
+}
+
 1;

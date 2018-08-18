@@ -69,6 +69,14 @@ sub new {
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
+		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
+		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
+		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
+		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
+		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
+		'00E3' => ['chat_room_leave'],
+		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
+		'00E6' => ['deal_reply', 'C', [qw(action)]],
 		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
@@ -342,75 +350,6 @@ sub sendCharDelete {
 	$self->sendToServer($msg);
 }
 
-sub sendChatRoomBestow {
-	my ($self, $name) = @_;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-
-	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $binName;
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
-}
-
-sub sendChatRoomChange {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	my $titleBytes = stringToBytes($title);
-	my $passwordBytes = stringToBytes($password);
-	$passwordBytes = substr($passwordBytes, 0, 8) if (length($passwordBytes) > 8);
-	$passwordBytes = $passwordBytes . chr(0) x (8 - length($passwordBytes));
-
-	my $msg = pack("C*", 0xDE, 0x00).pack("v*", length($titleBytes) + 15, $limit).pack("C*",$public).$passwordBytes.$titleBytes;
-	$self->sendToServer($msg);
-	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
-
-sub sendChatRoomCreate {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	my $passwordBytes = stringToBytes($password);
-	$passwordBytes = substr($passwordBytes, 0, 8) if (length($passwordBytes) > 8);
-	$passwordBytes = $passwordBytes . chr(0) x (8 - length($passwordBytes));
-	my $binTitle = stringToBytes($title);
-
-	my $msg = pack("C*", 0xD5, 0x00) .
-		pack("v*", length($binTitle) + 15, $limit) .
-		pack("C*", $public) . $passwordBytes . $binTitle;
-	$self->sendToServer($msg);
-	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
-
-sub sendChatRoomJoin {
-	my ($self, $ID, $password) = @_;
-
-	my $passwordBytes = stringToBytes($password);
-	$passwordBytes = substr($passwordBytes, 0, 8) if (length($passwordBytes) > 8);
-	$passwordBytes = $passwordBytes . chr(0) x (8 - length($passwordBytes));
-	my $msg = pack("C*", 0xD9, 0x00).$ID.$passwordBytes;
-	$self->sendToServer($msg);
-	debug "Sent Join Chat Room: ".getHex($ID)." $password\n", "sendPacket", 2;
-}
-
-sub sendChatRoomKick {
-	my ($self, $name) = @_;
-
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-	my $msg = pack("C*", 0xE2, 0x00) . $binName;
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
-}
-
-sub sendChatRoomLeave {
-	my $self = shift;
-	my $msg = pack("C*", 0xE3, 0x00);
-	$self->sendToServer($msg);
-	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
 sub sendCompanionRelease {
 	my $msg = pack("C*", 0x2A, 0x01);
 	$_[0]->sendToServer($msg);
@@ -421,41 +360,6 @@ sub sendCurrentDealCancel {
 	my $msg = pack("C*", 0xED, 0x00);
 	$_[0]->sendToServer($msg);
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
-
-sub sendDeal {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xE4, 0x00) . $ID;
-	$_[0]->sendToServer($msg);
-	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendDealReply {
-	#Reply to a trade-request.
-	# Type values:
-	# 0: Char is too far
-	# 1: Character does not exist
-	# 2: Trade failed
-	# 3: Accept
-	# 4: Cancel
-	# Weird enough, the client should only send 3/4
-	# and the server is the one that can reply 0~2
-	my ($self, $action) = @_;
-	my $msg = pack('v C', 0x00E6, $action);
-	$_[0]->sendToServer($msg);
-	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
-}
-
-# TODO: legacy plugin support, remove later
-sub sendDealAccept {
-	$_[0]->sendDealReply(3);
-	debug "Sent Cancel Deal\n", "sendPacket", 2;
-}
-
-# TODO: legacy plugin support, remove later
-sub sendDealCancel {
-	$_[0]->sendDealReply(4);
-	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
 sub sendDealFinalize {
