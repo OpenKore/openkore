@@ -2034,4 +2034,16 @@ sub sendPartyJoinRequest {
 	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendPartyJoin {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Party Join: ".getHex($ID).", $flag\n", "sendPacket", 2;
+}
+
 1;

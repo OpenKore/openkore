@@ -85,6 +85,7 @@ sub new {
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'00F7' => ['storage_close'],
 		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
+		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
@@ -546,15 +547,6 @@ sub sendOpenShop {
 	}
 
 	$self->sendToServer($msg);
-}
-
-sub sendPartyJoin {
-	my $self = shift;
-	my $ID = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0xFF, 0x00).$ID.pack("V", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Join Party: ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
 sub _binName {
