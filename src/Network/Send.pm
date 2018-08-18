@@ -1922,6 +1922,18 @@ sub sendChatRoomBestow {
 	$self->sendToServer($self->reconstruct({
 		switch => 'chat_room_bestow',
 		name => stringToBytes($name),
+		
+		# There are two roles:
+		# 	0 means 'admin'
+		# 	1 means 'normal (not-admin)'
+		#
+		# Weirdly, you can only bestow the chat window if you are admin (role 0),
+		# and in the official client you cannot try to bestow the chat window UNLESS
+		# you're admin - so it always sends role 0
+		# In rA and Hercules, this info is not used at all, instead it's checked whether
+		# you're actually the chat window admin or not. This might be exploitable in 
+		# official servers (by lying that you're admin when you're not) but I never cared
+		# enough to test - lututui, Aug 2018
 		role => 0,
 	}));
 	
