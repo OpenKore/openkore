@@ -2015,4 +2015,12 @@ sub sendDealTrade {
 	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
+sub sendStorageClose {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'storage_close'}));
+	
+	debug "Sent Storage Close\n", "sendPacket", 2;
+}
+
 1;
