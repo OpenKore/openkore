@@ -362,18 +362,6 @@ sub sendCurrentDealCancel {
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
 }
 
-# TODO: legacy plugin support, remove later
-sub sendDealAccept {
-	$_[0]->sendDealReply(3);
-	debug "Sent Cancel Deal\n", "sendPacket", 2;
-}
-
-# TODO: legacy plugin support, remove later
-sub sendDealCancel {
-	$_[0]->sendDealReply(4);
-	debug "Sent Cancel Deal\n", "sendPacket", 2;
-}
-
 sub sendDealFinalize {
 	my $msg = pack("C*", 0xEB, 0x00);
 	$_[0]->sendToServer($msg);
