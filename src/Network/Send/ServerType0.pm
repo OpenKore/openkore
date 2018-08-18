@@ -86,6 +86,7 @@ sub new {
 		'00F7' => ['storage_close'],
 		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
 		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
+		'0100' => ['party_leave'],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
@@ -572,13 +573,6 @@ sub sendPartyKick {
 	my $msg = pack("C*", 0x03, 0x01) . $ID . _binName ($name);
 	$self->sendToServer($msg);
 	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
-}
-
-sub sendPartyLeave {
-	my $self = shift;
-	my $msg = pack("C*", 0x00, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Leave Party\n", "sendPacket", 2;
 }
 
 sub sendPartyOrganize {
