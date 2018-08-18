@@ -1916,4 +1916,16 @@ sub sendChatRoomChange {
 	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
 
+sub sendChatRoomBestow {
+	my ($self, $name) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'chat_room_bestow',
+		name => stringToBytes($name),
+		role => 0,
+	}));
+	
+	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
+}
+
 1;

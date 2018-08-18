@@ -70,6 +70,7 @@ sub new {
 		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
+		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -376,15 +377,6 @@ sub sendGMKillAll {
 # 0x00dd,29
 
 # 0x00df,-1
-
-# 0x00e0,30,changechatowner,2:6
-# x4 is the role, 0 is admin?
-sub sendChatRoomBestow {
-	my ($self, $name) = @_;
-	my $msg = pack('v x4 Z24', 0x00E0, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
-}
 
 # 0x00e1,30
 
