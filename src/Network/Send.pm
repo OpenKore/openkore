@@ -2066,4 +2066,12 @@ sub sendPartyKick {
 	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
+sub sendMemo {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'memo_request'}));
+	
+	debug "Sent Memo\n", "sendPacket", 2;
+}
+
 1;

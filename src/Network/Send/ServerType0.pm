@@ -93,6 +93,7 @@ sub new {
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
@@ -524,13 +525,6 @@ sub sendIdentify {
 		ID => $ID,
 	}));
 	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
-}
-
-sub sendMemo {
-	my $self = shift;
-	my $msg = pack("C*", 0x1D, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Memo\n", "sendPacket", 2;
 }
 
 sub sendOpenShop {

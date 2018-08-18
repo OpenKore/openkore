@@ -90,6 +90,7 @@ sub new {
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011D' => ['memo_request'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
@@ -483,12 +484,6 @@ sub sendWarpTele { # type: 26=tele, 27=warp
 }
 
 # 0x011c,68
-
-# 0x011d,2,requestmemo,0
-sub sendMemo {
-	$_[0]->sendToServer(pack('v', 0x011D));
-	debug "Sent Memo\n", "sendPacket", 2;
-}
 
 # 0x011e,3
 # 0x011f,16
