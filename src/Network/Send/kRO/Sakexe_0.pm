@@ -85,6 +85,7 @@ sub new {
 		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
 		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
 		'0100' => ['party_leave'],
+		'0103' => ['party_kick', 'a4 Z24', [qw(ID name)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
@@ -439,14 +440,6 @@ sub sendPartyOption {
 	my $msg = pack('v3', 0x0102, $exp, $item);
 	$self->sendToServer($msg);
 	debug "Sent Party 0ption\n", "sendPacket", 2;
-}
-
-# 0x0103,30,removepartymember,2:6
-sub sendPartyKick {
-	my ($self, $ID, $name) = @_;
-	my $msg = pack('v a4 Z24', 0x0103, $ID, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
 # 0x0104,79

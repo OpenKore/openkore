@@ -2054,4 +2054,16 @@ sub sendPartyLeave {
 	debug "Sent Party Leave\n", "sendPacket", 2;
 }
 
+sub sendPartyKick {
+	my ($self, $ID, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_kick',
+		ID => $ID,
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
+}
+
 1;

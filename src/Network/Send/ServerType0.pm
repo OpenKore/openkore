@@ -88,6 +88,7 @@ sub new {
 		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
 		'0100' => ['party_leave'],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
+		'0103' => ['party_kick', 'a4 Z24', [qw(ID name)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
@@ -550,29 +551,11 @@ sub sendOpenShop {
 	$self->sendToServer($msg);
 }
 
-sub _binName {
-	my $name = shift;
-	
-	$name = stringToBytes ($name);
-	$name = substr ($name, 0, 24) if 24 < length $name;
-	$name .= "\x00" x (24 - length $name);
-	return $name;
-}
-
 sub sendPartyJoinRequestByNameReply {
 	my ($self, $accountID, $flag) = @_;
 	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
-sub sendPartyKick {
-	my $self = shift;
-	my $ID = shift;
-	my $name = shift;
-	my $msg = pack("C*", 0x03, 0x01) . $ID . _binName ($name);
-	$self->sendToServer($msg);
-	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
 sub sendPartyOrganize {
