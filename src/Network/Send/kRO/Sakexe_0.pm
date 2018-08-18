@@ -67,6 +67,14 @@ sub new {
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
+		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
+		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
+		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
+		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
+		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
+		'00E3' => ['chat_room_leave'],
+		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
+		'00E6' => ['deal_reply', 'C', [qw(action)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
@@ -363,98 +371,20 @@ sub sendGMKillAll {
 
 # 0x00d4,-1
 
-# 0x00d5,-1,createchatroom,2:4:6:7:15
-sub sendChatRoomCreate {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	$title = stringToBytes($title);
-
-	my $msg = pack('v3 C Z8 a*', 0x00D5, length($title) + 15, $limit, $public, stringToBytes($password), $title);
-	$self->sendToServer($msg);
-	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
-
 # 0x00d6,3
 # 0x00d7,-1
 # 0x00d8,6
-
-# 0x00d9,14,chataddmember,2:6
-sub sendChatRoomJoin {
-	my ($self, $ID, $password) = @_;
-	my $msg = pack('v a4 Z8', 0x00D9, $ID, stringToBytes($password));
-	$self->sendToServer($msg);
-	debug "Sent Join Chat Room: ".getHex($ID).", $password\n", "sendPacket", 2;
-}
 
 # 0x00da,3
 # 0x00db,-1
 # 0x00dc,28
 # 0x00dd,29
 
-# 0x00de,-1,chatroomstatuschange,2:4:6:7:15
-sub sendChatRoomChange {
-	my ($self, $title, $limit, $public, $password) = @_;
-
-	$title = stringToBytes($title);
-
-	my $msg = pack('v3 C Z8 a*', 0x00DE, length($title) + 15, $limit, $public, stringToBytes($password), $title);
-	$self->sendToServer($msg);
-	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
-}
-
 # 0x00df,-1
-
-# 0x00e0,30,changechatowner,2:6
-# x4 is the role, 0 is admin?
-sub sendChatRoomBestow {
-	my ($self, $name) = @_;
-	my $msg = pack('v x4 Z24', 0x00E0, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
-}
 
 # 0x00e1,30
 
-# 0x00e2,26,kickfromchat,2
-sub sendChatRoomKick {
-	my ($self, $name) = @_;
-	my $msg = pack('v Z24', 0x00E2, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
-}
-
-# 0x00e3,2,chatleave,0
-sub sendChatRoomLeave {
-	$_[0]->sendToServer(pack('v', 0x00E3));
-	debug "Sent Leave Chat Room\n", "sendPacket", 2;
-}
-
-# 0x00e4,6,traderequest,2
-sub sendDeal {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x00E4, $ID);
-	$_[0]->sendToServer($msg);
-	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
 # 0x00e5,26
-
-# 0x00e6,3,tradeack,2
-sub sendDealReply {
-	#Reply to a trade-request.
-	# Type values:
-	# 0: Char is too far
-	# 1: Character does not exist
-	# 2: Trade failed
-	# 3: Accept
-	# 4: Cancel
-	# Weird enough, the client should only send 3/4
-	# and the server is the one that can reply 0~2
-	my ($self, $action) = @_;
-	my $msg = pack('v C', 0x00E6, $action);
-	$_[0]->sendToServer($msg);
-	debug "Sent " . ($action == 3 ? "Accept": ($action == 4 ? "Cancel" : "action: " . $action)) . " Deal\n", "sendPacket", 2;
-}
 
 # 0x00e7,3
 
