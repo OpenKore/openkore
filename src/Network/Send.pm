@@ -2107,4 +2107,15 @@ sub sendCartGet {
 	debug "Sent Cart Get: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
 
+sub sendIdentify {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'identify',
+		ID => $ID,
+	}));
+	
+	debug "Sent Identify: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
 1;

@@ -495,15 +495,6 @@ sub sendHomunculusName {
 	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
 }
 
-sub sendIdentify {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'identify',
-		ID => $ID,
-	}));
-	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
-}
-
 sub sendOpenShop {
 	my ($self, $title, $items) = @_;
 
