@@ -2046,4 +2046,12 @@ sub sendPartyJoin {
 	debug "Sent Party Join: ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
+sub sendPartyLeave {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'party_leave'}));
+	
+	debug "Sent Party Leave\n", "sendPacket", 2;
+}
+
 1;
