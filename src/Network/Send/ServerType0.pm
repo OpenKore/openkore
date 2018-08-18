@@ -77,8 +77,8 @@ sub new {
 		'00E3' => ['chat_room_leave'],
 		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
 		'00E6' => ['deal_reply', 'C', [qw(action)]],
-		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
+		'00EB' => ['deal_finalize'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
@@ -360,18 +360,6 @@ sub sendCurrentDealCancel {
 	my $msg = pack("C*", 0xED, 0x00);
 	$_[0]->sendToServer($msg);
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
-
-sub sendDealFinalize {
-	my $msg = pack("C*", 0xEB, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal OK\n", "sendPacket", 2;
-}
-
-sub sendDealOK {
-	my $msg = pack("C*", 0xEB, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal OK\n", "sendPacket", 2;
 }
 
 sub sendDealTrade {
