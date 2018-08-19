@@ -2224,4 +2224,28 @@ sub sendWarpTele {
 	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
 }
 
+sub sendStorageGetToCart {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'storage_to_cart',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Storage Get From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
+sub sendStorageAddFromCart {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_to_storage',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Storage Add From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
 1;

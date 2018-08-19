@@ -97,6 +97,8 @@ sub new {
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
+		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -583,26 +585,6 @@ sub sendSellBulk {
 
 	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
 	$self->sendToServer($msg);
-}
-
-sub sendStorageAddFromCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg;
-	$msg = pack("C*", 0x29, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-sub sendStorageGetToCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg;
-	$msg = pack("C*", 0x28, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendTop10Alchemist {
