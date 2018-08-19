@@ -103,6 +103,8 @@ sub new {
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
+		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
+		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -781,23 +783,7 @@ sub sendGuildAlly {
 
 # 0x0179,5
 
-# 0x017a,4,usecard,2
-sub sendCardMergeRequest {
-	my ($self, $card_ID) = @_;
-	my $msg = pack('v', 0x017A) . pack("a2", $card_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
-}
-
 # 0x017b,-1
-
-# 0x017c,6,insertcard,2:4
-sub sendCardMerge {
-	my ($self, $card_ID, $item_ID) = @_;
-	my $msg = pack('v', 0x017C) . pack("a2 a2", $card_ID, $item_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
-}
 
 # 0x017d,7
 
