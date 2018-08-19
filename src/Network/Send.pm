@@ -2209,4 +2209,19 @@ sub sendGuildBreak {
 	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
 }
 
+sub sendWarpTele {
+	my ($self, $skillID, $map) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'warp_select',
+		# skillID:
+		# 26 => Teleport (Respawn/Random)
+		# 27 => Open Warp
+		skillID => $skillID,
+		mapName => stringToBytes($map),
+	}));
+	
+	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
+}
+
 1;
