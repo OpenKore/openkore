@@ -582,14 +582,6 @@ sub sendAlignment {
 
 # 0x0150,110
 
-# 0x0151,6,guildrequestemblem,2
-sub sendGuildRequestEmblem {
-	my ($self, $guildID) = @_;
-	my $msg = pack('v V', 0x0151, $guildID);
-	$self->sendToServer($msg);
-	debug "Sent Guild Request Emblem.\n", "sendPacket";
-}
-
 # 0x0152,-1
 
 # 0x0153,-1,guildchangeemblem,2:4
