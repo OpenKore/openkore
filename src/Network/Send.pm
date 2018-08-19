@@ -2248,4 +2248,15 @@ sub sendStorageAddFromCart {
 	debug "Sent Storage Add From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
 
+sub sendHomunculusName {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_name',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
+}
+
 1;

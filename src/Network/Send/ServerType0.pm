@@ -141,6 +141,7 @@ sub new {
 		'021D' => ['less_effect'], # TODO
 		'0222' => ['refine_item', 'V', [qw(ID)]],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
@@ -436,14 +437,6 @@ sub sendGuildSetAlly {
 			$charID;
 	$self->sendToServer($msg);
 
-}
-
-sub sendHomunculusName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack("v1 a24", 0x0231, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
 }
 
 sub sendOpenShop {
