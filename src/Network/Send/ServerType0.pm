@@ -611,25 +611,6 @@ sub sendStorageGetToCart {
 	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
-=pod
-sub sendTeleport {
-	my $self = shift;
-	my $location = shift;
-	$location = substr($location, 0, 16) if (length($location) > 16);
-	$location .= chr(0) x (16 - length($location));
-	my $msg = pack("C*", 0x1B, 0x01, 0x1A, 0x00) . $location;
-	$self->sendToServer($msg);
-	debug "Sent Teleport: $location\n", "sendPacket", 2;
-}
-
-sub sendOpenWarp {
-	my ($self, $map) = @_;
-	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
-		chr(0) x (16 - length($map));
-	$self->sendToServer($msg);
-}
-=cut
-
 sub sendTop10Alchemist {
 	my $self = shift;
 	my $msg = pack("v", 0x0218);
