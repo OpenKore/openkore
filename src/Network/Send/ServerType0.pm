@@ -105,6 +105,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
 		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
@@ -321,13 +322,6 @@ sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
 	$self->sendToServer($packet);
-}
-
-sub sendGuildAlly {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack("C*", 0x72, 0x01).$ID.pack("V1", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
 sub sendGuildBreak {
