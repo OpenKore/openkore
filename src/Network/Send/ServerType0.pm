@@ -105,6 +105,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -322,13 +323,6 @@ sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
 	$self->sendToServer($packet);
-}
-
-sub sendGuildBreak {
-	my ($self, $guildName) = @_;
-	my $msg = pack("C C a40", 0x5D, 0x01, stringToBytes($guildName));
-	$self->sendToServer($msg);
-	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
 }
 
 sub sendGuildCreate {

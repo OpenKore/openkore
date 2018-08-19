@@ -102,6 +102,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -641,14 +642,6 @@ sub sendGuildMemberKick {
 }
 
 # 0x015c,90
-
-# 0x015d,42,guildbreak,2
-sub sendGuildBreak {
-	my ($self, $guildName) = @_;
-	my $msg = pack('v a40', 0x015D, stringToBytes($guildName));
-	$self->sendToServer($msg);
-	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
-}
 
 # 0x015e,6
 # 0x015f,42

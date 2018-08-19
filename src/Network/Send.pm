@@ -2198,4 +2198,15 @@ sub sendGuildRequestEmblem {
 	debug "Sent Guild Request Emblem.\n", "sendPacket";
 }
 
+sub sendGuildBreak {
+	my ($self, $guildName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_break',
+		guildName => stringToBytes($guildName),
+	}));
+	
+	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
+}
+
 1;
