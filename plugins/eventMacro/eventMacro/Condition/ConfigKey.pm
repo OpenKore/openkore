@@ -4,8 +4,8 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals;
-use eventMacro::Data;
+use Globals qw(%config);
+use eventMacro::Data qw($general_wider_variable_qr);
 use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
@@ -155,10 +155,10 @@ sub validate_condition {
 
 sub check_keys {
 	my ($self, $key_from_hook, $value_from_hook) = @_;
+	
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	$self->{fulfilled_value} = undef;
-	use Log::warning;
 	foreach my $key (keys %{$self->{config_keys_member}}) {
 		my $real_key = get_real_key($key); #when have a label, then key changes, else key is the same
 		my $config_key_value;
@@ -167,7 +167,6 @@ sub check_keys {
 		} else {
 			$config_key_value = (!exists $config{$real_key} ? 'none' : (!defined $config{$real_key} ? 'none' : $config{$real_key}));
 		}
-		warning("key: '$key', real_key: $real_key, config_key_value: $config_key_value\n");
 		foreach my $member (@{$self->{config_keys_member}{$key}}) {
 			next unless ($member->{value} eq $config_key_value);
 			$self->{fulfilled_key} = $real_key;
