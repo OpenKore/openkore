@@ -94,6 +94,8 @@ sub new {
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
+		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -476,26 +478,6 @@ sub sendAttackStop {
 # 0x0123,-1
 # 0x0124,21
 # 0x0125,8
-
-# 0x0128,8,movefromkafratocart,2:4
-sub sendStorageGetToCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack('v', 0x0128) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x0129,8,movetokafrafromcart,2:4
-sub sendStorageAddFromCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack('v', 0x0129) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
 
 # 0x012b,2
 # 0x012c,3
