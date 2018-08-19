@@ -484,12 +484,6 @@ sub sendPartyOrganize {
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
 }
 
-# legacy plugin support, remove later
-sub sendPartyShareEXP {
-	my ($self, $exp) = @_;
-	$self->sendPartyOption($exp, 0);
-}
-
 # 0x0102,6,partychangeoption,2:4
 # note: item share changing seems disabled in newest clients
 sub sendPartyOption {
