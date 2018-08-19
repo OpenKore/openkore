@@ -108,6 +108,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
@@ -349,14 +350,6 @@ sub sendGuildJoinRequest {
 	my $msg = pack("C*", 0x68, 0x01).$ID.$accountID.$charID;
 	$self->sendToServer($msg);
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
-}
-
-sub sendGuildLeave {
-	my ($self, $reason) = @_;
-	my $mess = pack("Z40", stringToBytes($reason));
-	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
-	$self->sendToServer($msg);
-	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
 }
 
 sub sendGuildMemberKick {
