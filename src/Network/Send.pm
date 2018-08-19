@@ -2141,4 +2141,38 @@ sub sendCardMerge {
 	debug "Sent Card Merge: " . getHex($cardID) . ", " . getHex($itemID) . "\n", "sendPacket", 2;
 }
 
+sub sendCharCreate {
+	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_create',
+		name => stringToBytes($name),
+		str => $str,
+		agi => $agi,
+		vit => $vit,
+		int => $int,
+		dex => $dex,
+		luk => $luk,
+		slot => $slot,
+		hair_color => $hair_color,
+		hair_style => $hair_style
+	}));
+	
+	debug "Sent Char Create\n", "sendPacket", 2;
+}
+
+sub sendCharDelete {
+	my ($self, $charID, $email) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_delete',
+		charID => $charID,
+		email => stringToBytes($email),
+	}));
+	
+	debug "Sent Char Delete\n", "sendPacket", 2;
+}
+
 1;

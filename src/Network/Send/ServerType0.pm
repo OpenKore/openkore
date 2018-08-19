@@ -42,8 +42,8 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
-		'0068' => ['char_delete'], # TODO
+		'0067' => ['char_create', 'a24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
+		'0068' => ['char_delete', 'a4 a40', [qw(charID email)]],
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
 		'007E' => ['sync', 'V', [qw(time)]],
@@ -308,27 +308,6 @@ sub sendBuyBulk {
 	$self->sendToServer($msg);
 }
 
-sub sendCharCreate {
-	my ($self, $slot, $name,
-	    $str, $agi, $vit, $int, $dex, $luk,
-		$hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-	$hair_style ||= 0;
-
-	my $msg = pack("C*", 0x67, 0x00) .
-		pack("a24", stringToBytes($name)) .
-		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("v*", $hair_color, $hair_style);
-	$self->sendToServer($msg);
-}
-
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0x68, 0x00) .
-			$charID . pack("a40", stringToBytes($email));
-	$self->sendToServer($msg);
-}
-
 =pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
@@ -509,19 +488,15 @@ sub sendPartyJoinRequestByNameReply {
 }
 
 sub sendPartyOrganize {
-	my $self = shift;
-	my $name = shift;
-	my $share1 = shift || 1;
-	my $share2 = shift || 1;
+	my ($self, $name, $share1, $share2) = @_;
+	$share1 ||= 1;
+	$share2 ||= 1;
 
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-	#my $msg = pack("C*", 0xF9, 0x00) . $binName;
+	# my $msg = pack("C*", 0xF9, 0x00) . pack("Z24", stringToBytes($name));
 	# I think this is obsolete - which serverTypes still support this packet anyway?
 	# FIXME: what are shared with $share1 and $share2? experience? item? vice-versa?
 	
-	my $msg = pack("C*", 0xE8, 0x01) . $binName . pack("C*", $share1, $share2);
+	my $msg = pack("C*", 0xE8, 0x01) . pack("Z24", stringToBytes($name)) . pack("C*", $share1, $share2);
 
 	$self->sendToServer($msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
