@@ -2187,4 +2187,15 @@ sub sendGuildAlly {
 	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
+sub sendGuildRequestEmblem {
+	my ($self, $guildID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_emblem_request',
+		guildID => $guildID,
+	}));
+	
+	debug "Sent Guild Request Emblem.\n", "sendPacket";
+}
+
 1;

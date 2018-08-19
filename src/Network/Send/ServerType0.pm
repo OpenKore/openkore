@@ -426,13 +426,6 @@ sub sendGuildPositionInfo {
 	$self->sendToServer($msg);
 }
 
-sub sendGuildRequestEmblem {
-	my ($self, $guildID) = @_;
-	my $msg = pack("v V", 0x0151, $guildID);
-	$self->sendToServer($msg);
-	debug "Sent Guild Request Emblem.\n", "sendPacket";
-}
-
 sub sendGuildSetAlly {
 	# this packet is for guildmaster asking to set alliance with another guildmaster
 	# the other sub for sendGuildAlly are responses to this sub
