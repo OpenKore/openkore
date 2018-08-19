@@ -2275,4 +2275,18 @@ sub sendGuildLeave {
 	debug "Sent Guild Leave: $reason\n", "sendPacket";
 }
 
+sub sendGuildMemberKick {
+	my ($self, $guildID, $accountID, $charID, $reason) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_kick',
+		guildID => $guildID,
+		charID => $charID,
+		accountID => $accountID,
+		reason => stringToBytes($reason),
+	}));
+	
+	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
+}
+
 1;

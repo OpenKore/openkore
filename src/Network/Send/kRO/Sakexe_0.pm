@@ -106,6 +106,7 @@ sub new {
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
 		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
+		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
@@ -601,14 +602,6 @@ sub sendGuildMemberPositions {
 # 0x0158,-1
 
 # 0x015a,66
-
-# 0x015b,54,guildexpulsion,2:6:10:14
-sub sendGuildMemberKick {
-	my ($self, $guildID, $accountID, $charID, $cause) = @_;
-	my $msg = pack('v a4 a4 a4 a40', 0x015B, $guildID, $accountID, $charID, stringToBytes($cause));
-	$self->sendToServer($msg);
-	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
-}
 
 # 0x015c,90
 
