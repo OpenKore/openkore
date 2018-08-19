@@ -2118,4 +2118,27 @@ sub sendIdentify {
 	debug "Sent Identify: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
+sub sendCardMergeRequest {
+	my ($self, $cardID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'card_merge_request',
+		cardID => $cardID,
+	}));
+	
+	debug "Sent Card Merge Request: " . getHex($cardID) . "\n", "sendPacket", 2;
+}
+
+sub sendCardMerge {
+	my ($self, $cardID, $itemID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'card_merge',
+		cardID => $cardID,
+		itemID => $itemID,
+	}));
+	
+	debug "Sent Card Merge: " . getHex($cardID) . ", " . getHex($itemID) . "\n", "sendPacket", 2;
+}
+
 1;

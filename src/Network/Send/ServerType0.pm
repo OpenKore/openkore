@@ -106,6 +106,8 @@ sub new {
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
+		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
+		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -304,20 +306,6 @@ sub sendBuyBulk {
 		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendCardMerge {
-	my ($self, $card_ID, $item_ID) = @_;
-	my $msg = pack("C*", 0x7C, 0x01) . pack("a2 a2", $card_ID, $item_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
-}
-
-sub sendCardMergeRequest {
-	my ($self, $card_ID) = @_;
-	my $msg = pack("C*", 0x7A, 0x01) . pack("a2", $card_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
 }
 
 sub sendCharCreate {
