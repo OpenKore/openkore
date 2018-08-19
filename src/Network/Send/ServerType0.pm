@@ -620,13 +620,6 @@ sub sendRequestMakingHomunculus {
 	}
 }
 
-sub sendRemoveAttachments {
-	# remove peco, falcon, cart
-	my $msg = pack("C*", 0x2A, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent remove attachments\n", "sendPacket", 2;
-}
-
 sub sendSellBulk {
 	my $self = shift;
 	my $r_array = shift;
