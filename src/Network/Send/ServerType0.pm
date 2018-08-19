@@ -77,17 +77,26 @@ sub new {
 		'00E3' => ['chat_room_leave'],
 		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
 		'00E6' => ['deal_reply', 'C', [qw(action)]],
-		#'00F3' => ['map_login', '', [qw()]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
+		'00EB' => ['deal_finalize'],
+		'00ED' => ['deal_cancel'],
+		'00EF' => ['deal_trade'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'00F7' => ['storage_close'],
+		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
+		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
+		'0100' => ['party_leave'],
 		'0102' => ['party_setting', 'V', [qw(exp)]],
+		'0103' => ['party_kick', 'a4 Z24', [qw(ID name)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
@@ -311,24 +320,6 @@ sub sendCardMergeRequest {
 	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
 }
 
-sub sendCartAdd {
-	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'cart_add',
-		ID => $ID,
-		amount => $amount,
-	}));
-}
-
-sub sendCartGet {
-	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'cart_get',
-		ID => $ID,
-		amount => $amount,
-	}));
-}
-
 sub sendCharCreate {
 	my ($self, $slot, $name,
 	    $str, $agi, $vit, $int, $dex, $luk,
@@ -348,36 +339,6 @@ sub sendCharDelete {
 	my $msg = pack("C*", 0x68, 0x00) .
 			$charID . pack("a40", stringToBytes($email));
 	$self->sendToServer($msg);
-}
-
-sub sendCompanionRelease {
-	my $msg = pack("C*", 0x2A, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
-}
-
-sub sendCurrentDealCancel {
-	my $msg = pack("C*", 0xED, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
-
-sub sendDealFinalize {
-	my $msg = pack("C*", 0xEB, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal OK\n", "sendPacket", 2;
-}
-
-sub sendDealOK {
-	my $msg = pack("C*", 0xEB, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal OK\n", "sendPacket", 2;
-}
-
-sub sendDealTrade {
-	my $msg = pack("C*", 0xEF, 0x00);
-	$_[0]->sendToServer($msg);
-	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
 =pod
@@ -543,13 +504,6 @@ sub sendIdentify {
 	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
 }
 
-sub sendMemo {
-	my $self = shift;
-	my $msg = pack("C*", 0x1D, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Memo\n", "sendPacket", 2;
-}
-
 sub sendOpenShop {
 	my ($self, $title, $items) = @_;
 
@@ -568,53 +522,11 @@ sub sendOpenShop {
 	$self->sendToServer($msg);
 }
 
-sub sendPartyJoin {
-	my $self = shift;
-	my $ID = shift;
-	my $flag = shift;
-	my $msg = pack("C*", 0xFF, 0x00).$ID.pack("V", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Join Party: ".getHex($ID).", $flag\n", "sendPacket", 2;
-}
-
-sub sendPartyJoinRequest {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0xFC, 0x00).$ID;
-	$self->sendToServer($msg);
-	debug "Sent Request Join Party: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub _binName {
-	my $name = shift;
-	
-	$name = stringToBytes ($name);
-	$name = substr ($name, 0, 24) if 24 < length $name;
-	$name .= "\x00" x (24 - length $name);
-	return $name;
-}
-
 sub sendPartyJoinRequestByNameReply {
 	my ($self, $accountID, $flag) = @_;
 	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
 	$self->sendToServer($msg);
 	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
-sub sendPartyKick {
-	my $self = shift;
-	my $ID = shift;
-	my $name = shift;
-	my $msg = pack("C*", 0x03, 0x01) . $ID . _binName ($name);
-	$self->sendToServer($msg);
-	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
-}
-
-sub sendPartyLeave {
-	my $self = shift;
-	my $msg = pack("C*", 0x00, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Leave Party\n", "sendPacket", 2;
 }
 
 sub sendPartyOrganize {
@@ -758,23 +670,6 @@ sub sendStorageAddFromCart {
 	$msg = pack("C*", 0x29, 0x01) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	my ($self) = @_;
-	my $msg;
-	if (($self->{serverType} == 3) || ($self->{serverType} == 5) || ($self->{serverType} == 9) || ($self->{serverType} == 15)) {
-		$msg = pack("C*", 0x93, 0x01);
-	} elsif ($self->{serverType} == 12) {
-		$msg = pack("C*", 0x72, 0x00);
-	} elsif ($self->{serverType} == 14) {
-		$msg = pack("C*", 0x16, 0x01);
-	} else {
-		$msg = pack("C*", 0xF7, 0x00);
-	}
-
-	$self->sendToServer($msg);
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 sub sendStorageGetToCart {
