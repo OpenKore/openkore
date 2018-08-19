@@ -2289,4 +2289,16 @@ sub sendGuildMemberKick {
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
 
+sub sendGuildCreate {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_create',
+		charID => $charID,
+		guildName => stringToBytes($name),
+	}));
+	
+	debug "Sent Guild Create: $name\n", "sendPacket", 2;
+}
+
 1;

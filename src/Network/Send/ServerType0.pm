@@ -111,6 +111,7 @@ sub new {
 		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
+		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -329,14 +330,6 @@ sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
 	$self->sendToServer($packet);
-}
-
-sub sendGuildCreate {
-	my ($self, $name) = @_;
-	# By Default, the second param is our CharID. which indicate the Guild Master Char ID
-	my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
 sub sendGuildJoin {
