@@ -31,7 +31,9 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog);
+# TODO: remove 'use Globals' from here, instead pass vars on
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog %guild $charID);
+
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -2257,6 +2259,20 @@ sub sendHomunculusName {
 	}));
 	
 	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
+}
+
+sub sendGuildLeave {
+	my ($self, $reason) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_leave',
+		guildID => $guild{ID},
+		accountID => $accountID,
+		charID => $charID,
+		reason => stringToBytes($reason),
+	}));
+	
+	debug "Sent Guild Leave: $reason\n", "sendPacket";
 }
 
 1;

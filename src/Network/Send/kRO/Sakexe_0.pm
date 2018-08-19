@@ -105,6 +105,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
@@ -598,14 +599,6 @@ sub sendGuildMemberPositions {
 # TODO
 
 # 0x0158,-1
-
-# 0x0159,54,guildleave,2:6:10:14
-sub sendGuildLeave {
-	my ($self, $reason) = @_;
-	my $msg = pack('v a4 a4 Z40', 0x0159, $accountID, $charID, stringToBytes($reason));
-	$self->sendToServer($msg);
-	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
-}
 
 # 0x015a,66
 
