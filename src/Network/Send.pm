@@ -1264,7 +1264,8 @@ sub sendTokenToServer {
 	my $ip = '192.168.0.14';
 	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
-
+	
+	$net->serverDisconnect();
 	$net->serverConnect($ott_ip, $ott_port);
 
 	my $msg = $self->reconstruct({
@@ -1273,7 +1274,7 @@ sub sendTokenToServer {
 		version => $version,
 		master_version => $master_version,
 		username => $username,
-		password_rijndael => '',
+		password_rijndael => $password_rijndael,
 		mac => $mac_hyphen_separated,
 		ip => $ip,
 		token => $token,
