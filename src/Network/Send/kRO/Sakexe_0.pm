@@ -90,6 +90,7 @@ sub new {
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011B' => ['warp_select', 'v Z16', [qw(skillID mapName)]],
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
@@ -464,14 +465,6 @@ sub sendAttackStop {
 
 # 0x0119,13
 # 0x011a,15
-
-# 0x011b,20,useskillmap,2:4
-sub sendWarpTele { # type: 26=tele, 27=warp
-	my ($self, $skillID, $map) = @_;
-	my $msg = pack('v2 Z16', 0x011B, $skillID, stringToBytes($map));
-	$self->sendToServer($msg);
-	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
-}
 
 # 0x011c,68
 
