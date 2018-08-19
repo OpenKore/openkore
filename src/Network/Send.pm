@@ -1992,4 +1992,119 @@ sub sendDealReply {
 	debug "Sent Deal Reply (Action: $action)\n", "sendPacket", 2;
 }
 
+sub sendDealFinalize {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'deal_finalize'}));
+	
+	debug "Sent Deal Finalize\n", "sendPacket", 2;
+}
+
+sub sendCurrentDealCancel {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'deal_cancel'}));
+	
+	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
+}
+
+sub sendDealTrade {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'deal_trade'}));
+	
+	debug "Sent Deal Trade\n", "sendPacket", 2;
+}
+
+sub sendStorageClose {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'storage_close'}));
+	
+	debug "Sent Storage Close\n", "sendPacket", 2;
+}
+
+sub sendPartyJoinRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request',
+		ID => $ID,
+	}));
+	
+	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendPartyJoin {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Party Join: ".getHex($ID).", $flag\n", "sendPacket", 2;
+}
+
+sub sendPartyLeave {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'party_leave'}));
+	
+	debug "Sent Party Leave\n", "sendPacket", 2;
+}
+
+sub sendPartyKick {
+	my ($self, $ID, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_kick',
+		ID => $ID,
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
+}
+
+sub sendMemo {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'memo_request'}));
+	
+	debug "Sent Memo\n", "sendPacket", 2;
+}
+
+sub sendCompanionRelease {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'companion_release'}));
+	
+	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
+}
+
+sub sendCartAdd {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_add',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Cart Add: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
+sub sendCartGet {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_get',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Cart Get: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
 1;

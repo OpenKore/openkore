@@ -76,12 +76,24 @@ sub new {
 		'00E4' => ['deal_initiate', 'a4', [qw(ID)]],
 		'00E6' => ['deal_reply', 'C', [qw(action)]],
 		'00E8' => ['deal_item_add', 'a2 V', [qw(ID amount)]],
+		'00EB' => ['deal_finalize'],
+		'00ED' => ['deal_cancel'],
+		'00EF' => ['deal_trade'],
 		'00F3' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'00F5' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'00F7' => ['storage_close'],
+		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
+		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
+		'0100' => ['party_leave'],
+		'0103' => ['party_kick', 'a4 Z24', [qw(ID name)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011D' => ['memo_request'],
+		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
+		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
@@ -391,27 +403,9 @@ sub sendGMKillAll {
 # 0x00e9,19
 # 0x00ea,5
 
-# 0x00eb,2,tradeok,0
-sub sendDealFinalize {
-	$_[0]->sendToServer(pack('v', 0x00EB));
-	debug "Sent Deal OK\n", "sendPacket", 2;
-}
-
 # 0x00ec,3
 
-# 0x00ed,2,tradecancel,0
-sub sendCurrentDealCancel {
-	$_[0]->sendToServer(pack('v', 0x00ED));
-	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
-}
-
 # 0x00ee,2
-
-# 0x00ef,2,tradecommit,0
-sub sendDealTrade {
-	$_[0]->sendToServer(pack('v', 0x00EF));
-	debug "Sent Deal Trade\n", "sendPacket", 2;
-}
 
 # 0x00f0,3
 # 0x00f1,2
@@ -424,12 +418,6 @@ sub sendDealTrade {
 # 0x00f5,8,movefromkafra,2:4
 
 # 0x00f6,8
-
-# 0x00f7,2,closekafra,0
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x00F7));
-	debug "Sent Storage Done\n", "sendPacket", 2;
-}
 
 # 0x00f8,2
 
@@ -444,30 +432,8 @@ sub sendPartyOrganize {
 # 0x00fa,3
 # 0x00fb,-1
 
-# 0x00fc,6,partyinvite,2
-sub sendPartyJoinRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4', 0x00FC, $ID);
-	$self->sendToServer($msg);
-	debug "Sent Party Request Join: ".getHex($ID)."\n", "sendPacket", 2;
-}
-
 # 0x00fd,27
 # 0x00fe,30
-
-# 0x00ff,10,replypartyinvite,2:6
-sub sendPartyJoin {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack('v a4 V', 0x00FF, $ID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Party Join: ".getHex($ID).", $flag\n", "sendPacket", 2;
-}
-
-# 0x0100,2,leaveparty,0
-sub sendPartyLeave {
-	$_[0]->sendToServer(pack('v', 0x0100));
-	debug "Sent Party Leave\n", "sendPacket", 2;
-}
 
 # 0x0101,6
 
@@ -478,14 +444,6 @@ sub sendPartyOption {
 	my $msg = pack('v3', 0x0102, $exp, $item);
 	$self->sendToServer($msg);
 	debug "Sent Party 0ption\n", "sendPacket", 2;
-}
-
-# 0x0103,30,removepartymember,2:6
-sub sendPartyKick {
-	my ($self, $ID, $name) = @_;
-	my $msg = pack('v a4 Z24', 0x0103, $ID, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Party Kick: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
 # 0x0104,79
@@ -530,12 +488,6 @@ sub sendWarpTele { # type: 26=tele, 27=warp
 
 # 0x011c,68
 
-# 0x011d,2,requestmemo,0
-sub sendMemo {
-	$_[0]->sendToServer(pack('v', 0x011D));
-	debug "Sent Memo\n", "sendPacket", 2;
-}
-
 # 0x011e,3
 # 0x011f,16
 # 0x0120,6
@@ -544,22 +496,6 @@ sub sendMemo {
 # 0x0123,-1
 # 0x0124,21
 # 0x0125,8
-
-# 0x0126,8,putitemtocart,2:4
-sub sendCartAdd {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v', 0x0126) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Cart Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x0127,8,getitemfromcart,2:4
-sub sendCartGet {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v', 0x0127) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Cart Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
 
 # 0x0128,8,movefromkafratocart,2:4
 sub sendStorageGetToCart {
@@ -579,12 +515,6 @@ sub sendStorageAddFromCart {
 	my $msg = pack('v', 0x0129) . pack("a2", $ID) . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x012a,2,removeoption,0
-sub sendCompanionRelease {
-	$_[0]->sendToServer(pack('v', 0x012A));
-	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
 # 0x012b,2
