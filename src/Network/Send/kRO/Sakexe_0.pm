@@ -102,6 +102,7 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
 		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
@@ -745,14 +746,6 @@ sub sendGuildSetAlly {
 }
 
 # 0x0171,30
-
-# 0x0172,10,guildreplyalliance,2:6
-sub sendGuildAlly {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack('v a4 V', 0x0172, $ID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
-}
 
 # 0x0173,3
 # 0x0174,-1

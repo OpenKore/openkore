@@ -2175,4 +2175,16 @@ sub sendCharDelete {
 	debug "Sent Char Delete\n", "sendPacket", 2;
 }
 
+sub sendGuildAlly {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_alliance_reply',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
+}
+
 1;
