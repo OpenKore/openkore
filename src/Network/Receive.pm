@@ -2331,7 +2331,7 @@ sub show_eq {
 			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id identified)],
 		};
 		
-	} elsif ($args->{switch} eq '0A2D' && $args->{switch} eq '0B03') { # PACKETVER >= 20150226 / PACKETVER_RE_NUM >= 20180801
+	} elsif ($args->{switch} eq '0A2D' || $args->{switch} eq '0B03') { # PACKETVER >= 20150226 / PACKETVER_RE_NUM >= 20180801
 		$item_info = {
 			len => 57,
 			types => 'a2 v C V2 C a8 l v2 C a25 C',
