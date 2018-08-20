@@ -40,8 +40,8 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
-		'0068' => ['char_delete'], # TODO
+		'0067' => ['char_create', 'a24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
+		'0068' => ['char_delete', 'a4 a40', [qw(charID email)]],
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
 		'007E' => ['sync', 'V', [qw(time)]],
@@ -90,9 +90,12 @@ sub new {
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011B' => ['warp_select', 'v Z16', [qw(skillID mapName)]],
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
+		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -102,6 +105,14 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
+		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
+		'015D' => ['guild_break', 'a4', [qw(guildName)]],
+		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
+		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
+		'0178' => ['identify', 'a2', [qw(ID)]],
+		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
+		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -124,6 +135,7 @@ sub new {
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
+		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
@@ -185,25 +197,6 @@ sub new {
 # TODO: move 0273 and 0275 to appropriate Sakexe version
 
 # 0x0066,6
-
-# 0x0067,37
-sub sendCharCreate {
-	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-
-	my $msg = pack('v a24 C7 v2', 0x0067, stringToBytes($name), $str, $agi, $vit, $int, $dex, $luk, $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
-}
-
-# 0x0068,46
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack('v a4 a40', 0x0068, $charID, stringToBytes($email));
-	$self->sendToServer($msg);
-	debug "Sent sendCharDelete\n", "sendPacket", 2;
-}
-
 # 0x0069,-1
 # 0x006a,23
 # 0x006b,-1
@@ -213,9 +206,7 @@ sub sendCharDelete {
 # 0x006f,2
 # 0x0070,6
 # 0x0071,28
-
 # 0x0072,19,wanttoconnection,2:6:10:14:18
-
 # 0x0073,11
 # 0x0074,3
 # 0x0075,-1
@@ -226,11 +217,8 @@ sub sendCharDelete {
 # 0x007a,58
 # 0x007b,60
 # 0x007c,41
-
 # 0x007d,2,loadendack,0
-
 # 0x007e,6,ticksend,2
-
 # 0x007f,6
 # 0x0080,7
 # 0x0081,3
@@ -244,34 +232,23 @@ sub sendQuitRequest {
 
 # 0x0083,2
 # 0x0084,2
-
 # 0x0085,5,walktoxy,2
-
 # 0x0086,16
 # 0x0087,12
 # 0x0088,10
-
 # 0x0089,7,actionrequest,2:6
-
 # 0x008a,29
 # 0x008b,2
-
 # 0x008c,-1,globalmessage,2:4
-
 # 0x008d,-1
 # 0x008e,-1
-# // 0x008f,0
-
+# 0x008f,0
 # 0x0091,22
 # 0x0092,28
 # 0x0093,2
-
 # 0x0094,6,getcharnamerequest,2
-
 # 0x0095,30
-
 # 0x0096,-1,wis,2:4:28
-
 # 0x0097,-1
 # 0x0098,3
 
@@ -285,31 +262,23 @@ sub sendGMMessage {
 }
 
 # 0x009a,-1
-
 # 0x009b,5,changedir,2:4
-
 # 0x009c,9
 # 0x009d,17
 # 0x009e,17
-
 # 0x009f,6,takeitem,2
-
 # 0x00a0,23
 # 0x00a1,6
-
 # 0x00a2,6,dropitem,2:4
-
 # 0x00a3,-1
 # 0x00a4,-1
 # 0x00a5,-1
 # 0x00a6,-1
-
 # 0x00a8,7
 # 0x00a8,7
 # 0x00aa,7
-
 # 0x00ac,7
-# // 0x00ad,0
+# 0x00ad,0
 # 0x00ae,-1
 # 0x00af,6
 # 0x00b0,8
@@ -330,13 +299,10 @@ sub sendGMMessage {
 # 0x00bc,6
 # 0x00bd,44
 # 0x00be,5
-
 # 0x00c0,7
-
 # 0x00c2,6
 # 0x00c3,8
 # 0x00c4,6
-
 # 0x00c6,-1
 # 0x00c7,-1
 
@@ -380,45 +346,29 @@ sub sendGMKillAll {
 
 # 0x00d1,4
 # 0x00d2,4
-
 # 0x00d4,-1
-
 # 0x00d6,3
 # 0x00d7,-1
 # 0x00d8,6
-
 # 0x00da,3
 # 0x00db,-1
 # 0x00dc,28
 # 0x00dd,29
-
 # 0x00df,-1
-
 # 0x00e1,30
-
 # 0x00e5,26
-
 # 0x00e7,3
-
 # 0x00e9,19
 # 0x00ea,5
-
 # 0x00ec,3
-
 # 0x00ee,2
-
 # 0x00f0,3
 # 0x00f1,2
 # 0x00f2,6
-
 # 0x00f3,8,movetokafra,2:4
-
 # 0x00f4,21
-
 # 0x00f5,8,movefromkafra,2:4
-
 # 0x00f6,8
-
 # 0x00f8,2
 
 # 0x00f9,26,createparty,2
@@ -431,10 +381,8 @@ sub sendPartyOrganize {
 
 # 0x00fa,3
 # 0x00fb,-1
-
 # 0x00fd,27
 # 0x00fe,30
-
 # 0x0101,6
 
 # 0x0102,6,partychangeoption,2:4
@@ -450,9 +398,7 @@ sub sendPartyOption {
 # 0x0105,31
 # 0x0106,10
 # 0x0107,10
-
 # 0x0108,-1,partymessage,2:4
-
 # 0x0109,-1
 # 0x010a,4
 # 0x010b,6
@@ -462,7 +408,6 @@ sub sendPartyOption {
 # 0x010f,-1
 # 0x0110,10
 # 0x0111,39
-
 # 0x0113,10,useskilltoid,2:4:6
 # 0x0114,31
 # 0x0115,35
@@ -477,17 +422,7 @@ sub sendAttackStop {
 
 # 0x0119,13
 # 0x011a,15
-
-# 0x011b,20,useskillmap,2:4
-sub sendWarpTele { # type: 26=tele, 27=warp
-	my ($self, $skillID, $map) = @_;
-	my $msg = pack('v2 Z16', 0x011B, $skillID, stringToBytes($map));
-	$self->sendToServer($msg);
-	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
-}
-
 # 0x011c,68
-
 # 0x011e,3
 # 0x011f,16
 # 0x0120,6
@@ -496,31 +431,9 @@ sub sendWarpTele { # type: 26=tele, 27=warp
 # 0x0123,-1
 # 0x0124,21
 # 0x0125,8
-
-# 0x0128,8,movefromkafratocart,2:4
-sub sendStorageGetToCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack('v', 0x0128) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x0129,8,movetokafrafromcart,2:4
-sub sendStorageAddFromCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack('v', 0x0129) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 # 0x012b,2
 # 0x012c,3
 # 0x012d,4
-
 # 0x012e,2,closevending,0
 
 # 0x012f,-1
@@ -529,9 +442,7 @@ sub sendStorageAddFromCart {
 # 0x0131,86
 # 0x0132,6
 # 0x0133,-1
-
 # 0x0134,-1,purchasereq,2:4:8
-
 # 0x0135,7
 # 0x0136,-1
 # 0x0137,6
@@ -569,10 +480,8 @@ sub sendGMMapMove {
 
 # 0x0141,14
 # 0x0142,6
-
 # 0x0144,23
 # 0x0145,19
-
 # 0x0147,39
 # 0x0148,8
 
@@ -587,23 +496,10 @@ sub sendAlignment {
 # 0x014a,6
 # 0x014b,27
 # 0x014c,-1
-
 # 0x014d,2,guildcheckmaster,0
-
 # 0x014e,6
-
 # 0x014f,6,guildrequestinfo,2
-
 # 0x0150,110
-
-# 0x0151,6,guildrequestemblem,2
-sub sendGuildRequestEmblem {
-	my ($self, $guildID) = @_;
-	my $msg = pack('v V', 0x0151, $guildID);
-	$self->sendToServer($msg);
-	debug "Sent Guild Request Emblem.\n", "sendPacket";
-}
-
 # 0x0152,-1
 
 # 0x0153,-1,guildchangeemblem,2:4
@@ -643,35 +539,8 @@ sub sendGuildMemberPositions {
 # TODO
 
 # 0x0158,-1
-
-# 0x0159,54,guildleave,2:6:10:14
-sub sendGuildLeave {
-	my ($self, $reason) = @_;
-	my $msg = pack('v a4 a4 Z40', 0x0159, $accountID, $charID, stringToBytes($reason));
-	$self->sendToServer($msg);
-	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
-}
-
 # 0x015a,66
-
-# 0x015b,54,guildexpulsion,2:6:10:14
-sub sendGuildMemberKick {
-	my ($self, $guildID, $accountID, $charID, $cause) = @_;
-	my $msg = pack('v a4 a4 a4 a40', 0x015B, $guildID, $accountID, $charID, stringToBytes($cause));
-	$self->sendToServer($msg);
-	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
-}
-
 # 0x015c,90
-
-# 0x015d,42,guildbreak,2
-sub sendGuildBreak {
-	my ($self, $guildName) = @_;
-	my $msg = pack('v a40', 0x015D, stringToBytes($guildName));
-	$self->sendToServer($msg);
-	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
-}
-
 # 0x015e,6
 # 0x015f,42
 # 0x0160,-1
@@ -705,17 +574,6 @@ sub sendGuildPositionInfo {
 # 0x0162,-1
 # 0x0163,-1
 # 0x0164,-1
-
-# 0x0165,30,createguild,6
-sub sendGuildCreate {
-	my ($self, $name) = @_;
-	# TODO: Check what is used. Analisis show that the param is CharID, not AccID.
-	# my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
-	my $msg = pack('v a4 a24', 0x0165, $accountID, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Guild Create: $name\n", "sendPacket", 2;
-}
-
 # 0x0166,-1
 # 0x0167,3
 
@@ -760,15 +618,6 @@ sub sendGuildSetAlly {
 }
 
 # 0x0171,30
-
-# 0x0172,10,guildreplyalliance,2:6
-sub sendGuildAlly {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack('v a4 V', 0x0172, $ID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
-}
-
 # 0x0173,3
 # 0x0174,-1
 
@@ -777,40 +626,10 @@ sub sendGuildAlly {
 
 # 0x0176,106
 # 0x0177,-1
-
-# 0x0178,4,itemidentify,2
-sub sendIdentify {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack('v', 0x0178) . pack("a2", $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Identify: %s\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 # 0x0179,5
-
-# 0x017a,4,usecard,2
-sub sendCardMergeRequest {
-	my ($self, $card_ID) = @_;
-	my $msg = pack('v', 0x017A) . pack("a2", $card_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
-}
-
 # 0x017b,-1
-
-# 0x017c,6,insertcard,2:4
-sub sendCardMerge {
-	my ($self, $card_ID, $item_ID) = @_;
-	my $msg = pack('v', 0x017C) . pack("a2 a2", $card_ID, $item_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
-}
-
 # 0x017d,7
-
 # 0x017e,-1,guildmessage,2:4
-
 # 0x017f,-1
 
 # 0x0180,6,guildopposition,2
@@ -824,17 +643,14 @@ sub sendCardMerge {
 
 # 0x0184,10
 # 0x0185,34
-# // 0x0186,0
+# 0x0186,0
 # 0x0187,6
 # 0x0188,8
 # 0x0189,4
-
 # 0x018a,4,quitgame,0
-
 # 0x018b,4
 # 0x018c,29
 # 0x018d,-1
-
 # 0x018f,6
 
 # 0x0190,90,useskilltoposinfo,2:4:6:8:10
@@ -955,7 +771,6 @@ sub sendPetEmotion{
 # 0x01ab,12
 # 0x01ac,6
 # 0x01ad,-1
-
 # 0x01b0,11
 # 0x01b1,7
 
@@ -1030,21 +845,19 @@ sub sendGMSummon {
 # 0x01c7,2
 # 0x01c8,13
 # 0x01c9,97
-# // 0x01ca,0
+# 0x01ca,0
 
 # 0x01cb,9
 # TODO
 
 # 0x01cc,9
 # 0x01cd,30
-
 # 0x01cf,28
 # 0x01d0,8
 # 0x01d1,14
 # 0x01d2,10
 # 0x01d3,35
 # 0x01d4,6
-
 # 0x01d6,4
 # 0x01d7,11
 # 0x01d8,54
@@ -1091,7 +904,6 @@ sub sendPartyOrganize {
 # 0x01ea,6
 # 0x01eb,10
 # 0x01ec,26
-
 # 0x01ee,-1
 # 0x01ef,-1
 # 0x01f0,-1
@@ -1101,7 +913,6 @@ sub sendPartyOrganize {
 # 0x01f4,32
 # 0x01f5,9
 # 0x01f6,34
-
 # 0x01f8,2
 
 # 0x01fa,48
@@ -1111,7 +922,6 @@ sub sendPartyOrganize {
 # TODO
 
 # 0x01fc,-1
-
 # 0x01fe,5
 # 0x01ff,10
 
@@ -1119,9 +929,7 @@ sub sendPartyOrganize {
 # TODO
 
 # 0x0201,-1
-
 # 0x0204,18
-
 # 0x0205,26
 # 0x0206,11
 # 0x0207,34

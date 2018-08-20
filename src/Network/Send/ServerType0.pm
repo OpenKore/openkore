@@ -42,8 +42,8 @@ sub new {
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
 		'0066' => ['char_login', 'C', [qw(slot)]],
-		'0067' => ['char_create'], # TODO
-		'0068' => ['char_delete'], # TODO
+		'0067' => ['char_create', 'a24 C7 v2', [qw(name str agi vit int dex luk slot hair_color hair_style)]],
+		'0068' => ['char_delete', 'a4 a40', [qw(charID email)]],
 		'0072' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'007D' => ['map_loaded'], # len 2
 		'007E' => ['sync', 'V', [qw(time)]],
@@ -93,9 +93,12 @@ sub new {
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
 		'0113' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0116' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'011B' => ['warp_select', 'v Z16', [qw(skillID mapName)]],
 		'011D' => ['memo_request'],
 		'0126' => ['cart_add', 'a2 V', [qw(ID amount)]],
 		'0127' => ['cart_get', 'a2 V', [qw(ID amount)]],
+		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
+		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
@@ -105,7 +108,14 @@ sub new {
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
+		'0159' => ['guild_leave', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
+		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
+		'015D' => ['guild_break', 'a4', [qw(guildName)]],
+		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
+		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
+		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
+		'017C' => ['card_merge', 'a2 a2', [qw(cardID itemID)]],
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
@@ -134,6 +144,7 @@ sub new {
 		'021D' => ['less_effect'], # TODO
 		'0222' => ['refine_item', 'V', [qw(ID)]],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
@@ -306,41 +317,6 @@ sub sendBuyBulk {
 	$self->sendToServer($msg);
 }
 
-sub sendCardMerge {
-	my ($self, $card_ID, $item_ID) = @_;
-	my $msg = pack("C*", 0x7C, 0x01) . pack("a2 a2", $card_ID, $item_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge: %s, %s\n", unpack('v', $card_ID), unpack('v', $item_ID)), "sendPacket";
-}
-
-sub sendCardMergeRequest {
-	my ($self, $card_ID) = @_;
-	my $msg = pack("C*", 0x7A, 0x01) . pack("a2", $card_ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Card Merge Request: %s\n", unpack('v', $card_ID)), "sendPacket";
-}
-
-sub sendCharCreate {
-	my ($self, $slot, $name,
-	    $str, $agi, $vit, $int, $dex, $luk,
-		$hair_style, $hair_color) = @_;
-	$hair_color ||= 1;
-	$hair_style ||= 0;
-
-	my $msg = pack("C*", 0x67, 0x00) .
-		pack("a24", stringToBytes($name)) .
-		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("v*", $hair_color, $hair_style);
-	$self->sendToServer($msg);
-}
-
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0x68, 0x00) .
-			$charID . pack("a40", stringToBytes($email));
-	$self->sendToServer($msg);
-}
-
 =pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
@@ -356,28 +332,6 @@ sub sendGMSummon {
 	$self->sendToServer($packet);
 }
 
-sub sendGuildAlly {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack("C*", 0x72, 0x01).$ID.pack("V1", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
-}
-
-sub sendGuildBreak {
-	my ($self, $guildName) = @_;
-	my $msg = pack("C C a40", 0x5D, 0x01, stringToBytes($guildName));
-	$self->sendToServer($msg);
-	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
-}
-
-sub sendGuildCreate {
-	my ($self, $name) = @_;
-	# By Default, the second param is our CharID. which indicate the Guild Master Char ID
-	my $msg = pack('v a4 a24', 0x0165, $charID, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Guild Create: $name\n", "sendPacket", 2;
-}
-
 sub sendGuildJoin {
 	my ($self, $ID, $flag) = @_;
 	my $msg = pack("C*", 0x6B, 0x01).$ID.pack("V1", $flag);
@@ -390,21 +344,6 @@ sub sendGuildJoinRequest {
 	my $msg = pack("C*", 0x68, 0x01).$ID.$accountID.$charID;
 	$self->sendToServer($msg);
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
-}
-
-sub sendGuildLeave {
-	my ($self, $reason) = @_;
-	my $mess = pack("Z40", stringToBytes($reason));
-	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
-	$self->sendToServer($msg);
-	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
-}
-
-sub sendGuildMemberKick {
-	my ($self, $guildID, $accountID, $charID, $cause) = @_;
-	my $msg = pack("C*", 0x5B, 0x01).$guildID.$accountID.$charID.pack("a40", stringToBytes($cause));
-	$self->sendToServer($msg);
-	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
 
 =pod
@@ -465,13 +404,6 @@ sub sendGuildPositionInfo {
 	$self->sendToServer($msg);
 }
 
-sub sendGuildRequestEmblem {
-	my ($self, $guildID) = @_;
-	my $msg = pack("v V", 0x0151, $guildID);
-	$self->sendToServer($msg);
-	debug "Sent Guild Request Emblem.\n", "sendPacket";
-}
-
 sub sendGuildSetAlly {
 	# this packet is for guildmaster asking to set alliance with another guildmaster
 	# the other sub for sendGuildAlly are responses to this sub
@@ -485,23 +417,6 @@ sub sendGuildSetAlly {
 			$charID;
 	$self->sendToServer($msg);
 
-}
-
-sub sendHomunculusName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack("v1 a24", 0x0231, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
-}
-
-sub sendIdentify {
-	my ($self, $ID) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'identify',
-		ID => $ID,
-	}));
-	debug "Sent Identify: ".unpack('v',$ID)."\n", "sendPacket", 2;
 }
 
 sub sendOpenShop {
@@ -530,28 +445,18 @@ sub sendPartyJoinRequestByNameReply {
 }
 
 sub sendPartyOrganize {
-	my $self = shift;
-	my $name = shift;
-	my $share1 = shift || 1;
-	my $share2 = shift || 1;
+	my ($self, $name, $share1, $share2) = @_;
+	$share1 ||= 1;
+	$share2 ||= 1;
 
-	my $binName = stringToBytes($name);
-	$binName = substr($binName, 0, 24) if (length($binName) > 24);
-	$binName .= chr(0) x (24 - length($binName));
-	#my $msg = pack("C*", 0xF9, 0x00) . $binName;
+	# my $msg = pack("C*", 0xF9, 0x00) . pack("Z24", stringToBytes($name));
 	# I think this is obsolete - which serverTypes still support this packet anyway?
 	# FIXME: what are shared with $share1 and $share2? experience? item? vice-versa?
 	
-	my $msg = pack("C*", 0xE8, 0x01) . $binName . pack("C*", $share1, $share2);
+	my $msg = pack("C*", 0xE8, 0x01) . pack("Z24", stringToBytes($name)) . pack("C*", $share1, $share2);
 
 	$self->sendToServer($msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
-}
-
-# legacy plugin support, remove later
-sub sendPartyShareEXP {
-	my ($self, $exp) = @_;
-	$self->sendPartyOption($exp, 0);
 }
 
 # 0x0102,6,partychangeoption,2:4
@@ -641,13 +546,6 @@ sub sendRequestMakingHomunculus {
 	}
 }
 
-sub sendRemoveAttachments {
-	# remove peco, falcon, cart
-	my $msg = pack("C*", 0x2A, 0x01);
-	$_[0]->sendToServer($msg);
-	debug "Sent remove attachments\n", "sendPacket", 2;
-}
-
 sub sendSellBulk {
 	my $self = shift;
 	my $r_array = shift;
@@ -661,52 +559,6 @@ sub sendSellBulk {
 	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
 	$self->sendToServer($msg);
 }
-
-sub sendStorageAddFromCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg;
-	$msg = pack("C*", 0x29, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Add From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-sub sendStorageGetToCart {
-	my $self = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg;
-	$msg = pack("C*", 0x28, 0x01) . pack("a2", $ID) . pack("V*", $amount);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Storage Get From Cart: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-# 0x011b,20,useskillmap,2:4
-sub sendWarpTele { # type: 26=tele, 27=warp
-	my ($self, $skillID, $map) = @_;
-	my $msg = pack('v2 Z16', 0x011B, $skillID, stringToBytes($map));
-	$self->sendToServer($msg);
-	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
-}
-=pod
-sub sendTeleport {
-	my $self = shift;
-	my $location = shift;
-	$location = substr($location, 0, 16) if (length($location) > 16);
-	$location .= chr(0) x (16 - length($location));
-	my $msg = pack("C*", 0x1B, 0x01, 0x1A, 0x00) . $location;
-	$self->sendToServer($msg);
-	debug "Sent Teleport: $location\n", "sendPacket", 2;
-}
-
-sub sendOpenWarp {
-	my ($self, $map) = @_;
-	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
-		chr(0) x (16 - length($map));
-	$self->sendToServer($msg);
-}
-=cut
 
 sub sendTop10Alchemist {
 	my $self = shift;

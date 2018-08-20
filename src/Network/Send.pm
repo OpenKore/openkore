@@ -31,7 +31,9 @@ use Carp::Assert;
 use Digest::MD5;
 use Math::BigInt;
 
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog);
+# TODO: remove 'use Globals' from here, instead pass vars on
+use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog %guild $charID);
+
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
@@ -2105,6 +2107,198 @@ sub sendCartGet {
 	}));
 	
 	debug "Sent Cart Get: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
+sub sendIdentify {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'identify',
+		ID => $ID,
+	}));
+	
+	debug "Sent Identify: ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendCardMergeRequest {
+	my ($self, $cardID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'card_merge_request',
+		cardID => $cardID,
+	}));
+	
+	debug "Sent Card Merge Request: " . getHex($cardID) . "\n", "sendPacket", 2;
+}
+
+sub sendCardMerge {
+	my ($self, $cardID, $itemID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'card_merge',
+		cardID => $cardID,
+		itemID => $itemID,
+	}));
+	
+	debug "Sent Card Merge: " . getHex($cardID) . ", " . getHex($itemID) . "\n", "sendPacket", 2;
+}
+
+sub sendCharCreate {
+	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_create',
+		name => stringToBytes($name),
+		str => $str,
+		agi => $agi,
+		vit => $vit,
+		int => $int,
+		dex => $dex,
+		luk => $luk,
+		slot => $slot,
+		hair_color => $hair_color,
+		hair_style => $hair_style
+	}));
+	
+	debug "Sent Char Create\n", "sendPacket", 2;
+}
+
+sub sendCharDelete {
+	my ($self, $charID, $email) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_delete',
+		charID => $charID,
+		email => stringToBytes($email),
+	}));
+	
+	debug "Sent Char Delete\n", "sendPacket", 2;
+}
+
+sub sendGuildAlly {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_alliance_reply',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
+}
+
+sub sendGuildRequestEmblem {
+	my ($self, $guildID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_emblem_request',
+		guildID => $guildID,
+	}));
+	
+	debug "Sent Guild Request Emblem.\n", "sendPacket";
+}
+
+sub sendGuildBreak {
+	my ($self, $guildName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_break',
+		guildName => stringToBytes($guildName),
+	}));
+	
+	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
+}
+
+sub sendWarpTele {
+	my ($self, $skillID, $map) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'warp_select',
+		# skillID:
+		# 26 => Teleport (Respawn/Random)
+		# 27 => Open Warp
+		skillID => $skillID,
+		mapName => stringToBytes($map),
+	}));
+	
+	debug "Sent ". ($skillID == 26 ? "Teleport" : "Open Warp") . "\n", "sendPacket", 2
+}
+
+sub sendStorageGetToCart {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'storage_to_cart',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Storage Get From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
+sub sendStorageAddFromCart {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'cart_to_storage',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Storage Add From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
+}
+
+sub sendHomunculusName {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'homunculus_name',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
+}
+
+sub sendGuildLeave {
+	my ($self, $reason) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_leave',
+		guildID => $guild{ID},
+		accountID => $accountID,
+		charID => $charID,
+		reason => stringToBytes($reason),
+	}));
+	
+	debug "Sent Guild Leave: $reason\n", "sendPacket";
+}
+
+sub sendGuildMemberKick {
+	my ($self, $guildID, $accountID, $charID, $reason) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_kick',
+		guildID => $guildID,
+		charID => $charID,
+		accountID => $accountID,
+		reason => stringToBytes($reason),
+	}));
+	
+	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
+}
+
+sub sendGuildCreate {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_create',
+		charID => $charID,
+		guildName => stringToBytes($name),
+	}));
+	
+	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
 1;
