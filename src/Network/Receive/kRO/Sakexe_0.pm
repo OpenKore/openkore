@@ -519,9 +519,9 @@ sub new {
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
-		'09A6' => ['banking_status', 'V2 x2',[qw(inbank reason)]], #rA : reason = 0
-		'09A8' => ['banking_status_deposit', 'v V3',[qw(reason inbank onhand)]],
-		'09AA' => ['banking_status_withdraw', 'v V3',[qw(reason inbank onhand)]],	
+		'09A6' => ['banking_status', 'V2 v',[qw(inbank reason)]], #rA : reason = 0
+		'09A8' => ['banking_status_deposit', 'v a8 V',[qw(reason inbank onhand)]],
+		'09AA' => ['banking_status_withdraw', 'v a8 V',[qw(reason inbank onhand)]],	
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
