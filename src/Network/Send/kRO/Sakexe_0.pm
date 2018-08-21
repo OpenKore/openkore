@@ -126,6 +126,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
+		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
@@ -700,15 +701,6 @@ sub sendPetName {
 }
 
 # 0x01a6,-1
-
-# 0x01a7,4,selectegg,2
-sub sendPetHatch {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a2', 0x01A7, $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 # 0x01a8,4
 
 # 0x01a9,6,sendemotion,2

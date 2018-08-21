@@ -2386,4 +2386,15 @@ sub sendPetMenu {
 	debug "Sent Pet Menu\n", "sendPacket", 2;
 }
 
+sub sendPetHatch {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_hatch',
+		ID => $ID,
+	}));
+	
+	debug "Sent Incubator hatch: " . getHex($ID) . "\n", "sendPacket", 2;
+}
+
 1;

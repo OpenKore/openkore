@@ -127,6 +127,7 @@ sub new {
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
+		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
@@ -438,13 +439,6 @@ sub sendPartyOption {
 		itemDivision => $itemDivision,
 	}));
 	debug "Sent Party Option\n", "sendPacket", 2;
-}
-
-sub sendPetHatch {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a2', 0x01A7, $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendPetName {
