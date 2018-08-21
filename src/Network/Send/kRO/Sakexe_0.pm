@@ -65,6 +65,7 @@ sub new {
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
+		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -314,19 +315,6 @@ sub sendGMMessage {
 # 0x00c4,6
 # 0x00c6,-1
 # 0x00c7,-1
-
-# 0x00c9,-1,npcselllistsend,2:4
-sub sendSellBulk {
-	my $self = shift;
-	my $r_array = shift;
-	my $msg = pack('v2', 0x00C9, 4+4*@{$r_array});
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('a2 v', $r_array->[$i]{ID}, $r_array->[$i]{amount});
-		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
-
 # 0x00ca,3
 # 0x00cb,3
 

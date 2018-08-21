@@ -67,6 +67,7 @@ sub new {
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
+		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -471,20 +472,6 @@ sub sendRequestMakingHomunculus {
 		$self->sendToServer($msg);
 		debug "Sent RequestMakingHomunculus\n", "sendPacket", 2;
 	}
-}
-
-sub sendSellBulk {
-	my $self = shift;
-	my $r_array = shift;
-	my $sellMsg = "";
-
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$sellMsg .= pack("a2 v", $r_array->[$i]{ID}, $r_array->[$i]{amount});
-		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
-	}
-
-	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
-	$self->sendToServer($msg);
 }
 
 sub sendTop10Alchemist {

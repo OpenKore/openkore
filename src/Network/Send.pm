@@ -2425,4 +2425,22 @@ sub reconstruct_buy_bulk {
 	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
 }
 
+
+sub sendSellBulk {
+	my ($self, $r_array) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'sell_bulk',
+		items => \@{$r_array},
+	}));
+	
+	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_sell_bulk {
+	my ($self, $args) = @_;
+	
+	$args->{sellInfo} = pack "(a*)*", map { pack "a2 v", $_->{ID}, $_->{amount} } @{$args->{items}};
+}
+
 1;
