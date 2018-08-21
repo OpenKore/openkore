@@ -2301,4 +2301,16 @@ sub sendGuildCreate {
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
+sub sendGuildJoin {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_join',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
+}
+
 1;
