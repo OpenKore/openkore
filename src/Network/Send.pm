@@ -2326,4 +2326,17 @@ sub sendGuildJoinRequest {
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
+sub sendGuildNotice {
+	my ($self, $guildID, $name, $notice) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_notice',
+		guildID => $guildID,
+		name => stringToBytes($name),
+		notice => stringToBytes($notice),
+	}));
+	
+	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
+}
+
 1;

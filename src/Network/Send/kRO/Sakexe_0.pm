@@ -111,6 +111,7 @@ sub new {
 		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
 		'0168' => ['guild_join_request', 'a4 a4 a4', [qw(ID accountID charID)]],
 		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
+		'016E' => ['guild_notice', 'a4 Z60 Z120', [qw(guildID name notice)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -582,15 +583,6 @@ sub sendGuildPositionInfo {
 # 0x016a,30
 # 0x016c,43
 # 0x016d,14
-
-# 0x016e,186,guildchangenotice,2:6:66
-sub sendGuildNotice { # sets the notice/announcement for the guild
-	my ($self, $guildID, $name, $notice) = @_;
-	my $msg = pack('v a4 a60 a120', 0x016E, $guildID, stringToBytes($name), stringToBytes($notice));
-	$self->sendToServer($msg);
-	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
-}
-
 # 0x016f,182
 
 # 0x0170,14,guildrequestalliance,2
