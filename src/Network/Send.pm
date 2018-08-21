@@ -2339,4 +2339,23 @@ sub sendGuildNotice {
 	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
+sub sendGuildSetAlly {
+	my ($self, $targetAID, $myAID, $charID) = @_;
+	
+	# this packet is for guildmaster asking to set alliance with another guildmaster
+	# the other sub for sendGuildAlly are responses to this sub
+	# kept the parameters open, but everything except $targetAID could be replaced with Global variables
+	# unless you plan to mess around with the alliance packet, no exploits though, I tried ;-)
+	# -zdivpsa
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_alliance_request',
+		targetAccountID => $targetAID,
+		accountID => $myAID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Guild Alliance Request\n", "sendPacket", 2;
+}
+
 1;

@@ -112,6 +112,7 @@ sub new {
 		'0168' => ['guild_join_request', 'a4 a4 a4', [qw(ID accountID charID)]],
 		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
 		'016E' => ['guild_notice', 'a4 Z60 Z120', [qw(guildID name notice)]],
+		'0170' => ['guild_alliance_request', 'a4 a4 a4', [qw(targetAccountID accountID charID)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -584,15 +585,6 @@ sub sendGuildPositionInfo {
 # 0x016c,43
 # 0x016d,14
 # 0x016f,182
-
-# 0x0170,14,guildrequestalliance,2
-sub sendGuildSetAlly {
-	my ($self, $targetAID, $myAID, $charID) = @_;
-	my $msg = pack('v a4 a4 a4', 0x0170, $targetAID, $myAID, $charID);
-	$self->sendToServer($msg);
-
-}
-
 # 0x0171,30
 # 0x0173,3
 # 0x0174,-1

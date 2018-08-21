@@ -115,6 +115,7 @@ sub new {
 		'0168' => ['guild_join_request', 'a4 a4 a4', [qw(ID accountID charID)]],
 		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
 		'016E' => ['guild_notice', 'a4 Z60 Z120', [qw(guildID name notice)]],
+		'0170' => ['guild_alliance_request', 'a4 a4 a4', [qw(targetAccountID accountID charID)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -382,21 +383,6 @@ sub sendGuildPositionInfo {
 		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendGuildSetAlly {
-	# this packet is for guildmaster asking to set alliance with another guildmaster
-	# the other sub for sendGuildAlly are responses to this sub
-	# kept the parameters open, but everything except $targetAID could be replaced with Global variables
-	# unless you plan to mess around with the alliance packet, no exploits though, I tried ;-)
-	# -zdivpsa
-	my ($self, $targetAID, $myAID, $charID) = @_;	# remote socket, $net
-	my $msg =	pack("C*", 0x70, 0x01) .
-			$targetAID .
-			$myAID .
-			$charID;
-	$self->sendToServer($msg);
-
 }
 
 sub sendOpenShop {
