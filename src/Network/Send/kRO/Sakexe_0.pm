@@ -122,6 +122,7 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
+		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
@@ -684,15 +685,6 @@ sub sendGMHide {
 }
 
 # 0x019e,2
-
-# 0x019f,6,catchpet,2
-sub sendPetCapture {
-	my ($self, $monID) = @_;
-	my $msg = pack('v a4', 0x019F, $monID);
-	$self->sendToServer($msg);
-	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
-}
-
 # 0x01a0,3
 
 # 0x01a1,3,petmenu,2
