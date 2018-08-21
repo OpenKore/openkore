@@ -581,6 +581,7 @@ sub checkConnection {
 	} elsif ($self->getState() == Network::CONNECTED_TO_CHAR_SERVER) {
 		if(!$self->serverAlive() && !$conState_tries) {
 			if ($config{pauseMapServer}) {
+				return if($config{XKore} eq 1 || $config{XKore} eq 3);
 				message "Pausing for $config{pauseMapServer} second(s)...\n", "system";
 				sleep($config{pauseMapServer});
 			}
