@@ -2356,6 +2356,7 @@ sub received_characters {
 		$timeout{'charlogin'}{'time'} = time;
 		
 	} elsif ($masterServer->{pauseCharLogin}) {
+		return if($config{XKore} eq 1 || $config{XKore} eq 3);
 		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
 			$timeout{'char_login_pause'}{'timeout'} = 2;
 		}
