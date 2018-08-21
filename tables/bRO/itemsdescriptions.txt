@@ -17184,10 +17184,9 @@ Combina com: ^777777Vestimenta^000000
 Peso: ^7777771^000000
 #
 4062#
-Dano físico contra a propriedade Veneno +20%.
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+^0000ffDano físico contra oponentes de propriedade Veneno +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4063#
@@ -17507,10 +17506,10 @@ Combina com: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4108#
-^0000ffConcede 30% de resistência contra ataques da propriedade Veneno, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Veneno +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4109#
@@ -17521,10 +17520,10 @@ Combina com: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4110#
-^0000ffDEF +1, concede 20% de resistência contra a propriedade Veneno.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+^0000ffDEF +1.^000000
+^0000ffTolerância a Envenenamento +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4111#
@@ -50538,6 +50537,17 @@ Peso: ^77777710^000000
 Nível necessário: ^77777750^000000
 Classes: ^777777Todas^000000
 #
+19105#
+Com um refrescante sabor de menta, essa é uma daquelas gomas de mascar que formam uma bola gigantesca sem grudar no rosto inteiro quando estouram.
+^0000ffConjuração variável^000000 ^ff0000+10%.^000000
+^0000ffTolerância a Sono +100%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19106#
 Dizem que originalmente esse véu foi usado pela Abelha Rainha quando ela assumiu uma forma humana para conhecer o mundo dos homens. Repleto de gemas preciosas, o véu possui diversos encantamentos, mas, aparentemente, eles só se revelam por completo diante do poder da própria Abelha Rainha.
 ^a400cdIndestrutível em batalha.^000000
@@ -51415,6 +51425,17 @@ Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+19314#
+Uma requintada sobrepeliz repleta de aspectos dignos da realeza: seda azul com detalhes dourados e um laço branco adornado por uma joia preciosa. Só pra quem pode.
+^0000ffDEFM +5.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 19315#
@@ -53292,6 +53313,14 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+20052#
+Precisa ir jantar? A encomenda chegou? O chocolate vencido caiu mal e a natureza bateu à porta? Então é hora de usar esse balão pra sinalizar que forças maiores fizeram você dar uma pausa rápida nas suas aventuras. Por sinal, “AFK” significa “Aventureiro Fora do Computador”. Erraram na hora de digitar o C.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 20054#
 Uma chupeta usada para silenciar bebês e nenéns. Não é a toa que é o item favorito de diabinhos como Deviruchi, Diabolik e o seu irmão mais novo.
@@ -59396,6 +59425,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31453#
+Se o inverno chegou e ainda faltava um cachecol grande, quentinho e estiloso no seu inventário, agora não falta mais! Lã por dentro e veludo por fora, esse cachecol te deixa bem aconchegante, e com essa cor você não tem mais a desculpa do “não combina com nada”.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31460#
 Em homenagem à sentinela Desirèe Olivier, dedicados artesãos confeccionaram lanternas flutuantes que parecem subir aos céus, como símbolo de abrigo para a sua alma. Após tantos anos de dedicação, uma das maiores guerreiras que desbravou Rune-Midgard lutando contra inúmeros obstáculos agora encontrará repouso e serenidade. Que seu bravo espírito seja guia e inspiração para a sua jornada.
 ^FF0000ATENÇÃO! Este item não pode ser negociado, derrubado no chão, vendido em NPC e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
@@ -59421,6 +59458,14 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31482#
+Encontraram uma forma de replicar toda a fofura e conforto do fino pelo dos Lunáticos sem sequer precisar machucar um deles no processo. Quem recusaria sentir essa maciez dos deuses no pescoço o dia inteiro? Só um verdadeiro lunático mesmo!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Meio^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 31488#
 Você sempre imaginou que MVP significasse “Most Valuable Player”, ou seja, Jogador Mais Valioso, né? Na verdade, a sigla significa “Menos Vergonhoso Possível” (mentira), e te lembra de que você não fez mais que sua obrigação em ganhar aquele MVP com aquele tanto de Bombas Ácidas que usou.
