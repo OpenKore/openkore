@@ -2299,6 +2299,7 @@ sub sendGuildCreate {
 	}));
 	
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
+}
 
 sub sendBankCheck {
 	my ($self, $accountID) = @_;
@@ -2307,6 +2308,7 @@ sub sendBankCheck {
 		accountID => $accountID,
 	}));
 }
+
 sub sendBankWithdraw {
 	my ($self, $accountID , $zenyamount) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -2315,7 +2317,8 @@ sub sendBankWithdraw {
 		zeny => $zenyamount,
 	}));
 }
- sub sendBankDeposit {
+
+sub sendBankDeposit {
 	my ($self, $accountID , $zenyamount) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'banking_deposit',
