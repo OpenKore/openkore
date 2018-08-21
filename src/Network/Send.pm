@@ -2397,4 +2397,15 @@ sub sendPetHatch {
 	debug "Sent Incubator hatch: " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
+sub sendPetName {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_name',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
+}
+
 1;

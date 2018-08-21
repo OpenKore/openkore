@@ -126,6 +126,7 @@ sub new {
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
+		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
@@ -691,15 +692,6 @@ sub sendGMHide {
 # 0x01a2,35
 # 0x01a3,5
 # 0x01a4,11
-
-# 0x01a5,26,changepetname,2
-sub sendPetName {
-	my ($self, $name) = @_;
-	my $msg = pack('v a24', 0x01A5, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
-}
-
 # 0x01a6,-1
 # 0x01a8,4
 
