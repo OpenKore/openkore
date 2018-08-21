@@ -3637,6 +3637,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == REFUSE_INVALID_PASSWD) {
 		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
+		Plugins::callHook('invalid_password');
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
 			if (defined($password)) {
