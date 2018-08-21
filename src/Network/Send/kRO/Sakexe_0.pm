@@ -109,6 +109,7 @@ sub new {
 		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
+		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -587,15 +588,6 @@ sub sendGuildJoinRequest {
 
 # 0x0169,3
 # 0x016a,30
-
-# 0x016b,10,guildreplyinvite,2:6
-sub sendGuildJoin {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack('v a4 V', 0x016B, $ID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
-}
-
 # 0x016c,43
 # 0x016d,14
 
