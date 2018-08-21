@@ -2408,4 +2408,21 @@ sub sendPetName {
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
+sub sendBuyBulk {
+	my ($self, $r_array) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk',
+		items => \@{$r_array},
+	}));
+	
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_buy_bulk {
+	my ($self, $args) = @_;
+	
+	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
+}
+
 1;
