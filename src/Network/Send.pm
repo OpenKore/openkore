@@ -2313,4 +2313,17 @@ sub sendGuildJoin {
 	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
 }
 
+sub sendGuildJoinRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_join_request',
+		ID => $ID,
+		accountID => $accountID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
+}
+
 1;
