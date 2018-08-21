@@ -126,6 +126,7 @@ sub new {
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
+		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
@@ -437,14 +438,6 @@ sub sendPartyOption {
 		itemDivision => $itemDivision,
 	}));
 	debug "Sent Party Option\n", "sendPacket", 2;
-}
-
-# 0x01a1,3,petmenu,2
-sub sendPetMenu {
-	my ($self, $type) = @_; # 0:info, 1:feed, 2:performance, 3:to egg, 4:uneq item
-	my $msg = pack('v C', 0x01A1, $type);
-	$self->sendToServer($msg);
-	debug "Sent Pet Menu\n", "sendPacket", 2;
 }
 
 sub sendPetHatch {

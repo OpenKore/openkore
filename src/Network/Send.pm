@@ -2368,4 +2368,22 @@ sub sendPetCapture {
 	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
+sub sendPetMenu {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_menu',
+		
+		# Action
+		# 0 => info
+		# 1 => feed
+		# 2 => performance
+		# 3 => return to egg
+		# 4 => unequip accessory
+		action => $type,
+	}));
+	
+	debug "Sent Pet Menu\n", "sendPacket", 2;
+}
+
 1;

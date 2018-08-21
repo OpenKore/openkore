@@ -125,6 +125,7 @@ sub new {
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
@@ -686,15 +687,6 @@ sub sendGMHide {
 
 # 0x019e,2
 # 0x01a0,3
-
-# 0x01a1,3,petmenu,2
-sub sendPetMenu {
-	my ($self, $type) = @_; # 1:feed, 0:info, 2:performance, 3:to egg, 4:uneq item
-	my $msg = pack('v C', 0x01A1, $type);
-	$self->sendToServer($msg);
-	debug "Sent Pet Menu\n", "sendPacket", 2;
-}
-
 # 0x01a2,35
 # 0x01a3,5
 # 0x01a4,11
