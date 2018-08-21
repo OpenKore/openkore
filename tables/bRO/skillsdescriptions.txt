@@ -3,23 +3,23 @@ Habilidades Básicas
 Nível máximo: ^7777779^000000
 ^777777Libera os controles básicos de interface.^000000
 [Nv 1]: ^777777Libera Negociação.
-         Clique com o botão direito em cima
-         de um personagem e negocie itens.^000000
+          Clique com o botão direito em cima
+          de um personagem e negocie itens.^000000
 [Nv 2]: ^777777Libera o uso de Emoticons.
-         Acesse a lista de emojis
-         através do comando ALT + L.^000000
+          Acesse a lista de emojis
+          através do comando ALT + L.^000000
 [Nv 3]: ^777777Libera o personagem Sentar.
-         Aperte [insert] ou digite
-         /sit para sentar seu personagem.^000000
+          Aperte [insert] ou digite
+          /sit para sentar seu personagem.^000000
 [Nv 4]: ^777777Libera a criação de Chat.
-         Digite /chat ou ALT+C
-         para criar uma sala de chat.^000000
+          Digite /chat ou ALT+C
+          para criar uma sala de chat.^000000
 [Nv 5]: ^777777Libera se juntar em um Grupo.^000000
 [Nv 6]: ^777777Libera uso do Armazém.^000000
 [Nv 7]: ^777777Libera a criação de Grupo
-         Digite /organize nomedogrupo
-         para criar um grupo e ALT + Z
-         para ajustar as configurações.^000000
+          Digite /organize nomedogrupo
+          para criar um grupo e ALT + Z
+          para ajustar as configurações.^000000
 [Nv 8]: ^777777Parabéns! Você chegou ao nível 8!^000000
 [Nv 9]: ^777777Permite mudar de Classe.^000000
 #
@@ -58,21 +58,23 @@ Descrição: ^777777Aumenta o dano com Espadas de Duas Mãos.^000000
 #
 SM_RECOVERY#
 Aumentar Recuperação de HP
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta regeneração de HP enquanto parado.
-Também aumenta a eficiência de itens de recuperacão de HP.
-O HP Máx afeta o quanto é recuperado por esta habilidade.^000000
-[Nv 1]: ^777777HP +5 a cada 10 segundos^000000
-[Nv 2]: ^777777HP +10 a cada 10 segundos^000000
-[Nv 3]: ^777777HP +15 a cada 10 segundos^000000
-[Nv 4]: ^777777HP +20 a cada 10 segundos^000000
-[Nv 5]: ^777777HP +25 a cada 10 segundos^000000
-[Nv 6]: ^777777HP +30 a cada 10 segundos^000000
-[Nv 7]: ^777777HP +35 a cada 10 segundos^000000
-[Nv 8]: ^777777HP +40 a cada 10 segundos^000000
-[Nv 9]: ^777777HP +45 a cada 10 segundos^000000
-[Nv 10]: ^777777HP +50 a cada 10 segundos^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Enquanto permanecer imóvel, o HP será
+regenerado a cada 10 segundos.
+A quantia regenerada depende do HP máx.^000000
+Nível l Regeneração de HP
+[Nv 1]: ^777777+5^000000
+[Nv 2]: ^777777+10^000000
+[Nv 3]: ^777777+15^000000
+[Nv 4]: ^777777+20^000000
+[Nv 5]: ^777777+25^000000
+[Nv 6]: ^777777+30^000000
+[Nv 7]: ^777777+35^000000
+[Nv 8]: ^777777+40^000000
+[Nv 9]: ^777777+45^000000
+[Nv 10]: ^777777+50^000000
 #
 SM_BASH#
 Golpe Fulminante
@@ -155,20 +157,23 @@ Duração e bônus de MDEF de acordo com nível da habilidade:
 #
 MG_SRECOVERY#
 Aumentar recuperação de SP
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta regeneração de SP enquanto parado.
-O SP Máx afeta o quanto é recuperado por esta habilidade.^000000
-[Nv 1]: ^777777+3 SP a cada 10 segundos,^000000
-[Nv 2]: ^777777+6 SP a cada 10 segundos,^000000
-[Nv 3]: ^777777+9 SP a cada 10 segundos,^000000
-[Nv 4]: ^777777+12 SP a cada 10 segundos,^000000
-[Nv 5]: ^777777+15 SP a cada 10 segundos,^000000
-[Nv 6]: ^777777+18 SP a cada 10 segundos,^000000
-[Nv 7]: ^777777+21 SP a cada 10 segundos,^000000
-[Nv 8]: ^777777+24 SP a cada 10 segundos,^000000
-[Nv 9]: ^777777+27 SP a cada 10 segundos,^000000
-[Nv 10]: ^777777+30 SP a cada 10 segundos,^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Enquanto permanecer imóvel, o SP será
+regenerado a cada 10 segundos.
+A quantia regenerada depende do SP máx.^000000
+Nível l Regeneração de SP
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 MG_SIGHT#
 Chama Reveladora
@@ -201,26 +206,27 @@ Consumo de SP, tempo entre conjurações, bônus de ATQM:^000000
 #
 MG_SAFETYWALL#
 Escudo Mágico
-Nível Máximo: 10
-2^777777Pré requisitos: Ataque Espiritual 7, Espíritos Anciões 5^000000
-8^777777Pré requisitos: Aspersio 4, Santuário 3^000000
-Tipo: ^777777Suporte
-Propriedade: ^bb00bbFantasma^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Cria um escudo mágico no local desejado para bloquear
-temporariamente ataques físicos de curto alcance.
-Requer ^BB00BB1 Gema Azul^777777 para cada conjuração.
-Consumo de SP, tempo de conjuração, quantidade de ataques bloqueados:^000000
-[Nv 1]: ^77777730 SP, 4 segundos, 2 ataques bloqueados^000000
-[Nv 2]: ^77777730 SP, 3.5 segundos, 3 ataques bloqueados^000000
-[Nv 3]: ^77777730 SP, 3 segundos, 4 ataques bloqueados^000000
-[Nv 4]: ^77777735 SP, 2.5 segundos, 5 ataques bloqueados^000000
-[Nv 5]: ^77777735 SP, 2 segundos, 6 ataques bloqueados^000000
-[Nv 6]: ^77777735 SP, 1.5 segundos, 7 ataques bloqueados^000000
-[Nv 7]: ^77777740 SP, 1 segundo, 8 ataques bloqueados^000000
-[Nv 8]: ^77777740 SP, 1 segundo, 9 ataques bloqueados^000000
-[Nv 9]: ^77777740 SP, 1 segundo, 10 ataques bloqueados^000000
-[Nv 10]: ^77777740 SP, 1 segundo, 11 ataques bloqueados^000000
+Nível máximo: ^77777710^00000
+Pré requisitos (^008080Magos^000000):
+^777777Ataque Espiritual 7, Espíritos Anciões 5^000000
+Pré requisitos (^008080Sacerdotes^000000):
+^777777Aspersio 4, Santuário 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Cria uma barreira na célula desejada para
+bloquear danos físicos de curta distância.^000000
+^000088Consome 1 Gema Azul.^000000
+Nível l Duração l Bloqueios
+[Nv 1]: ^7777775 segundos^000000 l ^7777772 ataques^000000
+[Nv 2]: ^77777710 segundos^000000 l ^7777773 ataques^000000
+[Nv 3]: ^77777715 segundos^000000 l ^7777774 ataques^000000
+[Nv 4]: ^77777720 segundos^000000 l ^7777775 ataques^000000
+[Nv 5]: ^77777725 segundos^000000 l ^7777776 ataques^000000
+[Nv 6]: ^77777730 segundos^000000 l ^7777777 ataques^000000
+[Nv 7]: ^77777735 segundos^000000 l ^7777778 ataques^000000
+[Nv 8]: ^77777740 segundos^000000 l ^7777779 ataques^000000
+[Nv 9]: ^77777745 segundos^000000 l ^77777710 ataques^000000
+[Nv 10]: ^77777750 segundos^000000 l ^77777711 ataques^000000
 #
 MG_SOULSTRIKE#
 Espíritos Anciões
@@ -1078,237 +1084,271 @@ Descrição: ^777777Melhora velocidade de ataque quando montado em um Peco Peco^
 #
 PR_MACEMASTERY#
 Perícia com Maça
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta o dano com armas do tipo Maça.^000000
-[Nv 1]: ^777777ATQ +3^000000
-[Nv 2]: ^777777ATQ +6^000000
-[Nv 3]: ^777777ATQ +9^000000
-[Nv 4]: ^777777ATQ +12^000000
-[Nv 5]: ^777777ATQ +15^000000
-[Nv 6]: ^777777ATQ +18^000000
-[Nv 7]: ^777777ATQ +21^000000
-[Nv 8]: ^777777ATQ +24^000000
-[Nv 9]: ^777777ATQ +27^000000
-[Nv 10]: ^777777ATQ +30^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ de perícia ao usar Maças.^000000
+Nível l ATQ
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 PR_IMPOSITIO#
 Impositio Manus
-Nível Máximo: 5
-Tipo: ^777777Efeito Positivo^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Abençoa um jogador aumentando o dano da arma
-por 1 minuto^000000
-[Nv 1]: ^77777713 SP, ATQ +5^000000
-[Nv 2]: ^77777716 SP, ATQ +10^000000
-[Nv 3]: ^77777719 SP, ATQ +15^000000
-[Nv 4]: ^77777722 SP, ATQ +20^000000
-[Nv 5]: ^77777725 SP, ATQ +25^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Abençoa a arma do alvo aumentando
+o ATQ durante 60 segundos.^000000
+Nível l Custo de SP l Bônus de ATQ
+[Nv 1]: ^77777713^000000 l ^777777+5^000000
+[Nv 2]: ^77777716^000000 l ^777777+10^000000
+[Nv 3]: ^77777719^000000 l ^777777+15^000000
+[Nv 4]: ^77777722^000000 l ^777777+20^000000
+[Nv 5]: ^77777725^000000 l ^777777+25^000000
 #
 PR_SUFFRAGIUM#
 Suffragium
-Nível Máximo: 3
-^777777Pré requisitos: Impositio Manus 2^000000
-Tipo: ^777777Efeito Positivo^000000
-Alvo: ^777777Jogador (Sem efeito sobre o usuário)^000000
-Descrição: ^777777Invocação para terceiros.
-Reduz o Tempo de Conjuração de magias por uma conjuração.^000000
-Cada ativação da habilidade consome 8 SP e é seguida
-por um intervalo entre conjuração de 2 segundos.
-[Nv 1]: ^777777Redução de 15%, duração de 30 segundos^000000
-[Nv 2]: ^777777Redução de 30%, duração de 20 segundos^000000
-[Nv 3]: ^777777Redução de 45%, duração de 10 segundos^000000
+Nível máximo: ^7777773^000000
+Pré requisitos: ^777777Impositio Manus 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Reduz o tempo de conjuração variável
+da próxima habilidade a ser usada.
+Não pode ser conjurada em si.^000000
+Nível l Duração l Conjuração variável
+[Nv 1]: ^77777730 segundos^000000 l ^777777-15%^000000
+[Nv 2]: ^77777720 segundos^000000 l ^777777-30%^000000
+[Nv 3]: ^77777710 segundos^000000 l ^777777-45%^000000
 #
 PR_ASPERSIO#
 Aspersio
-Nível Máximo: 5
-^777777Pré requisitos: Aqua Benedicta 1,
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Aqua Benedicta 1,
 Impositio Manus 3^000000
-Tipo: ^777777Efeito Positivo^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Batiza a arma de terceiros com Água Benta.
-Confere propriedade Sagrada à arma durante duração limitida.
-Utiliza ^00BB001 Água Benta para cada conjuração^777777.^000000
-[Nv 1]: ^77777712 SP, duração de 1 minuto^000000
-[Nv 2]: ^77777714 SP, duração de 1 minuto 30 segundos^000000
-[Nv 3]: ^77777716 SP, duração de 2 minutos^000000
-[Nv 4]: ^77777718 SP, duração de 2 minutos 30 segundo^000000
-[Nv 5]: ^77777720 SP, duração de 3 minutos^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Temporariamente abençoa a arma
+do alvo com a propriedade Sagrado.^000000
+^000088Consome 1 Água Benta.^000000
+Nível l Duração
+[Nv 1]: ^7777771 minuto^000000
+[Nv 2]: ^7777771 minuto e 30 segundos^000000
+[Nv 3]: ^7777772 minutos^000000
+[Nv 4]: ^7777772 minutos e 30 segundos^000000
+[Nv 5]: ^7777773 minutos^000000
 #
 PR_BENEDICTIO#
 Benedictio Sanctissimi Sacramenti
-Nível Máximo: 1
-Pré-requisitos : ^777777Aspersio 5, Glória 3^000000
-Tipo: ^777777Efeito Positivo^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Confere propriedade Sagrada à armadura de todos jogadores do grupo.
-os jogadores do grupo na tela do usuário.
-Esta habilidade necessita de um Noviço, Sacerdote ou Sumo Sacerdote
-ao lado do usuário para que funcione.
-Mortos-Vivos e Demônios na área da habilidade receberão
-dano de propriedade Sagrada.^000000
-[Nv 1]:^777777 40 segundos de duração^000000
-[Nv 2]:^777777 1 min e 20 segundos de duração^000000
-[Nv 3]:^777777 2 mins de duração^000000
-[Nv 4]:^777777 2 mins e 40 segundos de duração^000000
-[Nv 5]:^777777 3 min e 20 segundos de duração^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Aspersio 5,
+Glória 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Temporariamente abençoa a armadura dos
+alvos na área com a propriedade Sagrado.
+Funciona apenas em membros do grupo.
+Demônios e Malditos receberão dano mágico.
+É necessário que você e mais 2 personagens
+da classe Noviço ou evoluções estejam lado
+a lado para conjurar a habilidade.^000000
+^000088Consome 1 Água Benta.^000000
+Nível l Duração
+[Nv 1]: ^77777740 segundos^000000
+[Nv 2]: ^7777771 minuto e 20 segundos^000000
+[Nv 3]: ^7777772 minutos^000000
+[Nv 4]: ^7777772 minutos e 40 segundos^000000
+[Nv 5]: ^7777773 minutos e 20 segundos^000000
 #
 PR_SANCTUARY#
 Santuário
-Nível Máximo: 10
-^777777Pré requisitos:  Curar 1^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Curar 1^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Cria uma área abençoada no solo durante a duração.
-da habilidade. Jogadores regeneram HP ao pisarem no campo da habilidade,
-causando dano e afastando criaturas malditas e sombrias.
-^00BB00Requer 1 Gema Azul para cada conjuração.^000000
-[Nv 1]:^777777 15 SP, 100HP/s, 4 segundos de duração^000000
-[Nv 2]:^777777 18 SP, 200HP/s, 7 segundos de duração^000000
-[Nv 3]:^777777 21 SP, 300HP/s, 10 segundos de duração^000000
-[Nv 4]:^777777 24 SP, 400HP/s, 13 segundos de duração^000000
-[Nv 5]:^777777 27 SP, 500HP/s, 16 segundos de duração^000000
-[Nv 6]:^777777 30 SP, 600HP/s, 19 segundos de duração^000000
-[Nv 7]:^777777 33 SP, 777HP/s, 22 segundos de duração^000000
-[Nv 8]:^777777 36 SP, 777HP/s, 25 segundos de duração^000000
-[Nv 9]:^777777 39 SP, 777HP/s, 28 segundos de duração^000000
-[Nv 10]:^777777 42 SP, 777HP/s, 31 segundos de duração^000000
+Descrição:
+Cria uma área de 5x5 células que regenera
+HP dos personagens a cada segundo.
+Demônios e Malditos receberão dano mágico
+de propriedade Sagrado e serão empurrados.
+^000088Consome 1 Gema Azul.^000000
+Nível l HP recuperado l Duração
+[Nv 1]: ^777777100^000000 l ^7777774 segundos^000000
+[Nv 2]: ^777777200^000000 l ^7777777 segundos^000000
+[Nv 3]: ^777777300^000000 l ^77777710 segundos^000000
+[Nv 4]: ^777777400^000000 l ^77777713 segundos^000000
+[Nv 5]: ^777777500^000000 l ^77777716 segundos^000000
+[Nv 6]: ^777777600^000000 l ^77777719 segundos^000000
+[Nv 7]: ^777777777^000000 l ^77777722 segundos^000000
+[Nv 8]: ^777777777^000000 l ^77777725 segundos^000000
+[Nv 9]: ^777777777^000000 l ^77777728 segundos^000000
+[Nv 10]: ^777777777^000000 l ^77777731 segundos^000000
 #
 PR_SLOWPOISON#
 Retardar Veneno
-Nível Máximo: 4
+Nível máximo: ^7777774^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Retarda os efeitos de veneno por tempo limitado.^000000
+Descrição:
+^777777Impede que um alvo com Envenenamento
+tenha o HP drenado a cada segundo.^000000
+Nível l Duração
+[Nv 1]: ^77777710 segundos^000000
+[Nv 2]: ^77777720 segundos^000000
+[Nv 3]: ^77777730 segundos^000000
+[Nv 4]: ^77777740 segundos^000000
 #
 PR_STRECOVERY#
 Graça Divina
-Nível Máximo: 1
+Nível máximo: ^7777771^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Cura atributos anormais como Atordoamento,
-Congelamento e Petrificação.
-Inflige Cegueira sobre Morto-Vivos.^000000
+Descrição:
+^777777Remove Atordoamento, Congelamento, Exílio,
+Petrificação e Poema de Nifflheim do alvo.
+Em mortos-vivos, inflige Cegueira.^000000
 #
 PR_KYRIE#
 Kyrie Eleison
-Nível Máximo: 10
-^777777Pré requisitos: Angelus 2^000000
-Tipo: ^777777Efeito Positivo^000000
-Descrição: ^777777Cria uma barreira ao redor do personagem.
-A barreira é cancelada se absorver o limite de ataques ou se
-receber um dano proporcional ao HP do personagem.
-Quando não receber ataques, tem a duração de 2 minutos.
-A habilidade Luz Divina cancela imadiatamente o efeito da habilidade.^000000
-[Nv 1]: ^777777Sustenta 5 ataques ou o equivalente a 12% do HP^000000
-[Nv 2]: ^777777Sustenta 6 ataques ou o equivalente a 14% do HP^000000
-[Nv 3]: ^777777Sustenta 6 ataques ou o equivalente a 16% do HP^000000
-[Nv 4]: ^777777Sustenta 7 ataques ou o equivalente a 18% do HP^000000
-[Nv 5]: ^777777Sustenta 7 ataques ou o equivalente a 20% do HP^000000
-[Nv 6]: ^777777Sustenta 8 ataques ou o equivalente a 22% do HP^000000
-[Nv 7]: ^777777Sustenta 8 ataques ou o equivalente a 24% do HP^000000
-[Nv 8]: ^777777Sustenta 9 ataques ou o equivalente a 26% do HP^000000
-[Nv 9]: ^777777Sustenta 9 ataques ou o equivalente a 28% do HP^000000
-[Nv 10]: ^777777Sustenta 10 ataques ou o equivalente a 30% do HP^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Angelus 2^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Cria uma barreira no alvo que bloqueia
+um número limitado de ataques físicos ou
+um dano equivalente ao HP máx. do alvo.^000000
+Nível l Bloqueios l HP equivalente
+[Nv 1]: ^7777775 ataques^000000 l ^77777712%^000000
+[Nv 2]: ^7777776 ataques^000000 l ^77777714%^000000
+[Nv 3]: ^7777776 ataques^000000 l ^77777716%^000000
+[Nv 4]: ^7777777 ataques^000000 l ^77777718%^000000
+[Nv 5]: ^7777777 ataques^000000 l ^77777720%^000000
+[Nv 6]: ^7777778 ataques^000000 l ^77777722%^000000
+[Nv 7]: ^7777778 ataques^000000 l ^77777724%^000000
+[Nv 8]: ^7777779 ataques^000000 l ^77777726%^000000
+[Nv 9]: ^7777779 ataques^000000 l ^77777728%^000000
+[Nv 10]: ^77777710 ataques^000000 l ^77777730%^000000
 #
 PR_MAGNIFICAT#
 Magnificat
-Nível Máximo: 5
-Tipo: ^777777Efeito Positivo^000000
-Descrição: ^777777Dobra velocidade de regeneração de SP do grupo
-pela duração da habilidade.^000000
-[Nv 1]:^777777 30 segundos de duração^000000
-[Nv 2]:^777777 45 segundos de duração^000000
-[Nv 3]:^777777 60 segundos de duração^000000
-[Nv 4]:^777777 75 segundos de duração^000000
-[Nv 5]:^777777 90 segundos de duração^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Membros do grupo irão regenerar o SP
+duas vezes mais rápido, temporariamente.^000000
+Nível l Duração
+[Nv 1]: ^77777730 segundos^000000
+[Nv 2]: ^77777745 segundos^000000
+[Nv 3]: ^77777760 segundos^000000
+[Nv 4]: ^77777775 segundos^000000
+[Nv 5]: ^77777790 segundos^000000
 #
 PR_GLORIA#
 Glória
-Nível Máximo: 5
-^777777Pré requisitos: Kyrie Eleison 4, Magnificat 3^000000
-Tipo: ^777777Efeito Positivo^000000
-Descrição: ^777777Aumenta a SOR dos membros do grupo em 30 por tempo limitado.
-Consome 20 de SP independente do nível da habilidade.^000000
-[Nv 1]:^777777 10 segundos de duração^000000
-[Nv 2]:^777777 15 segundos de duração^000000
-[Nv 3]:^777777 20 segundos de duração^000000
-[Nv 4]:^777777 25 segundos de duração^000000
-[Nv 5]:^777777 30 segundos de duração^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Kyrie Eleison 4,
+Magnificat 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+777777Temporariamente concede SOR +30.^000000
+Nível l Duração
+[Nv 1]: ^77777710 segundos^000000
+[Nv 2]: ^77777715 segundos^000000
+[Nv 3]: ^77777720 segundos^000000
+[Nv 4]: ^77777725 segundos^000000
+[Nv 5]: ^77777730 segundos^000000
 #
 PR_LEXDIVINA#
 Lex Divina
-Nível Máximo: 10
-^777777Pré requisitos: Revelação 1^000000
-Tipo: ^777777Efeito Negativo^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Silencia um oponente por tempo limitado,
-impedindo o uso de habilidades.
-Se um alvo já estiver silenciado, esta habilidade removerá
-o efeito de Silêncio^000000
-[Nv 1]:^777777 20 SP, 30 segundos de duração^000000
-[Nv 2]:^777777 20 SP, 35 segundos de duração^000000
-[Nv 3]:^777777 20 SP, 40 segundos de duração^000000
-[Nv 4]:^777777 20 SP, 45 segundos de duração^000000
-[Nv 5]:^777777 20 SP, 50 segundos de duração^000000
-[Nv 6]:^777777 18 SP, 60 segundos de duração^000000
-[Nv 7]:^777777 16 SP, 60 segundos de duração^000000
-[Nv 8]:^777777 14 SP, 60 segundos de duração^000000
-[Nv 9]:^777777 12 SP, 60 segundos de duração^000000
-[Nv 10]:^777777 10 SP, 60 segundos de duração^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Revelação 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Concede uma chance de infligir
+Silêcio em um alvo selecionado.
+Se um alvo já estiver Silenciado, usar
+esta habilidade removerá o Silêncio.^000000
+Nível l Custo de SP l Duração do Silêncio
+[Nv 1]: ^77777720^000000 l ^77777730 segundos^000000
+[Nv 2]: ^77777720^000000 l ^77777735 segundos^000000
+[Nv 3]: ^77777720^000000 l ^77777740 segundos^000000
+[Nv 4]: ^77777720^000000 l ^77777745 segundos^000000
+[Nv 5]: ^77777720^000000 l ^77777750 segundos^000000
+[Nv 6]: ^77777718^000000 l ^77777760 segundos^000000
+[Nv 7]: ^77777716^000000 l ^77777760 segundos^000000
+[Nv 8]: ^77777714^000000 l ^77777760 segundos^000000
+[Nv 9]: ^77777712^000000 l ^77777760 segundos^000000
+[Nv 10]: ^77777710^000000 l ^77777760 segundos^000000
 #
 PR_TURNUNDEAD#
 Esconjurar
-Nível Máximo: 10
-^777777Pré requisitos: Ressuscitar 1, Lex Divina 3^000000
-Tipo: ^777777Efeito Negativo^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca Mortos-Vivos causando grande dano.
-O ataque contra Mortos-Vivos tem chance de eliminar os alvos instantaneamente.
-Consome 20 de SP independente do nível da habilidade.^000000
-[Nv 1]:^777777 2% de chance de eliminação instantânea^000000
-[Nv 2]:^777777 4% de chance de eliminação instantânea^000000
-[Nv 3]:^777777 6% de chance de eliminação instantânea^000000
-[Nv 4]:^777777 8% de chance de eliminação instantânea^000000
-[Nv 5]:^777777 10% de chance de eliminação instantânea^000000
-[Nv 6]:^777777 12% de chance de eliminação instantânea^000000
-[Nv 7]:^777777 14% de chance de eliminação instantânea^000000
-[Nv 8]:^777777 16% de chance de eliminação instantânea^000000
-[Nv 9]:^777777 18% de chance de eliminação instantânea^000000
-[Nv 10]:^777777 20% de chance de eliminação instantânea^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Ressuscitar 1,
+Lex Divina 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Dá a chance de eliminar instantaneamente
+um monstro da raça Morto-Vivo.
+Se falhar, causa dano mágico Sagrado.
+A chance é influenciada pela INT, SOR
+e nível de base do usuário.^000000
+Nível l Chance inicial
+[Nv 1]: ^7777772%^000000
+[Nv 2]: ^7777774%^000000
+[Nv 3]: ^7777776%^000000
+[Nv 4]: ^7777778%^000000
+[Nv 5]: ^77777710%^000000
+[Nv 6]: ^77777712%^000000
+[Nv 7]: ^77777714%^000000
+[Nv 8]: ^77777716%^000000
+[Nv 9]: ^77777718%^000000
+[Nv 10]: ^77777720%^000000
 #
 PR_LEXAETERNA#
 Lex Aeterna
-Nível Máximo: 1
-^777777Pré requisitos: Lex Divina 5^000000
-Tipo: ^777777Efeito Negativo^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Deixa o oponente mais fraco para causar o dobro de dano
-no próximo ataque que ele receber.
-Não funciona em alvos congelados, petrificados ou amaldiçoados.
-Consome 10 de SP e possui 3 segundos de intervalo entre conjurações.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Lex Divina 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Permite que um alvo receba o dobro de dano
+no próximo ataque, cancelando o efeito de
+Lex Aeterna logo em seguida.
+Não funciona em alvos sofrendo de
+Congelamento ou Petrificação.^000000
 #
 PR_MAGNUS#
 Magnus Exorcismus
-Nível Máximo: 10
-^777777Pré requisitos:  Esconjurar 3,
-Lex Aeterna 1, Escudo Mágico 1^000000
-Tipo: ^777777Efeito Negativo^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Invoca uma Grande Cruz para exterminar
-monstros Demônios e Maltido.
-^00BB00Gasta 1 Gema Azul em cada conjuração^777777.
-O tempo de conjuração é 15 segundos.^000000
-[Nv 1]:^777777 40 SP, 1 ataque, 4 segundos de duração^000000
-[Nv 2]:^777777 42 SP, 2 ataques, 5 segundos de duração^000000
-[Nv 3]:^777777 44 SP, 3 ataques, 6 segundos de duração^000000
-[Nv 4]:^777777 46 SP, 4 ataques, 7 segundos de duração^000000
-[Nv 5]:^777777 48 SP, 5 ataques, 8 segundos de duração^000000
-[Nv 6]:^777777 50 SP, 6 ataques, 9 segundos de duração^000000
-[Nv 7]:^777777 52 SP, 7 ataques, 10 segundos de duração^000000
-[Nv 8]:^777777 54 SP, 8 ataques, 11 segundos de duração^000000
-[Nv 9]:^777777 56 SP, 9 ataques, 12 segundos de duração^000000
-[Nv 10]:^777777 58 SP, 10 ataques, 13 segundos de duração^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Esconjurar 3,
+Lex Aeterna 1
+Escudo Mágico 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Cria uma área de 7x7 células que emite
+uma luz a cada 3 segundos.
+Cada luz causa dano mágico Sagrado apenas
+em monstros Demônios e Malditos.^000000
+^000088Consome 1 Gema Azul.^000000
+Nível l Luzes l Duração
+[Nv 1]: ^7777771^000000 l ^7777774 segundos^000000
+[Nv 2]: ^7777772^000000 l ^7777775 segundos^000000
+[Nv 3]: ^7777773^000000 l ^7777776 segundos^000000
+[Nv 4]: ^7777774^000000 l ^7777777 segundos^000000
+[Nv 5]: ^7777775^000000 l ^7777778 segundos^000000
+[Nv 6]: ^7777776^000000 l ^7777779 segundos^000000
+[Nv 7]: ^7777777^000000 l ^77777710 segundos^000000
+[Nv 8]: ^7777778^000000 l ^77777711 segundoso^000000
+[Nv 9]: ^7777779^000000 l ^77777712 segundos^000000
+[Nv 10]: ^77777710^000000 l ^77777713 segundos^000000
 #
 WZ_FIREPILLAR#
 Coluna de Fogo
@@ -2082,20 +2122,21 @@ da mão esquerda para 30%.^000000
 #
 AS_KATAR#
 Perícia com Katar
-Nv máximo: 10
-Tipo: ^000099Passiva^000000
-Resultado: ^777777Aumenta dano ao utilizar armas
-do tipo Katar.^000000
-[Nv 1]: ^777777ATQ +3^000000
-[Nv 2]: ^777777ATQ +6^000000
-[Nv 3]: ^777777ATQ +9^000000
-[Nv 4]: ^777777ATQ +12^000000
-[Nv 5]: ^777777ATQ +15^000000
-[Nv 6]: ^777777ATQ +18^000000
-[Nv 7]: ^777777ATQ +21^000000
-[Nv 8]: ^777777ATQ +24^000000
-[Nv 9]: ^777777ATQ +27^000000
-[Nv 10]: ^777777ATQ +30^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ de perícia ao usar Katar.^000000
+Nível l ATQ
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 AS_CLOAKING#
 Furtividade
@@ -2669,20 +2710,22 @@ usada.^000000
 #
 AM_AXEMASTERY#
 Perícia com Machado e Espada
-Nv máximo: 10
-Tipo: ^000099Passiva^000000
-Resultado: ^777777Aumenta o dano com armas dos tipos
-Espada e Machado de Uma ou de Duas Mãos.^000000
-[Nv 1]: ^777777ATQ +3^000000
-[Nv 2]: ^777777ATQ +6^000000
-[Nv 3]: ^777777ATQ +9^000000
-[Nv 4]: ^777777ATQ +12^000000
-[Nv 5]: ^777777ATQ +15^000000
-[Nv 6]: ^777777ATQ +18^000000
-[Nv 7]: ^777777ATQ +21^000000
-[Nv 8]: ^777777ATQ +24^000000
-[Nv 9]: ^777777ATQ +27^000000
-[Nv 10]: ^777777ATQ +30^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ de perícia ao usar Espadas
+de uma mão e Machados de uma ou duas mãos.^000000
+Nível l ATQ
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 AM_LEARNINGPOTION#
 Pesquisa de Poções
@@ -4343,51 +4386,73 @@ Essa habilidade drena um pouco de HP por segundo. Depois de usar essa habilidade
 #
 HP_ASSUMPTIO#
 Assumptio
-Nível Máximo: 5
-^777777Pré requisitos: Angelus 1,
-Aumentar Recuperação de SP 3, Impositio Manus 3^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Angelus 1,
+Impositio Manus 3
+Impositio Manus 3^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta temporariamente a defesa do alvo baseada em seus equipamentos.
-Não pode ser usado com a Kyrie Eleison ao mesmo tempo. A defesa é aumentada em zonas de Guerra do Emperium e PvP.^000000
-[Nv 1]: ^777777Duração de 20 segundos^000000
-[Nv 2]: ^777777Duração de 40 segundos^000000
-[Nv 3]: ^777777Duração de 60 segundos^000000
-[Nv 4]: ^777777Duração de 80 segundos^000000
-[Nv 5]: ^777777Duração de 100 segundos^000000
+Descrição:
+^777777Temporariamente dobra a DEF e DEFM
+dos equipamentos do alvo.
+Não pode ser conjurada em mapas de PvP ou
+GdE, mas entrar nesses mapas com o efeito
+ativo, reduz o bônus para 35%.
+Impossível usar junto com Kyrie Eleison.^000000
+Nível l Duração
+[Nv 1]: ^77777720 segundos^000000
+[Nv 2]: ^77777740 segundos^000000
+[Nv 3]: ^77777760 segundos^000000
+[Nv 4]: ^77777780 segundos^000000
+[Nv 5]: ^777777100 segundos^000000
 #
 HP_BASILICA#
 Basílica
-Nível Máximo: 5
-Pré-requisitos : ^777777Gloria 2,
-Aumentar Recuperação de SP 1, Kyrie Eleison 3^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Gloria 2
+Kyrie Eleison 3
+Aumentar Recuperação de SP 1^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Bloqueia todos os inimigos que entrarem no alcance desta habilidade, além de qualquer ataque.
-Requer 1 Gema Azul, 1 Gema Amarela, 1 Gema Vermelha e 1 Água Benta.
-Não pode ser usada contra Chefes nem em áreas de Guerra do Emperium. Se houver qualquer obstáculo dentro do alcance da habilidade, ela não poderá ser usada.^000000
-[Nv 1]: ^777777Duração de 20 segundos^000000
-[Nv 2]: ^777777Duração de 25 segundos^000000
-[Nv 3]: ^777777Duração de 30 segundos^000000
-[Nv 4]: ^777777Duração de 35 segundos^000000
-[Nv 5]: ^777777Duração de 40 segundos^000000
+Descrição:
+^777777Cria uma área de 5x5 células que bloqueia
+ataques e a entrada de oponentes.
+O usuário permanecerá imóvel e não poderá
+usar habilidades até o final do efeito.
+Não funciona contra Chefes e na GdE.
+Para ser conjurada, a área ao redor não
+poderá conter personagens ou obstáculos.
+^000088Consome 1 Água Benta, 1 Gema Azul,
+1 Gema Vermelha e 1 Gema Amarela.^000000
+Nível l Duração
+[Nv 1]: ^77777720 segundos^000000
+[Nv 2]: ^77777725 segundos^000000
+[Nv 3]: ^77777730 segundos^000000
+[Nv 4]: ^77777735 segundos^000000
+[Nv 5]: ^77777740 segundos^000000
 #
 HP_MEDITATIO#
 Meditatio
-Nível Máximo: 10
-^777777Pré requisitos: Aumentar Recuperação de SP 5,
-Lex Divina 5, Aspersio 3^000000
+Nível máximo: ^77777710
+Pré requisitos:
+^777777Aumentar Recuperação de SP 5,
+Lex Divina 5^000000
+Aspersio 3^000000
 Tipo: ^777777Passiva^000000
-Conteúdo: ^777777Aumenta a regeneração de SP e o SP máximo.
-Também afeta a quantidade de HP restaurado por habilidades de Cura.^000000
-[Nv 1]: ^777777SP Máximo +1%, Recuperação de SP + 3%^000000
-[Nv 2]: ^777777SP Máximo +2%, Recuperação de SP + 6% ^000000
-[Nv 3]: ^777777SP Máximo +3%, Recuperação de SP + 9%^000000
-[Nv 4]: ^777777SP Máximo +4%, Recuperação de SP + 12%^000000
-[Nv 5]: ^777777SP Máximo +5%, Recuperação de SP + 15%^000000
-[Nv 6]: ^777777SP Máximo +6%, Recuperação de SP + 18%^000000
-[Nv 7]: ^777777SP Máximo +7%, Recuperação de SP + 21%^000000
-[Nv 8]: ^777777SP Máximo +8%, Recuperação de SP + 24%^000000
-[Nv 9]: ^777777SP Máximo +9%, Recuperação de SP + 27%^000000
-[Nv 10]: ^777777SP Máximo +10%, Recuperação de SP + 30%^000000
+Descrição:
+^777777Acelera a regen. natural de SP, aumenta o
+SP máx. e melhora a efetividade de cura.^000000
+Nível l SP máx. l Regeneração
+[Nv 1]: ^777777+1%^000000 l ^777777+3%^000000
+[Nv 2]: ^777777+2%^000000 l ^777777+6% ^000000
+[Nv 3]: ^777777+3%^000000 l ^777777+9%^000000
+[Nv 4]: ^777777+4%^000000 l ^777777+12%^000000
+[Nv 5]: ^777777+5%^000000 l ^777777+15%^000000
+[Nv 6]: ^777777+6%^000000 l ^777777+18%^000000
+[Nv 7]: ^777777+7%^000000 l ^777777+21%^000000
+[Nv 8]: ^777777+8%^000000 l ^777777+24%^000000
+[Nv 9]: ^777777+9%^000000 l ^777777+27%^000000
+[Nv 10]: ^777777+10%^000000 l ^777777+30%^000000
 #
 HW_SOULDRAIN#
 Dreno de Alma
@@ -6022,17 +6087,18 @@ Choque Rápido tem uma demora de 1 segundo, e ^00BB00requer um escudo^777777.^00
 #
 HP_MANARECHARGE#
 Riqueza de Espírito
-Nível Máximo: 5
-^777777Pré requisitos: Perícia com Maça 10,
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Perícia com Maça 10,
 Flagelo do Mal 10^000000
-Descrição: ^777777Reduz a quantidade de SP consumida pelas habilidades.^000000
-^FFFFFF_^000000
-Redução no Consumo de SP por Nível
-[Nv 1]:^777777 4%^000000
-[Nv 2]:^777777 8%^000000
-[Nv 3]:^777777 12%^000000
-[Nv 4]:^777777 16%^000000
-[Nv 5]:^777777 20%^000000
+Descrição:
+^777777Reduz o custo de SP ao usar habilidades.^000000
+Nível l Consumo de SP
+[Nv 1]: ^777777-4%^000000
+[Nv 2]: ^777777-8%^000000
+[Nv 3]: ^777777-12%^000000
+[Nv 4]: ^777777-16%^000000
+[Nv 5]: ^777777-20%^000000
 #
 PF_DOUBLECASTING#
 Lanças Duplas
@@ -10528,7 +10594,7 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Desencantar 2^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^777777Causa dano mágico Neutro
+^777777Causa dano mágico de propriedade Neutro
 a cada 0,5 segundos nos alvos da área.
 O dano é aumentado pela INT do usuário.^000000
 Nível l Duração l Área
@@ -10675,10 +10741,10 @@ Descrição:
 ^777777Invoca Agni, o elemental do fogo.
 Enquanto estiver vivo, ele drena SP
 do usuário a cada 10 segundos.^000000
-Nível l Duração l Dreno de SP l Material
-[Nv 1]: ^77777710 min.^000000 l ^7777775^000000 l ^7777773 Sangue Escarlate^000000
-[Nv 2]: ^77777715 min.^000000 l ^7777778^000000 l ^7777776 Sangue Escarlate^000000
-[Nv 3]: ^77777720 min.^000000 l ^77777711^000000 l ^7777771 Coração Flamejante^000000
+Nível l Duração l Material l Dreno de SP
+[Nv 1]: ^77777710 min.^000000 l ^7777773 Sangue Escarlate^000000 l ^7777775^000000
+[Nv 2]: ^77777715 min.^000000 l ^7777776 Sangue Escarlate^000000 l ^7777778^000000
+[Nv 3]: ^77777720 min.^000000 l ^7777771 Coração Flamejante^000000 l ^77777711^000000
 #
 SO_SUMMON_AQUA#
 Invocar Varuna
@@ -10691,10 +10757,10 @@ Descrição:
 ^777777Invoca Varuna, a elemental da água.
 Enquanto estiver viva, ela drena SP
 do usuário a cada 10 segundos.^000000
-Nível l Duração l Dreno de SP l Material
-[Nv 1]: ^77777710 min.^000000 l ^7777775^000000 l ^7777773 Cristal Azul^000000
-[Nv 2]: ^77777715 min.^000000 l ^7777778^000000 l ^7777776 Cristal Azul^000000
-[Nv 3]: ^77777720 min.^000000 l ^77777711^000000 l ^7777771 Gelo Místico^000000
+Nível l Duração l Material l Dreno de SP
+[Nv 1]: ^77777710 min.^000000 l ^7777773 Cristal Azul^000000 l ^7777775^000000
+[Nv 2]: ^77777715 min.^000000 l ^7777776 Cristal Azul^000000 l ^7777778^000000
+[Nv 3]: ^77777720 min.^000000 l ^7777771 Gelo Místico^000000 l ^77777711^000000
 #
 SO_SUMMON_VENTUS#
 Invocar Vayu
@@ -10707,10 +10773,10 @@ Descrição:
 ^777777Invoca Vayu, a elemental do vento.
 Enquanto estiver viva, ela drena SP
 do usuário a cada 10 segundos.^000000
-Nível l Duração l Dreno de SP l Material
-[Nv 1]: ^77777710 min.^000000 l ^7777775^000000 l ^7777773 Frescor do Vento^000000
-[Nv 2]: ^77777715 min.^000000 l ^7777778^000000 l ^7777776 Frescor do Vento^000000
-[Nv 3]: ^77777720 min.^000000 l ^77777711^000000 l ^7777771 Vento Bruto^000000
+Nível l Duração l Material l Dreno de SP
+[Nv 1]: ^77777710 min.^000000 l ^7777773 Frescor do Vento^000000 l ^7777775^000000
+[Nv 2]: ^77777715 min.^000000 l ^7777776 Frescor do Vento^000000 l ^7777778^000000
+[Nv 3]: ^77777720 min.^000000 l ^7777771 Vento Bruto^000000 l ^77777711^000000
 #
 SO_SUMMON_TERA#
 Invocar Chandra
@@ -10723,10 +10789,10 @@ Descrição:
 ^777777Invoca Chandra, o elemental da terra.
 Enquanto estiver vivo, ele drena SP
 do usuário a cada 10 segundos.^000000
-Nível l Duração l Dreno de SP l Material
-[Nv 1]: ^77777710 min.^000000 l ^7777775^000000 l ^7777773 Vida Verdejante^000000
-[Nv 2]: ^77777715 min.^000000 l ^7777778^000000 l ^7777776 Vida Verdejante^000000
-[Nv 3]: ^77777720 min.^000000 l ^77777711^000000 l ^7777771 Natureza Grandiosa^000000
+Nível l Duração l Material l Dreno de SP
+[Nv 1]: ^77777710 min.^000000 l ^7777773 Vida Verdejante^000000 l ^7777775^000000
+[Nv 2]: ^77777715 min.^000000 l ^7777776 Vida Verdejante^000000 l ^7777778^000000
+[Nv 3]: ^77777720 min.^000000 l ^7777771 Natureza Grandiosa^000000 l ^77777711^000000
 #
 SO_EL_ACTION#
 Incitar Elemental
@@ -10790,18 +10856,18 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Por 1 min., encanta a área de 3x3 células.
 A cada 5 segundos na insígnia, alvos de
-propriedade Fogo regeneram 1% de HP máx. e
-alvos de Terra perdem 1% de HP máx.
+propriedade Fogo regeneram 1% de HP máx.
+e alvos de Terra perdem 1% de HP.
 Qualquer alvo na área receberá 50% a mais
 de dano físico ou mágico de Água.^000000
 ^000088Consome 1 a 3 Fragmentos Escarlate.^000000
 Nível l Efeitos
 [Nv 1]: ^777777ATQ do Agni +20%.^000000
-            ^777777Regen. de HP/SP +100% a cada 3s.^000000
+          ^777777Regen. de HP/SP +100% a cada 3s.^000000
 [Nv 2]: ^777777ATQ +10%.^000000 / ^777777ATQ +50.^000000
-            ^777777Propriedade da arma muda para Fogo.^000000
+          ^777777Propriedade da arma muda para Fogo.^000000
 [Nv 3]: ^777777ATQM +50.^000000
-            ^777777Dano mágico de Fogo +25%.^000000
+          ^777777Dano mágico de Fogo +25%.^000000
 #
 SO_WATER_INSIGNIA#
 Insígnia da Água
@@ -10811,18 +10877,18 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Por 1 min., encanta a área de 3x3 células.
 A cada 5 segundos na insígnia, alvos de
-propriedade Água regeneram 1% de HP máx. e
-alvos de Fogo perdem 1% de HP máx.
+propriedade Água regeneram 1% de HP máx.
+e alvos de Fogo perdem 1% de HP.
 Qualquer alvo na área receberá 50% a mais
 de dano físico ou mágico de Vento.^000000
 ^000088Consome 1 a 3 Fragmentos Azuis.^000000
 Nível l Efeitos
 [Nv 1]: ^777777ATQ da Varuna +20%.^000000
-            ^777777Regen. de HP/SP +100% a cada 3s.^000000
+          ^777777Regen. de HP/SP +100% a cada 3s.^000000
 [Nv 2]: ^777777ATQ +10%.^000000 / ^777777Efetv. de cura +10%.^000000
-            ^777777Propriedade da arma muda para Água.^000000
+          ^777777Propriedade da arma muda para Água.^000000
 [Nv 3]: ^777777Conjuração variável -30%.^000000
-            ^777777Dano mágico de Água +25%.^000000
+          ^777777Dano mágico de Água +25%.^000000
 #
 SO_WIND_INSIGNIA#
 Insígnia do Vento
@@ -10832,18 +10898,18 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Por 1 min., encanta a área de 3x3 células.
 A cada 5 segundos na insígnia, alvos de
-propriedade Vento regeneram 1% de HP máx. e
-alvos de Água perdem 1% de HP máx.
+propriedade Vento regeneram 1% de HP máx.
+e alvos de Água perdem 1% de HP.
 Qualquer alvo na área receberá 50% a mais
 de dano físico ou mágico de Terra.^000000
 ^000088Consome 1 a 3 Fragmentos Amarelos.^000000
 Nível l Efeitos
 [Nv 1]: ^777777ATQ da Vayu +20%.^000000
-            ^777777Regen. de HP/SP +100% a cada 3s.^000000
+          ^777777Regen. de HP/SP +100% a cada 3s.^000000
 [Nv 2]: ^777777ATQ +10%.^000000 / ^777777Pós-conjuração -10%.^000000
-            ^777777Propriedade da arma muda para Vento.^000000
+          ^777777Propriedade da arma muda para Vento.^000000
 [Nv 3]: ^777777Pós-conjuração de magias de Vento -50%.^000000
-            ^777777Dano mágico de Vento +25%.^000000
+          ^777777Dano mágico de Vento +25%.^000000
 #
 SO_EARTH_INSIGNIA#
 Insígnia da Terra
@@ -10853,18 +10919,18 @@ Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Por 1 min., encanta a área de 3x3 células.
 A cada 5 segundos na insígnia, alvos de
-propriedade Terra regeneram 1% de HP máx. e
-alvos de Vento perdem 1% de HP máx.
+propriedade Terra regeneram 1% de HP máx.
+e alvos de Vento perdem 1% de HP.
 Qualquer alvo na área receberá 50% a mais
 de dano físico ou mágico de Fogo.^000000
 ^000088Consome 1 a 3 Fragmentos Verdes.^000000
 Nível l Efeitos
 [Nv 1]: ^777777ATQ do Chandra +20%.^000000
-            ^777777Regen. de HP/SP +100% a cada 3s.^000000
+          ^777777Regen. de HP/SP +100% a cada 3s.^000000
 [Nv 2]: ^777777ATQ +10%.^000000 / ^777777HP +500.^000000 / ^777777DEF +50.^000000
-            ^777777Propriedade da arma muda para Terra.^000000
+          ^777777Propriedade da arma muda para Terra.^000000
 [Nv 3]: ^777777SP +50.^000000 / ^777777DEFM +50.^000000
-            ^777777Dano mágico de Terra +25%.^000000
+          ^777777Dano mágico de Terra +25%.^000000
 #
 GN_TRAINING_SWORD#
 Perícia em Esgrima

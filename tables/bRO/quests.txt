@@ -9820,7 +9820,7 @@ Encontre o Sapo Diário No. 6 no primeiro andar da Torre de Bifröst. #
 Fale com o Sapo Diário No. 6. #
 
 1225#Recuperando as memórias do Professor Fabre#SG_FEEL#QUE_NOIMAGE#
-Elimine 15 Lichterns(Azuis) no primeiro andar da Torre de Bifröst. #
+Elimine 15 Lichtern Laguz no primeiro andar da Torre de Bifröst. #
 Fale com o Sapo Diário No. 6. #
 
 1226#Recuperando as memórias do Professor Fabre#SG_FEEL#QUE_NOIMAGE#

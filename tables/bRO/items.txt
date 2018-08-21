@@ -2274,20 +2274,20 @@
 4556#Carta Fenrir#
 4557#Carta Fenris#
 4559#Carta do Rei Morroc#
-4560#Carta Alphoccio Basil#
-4561#Carta Celia Alde#
-4562#Carta Chen Liu#
-4563#Carta Flamel Emul#
-4564#Carta Gertie Wie#
-4565#Carta Randel Lawrence#
-4566#Carta Trentini#
-4567#Carta Menestrel Alphoccio#
-4568#Carta Professora Celia#
-4569#Carta Mestre Chen#
-4570#Carta Criador Flamel#
-4571#Carta Desordeira Gertie#
-4572#Carta Paladino Randel#
-4573#Carta Cigana Trentini#
+4560#Carta Menestrel Alphoccio#
+4561#Carta Professora Celia#
+4562#Carta Mestre Chen#
+4563#Carta Criador Flamel#
+4564#Carta Desordeira Gertie#
+4565#Carta Paladino Randel#
+4566#Carta Cigana Trentini#
+4567#Carta Alphoccio Basil#
+4568#Carta Celia Alde#
+4569#Carta Chen Liu#
+4570#Carta Flamel Emul#
+4571#Carta Gertie Wie#
+4572#Carta Randel Lawrence#
+4573#Carta Trentini#
 4574#Carta General Daehyun#
 4575#Carta Samurai Soheon#
 4576#Carta Gioia#
@@ -2311,10 +2311,10 @@
 4594#Carta Petal#
 4595#Carta Cenere#
 4596#Carta Antigo Livro Danificado#
-4597#Carta Lichtern Azul#
-4598#Carta Lichtern Amarelo#
-4599#Carta Lichtern Vermelho#
-4600#Carta Lichtern Verde#
+4597#Carta Lichtern Laguz#
+4598#Carta Lichtern Anzus#
+4599#Carta Lichtern Kenaz#
+4600#Carta Lichtern Inguz#
 4601#Carta Amdarais#
 4603#Carta Origem da Maldição#
 4605#Carta Cavaleiro Desmorto#
@@ -6188,6 +6188,7 @@
 19098#Chapéu Macabro de Cetim#
 19101#Familiar de Combate#
 19104#Asas de Dragão#
+19105#Chicle de Menta#
 19106#Véu das Gemas Sagradas#
 19109#Tiara de Popstar#
 19111#Olho da Cecil#
@@ -6232,6 +6233,7 @@
 19300#Quepe do Cão-mandante#
 19305#Lampião das Fadas#
 19306#Carta de Comodo#
+19314#Sobrepeliz Real#
 19315#Chapéu do Éden#
 19316#Capuz de Esquilo#
 19318#Rosário da Guarda Real#
@@ -6440,6 +6442,7 @@
 20035#Rosa Celeste#
 20044#Chapéu de Carmen Miranda#
 20048#Tiara Elegante#
+20052#Balão de AFK#
 20054#Chupeta de Neném#
 20062#Brilho do Sol Nascente#
 20069#Tiara de Grifo Real#
@@ -6971,9 +6974,11 @@
 31438#Capa Angelical#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
+31453#Cachecol Marrom com Laço#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
 31474#Cabelo Longo Preto#
+31482#Cachecol de Lunático#
 31488#Balão de MVP#
 31490#Cachecol de Poring#
 31493#Peruca Branca de Waifu#
