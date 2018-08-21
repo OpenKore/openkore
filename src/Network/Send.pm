@@ -2358,4 +2358,14 @@ sub sendGuildSetAlly {
 	debug "Sent Guild Alliance Request\n", "sendPacket", 2;
 }
 
+sub sendPetCapture {
+	my ($self, $monID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_capture',
+		ID => $monID,
+	}));
+	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
+}
+
 1;

@@ -439,16 +439,6 @@ sub sendPartyOption {
 	debug "Sent Party Option\n", "sendPacket", 2;
 }
 
-sub sendPetCapture {
-	my ($self, $monID) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'pet_capture',
-		ID => $monID,
-	}));
-	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
-}
-
 # 0x01a1,3,petmenu,2
 sub sendPetMenu {
 	my ($self, $type) = @_; # 0:info, 1:feed, 2:performance, 3:to egg, 4:uneq item
