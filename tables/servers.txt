@@ -503,9 +503,9 @@ pauseCharLogin 1
 ####################
 # Private RO Servers
 
-## http://gombak-gamerz.com/
+## http://ggamerz-ro.com/
 [GGamerzRO]
-ip 116.251.223.176
+ip 116.251.223.136
 port 6900
 private 1
 master_version 1
@@ -516,7 +516,7 @@ serverEncoding Western
 charBlockSize 147
 pinCode 1
 addTableFolders pserver/ggRO
-clientHash fa058c003da60688ef1f8baffa0d3135
+clientHash DA4E4A35A46BF326C9C45C653979972A
 sendCryptKeys 0x4C17382A, 0x29961E4F, 0x7ED174C9
 
 [Localhost]
