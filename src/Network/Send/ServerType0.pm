@@ -66,6 +66,8 @@ sub new {
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
+		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -112,6 +114,10 @@ sub new {
 		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
+		'0168' => ['guild_join_request', 'a4 a4 a4', [qw(ID accountID charID)]],
+		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
+		'016E' => ['guild_notice', 'a4 Z60 Z120', [qw(guildID name notice)]],
+		'0170' => ['guild_alliance_request', 'a4 a4 a4', [qw(targetAccountID accountID charID)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -122,6 +128,9 @@ sub new {
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
+		'01A1' => ['pet_menu', 'C', [qw(action)]],
+		'01A5' => ['pet_name', 'a24', [qw(name)]],
+		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01B2' => ['shop_open'], # TODO
@@ -306,17 +315,6 @@ sub sendAttackStop {
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
-# 0x00c8,-1,npcbuylistsend,2:4
-sub sendBuyBulk {
-	my ($self, $r_array) = @_;
-	my $msg = pack('v2', 0x00C8, 4+4*@{$r_array});
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemID});
-		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
-
 =pod
 sub sendGetCharacterName {
 	my ($self, $ID) = @_;
@@ -330,20 +328,6 @@ sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
 	$self->sendToServer($packet);
-}
-
-sub sendGuildJoin {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack("C*", 0x6B, 0x01).$ID.pack("V1", $flag);
-	$self->sendToServer($msg);
-	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
-}
-
-sub sendGuildJoinRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x68, 0x01).$ID.$accountID.$charID;
-	$self->sendToServer($msg);
-	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
 =pod
@@ -365,15 +349,6 @@ sub sendGuildMemberPositions {
 		debug "Sent GuildChangeMemberPositions: $r_array->[$i]{accountID} $r_array->[$i]{charID} $r_array->[$i]{index}\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendGuildNotice {
-	# sets the notice/announcement for the guild
-	my ($self, $guildID, $name, $notice) = @_;
-	my $msg = pack("C*", 0x6E, 0x01) . $guildID .
-		pack("a60 a120", stringToBytes($name), stringToBytes($notice));
-	$self->sendToServer($msg);
-	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
 =pod
@@ -402,21 +377,6 @@ sub sendGuildPositionInfo {
 		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendGuildSetAlly {
-	# this packet is for guildmaster asking to set alliance with another guildmaster
-	# the other sub for sendGuildAlly are responses to this sub
-	# kept the parameters open, but everything except $targetAID could be replaced with Global variables
-	# unless you plan to mess around with the alliance packet, no exploits though, I tried ;-)
-	# -zdivpsa
-	my ($self, $targetAID, $myAID, $charID) = @_;	# remote socket, $net
-	my $msg =	pack("C*", 0x70, 0x01) .
-			$targetAID .
-			$myAID .
-			$charID;
-	$self->sendToServer($msg);
-
 }
 
 sub sendOpenShop {
@@ -473,38 +433,6 @@ sub sendPartyOption {
 	debug "Sent Party Option\n", "sendPacket", 2;
 }
 
-sub sendPetCapture {
-	my ($self, $monID) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'pet_capture',
-		ID => $monID,
-	}));
-	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
-}
-
-# 0x01a1,3,petmenu,2
-sub sendPetMenu {
-	my ($self, $type) = @_; # 0:info, 1:feed, 2:performance, 3:to egg, 4:uneq item
-	my $msg = pack('v C', 0x01A1, $type);
-	$self->sendToServer($msg);
-	debug "Sent Pet Menu\n", "sendPacket", 2;
-}
-
-sub sendPetHatch {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a2', 0x01A7, $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
-sub sendPetName {
-	my ($self, $name) = @_;
-	my $msg = pack('v a24', 0x01A5, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
-}
-
 sub sendPreLoginCode {
 	# no server actually needs this, but we might need it in the future?
 	my $self = shift;
@@ -544,20 +472,6 @@ sub sendRequestMakingHomunculus {
 		$self->sendToServer($msg);
 		debug "Sent RequestMakingHomunculus\n", "sendPacket", 2;
 	}
-}
-
-sub sendSellBulk {
-	my $self = shift;
-	my $r_array = shift;
-	my $sellMsg = "";
-
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$sellMsg .= pack("a2 v", $r_array->[$i]{ID}, $r_array->[$i]{amount});
-		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
-	}
-
-	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
-	$self->sendToServer($msg);
 }
 
 sub sendTop10Alchemist {

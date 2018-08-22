@@ -64,6 +64,8 @@ sub new {
 		'00BF' => ['send_emotion', 'C', [qw(ID)]],
 		'00C1' => ['request_user_count'],
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
+		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
+		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -109,6 +111,10 @@ sub new {
 		'015B' => ['guild_kick', 'a4 a4 a4 Z40', [qw(guildID accountID charID reason)]],
 		'015D' => ['guild_break', 'a4', [qw(guildName)]],
 		'0165' => ['guild_create', 'a4 Z24', [qw(charID guildName)]],
+		'0168' => ['guild_join_request', 'a4 a4 a4', [qw(ID accountID charID)]],
+		'016B' => ['guild_join', 'a4 V', [qw(ID flag)]],
+		'016E' => ['guild_notice', 'a4 Z60 Z120', [qw(guildID name notice)]],
+		'0170' => ['guild_alliance_request', 'a4 a4 a4', [qw(targetAccountID accountID charID)]],
 		'0172' => ['guild_alliance_reply', 'a4 V', [qw(ID flag)]],
 		'0178' => ['identify', 'a2', [qw(ID)]],
 		'017A' => ['card_merge_request', 'a2', [qw(cardID)]],
@@ -118,8 +124,12 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
+		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
+		'01A1' => ['pet_menu', 'C', [qw(action)]],
+		'01A5' => ['pet_name', 'a24', [qw(name)]],
+		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
@@ -305,30 +315,6 @@ sub sendGMMessage {
 # 0x00c4,6
 # 0x00c6,-1
 # 0x00c7,-1
-
-# 0x00c8,-1,npcbuylistsend,2:4
-sub sendBuyBulk {
-	my ($self, $r_array) = @_;
-	my $msg = pack('v2', 0x00C8, 4+4*@{$r_array});
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('v2', $r_array->[$i]{amount}, $r_array->[$i]{itemID});
-		debug "Sent bulk buy: $r_array->[$i]{itemID} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
-
-# 0x00c9,-1,npcselllistsend,2:4
-sub sendSellBulk {
-	my $self = shift;
-	my $r_array = shift;
-	my $msg = pack('v2', 0x00C9, 4+4*@{$r_array});
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		$msg .= pack('a2 v', $r_array->[$i]{ID}, $r_array->[$i]{amount});
-		debug sprintf("Sent bulk sell: %s x $r_array->[$i]{amount}\n", unpack('v', $r_array->[$i]{ID})), "d_sendPacket", 2;
-	}
-	$self->sendToServer($msg);
-}
-
 # 0x00ca,3
 # 0x00cb,3
 
@@ -576,47 +562,11 @@ sub sendGuildPositionInfo {
 # 0x0164,-1
 # 0x0166,-1
 # 0x0167,3
-
-# 0x0168,14,guildinvite,2
-sub sendGuildJoinRequest {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a4 a4 a4', 0x0168, $ID, $accountID, $charID);
-	$self->sendToServer($msg);
-	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
-}
-
 # 0x0169,3
 # 0x016a,30
-
-# 0x016b,10,guildreplyinvite,2:6
-sub sendGuildJoin {
-	my ($self, $ID, $flag) = @_;
-	my $msg = pack('v a4 V', 0x016B, $ID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
-}
-
 # 0x016c,43
 # 0x016d,14
-
-# 0x016e,186,guildchangenotice,2:6:66
-sub sendGuildNotice { # sets the notice/announcement for the guild
-	my ($self, $guildID, $name, $notice) = @_;
-	my $msg = pack('v a4 a60 a120', 0x016E, $guildID, stringToBytes($name), stringToBytes($notice));
-	$self->sendToServer($msg);
-	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
-}
-
 # 0x016f,182
-
-# 0x0170,14,guildrequestalliance,2
-sub sendGuildSetAlly {
-	my ($self, $targetAID, $myAID, $charID) = @_;
-	my $msg = pack('v a4 a4 a4', 0x0170, $targetAID, $myAID, $charID);
-	$self->sendToServer($msg);
-
-}
-
 # 0x0171,30
 # 0x0173,3
 # 0x0174,-1
@@ -716,47 +666,11 @@ sub sendGMHide {
 }
 
 # 0x019e,2
-
-# 0x019f,6,catchpet,2
-sub sendPetCapture {
-	my ($self, $monID) = @_;
-	my $msg = pack('v a4', 0x019F, $monID);
-	$self->sendToServer($msg);
-	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
-}
-
 # 0x01a0,3
-
-# 0x01a1,3,petmenu,2
-sub sendPetMenu {
-	my ($self, $type) = @_; # 1:feed, 0:info, 2:performance, 3:to egg, 4:uneq item
-	my $msg = pack('v C', 0x01A1, $type);
-	$self->sendToServer($msg);
-	debug "Sent Pet Menu\n", "sendPacket", 2;
-}
-
 # 0x01a2,35
 # 0x01a3,5
 # 0x01a4,11
-
-# 0x01a5,26,changepetname,2
-sub sendPetName {
-	my ($self, $name) = @_;
-	my $msg = pack('v a24', 0x01A5, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
-}
-
 # 0x01a6,-1
-
-# 0x01a7,4,selectegg,2
-sub sendPetHatch {
-	my ($self, $ID) = @_;
-	my $msg = pack('v a2', 0x01A7, $ID);
-	$self->sendToServer($msg);
-	debug sprintf("Sent Incubator hatch: $ID\n", unpack('v', $ID)), "sendPacket", 2;
-}
-
 # 0x01a8,4
 
 # 0x01a9,6,sendemotion,2

@@ -2301,4 +2301,146 @@ sub sendGuildCreate {
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
+sub sendGuildJoin {
+	my ($self, $ID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_join',
+		ID => $ID,
+		flag => $flag,
+	}));
+	
+	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
+}
+
+sub sendGuildJoinRequest {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_join_request',
+		ID => $ID,
+		accountID => $accountID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
+}
+
+sub sendGuildNotice {
+	my ($self, $guildID, $name, $notice) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_notice',
+		guildID => $guildID,
+		name => stringToBytes($name),
+		notice => stringToBytes($notice),
+	}));
+	
+	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
+}
+
+sub sendGuildSetAlly {
+	my ($self, $targetAID, $myAID, $charID) = @_;
+	
+	# this packet is for guildmaster asking to set alliance with another guildmaster
+	# the other sub for sendGuildAlly are responses to this sub
+	# kept the parameters open, but everything except $targetAID could be replaced with Global variables
+	# unless you plan to mess around with the alliance packet, no exploits though, I tried ;-)
+	# -zdivpsa
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'guild_alliance_request',
+		targetAccountID => $targetAID,
+		accountID => $myAID,
+		charID => $charID,
+	}));
+	
+	debug "Sent Guild Alliance Request\n", "sendPacket", 2;
+}
+
+sub sendPetCapture {
+	my ($self, $monID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_capture',
+		ID => $monID,
+	}));
+	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
+}
+
+sub sendPetMenu {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_menu',
+		
+		# Action
+		# 0 => info
+		# 1 => feed
+		# 2 => performance
+		# 3 => return to egg
+		# 4 => unequip accessory
+		action => $type,
+	}));
+	
+	debug "Sent Pet Menu\n", "sendPacket", 2;
+}
+
+sub sendPetHatch {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_hatch',
+		ID => $ID,
+	}));
+	
+	debug "Sent Incubator hatch: " . getHex($ID) . "\n", "sendPacket", 2;
+}
+
+sub sendPetName {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_name',
+		name => stringToBytes($name),
+	}));
+	
+	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
+}
+
+sub sendBuyBulk {
+	my ($self, $r_array) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk',
+		items => \@{$r_array},
+	}));
+	
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_buy_bulk {
+	my ($self, $args) = @_;
+	
+	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
+}
+
+
+sub sendSellBulk {
+	my ($self, $r_array) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'sell_bulk',
+		items => \@{$r_array},
+	}));
+	
+	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_sell_bulk {
+	my ($self, $args) = @_;
+	
+	$args->{sellInfo} = pack "(a*)*", map { pack "a2 v", $_->{ID}, $_->{amount} } @{$args->{items}};
+}
+
 1;
