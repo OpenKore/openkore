@@ -20,28 +20,9 @@ package Network::Receive::kRO::Sakexe_2005_10_13a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_10_10a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'007A' => ['changeToInGameState'], # 6
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2005-10-13aSakexe
-0x007a,6
-0x0251,32
-0x025c,4,auctionbuysell,0
-=cut
 
 1;

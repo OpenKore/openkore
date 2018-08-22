@@ -789,7 +789,7 @@ man_in01.rsw#Inside Manuk#
 splendide.rsw#Splendide, the Laphine Basecamp#
 spl_fild01.rsw#Splendide Field#
 spl_in01.rsw#Inside the Splendide Command Post#
-spl_in02.rsw#Inside Splendide# 
+spl_in02.rsw#Inside Splendide#
 itemmall_p.rsw#Item mall#
 itemmall_s.rsw#Item mall#
 brasilis.rsw#Brasilis#
@@ -844,8 +844,7 @@ ecl_tdun04.rsw#Bifrost Floor 4#
 ecl_hub01.rsw#Eclage Perimeter#
 que_avan01.rsw#Avant's Laboratory#
 
-
-//°ø¼ºÀü TE º¹»ç¸Ê 
+//냸벺샼 TE 몹믧룊
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -880,7 +879,7 @@ gl_chyard_.rsw#Churchyard#
 //Clocktower_nightmare
 c_tower2_.rsw#Twisted Time Clock Tower 2nd Floor#
 c_tower3_.rsw#Twisted Time Clock Tower 3rd Floor#
-//¿µ¿õÀÇÈçÀû
+//뾵뿵샇죧샻
 dali02.rsw#Crack of Dimension#
 1@tnm1.rsw#Darklord Tower High Floor#
 1@tnm2.rsw#Darklord Tower Top Floor#
@@ -904,3 +903,9 @@ moro_cav.rsw#Flame Cave#
 1@glast.rsw#Old Glast Heim#
 1@air1.rsw#Airship#
 1@air2.rsw#Airship#
+
+mora.rsw#Rafle Village, Mora#
+malangdo.rsw#Malangdo#
+mal_in01.rsw#Dalam Malangdo#
+mal_in02.rsw#Dalam Malangdo Kapal#
+mal_dun01.rsw#Starry Coral Area#

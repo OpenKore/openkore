@@ -22,48 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2008_03_18a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		# 0x02f3,-1
-		# 0x02f4,-1
-		# 0x02f5,-1
-		# 0x02f6,-1
-		# 0x02f7,-1
-		# 0x02f8,-1
-		# 0x02f9,-1
-		# 0x02fa,-1
-		# 0x02fb,-1
-		# 0x02fc,-1
-		# 0x02fd,-1
-		# 0x02fe,-1
-		# 0x02ff,-1
-		# 0x0300,-1
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);	
 }
-
-
-=pod
-//2008-03-25bSakexe
-0x02f3,-1
-0x02f4,-1
-0x02f5,-1
-0x02f6,-1
-0x02f7,-1
-0x02f8,-1
-0x02f9,-1
-0x02fa,-1
-0x02fb,-1
-0x02fc,-1
-0x02fd,-1
-0x02fe,-1
-0x02ff,-1
-0x0300,-1
-=cut
 
 1;

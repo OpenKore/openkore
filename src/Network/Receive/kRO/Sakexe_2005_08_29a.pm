@@ -20,34 +20,9 @@ package Network::Receive::kRO::Sakexe_2005_08_29a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_08_17a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0240' => ['mail_refreshinbox', 'v V', [qw(size  count)]], # -1
-		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
-
-		# 0x0256,0
-		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2005-08-29aSakexe
-0x0240,-1
-0x0248,-1,mailsend,2:4:28:68
-0x0255,5
-0x0256,0
-0x0257,8
-=cut
 
 1;

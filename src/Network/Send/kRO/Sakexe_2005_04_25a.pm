@@ -20,9 +20,6 @@ package Network::Send::kRO::Sakexe_2005_04_25a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_04_11a);
 
-use Log qw(message warning error debug);
-use Utils qw(getHex getCoordString);
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);

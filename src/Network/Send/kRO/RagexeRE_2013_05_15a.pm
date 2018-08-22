@@ -54,6 +54,9 @@ sub new {
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0938' => undef,
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0835' => ['search_store_request_next_page'],
+		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -75,6 +78,9 @@ sub new {
 		storage_item_add 0887
 		storage_item_remove 08AC
 		sync 035F
+		search_store_info 0819
+		search_store_request_next_page 0835
+		search_store_select 0838
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 

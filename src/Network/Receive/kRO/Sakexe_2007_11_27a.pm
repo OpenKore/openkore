@@ -22,21 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2007_11_20a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]], # -1 # int[] mapInfoTable
-	);
-
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2007-11-27aSakexe
-0x02e7,-1
-=cut
 
 1;

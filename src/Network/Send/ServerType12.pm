@@ -23,7 +23,21 @@ use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0072' => ['storage_close'],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		storage_close 0072
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub sendAction {

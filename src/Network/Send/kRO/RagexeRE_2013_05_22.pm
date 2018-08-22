@@ -13,7 +13,6 @@ package Network::Send::kRO::RagexeRE_2013_05_22;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2013_05_15a);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
@@ -52,6 +51,9 @@ sub new {
 		'0362' => ['friend_request', 'a*', [qw(username)]],#26
 		'0931' => undef,
 		'0926' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'095B' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'08AA' => ['search_store_request_next_page'],
+		'093E' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -72,6 +74,9 @@ sub new {
 		storage_item_add 08A3
 		storage_item_remove 087E
 		sync 07EC
+		search_store_info 095B
+		search_store_request_next_page 08AA
+		search_store_select 093E
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
