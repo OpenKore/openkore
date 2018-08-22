@@ -160,7 +160,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x1C7B093E, 0x0A481748, 0x52645FDA
+sendCryptKeys 0x48F719D3, 0x1F73118F, 0x27963B51
 
 # TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
