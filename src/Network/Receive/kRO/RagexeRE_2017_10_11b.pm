@@ -15,6 +15,10 @@ package Network::Receive::kRO::RagexeRE_2017_10_11b;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2017_10_02c);
 
+sub new {
+	my ($class) = @_;
+	return $class->SUPER::new(@_);
+}
 
 1;
 =pod

@@ -20,40 +20,9 @@ package Network::Receive::kRO::Sakexe_2004_11_09a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2004_11_01a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0084' => ['quit_refuse'], # 2
-
-		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
-
-		'0219' => ['top10_blacksmith_rank'], #282
-		'021A' => ['top10_alchemist_rank'], # 282
-		'021B' => ['blacksmith_points', 'V2', [qw(points total)]], # 10
-		'021C' => ['alchemist_point', 'V2', [qw(points total)]], # 10
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-
-=pod
-//2004-11-08aSakexe
-0x0084,2
-0x0216,6
-0x0217,2,blacksmith,0
-0x0218,2,alchemist,0
-0x0219,282
-0x021a,282
-0x021b,10
-0x021c,10
-=cut
 
 1;

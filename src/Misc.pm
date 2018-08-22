@@ -86,13 +86,16 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID/,
+	itemNameToID
+	itemNameToIDList
+	containsItemNameToIDList/,
 
 	# File Parsing and Writing
 	qw/chatLog
 	shopLog
 	monsterLog
-	deadLog/,
+	deadLog
+	searchStoreInfo/,
 
 	# Logging
 	qw/itemLog/,
@@ -198,6 +201,9 @@ our @EXPORT = (
 	makeShop
 	openShop
 	closeShop
+	makeBuyerShop
+	openBuyerShop
+	closeBuyerShop
 	inLockMap
 	parseReload
 	setCharDeleteDate/,
@@ -1005,7 +1011,9 @@ sub actorAddedRemovedVars {
 		return ('npc', \@npcsID, \%npcs);
 	} elsif ($actor->isa ('Actor::Slave')) {
 		return ('slave', \@slavesID, \%slaves);
-	} else {
+	} elsif ($actor->isa ('Actor::Elemental')) {
+		return ('elemental', \@elementalsID, \%elementals);
+	}else {
 		return (undef, undef, undef);
 	}
 }
@@ -1108,6 +1116,7 @@ sub actorListClearing {
 	undef %npcs;
 	undef %pets;
 	undef %slaves;
+	undef %elementals;
 	undef @itemsID;
 	undef @playersID;
 	undef @monstersID;
@@ -1115,6 +1124,7 @@ sub actorListClearing {
 	undef @npcsID;
 	undef @petsID;
 	undef @slavesID;
+	undef @elementalsID;
 }
 
 sub avoidGM_talk {
@@ -2055,6 +2065,40 @@ sub itemNameToID {
 	}
 }
 
+sub itemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if ($itemName eq lc($items_lut{$hashID})) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
+}
+
+sub containsItemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if (index(lc($items_lut{$hashID}), $itemName) != -1) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
+}
+
 ##
 # DEPRECATED: Use transferItems() instead.
 #
@@ -2551,6 +2595,8 @@ sub sendMessage_send {
 		$sender->sendPrivateMsg($user, $msg);
 	} elsif ($type eq "k") {
 		$sender->injectMessage($msg);
+	} elsif ($type eq "cln") {
+		$sender->sendClanChat($msg);
 	}
 }
 
@@ -4027,7 +4073,7 @@ sub checkSelfCondition {
 	if ($char->{homunculus}) {
 		if ($config{$prefix . "_homunculus_hp"}) {
 			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{hpPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
 			}
@@ -4035,7 +4081,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_homunculus_sp"}) {
 			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{spPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
 			}
@@ -4057,7 +4103,7 @@ sub checkSelfCondition {
 	if ($char->{mercenary}) {
 		if ($config{$prefix . "_mercenary_hp"}) {
 			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{hpPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
 			}
@@ -4065,7 +4111,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_mercenary_sp"}) {
 			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{spPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 			}
@@ -4625,6 +4671,118 @@ sub closeShop {
 	message T("Shop closed.\n");
 }
 
+sub makeBuyerShop {
+	if ($buyershopstarted) {
+		error T("A shop has already been opened.\n");
+		return;
+	}
+
+	return unless $char;
+
+	my $max_items = 2;
+	my @items = ();
+	
+	if($char->inventory->getByNameID(6377)) {
+		$max_items = 5;
+	}
+
+	# Iterate through items to be sold
+	shuffleArray(\@{$buyer_shop{items}}) if ($config{'buyerShop_random'} eq "2");
+	my %used_items;
+	for my $sale (@{$buyer_shop{items}}) {
+		my $inventory_item;
+		for my $item (@{$char->inventory}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{binID}};
+			$inventory_item = $used_items{$item->{binID}} = $item;
+			last;
+		}
+		next unless ($inventory_item);
+
+		my %item;
+		$item{name} = $inventory_item->{name};
+		$item{nameID} = $inventory_item->{nameID};
+			if ($sale->{priceMax}) {
+				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+			} else {
+				$item{price} = $sale->{price};
+			}
+		$item{amount} = $sale->{amount};
+		push(@items, \%item);
+
+		# We can't buy anymore items
+		last if @items >= $max_items;
+	}
+
+	if (!@items) {
+		error T("There are no items to sell.\n");
+		return;
+	}
+
+	shuffleArray(\@items) if ($config{'buyerShop_random'} eq "1");
+
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
+		my $item = $char->inventory->getByNameID(12548);
+		if(!$item) {
+			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+			return;
+		} else {
+			$item->use;
+		}
+	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
+		error T("You don't have Bulk Buyer Shop License.\n");
+		return;
+	} else { # have skill and item
+		my $skill = new Skill(auto => "ALL_BUYING_STORE");
+		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
+	}
+	
+	if (!$buyer_shop{title_line}) {
+		error T("Your buyer shop does not have a title.\n");
+		return;
+	}
+
+	return @items;
+}
+
+sub openBuyerShop {
+	my @items = makeBuyerShop();
+	my @buyershopnames;
+	my $limitZeny = 0;
+	return unless @items;
+	@buyershopnames = split(/;;/, $buyer_shop{title_line});
+	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
+	$buyer_shop{title} = ($config{buyerShopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
+
+	foreach my $item (@items) {
+		$limitZeny += ($item->{amount} * $item->{price});
+	}
+
+	if($limitZeny > $char->{zeny}) {
+		$limitZeny = $char->{zeny};
+	}
+
+	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
+	
+	message T("Trying to set up buyer shop...\n"), "vending";
+	$buyershopstarted = 1;
+}
+
+sub closeBuyerShop {
+	if (!$buyershopstarted) {
+		error T("A Buyer Shop has not been opened.\n");
+		return;
+	}
+
+	$messageSender->sendCloseBuyShop();
+
+	$buyershopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("buyer_shop_closed");
+	message T("Buyer Shop closed.\n");
+}
+
 ##
 # inLockMap()
 #
@@ -4735,6 +4893,27 @@ sub CharacterLogin {
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
+}
+
+sub searchStoreInfo {
+	my ($page) = @_;
+	
+	message T("============================================== Search Store Result ==============================================\n");
+	message TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
+	message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+		["#", T("Shop Name"), T("Item"), T("Price"), T("Amount")]));
+	
+	for (my $i = 0; $i < scalar(@{${$universalCatalog{list}}[$page]}); ++$i) {
+		message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+				[$i, ${$universalCatalog{list}}[$page][$i]{shopName},
+				itemName({
+					nameID => ${$universalCatalog{list}}[$page][$i]{nameID},
+					cards => ${$universalCatalog{list}}[$page][$i]{cards_nameID},
+					upgrade => ${$universalCatalog{list}}[$page][$i]{refine}
+				}), formatNumber(${$universalCatalog{list}}[$page][$i]{price}), ${$universalCatalog{list}}[$page][$i]{amount}]), "list");
+	}
+	
+	message T("=================================================================================================================\n");
 }
 
 return 1;

@@ -20,29 +20,9 @@ package Network::Receive::kRO::Sakexe_2004_07_13a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2004_07_05a);
 
-use Log qw(message warning error debug);
-use Utils qw(getTickCount getCoordString);
-
-# TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($char);
-
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
-
-=pod
-//2004-07-13aSakexe
-packet_ver: 7
-0x0072,39,wanttoconnection,12:22:30:34:38
-0x0085,9,walktoxy,6
-0x009b,13,changedir,5:12
-0x009f,10,takeitem,6
-0x00a7,17,useitem,6:13
-0x0113,19,useskilltoid,7:9:15
-0x0116,19,useskilltopos,7:9:15:17
-0x0190,99,useskilltoposinfo,7:9:15:17:19
-=cut
 
 1;

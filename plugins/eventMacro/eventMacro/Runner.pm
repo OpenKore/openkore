@@ -35,8 +35,6 @@ sub new {
 	$self->{finished} = 0;
 	$self->{macro_block} = 0;
 	
-	$self->{subline_index} = undef;
-	$self->{sublines_array} = [];
 	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
 	$self->{line_index} = 0;
 	
@@ -489,47 +487,10 @@ sub line_script {
 	return @{$self->{lines_array}}[$line_index];
 }
 
-# Sets/Gets the current subline index
-sub subline_index {
-	my ($self, $subline_index) = @_;
-	if (defined $subline_index) {
-		$self->{subline_index} = $subline_index;
-	}
-	return $self->{subline_index};
-}
-
-# Gets the script of the given subline
-sub subline_script {
-	my ($self, $subline_index) = @_;
-	return @{$self->{sublines_array}}[$subline_index];
-}
-
-# Defines the sublines variables
-sub sublines_start {
-	my ($self) = @_;
-	my $full_line = $self->line_script($self->line_index);
-	debug "[eventMacro] Line '".$full_line."' of index '".$self->line_index."' has sublines.\n", "eventMacro", 2;
-	@{$self->{sublines_array}} = split(/\s*;\s*/, $full_line);
-	$self->subline_index(0);
-}
-
-# Undefines the sublines variables
-sub sublines_end {
-	my ($self) = @_;
-	debug "[eventMacro] Finished all sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."', continuing with next line.\n", "eventMacro", 2;
-	undef $self->{sublines_array};
-	undef $self->{subline_index};
-	$self->next_line;
-}
-
-# Advances a line or a subline
+# Advances a line
 sub next_line {
 	my ($self) = @_;
-	if (defined $self->{subline_index}) {
-		$self->{subline_index}++;
-	} else {
-		$self->{line_index}++;
-	}
+	$self->{line_index}++;
 }
 
 # Sets/Gets the error message
@@ -548,11 +509,7 @@ sub error_message {
 	  "[eventMacro] Error in macro '".$self->{name}."'\n".
 	  "[eventMacro] Line index of the error '".$self->line_index."'\n".
 	  "[eventMacro] Script of the line '".$self->line_script($self->line_index)."'\n";
-	if (defined $self->subline_index) {
-		$error_message .= 
-		  "[eventMacro] Subline index of the error '".$self->subline_index."'\n".
-		  "[eventMacro] Script of the subline '".$self->subline_script($self->subline_index)."'\n";
-	}
+	  
 	$error_message .= "[eventMacro] Error message '".$self->error."'\n";
 	return $error_message;
 }
@@ -569,22 +526,6 @@ sub define_current_line {
 			return;
 		}
 		$self->define_current_line;
-	
-	#Inside subline script
-	} elsif (defined $self->subline_index) {
-	
-		#End of subline script
-		if ($self->subline_index == scalar(@{$self->{sublines_array}})) {
-			$self->sublines_end;
-			$self->define_current_line;
-		} else {
-			$self->{current_line} = $self->subline_script($self->subline_index);
-		}
-		
-	#Start of subline script
-	} elsif ($self->line_script($self->line_index) =~ /;/) {
-		$self->sublines_start();
-		$self->{current_line} = $self->subline_script($self->subline_index);
 		
 	#Normal script
 	} else {
@@ -606,10 +547,10 @@ sub define_next_valid_command {
 		if ($check_need) {
 			$self->define_current_line;
 			return "" if ($self->{finished});
-			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command.\n", "eventMacro", 3;
+			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command.\n", "eventMacro", 3;
 			debug "[eventMacro] Script '".$self->{current_line}."'.\n", "eventMacro", 3;
 		} else {
-			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '')." for a macro command after it was cleaned.\n", "eventMacro", 3;
+			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command after it was cleaned.\n", "eventMacro", 3;
 			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
 			$check_need = 1;
 		}
@@ -696,7 +637,7 @@ sub define_next_valid_command {
 						}
 						
 						#Start of another if/switch/case/while block
-						if ( $self->{current_line} =~ /^(if|switch|case|while).*{$/ ) {
+						if ( $self->{current_line} =~ /^(if|switch|case|while|else).*{$/ ) {
 							$block_count++;
 							
 						#End of an if block or start of else block
@@ -725,7 +666,7 @@ sub define_next_valid_command {
 							}
 						}
 						
-						debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
+						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
 						
 					}
 				}
@@ -818,7 +759,7 @@ sub define_next_valid_command {
 									return;
 								}
 								
-								debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
+								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
 								
 								if (isNewCommandBlock($self->{current_line})) {
 									$block_count++;
@@ -853,7 +794,7 @@ sub define_next_valid_command {
 					return;
 				}
 				
-				debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
+				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
 				
 				if (isNewCommandBlock($self->{current_line})) {
 					$open_blocks++;
@@ -884,7 +825,7 @@ sub define_next_valid_command {
 						return;
 					}
 								
-					debug "[eventMacro] Cleaning [sub]line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
 					
 					if (isNewCommandBlock($self->{current_line})) {
 						$block_count++;
@@ -939,11 +880,6 @@ sub define_next_valid_command {
 			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
 			if (exists $self->{label}->{$label}) {
 				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3;
-				if (defined $self->{subline_index}) {
-					debug "[eventMacro] Finishing prematurely sublines of line '".$self->line_script($self->line_index)."' of index '".$self->line_index."' because of flow command.\n", "eventMacro", 2;
-					undef $self->{sublines_array};
-					undef $self->{subline_index};
-				}
 				$self->line_index($self->{label}->{$label});
 			} else {
 				$self->error("Cannot find label '$label'");
@@ -967,7 +903,7 @@ sub next {
 	#We must finish the subcall before returning to this macro
 	return $self->manage_subcall if (defined $self->{subcall});
 
-	#   All non command [sub]lines must be checked and parsed in only one 'next' cycle
+	#   All non command lines must be checked and parsed in only one 'next' cycle
 	# define_next_valid_command makes sure the current line is a valid macro command
 	# all flow control ('if', 'else', 'goto', 'while', etc) must be parsed by it.
 	$self->define_next_valid_command;
@@ -975,8 +911,8 @@ sub next {
 	return "" if ($self->{finished});
 	
 	#Some debug messages
-	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index."'".(defined $self->subline_index ? ", subline index '".$self->subline_index."'" : '').".\n", "eventMacro", 2;
-	debug "[eventMacro] ".(defined $self->subline_index ? "Subline" : 'Line')." script '".$self->{current_line}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index.".\n", "eventMacro", 2;
+	debug "[eventMacro] Line script '".$self->{current_line}."'.\n", "eventMacro", 2;
 		
 	##########################################
 	# set variable: variable = value
@@ -1124,6 +1060,30 @@ sub next {
 					}
 					
 					$eventMacro->set_full_array($var->{real_name}, \@new_array);
+				} elsif ($value =~ /\w+\s*\(.*\)$/) {
+					my $real_value = $self->parse_command($value);
+					
+					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
+						if (ref($real_value) eq 'ARRAY') {
+							#if is a array ref, have to convert into a hash ref
+							my %hash = @{$real_value};
+							$real_value = \%hash;
+						}
+						$eventMacro->set_full_hash($var->{real_name}, $real_value);
+						
+					} elsif (ref($real_value) eq '' && $real_value && $var->{type} eq 'array') { 
+						#elsif real value is defined is because something were returned, so it will make an array of that
+						my @array = split (/,/, $real_value); 
+						$eventMacro->set_full_array($var->{real_name}, \@array);
+						
+					} elsif((ref($real_value) eq 'ARRAY' || ref($real_value) eq 'SCALAR') && $var->{type} eq 'array') {
+						$eventMacro->set_full_array($var->{real_name}, $real_value);
+						
+					} else {
+						# $real_value not defined, some error happened
+						$self->error("Unable to set array or hash, empty value! (value: '$real_value')");
+						return;
+					}
 				}
 				
 			} else {
@@ -1706,7 +1666,7 @@ sub find_and_define_key_index {
 
 # substitute variables
 sub substitue_variables {
-	my ($self, $received) = @_;
+	my ($self, $received, $get_entire_array_or_hash) = @_;
 	
 	my $remaining = $received;
 	my $substituted;
@@ -1746,10 +1706,18 @@ sub substitue_variables {
 					$var_value = $eventMacro->get_scalar_var($var->{real_name});
 					
 				} elsif ($var->{type} eq 'array') {
-					$var_value = $eventMacro->get_array_size($var->{real_name});
+					if ($get_entire_array_or_hash) {
+						$var_value = $var->{display_name};
+					} else {
+						$var_value = $eventMacro->get_array_size($var->{real_name});
+					}
 					
 				} elsif ($var->{type} eq 'hash') {
-					$var_value = $eventMacro->get_hash_size($var->{real_name});
+					if ($get_entire_array_or_hash) {
+						$var_value = $var->{display_name};
+					} else {
+						$var_value = $eventMacro->get_hash_size($var->{real_name});
+					}
 				}
 				$var_value = '' unless (defined $var_value);
 				
@@ -1891,6 +1859,10 @@ sub parse_command {
 		} elsif ($keyword eq 'listlength') {
 			$result = getListLenght($parsed);
 			
+		} elsif ($keyword eq 'strip') {
+			$parsed =~ s/\(|\)//g;
+			$result = $parsed;
+			
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
@@ -1950,14 +1922,69 @@ sub parse_command {
 				$self->error("Unrecognized --> $sub <-- Sub-Routine");
 				return "";
 			}
-			$parsed = $self->substitue_variables($val);
-			my $sub1 = "main::".$sub."(".$parsed.")";
-			$result = eval($sub1);
-			if ($@) {
-				message "[eventMacro] Error in eval '".$@."'\n";
+			$parsed = $self->substitue_variables($val, 1);
+			
+			#spliting $parsed to check if there is an array or hash
+			my (@array_holder, %hash_holder);
+			foreach (split /\s*,\s*/ , $parsed) {
+				#if don't have quotation marks and it is not a number or a variable, add the quotation marks
+				if ($_ !~ /"[^"]+"/ && $_ !~ /^\s*\d+\s*$/ && $_ !~ /$array_variable_qr|$hash_variable_qr/) { 
+					$parsed =~ s/$_/"$_"/;
+					
+				#elsif it is a variable or a number but has quotation marks, remove it
+				} elsif ($_ =~ /"\s*$array_variable_qr\s*"|"\s*$hash_variable_qr\s*"/ || $_ =~ /"\s*\d+\s*"/) {
+					#first remove quotation from $_
+					$_ =~ s/\"//g; 
+					#after remove quotation from $parsed, using the $_ to find the correct place to remove
+					$parsed =~ s/\"$_\"/$_/;
+					#strange but it works
+				}
+				
+				if (my $var = find_variable($_)) {
+					#there is an array or a hash to pass to sub
+					if ($var->{type} eq 'array') {
+						#if array exists, gets the content and insert on array holder
+						#then insert array_holder on $parsed
+						if ($eventMacro->{Array_Variable_List_Hash}{ $var->{real_name}}) {
+							@array_holder = @{ $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}} };
+							$parsed =~ s/$var->{real_name}/array_holder/;
+						} else {
+							$self->error ("Array '" . $var->{display_name} . "' does not exist");
+						}
+						
+					} elsif ($var->{type} eq 'hash') {
+						#if hash exists, gets the content and insert on hash holder
+						#then insert hash_holder on $parsed
+						if ($eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}}) {
+							%hash_holder = %{ $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}} };
+							$parsed =~ s/$var->{real_name}/hash_holder/;
+						} else {
+							$self->error ("Hash '" . $var->{display_name} . "' does not exist");
+						}
+					} else {
+						$self->error("Could not define variable type on calling sub");
+						return "";
+					}
+				}
 			}
-			return unless defined $result;
-			$val = q4rx $val;		
+			my $sub1 = 'main::'.$sub.'('.$parsed.')';
+			my @testArray = eval($sub1);
+			if ($@) {
+				warning "[eventMacro] Error in eval '".$@."'\n";
+			}
+			return unless scalar(@testArray);
+			if (scalar(@testArray) > 1 ) {
+				#if this is true, user returned an array or hash that is not a reference
+				#but the code demands a reference
+				$result = \@testArray;
+			} else {
+				#can be a normal scalar value, or a reference to anything
+				$result = $testArray[0];
+			}
+			if (ref($result) eq 'ARRAY' || ref($result) eq 'HASH' || ref($result) eq 'SCALAR') {
+				return $result;
+			}
+			$val = q4rx $val;
 			$command =~ s/$sub\s*\(\s*$val\s*\)/$result/g
 		}
 	}

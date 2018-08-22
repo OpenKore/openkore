@@ -380,7 +380,7 @@ sub request {
 	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
 	my (@listMemberIndex, @listMemberName, @listMemberClass, @listMemberLvl, @listMemberTitle, @listMemberOnline, @listMemberID, @listMemberCharID);
 	
-	if (defined @{$guild{member}}) {
+	if ($guild{member} && @{$guild{member}}) {
 		my $count = @{$guild{member}};
 			for ($i = 0; $i < $count; $i++) {
 				$name  = $guild{member}[$i]{name};
@@ -664,13 +664,13 @@ sub request {
 		'homunculusID' => $char->{homunculus},
 		'homunculusHP' => $char->{homunculus}{'hp'},
 		'homunculusHPMax' => $char->{homunculus}{'hp_max'},
-		'homunculusHPPercent' => sprintf("%.2f", $char->{homunculus}{hpPercent}),
+		'homunculusHPPercent' => sprintf("%.2f", $char->{homunculus}->hp_percent),
 		'homunculusSP' => $char->{homunculus}{'sp'},
 		'homunculusSPMax' => $char->{homunculus}{'sp_max'},
-		'homunculusSPPercent' => sprintf("%.2f", $char->{homunculus}{spPercent}),
+		'homunculusSPPercent' => sprintf("%.2f", $char->{homunculus}->sp_percent),
 		'homunculusEXP' => $char->{homunculus}{'exp'},
 		'homunculusEXPMax' => $char->{homunculus}{'exp_max'},
-		'homunculusEXPPercent' => sprintf("%.2f", $char->{homunculus}{expPercent}),
+		'homunculusEXPPercent' => sprintf("%.2f", $char->{homunculus}->exp_percent),
 		'homunculusHunger' => $char->{homunculus}{'hunger'},
 		'homunculusAccessory' => $char->{homunculus}{'accessory'},
 		'homunculusIntimacy' => $char->{homunculus}{'intimacy'},

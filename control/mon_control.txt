@@ -141,19 +141,6 @@ Yellow Plant 0 0 0
 6045 -1 0 0
 6046 -1 0 0
 
-##### Monster Mercenary #####
-# Mimic (Monster)
-1191 -1 0 0
-# Disguise (Monster)
-1506 -1 0 0
-# Alice (Monster)
-1275 -1 0 0
-# Wild Rose (Mercenary version, M_WILD_ROSE)
-1965 -1 0 0
-# Doppelganger (Mercenary version, M_DOPPELGANGER)
-1966 -1 0 0
-# Egnigem Cenia (Mercenary version, M_YGNIZEM)
-1967 -1 0 0
 
 ##### MVPs and Dangerous Monsters #####
 ##MOB ID : MVP

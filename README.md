@@ -10,7 +10,12 @@ To run OpenKore you will need:
 
 ## Quickstart
 
-1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
+1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. Alternatively, you could press the **Windows Key + R**, type in ``cmd`` and enter. Run the following command in the cmd to clone.
+***Note: [Git](https://git-scm.com/) required.***
+```
+git clone https://github.com/OpenKore/openkore.git
+```
+
 2. Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
 3. Run openkore.pl (you can run start.exe or wxstart.exe if you use Windows).
 
@@ -26,18 +31,20 @@ To run OpenKore you will need:
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| `iRO` | International(US) RO | **** | Botable, Weekly Update | allanon |
-| `bRO` | Brazilian RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| `idRO` | Indonesian RO | **** | Botable only RE_server | sctnightcore(temp)
-| `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
-| `cRO` | Chinese RO | nProtect | Botable, Weekly Update  | alisonrag, sctnightcore |
-| `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | Cdclient | Need Verification |  N/A|
-| `jRO` | Japanese RO | HShield | Need Verification | N/A |
-| `thRO` | Thai RO | EAC | Need Verification | N/A |
-| `mRO` | Malaysian RO | Cdclient | Not Working | N/A |
-| `phRO` | Philippines RO | Cdclient | Not Working | N/A |
-| `twRO` | Taiwanese RO | Cdclient | Not working | windhamwong |
+| [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
+| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
+| [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag, sctnightcore |
+| [idRO](https://ragnarok.gravindo.id/) | Indonesia RO (classic) | *** | Not Working | N/A  |
+| [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | sctnightcore | 
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag, sctnightcore |
+| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Need Verification |  N/A |
+| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
+| [tRO](https://ro.exe.in.th/) | Thailand RO | EAC | Need Verification | N/A |
+| [mRO](https://roextreme.com/mysg/main) | Malaysia RO | EAC | Not Working | N/A |
+| [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
+| [ruRO](https://ru.4game.com/ro/play/) | Russia RO | *** | Need Verification | N/A |
+| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing
 
@@ -50,7 +57,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [IRC Channel](https://webchat.freenode.net/?channels=openkore) 
 * [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
-* [Taiwanese Community](http://optw.nva-hk.com/forum.php)
+
 ## Warning
 
 Other communities are not affiliated to openkore.com
@@ -58,7 +65,7 @@ Other communities are not affiliated to openkore.com
 ## Other Links
 
 1. [Openkore History](http://openkore.com/index.php/OpenKore)
-2. [Legacy Changelog](https://github.com/OpenKore/openkore/commits/master/README.txt)
+2. [Legacy Changelog](https://github.com/OpenKore/openkore/blob/master/LegacyChangelog.md)
 3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
 4. [Feature Requests and TODO Wiki](http://openkore.com/index.php/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
 

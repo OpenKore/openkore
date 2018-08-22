@@ -21,8 +21,7 @@ use strict;
 use base qw(Network::Send::kRO::RagexeRE_2009_08_25a);
 
 use Globals qw($accountID);
-
-use Log qw(message warning error debug);
+use Log qw(debug);
 
 sub new {
 	my ($class) = @_;

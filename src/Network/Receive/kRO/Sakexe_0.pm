@@ -9,8 +9,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision: 6687 $
-#  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
 # The majority of private servers use eAthena, this is a clone of kRO
@@ -18,7 +16,7 @@
 package Network::Receive::kRO::Sakexe_0;
 
 use strict;
-use Network::Receive::kRO ();
+use Network::Receive::kRO;
 use base qw(Network::Receive::kRO);
 ############# TEMPORARY?
 use Time::HiRes qw(time usleep);
@@ -67,7 +65,12 @@ sub new {
 		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
 		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
-		'006D' => ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]], # packet(108) = switch(2) + charblock(106)
+		'006D' => ($rpackets{'006D'} == 108)
+			? (($rpackets{'006D'} == 110)
+				? ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]] # 110
+				: ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]])
+			: ['character_creation_successful', 'a4 V9 v V2 v15 Z24 C6 v2 Z16 V5', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style body weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag map deleteDate robe slotMove addons sex)]],
+		,
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
@@ -77,11 +80,17 @@ sub new {
 		'0075' => ['changeToInGameState'], # -1
 		'0076' => ['update_char', 'a4 v C', [qw(ID style item)]], # 9
 		'0077' => ['changeToInGameState'], # 5
-		'0078' => ['actor_exists',	'a4 v14 a4 a2 v2 C2 a3 C3 v', 		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], #standing # 54
+		'0078' => ($rpackets{'0078'} == 54) # or 55
+			? ['actor_exists',	'a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]] #standing # 54
+			: ['actor_exists', 'C a4 v14 a4 a2 v2 C2 a3 C3 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]] # 55 #standing
+		,
 		'0079' => ['actor_connected',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
 		'007B' => ['actor_moved',	'a4 v8 V v6 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #walking # 60
-		'007C' => ['actor_connected',	'a4 v14 C2 a3 C2',					[qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]], #spawning (eA does not send this for players) # 41
+		'007C' => ($rpackets{'007C'} == 41 )# or 42		
+			? ['actor_connected',	'a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 41
+			: ['actor_connected', 'C a4 v14 C2 a3 C2', [qw(object_type ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 42
+		,
 		'007F' => ['received_sync', 'V', [qw(time)]], # 6
 		'0080' => ['actor_died_or_disappeared', 'a4 C', [qw(ID type)]], # 7
 		'0081' => ['errors', 'C', [qw(type)]], # 3
@@ -114,7 +123,7 @@ sub new {
 		'00AC' => ['unequip_item', 'a2 v C', [qw(ID type success)]], # 7
 		'00AF' => ['inventory_item_removed', 'a2 v', [qw(ID amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
-		'00B1' => ['exp_zeny_info', 'v V', [qw(type val)]], # 8
+		'00B1' => ['stat_info', 'v V', [qw(type val)]], # 8 was "exp_zeny_info"
 		'00B3' => ['switch_character', 'C', [qw(result)]], # 3
 		'00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]], # -1
 		'00B5' => ['npc_talk_continue', 'a4', [qw(ID)]], # 6
@@ -122,7 +131,7 @@ sub new {
 		'00B7' => ['npc_talk_responses'], # -1
 		'00BC' => ['stats_added', 'v C C', [qw(type result val)]], # 6
 		'00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical stance manner)]],
-		'00BE' => ['stats_points_needed', 'v C', [qw(type val)]], # 5
+		'00BE' => ['stat_info', 'v C', [qw(type val)]], # 5 was "stats_points_needed"
 		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]], # 7
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
@@ -156,17 +165,17 @@ sub new {
 		'00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]], # 21
 		'00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]], # 8
 		'00F8' => ['storage_closed'], # 2
-		'00FA' => ['party_organize_result', 'C', [qw(fail)]], # 3
-		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]], # -1
-		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]], # 27
-		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]], # 30
-		'0101' => ['party_exp', 'V', [qw(type)]], # 6
-		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]], # 79
-		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name flag)]], # 31
-		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]], # 10
-		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]], # 10
+		'00FA' => ['party_organize_result', 'C', [qw(fail)]],
+		'00FB' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'00FD' => ['party_invite_result', 'Z24 C', [qw(name type)]],
+		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
+		'0101' => ['party_exp', 'V', [qw(type)]],
+		'0104' => ['party_join', 'a4 V v2 C Z24 Z24 Z16', [qw(ID role x y type name user map)]],
+		'0105' => ['party_leave', 'a4 Z24 C', [qw(ID name result)]],
+		'0106' => ['party_hp_info', 'a4 v2', [qw(ID hp hp_max)]],
+		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
-		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]], # -1
+		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
 		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
@@ -174,7 +183,6 @@ sub new {
 		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
-		# 0x0110 # TODO
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
@@ -220,7 +228,6 @@ sub new {
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
 		'0154' => ['guild_members_list'], # -1
 		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 # FIXME: this is a variable len message, can hold multiple entries
-		# 0x0158,-1 # TODO
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
 		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message account)]], # 90
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # 6 # clif_guild_broken
@@ -249,13 +256,12 @@ sub new {
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # 10 # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
-		# // 0x0186,0
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
 		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]], # 8
 		'0189' => ['no_teleport', 'v', [qw(fail)]], # 4
 		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]], # 29
-		'018D' => ['forge_list'], # -1
+		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]], # -1
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]], # 6
 		'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # 86 # talkie box message
 		'0192' => ['map_change_cell', 'v3 Z16', [qw(x y type map_name)]], # 24 # ex. due to ice wall
@@ -266,8 +272,11 @@ sub new {
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		'019E' => ['pet_capture_process'], # 2
-		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
-		'01A2' => ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]], # 35
+		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3		
+		'01A2' => ($rpackets{'01A2'} == 35) # or 37
+			? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
+			: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
+		,
 		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]], # 11
 		'01A6' => ['egg_list'], # -1
@@ -292,7 +301,6 @@ sub new {
 		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
-		# // 0x01ca,0
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
@@ -306,21 +314,19 @@ sub new {
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking
-		# 0x01dc,-1 # TODO
 		'01DE' => ['skill_use', 'v a4 a4 V4 v2 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 33
 		'01E0' => ['GM_req_acc_name', 'a4 Z24', [qw(targetID accountName)]], # 30
 		'01E1' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]], # 8
 		'01E2' => ['marriage_req', 'a4 a4 Z24', [qw(AID GID name)]], # 34 # TODO: rename vars?
 		'01E4' => ['marriage_start'], # 2
 		'01E6' => ['marriage_partner_name', 'Z24', [qw(name)]],  # 26
-		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]], # 81
+		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
 		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
 		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01F0' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		# 0x01f1,-1 # TODO
 		'01F2' => ['guild_member_online_status', 'a4 a4 V v3', [qw(ID charID online sex hair_style hair_color)]], # 20
 		'01F3' => ['misc_effect', 'a4 V', [qw(ID effect)]], # 10 # weather/misceffect2 packet
 		'01F4' => ['deal_request', 'Z24 a4 v', [qw(user ID level)]], # 32
@@ -336,31 +342,171 @@ sub new {
 		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]], # 34
 		'0209' => ['friend_response', 'v a4 a4 Z24', [qw(type accountID charID name)]], # 36
 		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]], # 10
-		# // 0x020b,0
-		# // 0x020c,0
 		'020D' => ['character_block_info', 'v2 a*', [qw(len unknown)]], # -1 TODO
-		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
-		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
+		'020E' => ['taekwon_packets', 'Z24 a4 C2', [qw(name ID value flag)]], # 32
+		'0210' => ['pvppoint_result', 'a4 a4 V3', [qw(ID guildID win_point lose_point point)]], # 22
+		'0215' => ['gospel_buff_aligned', 'V', [qw(ID)]], # 6
+		'0216' => ['adopt_reply', 'V', [qw(type)]], # 6
+		'0219' => ['top10_blacksmith_rank'], #282
+		'021A' => ['top10_alchemist_rank'], # 282
+		'021B' => ['blacksmith_points', 'V2', [qw(points total)]], # 10
+		'021C' => ['alchemist_point', 'V2', [qw(points total)]], # 10
+		'021E' => ['less_effect', 'V', [qw(flag)]], # 6
+		'021F' => ['pk_info', 'V2 Z24 Z24 a4 a4', [qw(win_point lose_point killer_name killed_name dwLowDateTime dwHighDateTime)]], # 66
+		'0220' => ['crazy_killer', 'a4 V', [qw(ID flag)]], # 10
+		'0221' => ['upgrade_list', 'v a*', [qw(len item_list)]],
+		'0223' => ['upgrade_message', 'V v', [qw(type itemID)]], # 8
+		'0224' => ['taekwon_rank', 'V2', [qw(type rank)]], # 10
+		'0226' => ['top10_taekwon_rank'], # 282
+		'0227' => ['gameguard_request'], # 18 ??
+		'0229' => ['character_status', 'a4 v2 V C', [qw(ID opt1 opt2 option stance)]], # 15
+		'022A' => ['actor_exists', 'a4 v3 V v10 a4 a2 v V C2 a3 C3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 58 # standing
+		'022B' => ['actor_connected', 'a4 v3 V v10 a4 a2 v V C2 a3 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 57 # spawning
+		'022C' => ($rpackets{'022C'} == 64) # or 65
+			? ['actor_moved', 'a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # 64 # walking
+			: ['actor_moved', 'C a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # walking # 65 # TODO: figure out what eA does here (shield is in GEmblemVer?): # v5 => v2 V v
+		,
+		'022E' => ($rpackets{'022E'} == 69) # or 71
+			? ['homunculus_property', 'Z24 C v16 V2 v', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill)]] # 69
+			: ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]] # 71
+		,
+		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
+		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]], # 12
+		'0235' => ['skills_list'], # -1 # homunculus skills
+		'0238' => ['top10_pk_rank'], #  282
+		'0239' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
+		'023A' => ['storage_password_request', 'v', [qw(flag)]], # 4
+		'023C' => ['storage_password_result', 'v2', [qw(type val)]], # 6
+		'023E' => ['storage_password_request', 'v', [qw(flag)]], # 4
+		'0240' => ['mail_refreshinbox', 'v V', [qw(size count)]], # 8
+		'0242' => ['mail_read', 'v V Z40 Z24 V3 v2 C3 a8 C Z*', [qw(len mailID title sender delete_time zeny amount nameID type identified broken upgrade cards msg_len message)]], # -1
+		'0245' => ['mail_getattachment', 'C', [qw(fail)]], # 3
+		'0249' => ['mail_send', 'C', [qw(fail)]], # 3
+		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
+		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
+		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
+		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
+		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5		
+		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
+		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
+		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
+		'025A' => ['cooking_list', 'v2 a*', [qw(len type item_list)]],
+		'025F' => ['auction_windows', 'V', [qw(flag)]], # 6
+		'0260' => ['mail_window', 'V', [qw(flag)]], # 6
+		'0274' => ['mail_return', 'V v', [qw(mailID fail)]], # 8
+		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]], #v 14
+		'0283' => ['account_id', 'a4', [qw(accountID)]], # 6
+		'0287' => ['cash_dealer'], # -1
+		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12		
+		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
+		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
+		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
+		'0291' => ['message_string', 'v', [qw(msg_id)]], # 4
+		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
+		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]], # 10
+		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
+		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
+		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
+		'029B' => ($rpackets{'029B'} == 72) # or 80
+			? ['mercenary_init', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]] # 72
+			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]] # 80
+		,
+		'029C' => ['mercenary_property', 'v8 Z24 v5 a4 v V2', [qw(atk matk hit crit def mdef flee aspd name lv hp max_hp sp max_sp contract_end faith summons kills)]], # 66
+		'029D' => ['skills_list'], # -1 # mercenary skills		
+		'02A2' => ['stat_info', 'v V', [qw(type val)]], # 8 was "mercenary_param_change"
+		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
+		'02A6' => ['gameguard_request'], # 22		
+		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
+		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
+		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
+		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
+		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
+		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
+		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
+		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
+		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
+		'02B9' => ['hotkeys'], # 191 # hotkeys:27
+		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
+		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
+		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
+		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
+		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
+		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
+		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
+		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
+		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10		
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02D3' => ['bind_on_equip', 'v', [qw(index)]], # 4
+		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]], # 29
+		'02D5' => ['isvr_disconnect'], # 2
+		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], # -1 #type is job
+		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]], # 10
+		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]], # 3
+		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]], # -1
+		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]], # 32
+		'02DE' => ['battleground_score', 'v2', [qw(score_lion score_eagle)]], # 6
+		'02DF' => ['battleground_position', 'a4 Z24 v3', [qw(ID name job x y)]], # 36
+		'02E0' => ['battleground_hp', 'a4 Z24 v2', [qw(ID name hp max_hp)]], # 34
+		'02E1' => ['actor_action', 'a4 a4 a4 V3 v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]], # 33
+		'02E7' => ['map_property', 'v2 a*', [qw(len type info_table)]], # -1 # int[] mapInfoTable
+		'02E8' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02E9' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02EA' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
+		'02EB' => ['map_loaded', 'V a3 C2 v', [qw(syncMapSync coords xSize ySize font)]], # 13
+		'02EC' => ['actor_exists', 'C a4 v3 V v5 V v5 a4 a4 V C2 a6 C2 v2', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 67 # Moving # TODO: C struct is different
+		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 C2 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 59 # Spawning
+		'02EE' => ['actor_moved', 'a4 v3 V v10 a4 a4 V C2 a3 C3 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize act lv font)]], # 60 # Standing
+		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
+		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
+		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
+		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]], # 25
+		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
+		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
+		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]], # -1
+		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]], # 14
+		'0449' => ['hack_shield_alarm', 'x2', [qw(unknown)]], # 4		
+		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
+		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
+		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
+		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],
+		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
+		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
+		'0837' => ['search_store_fail', 'C', [qw(reason)]],
+		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
+		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
+		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
+		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'08B9' => ['login_pin_code_request2', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
-		'006D' => ['character_creation_successful', 'a4 V9 v V2 v15 Z24 C6 v2 Z16 V5', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style body weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag map deleteDate robe slotMove addons sex)]],
+		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -368,8 +514,16 @@ sub new {
 		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
+		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
+		'098D' => ['clan_leave'],
+		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
+		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
+		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -380,31 +534,55 @@ sub new {
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
+		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
 		'0A00' => ['hotkeys', 'C a*', [qw(rotate hotkeys)]],
 		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
 		'0A07' => ['rodex_remove_item', 'C a2 v2', [qw(result ID amount weight)]],   # 9
+		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
+		'0A0A' => ['storage_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+		'0A0B' => ['cart_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+		'0A0C' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
+		'0A0D' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A0F' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
+		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
 		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
-		'0A27' => ['hp_sp_changed', 'vV', [qw(type amount)]],
+		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
+		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
+		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
 		'0A37' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options)]],
-		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 x4', [qw(ID name partyName guildName guildTitle)]],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
+		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
+		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4A' => ['private_airship_type', 'V', [qw(type)]],
+		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
+		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
-		'0AC4' => ['account_server_info', 'x2 a4 a4 a4 a4 a26 C x17 a*', [qw(sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
-		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort unknown)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
+		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
+		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
+		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
+		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
+		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
+		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
-		'0ADE' => ['flag', 'V', [qw(unknown)]],
-		
+ 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
+		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
+		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		};
 
 	# Item RECORD Struct's
@@ -477,75 +655,6 @@ sub new {
 
 	return $self;
 }
-
-use constant {
-	REFUSE_INVALID_ID => 0x0,
-	REFUSE_INVALID_PASSWD => 0x1,
-	REFUSE_ID_EXPIRED => 0x2,
-	ACCEPT_ID_PASSWD => 0x3,
-	REFUSE_NOT_CONFIRMED => 0x4,
-	REFUSE_INVALID_VERSION => 0x5,
-	REFUSE_BLOCK_TEMPORARY => 0x6,
-	REFUSE_BILLING_NOT_READY => 0x7,
-	REFUSE_NONSAKRAY_ID_BLOCKED => 0x8,
-	REFUSE_BAN_BY_DBA => 0x9,
-	REFUSE_EMAIL_NOT_CONFIRMED => 0xa,
-	REFUSE_BAN_BY_GM => 0xb,
-	REFUSE_TEMP_BAN_FOR_DBWORK => 0xc,
-	REFUSE_SELF_LOCK => 0xd,
-	REFUSE_NOT_PERMITTED_GROUP => 0xe,
-	REFUSE_WAIT_FOR_SAKRAY_ACTIVE => 0xf,
-	REFUSE_NOT_CHANGED_PASSWD => 0x10,
-	REFUSE_BLOCK_INVALID => 0x11,
-	REFUSE_WARNING => 0x12,
-	REFUSE_NOT_OTP_USER_INFO => 0x13,
-	REFUSE_OTP_AUTH_FAILED => 0x14,
-	REFUSE_SSO_AUTH_FAILED => 0x15,
-	REFUSE_NOT_ALLOWED_IP_ON_TESTING => 0x16,
-	REFUSE_OVER_BANDWIDTH => 0x17,
-	REFUSE_OVER_USERLIMIT => 0x18,
-	REFUSE_UNDER_RESTRICTION => 0x19,
-	REFUSE_BY_OUTER_SERVER => 0x1a,
-	REFUSE_BY_UNIQUESERVER_CONNECTION => 0x1b,
-	REFUSE_BY_AUTHSERVER_CONNECTION => 0x1c,
-	REFUSE_BY_BILLSERVER_CONNECTION => 0x1d,
-	REFUSE_BY_AUTH_WAITING => 0x1e,
-	REFUSE_DELETED_ACCOUNT => 0x63,
-	REFUSE_ALREADY_CONNECT => 0x64,
-	REFUSE_TEMP_BAN_HACKING_INVESTIGATION => 0x65,
-	REFUSE_TEMP_BAN_BUG_INVESTIGATION => 0x66,
-	REFUSE_TEMP_BAN_DELETING_CHAR => 0x67,
-	REFUSE_TEMP_BAN_DELETING_SPOUSE_CHAR => 0x68,
-	REFUSE_USER_PHONE_BLOCK => 0x69,
-	ACCEPT_LOGIN_USER_PHONE_BLOCK => 0x6a,
-	ACCEPT_LOGIN_CHILD => 0x6b,
-	REFUSE_IS_NOT_FREEUSER => 0x6c,
-	REFUSE_INVALID_ONETIMELIMIT => 0x6d,
-	REFUSE_CHANGE_PASSWD_FORCE => 0x6e,
-	REFUSE_OUTOFDATE_PASSWORD => 0x6f,
-	REFUSE_NOT_CHANGE_ACCOUNTID => 0xf0,
-	REFUSE_NOT_CHANGE_CHARACTERID => 0xf1,
-	REFUSE_SSO_AUTH_BLOCK_USER => 0x1394,
-	REFUSE_SSO_AUTH_GAME_APPLY => 0x1395,
-	REFUSE_SSO_AUTH_INVALID_GAMENUM => 0x1396,
-	REFUSE_SSO_AUTH_INVALID_USER => 0x1397,
-	REFUSE_SSO_AUTH_OTHERS => 0x1398,
-	REFUSE_SSO_AUTH_INVALID_AGE => 0x1399,
-	REFUSE_SSO_AUTH_INVALID_MACADDRESS => 0x139a,
-	REFUSE_SSO_AUTH_BLOCK_ETERNAL => 0x13c6,
-	REFUSE_SSO_AUTH_BLOCK_ACCOUNT_STEAL => 0x13c7,
-	REFUSE_SSO_AUTH_BLOCK_BUG_INVESTIGATION => 0x13c8,
-	REFUSE_SSO_NOT_PAY_USER => 0x13ba,
-	REFUSE_SSO_ALREADY_LOGIN_USER => 0x13bb,
-	REFUSE_SSO_CURRENT_USED_USER => 0x13bc,
-	REFUSE_SSO_OTHER_1 => 0x13bd,
-	REFUSE_SSO_DROP_USER => 0x13be,
-	REFUSE_SSO_NOTHING_USER => 0x13bf,
-	REFUSE_SSO_OTHER_2 => 0x13c0,
-	REFUSE_SSO_WRONG_RATETYPE_1 => 0x13c1,
-	REFUSE_SSO_EXTENSION_PCBANG_TIME => 0x13c2,
-	REFUSE_SSO_WRONG_RATETYPE_2 => 0x13c3,
-};
 
 ######################################
 #### Packet inner struct handlers ####
@@ -675,7 +784,7 @@ sub parse_items_nonstackable {
 		# not change the amount if it's already a non-zero value.
 		$item->{amount} = 1 unless ($item->{amount});
 		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -686,7 +795,7 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
-		$item->{idenfitied} = $item->{identified} & (1 << 0);
+		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }
 
@@ -1116,91 +1225,6 @@ sub equip_item {
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
 
-sub exp_zeny_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	if ($args->{type} == 1) {
-		$char->{exp_last} = $char->{exp};
-		$char->{exp} = $args->{val};
-		debug "Exp: $args->{val}\n", "parseMsg";
-		if (!$bExpSwitch) {
-			$bExpSwitch = 1;
-		} else {
-			if ($char->{exp_last} > $char->{exp}) {
-				$monsterBaseExp = 0;
-			} else {
-				$monsterBaseExp = $char->{exp} - $char->{exp_last};
-			}
-			$totalBaseExp += $monsterBaseExp;
-			if ($bExpSwitch == 1) {
-				$totalBaseExp += $monsterBaseExp;
-				$bExpSwitch = 2;
-			}
-		}
-
-	} elsif ($args->{type} == 2) {
-		$char->{exp_job_last} = $char->{exp_job};
-		$char->{exp_job} = $args->{val};
-		debug "Job Exp: $args->{val}\n", "parseMsg";
-		if ($jExpSwitch == 0) {
-			$jExpSwitch = 1;
-		} else {
-			if ($char->{exp_job_last} > $char->{exp_job}) {
-				$monsterJobExp = 0;
-			} else {
-				$monsterJobExp = $char->{exp_job} - $char->{exp_job_last};
-			}
-			$totalJobExp += $monsterJobExp;
-			if ($jExpSwitch == 1) {
-				$totalJobExp += $monsterJobExp;
-				$jExpSwitch = 2;
-			}
-		}
-		my $basePercent = $char->{exp_max} ?
-			($monsterBaseExp / $char->{exp_max} * 100) :
-			0;
-		my $jobPercent = $char->{exp_job_max} ?
-			($monsterJobExp / $char->{exp_job_max} * 100) :
-			0;
-		message TF("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
-		Plugins::callHook('exp_gained');
-
-	} elsif ($args->{type} == 20) {
-		my $change = $args->{val} - $char->{zeny};
-		if ($change > 0) {
-			message TF("You gained %s zeny.\n", formatNumber($change));
-		} elsif ($change < 0) {
-			message TF("You lost %s zeny.\n", formatNumber(-$change));
-		}
-		$char->{zeny} = $args->{val};
-		debug "zeny: $args->{val}\n", "parseMsg";
-		Plugins::callHook('zeny_change', {
-			zeny	=> $args->{val},
-			change	=> $change,
-		});
-		if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
-			$messageSender->sendQuit();
-			error (TF("Auto disconnecting due to zeny lower than %s!\n", $config{dcOnZeny}));
-			chatLog("k", T("*** You have no money, auto disconnect! ***\n"));
-			quit();
-		}
-	} elsif ($args->{type} == 22) {
-		$char->{exp_max_last} = $char->{exp_max};
-		$char->{exp_max} = $args->{val};
-		debug(TF("Required Exp: %s\n", $args->{val}), "parseMsg");
-		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
-			$messageSender->sendSync(1);
-			$initSync = 0;
-		}
-	} elsif ($args->{type} == 23) {
-		$char->{exp_job_max_last} = $char->{exp_job_max};
-		$char->{exp_job_max} = $args->{val};
-		debug("Required Job Exp: $args->{val}\n", "parseMsg");
-		message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
-	}
-}
-
 # TODO: test optimized unpacking
 sub friend_list {
 	my ($self, $args) = @_;
@@ -1241,7 +1265,12 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
-	$slave->{expPercent}   = ($args->{exp_max}) ? ($args->{exp} / $args->{exp_max}) * 100 : 0;
+	
+	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	}
 }
 
 # 022E
@@ -1317,6 +1346,7 @@ sub guild_member_setting_list {
 		# TODO: isn't there a nyble unpack or something and is this even correct?
 		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
 		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
 		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
 	}
 }
@@ -1774,42 +1804,6 @@ sub memo_success {
 	}
 }
 
-{
-	my %mercenaryParam = (
-		0x00 => 'walk_speed',
-		0x05 => 'hp',
-		0x06 => 'hp_max',
-		0x07 => 'sp',
-		0x08 => 'sp_max',
-		0x29 => 'atk',
-		0x2B => 'attack_magic_max',
-		0x31 => 'hit',
-		0x35 => 'attack_delay',
-		0xA5 => 'flee',
-		0xBD => 'kills',
-		0xBE => 'faith',
-	);
-
-	sub mercenary_param_change {
-		my ($self, $args) = @_;
-
-		return unless $char->{mercenary};
-
-		if (my $type = $mercenaryParam{$args->{type}}) {
-			$char->{mercenary}{$type} = $args->{param};
-
-			$char->{mercenary}{attack_speed} = int (200 - (($char->{mercenary}{attack_delay} < 10) ? 10 : ($char->{mercenary}{attack_delay} / 10)));
-			$char->{mercenary}{hpPercent}    = $char->{mercenary}{hp_max} ? 100 * $char->{mercenary}{hp} / $char->{mercenary}{hp_max} : 0;
-			$char->{mercenary}{spPercent}    = $char->{mercenary}{sp_max} ? 100 * $char->{mercenary}{sp} / $char->{mercenary}{sp_max} : 0;
-			$char->{mercenary}{walk_speed}   = $char->{mercenary}{walk_speed} ? $char->{mercenary}{walk_speed}/1000 : 0.15;
-
-			debug "Mercenary: $type = $args->{param}\n";
-		} else {
-			warning "Unknown mercenary param received (type: $args->{type}; param: $args->{param}; raw: " . unpack ('H*', $args->{RAW_MSG}) . ")\n";
-		}
-	}
-}
-
 # +message_string
 sub mercenary_off {
 	$slavesList->removeByID($char->{mercenary}{ID});
@@ -1959,206 +1953,6 @@ sub npc_talk {
 						msg => $talk{msg},
 						});
 	message "$name: $talk{msg}\n", "npc";
-}
-
-sub party_allow_invite {
-   my ($self, $args) = @_;
-
-   if ($args->{type}) {
-      message T("Not allowed other player invite to Party\n"), "party", 1;
-   } else {
-      message T("Allowed other player invite to Party\n"), "party", 1;
-   }
-}
-
-sub party_chat {
-	my ($self, $args) = @_;
-
-	my $msg = bytesToString($args->{message});
-
-	# Type: String
-	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
-	$chatMsgUser =~ s/ $//;
-
-	stripLanguageCode(\$chatMsg);
-	# Type: String
-	my $chat = "$chatMsgUser : $chatMsg";
-	message TF("[Party] %s\n", $chat), "partychat";
-
-	chatLog("p", "$chat\n") if ($config{'logPartyChat'});
-	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
-
-	Plugins::callHook('packet_partyMsg', {
-		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
-	});
-}
-
-# TODO: test if this packet also gives us the item share options => 07D8 does this
-# TODO: add 07D8 strings for rules: item_pickup, item_division
-sub party_exp {
-	my ($self, $args) = @_;
-	$char->{party}{share} = $args->{type};
-	if ($args->{type} == 0) {
-		message T("Party EXP set to Individual Take\n"), "party", 1;
-	} elsif ($args->{type} == 1) {
-		message T("Party EXP set to Even Share\n"), "party", 1;
-	} else {
-		error T("Error setting party option\n");
-	}
-}
-
-sub party_hp_info {
-	my ($self, $args) = @_;
-	my $ID = $args->{ID};
-
-	if ($char->{party}{users}{$ID}) {
-		$char->{party}{users}{$ID}{hp} = $args->{hp};
-		$char->{party}{users}{$ID}{hp_max} = $args->{hp_max};
-	}
-}
-
-sub party_invite {
-	my ($self, $args) = @_;
-	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
-	$incomingParty{ID} = $args->{ID};
-	$incomingParty{ACK} = $args->{switch} eq '02C6' ? '02C7' : '00FF';
-	$timeout{ai_partyAutoDeny}{time} = time;
-}
-
-sub party_invite_result {
-	my ($self, $args) = @_;
-	my $name = bytesToString($args->{name});
-	if ($args->{type} == 0) {
-		warning TF("Join request failed: %s is already in a party\n", $name);
-	} elsif ($args->{type} == 1) {
-		warning TF("Join request failed: %s denied request\n", $name);
-	} elsif ($args->{type} == 2) {
-		message TF("%s accepted your request\n", $name), "info";
-	} elsif ($args->{type} == 3) {
-		message T("Join request failed: Party is full.\n"), "info";
-	} elsif ($args->{type} == 4) {
-		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
-	}
-}
-
-sub party_join {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my ($ID, $role, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID role x y type name user map)};
-	$name = bytesToString($name);
-	$user = bytesToString($user);
-
-	if (!$char->{party}{joined} || !$char->{party}{users}{$ID} || !%{$char->{party}{users}{$ID}}) {
-		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
-		if ($ID eq $accountID) {
-			message TF("You joined party '%s'\n", $name), undef, 1;
-			# Some servers receive party_users_info before party_join when logging in
-			# This is to prevent clearing info already in $char->{party}
-			$char->{party} = {} unless ref($char->{party}) eq "HASH";
-			$char->{party}{joined} = 1;
-		} else {
-			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
-		}
-	}
-
-	my $actor = $char->{party}{users}{$ID} && %{$char->{party}{users}{$ID}} ? $char->{party}{users}{$ID} : new Actor::Party;
-
-	$actor->{admin} = !$role;
-	delete $actor->{statuses} unless $actor->{online} = !$type;
-	$actor->{pos}{x} = $x;
-	$actor->{pos}{y} = $y;
-	$actor->{map} = $map;
-	$actor->{name} = $user;
-	$actor->{ID} = $ID;
-	$char->{party}{users}{$ID} = $actor;
-
-=pod
-	$char->{party}{users}{$ID} = new Actor::Party if ($char->{party}{users}{$ID}{name});
-	$char->{party}{users}{$ID}{admin} = !$role;
-	if ($type == 0) {
-		$char->{party}{users}{$ID}{online} = 1;
-	} elsif ($type == 1) {
-		$char->{party}{users}{$ID}{online} = 0;
-		delete $char->{party}{users}{$ID}{statuses};
-	}
-=cut
-	$char->{party}{name} = $name;
-=pod
-	$char->{party}{users}{$ID}{pos}{x} = $x;
-	$char->{party}{users}{$ID}{pos}{y} = $y;
-	$char->{party}{users}{$ID}{map} = $map;
-	$char->{party}{users}{$ID}{name} = $user;
-	$char->{party}{users}{$ID}->{ID} = $ID;
-=cut
-
-	if ($config{partyAutoShare} && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption(1, 0);
-	}
-}
-
-sub party_leave {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	delete $char->{party}{users}{$ID};
-	binRemove(\@partyUsersID, $ID);
-	if ($ID eq $accountID) {
-		message T("You left the party\n");
-		delete $char->{party};
-		undef @partyUsersID;
-		$char->{party}{joined} = 0;
-	} else {
-		message TF("%s left the party\n", bytesToString($args->{name}));
-	}
-}
-
-sub party_location {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-
-	if ($char->{party}{users}{$ID}) {
-		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
-		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
-		$char->{party}{users}{$ID}{online} = 1;
-		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
-	}
-}
-
-sub party_organize_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		warning T("Can't organize party - party name exists\n");
-	} else {
-		$char->{party}{users}{$accountID}{admin} = 1 if $char->{party}{users}{$accountID};
-	}
-}
-
-sub party_users_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $msg = $args->{RAW_MSG};
-	$char->{party}{name} = bytesToString($args->{party_name});
-
-	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
-		my $ID = substr($msg, $i, 4);
-		if (binFind(\@partyUsersID, $ID) eq "") {
-			binAdd(\@partyUsersID, $ID);
-		}
-		$char->{party}{users}{$ID} = new Actor::Party();
-		$char->{party}{users}{$ID}{name} = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
-		$char->{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
-		$char->{party}{users}{$ID}{admin} = !(unpack("C1", substr($msg, $i + 44, 1)));
-		$char->{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
-		$char->{party}{users}{$ID}->{ID} = $ID;
-		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
-	if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party}{joined} && $char->{party}{users}{$accountID}{admin}) {
-		$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
-	}
 }
 
 sub pet_capture_result {
@@ -2445,13 +2239,14 @@ sub received_characters {
 
 	message T("Received characters from Character Server\n"), "connection";
 
-	$messageSender->sendBanCheck($accountID) if(grep { $args->{switch} eq $_ } qw( 099D ));
+	#$messageSender->sendBanCheck($accountID) if(grep { $args->{switch} eq $_ } qw( 099D ));
 		
 	if ($masterServer->{pinCode}) {
 		message T("Waiting for PIN code request\n"), "connection";
 		$timeout{'charlogin'}{'time'} = time;
 		
 	} elsif ($masterServer->{pauseCharLogin}) {
+		return if($config{XKore} eq 1 || $config{XKore} eq 3);
 		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
 			$timeout{'char_login_pause'}{'timeout'} = 2;
 		}
@@ -2459,21 +2254,6 @@ sub received_characters {
 		
 	} else {
 		CharacterLogin();
-	}
-}
-
-sub refine_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 1) {
-		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 2) {
-		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
-	} elsif ($args->{fail} == 3) {
-		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
-	} else {
-		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
 	}
 }
 
@@ -2918,10 +2698,10 @@ sub skill_use {
 		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && $char->{slaves}{$args->{sourceID}} && !$char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}{hpPercent}, $char->{slaves}{$args->{sourceID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{sourceID}}->hp_percent, $char->{slaves}{$args->{sourceID}}->sp_percent);
 		$disp = $status.$disp;
 	} elsif ($char->{slaves} && !$char->{slaves}{$args->{sourceID}} && $char->{slaves}{$args->{targetID}}) {
-		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}{hpPercent}, $char->{slaves}{$args->{targetID}}{spPercent});
+		my $status = sprintf("[%3d/%3d] ", $char->{slaves}{$args->{targetID}}->hp_percent, $char->{slaves}{$args->{targetID}}->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
@@ -3184,276 +2964,6 @@ sub skill_delete {
 	binRemove(\@skillsID, $handle);
 
 	# i guess we don't have to remove it from Skill::DynamicInfo
-}
-
-sub stats_added {
-	my ($self, $args) = @_;
-
-	if ($args->{val} == 207) {
-		error T("Not enough stat points to add\n");
-	} else {
-		if ($args->{type} == 13) {
-			$char->{str} = $args->{val};
-			debug "Strength: $args->{val}\n", "parseMsg";
-
-		} elsif ($args->{type} == 14) {
-			$char->{agi} = $args->{val};
-			debug "Agility: $args->{val}\n", "parseMsg";
-
-		} elsif ($args->{type} == 15) {
-			$char->{vit} = $args->{val};
-			debug "Vitality: $args->{val}\n", "parseMsg";
-
-		} elsif ($args->{type} == 16) {
-			$char->{int} = $args->{val};
-			debug "Intelligence: $args->{val}\n", "parseMsg";
-
-		} elsif ($args->{type} == 17) {
-			$char->{dex} = $args->{val};
-			debug "Dexterity: $args->{val}\n", "parseMsg";
-
-		} elsif ($args->{type} == 18) {
-			$char->{luk} = $args->{val};
-			debug "Luck: $args->{val}\n", "parseMsg";
-
-		} else {
-			debug "Something: $args->{val}\n", "parseMsg";
-		}
-	}
-	Plugins::callHook('packet_charStats', {
-		type	=> $args->{type},
-		val	=> $args->{val},
-	});
-}
-
-sub stats_info {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	$char->{points_free} = $args->{points_free};
-	$char->{str} = $args->{str};
-	$char->{points_str} = $args->{points_str};
-	$char->{agi} = $args->{agi};
-	$char->{points_agi} = $args->{points_agi};
-	$char->{vit} = $args->{vit};
-	$char->{points_vit} = $args->{points_vit};
-	$char->{int} = $args->{int};
-	$char->{points_int} = $args->{points_int};
-	$char->{dex} = $args->{dex};
-	$char->{points_dex} = $args->{points_dex};
-	$char->{luk} = $args->{luk};
-	$char->{points_luk} = $args->{points_luk};
-	$char->{attack} = $args->{attack};
-	$char->{attack_bonus} = $args->{attack_bonus};
-	$char->{attack_magic_min} = $args->{attack_magic_min};
-	$char->{attack_magic_max} = $args->{attack_magic_max};
-	$char->{def} = $args->{def};
-	$char->{def_bonus} = $args->{def_bonus};
-	$char->{def_magic} = $args->{def_magic};
-	$char->{def_magic_bonus} = $args->{def_magic_bonus};
-	$char->{hit} = $args->{hit};
-	$char->{flee} = $args->{flee};
-	$char->{flee_bonus} = $args->{flee_bonus};
-	$char->{critical} = $args->{critical};
-	debug	"Strength: $char->{str} #$char->{points_str}\n"
-		."Agility: $char->{agi} #$char->{points_agi}\n"
-		."Vitality: $char->{vit} #$char->{points_vit}\n"
-		."Intelligence: $char->{int} #$char->{points_int}\n"
-		."Dexterity: $char->{dex} #$char->{points_dex}\n"
-		."Luck: $char->{luk} #$char->{points_luk}\n"
-		."Attack: $char->{attack}\n"
-		."Attack Bonus: $char->{attack_bonus}\n"
-		."Magic Attack Min: $char->{attack_magic_min}\n"
-		."Magic Attack Max: $char->{attack_magic_max}\n"
-		."Defense: $char->{def}\n"
-		."Defense Bonus: $char->{def_bonus}\n"
-		."Magic Defense: $char->{def_magic}\n"
-		."Magic Defense Bonus: $char->{def_magic_bonus}\n"
-		."Hit: $char->{hit}\n"
-		."Flee: $char->{flee}\n"
-		."Flee Bonus: $char->{flee_bonus}\n"
-		."Critical: $char->{critical}\n"
-		."Status Points: $char->{points_free}\n", "parseMsg";
-}
-
-sub stat_info {
-	my ($self,$args) = @_;
-	return unless changeToInGameState();
-	if ($args->{type} == 0) {
-		$char->{walk_speed} = $args->{val} / 1000;
-		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 3) {
-		debug "Something2: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 4) {
-		if ($args->{val} == 0) {
-			delete $char->{muted};
-			delete $char->{mute_period};
-			message T("Mute period expired.\n");
-		} else {
-			my $val = (0xFFFFFFFF - $args->{val}) + 1;
-			$char->{mute_period} = $val * 60;
-			$char->{muted} = time;
-			if ($config{dcOnMute}) {
-				error TF("Auto disconnecting, you've been muted for %s minutes!\n", $val);
-				chatLog("k", TF("*** You have been muted for %s minutes, auto disconnect! ***\n", $val));
-				$messageSender->sendQuit();
-				quit();
-			} else {
-				message TF("You've been muted for %s minutes\n", $val);
-			}
-		}
-	} elsif ($args->{type} == 5) {
-		$char->{hp} = $args->{val};
-		debug "Hp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 6) {
-		$char->{hp_max} = $args->{val};
-		debug "Max Hp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 7) {
-		$char->{sp} = $args->{val};
-		debug "Sp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 8) {
-		$char->{sp_max} = $args->{val};
-		debug "Max Sp: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 9) {
-		$char->{points_free} = $args->{val};
-		debug "Status Points: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 11) {
-		$char->{lv} = $args->{val};
-		message TF("You are now level %s\n", $args->{val}), "success";
-
-		Plugins::callHook('base_level_changed', {
-			level	=> $args->{val}
-		});
-
-		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
-			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
-			chatLog("k", TF("Disconnecting on level %s!\n", $config{dcOnLevel}));
-			quit();
-		}
-	} elsif ($args->{type} == 12) {
-		$char->{points_skill} = $args->{val};
-		debug "Skill Points: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 24) {
-		$char->{weight} = $args->{val} / 10;
-		debug "Weight: $char->{weight}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 25) {
-		$char->{weight_max} = int($args->{val} / 10);
-		debug "Max Weight: $char->{weight_max}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 41) {
-		$char->{attack} = $args->{val};
-		debug "Attack: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 42) {
-		$char->{attack_bonus} = $args->{val};
-		debug "Attack Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 43) {
-		$char->{attack_magic_max} = $args->{val};
-		debug "Magic Attack Max: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 44) {
-		$char->{attack_magic_min} = $args->{val};
-		debug "Magic Attack Min: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 45) {
-		$char->{def} = $args->{val};
-		debug "Defense: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 46) {
-		$char->{def_bonus} = $args->{val};
-		debug "Defense Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 47) {
-		$char->{def_magic} = $args->{val};
-		debug "Magic Defense: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 48) {
-		$char->{def_magic_bonus} = $args->{val};
-		debug "Magic Defense Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 49) {
-		$char->{hit} = $args->{val};
-		debug "Hit: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 50) {
-		$char->{flee} = $args->{val};
-		debug "Flee: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 51) {
-		$char->{flee_bonus} = $args->{val};
-		debug "Flee Bonus: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 52) {
-		$char->{critical} = $args->{val};
-		debug "Critical: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 53) {
-		$char->{attack_delay} = $args->{val};
-		$char->{attack_speed} = 200 - $args->{val}/10;
-		debug "Attack Speed: $char->{attack_speed}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 55) {
-		$char->{lv_job} = $args->{val};
-		message TF("You are now job level %s\n", $args->{val}), "success";
-		
-		Plugins::callHook('job_level_changed', {
-			level	=> $args->{val}
-		});
-		
-		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
-			message TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel});
-			chatLog("k", TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel}));
-			quit();
-		}
-	} elsif ($args->{type} == 124) {
-		debug "Something3: $args->{val}\n", "parseMsg", 2;
-	} else {
-		debug "Something: $args->{val}\n", "parseMsg", 2;
-	}
-
-	if (!$char->{walk_speed}) {
-		$char->{walk_speed} = 0.15; # This is the default speed, since xkore requires this and eA (And aegis?) do not send this if its default speed
-	}
-}
-
-sub stat_info2 {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-	my ($type, $val, $val2) = @{$args}{qw(type val val2)};
-	if ($type == 13) {
-		$char->{str} = $val;
-		$char->{str_bonus} = $val2;
-		debug "Strength: $val + $val2\n", "parseMsg";
-	} elsif ($type == 14) {
-		$char->{agi} = $val;
-		$char->{agi_bonus} = $val2;
-		debug "Agility: $val + $val2\n", "parseMsg";
-	} elsif ($type == 15) {
-		$char->{vit} = $val;
-		$char->{vit_bonus} = $val2;
-		debug "Vitality: $val + $val2\n", "parseMsg";
-	} elsif ($type == 16) {
-		$char->{int} = $val;
-		$char->{int_bonus} = $val2;
-		debug "Intelligence: $val + $val2\n", "parseMsg";
-	} elsif ($type == 17) {
-		$char->{dex} = $val;
-		$char->{dex_bonus} = $val2;
-		debug "Dexterity: $val + $val2\n", "parseMsg";
-	} elsif ($type == 18) {
-		$char->{luk} = $val;
-		$char->{luk_bonus} = $val2;
-		debug "Luck: $val + $val2\n", "parseMsg";
-	}
-}
-
-sub stats_points_needed {
-	my ($self, $args) = @_;
-	if ($args->{type} == 32) {
-		$char->{points_str} = $args->{val};
-		debug "Points needed for Strength: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type}	== 33) {
-		$char->{points_agi} = $args->{val};
-		debug "Points needed for Agility: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 34) {
-		$char->{points_vit} = $args->{val};
-		debug "Points needed for Vitality: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 35) {
-		$char->{points_int} = $args->{val};
-		debug "Points needed for Intelligence: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 36) {
-		$char->{points_dex} = $args->{val};
-		debug "Points needed for Dexterity: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type} == 37) {
-		$char->{points_luk} = $args->{val};
-		debug "Points needed for Luck: $args->{val}\n", "parseMsg";
-	}
 }
 
 sub storage_password_request {
@@ -3973,7 +3483,7 @@ sub auction_result {
 	} elsif ($flag == 9) {
 		message T("You cannot place more than 5 bids at a time.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4045,7 +3555,7 @@ sub auction_my_sell_stop {
 	} elsif ($flag == 2) {
 		message T("Bid number is incorrect.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4087,7 +3597,7 @@ sub guild_alliance {
 	} elsif ($args->{flag} == 4) {
 		message T("You have too many alliances.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4107,17 +3617,7 @@ sub manner_message {
 	} elsif ($args->{flag} == 5) {
 		message T("You got a good point.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
-	}
-}
-
-sub GM_silence {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
-	}
-	else {
-		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4139,21 +3639,8 @@ sub taekwon_packets {
 	} elsif ($args->{flag} == 30) { #Feel/Hate reset
 		message T("Your Hate and Feel targets have been resetted.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
-}
-
-sub guild_master_member {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0xd7) {
-	} elsif ($args->{type} == 0x57) {
-		message T("You are not a guildmaster.\n"), "info";
-		return;
-	} else {
-		warning TF("type: %s gave unknown results in: %s\n", $args->{type}, $self->{packet_list}{$args->{switch}}->[0]);
-		return;
-	}
-	message T("You are a guildmaster.\n"), "info";
 }
 
 # 0152
@@ -4228,74 +3715,6 @@ sub divorced {
 	message TF("%s and %s have divorced from each other.\n", $char->{name}, $args->{name}), "info"; # is it $char->{name} or is this packet also used for other players?
 }
 
-# 0221
-# TODO: test new unpack string
-sub upgrade_list {
-	my ($self, $args) = @_;
-	my $msg;
-	$msg .= center(" " . T("Upgrade List") . " ", 79, '-') . "\n";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		#my ($index, $nameID) = unpack('v x6 C', substr($args->{RAW_MSG}, $i, 13));
-		my ($index, $nameID, $upgrade, $cards) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
-		my $item = $char->inventory->getByID($index);
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$item->{binID}, itemName($item)]);
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-}
-
-# 0223
-# TODO: can we use itemName? and why is type 0 equal to type 1?
-# doesn't seem to be used by eA
-sub upgrade_message {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 1) {
-		message TF("Weapon upgraded: %s\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 2) {
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", itemName(Actor::Item::get($args->{nameID}))), "info";
-	} elsif($args->{type} == 3) {
-		message TF("You lack item %s to upgrade the weapon.\n", itemNameSimple($args->{nameID})), "info";
-	}
-}
-
-# 025A
-# TODO
-sub cooking_list {
-	my ($self, $args) = @_;
-	undef $cookingList;
-	my $k = 0;
-	my $msg;
-	$msg .= center(" " . T("Cooking List") . " ", 79, '-') . "\n";
-	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $nameID = unpack('v', substr($args->{RAW_MSG}, $i, 2));
-		$cookingList->[$k] = $nameID;
-		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
-		$k++;
-	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	message($msg, "list");
-	message T("You can now use the 'cook' command.\n"), "info";
-}
-
-# TODO: test whether the message is correct: tech: i haven't seen this in action yet
-sub party_show_picker {
-	my ($self, $args) = @_;
-
-	# wtf the server sends this packet for your own character? (rRo)
-	return if $args->{sourceID} eq $accountID;
-
-	my $string = ($char->{party}{users}{$args->{sourceID}} && %{$char->{party}{users}{$args->{sourceID}}}) ? $char->{party}{users}{$args->{sourceID}}->name() : $args->{sourceID};
-	my $item = {};
-	$item->{nameID} = $args->{nameID};
-	$item->{identified} = $args->{identified};
-	$item->{upgrade} = $args->{upgrade};
-	$item->{cards} = $args->{cards};
-	$item->{broken} = $args->{broken};
-	message TF("Party member %s has picked up item %s.\n", $string, itemName($item)), "info";
-}
-
 # 02CB
 # TODO
 # Required to start the instancing information window on Client
@@ -4337,7 +3756,7 @@ sub instance_window_leave {
 	} elsif ($args->{type} == 4) {
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
 	} else {
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
 }
 
@@ -4403,71 +3822,13 @@ sub cash_buy_fail {
 	debug "cash_buy_fail $args->{cash_points} $args->{kafra_points} $args->{fail}\n";
 }
 
-sub adopt_reply {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message T("You cannot adopt more than 1 child.\n"), "info";
-	} elsif($args->{type} == 1) {
-		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
-	} elsif($args->{type} == 2) {
-		message T("You cannot adopt a married person.\n"), "info";
-	}
-}
-
 # TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
 sub adopt_request {
 	my ($self, $args) = @_;
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
-# 0293
-sub boss_map_info {
-	my ($self, $args) = @_;
-	my $bossName = bytesToString($args->{name});
-
-	if ($args->{flag} == 0) {
-		message T("You cannot find any trace of a Boss Monster in this area.\n"), "info";
-	} elsif ($args->{flag} == 1) {
-		message TF("MVP Boss %s is now on location: (%d, %d)\n", $bossName, $args->{x}, $args->{y}), "info";
-	} elsif ($args->{flag} == 2) {
-		message TF("MVP Boss %s has been detected on this map!\n", $bossName), "info";
-	} elsif ($args->{flag} == 3) {
-		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
-	} else {
-		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-		warning TF("flag: %s gave unknown results in: %s\n", $args->{flag}, $self->{packet_list}{$args->{switch}}->[0]);
-	}
-}
-
-sub GM_req_acc_name {
-	my ($self, $args) = @_;
-	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
-}
-
 #newly added in Sakexe_0.pm
-
-# 00CB
-sub sell_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("Sell failed.\n");
-	} else {
-		message T("Sell completed.\n"), "success";
-	}
-	if (AI::is("sellAuto")) {
-		AI::args->{recv_sell_packet} = 1;
-	}
-}
-
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
-}
 
 # 00B3
 # TODO: add real client messages and logic?
@@ -4484,77 +3845,6 @@ sub switch_character {
 	debug "result: $args->{result}\n";
 }
 
-# 0x803
-sub booking_register_request {
-	my ($self, $args) = @_;
-	my $result = $args->{result};
-
-	if ($result == 0) {
-	message T("Booking successfully created!\n"), "booking";
-	} elsif ($result == 2) {
-	error T("You already got a reservation group active!\n"), "booking";
-	} else {
-	error TF("Unknown error in creating the group booking (Error %s)\n", $result), "booking";
-	}
-}
-
-# 0x805
-sub booking_search_request {
-	my ($self, $args) = @_;
-
-	if (length($args->{innerData}) == 0) {
-		error T("Without results!\n"), "booking";
-		return;
-	}
-
-	message "-------------- Booking Search ---------------\n";
-	for (my $offset = 0; $offset < length($args->{innerData}); $offset += 48) {
-		my ($index, $charName, $expireTime, $level, $mapID, @job) = unpack("V Z24 V s8", substr($args->{innerData}, $offset, 48));
-		message swrite(
-			T("Name: \@<<<<<<<<<<<<<<<<<<<<<<<<	Index: \@>>>>\n" .
-			"Created: \@<<<<<<<<<<<<<<<<<<<<<	Level: \@>>>\n" .
-			"MapID: \@<<<<<\n".
-			"Job: \@<<<< \@<<<< \@<<< \@<<<< \@<<<<\n" .
-			"---------------------------------------------"),
-			[bytesToString($charName), $index, getFormattedDate($expireTime), $level, $mapID, @job]), "booking";
-	}
-}
-
-# 0x807
-sub booking_delete_request {
-	my ($self, $args) = @_;
-	my $result = $args->{result};
-
-	if ($result == 0) {
-	message T("Reserve deleted successfully!\n"), "booking";
-	} elsif ($result == 3) {
-	error T("You're not with a group booking active!\n"), "booking";
-	} else {
-	error TF("Unknown error in deletion of group booking (Error %s)\n", $result), "booking";
-	}
-}
-
-# 0x809
-sub booking_insert {
-	my ($self, $args) = @_;
-
-	message TF("%s has created a new group booking (index: %s)\n", bytesToString($args->{name}), $args->{ID});
-}
-
-# 0x80A
-sub booking_update {
-	my ($self, $args) = @_;
-
-	message TF("Reserve index of %s has changed its settings\n", $args->{ID});
-}
-
-# 0x80B
-sub booking_delete {
-	my ($self, $args) = @_;
-
-	message TF("Deleted reserve group index %s\n", $args->{ID});
-}
-
 sub disconnect_character {
 	my ($self, $args) = @_;
 	debug "disconnect_character result: $args->{result}\n";
@@ -4564,784 +3854,19 @@ sub character_block_info {
 	#TODO
 }
 
-sub quest_all_list2 {
+sub party_dead {
 	my ($self, $args) = @_;
-	$questList = {};
-	my $msg;
-	my ($questID, $active, $time_start, $time, $mission_amount);
-	my $i = 0;
-	my ($mobID, $count, $amount, $mobName);
-	while ($i < $args->{RAW_MSG_SIZE} - 8) {
-		$msg = substr($args->{message}, $i, 15);
-		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
 
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		$i += 15;
-
-		if ($mission_amount > 0) {
-			for (my $j = 0 ; $j < $mission_amount ; $j++) {
-				$msg = substr($args->{message}, $i, 32);
-				($mobID, $count, $amount, $mobName) = unpack('V v2 Z24', $msg);
-				my $mission = \%{$quest->{missions}->{$mobID}};
-				$mission->{mobID} = $mobID;
-				$mission->{count} = $count;
-				$mission->{amount} = $amount;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName} = bytesToString($mobName);
-				debug "- $mobID $count / $amount $mobName\n", "info";
-				$i += 32;
-			}
-		}
-	}
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
 }
 
-sub achievement_list {
-	my ($self, $args) = @_;
-	
-	$achievementList = {};
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen = 22;
-	my $achieve_pack = 'V C V10 V C';
-	my $achieve_len = length pack $achieve_pack;
-	
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
-		my $achieve;
-
-		($achieve->{ach_id},
-		$achieve->{completed},
-		$achieve->{objective1},
-		$achieve->{objective2},
-		$achieve->{objective3},
-		$achieve->{objective4},
-		$achieve->{objective5},
-		$achieve->{objective6},
-		$achieve->{objective7},
-		$achieve->{objective8},
-		$achieve->{objective9},
-		$achieve->{objective10},
-		$achieve->{completed_at},
-		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
-		
-		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
-	}
+sub progress_bar_unit {
+	my($self, $args) = @_;
+	debug "Displays progress bar (GID: $args-{GID} time: $args-{time})\n";	
 }
 
-sub achievement_update {
-	my ($self, $args) = @_;
-	
-	my $achieve;
-	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
-	
-	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
-}
-
-sub achievement_reward_ack {
-	my ($self, $args) = @_;
-	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
-}
-
-sub rodex_mail_list {
-	my ( $self, $args ) = @_;
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v C C C';
-	my $header_len = ((length pack $header_pack) + 2);
-	
-	my $mail_pack = 'V2 C C Z24 V V v';
-	my $base_mail_len = length pack $mail_pack;
-	
-	if ($args->{switch} eq '0A7D') {
-		$rodexList->{current_page} = 0;
-		$rodexList = {};
-		$rodexList->{mails} = {};
-	} else {
-		$rodexList->{current_page}++;
-	}
-	
-	if ($args->{isEnd} == 1) {
-		$rodexList->{last_page} = $rodexList->{current_page};
-	} else {
-		$rodexList->{mails_per_page} = $args->{amount};
-	}
-	
-	my $mail_len;
-	
-	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 79, '-') . "\n";
-	
-	my $index = 0;
-	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
-		my $mail;
-
-		($mail->{mailID1},
-		$mail->{mailID2},
-		$mail->{isRead},
-		$mail->{type},
-		$mail->{sender},
-		$mail->{regDateTime},
-		$mail->{expireDateTime},
-		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
-		
-		$mail->{title} = substr($msg, ($i+$base_mail_len), $mail->{Titlelength});
-		
-		$mail->{page} = $rodexList->{current_page};
-		$mail->{page_index} = $index;
-		
-		$mail_len = $base_mail_len + $mail->{Titlelength};
-		
-		$rodexList->{mails}{$mail->{mailID1}} = $mail;
-		
-		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
-		
-		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
-		
-		$index++;
-	}
-	$print_msg .= sprintf("%s\n", ('-'x79));
-	message $print_msg, "list";
-}
-
-sub rodex_read_mail {
-	my ( $self, $args ) = @_;
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v C V2 v V2 C';
-	my $header_len = ((length pack $header_pack) + 2);
-	
-	my $mail = {};
-	
-	$mail->{body} = substr($msg, $header_len, $args->{text_len});
-	$mail->{zeny1} = $args->{zeny1};
-	$mail->{zeny2} = $args->{zeny2};
-	
-	my $item_pack = 'v2 C3 a8 a4 C a4 a25';
-	my $item_len = length pack $item_pack;
-	
-	my $mail_len;
-	
-	$mail->{items} = [];
-	
-	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
-	
-	my @message_parts = unpack("(A51)*", $mail->{body});
-	
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Message:", $message_parts[0]]);
-	
-	foreach my $part (@message_parts[1..$#message_parts]) {
-		$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["", $part]);
-	}
-	
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
-	
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
-
-	my $index = 0;
-	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
-		my $item;
-		($item->{amount},
-		$item->{nameID},
-		$item->{identified},
-		$item->{broken},
-		$item->{upgrade},
-		$item->{cards},
-		$item->{unknow1},
-		$item->{type},
-		$item->{unknow2},
-		$item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
-		
-		$item->{name} = itemName($item);
-		
-		my $display = $item->{name};
-		$display .= " x $item->{amount}";
-		
-		$print_msg .= swrite("@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $display]);
-		
-		push(@{$mail->{items}}, $item);
-		$index++;
-	}
-	
-	$print_msg .= sprintf("%s\n", ('-'x79));
-	message $print_msg, "list";
-	
-	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
-	
-	$rodexList->{mails}{$args->{mailID1}}{isRead} = 1;
-	
-	$rodexList->{current_read} = $args->{mailID1};
-}
-
-sub unread_rodex {
-	my ( $self, $args ) = @_;
-	message "You have new unread rodex mails.\n";
-}
-
-sub rodex_remove_item {
-	my ( $self, $args ) = @_;
-	
-	if (!$args->{result}) {
-		error "You failed to remove an item from rodex mail.\n";
-		return;
-	}
-	
-	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
-	
-	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
-			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
-	
-	$rodex_item->{amount} -= $args->{amount};
-	if ($rodex_item->{amount} <= 0) {
-		$rodexWrite->{items}->remove($rodex_item);
-	}
-}
-
-sub rodex_add_item {
-	my ( $self, $args ) = @_;
-	
-	if ($args->{fail}) {
-		error "You failed to add an item to rodex mail.\n";
-		return;
-	}
-	
-	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
-	
-	if ($rodex_item) {
-		$rodex_item->{amount} += $args->{amount};
-	} else {
-		$rodex_item = new Actor::Item();
-		$rodex_item->{ID} = $args->{ID};
-		$rodex_item->{nameID} = $args->{nameID};
-		$rodex_item->{type} = $args->{type};
-		$rodex_item->{amount} = $args->{amount};
-		$rodex_item->{identified} = $args->{identified};
-		$rodex_item->{broken} = $args->{broken};
-		$rodex_item->{upgrade} = $args->{upgrade};
-		$rodex_item->{cards} = $args->{cards};
-		$rodex_item->{options} = $args->{options};
-		$rodex_item->{name} = itemName($rodex_item);
-
-		$rodexWrite->{items}->add($rodex_item);
-	}
-	
-	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
-			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
-}
-
-sub rodex_open_write {
-	my ( $self, $args ) = @_;
-	
-	$rodexWrite = {};
-	
-	$rodexWrite->{items} = new InventoryList;
-	
-}
-
-sub rodex_check_player {
-	my ( $self, $args ) = @_;
-	
-	if (!$args->{char_id}) {
-		error "Could not find player with name '".$args->{name}."'.";
-		return;
-	}
-	
-	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
-	
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $args->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
-	
-	$print_msg .= sprintf("%s\n", ('-'x79));
-	message $print_msg, "list";
-	
-	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
-}
-
-sub rodex_write_result {
-	my ( $self, $args ) = @_;
-	
-	if ($args->{fail}) {
-		error "You failed to send the rodex mail.\n";
-		return;
-	}
-	
-	message "Your rodex mail was sent with success.\n";
-	undef $rodexWrite;
-}
-
-sub rodex_get_zeny {
-	my ( $self, $args ) = @_;
-	
-	if ($args->{fail}) {
-		error "You failed to get the zeny of the rodex mail.\n";
-		return;
-	}
-	
-	message "The zeny of the rodex mail was requested with success.\n";
-	
-	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
-}
-
-sub rodex_get_item {
-	my ( $self, $args ) = @_;
-	
-	if ($args->{fail}) {
-		error "You failed to get the items of the rodex mail.\n";
-		return;
-	}
-	
-	message "The items of the rodex mail were requested with success.\n";
-	
-	$rodexList->{mails}{$args->{mailID1}}{items} = [];
-}
-
-sub rodex_delete {
-	my ( $self, $args ) = @_;
-	
-	return unless (exists $rodexList->{mails}{$args->{mailID1}});
-	
-	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
-	
-	delete $rodexList->{mails}{$args->{mailID1}};
-}
 
 1;
-
-=pod
-packet_ver: 5
-0x0064,55
-0x0065,17
-0x0066,6
-0x0067,37
-0x0068,46
-0x0069,-1
-0x006a,23
-0x006b,-1
-0x006c,3
-0x006d,108
-0x006e,3
-0x006f,2
-0x0070,6
-0x0071,28
-0x0072,19,wanttoconnection,2:6:10:14:18
-0x0073,11
-0x0074,3
-0x0075,-1
-0x0076,9
-0x0077,5
-0x0078,54
-0x0079,53
-0x007a,58
-0x007b,60
-0x007c,41
-0x007d,2,loadendack,0
-0x007e,6,ticksend,2
-0x007f,6
-0x0080,7
-0x0081,3
-0x0082,2
-0x0083,2
-0x0084,2
-0x0085,5,walktoxy,2
-0x0086,16
-0x0087,12
-0x0088,10
-0x0089,7,actionrequest,2:6
-0x008a,29
-0x008b,2
-0x008c,-1,globalmessage,2:4
-0x008d,-1
-0x008e,-1
-//0x008f,0
-0x0090,7,npcclicked,2
-0x0091,22
-0x0092,28
-0x0093,2
-0x0094,6,getcharnamerequest,2
-0x0095,30
-0x0096,-1,wis,2:4:28
-0x0097,-1
-0x0098,3
-0x0099,-1,gmmessage,2:4
-0x009a,-1
-0x009b,5,changedir,2:4
-0x009c,9
-0x009d,17
-0x009e,17
-0x009f,6,takeitem,2
-0x00a0,23
-0x00a1,6
-0x00a2,6,dropitem,2:4
-0x00a3,-1
-0x00a4,-1
-0x00a5,-1
-0x00a6,-1
-0x00a7,8,useitem,2:4
-0x00a8,7
-0x00a9,6,equipitem,2:4
-0x00aa,7
-0x00ab,4,unequipitem,2
-0x00ac,7
-//0x00ad,0
-0x00ae,-1
-0x00af,6
-0x00b0,8
-0x00b1,8
-0x00b2,3,restart,2
-0x00b3,3
-0x00b4,-1
-0x00b5,6
-0x00b6,6
-0x00b7,-1
-0x00b8,7,npcselectmenu,2:6
-0x00b9,6,npcnextclicked,2
-0x00ba,2
-0x00bb,5,statusup,2:4
-0x00bc,6
-0x00bd,44
-0x00be,5
-0x00bf,3,emotion,2
-0x00c0,7
-0x00c1,2,howmanyconnections,0
-0x00c2,6
-0x00c3,8
-0x00c4,6
-0x00c5,7,npcbuysellselected,2:6
-0x00c6,-1
-0x00c7,-1
-0x00c8,-1,npcbuylistsend,2:4
-0x00c9,-1,npcselllistsend,2:4
-0x00ca,3
-0x00cb,3
-0x00cc,6,gmkick,2
-0x00cd,3
-0x00ce,2,killall,0
-0x00cf,27,wisexin,2:26
-0x00d0,3,wisall,2
-0x00d1,4
-0x00d2,4
-0x00d3,2,wisexlist,0
-0x00d4,-1
-0x00d5,-1,createchatroom,2:4:6:7:15
-0x00d6,3
-0x00d7,-1
-0x00d8,6
-0x00d9,14,chataddmember,2:6
-0x00da,3
-0x00db,-1
-0x00dc,28
-0x00dd,29
-0x00de,-1,chatroomstatuschange,2:4:6:7:15
-0x00df,-1
-0x00e0,30,changechatowner,2:6
-0x00e1,30
-0x00e2,26,kickfromchat,2
-0x00e3,2,chatleave,0
-0x00e4,6,traderequest,2
-0x00e5,26
-0x00e6,3,tradeack,2
-0x00e7,3
-0x00e8,8,tradeadditem,2:4
-0x00e9,19
-0x00ea,5
-0x00eb,2,tradeok,0
-0x00ec,3
-0x00ed,2,tradecancel,0
-0x00ee,2
-0x00ef,2,tradecommit,0
-0x00f0,3
-0x00f1,2
-0x00f2,6
-0x00f3,8,movetokafra,2:4
-0x00f4,21
-0x00f5,8,movefromkafra,2:4
-0x00f6,8
-0x00f7,2,closekafra,0
-0x00f8,2
-0x00f9,26,createparty,2
-0x00fa,3
-0x00fb,-1
-0x00fc,6,partyinvite,2
-0x00fd,27
-0x00fe,30
-0x00ff,10,replypartyinvite,2:6
-0x0100,2,leaveparty,0
-0x0101,6
-0x0102,6,partychangeoption,2:4
-0x0103,30,removepartymember,2:6
-0x0104,79
-0x0105,31
-0x0106,10
-0x0107,10
-0x0108,-1,partymessage,2:4
-0x0109,-1
-0x010a,4
-0x010b,6
-0x010c,6
-0x010d,2
-0x010e,11
-0x010f,-1
-0x0110,10
-0x0111,39
-0x0112,4,skillup,2
-0x0113,10,useskilltoid,2:4:6
-0x0114,31
-0x0115,35
-0x0116,10,useskilltopos,2:4:6:8
-0x0117,18
-0x0118,2,stopattack,0
-0x0119,13
-0x011a,15
-0x011b,20,useskillmap,2:4
-0x011c,68
-0x011d,2,requestmemo,0
-0x011e,3
-0x011f,16
-0x0120,6
-0x0121,14
-0x0122,-1
-0x0123,-1
-0x0124,21
-0x0125,8
-0x0126,8,putitemtocart,2:4
-0x0127,8,getitemfromcart,2:4
-0x0128,8,movefromkafratocart,2:4
-0x0129,8,movetokafrafromcart,2:4
-0x012a,2,removeoption,0
-0x012b,2
-0x012c,3
-0x012d,4
-0x012e,2,closevending,0
-0x012f,-1
-0x0130,6,vendinglistreq,2
-0x0131,86
-0x0132,6
-0x0133,-1
-0x0134,-1,purchasereq,2:4:8
-0x0135,7
-0x0136,-1
-0x0137,6
-0x0138,3
-0x0139,16
-0x013a,4
-0x013b,4
-0x013c,4
-0x013d,6
-0x013e,24
-0x013f,26,itemmonster,2
-0x0140,22,mapmove,2:18:20
-0x0141,14
-0x0142,6
-0x0143,10,npcamountinput,2:6
-0x0144,23
-0x0145,19
-0x0146,6,npccloseclicked,2
-0x0147,39
-0x0148,8
-0x0149,9,gmreqnochat,2:6:7
-0x014a,6
-0x014b,27
-0x014c,-1
-0x014d,2,guildcheckmaster,0
-0x014e,6
-0x014f,6,guildrequestinfo,2
-0x0150,110
-0x0151,6,guildrequestemblem,2
-0x0152,-1
-0x0153,-1,guildchangeemblem,2:4
-0x0154,-1
-0x0155,-1,guildchangememberposition,2
-0x0156,-1
-0x0157,6
-0x0158,-1
-0x0159,54,guildleave,2:6:10:14
-0x015a,66
-0x015b,54,guildexpulsion,2:6:10:14
-0x015c,90
-0x015d,42,guildbreak,2
-0x015e,6
-0x015f,42
-0x0160,-1
-0x0161,-1,guildchangepositioninfo,2
-0x0162,-1
-0x0163,-1
-0x0164,-1
-0x0165,30,createguild,6
-0x0166,-1
-0x0167,3
-0x0168,14,guildinvite,2
-0x0169,3
-0x016a,30
-0x016b,10,guildreplyinvite,2:6
-0x016c,43
-0x016d,14
-0x016e,186,guildchangenotice,2:6:66
-0x016f,182
-0x0170,14,guildrequestalliance,2
-0x0171,30
-0x0172,10,guildreplyalliance,2:6
-0x0173,3
-0x0174,-1
-0x0175,6
-0x0176,106
-0x0177,-1
-0x0178,4,itemidentify,2
-0x0179,5
-0x017a,4,usecard,2
-0x017b,-1
-0x017c,6,insertcard,2:4
-0x017d,7
-0x017e,-1,guildmessage,2:4
-0x017f,-1
-0x0180,6,guildopposition,2
-0x0181,3
-0x0182,106
-0x0183,10,guilddelalliance,2:6
-0x0184,10
-0x0185,34
-//0x0186,0
-0x0187,6
-0x0188,8
-0x0189,4
-0x018a,4,quitgame,0
-0x018b,4
-0x018c,29
-0x018d,-1
-0x018e,10,producemix,2:4:6:8
-0x018f,6
-0x0190,90,useskilltoposinfo,2:4:6:8:10
-0x0191,86
-0x0192,24
-0x0193,6,solvecharname,2
-0x0194,30
-0x0195,102
-0x0196,9
-0x0197,4,resetchar,2
-0x0198,8,changemaptype,2:4:6
-0x0199,4
-0x019a,14
-0x019b,10
-0x019c,-1,lgmmessage,2:4
-0x019d,6,gmhide,0
-0x019e,2
-0x019f,6,catchpet,2
-0x01a0,3
-0x01a1,3,petmenu,2
-0x01a2,35
-0x01a3,5
-0x01a4,11
-0x01a5,26,changepetname,2
-0x01a6,-1
-0x01a7,4,selectegg,2
-0x01a8,4
-0x01a9,6,sendemotion,2
-0x01aa,10
-0x01ab,12
-0x01ac,6
-0x01ad,-1
-0x01ae,4,selectarrow,2
-0x01af,4,changecart,2
-0x01b0,11
-0x01b1,7
-0x01b2,-1,openvending,2:4:84:85
-0x01b3,67
-0x01b4,12
-0x01b5,18
-0x01b6,114
-0x01b7,6
-0x01b8,3
-0x01b9,6
-0x01ba,26,remove,2
-0x01bb,26,shift,2
-0x01bc,26,recall,2
-0x01bd,26,summon,2
-0x01be,2
-0x01bf,3
-0x01c0,2
-0x01c1,14
-0x01c2,10
-0x01c3,-1
-0x01c4,22
-0x01c5,22
-0x01c6,4
-0x01c7,2
-0x01c8,13
-0x01c9,97
-//0x01ca,0
-0x01cb,9
-0x01cc,9
-0x01cd,30
-0x01ce,6,autospell,2
-0x01cf,28
-0x01d0,8
-0x01d1,14
-0x01d2,10
-0x01d3,35
-0x01d4,6
-0x01d5,-1,npcstringinput,2:4:8
-0x01d6,4
-0x01d7,11
-0x01d8,54
-0x01d9,53
-0x01da,60
-0x01db,2
-0x01dc,-1
-0x01dd,47
-0x01de,33
-0x01df,6,gmreqaccname,2
-0x01e0,30
-0x01e1,8
-0x01e2,34
-0x01e3,14
-0x01e4,2
-0x01e5,6
-0x01e6,26
-0x01e7,2,sndoridori,0
-0x01e8,28,createparty2,2
-0x01e9,81
-0x01ea,6
-0x01eb,10
-0x01ec,26
-0x01ed,2,snexplosionspirits,0
-0x01ee,-1
-0x01ef,-1
-0x01f0,-1
-0x01f1,-1
-0x01f2,20
-0x01f3,10
-0x01f4,32
-0x01f5,9
-0x01f6,34
-0x01f7,14,adoptreply,0
-0x01f8,2
-0x01f9,6,adoptrequest,0
-0x01fa,48
-0x01fb,56
-0x01fc,-1
-0x01fd,4,repairitem,2
-0x01fe,5
-0x01ff,10
-0x0200,26
-0x0201,-1
-0x0202,26,friendslistadd,2
-0x0203,10,friendslistremove,2:6
-0x0204,18
-0x0205,26
-0x0206,11
-0x0207,34
-0x0208,11,friendslistreply,2:6:10
-0x0209,36
-0x020a,10
-//0x020b,0
-//0x020c,0
-0x020d,-1
-=cut
