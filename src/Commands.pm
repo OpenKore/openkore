@@ -2763,7 +2763,7 @@ sub cmdGuild {
 			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {
-			$messageSender->sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
+			$messageSender->sendGuildSetAlly($player->{ID}, $accountID, $charID);
 			message TF("Sent guild alliance request to %s\n", $player->{name});
 		}
 
