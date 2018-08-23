@@ -432,6 +432,7 @@ sub new {
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
+		'02C2' => ['message_string', 'v a*', [qw(msg_id messageString)]],#-1 I think it should be used together.[sctnightcore]
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
@@ -566,6 +567,7 @@ sub new {
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A6F' => ['message_string', 'v V a*', [qw(msg_id color messageString)]], #-1 I think it should be used together.[sctnightcore]
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],

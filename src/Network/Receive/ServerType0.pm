@@ -416,6 +416,7 @@ sub new {
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'02C1' => ['npc_chat', 'x2 a4 a4 Z*', [qw(ID color message)]],
+		'02C2' => ['message_string', 'v a*', [qw(msg_id messageString)]], #-1 
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
@@ -626,6 +627,7 @@ sub new {
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A6F' => ['message_string', 'v V a*', [qw(msg_id color messageString)]], #-1 I think it should be used together.[sctnightcore]
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
