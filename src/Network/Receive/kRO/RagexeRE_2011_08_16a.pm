@@ -23,7 +23,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'082D' => ['received_characters_info', 'x2 C5 x20 a*', [qw(normal_slot premium_slot billing_slot producible_slot valid_slot charInfo)]],
 		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],#10
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],#16
 		'0856' => ['actor_exists', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
@@ -38,18 +37,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-sub received_characters_info {
-	my ($self, $args) = @_;
-
-	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
-	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
-	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
-	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
-	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
-
-	$timeout{charlogin}{time} = time;
 }
 
 1;
