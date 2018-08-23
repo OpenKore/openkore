@@ -2455,7 +2455,11 @@ sub sendAchievementGetReward {
 sub sendTop10Alchemist {
 	my ($self) = @_;
 	
-	$self->sendToServer($self->reconstruct({switch => 'rank_alchemist'}));
+	if (!$masterServer->{rankingSystemType}) {
+		$self->sendToServer($self->reconstruct({switch => 'rank_alchemist'}));
+	} else {
+		$self->sendTop10(1);
+	}
 	
 	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
 }
@@ -2463,7 +2467,11 @@ sub sendTop10Alchemist {
 sub sendTop10Blacksmith {
 	my ($self) = @_;
 	
-	$self->sendToServer($self->reconstruct({switch => 'rank_blacksmith'}));
+	if (!$masterServer->{rankingSystemType}) {
+		$self->sendToServer($self->reconstruct({switch => 'rank_blacksmith'}));
+	} else {
+		$self->sendTop10(0);
+	}
 	
 	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
 }	
@@ -2471,7 +2479,11 @@ sub sendTop10Blacksmith {
 sub sendTop10PK {
 	my ($self) = @_;
 	
-	$self->sendToServer($self->reconstruct({switch => 'rank_killer'}));
+	if (!$masterServer->{rankingSystemType}) {
+		$self->sendToServer($self->reconstruct({switch => 'rank_killer'}));
+	} else {
+		$self->sendTop10(3);
+	}
 	
 	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
 }
@@ -2479,9 +2491,28 @@ sub sendTop10PK {
 sub sendTop10Taekwon {
 	my ($self) = @_;
 	
-	$self->sendToServer($self->reconstruct({switch => 'rank_taekwon'}));
+	if (!$masterServer->{rankingSystemType}) {
+		$self->sendToServer($self->reconstruct({switch => 'rank_taekwon'}));
+	} else {
+		$self->sendTop10(2);
+	}
 	
 	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
+}
+
+sub sendTop10 {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'rank_general',
+		
+		# Type:
+		# 0 => Blacksmith
+		# 1 => Alchemist
+		# 2 => Taekwon
+		# 3 => PK
+		type => $type,
+	}));
 }
 
 1;

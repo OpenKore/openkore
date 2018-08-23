@@ -27,12 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0225,2,taekwon,0
-sub sendTop10Taekwon {
-	$_[0]->sendToServer(pack('v', 0x0225));
-	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
-}
-
 =pod
 //2005-03-28aSakexe
 0x0224,10

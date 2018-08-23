@@ -28,12 +28,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0217,2,blacksmith,0
-sub sendTop10Blacksmith {
-	$_[0]->sendToServer(pack('v', 0x0217));
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}	
-
 # 0x0231,26,changehomunculusname,0
 sub sendHomunculusName {
 	my $self = shift;
