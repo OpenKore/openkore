@@ -4863,7 +4863,9 @@ sub map_change {
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
 
-		$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal bRO )); # request to unfreeze char alisonrag
+		# request to unfreeze char alisonrag
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
+		
 		$timeout{ai}{time} = time;
 	}
 
