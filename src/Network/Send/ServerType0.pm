@@ -315,15 +315,6 @@ sub sendAttackStop {
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
-=pod
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x93, 0x01) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
-
 sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
