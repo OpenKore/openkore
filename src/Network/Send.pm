@@ -2443,4 +2443,45 @@ sub reconstruct_sell_bulk {
 	$args->{sellInfo} = pack "(a*)*", map { pack "a2 v", $_->{ID}, $_->{amount} } @{$args->{items}};
 }
 
+sub sendAchievementGetReward {
+	my ($self, $ach_id) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'achievement_get_reward',
+		ach_id => $ach_id,
+	}));
+}
+
+sub sendTop10Alchemist {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'rank_alchemist'}));
+	
+	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
+}
+
+sub sendTop10Blacksmith {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'rank_blacksmith'}));
+	
+	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
+}	
+
+sub sendTop10PK {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'rank_killer'}));
+	
+	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
+}
+
+sub sendTop10Taekwon {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'rank_taekwon'}));
+	
+	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
+}
+
 1;
