@@ -27,12 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0237,2,rankingpk,0
-sub sendTop10PK {
-	$_[0]->sendToServer(pack('v', 0x0237));
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
-}
-
 =pod
 //2005-05-30aSakexe
 0x022e,71
