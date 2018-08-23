@@ -1239,7 +1239,7 @@ sub charSelectScreen {
 			}
 		}
 		
-		my $messageMapName = sprintf(", %s", $chars[$num]{map_name}) if ($chars[$num]{map_name});
+		my $messageMapName = sprintf(", %s", $chars[$num]{last_map}) if ($chars[$num]{last_map});
 		
 		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
