@@ -150,13 +150,17 @@ sub new {
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
+		'0217' => ['rank_blacksmith'],
+		'0218' => ['rank_alchemist'],
 		'021D' => ['less_effect'], # TODO
 		'0222' => ['refine_item', 'V', [qw(ID)]],
+		'0225' => ['rank_taekwon'],
 		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
+		'0237' => ['rank_killer'],
 		'023B' => ['storage_password'],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
@@ -315,15 +319,6 @@ sub sendAttackStop {
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
-=pod
-sub sendGetCharacterName {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x93, 0x01) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-=cut
-
 sub sendGMSummon {
 	my ($self, $playerName) = @_;
 	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
@@ -472,34 +467,6 @@ sub sendRequestMakingHomunculus {
 		$self->sendToServer($msg);
 		debug "Sent RequestMakingHomunculus\n", "sendPacket", 2;
 	}
-}
-
-sub sendTop10Alchemist {
-	my $self = shift;
-	my $msg = pack("v", 0x0218);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
-}
-
-sub sendTop10Blacksmith {
-	my $self = shift;
-	my $msg = pack("v", 0x0217);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}	
-
-sub sendTop10PK {
-	my $self = shift;
-	my $msg = pack("v", 0x0237);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
-}
-
-sub sendTop10Taekwon {
-	my $self = shift;
-	my $msg = pack("v", 0x0225);
-	$self->sendToServer($msg);
-	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
 }
 
 # 0x0213 has no info on eA
@@ -682,13 +649,6 @@ sub sendCaptchaInitiate {
 sub sendCaptchaAnswer {
 	my ($self, $answer) = @_;
 	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
-	$self->sendToServer($msg);
-}
-
-# 0x0204,18
-sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
-	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
 	$self->sendToServer($msg);
 }
 

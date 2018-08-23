@@ -144,8 +144,12 @@ sub new {
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'0217' => ['rank_blacksmith'],
+		'0218' => ['rank_alchemist'],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
+		'0225' => ['rank_taekwon'],
 		'0231' => ['homunculus_name', 'a24', [qw(name)]],
+		'0237' => ['rank_killer'],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
@@ -186,6 +190,7 @@ sub new {
 		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
@@ -843,7 +848,6 @@ sub sendPartyOrganize {
 # TODO
 
 # 0x0201,-1
-# 0x0204,18
 # 0x0205,26
 # 0x0206,11
 # 0x0207,34
