@@ -28,6 +28,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 sendCryptKeys 0x530C62EB, 0x44E91D9A, 0x638C1AA5
+blockingPlayerCancel 1
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -48,6 +49,7 @@ charBlockSize 144
 pinCode 1
 charDeleteDateType 1
 sendCryptKeys 0x530C62EB, 0x44E91D9A, 0x638C1AA5
+blockingPlayerCancel 1
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
@@ -68,6 +70,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 charDeleteDateType 1
 pauseCharLogin 1
+blockingPlayerCancel 1
 
 # http://www.ragnarokeurope.com/
 [France - fRO]
@@ -101,6 +104,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x
 addTableFolders idRO
 charBlockSize 144
 charDeleteDateType 1
+blockingPlayerCancel 1
 
 # Renewal
 # http://playragnarok.com
@@ -118,6 +122,7 @@ addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
 sendCryptKeys 0x3A78749E, 0x0C02582A, 0x2EDD7F28
+blockingPlayerCancel 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
@@ -194,6 +199,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 OTT_ip 112.175.128.135
 OTT_port 6900
 sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
+blockingPlayerCancel 1
 
 # http://ro.gnjoy.com/
 [Korea - kRO: Sara/Rangidis/Thanatos]

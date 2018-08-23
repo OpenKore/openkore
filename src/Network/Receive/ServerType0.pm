@@ -965,7 +965,9 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	$messageSender->sendBlockingPlayerCancel() if(grep { $masterServer->{serverType} eq $_ } qw( Zero idRO_Renewal cRO iRO_Renewal bRO )); # request to unfreeze char alisonrag
+	
+	# request to unfreeze char - alisonrag
+	$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
 }
 
 sub area_spell {
