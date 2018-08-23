@@ -2443,4 +2443,13 @@ sub reconstruct_sell_bulk {
 	$args->{sellInfo} = pack "(a*)*", map { pack "a2 v", $_->{ID}, $_->{amount} } @{$args->{items}};
 }
 
+sub sendAchievementGetReward {
+	my ($self, $ach_id) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'achievement_get_reward',
+		ach_id => $ach_id,
+	}));
+}
+
 1;

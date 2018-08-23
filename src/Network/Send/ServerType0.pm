@@ -685,11 +685,4 @@ sub sendCaptchaAnswer {
 	$self->sendToServer($msg);
 }
 
-# 0x0204,18
-sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
-	my $msg = pack("C*", 0x25, 0x0A) . pack("V", $ach_id);
-	$self->sendToServer($msg);
-}
-
 1;
