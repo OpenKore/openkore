@@ -29,6 +29,7 @@ pinCode 1
 charDeleteDateType 1
 sendCryptKeys 0x530C62EB, 0x44E91D9A, 0x638C1AA5
 blockingPlayerCancel 1
+rankingSystemType 1
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -50,6 +51,7 @@ pinCode 1
 charDeleteDateType 1
 sendCryptKeys 0x530C62EB, 0x44E91D9A, 0x638C1AA5
 blockingPlayerCancel 1
+rankingSystemType 1
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
@@ -71,6 +73,7 @@ pinCode 1
 charDeleteDateType 1
 pauseCharLogin 1
 blockingPlayerCancel 1
+rankingSystemType
 
 # http://www.ragnarokeurope.com/
 [France - fRO]
@@ -123,6 +126,7 @@ charBlockSize 145
 charDeleteDateType 1
 sendCryptKeys 0x3A78749E, 0x0C02582A, 0x2EDD7F28
 blockingPlayerCancel 1
+rankingSystemType 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
@@ -137,6 +141,7 @@ paddedPackets_attackID 0x72
 paddedPackets_skillUseID 0xF5
 addTableFolders iRO
 charBlockSize 145
+rankingSystemType 1
 
 # Pre-renewal
 # http://playragnarok.com
@@ -150,6 +155,7 @@ serverType iRO_Classic
 serverEncoding Western
 addTableFolders iRO/Classic;iRO
 charBlockSize 108
+rankingSystemType 1
 
 # Re:Start
 # http://playragnarokrestart.com/
@@ -166,6 +172,7 @@ pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
 sendCryptKeys 0x48F719D3, 0x1F73118F, 0x27963B51
+rankingSystemType 1
 
 # TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
