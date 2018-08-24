@@ -427,8 +427,8 @@ sub scanBlocks {
 	my $block_starts = [];
 	
 	for (my $line = 0; $line < @{$script}; $line++) {
-		if ($script->[$line] =~ /^(if|switch|while)\s+\(.*\)\s+{$/) {
-			push @$block_starts, { type => $1, start => $line };
+		if ($script->[$line] =~ /^(if|switch|while|case)\s+\(.*\)\s+{$|^(else)\s+.*{/) {
+			push @$block_starts, { type => $1 || $2, start => $line };
 		} elsif ($script->[$line] eq '}') {
 			my $block = pop @$block_starts;
 			$block->{end} = $line;
