@@ -51,6 +51,7 @@ sub new {
 		'0090' => ['npc_talk', 'a4 C', [qw(ID type)]],
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
+		'0099' => ['gm_broadcast', 'v Z*', [qw(len message)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
@@ -66,6 +67,8 @@ sub new {
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
 		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
+		'00CC' => ['gm_kick', 'a4', [qw(targetAccountID)]],
+		'00CE' => ['gm_kick_all'],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -101,9 +104,11 @@ sub new {
 		'012A' => ['companion_release'],
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
+		'013F' => ['gm_item_mob_create', 'a24', [qw(name)]],
+		'0140' => ['gm_move_to_map', 'Z16 v v', [qw(mapName x y)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
-		'0149' => ['alignment'], # TODO
+		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
 		'014D' => ['guild_check'], # len 2
 		'014F' => ['guild_info_request', 'V', [qw(type)]],
 		'0151' => ['guild_emblem_request', 'a4', [qw(guildID)]],
@@ -124,6 +129,10 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
+		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
+		'019C' => ['gm_broadcast_local', 'v Z*', [qw(len message)]],
+		'019D' => ['gm_change_effect_state', 'V', [qw(effect_state)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01B2' => ['shop_open'], # TODO
 		'012E' => ['shop_close'], # len 2
@@ -132,6 +141,10 @@ sub new {
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
+		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
+		'01BB' => ['gm_shift', 'a24', [qw(playerName)]],
+		'01BC' => ['gm_recall', 'a24', [qw(playerName)]],
+		'01BD' => ['gm_summon_player', 'a24', [qw(playerName)]],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
@@ -267,16 +280,6 @@ sub sendQuitRequest {
 # 0x0096,-1,wis,2:4:28
 # 0x0097,-1
 # 0x0098,3
-
-# 0x0099,-1,gmmessage,2:4
-# TODO: implement + test
-sub sendGMMessage {
-	my ($self, $message) = @_; # to colorize, add in front of message: micc | ssss | blue | tool ?
-	$message = stringToBytes($message);
-	my $msg = pack('v2 Z*', 0x0099, length($message) + 5, $message);
-	$self->sendToServer($msg);
-}
-
 # 0x009a,-1
 # 0x009b,5,changedir,2:4
 # 0x009c,9
@@ -323,19 +326,6 @@ sub sendGMMessage {
 # 0x00c7,-1
 # 0x00ca,3
 # 0x00cb,3
-
-# 0x00cc,6,gmkick,2
-sub sendGMKick {
-	my ($self, $ID) = @_;
-	my $msg = pack('v V', 0x00CC, $ID);
-	$self->sendToServer($msg);
-}
-
-# 0x00ce,2,killall,0
-sub sendGMKillAll {
-	$_[0]->sendToServer(pack('v', 0x00CE));
-}
-
 # 0x00d1,4
 # 0x00d2,4
 # 0x00d4,-1
@@ -453,38 +443,12 @@ sub sendPKModeChange {
 # 0x013c,4
 # 0x013d,6
 # 0x013e,24
-
-# 0x013f,26,itemmonster,2
-# clif_parse_GM_Monster_Item
-sub sendGMMonsterItem {
-	my ($self, $name) = @_;
-	my $packet = pack('v a24', 0x013F, stringToBytes($name));
-	$self->sendToServer($packet);
-}
-
-# 0x0140,22,mapmove,2:18:20
-# clif_parse_MapMove
-sub sendGMMapMove {
-	my ($self, $name, $x, $y) = @_;
-	my $packet = pack('v Z16 v2', 0x013F, stringToBytes($name), $x, $y);
-	$self->sendToServer($packet);
-}
-
 # 0x0141,14
 # 0x0142,6
 # 0x0144,23
 # 0x0145,19
 # 0x0147,39
 # 0x0148,8
-
-# 0x0149,9,gmreqnochat,2:6:7
-sub sendAlignment {
-	my ($self, $ID, $alignment) = @_;
-	my $msg = pack('v a4 v', 0x0149, $ID, $alignment);
-	$self->sendToServer($msg);
-	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
-}
-
 # 0x014a,6
 # 0x014b,27
 # 0x014c,-1
@@ -621,56 +585,12 @@ sub sendSkillUseLocInfo {
 
 # 0x0191,86
 # 0x0192,24
-
-# 0x0193,6,solvecharname,2
-# sub sendGetCharacterName {
-	# my ($self, $ID) = @_;
-	# my $msg = pack('v a4', 0x0193, $ID);
-	# $self->sendToServer($msg);
-	# debug "Sent get character name: ID - ".getHex($ID)."\n", "sendPacket", 2;
-# }
-
 # 0x0194,30
 # 0x0195,102
 # 0x0196,9
-
-# 0x0197,4,resetchar,2
-sub sendGMResetChar { # type:0 status, type:1 skills
-	my ($self, $type) = @_;
-	my $msg = pack('v2', 0x0197, $type);
-	$self->sendToServer($msg);
-	debug "Sent GM Reset State.\n", "sendPacket", 2;
-}
-
-# 0x0198,8,changemaptype,2:4:6
-sub sendGMChangeMapType { # type is of .gat format
-	my ($self, $x, $y, $type) = @_;
-	my $msg = pack('v4', 0x0198, $x, $y, $type);
-	$self->sendToServer($msg);
-	debug "Sent GM Change Map Type.\n", "sendPacket", 2;
-}
-
 # 0x0199,4
 # 0x019a,14
 # 0x019b,10
-
-# 0x019c,-1,lgmmessage,2:4
-# TODO: implement + test
-sub sendGMLMessage { # local?
-	my ($self, $message) = @_; # to colorize, add in front of message: micc | ssss | blue | tool ?
-	my $msg = pack('v2 Z*', 0x019c, length($message) + 4, stringToBytes($message));
-	$self->sendToServer($msg);
-}
-
-# 0x019d,6,gmhide,0
-# TODO: test this
-sub sendGMHide {
-	my ($self) = @_;
-	my $msg = pack('v x4', 0x019D);
-	$self->sendToServer($msg);
-	debug "Sent GM Hide.\n", "sendPacket", 2;
-}
-
 # 0x019e,2
 # 0x01a0,3
 # 0x01a2,35
@@ -716,35 +636,6 @@ sub sendOpenShop {
 
 # 0x01b8,3
 # 0x01b9,6
-
-# 0x01ba,26,remove,2
-sub sendGMRemove {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x01BA, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
-# 0x01bb,26,shift,2
-sub sendGMShift {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x01BB, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
-# 0x01bc,26,recall,2
-sub sendGMRecall {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x01BC, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
-# 0x01bd,26,summon,2
-sub sendGMSummon {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x01BD, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
 # 0x01be,2
 
 # 0x01bf,3
