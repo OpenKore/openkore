@@ -199,6 +199,7 @@ sub new {
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'0447' => ['blocking_play_cancel'],
+		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], #Selling store
@@ -436,19 +437,6 @@ sub sendPreLoginCode {
 	}
 	$self->sendToServer($msg);
 	debug "Sent pre-login packet $type\n", "sendPacket", 2;
-}
-
-sub sendRaw {
-	my $self = shift;
-	my $raw = shift;
-	my @raw;
-	my $msg;
-	@raw = split / /, $raw;
-	foreach (@raw) {
-		$msg .= pack("C", hex($_));
-	}
-	$self->sendToServer($msg);
-	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
 }
 
 sub sendRequestMakingHomunculus {

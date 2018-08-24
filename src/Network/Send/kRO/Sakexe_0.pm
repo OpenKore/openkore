@@ -167,6 +167,7 @@ sub new {
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02F1' => ['notify_progress_bar_complete'],
+		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
