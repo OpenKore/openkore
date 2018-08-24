@@ -71693,3 +71693,18 @@ A box that contains: 1x Blank Certificate^000000
 This blank certificate can be used with forgery tokens to forge a hat certificate. Look for Hank in Morroc.
 ^ffffff_^000000
 #
+
+20054#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Filir Hat!
+300 Feathers
+200 Feather of Birds
+100 Ectoplasm
+5 Blue Feathers
+2 Yellow Gemstones
+1 Filir Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#

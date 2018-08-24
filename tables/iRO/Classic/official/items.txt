@@ -6978,3 +6978,5 @@
 20052#Cancer_Diadem_Certificate#
 
 20053#Blank_Certificate_Box#
+
+20054#Filir_Hat_Certificate#
