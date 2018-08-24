@@ -834,10 +834,13 @@ sub sendCloseShop {
 
 # 0x7DA
 sub sendPartyLeader {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0xDA, 0x07).$ID;
-	$self->sendToServer($msg);
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_leader',
+		accountID => $ID,
+	}));
+	
 	debug "Sent Change Party Leader ".getHex($ID)."\n", "sendPacket", 2;
 }
 
