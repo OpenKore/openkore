@@ -2425,7 +2425,6 @@ sub reconstruct_buy_bulk {
 	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
 }
 
-
 sub sendSellBulk {
 	my ($self, $r_array) = @_;
 	
@@ -2514,5 +2513,153 @@ sub sendTop10 {
 		type => $type,
 	}));
 }
+
+sub sendGMSummon {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_summon_player',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMBroadcast {
+	my ($self, $message) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_broadcast',
+		
+		# to colorize, add in front of message: micc | ssss | blue | tool ?
+		message => stringToBytes($message),
+	}));
+}
+
+sub sendGMKick {
+	my ($self, $accountID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_kick',
+		targetAccountID => $accountID,
+	}));
+}
+
+sub sendGMKickAll {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'gm_kick_all'}));
+}
+
+sub sendGMMonsterItem {
+	my ($self, $name) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_item_mob_create',
+		name => stringToBytes($name),
+	}));
+}
+
+sub sendGMMapMove {
+	my ($self, $name, $x, $y) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_move_to_map',
+		mapName => stringToBytes($name),
+		x => $x,
+		y => $y,
+	}));
+}
+
+sub sendGMResetStateSkill {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_reset_state_skill',
+		
+		# type
+		# 0 => status
+		# 1 => skills
+		type => $type,
+	}));
+	
+	debug "Sent GM Reset State/Skill.\n", "sendPacket", 2;
+}
+
+sub sendGMChangeMapType {
+	my ($self, $x, $y, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_change_cell_type',
+		x => $x,
+		y => $y,
+		
+		# type
+		# 0 => not walkable
+		# 1 => walkable
+		type => $type,
+	}));
+	
+	debug "Sent GM Change Map Type.\n", "sendPacket", 2;
+}
+
+sub sendGMBroadcastLocal {
+	my ($self, $message) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_broadcast_local',
+		message => stringToBytes($message),
+	}));
+}
+
+sub sendGMChangeEffectState {
+	my ($self, $effect_state) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_change_effect_state',
+		effect_state => $effect_state
+	}));
+	
+	debug "Sent GM Hide.\n", "sendPacket", 2;
+}
+
+sub sendGMRemove {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_remove',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMShift {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_shift',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMRecall {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_recall',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendAlignment {
+	my ($self, $ID, $alignment, $point) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'alignment',
+		targetID => $ID,
+		type => $alignment,
+		point => $point,
+	}));
+	
+	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
+}
+
 
 1;

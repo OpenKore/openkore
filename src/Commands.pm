@@ -133,7 +133,7 @@ sub initHandlers {
 	gmresetstate		=> \&cmdGmresetstate,
 	gmmute				=> \&cmdGmmute,
 	gmunmute			=> \&cmdGmunmute,
-	gmkillall			=> \&cmdGmkillall,
+	gmkickall			=> \&cmdGmkickall,
 	# GM Commands - End
 	guild				=> \&cmdGuild,
 	help				=> \&cmdHelp,
@@ -2415,26 +2415,21 @@ sub cmdGmb {
 
 	return unless ($char);
 	my ($cmd, $message) = @_;
-	my ($msg, $switch);
-
-	if ($message eq '') {
-		error TF("Usage: %s <MESSAGE>\n", $cmd);
-		return;
-	} elsif ($cmd =~ /^gml/) {
-		$switch = hex('019C');
-	} else {
-		$switch = hex('0099');
-	}
 
 	if ($cmd eq 'gmb' || $cmd eq 'gmlb') {
-		$message = stringToBytes("$char->{name}: $message");
+		$message = "$char->{name}: $message";
 	} elsif ($cmd eq 'gmbb' || $cmd eq 'gmlbb') {
-		$message = stringToBytes("blue$message");
-	} elsif ($cmd eq 'gmnb' || $cmd eq 'gmlnb') {
-		$message = stringToBytes($message);
+		$message = "blue$message";
+	} elsif ($cmd ne 'gmnb' && $cmd ne 'gmlnb') {
+		error TF("Usage: %s <MESSAGE>\n", $cmd);
+		return;
 	}
-	$msg = pack('v2 Z*', $switch, length($message) + 5, $message);
-	$messageSender->sendToServer($msg);
+	
+	if ($cmd =~ /^gml/) {
+		$messageSender->sendGMBroadcastLocal($message);
+	} else {
+		$messageSender->sendGMBroadcast($message);
+	}
 }
 
 sub cmdGmmapmove {
@@ -2455,8 +2450,7 @@ sub cmdGmmapmove {
 		return;
 	}
 
-	my $packet = pack("C*", 0x40, 0x01) . pack("a16", $map_name) . pack("v1 v1", $x, $y);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMMapMove($map_name, $x, $y);
 }
 
 sub cmdGmsummon {
@@ -2488,17 +2482,16 @@ sub cmdGmdc {
 		return;
 	}
 
-	my $packet = pack("C*", 0xCC, 0x00).pack("V1", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMKick($args);
 }
 
-sub cmdGmkillall {
+sub cmdGmkickall {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C*", 0xCE, 0x00);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMKickAll();
 }
 
 sub cmdGmcreate {
@@ -2513,8 +2506,7 @@ sub cmdGmcreate {
 		return;
 	}
 
-	my $packet = pack("C*", 0x3F, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMMonsterItem($args);
 }
 
 sub cmdGmhide {
@@ -2522,8 +2514,8 @@ sub cmdGmhide {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMChangeEffectState(0);
 }
 
 sub cmdGmresetstate {
@@ -2531,8 +2523,8 @@ sub cmdGmresetstate {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMResetStateSkill(0);
 }
 
 sub cmdGmresetskill {
@@ -2540,8 +2532,8 @@ sub cmdGmresetskill {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMResetStateSkill(1);
 }
 
 sub cmdGmmute {
@@ -2555,8 +2547,8 @@ sub cmdGmmute {
 		error T("Usage: gmmute <ID> <minutes>\n");
 		return;
 	}
-	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 1, $time);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendAlignment($ID, 1, $time);
 }
 
 sub cmdGmunmute {
@@ -2570,8 +2562,8 @@ sub cmdGmunmute {
 		error T("Usage: gmunmute <ID> <minutes>\n");
 		return;
 	}
-	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 0, $time);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendAlignment($ID, 0, $time);
 }
 
 sub cmdGmwarpto {
@@ -2586,8 +2578,7 @@ sub cmdGmwarpto {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBB, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMShift($args);
 }
 
 sub cmdGmrecall {
@@ -2602,8 +2593,7 @@ sub cmdGmrecall {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBC, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMRecall($args);
 }
 
 sub cmdGmremove {
@@ -2618,8 +2608,7 @@ sub cmdGmremove {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBA, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMRemove($args);
 }
 
 sub cmdGuild {
