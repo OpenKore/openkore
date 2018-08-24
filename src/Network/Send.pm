@@ -1158,8 +1158,9 @@ sub sendEquip {
 
 sub sendProgress {
 	my ($self) = @_;
-	my $msg = pack("C*", 0xf1, 0x02);
-	$self->sendToServer($msg);
+	
+	$self->sendToServer($self->reconstruct({switch => 'notify_progress_bar_complete'}));
+	
 	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
 }
 
