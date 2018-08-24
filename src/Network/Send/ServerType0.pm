@@ -55,6 +55,7 @@ sub new {
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
 		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'0099' => ['gm_broadcast', 'v Z*', [qw(len message)]],
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],#8
 		'00A9' => ['send_equip', 'a2 v', [qw(ID type)]],#6
@@ -68,6 +69,8 @@ sub new {
 		'00C5' => ['request_buy_sell_list', 'a4 C', [qw(ID type)]],
 		'00C8' => ['buy_bulk', 'v a*', [qw(len buyInfo)]],
 		'00C9' => ['sell_bulk', 'v a*', [qw(len sellInfo)]],
+		'00CC' => ['gm_kick', 'a4', [qw(targetAccountID)]],
+		'00CE' => ['gm_kick_all'],
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
@@ -102,8 +105,11 @@ sub new {
 		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
 		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
+		'012E' => ['shop_close'], # len 2
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
+		'013F' => ['gm_item_mob_create', 'a24', [qw(name)]],
+		'0140' => ['gm_move_to_map', 'Z16 v v', [qw(mapName x y)]],
 		'0143' => ['npc_talk_number', 'a4 V', [qw(ID value)]],
 		'0146' => ['npc_talk_cancel', 'a4', [qw(ID)]],
 		'0149' => ['alignment', 'a4 C v', [qw(targetID type point)]],
@@ -127,14 +133,21 @@ sub new {
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
+		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
+		'019C' => ['gm_broadcast_local', 'v Z*', [qw(len message)]],
+		'019D' => ['gm_change_effect_state', 'V', [qw(effect_state)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
+		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
+		'01BB' => ['gm_shift', 'a24', [qw(playerName)]],
+		'01BC' => ['gm_recall', 'a24', [qw(playerName)]],
 		'01B2' => ['shop_open'], # TODO
-		'012E' => ['shop_close'], # len 2
+		'01BD' => ['gm_summon_player', 'a24', [qw(playerName)]],
 		'01C0' => ['request_remain_time'],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
@@ -296,16 +309,6 @@ sub version {
 	return $masterServer->{version} || 1;
 }
 
-sub sendAlignment {
-	my ($self, $ID, $alignment) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'alignment',
-		targetID => $ID,
-		type => $alignment,
-	}));
-	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
-}
-
 # 0x0089,7,actionrequest,2:6
 
 sub sendAttackStop {
@@ -318,12 +321,6 @@ sub sendAttackStop {
 	# Don't use this function, use Misc::stopAttack() instead!
 	#sendMove ($char->{'pos_to'}{'x'}, $char->{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
-}
-
-sub sendGMSummon {
-	my ($self, $playerName) = @_;
-	my $packet = pack("C*", 0xBD, 0x01) . pack("a24", stringToBytes($playerName));
-	$self->sendToServer($packet);
 }
 
 =pod
