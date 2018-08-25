@@ -32,7 +32,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog %guild $charID);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -43,7 +43,7 @@ sub new {
 	my ( $class ) = @_;
 	my $self = $class->SUPER::new( @_ );
 
-	my $cryptKeys = $masterServers{ $config{master} }->{sendCryptKeys};
+	my $cryptKeys = $masterServer->{sendCryptKeys};
 	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
@@ -2266,11 +2266,11 @@ sub sendHomunculusName {
 }
 
 sub sendGuildLeave {
-	my ($self, $reason) = @_;
+	my ($self, $reason, $guildID, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_leave',
-		guildID => $guild{ID},
+		guildID => $guildID,
 		accountID => $accountID,
 		charID => $charID,
 		reason => stringToBytes($reason),
@@ -2294,7 +2294,7 @@ sub sendGuildMemberKick {
 }
 
 sub sendGuildCreate {
-	my ($self, $name) = @_;
+	my ($self, $name, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_create',
@@ -2318,7 +2318,7 @@ sub sendGuildJoin {
 }
 
 sub sendGuildJoinRequest {
-	my ($self, $ID) = @_;
+	my ($self, $ID, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_join_request',
