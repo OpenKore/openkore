@@ -1164,16 +1164,6 @@ sub sendProgress {
 	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
 }
 
-sub sendProduceMix {
-	my ($self, $ID,
-		# nameIDs for added items such as Star Crumb or Flame Heart
-		$item1, $item2, $item3) = @_;
-
-	my $msg = pack('v5', 0x018E, $ID, $item1, $item2, $item3);
-	$self->sendToServer($msg);
-	debug "Sent Forge, Produce Item: $ID\n" , 2;
-}
-
 sub sendDealAddItem {
 	my ($self, $ID, $amount) = @_;
 	$self->sendToServer($self->reconstruct({
