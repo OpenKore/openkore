@@ -569,8 +569,11 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A6F' => ['message_string', 'v V a*', [qw(msg_id color messageString)]], #-1 I think it should be used together.[sctnightcore]
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]], # -1
+		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message ID)]],
+		'0A83' => ['guild_leave', 'a4 Z40', [qw(ID message)]], 
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA7' => ['move_item_fail', 'v2' ,[qw(index unknow)]], #Herc send unknow = 1
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
@@ -3876,6 +3879,12 @@ sub progress_bar_unit {
 #0AFD
 sub guild_member_position {
 	my($self, $args) = @_;
+}
+
+#Need to test ! 
+sub move_item_fail {
+	my($self, $args) = @_;
+
 }
 
 1;

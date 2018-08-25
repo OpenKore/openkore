@@ -629,10 +629,13 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A6F' => ['message_string', 'v V a*', [qw(msg_id color messageString)]], #-1 I think it should be used together.[sctnightcore]
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
+		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message ID)]],
+		'0A83' => ['guild_leave', 'a4 Z40', [qw(ID message)]], 
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0AA7' => ['move_item_fail', 'v2' ,[qw(index unknow)]], #Herc send unknow = 1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
@@ -4575,5 +4578,12 @@ sub progress_bar_unit {
 sub guild_member_position {
 	my($self, $args) = @_;
 }
+
+#Need to test ! 
+sub move_item_fail {
+	my($self, $args) = @_;
+
+}
+
 
 1;

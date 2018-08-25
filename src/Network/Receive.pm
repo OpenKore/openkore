@@ -4434,16 +4434,20 @@ sub guild_location {
 
 sub guild_leave {
 	my ($self, $args) = @_;
-
+	my $name = bytesToString($args->{name}) if defined $args->{name};
+	my $gid = unpack("V",$args->{ID}) if defined $args->{ID};
+	
 	message TF("%s has left the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
+		"Reason: %s\n", $name ? $gid, bytesToString($args->{message})), "schat";
 }
 
 sub guild_expulsion {
 	my ($self, $args) = @_;
+	my $name = bytesToString($args->{name}) if defined $args->{name};
+	my $gid = unpack("V",$args->{ID}) if defined $args->{ID};
 
 	message TF("%s has been removed from the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
+		"Reason: %s\n", $name ? $gid, bytesToString($args->{message})), "schat";
 }
 
 sub guild_member_online_status {
