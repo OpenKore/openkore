@@ -1021,12 +1021,11 @@ sub sendSkillSelect {
 	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
 }
 
-sub sendReplySyncRequestEx 
-{
+sub sendReplySyncRequestEx {
 	my ($self, $SyncID) = @_;
 	# Packing New Message and Dispatching
-	my $pid = sprintf("%04X", $SyncID);
-	$self->sendToServer(pack("C C", hex(substr($pid, 2, 2)), hex(substr($pid, 0, 2))));
+	
+	$self->sendToServer(pack("v", $SyncID));
 	# Debug Log
 	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";		
 	# Debug Log
