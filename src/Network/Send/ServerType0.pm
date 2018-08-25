@@ -146,7 +146,7 @@ sub new {
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
 		'01BB' => ['gm_shift', 'a24', [qw(playerName)]],
 		'01BC' => ['gm_recall', 'a24', [qw(playerName)]],
-		'01B2' => ['shop_open'], # TODO
+		'01B2' => ['shop_open', 'v a80 C a*', [qw(len title result vendingInfo)]],
 		'01BD' => ['gm_summon_player', 'a24', [qw(playerName)]],
 		'01C0' => ['request_remain_time'],
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
@@ -370,24 +370,6 @@ sub sendGuildPositionInfo {
 		$msg .= pack('v2 V4 a24', $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, stringToBytes($r_array->[$i]{title}));
 		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
 	}
-	$self->sendToServer($msg);
-}
-
-sub sendOpenShop {
-	my ($self, $title, $items) = @_;
-
-	my $length = 0x55 + 0x08 * @{$items};
-	my $msg = pack("C*", 0xB2, 0x01).
-		pack("v*", $length).
-		pack("a80", stringToBytes($title)).
-		pack("C*", 0x01);
-
-	foreach my $item (@{$items}) {
-		$msg .= pack("a2", $item->{ID}).
-			pack("v1", $item->{amount}).
-			pack("V1", $item->{price});
-	}
-
 	$self->sendToServer($msg);
 }
 

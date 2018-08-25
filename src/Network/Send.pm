@@ -2654,5 +2654,21 @@ sub sendAlignment {
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
 }
 
+sub sendOpenShop {
+	my ($self, $title, $items) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'shop_open',
+		title => stringToBytes($title),
+		result => 1,
+		items => $items,
+	}));
+}
+
+sub reconstruct_shop_open {
+	my ($self, $args) = @_;
+	
+	$args->{vendingInfo} = pack "(a*)*", map { pack "a2 v V", $_->{ID}, $_->{amount}, $_->{price} } @{$args->{items}};
+}
 
 1;
