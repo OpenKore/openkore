@@ -28,13 +28,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-sub sendMailReturn {
-	my ($self, $mailID, $sender) = @_;
-	my $msg = pack('v V Z24', 0x0273, $mailID, stringToBytes($sender));
-	$self->sendToServer($msg);
-	debug "Sent return mail.\n", "sendPacket", 2;
-}
-
 =pod
 //2006-03-13aSakexe
 0x0273,30,mailreturn,2:6

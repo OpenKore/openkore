@@ -2671,4 +2671,114 @@ sub reconstruct_shop_open {
 	$args->{vendingInfo} = pack "(a*)*", map { pack "a2 v V", $_->{ID}, $_->{amount}, $_->{price} } @{$args->{items}};
 }
 
+sub sendMailboxOpen {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'mailbox_open'}));
+	
+	debug "Sent mailbox open.\n", "sendPacket", 2;
+}
+
+sub sendMailRead {
+	my ($self, $mailID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_read',
+		mailID => $mailID,
+	}));
+	
+	debug "Sent read mail.\n", "sendPacket", 2;
+}
+
+sub sendMailDelete {
+	my ($self, $mailID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_delete',
+		mailID => $mailID,
+	}));
+	
+	debug "Sent delete mail.\n", "sendPacket", 2;
+}
+
+sub sendMailGetAttach {
+	my ($self, $mailID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_attachment_get',
+		mailID => $mailID,
+	}));
+	
+	debug "Sent mail get attachment.\n", "sendPacket", 2;
+}
+
+sub sendMailOperateWindow {
+	my ($self, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_remove',
+		flag => $flag,
+	}));
+	
+	debug "Sent mail remove item/zeny.\n", "sendPacket", 2;
+}
+
+sub sendMailSetAttach {
+	my ($self, $amount, $ID) = @_;
+	
+	# 0 for zeny
+	$ID ||= 0;
+	
+	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
+
+	# Before setting an attachment, we must remove any zeny/item that was attached but the mail wasn't sent
+	# Otherwise the attachment will be lost
+	if ($ID) {
+		$self->sendMailOperateWindow(1);
+	} else {
+		$self->sendMailOperateWindow(2);
+	}
+	
+	$AI::temp::mailAttachAmount = $amount;
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_attachment_set',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent mail set attachment.\n", "sendPacket", 2;
+}
+
+sub sendMailSend {
+	my ($self, $receiver, $title, $message) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_send',
+		recipient => stringToBytes($receiver),
+		title => stringToBytes($title),
+		body_len => length $message > 255 ? 255 : length $message,
+		body => $message,
+	}));
+	
+	debug "Sent mail send.\n", "sendPacket", 2;
+}
+
+sub reconstruct_mail_send {
+	my ($self, $args) = @_;
+	
+	$args->{body} = pack "Z" . $args->{body_len}, stringToBytes($args->{body});
+}
+
+sub sendMailReturn {
+	my ($self, $mailID, $sender) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mail_return',
+		mailID => $mailID,
+		sender => $sender,
+	}));
+	
+	debug "Sent return mail.\n", "sendPacket", 2;
+}
+
 1;
