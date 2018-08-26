@@ -610,31 +610,31 @@ sub received_characters_unpackString {
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date)],
 			};
 			
-        } elsif ($_ == 128) { # 
+        } elsif ($_ == 128) { # [Update in last_map size]
 			$char_info = {
-				types => 'L i9 s i2 s14 Z24 C8 s Z16',
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map)],
 			};
 			
-        } elsif ($_ == 124) { # PACKETVER >= 20100803 [added map_name, bRO (bitfrost update)]
+        } elsif ($_ == 124) { # PACKETVER >= 20100803 [added last_map, bRO (bitfrost update)]
 			$char_info = {
 				types => 'a4 V9 v V2 v14 Z24 C8 v Z12',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map)],
 			};
 			
-        } elsif ($_ == 116) { # 
+        } elsif ($_ == 116) { # Unknown change
 			$char_info = {
 				types => 'a4 V9 v V2 v14 Z24 C8 v x4',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed)],
 			};
 			
-        } elsif ($_ == 112) { # 
+        } elsif ($_ == 112) { # [Added is_renamed]
 			$char_info = {
 				types => 'a4 V9 v V2 v14 Z24 C8 v',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed)],
 			};
 			
-        } elsif ($_ == 108) { #
+        } elsif ($_ == 108) { # [Added hair_color]
 			$char_info = {
 				types => 'a4 V9 v17 Z24 C6 v2',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color)],
