@@ -2725,7 +2725,7 @@ sub cmdGuild {
 			error T("Syntax Error in function 'guild create' (Create Guild)\n" .
 				"Usage: guild create <name>\n");
 		} else {
-			$messageSender->sendGuildCreate($arg2);
+			$messageSender->sendGuildCreate($arg2, $charID);
 		}
 
 	} elsif (!defined $char->{guild}) {
@@ -2736,7 +2736,7 @@ sub cmdGuild {
 		if (!$player) {
 			error TF("Player %s does not exist.\n", $arg2);
 		} else {
-			$messageSender->sendGuildJoinRequest($player->{ID});
+			$messageSender->sendGuildJoinRequest($player->{ID}, $charID);
 			message TF("Sent guild join request to %s\n", $player->{name});
 		}
 
@@ -2757,7 +2757,7 @@ sub cmdGuild {
 		}
 
 	} elsif ($arg1 eq "leave") {
-		$messageSender->sendGuildLeave($arg2);
+		$messageSender->sendGuildLeave($arg2, $guild{ID}, $charID);
 		message TF("Sending guild leave: %s\n", $arg2);
 
 	} elsif ($arg1 eq "break") {

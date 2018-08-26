@@ -102,6 +102,7 @@ sub new {
 		'0128' => ['storage_to_cart', 'a2 V', [qw(ID amount)]],
 		'0129' => ['cart_to_storage', 'a2 V', [qw(ID amount)]],
 		'012A' => ['companion_release'],
+		'012E' => ['shop_close'], # len 2
 		'0130' => ['send_entering_vending', 'a4', [qw(accountID)]],
 		'0134' => ['buy_bulk_vender', 'x2 a4 a*', [qw(venderID itemInfo)]],
 		'013F' => ['gm_item_mob_create', 'a24', [qw(name)]],
@@ -134,8 +135,7 @@ sub new {
 		'019C' => ['gm_broadcast_local', 'v Z*', [qw(len message)]],
 		'019D' => ['gm_change_effect_state', 'V', [qw(effect_state)]],
 		'019F' => ['pet_capture', 'a4', [qw(ID)]],
-		'01B2' => ['shop_open'], # TODO
-		'012E' => ['shop_close'], # len 2
+		'01B2' => ['shop_open', 'v a80 C a*', [qw(len title result vendingInfo)]],
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
@@ -167,6 +167,7 @@ sub new {
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02F1' => ['notify_progress_bar_complete'],
+		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
@@ -613,19 +614,6 @@ sub sendPetEmotion{
 # 0x01ad,-1
 # 0x01b0,11
 # 0x01b1,7
-
-# 0x01b2,-1,openvending,2:4:84:85
-# NOTE: complex packet structure
-sub sendOpenShop {
-	my ($self, $title, $items) = @_;
-	my $length = 0x55 + 0x08 * @{$items};
-	my $msg = pack('v2 a80 C', 0x01B2, $length, stringToBytes($title), 1);
-	foreach my $item (@{$items}) {
-		$msg .= pack('a2 v V', $item->{ID}, $item->{amount}, $item->{price});
-	}
-	$self->sendToServer($msg);
-}
-
 # 0x01b3,67
 # 0x01b4,12
 # 0x01b5,18
