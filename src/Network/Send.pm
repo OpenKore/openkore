@@ -32,7 +32,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $encryptVal $bytesSent $conState %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk %masterServers $skillExchangeItem $refineUI $net $rodexList $rodexWrite %universalCatalog %guild $charID);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -43,7 +43,7 @@ sub new {
 	my ( $class ) = @_;
 	my $self = $class->SUPER::new( @_ );
 
-	my $cryptKeys = $masterServers{ $config{master} }->{sendCryptKeys};
+	my $cryptKeys = $masterServer->{sendCryptKeys};
 	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
@@ -834,10 +834,13 @@ sub sendCloseShop {
 
 # 0x7DA
 sub sendPartyLeader {
-	my $self = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0xDA, 0x07).$ID;
-	$self->sendToServer($msg);
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_leader',
+		accountID => $ID,
+	}));
+	
 	debug "Sent Change Party Leader ".getHex($ID)."\n", "sendPacket", 2;
 }
 
@@ -1018,12 +1021,11 @@ sub sendSkillSelect {
 	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
 }
 
-sub sendReplySyncRequestEx 
-{
+sub sendReplySyncRequestEx {
 	my ($self, $SyncID) = @_;
 	# Packing New Message and Dispatching
-	my $pid = sprintf("%04X", $SyncID);
-	$self->sendToServer(pack("C C", hex(substr($pid, 2, 2)), hex(substr($pid, 0, 2))));
+	
+	$self->sendToServer(pack("v", $SyncID));
 	# Debug Log
 	# print "Dispatching Sync Ex Reply : 0x" . $pid . "\n";		
 	# Debug Log
@@ -1155,19 +1157,10 @@ sub sendEquip {
 
 sub sendProgress {
 	my ($self) = @_;
-	my $msg = pack("C*", 0xf1, 0x02);
-	$self->sendToServer($msg);
+	
+	$self->sendToServer($self->reconstruct({switch => 'notify_progress_bar_complete'}));
+	
 	debug "Sent Progress Bar Finish\n", "sendPacket", 2;
-}
-
-sub sendProduceMix {
-	my ($self, $ID,
-		# nameIDs for added items such as Star Crumb or Flame Heart
-		$item1, $item2, $item3) = @_;
-
-	my $msg = pack('v5', 0x018E, $ID, $item1, $item2, $item3);
-	$self->sendToServer($msg);
-	debug "Sent Forge, Produce Item: $ID\n" , 2;
 }
 
 sub sendDealAddItem {
@@ -2262,11 +2255,11 @@ sub sendHomunculusName {
 }
 
 sub sendGuildLeave {
-	my ($self, $reason) = @_;
+	my ($self, $reason, $guildID, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_leave',
-		guildID => $guild{ID},
+		guildID => $guildID,
 		accountID => $accountID,
 		charID => $charID,
 		reason => stringToBytes($reason),
@@ -2290,7 +2283,7 @@ sub sendGuildMemberKick {
 }
 
 sub sendGuildCreate {
-	my ($self, $name) = @_;
+	my ($self, $name, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_create',
@@ -2314,7 +2307,7 @@ sub sendGuildJoin {
 }
 
 sub sendGuildJoinRequest {
-	my ($self, $ID) = @_;
+	my ($self, $ID, $charID) = @_;
 	
 	$self->sendToServer($self->reconstruct({
 		switch => 'guild_join_request',
@@ -2661,5 +2654,21 @@ sub sendAlignment {
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
 }
 
+sub sendOpenShop {
+	my ($self, $title, $items) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'shop_open',
+		title => stringToBytes($title),
+		result => 1,
+		items => $items,
+	}));
+}
+
+sub reconstruct_shop_open {
+	my ($self, $args) = @_;
+	
+	$args->{vendingInfo} = pack "(a*)*", map { pack "a2 v V", $_->{ID}, $_->{amount}, $_->{price} } @{$args->{items}};
+}
 
 1;
