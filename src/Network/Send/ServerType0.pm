@@ -182,7 +182,15 @@ sub new {
 		'0246' => ['mail_remove', 'v', [qw(flag)]],
 		'0247' => ['mail_attachment_set', 'a2 V', [qw(ID amount)]],
 		'0248' => ['mail_send', 'v Z24 a40 C a*', [qw(len recipient title body_len body)]],
+		'024B' => ['auction_add_item_cancel', 'v', [qw(flag)]],
+		'024C' => ['auction_add_item', 'a2 V', [qw(ID amount)]],
+		'024D' => ['auction_create', 'V V v', [qw(now_price max_price delete_time)]],
+		'024E' => ['auction_cancel', 'V', [qw(ID)]],
+		'024F' => ['auction_buy', 'V V', [qw(ID price)]],
+		'0251' => ['auction_search', 'v V Z24 v', [qw(type price search_string page)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
+		'025C' => ['auction_info_self', 'v', [qw(type)]],
+		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
@@ -446,63 +454,6 @@ sub sendRequestMakingHomunculus {
 }
 
 # 0x0213 has no info on eA
-
-sub sendAuctionAddItemCancel {
-	my ($self) = @_;
-	my $msg = pack("v2", 0x024B, 1);
-	$self->sendToServer($msg);
-	debug "Sent Auction Add Item Cancel.\n", "sendPacket", 2;
-}
-
-sub sendAuctionAddItem {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack("v a2 V", 0x024C, $ID, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Auction Add Item.\n", "sendPacket", 2;
-}
-
-sub sendAuctionCreate {
-	my ($self, $price, $buynow, $hours) = @_;
-	my $msg = pack("v V2 v", 0x024D, $price, $buynow, $hours);
-	$self->sendToServer($msg);
-	debug "Sent Auction Create.\n", "sendPacket", 2;
-}
-
-sub sendAuctionCancel {
-	my ($self, $id) = @_;
-	my $msg = pack("v V", 0x024E, $id);
-	$self->sendToServer($msg);
-	debug "Sent Auction Cancel.\n", "sendPacket", 2;
-}
-
-sub sendAuctionBuy {
-	my ($self, $id, $bid) = @_;
-	my $msg = pack("v V2", 0x024F, $id, $bid);
-	$self->sendToServer($msg);
-	debug "Sent Auction Buy.\n", "sendPacket", 2;
-}
-
-sub sendAuctionItemSearch {
-	my ($self, $type, $price, $text, $page) = @_;
-	$page = (defined $page) ? $page : 1;
-	my $msg = pack("v2 V Z24 v", 0x0251, $type, $price, stringToBytes($text), $page);
-	$self->sendToServer($msg);
-	debug "Sent Auction Item Search.\n", "sendPacket", 2;
-}
-
-sub sendAuctionReqMyInfo {
-	my ($self, $type) = @_;
-	my $msg = pack("v2", 0x025C, $type);
-	$self->sendToServer($msg);
-	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
-}
-
-sub sendAuctionMySellStop {
-	my ($self, $id) = @_;
-	my $msg = pack("v V", 0x025D, $id);
-	$self->sendToServer($msg);
-	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
 
 sub sendCashShopBuy {
 	my ($self, $ID, $amount, $points) = @_;
