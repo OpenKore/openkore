@@ -74,6 +74,7 @@ charDeleteDateType 1
 pauseCharLogin 1
 blockingPlayerCancel 1
 rankingSystemType
+pauseCharLogin 1
 
 # http://www.ragnarokeurope.com/
 [France - fRO]
@@ -127,6 +128,7 @@ charDeleteDateType 1
 sendCryptKeys 0x36CF7CAB, 0x2D1537DD, 0x140740AF
 blockingPlayerCancel 1
 rankingSystemType 1
+pauseCharLogin 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
@@ -173,6 +175,7 @@ patchserver ropatch1.gravityus.com
 patchpath /repatch
 sendCryptKeys 0x48F719D3, 0x1F73118F, 0x27963B51
 rankingSystemType 1
+pauseCharLogin 1
 
 # TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
