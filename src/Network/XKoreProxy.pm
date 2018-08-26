@@ -598,6 +598,7 @@ sub modifyPacketIn {
 			}
 		} else {
 			@{$mapInfo}{@{[qw(map x y IP port)]}} = unpack('Z16 v2 a4 v', substr($msg, 2));
+			$mapInfo->{IP} = inet_ntoa($mapInfo->{IP});
 		}
 	
 		$msg = $packetParser->reconstruct({
