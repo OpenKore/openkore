@@ -160,7 +160,6 @@ sub char_login {
 			# Invalid character selected.
 			$client->send(pack('C*', 0x6C, 0x00, 0));
 		} else {
-			my $char = $char;
 			my $charInfo = $self->{mapServer}->getCharInfo($session);
 			if (!$charInfo) {
 				# We can't get the character information for some reason.
