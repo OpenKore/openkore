@@ -658,7 +658,6 @@ sub received_characters_slots_info {
 	return if ($net->getState() == Network::IN_GAME);
 	my ($self, $args) = @_;
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
-
 	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
 	$charSvrSet{premium_start_slot} = $args->{premium_start_slot} if (exists $args->{premium_start_slot});
 	$charSvrSet{premium_end_slot} = $args->{premium_end_slot} if (exists $args->{premium_end_slot});
@@ -686,7 +685,11 @@ sub received_characters {
 	my ($self, $args) = @_;
 	my $blockSize = $self->received_characters_blockSize();
 	my $char_info = $self->received_characters_unpackString;
-		
+
+	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER) if $net->getState() != Network::CONNECTED_TO_LOGIN_SERVER;
+	
+	return unless exists $args->{charInfo};
+
 	for (my $i = 0; $i < length($args->{charInfo}); $i += $masterServer->{charBlockSize}) {
 		my $character = new Actor::You;
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
@@ -715,24 +718,10 @@ sub received_characters {
 			$character->{exp_job} = hex $character->{exp_job};	
 		}
 
-		if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
+		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 
 		$chars[$character->{slot}] = $character;
 		setCharDeleteDate($character->{slot}, $character->{delete_date}) if $character->{delete_date};
-	}
-
-	# FIXME better support for multiple received_characters packets
-	## Note to devs: If other official servers support > 3 characters, then
-	## you should add these other serverTypes to the list compared here:
-	if (($args->{switch} eq '099D') && 
-		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO_Renewal iRO idRO bRO cRO ))
-	) {
-		$net->setState(1.5);
-		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
-			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
-			$charSvrSet{sync_CountDown}--;
-		}
-		return;
 	}
 
 	message T("Received characters from Character Server\n"), "connection";
@@ -828,11 +817,15 @@ sub character_creation_successful {
 sub received_characters_info {
 	my ($self, $args) = @_;
 
+	$timeout{charlogin}{time} = time;
+
 	Scalar::Util::weaken(my $weak = $self);
-	my $timeout = {timeout => 6, time => time};
+	my $timeout = {timeout => 6, time => $timeout{charlogin}{time}};
 
 	$self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
 		if ($weak && timeOut($timeout)) {
+			$weak->received_characters_slots_info($args);
+		} else {
 			$weak->received_characters_slots_info({charInfo => '', RAW_MSG_SIZE => 4});
 		}
 	});
@@ -842,10 +835,6 @@ sub received_characters_info {
 			Plugins::delHook(delete $weak->{charSelectTimeoutHook}) if $weak->{charSelectTimeoutHook};
 		}
 	});
-
-	$timeout{charlogin}{time} = time;
-
-	$self->received_characters_slots_info($args);
 }
 
 ### Parse/reconstruct callbacks and packet handlers
