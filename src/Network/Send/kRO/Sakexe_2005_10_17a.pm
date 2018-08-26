@@ -27,14 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x025d,6,auctionclose,0
-sub sendAuctionMySellStop {
-	my ($self, $id) = @_;
-	my $msg = pack('v V', 0x025D, $id);
-	$self->sendToServer($msg);
-	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
 =pod
 //2005-10-17aSakexe
 0x007a,58

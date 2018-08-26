@@ -27,14 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x025c,4,auctionbuysell,0
-sub sendAuctionReqMyInfo {
-	my ($self, $type) = @_;
-	my $msg = pack('v2', 0x025C, $type);
-	$self->sendToServer($msg);
-	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
-}
-
 =pod
 //2005-10-13aSakexe
 0x007a,6
