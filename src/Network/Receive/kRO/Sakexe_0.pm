@@ -2831,19 +2831,6 @@ sub skill_add {
 	});
 }
 
-# TODO: test (ex. with a rogue using plagiarism)
-sub skill_delete {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $handle = Skill->new(idn => $args->{skillID})->getName();
-
-	delete $char->{skills}{$handle};
-	binRemove(\@skillsID, $handle);
-
-	# i guess we don't have to remove it from Skill::DynamicInfo
-}
-
 sub storage_password_request {
 	my ($self, $args) = @_;
 
