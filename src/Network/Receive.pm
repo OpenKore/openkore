@@ -560,34 +560,292 @@ sub received_characters_blockSize {
 	if ($masterServer && $masterServer->{charBlockSize}) {
 		return $masterServer->{charBlockSize};
 	} else {
-		return 106;
+		return 144;
 	}
 }
 
 # The length must exactly match charBlockSize, as it's used to construct packets.
 sub received_characters_unpackString {
+	my $char_info;
 	for ($masterServer && $masterServer->{charBlockSize}) {
-		# unknown purpose (0 = disabled, otherwise displays "Add-Ons" sidebar) (from rA)
-		# change $hairstyle
-		return 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $_ == 155;
-		return 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $_ == 147;
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $_ == 145;
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $_ == 144;
-		# change slot feature
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $_ == 140;
-		# robe
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $_ == 136;
-		# delete date
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16 V' if $_ == 132;
-		return 'a4 V9 v V2 v14 Z24 C8 v Z16' if $_ == 128;
-		# bRO (bitfrost update)
-		return 'a4 V9 v V2 v14 Z24 C8 v Z12' if $_ == 124;
-		return 'a4 V9 v V2 v14 Z24 C6 v2 x4' if $_ == 116; # TODO: (missing 2 last bytes)
-		return 'a4 V9 v V2 v14 Z24 C6 v2' if $_ == 112;
-		return 'a4 V9 v17 Z24 C6 v2' if $_ == 108;
-		return 'a4 V9 v17 Z24 C6 v' if $_ == 106 || !$_;
-		die "Unknown charBlockSize: $_";
+		if ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
+			$char_info = {
+	            types => 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 V4 C',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+			};
+
+		} elsif ($_ == 147) { # PACKETVER >= 20141022 [iRO Doram Update, walk_speed is now long]
+			$char_info = {
+			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 V4 C',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+			};
+			
+        } elsif ($_ == 145) { # PACKETVER >= 20141016 [support to double sex account]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16 V4 C',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+			};
+			
+		} elsif ($_ == 144) { # PACKETVER >= 20111025 [added rename char feature]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16 V4',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon)],
+			};
+			
+        } elsif ($_ == 140) { # PACKETVER >= 20110928 [added change slot feature]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16 V3',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon)],
+			};
+			
+        } elsif ($_ == 136) { # PACKETVER >= 20110111 [added robe]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16 V2',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe)],
+			};
+			
+        } elsif ($_ == 132) { # PACKETVER >= 20100803 [added delete date]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16 V',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date)],
+			};
+			
+        } elsif ($_ == 128) { # [Update in last_map size]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z16',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map)],
+			};
+			
+        } elsif ($_ == 124) { # PACKETVER >= 20100803 [added last_map, bRO (bitfrost update)]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v Z12',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map)],
+			};
+			
+        } elsif ($_ == 116) { # Unknown change
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v x4',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed)],
+			};
+			
+        } elsif ($_ == 112) { # [Added is_renamed]
+			$char_info = {
+				types => 'a4 V9 v V2 v14 Z24 C8 v',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed)],
+			};
+			
+        } elsif ($_ == 108) { # [Added hair_color]
+			$char_info = {
+				types => 'a4 V9 v17 Z24 C6 v2',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color)],
+			};
+			
+        } elsif ($_ == 106) { # PACKETVER >= 2003+ [First known charBlockSize]
+			$char_info = {
+				types => 'a4 V9 v17 Z24 C6 v',
+				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot)],
+			};
+			
+        } else {
+		    die "Unknown charBlockSize: $_";
+		}
+		return $char_info;
 	}
+	    die "masterserver or charBlockSize is undefined";
+}
+
+sub received_characters_slots_info {
+	return if ($net->getState() == Network::IN_GAME);
+	my ($self, $args) = @_;
+	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
+
+	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
+	$charSvrSet{premium_start_slot} = $args->{premium_start_slot} if (exists $args->{premium_start_slot});
+	$charSvrSet{premium_end_slot} = $args->{premium_end_slot} if (exists $args->{premium_end_slot});
+
+	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
+	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
+	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
+
+	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
+	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
+
+	undef $conState_tries;
+
+	Plugins::callHook('parseMsg/recvChars', $args->{options});
+	if ($args->{options} && exists $args->{options}{charServer}) {
+		$charServer = $args->{options}{charServer};
+	} else {
+		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
+	}
+	
+	$self->received_characters($args) if($args->{charInfo});
+}
+
+sub received_characters {
+	my ($self, $args) = @_;
+	my $blockSize = $self->received_characters_blockSize();
+	my $char_info = $self->received_characters_unpackString;
+		
+	for (my $i = 0; $i < length($args->{charInfo}); $i += $masterServer->{charBlockSize}) {
+		my $character = new Actor::You;
+		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+		$character->{ID} = $accountID;
+
+		# Re-use existing $char object instead of re-creating it.
+		# Required because existing AI sequences (eg, route) keep a reference to $char.
+		$character = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $character->{charID};
+
+		$character->{lastJobLvl} = $character->{lv_job}; # This is for counting exp
+		$character->{lastBaseLvl} = $character->{lv}; # This is for counting exp
+		$character->{headgear}{low} = $character->{head_bottom};
+		$character->{headgear}{top} = $character->{head_top};
+		$character->{headgear}{mid} = $character->{head_mid};
+
+		$character->{nameID} = unpack("V", $character->{ID});
+		$character->{name} = bytesToString($character->{name});
+		$character->{map_name} =~ s/\.gat//g;
+
+		if ($masterServer->{charBlockSize} >= 155) {
+			$character->{exp} = getHex($character->{exp});
+			$character->{exp} = join '', reverse split / /, $character->{exp};
+			$character->{exp} = hex $character->{exp};
+			$character->{exp_job} = getHex($character->{exp_job});
+			$character->{exp_job} = join '', reverse split / /, $character->{exp_job};
+			$character->{exp_job} = hex $character->{exp_job};	
+		}
+
+		if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
+
+		$chars[$character->{slot}] = $character;
+		setCharDeleteDate($character->{slot}, $character->{delete_date}) if $character->{delete_date};
+	}
+
+	# FIXME better support for multiple received_characters packets
+	## Note to devs: If other official servers support > 3 characters, then
+	## you should add these other serverTypes to the list compared here:
+	if (($args->{switch} eq '099D') && 
+		(grep { $masterServer->{serverType} eq $_ } qw( twRO iRO_Renewal iRO idRO bRO cRO ))
+	) {
+		$net->setState(1.5);
+		if ($charSvrSet{sync_CountDown} && $config{'XKore'} ne '1' && $config{'XKore'} ne '3') {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+			$charSvrSet{sync_CountDown}--;
+		}
+		return;
+	}
+
+	message T("Received characters from Character Server\n"), "connection";
+
+	# gradeA says it's supposed to send this packet here, but
+	# it doesn't work...
+	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
+	$messageSender->sendBanCheck($accountID) if (!$net->clientAlive && $masterServer->{serverType} == 2);
+	
+	if ($masterServer->{pinCode}) {
+		message T("Waiting for PIN code request\n"), "connection";
+		$timeout{'charlogin'}{'time'} = time;
+		
+	} elsif ($masterServer->{pauseCharLogin}) {
+		return if($config{XKore} eq 1 || $config{XKore} eq 3);
+		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
+			$timeout{'char_login_pause'}{'timeout'} = 2;
+		}
+		$timeout{'char_login_pause'}{'time'} = time;
+		
+	} else {
+		CharacterLogin();
+	}
+}
+
+sub sync_received_characters {
+	my ($self, $args) = @_;
+
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+
+	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+
+	unless ($net->clientAlive) {
+		for (1..$args->{sync_Count}) {
+			$messageSender->sendToServer($messageSender->reconstruct({switch => 'sync_received_characters'}));
+		}
+	}
+}
+
+sub reconstruct_received_characters {
+	my ($self, $args) = @_;
+	my $char_info = $self->received_characters_unpackString;
+
+	$args->{charInfo} = pack '(a'.$masterServer->{charBlockSize}.')*', map { pack $char_info->{types}, @{$_}{@{$char_info->{keys}}} } @{$args->{chars}};
+}
+
+sub reconstruct_received_characters_info {
+	my ($self, $args) = @_;
+	my $char_info = $self->received_characters_unpackString;
+
+	$args->{charInfo} = pack '(a'.$masterServer->{charBlockSize}.')*', map { pack $char_info->{types}, @{$_}{@{$char_info->{keys}}} } @{$args->{chars}};
+}
+
+sub character_creation_successful {
+	my ($self, $args) = @_;
+	return unless exists $args->{charInfo};
+
+	my $char_info = $self->received_characters_unpackString;
+	
+	my $character = new Actor::You;
+	@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, 0, $masterServer->{charBlockSize}));
+	$character->{ID} = $accountID;
+
+	$character->{lastJobLvl} = $character->{lv_job}; # This is for counting exp
+	$character->{lastBaseLvl} = $character->{lv}; # This is for counting exp
+	$character->{headgear}{low} = $character->{head_bottom};
+	$character->{headgear}{top} = $character->{head_top};
+	$character->{headgear}{mid} = $character->{head_mid};
+
+	$character->{nameID} = unpack("V", $character->{ID});
+	$character->{name} = bytesToString($character->{name});
+	$character->{map_name} =~ s/\.gat//g;
+
+	$character->{exp} = 0;
+	$character->{exp_job} = 0;
+
+	if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
+
+	$chars[$character->{slot}] = $character;
+
+	$net->setState(3);
+	message TF("Character %s (%d) created.\n", $character->{name}, $character->{slot}), "info";
+
+	Plugins::callHook('char_created', {	char => $character });
+
+	if (charSelectScreen() == 1) {
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+sub received_characters_info {
+	my ($self, $args) = @_;
+
+	Scalar::Util::weaken(my $weak = $self);
+	my $timeout = {timeout => 6, time => time};
+
+	$self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
+		if ($weak && timeOut($timeout)) {
+			$weak->received_characters_slots_info({charInfo => '', RAW_MSG_SIZE => 4});
+		}
+	});
+
+	$self->{charSelectHook} = Plugins::addHook(charSelectScreen => sub {
+		if ($weak) {
+			Plugins::delHook(delete $weak->{charSelectTimeoutHook}) if $weak->{charSelectTimeoutHook};
+		}
+	});
+
+	$timeout{charlogin}{time} = time;
+
+	$self->received_characters_slots_info($args);
 }
 
 ### Parse/reconstruct callbacks and packet handlers
