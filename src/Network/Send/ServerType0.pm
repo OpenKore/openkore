@@ -175,7 +175,15 @@ sub new {
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'0237' => ['rank_killer'],
 		'023B' => ['storage_password'],
+		'023F' => ['mailbox_open'],
+		'0241' => ['mail_read', 'V', [qw(mailID)]],
+		'0243' => ['mail_delete', 'V', [qw(mailID)]],
+		'0244' => ['mail_attachment_get', 'V', [qw(mailID)]],
+		'0246' => ['mail_remove', 'v', [qw(flag)]],
+		'0247' => ['mail_attachment_set', 'a2 V', [qw(ID amount)]],
+		'0248' => ['mail_send', 'v Z24 a40 C a*', [qw(len recipient title body_len body)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
+		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
@@ -439,65 +447,6 @@ sub sendRequestMakingHomunculus {
 
 # 0x0213 has no info on eA
 
-sub sendMailboxOpen {
-	my $self = $_[0];
-	my $msg = pack("v", 0x023F);
-	$self->sendToServer($msg);
-	debug "Sent mailbox open.\n", "sendPacket", 2;
-}
-
-sub sendMailRead {
-	my ($self, $mailID) = @_;
-	my $msg = pack("v V", 0x0241, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent read mail.\n", "sendPacket", 2;
-}
-
-sub sendMailDelete {
-	my ($self, $mailID) = @_;
-	my $msg = pack("v V", 0x0243, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent delete mail.\n", "sendPacket", 2;
-}
-
-sub sendMailGetAttach {
-	my ($self, $mailID) = @_;
-	my $msg = pack("v V", 0x0244, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent mail get attachment.\n", "sendPacket", 2;
-}
-
-sub sendMailOperateWindow {
-	my ($self, $window) = @_;
-	my $msg = pack("v C x", 0x0246, $window);
-	$self->sendToServer($msg);
-	debug "Sent mail window.\n", "sendPacket", 2;
-}
-
-sub sendMailSetAttach {
-	my $self = $_[0];
-	my $amount = $_[1];
-	my $ID = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
-
-	#We must do it or we will lost attachment what was not send.
-	if ($ID) {
-		$self->sendMailOperateWindow(1);
-	} else {
-		$self->sendMailOperateWindow(2);
-	}	
-	$AI::temp::mailAttachAmount = $amount;
-	$self->sendToServer($msg);
-	debug "Sent mail set attachment.\n", "sendPacket", 2;
-}
-
-sub sendMailSend {
-	my ($self, $receiver, $title, $message) = @_;
-	my $msg = pack("v2 Z24 a40 C Z*", 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent mail send.\n", "sendPacket", 2;
-}
-
 sub sendAuctionAddItemCancel {
 	my ($self) = @_;
 	my $msg = pack("v2", 0x024B, 1);
@@ -553,13 +502,6 @@ sub sendAuctionMySellStop {
 	my $msg = pack("v V", 0x025D, $id);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendMailReturn {
-	my ($self, $mailID, $sender) = @_;
-	my $msg = pack("v V Z24", 0x0273, $mailID, stringToBytes($sender));
-	$self->sendToServer($msg);
-	debug "Sent return mail.\n", "sendPacket", 2;
 }
 
 sub sendCashShopBuy {
