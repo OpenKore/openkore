@@ -26,7 +26,7 @@ use I18N qw(stringToBytes);
 use Utils qw(getHex getCoordString makeCoordsDir);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($charID);
+use Globals qw($charID %rpackets);
 
 sub version {
 	return 5;
@@ -200,7 +200,9 @@ sub new {
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
 		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],	
-		'0848' => ['cash_shop_buy_items', 's s V V s', [qw(len count item_id item_amount tab_code)]], #item_id, item_amount and tab_code could be repeated in order to buy multiple itens at once
+		'0848' => (exists $rpackets{'0848'}{minLength} && $rpackets{'0848'}{minLength} == 6) ? 
+			['cash_shop_buy', 'v v a*', [qw(len count buy_info)]] :
+			['cash_shop_buy', 'v v V a*', [qw(len count kafra_points buy_info)]],
 		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C1' => ['macro_start'],#2
