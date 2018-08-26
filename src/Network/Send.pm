@@ -1068,26 +1068,36 @@ sub sendRequestCashItemsList {
 }
 
 sub sendCashShopOpen {
-	my $self = shift;
+	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'cash_shop_open'}));
 	debug "Requesting sendCashShopOpen\n", "sendPacket", 2;
 }
 
+sub sendCashShopClose {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'cash_shop_close'}));
+	debug "Requesting sendCashShopClose\n", "sendPacket", 2;
+}
+
 sub sendCashBuy {
-	my $self = shift;
-	my ($item_id, $item_amount, $tab_code) = @_;
-	#"len count item_id item_amount tab_code"
+	my ($self, $kafra_points, $items) = @_;
+	
 	$self->sendToServer($self->reconstruct({
-				switch => 'cash_shop_buy_items',
-				len => 16, # always 16 for current implementation
-				count => 1, # current _kore_ implementation only allow us to buy 1 item at time
-				item_id => $item_id,
-				item_amount => $item_amount,
-				tab_code => $tab_code
-			}
-		)
-	);
-	debug "Requesting sendCashShopOpen\n", "sendPacket", 2;
+		switch => 'cash_shop_buy',
+		kafra_points => $kafra_points,
+		count => scalar @{$items},
+		items => $items,
+	}));
+	
+	debug "Requesting cash shop buy\n", "sendPacket", 2;
+}
+
+sub reconstruct_cash_shop_buy {
+	my ($self, $args) = @_;
+	
+	$args->{buy_info} = pack '(a*)*', map { pack 'V V v', $_->{nameID}, $_->{amount}, $_->{tab} } @{$args->{items}};
+	# Some older clients (prior to 2013, I don't know the exact date) use 'v3' instead of 'V2 v' - lututui
+	# $args->{buy_info} = pack '(a*)*', map { pack 'v v v', $_->{nameID}, $_->{amount}, $_->{tab} } @{$args->{items}};
 }
 
 sub sendShowEquipPlayer {
