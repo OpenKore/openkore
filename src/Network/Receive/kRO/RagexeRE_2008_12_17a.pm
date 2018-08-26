@@ -22,17 +22,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2008_11_12a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'01A2' => ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]], # 37
-		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
