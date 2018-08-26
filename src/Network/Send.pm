@@ -2781,4 +2781,110 @@ sub sendMailReturn {
 	debug "Sent return mail.\n", "sendPacket", 2;
 }
 
+sub sendAuctionAddItemCancel {
+	my ($self, $flag) = @_;
+	
+	$flag ||= 1;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_add_item_cancel',
+		flag => $flag,
+	}));
+	
+	debug "Sent Auction Add Item Cancel.\n", "sendPacket", 2;
+}
+
+sub sendAuctionAddItem {
+	my ($self, $ID, $amount) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_add_item',
+		ID => $ID,
+		amount => $amount,
+	}));
+	
+	debug "Sent Auction Add Item.\n", "sendPacket", 2;
+}
+
+sub sendAuctionCreate {
+	my ($self, $now_price, $max_price, $delete_time) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_create',
+		now_price => $now_price,
+		max_price => $max_price,
+		delete_time => $delete_time,
+	}));
+	
+	debug "Sent Auction Create.\n", "sendPacket", 2;
+}
+
+sub sendAuctionCancel {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_cancel',
+		ID => $ID,
+	}));
+	
+	debug "Sent Auction Cancel.\n", "sendPacket", 2;
+}
+
+sub sendAuctionBuy {
+	my ($self, $ID, $price) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_buy',
+		ID => $ID,
+		price => $price,
+	}));
+	
+	debug "Sent Auction Buy.\n", "sendPacket", 2;
+}
+
+sub sendAuctionItemSearch {
+	my ($self, $type, $price, $search_string, $page) = @_;
+	$page ||= 1;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_search',
+		price => $price,
+		search_string => stringToBytes($search_string),
+		page => $page,
+		
+		# type
+		# 0 => armor
+		# 1 => weapon
+		# 2 => card
+		# 3 => misc
+		# 4 => name
+		# 5 => auction id
+		type => $type,
+	}));
+	
+	debug "Sent Auction Item Search.\n", "sendPacket", 2;
+}
+
+sub sendAuctionReqMyInfo {
+	my ($self, $type) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_info_self',
+		type => $type,
+	}));
+	
+	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
+}
+
+sub sendAuctionMySellStop {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'auction_sell_stop',
+		ID => $ID,
+	}));
+	
+	debug "Sent My Sell Stop.\n", "sendPacket", 2;
+}
+
 1;

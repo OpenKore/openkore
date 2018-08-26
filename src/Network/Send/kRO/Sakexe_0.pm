@@ -23,10 +23,10 @@ use Network::Send::ServerType0();
 
 use Log qw(message warning error debug);
 use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString makeCoordsDir);
+use Utils qw(getHex getCoordString makeCoordsDir);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net $rodexList $rodexWrite);
+use Globals qw($charID);
 
 sub version {
 	return 5;
@@ -170,7 +170,15 @@ sub new {
 		'0246' => ['mail_remove', 'v', [qw(flag)]],
 		'0247' => ['mail_attachment_set', 'a2 V', [qw(ID amount)]],
 		'0248' => ['mail_send', 'v Z24 a40 C a*', [qw(len recipient title body_len body)]],
+		'024B' => ['auction_add_item_cancel', 'v', [qw(flag)]],
+		'024C' => ['auction_add_item', 'a2 V', [qw(ID amount)]],
+		'024D' => ['auction_create', 'V V v', [qw(now_price max_price delete_time)]],
+		'024E' => ['auction_cancel', 'V', [qw(ID)]],
+		'024F' => ['auction_buy', 'V V', [qw(ID price)]],
+		'0251' => ['auction_search', 'v V Z24 v', [qw(type price search_string page)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
+		'025C' => ['auction_info_self', 'v', [qw(type)]],
+		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],

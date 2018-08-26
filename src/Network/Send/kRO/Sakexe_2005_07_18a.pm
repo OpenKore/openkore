@@ -59,27 +59,6 @@ sub sendSkillUseLocInfo {
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
-sub sendAuctionAddItem {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v a2 V', 0x024C, $ID, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Auction Add Item.\n", "sendPacket", 2;
-}
-
-sub sendAuctionCancel {
-	my ($self, $id) = @_;
-	my $msg = pack('v V', 0x024E, $id);
-	$self->sendToServer($msg);
-	debug "Sent Auction Cancel.\n", "sendPacket", 2;
-}
-
-sub sendAuctionBuy {
-	my ($self, $id, $bid) = @_;
-	my $msg = pack('v V2', 0x024F, $id, $bid);
-	$self->sendToServer($msg);
-	debug "Sent Auction Buy.\n", "sendPacket", 2;
-}
-
 1;
 
 =pod
