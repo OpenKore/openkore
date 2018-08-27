@@ -72,5 +72,18 @@ sub validate {
 	return 0;
 }
 
+sub validate_reverse {
+	my ( $self, $possible_member ) = @_;
+	return 1 if ($self->{list_is_any});
+	
+	foreach my $list_member (@{$self->{list}}) {
+		next unless (defined $list_member);
+		return 1 if ($list_member ne $possible_member);
+	}
+	
+	return 0;
+	
+}
+
 
 1;

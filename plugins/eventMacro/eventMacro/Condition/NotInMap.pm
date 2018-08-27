@@ -3,7 +3,6 @@ package eventMacro::Condition::NotInMap;
 use strict;
 
 use base 'eventMacro::Condition';
-use eventMacro::Data;
 use eventMacro::Utilities qw(find_variable);
 
 use Globals;
