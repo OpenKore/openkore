@@ -1036,76 +1036,99 @@ sub cmdCart_get {
 
 sub cmdCash {
 	my (undef, $args) = @_;
-	my ($sub_cmd, $arg) = split(/\s+/,$args, 2);
-	if ($sub_cmd eq 'buy') {
-		if ($arg =~ /^\s+$/) {
-			error T("Syntax Error in function 'cash' (Cash shop)\n" .
-				"Usage: cash <buy|points>\n");
+	my (@args) = parseArgs($args);
+	
+	if ($args[0] eq 'open') {
+		if (defined $cashShop{points}) {
+			error T("Cash shop already opened this session\n");
 			return;
 		}
-		my $int_arg;
-		#my $r_arg;
-		if ($arg =~ s/(\d+)$//) { # ending with number
-			$int_arg = $1;
-		}
-		$arg =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
-		$arg =~ s/\s+$//g;	# Remove trailing whitespace
-
-		my $amount;
-		my $item;
-
-		if ($arg && $int_arg) { # recebi item (nao sei se é ID ou nome) e quantidade
-			$amount = $int_arg;
-			$item = $arg;
-		} elsif (!$arg && $int_arg) { # recebi itemID, sem quantidade
-			$amount = 1;
-			$item = $int_arg;
-		} elsif ($arg && !$int_arg) { # recebi nome do item, sem quantidade
-			$amount = 1;
-			$item = $arg;
-		} else {
-			error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
+		
+		$messageSender->sendCashShopOpen();
+		return;
+	}
+	
+	if ($args[0] eq 'close') {
+		if (not defined $cashShop{points}) {
+			error T("Cash shop is not open\n");
 			return;
 		}
-
-		if ($item !~ /^\d+$/) {
-			# transform itemName into itemID
+		
+		$messageSender->sendCashShopClose();
+		return;
+	}
+	
+	if (not defined $cashShop{points}) {
+		error T("Cash shop is not open\n");
+		error T("Please use 'cash open' first\n");
+		return;
+	}
+	
+	if ($args[0] eq 'buy') {
+		if (scalar @args < 2 || !$args[1]) {
+			error T("Syntax Error in function 'cash buy' (Cash shop)\n" .
+				"Usage: cash buy <item> [<amount>] [<kafra shop points>]\n");
+			return;
+		}
+		
+		my ($amount, $item, $kafra_points);
+		
+		if ($args[1] !~ /^\d+$/) {
 			$item = itemNameToID($item);
 			if (!$item) {
 				error TF("Error in function 'cash buy': invalid item name or tables needs to be updated \n");
 				return;
 			}
+		} else {
+			$item = $args[1];
+		}
+		
+		if (scalar @args < 3 || $args[2] !~ /^\d+$/) {
+			$amount = 1;
+		} else {
+			$amount = $args[2];
+		}
+		
+		if (scalar @args >= 4) {
+			$kafra_points = $args[3];
+		} else {
+			$kafra_points = 0;
 		}
 
-		$messageSender->sendCashShopOpen() unless (defined $cashShop{points});
-
-		for (my $tab = 0; $tab < @{$cashShop{list}}; $tab++) {
-			foreach my $itemloop (@{$cashShop{list}[$tab]}) {
-				if ($itemloop->{item_id} == $item) {
-					# found item! ... but do we have the money?
-					unless ((defined $cashShop{points}) && ($itemloop->{price} > $cashShop{points}->{cash})) {
-						# buy item
-						message TF("Buying %s from cash shop \n", itemNameSimple($itemloop->{item_id}));
-						$messageSender->sendCashBuy($itemloop->{item_id}, $amount, $tab);
-						return;
-					} else {
-						error TF("Not enough cash to buy item %s (%sC), we have %sC\n", itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price}), formatNumber($cashShop{points}->{cash}));
+		if ($kafra_points > $cashShop{points}->{kafra}) {
+			error TF("You don't have that many kafra shop points (Requested: %d, Available: %d)", $kafra_points, $cashShop{points}->{kafra});
+			return;
+		}
+		
+		for (my $i = 0; $i < scalar @{$cashShop{list}}; ++$i) {
+			foreach my $item_in_tab (@{$cashShop{list}[$i]}) {
+				if ($item_in_tab->{item_id} == $item) {
+					if ($item_in_tab->{price} * $amount > $cashShop{points}->{cash} + $kafra_points) {
+						error TF("Not enough cash to buy item %s x %d (%sC), we have %sC\n",
+							itemNameSimple($item_in_tab->{item_id}), $amount, formatNumber($item_in_tab->{price} * $amount),
+							formatNumber($cashShop{points}->{cash} + $kafra_points)
+						);
 						return;
 					}
+					
+					message TF("Buying %s from cash shop \n", itemNameSimple($item_in_tab->{item_id}));
+					$messageSender->sendCashBuy($kafra_points, [{nameID => $item_in_tab->{item_id}, amount => $amount, tab => $i}]);
+					return;
 				}
-			} 
+			}
 		}
 
 		error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
 		return;
 
-	} elsif ($sub_cmd eq 'points') {
-		if (defined $cashShop{points}) {
-			message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
-		} else {
-			$messageSender->sendCashShopOpen();
-		}
-	} elsif ($sub_cmd eq 'list') {
+	} 
+	
+	if ($args[0] eq 'points') {
+		message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
+		return;
+	}
+	
+	if ($args[0] eq 'list') {
 		my %cashitem_tab = (
 			0 => T('New'),
 			1 => T('Popular'),
@@ -1129,11 +1152,12 @@ sub cmdCash {
 		}
 		$msg .= ('-'x50) . "\n";
 		message $msg, "list";
-
-	} else {
-		error T("Syntax Error in function 'cash' (Cash shop)\n" .
-			"Usage: cash <buy|points|list>\n");
+		
+		return;
 	}
+	
+	error T("Syntax Error in function 'cash' (Cash shop)\n" .
+			"Usage: cash <open|close|buy|points|list>\n");
 }
 
 sub cmdCharSelect {
