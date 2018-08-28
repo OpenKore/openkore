@@ -4198,7 +4198,7 @@ Ataque: ^77777738^000000
 Peso: ^77777780^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^7777773^000000
-Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores, Gatunos e evoluções^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores e evoluções^000000
 #
 1302#
 Machado comum. Lento, mas poderoso. Arraste esta arma para a janela de equipamento para usar.
@@ -4208,7 +4208,7 @@ Ataque: ^77777738^000000
 Peso: ^77777780^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^7777773^000000
-Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores, Gatunos e evoluções^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores e evoluções^000000
 #
 1303#
 Machado comum. Lento, mas poderoso. Arraste esta arma para a janela de equipamento para usar.
@@ -4218,7 +4218,7 @@ Ataque: ^77777738^000000
 Peso: ^77777780^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^7777773^000000
-Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores, Gatunos e evoluções^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores e evoluções^000000
 #
 1304#
 Machado feito por ferreiros orcs e usado por Guerreiros Orc. É muito pesado e ainda assim é menos poderoso do que parece...
@@ -4240,7 +4240,7 @@ Ataque: ^777777140^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777744^000000
-Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
+Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 1306#
 Poderoso machado de uma mão que já viu muitas batalhas.
@@ -28620,6 +28620,30 @@ Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+5919#
+Um lindo ornamento proveniente da bela cidade de Amatsu. As flores de camélia dão um toque único ao acessório, utilizado principalmente em ocasiões especiais.
+DEFM +20.
+Ao realizar ataques físicos:
+2,5% de chance de autoconjurar [Escudo Sagrado] nv. 1.
+A cada refino até o +5:
+Chance de autoconjurar [Escudo Sagrado] +0,5%.
+Refino +6 ou mais:
+Chance de autoconjurar [Escudo Sagrado] +1,5% adicional.
+Refino +7 ou mais:
+Chance de autoconjurar [Escudo Sagrado] +1,5% adicional.
+Refino +8 ou mais:
+Chance de autoconjurar [Escudo Sagrado] +2% adicional.
+Refino +9 ou mais:
+Chance de autoconjurar [Escudo Sagrado] +2% adicional.
+Refino +10 ou mais:
+Chance de autoconjurar [Escudo Sagrado] +2,5% adicional.
+Tipo: Equipamento para Cabeça
+Equipa em: Topo
+Defesa: 0
+Peso: 100
+Nível necessário: 50
+Classes: Todas
+#
 5930#
 Uma tiara dada à Lucya, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Lucya utilizou esta tiara para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta tiara foi encantada pela Valquíria Lexus, e possui o poder da transformação.
 ^008080Exibe efeito gráfico que não pode ser escondido por visuais, mas pode ser desligado com /effect.^000000
@@ -52745,6 +52769,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19868#
+Você definitivamente vai precisar desse chapéu para dar um ar de explorador às suas aventuras — não importa se você vai procurar pelo reino da caveira de cristal, correr de pedras rolantes imensas ou se proteger de uma explosão dentro de uma geladeira
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19871#
 Sabe aquela música que quando você escuta não sai mais da sua cabeça? Aquela música do momento, tipo a 'Ai se eu te dropo', 'Show das Odaliscas' ou 'Hode Hode'? Pois é, sabemos que nesse exato instante você tem uma música dessas na sua cabeça. Tá na sua cara!
 ^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
@@ -59489,5 +59522,14 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31513#
+Se outras pessoas perguntarem por que você se veste como um coelho, pergunte a elas por que se vestem como humanos. Se elas conhecerem tanto de filmes como você, talvez entendam o que você quis dizer.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
