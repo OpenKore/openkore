@@ -12,7 +12,7 @@ Nível máximo: ^7777779^000000
           Aperte [insert] ou digite
           /sit para sentar seu personagem.^000000
 [Nv 4]: ^777777Libera a criação de Chat.
-          Digite /chat ou ALT+C
+          Digite /chat ou ALT + C
           para criar uma sala de chat.^000000
 [Nv 5]: ^777777Libera se juntar em um Grupo.^000000
 [Nv 6]: ^777777Libera uso do Armazém.^000000
@@ -25,36 +25,41 @@ Nível máximo: ^7777779^000000
 #
 SM_SWORD#
 Perícia com Espada
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta o dano com Espadas de Uma Mão e Adagas.^000000
-[Nv 1]: ^777777ATQ +4^000000
-[Nv 2]: ^777777ATQ +8^000000
-[Nv 3]: ^777777ATQ +12^000000
-[Nv 4]: ^777777ATQ +16^000000
-[Nv 5]: ^777777ATQ +20^000000
-[Nv 6]: ^777777ATQ +24^000000
-[Nv 7]: ^777777ATQ +28^000000
-[Nv 8]: ^777777ATQ +32^000000
-[Nv 9]: ^777777ATQ +36^000000
-[Nv 10]: ^777777ATQ +40^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ de perícia ao usar Adagas
+ou Espadas de uma mão.^000000
+Nível l ATQ
+[Nv 1]: ^777777+4^000000
+[Nv 2]: ^777777+8^000000
+[Nv 3]: ^777777+12^000000
+[Nv 4]: ^777777+16^000000
+[Nv 5]: ^777777+20^000000
+[Nv 6]: ^777777+24^000000
+[Nv 7]: ^777777+28^000000
+[Nv 8]: ^777777+32^000000
+[Nv 9]: ^777777+36^000000
+[Nv 10]: ^777777+40^000000
 #
 SM_TWOHAND#
 Perícia com Espada de Duas Mãos
-Nível Máximo: 10
-^777777Pré requisitos: Perícia com Espada 1^000000
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta o dano com Espadas de Duas Mãos.^000000
-[Nv 1]: ^777777ATQ +4^000000
-[Nv 2]: ^777777ATQ +8^000000
-[Nv 3]: ^777777ATQ +12^000000
-[Nv 4]: ^777777ATQ +16^000000
-[Nv 5]: ^777777ATQ +20^000000
-[Nv 6]: ^777777ATQ +24^000000
-[Nv 7]: ^777777ATQ +28^000000
-[Nv 8]: ^777777ATQ +32^000000
-[Nv 9]: ^777777ATQ +36^000000
-[Nv 10]: ^777777ATQ +40^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Perícia com Espada 1^000000
+Tipo: ^777777Passiva^000000
+^777777Aumenta o ATQ de perícia ao usar
+Espadas de duas mãos.^000000
+Nível l ATQ
+[Nv 1]: ^777777+4^000000
+[Nv 2]: ^777777+8^000000
+[Nv 3]: ^777777+12^000000
+[Nv 4]: ^777777+16^000000
+[Nv 5]: ^777777+20^000000
+[Nv 6]: ^777777+24^000000
+[Nv 7]: ^777777+28^000000
+[Nv 8]: ^777777+32^000000
+[Nv 9]: ^777777+36^000000
+[Nv 10]: ^777777+40^000000
 #
 SM_RECOVERY#
 Aumentar Recuperação de HP
@@ -78,82 +83,90 @@ Nível l Regeneração de HP
 #
 SM_BASH#
 Golpe Fulminante
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Acerta o inimigo com maior força.
-Se a habilidade Golpe Fatal for aprendida, Golpe Fulminante terá
-um efeito adicional de chance de Atordoamento no nível 5 e acima.^000000
-[Nv 1]: ^777777+ATQ 130%^000000
-[Nv 2]: ^777777+ATQ 160%^000000
-[Nv 3]: ^777777+ATQ 190%^000000
-[Nv 4]: ^777777+ATQ 220%^000000
-[Nv 5]: ^777777+ATQ 250%^000000
-[Nv 6]: ^777777+ATQ 280%^000000
-[Nv 7]: ^777777+ATQ 310%^000000
-[Nv 8]: ^777777+ATQ 340%^000000
-[Nv 9]: ^777777+ATQ 370%^000000
-[Nv 10]: ^777777+ATQ 400%^000000
+Descrição:
+^777777Atinge o oponente com um único golpe
+físico de curta distância.^000000
+Nível l ATQ
+[Nv 1]: ^777777130%^000000
+[Nv 2]: ^777777160%^000000
+[Nv 3]: ^777777190%^000000
+[Nv 4]: ^777777220%^000000
+[Nv 5]: ^777777250%^000000
+[Nv 6]: ^777777280%^000000
+[Nv 7]: ^777777310%^000000
+[Nv 8]: ^777777340%^000000
+[Nv 9]: ^777777370%^000000
+[Nv 10]: ^777777400%^000000
 #
 SM_PROVOKE#
 Provocar
-Nível Máximo: 10
-Tipo: ^777777Suporte^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Diminui a Defesa e aumenta a Força do oponente ao mesmo tempo.
-Não funciona contra Mortos-vivos.^000000
-Efeito de Provocar no Oponente dependendo do nível da habilidade:
-[Nv 1]: ^777777+5% ATQ, -10% DEF^000000
-[Nv 2]: ^777777+8% ATQ, -15% DEF^000000
-[Nv 3]: ^777777+11% ATQ, -20% DEF^000000
-[Nv 4]: ^777777+14% ATQ, -25% DEF^000000
-[Nv 5]: ^777777+17% ATQ, -30% DEF^000000
-[Nv 6]: ^777777+20% ATQ, -35% DEF^000000
-[Nv 7]: ^777777+23% ATQ, -40% DEF^000000
-[Nv 8]: ^777777+26% ATQ, -45% DEF^000000
-[Nv 9]: ^777777+29% ATQ, -50% DEF^000000
-[Nv 10]: ^777777+32% ATQ, -55% DEF^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tenta irritar o alvo para atraí-lo.
+Em caso de sucesso, diminui a DEF e
+aumenta o ATQ do oponente.
+Não funciona em monstros mortos-vivos.^000000
+Nível l DEF l ATQ
+[Nv 1]: ^777777-10%^000000 l ^777777+5%^000000
+[Nv 2]: ^777777-15%^000000 l ^777777+8%^000000
+[Nv 3]: ^777777-20%^000000 l ^777777+11%^000000
+[Nv 4]: ^777777-25%^000000 l ^777777+14%^000000
+[Nv 5]: ^777777-30%^000000 l ^777777+17%^000000
+[Nv 6]: ^777777-35%^000000 l ^777777+20%^000000
+[Nv 7]: ^777777-40%^000000 l ^777777+23%^000000
+[Nv 8]: ^777777-45%^000000 l ^777777+26%^000000
+[Nv 9]: ^777777-50%^000000 l ^777777+29%^000000
+[Nv 10]: ^777777-55%^000000 l ^777777+32%^000000
 #
 SM_MAGNUM#
 Impacto Explosivo
-Nível Máximo: 10
-^777777Pré requisitos: Golpe Fulminante 5^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Golpe Fulminante 5^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb0000Fogo^000000
-Descrição: Dano explosivo com Propriedade Fogo que empurra os monstros que estiverem ao redor do jogador.
-Consome 30 SP e um pouco de HP.
-Por 10 segundos após o uso, acrescenta um dano de 20% de Propriedade Fogo à arma.
-[Nv 1]: ^777777+ATQ 120%^000000
-[Nv 2]: ^777777+ATQ 140%^000000
-[Nv 3]: ^777777+ATQ 160%^000000
-[Nv 4]: ^777777+ATQ 180%^000000
-[Nv 5]: ^777777+ATQ 200%^000000
-[Nv 6]: ^777777+ATQ 220%^000000
-[Nv 7]: ^777777+ATQ 240%^000000
-[Nv 8]: ^777777+ATQ 260%^000000
-[Nv 9]: ^777777+ATQ 280%^000000
-[Nv 10]: ^777777+ATQ 300%^000000
+Descrição:
+^777777Causa dano físico de propriedade Fogo na
+área de 5x5 células ao redor do usuário.
+Alvos atingidos serão empurrados e nos
+próximos 10 segundos, o dano físico do
+usuário é aumentado em 20%.
+Consome um pouco de HP para ser usada.^000000
+Nível l ATQ
+[Nv 1]: ^777777120%^000000
+[Nv 2]: ^777777140%^000000
+[Nv 3]: ^777777160%^000000
+[Nv 4]: ^777777180%^000000
+[Nv 5]: ^777777200%^000000
+[Nv 6]: ^777777220%^000000
+[Nv 7]: ^777777240%^000000
+[Nv 8]: ^777777260%^000000
+[Nv 9]: ^777777280%^000000
+[Nv 10]: ^777777300%^000000
 #
 SM_ENDURE#
 Vigor
-Nível Máximo: 10
-^777777Pré requisitos: Provocar 5^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Provocar 5^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Permite atacar e se movimentar enquanto receber ataques.
-A habilidade é cancelada automáticamente após 7 acertos.
-Espera de 10 segundo para ser usada novamente.
-Desabilitada na Guerra do Emperium.^000000
-Duração e bônus de MDEF de acordo com nível da habilidade:
-[Nv 1]: ^77777710 segundos, MDEF +1^000000
-[Nv 2]: ^77777713 segundos, MDEF +2^000000
-[Nv 3]: ^77777716 segundos, MDEF +3^000000
-[Nv 4]: ^77777719 segundos, MDEF +4^000000
-[Nv 5]: ^77777722 segundos, MDEF +5^000000
-[Nv 6]: ^77777725 segundos, MDEF +6^000000
-[Nv 7]: ^77777728 segundos, MDEF +7^000000
-[Nv 8]: ^77777731 segundos, MDEF +8^000000
-[Nv 9]: ^77777734 segundos, MDEF +9^000000
-[Nv 10]: ^77777737 segundos, MDEF +10^000000
+Descrição:
+^777777Temporariamente aumenta a DEFM e evita o
+personagem reagir ao receber ataques.
+O efeito acaba após receber 7 golpes.
+Em mapas de GdE, só fornece DEFM.
+Possui 10 segundos de recarga.^000000
+Nível l Duração l DEFM
+[Nv 1]: ^77777710 segundos^000000 l ^777777+1^000000
+[Nv 2]: ^77777713 segundos^000000 l ^777777+2^000000
+[Nv 3]: ^77777716 segundos^000000 l ^777777+3^000000
+[Nv 4]: ^77777719 segundos^000000 l ^777777+4^000000
+[Nv 5]: ^77777722 segundos^000000 l ^777777+5^000000
+[Nv 6]: ^77777725 segundos^000000 l ^777777+6^000000
+[Nv 7]: ^77777728 segundos^000000 l ^777777+7^000000
+[Nv 8]: ^77777731 segundos^000000 l ^777777+8^000000
+[Nv 9]: ^77777734 segundos^000000 l ^777777+9^000000
+[Nv 10]: ^77777737 segundos^000000 l ^777777+10^000000
 #
 MG_SRECOVERY#
 Aumentar recuperação de SP
@@ -177,36 +190,35 @@ Nível l Regeneração de SP
 #
 MG_SIGHT#
 Chama Reveladora
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Propriedade: ^bb0000Fogo^000000
-Descrição: ^777777Detecta oponentes escondidos em áreas próximas.
-O alcance é de 7x7 células.
-Cada conjuração consome 10 de SP.^000000
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Detecta oponentes escondidos em uma área
+de 7x7 células ao redor do personagem.
+Consome 10 de SP.^000000
 #
 MG_NAPALMBEAT#
 Ataque Espiritual
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb00bbFantasma^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca inimigos na zona de alcance com telecinese.
-Não ultrapassa obstáculos físicos.
-Consumo de SP, tempo entre conjurações, bônus de ATQM:^000000
-[Nv 1]:^777777 9 SP, 1 segundo, +80% ATQM^000000
-[Nv 2]:^777777 9 SP, 1 segundo, +90% ATQM^000000
-[Nv 3]:^777777 9 SP, 1 segundo, +100% ATQM^000000
-[Nv 4]:^777777 12 SP, 0.9 segundos, +110% ATQM^000000
-[Nv 5]:^777777 12 SP, 0.9 segundos, +120% ATQM^000000
-[Nv 6]:^777777 12 SP, 0.8 segundos, +130% ATQM^000000
-[Nv 7]:^777777 15 SP, 0.8 segundos, +140% ATQM^000000
-[Nv 8]:^777777 15 SP, 0.7 segundos, +150% ATQM^000000
-[Nv 9]:^777777 15 SP, 0.6 segundos, +160% ATQM^000000
-[Nv 10]:^777777 18 SP, 0.5 segundos, +170% ATQM^000000
+Descrição:
+^777777Atinge o alvo e oponentes ao redor, causa
+dano mágico de propriedade Fantasma.^000000
+Nível l Pós-conjuração l ATQM
+[Nv 1]: ^7777771,0 segundos^000000 l ^77777780%^000000
+[Nv 2]: ^7777771,0 segundos^000000 l ^77777790%^000000
+[Nv 3]: ^7777771,0 segundos^000000 l ^777777100%^000000
+[Nv 4]: ^7777770,9 segundos^000000 l ^777777110%^000000
+[Nv 5]: ^7777770,9 segundos^000000 l ^777777120%^000000
+[Nv 6]: ^7777770,8 segundos^000000 l ^777777130%^000000
+[Nv 7]: ^7777770,8 segundos^000000 l ^777777140%^000000
+[Nv 8]: ^7777770,7 segundos^000000 l ^777777150%^000000
+[Nv 9]: ^7777770,6 segundos^000000 l ^777777160%^000000
+[Nv 10]: ^7777770,5 segundos^000000 l ^777777170%^000000
 #
 MG_SAFETYWALL#
 Escudo Mágico
-Nível máximo: ^77777710^00000
+Nível máximo: ^77777710^000000
 Pré requisitos (^008080Magos^000000):
 ^777777Ataque Espiritual 7, Espíritos Anciões 5^000000
 Pré requisitos (^008080Sacerdotes^000000):
@@ -230,185 +242,133 @@ Nível l Duração l Bloqueios
 #
 MG_SOULSTRIKE#
 Espíritos Anciões
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Espiritual 4^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Ataque Espiritual 4^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb00bbFantasma^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Invoca numerosos espíritos antigos para atacar.
-No nível 10, estes espíritos infligirão 5 ataques consecutivos.
-Esta habilidade possui tempo entre conjurações de 0.5 segundos.
-Consumo de SP, tempo de conjuração, dano adicional contra Mortos-Vivos:^000000
-[Nv 1]:^777777 18 SP, 1.2 segundos, +5% dano^000000
-[Nv 2]:^777777 14 SP, 1.5 segundos, +10% dano^000000
-[Nv 3]:^777777 24 SP, 1.6 segundos, +15% dano^000000
-[Nv 4]:^777777 20 SP, 1.8 segundos, +20% dano^000000
-[Nv 5]:^777777 30 SP, 2.0 segundos, +25% dano^000000
-[Nv 6]:^777777 26 SP, 2.2 segundos, +30% dano^000000
-[Nv 7]:^777777 36 SP, 2.4 segundos, +35% dano^000000
-[Nv 8]:^777777 32 SP, 2.6 segundos, +40% dano^000000
-[Nv 9]:^777777 42 SP, 2.8 segundos, +45% dano^000000
-[Nv 10]:^777777 38 SP, 2.7 segundos, +50% dano^000000
+Descrição:
+^777777Invoca alguns espíritos para causar dano
+mágico de propriedade Fantasma em um alvo.
+Causa dano adicional em Mortos-Vivos.^000000
+Nível l Pós-conjuração l Dano adicional
+[Nv 1]: ^7777771,2 segundos^000000 l ^777777+5%^000000
+[Nv 2]: ^7777771,5 segundos^000000 l ^777777+10%^000000
+[Nv 3]: ^7777771,6 segundos^000000 l ^777777+15%^000000
+[Nv 4]: ^7777771,8 segundos^000000 l ^777777+20%^000000
+[Nv 5]: ^7777772,0 segundos^000000 l ^777777+25%^000000
+[Nv 6]: ^7777772,2 segundos^000000 l ^777777+30%^000000
+[Nv 7]: ^7777772,4 segundos^000000 l ^777777+35%^000000
+[Nv 8]: ^7777772,6 segundos^000000 l ^777777+40%^000000
+[Nv 9]: ^7777772,8 segundos^000000 l ^777777+45%^000000
+[Nv 10]: ^7777772,7 segundos^000000 l ^777777+50%^000000
 #
 MG_COLDBOLT#
 Lanças de Gelo
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^0000bbÁgua^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca um oponente com lanças de gelo.
-Alterações no elemento que resultem em anulação do dano elemental
-farão com que cada lança cause dano igual ao ATQM do usuário.
-Consumo de SP, tempo de conjuração, quantidade de lanças:^000000
-[Nv 1]:^777777 12 SP, 0.7 segundos, 1 lança^000000
-[Nv 2]:^777777 14 SP, 1.4 segundos, 2 lanças^000000
-[Nv 3]:^777777 16 SP, 2.1 segundos, 3 lanças^000000
-[Nv 4]:^777777 18 SP, 2.8 segundos, 4 lanças^000000
-[Nv 5]:^777777 20 SP, 3.5 segundos, 5 lanças^000000
-[Nv 6]:^777777 22 SP, 4.2 segundos, 6 lanças^000000
-[Nv 7]:^777777 24 SP, 4.9 segundos, 7 lanças^000000
-[Nv 8]:^777777 26 SP, 5.6 segundos, 8 lanças^000000
-[Nv 9]:^777777 28 SP, 6.3 segundos, 9 lanças^000000
-[Nv 10]:^777777 30 SP, 7 segundos, 10 lanças^000000
+Descrição:
+^777777Ataca um alvo com lanças vindas do céu.
+Causa dano mágico de propriedade Água.
+O número de lanças atiradas é igual ao
+nível da habilidade aprendido.^000000
 #
 MG_FROSTDIVER#
 Rajada Congelante
-Nível Máximo: 10
-^777777Pré requisitos: Lanças de Gelo 5^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Lanças de Gelo 5^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^0000bbÁgua^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Inflige dano de água e acrescenta a chance de
-congelar temporariamente o oponente.
-Consumo de SP, chance de congelamento, aumento no dano:^000000
-[Nv 1]: 25 SP, 38% de chance, +110% de dano
-[Nv 2]: 24 SP, 41% de chance, +120% de dano
-[Nv 3]: 23 SP, 44% de chance, +130% de dano
-[Nv 4]: 22 SP, 47% de chance, +140% de dano
-[Nv 5]: 21 SP, 50% de chance, +150% de dano
-[Nv 6]: 20 SP, 53% de chance, +160% de dano
-[Nv 7]: 19 SP, 56% de chance, +170% de dano
-[Nv 8]: 18 SP, 59% de chance, +180% de dano
-[Nv 9]: 17 SP, 62% de chance, +190% de dano
-[Nv 10]: 16 SP, 65% de chance, +200% de dano
+Descrição:
+^777777Causa dano mágico de propriedade Água com
+chance de infligir [Congelamento] no alvo.^000000
+Nível l Chance l ATQM
+[Nv 1]: ^77777738%^000000 l ^777777110%^000000
+[Nv 2]: ^77777741%^000000 l ^777777120%^000000
+[Nv 3]: ^77777744%^000000 l ^777777130%^000000
+[Nv 4]: ^77777747%^000000 l ^777777140%^000000
+[Nv 5]: ^77777750%^000000 l ^777777150%^000000
+[Nv 6]: ^77777753%^000000 l ^777777160%^000000
+[Nv 7]: ^77777756%^000000 l ^777777170%^000000
+[Nv 8]: ^77777759%^000000 l ^777777180%^000000
+[Nv 9]: ^77777762%^000000 l ^777777190%^000000
+[Nv 10]: ^77777765%^000000 l ^777777200%^000000
 #
 MG_STONECURSE#
 Petrificar
-Nível Máximo: 10
-Tipo: ^777777Efeito Negativo^000000
-Propriedade: ^8B5A2BTerra^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Petrifica um oponente.
-Requer ^00bb001 Gema Vermelha^777777 para cada conjuração.
-Não pode ser usado em monstros tipo Chefe e Mortos-Vivos.
-Consumo de SP, chance de sucesso:^000000
-[Nv 1]:^777777 25 SP, 24% de chance^000000
-[Nv 2]:^777777 24 SP, 28% de chance^000000
-[Nv 3]:^777777 23 SP, 32% de chance^000000
-[Nv 4]:^777777 22 SP, 36% de chance^000000
-[Nv 5]:^777777 21 SP, 40% de chance^000000
-[Nv 6]:^777777 20 SP, 44% de chance^000000
-[Nv 7]:^777777 19 SP, 48% de chance^000000
-[Nv 8]:^777777 18 SP, 52% de chance^000000
-[Nv 9]:^777777 17 SP, 56% de chance^000000
-[Nv 10]:^777777 16 SP, 60% de chance^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Chance de infligir [Petrificação] no alvo.
+Do nível 6 em diante, não haverá consumo
+de Gema Vermelha em casos de falha.
+Não funciona em Mortos-Vivos e Chefes.^000000
+^000088Consome 1 Gema Vermelha.^000000
+Nível l Custo de SP l Chance
+[Nv 1]:^777777 25^000000 l ^77777724%^000000
+[Nv 2]:^777777 24^000000 l ^77777728%^000000
+[Nv 3]:^777777 23^000000 l ^77777732%^000000
+[Nv 4]:^777777 22^000000 l ^77777736%^000000
+[Nv 5]:^777777 21^000000 l ^77777740%^000000
+[Nv 6]:^777777 20^000000 l ^77777744%^000000
+[Nv 7]:^777777 19^000000 l ^77777748%^000000
+[Nv 8]:^777777 18^000000 l ^77777752%^000000
+[Nv 9]:^777777 17^000000 l ^77777756%^000000
+[Nv 10]:^777777 16^000000 l ^77777760%^000000
 #
 MG_FIREBALL#
 Bolas de Fogo
-Nível Máximo: 10
-^777777Pré requisitos: Lanças de Fogo 4^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Lanças de Fogo 4^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb0000Fogo^000000
-Descrição: ^777777Ataca um inimigo com uma bola de fogo.
-Acerta o alvo e oponentes próximos.
-Os adversários próximos do alvo recebem 3/4 do dano.
-No nível 6 e acima, o tempo de conjuração e entre conjurações é reduzido.
-Consome 25 de SP independente do nível da habilidade.
-Poder de ATQM, tempo entre conjurações:^000000
-[Nv 1]:^777777 80% ATQM, 1.5 segundos^000000
-[Nv 2]:^777777 90% ATQM, 1.5 segundos^000000
-[Nv 3]:^777777 100% ATQM, 1.5 segundos^000000
-[Nv 4]:^777777 110% ATQM, 1.5 segundos^000000
-[Nv 5]:^777777 120% ATQM, 1.5 segundos^000000
-[Nv 6]:^777777 130% ATQM, 1 segundo^000000
-[Nv 7]:^777777 140% ATQM, 1 segundo^000000
-[Nv 8]:^777777 150% ATQM, 1 segundo^000000
-[Nv 9]:^777777 160% ATQM, 1 segundo^000000
-[Nv 10]:^777777 170% ATQM, 1 segundo^000000
+Descrição:
+^777777Atira bolas que causam dano mágico de
+propriedade Fogo que atinge o alvo e
+oponentes na área de 3x3 células.
+Alvos próximos recebem 25% menos de dano.
+O dano aumenta com o nv. da habilidade.^000000
 #
 MG_FIREWALL#
 Barreira de Fogo
-Nível Máximo: 10
-^777777Pré requisitos: Chama Reveladora 1, Bolas de Fogo 5^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Chama Reveladora 1,
+Bolas de Fogo 5^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb0000Fogo^000000
-Descrição: ^777777Incendeia o chão criando uma barreira que causa dano, impedindo
-que oponentes passem pela área atingida.
-O custo de SP 40. Tempo de conjuração diminui conforme o nível da habilidade aumenta.^000000
+Descrição:
+^777777Cria uma parede que impede os oponentes
+de atravessarem, causando dano mágico de
+propriedade Fogo e empurrando-os.
+A duração da barreira aumenta conforme
+o nível da habilidade.^000000
 #
 MG_FIREBOLT#
 Lanças de Fogo
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^bb0000Fogo^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca um oponente com lanças de fogo vindas do céu.
-Alterações no elemento que resultem em anulação do dano elemental
-farão com que cada lança cause dano igual ao ATQM do usuário.
-Consumo de SP, tempo de conjuração, quantidade de lanças:^000000
-[Nv 1]:^777777 12 SP, 0.7 segundos, 1 lança^000000
-[Nv 2]:^777777 14 SP, 1.4 segundos, 2 lanças^000000
-[Nv 3]:^777777 16 SP, 2.1 segundos, 3 lanças^000000
-[Nv 4]:^777777 18 SP, 2.8 segundos, 4 lanças^000000
-[Nv 5]:^777777 20 SP, 3.5 segundos, 5 lanças^000000
-[Nv 6]:^777777 22 SP, 4.2 segundos, 6 lanças^000000
-[Nv 7]:^777777 24 SP, 4.9 segundos, 7 lanças^000000
-[Nv 8]:^777777 26 SP, 5.6 segundos, 8 lanças^000000
-[Nv 9]:^777777 28 SP, 6.3 segundos, 9 lanças^000000
-[Nv 10]:^777777 30 SP, 7 segundos, 10 lanças^000000
+Descrição:
+^777777Ataca um alvo com lanças vindas do céu.
+Causa dano mágico de propriedade Fogo.
+O número de lanças atiradas é igual ao
+nível da habilidade aprendido.^000000
 #
 MG_LIGHTNINGBOLT#
 Relâmpago
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^228B22Vento^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca o oponente com um relâmpago.
-Alterações no elemento que resultem em anulação do dano elemental
-farão com que cada lança cause dano igual ao ATQM do usuário.
-Consumo de SP, tempo de conjuração, quantidade de lanças:^000000
-[Nv 1]:^777777 12 SP, 0.7 segundos, 1 lança^000000
-[Nv 2]:^777777 14 SP, 1.4 segundos, 2 lanças^000000
-[Nv 3]:^777777 16 SP, 2.1 segundos, 3 lanças^000000
-[Nv 4]:^777777 18 SP, 2.8 segundos, 4 lanças^000000
-[Nv 5]:^777777 20 SP, 3.5 segundos, 5 lanças^000000
-[Nv 6]:^777777 22 SP, 4.2 segundos, 6 lanças^000000
-[Nv 7]:^777777 24 SP, 4.9 segundos, 7 lanças^000000
-[Nv 8]:^777777 26 SP, 5.6 segundos, 8 lanças^000000
-[Nv 9]:^777777 28 SP, 6.3 segundos, 9 lanças^000000
-[Nv 10]:^777777 30 SP, 7 segundos, 10 lanças^000000
+Descrição:
+^777777Ataca um alvo com raios vindos do céu.
+Causa dano mágico de propriedade Vento.
+O número de raios atirados é igual ao
+nível da habilidade aprendido.^000000
 #
 MG_THUNDERSTORM#
 Tempestade de Raios
-Nível Máximo: 10
-^777777Pré requisitos: Relâmpago 4^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Relâmpago 4^000000
 Tipo: ^777777Ofensiva^000000
-Propriedade: ^228B22Vento^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Causa uma tempestade elétrica no local,
-atingindo os inimigos ao seu redor.
-Cada raio causa uma quantidade de dano igual à 100% do ATQM do usuário.
-Consumo de SP, tempo de conjuração, quantidade de raios:^000000
-[Nv 1]:^777777 29 SP, 1 segundo, 1 raio^000000
-[Nv 2]:^777777 34 SP, 2 segundos, 2 raios^000000
-[Nv 3]:^777777 39 SP, 3 segundos, 3 raios^000000
-[Nv 4]:^777777 44 SP, 4 segundos, 4 raios^000000
-[Nv 5]:^777777 49 SP, 5 segundos, 5 raios^000000
-[Nv 6]:^777777 54 SP, 6 segundos, 6 raios^000000
-[Nv 7]:^777777 59 SP, 7 segundos, 7 raios^000000
-[Nv 8]:^777777 64 SP, 8 segundos, 8 raios^000000
-[Nv 9]:^777777 69 SP, 9 segundos, 9 raios^000000
-[Nv 10]:^777777 74 SP, 10 segundos, 10 raios^000000
+Descrição:
+^777777Causa dano mágico de propriedade Vento na
+área selecionada de 5x5 células.
+O número de raios atirados é igual ao
+nível da habilidade aprendido.^000000
 #
 AL_DP#
 Proteção Divina
@@ -900,7 +860,7 @@ Descrição: ^777777Remove o envenenamento do alvo.^000000
 ALL_RESURRECTION#
 Ressuscitar
 Nível Máximo: 4
-^777777Pré requisitos: Aumentar recuperação de SP 4
+Pré requisitos: ^777777Aumentar recuperação de SP 4
 Graça Divina 1^000000
 Tipo: ^777777Suporte^000000
 Alvo: ^777777Jogadores derrotados^000000
@@ -1132,8 +1092,7 @@ PR_ASPERSIO#
 Aspersio
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Aqua Benedicta 1,
-Impositio Manus 3^000000
+^777777Aqua Benedicta 1, Impositio Manus 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Temporariamente abençoa a arma
@@ -1150,8 +1109,7 @@ PR_BENEDICTIO#
 Benedictio Sanctissimi Sacramenti
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Aspersio 5,
-Glória 3^000000
+^777777Aspersio 5, Glória 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Temporariamente abençoa a armadura dos
@@ -1175,10 +1133,10 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Curar 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-Cria uma área de 5x5 células que regenera
+^777777Cria uma área de 5x5 células que regenera
 HP dos personagens a cada segundo.
 Demônios e Malditos receberão dano mágico
-de propriedade Sagrado e serão empurrados.
+de propriedade Sagrado e serão empurrados.^000000
 ^000088Consome 1 Gema Azul.^000000
 Nível l HP recuperado l Duração
 [Nv 1]: ^777777100^000000 l ^7777774 segundos^000000
@@ -1253,11 +1211,10 @@ PR_GLORIA#
 Glória
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Kyrie Eleison 4,
-Magnificat 3^000000
+^777777Kyrie Eleison 4, Magnificat 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-777777Temporariamente concede SOR +30.^000000
+^777777Temporariamente concede SOR +30.^000000
 Nível l Duração
 [Nv 1]: ^77777710 segundos^000000
 [Nv 2]: ^77777715 segundos^000000
@@ -1272,7 +1229,7 @@ Pré requisitos: ^777777Revelação 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Concede uma chance de infligir
-Silêcio em um alvo selecionado.
+Silêncio em um alvo selecionado.
 Se um alvo já estiver Silenciado, usar
 esta habilidade removerá o Silêncio.^000000
 Nível l Custo de SP l Duração do Silêncio
@@ -1291,8 +1248,7 @@ PR_TURNUNDEAD#
 Esconjurar
 Nível máximo: ^77777710^000000
 Pré requisitos:
-^777777Ressuscitar 1,
-Lex Divina 3^000000
+^777777Ressuscitar 1, Lex Divina 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Dá a chance de eliminar instantaneamente
@@ -1328,8 +1284,7 @@ PR_MAGNUS#
 Magnus Exorcismus
 Nível máximo: ^77777710^000000
 Pré requisitos:
-^777777Esconjurar 3,
-Lex Aeterna 1
+^777777Esconjurar 3, Lex Aeterna 1,
 Escudo Mágico 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -3811,8 +3766,7 @@ BD_LULLABY#
 Cantiga de Ninar
 Nível máximo: ^7777771^000000
 Pré requisitos:
-^777777Assovio 10^000000 ou
-^777777Sibilo 10^000000
+^777777Assovio 10^000000 ou ^777777Sibilo 10^000000
 Tipo: ^777777Ativa^000000 / ^CD3278Dueto^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
@@ -3857,8 +3811,7 @@ BD_DRUMBATTLEFIELD#
 Rufar dos Tambores
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Maçãs de Idun 10^000000 ou
-^777777Dança Cigana 10^000000
+^777777Maçãs de Idun 10^000000 ou ^777777Dança Cigana 10^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Dueto^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
@@ -3922,8 +3875,7 @@ BD_SIEGFRIED#
 Ode a Siegfried
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Poema de Bragi 10^000000 ou
-^777777Beijo da Sorte 10^000000
+^777777Poema de Bragi 10^000000 ou ^777777Beijo da Sorte 10^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Dueto^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
@@ -3984,8 +3936,7 @@ BA_DISSONANCE#
 Dissonância
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Encerramento 1
-Lições de Música 1^000000
+^777777Encerramento 1, Lições de Música 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Instrumentos Musicais.^000000
@@ -4160,8 +4111,7 @@ DC_UGLYDANCE#
 Dança do Ventre
 Nível máximo: ^7777775^000000
 Pré requisitos
-^777777Encerramento 1
-Lições de Dança 1^000000
+^777777Encerramento 1, Lições de Dança 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Apenas Chicotes.^000000
@@ -4388,9 +4338,8 @@ HP_ASSUMPTIO#
 Assumptio
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Angelus 1,
-Impositio Manus 3
-Impositio Manus 3^000000
+^777777Angelus 1, Impositio Manus 3,
+Aumentar Recuperação de SP 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Temporariamente dobra a DEF e DEFM
@@ -4410,8 +4359,7 @@ HP_BASILICA#
 Basílica
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Gloria 2
-Kyrie Eleison 3
+^777777Gloria 2, Kyrie Eleison 3,
 Aumentar Recuperação de SP 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
@@ -4433,11 +4381,10 @@ Nível l Duração
 #
 HP_MEDITATIO#
 Meditatio
-Nível máximo: ^77777710
+Nível máximo: ^77777710^000000
 Pré requisitos:
 ^777777Aumentar Recuperação de SP 5,
-Lex Divina 5^000000
-Aspersio 3^000000
+Lex Divina 5, Aspersio 3^000000
 Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Acelera a regen. natural de SP, aumenta o
@@ -4751,8 +4698,7 @@ ST_CHASEWALK#
 Espreitar
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Esconderijo 5^000000
-^777777Tunel de Fuga 3^000000
+^777777Esconderijo 5, Tunel de Fuga 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Esconde-se para evitar a detecção
@@ -6089,8 +6035,7 @@ HP_MANARECHARGE#
 Riqueza de Espírito
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Perícia com Maça 10,
-Flagelo do Mal 10^000000
+^777777Perícia com Maça 10, Flagelo do Mal 10^000000
 Descrição:
 ^777777Reduz o custo de SP ao usar habilidades.^000000
 Nível l Consumo de SP
@@ -6548,8 +6493,7 @@ GS_GATLINGFEVER#
 Ataque Gatling
 Nível máximo: ^77777710^000000
 Pré requisitos:
-^777777Desperado 5^000000
-^777777Rajada Certeira 7^000000
+^777777Desperado 5, Rajada Certeira 7^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Somente com Metralhadoras.^000000
@@ -7619,10 +7563,15 @@ Sempre ataca em 100% do dano quando usar armas tipo Lança.^000000
 #
 RK_DRAGONBREATH#
 Sopro do Dragão
-Nível Máximo:  10
-^777777Pré requisitos: Adestrar Dragão 2^000000
-Tipo: ^777777Ataque de longa distância^000000
-Descrição: ^777777O Ferus cospe fogo, adicionando chance de causar dano contínuo no alvo atingido. O dano desta habilidade depende da condição do usuário. ^000000
+Nível máximo: ^77777710^000000
+Pré requisito: ^777777Adestrar Dragão 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Comanda o dragão para cuspir em área,
+causando dano físico a distância de
+propriedade Fogo com chance de infligir
+infligir [Incêndio] nos atingidos.^000000
+^000088Precisa da montaria de Dragão.^000000
 #
 RK_DRAGONHOWLING#
 Rugido do Dragão
@@ -7651,7 +7600,8 @@ Nível l Runa l Habilidade l Materiais
 [Nv 2]: ^777777Runa Isa^000000 l ^777777Vitalidade Rúnica^000000
      ^7777771 Coração Incandescente^000000
 [Nv 3]: ^777777Runa Wyrd^000000 l ^777777Explosão Rúnica^000000
-     ^7777771 Partículas de Luz, 1 Corrente, 1 Canino de Dragão^000000
+     ^7777771 Partículas de Luz, 1 Corrente^000000
+     ^7777771 Canino de Dragão^000000
 [Nv 4]: ^777777Runa Hagalaz^000000 l ^777777Escamas Rochosas^000000
      ^7777771 Casca Arredondada, 1 Pele de Dragão^000000
 [Nv 5]: ^777777Runa Othila^000000 l ^777777Aura de Combate^000000
@@ -7661,7 +7611,8 @@ Nível l Runa l Habilidade l Materiais
 [Nv 7]: ^777777Runa Raido^000000 l ^777777Golpe Titânico^000000
      ^7777771 Partículas de Luz, 1 Gema Vermelha^000000
 [Nv 8]: ^777777Runa Nauthiz^000000 l ^777777Purificação^000000
-     ^7777771 Partículas de Luz, 1 Armadura Destruída, 1 Pergaminho Antigo^000000
+     ^7777771 Partículas de Luz, 1 Armadura Destruída,^000000
+     ^7777771 Pergaminho Antigo^000000
 [Nv 9]: ^777777Runa Berkana^000000 l ^777777Escudos Milenares^000000
      ^7777771 Armadura de Dullahan^000000
 [Nv 10]: ^777777Runa Luxanima^000000 l ^777777Luz da Alma^000000
@@ -7924,8 +7875,7 @@ AB_ADORAMUS#
 Adoramus
 Nível máximo: ^77777710^000000
 Pré requisitos:
-^777777Judex 5
-Criar Ancilla 1
+^777777Judex 5, Criar Ancilla 1,
 Magnus Exorcismus 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -8001,8 +7951,7 @@ AB_EPICLESIS#
 Epiclesis
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Criar Ancilla 1
-Curatio 1^000000
+^777777Criar Ancilla 1, Curatio 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Revive personagens na área de 5x5
@@ -8047,7 +7996,6 @@ AB_ORATIO#
 Oratio
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Praefatio 5^000000
-
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Concede a chance de reduzir a
@@ -8084,8 +8032,7 @@ Nível l Chance l VIT
 AB_LAUDARAMUS#
 Lauda Ramus
 Nível máximo: ^7777774^000000
-Pré requisitos:
-^777777Lauda Agnus 2^000000
+Pré requisitos: ^777777Lauda Agnus 2^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Dá a chance de aumentar a SOR por
@@ -8102,8 +8049,7 @@ AB_EUCHARISTICA#
 Eucaristia
 Nível máximo: ^77777710^000000
 Pré requisitos:
-^777777Epiclesis 1
-Expiatio 1^000000
+^777777Epiclesis 1, Expiatio 1^000000
 Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Aumenta a resistência e o dano
@@ -8169,8 +8115,7 @@ AB_EXPIATIO#
 Expiatio
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Oratio 5
-Gemini Lumen 5^000000
+^777777Oratio 5, Gemini Lumen 5^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Permite que ataques físicos ignorem
@@ -8848,8 +8793,7 @@ NC_ARMSCANNON#
 Canhão
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Lança-Chamas 2^000000
-^777777Gás Criogênico 2^000000
+^777777Lança-Chamas 2, Gás Criogênico 2^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Apenas com M.E.C.H.A.^000000
@@ -9043,8 +8987,7 @@ NC_STEALTHFIELD#
 Campo de Invisibilidade
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Analisar 3^000000
-^777777Campo Protetor 2^000000
+^777777Analisar 3, Campo Protetor 2^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas com M.E.C.H.A.^000000
@@ -9184,7 +9127,7 @@ Nível l Duração l ATQ
 NC_MAGICDECOY#
 Artilharia Arcana
 Nível máximo: ^7777775^000000
-Pré requisitos: ^777777Artilharia Caçadora  2^000000
+Pré requisitos: ^777777Artilharia Caçadora 2^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Cria uma Artilharia de ataques
@@ -9945,9 +9888,9 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Chicotes.^000000
-^777777Por 60 segundos, aumenta a
-velocidade de ataque e movimento
-do usuário e membros do grupo.^000000
+^777777Por 60 segundos, aumenta a velocidade de
+ataque e a velocidade de movimento do
+usuário e membros do grupo.^000000
 Nível l Área
 [Nv 1]: ^77777715x15 células^000000
 [Nv 2]: ^77777717x17 células^000000
@@ -9962,10 +9905,9 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Chicotes.^000000
-^777777Por 60 segundos, aumenta a
-DEFM do usuário e membros do
-grupo. O bônus aumenta conforme
-o nível de classe do usuário.^000000
+^777777Por 60 segundos, aumenta a DEFM do usuário
+e dos membros do grupo. O bônus é afetado
+pelo nível de classe do usuário.^000000
 Nível l Área
 [Nv 1]: ^77777715x15 células^000000
 [Nv 2]: ^77777717x17 células^000000
@@ -9980,10 +9922,9 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Chicotes.^000000
-^777777Por 60 segundos, aumenta o
-ATQM do usuário e membros do
-grupo. O bônus aumenta conforme
-o nível de classe do usuário.^000000
+^777777Por 60 segundos, aumenta o ATQM do usuário
+e dos membros do grupo. O bônus é afetado
+pelo nível de classe do usuário.^000000
 Nível l Área
 [Nv 1]: ^77777715x15 células^000000
 [Nv 2]: ^77777717x17 células^000000
@@ -9998,10 +9939,9 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Instrumentos Musicais.^000000
-^777777Por 60 segundos, aumenta o
-ATQ do usuário e membros do
-grupo. O bônus aumenta conforme
-o nível de classe do usuário.^000000
+^777777Por 60 segundos, aumenta o ATQ do usuário
+e dos membros do grupo. O bônus é afetado
+pelo nível de classe do usuário.^000000
 Nível l Área
 [Nv 1]: ^77777715x15 células^000000
 [Nv 2]: ^77777717x17 células^000000
@@ -10016,10 +9956,9 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Instrumentos Musicais.^000000
-^777777Por 60 segundos, aumenta a
-DEF do usuário e membros do
-grupo. O bônus aumenta conforme
-o nível de classe do usuário.^000000
+^777777Por 60 segundos, aumenta a DEF do usuário
+e dos membros do grupo. O bônus é afetado
+pelo nível de classe do usuário.^000000
 Nível l Área
 [Nv 1]: ^77777715x15 células^000000
 [Nv 2]: ^77777717x17 células^000000
@@ -10034,9 +9973,8 @@ Pré requisitos: ^777777Melodia de Morfeu 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Instrumentos Musicais.^000000
-^777777Por 60 segundos, reduz
-todos os atributos do alvo
-e do usuário.^000000
+^777777Por 60 segundos, reduz todos os atributos
+do alvo e do usuário.^000000
 Nível l Atributos
 [Nv 1]: ^777777-10^000000
 [Nv 2]: ^777777-15^000000
@@ -10049,12 +9987,10 @@ Domínio Musical
 Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
 Descrição:
-^777777Aumenta o SP máx. e a
-regeneração de SP a cada
-10 segundos enquanto imóvel.
-Do nível 5 em diante, permite
-usar outras músicas e danças
-enquanto dança ou toca.^000000
+^777777Aumenta o SP máx. e a regeneração de SP
+a cada 10 segundos enquanto imóvel.
+Do nível 5 em diante, permite usar outras
+músicas e danças enquanto dança ou toca.^000000
 Nível l SP máx.
 [Nv 1]: ^777777+30^000000
 [Nv 2]: ^777777+60^000000
@@ -10073,11 +10009,9 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Ativar Ressonância 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^777777Causa dano mágico de
-propriedade Neutro e drena
-um pouco de SP do alvo.
-Alvos em Sono Profundo
-receberão mais dano.^000000
+^777777Causa dano mágico de propriedade Neutro
+e drena um pouco de SP do oponente.
+Alvos em Sono Profundo receberão mais dano.^000000
 Nível l ATQM l Recarga l SP
 [Nv 1]: ^777777120%^000000 l ^7777772,0 segundos^000000 l ^77777764^000000
 [Nv 2]: ^777777240%^000000 l ^7777772,5 segundos^000000 l ^77777768^000000
@@ -10089,16 +10023,13 @@ WM_REVERBERATION#
 Ressonância
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Dissonância 5^000000 ou
-^777777Dança do Ventre 5^000000
+^777777Dissonância 5^000000 ou ^777777Dança do Ventre 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^777777Cria uma onda sonora na área
-de 3x3 células que causa
-dano físico e mágico nos
-alvos que se aproximarem.
-Também pode ser ativada
-por [Ativar Ressonância].^000000
+777777Cria uma onda sonora de 3x3 células que
+causa dano físico e mágico nos alvos
+que se aproximarem.
+Pode ser ativada por [Ativar Ressonância].^000000
 Nível l ATQ l ATQM l SP
 [Nv 1]: ^777777400%^000000 l ^777777200%^000000 l ^77777728^000000
 [Nv 2]: ^777777500%^000000 l ^777777300%^000000 l ^77777732^000000
@@ -10112,23 +10043,20 @@ Nível máximo: ^7777771^000000
 Pré requisitos: ^777777Ressonância 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
-^777777Ativa todas as Ressonâncias
-da área de 11x11 células,
-incluindo as de oponentes.^000000
+^777777Ativa todas as Ressonâncias na área de
+11x11 células, incluindo as de oponentes.^000000
 #
 WM_SEVERE_RAINSTORM#
 Temporal de Mil Flechas
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Estilingue 5^000000 ou
-^777777Flecha Melódica 5^000000
+^777777Estilingue 5^000000 ou ^777777Flecha Melódica 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Apenas com Arcos.^000000
 ^777777Consome 20 flechas para causar
-dano físico a distância
-na área de 11x11 células
-durante 3 segundos.
+dano físico a distância na área de 11x11
+células durante 3 segundos.
 O dano é influenciado pela
 DES e AGI do usuário.^000000
 Nível l Recarga l SP
@@ -10145,13 +10073,11 @@ Pré requisitos: ^777777Domínio Musical 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Consome 1 Pastilha Refrescante
-para criar uma armadilha.
-Oponentes que se aproximarem
-da área de 3x3 células do poema
-ficarão imóveis temporariamente.
+^777777Cria uma armadilha que imobiliza um alvo
+que se aproximar da área de 3x3 células.
 Apenas 5 poemas ativos por vez.
 Não funciona contra Chefes.^000000
+^000088Consome 1 Pastilha Refrescante.^000000
 Nível l Tempo (imóvel) l Tempo (poema)
 [Nv 1]: ^7777778 segundos^000000 l ^7777779 segundos^000000
 [Nv 2]: ^77777710 segundos^000000 l ^77777711 segundos^000000
@@ -10166,13 +10092,11 @@ Pré requisitos: ^777777Poema de Nifflheim 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Um canto que tem chance
-de infligir [Sedução] nos alvos
-na área ao seu redor.
-A área, a chance de inflição
-e a duração do efeito nos alvos
-aumentam de acordo com o
-nível da habilidade.
+^777777Um canto que tem chance de infligir
+[Sedução] nos alvos ao seu redor.
+A área, a chance de inflição e a duração
+do efeito nos alvos aumentam de acordo com
+o nível da habilidade.
 Funciona apenas em PvP/GdE.^000000
 Nível l Duração l Área
 [Nv 1]: ^77777715 segundos^000000 l ^7777775x5 células^000000
@@ -10188,10 +10112,11 @@ Pré requisitos: ^777777Sibilo de Eir 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Consome 1 Lágrima de Arrependiento
-para ter a chance de reviver
-outros personagens, drenando SP
-do alvo para recuperar em HP.^000000
+^777777Dá a chance de drenar o SP do alvo para
+revivê-lo com uma quantia de HP exatamente
+igual à quantid de SP atual do morto. Se o
+alvo tiver 0 de SP, revive com 1 de HP.^000000
+^000088Consome 1 Lágrima de Arrependimento.^000000
 Nível l Chance l SP drenado
 [Nv 1]: ^77777790%^000000 l ^77777750%^000000
 [Nv 2]: ^77777792%^000000 l ^77777740%^000000
@@ -10207,8 +10132,7 @@ Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
 ^777777Concede a chance de infligir
-[Sono Profundo] nos oponentes
-ao redor do usuário.^000000
+[Sono Profundo] nos oponentes ao redor. ^000000
 Nível l Área l SP
 [Nv 1]: ^77777711x11 células^000000 l ^77777780^000000
 [Nv 2]: ^77777713x13 células^000000 l ^77777790^000000
@@ -10223,10 +10147,9 @@ Pré requisitos: ^777777Domínio Musical 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Drena SP para recuperar
-um pouco de HP por segundo
-do usuário e dos membros
-do grupo por 60 segundos.^000000
+^777777Drena um pouco de SP para recuperar
+um pouco de HP por segundo por 1 minuto.
+Afeta usuário e membros do grupo.^000000
 Nível l Dreno de SP l Rec. de HP l Área
 [Nv 1]: ^7777774^000000 l ^77777740^000000 l ^7777777x7 células^000000
 [Nv 2]: ^7777778^000000 l ^77777780^000000 l ^7777779x9 células^000000
@@ -10257,11 +10180,10 @@ Pré requisitos: ^777777Improviso 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Melhora o dano de algumas
-habilidades ao custo de reduzir
-esquiva e velocidade de ataque.
-Há uma pequena chance de
-retirar a montaria do alvo.^000000
+^777777Melhora o dano de algumas habilidades
+ao custo de reduzir a esquiva e a
+velocidade de ataque temporariamente.
+Há chances de retirar a montaria do alvo.^000000
 Habilidades afetadas:
 ^777777Brandir Lança, Choque Rápido,
 Perfurar em Espiral, Punição Divina,
@@ -10280,11 +10202,10 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Ruído Estridente 1^000000
 Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
 Descrição:
-^777777Consome 1 Pastilha Refrescante
-para causar dano físico
-a distância na área escolhida.
+^777777Causa dano físico a distância na área.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
+^000088Consome 1 Pastilha Refrescante.^000000
 Nível l Área l Dano
 [Nv 1]: ^7777775x5 células^000000 l ^777777600%^000000
 [Nv 2]: ^7777777x7 células^000000 l ^777777800%^000000
@@ -10296,18 +10217,15 @@ WM_SONG_OF_MANA#
 Canção de Alfheim
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Ritmo Contagiante 1,
-Balada Sinfônica 1 e
+^777777Ritmo Contagiante 1, Balada Sinfônica 1 e
 Serenata ao Luar 1^000000 ou
-^777777Harmonizar 1
-Sinfonia dos Ventos 1 e
-Canção de Balder 1^000000
+^777777Harmonizar 1, Canção de Balder 1 e
+Sinfonia dos Ventos 1^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Usuário e membros do grupo
-poderão recuperar 10 de SP
-a cada 5 segundos.
+^777777Usuário e membros do grupo irão recuperar
+10 de SP a cada 5 segundos.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
 Nível l Área l Duração
@@ -10321,21 +10239,17 @@ WM_DANCE_WITH_WUG#
 Dança com Lobos
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Ritmo Contagiante 1,
-Balada Sinfônica 1 e
+^777777Ritmo Contagiante 1, Balada Sinfônica 1 e
 Serenata ao Luar 1^000000 ou
-^777777Harmonizar 1
-Sinfonia dos Ventos 1 e
-Canção de Balder 1^000000
+^777777Harmonizar 1, Canção de Balder 1 e
+Sinfonia dos Ventos 1^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Reduz a conjuração fixa e
-aumenta a velocidade de ataque
-do usuário e membros do grupo.
-Em evoluções de Arqueiro,
-aumenta o dano físico a
-distância e o dano com o Worg.
+^777777Reduz a conjuração fixa e aumenta a
+velocidade de ataque do usuário e grupo.
+Em evoluções de Arqueiro, aumenta o dano
+dano físico a distância e dano com o Worg.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
 Nível l Área l Duração
@@ -10354,10 +10268,8 @@ Cântico da Iluminação 3^000000
 Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Causa dano fixo no alvo
-com chance de cancelar uma
-música ou dança dos artistas
-na área selecionada.
+^777777Causa dano fixo no alvo com chance de
+cancelar uma música ou dança na área.
 O coral é melhorado com o
 núm. de artistas no grupo.
 Funciona apenas em PvP/GdE.^000000
@@ -10375,15 +10287,12 @@ Pré requisitos: ^777777Dança com Lobos 1^000000
 Tipo: ^777777Ofensiva^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Concede a chance de aumentar
-o ATQ, reduzir a DEF e a esquiva
-de todos os personagens na área.
-Drena 1% de HP e SP e
-impede o uso de itens.
-Após o efeito, todos sentarão.
-Se mais de 7 pessoas forem
-afetadas, todas receberão
-9.999 de dano fixo.
+^777777Dá a chance de aumentar o ATQ, e reduzir a
+DEF e a esquiva de todos os alvos na área.
+Drena 1% de HP/SP e impede o usode itens.
+Após o efeito, todos ficarão sentados.
+Se mais de 7 pessoas forem afetadas, todas
+todas receberão um dano fixo de 9.999.
 O coral é melhorado com o
 núm. de artistas no grupo.
 Funciona apenas em PvP/GdE.^000000
@@ -10398,17 +10307,14 @@ WM_LERADS_DEW#
 Orvalho de Idun
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Ritmo Contagiante 1,
-Balada Sinfônica 1 e
+^777777Ritmo Contagiante 1, Balada Sinfônica 1 e
 Serenata ao Luar 1^000000 ou
-^777777Harmonizar 1
-Sinfonia dos Ventos 1 e
-Canção de Balder 1^000000
+^777777Harmonizar 1, Canção de Balder 1 e
+Sinfonia dos Ventos 1^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Usuário e membros do grupo
-terão bônus no HP máx.
+777777Aumenta o HP máx. do usuário e grupo.
 Não afeta alvos em Frenesi.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
@@ -10426,9 +10332,8 @@ Pré requisitos: ^777777Canção de Alfheim 1^000000
 Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Concede a chance de reduzir
-a INT e drenar SP de todos
-os personagens da área.
+^777777Concede a chance de reduzir a INT e
+drenar SP de todos os personagens na área.
 Não tem efeito fora do PvP/GdE.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
@@ -10446,10 +10351,9 @@ Pré requisitos: ^777777Orvalho de Idun 1^000000
 Tipo: ^777777Ativa^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Concede a chance de reduzir
-o HP máx. e aumentar
-a FOR e o CRIT de todos
-os personagens da área.
+^777777Concede a chance de reduzir o HP máx. e
+aumentar a FOR e o CRIT de todos os
+personagens na área.
 Não tem efeito fora do PvP/GdE.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
@@ -10464,15 +10368,13 @@ WM_UNLIMITED_HUMMING_VOICE#
 Murmúrio Perene
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Prelúdio do Ragnarök 1,
-Clamor de Batalha 1^000000
+^777777Prelúdio do Ragnarök 1,Clamor de Batalha 1^000000
 Tipo: ^777777Suporte^000000 / ^CD3278Coral^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
-^777777Todos os alvos na área
-consumirão 15% mais de SP,
-mas a conjuração de habilidades
-não será interrompida.
+^777777Todos os alvos na área consumirão 15% mais
+de SP, mas a conjuração de habilidades
+não poderá ser interrompida.
 Não funciona na GdE.
 O coral é melhorado com o
 núm. de artistas no grupo.^000000
@@ -10504,8 +10406,7 @@ Nível l Passos
 SO_ELECTRICWALK#
 Passos da Sílfide
 Nível máximo: ^7777775^000000
-Pré requisitos:
-^777777Furacão 1^000000
+Pré requisitos: ^777777Furacão 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Por 30 segundos, encanta os pés
@@ -10625,8 +10526,7 @@ SO_STRIKING#
 Encanto de Órion
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Encantar com Chama 1,
-Encantar com Geada 1,
+^777777Encantar com Chama 1, Encantar com Geada 1
 Encantar com Ventania 1 e
 Encantar com Terremoto 1^000000
 Tipo: ^777777Suporte^000000
@@ -10647,8 +10547,7 @@ SO_WARMER#
 Aquecer Terreno
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Vulcão 1,
-Furacão 1^000000
+^777777Vulcão 1, Furacão 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Alvos na área de 7x7 células irão
@@ -10684,8 +10583,7 @@ SO_VARETYR_SPEAR#
 Lanças dos Aesir
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Encantar com Terremoto 1,
-Furacão 4^000000
+^777777Encantar com Terremoto 1, Furacão 4^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Causa dano físico e mágico de Vento
@@ -10734,8 +10632,7 @@ SO_SUMMON_AGNI#
 Invocar Agni
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Domínio Elemental 1
-Aquecer Terreno 3^000000
+^777777Domínio Elemental 1, Aquecer Terreno 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Invoca Agni, o elemental do fogo.
@@ -10750,8 +10647,7 @@ SO_SUMMON_AQUA#
 Invocar Varuna
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Domínio Elemental 1
-Pó de Diamante 3^000000
+^777777Domínio Elemental 1, Pó de Diamante 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Invoca Varuna, a elemental da água.
@@ -10766,8 +10662,7 @@ SO_SUMMON_VENTUS#
 Invocar Vayu
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Domínio Elemental 1
-Lanças dos Aesir 3^000000
+^777777Domínio Elemental 1, Lanças dos Aesir 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Invoca Vayu, a elemental do vento.
@@ -10782,8 +10677,7 @@ SO_SUMMON_TERA#
 Invocar Chandra
 Nível máximo: ^7777773^000000
 Pré requisitos:
-^777777Domínio Elemental 1
-Castigo de Nerthus 3^000000
+^777777Domínio Elemental 1, Castigo de Nerthus 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Invoca Chandra, o elemental da terra.
@@ -10804,11 +10698,10 @@ Descrição:
 #
 SO_EL_ANALYSIS#
 Análise Elemental
-Nível máximo: ^7777774^000000
+Nível máximo: ^7777772^000000
 Pré requisitos:
-^777777Encantar com Chama 1
-Encantar com Geada 1
-Encantar com Ventania 1
+^777777Encantar com Geada 1, Encantar com Chama 1
+Encantar com Ventania 1 e
 Encantar com Terremoto 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
@@ -10857,7 +10750,7 @@ Descrição:
 ^777777Por 1 min., encanta a área de 3x3 células.
 A cada 5 segundos na insígnia, alvos de
 propriedade Fogo regeneram 1% de HP máx.
-e alvos de Terra perdem 1% de HP.
+w alvos de Terra perdem 1% de HP.
 Qualquer alvo na área receberá 50% a mais
 de dano físico ou mágico de Água.^000000
 ^000088Consome 1 a 3 Fragmentos Escarlate.^000000
@@ -10908,7 +10801,7 @@ Nível l Efeitos
           ^777777Regen. de HP/SP +100% a cada 3s.^000000
 [Nv 2]: ^777777ATQ +10%.^000000 / ^777777Pós-conjuração -10%.^000000
           ^777777Propriedade da arma muda para Vento.^000000
-[Nv 3]: ^777777Pós-conjuração de magias de Vento -50%.^000000
+[Nv 3]: ^777777Pós-conj. de magias de Vento -50%.^000000
           ^777777Dano mágico de Vento +25%.^000000
 #
 SO_EARTH_INSIGNIA#
@@ -11148,8 +11041,7 @@ AB_SECRAMENT#
 Sacramentum
 Nível máximo: ^7777775^000000
 Pré requisitos:
-^777777Epiclesis 1
-Expiatio 1^000000
+^777777Epiclesis 1, Expiatio 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Temporariamente, reduz o tempo
@@ -11330,8 +11222,7 @@ RL_S_STORM#
 Rajada Estilhaçante
 Nível máximo: ^7777775^000000
 Pré-requisitos:
-^777777Desarmar 1^000000
-^777777Controle de Multidão 1^000000
+^777777Desarmar 1, Controle de Multidão 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Espingardas.^000000
@@ -11352,8 +11243,7 @@ RL_E_CHAIN#
 Reação Ilimitada
 Nível máximo: ^77777710^000000
 Pré-requisitos:
-^777777Cara ou Coroa 1^000000
-^777777Reação em Cadeia 10^000000
+^777777Cara ou Coroa 1, Reação em Cadeia 10^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Consome 1 moeda para ativar
@@ -11499,8 +11389,7 @@ RL_D_TAIL#
 Lançar Míssil
 Nível máximo: ^7777775^000000
 Pré-requisitos:
-^777777Marcar em Brasa 1^000000
-^777777Arremessar Granada 3^000000
+^777777Marcar em Brasa 1, Arremessar Granada 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Lança-Granadas.^000000
@@ -11604,8 +11493,7 @@ RL_HAMMER_OF_GOD#
 Execução
 Nível máximo: ^7777775^000000
 Pré-requisitos:
-^777777Farta Fortuna 1^000000
-^777777Explosão Antimatéria 3^000000
+^777777Farta Fortuna 1, Explosão Antimatéria 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^008080Somente com Rifles.^000000
@@ -12028,52 +11916,69 @@ Descrição:
 #
 GC_DARKCROW#
 Garra Sombria
-Nível Máximo : 5
-^777777Pré requisito : Passo Sombrio 5 ^000000
-Tipo : ^777777  Ativo / Dano Especial  ^000000
-Descrição : ^777777  Causa dolorosos ferimentos no inimigo. Os ferimentos duram 5 segundos. Dano corpo a corpo aumentado enquanto durar os ferimentos.^000000
-[Nível 1] : ^777777 Dano 100% / Dano do ferimento aumentado em 1.3 vezes^000000
-[Nível 2] : ^777777 Dano 200% / Dano do ferimento aumentado em 1.6 vezes^000000
-[Nível 3] : ^777777 Dano 300% / Dano do ferimento aumentado em 1.9 vezes^000000
-[Nível 4] : ^777777 Dano 400% / Dano do ferimento aumentado em 2.2 vezes^000000
-[Nível 5] : ^777777 Dano 500% / Dano do ferimento aumentado em 2.5 vezes^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Passo Sombrio 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+Causa dano físico corpo a corpo e
+inflige um Ferimento por 5 segundos.
+Durante esse período, o alvo receberá mais
+dano em ataques físicos corpo a corpo.
+Nivel l Dano l Bônus do Ferimento
+[Nv 1]: ^777777100%^000000 l ^777777+30%^000000
+[Nv 2]: ^777777200%^000000 l ^777777+60%^000000
+[Nv 3]: ^777777300%^000000 l ^777777+90%^000000
+[Nv 4]: ^777777400%^000000 l ^777777+120%^000000
+[Nv 5]: ^777777500%^000000 l ^777777+150%^000000
 #
 RA_UNLIMIT#
 Ilimitar
-Nível Máximo : 5
-^777777Pré requisito : Disparo Selvagem 5^000000
-Tipo : ^777777 Ativo / Efeito Positivo ^000000
-Descrição : ^777777  Pelo deus da caça, Ullr, dano a distância maximizado, porém, defesa reduzida por 1 minuto.^000000
-[Nível 1] : ^777777 Dano a distância aumentado em 1.5 vezes ^000000
-[Nível 2] : ^777777 Dano a distância aumentado em 2.0 vezes ^000000
-[Nível 3] : ^777777 Dano a distância aumentado em 2.5 vezes ^000000
-[Nível 4] : ^777777 Dano a distância aumentado em 3.0 vezes ^000000
-[Nível 5] : ^777777 Dano a distância aumentado em 3.5 vezes ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Disparo Selvagem 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o dano físico a distância e reduz
+a DEF e DEFM para 1 ponto durante 1 min.^000000
+Nível l Dano
+[Nv 1]: ^777777+50%^000000
+[Nv 2]: ^777777+100%^000000
+[Nv 3]: ^777777+150%^000000
+[Nv 4]: ^777777+200%^000000
+[Nv 5]: ^777777+250%^000000
 #
 GN_ILLUSIONDOPING#
 Alucinógeno
-Nível Máximo : 5
-^777777Pré requisito : Farmacologia Avançada  1 ^000000
-Tipo : ^777777  Especial / Efeito Negativo ^000000
-Descrição : ^777777 Lança álcool enriquecido no alvo causando alucinação e baixa precisão. Consome 1 Álcool.^000000
-[Nível 1] : ^777777 Dano: 100% / Área afetada: 9X9 Células ^000000
-[Nível 2] : ^777777 Dano: 100% / Área afetada: 11X11 Células ^000000
-[Nível 3] : ^777777 Dano: 100% / Área afetada: 13X13 Células ^000000
-[Nível 4] : ^777777 Dano: 100% / Área afetada: 15X15 Células ^000000
-[Nível 5] : ^777777 Dano: 100% / Área afetada: 29X29 Células ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Farmacologia Avançada 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Causa 100% de dano físico corpo a corpo
+com chance de infligir [Alucinação] no
+alvo e em oponentes ao redor dele.^000000
+^000088Consome 1 Álcool.^000000
+Nível l Área
+[Nv 1]: ^7777779x9 células^000000
+[Nv 2]: ^77777711x11 células^000000
+[Nv 3]: ^77777713x13 células^000000
+[Nv 4]: ^77777715x15 células^000000
+[Nv 5]: ^77777729x29 células^000000
 #
 RK_DRAGONBREATH_WATER#
 Sopro de Gelo
-Nível Máximo :  10
-^777777Pré requisito : Adestrar Dragão 2^000000
-Tipo : ^777777 Dano em Area^000000
-Descrição : ^777777Ensina seu Dragão a soprar gelo. Pode causar Hipotermia e reduzir a velocidade de movimento. O dano é baseado tanto no usuário quanto no Dragão.^000000
+Nível máximo: ^77777710^000000
+Pré requisito: ^777777Adestrar Dragão 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Comanda o dragão para cuspir em área,
+causando dano físico a distância de
+propriedade Água com chance de infligir
+infligir [Hipotermia] nos atingidos.^000000
+^000088Precisa da montaria de Dragão.^000000
 #
 NC_MAGMA_ERUPTION#
 Erupção de Magma
 Nível máximo: ^7777775^000000
-Pré requisito:
-^777777Sabedoria de Hefesto 1^000000
+Pré requisito: ^777777Sabedoria de Hefesto 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Cria um forte impacto numa área
@@ -12115,33 +12020,47 @@ Descrição:
 ^777777Sacrifica o Elemental ativo para
 conjurar Escudo Mágico e Escudo Sagrado
 no usuário e nos membros do grupo na tela.^000000
-^000088Consome 1 Gema Azul.^000000
+^000088Consome 1 Gema Azul e o Elemental.^000000
 #
 SR_FLASHCOMBO#
 Combo Rápido
-Nível Máximo : 5
-^777777Pré requisitos : Punho do Dragão 3 / Ruína 3 / Garra de Tigre 1 / Soco Furacão 1^000000
-Tipo : ^777777  Ativo ^000000
-Descrição : ^777777  Rapidamente usa 4 habilidades(Punho do Dragão, Ruína, Garra de Tigre e Soco Furacão) em sequência. As habilidades serão ativadas no nível aprendido.^000000
-Descrição : ^777777  Ao usar as 4 habilidades, você não poderá usar outras habilidades ou itens. ^000000
-[Nível 1] : ^777777Consome 5 Esferas de Energia. Por 4 segundos, ATQ 40 ^000000
-[Nível 2] : ^777777Consome 5 Esferas de Energia. Por 4 segundos, ATQ 60 ^000000
-[Nível 3] : ^777777Consome 4 Esferas de Energia. Por 4 segundos, ATQ 80 ^000000
-[Nível 4] : ^777777Consome 4 Esferas de Energia. Por 4 segundos, ATQ 100 ^000000
-[Nível 5] : ^777777Consome 3 Esferas de Energia. Por 4 segundos, ATQ 120 ^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Punho do Dragão 3, Ruína 3,
+Garra de Tigre 1, Soco Furacão 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Nos próximos 4 segundos, atinge o alvo com
+uma sequência de Punho do Dragão, Ruína,
+Garra de Tigre e Soco Furacão.
+Enquanto executa a sequência, você não
+poderá usar itens, habilidades e se mover.
+Durante esse período, seu ATQ é aumentado.^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Esferas consumidas l Bônus de ATQ
+[Nv 1]: ^7777775^000000 l ^777777+40^000000
+[Nv 2]: ^7777775^000000 l ^777777+60^000000
+[Nv 3]: ^7777774^000000 l ^777777+80^000000
+[Nv 4]: ^7777774^000000 l ^777777+100^000000
+[Nv 5]: ^7777773^000000 l ^777777+120^000000
 #
 SC_ESCAPE#
 Escapar
-Nível Máximo : 5
-^777777Pré requisito : Disparo Triplo 2 ^000000
-Tipo : ^777777  Ativo ^000000
-Descrição : ^777777 Ao utilizar a habilidade, uma armadilha será ativada e o usuário recuará para fugir de inimigos. Não é possível recuar sobre barreiras imóveis.^000000
-^777777 Consome 1 Armadilha Especial.^000000
-[Nível 1] : ^777777 Recua 5 células^000000
-[Nível 2] : ^777777 Recua 6 células^000000
-[Nível 3] : ^777777 Recua 7 células^000000
-[Nível 4] : ^777777 Recua 8 células^000000
-[Nível 5] : ^777777 Recua 9 células^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Disparo Triplo 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Recua instantaneamente após instalar uma
+armadilha que dura 50 segundos no chão.
+Se não houver células disponíveis para
+recuar, a habilidade não funcionará.^000000
+^000088Consome 1 Armadilha Especial.^000000
+Nível l Recuo
+[Nv 1]: ^7777775 células^000000
+[Nv 2]: ^7777776 células^000000
+[Nv 3]: ^7777777 células^000000
+[Nv 4]: ^7777778 células^000000
+[Nv 5]: ^7777779 células^000000
 #
 AB_OFFERTORIUM#
 Offertorium
@@ -12168,29 +12087,46 @@ Nível l Custo de SP l Efetividade de cura
 #
 WL_TELEKINESIS_INTENSE#
 Telecinesia
-Nível Máximo 5
-^777777Pré requisito : Impacto Espiritual 5  ^000000
-Tipo : ^777777 Ativo / Efeito Positivo ^000000
-Descrição : ^777777 Otimiza a Telecinese para melhorar o ataque mágico e o tempo de conjuração de habilidades Fantasma por 1 minuto. ^000000
-^777777 O efeito não pode ser removido por Desencantar e Gênese. ^000000
-[Nível 1] : ^777777 Ataques de Telecinese aumentarão em 1.4 vezes / Conjuração variável reduzida em 10% / SP consumido de habilidade de Telecinese reduzido em 10% ^000000
-[Nível 2] : ^777777 Ataques de Telecinese aumentarão em 1.8 vezes / Conjuração variável reduzida em 20% / SP consumido de habilidade de Telecinese reduzido em 20% ^000000
-[Nível 3] : ^777777 Ataques de Telecinese aumentarão em 2.2 vezes / Conjuração variável reduzida em 30% / SP consumido de habilidade de Telecinese reduzido em 30% ^000000
-[Nível 4] : ^777777 Ataques de Telecinese aumentarão em 2.6 vezes / Conjuração variável reduzida em 40% / SP consumido de habilidade de Telecinese reduzido em 40% ^000000
-[Nível 5] : ^777777 Ataques de Telecinese aumentarão em 3 vezes / Conjuração variável reduzida em 50%  / SP consumido de habilidade de Telecinese reduzido em 50% ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Impacto Espiritual 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o dano e reduz o custo de SP das
+magias Fantasmas. Reduz a conjuração
+variável de todas as habilidades.^000000
+Magias Fantasmas afetadas:
+^777777Impacto Espiritual, Ataque Espiritual,
+Espíritos Anciões, Vulcão Napalm e
+Escudo Mágico.^000000
+Nível l Conj. Var. l Custo de SP l Dano
+[Nv 1]: ^777777-10%^000000 l ^777777-10%^000000 l ^777777+40%^000000
+[Nv 2]: ^777777-20%^000000 l ^777777-20%^000000 l ^777777+80%^000000
+[Nv 3]: ^777777-30%^000000 l ^777777-30%^000000 l ^777777+120%^000000
+[Nv 4]: ^777777-40%^000000 l ^777777-40%^000000 l ^777777+160%^000000
+[Nv 5]: ^777777-50%^000000 l ^777777-50%^000000 l ^777777+200%^000000
 #
 LG_KINGS_GRACE#
 Graça Real
-Nível Máximo : 5
-^777777Pré requisito : Reflexão Amplificada 5 ^000000
-Tipo : ^777777 Ativo / Efeito Positivo ^000000
-Descrição : ^777777Pela graça real, cura e protege o jogador de quase todos os efeitos negativos.^000000
-^777777Efeitos afetados : Evenenamento, Cegueira, Congelamento, Petrificação, Atordoamento, Sono, Sangramento, Maldição, Caos, Alucinação, Silêncio, Incêndio, Cristalização, Hipotermia, Sono Profundo, Medo e Grito da Mandrágora.^000000
-[Nível 1] : ^777777 Cura ativa por 5 segundos. 4% de recuperação de HP por segundo. ^000000
-[Nível 2] : ^777777 Cura ativa por 5 segundos. 5% de recuperação de HP por segundo. ^000000
-[Nível 3] : ^777777 Cura ativa por 5 segundos. 6% de recuperação de HP por segundo. ^000000
-[Nível 4] : ^777777 Cura ativa por 5 segundos. 7% de recuperação de HP por segundo. ^000000
-[Nível 5] : ^777777 Cura ativa por 5 segundos. 8% de recuperação de HP por segundo. ^000000
+Nível máximo: ^7777775^000000
+Pré requisito: ^777777Reflexão Amplificada 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Imobiliza o usuário e aliados na área de
+5x5 células para remover efeitos negativos
+e regenerar um pouco de HP por segundo.
+Durante 5 segundos, os afetados não serão
+atingidos por qualquer ataque ou efeitos.^000000
+Efeitos negativos afetados:
+^777777Evenenamento, Cegueira, Congelamento, Caos
+Petrificação, Atordoamento, Sono, Maldição
+Alucinação, Silêncio, Incêndio, Hipotermia
+Cristalização, Medo e Grito da Mandrágora.^000000
+Nível l HP recuperado por segundo
+[Nv 1]: ^7777774%^000000
+[Nv 2]: ^7777775%^000000
+[Nv 3]: ^7777776%^000000
+[Nv 4]: ^7777777%^000000
+[Nv 5]: ^7777778%^000000
 #
 ALL_FULL_THROTTLE#
 Maximizar Poder

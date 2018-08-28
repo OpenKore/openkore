@@ -3176,6 +3176,7 @@
 5909#Bravura dos Einherjar#
 5914#Aura Esplêndida#
 5918#Marcas de Comodo#
+5919#Kanzashi de Camélias#
 5930#Tiara da Valquíria Mágica#
 5931#Chapéu de Poltergeist#
 5933#Máscara do Tengu Corvo#
@@ -6378,6 +6379,7 @@
 19852#Boné de Pingu#
 19862#Chifres de Succubus#
 19865#Coroa de Bufão#
+19868#Chapéu do Explorador#
 19871#Ritmo do Momento#
 19874#Tiara Carnavalesca#
 19875#Touca de Coelho#
@@ -6982,3 +6984,4 @@
 31488#Balão de MVP#
 31490#Cachecol de Poring#
 31493#Peruca Branca de Waifu#
+31513#Orelhas do Coelho Minguante#
