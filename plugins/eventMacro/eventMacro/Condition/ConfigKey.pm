@@ -138,17 +138,21 @@ sub validate_condition {
 		
 		if ($callback_name eq 'configModify') {
 			
-			$self->check_keys($args->{key}, $args->{value});
 			
 			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
 			return $self->SUPER::validate_condition if (!defined $self->{fulfilled_key} && !exists $self->{config_keys_member}->{$args->{key}});
 			
+			$self->check_keys($args->{key}, $args->{val});
+			
+		} elsif ($callback_name eq 'pos_load_config.txt' || $callback_name eq 'in_game') {
+			$self->check_keys;
 			
 		}
 		
+	} elsif ($callback_type eq 'recheck') {
+		$self->check_keys;
+		
 	}
-	
-	$self->check_keys;
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
