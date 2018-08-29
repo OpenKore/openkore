@@ -816,25 +816,21 @@ sub character_creation_successful {
 
 sub received_characters_info {
 	my ($self, $args) = @_;
+ 	Scalar::Util::weaken(my $weak = $self);
+	my $timeout = {timeout => 6, time => time};
 
-	$timeout{charlogin}{time} = time;
-
-	Scalar::Util::weaken(my $weak = $self);
-	my $timeout = {timeout => 6, time => $timeout{charlogin}{time}};
-
-	$self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
+ 	$self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
 		if ($weak && timeOut($timeout)) {
-			$weak->received_characters_slots_info($args);
-		} else {
 			$weak->received_characters_slots_info({charInfo => '', RAW_MSG_SIZE => 4});
 		}
 	});
-
-	$self->{charSelectHook} = Plugins::addHook(charSelectScreen => sub {
+ 	$self->{charSelectHook} = Plugins::addHook(charSelectScreen => sub {
 		if ($weak) {
 			Plugins::delHook(delete $weak->{charSelectTimeoutHook}) if $weak->{charSelectTimeoutHook};
 		}
 	});
+ 	$timeout{charlogin}{time} = time;
+ 	$self->received_characters_slots_info($args);
 }
 
 ### Parse/reconstruct callbacks and packet handlers
