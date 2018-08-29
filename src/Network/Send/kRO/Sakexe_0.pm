@@ -72,7 +72,7 @@ sub new {
 		'00CF' => ['ignore_player', 'Z24 C', [qw(name flag)]],
 		'00D0' => ['ignore_all', 'C', [qw(flag)]],
 		'00D3' => ['get_ignore_list'],
-		'00D5' => ['chat_room_create', 'v C Z8 a*', [qw(limit public password title)]],
+		'00D5' => ['chat_room_create', 'v2 C Z8 a*', [qw(len limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
 		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
