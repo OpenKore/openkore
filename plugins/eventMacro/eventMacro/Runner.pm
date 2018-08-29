@@ -5,6 +5,8 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 
+use Data::Dumper;
+
 use Time::HiRes qw( &time );
 use Globals;
 use AI;
@@ -601,10 +603,210 @@ sub define_next_valid_command {
 		# Initial 'if'
 		######################################
 		} elsif ($self->{current_line} =~ /^if\s/) {
-			my ($condition_text, $post_if) = $self->{current_line} =~ /^if\s+\(\s*(.*)\s*\)\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
-
+			#my ($condition_text, $post_if) = $self->{current_line} =~ /^if\s+(\(\s*.*\s*\))\s+(goto\s+.*|call\s+.*|stop|{|)\s*/;
+	
 			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
 			
+			use Switch;
+			my @chars = split //, $self->{current_line};
+			my $parenthesis_count;
+			my $condition_text;
+			my $condition_start;
+			my $condition_end;
+			my $condition_length;
+			my $in_regex;
+			my $in_quote;
+			my @start_of_group;
+			my @end_of_group;
+			my $amount_of_groups;
+			my $token;
+			my $ignore_next_closing_parenthesis;
+			my @groups;
+			CHAR: for (my $i = 0; $i < @chars ; $i++) {
+				my $previous_char = $chars[$i-1];
+				my $current_char  = $chars[$i];
+				my $next_char     = $chars[$i+1];
+				warning "current_char $i: '$current_char'\n";
+				
+				switch ($current_char) {
+					
+					#possible begin or end of a regex
+					case ('/') {
+						
+						if ($in_quote) {
+							next CHAR;
+							
+						} elsif (!$in_regex) {
+							warning "beggining of a regex\n";
+							$in_regex = 1;
+							
+						} elsif ($in_regex) {
+							if ($previous_char eq "\\") {
+								next CHAR;
+							} else {
+								warning "end of a regex\n";
+								if ($next_char eq 'i') {
+									warning "regex is case-insensitive\n";
+								}
+								undef $in_regex;
+							}
+							
+						} else {
+							error "eu estou fazendo algo errado com o '/'\n";
+						}
+					}
+					
+					#possible begin or end of double_quoted string
+					case ('"') {
+						if ($in_regex) {
+							next CHAR;
+							
+						} elsif (!$in_quote) {
+							warning "beggining of a double_quoted string\n";
+							$in_quote = 1;
+							
+						} elsif ($in_quote) {
+							if ($previous_char eq "\\") {
+								next CHAR;
+							} else {
+								warning "end of a double_quoted string\n";
+								undef $in_quote;
+							}
+							
+						}
+					}
+					
+					case ( ')' ) {
+						if ($in_regex || $in_quote) {
+							next CHAR;
+						}
+						
+						
+						if ($token) {
+							"token is '$token', undefining\n";
+							undef $token;
+						}
+						
+						if ($ignore_next_closing_parenthesis > 0) {
+							warning "ignoring a closing_parenthesis\n";
+							$ignore_next_closing_parenthesis--;
+							warning "now we will ignore $ignore_next_closing_parenthesis times\n";
+							next CHAR;
+						}
+						
+						warning "end of a group\n";
+						$parenthesis_count--;
+						warning "parenthesis_count: '$parenthesis_count'\n";
+						if ($parenthesis_count < 0) {
+							$self->{error} = "missing at least one opening parenthesis";
+							return;
+						}
+						
+						push (@end_of_group, $i+1);
+						
+						my $lenght = $end_of_group[0] - $start_of_group[-1];
+						my $script = substr ($self->{current_line}, $start_of_group[-1], $lenght);
+						push @groups, {start => pop @start_of_group, end => shift @end_of_group, length => $lenght, script => $script};
+						
+						if ($parenthesis_count == 0) {
+							$condition_end = $i;
+							$condition_length = $i - $condition_start;
+							$amount_of_groups = scalar (@end_of_group);
+							last CHAR;
+						}
+					}
+					
+					case ( '(' ) {
+						if ($in_regex || $in_quote) {
+							next CHAR;
+						}
+						if ($token) {
+							warning "token encontrado: '$token'\n";
+							warning "provavelmente eh um macro keyword\n";
+							if ($macroKeywords =~ /\b$token\b/) {
+								warning "é sim!\n";
+								$ignore_next_closing_parenthesis++;
+								warning "now we will ignore_next_closing_parenthesis '$ignore_next_closing_parenthesis' times\n";
+								undef $token;
+								next CHAR;
+							} else {
+								warning "pelo visto nao é...\n";
+								warning "begin of a group\n";
+							}
+							undef $token;
+						} else {
+							warning "begin of a group\n"
+						}
+						
+						push (@start_of_group, $i);
+						$parenthesis_count++;
+						warning "parenthesis_count: '$parenthesis_count'\n";
+						if ($parenthesis_count == 1) {
+							$condition_start = $i+1;
+						}
+					}
+					
+					case (/\w/) {
+						if (!$in_regex && !$in_quote) {
+							if ($next_char =~ /\W/ && length($token) < 3) {
+								next CHAR;
+							} else {
+								$token .= $current_char;
+								warning "pushing char to token. Token now is '$token'\n";
+								
+							}
+						}
+						next; #to be possible to fall in other case
+					}
+					
+					case (/\W/) {
+						if ($token) {
+							if (!$in_regex && !$in_quote && length($token) >= 3) {
+								warning "token encontrado: '$token'\n";
+								if ($next_char eq '(') {
+									warning "provavelmente eh um macro keyword\n";
+									if ($macroKeywords =~ /\b$token\b/) {
+										warning "eh sim!\n";
+										$ignore_next_closing_parenthesis++;
+										warning "now we will ignore_next_closing_parenthesis '$ignore_next_closing_parenthesis' times\n";
+										$i++;
+									} else {
+										warning "pelo visto nao eh...\n";
+									}
+								} else {
+									warning "nao tem chance de ser um macro_keyword\n";
+								}
+							}
+							warning "indefinindo token\n";
+							undef $token;
+						}
+						next; #to be possible to fall in other case
+					}
+				}
+			}
+			#warning "amount_of_groups: '$amount_of_groups', end_of_group: '" . scalar @end_of_group . "', start_of_group: '" . scalar @start_of_group . "'\n";
+			#warning "group_start: $_\n" foreach @start_of_group;
+			#warning "group_end: $_\n" foreach @end_of_group;
+			
+			while ($amount_of_groups > 0) {
+				my $lenght = $end_of_group[0] - $start_of_group[-1];
+				my $script = substr ($self->{current_line}, $start_of_group[-1], $lenght);
+				push @groups, {start => pop @start_of_group, end => shift @end_of_group, length => $lenght, script => $script};
+				$amount_of_groups--;
+			}
+			warning "condition_start: '$condition_start', condition_end: '$condition_end', condition_length: '$condition_length'\n";
+			$condition_text = substr ($self->{current_line}, $condition_start, $condition_length);
+			my $post_if = substr ($self->{current_line}, $condition_end+1);
+			$condition_text =~ s/^\s+|\s+$//g;
+			$post_if        =~ s/^\s+|\s+$//g;
+			warning "condition_text: '$condition_text'\n";
+			warning "post_if: '$post_if'\n";
+			
+
+			
+			
+			warning Dumper(\@groups);
+			parse_test(\@groups);
 			my $result = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
 			
@@ -612,7 +814,7 @@ sub define_next_valid_command {
 				debug "[eventMacro] Condition of 'if' is true.\n", "eventMacro", 3;
 				if ($post_if ne "{") {
 					debug "[eventMacro] Code after the 'if' is a command, cleaning 'if' and rechecking line.\n", "eventMacro", 3;
-					$self->{current_line} =~ s/^if\s*\(.*\)\s*//;
+					$self->{current_line} = $post_if;
 					$check_need = 0;
 					next DEFINE_COMMAND;
 				} else {
@@ -770,7 +972,7 @@ sub define_next_valid_command {
 						}
 					}
 				} else {
-					$self->error("Only 'else' and 'case' blocks are allowed inside swtich blocks");
+					$self->error("Only 'else' and 'case' blocks are allowed inside switch blocks");
 					return;
 				}
 			}
@@ -893,6 +1095,17 @@ sub define_next_valid_command {
 			debug "[eventMacro] Next valid macro command found: '".$self->{current_line}."'.\n", "eventMacro", 3;
 			last DEFINE_COMMAND;
 		}
+	}
+}
+
+sub parse_test {
+	my ($groups) = @_;
+	warning "ENTERING SUB PARSE_TEST\n";
+	warning "how many groups: '" . scalar(@{$groups}) . "'\n";
+	foreach my $group ( @{ $groups } ) {
+		
+		#warning Dumper($group);
+		
 	}
 }
 
@@ -1739,6 +1952,8 @@ sub substitue_variables {
 
 	return $substituted;
 }
+
+
 
 sub parse_keywords {
 	my ($command) = @_;
