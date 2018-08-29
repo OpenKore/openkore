@@ -818,12 +818,10 @@ sub received_characters_info {
 	my ($self, $args) = @_;
  	Scalar::Util::weaken(my $weak = $self);
 	my $timeout = {timeout => 6, time => time};
-		foreach my $key (@{$args->{KEYS}}) {
-		message "Name: ".$key." Len: ".length($args->{$key})." Value: ".$args->{$key}."\n";
-	}
+
  	$self->{charSelectTimeoutHook} = Plugins::addHook('Network::serverConnect/special' => sub {
 		if ($weak && timeOut($timeout)) {
-			$weak->received_characters({charInfo => '', RAW_MSG_SIZE => 4});
+			$weak->received_characters_slots_info({charInfo => '', RAW_MSG_SIZE => 4});
 		}
 	});
  	$self->{charSelectHook} = Plugins::addHook(charSelectScreen => sub {
