@@ -2897,4 +2897,16 @@ sub sendAuctionMySellStop {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
+sub sendPartyJoinRequestByNameReply {
+	my ($self, $accountID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request_by_name_reply',
+		accountID => $accountID,
+		flag => $flag,
+	}));
+	
+	debug "Sent reply Party Invite.\n", "sendPacket", 2;
+}
+
 1;

@@ -182,6 +182,7 @@ sub new {
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
+		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
