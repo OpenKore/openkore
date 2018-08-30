@@ -37,7 +37,7 @@ sub new {
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x7 a4', [qw(ID)]],
 		'0094' => ['storage_item_add', 'x2 a2 x4 V', [qw(ID amount)]],
-		'009B' => undef,
+		'009B' => ['storage_close'],
 		'009F' => ['actor_action', 'x4 a4 x7 C', [qw(targetID type)]],
 		'00A2' => ['item_take', 'x a4', [qw(ID)]],
 		'00A7' => ['character_move', 'x2 a3', [qw(coords)]],
@@ -66,16 +66,12 @@ sub new {
 		storage_item_add 0094
 		sync 0089
 		skill_use_location_text 0113
+		storage_close 009B
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x009B));
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 1;
