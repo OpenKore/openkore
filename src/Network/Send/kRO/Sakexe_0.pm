@@ -181,6 +181,7 @@ sub new {
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0292' => ['auto_revive'],
+		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
