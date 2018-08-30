@@ -27,12 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0292,2,autorevive,0
-sub sendAutoRevive {
-	$_[0]->sendToServer(pack('v', 0x0292));
-	debug "Sent Auto Revive.\n", "sendPacket", 2;
-}
-
 # 0x029f,3,mermenu,0
 sub sendMercenaryCommand {
 	my ($self, $command) = @_;
