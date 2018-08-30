@@ -4291,17 +4291,6 @@ sub millenium_shield {
 	my ($self, $args) = @_;
 }
 
-sub skill_delete {
-	my ( $self, $args ) = @_;
-	my $skill = new Skill( idn => $args->{ID} );
-	return if !$skill;
-	return if !$char->{skills}->{ $skill->getHandle };
-
-	message TF( "Lost skill: %s\n", $skill->getName ), 'skill';
-	delete $char->{skills}->{ $skill->getHandle };
-	binRemove( \@skillsID, $skill->getHandle );
-}
-
 sub skill_post_delaylist {
 	my ($self, $args) = @_;
 

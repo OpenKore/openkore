@@ -26,8 +26,3 @@ sub new {
 }
 
 1;
-
-=pod
-//2008-12-17bRagexeRE
-0x006d,114
-=cut
