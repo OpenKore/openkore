@@ -22,29 +22,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2008_11_12a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'01A2' => ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]], # 37
-		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
-		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
-		#//# 0x0442,8
-		#//# 0x0443,8
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
-
-=pod
-//2008-12-17aRagexeRE
-0x01a2,37
-//0x0440,10
-//0x0441,4
-//0x0442,8
-//0x0443,8
-=cut
