@@ -194,6 +194,7 @@ sub new {
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
 		'0292' => ['auto_revive'],
+		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
@@ -458,18 +459,6 @@ sub sendCashShopBuy {
 	my $msg = pack("v v2 V", 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendMercenaryCommand {
-	my ($self, $command) = @_;
-	
-	# 0x0 => COMMAND_REQ_NONE
-	# 0x1 => COMMAND_REQ_PROPERTY
-	# 0x2 => COMMAND_REQ_DELETE
-	
-	my $msg = pack ('v C', 0x029F, $command);
-	$self->sendToServer($msg);
-	debug "Sent Mercenary Command $command", "sendPacket", 2;
 }
 
 sub sendMessageIDEncryptionInitialized {

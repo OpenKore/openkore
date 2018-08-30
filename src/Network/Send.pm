@@ -2928,4 +2928,19 @@ sub sendBattlegroundChat {
 	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
+sub sendMercenaryCommand {
+	my ($self, $command) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mercenary_command',
+		
+		# 0x0 => COMMAND_REQ_NONE
+		# 0x1 => COMMAND_REQ_PROPERTY
+		# 0x2 => COMMAND_REQ_DELETE
+		flag => $command
+	}));
+	
+	debug "Sent Mercenary Command $command", "sendPacket", 2;
+}
+
 1;
