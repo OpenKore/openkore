@@ -201,6 +201,7 @@ sub new {
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
@@ -476,14 +477,6 @@ sub sendMessageIDEncryptionInitialized {
 	my $msg = pack("v", 0x02AF);
 	$self->sendToServer($msg);
 	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
-}
-
-sub sendBattlegroundChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if $masterServer->{chatLangCode};
-	my $msg = pack("v2 Z*", 0x02DB, length($message)+4, stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
 # this is different from kRO

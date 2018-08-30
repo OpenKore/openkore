@@ -2917,4 +2917,15 @@ sub sendAutoRevive {
 	debug "Sent Auto Revive.\n", "sendPacket", 2;
 }
 
+sub sendBattlegroundChat {
+	my ($self, $message) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'battleground_chat',
+		message => ($masterServer->{chatLangCode}) ? stringToBytes("|00" . $message) : stringToBytes($message),
+	}));
+	
+	debug "Sent Battleground chat.\n", "sendPacket", 2;
+}
+
 1;
