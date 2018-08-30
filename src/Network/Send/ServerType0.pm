@@ -197,6 +197,7 @@ sub new {
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
 		'02F1' => ['notify_progress_bar_complete'],
@@ -389,13 +390,6 @@ sub sendGuildPositionInfo {
 		debug "Sent GuildPositionInfo: $r_array->[$i]{index}, $r_array->[$i]{permissions}, $r_array->[$i]{index}, $r_array->[$i]{tax}, ".stringToBytes($r_array->[$i]{title})."\n", "d_sendPacket", 2;
 	}
 	$self->sendToServer($msg);
-}
-
-sub sendPartyJoinRequestByNameReply {
-	my ($self, $accountID, $flag) = @_;
-	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent reply Party Invite.\n", "sendPacket", 2;
 }
 
 sub sendPartyOrganize {
