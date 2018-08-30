@@ -32,7 +32,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['skill_use', 'x7 V x4 v x4 a4', [qw(lv skillID targetID)]],#26
-		'007E' => undef,
+		'007E' => ['skill_use_location_text', 'v x8 v x6 v x2 v x8 v Z80', [qw(lvl ID x y info)]],
 		'0085' => ['actor_look_at', 'x10 C x9 C', [qw(head body)]],
 		'0089' => ['sync', 'x3 V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x2 a4', [qw(ID)]],
@@ -49,6 +49,7 @@ sub new {
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
 		'0193' => undef,
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -63,16 +64,10 @@ sub new {
 		skill_use_location 0113
 		storage_item_remove 00F7
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v x8 v x6 v x2 v x8 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	return $self;
 }
 
 sub sendStorageClose {
