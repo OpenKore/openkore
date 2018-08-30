@@ -2909,4 +2909,12 @@ sub sendPartyJoinRequestByNameReply {
 	debug "Sent reply Party Invite.\n", "sendPacket", 2;
 }
 
+sub sendAutoRevive {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'auto_revive'}));
+	
+	debug "Sent Auto Revive.\n", "sendPacket", 2;
+}
+
 1;
