@@ -89,6 +89,7 @@ serverType fRO
 serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
+pauseCharLogin 1
 
 # https://ror.gravindo.id/
 [Indonesia - idRO: Midgard,Asgard ,Valhalla]
