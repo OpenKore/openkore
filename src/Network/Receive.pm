@@ -40,6 +40,7 @@ use Network;
 use Network::MessageTokenizer;
 use Misc;
 use Plugins;
+use Skill;
 use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
@@ -6537,6 +6538,32 @@ sub skill_msg {
 	} else {
 		warning TF("Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msgid}, $args->{id});
 	}
+}
+
+# TODO: use $args->{type} if present
+sub skill_update {
+	my ($self, $args) = @_;
+
+	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
+
+	my $skill = new Skill(idn => $ID);
+	my $handle = $skill->getHandle();
+	my $name = $skill->getName();
+	$char->{skills}{$handle}{lv} = $lv;
+	$char->{skills}{$handle}{sp} = $sp;
+	$char->{skills}{$handle}{range} = $range;
+	$char->{skills}{$handle}{up} = $up;
+
+	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
+
+	Plugins::callHook('packet_charSkills', {
+		ID => $ID,
+		handle => $handle,
+		level => $lv,
+		upgradable => $up,
+	});
+
+	debug "Skill $name: $lv\n", "parseMsg";
 }
 
 #TODO !
