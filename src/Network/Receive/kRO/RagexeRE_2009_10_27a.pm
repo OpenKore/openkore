@@ -19,22 +19,11 @@ package Network::Receive::kRO::RagexeRE_2009_10_27a;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2009_10_06a);
-use Globals qw($char);
-use Log qw(message);
-use Translation qw(TF);
-
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
 
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
-
-=pod
-//2009-10-27aRagexeRE
-0x07f5,6
-0x07f6,14
-=cut
