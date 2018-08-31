@@ -22,21 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2009_07_08a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]], # 0x07e1,15
-	);
 
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
-
-=pod
-//2009-07-15aRagexeRE
-//0x07e1,15
-=cut
