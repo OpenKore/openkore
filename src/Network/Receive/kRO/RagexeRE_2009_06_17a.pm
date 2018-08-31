@@ -23,7 +23,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2009_06_10a);
 sub new {
 	my ($class) = @_;
 
-	return $self = $class->SUPER::new(@_);
+	return $class->SUPER::new(@_);
 }
 
 1;
