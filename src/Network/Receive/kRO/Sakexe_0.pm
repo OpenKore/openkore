@@ -472,6 +472,7 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
@@ -2488,31 +2489,6 @@ sub skill_cast {
 
 		Misc::checkValidity("skill_cast part 4");
 	}
-}
-
-sub skill_update {
-	my ($self, $args) = @_;
-
-	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
-
-	my $skill = new Skill(idn => $ID);
-	my $handle = $skill->getHandle();
-	my $name = $skill->getName();
-	$char->{skills}{$handle}{lv} = $lv;
-	$char->{skills}{$handle}{sp} = $sp;
-	$char->{skills}{$handle}{range} = $range;
-	$char->{skills}{$handle}{up} = $up;
-
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $ID,
-		handle => $handle,
-		level => $lv,
-		upgradable => $up,
-	});
-
-	debug "Skill $name: $lv\n", "parseMsg";
 }
 
 sub skill_use {

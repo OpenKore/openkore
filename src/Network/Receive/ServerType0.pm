@@ -2570,32 +2570,6 @@ sub skill_cast {
 	}
 }
 
-# TODO: use $args->{type} if present
-sub skill_update {
-	my ($self, $args) = @_;
-
-	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
-
-	my $skill = new Skill(idn => $ID);
-	my $handle = $skill->getHandle();
-	my $name = $skill->getName();
-	$char->{skills}{$handle}{lv} = $lv;
-	$char->{skills}{$handle}{sp} = $sp;
-	$char->{skills}{$handle}{range} = $range;
-	$char->{skills}{$handle}{up} = $up;
-
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $ID,
-		handle => $handle,
-		level => $lv,
-		upgradable => $up,
-	});
-
-	debug "Skill $name: $lv\n", "parseMsg";
-}
-
 sub skill_use {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
