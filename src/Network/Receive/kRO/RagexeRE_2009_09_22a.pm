@@ -20,8 +20,6 @@ package Network::Receive::kRO::RagexeRE_2009_09_22a;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2009_08_25a);
 
-use Log qw(warning debug);
-
 sub new {
 	my ($class) = @_;
 
