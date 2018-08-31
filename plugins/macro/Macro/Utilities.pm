@@ -49,7 +49,7 @@ sub ai_isIdle {
 		}
 	}
 	return 1 if (AI::is('macro', 'deal'));
-	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
+	return 1 if (AI::is('NPC') && $char->args->{waitingForSteps});
 	return 0;
 }
 
