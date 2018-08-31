@@ -6540,6 +6540,16 @@ sub skill_msg {
 	}
 }
 
+sub msg_string {
+	my ($self, $args) = @_;
+
+	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
+		message "$msgTable[$args->{index}]. Value: $args->{paral}\n", "info";
+	} else {
+		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
+	}
+}
+
 # TODO: use $args->{type} if present
 sub skill_update {
 	my ($self, $args) = @_;

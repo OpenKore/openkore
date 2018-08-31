@@ -4292,8 +4292,12 @@ sub skill_post_delaylist2 {
 
 sub msg_string {
 	my ($self, $args) = @_;
-	message TF("index: %s para1: %s\n", $args->{ID}, $args->{para1}), "info";
-	#		'07E2' => ['msg_string', 'v V', [qw(index para1)]], #TODO PACKET_ZC_MSG_VALUE        **msgtable
+
+	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
+		message "$msgTable[$args->{index}]\n", "info";
+	} else {
+		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
+	}
 }
 
 sub quest_all_list3 {
