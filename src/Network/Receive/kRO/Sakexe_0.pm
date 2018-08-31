@@ -475,6 +475,8 @@ sub new {
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
 		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
+		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
+		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],		

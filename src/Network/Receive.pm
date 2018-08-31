@@ -6822,4 +6822,46 @@ sub skill_delete {
 	delete $char->{skills}->{ $skill->getHandle };
 	binRemove( \@skillsID, $skill->getHandle );
 }
+
+# captcha packets from kRO::RagexeRE_2009_09_22a
+
+# 07E6?
+sub captcha_session_ID {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
+# 0x07e8,-1
+# todo: debug + remove debug message
+sub captcha_image {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+	
+	my $hookArgs = {image => $args->{image}};
+	Plugins::callHook ('captcha_image', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
+	my $file = $Settings::logs_folder . "/captcha.bmp";
+	open my $DUMP, '>', $file;
+	print $DUMP $args->{image};
+	close $DUMP;
+	
+	$hookArgs = {file => $file};
+	Plugins::callHook ('captcha_file', $hookArgs);
+	return 1 if $hookArgs->{return};
+	
+	warning "captcha.bmp has been saved to: " . $Settings::logs_folder . ", open it, solve it and use the command: captcha <text>\n";
+}
+
+# 0x07e9,5
+# todo: debug + remove debug message
+sub captcha_answer {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+	debug ($args->{flag} ? "good" : "bad") . " answer\n";
+	$captcha_state = $args->{flag};
+	
+	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
+}
+
 1;
