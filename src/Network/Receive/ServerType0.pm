@@ -470,6 +470,7 @@ sub new {
 		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
 		'07E3' => ['skill_exchange_item', 'V2', [qw(type val)]], # 8
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
+		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
 		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
 
@@ -3964,41 +3965,6 @@ sub switch_character {
 	debug "result: $args->{result}\n";
 }
 
-# captcha packets from kRO::RagexeRE_2009_09_22a
-
-# 0x07e8,-1
-# todo: debug + remove debug message
-sub captcha_image {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-
-	my $hookArgs = {image => $args->{image}};
-	Plugins::callHook ('captcha_image', $hookArgs);
-	return 1 if $hookArgs->{return};
-
-	my $file = $Settings::logs_folder . "/captcha.bmp";
-	open my $DUMP, '>', $file;
-	print $DUMP $args->{image};
-	close $DUMP;
-
-	$hookArgs = {file => $file};
-	Plugins::callHook ('captcha_file', $hookArgs);
-	return 1 if $hookArgs->{return};
-
-	warning "captcha.bmp has been saved to: " . $Settings::logs_folder . ", open it, solve it and use the command: captcha <text>\n";
-}
-
-# 0x07e9,5
-# todo: debug + remove debug message
-sub captcha_answer {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-	debug ($args->{flag} ? "good" : "bad") . " answer\n";
-	$captcha_state = $args->{flag};
-
-	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
-}
-
 use constant {
 	TYPE_BOXITEM => 0x0,
 	TYPE_MONSTER_ITEM => 0x1,
@@ -4287,16 +4253,6 @@ sub skill_post_delaylist2 {
 		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
 
 		$char->setStatus($skillName." ".$status, 1, $remainDelay);
-	}
-}
-
-sub msg_string {
-	my ($self, $args) = @_;
-
-	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
-		message "$msgTable[$args->{index}]\n", "info";
-	} else {
-		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
 	}
 }
 
