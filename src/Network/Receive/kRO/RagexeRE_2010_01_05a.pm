@@ -27,8 +27,3 @@ sub new {
 }
 
 1;
-
-=pod
-//2010-01-05aRagexeRE
-0x0801,-1,purchasereq2,2:4:8:12
-=cut
