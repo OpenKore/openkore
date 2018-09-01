@@ -74,7 +74,7 @@ sub new {
 		'00D3' => ['get_ignore_list'],
 		'00D5' => ['chat_room_create', 'v2 C Z8 a*', [qw(len limit public password title)]],
 		'00D9' => ['chat_room_join', 'a4 Z8', [qw(ID password)]],
-		'00DE' => ['chat_room_change', 'v C Z8 a*', [qw(limit public password title)]],
+		'00DE' => ['chat_room_change', 'v2 C Z8 a*', [qw(len limit public password title)]],
 		'00E0' => ['chat_room_bestow', 'V Z24', [qw(role name)]],
 		'00E2' => ['chat_room_kick', 'Z24', [qw(name)]],
 		'00E3' => ['chat_room_leave'],

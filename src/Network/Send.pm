@@ -1912,7 +1912,7 @@ sub sendChatRoomChange {
 	my ($self, $title, $limit, $public, $password) = @_;
 
 	$self->sendToServer($self->reconstruct({
-		switch => 'chat_room_create',
+		switch => 'chat_room_change',
 		limit => $limit,
 		public => $public,
 		password => stringToBytes($password),
