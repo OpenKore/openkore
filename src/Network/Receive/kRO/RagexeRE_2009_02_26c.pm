@@ -22,21 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2009_02_18a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		# //0x0448,-1
-	);
 
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
-
-=pod
-//2009-02-26cRagexeRE
-//0x0448,-1
-=cut

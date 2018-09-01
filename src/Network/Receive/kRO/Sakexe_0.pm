@@ -472,10 +472,20 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
+		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
+		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
+		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
+		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
+		'07F7' => ['actor_exists', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking
+		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
+		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
-		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
+		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],
+		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -2488,31 +2498,6 @@ sub skill_cast {
 
 		Misc::checkValidity("skill_cast part 4");
 	}
-}
-
-sub skill_update {
-	my ($self, $args) = @_;
-
-	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
-
-	my $skill = new Skill(idn => $ID);
-	my $handle = $skill->getHandle();
-	my $name = $skill->getName();
-	$char->{skills}{$handle}{lv} = $lv;
-	$char->{skills}{$handle}{sp} = $sp;
-	$char->{skills}{$handle}{range} = $range;
-	$char->{skills}{$handle}{up} = $up;
-
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $ID,
-		handle => $handle,
-		level => $lv,
-		upgradable => $up,
-	});
-
-	debug "Skill $name: $lv\n", "parseMsg";
 }
 
 sub skill_use {
