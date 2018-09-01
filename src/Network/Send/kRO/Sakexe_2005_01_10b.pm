@@ -47,7 +47,7 @@ sub new {
 		'0113' => ['skill_use_location', 'x8 v x6 v x2 v x8 v', [qw(lv skillID x y)]],
 		'0116' => ['item_drop', 'x13 a2 x v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x7 a4 x6 C', [qw(targetID type)]],
-		'0193' => undef,
+		'0193' => ['storage_close'],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -63,16 +63,12 @@ sub new {
 		skill_use 0072
 		skill_use_location 0113
 		storage_item_remove 00F7
+		storage_close 0193
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x0193));
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 1;
