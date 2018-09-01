@@ -2897,4 +2897,50 @@ sub sendAuctionMySellStop {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
+sub sendPartyJoinRequestByNameReply {
+	my ($self, $accountID, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_join_request_by_name_reply',
+		accountID => $accountID,
+		flag => $flag,
+	}));
+	
+	debug "Sent reply Party Invite.\n", "sendPacket", 2;
+}
+
+sub sendAutoRevive {
+	my ($self) = @_;
+	
+	$self->sendToServer($self->reconstruct({switch => 'auto_revive'}));
+	
+	debug "Sent Auto Revive.\n", "sendPacket", 2;
+}
+
+sub sendBattlegroundChat {
+	my ($self, $message) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'battleground_chat',
+		message => ($masterServer->{chatLangCode}) ? stringToBytes("|00" . $message) : stringToBytes($message),
+	}));
+	
+	debug "Sent Battleground chat.\n", "sendPacket", 2;
+}
+
+sub sendMercenaryCommand {
+	my ($self, $command) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'mercenary_command',
+		
+		# 0x0 => COMMAND_REQ_NONE
+		# 0x1 => COMMAND_REQ_PROPERTY
+		# 0x2 => COMMAND_REQ_DELETE
+		flag => $command
+	}));
+	
+	debug "Sent Mercenary Command $command", "sendPacket", 2;
+}
+
 1;

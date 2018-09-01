@@ -27,25 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0292,2,autorevive,0
-sub sendAutoRevive {
-	$_[0]->sendToServer(pack('v', 0x0292));
-	debug "Sent Auto Revive.\n", "sendPacket", 2;
-}
-
-# 0x029f,3,mermenu,0
-sub sendMercenaryCommand {
-	my ($self, $command) = @_;
-	
-	# 0x0 => COMMAND_REQ_NONE
-	# 0x1 => COMMAND_REQ_PROPERTY
-	# 0x2 => COMMAND_REQ_DELETE
-	
-	my $msg = pack ('v C', 0x029F, $command);
-	$self->sendToServer ($msg);
-	debug "Sent Mercenary Command $command", "sendPacket", 2;
-}
-
 =pod
 //2006-04-24aSakexe to 2007-01-02aSakexe
 0x023e,8

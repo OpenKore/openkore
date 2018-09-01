@@ -193,12 +193,16 @@ sub new {
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
+		'0292' => ['auto_revive'],
+		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
+		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0360' => ['sync', 'V', [qw(time)]],
@@ -391,13 +395,6 @@ sub sendGuildPositionInfo {
 	$self->sendToServer($msg);
 }
 
-sub sendPartyJoinRequestByNameReply {
-	my ($self, $accountID, $flag) = @_;
-	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
 sub sendPartyOrganize {
 	my ($self, $name, $share1, $share2) = @_;
 	$share1 ||= 1;
@@ -464,38 +461,11 @@ sub sendCashShopBuy {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
-sub sendAutoRevive {
-	my ($self, $ID, $amount, $points) = @_;
-	my $msg = pack("v", 0x0292);
-	$self->sendToServer($msg);
-	debug "Sent Auto Revive.\n", "sendPacket", 2;
-}
-
-sub sendMercenaryCommand {
-	my ($self, $command) = @_;
-	
-	# 0x0 => COMMAND_REQ_NONE
-	# 0x1 => COMMAND_REQ_PROPERTY
-	# 0x2 => COMMAND_REQ_DELETE
-	
-	my $msg = pack ('v C', 0x029F, $command);
-	$self->sendToServer($msg);
-	debug "Sent Mercenary Command $command", "sendPacket", 2;
-}
-
 sub sendMessageIDEncryptionInitialized {
 	my $self = shift;
 	my $msg = pack("v", 0x02AF);
 	$self->sendToServer($msg);
 	debug "Sent Message ID Encryption Initialized\n", "sendPacket", 2;
-}
-
-sub sendBattlegroundChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if $masterServer->{chatLangCode};
-	my $msg = pack("v2 Z*", 0x02DB, length($message)+4, stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
 # this is different from kRO
