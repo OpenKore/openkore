@@ -22,16 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2009_12_22a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		# 0x0801 is sent packet
-	);
 
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
 
 1;
