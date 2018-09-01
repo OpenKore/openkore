@@ -6864,4 +6864,204 @@ sub captcha_answer {
 	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
 
+sub open_buying_store {
+	my($self, $args) = @_;
+	my $amount = $args->{amount};
+	message TF("Your buying store can buy %d items \n", $amount);
+}
+
+
+# TODO
+sub buyer_items
+{
+	my($self, $args) = @_;
+
+	my $BinaryID = $args->{venderID};
+	my $Player = Actor::get($BinaryID);
+	my $Name = $Player->name;
+
+	my $headerlen = 12;
+	my $Total = unpack('V4', substr($args->{msg}, $headerlen, 4));
+	$headerlen += 4;
+
+	for (my $i = $headerlen; $i < $args->{msg_size}; $i+=9)
+	{
+		my $Item = {};
+
+		($Item->{price},
+		$Item->{amount},
+		undef,
+		$Item->{nameID}) = unpack('V v C v', substr($args->{msg}, $i, 9));
+	}
+}
+
+sub open_buying_store_item_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 12;
+
+	undef @selfBuyerItemList;
+
+	#started a shop.
+	message TF("Buying Shop opened!\n"), "BuyShop";
+# what is:
+#	@articles = ();
+#	$articles = 0;
+	my $index = 0;
+
+	for (my $i = $headerlen; $i < $msg_size; $i += 9) {
+		my $item = {};
+
+		($item->{price},
+		$item->{amount},
+		$item->{type},
+		$item->{nameID})	= unpack('V v C v', substr($msg, $i, 9));
+
+		$item->{name} = itemName($item);
+		$selfBuyerItemList[$index] = $item;
+
+		Plugins::callHook('packet_open_buying_store', {
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price},
+			type => $item->{type}
+		});
+
+		$index++;
+	}
+	Commands::run('bs');
+}
+
+sub buying_store_found {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+
+	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
+		binAdd(\@buyerListsID, $ID);
+		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
+	}
+	$buyerLists{$ID}{title} = bytesToString($args->{title});
+	$buyerLists{$ID}{id} = $ID;
+}
+
+sub buying_store_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@buyerListsID, $ID);
+	delete $buyerLists{$ID};
+}
+
+sub buying_store_items_list {
+	my($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $headerlen = 16;
+	my $zeny = $args->{zeny};
+	undef @buyerItemList;
+	undef $buyerID;
+	undef $buyingStoreID;
+	$buyerID = $args->{buyerID};
+	$buyingStoreID = $args->{buyingStoreID};
+	my $player = Actor::get($buyerID);
+	my $index = 0;
+
+	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
+		T("#   Name                                      Type        Amount          Price\n");
+
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
+		my $item = {};
+
+		($item->{price},
+		$item->{amount},
+		$item->{type},
+		$item->{nameID})	= unpack('V v C v', substr($args->{RAW_MSG}, $i, 9));
+
+		$item->{name} = itemName($item);
+		$buyerItemList[$index] = $item;
+
+		debug "Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2;
+
+		Plugins::callHook('packet_buying_store', {
+			buyerID => $buyerID,
+			number => $index,
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price},
+			type => $item->{type}
+		});
+
+		$msg .= swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]);
+
+		$index++;
+	}
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", $zeny) . ('-'x79) . "\n";
+	message $msg, "list";
+
+	Plugins::callHook('packet_buying_store2', {
+		venderID => $buyerID,
+		itemList => \@buyerItemList
+	});
+}
+
+sub buying_store_item_delete {
+	my($self, $args) = @_;
+	return unless changeToInGameState();
+	my $item = $char->inventory->getByID($args->{ID});
+	my $zeny = $args->{amount} * $args->{zeny};
+	if ($item) {
+		inventoryItemRemoved($item->{binID}, $args->{amount});
+	}
+	message TF("You have sold %s. Amount: %s. Total zeny: %sz\n", $item, $args->{amount}, $zeny);# msgstring 1747
+}
+
+sub buying_store_fail {
+	my ($self, $args) = @_;
+	if ($args->{result} == 5) {
+		error T("The deal has failed.\n");# msgstring 58
+	} 	elsif ($args->{result} == 6) {
+		error TF("%s item could not be sold because you do not have the wanted amount of items.\n", itemNameSimple($args->{itemID}));# msgstring 1748
+	} 	elsif ($args->{result} == 7) {
+		error T("Failed to deal because you have not enough Zeny.\n");# msgstring 1746
+	} else {
+		error TF("Unknown 'buying_store_fail' result: %s.\n", $args->{result});
+	}
+}
+
+sub buying_store_update {
+	my($self, $args) = @_;
+	if(@selfBuyerItemList) {
+		for(my $i = 0; $i < @selfBuyerItemList; $i++) {
+			print "$_->{amount}          $args->{count}\n";
+			$_->{amount} = $args->{count} if($_->{itemID} == $args->{itemID});
+			print "$_->{amount}          $args->{count}\n";
+		}
+	}
+}
+
+sub buyer_found {
+    my($self, $args) = @_;
+    my $ID = $args->{ID};
+
+	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
+		binAdd(\@buyerListsID, $ID);
+		Plugins::callHook('packet_buyer', {ID => $ID});
+	}
+	$buyerLists{$ID}{title} = bytesToString($args->{title});
+	$buyerLists{$ID}{id} = $ID;
+}
+
+sub buyer_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@buyerListsID, $ID);
+	delete $buyerLists{$ID};
+}
+
 1;
