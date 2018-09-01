@@ -20,9 +20,6 @@ package Network::Send::kRO::Sakexe_2006_03_13a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2006_03_06a);
 
-use Log qw(debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);

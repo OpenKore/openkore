@@ -14,8 +14,6 @@ package Network::Send::kRO::RagexeRE_2011_10_05a;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_08_16a);
 
-use Log qw(debug);
-
 sub version { 27 }
 
 sub new {

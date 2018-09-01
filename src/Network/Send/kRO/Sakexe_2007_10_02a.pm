@@ -21,8 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
 use Log qw(debug);
-use I18N qw(stringToBytes);
-use Globals qw($masterServer);
 
 sub new {
 	my ($class) = @_;
