@@ -173,6 +173,7 @@ sub new {
 		'0246' => ['mail_remove', 'v', [qw(flag)]],
 		'0247' => ['mail_attachment_set', 'a2 V', [qw(ID amount)]],
 		'0248' => ['mail_send', 'v Z24 a40 C a*', [qw(len recipient title body_len body)]],
+		'0254' => ['starplace_agree', 'C', [qw(flag)]],
 		'024B' => ['auction_add_item_cancel', 'v', [qw(flag)]],
 		'024C' => ['auction_add_item', 'a2 V', [qw(ID amount)]],
 		'024D' => ['auction_create', 'V V v', [qw(now_price max_price delete_time)]],

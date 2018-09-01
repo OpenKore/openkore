@@ -191,6 +191,7 @@ sub new {
 		'024E' => ['auction_cancel', 'V', [qw(ID)]],
 		'024F' => ['auction_buy', 'V V', [qw(ID price)]],
 		'0251' => ['auction_search', 'v V Z24 v', [qw(type price search_string page)]],
+		'0254' => ['starplace_agree', 'C', [qw(flag)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'025C' => ['auction_info_self', 'v', [qw(type)]],
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
