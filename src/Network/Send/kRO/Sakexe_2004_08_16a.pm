@@ -27,13 +27,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0212,26,rc,2
-sub sendGMGiveMannerByName {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x0212, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
 # 0x0213,26,check,2
 sub sendGMRequestStatus {
 	my ($self, $playerName) = @_;
