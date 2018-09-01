@@ -32,7 +32,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -2956,6 +2956,68 @@ sub sendSkillUseLocInfo {
 	}));
 	
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+}
+
+sub sendGMGiveMannerByName {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'manner_by_name',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMRequestStatus {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_status',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendFeelSaveOk {
+	my ($self, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'starplace_agree',
+		flag => $flag,
+	}));
+	
+	debug "Sent FeelSaveOk.\n", "sendPacket", 2;
+}
+
+sub sendGMReqAccName {
+	my ($self, $targetID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_account_name',
+		targetID => $targetID,
+	}));
+	
+	debug "Sent GM Request Account Name.\n", "sendPacket", 2;
+}
+
+sub sendClientVersion {
+	my ($self, $version) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'client_version',
+		clientVersion => $version,
+	}));
+}
+
+sub sendCaptchaAnswer {
+	my ($self, $answer) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'captcha_answer',
+		accountID => $accountID,
+		answer => $answer,
+		
+		# Strangely, this packet has fixed length (dec 32, or hex 0x20) but has it padded into it - lututui
+		len => (exists $rpackets{'07E7'}{length}) ? $rpackets{'07E7'}{length} : 32,
+	}));
 }
 
 1;
