@@ -2943,4 +2943,19 @@ sub sendMercenaryCommand {
 	debug "Sent Mercenary Command $command", "sendPacket", 2;
 }
 
+sub sendSkillUseLocInfo {
+	my ($self, $ID, $lvl, $x, $y, $moreinfo) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'skill_use_location_text',
+		lvl => $lvl,
+		ID => $ID,
+		x => $x,
+		y => $y,
+		info => $moreinfo
+	}));
+	
+	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+}
+
 1;

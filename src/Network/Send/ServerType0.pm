@@ -132,6 +132,7 @@ sub new {
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
+		'0190' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
 		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
@@ -212,6 +213,7 @@ sub new {
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],

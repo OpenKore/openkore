@@ -56,7 +56,9 @@ sub new {
 		'092C' => ['buy_bulk_closeShop'],#2
 		'0815' => undef,
 		'0891' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		'08A2' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -79,17 +81,12 @@ sub new {
 		storage_item_remove 0869
 		sync 087D
 		party_join_request_by_name 091F
+		skill_use_location_text 08A2
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-#0x08A2,90,useskilltoposinfo,2:4:6:8:10
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	$self->sendToServer(pack('v5 Z80', 0x08A2, $lv, $ID, $x, $y, $moreinfo));
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	return $self;
 }
 
 #0x089A,36,storagepassword,0
