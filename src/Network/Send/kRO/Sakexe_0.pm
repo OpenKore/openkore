@@ -149,6 +149,7 @@ sub new {
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
+		'01DF' => ['gm_request_account_name', 'V', [qw(targetID)]],
 		'01E7' => ['novice_dori_dori'],
 		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],

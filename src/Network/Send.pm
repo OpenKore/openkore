@@ -2987,4 +2987,15 @@ sub sendFeelSaveOk {
 	debug "Sent FeelSaveOk.\n", "sendPacket", 2;
 }
 
+sub sendGMReqAccName {
+	my ($self, $targetID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_account_name',
+		targetID => $targetID,
+	}));
+	
+	debug "Sent GM Request Account Name.\n", "sendPacket", 2;
+}
+
 1;
