@@ -28,13 +28,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-sub sendMailSend {
-	my ($self, $receiver, $title, $message) = @_;
-	my $msg = pack('v2 Z24 a40 C Z*', 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent mail send.\n", "sendPacket", 2;
-}
-
 =pod
 //2005-08-29aSakexe
 0x0240,-1
