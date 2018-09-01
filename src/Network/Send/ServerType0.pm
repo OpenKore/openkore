@@ -229,6 +229,7 @@ sub new {
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
+		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], #Selling store
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 V s', [qw(level MapID job LastIndex ResultCount)]],
@@ -481,15 +482,6 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
-}
-
-# captcha packet from kRO::RagexeRE_2009_09_22a
-#0x07e7,32
-# TODO: what is 0x20?
-sub sendCaptchaAnswer {
-	my ($self, $answer) = @_;
-	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
-	$self->sendToServer($msg);
 }
 
 1;

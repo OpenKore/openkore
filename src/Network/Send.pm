@@ -32,7 +32,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -3004,6 +3004,19 @@ sub sendClientVersion {
 	$self->sendToServer($self->reconstruct({
 		switch => 'client_version',
 		clientVersion => $version,
+	}));
+}
+
+sub sendCaptchaAnswer {
+	my ($self, $answer) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'captcha_answer',
+		accountID => $accountID,
+		answer => $answer,
+		
+		# Strangely, this packet has fixed length (dec 32, or hex 0x20) but has it padded into it - lututui
+		len => (exists $rpackets{'07E7'}{length}) ? $rpackets{'07E7'}{length} : 32,
 	}));
 }
 
