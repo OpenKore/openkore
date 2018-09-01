@@ -499,6 +499,7 @@ sub new {
 		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
 		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
 		'0818' => ['buying_store_items_list', 'v a4 a4 V', [qw(len buyerID buyingStoreID zeny)]],
+		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
 		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
 		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]],
 		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],

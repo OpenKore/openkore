@@ -7064,4 +7064,15 @@ sub buyer_lost {
 	delete $buyerLists{$ID};
 }
 
+sub buying_buy_fail {
+	my ($self, $args) = @_;
+	if ($args->{result} == 3) {
+		error T("Failed to buying (insufficient zeny).\n");
+	} elsif ($args->{result} == 4) {
+		message T("Buying up complete.\n");
+	} else {
+		error TF("Failed to buying (unknown error: %s).\n", $args->{result});
+	}
+}
+
 1;
