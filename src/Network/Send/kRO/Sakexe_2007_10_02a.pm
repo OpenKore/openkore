@@ -52,22 +52,6 @@ sub sendHotkey {
 	debug "Sent Hotkey.\n", "sendPacket", 2;
 }
 
-sub sendPartyJoinRequestByNameReply { # long name lol
-	my ($self, $accountID, $flag) = @_;
-	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
-sub sendBattlegroundChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if $masterServer->{chatLangCode};
-	$message = stringToBytes($message); # Type: Bytes
-	my $data = pack('v2 Z*', 0x02DB, length($message)+5, $message);
-	$self->sendToServer($data);
-	debug "Sent Battleground chat.\n", "sendPacket", 2;
-}
-
 1;
 
 =pod
