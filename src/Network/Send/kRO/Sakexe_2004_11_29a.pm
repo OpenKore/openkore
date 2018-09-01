@@ -44,11 +44,12 @@ sub new {
 		'00F3' => ['actor_look_at', 'x C x3 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x a4 x3 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'00F7' => ['actor_name_request', 'x8 a4', [qw(ID)]],
-		'0113' => undef,
+		'0113' => ['skill_use_location_text', 'v x2 v x3 v x11 v x4 v Z80', [qw(lvl ID x y info)]],
 		'0116' => ['item_drop', 'x2 a2 x4 v', [qw(ID amount)]],
 		'0190' => ['item_use', 'x a2 x6 a4', [qw(ID targetID)]],#15
 		'0193' => ['storage_item_remove', 'x2 a2 x11 V', [qw(ID amount)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -64,22 +65,17 @@ sub new {
 		skill_use_location 007E
 		storage_item_add 0094
 		sync 0089
+		skill_use_location_text 0113
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
+	return $self;
 }
 
 sub sendStorageClose {
 	$_[0]->sendToServer(pack('v', 0x009B));
 	debug "Sent Storage Done\n", "sendPacket", 2;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v x2 v x3 v x11 v x4 v Z80', 0x0113, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
 1;

@@ -129,6 +129,7 @@ sub new {
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
+		'0190' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
 		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
@@ -187,6 +188,7 @@ sub new {
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
+		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
@@ -595,17 +597,6 @@ sub sendGuildPositionInfo {
 # 0x018c,29
 # 0x018d,-1
 # 0x018f,6
-
-# 0x0190,90,useskilltoposinfo,2:4:6:8:10
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
-	my $msg = pack('v5 Z80', 0x0190, $lv, $ID, $x, $y, $moreinfo);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
 # 0x0191,86
 # 0x0192,24
 # 0x0194,30

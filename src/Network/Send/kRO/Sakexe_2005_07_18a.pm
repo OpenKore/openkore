@@ -33,6 +33,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['skill_use', 'x3 V x2 v x2 a4', [qw(lv skillID targetID)]],#19
+		'007E' => ['skill_use_location_text', 'v x7 v x4 v x6 v x3 v Z80', [qw(lvl ID x y info)]],
 		'0085' => ['actor_look_at', 'x4 C x3 C', [qw(head body)]],
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
@@ -47,16 +48,16 @@ sub new {
 		'0116' => ['item_drop', 'x4 a2 x2 v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x3 a4 x11 C', [qw(targetID type)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v x7 v x4 v x6 v x3 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	my %handlers = qw(
+		skill_use_location_text 007E
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 1;

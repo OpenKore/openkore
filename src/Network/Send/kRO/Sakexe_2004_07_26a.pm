@@ -39,7 +39,7 @@ sub new {
 		'0094' => ['item_take', 'x4 a4', [qw(ID)]],
 		'009B' => ['character_move', 'x a3', [qw(coords)]],
 		'009F' => ['actor_look_at', 'x3 C x6 C', [qw(head body)]],
-		'00A2' => undef,
+		'00A2' => ['skill_use_location_text', 'v x v x v x9 v x2 v Z80', [qw(lvl ID x y info)]],
 		'00A7' => ['actor_name_request', 'x6 a4', [qw(ID)]],
 		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 		'00F5' => ['item_use', 'x4 a2 x5 a4', [qw(ID targetID)]],#17
@@ -49,6 +49,7 @@ sub new {
 		'0190' => ['storage_item_remove', 'x8 a2 x10 V', [qw(ID amount)]],
 		'0193' => ['actor_action', 'x a4 x C', [qw(targetID type)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	# since there is only one available switch alternative per kRO ST,
@@ -69,19 +70,12 @@ sub new {
 		storage_item_add 0113
 		storage_item_remove 0190
 		sync 00F7
+		skill_use_location_text 00A2
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
-	my $msg = pack('v x v x v x9 v x2 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	return $self;
 }
 
 sub sendStorageClose {
