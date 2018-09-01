@@ -24,7 +24,21 @@ use Utils qw(getTickCount getHex getCoordString2);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0113' => ['storage_close'],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		storage_close 0113
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 # Create a random byte string of a specified length.
@@ -172,13 +186,6 @@ sub sendStorageGet {
 			
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-        my ($self) = @_;
-        my $msg = pack("C*", 0x13, 0x01);
-        $self->sendToServer($msg);
-        debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 sub sendSync {
