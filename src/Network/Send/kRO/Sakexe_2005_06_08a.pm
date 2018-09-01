@@ -28,15 +28,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x0231,26,changehomunculusname,0
-sub sendHomunculusName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack('v a24', 0x0231, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
-}
-
 # 0x023b,24,storagepassword,0
 sub sendStoragePassword {
 	my $self = shift;

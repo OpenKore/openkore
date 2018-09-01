@@ -45,13 +45,6 @@ sub sendCashShopBuy {
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
 }
 
-sub sendHotkey {
-	my ($self, $index, $type, $ID, $lv) = @_;
-	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
-	$self->sendToServer($msg);
-	debug "Sent Hotkey.\n", "sendPacket", 2;
-}
-
 1;
 
 =pod
