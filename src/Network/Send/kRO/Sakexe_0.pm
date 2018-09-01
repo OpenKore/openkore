@@ -195,6 +195,7 @@ sub new {
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
+		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
