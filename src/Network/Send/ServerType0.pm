@@ -224,6 +224,7 @@ sub new {
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'0447' => ['blocking_play_cancel'],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],

@@ -2998,4 +2998,13 @@ sub sendGMReqAccName {
 	debug "Sent GM Request Account Name.\n", "sendPacket", 2;
 }
 
+sub sendClientVersion {
+	my ($self, $version) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'client_version',
+		clientVersion => $version,
+	}));
+}
+
 1;
