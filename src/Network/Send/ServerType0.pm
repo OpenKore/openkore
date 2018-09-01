@@ -165,6 +165,7 @@ sub new {
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
 		'0212' => ['manner_by_name', 'Z24', [qw(playerName)]],
+		'0213' => ['gm_request_status', 'Z24', [qw(playerName)]],
 		'0217' => ['rank_blacksmith'],
 		'0218' => ['rank_alchemist'],
 		'021D' => ['less_effect'], # TODO

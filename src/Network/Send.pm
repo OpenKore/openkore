@@ -2958,4 +2958,22 @@ sub sendSkillUseLocInfo {
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
+sub sendGMGiveMannerByName {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'manner_by_name',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMRequestStatus {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_status',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
 1;
