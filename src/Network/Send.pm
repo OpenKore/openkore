@@ -2976,4 +2976,15 @@ sub sendGMRequestStatus {
 	}));
 }
 
+sub sendFeelSaveOk {
+	my ($self, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'starplace_agree',
+		flag => $flag,
+	}));
+	
+	debug "Sent FeelSaveOk.\n", "sendPacket", 2;
+}
+
 1;
