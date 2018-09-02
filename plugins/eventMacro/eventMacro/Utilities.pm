@@ -30,9 +30,8 @@ sub between {
 sub cmpr {
 	my ($first, $cond, $second) = @_;
 	
-	if (!defined $first || !defined $cond || !defined $second) {
-		# this produces a warning but that's what we want
-		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n", "eventMacro";
+	if (defined $first && !defined $cond & !defined $second) {
+		return 1;
 		
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
