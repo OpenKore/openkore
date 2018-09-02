@@ -21,9 +21,9 @@ use strict;
 use base qw(Network::Send::kRO);
 use Network::Send::ServerType0();
 
-use Log qw(message warning error debug);
+use Log qw(debug);
 use I18N qw(stringToBytes);
-use Utils qw(getHex getCoordString makeCoordsDir);
+use Utils qw(getHex);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw($charID %rpackets);

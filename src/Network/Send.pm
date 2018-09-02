@@ -661,22 +661,32 @@ sub sendStorageGet {
 }
 
 sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	my $mid = hex($self->{packet_lut}{storage_password});
-	if ($type == 3) {
-		$msg = pack("v v", $mid, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack("v v", $mid, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+	my ($self, $pass, $type) = @_;
+	
+	# $pass -> 16 byte packed hex data
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'storage_password',
+		type => $type,
+		pass => $pass,
+	}));
+}
+
+sub reconstruct_storage_password {
+	my ($self, $args) = @_;
+	
+	my $aux = pack "H*", "EC62E539BB6BBC811A60C06FACCB7EC8";
+	
+	# $type == 2 -> change password
+	# $type == 3 -> check password
+	
+	if ($args->{type} == 3) {
+		$args->{data} = pack '(a*)*', $args->{pass}, $aux;
+	} elsif ($args->{type} == 2) {
+		$args->{data} = pack '(a*)*', $aux, $args->{pass};
 	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
+		ArgumentException->throw("The 'type' argument has invalid value ($args->{type}).");
 	}
-	$self->sendToServer($msg);
 }
 
 sub parse_party_chat {
