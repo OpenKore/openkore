@@ -20,8 +20,6 @@ package Network::Send::kRO::Sakexe_2004_11_29a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_11_15a);
 
-use Log qw(debug);
-
 sub version {
 	return 14;
 }

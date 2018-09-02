@@ -178,7 +178,7 @@ sub new {
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'0237' => ['rank_killer'],
-		'023B' => ['storage_password'],
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 		'023F' => ['mailbox_open'],
 		'0241' => ['mail_read', 'V', [qw(mailID)]],
 		'0243' => ['mail_delete', 'V', [qw(mailID)]],
