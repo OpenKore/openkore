@@ -708,7 +708,7 @@ sub received_characters {
 
 		$character->{nameID} = unpack("V", $character->{ID});
 		$character->{name} = bytesToString($character->{name});
-		$character->{map_name} =~ s/\.gat//g;
+		$character->{last_map} = substr($character->{last_map}, 0, length($character->{last_map}) - 4);
 
 		if ($masterServer->{charBlockSize} >= 155) {
 			$character->{exp} = getHex($character->{exp});
@@ -794,7 +794,7 @@ sub character_creation_successful {
 
 	$character->{nameID} = unpack("V", $character->{ID});
 	$character->{name} = bytesToString($character->{name});
-	$character->{map_name} =~ s/\.gat//g;
+	$character->{last_map} = substr($character->{last_map}, 0, length($character->{last_map}) - 4);
 
 	$character->{exp} = 0;
 	$character->{exp_job} = 0;
