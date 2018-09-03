@@ -485,6 +485,7 @@ sub new {
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
+		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
