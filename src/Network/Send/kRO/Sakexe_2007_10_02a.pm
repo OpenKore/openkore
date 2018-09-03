@@ -21,8 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
 use Log qw(debug);
-use I18N qw(stringToBytes);
-use Globals qw($masterServer);
 
 sub new {
 	my ($class) = @_;
@@ -43,13 +41,6 @@ sub sendCashShopBuy {
 	my $msg = pack('v v2 V', 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendHotkey {
-	my ($self, $index, $type, $ID, $lv) = @_;
-	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
-	$self->sendToServer($msg);
-	debug "Sent Hotkey.\n", "sendPacket", 2;
 }
 
 1;

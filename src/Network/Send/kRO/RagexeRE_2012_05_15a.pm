@@ -13,7 +13,6 @@ package Network::Send::kRO::RagexeRE_2012_05_15a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2012_04_18a);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
@@ -56,7 +55,10 @@ sub new {
 		'092C' => ['buy_bulk_closeShop'],#2
 		'0815' => undef,
 		'0891' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		'08A2' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'089A' => ['storage_password', 'v a*', [qw(type data)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -79,36 +81,13 @@ sub new {
 		storage_item_remove 0869
 		sync 087D
 		party_join_request_by_name 091F
+		skill_use_location_text 08A2
+		storage_password 089A
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-#0x08A2,90,useskilltoposinfo,2:4:6:8:10
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	$self->sendToServer(pack('v5 Z80', 0x08A2, $lv, $ID, $x, $y, $moreinfo));
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-#0x089A,36,storagepassword,0
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack('v2', 0x089A, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack('v2', 0x089A, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
+	return $self;
 }
 
 1;

@@ -32,7 +32,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -661,22 +661,32 @@ sub sendStorageGet {
 }
 
 sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	my $mid = hex($self->{packet_lut}{storage_password});
-	if ($type == 3) {
-		$msg = pack("v v", $mid, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack("v v", $mid, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
+	my ($self, $pass, $type) = @_;
+	
+	# $pass -> 16 byte packed hex data
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'storage_password',
+		type => $type,
+		pass => $pass,
+	}));
+}
+
+sub reconstruct_storage_password {
+	my ($self, $args) = @_;
+	
+	my $aux = pack "H*", "EC62E539BB6BBC811A60C06FACCB7EC8";
+	
+	# $type == 2 -> change password
+	# $type == 3 -> check password
+	
+	if ($args->{type} == 3) {
+		$args->{data} = pack '(a*)*', $args->{pass}, $aux;
+	} elsif ($args->{type} == 2) {
+		$args->{data} = pack '(a*)*', $aux, $args->{pass};
 	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
+		ArgumentException->throw("The 'type' argument has invalid value ($args->{type}).");
 	}
-	$self->sendToServer($msg);
 }
 
 sub parse_party_chat {
@@ -2941,6 +2951,83 @@ sub sendMercenaryCommand {
 	}));
 	
 	debug "Sent Mercenary Command $command", "sendPacket", 2;
+}
+
+sub sendSkillUseLocInfo {
+	my ($self, $ID, $lvl, $x, $y, $moreinfo) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'skill_use_location_text',
+		lvl => $lvl,
+		ID => $ID,
+		x => $x,
+		y => $y,
+		info => $moreinfo
+	}));
+	
+	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+}
+
+sub sendGMGiveMannerByName {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'manner_by_name',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendGMRequestStatus {
+	my ($self, $playerName) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_status',
+		playerName => stringToBytes($playerName),
+	}));
+}
+
+sub sendFeelSaveOk {
+	my ($self, $flag) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'starplace_agree',
+		flag => $flag,
+	}));
+	
+	debug "Sent FeelSaveOk.\n", "sendPacket", 2;
+}
+
+sub sendGMReqAccName {
+	my ($self, $targetID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_request_account_name',
+		targetID => $targetID,
+	}));
+	
+	debug "Sent GM Request Account Name.\n", "sendPacket", 2;
+}
+
+sub sendClientVersion {
+	my ($self, $version) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'client_version',
+		clientVersion => $version,
+	}));
+}
+
+sub sendCaptchaAnswer {
+	my ($self, $answer) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'captcha_answer',
+		accountID => $accountID,
+		answer => $answer,
+		
+		# Strangely, this packet has fixed length (dec 32, or hex 0x20) but has it padded into it - lututui
+		len => (exists $rpackets{'07E7'}{length}) ? $rpackets{'07E7'}{length} : 32,
+	}));
 }
 
 1;

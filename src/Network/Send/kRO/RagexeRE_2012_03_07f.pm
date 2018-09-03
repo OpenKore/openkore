@@ -33,6 +33,7 @@ sub new {
 		'0361' => undef,
 		'0362' => undef,
 		'0364' => undef,
+		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
 		'07E4' => undef,
 		'0802' => undef,
@@ -56,6 +57,7 @@ sub new {
 		'0817' => ['buy_bulk_closeShop'],#2
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
@@ -74,10 +76,12 @@ sub new {
 		storage_item_add 093B
 		storage_item_remove 0963
 		sync 0887
+		skill_use_location_text 0366
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
-	$self;
+	return $self;
 }
 
 sub sendCharCreate {
@@ -85,12 +89,6 @@ sub sendCharCreate {
 	my $msg = pack('v a24 C v2', 0x0970, stringToBytes($name), $slot, $hair_color, $hair_style);
 	$self->sendToServer($msg);
 	debug "Sent sendCharCreate\n", "sendPacket", 2;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	$self->sendToServer(pack('v5 Z80', 0x0366, $lv, $ID, $x, $y, $moreinfo));
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
 1;

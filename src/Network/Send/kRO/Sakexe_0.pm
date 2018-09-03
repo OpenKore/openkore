@@ -21,9 +21,9 @@ use strict;
 use base qw(Network::Send::kRO);
 use Network::Send::ServerType0();
 
-use Log qw(message warning error debug);
+use Log qw(debug);
 use I18N qw(stringToBytes);
-use Utils qw(getHex getCoordString makeCoordsDir);
+use Utils qw(getHex);
 
 # TODO: maybe we should try to not use globals in here at all but instead pass them on?
 use Globals qw($charID %rpackets);
@@ -129,6 +129,7 @@ sub new {
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
+		'0190' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
 		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
@@ -148,6 +149,7 @@ sub new {
 		'01CE' => ['auto_spell', 'V', [qw(ID)]],
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
+		'01DF' => ['gm_request_account_name', 'V', [qw(targetID)]],
 		'01E7' => ['novice_dori_dori'],
 		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
@@ -157,6 +159,8 @@ sub new {
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 C', [qw(friendAccountID friendCharID type)]],
+		'0212' => ['manner_by_name', 'Z24', [qw(playerName)]],
+		'0213' => ['gm_request_status', 'Z24', [qw(playerName)]],
 		'0217' => ['rank_blacksmith'],
 		'0218' => ['rank_alchemist'],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
@@ -170,6 +174,7 @@ sub new {
 		'0246' => ['mail_remove', 'v', [qw(flag)]],
 		'0247' => ['mail_attachment_set', 'a2 V', [qw(ID amount)]],
 		'0248' => ['mail_send', 'v Z24 a40 C a*', [qw(len recipient title body_len body)]],
+		'0254' => ['starplace_agree', 'C', [qw(flag)]],
 		'024B' => ['auction_add_item_cancel', 'v', [qw(flag)]],
 		'024C' => ['auction_add_item', 'a2 V', [qw(ID amount)]],
 		'024D' => ['auction_create', 'V V v', [qw(now_price max_price delete_time)]],
@@ -187,7 +192,10 @@ sub new {
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
+		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
+		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
 		'0806' => ['booking_delete'],
@@ -595,17 +603,6 @@ sub sendGuildPositionInfo {
 # 0x018c,29
 # 0x018d,-1
 # 0x018f,6
-
-# 0x0190,90,useskilltoposinfo,2:4:6:8:10
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
-	my $msg = pack('v5 Z80', 0x0190, $lv, $ID, $x, $y, $moreinfo);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
 # 0x0191,86
 # 0x0192,24
 # 0x0194,30

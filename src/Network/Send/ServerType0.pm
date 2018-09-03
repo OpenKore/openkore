@@ -132,6 +132,7 @@ sub new {
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
 		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
+		'0190' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
 		'0198' => ['gm_change_cell_type', 'v v v', [qw(x y type)]],
@@ -153,6 +154,7 @@ sub new {
 		'01D5' => ['npc_talk_text', 'v a4 Z*', [qw(len ID text)]],
 		'01DB' => ['secure_login_key_request'], # len 2
 		'01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
+		'01DF' => ['gm_request_account_name', 'V', [qw(targetID)]],
 		'01E7' => ['novice_dori_dori'],
 		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
@@ -163,6 +165,8 @@ sub new {
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
 		'0208' => ['friend_response', 'a4 a4 V', [qw(friendAccountID friendCharID type)]],
+		'0212' => ['manner_by_name', 'Z24', [qw(playerName)]],
+		'0213' => ['gm_request_status', 'Z24', [qw(playerName)]],
 		'0217' => ['rank_blacksmith'],
 		'0218' => ['rank_alchemist'],
 		'021D' => ['less_effect'], # TODO
@@ -174,7 +178,7 @@ sub new {
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 		'0237' => ['rank_killer'],
-		'023B' => ['storage_password'],
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 		'023F' => ['mailbox_open'],
 		'0241' => ['mail_read', 'V', [qw(mailID)]],
 		'0243' => ['mail_delete', 'V', [qw(mailID)]],
@@ -188,6 +192,7 @@ sub new {
 		'024E' => ['auction_cancel', 'V', [qw(ID)]],
 		'024F' => ['auction_buy', 'V V', [qw(ID price)]],
 		'0251' => ['auction_search', 'v V Z24 v', [qw(type price search_string page)]],
+		'0254' => ['starplace_agree', 'C', [qw(flag)]],
 		'025B' => ['cook_request', 'v2', [qw(type nameID)]],
 		'025C' => ['auction_info_self', 'v', [qw(type)]],
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
@@ -212,16 +217,19 @@ sub new {
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
+		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
+		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'0447' => ['blocking_play_cancel'],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
+		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
 		'0801' => ['buy_bulk_vender', 'x2 a4 a4 a*', [qw(venderID venderCID itemInfo)]], #Selling store
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 V s', [qw(level MapID job LastIndex ResultCount)]],
@@ -474,15 +482,6 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
-}
-
-# captcha packet from kRO::RagexeRE_2009_09_22a
-#0x07e7,32
-# TODO: what is 0x20?
-sub sendCaptchaAnswer {
-	my ($self, $answer) = @_;
-	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
-	$self->sendToServer($msg);
 }
 
 1;

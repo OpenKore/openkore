@@ -27,7 +27,21 @@ use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0193' => ['storage_close'],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		storage_close 0193
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub sendAttack {
@@ -202,13 +216,6 @@ sub sendStorageGet {
 	my $msg = pack("C*", 0xf7, 0x00) . pack("x1") . pack("a2", $index) . pack("x8") . pack("V*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	my ($self) = @_;
-	my $msg = pack("C*", 0x93, 0x01);
-	$self->sendToServer($msg);
-	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 sub sendSync {
