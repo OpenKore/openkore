@@ -64,7 +64,7 @@ sub new {
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
 		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
 		'006B' => ['received_characters_info', 'v C3 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # last known struct
-		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
+		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
@@ -115,7 +115,9 @@ sub new {
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A8' => ['use_item', 'a2 v C', [qw(ID amount success)]], # 7
-		'00AA' => ['equip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AA' => ($rpackets{'00AA'}{length} == 7) # or 9
+			? ['equip_item', 'a2 v C', [qw(ID type success)]]
+			: ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'00AC' => ['unequip_item', 'a2 v C', [qw(ID type success)]], # 7
 		'00AF' => ['inventory_item_removed', 'a2 v', [qw(ID amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
@@ -431,6 +433,7 @@ sub new {
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
+		'02CA' => ['login_error_game_login_server', 'C', [qw(type)]],
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
@@ -491,21 +494,35 @@ sub new {
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0810' => ['open_buying_store', 'c', [qw(amount)]], #3
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
+		'0813' => ['open_buying_store_item_list', 'v a4 V', [qw(len AID zeny)]],
+		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
+		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
+		'0818' => ['buying_store_items_list', 'v a4 a4 V', [qw(len buyerID buyingStoreID zeny)]],
+		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
+		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
+		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
+		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]], #6
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters_info', 'v C5 x20', [qw(len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
 		'0837' => ['search_store_fail', 'C', [qw(reason)]],
+		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
+		'083E' => ['login_error', 'V Z20', [qw(type date)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
+		'0856' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
+		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
+		'0858' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
@@ -588,6 +605,7 @@ sub new {
 		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
+		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
