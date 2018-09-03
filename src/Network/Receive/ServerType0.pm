@@ -281,7 +281,7 @@ sub new {
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]],
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
-		'01CD' => ['sage_autospell', 'x2 a*', [qw(autospell_list)]],
+		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'01D1' => ['blade_stop', 'a4 a4 V', [qw(sourceID targetID active)]],
@@ -3966,42 +3966,10 @@ sub switch_character {
 	debug "result: $args->{result}\n";
 }
 
-use constant {
-	TYPE_BOXITEM => 0x0,
-	TYPE_MONSTER_ITEM => 0x1,
-};
-
-# TODO: more meaningful messages?
-sub special_item_obtain {
-	my ($self, $args) = @_;
-
-	my $item_name = itemNameSimple($args->{nameID});
-	my $holder =  bytesToString($args->{holder});
-	stripLanguageCode(\$holder);
-	if ($args->{type} == TYPE_BOXITEM) {
-		@{$args}{qw(box_nameID)} = unpack 'c/v', $args->{etc};
-
-		my $box_item_name = itemNameSimple($args->{box_nameID});
-		chatLog("GM", "$holder has got $item_name from $box_item_name\n") if ($config{logSystemChat});
-		message TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name), 'schat';
-
-	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
-		@{$args}{qw(len monster_name)} = unpack 'c Z*', $args->{etc};
-		my $monster_name = bytesToString($args->{monster_name});
-		stripLanguageCode(\$monster_name);
-		chatLog("GM", "$holder has got $item_name from $monster_name\n") if ($config{logSystemChat});
-		message TF("%s has got %s from %s.\n", $holder, $item_name, $monster_name), 'schat';
-
-	} else {
-		warning TF("%s has got %s (from Unknown type %d).\n", $holder, $item_name, $args->{type}), 'schat';
-	}
-}
-
 sub define_check {
 	my ($self, $args) = @_;
 	#TODO
 }
-
 
 sub battlefield_position {
 	my ($self, $args) = @_;

@@ -14,8 +14,6 @@ package Network::Send::kRO::RagexeRE_2011_10_05a;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_08_16a);
 
-use Log qw(debug);
-
 sub version { 27 }
 
 sub new {
@@ -32,6 +30,7 @@ sub new {
 		'0361' => undef,
 		'0362' => undef,
 		'0364' => undef,
+		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0367' => ['sync', 'V', [qw(time)]],#6
 		'0369' => undef,
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19 
@@ -47,7 +46,8 @@ sub new {
 		'08A4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'08AD' => undef,
 		'0365' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
-		);
+	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -66,17 +66,12 @@ sub new {
 		storage_item_add 08A4
 		storage_item_remove 0802
 		sync 0367
+		skill_use_location_text 0366
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-# 0x0366,90,useskilltoposinfo,2:4:6:8:10
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	$self->sendToServer(pack('v5 Z80', 0x0366, $lv, $ID, $x, $y, $moreinfo));
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	return $self;
 }
 
 1;

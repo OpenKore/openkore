@@ -1239,7 +1239,17 @@ sub charSelectScreen {
 			}
 		}
 		
-		my $messageMapName = sprintf(", %s", $chars[$num]{last_map}) if ($chars[$num]{last_map});
+		my $messageMapName;
+		
+		if (exists $chars[$num]{last_map} && $chars[$num]{last_map}) {
+			my $map_lut_key = $chars[$num]{last_map} . ".rsw";
+			
+			if (exists $maps_lut{$map_lut_key} && length $maps_lut{$map_lut_key} <= 16) {
+				$messageMapName = sprintf(", %s", $maps_lut{$map_lut_key});
+			} else {
+				$messageMapName = sprintf(", %s", $chars[$num]{last_map});
+			}
+		}
 		
 		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,

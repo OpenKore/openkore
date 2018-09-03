@@ -20,8 +20,6 @@ package Network::Send::kRO::Sakexe_2004_09_06a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_08_17a);
 
-use Log qw(debug);
-
 sub version {
 	return 10;
 }
@@ -35,7 +33,7 @@ sub new {
 		'007E' => ['storage_item_add', 'x a2 x10 V', [qw(ID amount)]],
 		'0085' => ['actor_action', 'x7 a4 x9 C', [qw(targetID type)]],
 		'0089' => ['character_move', 'x4 a3', [qw(coords)]],
-		'008C' => undef,
+		'008C' => ['skill_use_location_text', 'v x8 v x2 v x2 v x3 v Z80', [qw(lvl ID x y info)]],
 		'009B' => ['actor_info_request', 'x8 a4', [qw(ID)]],
 		'0094' => ['item_drop', 'x4 a2 x7 v', [qw(ID amount)]],
 		'009F' => ['public_chat', 'x2 Z*', [qw(message)]],
@@ -43,12 +41,13 @@ sub new {
 		'00A7' => ['skill_use_location', 'x8 v x2 v x2 v x3 v', [qw(lv skillID x y)]],
 		'00F3' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
 		'00F5' => ['map_login', 'x5 a4 x4 a4 x6 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'00F7' => undef,
+		'00F7' => ['storage_close'],
 		'0113' => ['item_take', 'x5 a4', [qw(ID)]],
 		'0116' => ['sync', 'x5 V', [qw(time)]],
 		'0190' => ['skill_use', 'x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
 		'0193' => ['storage_item_remove', 'x a2 x8 V', [qw(ID amount)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -67,22 +66,13 @@ sub new {
 		storage_item_add 007E
 		storage_item_remove 0193
 		sync 0116
+		skill_use_location_text 008C
+		storage_close 00F7
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v x8 v x2 v x2 v x3 v Z80', 0x008C, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-	$_[0]->sendToServer(pack('v', 0x00F7));
-	debug "Sent Storage Done\n", "sendPacket", 2;
+	return $self;
 }
 
 1;
