@@ -6864,4 +6864,35 @@ sub captcha_answer {
 	Plugins::callHook ('captcha_answer', {flag => $args->{flag}});
 }
 
+use constant {
+	TYPE_BOXITEM => 0x0,
+	TYPE_MONSTER_ITEM => 0x1,
+};
+
+# TODO: more meaningful messages?
+sub special_item_obtain {
+	my ($self, $args) = @_;
+
+	my $item_name = itemNameSimple($args->{nameID});
+	my $holder =  bytesToString($args->{holder});
+	stripLanguageCode(\$holder);
+	if ($args->{type} == TYPE_BOXITEM) {
+		@{$args}{qw(box_nameID)} = unpack 'c/v', $args->{etc};
+
+		my $box_item_name = itemNameSimple($args->{box_nameID});
+		chatLog("GM", "$holder has got $item_name from $box_item_name\n") if ($config{logSystemChat});
+		message TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name), 'schat';
+
+	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
+		@{$args}{qw(len monster_name)} = unpack 'c Z*', $args->{etc};
+		my $monster_name = bytesToString($args->{monster_name});
+		stripLanguageCode(\$monster_name);
+		chatLog("GM", "$holder has got $item_name from $monster_name\n") if ($config{logSystemChat});
+		message TF("%s has got %s from %s.\n", $holder, $item_name, $monster_name), 'schat';
+
+	} else {
+		warning TF("%s has got %s (from Unknown type %d).\n", $holder, $item_name, $args->{type}), 'schat';
+	}
+}
+
 1;
