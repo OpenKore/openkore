@@ -16,20 +16,8 @@
 package Network::Receive::kRO::RagexeRE_2011_08_16a;
 
 use strict;
-use base qw(Network::Receive::kRO::RagexeRE_2010_12_28a);
-use Globals qw(%charSvrSet %timeout);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-	);
-
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
-}
-
+	return $class->SUPER::new(@_);
 1;
