@@ -7106,4 +7106,14 @@ sub special_item_obtain {
 	}
 }
 
+sub inventory_item_favorite {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByID($args->{ID});
+	if ($args->{flag}) {
+		message TF("Inventory Item removed from favorite tab: %s\n", $item), "storage";
+	} else {
+		message TF("Inventory Item move to favorite tab: %s\n", $item), "storage";
+	}
+}
+
 1;
