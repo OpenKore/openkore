@@ -6238,6 +6238,7 @@
 19315#Chapéu do Éden#
 19316#Capuz de Esquilo#
 19318#Rosário da Guarda Real#
+19326#Livros da Sabedoria #
 19507#Sol Risonho#
 19509#Asas de Borboleta#
 19510#Parafusos Soltos#
