@@ -31,7 +31,13 @@ sub cmpr {
 	my ($first, $cond, $second) = @_;
 	
 	if (defined $first && !defined $cond & !defined $second) {
-		return 1;
+		if ($first eq '' || $first == 0) {
+			warning "Utilities.pm, sub cmpr: first is '$first'and we are returning 0\n";
+			return 0;
+		} else {
+			warning "Utilities.pm, sub cmpr: first is '$first' and we are returning 1\n";
+			return 1;
+		}
 		
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
@@ -67,14 +73,14 @@ sub cmpr {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
 		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
-		return ($first > $second  ? 1 : 0) if ($cond eq ">");
-		return ($first < $second  ? 1 : 0) if ($cond eq "<");
+		return ($first >  $second  ? 1 : 0) if ($cond eq ">");
+		return ($first <  $second  ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
 		
 	} elsif (($cond eq "=" || $cond eq "==")) {
 		return ($first eq $second ? 1 : 0);
 		
-	} elsif ($cond eq "!=" && $first ne $second) {
+	} elsif ($cond eq "!=") {
 		return ($first ne $second ? 1 : 0);
 		
 	} elsif ($cond eq "~") {
@@ -84,7 +90,7 @@ sub cmpr {
 		}
 		
 	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
-		return match($first, $second, 1);
+		return match($first, $second);
 	}
 
 	return 0;
@@ -105,7 +111,7 @@ sub q4rx2 {
 }
 
 sub match {
-	my ($text, $kw, $cmpr) = @_;
+	my ($text, $kw) = @_;
 
 	unless (defined $text && defined $kw) {
 		# this produces a warning but that's what we want
@@ -119,11 +125,9 @@ sub match {
 
 	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
 		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
-			if (!defined $cmpr) {
-				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
-				use strict;
-			}
+			no strict;
+			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
+			use strict;
 			return 1
 		}
 	}
