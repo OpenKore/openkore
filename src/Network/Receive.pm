@@ -3213,7 +3213,7 @@ sub area_spell_multiple2 {
 	my ($ID, $sourceID, $x, $y, $type, $range, $fail);
 	for (my $i = 0; $i < $len; $i += 18) {
 		$msg = substr($spellInfo, $i, 18);
-		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v3 X2 C2', $msg);
+		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v2 V C2', $msg);
 
 		if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
 			$binID = binFind(\@spellsID, $ID);
@@ -3229,6 +3229,7 @@ sub area_spell_multiple2 {
 		$spells{$ID}{'pos_to'}{'y'} = $y;
 		$spells{$ID}{'binID'} = $binID;
 		$spells{$ID}{'type'} = $type;
+		$spells{$ID}{'fail'} = $fail;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
@@ -3236,11 +3237,13 @@ sub area_spell_multiple2 {
 	}
 
 	Plugins::callHook('packet_areaSpell', {
-		fail => $fail,
+		ID => $ID,
 		sourceID => $sourceID,
-		type => $type,
 		x => $x,
-		y => $y
+		y => $y,
+		type => $type,
+		range => $range,
+		fail => $fail,
 	});
 }
 
@@ -3253,10 +3256,10 @@ sub area_spell_multiple3 {
 	my $spellInfo = $args->{spellInfo};
 	my $msg = "";
 	my $binID;
-	my ($ID, $sourceID, $x, $y, $type, $range, $fail);
+	my ($ID, $sourceID, $x, $y, $type, $range, $fail, $lvl);
 	for (my $i = 0; $i < $len; $i += 19) {
 		$msg = substr($spellInfo, $i, 19);
-		($ID, $sourceID, $x, $y, $type, $range, $fail) = unpack('a4 a4 v3 X3 C2', $msg);
+		($ID, $sourceID, $x, $y, $type, $range, $fail, $lvl) = unpack('a4 a4 v2 V C3', $msg);
 
 		if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
 			$binID = binFind(\@spellsID, $ID);
@@ -3272,18 +3275,24 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'pos_to'}{'y'} = $y;
 		$spells{$ID}{'binID'} = $binID;
 		$spells{$ID}{'type'} = $type;
+		$spells{$ID}{'range'} = $range;
+		$spells{$ID}{'fail'} = $fail;
+		$spells{$ID}{'lvl'} = $lvl;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
-		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), lvl: $lvl\n", "skill", 2;
 	}
 
 	Plugins::callHook('packet_areaSpell', {
-		fail => $fail,
+		ID => $ID,
 		sourceID => $sourceID,
-		type => $type,
 		x => $x,
-		y => $y
+		y => $y,
+		type => $type,
+		range => $range,
+		fail => $fail,
+		lvl => $lvl,
 	});
 }
 
