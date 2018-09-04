@@ -16,8 +16,10 @@
 package Network::Receive::kRO::RagexeRE_2011_08_16a;
 
 use strict;
+use base qw(Network::Receive::kRO::RagexeRE_2010_12_28a);
 
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
+	}
 1;
