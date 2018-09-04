@@ -14864,7 +14864,7 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777780^000000
-Classes: ^777777Todas^000000
+Classes: ^777777Bruxos, Sábios, Espiritualistas e evoluções^000000
 #
 2717#
 Um relógico prateado com uma longa corrente.
@@ -28622,27 +28622,27 @@ Classes: ^777777Todas^000000
 #
 5919#
 Um lindo ornamento proveniente da bela cidade de Amatsu. As flores de camélia dão um toque único ao acessório, utilizado principalmente em ocasiões especiais.
-DEFM +20.
-Ao realizar ataques físicos:
-2,5% de chance de autoconjurar [Escudo Sagrado] nv. 1.
+^0000ffDEFM +20.^000000
+^0000ffDEFM +20.^000000
+^0000ff2,5% de chance de autoconjurar [Escudo Sagrado] nv. 1.^000000
 A cada refino até o +5:
-Chance de autoconjurar [Escudo Sagrado] +0,5%.
+^0000ffChance de autoconjurar [Escudo Sagrado] +0,5%.^000000
 Refino +6 ou mais:
-Chance de autoconjurar [Escudo Sagrado] +1,5% adicional.
+^0000ffChance de autoconjurar [Escudo Sagrado] +1,5% adicional.^000000
 Refino +7 ou mais:
-Chance de autoconjurar [Escudo Sagrado] +1,5% adicional.
+^0000ffChance de autoconjurar [Escudo Sagrado] +1,5% adicional.^000000
 Refino +8 ou mais:
-Chance de autoconjurar [Escudo Sagrado] +2% adicional.
+^0000ffChance de autoconjurar [Escudo Sagrado] +2% adicional.^000000
 Refino +9 ou mais:
-Chance de autoconjurar [Escudo Sagrado] +2% adicional.
+^0000ffChance de autoconjurar [Escudo Sagrado] +2% adicional.^000000
 Refino +10 ou mais:
-Chance de autoconjurar [Escudo Sagrado] +2,5% adicional.
-Tipo: Equipamento para Cabeça
-Equipa em: Topo
-Defesa: 0
-Peso: 100
-Nível necessário: 50
-Classes: Todas
+^0000ffChance de autoconjurar [Escudo Sagrado] +2,5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 5930#
 Uma tiara dada à Lucya, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Lucya utilizou esta tiara para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta tiara foi encantada pela Valquíria Lexus, e possui o poder da transformação.
@@ -33535,7 +33535,7 @@ Ingresso especial que permite a entrada nos Mapas Especiais somente para persona
 ^CD3278Coord.:^000000 prontera 162, 326
 <NAVI>[Navegar]<INFO>prontera,162,326,0,000,0</INFO></NAVI>
 --------------------------
-Este ticket desaparecerá durante a manutenção de 15/05/2018. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 02/10/2018. Aproveite e divirta-se!
 --------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 --------------------------
@@ -51540,6 +51540,51 @@ Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+19326#
+Uma pilha de livros ótimos para estudar a forma ideal de otimizar seu ganho de experiência contra certos monstros. Você também pode equilibrar tudo isso na cabeça e aprender por osmose.
+^FF6347Efeito de conjunto:^000000
+^0000ffEXP adquirida ao derrotar monstros da raça^000000 ^CD3278X^000000 ^0000ff+5%.^000000
+Refino +8 ou mais:
+^0000ffEXP adquirida ao derrotar monstros da raça^000000 ^CD3278X^000000 ^0000ff+5% adicional.^000000
+Refino +11 ou mais:
+^0000ffEXP adquirida ao derrotar monstros da raça^000000 ^CD3278X^000000 ^0000ff+5% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Baronesa da Retribuição]^000000
+^CD3278X^000000 ^0000ff= raça Anjo.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Anopheles]^000000
+^CD3278X^000000 ^0000ff= raça Inseto.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Grove]^000000
+^CD3278X^000000 ^0000ff= raça Amorfo.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Raydric Arqueiro]^000000
+^CD3278X^000000 ^0000ff= raça Demônio.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Alma Penada]^000000
+^CD3278X^000000 ^0000ff= raça Morto-Vivo.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Orc Arqueiro]^000000
+^CD3278X^000000 ^0000ff= raça Humanoide.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Armeyer Dinze]^000000
+^CD3278X^000000 ^0000ff= raça Peixe.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Ermitão Maligno]^000000
+^CD3278X^000000 ^0000ff= raça Planta.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Ovo de Dragão]^000000
+^CD3278X^000000 ^0000ff= raça Dragão.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Talo de Verme]^000000
+^CD3278X^000000 ^0000ff= raça Bruto.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 19507#
