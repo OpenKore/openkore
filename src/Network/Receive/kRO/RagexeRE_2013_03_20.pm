@@ -55,41 +55,6 @@ sub new {
 	return $self;
 }
 
-sub parse_items_nonstackable {
-	my ($self, $args) = @_;
-	$self->parse_items($args, $self->items_nonstackable($args), sub {
-		my ($item) = @_;
-		$item->{amount} = 1 unless ($item->{amount});
-#message "1 nameID = $item->{nameID}, flag = $item->{flag} >> ";
-		if ($item->{flag} == 0) {
-			$item->{broken} = $item->{identified} = 0;
-		} elsif ($item->{flag} == 1 || $item->{flag} == 5) {
-			$item->{broken} = 0;
-			$item->{identified} = 1;
-		} elsif ($item->{flag} == 3 || $item->{flag} == 7) {
-			$item->{broken} = $item->{identified} = 1;
-		} else {
-			message T ("Warning: unknown flag!\n");
-		}
-#message "2 broken = $item->{broken}, identified = $item->{identified}\n";
-	})
-}
-
-sub parse_items_stackable {
-	my ($self, $args) = @_;
-	$self->parse_items($args, $self->items_stackable($args), sub {
-		my ($item) = @_;
-		$item->{identified} = $item->{identified} & (1 << 0);
-		if ($item->{flag} == 0) {
-			$item->{identified} = 0;
-		} elsif ($item->{flag} == 1 || $item->{flag} == 3) {
-			$item->{identified} = 1;
-		} else {
-			message T ("Warning: unknown flag!\n");
-		}
-	})
-}
-
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});

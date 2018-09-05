@@ -27,6 +27,9 @@ sub new {
 
 	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
 
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25 V v';
+	$self->{vender_items_list_item_pack_self} = 'V v2 C v C3 a8 a25';
+
 	return $self;
 }
 

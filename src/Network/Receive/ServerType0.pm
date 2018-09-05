@@ -3280,43 +3280,6 @@ sub vender_buy_fail {
 	}
 }
 
-# TODO
-sub vending_start {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = unpack("v1",substr($msg, 2, 2));
-	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
-	my $item_len = length pack $item_pack;
-
-	#started a shop.
-	message TF("Shop '%s' opened!\n", $shop{title}), "success";
-	@articles = ();
-	# FIXME: why do we need a seperate variable to track how many items are left in the store?
-	$articles = 0;
-
-	# FIXME: Read the packet the server sends us to determine
-	# the shop title instead of using $shop{title}.
-	my $display = center(" $shop{title} ", 79, '-') . "\n" .
-		T("#  Name                                       Type        Amount          Price\n");
-	for (my $i = 8; $i < $msg_size; $i += $item_len) {
-	    my $item = {};
-	    @$item{qw( price number quantity type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $msg, $i, $item_len;
-		$item->{name} = itemName($item);
-	    $articles[delete $item->{number}] = $item;
-		$articles++;
-
-		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
-
-		$display .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{quantity}), formatNumber($item->{price})]);
-	}
-	$display .= ('-'x79) . "\n";
-	message $display, "list";
-	$shopEarned ||= 0;
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
