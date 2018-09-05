@@ -5331,7 +5331,18 @@ sub npc_store_info {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
 		my $item = Actor::Item->new;
 		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
-		$item->{ID} = $item->{nameID};
+		
+		# Workaround some npcs that have items appearing more than once in their store list,
+		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
+		#
+		# Usually, $Actor::Item->{ID} is equal to $Actor::Item->{nameID} - that WILL crash 
+		# kore in the event described above
+		#
+		# This workaround causes $Actor::Item->{ID} to be equal to $Actor::Item->{binID} and,
+		# therefore, never overlap 
+		# - lututui & alisonrag - Sep, 2018
+		$item->{ID} = $storeList->size;
+		
 		$item->{name} = itemName($item);
 		$storeList->add($item);
 
