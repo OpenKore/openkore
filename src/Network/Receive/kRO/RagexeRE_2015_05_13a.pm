@@ -19,7 +19,11 @@ use base qw(Network::Receive::kRO::RagexeRE_2014_10_22b);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
+
+	return $self;
 }
 
 1;
