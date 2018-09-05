@@ -679,7 +679,7 @@ sub new {
 			type6 => {
 				len => 24,
 				types => 'a2 v C v V a8 l C',
-				keys => [qw(ID nameID type amount type_equip cards expire flag)],
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 		},
 	};
@@ -714,16 +714,16 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D2'    # cart
 	) {
 		return $items->{$rpackets{'00AA'}{length} == 7 ? 'type3' : 'type4'};
-
 	} elsif ($args->{switch} eq '0901' # inventory
 		|| $args->{switch} eq '0976' # storage
 		|| $args->{switch} eq '0903' # cart
+		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
-
-	} elsif ($args->{switch} eq '0992' ||# inventory
-		$args->{switch} eq '0994' ||# cart
-		$args->{switch} eq '0996'	# storage
+	} elsif ($args->{switch} eq '0992' # inventory
+		|| $args->{switch} eq '0994' # cart
+		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0A0D' # inventory
@@ -732,12 +732,12 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
-		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
 }
 
+# Override this function if you need to.
 sub items_stackable {
 	my ($self, $args) = @_;
 
@@ -767,12 +767,11 @@ sub items_stackable {
 	) {
 		return $items->{type5};
 
-	} elsif ($args->{switch} eq '0991' ||# inventory
-		$args->{switch} eq '0993' ||# cart
-		$args->{switch} eq '0995'	# storage
+	} elsif ($args->{switch} eq '0991' # inventory
+		|| $args->{switch} eq '0993' # cart
+		|| $args->{switch} eq '0995' # storage
 	) {
 		return $items->{type6};
-
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -3158,47 +3157,6 @@ sub vender_buy_fail {
 	} else {
 		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
 	}
-}
-
-sub vending_start {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = unpack("v1",substr($msg, 2, 2));
-
-	#started a shop.
-	message TF("Shop '%s' opened!\n", $shop{title}), "success";
-	@articles = ();
-	# FIXME: why do we need a seperate variable to track how many items are left in the store?
-	$articles = 0;
-
-	# FIXME: Read the packet the server sends us to determine
-	# the shop title instead of using $shop{title}.
-	my $display = center(" $shop{title} ", 79, '-') . "\n" .
-		T("#  Name                                   Type            Amount          Price\n");
-	for (my $i = 8; $i < $msg_size; $i += 22) {
-		my $number = unpack("v1", substr($msg, $i + 4, 2));
-		my $item = $articles[$number] = {};
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
-		$item->{name} = itemName($item);
-		$articles++;
-
-		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
-
-		$display .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<  @>>>>  @>>>>>>>>>>>z",
-			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]);
-	}
-	$display .= ('-'x79) . "\n";
-	message $display, "list";
-	$shopEarned ||= 0;
 }
 
 sub mail_refreshinbox {
