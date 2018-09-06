@@ -24,6 +24,7 @@
 package Network::Send;
 
 use strict;
+use Time::HiRes qw(time);
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
 use utf8;
