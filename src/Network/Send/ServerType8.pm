@@ -18,10 +18,11 @@
 package Network::Send::ServerType8;
 
 use strict;
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(message warning error debug);
+
+use Globals qw($char $masterServer $syncSync);
+use Log qw(debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 

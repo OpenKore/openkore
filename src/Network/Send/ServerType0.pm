@@ -16,16 +16,14 @@
 package Network::Send::ServerType0;
 
 use strict;
-use Time::HiRes qw(time);
 
-use Misc qw(stripLanguageCode);
 use Network::Send ();
 use base qw(Network::Send);
 use Plugins;
-use Globals qw(%rpackets $accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $rodexList $rodexWrite);
+use Globals qw(%rpackets $char $masterServer);
 use Log qw(debug);
 use Translation qw(T TF);
-use I18N qw(bytesToString stringToBytes);
+use I18N qw(stringToBytes);
 use Utils;
 use Utils::Exceptions;
 use Utils::Rijndael;
