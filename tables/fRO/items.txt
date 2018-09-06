@@ -4884,6 +4884,18 @@
 31119#Costume_Blue_Magician_Hat#
 31123#Costume_Ghostring_Tall_Hat#
 
+17741#CostamaMarchen#
+20452#C_Berry_Prince_Crown#
+31137#C_Blue_Rose_Ornament#
+31136#C_Clock_Casket#
+31138#C_Piamette_Hood_Red#
+31139#C_White_Rabbit_Ear#
+31135#C_Fancy_Mini_Crown#
+20144#C_Ancient_Elven_Ear#
+31088#C_Mad_Hatter#
+31134#C_Chatty_Parrot#
+31133#C_Gambler_Seal#
+
 
 // -------------- Item End ------------
 
