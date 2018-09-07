@@ -261,7 +261,7 @@ Restores ^008000175^000000 to ^008000235^000000 HP.
 547#
 A condensed white potion that weighs significantly less.
 Class: ^808080Recovery^000000
-Weight: ^8080803^000000
+Weight: ^8080802^000000
 Restores ^008000325^000000 to ^008000405^000000 HP.
 #
 548#
@@ -12896,6 +12896,7 @@ Requires Level: ^80808065^000000
 Usable By: ^808080All Jobs^000000
 Reduces damage taken from Earth property enemies by 5%.
 Increases damage taken from Plant race enemies by 5%.
+Increases the experience given from monsters by 10% if the user has active VIP.
 ^800080Set Bonus^000000
 ^008080Sol Manteau^000000
 ^008080Sol Shield^000000
@@ -13201,6 +13202,7 @@ Requires Level: ^80808065^000000
 Usable By: ^808080All Jobs^000000
 Reduces damage taken from Neutral property enemies by 5%.
 Increases damage taken from Formless race enemies by 5%.
+Increases the experience given from monsters by 10% if the user has active VIP.
 ^800080Set Bonus^000000
 ^008080Lian Robe^000000
 ^008080Lian Shield^000000
@@ -24877,19 +24879,12 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4375#
-Flee +10.
-Adds 10% resistance to
-Neutral property attacks.^FFFFFF ^000000 When the compounded
-garmet's upgrade
-level is 9 or greater,
-these bonuses are
-increased to Flee
-Rate +15 and +15%
-Neutral property
-resistance.
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Reduces damage taken from Neutral property attacks by 10%.
+If upgrade level is +9 or higher, additional Flee + 5 and reduces damage taken from Neutral property attacks by an additional 5%.
 #
 4376#
 Increases Max SP
@@ -36041,16 +36036,17 @@ placeholder
 #
 5778#
 Having saved her from the roasting pan this Turkey now rests comfortably on your head.
-Str+2
-Increases Heal amount of Eggs
-Give a small chance to receive Eggs from any monster killed
-+1% Max Hp and Max Sp per refine level
-Casts Increase Agi when attacked or attacking. Increase Agi spell level is equal to refine level with maximum value of 10
-Class : ^777777Headgear^000000
-Defense: ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Increases the recovery rate of ^008080Egg^000000 consumables.
+Adds a chance of gaining ^008080Egg^000000 when a monster is killed.
+Max HP +1 % and Max SP + 1% per upgrade level of the item.
+Adds a chance of casting ^0000FFIncrease Agi^000000 on the user when performing or receiving a physical attack, where the level of the skill is equal to item upgrade level to a maximum upgrade level of 10.
 #
 5781#
 #
@@ -59344,6 +59340,21 @@ Costume Spinning Eyes
 Costume Volume Low Twin (White)
 
 #
+14991#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following:
+Costume Large Hungry Fish
+Costume Falcon Mask
+Costume Cat Eared Bandana
+Costume Drooping Yellow Cat
+Costume Isabella's Blue Ear Hat
+Costume Fawn Ears
+Costume Short Haired Cat Ears
+Costume Long Haired Cat Ears
+Costume Tuxedo Rabbit
+Costume Black Rabbit Ears
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -74441,11 +74452,19 @@ Agi + 8
 Restores 9% HP and 2% SP.
 #
 19391#
-A sweetly scented tea, one of Charles Orleans's specialties, that is regularly enjoyed by the royal family.
-Class: ^808080Stat Boost^000000
-Weight: ^808080100^000000
-Int + 8
-Restores 6% HP and 10% SP.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+MHP + 10% , MSP + 10%
+Reduces damage taken from enemy players by 5%.
+Never get a blind status.
+If the hallucination doping skill level is 5,
+Dispel level 5 is available.
+If Mandragora Howling skill level is 5,
+Mandragora Howling skill casting time is reduced by 70%.
+
 #
 19392#
 Large toasted bread garnished with huge amounts of meat, cheese, and vegetables. It's so big, no one has ever finished it.
@@ -76269,6 +76288,14 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+19781#
+An ear accessory that looks just like white, beautiful angel wings
+
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
 #
 19783#
 A beard that makes you look serious once you wear it.
@@ -81714,16 +81741,32 @@ Max SP + 25%
 Increased Movement Speed.
 #
 22047#
-Airship captain Felrock‘s possessions.
-Resolved the airship attack incident and acquired as a trophy.
-AGI + 1, Attack rate increase (Delay after attack 5% reduction).
-If 7 refined, AGI + 1, Delay after attack extra 5% decrease
-If 9 refined, AGI + 1, Delay after attack extra 5% decrease
-If 12 refined, ASPD + 1.
-Type : ^777777Shoes^000000    Defense : ^77777713^000000
-Weight : ^77777725^000000
-Required Level : ^777777125^000000
-Job : ^777777All^000000
+A personal possession of Captain Felrock. Taken as a trophy for helping resolve the airship incident.
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808025^000000
+Requires Level: ^808080125^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Aspd + 5%
+If upgrade level is +7 or higher,
+Additional Agi + 1
+Additional Aspd + 5%
+If upgrade level is +9 or higher,
+Additional Agi + 1
+Additional Aspd + 5%
+If upgrade level is +12 or higher,
+Aspd + 1
+^800080Set Bonus^000000
+^008080Felrock's Armor^000000
+^008080Felrock's Boots^000000
+^008080Felrock's Cloak^000000
+Max HP + 25%
+Max HP + 25%
+Increased Movement Speed.
+If the combined upgrade levels of ^008080Felrock's Armor^000000, ^008080Felrock's Boots^000000 and ^008080Felrock's Cloak^000000 are +30 or higher,
+Additional Max HP + 5%
+Additional Max HP + 5%
 #
 22049#
 ^808080A pair of magical shoes endowed with the power of earth.^000000
@@ -82032,6 +82075,18 @@ Max HP + 4000
 Reduces the fixed casting time of skills by 25%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
+#
+22093#
+Shoes wore by an exorcist. Shoes reflects all the experience that he has been through.
+
+
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Additional 5% EXP from devil type monsters.
+Additional 1% EXP from devil type monters for every refine upgrade.
+
 #
 22094#
 These shoes were worn by a man who made a living out of taking care of gardens. These shoes contains the man's many years of experience.
@@ -82610,6 +82665,32 @@ If upgrade level is +7 or higher,
 Additional Max HP + 10%
 Additional Max SP + 10%
 Reduces the SP cost of skills by an additional 5%.
+#
+22198#
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+MHP + 3% , MSP + 3%.
+Increases magic damage by 2%.
+Increases neutral magic damage by 2%.
+If refine level is 5 or higher, additional MHP + 7%, MSP + 7%.
+Increases additional damage of magical attacks by 3%.
+Increases additional damage of Neutral property magical attacks 3%.
+If refine level is 7 or higher, additional MHP + 10%,?MSP + 10%.
+Increases additional damage of magical attacks by 5%.
+Increases additional damage of Neutral property magical attacks 5%.
+All stats + 1 for every swing dance skill level up.
+Increases Attack speed by 4%
+for every harmonize skill level up.
+Increase MHP by 2% by
+for every Frigg's Song skill level up.
+Increase damage of Metalic sound by 10%
+for every Gloomy Shyness skill level up.
+If Deep Sleep Lullaby skill level is 1 or higher,
+Metalic sound skill casting time is reduced by 10%.
+Hitting targets with magic attack gives a chance of inflicting deep sleep to enemies with certain rate.
+Increase the probability of causing Sleep for every skill level up.
 #
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
@@ -88229,6 +88310,27 @@ Max SP + 1%
 Additional Max SP+ 1% per 3 upgrade levels of the item.
 Additional Max SP + 1%, if the users base level is 130 or higher.
 #
+28951#
+Class: ^808080Shield^000000
+Defense: ^80808080^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Reduces damage taken from Water property attacks by 10%.
+Increases additional physical and magical DMG
+inflicted on Water property monsters by 5%.
+If refine level is 6 or higher, damage taken from Water property is reduced
+by 15%.
+Increases additional physical and magical DMG inflicted on Water property monsters by 10%.
+If refine level is 8 or higher,
+Atk 50 is increased when pure Str is 90 or higher.
+If pure Agi is 90 or higher, attack speed is increased by 5%.
+If pure Vit is 90 or higher
+receives 10% more HP from healing skills.
+Receives 10% more HP from certain healing items.
+If pure Int is 90 or higher, Matk is increased by 30.
+If pure Dex is 90 or higher, fluctuant casting rate is reduced by 5%.
+If pure Luk is 90 or higher, critical attack DMG is increased by 5%.
+#
 29000#
 Type: Miscellaneous
 Class: Enchant
@@ -90306,6 +90408,70 @@ Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
 Usable By: ^808080All Jobs^000000
+#
+31504#
+Seems like the fish thinks you're pretty chummy...
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31505#
+Have you ever wondered how it felt to be a bird? Well wonder no more with this Costume Falcon Mask! Bird is the word! Feathers not included.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+#
+31506#
+A uniform hat, with a cute design that is well matched with cat's ears.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31507#
+Oh look! A yellow cat on your head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31508#
+Isabella's blue hat, a crowd favorite!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31509#
+ Fancy to fawn over these fancy fawn ears?
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31510#
+A short-haired cat-ear style bun wig.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31511#
+A long-haired cat-ear style bun wig.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31512#
+This tuxedo rabbit will be the highlight of the ball wherever you go!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31513#
+A cute black cap with long rabbit ears.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 32203#
 Class: ^808080Accessory^000000
