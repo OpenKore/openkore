@@ -6981,3 +6981,4 @@
 
 20054#Filir_Hat_Certificate#
 20055#Tam_Certificate#
+20056#Hunter's_Cap_Certificate#

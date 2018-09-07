@@ -6899,6 +6899,7 @@
 14971#Overseas_Care_Package_XX#
 14977#Overseas_Care_Package_XXI#
 14979#MVP_August_Costume_Box#
+14991#Feisty_September_2018_Costume_Box#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -8186,7 +8187,7 @@
 19388#Suptuous_Feast#
 19389#Bearfoot_Special#
 19390#Incredibly_Spicy_Curry#
-19391#Royal_Family_Tea#
+19391#Eyes_Of_Illusion#
 19392#Special_Toast#
 19393#Strawberry_Flavored_Rice_Ball#
 19394#Giant_Burito#
@@ -8399,6 +8400,7 @@
 19775#Costume:_Marvelous_Wig#
 19776#Costume:_Tomboy_Fairy#
 19780#Costume_Lunatic_Knit_Hat#
+19781#Costume:_Angel_Wing_Ears#
 19783#Costume:_Granpa_Stache#
 19785#Costume:_Crunch_Toast#
 19787#Costume:_Devoted_Eyes#
@@ -8903,7 +8905,7 @@
 22043#Supplement_Part_Agi#
 22044#Upgrade_Part_-_Booster#
 22046#Airship's_Boots#
-22047#Felrock‘s_Boots#
+22047#Felrock's_Boots#
 22049#Sol_Shoes#
 22050#Gardener_Shoes#
 22051#Lamor_Shoes#
@@ -8922,6 +8924,7 @@
 22083#Doram_Shoes#
 22084#Luxurious_Doram_Shoes#
 22085#Elegant_Doram_Shoes#
+22093#Exorcist's_Shoes#
 22094#Gardener_Shoes#
 22095#Gravekeeper_Shoes#
 22097#Dragon_Trainer_Shoes#
@@ -8948,6 +8951,7 @@
 22170#Survivor's_Shoes#
 22172#Gray_Wing_Boots#
 22189#Pilgrim_Shoes#
+22198#Traveler_Shoes#
 22507#Old_Scroll#
 22508#Eden_Group_Mark#
 22511#Fenrir's_Power_Scroll#
@@ -9438,6 +9442,7 @@
 28931#Mad_Bunny_Buckler#
 28932#Mad_Bunny_Shield#
 28941#Excelion_Shield#
+28951#Nero_Shield#
 29000#Rune_of_Intellect_Lv_1#
 29001#Rune_of_Intellect_Lv_2#
 29002#Rune_of_Intellect_Lv_3#
@@ -9728,6 +9733,16 @@
 31491#Costume_Orange_Tabby_Cat#
 31492#Costume_Cat_Ears_Cape_Brown#
 31493#Costume_Volume_Low_Twin_(White)#
+31504#Costume_Large_Hungry_Fish#
+31505#Costume_Falcon_Mask#
+31506#Costume_Cat_Eared_Bandana#
+31507#Costume_Drooping_Yellow_Cat#
+31508#Costume_Isabella's_Blue_Ear_Hat#
+31509#Costume_Fawn_Ears#
+31510#Costume_Short_Haired_Cat_Ears#
+31511#Costume_Long_Haired_Cat_Ears#
+31512#Costume_Tuxedo_Rabbit#
+31513#Costume_Black_Rabbit_Ears#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#
