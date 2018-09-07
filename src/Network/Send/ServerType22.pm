@@ -14,49 +14,11 @@
 package Network::Send::ServerType22;
 
 use strict;
-use Network::Send::ServerType0;
-use base qw(Network::Send::ServerType0);
-
-use Log qw(debug);
+use base qw(Network::Send::ServerType21);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	my %handlers = qw(
-		character_move 0085
-	);
-	
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
-	return $self;
-}
-
-sub sendMove {
-	my ($self, $x, $y) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'character_move',
-		x => $x,
-		y => $y,
-		no_padding => 1,
-	}));
-	
-	debug "Sent move to: $x, $y\n", "sendPacket", 2;
-}
-
-sub sendHomunculusMove {
-	my ($self, $homunID, $x, $y) = @_;
-	
-	$self->sendToServer($self->reconstruct({
-		switch => 'actor_move',
-		ID => $homunID,
-		x => $x,
-		y => $y,
-		no_padding => 1,
-	}));
-	
-	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
+	return $class->SUPER::new(@_);
 }
 
 1;
