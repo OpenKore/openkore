@@ -7173,8 +7173,8 @@ sub cmdSearchStore {
 		} elsif ($args[1] eq "exact") {
 			$searchMethod = \&itemNameToIDList;
 		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			error T("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] \"<item name>\" [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n");
 			
 			return;
 		}
@@ -7202,11 +7202,6 @@ sub cmdSearchStore {
 			if ($args[5] eq "card") {
 				@cards = $searchMethod->($args[6]);
 			}
-		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
-			
-			return;
 		}
 		
 		if ($args[-1] eq "buy") {
