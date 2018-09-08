@@ -14,11 +14,12 @@
 package Network::Send::ServerType16;
 
 use strict;
-use Globals qw($char $syncSync $net);
 use Network::Send::ServerType11;
 use Network::PaddedPackets;
 use base qw(Network::Send::ServerType11);
-use Log qw(error debug);
+
+use Globals qw($char $syncSync);
+use Log qw(debug);
 use Utils qw(getTickCount getHex getCoordString);
 
 sub new {

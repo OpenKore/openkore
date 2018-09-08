@@ -14,12 +14,11 @@
 package Network::Send::ServerType22;
 
 use strict;
-use Globals;
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
+
+use Log qw(debug);
+use Utils qw(getCoordString);
 
 sub new {
    my ($class) = @_;
