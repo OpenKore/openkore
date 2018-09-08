@@ -102,6 +102,7 @@ sub iterate {
 	Benchmark::begin("ai_autoSkillUse") if DEBUG;
 	processAutoSkillUse();
 	Benchmark::end("ai_autoSkillUse") if DEBUG;
+	processFeed();
 	Benchmark::end("AI (part 1.4)") if DEBUG;
 
 	Benchmark::end("AI (part 1)") if DEBUG;
@@ -181,7 +182,6 @@ sub iterate {
 	processAutoShopOpen();
 	processAutoBuyerShopOpen();
 	processRepairAuto();
-	processFeed();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
