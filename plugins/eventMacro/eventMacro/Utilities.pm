@@ -32,10 +32,8 @@ sub cmpr {
 	
 	if (defined $first && !defined $cond & !defined $second) {
 		if ($first eq '' || $first == 0) {
-			warning "Utilities.pm, sub cmpr: first is '$first' and we are returning 0\n";
 			return 0;
 		} else {
-			warning "Utilities.pm, sub cmpr: first is '$first' and we are returning 1\n";
 			return 1;
 		}
 		
