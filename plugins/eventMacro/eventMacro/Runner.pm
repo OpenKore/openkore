@@ -1205,6 +1205,8 @@ sub next {
 }
 
 sub parse_and_check_condition_text {
+	my ($self, $line_script) = @_;
+	
 	#think on this possible statment:
 	# if ( ( 1 = 1 ) && ( foo != bar ) ) {
 	#this code will create an array of groups os parenthesis, starting by the smaller, until the bigger
@@ -1213,7 +1215,6 @@ sub parse_and_check_condition_text {
 	#$group[1] = "( foo != bar )"
 	#$group[2] = "( ( 1 = 1 ) && ( foo != bar) )"
 	#so each group will be treated separetedly
-	my ($self, $line_script) = @_;
 	use Switch;
 	my @characters = split //, $line_script;
 	
@@ -1266,17 +1267,24 @@ sub parse_and_check_condition_text {
 			#possible begin or end of a regex
 			case ('/') {
 				
+				#ignore slashes inside quote
 				if (defined $in_quote) {
 					next CHAR;
-					
+				
+				#start of a regex, it will ignore special characteres
 				} elsif (!defined $in_regex) {
 					warning "beggining of a regex\n";
 					$in_regex = 1;
 					undef $token;
 					
+				#end of a regex
 				} elsif (defined $in_regex) {
+					
+					#foud a "\/" inside regex, so regex still did not ended
 					if ($previous_char eq "\\") {
 						next CHAR;
+						
+					#real regex end
 					} else {
 						warning "end of a regex\n";
 						if ($next_char eq 'i') {
@@ -1286,8 +1294,6 @@ sub parse_and_check_condition_text {
 						undef $token if defined $token;
 					}
 					
-				} else {
-					error "eu estou fazendo algo errado com o '/'\n";
 				}
 			}
 			
@@ -1295,12 +1301,12 @@ sub parse_and_check_condition_text {
 			case ('"') {
 				if (defined $in_regex) {
 					next CHAR;
-					
+				
 				} elsif (!defined $in_quote) {
 					warning "beggining of a double_quoted string\n";
 					$in_quote = 1;
 					undef $token;
-					
+				
 				} elsif (defined $in_quote) {
 					if ($previous_char eq "\\") {
 						next CHAR;
@@ -1309,8 +1315,6 @@ sub parse_and_check_condition_text {
 						undef $in_quote;
 						undef $token if $token;
 					}
-				} else {
-					error "somethings wrong with this \"\n";
 				}
 			}
 			
@@ -1324,54 +1328,62 @@ sub parse_and_check_condition_text {
 			}
 			
 			case ( '&' ) {
+				
+				#ignore if is quoted string or regex
 				if (defined $in_regex || defined $in_quote) {
 					next CHAR;
 				}
 				
+				#if is a & followed by a letter or number, is problably a macro keyword
 				if ($previous_char ne '&' && $next_char =~ /\w/) {
 					warning "start of a macro keyword\n";
 					undef $token;
-					if ($start_of_macro_keyword) {
-						error "THERE ARE SOMETHING WRONG WITH '&' \n";
-					}
 					$start_of_macro_keyword = 1;
 					
+				# if have && then it will be parsed or other sub
 				} elsif ( $previous_char eq '&' || $next_char eq '&') {
-					undef $start_of_macro_keyword if $start_of_macro_keyword;
+					undef $token                  if defined $token;
+					undef $start_of_macro_keyword if defined $start_of_macro_keyword;
 					next CHAR;
 					
+				# throw error
 				} else {
-					$self->{error} = "unsupported '&' in statment (maybe you put just only one '&' instead of two?)";
+					$self->error("unsupported '&' in statment (maybe you put just only one '&' instead of two?)");
 					return;
 				}
 			}
 			
 			case ( '|' ) {
+				
+				#ignore if inside a quoted string or a regex
 				if ($in_regex || $in_quote) {
 					next CHAR;
 				}
 				
+				# if have || then it will be parsed or other sub
 				if ( $previous_char eq '|' || $next_char eq '|') {
-					undef $start_of_macro_keyword if $start_of_macro_keyword;
+					undef $token                  if defined $token;
+					undef $start_of_macro_keyword if defined $start_of_macro_keyword;
 					next CHAR;
 					
+				#else throw error
 				} else {
-					$self->{error} = "unsupported '|' in statment (maybe you put only one '|' instead of two?)";
+					$self->error("unsupported '|' in statment (maybe you put only one '|' instead of two?)");
 					return;
 				}
 			}
 			
 			case ( ')' ) {
+				
+				#ignore if inside a quoted string or a regex
 				if ($in_regex || $in_quote) {
 					next CHAR;
 				}
-				undef $start_of_macro_keyword;
+				undef $start_of_macro_keyword if defined $start_of_macro_keyword;
+				undef $token                  if defined $token;
 				
-				if ($token) {
-					"token is '$token', undefining\n";
-					undef $token;
-				}
-				
+				#this is when the ) is a closing pharenthesis of a macrokeyword or a sub
+				#example: &npc(154 89) <--- this closing pharentesis will not be considered as a group end
 				if ($ignore_next_closing_parenthesis > 0) {
 					warning "ignoring a closing_parenthesis\n";
 					$ignore_next_closing_parenthesis--;
@@ -1380,13 +1392,17 @@ sub parse_and_check_condition_text {
 				}
 				
 				warning "end of a group\n";
+				#end of the group
 				$parenthesis_count--;
 				warning "parenthesis_count: '$parenthesis_count'\n";
 				if ($parenthesis_count < 0) {
-					$self->{error} = "missing at least one opening parenthesis or too many closing parenthesis";
+					$self->error("missing at least one opening parenthesis or too many closing parenthesis");
 					return;
 				}
 				
+				#currently there is something that have to change:
+				#start, end and lenght of group is only used on the main group (the entire statement)
+				#the other groups those informations are irrelevant, so it shouldn't be stored
 				my $lenght = ($i + 1) - $start_of_group[-1];
 				my $script = substr ($line_script, $start_of_group[-1], $lenght);
 				push @groups, {
@@ -1396,20 +1412,26 @@ sub parse_and_check_condition_text {
 					script => $script
 				};
 				
+				#end of entire statement
 				if ($parenthesis_count == 0) {
 					last CHAR;
 				}
 			}
 			
 			case ( '(' ) {
+				
+				#ignore if inside a quoted string or a regex
 				if ($in_regex || $in_quote) {
 					next CHAR;
 				}
 				
+				#oh, this might be a macro keyword or sub!
 				if ($token && length($token) >= 3) {
-					warning "token encontrado: '$token'\n";
-					if ($start_of_macro_keyword) {
+					
+					#probably a macro_keyword
+					if (defined $start_of_macro_keyword) {
 						warning "provavelmente eh um macro keyword\n";
+						#yeah it is
 						if ($macroKeywords =~ /\b$token\b/) {
 							warning "é sim!\n";
 							$ignore_next_closing_parenthesis++;
@@ -1417,14 +1439,20 @@ sub parse_and_check_condition_text {
 							undef $token;
 							undef $start_of_macro_keyword;
 							next CHAR;
+							
+						#macro_keyword not found, probably typo
 						} else {
-							$self->{error} = "unknown macro_keyword '&$token' (maybe you typed wrong?)";
+							$self->error("unknown macro_keyword '&$token' (maybe you typed wrong?)");
 							return;
 						}
+						
+					#problably is a sub
 					} else {
 						warning "provavelmente é um sub\n";
 						my $sub_found;
 						foreach (@{ $eventMacro->{subs_list} }) {
+							
+							#it is a sub!
 							if ( $token eq $_) { #sub name
 								$sub_found = 1;
 								warning "é um sub!\n";
@@ -1437,6 +1465,8 @@ sub parse_and_check_condition_text {
 						
 						if (!$sub_found) {
 							warning "TEST: $token IS NOT A SUB, I HOPE IT IS CORRECT\n";
+							$self->error("unknown sub '$token' (maybe you typed wrong?)");
+							return;
 						}
 						warning "begin of a group\n";
 					}
@@ -1452,7 +1482,6 @@ sub parse_and_check_condition_text {
 				$parenthesis_count++;
 				warning "parenthesis_count: '$parenthesis_count'\n";
 			}
-			
 			
 			case (/\w/) {
 				if (!$in_regex && !$in_quote && !$start_of_variable) {
@@ -1470,21 +1499,24 @@ sub parse_and_check_condition_text {
 		}
 	}
 	
-	
+	#its error time
+	#multiple checks of commom errors
 	if (defined $in_regex) {
-		$self->{error} = "unclosed regex found, please check your code\n";
+		$self->error("unclosed regex found, please check your code\n");
 		return;
 	} elsif (defined $in_quote) {
-		$self->{error} = "unclosed quote found, please check your code\n";
+		$self->error("unclosed quote found, please check your code\n");
 		return;
 	} elsif (defined $start_of_macro_keyword) {
-		$self->{error} = "unclosed macro_keyword found, please check your code";
+		$self->error("unclosed macro_keyword found, please check your code");
 		return;
 	} elsif ($parenthesis_count > 0) {
-		$self->{error} = "unclosed parenthesis found, please check your code";
+		$self->error("unclosed parenthesis found, please check your code");
 		return;
 	}
 	
+	#the last group in the array is always the full statement
+	#so post_if is what lies after end of main group
 	my $post_if = substr ($line_script, $groups[-1]{end}+1);
 	$post_if    =~ s/^\s+|\s+$//g;
 	warning "sub modified_parse_and_check_condition_text\n";
@@ -1492,8 +1524,8 @@ sub parse_and_check_condition_text {
 	warning "post_if: '$post_if'\n";
 	use Data::Dumper;
 	warning Dumper(\@groups);
-	my $result  = $self->parse_condition_text_groups(\@groups);
-	return if defined $self->{error};
+	my $result = $self->parse_condition_text_groups(\@groups);
+	return if defined $self->error;
 
 	return $result, $post_if;
 }
@@ -1505,31 +1537,31 @@ sub parse_condition_text_groups {
 	my $result;
 	if ( scalar @{$groups} == 1) {
 		$result = $self->parse_single_group($groups->[-1]->{script});
-		return if (defined $self->{error});
 		warning "final_result: '". $result . "'\n";
-		return $result;
+		return if (defined $self->error);
 		
 	} else {
-		$result = pop @{$groups}; #original unparsed condition text
+		my $entire_statement = pop @{$groups}; #original unparsed statement
 		
 		#now we will parse one group at a time, since it has more than one
 		foreach my $group ( @{ $groups } ) {
 			my $script = $group->{script};
 			my $parsed = $self->parse_single_group($script);
-			return if defined $self->{error};
-			warning ("sub parse_condition_text_groups, entire_script before replacement: '$result->{script}'\n");
+			return if defined $self->error;
+			warning ("sub parse_condition_text_groups, entire_script before replacement: \n'$entire_statement->{script}'\n");
 			#after parse a group, remove it from original script and replace by it's result
-			$result->{script} =~ s/\Q$script\E/$parsed/;
-			warning ("entire_script AFTER replacement: '$result->{script}'\n");
+			$entire_statement->{script} =~ s/\Q$script\E/$parsed/;
+			warning ("entire_script AFTER replacement: '$entire_statement->{script}'\n");
 			
 		}
 		#now that were parsed other groups inside result, lets parse result itself
-		warning "script before last parse: '$result->{script}'\n";
-		my $final_result = $self->parse_single_group($result->{script});
-		return if defined $self->{error};
-		warning "final_result: '". $final_result . "'\n";
-		return $final_result; #the final result, will be 1 or 0
+		warning "script before last parse: '$entire_statement->{script}'\n";
+		$result = $self->parse_single_group($entire_statement->{script});
+		return if defined $self->error;
 	}
+	
+	warning "final_result: '". $result . "'\n";
+	return $result;
 }
 
 sub parse_single_group {
@@ -1560,19 +1592,19 @@ sub parse_single_group {
 					#end of this statment
 					warning ("sub parse_single_group, end of statement\nfirst: '$first', cond: '$condition', last: '$second'\n");
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->{error}) {
+					if (defined $self->error) {
 						Log::error "deu erro no resolve_statement\n";
 						return;
 					}
 					warning ("result of resolve_statement is '$result'\n");
 					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->{error} = "NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n";
-					return if (defined $self->{error});
+					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
+					return if (defined $self->error);
 					
 					warning ("script now is $script\n");
 					
 					$script = $self->resolve_multi_and_remove_parenthesis($script);
-					return if (defined $self->{error});
+					return if (defined $self->error);
 					undef $negate;
 					undef $first;
 					undef $condition;
@@ -1613,21 +1645,22 @@ sub parse_single_group {
 				if ($next_char eq '&' ) {
 					warning ("  &  opa, temos um resultado!\n");
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->{error}) {
+					if (defined $self->error) {
 						Log::error "deu erro no resolve_statement\n";
 						return;
 					}
 					warning ("result of resolve_statement is '$result'\n");
 					$script =~ s/\Q$negate$first$condition$second\E/$result/ 
-					or $self->{error} = "NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n";
+					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
 					
-					return if (defined $self->{error});
+					return if (defined $self->error);
 						
 					undef $negate;
 					undef $first;
 					undef $condition;
 					undef $second;
 					$i++; #intentional, it is to skip the next " & "
+					next CHAR;
 				} else {
 					next;
 				}
@@ -1641,21 +1674,22 @@ sub parse_single_group {
 				if ($next_char eq '|' ) {
 					warning ("  |  opa, temos um resultado!\n");
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->{error}) {
+					if (defined $self->error) {
 						Log::error "deu erro no resolve_statement\n";
 						return;
 					}
 					warning ("result of resolve_statement is '$result'\n");
 					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->{error} = "NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n";
+					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
 					
-					return if (defined $self->{error});
+					return if (defined $self->error);
 						
 					undef $negate;
 					undef $first;
 					undef $condition;
 					undef $second;
 					$i++; #intentional, it is to skip the next " | "
+					next CHAR;
 				} else {
 					next;
 				}
@@ -1664,15 +1698,16 @@ sub parse_single_group {
 			
 			case ( /[=!~><]/ ) {
 				if ($in_quote || $in_regex) {
-					next;
+					last;
 				}
 				
 				if ( !defined $first || $first =~ /^\s+$/) {
 					if ($current_char eq '!') {
-						$negate = '!';
+						$negate = $first . '!'; #first is here only to get the whitespace
 						undef $first;
+						next CHAR;
 					} else {
-						$self->{error} = "Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)";
+						$self->error("Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)");
 						return;
 					}
 					
@@ -1682,6 +1717,7 @@ sub parse_single_group {
 						$condition .= $next_char;
 						$i++;
 					}
+					next CHAR;
 					warning ("looks like a condition, first is $first, condition is $condition\n");
 					
 				} elsif ( defined $first && defined $condition) {
@@ -1689,41 +1725,40 @@ sub parse_single_group {
 					return;
 				}
 			}
-			
-			else {
-				if ($current_char eq '"') {
-					unless ($previous_char eq "\\" || $in_regex) {
-						if ($in_quote) {
-							undef $in_quote;
-						} else {
-							$in_quote = 1;
-						}
-					}
-					
-				} elsif ($current_char eq '/') {
-					unless ($previous_char eq '\\' || $in_quote) {
-						if ($in_regex) {
-							undef $in_regex;
-						} else {
-							$in_regex = 1;
-						}
-					}
-				}
-				
-				if (!defined $condition) {
-					$first .= $current_char;
-					warning ("incrementando o first, valor eh: '$first'\n");
-				} elsif ( defined $first && defined $condition ) {
-					$second .= $current_char;
-					warning ("incrementando o second, valor eh: '$second'\n");
+		}
+		
+		if ($current_char eq '"') {
+			unless ($previous_char eq "\\" || $in_regex) {
+				if ($in_quote) {
+					warning "quote end\n";
+					undef $in_quote;
 				} else {
-					warning("tem algo errado nesse código\n");
-					next CHAR;
+					warning "quote begin!\n";
+					$in_quote = 1;
+				}
+			}
+			
+		} elsif ($current_char eq '/') {
+			unless ($previous_char eq '\\' || $in_quote) {
+				if ($in_regex) {
+					warning "regex end\n";
+					undef $in_regex;
+				} else {
+					warning "regex begin\n";
+					$in_regex = 1;
 				}
 			}
 		}
+		
+		if (!defined $condition) {
+			$first .= $current_char;
+			warning ("incrementando o first, valor eh: '$first'\n");
+		} elsif ( defined $first && defined $condition ) {
+			$second .= $current_char;
+			warning ("incrementando o second, valor eh: '$second'\n");
+		}
 	}
-	$self->{error} = "o código não deveria chegar até aqui\n";
+	$self->error("o código não deveria chegar até aqui\n");
 	return 0;
 }
 
@@ -1958,13 +1993,13 @@ sub resolve_statement {
 		
 	#if $first and $cond are defined and missing $last, throw error
 	} elsif ( $first ne '' && $cond ne '' && $last eq '' ) {
-		$self->{error} = "Last argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')";
+		$self->error("Last argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
 		Log::error "erro: ultimo argumento nao existe\n";
 		return;
 		
 	#if $cond and $last are defined, but missing $first, throw error
 	} elsif ( $first eq '' && $cond ne '' && $last ne '' ) {
-		$self->{error} = "First argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')";
+		$self->error("First argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
 		Log::error "erro: ultimo argumento nao existe\n";
 		return;
 		
@@ -1972,8 +2007,8 @@ sub resolve_statement {
 	} elsif ( $first ne '' && $cond eq '' && $last eq '' ) {
 		warning ("sub resolve_statement, is a statement WITHOUT cond and last\n");
 		$parsed_first = $self->parse_command($first);
-		if (defined $self->{error}) {
-			Log::error "error enquanto deu o parse_command no '$first', error is '$self->{error}'\n";
+		if (defined $self->error) {
+			Log::error "error enquanto deu o parse_command no '$first', error is '$self->error'\n";
 			return;
 		}
 		
@@ -1982,7 +2017,7 @@ sub resolve_statement {
 		warning ("sub resolve_statement, is a statment WITH cond and last\n");
 		$parsed_first = $self->parse_command($first);
 		$parsed_last  = $self->parse_command($last);
-		if (defined $self->{error}) {
+		if (defined $self->error) {
 			Log::error "error enquanto deu o parse_command no '$first'\n";
 			return;
 		}
@@ -1991,7 +2026,7 @@ sub resolve_statement {
 	}
 	warning "sub resolve_statement, parsed_first is '$parsed_first', parsed_last is '$parsed_last'\n";
 	my $result = cmpr($parsed_first, $cond, $parsed_last);
-	if (defined $self->{error}) {
+	if (defined $self->error) {
 		Log::error "error enquanto usou o cmpr com o '$parsed_first'\n";
 		return;
 	}
@@ -2426,7 +2461,7 @@ sub parse_command {
 							@array_holder = @{ $eventMacro->{Array_Variable_List_Hash}{$var->{real_name}} };
 							$parsed =~ s/$var->{real_name}/array_holder/;
 						} else {
-							$self->error ("Array '" . $var->{display_name} . "' does not exist");
+							$self->error("Array '" . $var->{display_name} . "' does not exist");
 						}
 						
 					} elsif ($var->{type} eq 'hash') {
@@ -2436,7 +2471,7 @@ sub parse_command {
 							%hash_holder = %{ $eventMacro->{Hash_Variable_List_Hash}{$var->{real_name}} };
 							$parsed =~ s/$var->{real_name}/hash_holder/;
 						} else {
-							$self->error ("Hash '" . $var->{display_name} . "' does not exist");
+							$self->error(("Hash '" . $var->{display_name} . "' does not exist"));
 						}
 					} else {
 						$self->error("Could not define variable type on calling sub");
