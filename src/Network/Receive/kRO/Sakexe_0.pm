@@ -549,6 +549,7 @@ sub new {
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],

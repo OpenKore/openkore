@@ -2184,27 +2184,6 @@ sub private_message {
 	}
 }
 
-sub private_message_sent {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0) {
- 		message TF("(To %s) : %s\n", $lastpm[0]{'user'}, $lastpm[0]{'msg'}), "pm/sent";
-		chatLog("pm", "(To: $lastpm[0]{user}) : $lastpm[0]{msg}\n") if ($config{'logPrivateChat'});
-
-		Plugins::callHook('packet_sentPM', {
-			to => $lastpm[0]{user},
-			msg => $lastpm[0]{msg}
-		});
-
-	} elsif ($args->{type} == 1) {
-		warning TF("%s is not online\n", $lastpm[0]{user});
-	} elsif ($args->{type} == 2) {
-		warning TF("Player %s ignored your message\n", $lastpm[0]{user});
-	} else {
-		warning TF("Player %s doesn't want to receive messages\n", $lastpm[0]{user});
-	}
-	shift @lastpm;
-}
-
 sub rank_points {
 	my ( $self, $args ) = @_;
 
