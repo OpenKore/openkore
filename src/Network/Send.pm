@@ -428,8 +428,8 @@ sub sendMapLogin {
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
-	if ($self->{serverType} == 0 || $self->{serverType} == 19 || $self->{serverType} == 20 || $self->{serverType} == 21 ||
-		$self->{serverType} == 22) {
+	if ($self->{serverType} == 0 || $self->{serverType} == 18 || $self->{serverType} == 19 || $self->{serverType} == 20 ||
+		$self->{serverType} == 21 || $self->{serverType} == 22) {
 		
 		$msg = $self->reconstruct({
 			switch => 'map_login',
