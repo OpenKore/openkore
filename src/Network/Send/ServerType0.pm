@@ -47,7 +47,7 @@ sub new {
 		'007E' => ['sync', 'V', [qw(time)]],
 		'0085' => ['character_move', 'a3', [qw(coords)]],
 		'0089' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'008C' => ['public_chat', 'x2 Z*', [qw(message)]],
+		'008C' => ['public_chat', 'v Z*', [qw(len message)]],
 		'0090' => ['npc_talk', 'a4 C', [qw(ID type)]],
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0096' => ['private_message', 'x2 Z24 Z*', [qw(privMsgUser privMsg)]],
