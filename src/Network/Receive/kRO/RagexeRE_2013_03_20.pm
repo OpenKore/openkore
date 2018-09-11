@@ -24,7 +24,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 	);
