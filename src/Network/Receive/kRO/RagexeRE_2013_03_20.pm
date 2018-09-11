@@ -16,20 +16,11 @@ package Network::Receive::kRO::RagexeRE_2013_03_20;
 
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2012_06_18a);
-use Globals qw (%ai_v $char %charSvrSet %equipSlot_lut %equipSlot_rlut %equipTypes_lut $messageSender $net %timeout);
-use Log qw (message);
-use Translation qw(T TF);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	my %packets = (
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-	
+
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D
@@ -42,43 +33,3 @@ sub new {
 }
 
 1;
-
-=pod
-//2013-03-20Ragexe (Judas)
-packet_ver: 30
-0x01FD,15,repairitem,2
-0x086D,26,friendslistadd,2
-0x0897,5,hommenu,2:4
-0x0947,36,storagepassword,0
-//0x0288,-1,cashshopbuy,4:8
-0x086F,26,partyinvite2,2
-0x0888,19,wanttoconnection,2:6:10:14:18
-0x08c9,4
-0x088E,7,actionrequest,2:6
-0x089B,10,useskilltoid,2:4:6
-0x0881,5,walktoxy,2
-0x0363,6,ticksend,2
-0x093F,5,changedir,2:4
-0x0933,6,takeitem,2
-0x0438,6,dropitem,2:4
-0x08AC,8,movetokafra,2:4
-0x0874,8,movefromkafra,2:4
-0x0959,10,useskilltopos,2:4:6:8
-0x085A,90,useskilltoposinfo,2:4:6:8:10
-0x0898,6,getcharnamerequest,2
-0x094C,6,solvecharname,2
-0x0907,5,moveitem,2:4
-0x0908,5
-0x08CF,10 //Amulet spirits
-0x08d2,10
-0x0977,14 //Monster HP Bar
-0x0998,8,equipitem,2:4
-//0x0281,-1,itemlistwindowselected,2:4:8
-0x0938,-1,reqopenbuyingstore,2:4:8:9:89
-//0x0817,2,reqclosebuyingstore,0
-//0x0360,6,reqclickbuyingstore,2
-0x0922,-1,reqtradebuyingstore,2:4:8:12
-0x094E,-1,searchstoreinfo,2:4:5:9:13:14:15
-//0x0835,2,searchstoreinfonextpage,0
-//0x0838,12,searchstoreinfolistitemclick,2:6:10
-=cut
