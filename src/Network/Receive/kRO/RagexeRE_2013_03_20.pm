@@ -28,13 +28,6 @@ sub new {
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
-		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 V v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire bindOnEquipType)]],#31
-		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
-		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],#-1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 	);
 	
