@@ -24,7 +24,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'084B' => ['item_appeared', 'a4 v2 C v4', [qw(ID nameID unknown1 identified x y unknown2 amount)]], # 19 TODO   provided by try71023, modified sofax222
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
