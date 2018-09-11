@@ -554,6 +554,8 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
+		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
@@ -1218,7 +1220,7 @@ sub cast_cancelled {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if (!$args->{success}) {
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
