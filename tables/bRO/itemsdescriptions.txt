@@ -8677,6 +8677,29 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777105^000000
 Classes: ^777777Shuras^000000
 #
+1847#
+Garras imbuídas com energias de tempos antigos. Não se conhece um material que não tenha cedido às suas lâminas.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano físico a distância +4%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Explosão Espiritual] +10%.^000000
+Refino +11 ou mais:
+^0000ffRecarga de [Explosão Espiritual] -1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffATQ da arma +15%.^000000
+Tipo: ^777777Soqueira^000000
+Ataque: ^777777180^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Shuras^000000
+#
 1901#
 Instrumento de cordas de tom alto, muito usado na música erudita e também no Country. O favorito dos Rockers.
 Classe: ^777777Instrumento Musical^000000
@@ -9914,6 +9937,32 @@ Peso: ^777777270^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Feiticeiros^000000
+#
+2048#
+Guardado há séculos pelos feiticeiros mais prestigiados de Geffen, esse cetro guarda poderes inestimáveis para aqueles que sabem manipular a mana ao seu favor.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +200.^000000
+A cada 2 refinos:
+^0000ffATQM +10.^000000
+A cada 3 refinos:
+^0000ffDano de [Abalo Sísmico] +12%.^000000
+Refino +9 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +11 ou mais:
+^0000ffRecarga de [Abalo Sísmico] -1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+Tipo: ^777777Cajado de Duas Mãos^000000
+Ataque: ^777777100^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcanos^000000
 #
 2101#
 Escudo quadrado, pequeno mas efetivo para bloquear ataques inimigos. Arraste para a janela de equipamento para utilizar.
@@ -28623,7 +28672,6 @@ Classes: ^777777Todas^000000
 5919#
 Um lindo ornamento proveniente da bela cidade de Amatsu. As flores de camélia dão um toque único ao acessório, utilizado principalmente em ocasiões especiais.
 ^0000ffDEFM +20.^000000
-^0000ffDEFM +20.^000000
 ^0000ff2,5% de chance de autoconjurar [Escudo Sagrado] nv. 1.^000000
 A cada refino até o +5:
 ^0000ffChance de autoconjurar [Escudo Sagrado] +0,5%.^000000
@@ -33726,8 +33774,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000027.08.2018.^000000
-Este item será removido no dia ^ff000028.08.2018.^000000
+Promoção limitada até o dia ^ff000024.09.2018.^000000
+Este item será removido no dia ^ff000025.09.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -45050,6 +45098,43 @@ Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+15374#
+O sol e a lua em dourado tornam essa armadura um item precioso para os antigos guerreiros de Amatsu. O reluzir de seus ornamentos revelam que jamais foi vestida por nenhum outro guerreiro.
+^a400cdIndestrutível em batalha.^000000
+^0000ffDEFM +10.^000000
+^0000ffHP e SP +15%.^000000
+A cada refino:
+^0000ffPós-conjuração -1%.^000000
+Refino +10 ou mais:
+^0000ffConjuração fixa -50%.^000000
+Refino +13 ou mais:
+^0000ffConjuração fixa -20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Hatii]^000000
+^0000ffTolerância a Congelamento +100%.^000000
+Ao receber danos físicos de curta distância:
+^0000ff50% de chance de infligir Congelamento no oponente.^000000
+A cada refino:
+^0000ffDano físico contra oponentes de propriedade Água +5%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^777777120^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+15375#
+O sol e a lua em dourado tornam essa armadura um item precioso para os antigos guerreiros de Amatsu. Seus rasgos e danos mostram claros sinais de uso.
+^0000ffHP e SP +5%.^000000
+A cada refino:
+^0000ffPós-conjuração -1%.^000000
+Refino +12 ou mais:
+^0000ffConjuração fixa -50%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^7777770^000000
+Peso: ^77777760^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 16000#
 A forma desta maça é inspirada na cobra, simbolizando a fonte de conhecimento.
 ^a400cdIndestrutível em batalha.^000000
@@ -47200,6 +47285,52 @@ Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Arqueiros, Arruaceiros e evoluções^000000
+#
+18164#
+Um antigo arco que já era conhecido por seu poder e leveza. Ele foi recuperado e melhorado com novas tecnologias, o que o tornou um instrumento ainda mais mortal.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano de [Tempestade de Flechas] +12%.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+Refino +11 ou mais:
+^0000ffDano físico a distância +5%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffDES +20.^000000
+^0000ffDano com Arco +20%.^000000
+Tipo: ^777777Arco^000000
+Ataque: ^777777180^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Renegados e Sentinelas^000000
+#
+18170#
+Uma vez atingidos, seus alvos jamais se esquecerão da dor lancinante causada pelos disparos deste arco. Isto é, se eles sobreviverem.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano físico a distância +4%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Temporal de Mil Flechas] +10%.^000000
+Refino +11 ou mais:
+^0000ffRecarga de [Temporal de Mil Flechas] -2 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffDES +20.^000000
+^0000ffDano com Arco +20%.^000000
+Tipo: ^777777Arco^000000
+Ataque: ^777777180^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Renegados, Arqueiros e evoluções^000000
 #
 18504#
 Um elmo confeccionado para ser semelhante a cabeça do Anubis.
@@ -55518,6 +55649,29 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777110^000000
 Classes: ^777777Cavaleiros Rúnicos^000000
 #
+21038#
+Com o manejo adequado, a construção ágil e longa dessa espada permite estocadas e golpes furiosos.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano de [Onda de Choque] +10%.^000000
+Refino +9 ou mais:
+^0000ffAo realizar ataques físicos, 7% de chance de autoconjurar [Onda de Choque] nv. 2 ou no nível aprendido.^000000
+Refino +11 ou mais:
+^0000ffTorna a arma indestrutível em batalha.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffATQ da arma +15%.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777180^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Cavaleiros Rúnicos^000000
+#
 21042#
 Uma misteriosa espada que se acredita ter sido forjada em tempos muito antigos. Para fazer jus ao nome, sua lâmina carrega uma força demoníaca muito poderosa.
 -------------------------
@@ -56340,6 +56494,25 @@ Tipo: ^777777Calçado^000000
 Defesa: ^77777725^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
+22171#
+Um par de calçados poderosos. Suas energias são capazes de despertar propriedades misteriosas em armas ancestrais.
+^0000ffHP máx. +500.^000000
+^0000ffSP máx. +50.^000000
+A cada 3 refinos:
+^0000ffHP máx. +2%^000000
+^0000ffSP máx. +1%.^000000
+Refino +9 ou mais:
+^0000ffConjuração fixa -0,3 segundos.^000000
+Refino +12 ou mais:
+^0000ffConjuração fixa -0,2 segundos adicional.^000000
+Refino +14 ou mais:
+^0000ffPós-conjuração -5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^77777760^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 22172#
@@ -57270,6 +57443,32 @@ Insígnia do Festival da Diversidade de Brasilis que representa a Liga dos Heró
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 Peso: ^7777770^000000
 #
+26118#
+Poderes arcanos surpreendentes se manifestam deste imponente cajado, mas apenas quando manejado pelas mãos certas.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +155.^000000
+A cada 2 refinos:
+^0000ffATQM +10.^000000
+A cada 3 refinos:
+^0000ffDano de [Castigo de Nerthus] +12%.^000000
+Refino +9 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +11 ou mais:
+^0000ffRecarga de [Onda Psíquica] -1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+Tipo: ^777777Cajado^000000
+Ataque: ^77777740^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Feiticeiros^000000
+#
 27012#
 ^0000ffHP máx. +8%.^000000
 ^FF6347Mecânicos:^000000
@@ -57473,6 +57672,32 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Sicários e evoluções^000000
 #
+28039#
+Leve e mortal, esta é uma katar forjada com materiais proibidos e de passado desconhecido – estima-se que foi usada pelos primeiros Algozes que se tem registro.
+^CD3278Duplica a chance de causar um ataque crítico.^000000
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano crítico +4%.^000000
+Refino +7 ou mais:
+^0000ffDano físico contra as raças Bruto e Humanoide +15%.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+Refino +11 ou mais:
+^0000ffDano físico contra as raças Bruto e Humanoide +20% adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffSOR +20.^000000
+^0000ffDano crítico +10%.^000000
+Tipo: ^777777Katar^000000
+Ataque: ^777777185^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sicários^000000
+#
 28100#
 Armamento esculpido do Fragmento de Cinzas para contra-atacar a Espada Talefing.
 ^a400cdIndestrutível em batalha.^000000
@@ -57499,6 +57724,30 @@ Peso: ^777777400^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Mercadores, Espadachins e evoluções^000000
+#
+28130#
+Um golpe preciso e imediato em um ponto vulnerável de seu inimigo é tudo que é necessário para fazer os demais oponentes temerem este cutelo sombrio.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano de [Fúria do Furacão] +10%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Arremesso de Machado] +40%.^000000
+Refino +11 ou mais:
+^0000ffDano físico contra todos os tamanhos +15%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffATQ da arma +15%.^000000
+Tipo: ^777777Machado de Duas Mãos^000000
+Ataque: ^777777270^000000
+Peso: ^777777600^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Mecânicos^000000
 #
 28200#
 Uma Lança-Granadas de metal que tem o poder de perfurar e matar inimigos.
@@ -58248,6 +58497,23 @@ Peso: ^77777750^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+28598#
+Não se sabe ao certo o que esse chip era capaz de controlar, mas o seu fragmento ainda aparenta ter alguma funcionalidade.
+^0000ffFOR +5, VIT +5, DES +5.^000000
+^0000ffDano físico +5%.^000000
+Ao aprender [Bate Estaca] nv. 3:
+^0000ffATQ +50.^000000
+^0000ffFOR +5, VIT +5, DES +5 adicional.^000000
+Ao aprender [Campo Protetor] nv. 3:
+^0000ffConjuração variável de [Canhão] [Gás Criogênico] e [Lança Chamas] -50%.^000000
+Ao aprender [Canhão] nv. 3 ou mais:
+^0000ffPós-conjuração -30%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 28617#
 Essencial para Arcebispos, essa Bíblia foi usada séculos atrás pelos irmãos Linchester, os consagrados caçadores de demônios. Mas não se preocupe, você não precisa saber latim para usá-la, basta ter sabedoria e fé para que as bênçãos caiam sobre você. Com elas, as criaturas sombrias se afastarão e uma poderosa proteção divina te envolverá.
 ^0000ffATQM +170.^000000
@@ -58271,6 +58537,31 @@ Ataque: ^77777730^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^777777110^000000
+Classes: ^777777Arcebispos^000000
+#
+28630#
+Os livros mágicos mais sombrios de Rune-Midgard foram recuperados, reescritos e compilados neste tomo de poder imensurável.
+^0000ffATQM +160.^000000
+A cada 2 refinos:
+^0000ffATQM +10.^000000
+A cada 3 refinos:
+^0000ffDano físico e mágico de [Gemini Lumen] +25%.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+Refino +11 ou mais:
+^0000ffDano físico e mágico de [Gemini Lumen] +30%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+Tipo: ^777777Livro^000000
+Ataque: ^777777165^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Arcebispos^000000
 #
 28728#
@@ -58367,6 +58658,31 @@ Peso: ^77777765^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Arqueiros, Gatunos, Mercadores, Ninjas, Magos, Espiritualistas e evoluções^000000
+#
+28744#
+Graças ao seu fio perfeito e poderes obscuros, essa lâmina não requer mais que duas ou três estocadas para causar danos que jamais serão revertidos.
+^0000ffATQM +150.^000000
+A cada 2 refinos:
+^0000ffATQM +10.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +2%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de todas as propriedades +10%.^000000
+Refino +11 ou mais:
+^0000ffAo realizar ataques físicos, 7% de chance de autoconjurar [Onda Psíquica] nv. 3.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777150^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Renegados^000000
 #
 28901#
 O macabro coelhinho de Piamette que serve como escudo de mentirinha até para os mais iniciantes. A aparência meio esquisita e remendada mostra que a própria Piamette o confeccionou; mas ela colocou tanto enchimento que ele ficou enorme, quase do tamanho dela. E se as manchas vermelhas são sangue ou não, é melhor nem saber.
@@ -59576,5 +59892,64 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31531#
+Chapéu que Sarakura Dropa-Cartas conquistou após selar a carta de Gêmeos. Ele pode até não ter o poder de duplicar coisas ou pessoas, mas não há dúvidas de que vai te deixar duas vezes mais bonito.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31545#
+Apesar do espírito de Eremes ser cheio de frustração e angústia, esse cachecol foi usado quando ele estava em uma fase alegre e colorida. E vivo, é claro.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+32018#
+Uma lança cuja ponta foi afiada com a minúcia de 1000 artesãos, com o intuito de que o primeiro golpe seja o último.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano físico a distância +4%.^000000
+Refino +7 ou mais:
+^0000ffDano de [Disparo Perfurante] e [Toque do Oblívio] +15%.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+Refino +11 ou mais:
+^0000ffDano de [Disparo Perfurante] e [Toque do Oblívio] +20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffATQ da arma +15%.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^777777180^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Guardiões Reais^000000
+#
+32205#
+Um anel que carrega uma gigantesca e rara esmeralda. De tão pesada, foi preciso sustentá-la com outros adornos.
+^0000ffCusto de SP de [Improviso] -18.^000000
+A cada 2 níveis de [Rajada de Flechas]:
+^0000ffATQ +10.^000000
+^0000ffAGI +1, DES +1, VIT +1.^000000
+A cada nível base:
+^0000ffDano de [Rajada de Flechas] e [Chuva de Flechas] +1%.^000000
+A cada 10 níveis de base:
+^0000ffDano de [Temporal de Mil Flechas] +2%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
