@@ -24,8 +24,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
-		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
-		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]], #8
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
@@ -44,31 +42,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
-}
-
-sub equip_item {
-	my ($self, $args) = @_;
-	my $item = $char->inventory->getByID($args->{ID});
-	if ($args->{success}) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
-	} else {
-		$item->{equipped} = $args->{type};
-		if ($args->{type} == 10 || $args->{type} == 32768) {
-			$char->{equipment}{arrow} = $item;
-		} else {
-			foreach (%equipSlot_rlut){
-				if ($_ & $args->{type}){
-					next if $_ == 10; # work around Arrow bug
-					next if $_ == 32768;
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-					Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
-				}
-			}
-		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
-			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
-	}
-	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
 
 1;
