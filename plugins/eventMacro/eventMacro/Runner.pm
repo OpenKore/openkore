@@ -5,7 +5,6 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 
-
 use Time::HiRes qw( &time );
 use Globals;
 use AI;
@@ -1924,8 +1923,6 @@ sub resolve_statement {
 	#remove quotes
 	$first =~ s/^"(.+)"$/\1/;
 	$last  =~ s/^"(.+)"$/\1/;
-	
-	warning ("first is $first, cond is $cond, last is $last\n");
 	
 	my ($parsed_first, $parsed_last);
 	
