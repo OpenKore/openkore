@@ -24,6 +24,7 @@
 package Network::Send;
 
 use strict;
+use Time::HiRes qw(time);
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
 use utf8;
@@ -427,7 +428,9 @@ sub sendMapLogin {
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	
-	if ($self->{serverType} == 0 || $self->{serverType} == 21 || $self->{serverType} == 22) {
+	if ($self->{serverType} == 0 || $self->{serverType} == 18 || $self->{serverType} == 19 || $self->{serverType} == 20 ||
+		$self->{serverType} == 21 || $self->{serverType} == 22) {
+		
 		$msg = $self->reconstruct({
 			switch => 'map_login',
 			accountID => $accountID,
@@ -484,12 +487,21 @@ sub parse_character_move {
 
 sub reconstruct_character_move {
 	my ($self, $args) = @_;
-	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $masterServer->{serverType} == 0);
+	
+	$args->{no_padding} = exists $args->{no_padding} ? $args->{no_padding} : $masterServer->{serverType} == 0;
+	
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'character_move', x => $x, y => $y}));
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'character_move',
+		x => $x,
+		y => $y
+	}));
+	
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
@@ -965,13 +977,23 @@ sub parse_actor_move {
 
 sub reconstruct_actor_move {
 	my ($self, $args) = @_;
-	$args->{coords} = getCoordString(@{$args}{qw(x y)}, !($masterServer->{serverType} > 0));
+	
+	$args->{no_padding} = exists $args->{no_padding} ? $args->{no_padding} : !($masterServer->{serverType} > 0);
+	
+	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
 # should be called sendSlaveMove...
 sub sendHomunculusMove {
 	my ($self, $ID, $x, $y) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'actor_move', ID => $ID, x => $x, y => $y}));
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'actor_move',
+		ID => $ID,
+		x => $x,
+		y => $y,
+	}));
+	
 	debug sprintf("Sent %s move to: %d, %d\n", Actor::get($ID), $x, $y), "sendPacket", 2;
 }
 
