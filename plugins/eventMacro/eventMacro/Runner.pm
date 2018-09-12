@@ -1596,14 +1596,13 @@ sub parse_single_group {
 				}
 			}
 			
-			case ( '&' || '|' ) {
-				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a && or ||)
-				if ($in_quote || $in_regex || $next_char =~ /\w/) {
+			case ( '&' ) {
+				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a &&)
+				if ($in_quote || $in_regex) {
 					next;
 				}
-				
-				#if next char is also a & or | means that were found a '&&' or '||', that means that there is one statement to be parsed
-				if ($next_char eq '&' || $next_char eq '|' ) {
+				#if next char is also a &  means that were found a '&&', that means that there is one statement to be parsed
+				if ($next_char eq '&' ) {
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
 					return if (defined $self->error);
 					
@@ -1615,7 +1614,32 @@ sub parse_single_group {
 					undef $first;
 					undef $condition;
 					undef $second;
-					$i++; #intentional, it is to skip the next & or |
+					$i++; #intentional, it is to skip the next &
+					next CHAR;
+				} else {
+					next;
+				}
+			}
+			
+			case ( '|' ) {
+				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a ||)
+				if ($in_quote || $in_regex) {
+					next;
+				}
+				#if next char is also a | means that were found a '||', that means that there is one statement to be parsed
+				if ($next_char eq '|' ) {
+					$result = $self->resolve_statement($negate, $first, $condition, $second);
+					return if (defined $self->error);
+					
+					$script =~ s/\Q$negate$first$condition$second\E/$result/
+					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
+					return if (defined $self->error);
+					
+					undef $negate;
+					undef $first;
+					undef $condition;
+					undef $second;
+					$i++; #intentional, it is to skip the next |
 					next CHAR;
 				} else {
 					next;
