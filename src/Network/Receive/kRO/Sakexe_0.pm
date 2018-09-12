@@ -547,8 +547,20 @@ sub new {
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
+		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
+		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
+		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
+		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
@@ -1210,7 +1222,7 @@ sub cast_cancelled {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if (!$args->{success}) {
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
