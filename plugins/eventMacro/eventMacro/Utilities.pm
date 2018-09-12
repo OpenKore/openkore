@@ -48,9 +48,11 @@ sub cmpr {
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
+				return;
 			}
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
+		return;
 		
 	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($second1, $second2) = ($1, $2);
@@ -63,16 +65,18 @@ sub cmpr {
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
+				return;
 			}
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
+		return;
 		
 	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
 		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
-		return ($first >  $second  ? 1 : 0) if ($cond eq ">");
-		return ($first <  $second  ? 1 : 0) if ($cond eq "<");
+		return ($first >  $second ? 1 : 0) if ($cond eq ">");
+		return ($first <  $second ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
 		
 	} elsif (($cond eq "=" || $cond eq "==")) {
@@ -109,28 +113,26 @@ sub q4rx2 {
 }
 
 sub match {
-	my ($text, $kw) = @_;
+	my ($text_to_be_compared, $regex) = @_;
 
-	unless (defined $text && defined $kw) {
+	unless (defined $text_to_be_compared && defined $regex) {
 		# this produces a warning but that's what we want
-		error "match: wrong # of arguments ($text) ($kw)\n", "eventMacro";
-		return 0
+		error "match: wrong # of arguments ($text_to_be_compared) ($regex)\n", "eventMacro";
+		return;
 	}
 
-	if ($kw =~ /^"(.*?)"$/) {
-		return $text eq $1
-	}
-
-	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
-		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
+	if ($regex =~ /^\/(.*?)\/(\w?)$/) {
+		if ($text_to_be_compared =~ /$1/ || ($2 eq 'i' && $text_to_be_compared =~ /$1/i)) {
 			no strict;
 			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
 			use strict;
-			return 1
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 
-	return 0
+	return;
 }
 
 sub getArgs {

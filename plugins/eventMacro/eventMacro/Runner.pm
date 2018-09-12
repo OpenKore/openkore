@@ -1306,6 +1306,8 @@ sub parse_and_check_condition_text {
 				}
 			}
 			
+			#this case block is only to prevent $token to save variables, which is useless
+			#$token is meant to save only macro_keywords and subs
 			case ( '$' || '@' || '%') {
 				if (defined $in_regex || defined $in_quote || $previous_char eq "\\") {
 					next CHAR;
@@ -1446,6 +1448,8 @@ sub parse_and_check_condition_text {
 					}
 					undef $start_of_macro_keyword;
 					undef $token;
+					
+				#it is nothing, so it will be ignored
 				} else {
 					undef $token;
 					undef $start_of_macro_keyword;
@@ -1455,6 +1459,8 @@ sub parse_and_check_condition_text {
 				$parenthesis_count++;
 			}
 			
+			#save every char on $token, until a space or special charecter appear
+			#eventually it will become a macro_keyword or sub
 			case (/\w/) {
 				if (!$in_regex && !$in_quote && !$start_of_variable) {
 					if ($next_char =~ /\W/ && length($token) < 2) {
@@ -1498,10 +1504,14 @@ sub parse_and_check_condition_text {
 sub parse_condition_text_groups {
 	my ($self, $groups) = @_;
 	my $result;
+	
+	#when it is a simple statemente, with only one group, then parse it 1 time only
 	if ( scalar @{$groups} == 1) {
 		$result = $self->parse_single_group($groups->[-1]->{script});
 		return if (defined $self->error);
 		
+	#when it is a complex statement, with more than one group, parse each one of them
+	#then replace the group byt its result on entire statement
 	} else {
 		my $entire_statement = pop @{$groups}; #original unparsed statement
 		
@@ -1537,18 +1547,21 @@ sub parse_single_group {
 		my $result;
 		
 		switch ($current_char) {
+			
+			#end of group that is being parsed
 			case ( ')' ) {
+				
+				#actually is inside quoted string or regex, so will ignore
 				if ($in_quote || $in_regex) {
 					next;
 				}
 				
+				#if there is no other char after ')', that is really end of group
 				if (!$next_char) {
 					#end of this statment
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->error) {
-						Log::error "deu erro no resolve_statement\n";
-						return;
-					}
+					return if (defined $self->error);
+					
 					$script =~ s/\Q$negate$first$condition$second\E/$result/
 					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
 					return if (defined $self->error);
@@ -1562,6 +1575,8 @@ sub parse_single_group {
 					undef $second;
 					
 					return $script;
+					
+				#if there is a char after ')' means that is a normal closing parenthsis
 				} else {
 					next;
 				}
@@ -1572,90 +1587,63 @@ sub parse_single_group {
 					next;
 				}
 				
+				#means it is the beginning of script, always a '(''
 				if ($i == 0) {
-					#means it is the beginning of script, always a '(''
 					next CHAR;
+					
+				#normal '(' inside statement, can be of a macro_keyword or sub
 				} else {
 					next;
 				}
 			}
 			
-			case ( '&' ) {
-				if ($in_quote || $in_regex) {
+			case ( '&' || '|' ) {
+				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a && or ||)
+				if ($in_quote || $in_regex || $next_char =~ /\w/) {
 					next;
 				}
 				
-				if ($in_quote || $in_regex) {
-					next;
-				} elsif ($next_char =~ /\w/) {
-					next;
-				}
-	
-				if ($next_char eq '&' ) {
+				#if next char is also a & or | means that were found a '&&' or '||', that means that there is one statement to be parsed
+				if ($next_char eq '&' || $next_char eq '|' ) {
 					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->error) {
-						Log::error "deu erro no resolve_statement\n";
-						return;
-					}
+					return if (defined $self->error);
+					
 					$script =~ s/\Q$negate$first$condition$second\E/$result/
 					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
-					
 					return if (defined $self->error);
-						
+					
 					undef $negate;
 					undef $first;
 					undef $condition;
 					undef $second;
-					$i++; #intentional, it is to skip the next " & "
+					$i++; #intentional, it is to skip the next & or |
 					next CHAR;
 				} else {
 					next;
 				}
 			}
 			
-			case ( '|' ) {
-				if ($in_quote || $in_regex) {
-					next;
-				}
-				
-				if ($next_char eq '|' ) {
-					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					if (defined $self->error) {
-						Log::error "deu erro no resolve_statement\n";
-						return;
-					}
-					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
-					
-					return if (defined $self->error);
-						
-					undef $negate;
-					undef $first;
-					undef $condition;
-					undef $second;
-					$i++; #intentional, it is to skip the next " | "
-					next CHAR;
-				} else {
-					next;
-				}
-			}
-	
-			
+			#special characters found, problably is $condition
 			case ( /[=!~><]/ ) {
+				
+				#ignoring since it's inside quoted_string or inside regex
 				if ($in_quote || $in_regex) {
 					last;
 				}
 				
 				if ( !defined $first || $first =~ /^\s+$/) {
+					#if found a special character before first be defined, can only be two things
+					#its the $negate char or it's a typo
 					if ($current_char eq '!') {
 						$negate = $first . '!'; #first is here only to get the whitespace
-						undef $first;
+						undef $first; #clean spaces inside $first, they were passed to $negate
 						next CHAR;
 					} else {
 						$self->error("Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)");
 						return;
 					}
 					
+				#a condition
 				} elsif ( defined $first && !defined $condition ) {
 					$condition .= $current_char;
 					if ($next_char =~ /[=!~><]/ ) {
@@ -1664,26 +1652,37 @@ sub parse_single_group {
 					}
 					next CHAR;
 					
+				#if there is already a condition, then is certainly an error
 				} elsif ( defined $first && defined $condition) {
 					$self->{errror} = "Error in statement '$script': not expected to have '$current_char' at index '$i' (use quotes if condition have special characters)";
 					return;
 				}
 			}
-		}
+		} #end of switch statement
 		
 		if ($current_char eq '"') {
+			#ignore if is inside a regex or if found a \"
 			unless ($previous_char eq "\\" || $in_regex) {
+				
+				#end of quoted_string
 				if ($in_quote) {
 					undef $in_quote;
+				
+				#start of quoted_string
 				} else {
 					$in_quote = 1;
 				}
 			}
 			
 		} elsif ($current_char eq '/') {
+			#ignore if is inside a quoted_string or if found a escaped one '\/'
 			unless ($previous_char eq '\\' || $in_quote) {
+				
+				#end of regex
 				if ($in_regex) {
 					undef $in_regex;
+				
+				#start of regex
 				} else {
 					$in_regex = 1;
 				}
@@ -1695,9 +1694,11 @@ sub parse_single_group {
 		} elsif ( defined $first && defined $condition ) {
 			$second .= $current_char;
 		}
-	}
-	$self->error("o código não deveria chegar até aqui\n");
-	return 0;
+	} #end of for loop
+	
+	#in theory should never gets here, but it's better to leave a error message case it gets here
+	$self->error("unknown error found while parsing at sub parse_single_group, please create an issue on github about this");
+	return;
 }
 
 sub parse_include {
@@ -1912,12 +1913,19 @@ sub parse_call {
 	$self->next_line;
 }
 
-#From here functions are meant to parse code and check order (I haven't even looked at them yet)
 sub resolve_statement {
 	my ($self, $negate, $first, $cond, $last) = @_;
+	
+	#remove trailing whitespaces of beggining and end
 	$first =~ s/^\s+|\s+$//g;
 	$cond  =~ s/^\s+|\s+$//g;
 	$last  =~ s/^\s+|\s+$//g;
+	
+	#remove quotes
+	$first =~ s/^"(.+)"$/\1/;
+	$last  =~ s/^"(.+)"$/\1/;
+	
+	warning ("first is $first, cond is $cond, last is $last\n");
 	
 	my ($parsed_first, $parsed_last);
 	
@@ -1930,37 +1938,30 @@ sub resolve_statement {
 	#if $first and $cond are defined and missing $last, throw error
 	} elsif ( $first ne '' && $cond ne '' && $last eq '' ) {
 		$self->error("Last argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
-		Log::error "erro: ultimo argumento nao existe\n";
 		return;
 		
 	#if $cond and $last are defined, but missing $first, throw error
 	} elsif ( $first eq '' && $cond ne '' && $last ne '' ) {
 		$self->error("First argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
-		Log::error "erro: ultimo argumento nao existe\n";
 		return;
 		
 	#if only first is defined, parse only first then
 	} elsif ( $first ne '' && $cond eq '' && $last eq '' ) {
 		$parsed_first = $self->parse_command($first);
-		if (defined $self->error) {
-			Log::error "error enquanto deu o parse_command no '$first', error is '$self->error'\n";
-			return;
-		}
+		return if (defined $self->error);
 		
 	#if all of them are defined, then is ok and the statement will be tested
 	} elsif ($first ne '' && $cond ne '' && $last ne '') {
 		$parsed_first = $self->parse_command($first);
 		$parsed_last  = $self->parse_command($last);
-		if (defined $self->error) {
-			Log::error "error enquanto deu o parse_command no '$first'\n";
-			return;
-		}
-	} else {
-		Log::error("nao deveria aparecer esse erro, sub resolve_statement\n");
+		return if (defined $self->error);
 	}
 	my $result = cmpr($parsed_first, $cond, $parsed_last);
-	if (defined $self->error) {
-		Log::error "error enquanto usou o cmpr com o '$parsed_first'\n";
+	
+	#if sub cmpr gave some error, result will be empty
+	#else will be 0 or 1
+	if ($result eq '') {
+		$self->error("error shown above while comparing values on sub resolve_statement");
 		return;
 	}
 	
@@ -2003,8 +2004,8 @@ sub resolve_multi_and_remove_parenthesis {
 			return 1 if $e eq "1";
 		}
 		return 0
-	}
-	elsif ($save{$n} eq "&&" && $i > 0) {
+		
+	} elsif ($save{$n} eq "&&" && $i > 0) {
 		my @split = split(/\s*\&{2}\s*/, $text);
 		foreach my $e (@split) {
 			next if $e eq "1";
@@ -2012,12 +2013,17 @@ sub resolve_multi_and_remove_parenthesis {
 			return 0
 		}
 		return 1
-	}
-	elsif ($i == 0) {
+		
+	} elsif ($i == 0) {
 		return $text if $text =~ /^[0-1]$/;
+		
+	} else {
+		$self->error("Could not resolve multi, report this error on github\n");
+		return;
 	}
 }
 
+#From here functions are meant to parse code and check order (I haven't even looked at them yet)
 sub refined_macroKeywords {
 	# To make sure if there is really no more &special keywords
 
