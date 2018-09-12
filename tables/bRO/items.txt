@@ -975,6 +975,7 @@
 1836#Punho de Cinzas#
 1837#Garra de Ferro#
 1841#Garra Prismática#
+1847#Garra Ancestral#
 1901#Violino#
 1902#Violino#
 1903#Bandolin#
@@ -1067,6 +1068,7 @@
 2022#Cajado de Geffen#
 2023#Cajado Duplo de Cinzas#
 2047#Cajado da Bruxa#
+2048#Cetro Ancestral#
 2101#Vembrassa#
 2102#Vembrassa#
 2103#Broquel#
@@ -5724,6 +5726,8 @@
 15345#Armadura do Dragão Azul#
 15370#Gálea de Unicórnio#
 15371#Roupa de Natal do Antonio#
+15374#Armadura Eclipse#
+15375#Armadura Eclipse Desgastada#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
 16003#Maça Carga#
@@ -5936,6 +5940,8 @@
 18122#Arco Gigante#
 18123#Arco das Tempestades#
 18125#Arco Demoníaco#
+18164#Balista Ancestral#
+18170#Arco Ancestral#
 18504#Elmo de Anúbis da Petrificação#
 18505#Piercing de Umbala#
 18507#Orelhas de Elfo#
@@ -6651,6 +6657,7 @@
 21010#Espada Esconjurante#
 21011#Lâmina Gigante#
 21012#Espada Mágica Celestial#
+21038#Espada Ancestral#
 21042#Espada Onimaru#
 22000#Botas Temporais FOR#
 22001#Botas Temporais INT#
@@ -6692,6 +6699,7 @@
 22117#Botas Modificadas DES#
 22118#Botas Modificadas SOR#
 22149#Botas com Espigões#
+22171#Botas Ancestrais#
 22172#Botas Aladas#
 22182#Sapatos da Penitência#
 22189#Sapato Social#
@@ -6808,6 +6816,7 @@
 25487#Insígnia do Orgulho Azul#
 25488#Insígnia do Orgulho Verde#
 25489#Insígnia do Orgulho Amarelo#
+26118#Cajado Ancestral#
 27012#Carta Transistor#
 27013#Carta Mecha v1.6#
 27014#Carta Fumaça Verde#
@@ -6827,8 +6836,10 @@
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
 28025#Katares do Monarca#
+28039#Katar Ancestral#
 28100#Machado de Cinzas#
 28101#Tufão#
+28130#Cutelo Ancestral#
 28200#Lança-Granadas Caos Total#
 28201#Cruz Meridional#
 28202#Cruz Meridional#
@@ -6863,10 +6874,13 @@
 28538#Luvas de H. Motto#
 28564#Lágrima de Valquíria #
 28572#Broche da Celine#
+28598#Fragmento de Chip #
 28617#Bíblia Sagrada#
+28630#Tomo Ancestral#
 28728#Adaga das Valquírias#
 28737#Adaga Mística#
 28739#Lacma#
+28744#Punhal Ancestral#
 28901#Coelho Macabro#
 28902#Coelho Macabro#
 28906#Escudo do Fogo#
@@ -6986,3 +7000,7 @@
 31490#Cachecol de Poring#
 31493#Peruca Branca de Waifu#
 31513#Orelhas do Coelho Minguante#
+31531#Chapéu Mágico Duas-Pontas#
+31545#Cachecol Azul do Eremes#
+32018#Lança Ancestral#
+32205#Anel de Esmeralda#

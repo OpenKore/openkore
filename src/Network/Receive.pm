@@ -2967,6 +2967,43 @@ sub shop_sold_long {
 	}
 }
 
+# TODO
+sub vending_start {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = unpack("v1",substr($msg, 2, 2));
+	my $item_pack = $self->{vender_items_list_item_pack_self} || $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_len = length pack $item_pack;
+
+	#started a shop.
+	message TF("Shop '%s' opened!\n", $shop{title}), "success";
+	@articles = ();
+	# FIXME: why do we need a seperate variable to track how many items are left in the store?
+	$articles = 0;
+
+	# FIXME: Read the packet the server sends us to determine
+	# the shop title instead of using $shop{title}.
+	my $display = center(" $shop{title} ", 79, '-') . "\n" .
+		T("#  Name                                       Type        Amount          Price\n");
+	for (my $i = 8; $i < $msg_size; $i += $item_len) {
+	    my $item = {};
+	    @$item{qw( price number quantity type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $msg, $i, $item_len;
+		$item->{name} = itemName($item);
+	    $articles[delete $item->{number}] = $item;
+		$articles++;
+
+		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		$display .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{quantity}), formatNumber($item->{price})]);
+	}
+	$display .= ('-'x79) . "\n";
+	message $display, "list";
+	$shopEarned ||= 0;
+}
+
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
 sub revolving_entity {
 	my ($self, $args) = @_;
@@ -5294,7 +5331,18 @@ sub npc_store_info {
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
 		my $item = Actor::Item->new;
 		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
-		$item->{ID} = $item->{nameID};
+		
+		# Workaround some npcs that have items appearing more than once in their store list,
+		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
+		#
+		# Usually, $Actor::Item->{ID} is equal to $Actor::Item->{nameID} - that WILL crash 
+		# kore in the event described above
+		#
+		# This workaround causes $Actor::Item->{ID} to be equal to $Actor::Item->{binID} and,
+		# therefore, never overlap 
+		# - lututui & alisonrag - Sep, 2018
+		$item->{ID} = $storeList->size;
+		
 		$item->{name} = itemName($item);
 		$storeList->add($item);
 
@@ -7123,6 +7171,27 @@ sub inventory_item_favorite {
 	} else {
 		message TF("Inventory Item move to favorite tab: %s\n", $item), "storage";
 	}
+}
+
+sub private_message_sent {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+ 		message TF("(To %s) : %s\n", $lastpm[0]{'user'}, $lastpm[0]{'msg'}), "pm/sent";
+		chatLog("pm", "(To: $lastpm[0]{user}) : $lastpm[0]{msg}\n") if ($config{'logPrivateChat'});
+
+		Plugins::callHook('packet_sentPM', {
+			to => $lastpm[0]{user},
+			msg => $lastpm[0]{msg}
+		});
+
+	} elsif ($args->{type} == 1) {
+		warning TF("%s is not online\n", $lastpm[0]{user});
+	} elsif ($args->{type} == 2) {
+		warning TF("Player %s ignored your message\n", $lastpm[0]{user});
+	} else {
+		warning TF("Player %s doesn't want to receive messages\n", $lastpm[0]{user});
+	}
+	shift @lastpm;
 }
 
 1;

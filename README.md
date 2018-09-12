@@ -33,11 +33,11 @@ git clone https://github.com/OpenKore/openkore.git
 | --- | --- | --- | --- | --- |
 | [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag, sctnightcore |
+| [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag |
 | [idRO](https://ragnarok.gravindo.id/) | Indonesia RO (classic) | *** | Not Working | N/A  |
-| [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | sctnightcore | 
-| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag, sctnightcore |
-| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
+| [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | allanon | 
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag |
+| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag  |
 | [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Need Verification |  N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
 | [tRO](https://ro.exe.in.th/) | Thailand RO | EAC | Need Verification | N/A |

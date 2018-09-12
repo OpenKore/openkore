@@ -19,11 +19,12 @@
 package Network::Send::ServerType15;
 
 use strict;
-use Globals qw($char $syncSync $net %config $masterServer);
 use Network::Send::ServerType11;
 use Network::PaddedPackets;
 use base qw(Network::Send::ServerType11);
-use Log qw(error debug);
+
+use Globals qw($char $syncSync $masterServer);
+use Log qw(debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount getHex getCoordString);
 

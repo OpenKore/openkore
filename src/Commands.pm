@@ -171,6 +171,7 @@ sub initHandlers {
 	relog				=> \&cmdRelog,
 	repair				=> \&cmdRepair,
 	respawn				=> \&cmdRespawn,
+	revive				=> \&cmdRevive,
 	rodex				=> \&cmdRodex,
 	s					=> \&cmdStatus,
 	sell				=> \&cmdSell,
@@ -7172,8 +7173,8 @@ sub cmdSearchStore {
 		} elsif ($args[1] eq "exact") {
 			$searchMethod = \&itemNameToIDList;
 		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			error T("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] \"<item name>\" [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n");
 			
 			return;
 		}
@@ -7201,11 +7202,6 @@ sub cmdSearchStore {
 			if ($args[5] eq "card") {
 				@cards = $searchMethod->($args[6]);
 			}
-		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
-			
-			return;
 		}
 		
 		if ($args[-1] eq "buy") {
@@ -7265,6 +7261,50 @@ sub cmdSearchStore {
 			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
 			"searchstore select <page #> <store #> : Selects a store\n" .
 			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
+}
+
+sub cmdRevive {
+	my ($cmd, $args) = @_;
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	if (!$char->{dead}) {
+		error TF("You must be dead to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	my @args = parseArgs($args);
+	my $item;
+	
+	if (scalar @args == 1) {
+		# User passed an item nameID
+		if ($args[0] =~ /^\d+$/) {
+			$item = $char->inventory->getByNameID($args[0]);
+		}
+		# User passed an item name
+		elsif ($args[0] ne "force") {
+			$item = $char->inventory->getByName($args[0]);
+		}
+	} elsif (scalar @args == 0) {
+		# Try to find Token Of Siegfried
+		$item = $char->inventory->getByNameID(7621);
+	} else {
+		error T("Error in 'revive' command (incorrect syntax)\n".
+				"revive [force|<item name>|<item ID>]\n");
+		return;
+	}
+	
+	if (!$item && $args[0] ne "force") {
+		error TF("Error in 'revive' command\n".
+				"Cannot use item %d in attempt to revive: item not found in inventory\n", $args[0]);
+		return;
+	}
+	
+	message TF("Trying to use item %s to self-revive\n", $item->name());
+	$messageSender->sendAutoRevive();
 }
 
 1;
