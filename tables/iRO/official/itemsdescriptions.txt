@@ -19559,21 +19559,19 @@ Jobs : ^777777Mechanic only^000000
 #
 2809#
 A component to use Mechanic Magic Gear Skill, Emergency Cool.
-Dex +1.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^777777250^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Mechanic only^000000
+Class: ^808080Accessory^000000
+Weight: ^808080250^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Mechanic^000000
+Dex +1
 #
 2810#
 A component to use the Mechanic Magic Gear Skill, Emergency Cool.
-Dex +1.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^777777250^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Mechanic only^000000
+Class: ^808080Accessory^000000
+Weight: ^808080250^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Mechanic^000000
+Dex +1
 #
 2811#
 ^000088Rental Item^000000
@@ -59355,6 +59353,24 @@ Costume Long Haired Cat Ears
 Costume Tuxedo Rabbit
 Costume Black Rabbit Ears
 #
+14992#
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When Opened Gives One of the Following
+
+Supplemental Chip
+Work Cap
+Eyes Of Illusion
+Traveler Shoes
+Sunglasses [1]
+Nero Shield [1]
+Exorcist's Shoes [1]
+Beelzebub Wing Box
+(8) Blacksmith Blessing
+(6) Battle Manual X3
+(10) Citizen Oda’s Miracle Elixir
+(5) Bloody Dead Branch
+#
 15000#
 Dark Plated Armor covered with sharp bones.
 When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
@@ -68554,13 +68570,12 @@ Jobs : ^777777All Jobs^000000
 18517#
 #
 18518#
-An ear accesory that looks just like white, beautiful angel wings.
-Class : ^777777Costume^000000
-Defense: ^7777770^000000
-Location: ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+An ear accessory that looks just like white, beautiful angel wings.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18519#
 #
@@ -69710,14 +69725,14 @@ Required Level : ^77777720^000000
 Jobs : ^777777All class except novice^000000
 #
 18666#
-^808080Burn away as you hold this CD in your mouth.^000000
-Class: Headgear
-Position: Lower
-Defense: 0
-Weight: 20
-Required Level: 20
-Required Jobs: All Jobs except Novice Jobs
-Adds a 6% chance of buffing the user for 5 seconds when performing a physical or magical attack; Adds a 100% chance of casting a random level 1 to 5 ^0000FFCold Bolt^000000, ^0000FFEarth Spike^000000, ^0000FFFire Bolt^000000, ^0000FFLightning Bolt^000000 or ^0000FFSoul Strike^000000 on the target when performing a physical or magical attack.
+Burn away as you hold this CD in your mouth.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Adds a 6% chance of buffing the user for 5 seconds when performing a physical attack; Adds a 100% chance of casting a random level 1 to 5 ^0000FFCold Bolt^000000, ^0000FFEarth Spike^000000, ^0000FFFire Bolt^000000, ^0000FFLightning Bolt^000000 or ^0000FFSoul Strike^000000 on the target when performing a physical attack.
 #
 18667#
 Laced hairband decorated with two kitten figures.
@@ -69998,11 +70013,13 @@ Job : ^777777All Job except Novice^000000
 #
 18693#
 The headgear is made according to the sleeping kitty.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Increase damage inflicted on Brute Monsters by 2%.
-Series : ^777777Headgear^000000    Defense : ^7777774^000000
-Location : ^777777Upper^000000    Weight : ^77777720^000000
-Level Requirement : ^77777720^000000
-Job : ^777777All Job except Novice^000000
 #
 18694#
 You will feel in a fairy tale after worn it.
@@ -70045,12 +70062,14 @@ Required Level : ^77777720^000000
 Job : ^777777All Jobs except Novice^000000
 #
 18699#
-Hat that looks like a starving big fish eats man
-Receive 15% less damage from water property monster. When hunting monsters, dropped Fresh Fish with low chance.
-Refine unavailable.
-Class : ^777777Headgear^000000    Defense : ^7777773^000000
-Location : ^777777Upper^000000    Weight : ^777777120^000000
-Job : ^777777All Jobs^000000
+Hat that looks like a starving fish eating the adventurer.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^808080120^000000
+Usable By: ^808080All Jobs^000000
+Receive 15% less damage from water property monsters.
+When hunting monsters, dropped Fresh Fish with low chance.
 #
 18700#
 Gothic rabbit ribbon hat that is arrogant  and cute.
@@ -71517,14 +71536,16 @@ Max SP + 5%
 #
 18882#
 A headgear that is shaped like a gourd bowl used for drawing water.
-Creates a chance of casting Level 12 Deluge when you receive Physical damage.
-When upgraded to +3 or above, randomly casts Level 1 Waterball when you receive Physical damage.
-Waterball's level increases by 1 every 3 upgrade levels.
-MDEF +5.
-Class : ^777777HeadGear^000000 Defense : ^7777775^000000
-Location : ^777777Upper ^000000Weight : ^77777720^000000
-Required Level : ^77777720^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Adds a chance of casting ^0000FFLevel 1 Deluge^000000 when receiving a Physical attack.
+If upgrade level is +3 or higher, adds a chance of casting ^0000FFLevel 1 Waterball^000000 when performing a Physical attack.
+^0000FFWaterball^000000 level increases by 1 per 3 upgrade levels of the item.
 #
 18883#
 Wearing this hat, it seems to control myself by Black Witch's magic.
@@ -74452,6 +74473,7 @@ Agi + 8
 Restores 9% HP and 2% SP.
 #
 19391#
+A creepy blindfold drawn over the eyes gives a slightly uneasy feeling.
 Class: ^808080Headgear^000000
 Position: ^808080Middle^000000
 Defense: ^8080802^000000
@@ -74459,11 +74481,9 @@ Weight: ^80808050^000000
 Requires Level: ^808080100^000000
 MHP + 10% , MSP + 10%
 Reduces damage taken from enemy players by 5%.
-Never get a blind status.
-If the hallucination doping skill level is 5,
-Dispel level 5 is available.
-If Mandragora Howling skill level is 5,
-Mandragora Howling skill casting time is reduced by 70%.
+Grants immunity to being blinded.
+If user learned Hallucination Drug level 5, enables to use Dispel level 5.
+If user learned Mandragora Howl level 5, reduces fixed casting time of Mandragora Howl by 70%.
 
 #
 19392#
@@ -74649,30 +74669,22 @@ Required Level: ^7777771^000000
 Jobs : ^777777All^000000
 #
 19407#
-A box that contains 1 Classic Ramen Hat
-Description:
-Delicious noodles
-worn on the head that
-can be eaten when food
-is especially scarce.
-There's nothing like
-a good bowl of ramen.
-Nothing. Dex +4.
-Cannot be upgraded.
-Has a chance to
-auto-cast Lv.1 Dex-
-Decrease each
-time the wearer
-is attacked.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense: ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level: ^77777730^000000
-Jobs : ^777777All^000000
+A hat used by machinists at work. As stylish as it is functional.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808018^000000
+Weight: ^808080100^000000
+Requires Level: ^808080100^000000
+Mdef + 15.
+Vit + 10.
+Increases Axe Tornado damage by 20%.
+Reduces casting time of Greed by 100%.
+If user learned FAW Magic Decoy level 5, increases physical damage against boss monsters by 50%.
+If user learned Axe Boomerang level 5, Atk + 100.
+If user learned Lava Flow level 5, has a chance to gain 3carat Diamond when killing monsters.
+If refine rate is 7 or higher, increases Axe Tornado damage by additional 30%.
+If refine rate is 9 or higher, increases Axe Tornado damage by additional 50%.
+If refine rate is 10, ignore defense of all race monsters by 100%.
 #
 19408#
 A box that contains 1 Classic Robo Eye
@@ -82077,7 +82089,7 @@ Reduces the fixed casting time of skills by an additional 1% per upgrade level o
 The users casting cannot be interrupted outside of WoE.
 #
 22093#
-Shoes wore by an exorcist. Shoes reflects all the experience that he has been through.
+Shoes worn by an exorcist. They hold all the experience that he has been through.
 
 
 Class: ^808080Shoes^000000
@@ -82667,30 +82679,27 @@ Additional Max SP + 10%
 Reduces the SP cost of skills by an additional 5%.
 #
 22198#
+Shoes fit for a traveler with much work to be done.
 Class: ^808080Shoes^000000
 Defense: ^80808015^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
-MHP + 3% , MSP + 3%.
-Increases magic damage by 2%.
-Increases neutral magic damage by 2%.
-If refine level is 5 or higher, additional MHP + 7%, MSP + 7%.
-Increases additional damage of magical attacks by 3%.
-Increases additional damage of Neutral property magical attacks 3%.
-If refine level is 7 or higher, additional MHP + 10%,?MSP + 10%.
-Increases additional damage of magical attacks by 5%.
-Increases additional damage of Neutral property magical attacks 5%.
-All stats + 1 for every swing dance skill level up.
-Increases Attack speed by 4%
-for every harmonize skill level up.
-Increase MHP by 2% by
-for every Frigg's Song skill level up.
-Increase damage of Metalic sound by 10%
-for every Gloomy Shyness skill level up.
-If Deep Sleep Lullaby skill level is 1 or higher,
-Metalic sound skill casting time is reduced by 10%.
-Hitting targets with magic attack gives a chance of inflicting deep sleep to enemies with certain rate.
-Increase the probability of causing Sleep for every skill level up.
+Mdef + 15.
+MaxHP + 3%, MaxSP + 3%.
+Matk + 2%.
+Increases neutral property magical damage by 2%.
+All stat + 1 per each level of Swing Dance user learned.
+Attack speed + 4% per each level of Harmonize user learned.
+MaxHP + 2% per each level of Frigg's Song user learned.
+Increases damage of Metallic Sound by 10% and reduces casting time of Metallic Sound by 10% per each level of Gloomy Shyness user learned.
+If user learned Deep Sleep Lullaby level 1, has a chance of inflicting sleep on an enemy when dealing magical damage.
+Increases a chance of inflicting sleep per each level of Deep Sleep Lullaby user learned.
+If refine rate is 5 or higher, additional MaxHP/MaxSP + 7%,
+additional Matk + 3%,
+Increases neutral property magical damage by additional 3%.
+If refine rate is 7 or higher, additional MaxHP/MaxSP + 10%,
+additional Matk + 5%,
+Increases neutral property magical damage by additional 5%.
 #
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
@@ -83584,6 +83593,16 @@ Weight: 0
 Type: Consumable
 Class: Item Producer
 Weight: 0
+#
+23277#
+Emergency Madogear for use in the event of suit failure.
+
+Class: ^808080Scroll^000000
+Weight: ^808080300^000000
+Requires Level: ^808080100^000000
+Requires [Madogear License] to use.
+Can only be used once every 3 minutes.
+
 #
 23293#
 ^808080A box that contains a Bison Horn and Buffalo Horn.^000000
@@ -87780,6 +87799,31 @@ Max SP + 10%
 Flee + 40
 Reduces the global delay of skills by 30%.
 #
+28598#
+A special chip that amplifies natural abilities for a powerful effect.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+ATK + 5%
+If Arm Cannon is Lv 3 or Greater
+Reduces the cast delay of skills by 30%.
+
+If Neutral Barrier is Lv 3 or Greater
+Reduces the variable casting time of ^0000FFArm Cannon^000000 by 50%.
+Reduces the variable casting time of ^0000FFIce Launcher^000000 by 50%.
+Reduces the variable casting time of ^0000FFFlame Launcher^000000 by 50%.
+
+If Pilebunker is Lv 3 or Greater
+STR + 5
+VIT + 5
+Dex + 5
+ATK + 100
+
+If Fire Earth Research is Lv 5 or Greater
+Mado Fuel is not consumed when using skills.
+
+#
 28600#
 Attack: 0
 Property: N/A
@@ -88311,25 +88355,25 @@ Additional Max SP+ 1% per 3 upgrade levels of the item.
 Additional Max SP + 1%, if the users base level is 130 or higher.
 #
 28951#
+A shield that harnesses the power of water.
 Class: ^808080Shield^000000
 Defense: ^80808080^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
+Mdef + 5
+Increases physical and magical damage on Water property targets by 5%.
 Reduces damage taken from Water property attacks by 10%.
-Increases additional physical and magical DMG
-inflicted on Water property monsters by 5%.
-If refine level is 6 or higher, damage taken from Water property is reduced
-by 15%.
-Increases additional physical and magical DMG inflicted on Water property monsters by 10%.
-If refine level is 8 or higher,
-Atk 50 is increased when pure Str is 90 or higher.
-If pure Agi is 90 or higher, attack speed is increased by 5%.
-If pure Vit is 90 or higher
-receives 10% more HP from healing skills.
-Receives 10% more HP from certain healing items.
-If pure Int is 90 or higher, Matk is increased by 30.
-If pure Dex is 90 or higher, fluctuant casting rate is reduced by 5%.
-If pure Luk is 90 or higher, critical attack DMG is increased by 5%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Increases physical and magical damage on Water property targets by an additional 10%.
+Reduces damage taken from Water property attacks by an additional 15%.
+If upgrade level is +8 or higher,
+If the users base Str is 90 or higher, Atk + 50
+If the users base Agi is 90 or higher, Aspd + 5%
+If the users base Vit is 90 or higher, increases the recovery rate of recovery items by 10%.
+If the users base Int is 90 or higher, Matk + 30
+If the users base Dex is 90 or higher, reduces the variable casting time of skills by 5%.
+If the users base Luk is 90 or higher, increases critical damage on targets by 5%.
 #
 29000#
 Type: Miscellaneous
@@ -90466,6 +90510,8 @@ This tuxedo rabbit will be the highlight of the ball wherever you go!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31513#
 A cute black cap with long rabbit ears.

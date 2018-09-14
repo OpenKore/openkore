@@ -126,7 +126,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x39080480, 0x2BFD4A7B, 0x3E9847A3
+sendCryptKeys 0x51B74D50, 0x1B8A0882, 0x01583588
 blockingPlayerCancel 1
 rankingSystemType 1
 pauseCharLogin 1
@@ -174,7 +174,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x3A1706EB, 0x432049A9, 0x77020E74
+sendCryptKeys 0x53A47D0B, 0x612B148F, 0x049C0468
 rankingSystemType 1
 pauseCharLogin 1
 
