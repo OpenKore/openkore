@@ -6900,6 +6900,7 @@
 14977#Overseas_Care_Package_XXI#
 14979#MVP_August_Costume_Box#
 14991#Feisty_September_2018_Costume_Box#
+14992#Overseas_Care_Package_XXII#
 15000#Bone_Plate#
 15002#Rune_Plate#
 15003#Freya's_Spiritual_Robe#
@@ -7715,7 +7716,7 @@
 18515#RMSC_2011_Champion_Helm#
 18516#RMSC_2011_1st_Runner_Helm#
 18517#RMSC_2011_2nd_Runner_Helm#
-18518#Angel_Wing_Ears#
+18518#Costume_Angel_Wing_Ears#
 18519#Evil_Wing_Ears#
 18520#Jaty_Crown#
 18521#Lucky_Clover#
@@ -8203,7 +8204,7 @@
 19404#Classic_Kettle_Hat_Box#
 19405#Classic_Mini_Propeller_Hat_Box#
 19406#Classic_Pecopeco_Hairband_Box#
-19407#Classic_Ramen_Hat_Box#
+19407#Work_Cap#
 19408#Classic_Robo_Eye_Box#
 19409#Classic_Sheep_Hat_Box#
 19410#Classic_Charming_Ribbon_Box#
@@ -9070,6 +9071,7 @@
 23261#Chewy_Macaron#
 23265#Sprint_Bundle_A#
 23266#Etran_Bundle_A#
+23277#Mado_Emergency_Gear#
 23293#Bison_Bundle_A#
 23294#Pororoca_Shoes_Bundle_A#
 23295#Lian_Bundle_B#
@@ -9415,6 +9417,7 @@
 28573#Emerald_Ring#
 28575#Verus_Core#
 28594#Temporal_Ring#
+28598#Supplemental_Chip#
 28600#Ru_Blue_Book#
 28601#Ru_Gold_Book#
 28604#Crimson_Bible#
