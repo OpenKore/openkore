@@ -299,7 +299,7 @@ gameguard 1
 ####################
 # Private RO Servers
 
-# http://gombak-gamerz.com/
+# http://ggamerz-ro.com/
 [GGamerzRO]
 ip 116.251.223.136
 port 6900
