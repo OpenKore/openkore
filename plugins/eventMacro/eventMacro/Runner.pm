@@ -1228,10 +1228,34 @@ sub parse_and_check_condition_text {
 		my $current_char  = $characters[$i];
 		my $next_char     = $characters[$i+1];
 		
+		#end of regex if found a '/' and it's not a \/
+		if (defined $in_regex) {
+			if ($current_char eq '/' && $previous_char ne "\\") {
+				undef $in_regex;
+			}
+				
+		#end of quoted string if found a " and it's not a \"
+		} elsif (defined $in_quote) {
+			if ($current_char eq '"' && $previous_char ne "\\") {
+				undef $in_quote;
+			}
+			
+		#ignore if is inside a regex or if found a escaped \"
+		} elsif (!defined $in_quote && $current_char eq '"') {
+			unless ($previous_char eq "\\" || defined $in_regex) {
+				$in_quote = 1;
+			}
+			
+		#ignore if is inside a quoted_string or if found a escaped one '\/'
+		} elsif (!defined $in_regex && $current_char eq '/') {
+			unless ($previous_char eq '\\' || defined $in_quote) {
+				$in_regex = 1;
+			}
+		
 		#save every char on $token, until a space or special charecter appear
 		#eventually it will become a macro_keyword or sub
-		if ( $current_char =~ /\w/) {
-			if (!defined $in_regex && !defined $in_quote && !defined $start_of_variable) {
+		} elsif ( $current_char =~ /\w/) {
+			if (!defined $start_of_variable) {
 				if ($next_char =~ /\W/ && length($token) < 2) {
 					undef $token if defined $token;
 					next CHAR;
@@ -1241,76 +1265,32 @@ sub parse_and_check_condition_text {
 			}
 			
 		} elsif ($current_char =~ /\s/) {
-			if ($in_regex || $in_quote) {
-				next CHAR;
-			}
 			
 			# if a token is defined, then it can be a macro_keyword or a sub
 			# but is treated on other case statement
 			# if not, then undef token and start_of_macro_keyword and start_of_variable
-			if (defined $token && length($token) >= 3) {
-				if ( $next_char eq '(' ) {
-					next CHAR;
-				} else {
-					undef $start_of_macro_keyword;
-					undef $token;
-				}
-			} else {
+			unless (defined $token && length($token) >= 3 && $next_char eq '(') {
 				undef $start_of_macro_keyword;
 				undef $token;
 				undef $start_of_variable;
 			}
 			
-		#possible begin or end of a regex
-		} elsif ($current_char eq '/') {
-			
-			#ignore slashes inside quote
-			if (defined $in_quote) {
-				next CHAR;
-			
-			#start of a regex, it will ignore special characteres
-			} elsif (!defined $in_regex) {
-				$in_regex = 1;
-				undef $token;
-				
-			#end of a regex
-			} elsif (defined $in_regex && $previous_char ne "\\") {
-				undef $in_regex;
-				undef $token if defined $token;
-			}
-		
-		#possible begin or end of double_quoted string
-		} elsif ($current_char eq '"') {
-			if (defined $in_regex) {
-				next CHAR;
-			
-			} elsif (!defined $in_quote) {
-				$in_quote = 1;
-				undef $token;
-			
-			} elsif (defined $in_quote && $previous_char ne "\\") {
-				undef $in_quote;
-				undef $token if $token;
-			}
-			
 		#this case block is only to prevent $token to save variables, which is useless
 		#$token is meant to save only macro_keywords and subs
 		} elsif ($current_char eq '$' || $current_char eq '@' || $current_char eq '%') {
-			unless (defined $in_regex || defined $in_quote || $previous_char eq "\\") {
+			unless ($previous_char eq "\\") {
 				$start_of_variable = 1;
 			}
 			
 		} elsif ($current_char eq '&' ) {
 			
 			#ignore if is quoted string or regex or found a &&
-			if (defined $in_regex || defined $in_quote || $previous_char eq '&' || $next_char eq '&') {
+			if ($previous_char eq '&' || $next_char eq '&') {
 				undef $token                  if defined $token;
 				undef $start_of_macro_keyword if defined $start_of_macro_keyword;
-				next CHAR;
-			}
 			
 			#if is a & followed by a letter or number, is problably a macro keyword
-			if ($previous_char ne '&' && $next_char =~ /\w/) {
+			} elsif ($previous_char ne '&' && $next_char =~ /\w/) {
 				undef $token;
 				$start_of_macro_keyword = 1;
 				
@@ -1323,10 +1303,9 @@ sub parse_and_check_condition_text {
 		} elsif ( $current_char eq '|' ) {
 			
 			#ignore if inside a quoted string or a regex
-			if (defined $in_regex || defined $in_quote || $previous_char eq '|' || $next_char eq '|') {
+			if ($previous_char eq '|' || $next_char eq '|') {
 				undef $token                  if defined $token;
 				undef $start_of_macro_keyword if defined $start_of_macro_keyword;
-				next CHAR;
 			
 			#else throw error
 			} else {
@@ -1335,10 +1314,6 @@ sub parse_and_check_condition_text {
 			}
 		} elsif ( $current_char eq ')' ) {
 			
-			#ignore if inside a quoted string or a regex
-			if ($in_regex || $in_quote) {
-				next CHAR;
-			}
 			undef $start_of_macro_keyword if defined $start_of_macro_keyword;
 			undef $token                  if defined $token;
 			
@@ -1374,11 +1349,6 @@ sub parse_and_check_condition_text {
 			}
 			
 		} elsif ($current_char eq '(' ) {
-			
-			#ignore if inside a quoted string or a regex
-			if ($in_regex || $in_quote) {
-				next CHAR;
-			}
 			
 			#oh, this might be a macro keyword or sub!
 			if ($token && length($token) >= 3) {
@@ -1429,7 +1399,7 @@ sub parse_and_check_condition_text {
 			push (@start_of_group, $i);
 			$parenthesis_count++;
 		}
-	}
+	} #for loop end
 	
 	#its error time
 	#multiple checks of commom errors
