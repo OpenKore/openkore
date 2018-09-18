@@ -1496,187 +1496,118 @@ sub parse_single_group {
 	my $in_regex;
 	
 	CHAR: for (my $i = 0; $i < @characters; $i++) {
-		use Switch;
 		my $previous_char = $characters[$i-1];
 		my $current_char = $characters[$i];
 		my $next_char = $characters[$i+1];
 		my $result;
 		
-		switch ($current_char) {
+		#end of regex if found a '/' and it's not a \/
+		if (defined $in_regex) {
+			if ($current_char eq '/' && $previous_char ne "\\") {
+				undef $in_regex;
+			}
+				
+		#end of quoted string if found a " and it's not a \"
+		} elsif (defined $in_quote) {
+			if ($current_char eq '"' && $previous_char ne "\\") {
+				undef $in_quote;
+			}
 			
-			#end of group that is being parsed
-			case ( ')' ) {
-				
-				#actually is inside quoted string or regex, so will ignore
-				if ($in_quote || $in_regex) {
-					next;
-				}
-				
-				#if there is no other char after ')', that is really end of group
-				if (!$next_char) {
-					#end of this statment
-					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					return if (defined $self->error);
-					
-					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
-					return if (defined $self->error);
-					
-					
-					$script = $self->resolve_multi_and_remove_parenthesis($script);
-					return if (defined $self->error);
-					undef $negate;
-					undef $first;
-					undef $condition;
-					undef $second;
-					
-					return $script;
-					
-				#if there is a char after ')' means that is a normal closing parenthsis
-				} else {
-					next;
-				}
+		#ignore if is inside a regex or if found a escaped\"
+		} elsif (!defined $in_quote && $current_char eq '"') {
+			unless ($previous_char eq "\\" || defined $in_regex) {
+				$in_quote = 1;
+			}
+			
+		#ignore if is inside a quoted_string or if found a escaped one '\/'
+		} elsif (!defined $in_regex && $current_char eq '/') {
+			unless ($previous_char eq '\\' || defined $in_quote) {
+				$in_regex = 1;
 			}
 		
-			case ( '(' ) {
-				if ($in_quote || $in_regex) {
-					next;
-				}
-				
-				#means it is the beginning of script, always a '(''
-				if ($i == 0) {
-					next CHAR;
-					
-				#normal '(' inside statement, can be of a macro_keyword or sub
-				} else {
-					next;
-				}
-			}
+		#if there is no other char after ')', that is really end of group
+		#it will be parsed unless is inside a quoted string or a regex
+		} elsif ($current_char eq ')' && !defined $next_char) {
+			#end of group that is being parsed
+			$result = $self->resolve_statement($negate, $first, $condition, $second);
+			return if (defined $self->error);
 			
-			case ( '&' ) {
-				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a &&)
-				if ($in_quote || $in_regex) {
-					next;
-				}
-				#if next char is also a &  means that were found a '&&', that means that there is one statement to be parsed
-				if ($next_char eq '&' ) {
-					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					return if (defined $self->error);
-					
-					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
-					return if (defined $self->error);
-					
-					undef $negate;
-					undef $first;
-					undef $condition;
-					undef $second;
-					$i++; #intentional, it is to skip the next &
-					next CHAR;
-				} else {
-					next;
-				}
-			}
+			$script =~ s/\Q$negate$first$condition$second\E/$result/
+			or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
+			return if (defined $self->error);
 			
-			case ( '|' ) {
-				#next if inside quoted_string, inside regex or next char is a word (which means it is a macro keyword, not a ||)
-				if ($in_quote || $in_regex) {
-					next;
-				}
-				#if next char is also a | means that were found a '||', that means that there is one statement to be parsed
-				if ($next_char eq '|' ) {
-					$result = $self->resolve_statement($negate, $first, $condition, $second);
-					return if (defined $self->error);
-					
-					$script =~ s/\Q$negate$first$condition$second\E/$result/
-					or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
-					return if (defined $self->error);
-					
-					undef $negate;
-					undef $first;
-					undef $condition;
-					undef $second;
-					$i++; #intentional, it is to skip the next |
+			
+			$script = $self->resolve_multi_and_remove_parenthesis($script);
+			return if (defined $self->error);
+			undef $negate;
+			undef $first;
+			undef $condition;
+			undef $second;
+			
+			return $script;
+			
+		#means it is the beginning of script, always a '(''
+		} elsif ( $current_char eq '(' && $i == 0) {
+			next CHAR;
+			
+		#if next char is also a & means that were found a '&&', that means that there is one statement to be parsed
+		#if next char is also a | means that were found a '||', that means that there is one statement to be parsed
+		} elsif ( ($current_char eq '&' && $next_char eq '&') || ($current_char eq '|' && $next_char eq '|') ) {
+			$result = $self->resolve_statement($negate, $first, $condition, $second);
+			return if (defined $self->error);
+			
+			$script =~ s/\Q$negate$first$condition$second\E/$result/
+			or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
+			return if (defined $self->error);
+			
+			undef $negate;
+			undef $first;
+			undef $condition;
+			undef $second;
+			$i++; #intentional, it is to skip the next &
+			next CHAR;
+			
+		#special characters found, problably is $condition
+		} elsif ( $current_char =~ /[=!~><]/ ) {
+			
+			if ( !defined $first || $first =~ /^\s+$/) {
+				#if found a special character before first be defined, can only be two things
+				#its the $negate char or it's a typo
+				if ($current_char eq '!') {
+					$negate = $first . '!'; #first is here only to get the whitespace
+					undef $first; #clean spaces inside $first, they were passed to $negate
 					next CHAR;
 				} else {
-					next;
-				}
-			}
-			
-			#special characters found, problably is $condition
-			case ( /[=!~><]/ ) {
-				
-				#ignoring since it's inside quoted_string or inside regex
-				if ($in_quote || $in_regex) {
-					last;
-				}
-				
-				if ( !defined $first || $first =~ /^\s+$/) {
-					#if found a special character before first be defined, can only be two things
-					#its the $negate char or it's a typo
-					if ($current_char eq '!') {
-						$negate = $first . '!'; #first is here only to get the whitespace
-						undef $first; #clean spaces inside $first, they were passed to $negate
-						next CHAR;
-					} else {
-						$self->error("Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)");
-						return;
-					}
-					
-				#a condition
-				} elsif ( defined $first && !defined $condition ) {
-					$condition .= $current_char;
-					if ($next_char =~ /[=!~><]/ ) {
-						$condition .= $next_char;
-						$i++;
-					}
-					next CHAR;
-					
-				#if there is already a condition, then is certainly an error
-				} elsif ( defined $first && defined $condition) {
-					$self->{errror} = "Error in statement '$script': not expected to have '$current_char' at index '$i' (use quotes if condition have special characters)";
+					$self->error("Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)");
 					return;
 				}
-			}
-		} #end of switch statement
-		
-		if ($current_char eq '"') {
-			#ignore if is inside a regex or if found a \"
-			unless ($previous_char eq "\\" || $in_regex) {
 				
-				#end of quoted_string
-				if ($in_quote) {
-					undef $in_quote;
-				
-				#start of quoted_string
-				} else {
-					$in_quote = 1;
+			#a condition
+			} elsif ( defined $first && !defined $condition ) {
+				$condition .= $current_char;
+				if ($next_char =~ /[=!~><]/ ) {
+					$condition .= $next_char;
+					$i++;
 				}
-			}
-			
-		} elsif ($current_char eq '/') {
-			#ignore if is inside a quoted_string or if found a escaped one '\/'
-			unless ($previous_char eq '\\' || $in_quote) {
+				next CHAR;
 				
-				#end of regex
-				if ($in_regex) {
-					undef $in_regex;
-				
-				#start of regex
-				} else {
-					$in_regex = 1;
-				}
+			#if there is already a condition, then is certainly an error
+			} elsif ( defined $first && defined $condition) {
+				$self->{errror} = "Error in statement '$script': not expected to have '$current_char' at index '$i' (use quotes if condition have special characters)";
+				return;
 			}
 		}
+		
 		
 		if (!defined $condition) {
 			$first .= $current_char;
 		} elsif ( defined $first && defined $condition ) {
 			$second .= $current_char;
 		}
+		
 	} #end of for loop
 	
-	#in theory should never gets here, but it's better to leave a error message case it gets here
+	#in theory should never gets here, so it's better to leave a error message case it gets here
 	$self->error("unknown error found while parsing at sub parse_single_group, please create an issue on github about this");
 	return;
 }
