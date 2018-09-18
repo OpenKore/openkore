@@ -873,6 +873,7 @@
 1671#Cajado Esconjurante#
 1675#Cajado do Cavalheiro#
 1676#Cajado Demoníaco#
+1679#Cajado dos Esplêndidos#
 1701#Arco#
 1702#Arco#
 1703#Arco#
