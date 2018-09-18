@@ -37443,8 +37443,8 @@ Uma deliciosa bala típica feita de Guaraná. Carrega consigo as propriedades en
 Peso: ^7777771^000000
 #
 12418#
-^0000ffATQ +50.^000000=],
-				[=[^008080Perde o efeito ao morrer.^000000
+^0000ffATQ +50.^000000
+^008080Perde o efeito ao morrer.^000000
 Duração: ^777777500 segundos^000000
 Peso: ^7777775^000000
 #
@@ -37564,13 +37564,14 @@ Peso: ^7777771^000000
 #
 12529#
 Uma caixa contendo 200 Poções Brancas Compactas.
-Depois de aberta, não pode ser restituída.
 Não pode ser trocado ou colocado na Kafra.
 Peso : ^7777771^000000
+"^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12530#
 Uma caixa contendo 200 Mastelas. Uma fruta roxa, muito bela.
 Peso : ^77777710^000000
+"^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12531#
 Uma caixa contendo 100 Poções Brancas
@@ -37584,19 +37585,18 @@ Peso : ^7777770^000000
 #
 12533#
 Uma caixa contendo 100 Ervas Azuis.
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado no armazém.^000000
 Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12534#
 Uma caixa que contém 30 Sementes de Yggdrasil. Cuidado ao abrir.
 Peso: 0
-Cuidado - o conteúdo dessa caixa pode se perder caso você não tenha espaço no seu inventário.
+"^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12535#
-Há Frutos de Yggdrasil dentro desta caixa.
+Uma caixa contendo 15 Frutos de Yggdrasil
 Peso: ^7777770^000000
-^ff0000Atenção: Caso não tenha espaço suficiente no inventário, os itens serão perdidos.^000000
+"^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12536#
 Ensopado feito de arroz e polvo. O aroma pode ser sentido a metros!
@@ -52285,7 +52285,7 @@ Classes que Utilizam: ^777777Todas^000000
 Um par de óculos protetores para evitar acidentes e garantir o conforto necessário em longas viagens.
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
-Equipa em: ^777777Topo^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -60365,6 +60365,7 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31528#
+Vinda direto do espaço, essa tiara tem um visual que certamente vai te tornar um verdadeiro astro entre os aventureiros. Suas pontas são adornadas com estrelas, que se encontraram por um acaso do destino.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -60381,6 +60382,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31542#
+Você acha Porings tão fofos que tem vontade de guardá-los em um potinho? Bom, com esse vaso, você vai chegar bem próximo de tornar isso realidade!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
@@ -60388,6 +60390,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31543#
+Basta colocá-lo na cabeça e todo o conforto e a fofura desse simpático chapéu o farão se sentir um verdadeiro ursinho de pelúcia. Só tome cuidado pra não te apertarem demais!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
