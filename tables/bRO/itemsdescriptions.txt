@@ -7622,6 +7622,19 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Magos, Noviços, Espiritualistas e evoluções^000000
 #
+1679#
+Um cajado criado com uma pedra encantada pela Tribo dos Esplêndidos.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +180.^000000
+A cada refino:
+^0000ffTempo de conjuração fixo -1%.^000000
+Tipo: ^777777Cajado^000000
+Ataque: ^77777730^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Magos, Noviços e evoluções^000000
+#
 1701#
 Arco básico. Esta arma necessita de flechas para ser utilizada. Arraste esta arma para a janela de equipamento para utilizar.
 Classe: ^777777Arco^000000
@@ -37564,7 +37577,6 @@ Peso: ^7777771^000000
 #
 12529#
 Uma caixa contendo 200 Poções Brancas Compactas.
-Não pode ser trocado ou colocado na Kafra.
 Peso : ^7777771^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -37589,7 +37601,7 @@ Peso : ^7777770^000000
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
 12534#
-Uma caixa que contém 30 Sementes de Yggdrasil. Cuidado ao abrir.
+Uma caixa que contém 30 Sementes de Yggdrasil.
 Peso: 0
 "^ff0000 Cuidado - Se você estiver acima do peso e abrir a caixa, os itens poderão não ser recebidos. Verifique o peso de seu personagem!^000000"
 #
@@ -50945,7 +50957,7 @@ Uma tiara de penas e flores coloridas, confeccionada para uma verdadeira popstar
 --------------------------
 ^0000ffSP máx. +50.^000000
 Ao realizar ataques físicos:
-^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
+^0000ff5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
 --------------------------
 Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Meio^000000
@@ -50961,7 +50973,7 @@ Uma tiara de penas e flores coloridas, confeccionada para uma verdadeira popstar
 --------------------------
 ^0000ffSP máx. +50.^000000
 Ao realizar ataques físicos:
-^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
+^0000ff5% de chance de autoconjurar [Escudo Mágico] nv. 10 em si.^000000
 --------------------------
 Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Meio^000000
