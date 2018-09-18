@@ -1405,7 +1405,7 @@
 2484#Botas de Cerco#
 2485#Sapatos de Cerco#
 2486#Passo das Sombras#
-2487#Sapatos da Árvore da Vid#
+2487#Sapatos da Árvore da Vida#
 2491#Botas do Pesadelo de Bangungot#
 2492#Botas de Bangungot Bayani#
 2495#Botas de Aegir#
