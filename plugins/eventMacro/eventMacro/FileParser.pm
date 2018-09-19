@@ -197,7 +197,7 @@ sub parseMacroFile {
 		error TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
 		return 0;
 	}
-	return {macros => \%macro, automacros => \%automacro};
+	return {macros => \%macro, automacros => \%automacro, subs => \@perl_name};
 }
 
 sub sub_execute {
