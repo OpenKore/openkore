@@ -691,6 +691,7 @@
 1436#Lança de Vellum#
 1437#Pique TE#
 1438#Lança de Cinzas#
+1449#Gelerdria#
 1451#Guisarme#
 1452#Guisarme#
 1453#Guisarme#
@@ -863,13 +864,16 @@
 1659#Luz da Recuperação#
 1660#Cajado da Afeição Fortalecido#
 1661#Destruidora Mental#
+1664#Cajado de Espinhos da Escuridão#
+1666#Cajado Restaurador#
 1667#Cajado TE#
 1668#Bengala#
 1669#Cajado de Cinzas#
 1670#Cajado Memorável do RWC#
 1671#Cajado Esconjurante#
-1675#Bengala do Cavalheiro#
+1675#Cajado do Cavalheiro#
 1676#Cajado Demoníaco#
+1679#Cajado dos Esplêndidos#
 1701#Arco#
 1702#Arco#
 1703#Arco#
@@ -1402,6 +1406,7 @@
 2484#Botas de Cerco#
 2485#Sapatos de Cerco#
 2486#Passo das Sombras#
+2487#Sapatos da Árvore da Vida#
 2491#Botas do Pesadelo de Bangungot#
 2492#Botas de Bangungot Bayani#
 2495#Botas de Aegir#
@@ -4814,8 +4819,8 @@
 12412#Chicle de Bola#
 12413#Caixa de Cupom PC Bang#
 12414#Bala de Guaraná#
-12418#Poção de Ataque#
-12419#Poção de Ataque Mágico#
+12418#Poção do Furor Físico#
+12419#Poção do Furor Mágico#
 12422#Poção Pequena de HP#
 12423#Poção Média de HP#
 12424#Poção Grande de HP#
@@ -4834,6 +4839,7 @@
 12437#Suco Celular Enriquecido#
 12475#Poção de Recuperação#
 12490#Letra de Música Natalina#
+12516#Poção Menor de Vida#
 12529#Cx Poção Compacta Branca#
 12530#Caixa de Mastelas[200]#
 12531#Caixa de Poções Brancas#
@@ -5279,8 +5285,8 @@
 13266#Pedaço de Gororoba Dura#
 13267#Pedaço de Gororoba Muito Dura#
 13268#Pó Misterioso#
-13270#Atirador#
-13271#Atirador Mágico#
+13270#Projétil de Poção do Furor Físico#
+13271#Projétil de Poção do Furor Mágico#
 13272#Poção de Recuperação#
 13275#Poção Pequena de HP#
 13276#Poção Média de HP#
@@ -5338,12 +5344,15 @@
 13424#Sabre Valhalla Intermediário#
 13431#Espada Cromada#
 13434#Sabre III do Grupo Éden#
+13437#Espada Orc#
 13438#Espada Lunar#
 13439#Espada TE#
 13440#Espada Cerimonial#
 13441#Espada de Cinzas#
 13442#Guarda-Chuva Antiquado#
+13447#Byeollungum#
 13449#Espada Demoníaca#
+13463#Excalibur#
 13464#Garra Mágica de Brinquedo#
 13465#Gládio da Nobreza#
 13514#Spaner Box#
@@ -5724,10 +5733,12 @@
 15254#Vestido Abissal#
 15272#Armadura da Khalitzburg#
 15345#Armadura do Dragão Azul#
+15368#Saltos da Rainha Scaraba#
 15370#Gálea de Unicórnio#
 15371#Roupa de Natal do Antonio#
 15374#Armadura Eclipse#
 15375#Armadura Eclipse Desgastada#
+15385#Robozinho Sabe-Tudo#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
 16003#Maça Carga#
@@ -5754,6 +5765,7 @@
 16032#Bate-Estacas T#
 16033#Braço Robótico#
 16051#Maça da Valquíria Mágica#
+16056#Martelo Veterano#
 16074#Martelo Cósmico#
 16192#Caixa de Chapéu de Quati#
 16193#Caixa de Chapéu de Tucano#
@@ -6198,6 +6210,7 @@
 19105#Chicle de Menta#
 19106#Véu das Gemas Sagradas#
 19109#Tiara de Popstar#
+19110#Tiara de Popstar#
 19111#Olho da Cecil#
 19112#Pergaminho do Tengu#
 19114#Gravata de Sting#
@@ -6285,6 +6298,7 @@
 19574#Elmo Sombrio de Cristal#
 19575#Chapéu de Dragão#
 19577#Chapéu do 10º Aniversário#
+19578#Óculos de Aviação#
 19585#Boina Alada Visual#
 19587#Visual do Rei Poring#
 19589#Tiara de Randgris#
@@ -6297,6 +6311,9 @@
 19612#Fones Audio-Poring#
 19614#Supervisual de Aprendiz#
 19627#Tiara Satélite#
+19629#Diadema em Ouro#
+19630#Coroa Valiosa#
+19637#Chapéu de Ambulatório#
 19638#Sr. Sorriso#
 19639#Chapéu Rural#
 19640#Lacinho Charmoso#
@@ -6336,6 +6353,7 @@
 19724#Kafra V.I.P.#
 19726#Rosa da Sedução#
 19729#Tiara de Gatinha Kafra#
+19735#Presilhas de Barbatana#
 19738#Chapéu do Xerloque#
 19742#Milagre de Asgard#
 19746#Capuz do Coração Gelado#
@@ -6358,8 +6376,10 @@
 19777#Estrelinha Lumma#
 19780#Orelhinhas de Coelhinho de Lã#
 19783#Costume: Grampa Beard#
+19784#Gálea da Morrigane#
 19785#Pão de Forma Sem Casca#
 19787#Olhos de Valquíria#
+19796#Elmo com Chifres#
 19801#Máscara da ANBU#
 19802#Nove Caudas Dorminhoca#
 19803#Cata-vento Vermelho#
@@ -6487,12 +6507,14 @@
 20175#Fone de Ouvido de Diabolik#
 20176#Máscara Feliz do Pierrot#
 20183#Presença Misteriosa#
+20188#Faixa de Morpheus#
 20195#Gato Rabugento#
 20196#Gorro de Leopardo#
 20197#Boina de Amistr#
 20198#Orelhas Peludinhas#
 20200#Chapéu de Camponesa#
 20202#Balão de Deviruchi#
+20203#Bandana para Testa#
 20209#Bolhas de Sabão#
 20212#Boneco de Loki e Nidhogg#
 20217#Véu das Mil e Uma Noites#
@@ -6500,6 +6522,7 @@
 20219#Chapéu da Banda Sagrada#
 20220#Véu da Meia-Noite#
 20222#Gorro Natalino Azul#
+20232#Fita Macabra da Celine#
 20234#Máscara de Bafomé#
 20236#Gorro de ArchAngeling#
 20239#Cachecol de Lutie#
@@ -6651,12 +6674,14 @@
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
 21003#Muramasa#
+21004#Lâmina Escarlate#
 21006#Espada de Duas Mãos TE#
 21007#Espada Pesada#
 21009#Grande Espada de Cinzas#
 21010#Espada Esconjurante#
 21011#Lâmina Gigante#
 21012#Espada Mágica Celestial#
+21024#Espada Veterana#
 21038#Espada Ancestral#
 21042#Espada Onimaru#
 22000#Botas Temporais FOR#
@@ -6698,6 +6723,8 @@
 22116#Botas Modificadas VIT#
 22117#Botas Modificadas DES#
 22118#Botas Modificadas SOR#
+22129#Botas Veteranas#
+22138#Botas do Ocultista#
 22149#Botas com Espigões#
 22171#Botas Ancestrais#
 22172#Botas Aladas#
@@ -6723,6 +6750,7 @@
 22537#Prêmio do Herói#
 22538#Bolsa Hanbok#
 22540#Runa Luxanima#
+22545#Poção do Vento#
 22549#Garrafa de Veneno Especial#
 22566#Cristal Congelado#
 22567#Prêmio de Esquadrão#
@@ -6755,6 +6783,7 @@
 22822#Bolsa com Roupa de Banho#
 22838#Sacola de Doces Misteriosa#
 22881#Corda de Caça#
+23012#Poção Menor de Mana#
 23044#Doce de Elvira#
 23073#Caixa do ArchAngeling#
 23123#Cartucho de Projétil de Fogo#
@@ -6816,6 +6845,7 @@
 25487#Insígnia do Orgulho Azul#
 25488#Insígnia do Orgulho Verde#
 25489#Insígnia do Orgulho Amarelo#
+25737#Moeda do Explorador#
 26118#Cajado Ancestral#
 27012#Carta Transistor#
 27013#Carta Mecha v1.6#
@@ -6839,6 +6869,7 @@
 28039#Katar Ancestral#
 28100#Machado de Cinzas#
 28101#Tufão#
+28114#Machado Veterano#
 28130#Cutelo Ancestral#
 28200#Lança-Granadas Caos Total#
 28201#Cruz Meridional#
@@ -6996,11 +7027,15 @@
 31463#Super Drone A1000#
 31474#Cabelo Longo Preto#
 31482#Cachecol de Lunático#
+31487#Tapa-Olho Pirata#
 31488#Balão de MVP#
 31490#Cachecol de Poring#
 31493#Peruca Branca de Waifu#
 31513#Orelhas do Coelho Minguante#
+31528#Tiara Cósmica#
 31531#Chapéu Mágico Duas-Pontas#
+31542#Vaso do Poring Saltitante#
+31543#Chapéu de Urso#
 31545#Cachecol Azul do Eremes#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
