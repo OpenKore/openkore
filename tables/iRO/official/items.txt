@@ -7540,7 +7540,7 @@
 17386#Chemical_Shoes_Shadow_Box#
 17387#Clamorous_Shoes_Shadow_Box#
 17388#Insecticide_Shoes_Shadow_Box#
-17389#Fisher_Shoes_Shadow_Box#
+17389#Overseas_Care_Package_Remix_IX#
 17390#OCP_Remix_VII#
 17391#Overseas_Care_Package_Remix_VI#
 17392#Overseas_Care_Package_Remix_V#
@@ -9291,6 +9291,12 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
+25745#Piece_of_Five#
+25753#Khalitzburg_Map_Piece#
+25754#Scaled_Map_Piece			#
+25755#Undead_Servant's_Map_Piece			#
+25756#Jellopy_Map_Piece			#
+25758#Drake's_Map_Piece			#
 26007#Illusion_Spectral_Spear#
 26100#Paradise_Foxtail_II#
 26101#Paradise_Foxtail_III#
