@@ -54,6 +54,8 @@ sub new {
 	$self->create_macro_list($parse_result->{macros});
 
 	$self->create_automacro_list($parse_result->{automacros});
+	
+	$self->{subs_list} = $parse_result->{subs};
 
 	$self->define_automacro_check_state;
 	
