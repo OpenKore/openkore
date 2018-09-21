@@ -65831,6 +65831,21 @@ Luminous Blue Stone
 17388#
 #
 17389#
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following;
+Fallen Angel Wings [1]
+Survivor's Orb
+Survival Circlet
+Survivor's Shoes
+Cloak of Survival
+Imuke Upper Shield
+Abyss Dress
+Prize Medal x 2000
+Bloody Dead Branch 5-8 cnt
+HE Bubble Gum 6-9 cnt
+
 #
 17390#
 ^FF0000Account Bound^000000
@@ -68316,13 +68331,16 @@ Required Level : ^77777750^000000
 Jobs : ^777777Hunter Class/Bard Class/Dancer Class^000000
 #
 18109#
-Increases the damage of Triangle Shot depending on refine level as well as increasing SP consumption of the skill.
-Class : ^777777Bow^000000
-Attack : ^777777150^000000
-Weight : ^777777110^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Shadow Chaser Only^000000
+A bow made to facilitate the simultaneous launch of several arrows developed by the Thief Guild.
+Class: ^808080Bow^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080110^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Shadow Chaser^000000
+Increases the damage of ^0000FFTriangle Shot^000000 by 2% per upgrade level of the item.
+Increases the SP cost of ^0000FFTriangle Shot^000000 by 2 per upgrade level of the item.
 #
 18110#
 Increases the damage of Arrow Storm depending on refine level as well as increasing SP consumption of the skill.
@@ -74422,34 +74440,27 @@ Dex + 7
 Restores 5% HP and 7% SP.
 #
 19387#
+A hat modeled on the experimental goat by Werner Laboratories.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080802^000000
 Weight: ^80808050^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs^000000
-Damage received from Ground Property attacks -10%
-When using physical or magical attack in,
-15% increase in damage to monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
-receive 15% less damage from monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
+Reduces damage taken from Earth property attacks by 10%.
+Increases physical and magical damage on Memorial Dungeon's [Werner Lab Central Room] monsters by 15%.
+Reduces damage taken from Memorial Dungeon's [Werner Lab Central Room] monsters by 15%.
 
-If refinement level of [Experimental Goat Cap] is 7 or higher, additional
-15% increase in damage to monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
-receive 15% less damage from monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Memorial Dungeon's [Werner Lab Central Room] monsters by an additional 15%.
+Reduces damage taken from Memorial Dungeon's [Werner Lab Central Room] monsters by an additional 15%.
 
-If refinement level of [Experimental Goat Cap] is 8 or higher, additional
-Damage received from Ground Property attacks -15%
+If upgrade level is +8 or higher,
+Reduces damage taken from Earth property attacks by an additional 15%.
 
-If refinement level of [Experimental Goat Cap] is 9 or higher, additional
-When using physical or magical attack in,
-20% increase in damage to monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
-receive 20% less damage from monsters appearing in [Werner Lab] Memorial Dungeon's
-[Werner Lab Central Room]
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Memorial Dungeon's [Werner Lab Central Room] monsters by an additional 20%.
+Reduces damage taken from Memorial Dungeon's [Werner Lab Central Room] monsters by an additional 20%.
 #
 19388#
 A magnificent feast fit for gods that would make mortals cry tears of joy.
@@ -74479,12 +74490,13 @@ Position: ^808080Middle^000000
 Defense: ^8080802^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
-MHP + 10% , MSP + 10%
+Usable By: ^808080All Jobs^000000
+Max HP + 10%
+Max SP + 10%
 Reduces damage taken from enemy players by 5%.
-Grants immunity to being blinded.
-If user learned Hallucination Drug level 5, enables to use Dispel level 5.
-If user learned Mandragora Howl level 5, reduces fixed casting time of Mandragora Howl by 70%.
-
+Immune to ^800000Blind^000000.
+If ^0000FFHallucination Drug^000000 is level 5, enables ^0000FFLevel 5 Dispel^000000.
+If ^0000FFMandragora Howl^000000 is level 5, reduces the fixed casting time of ^0000FFMandragora Howl^000000 by 70%.
 #
 19392#
 Large toasted bread garnished with huge amounts of meat, cheese, and vegetables. It's so big, no one has ever finished it.
@@ -74675,16 +74687,17 @@ Position: ^808080Upper^000000
 Defense: ^80808018^000000
 Weight: ^808080100^000000
 Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 15.
 Vit + 10.
-Increases Axe Tornado damage by 20%.
-Reduces casting time of Greed by 100%.
-If user learned FAW Magic Decoy level 5, increases physical damage against boss monsters by 50%.
-If user learned Axe Boomerang level 5, Atk + 100.
-If user learned Lava Flow level 5, has a chance to gain 3carat Diamond when killing monsters.
-If refine rate is 7 or higher, increases Axe Tornado damage by additional 30%.
-If refine rate is 9 or higher, increases Axe Tornado damage by additional 50%.
-If refine rate is 10, ignore defense of all race monsters by 100%.
+
+Increases the skill damage bonus of ^0000FFAxe Tornado^000000 by 20%.
+If ^0000FFFAW Magic Decoy^000000 is level 5, increases physical damage against boss monsters by 50%.
+If ^0000FFAxe Boomerang^000000 is level 5, Atk + 100.
+If ^0000FFLava Flow^000000 is level 5, adds a chance of gaining ^0080803carat Diamond^000000 when a monster is killed.
+If upgrade level is +7 or higher, increases skill damage bonus of ^0000FFAxe Tornado^000000 by an additional 30%.
+If upgrade level is +9 or higher, increases skill damage bonus of ^0000FFAxe Tornado^000000 by an additional 50%.
+If upgrade level is +10, bypass 100% of hard defense of normal monsters/boss monsters/players when performing a physical attack.
 #
 19408#
 A box that contains 1 Classic Robo Eye
@@ -82089,16 +82102,15 @@ Reduces the fixed casting time of skills by an additional 1% per upgrade level o
 The users casting cannot be interrupted outside of WoE.
 #
 22093#
-Shoes worn by an exorcist. They hold all the experience that he has been through.
-
+These shoes were worn by a man who made a living out of performing exorcisms. These shoes contains the man's many years of experience.
 
 Class: ^808080Shoes^000000
 Defense: ^80808010^000000
 Weight: ^80808030^000000
 Requires Level: ^80808030^000000
-Additional 5% EXP from devil type monsters.
-Additional 1% EXP from devil type monters for every refine upgrade.
-
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Demon race monsters by 5%.
+Increases the experience given from Demon race monsters by an additional 1% per upgrade level of the item.
 #
 22094#
 These shoes were worn by a man who made a living out of taking care of gardens. These shoes contains the man's many years of experience.
@@ -85567,6 +85579,40 @@ A bottle containing a scent which is irresistible to doggo. It contains somethin
 Class: ^808080Pet Tame^000000
 Weight: ^8080800^000000
 #
+25745#
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+25753#
+A map piece that might lead to a buried treasure.
+
+Weight: ^8080800^000000
+Cannot be Vended or Mailed
+#
+25754#
+A map piece that might lead to a dragon's horde.
+
+Weight: ^8080800^000000
+Cannot be vended or mailed
+#
+25755#
+A rotting map piece.
+
+Weight: ^8080800^000000
+Cannot be Vended or Mailed
+#
+25756#
+A quarter of a map drawn by porings.
+
+Weight: ^8080800^000000
+Cannot be vended or mailed.
+#
+25758#
+A quarter of a map leading to buried treasure
+
+Weight: ^8080800^000000
+Cannot be vended or mailed.
+#
 26007#
 The creator of this formidable Two-Handed Spear sacrificed his own life to forge it, resulting in a curse that will try to dominate the wearer's soul.
 Class: ^808080Two-Handed Spear^000000
@@ -87805,24 +87851,27 @@ Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Mechanic^000000
-ATK + 5%
-If Arm Cannon is Lv 3 or Greater
+Str + 5
+Vit + 5
+Dex + 5
+Atk + 5%
+
+If ^0000FFArm Cannon^000000 is level 3,
 Reduces the cast delay of skills by 30%.
 
-If Neutral Barrier is Lv 3 or Greater
+If ^0000FFNeutral Barrier^000000 is level 3,
 Reduces the variable casting time of ^0000FFArm Cannon^000000 by 50%.
 Reduces the variable casting time of ^0000FFIce Launcher^000000 by 50%.
 Reduces the variable casting time of ^0000FFFlame Launcher^000000 by 50%.
 
-If Pilebunker is Lv 3 or Greater
-STR + 5
-VIT + 5
+If ^0000FFPile Bunker^000000 is level 3,
+Str + 5
+Vit + 5
 Dex + 5
-ATK + 100
+Atk + 100
 
-If Fire Earth Research is Lv 5 or Greater
-Mado Fuel is not consumed when using skills.
-
+If ^0000FFFire Earth Research^000000 is level 5,
+^008080Magic Gear Fuel^000000 is not consumed when using skills.
 #
 28600#
 Attack: 0
@@ -88356,24 +88405,27 @@ Additional Max SP + 1%, if the users base level is 130 or higher.
 #
 28951#
 A shield that harnesses the power of water.
+^FF0000This item is indestructible in battle.^000000
 Class: ^808080Shield^000000
 Defense: ^80808080^000000
 Weight: ^80808050^000000
-Requires Level: ^808080100^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 5
 Increases physical and magical damage on Water property targets by 5%.
 Reduces damage taken from Water property attacks by 10%.
-This item is indestructible in battle.
+
 If upgrade level is +6 or higher,
 Increases physical and magical damage on Water property targets by an additional 10%.
 Reduces damage taken from Water property attacks by an additional 15%.
+
 If upgrade level is +8 or higher,
-If the users base Str is 90 or higher, Atk + 50
-If the users base Agi is 90 or higher, Aspd + 5%
-If the users base Vit is 90 or higher, increases the recovery rate of recovery items by 10%.
-If the users base Int is 90 or higher, Matk + 30
-If the users base Dex is 90 or higher, reduces the variable casting time of skills by 5%.
-If the users base Luk is 90 or higher, increases critical damage on targets by 5%.
+Atk + 50, if the users base Str is 90 or higher.
+Aspd + 5%, if the users base Agi is 90 or higher.
+Matk + 30, if the users base Int is 90 or higher.
+Increases the recovery rate of recovery items by 10%, if the users base Vit is 90 or higher.
+Reduces the variable casting time of skills by 5%, if the users base Dex is 90 or higher.
+Increases critical damage on targets by 5%, if the users base Luk is 90 or higher.
 #
 29000#
 Type: Miscellaneous
@@ -90532,33 +90584,37 @@ Physical & Magical Damage increase by 10%
 Ignore 30% of Def & Mdef from all races
 #
 32204#
+A rusty old identification tag, perhaps it was used to distinguish immortal entities.
 Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Atk + 50 , Matk +50
-Receive 4% less damage Undead monsters.
-When equipped with [Juliette D Rachel],
-for every refinement level of [Juliette D Rachel], additional increase in physical attack damage by 5%
-If refinement level of [Juliette D Rachel] is 9 or higher,
-When using [Rolling Cutter] skill, 10% change of
-triggering [Oratio] Lv10
+Atk + 50
+Matk + 50
+Reduces damage taken from Undead race enemies by 4%.
+^800080Set Bonus^000000
+^008080Immortal Dog Tag [1]^000000
+^008080Juliette D Rachel [2]^000000
+Increases physical damage on targets by 5% per upgrade levels of ^008080Juliette D Rachel [2]^000000.
+If ^008080Juliette D Rachel [2]^000000 upgrade level is +9 or higher,
+Adds a 10% chance of casting ^0000FFLevel 10 Oratio^000000 on the target when using ^0000FFRolling Cutter^000000.
 
-When equipped with [Sunflower Boy],
-For every refinement level of [Sunflower Boy], INT +2
-[Crimson Rock] Damage +1%
-If refinement level of [Sunflower Boy] is 9 or higher,
-When successfully performed magical attack, 1% chance of
-increase in Fire Property Magic Attack damage by 50% for 10 seconds,
-When monster is defeated, HP + 500
+^800080Set Bonus^000000
+^008080Immortal Dog Tag [1]^000000
+^008080Sunflower Boy [2]^000000
+Int + 2 per upgrade levels of ^008080Sunflower Boy [2]^000000.
+Increases the damage of ^0000FFCrimson Rock^000000 by 1%.
+If ^008080Sunflower Boy [2]^000000 upgrade level is +9 or higher,
+Adds a 1% chance to increase the damage of Fire property magical attacks on targets by 50% for 10 seconds when performing a magical attack.
+Restores 500 HP to the user when a monster is killed.
 
-When equipped with [Lindy Hop],
-For every refinement level of [Lindy Hop],
-Critical Attack damage +3%
-If refinement level of [Lindy Hop] is 9 or higher,
-CRI +50
-Physical Attack damage to Boss Monsters increase by 25%.
-
+^800080Set Bonus^000000
+^008080Immortal Dog Tag [1]^000000
+^008080Lindy Hop [2]^000000
+Critical damage +3% per upgrade levels of ^008080Lindy Hop [2]^000000.
+If ^008080Lindy Hop [2]^000000 upgrade level is +9 or higher,
+Crit + 50
+Increases physical damage on boss monsters by 25%.
 #
 32206#
 Gloves provided from Prontera. Wearer becomes indomitable.

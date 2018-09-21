@@ -71752,3 +71752,18 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20058#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sagittarius Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+1 Blue Gemstone
+100 Zircon
+1 Sagittarius Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
