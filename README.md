@@ -27,7 +27,7 @@ git clone https://github.com/OpenKore/openkore.git
 * Please use the issue template, please post information about the server and your configuration.
 * Remember, developers are doing this on free time.
 
-## Weekly Maintence on official Servers
+### Weekly Maintence on official Servers
 Some official servers (like bRO and iRO) have a weekly maintence.
 
 When this weekly maintence happens, openkore stops working on this server.
