@@ -532,6 +532,7 @@ sub new {
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
+		'08CD' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
 		'08FF' => ['actor_status_active', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
