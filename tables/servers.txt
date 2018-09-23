@@ -9,6 +9,7 @@
 #####################
 # Official RO Servers
 
+# http://ragnarok.uol.com.br
 [Brazil - bRO: Valhalla]
 ip 200.229.50.36
 port 6900
@@ -26,8 +27,11 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
+sendCryptKeys 0x31F82F37, 0x02DB7873, 0x199A2E1F
+blockingPlayerCancel 1
+rankingSystemType 1
 
+# http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
 ip 200.229.50.3
 port 6900
@@ -45,440 +49,9 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x2FF65B61, 0x002E66E4, 0x07970BB2
-
-## http://euro-ro.net/
-[Europe - euRO]
-dead 1
-dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
-
-## http://www.ragnarokeurope.com/
-[France - fRO]
-title France - fRO (ragnarokeurope.com): Chaos
-ip 54.36.76.129
-port 6900
-master_version 31
-version 1
-patchpath /patch01
-patchserver ftp.ragnarokonline.fr
-serverType fRO
-serverEncoding Western
-addTableFolders fRO
-charBlockSize 116
-
-[Indonesia - idRO: Midgard,Asgard ,Valhalla]
-ip 202.93.25.131
-port 6900
-master_version 12
-version 2
-patchserver wpatch.ragnarok.co.id
-patchpath /patch02
-serverType idRO_Renewal
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
-addTableFolders idRO
-charBlockSize 144
-charDeleteDateType 1
-
-# Renewal
-[International - iRO: Ymir/Yggdrasil/Valkyrie]
-# http://playragnarok.com
-title International - iRO: Thor|Chaos (Renewal-compatible)
-ip 128.241.92.162
-port 6800
-master_version 1
-version 18
-serverType iRO_Renewal
-serverEncoding Western
-patchserver ropatch1.gravityus.com
-patchpath /patch02
-addTableFolders iRO/Renewal;iRO
-charBlockSize 145
-charDeleteDateType 1
-sendCryptKeys 0x30837DA3, 0x1BA31BA3, 0x7BA31BA3
-
-[International - iRO: Sakray]
-# http://playragnarok.com
-ip 128.241.92.162
-port 6800
-master_version 14
-version 18
-serverType iRO
-serverEncoding Western
-paddedPackets 0
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
-addTableFolders iRO
-charBlockSize 145
-
-#Pre-renewal
-[International - iRO: Loki Classic]
-# http://playragnarok.com
-title International - iRO: Classic.Loki
-ip 128.241.92.202
-port 6900
-master_version 1
-version 18
-serverType iRO_Classic
-serverEncoding Western
-addTableFolders iRO/Classic;iRO
-charBlockSize 108
-
-#Re:Start
-# http://playragnarok.com
-[International - iRO: Re:Start]
-ip 128.241.92.133
-port 6800
-version 18
-master_version 1
-serverType iRO_Restart
-addTableFolders iRO/Restart;iRO
-serverEncoding Western
-charBlockSize 145
-pauseCharLogin 1
-patchserver ropatch1.gravityus.com
-patchpath /repatch
-sendCryptKeys 0x2FFD19DB, 0x08D2502F, 0x302F418A
-
-
-
-# TODO: needs a servertype & table folder
-[Japan - jRO: Verdandi]
-ip 61.215.212.13
-port 6900
-master_version 3
-version 10
-serverType 7
-secureLogin 1
-serverEncoding Japanese
-addTableFolders Old
-
-
-[Korea - kRO:Zero]
-ip 112.175.128.137
-port 6950
-master_version 0
-version 19
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType Zero
-serverEncoding Korean
-charBlockSize 155
-gameGuard 1
-addTableFolders kRO/Zero;kRO
-pinCode 1
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-OTT_ip 112.175.128.135
-OTT_port 6900
-sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
-
-[Korea - kRO: Sara/Rangidis/Thanatos]
-ip 112.175.128.137
-port 6900
-master_version 0
-version 19
-serverType kRO_RagexeRE_0
-serverEncoding Korean
-charBlockSize 112
-storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
-gameGuard 1
-addTableFolders kRO
-
-[Korea - kRO: Sakray]
-ip 112.175.128.138
-port 6900
-master_version 2
-version 29
-serverType kRO_RagexeRE_0
-serverEncoding Korean
-charBlockSize 128
-storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
-captcha 0
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-#addTableFolders translated/kRO_english;kRO
-addTableFolders kRO
-
-[Philippines - pRO: New Chaos]
-ip 202.57.117.45
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-addTableFolders pRO
-pinCode 1
-
-[Philippines - pRO: Valhalla]
-ip 202.57.117.44
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-gameGuard 1
-addTableFolders pRO
-pinCode 1
-
-[Philippines - pRO: Valkyrie]
-ip 202.57.118.235
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-gameGuard 1
-recvpackets recvpackets.txt
-addTableFolders pRO
-pinCode 1
-
-[Philippines - pRO: New Loki]
-ip 202.57.117.44
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-gameGuard 1
-recvpackets recvpackets.txt
-addTableFolders pRO
-pinCode 1
-
-[Philippines - pRO: New Iris]
-ip 202.57.117.80
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-gameGuard 1
-recvpackets recvpackets.txt
-addTableFolders pRO
-pinCode 1
-
-[Philippines - pRO: Sakray]
-ip 202.57.118.235
-port 6900
-master_version 18
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-recvpackets recvpackets.txt
-addTableFolders pRO
-pinCode 1
-
-## http://www.raggame.ru/
-[Russia - rRO-Renewal]
-dead 1
-dead_message rRO was closed on 16 November 2015.
-ip 109.105.144.106
-port 6900
-version 112112
-serverType rRO
-serverEncoding Russian
-charBlockSize 132
-addTableFolders rRO
-
-[Taiwan - twRO: OldFriend (ChaosFree, IrisFree, LokiFree)]
-ip 220.130.113.235
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: Free (Moonlight, Baphomet, Poring)]
-ip 220.130.113.221
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: Free (Rainbow bridge)]
-ip 220.130.113.234
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: All (Prontera)]
-ip 220.130.113.208
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: Happy]
-ip 220.130.113.31
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: Gratification]
-ip 220.130.113.252
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
-addTableFolders twRO
-captcha 0
-
-[Taiwan - twRO: Sakray]
-ip 61.220.62.26
-port 6900
-master_version 5
-version 211
-serverType twRO
-serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets_sakray.txt
-addTableFolders twRO
-captcha 0
-
-## www.ragnarok.in.th/
-[Thailand - tRO Main server (Norse)]
-ip 122.155.11.240
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
-
-[Thailand - tRO Free life server (Alice(new), Poring)]
-ip 122.155.11.242
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-pauseCharServer 1
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
-
-[Thailand - tRO Free life server (Yoyo, Picky)]
-ip 122.155.11.241
-port 6900
-master_version 7
-version 24
-serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 112
-gameguard 1
+sendCryptKeys 0x31F82F37, 0x02DB7873, 0x199A2E1F
+blockingPlayerCancel 1
+rankingSystemType 1
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
@@ -499,13 +72,236 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 charDeleteDateType 1
 pauseCharLogin 1
+blockingPlayerCancel 1
+rankingSystemType
+pauseCharLogin 1
+
+# http://www.ragnarokeurope.com/
+[France - fRO]
+title France - fRO (ragnarokeurope.com): Chaos
+ip 54.36.76.129
+port 6900
+master_version 31
+version 1
+patchpath /patch01
+patchserver ftp.ragnarokonline.fr
+serverType fRO
+serverEncoding Western
+addTableFolders fRO
+charBlockSize 116
+pauseCharLogin 1
+
+# https://ror.gravindo.id/
+[Indonesia - idRO: Midgard,Asgard ,Valhalla]
+ip 202.93.25.131
+port 6900
+master_version 12
+version 2
+patchserver wpatch.ragnarok.co.id
+patchpath /patch02
+serverType idRO_Renewal
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
+addTableFolders idRO
+charBlockSize 144
+charDeleteDateType 1
+blockingPlayerCancel 1
+
+# Renewal
+# http://playragnarok.com
+[International - iRO: Ymir/Yggdrasil/Valkyrie]
+title International - iRO: Thor|Chaos (Renewal-compatible)
+ip 128.241.92.162
+port 6800
+master_version 1
+version 18
+serverType iRO_Renewal
+serverEncoding Western
+patchserver ropatch1.gravityus.com
+patchpath /patch02
+addTableFolders iRO/Renewal;iRO
+charBlockSize 145
+charDeleteDateType 1
+sendCryptKeys 0x7C382E77, 0x03E126E5, 0x1D425532
+blockingPlayerCancel 1
+rankingSystemType 1
+pauseCharLogin 1
+
+# http://playragnarok.com
+[International - iRO: Sakray]
+ip 128.241.92.162
+port 6800
+master_version 14
+version 18
+serverType iRO
+serverEncoding Western
+paddedPackets 0
+paddedPackets_attackID 0x72
+paddedPackets_skillUseID 0xF5
+addTableFolders iRO
+charBlockSize 145
+rankingSystemType 1
+
+# Pre-renewal
+# http://playragnarok.com
+[International - iRO: Loki Classic]
+title International - iRO: Classic.Loki
+ip 128.241.92.202
+port 6900
+master_version 1
+version 18
+serverType iRO_Classic
+serverEncoding Western
+addTableFolders iRO/Classic;iRO
+charBlockSize 108
+rankingSystemType 1
+
+# Re:Start
+# http://playragnarokrestart.com/
+[International - iRO: Re:Start]
+ip 128.241.92.133
+port 6800
+version 18
+master_version 1
+serverType iRO_Restart
+addTableFolders iRO/Restart;iRO
+serverEncoding Western
+charBlockSize 145
+pauseCharLogin 1
+patchserver ropatch1.gravityus.com
+patchpath /repatch
+sendCryptKeys 0x4ECB785C, 0x688A68B5, 0x6D35198F
+rankingSystemType 1
+pauseCharLogin 1
+
+# TODO: needs a servertype & table folder
+# https://ragnarokonline.gungho.jp/
+[Japan - jRO: Verdandi]
+ip 61.215.212.13
+port 6900
+master_version 3
+version 10
+serverType 7
+secureLogin 1
+serverEncoding Japanese
+addTableFolders Old
+
+# http://roz.gnjoy.com/
+[Korea - kRO:Zero]
+ip 112.175.128.137
+port 6950
+master_version 0
+version 19
+secureLogin 0
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType Zero
+serverEncoding Korean
+charBlockSize 155
+gameGuard 1
+addTableFolders kRO/Zero;kRO
+pinCode 1
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+OTT_ip 112.175.128.135
+OTT_port 6900
+sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
+blockingPlayerCancel 1
+
+# http://ro.gnjoy.com/
+[Korea - kRO: Sara/Rangidis/Thanatos]
+ip 112.175.128.137
+port 6900
+master_version 0
+version 19
+serverType kRO_RagexeRE_0
+serverEncoding Korean
+charBlockSize 112
+storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
+gameGuard 1
+addTableFolders kRO
+
+# http://ro.gnjoy.com/
+[Korea - kRO: Sakray]
+ip 112.175.128.138
+port 6900
+master_version 2
+version 29
+secureLogin 0
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType Sakray
+serverEncoding Korean
+charBlockSize 155
+addTableFolders kRO/Sakray;kRO
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+pinCode 1
+gameGuard 0
+
+# https://ragnarokonline.com.ph/main
+[Philippines - pRO: Valkyrie]
+ip 202.57.118.235
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType pRO
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+serverEncoding Tagalog
+charBlockSize 144
+gameGuard 1
+recvpackets recvpackets.txt
+addTableFolders pRO
+pinCode 1
+
+# https://ro.gnjoy.com.tw/
+[Taiwan - twRO: OldFriend (ChaosFree, IrisFree, LokiFree)]
+ip 220.130.113.235
+port 6900
+master_version 5
+version 211
+serverType twRO
+serverEncoding Big5
+charBlockSize 144
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+recvpackets recvpackets.txt
+addTableFolders twRO
+captcha 0
+
+# https://ro.exe.in.th/
+[Thailand - tRO Main server (Norse)]
+ip 122.155.11.240
+port 6900
+master_version 7
+version 24
+serverType tRO
+secureLogin 3
+secureLogin_type 0
+secureLogin_account 0
+patchserver wpatch.ragnarok.in.th
+patchpath /patch70
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 112
+gameguard 1
 
 ####################
 # Private RO Servers
 
-## http://gombak-gamerz.com/
+# http://ggamerz-ro.com/
 [GGamerzRO]
-ip 116.251.223.176
+ip 116.251.223.136
 port 6900
 private 1
 master_version 1
@@ -516,7 +312,7 @@ serverEncoding Western
 charBlockSize 147
 pinCode 1
 addTableFolders pserver/ggRO
-clientHash fa058c003da60688ef1f8baffa0d3135
+clientHash DA4E4A35A46BF326C9C45C653979972A
 sendCryptKeys 0x4C17382A, 0x29961E4F, 0x7ED174C9
 
 [Localhost]
@@ -540,8 +336,8 @@ addTableFolders translated/kRO_english;kRO
 charBlockSize
 clientHash 0123456789abcdef0123456789abcdef
 
-[RMS Renewal Test Server]
 # http://play.ratemyserver.net
+[RMS Renewal Test Server]
 ip 69.197.167.236
 port 6900
 version 51
@@ -554,8 +350,8 @@ addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 
-[RMS Pre-Re Test Server]
 # http://play.ratemyserver.net
+[RMS Pre-Re Test Server]
 ip 69.197.167.236
 port 6901
 version 51
@@ -566,3 +362,16 @@ charBlockSize 147
 addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+
+####################
+# Dead
+
+# http://euro-ro.net/
+[Europe - euRO]
+dead 1
+dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
+
+# http://www.raggame.ru/
+[Russia - rRO-Renewal]
+dead 1
+dead_message rRO was closed on 16 November 2015. New opening in August 18, 2018.

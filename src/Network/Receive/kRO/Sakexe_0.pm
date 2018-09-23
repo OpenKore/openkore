@@ -63,17 +63,13 @@ sub new {
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], # -1
 		'006A' => ['login_error', 'C Z20', [qw(type date)]], # 23
-		'006B' => ['received_characters', 'v C3 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # struct varies a lot, this one is from XKore 2
-		'006C' => ['connection_refused', 'C', [qw(error)]], # 3
-		'006D' => ($rpackets{'006D'} == 108)
-			? (($rpackets{'006D'} == 110)
-				? ['character_creation_successful', 'a4 V9 v17 Z24 C6 v2', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag)]] # 110
-				: ['character_creation_successful', 'a4 V9 v17 Z24 C6 v', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot)]])
-			: ['character_creation_successful', 'a4 V9 v V2 v15 Z24 C6 v2 Z16 V5', [qw(ID exp zeny exp_job lv_job opt1 opt2 option stance manner points_free hp hp_max sp sp_max walk_speed type hair_style body weapon lv points_skill lowhead shield tophead midhead hair_color clothes_color name str agi vit int dex luk slot renameflag map deleteDate robe slotMove addons sex)]],
-		,
+		'006B' => ['received_characters_info', 'v C3 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # last known struct
+		'006C' => ['login_error_game_login_server'],
+		'006D' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
+		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct 
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
 		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
@@ -119,7 +115,9 @@ sub new {
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'00A8' => ['use_item', 'a2 v C', [qw(ID amount success)]], # 7
-		'00AA' => ['equip_item', 'a2 v C', [qw(ID type success)]], # 7
+		'00AA' => ($rpackets{'00AA'}{length} == 7) # or 9
+			? ['equip_item', 'a2 v C', [qw(ID type success)]]
+			: ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'00AC' => ['unequip_item', 'a2 v C', [qw(ID type success)]], # 7
 		'00AF' => ['inventory_item_removed', 'a2 v', [qw(ID amount)]], # 6
 		'00B0' => ['stat_info', 'v V', [qw(type val)]], # 8
@@ -464,6 +462,7 @@ sub new {
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],
+		'02CA' => ['login_error_game_login_server', 'C', [qw(type)]],
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
@@ -505,15 +504,34 @@ sub new {
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
+		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
+		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
+		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
+		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
+		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
 		'07F6' => ['exp', 'a4 V v2', [qw(ID val type flag)]], # 14 # type: 1 base, 2 job; flag: 0 normal, 1 quest # TODO: use. I think this replaces the exp gained message trough guildchat hack
+		'07F7' => ['actor_exists', 'v C a4 v3 V v5 a4 v5 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking
+		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
+		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
-		'07FC' => ['party_leader', 'V2', [qw(old new)]],		
+		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
+		'07FC' => ['party_leader', 'V2', [qw(old new)]],
+		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
+		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'0810' => ['open_buying_store', 'c', [qw(amount)]], #3
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
+		'0813' => ['open_buying_store_item_list', 'v a4 V', [qw(len AID zeny)]],
+		'0814' => ['buying_store_found', 'a4 Z*', [qw(ID title)]],
+		'0816' => ['buying_store_lost', 'a4', [qw(ID)]],
+		'0818' => ['buying_store_items_list', 'v a4 a4 V', [qw(len buyerID buyingStoreID zeny)]],
+		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
+		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
+		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]],
 		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
 		'080B' => ['booking_delete', 'V', [qw(index)]],
 		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
@@ -533,23 +551,33 @@ sub new {
 		,
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
+		'082D' => ['received_characters_info', 'v C5 x20', [qw(len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
 		'0837' => ['search_store_fail', 'C', [qw(reason)]],
+		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'084B' => ($rpackets{'084B'} == 19) #  or 21 PACKETVER_RE_NUM >= 20180704
 			? ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]] #17
 			: ['item_appeared', 'a4 V v C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]] #19
 		,
+		'083E' => ['login_error', 'V Z20', [qw(type date)]],
+		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],#10
+		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],#16
+		'0856' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
+		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
+		'0858' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
+		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D0' => ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
-		'08B9' => ['login_pin_code_request2', 'V a4 v', [qw(seed accountID flag)]],
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
+		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0914' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'0915' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -562,10 +590,25 @@ sub new {
 		'098D' => ['clan_leave'],
 		'098E' => ['clan_chat', 'v Z24 Z*', [qw(len charname message)]],
 		'0990' => ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
+
+		'0991' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0992' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0993' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
+		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
+		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
+		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
+		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
+		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
+		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],#6
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
+		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
+		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -616,6 +659,7 @@ sub new {
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0A4A' => ['private_airship_type', 'V', [qw(type)]],
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
@@ -636,6 +680,7 @@ sub new {
 			? ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #24
 			: ['item_exists', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]] #22
 		,
+		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
@@ -706,7 +751,7 @@ sub new {
 			type6 => {
 				len => 24,
 				types => 'a2 v C v V a8 l C',
-				keys => [qw(ID nameID type amount type_equip cards expire flag)],
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 		},
 	};
@@ -741,16 +786,16 @@ sub items_nonstackable {
 		 $args->{switch} eq '02D2'    # cart
 	) {
 		return $items->{$rpackets{'00AA'}{length} == 7 ? 'type3' : 'type4'};
-
 	} elsif ($args->{switch} eq '0901' # inventory
 		|| $args->{switch} eq '0976' # storage
 		|| $args->{switch} eq '0903' # cart
+		|| $args->{switch} eq '0906' # other player
 	) {
 		return $items->{type5};
-
-	} elsif ($args->{switch} eq '0992' ||# inventory
-		$args->{switch} eq '0994' ||# cart
-		$args->{switch} eq '0996'	# storage
+	} elsif ($args->{switch} eq '0992' # inventory
+		|| $args->{switch} eq '0994' # cart
+		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0A0D' # inventory
@@ -759,12 +804,12 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
-		
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
 }
 
+# Override this function if you need to.
 sub items_stackable {
 	my ($self, $args) = @_;
 
@@ -794,12 +839,11 @@ sub items_stackable {
 	) {
 		return $items->{type5};
 
-	} elsif ($args->{switch} eq '0991' ||# inventory
-		$args->{switch} eq '0993' ||# cart
-		$args->{switch} eq '0995'	# storage
+	} elsif ($args->{switch} eq '0991' # inventory
+		|| $args->{switch} eq '0993' # cart
+		|| $args->{switch} eq '0995' # storage
 	) {
 		return $items->{type6};
-
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -1182,29 +1226,6 @@ sub character_creation_failed {
 	}
 }
 
-sub character_creation_successful {
-	my ($self, $args) = @_;
-
-	my $char = new Actor::You;
-	foreach (@{$args->{KEYS}}) {
-		$char->{$_} = $args->{$_} if (exists $args->{$_});
-	}
-	$char->{name} = bytesToString($args->{name});
-	$char->{jobID} = 0;
-	#$char->{lv} = 1;
-	#$char->{lv_job} = 1;
-	$char->{sex} = $accountSex2;
-	$chars[$char->{slot}] = $char;
-
-	$net->setState(3);
-	message TF("Character %s (%d) created.\n", $char->{name}, $char->{slot}), "info";
-	if (charSelectScreen() == 1) {
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
-	}
-}
-
 # TODO: test optimized unpacking
 sub chat_users {
 	my ($self, $args) = @_;
@@ -1261,7 +1282,7 @@ sub cast_cancelled {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if (!$args->{success}) {
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
 		$item->{equipped} = $args->{type};
@@ -1404,6 +1425,7 @@ sub guild_member_setting_list {
 		# TODO: isn't there a nyble unpack or something and is this even correct?
 		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
 		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
 		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
 	}
 }
@@ -2217,102 +2239,6 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
-sub received_characters {
-	return if ($net->getState() == Network::IN_GAME);
-	my ($self, $args) = @_;
-	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER);
-
-	$charSvrSet{total_slot} = $args->{total_slot} if (exists $args->{total_slot});
-	$charSvrSet{premium_start_slot} = $args->{premium_start_slot} if (exists $args->{premium_start_slot});
-	$charSvrSet{premium_end_slot} = $args->{premium_end_slot} if (exists $args->{premium_end_slot});
-
-	$charSvrSet{normal_slot} = $args->{normal_slot} if (exists $args->{normal_slot});
-	$charSvrSet{premium_slot} = $args->{premium_slot} if (exists $args->{premium_slot});
-	$charSvrSet{billing_slot} = $args->{billing_slot} if (exists $args->{billing_slot});
-
-	$charSvrSet{producible_slot} = $args->{producible_slot} if (exists $args->{producible_slot});
-	$charSvrSet{valid_slot} = $args->{valid_slot} if (exists $args->{valid_slot});
-
-	undef $conState_tries;
-
-	Plugins::callHook('parseMsg/recvChars', $args->{options});
-	if ($args->{options} && exists $args->{options}{charServer}) {
-		$charServer = $args->{options}{charServer};
-	} else {
-		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
-	}
-
-	# PACKET_HC_ACCEPT_ENTER2 contains no character info
-	return unless exists $args->{charInfo};
-
-	my $blockSize = $self->received_characters_blockSize();
-	for (my $i = $args->{RAW_MSG_SIZE} % $blockSize; $i < $args->{RAW_MSG_SIZE}; $i += $blockSize) {
-		#exp display bugfix - chobit andy 20030129
-		my $unpack_string = $self->received_characters_unpackString;
-		# TODO: What would be the $unknown ?
-		my ($cID,$exp,$zeny,$jobExp,$jobLevel, $opt1, $opt2, $option, $stance, $manner, $statpt,
-			$hp,$maxHp,$sp,$maxSp, $walkspeed, $jobId,$hairstyle, $weapon, $level, $skillpt,$headLow, $shield,$headTop,$headMid,$hairColor,
-			$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot, $rename, $unknown, $mapname, $deleteDate) =
-			unpack($unpack_string, substr($args->{RAW_MSG}, $i));
-		$chars[$slot] = new Actor::You;
-
-		# Re-use existing $char object instead of re-creating it.
-		# Required because existing AI sequences (eg, route) keep a reference to $char.
-		$chars[$slot] = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $cID;
-
-		$chars[$slot]{ID} = $accountID;
-		$chars[$slot]{charID} = $cID;
-		$chars[$slot]{exp} = $exp;
-		$chars[$slot]{zeny} = $zeny;
-		$chars[$slot]{exp_job} = $jobExp;
-		$chars[$slot]{lv_job} = $jobLevel;
-		$chars[$slot]{hp} = $hp;
-		$chars[$slot]{hp_max} = $maxHp;
-		$chars[$slot]{sp} = $sp;
-		$chars[$slot]{sp_max} = $maxSp;
-		$chars[$slot]{jobID} = $jobId;
-		$chars[$slot]{hair_style} = $hairstyle;
-		$chars[$slot]{lv} = $level;
-		$chars[$slot]{headgear}{low} = $headLow;
-		$chars[$slot]{headgear}{top} = $headTop;
-		$chars[$slot]{headgear}{mid} = $headMid;
-		$chars[$slot]{hair_color} = $hairColor;
-		$chars[$slot]{clothes_color} = $clothesColor;
-		$chars[$slot]{name} = $name;
-		$chars[$slot]{str} = $str;
-		$chars[$slot]{agi} = $agi;
-		$chars[$slot]{vit} = $vit;
-		$chars[$slot]{int} = $int;
-		$chars[$slot]{dex} = $dex;
-		$chars[$slot]{luk} = $luk;
-		$chars[$slot]{sex} = $accountSex2;
-
-		setCharDeleteDate($slot, $deleteDate) if $deleteDate;
-		$chars[$slot]{nameID} = unpack("V", $chars[$slot]{ID});
-		$chars[$slot]{name} = bytesToString($chars[$slot]{name});
-		$chars[$slot]{map_name} = $mapname;
-		$chars[$slot]{map_name} =~ s/\.gat//g;
-	}
-
-	message T("Received characters from Character Server\n"), "connection";
-
-	#$messageSender->sendBanCheck($accountID) if(grep { $args->{switch} eq $_ } qw( 099D ));
-		
-	if ($masterServer->{pinCode}) {
-		message T("Waiting for PIN code request\n"), "connection";
-		$timeout{'charlogin'}{'time'} = time;
-		
-	} elsif ($masterServer->{pauseCharLogin}) {
-		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
-			$timeout{'char_login_pause'}{'timeout'} = 2;
-		}
-		$timeout{'char_login_pause'}{'time'} = time;
-		
-	} else {
-		CharacterLogin();
-	}
-}
-
 sub blacksmith_points {
 	my ($self, $args) = @_;
 	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -2668,31 +2594,6 @@ sub skill_cast {
 	}
 }
 
-sub skill_update {
-	my ($self, $args) = @_;
-
-	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
-
-	my $skill = new Skill(idn => $ID);
-	my $handle = $skill->getHandle();
-	my $name = $skill->getName();
-	$char->{skills}{$handle}{lv} = $lv;
-	$char->{skills}{$handle}{sp} = $sp;
-	$char->{skills}{$handle}{range} = $range;
-	$char->{skills}{$handle}{up} = $up;
-
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $ID,
-		handle => $handle,
-		level => $lv,
-		upgradable => $up,
-	});
-
-	debug "Skill $name: $lv\n", "parseMsg";
-}
-
 sub skill_use {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -3007,19 +2908,6 @@ sub skill_add {
 		level => $args->{lv},
 		upgradable => $args->{upgradable},
 	});
-}
-
-# TODO: test (ex. with a rogue using plagiarism)
-sub skill_delete {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $handle = Skill->new(idn => $args->{skillID})->getName();
-
-	delete $char->{skills}{$handle};
-	binRemove(\@skillsID, $handle);
-
-	# i guess we don't have to remove it from Skill::DynamicInfo
 }
 
 sub storage_password_request {
@@ -3343,47 +3231,6 @@ sub vender_buy_fail {
 	}
 }
 
-sub vending_start {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = unpack("v1",substr($msg, 2, 2));
-
-	#started a shop.
-	message TF("Shop '%s' opened!\n", $shop{title}), "success";
-	@articles = ();
-	# FIXME: why do we need a seperate variable to track how many items are left in the store?
-	$articles = 0;
-
-	# FIXME: Read the packet the server sends us to determine
-	# the shop title instead of using $shop{title}.
-	my $display = center(" $shop{title} ", 79, '-') . "\n" .
-		T("#  Name                                   Type            Amount          Price\n");
-	for (my $i = 8; $i < $msg_size; $i += 22) {
-		my $number = unpack("v1", substr($msg, $i + 4, 2));
-		my $item = $articles[$number] = {};
-		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
-		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-		$item->{cards} = substr($msg, $i + 14, 8);
-		$item->{price} = unpack("V1", substr($msg, $i, 4));
-		$item->{name} = itemName($item);
-		$articles++;
-
-		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
-
-		$display .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<  @>>>>  @>>>>>>>>>>>z",
-			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]);
-	}
-	$display .= ('-'x79) . "\n";
-	message $display, "list";
-	$shopEarned ||= 0;
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
@@ -3677,16 +3524,6 @@ sub manner_message {
 	}
 }
 
-sub GM_silence {
-	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message TF("You have been: muted by %s.\n", bytesToString($args->{name})), "info";
-	}
-	else {
-		message TF("You have been: unmuted by %s.\n", bytesToString($args->{name})), "info";
-	}
-}
-
 # TODO test if we must use ID to know if the packets are meant for us.
 # ID is monsterID
 sub taekwon_packets {
@@ -3707,19 +3544,6 @@ sub taekwon_packets {
 	} else {
 		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
 	}
-}
-
-sub guild_master_member {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0xd7) {
-	} elsif ($args->{type} == 0x57) {
-		message T("You are not a guildmaster.\n"), "info";
-		return;
-	} else {
-		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
-		return;
-	}
-	message T("You are a guildmaster.\n"), "info";
 }
 
 # 0152
@@ -3901,71 +3725,13 @@ sub cash_buy_fail {
 	debug "cash_buy_fail $args->{cash_points} $args->{kafra_points} $args->{fail}\n";
 }
 
-sub adopt_reply {
-	my ($self, $args) = @_;
-	if($args->{type} == 0) {
-		message T("You cannot adopt more than 1 child.\n"), "info";
-	} elsif($args->{type} == 1) {
-		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
-	} elsif($args->{type} == 2) {
-		message T("You cannot adopt a married person.\n"), "info";
-	}
-}
-
 # TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
 sub adopt_request {
 	my ($self, $args) = @_;
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
-# 0293
-sub boss_map_info {
-	my ($self, $args) = @_;
-	my $bossName = bytesToString($args->{name});
-
-	if ($args->{flag} == 0) {
-		message T("You cannot find any trace of a Boss Monster in this area.\n"), "info";
-	} elsif ($args->{flag} == 1) {
-		message TF("MVP Boss %s is now on location: (%d, %d)\n", $bossName, $args->{x}, $args->{y}), "info";
-	} elsif ($args->{flag} == 2) {
-		message TF("MVP Boss %s has been detected on this map!\n", $bossName), "info";
-	} elsif ($args->{flag} == 3) {
-		message TF("MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n", $bossName, $args->{hours}, $args->{minutes}), "info";
-	} else {
-		debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
-}
-
-sub GM_req_acc_name {
-	my ($self, $args) = @_;
-	message TF("The accountName for ID %s is %s.\n", $args->{targetID}, $args->{accountName}), "info";
-}
-
 #newly added in Sakexe_0.pm
-
-# 00CB
-sub sell_result {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		error T("Sell failed.\n");
-	} else {
-		message T("Sell completed.\n"), "success";
-	}
-	if (AI::is("sellAuto")) {
-		AI::args->{recv_sell_packet} = 1;
-	}
-}
-
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
-}
 
 # 00B3
 # TODO: add real client messages and logic?
@@ -3991,92 +3757,6 @@ sub character_block_info {
 	#TODO
 }
 
-sub quest_all_list2 {
-	my ($self, $args) = @_;
-	$questList = {};
-	my $msg;
-	my ($questID, $active, $time_start, $time, $mission_amount);
-	my $i = 0;
-	my ($mobID, $count, $amount, $mobName);
-	while ($i < $args->{RAW_MSG_SIZE} - 8) {
-		$msg = substr($args->{message}, $i, 15);
-		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		$i += 15;
-
-		if ($mission_amount > 0) {
-			for (my $j = 0 ; $j < $mission_amount ; $j++) {
-				$msg = substr($args->{message}, $i, 32);
-				($mobID, $count, $amount, $mobName) = unpack('V v2 Z24', $msg);
-				my $mission = \%{$quest->{missions}->{$mobID}};
-				$mission->{mobID} = $mobID;
-				$mission->{count} = $count;
-				$mission->{amount} = $amount;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName} = bytesToString($mobName);
-				debug "- $mobID $count / $amount $mobName\n", "info";
-				$i += 32;
-			}
-		}
-	}
-}
-
-sub achievement_list {
-	my ($self, $args) = @_;
-	
-	$achievementList = {};
-	
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen = 22;
-	my $achieve_pack = 'V C V10 V C';
-	my $achieve_len = length pack $achieve_pack;
-	
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
-		my $achieve;
-
-		($achieve->{ach_id},
-		$achieve->{completed},
-		$achieve->{objective1},
-		$achieve->{objective2},
-		$achieve->{objective3},
-		$achieve->{objective4},
-		$achieve->{objective5},
-		$achieve->{objective6},
-		$achieve->{objective7},
-		$achieve->{objective8},
-		$achieve->{objective9},
-		$achieve->{objective10},
-		$achieve->{completed_at},
-		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
-		
-		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
-	}
-}
-
-sub achievement_update {
-	my ($self, $args) = @_;
-	
-	my $achieve;
-	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
-	
-	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
-}
-
-sub achievement_reward_ack {
-	my ($self, $args) = @_;
-	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
-}
-
 sub party_dead {
 	my ($self, $args) = @_;
 
@@ -4085,5 +3765,11 @@ sub party_dead {
 		message TF("Party member %s is dead.\n", $string), "info";
 	}	
 }
+
+sub progress_bar_unit {
+	my($self, $args) = @_;
+	debug "Displays progress bar (GID: $args-{GID} time: $args-{time})\n";	
+}
+
 
 1;

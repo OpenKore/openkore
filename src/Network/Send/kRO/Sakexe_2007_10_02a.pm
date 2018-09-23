@@ -21,8 +21,6 @@ use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_05_07a);
 
 use Log qw(debug);
-use I18N qw(stringToBytes);
-use Globals qw($masterServer);
 
 sub new {
 	my ($class) = @_;
@@ -43,29 +41,6 @@ sub sendCashShopBuy {
 	my $msg = pack('v v2 V', 0x0288, $ID, $amount, $points);
 	$self->sendToServer($msg);
 	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
-sub sendHotkey {
-	my ($self, $index, $type, $ID, $lv) = @_;
-	my $msg = pack('v2 C V v', 0x02BA, $index, $type, $ID, $lv);
-	$self->sendToServer($msg);
-	debug "Sent Hotkey.\n", "sendPacket", 2;
-}
-
-sub sendPartyJoinRequestByNameReply { # long name lol
-	my ($self, $accountID, $flag) = @_;
-	my $msg = pack('v a4 C', 0x02C7, $accountID, $flag);
-	$self->sendToServer($msg);
-	debug "Sent reply Party Invite.\n", "sendPacket", 2;
-}
-
-sub sendBattlegroundChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if $masterServer->{chatLangCode};
-	$message = stringToBytes($message); # Type: Bytes
-	my $data = pack('v2 Z*', 0x02DB, length($message)+5, $message);
-	$self->sendToServer($data);
-	debug "Sent Battleground chat.\n", "sendPacket", 2;
 }
 
 1;

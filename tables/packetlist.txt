@@ -1,8 +1,8 @@
-PACKETS HISTORY SINCE 2004 UPDATED IN 2018-04-09 BY ALISONRAG
+PACKETS HISTORY SINCE 2004 UPDATED IN 2018-08-27 BY ALISONRAG
 
 ID = PACKET ID
 LEN = PACKET LENGTH 
-TYPE = RECV: PACKETS FROM ZONE TO CLIENT.  SEND = PACKETS FROM CLIENT TO ZONE
+TYPE = RECV: PACKETS FROM SERVER TO CLIENT.  SEND = PACKETS FROM CLIENT TO SERVER
 OPENKORE_SUB = SUB IN OPENKORE THAT PARSE THIS PACKET
 PACKET_NAME = PACKET NAME FROM AEGIS ( GRAVITY EMULATOR )
 HERCULES_FUNCTION = FUNCTION IN HERCULES EMULATOR THAT PARSE THIS PACKET
@@ -17,7 +17,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0068 46  send char_delete                    CH_DELETE_CHAR                      chr->parse_char_delete_char_0068 
 0069 -1  recv account_server_info            AC_ACCEPT_LOGIN                                                    
 006A 23  recv login_error                    AC_REFUSE_LOGIN                                                    
-006B -1  recv received_characters            HC_ACCEPT_ENTER                                                    
+006B -1  recv received_characters_info       HC_ACCEPT_ENTER                                                    
 006C 3   recv login_error_game_login_server  HC_REFUSE_ENTER                                                    
 006D 108 recv character_creation_successful  HC_ACCEPT_MAKECHAR                                                 
 006E 3   recv character_creation_failed      HC_REFUSE_MAKECHAR                                                 
@@ -63,7 +63,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0096 -1  send private_message                CZ_WHISPER                          clif->pWisMessage              
 0097 -1  recv private_message                ZC_WHISPER                                                         
 0098 3   recv private_message_sent           ZC_ACK_WHISPER                                                     
-0099 -1  send                                CZ_BROADCAST                        clif->pBroadcast               
+0099 -1  send gm_broadcast                   CZ_BROADCAST                        clif->pBroadcast               
 009A -1  recv system_chat                    ZC_BROADCAST                                                       
 009B 5   send actor_look_at                  CZ_CHANGE_DIRECTION                 clif->pChangeDir               
 009C 9   recv actor_look_at                  ZC_CHANGE_DIRECTION                                                
@@ -101,55 +101,55 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00BC 6   recv stats_added                    ZC_STATUS_CHANGE_ACK                                               
 00BD 44  recv stats_info                     ZC_STATUS                                                          
 00BE 5   recv stat_info                      ZC_STATUS_CHANGE                                                   
-00BF 3   send                                CZ_REQ_EMOTION                      clif->pEmotion                 
+00BF 3   send send_emotion                   CZ_REQ_EMOTION                      clif->pEmotion                 
 00C0 7   recv emoticon                       ZC_EMOTION                                                         
-00C1 2   send                                CZ_REQ_USER_COUNT                   clif->pHowManyConnections      
+00C1 2   send request_user_count             CZ_REQ_USER_COUNT                   clif->pHowManyConnections      
 00C2 6   recv users_online                   ZC_USER_COUNT                                                      
 00C3 8   recv job_equipment_hair_change      ZC_SPRITE_CHANGE                                                   
 00C4 6   recv npc_store_begin                ZC_SELECT_DEALTYPE                                                 
-00C5 7   send                                CZ_ACK_SELECT_DEALTYPE              clif->pNpcBuySellSelected      
+00C5 7   send request_buy_sell_list          CZ_ACK_SELECT_DEALTYPE              clif->pNpcBuySellSelected      
 00C6 -1  recv npc_store_info                 ZC_PC_PURCHASE_ITEMLIST                                            
 00C7 -1  recv npc_sell_list                  ZC_PC_SELL_ITEMLIST                                                
-00C8 -1  send                                CZ_PC_PURCHASE_ITEMLIST             clif->pNpcBuyListSend          
-00C9 -1  send                                CZ_PC_SELL_ITEMLIST                 clif->pNpcSellListSend         
+00C8 -1  send buy_bulk                       CZ_PC_PURCHASE_ITEMLIST             clif->pNpcBuyListSend          
+00C9 -1  send sell_bulk                      CZ_PC_SELL_ITEMLIST                 clif->pNpcSellListSend         
 00CA 3   recv buy_result                     ZC_PC_PURCHASE_RESULT                                              
 00CB 3   recv sell_result                    ZC_PC_SELL_RESULT                                                  
-00CC 6   send                                CZ_DISCONNECT_CHARACTER             clif->pGMKick                  
+00CC 6   send gm_kick                        CZ_DISCONNECT_CHARACTER             clif->pGMKick                  
 00CD 3   recv                                ZC_ACK_DISCONNECT_CHARACTER                                        
-00CE 2   send                                CZ_DISCONNECT_ALL_CHARACTER         clif->pGMKickAll               
-00CF 27  send                                CZ_SETTING_WHISPER_PC               clif->pPMIgnore                
-00D0 3   send                                CZ_SETTING_WHISPER_STATE            clif->pPMIgnoreAll             
+00CE 2   send gm_kick_all                    CZ_DISCONNECT_ALL_CHARACTER         clif->pGMKickAll               
+00CF 27  send ignore_player                  CZ_SETTING_WHISPER_PC               clif->pPMIgnore                
+00D0 3   send ignore_all                     CZ_SETTING_WHISPER_STATE            clif->pPMIgnoreAll             
 00D1 4   recv ignore_player_result           ZC_SETTING_WHISPER_PC                                              
 00D2 4   recv ignore_all_result              ZC_SETTING_WHISPER_STATE                                           
-00D3 2   send                                CZ_REQ_WHISPER_LIST                 clif->pPMIgnoreList            
+00D3 2   send get_ignore_list                CZ_REQ_WHISPER_LIST                 clif->pPMIgnoreList            
 00D4 -1  recv whisper_list                   ZC_WHISPER_LIST                                                    
-00D5 -1  send                                CZ_CREATE_CHATROOM                  clif->pCreateChatRoom          
+00D5 -1  send chat_room_create               CZ_CREATE_CHATROOM                  clif->pCreateChatRoom          
 00D6 3   recv chat_created                   ZC_ACK_CREATE_CHATROOM                                             
 00D7 -1  recv chat_info                      ZC_ROOM_NEWENTRY                                                   
 00D8 6   recv chat_removed                   ZC_DESTROY_ROOM                                                    
-00D9 14  send                                CZ_REQ_ENTER_ROOM                   clif->pChatAddMember           
+00D9 14  send chat_room_join                 CZ_REQ_ENTER_ROOM                   clif->pChatAddMember           
 00DA 3   recv chat_join_result               ZC_REFUSE_ENTER_ROOM                                               
 00DB -1  recv chat_users                     ZC_ENTER_ROOM                                                      
 00DC 28  recv chat_user_join                 ZC_MEMBER_NEWENTRY                                                 
 00DD 29  recv chat_user_leave                ZC_MEMBER_EXIT                                                     
-00DE -1  send                                CZ_CHANGE_CHATROOM                  clif->pChatRoomStatusChange    
+00DE -1  send chat_room_change               CZ_CHANGE_CHATROOM                  clif->pChatRoomStatusChange    
 00DF -1  recv chat_modified                  ZC_CHANGE_CHATROOM                                                 
-00E0 30  send                                CZ_REQ_ROLE_CHANGE                  clif->pChangeChatOwner         
+00E0 30  send chat_room_bestow               CZ_REQ_ROLE_CHANGE                  clif->pChangeChatOwner         
 00E1 30  recv chat_newowner                  ZC_ROLE_CHANGE                                                     
-00E2 26  send                                CZ_REQ_EXPEL_MEMBER                 clif->pKickFromChat            
-00E3 2   send                                CZ_EXIT_ROOM                        clif->pChatLeave               
-00E4 6   send                                CZ_REQ_EXCHANGE_ITEM                clif->pTradeRequest            
+00E2 26  send chat_room_kick                 CZ_REQ_EXPEL_MEMBER                 clif->pKickFromChat            
+00E3 2   send chat_room_leave                CZ_EXIT_ROOM                        clif->pChatLeave               
+00E4 6   send deal_initiate                  CZ_REQ_EXCHANGE_ITEM                clif->pTradeRequest            
 00E5 26  recv deal_request                   ZC_REQ_EXCHANGE_ITEM                                               
-00E6 3   send                                CZ_ACK_EXCHANGE_ITEM                clif->pTradeAck                
+00E6 3   send deal_reply                     CZ_ACK_EXCHANGE_ITEM                clif->pTradeAck                
 00E7 3   recv deal_begin                     ZC_ACK_EXCHANGE_ITEM                                               
 00E8 8   send deal_item_add                  CZ_ADD_EXCHANGE_ITEM                clif->pTradeAddItem            
 00E9 19  recv deal_add_other                 ZC_ADD_EXCHANGE_ITEM                                               
 00EA 5   recv deal_add_you                   ZC_ACK_ADD_EXCHANGE_ITEM                                           
-00EB 2   send                                CZ_CONCLUDE_EXCHANGE_ITEM           clif->pTradeOk                 
+00EB 2   send deal_finalize                  CZ_CONCLUDE_EXCHANGE_ITEM           clif->pTradeOk                 
 00EC 3   recv deal_finalize                  ZC_CONCLUDE_EXCHANGE_ITEM                                          
-00ED 2   send                                CZ_CANCEL_EXCHANGE_ITEM             clif->pTradeCancel             
+00ED 2   send deal_cancel                    CZ_CANCEL_EXCHANGE_ITEM             clif->pTradeCancel             
 00EE 2   recv deal_cancelled                 ZC_CANCEL_EXCHANGE_ITEM                                            
-00EF 2   send                                CZ_EXEC_EXCHANGE_ITEM               clif->pTradeCommit             
+00EF 2   send deal_trade                     CZ_EXEC_EXCHANGE_ITEM               clif->pTradeCommit             
 00F0 3   recv deal_complete                  ZC_EXEC_EXCHANGE_ITEM                                              
 00F1 2   recv                                ZC_EXCHANGEITEM_UNDO                                               
 00F2 6   recv storage_opened                 ZC_NOTIFY_STOREITEM_COUNTINFO                                      
@@ -157,19 +157,19 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00F4 21  recv storage_item_added             ZC_ADD_ITEM_TO_STORE                                               
 00F5 8   send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
 00F6 8   recv storage_item_removed           ZC_DELETE_ITEM_FROM_STORE                                          
-00F7 2   send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 2   send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 00F8 2   recv storage_closed                 ZC_CLOSE_STORE                                                     
 00F9 26  send                                CZ_MAKE_GROUP                       clif->pCreateParty             
 00FA 3   recv party_organize_result          ZC_ACK_MAKE_GROUP                                                  
 00FB -1  recv party_users_info               ZC_GROUP_LIST                                                      
-00FC 6   send                                CZ_REQ_JOIN_GROUP                   clif->pPartyInvite             
+00FC 6   send party_join_request             CZ_REQ_JOIN_GROUP                   clif->pPartyInvite             
 00FD 27  recv party_invite_result            ZC_ACK_REQ_JOIN_GROUP                                              
 00FE 30  recv party_invite                   ZC_REQ_JOIN_GROUP                                                  
-00FF 10  send                                CZ_JOIN_GROUP                       clif->pReplyPartyInvite        
-0100 2   send                                CZ_REQ_LEAVE_GROUP                  clif->pLeaveParty              
+00FF 10  send party_join                     CZ_JOIN_GROUP                       clif->pReplyPartyInvite        
+0100 2   send party_leave                    CZ_REQ_LEAVE_GROUP                  clif->pLeaveParty              
 0101 6   recv party_exp                      ZC_GROUPINFO_CHANGE                                                
 0102 6   send party_setting                  CZ_CHANGE_GROUPEXPOPTION            clif->pPartyChangeOption       
-0103 30  send                                CZ_REQ_EXPEL_GROUP_MEMBER           clif->pRemovePartyMember       
+0103 30  send party_kick                     CZ_REQ_EXPEL_GROUP_MEMBER           clif->pRemovePartyMember       
 0104 79  recv party_join                     ZC_ADD_MEMBER_TO_GROUP                                             
 0105 31  recv party_leave                    ZC_DELETE_MEMBER_FROM_GROUP                                        
 0106 10  recv party_hp_info                  ZC_NOTIFY_HP_TO_GROUPM                                             
@@ -193,9 +193,9 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0118 2   send                                CZ_CANCEL_LOCKON                    clif->pStopAttack              
 0119 13  recv character_status               ZC_STATE_CHANGE                                                    
 011A 15  recv skill_used_no_damage           ZC_USE_SKILL                                                       
-011B 20  send                                CZ_SELECT_WARPPOINT                 clif->pUseSkillMap             
+011B 20  send warp_select                    CZ_SELECT_WARPPOINT                 clif->pUseSkillMap             
 011C 68  recv warp_portal_list               ZC_WARPLIST                                                        
-011D 2   send                                CZ_REMEMBER_WARPPOINT               clif->pRequestMemo             
+011D 2   send memo_request                   CZ_REMEMBER_WARPPOINT               clif->pRequestMemo             
 011E 3   recv memo_success                   ZC_ACK_REMEMBER_WARPPOINT                                          
 011F 16  recv area_spell                     ZC_SKILL_ENTRY                                                     
 0120 6   recv area_spell_disappears          ZC_SKILL_DISAPPEAR                                                 
@@ -206,9 +206,9 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0125 8   recv cart_item_removed              ZC_DELETE_ITEM_FROM_CART                                           
 0126 8   send cart_add                       CZ_MOVE_ITEM_FROM_BODY_TO_CART      clif->pPutItemToCart           
 0127 8   send cart_get                       CZ_MOVE_ITEM_FROM_CART_TO_BODY      clif->pGetItemFromCart         
-0128 8   send                                CZ_MOVE_ITEM_FROM_STORE_TO_CART     clif->pMoveFromKafraToCart     
-0129 8   send                                CZ_MOVE_ITEM_FROM_CART_TO_STORE     clif->pMoveToKafraFromCart     
-012A 2   send                                CZ_REQ_CARTOFF                      clif->pRemoveOption            
+0128 8   send storage_to_cart                CZ_MOVE_ITEM_FROM_STORE_TO_CART     clif->pMoveFromKafraToCart     
+0129 8   send cart_to_storage                CZ_MOVE_ITEM_FROM_CART_TO_STORE     clif->pMoveToKafraFromCart     
+012A 2   send companion_release              CZ_REQ_CARTOFF                      clif->pRemoveOption            
 012B 2   recv cart_off                       ZC_CARTOFF                                                         
 012C 3   recv cart_add_failed                ZC_ACK_ADDITEM_TO_CART                                             
 012D 4   recv shop_skill                     ZC_OPENSTORE                                                       
@@ -229,8 +229,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 013C 4   recv arrow_equipped                 ZC_EQUIP_ARROW                                                     
 013D 6   recv hp_sp_changed                  ZC_RECOVERY                                                        
 013E 24  recv skill_cast                     ZC_USESKILL_ACK                                                    
-013F 26  send                                CZ_ITEM_CREATE                      clif->pGM_Monster_Item         
-0140 22  send                                CZ_MOVETO_MAP                       clif->pMapMove                 
+013F 26  send gm_item_mob_create             CZ_ITEM_CREATE                      clif->pGM_Monster_Item         
+0140 22  send gm_move_to_map                 CZ_MOVETO_MAP                       clif->pMapMove                 
 0141 14  recv stat_info2                     ZC_COUPLESTATUS                                                    
 0142 6   recv npc_talk_number                ZC_OPEN_EDITDLG                                                    
 0143 10  send npc_talk_number                CZ_INPUT_EDITDLG                    clif->pNpcAmountInput          
@@ -255,11 +255,11 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0156 -1  recv guild_member_position_changed  ZC_ACK_REQ_CHANGE_MEMBERS                                          
 0157 6   send                                CZ_REQ_OPEN_MEMBER_INFO                                            
 0158 -1  recv                                ZC_ACK_OPEN_MEMBER_INFO                                            
-0159 54  send                                CZ_REQ_LEAVE_GUILD                  clif->pGuildLeave              
+0159 54  send guild_leave                    CZ_REQ_LEAVE_GUILD                  clif->pGuildLeave              
 015A 66  recv guild_leave                    ZC_ACK_LEAVE_GUILD                                                 
-015B 54  send                                CZ_REQ_BAN_GUILD                    clif->pGuildExpulsion          
+015B 54  send guild_kick                     CZ_REQ_BAN_GUILD                    clif->pGuildExpulsion          
 015C 90  recv guild_expulsion                ZC_ACK_BAN_GUILD                                                   
-015D 42  send                                CZ_REQ_DISORGANIZE_GUILD            clif->pGuildBreak              
+015D 42  send guild_break                    CZ_REQ_DISORGANIZE_GUILD            clif->pGuildBreak              
 015E 6   recv guild_broken                   ZC_ACK_DISORGANIZE_GUILD_RESULT                                    
 015F 42  recv                                ZC_ACK_DISORGANIZE_GUILD                                           
 0160 -1  recv guild_member_setting_list      ZC_POSITION_INFO                                                   
@@ -267,20 +267,20 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0162 -1  recv guild_skills_list              ZC_GUILD_SKILLINFO                                                 
 0163 -1  recv guild_expulsionlist            ZC_BAN_LIST                                                        
 0164 -1  recv                                ZC_OTHER_GUILD_LIST                                                
-0165 30  send                                CZ_REQ_MAKE_GUILD                   clif->pCreateGuild             
+0165 30  send guild_create                   CZ_REQ_MAKE_GUILD                   clif->pCreateGuild             
 0166 -1  recv guild_members_title_list       ZC_POSITION_ID_NAME_INFO                                           
 0167 3   recv guild_create_result            ZC_RESULT_MAKE_GUILD                                               
-0168 14  send                                CZ_REQ_JOIN_GUILD                   clif->pGuildInvite             
+0168 14  send guild_join_request             CZ_REQ_JOIN_GUILD                   clif->pGuildInvite             
 0169 3   recv guild_invite_result            ZC_ACK_REQ_JOIN_GUILD                                              
 016A 30  recv guild_request                  ZC_REQ_JOIN_GUILD                                                  
-016B 10  send                                CZ_JOIN_GUILD                       clif->pGuildReplyInvite        
+016B 10  send guild_join                     CZ_JOIN_GUILD                       clif->pGuildReplyInvite        
 016C 43  recv guild_name                     ZC_UPDATE_GDID                                                     
 016D 14  recv guild_member_online_status     ZC_UPDATE_CHARSTAT                                                 
-016E 186 send                                CZ_GUILD_NOTICE                     clif->pGuildChangeNotice       
+016E 186 send guild_notice                   CZ_GUILD_NOTICE                     clif->pGuildChangeNotice       
 016F 182 recv guild_notice                   ZC_GUILD_NOTICE                                                    
-0170 14  send                                CZ_REQ_ALLY_GUILD                   clif->pGuildRequestAlliance    
+0170 14  send guild_alliance_request         CZ_REQ_ALLY_GUILD                   clif->pGuildRequestAlliance    
 0171 30  recv guild_ally_request             ZC_REQ_ALLY_GUILD                                                  
-0172 10  send                                CZ_ALLY_GUILD                       clif->pGuildReplyAlliance      
+0172 10  send guild_alliance_reply           CZ_ALLY_GUILD                       clif->pGuildReplyAlliance      
 0173 3   recv guild_alliance                 ZC_ACK_REQ_ALLY_GUILD                                              
 0174 -1  recv guild_position_changed         ZC_ACK_CHANGE_GUILD_POSITIONINFO                                   
 0175 6   send                                CZ_REQ_GUILD_MEMBER_INFO                                           
@@ -288,9 +288,9 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0177 -1  recv identify_list                  ZC_ITEMIDENTIFY_LIST                                               
 0178 4   send identify                       CZ_REQ_ITEMIDENTIFY                 clif->pItemIdentify            
 0179 5   recv identify                       ZC_ACK_ITEMIDENTIFY                                                
-017A 4   send                                CZ_REQ_ITEMCOMPOSITION_LIST         clif->pUseCard                 
+017A 4   send card_merge_request             CZ_REQ_ITEMCOMPOSITION_LIST         clif->pUseCard                 
 017B -1  recv card_merge_list                ZC_ITEMCOMPOSITION_LIST                                            
-017C 6   send                                CZ_REQ_ITEMCOMPOSITION              clif->pInsertCard              
+017C 6   send card_merge                     CZ_REQ_ITEMCOMPOSITION              clif->pInsertCard              
 017D 7   recv card_merge_status              ZC_ACK_ITEMCOMPOSITION                                             
 017E -1  send guild_chat                     CZ_GUILD_CHAT                       clif->pGuildMessage            
 017F -1  recv guild_chat                     ZC_GUILD_CHAT                                                      
@@ -307,8 +307,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 018A 4   send quit_request                   CZ_REQ_DISCONNECT                   clif->pQuitGame                
 018B 4   recv quit_response                  ZC_ACK_REQ_DISCONNECT                                              
 018C 29  recv sense_result                   ZC_MONSTER_INFO                                                    
-018D -1  recv forge_list                     ZC_MAKABLEITEMLIST                                                 
-018E 10  send                                CZ_REQMAKINGITEM                    clif->pProduceMix              
+018D -1  recv makable_item_list              ZC_MAKABLEITEMLIST                                                 
+018E 10  send make_item_request              CZ_REQMAKINGITEM                    clif->pProduceMix              
 018F 6   recv refine_result                  ZC_ACK_REQMAKINGITEM                                               
 0190 90  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 0191 86  recv talkie_box                     ZC_TALKBOX_CHATCONTENTS                                            
@@ -317,31 +317,31 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0194 30  recv character_name                 ZC_ACK_REQNAME_BYGID                                               
 0195 102 recv actor_info                     ZC_ACK_REQNAMEALL                                                  
 0196 9   recv actor_status_active            ZC_MSG_STATE_CHANGE                                                
-0197 4   send                                CZ_RESET                            clif->pResetChar               
-0198 8   send                                CZ_CHANGE_MAPTYPE                   clif->pGMChangeMapType         
+0197 4   send gm_reset_state_skill           CZ_RESET                            clif->pResetChar               
+0198 8   send gm_change_cell_type            CZ_CHANGE_MAPTYPE                   clif->pGMChangeMapType         
 0199 4   recv map_property                   ZC_NOTIFY_MAPPROPERTY                                              
 019A 14  recv pvp_rank                       ZC_NOTIFY_RANKING                                                  
 019B 10  recv unit_levelup                   ZC_NOTIFY_EFFECT                                                   
-019C -1  send                                CZ_LOCALBROADCAST                   clif->pLocalBroadcast          
-019D 6   send                                CZ_CHANGE_EFFECTSTATE               clif->pGMHide                  
+019C -1  send gm_broadcast_local             CZ_LOCALBROADCAST                   clif->pLocalBroadcast          
+019D 6   send gm_change_effect_state         CZ_CHANGE_EFFECTSTATE               clif->pGMHide                  
 019E 2   recv pet_capture_process            ZC_START_CAPTURE                                                   
 019F 6   send pet_capture                    CZ_TRYCAPTURE_MONSTER               clif->pCatchPet                
 01A0 3   recv pet_capture_result             ZC_TRYCAPTURE_MONSTER                                              
-01A1 3   send                                CZ_COMMAND_PET                      clif->pPetMenu                 
+01A1 3   send pet_menu                       CZ_COMMAND_PET                      clif->pPetMenu                 
 01A2 35  recv pet_info                       ZC_PROPERTY_PET                                                    
 01A3 5   recv pet_food                       ZC_FEED_PET                                                        
 01A4 11  recv pet_info2                      ZC_CHANGESTATE_PET                                                 
-01A5 26  send                                CZ_RENAME_PET                       clif->pChangePetName           
+01A5 26  send pet_name                       CZ_RENAME_PET                       clif->pChangePetName           
 01A6 -1  recv egg_list                       ZC_PETEGG_LIST                                                     
-01A7 4   send                                CZ_SELECT_PETEGG                    clif->pSelectEgg               
+01A7 4   send pet_hatch                      CZ_SELECT_PETEGG                    clif->pSelectEgg               
 01A8 4   send                                CZ_PETEGG_INFO                                                     
 01A9 6   send                                CZ_PET_ACT                          clif->pSendEmotion             
 01AA 10  recv pet_emotion                    ZC_PET_ACT                                                         
 01AB 12  recv stat_info                      ZC_PAR_CHANGE_USER                                                 
 01AC 6   recv actor_trapped                  ZC_SKILL_UPDATE                                                    
 01AD -1  recv arrowcraft_list                ZC_MAKINGARROW_LIST                                                
-01AE 4   send                                CZ_REQ_MAKINGARROW                  clif->pSelectArrow             
-01AF 4   send                                CZ_REQ_CHANGECART                   clif->pChangeCart              
+01AE 4   send make_arrow                     CZ_REQ_MAKINGARROW                  clif->pSelectArrow             
+01AF 4   send change_cart                    CZ_REQ_CHANGECART                   clif->pChangeCart              
 01B0 11  recv monster_typechange             ZC_NPCSPRITE_CHANGE                                                
 01B1 7   recv                                ZC_SHOWDIGIT                                                       
 01B2 -1  send shop_open                      CZ_REQ_OPENSTORE2                   clif->pOpenVending             
@@ -352,10 +352,10 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 01B7 6   send                                CZ_GUILD_ZENY                                                      
 01B8 3   recv                                ZC_GUILD_ZENY_ACK                                                  
 01B9 6   recv cast_cancelled                 ZC_DISPEL                                                          
-01BA 26  send                                CZ_REMOVE_AID                       clif->pGMShift                 
-01BB 26  send                                CZ_SHIFT                            clif->pGMShift                 
-01BC 26  send                                CZ_RECALL                           clif->pGMRecall                
-01BD 26  send                                CZ_RECALL_GID                       clif->pGMRecall                
+01BA 26  send gm_remove                      CZ_REMOVE_AID                       clif->pGMShift                 
+01BB 26  send gm_shift                       CZ_SHIFT                            clif->pGMShift                 
+01BC 26  send gm_recall                      CZ_RECALL                           clif->pGMRecall                
+01BD 26  send gm_summon_player               CZ_RECALL_GID                       clif->pGMRecall                
 01BE 2   recv                                AC_ASK_PNGAMEROOM                                                  
 01BF 3   send                                CA_REPLY_PNGAMEROOM                                                
 01C0 2   send request_remain_time            CZ_REQ_REMAINTIME                                                  
@@ -372,7 +372,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 01CB 9   send                                CZ_MONSTER_TALK                                                    
 01CC 9   recv                                ZC_MONSTER_TALK                                                    
 01CD 30  recv sage_autospell                 ZC_AUTOSPELLLIST                                                   
-01CE 6   send                                CZ_SELECTAUTOSPELL                  clif->pAutoSpell               
+01CE 6   send auto_spell                     CZ_SELECTAUTOSPELL                  clif->pAutoSpell               
 01CF 28  recv devotion                       ZC_DEVOTIONLIST                                                    
 01D0 8   recv revolving_entity               ZC_SPIRITS                                                         
 01D1 14  recv blade_stop                     ZC_BLADESTOP                                                       
@@ -392,18 +392,18 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 01DF 6   send                                CZ_REQ_ACCOUNTNAME                  clif->pGMReqAccountName        
 01E0 30  recv GM_req_acc_name                ZC_ACK_ACCOUNTNAME                                                 
 01E1 8   recv revolving_entity               ZC_SPIRITS2                                                        
-01E2 34  recv                                ZC_REQ_COUPLE                                                      
+01E2 34  recv marriage_unknown               ZC_REQ_COUPLE                                                      
 01E3 14  send                                CZ_JOIN_COUPLE                                                     
-01E4 2   recv                                ZC_START_COUPLE                                                    
+01E4 2   recv marriage_unknown               ZC_START_COUPLE                                                    
 01E5 6   send                                CZ_REQ_JOIN_COUPLE                                                 
 01E6 26  recv marriage_partner_name          ZC_COUPLENAME                                                      
-01E7 2   send                                CZ_DORIDORI                         clif->pNoviceDoriDori          
+01E7 2   send novice_dori_dori               CZ_DORIDORI                         clif->pNoviceDoriDori          
 01E8 28  send                                CZ_MAKE_GROUP2                      clif->pCreateParty2            
 01E9 81  recv party_join                     ZC_ADD_MEMBER_TO_GROUP2                                            
 01EA 6   recv married                        ZC_CONGRATULATION                                                  
 01EB 10  recv guild_location                 ZC_NOTIFY_POSITION_TO_GUILDM                                       
 01EC 26  recv guild_member_map_change        ZC_GUILD_MEMBER_MAP_CHANGE                                         
-01ED 2   send                                CZ_CHOPOKGI                         clif->pNoviceExplosionSpirits  
+01ED 2   send novice_explosion_spirits       CZ_CHOPOKGI                         clif->pNoviceExplosionSpirits  
 01EE -1  recv inventory_items_stackable      ZC_NORMAL_ITEMLIST2                                                
 01EF -1  recv cart_items_stackable           ZC_CART_NORMAL_ITEMLIST2                                           
 01F0 -1  recv storage_items_stackable        ZC_STORE_NORMAL_ITEMLIST2                                          
@@ -413,19 +413,19 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 01F4 32  recv deal_request                   ZC_REQ_EXCHANGE_ITEM2                                              
 01F5 9   recv deal_begin                     ZC_ACK_EXCHANGE_ITEM2                                              
 01F6 34  recv adopt_request                  ZC_REQ_BABY                                                        
-01F7 14  send                                CZ_JOIN_BABY                        clif->pAdopt_reply             
-01F8 2   recv                                ZC_START_BABY                                                      
-01F9 6   send                                CZ_REQ_JOIN_BABY                    clif->pAdopt_request           
+01F7 14  send adopt_reply_request            CZ_JOIN_BABY                        clif->pAdopt_reply             
+01F8 2   recv adopt_unknown                  ZC_START_BABY                                                      
+01F9 6   send adopt_request                  CZ_REQ_JOIN_BABY                    clif->pAdopt_request           
 01FA 48  send master_login                   CA_LOGIN3                           lclif->p->parse_CA_LOGIN3      
 01FB 56  send                                CH_DELETE_CHAR2                     chr->parse_char_delete_char_01fb 
 01FC -1  recv repair_list                    ZC_REPAIRITEMLIST                                                  
-01FD 4   send                                CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
+01FD 4   send repair_item                    CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
 01FE 5   recv repair_result                  ZC_ACK_ITEMREPAIR                                                  
 01FF 10  recv high_jump                      ZC_HIGHJUMP                                                        
 0200 26  send                                CA_CONNECT_INFO_CHANGED             lclif->p->parse_CA_CONNECT_INFO_CHANGED 
 0201 -1  recv friend_list                    ZC_FRIENDS_LIST                                                    
 0202 26  send friend_request                 CZ_ADD_FRIENDS                      clif->pFriendsListAdd          
-0203 10  send                                CZ_DELETE_FRIENDS                   clif->pFriendsListRemove       
+0203 10  send friend_remove                  CZ_DELETE_FRIENDS                   clif->pFriendsListRemove       
 0204 18  send client_hash                    CA_EXE_HASHCHECK                    lclif->p->parse_CA_EXE_HASHCHECK 
 0205 26  recv divorced                       ZC_DIVORCE                                                         
 0206 11  recv friend_logon                   ZC_FRIENDS_STATE                                                   
@@ -470,7 +470,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A7 12  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F3 -1  send storage_item_add               CZ_MOVE_ITEM_FROM_BODY_TO_STORE     clif->pMoveToKafra             
 00F5 17  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 10  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 10  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 16  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 2   send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 26  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -488,7 +488,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 120 send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 11  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 24  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 13  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 13  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 23  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0190 26  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 0193 18  send actor_name_request             CZ_REQNAME_BYGID                    clif->pSolveCharName           
@@ -515,7 +515,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A7 25  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F3 10  send storage_item_add               CZ_MOVE_ITEM_FROM_BODY_TO_STORE     clif->pMoveToKafra             
 00F5 34  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 2   send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 2   send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 11  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 11  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 22  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -577,8 +577,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 //2004-11-08aSakexe
 0084 2   recv                                ZC_REFUSE_QUIT                                                     
 0216 6   recv adopt_reply                    ZC_BABYMSG                                                         
-0217 2   send                                CZ_BLACKSMITH_RANK                  clif->pBlacksmith              
-0218 2   send                                CZ_ALCHEMIST_RANK                   clif->pAlchemist               
+0217 2   send rank_blacksmith                CZ_BLACKSMITH_RANK                  clif->pBlacksmith              
+0218 2   send rank_alchemist                 CZ_ALCHEMIST_RANK                   clif->pAlchemist               
 0219 282 recv top10_blacksmith_rank          ZC_BLACKSMITH_RANK                                                 
 021A 282 recv top10_alchemist_rank           ZC_ALCHEMIST_RANK                                                  
 021B 10  recv blacksmith_points              ZC_BLACKSMITH_POINT                                                
@@ -600,13 +600,13 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A7 7   send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F3 8   send storage_item_add               CZ_MOVE_ITEM_FROM_BODY_TO_STORE     clif->pMoveToKafra             
 00F5 29  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 14  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 14  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 110 send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 12  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 15  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 0193 21  send actor_name_request             CZ_REQNAME_BYGID                    clif->pSolveCharName           
 0221 -1  recv upgrade_list                   ZC_NOTIFY_WEAPONITEMLIST                                           
-0222 6   send                                CZ_REQ_WEAPONREFINE                 clif->pWeaponRefine            
+0222 6   send refine_item                    CZ_REQ_WEAPONREFINE                 clif->pWeaponRefine            
 0223 8   recv upgrade_message                ZC_ACK_WEAPONREFINE                                                
 
 //2004-12-13aSakexe
@@ -630,7 +630,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A7 13  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F3 -1  send storage_item_add               CZ_MOVE_ITEM_FROM_BODY_TO_STORE     clif->pMoveToKafra             
 00F5 9   send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 21  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 21  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 34  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 20  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 20  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -638,7 +638,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2005-03-28aSakexe
 0224 10  recv taekwon_rank                   ZC_TAEKWON_POINT                                                   
-0225 2   send                                CZ_TAEKWON_RANK                     clif->pTaekwon                 
+0225 2   send rank_taekwon                   CZ_TAEKWON_RANK                     clif->pTaekwon                 
 0226 282 recv top10_taekwon_rank             ZC_TAEKWON_RANK                                                    
 
 //2005-04-04aSakexe
@@ -669,7 +669,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 15  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 8   send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 8   send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 22  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 22  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 22  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 10  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 19  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -682,7 +682,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 022E 71  recv homunculus_property            ZC_PROPERTY_HOMUN                                                  
 0235 -1  recv skills_list                    ZC_HOSKILLINFO_LIST                                                
 0236 10  recv                                ZC_KILLER_POINT                                                    
-0237 2   send                                CZ_KILLER_RANK                      clif->pRankingPk               
+0237 2   send rank_killer                    CZ_KILLER_RANK                      clif->pRankingPk               
 0238 282 recv top10_pk_rank                  ZC_KILLER_RANK                                                     
 
 //2005-05-31aSakexe
@@ -691,9 +691,9 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2005-06-08aSakexe
 0216 6   recv adopt_reply                    ZC_BABYMSG                                                         
-0217 2   send                                CZ_BLACKSMITH_RANK                  clif->pBlacksmith              
+0217 2   send rank_blacksmith                CZ_BLACKSMITH_RANK                  clif->pBlacksmith              
 022F 5   recv homunculus_food                ZC_FEED_MER                                                        
-0231 26  send                                CZ_RENAME_MER                       clif->pChangeHomunculusName    
+0231 26  send homunculus_name                CZ_RENAME_MER                       clif->pChangeHomunculusName    
 023A 4   recv storage_password_request       ZC_REQ_STORE_PASSWORD                                              
 023B 36  send storage_password               CZ_ACK_STORE_PASSWORD               clif->pStoragePassword         
 023C 6   recv storage_password_result        ZC_RESULT_STORE_PASSWORD                                           
@@ -713,7 +713,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 9   send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 11  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 13  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 18  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 18  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 33  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 12  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 24  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -733,30 +733,30 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 18  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 15  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 7   send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 13  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 13  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 30  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 12  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 21  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 0216 6   recv adopt_reply                    ZC_BABYMSG                                                         
-023F 2   send                                CZ_MAIL_GET_LIST                    clif->pMail_refreshinbox       
+023F 2   send mailbox_open                   CZ_MAIL_GET_LIST                    clif->pMail_refreshinbox       
 0240 8   recv mail_refreshinbox              ZC_MAIL_REQ_GET_LIST                                               
-0241 6   send                                CZ_MAIL_OPEN                        clif->pMail_read               
+0241 6   send mail_read                      CZ_MAIL_OPEN                        clif->pMail_read               
 0242 -1  recv mail_read                      ZC_MAIL_REQ_OPEN                                                   
-0243 6   send                                CZ_MAIL_DELETE                      clif->pMail_delete             
-0244 6   send                                CZ_MAIL_GET_ITEM                    clif->pMail_getattach          
+0243 6   send mail_delete                    CZ_MAIL_DELETE                      clif->pMail_delete             
+0244 6   send mail_attachment_get            CZ_MAIL_GET_ITEM                    clif->pMail_getattach          
 0245 7   recv mail_getattachment             ZC_MAIL_REQ_GET_ITEM                                               
-0246 4   send                                CZ_MAIL_RESET_ITEM                  clif->pMail_winopen            
-0247 8   send                                CZ_MAIL_ADD_ITEM                    clif->pMail_setattach          
-0248 68  send                                CZ_MAIL_SEND                        clif->pMail_send               
+0246 4   send mail_remove                    CZ_MAIL_RESET_ITEM                  clif->pMail_winopen            
+0247 8   send mail_attachment_set            CZ_MAIL_ADD_ITEM                    clif->pMail_setattach          
+0248 68  send mail_send                      CZ_MAIL_SEND                        clif->pMail_send               
 0249 3   recv mail_send                      ZC_MAIL_REQ_SEND                                                   
 024A 70  recv mail_new                       ZC_MAIL_RECEIVE                                                    
-024B 4   send                                CZ_AUCTION_CREATE                   clif->pAuction_cancelreg       
-024C 8   send                                CZ_AUCTION_ADD_ITEM                 clif->pAuction_setitem         
-024D 14  send                                CZ_AUCTION_ADD                      clif->pAuction_register        
-024E 6   send                                CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
-024F 10  send                                CZ_AUCTION_BUY                      clif->pAuction_bid             
+024B 4   send auction_add_item_cancel        CZ_AUCTION_CREATE                   clif->pAuction_cancelreg       
+024C 8   send auction_add_item               CZ_AUCTION_ADD_ITEM                 clif->pAuction_setitem         
+024D 14  send auction_create                 CZ_AUCTION_ADD                      clif->pAuction_register        
+024E 6   send auction_cancel                 CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
+024F 10  send auction_buy                    CZ_AUCTION_BUY                      clif->pAuction_bid             
 0250 3   recv auction_result                 ZC_AUCTION_RESULT                                                  
-0251 2   send                                CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
+0251 2   send auction_search                 CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
 0252 -1  recv auction_item_request_search    ZC_AUCTION_ITEM_REQ_SEARCH                                         
 
 //2005-07-19bSakexe
@@ -771,18 +771,18 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 9   send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 11  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 13  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 18  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 18  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 33  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 12  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 24  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 
 //2005-08-01aSakexe
 0245 3   recv mail_getattachment             ZC_MAIL_REQ_GET_ITEM                                               
-0251 4   send                                CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
+0251 4   send auction_search                 CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
 
 //2005-08-08aSakexe
-024D 12  send                                CZ_AUCTION_ADD                      clif->pAuction_register        
-024E 4   send                                CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
+024D 12  send auction_create                 CZ_AUCTION_ADD                      clif->pAuction_register        
+024E 4   send auction_cancel                 CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
 
 //2005-08-17aSakexe
 0253 3   recv                                ZC_STARPLACE                                                       
@@ -790,7 +790,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2005-08-29aSakexe
 0240 -1  recv mail_refreshinbox              ZC_MAIL_REQ_GET_LIST                                               
-0248 -1  send                                CZ_MAIL_SEND                        clif->pMail_send               
+0248 -1  send mail_send                      CZ_MAIL_SEND                        clif->pMail_send               
 0255 5   recv mail_setattachment             ZC_ACK_MAIL_ADD_ITEM                                               
 0256 -1  recv auction_add_item               ZC_ACK_AUCTION_ADD_ITEM                                            
 0257 8   recv mail_delete                    ZC_ACK_MAIL_DELETE                                                 
@@ -803,12 +803,12 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 //2005-10-10aSakexe
 020E 32  recv taekwon_packets                ZC_STARSKILL                                                       
 025A -1  recv cooking_list                   ZC_MAKINGITEM_LIST                                                 
-025B 6   send                                CZ_REQ_MAKINGITEM                   clif->pCooking                 
+025B 6   send cook_request                   CZ_REQ_MAKINGITEM                   clif->pCooking                 
 
 //2005-10-13aSakexe
 007A 6   recv changeToInGameState            ZC_NOTIFY_ACTENTRY                                                 
-0251 32  send                                CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
-025C 4   send                                CZ_AUCTION_REQ_MY_INFO              clif->pAuction_buysell         
+0251 32  send auction_search                 CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
+025C 4   send auction_info_self              CZ_AUCTION_REQ_MY_INFO              clif->pAuction_buysell         
 
 //2005-10-17aSakexe
 007A 58  recv changeToInGameState            ZC_NOTIFY_ACTENTRY                                                 
@@ -820,8 +820,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0260 6   recv mail_window                    ZC_MAIL_WINDOWS                                                    
 
 //2005-11-07aSakexe
-024E 6   send                                CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
-0251 34  send                                CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
+024E 6   send auction_cancel                 CZ_AUCTION_ADD_CANCEL               clif->pAuction_cancel          
+0251 34  send auction_search                 CZ_AUCTION_ITEM_SEARCH              clif->pAuction_search          
 
 //2006-01-09aSakexe
 0261 11  recv                                AC_REQ_LOGIN_OLDEKEY                                               
@@ -846,11 +846,11 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0271 40  send                                CA_ACK_LOGIN_ACCOUNT_INFO                                          
 
 //2006-03-06aSakexe
-0273 6   send                                CZ_REQ_MAIL_RETURN                  clif->pMail_return             
+0273 6   send mail_return                    CZ_REQ_MAIL_RETURN                  clif->pMail_return             
 0274 8   recv mail_return                    ZC_ACK_MAIL_RETURN                                                 
 
 //2006-03-13aSakexe
-0273 30  send                                CZ_REQ_MAIL_RETURN                  clif->pMail_return             
+0273 30  send mail_return                    CZ_REQ_MAIL_RETURN                  clif->pMail_return             
 
 //2006-03-27aSakexe
 0072 26  send received_characters            CZ_ENTER                            clif->pWantToConnection        
@@ -864,7 +864,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 11  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 15  send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 13  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 26  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 26  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 40  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 17  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 18  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -930,7 +930,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 10  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 8   send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 11  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 15  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 15  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 40  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 19  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 10  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -962,13 +962,13 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 15  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 8   send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 8   send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 22  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 22  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 22  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 10  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 19  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
 
 //2007-05-07aSakexe
-01FD 15  send                                CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
+01FD 15  send repair_item                    CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
 
 //2007-02-27aSakexe to 2007-10-02aSakexe
 0288 10  send                                CZ_PC_BUY_CASH_POINT_ITEM           clif->pcashshop_buy            
@@ -988,7 +988,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 02B7 7   recv quest_active                   ZC_ACTIVE_QUEST                                                    
 02B8 22  recv party_show_picker              ZC_ITEM_PICKUP_PARTY                                               
 02B9 191 recv hotkeys                        ZC_SHORTCUT_KEY_LIST                                               
-02BA 11  send send_shortcut_key_change       CZ_SHORTCUT_KEY_CHANGE              clif->pHotkey                  
+02BA 11  send hotkey_change                  CZ_SHORTCUT_KEY_CHANGE              clif->pHotkey                  
 02BB 8   recv                                ZC_EQUIPITEM_DAMAGED                                               
 02BC 6   recv                                ZC_NOTIFY_PCBANG_PLAYING_TIME                                      
 02BF 10  recv                                ZC_SRPACKETR2_INIT                                                 
@@ -1279,7 +1279,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 00A2 14  send item_drop                      CZ_ITEM_THROW                       clif->pDropItem                
 00A7 9   send item_use                       CZ_USE_ITEM                         clif->pUseItem                 
 00F5 11  send storage_item_remove            CZ_MOVE_ITEM_FROM_STORE_TO_BODY     clif->pMoveFromKafra           
-00F7 17  send                                CZ_REQUEST_TIME                     clif->pTickSend                
+00F7 17  send storage_close                  CZ_REQUEST_TIME                     clif->pTickSend                
 0113 25  send skill_use                      CZ_USE_SKILL                        clif->pUseSkillToId            
 0116 17  send skill_use_location             CZ_USE_SKILL_TOGROUND               clif->pUseSkillToPos           
 0190 23  send                                CZ_USE_SKILL_TOGROUND_WITHTALKBOX   clif->pUseSkillToPosMoreInfo   
@@ -1334,13 +1334,15 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 07D4 4   send                                CZ_ES_CANCEL                                                       
 07D5 4   recv                                ZC_ES_READY                                                        
 07D6 4   recv                                ZC_ES_GOTO                                                         
+
+// 2009-05-20aRagexe, 2009-05-20aRagexeRE
 0447 2   send blocking_play_cancel           CZ_BLOCKING_PLAY_CANCEL                                            
 
 //2009-06-03aRagexeRE
 07D7 8   send party_setting                  CZ_GROUPINFO_CHANGE_V2              clif->pPartyChangeOption       
 07D8 8   recv party_exp                      ZC_REQ_GROUPINFO_CHANGE_V2                                         
 07D9 254 recv hotkeys                        ZC_SHORTCUT_KEY_LIST_V2                                            
-07DA 6   send                                CZ_CHANGE_GROUP_MASTER              clif->pPartyChangeLeader       
+07DA 6   send party_leader                   CZ_CHANGE_GROUP_MASTER              clif->pPartyChangeLeader       
 
 //2009-06-10aRagexeRE
 07DB 8   recv stat_info                      ZC_HO_PAR_CHANGE                                                   
@@ -1469,7 +1471,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 081A 4   recv                                ZC_FAILED_TRADE_BUYING_STORE_TO_BUYER                                
 081B 4   recv buying_store_update            ZC_UPDATE_ITEM_FROM_BUYING_STORE                                   
 081C 6   recv buying_store_item_delete       ZC_ITEM_DELETE_BUYING_STORE                                        
-081D 22  recv                                ZC_EL_INIT                                                         
+081D 22  recv elemental_info                 ZC_EL_INIT                                                         
 081E 8   recv stat_info                      ZC_EL_PAR_CHANGE                                                   
 081F -1  recv                                ZC_BROADCAST4                                                      
 081A 6   recv                                ZC_FAILED_TRADE_BUYING_STORE_TO_BUYER                                
@@ -1490,15 +1492,15 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0824 6   recv buying_store_fail              ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER                                
 0825 -1  send token_login                    CA_SSO_LOGIN_REQ                                                   
 0826 4   recv                                AC_SSO_LOGIN_ACK                                                   
-0835 -1  send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
-0836 -1  recv                                ZC_SEARCH_STORE_INFO_ACK                                           
-0837 3   recv                                ZC_SEARCH_STORE_INFO_FAILED                                        
-0838 3   send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0838 2   send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-083A 4   recv                                ZC_OPEN_SEARCH_STORE_INFO                                          
-083B 2   send                                CZ_CLOSE_SEARCH_STORE_INFO          clif->pCloseSearchStoreInfo    
-083C 12  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
-083D 6   recv                                ZC_SSILIST_ITEM_CLICK_ACK                                          
+0835 -1  send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0836 -1  recv search_store_result            ZC_SEARCH_STORE_INFO_ACK                                           
+0837 3   recv search_store_fail              ZC_SEARCH_STORE_INFO_FAILED                                        
+0838 3   send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0838 2   send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+083A 4   recv search_store_open              ZC_OPEN_SEARCH_STORE_INFO                                          
+083B 2   send search_store_close             CZ_CLOSE_SEARCH_STORE_INFO          clif->pCloseSearchStoreInfo    
+083C 12  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083D 6   recv search_store_pos               ZC_SSILIST_ITEM_CLICK_ACK                                          
 
 //2010-06-15aRagexeRE
 083E 26  recv login_error                    AC_REFUSE_LOGIN_R2                                                 
@@ -1513,7 +1515,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 07F3 6   recv                                ZC_BATTLE_JOIN_NOTI_DEFER                                          
 
 //2010-07-01aRagexeRE
-083A 5   recv                                ZC_OPEN_SEARCH_STORE_INFO                                          
+083A 5   recv search_store_open              ZC_OPEN_SEARCH_STORE_INFO                                          
 
 //2010-07-13aRagexeRE
 0827 6   send char_delete2                   CH_DELETE_CHAR3_RESERVED            chr->parse_char_delete2_req    
@@ -1529,8 +1531,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2010-08-03aRagexeRE
 0839 66  recv guild_expulsion                ZC_ACK_BAN_GUILD_SSO                                               
-0842 6   send                                CZ_RECALL_SSO                       clif->pGMRecall2               
-0843 6   send                                CZ_REMOVE_AID_SSO                   clif->pGMRemove2               
+0842 6   send recall_sso                     CZ_RECALL_SSO                       clif->pGMRecall2               
+0843 6   send remove_aid_sso                 CZ_REMOVE_AID_SSO                   clif->pGMRemove2               
 
 //2010-11-24aRagexeRE
 0288 -1  send                                CZ_PC_BUY_CASH_POINT_ITEM           clif->pcashshop_buy            
@@ -1570,8 +1572,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 // 2011-02-22aRagexe
 08C0 -1  recv                                ZC_ACK_SE_CASH_ITEM_LIST2                                          
-08C1 2   send                                CZ_MACRO_START                                                     
-08C2 2   send                                CZ_MACRO_STOP                                                      
+08C1 2   send macro_start                    CZ_MACRO_START                                                     
+08C2 2   send macro_stop                     CZ_MACRO_STOP                                                      
 
 // 2011-04-19aRagexe
 08C7 -1  recv area_spell                     ZC_SKILL_ENTRY3                                                    
@@ -1587,8 +1589,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 //2011-07-18aRagexe (Thanks to Yommy!)
 0844 2   send cash_shop_open                 CZ_SE_CASHSHOP_OPEN                 clif->pCashShopOpen            
 084A 2   send cash_shop_close                CZ_SE_CASHSHOP_CLOSE                clif->pCashShopClose           
-0846 4   send                                CZ_REQ_SE_CASH_TAB_CODE             clif->pCashShopReqTab          
-0848 -1  send cash_shop_buy_items            CZ_SE_PC_BUY_CASHITEM_LIST          clif->pCashShopBuy             
+0846 4   send req_cash_tabcode               CZ_REQ_SE_CASH_TAB_CODE             clif->pCashShopReqTab          
+0848 -1  send cash_shop_buy                  CZ_SE_PC_BUY_CASHITEM_LIST          clif->pCashShopBuy             
 
 // 2011-08-02aRagexe
 09DC 2   recv actor_connected                ZC_NOTIFY_NEWENTRY10                                               
@@ -1616,7 +1618,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0369 10  send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
 08AD 90  send                                CZ_REASSEMBLY_AUTH42                                               
 088A 6   send                                CZ_REASSEMBLY_AUTH07                                               
-0838 6   send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0838 6   send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
 0439 8   send item_use                       CZ_USE_ITEM2                        clif->pUseItem                 
 08D7 28  send                                CZ_REQ_ENTRY_QUEUE_APPLY            clif->pBGQueueRegister         
 090A 26  send                                CZ_REQ_ENTRY_QUEUE_RANKING          clif->pBGQueueCheckState       
@@ -1628,19 +1630,19 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0898 5   send                                CZ_REASSEMBLY_AUTH21                                               
 0281 36  send                                CZ_GANGSI_RANK                                                     
 088D 26  send                                CZ_REASSEMBLY_AUTH10                                               
-083C 19  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 19  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 08AA 7   send                                CZ_REASSEMBLY_AUTH39                                               
 02C4 10  send party_join_request_by_name     CZ_PARTY_JOIN_REQ                   clif->pPartyInvite2            
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 08A5 18  send                                CZ_REASSEMBLY_AUTH34                                               
-0835 -1  send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0835 -1  send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 089B 2   send                                CZ_REASSEMBLY_AUTH24                                               
 08A1 6   send                                CZ_REASSEMBLY_AUTH30                                               
 089E -1  send                                CZ_REASSEMBLY_AUTH27                                               
 08AB -1  send                                CZ_REASSEMBLY_AUTH40                                               
 088B 2   send                                CZ_REASSEMBLY_AUTH08                                               
 08A2 12  send                                CZ_REASSEMBLY_AUTH31                                               
-0835 19  send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0835 19  send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0892 5   send                                CZ_REASSEMBLY_AUTH15                                               
 0899 6   send                                CZ_REASSEMBLY_AUTH22                                               
 
@@ -1670,13 +1672,13 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0884 -1  send                                CZ_REASSEMBLY_AUTH01                                               
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
 0439 8   send item_use                       CZ_USE_ITEM2                        clif->pUseItem                 
 08E2 27  recv                                ZC_NAVIGATION_ACTIVE                                               
 
 //2012-04-10aRagexeRE
-01FD 15  send                                CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
+01FD 15  send repair_item                    CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
 089C 26  send                                CZ_REASSEMBLY_AUTH25                                               
 0885 5   send                                CZ_REASSEMBLY_AUTH02                                               
 0961 36  send                                CZ_REASSEMBLY_AUTH75                                               
@@ -1684,7 +1686,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 091C 26  recv                                ZC_PARTY_RECRUIT_CANCEL_VOLUNTEER_TO_PM                                
 094B 19  send                                CZ_REASSEMBLY_AUTH53                                               
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0439 8   send item_use                       CZ_USE_ITEM2                        clif->pUseItem                 
 0945 -1  send                                CZ_REASSEMBLY_AUTH47                                               
 0815 -1  send buy_bulk_closeShop             CZ_REQ_CLOSE_BUYING_STORE           clif->pReqCloseBuyingStore     
@@ -1692,8 +1694,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 0886 6   send                                CZ_REASSEMBLY_AUTH03                                               
 0871 5   recv                                ZC_REASSEMBLY_AUTH24                                               
@@ -1789,7 +1791,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0802 26  send booking_register               CZ_PARTY_BOOKING_REQ_REGISTER       clif->pPartyBookingRegisterReq 
 022D 19  send homunculus_command             CZ_COMMAND_MER                      clif->pHomMenu                 
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0439 8   send item_use                       CZ_USE_ITEM2                        clif->pUseItem                 
 0281 -1  send                                CZ_GANGSI_RANK                                                     
 0815 -1  send buy_bulk_closeShop             CZ_REQ_CLOSE_BUYING_STORE           clif->pReqCloseBuyingStore     
@@ -1797,8 +1799,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
 0940 -1  recv                                ZC_REASSEMBLY_AUTH84                                               
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0202 5   send friend_request                 CZ_ADD_FRIENDS                      clif->pFriendsListAdd          
@@ -1869,7 +1871,6 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0947 36  send                                CZ_REASSEMBLY_AUTH49                                               
 0890 4   send                                CZ_REASSEMBLY_AUTH13                                               
 095A 8   send                                CZ_REASSEMBLY_AUTH68                                               
-0447 2   send blocking_play_cancel           CZ_BLOCKING_PLAY_CANCEL                                            
 099F 24  recv area_spell_multiple2           ZC_SKILL_ENTRY4                                                    
 09A7 10  send                                CZ_REQ_BANKING_DEPOSIT              clif->pBankDeposit             
 09A8 12  recv                                ZC_ACK_BANKING_DEPOSIT                                             
@@ -1889,7 +1890,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2013-05-15aRagexe (Shakto)
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0362 5   send item_take                      CZ_ITEM_PICKUP2                     clif->pTakeItem                
@@ -1901,8 +1902,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -1985,7 +1986,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2013-06-05Ragexe (Shakto)
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0202 5   send friend_request                 CZ_ADD_FRIENDS                      clif->pFriendsListAdd          
@@ -1997,8 +1998,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -2012,7 +2013,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 023B 26  send storage_password               CZ_ACK_STORE_PASSWORD               clif->pStoragePassword         
 0361 5   send actor_look_at                  CZ_CHANGE_DIRECTION2                clif->pChangeDir               
 0883 36  recv                                ZC_REASSEMBLY_AUTH42                                               
-097C 4   send                                CZ_REQ_RANKING                      clif->pRanklist                
+097C 4   send rank_general                   CZ_REQ_RANKING                      clif->pRanklist                
 0363 8   send item_drop                      CZ_ITEM_THROW2                      clif->pDropItem                
 0436 4   send map_login                      CZ_ENTER2                           clif->pWantToConnection        
 
@@ -2057,7 +2058,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2013-06-26Ragexe (Shakto)
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 094D 5   send                                CZ_REASSEMBLY_AUTH55                                               
@@ -2069,8 +2070,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -2148,7 +2149,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 //2013-08-07Ragexe (Shakto)
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0202 5   send friend_request                 CZ_ADD_FRIENDS                      clif->pFriendsListAdd          
@@ -2160,8 +2161,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -2198,7 +2199,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0868 12  recv                                ZC_REASSEMBLY_AUTH15                                               
 0941 2   send                                CZ_REASSEMBLY_AUTH43                                               
 0889 -1  send                                CZ_REASSEMBLY_AUTH06                                               
-0835 -1  send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0835 -1  send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0895 6   send                                CZ_REASSEMBLY_AUTH18                                               
 094E 2   send                                CZ_REASSEMBLY_AUTH56                                               
 0936 -1  recv                                ZC_REASSEMBLY_AUTH74                                               
@@ -2219,7 +2220,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 09D0 -1  send gameguard_reply                CZ_NPROTECTGAMEGUARDCSAUTH                                         
 
 // 2013-08-21bRagexe
-09D1 14  recv                                ZC_PROGRESS_ACTOR                                                  
+09D1 14  recv progress_bar_unit              ZC_PROGRESS_ACTOR                                                  
 
 // 2013-08-28bRagexe
 09D2 -1  recv                                ZC_GUILDSTORAGE_ITEMLIST_NORMAL_V5                                 
@@ -2237,14 +2238,14 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 09D7 -1  recv                                ZC_NPC_MARKET_PURCHASE_RESULT                                      
 09D8 2   send                                CZ_NPC_MARKET_CLOSE                 clif->pNPCMarketClosed         
 09D9 2   send                                CZ_REQ_GUILDSTORAGE_LOG                                            
-09DA 2   recv                                ZC_ACK_GUILDSTORAGE_LOG                                            
+09DA 2   recv guild_storage_log              ZC_ACK_GUILDSTORAGE_LOG                                            
 
 // 2013-09-25aRagexe
-09DA 10  recv                                ZC_ACK_GUILDSTORAGE_LOG                                            
+09DA 10  recv guild_storage_log              ZC_ACK_GUILDSTORAGE_LOG                                            
 
 // 2013-10-02aRagexe
 09D9 4   send                                CZ_REQ_GUILDSTORAGE_LOG                                            
-09DA -1  recv                                ZC_ACK_GUILDSTORAGE_LOG                                            
+09DA -1  recv guild_storage_log              ZC_ACK_GUILDSTORAGE_LOG                                            
 
 // 2013-10-16aRagexe
 09D9 6   send                                CZ_REQ_GUILDSTORAGE_LOG                                            
@@ -2283,7 +2284,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 // 2013-12-18bRagexe - Yommy
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0947 5   send                                CZ_REASSEMBLY_AUTH49                                               
@@ -2295,8 +2296,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 022D -1  send homunculus_command             CZ_COMMAND_MER                      clif->pHomMenu                 
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -2324,7 +2325,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 // 2013-12-23cRagexe - Yommy
 0369 7   send actor_name_request             CZ_REQNAME_BYGID2                   clif->pSolveCharName           
-083C 10  send                                CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
+083C 10  send search_store_select            CZ_SSILIST_ITEM_CLICK               clif->pSearchStoreInfoListItemClick 
 0437 5   send character_move                 CZ_REQUEST_ACT2                     clif->pActionRequest           
 035F 6   send character_move                 CZ_REQUEST_MOVE2                    clif->pWalkToXY                
 0202 5   send friend_request                 CZ_ADD_FRIENDS                      clif->pFriendsListAdd          
@@ -2336,8 +2337,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0366 90  send skill_use_location             CZ_USE_SKILL_TOGROUND2              clif->pUseSkillToPos           
 096A 6   send                                CZ_REASSEMBLY_AUTH84                                               
 0368 6   send actor_info_request             CZ_REQNAME2                         clif->pGetCharNameRequest      
-0838 12  send                                CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
-0835 2   send                                CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
+0838 12  send search_store_request_next_page CZ_SEARCH_STORE_INFO_NEXT_PAGE      clif->pSearchStoreInfoNextPage 
+0835 2   send search_store_info              CZ_SEARCH_STORE_INFO                clif->pSearchStoreInfo         
 0819 -1  send buy_bulk_buyer                 CZ_REQ_TRADE_BUYING_STORE           clif->pReqTradeBuyingStore     
 0811 -1  send buy_bulk_openShop              CZ_REQ_OPEN_BUYING_STORE            clif->pReqOpenBuyingStore      
 0360 6   send sync                           CZ_REQUEST_TIME2                    clif->pTickSend                
@@ -2391,7 +2392,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 // 2013-12-30aRagexe
 09EC -1  send                                CZ_REQ_SEND_RODEX                                                  
 09ED 3   recv rodex_write_result             ZC_ACK_SEND_RODEX                                                  
-09F7 75  recv                                ZC_PROPERTY_HOMUN_2                                                
+09F7 75  recv homunculus_property            ZC_PROPERTY_HOMUN_2                                                
 09EB 23  recv rodex_read_mail                ZC_ACK_READ_RODEX                                                  
 
 // 2014 Packet Data
@@ -2407,8 +2408,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 09EB -1  recv rodex_read_mail                ZC_ACK_READ_RODEX                                                  
 
 // 2014-01-22aRagexeRE
-09FB -1  send                                CZ_PET_EVOLUTION                                                   
-09FC 6   recv                                ZC_PET_EVOLUTION_RESULT                                            
+09FB -1  send pet_evolution                  CZ_PET_EVOLUTION                                                   
+09FC 6   recv pet_evolution_result           ZC_PET_EVOLUTION_RESULT                                            
 09FD -1  recv actor_moved                    ZC_NOTIFY_MOVEENTRY11                                              
 09FE -1  recv actor_connected                ZC_NOTIFY_NEWENTRY11                                               
 09FF -1  recv actor_exists                   ZC_NOTIFY_STANDENTRY11                                             
@@ -2489,7 +2490,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0A08 26  send rodex_open_write_mail          CZ_REQ_OPEN_WRITE_RODEX                                            
 
 // 2014-04-23aRagexeRE
-0A14 6   recv                                ZC_CHECK_RECEIVE_CHARACTER_NAME                                    
+0A14 6   recv rodex_check_player             ZC_CHECK_RECEIVE_CHARACTER_NAME                                    
 0A13 26  send rodex_checkname                CZ_CHECK_RECEIVE_CHARACTER_NAME                                    
 
 // 2014-04-30aRagexeRE
@@ -2502,7 +2503,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 
 // 2014-05-21aRagexeRE
 0A07 9   recv rodex_remove_item              ZC_ACK_REMOVE_RODEX_ITEM                                           
-0A14 10  recv                                ZC_CHECK_RECEIVE_CHARACTER_NAME                                    
+0A14 10  recv rodex_check_player             ZC_CHECK_RECEIVE_CHARACTER_NAME                                    
 
 // 2014-06-05aRagexe
 0A18 2   recv                                ZC_ACCEPT_ENTER3                                                   
@@ -2553,8 +2554,8 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0A2D -1  recv show_eq                        ZC_EQUIPWIN_MICROSCOPE_V6                                          
 
 // 2014-09-03aRagexeRE
-0A2E 6   send                                CZ_REQ_CHANGE_TITLE                                                
-0A2F 7   recv                                ZC_ACK_CHANGE_TITLE                                                
+0A2E 6   send send_change_title              CZ_REQ_CHANGE_TITLE                                                
+0A2F 7   recv change_title                   ZC_ACK_CHANGE_TITLE                                                
 
 // 2014-09-24bRagexeRE
 0A30 106 recv actor_info                     ZC_ACK_REQNAMEALL2                                                 
@@ -2615,11 +2616,16 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 // 2015-10-28cRagexeRE
 0A45 -1  unkn                                                                                                   
 
+// 2015-11-04aRagexeRE
+0A46 14  unkn                                                                                                   
+0A47 3   unkn                                                                                                   
+0A48 2   unkn                                                                                                   
+
 // 2015-11-18aRagexeRE
-0A49 22  unkn                                                                                                   
-0A4A 6   unkn                                                                                                   
-0A4B 22  unkn                                                                                                   
-0A4C 28  unkn                                                                                                   
+0A49 22  unkn private_airship_request                                                                           
+0A4A 6   unkn private_airship_type                                                                              
+0A4B 22  unkn map_change                                                                                        
+0A4C 28  unkn map_changed                                                                                       
 
 // 2016-01-27aRagexeRE
 0A4D -1  unkn                                                                                                   
@@ -2785,7 +2791,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AB5 2   unkn                                                                                                   
 0AB6 6   unkn                                                                                                   
 0AB7 4   unkn                                                                                                   
-0AB8 2   unkn                                                                                                   
+0AB8 2   unkn move_interrupt                                                                                    
 0AB9 39  unkn                                                                                                   
 
 // 2017-01-18aRagexeRE
@@ -2798,10 +2804,10 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0ABC -1  unkn                                                                                                   
 
 // 2017-02-15aRagexeRE
-0ABD 10  unkn                                                                                                   
+0ABD 10  unkn partylv_info                                                                                      
 
 // 2017-02-22aRagexeRE
-0ABE 116 unkn                                                                                                   
+0ABE 116 unkn warp_portal_list                                                                                  
 0ABF 114 unkn                                                                                                   
 
 // 2017-02-28aRagexeRE
@@ -2813,7 +2819,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AC5 156 recv received_character_ID_and_Map  HC_NOTIFY_ZONESVR                                                  
 0AC6 156 unkn                                                                                                   
 0AC7 156 recv map_changed                    ZC_NPCACK_SERVERMOVE                                               
-0ABE -1  unkn                                                                                                   
+0ABE -1  unkn warp_portal_list                                                                                  
 0ABF -1  unkn                                                                                                   
 
 // 2017-03-08bRagexeRE
@@ -2821,7 +2827,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AC9 -1  unkn account_server_info                                                                               
 
 // 2017-03-22aRagexeRE
-0ACA 3   unkn                                                                                                   
+0ACA 3   unkn errors                                                                                            
 
 // 2017-03-29cRagexeRE
 0AAC 69  unkn master_login                                                                                      
@@ -2868,14 +2874,13 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0ADB -1  unkn                                                                                                   
 006D 157 recv character_creation_successful  HC_ACCEPT_MAKECHAR                                                 
 08E3 157 recv                                HC_UPDATE_CHARINFO                                                 
-0A49 20  unkn                                                                                                   
 
 // 2017-09-06cRagexeRE
 0ADC 6   recv flag                           ZC_EQUIPWIN_OTHER                                                  
 
 // 2017-09-13bRagexeRE
 0ADD 22  unkn item_exists                                                                                       
-0ADE 6   unkn flag                                                                                              
+0ADE 6   unkn overweight_percent                                                                                
 0ADF 58  recv actor_info                     ZC_ACK_REQNAME                                                     
 0AE0 30  unkn                                                                                                   
 
@@ -2910,7 +2915,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AE7 30  unkn                                                                                                   
 0AE6 30  unkn                                                                                                   
 0AE7 30  unkn                                                                                                   
-0AE8 2   unkn                                                                                                   
+0AE8 2   unkn change_dress                                                                                      
 
 // 2017-12-13bRagexe
 0AE3 -1  recv received_login_token           AC_LOGIN_OTP                                                       
@@ -2918,7 +2923,7 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AE7 30  unkn                                                                                                   
 
 // 2017-12-20aRagexe
-0AE8 2   unkn                                                                                                   
+0AE8 2   unkn change_dress                                                                                      
 0AE9 64  unkn                                                                                                   
 0AEA 11  unkn                                                                                                   
 
@@ -2938,14 +2943,12 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 // 2018-01-24bRagexeRE
 0AF2 40  unkn                                                                                                   
 0AF3 -1  unkn                                                                                                   
-0821 102 recv                                AC_OTP_USER                                                        
 
 // 2018-01-31dRagexe_zero
 0AF2 40  unkn                                                                                                   
 0AF3 -1  unkn                                                                                                   
 0AF4 11  unkn                                                                                                   
 0AE6 10  unkn                                                                                                   
-0821 102 recv                                AC_OTP_USER                                                        
 
 // 2018-02-07bRagexe_zero
 0AF5 3   unkn                                                                                                   
@@ -2981,5 +2984,125 @@ ID   LEN TYPE OPENKORE_SUB                   PACKET_NAME                        
 0AFA 54  unkn                                                                                                   
 0AE7 38  unkn                                                                                                   
 
-// 2018-04-04cRagexeRE
-0821 102 recv                                AC_OTP_USER                                                        
+// 2018-04-18aRagexe, 2018-04-18bRagexeRE
+0AFB -1  unkn                                                                                                   
+
+// 2018-04-25_3aRagexe_zero
+0AFB -1  unkn                                                                                                   
+
+// 2018-05-16cRagexe, 2018-05-16cRagexeRE
+0AFC 16  unkn                                                                                                   
+
+// 2018-05-23aRagexe_zero
+0AFC 16  unkn                                                                                                   
+
+// 2018-06-05bRagexe, 2018-06-05bRagexeRE, 2018-06-05bRagexe_zero
+0AFD -1  unkn                                                                                                   
+0AFE -1  unkn                                                                                                   
+0AFF -1  unkn                                                                                                   
+
+// 2018-06-20cRagexe, 2018-06-20eRagexe, 2018-06-20dRagexeRE, 2018-06-20eRagexeRE
+0B00 8   unkn                                                                                                   
+0B01 40  unkn                                                                                                   
+
+// 2018-07-04aRagexe, 2018-07-04aRagexeRE
+0B02 26  unkn                                                                                                   
+0B01 56  unkn                                                                                                   
+
+// 2018-06-27aRagexe_zero
+0B00 8   unkn                                                                                                   
+0B01 56  unkn                                                                                                   
+0B02 26  unkn                                                                                                   
+
+// 2018-07-04aRagexeRE
+009D 19  recv item_exists                    ZC_ITEM_ENTRY                                                      
+009E 19  recv item_appeared                  ZC_ITEM_FALL_ENTRY                                                 
+00A0 33  recv inventory_item_added           ZC_ITEM_PICKUP_ACK                                                 
+00E9 29  recv deal_add_other                 ZC_ADD_EXCHANGE_ITEM                                               
+00F4 31  recv storage_item_added             ZC_ADD_ITEM_TO_STORE                                               
+010A 6   recv mvp_item                       ZC_MVP_GETTING_ITEM                                                
+0110 14  recv skill_use_failed               ZC_ACK_TOUSESKILL                                                  
+0124 31  recv cart_item_added                ZC_ADD_ITEM_TO_CART                                                
+018E 18  send make_item_request              CZ_REQMAKINGITEM                    clif->pProduceMix              
+018F 8   recv refine_result                  ZC_ACK_REQMAKINGITEM                                               
+01A3 7   recv pet_food                       ZC_FEED_PET                                                        
+01AE 6   send make_arrow                     CZ_REQ_MAKINGARROW                  clif->pSelectArrow             
+01C4 32  recv storage_item_added             ZC_ADD_ITEM_TO_STORE2                                              
+01C5 32  recv cart_item_added                ZC_ADD_ITEM_TO_CART2                                               
+01C8 15  recv item_used                      ZC_USE_ITEM_ACK2                                                   
+01D7 15  recv player_equipment               ZC_SPRITE_CHANGE2                                                  
+01D8 58  recv actor_exists                   ZC_NOTIFY_STANDENTRY2                                              
+01D9 57  recv actor_connected                ZC_NOTIFY_NEWENTRY2                                                
+01DA 64  recv actor_moved                    ZC_NOTIFY_MOVEENTRY2                                               
+01FD 25  send repair_item                    CZ_REQ_ITEMREPAIR                   clif->pRepairItem              
+0223 10  recv upgrade_message                ZC_ACK_WEAPONREFINE                                                
+022A 62  recv actor_exists                   ZC_NOTIFY_STANDENTRY3                                              
+022B 61  recv actor_connected                ZC_NOTIFY_NEWENTRY3                                                
+022C 69  recv actor_moved                    ZC_NOTIFY_MOVEENTRY3                                               
+022E 73  recv homunculus_property            ZC_PROPERTY_HOMUN                                                  
+022F 7   recv homunculus_food                ZC_FEED_MER                                                        
+025B 8   send cook_request                   CZ_REQ_MAKINGITEM                   clif->pCooking                 
+0298 10  recv rental_time                    ZC_CASH_TIME_COUNTER                                               
+0299 8   recv rental_expired                 ZC_CASH_ITEM_DELETE                                                
+029A 37  recv inventory_item_added           ZC_ITEM_PICKUP_ACK2                                                
+02B8 32  recv party_show_picker              ZC_ITEM_PICKUP_PARTY                                               
+02D4 39  recv inventory_item_added           ZC_ITEM_PICKUP_ACK3                                                
+02EC 71  recv actor_exists                   ZC_NOTIFY_MOVEENTRY4                                               
+02ED 63  recv actor_connected                ZC_NOTIFY_NEWENTRY4                                                
+02EE 64  recv actor_moved                    ZC_NOTIFY_STANDENTRY4                                              
+0445 12  send                                CZ_SIMPLE_BUY_CASH_POINT_ITEM                                      
+080F 30  recv deal_add_other                 ZC_ADD_EXCHANGE_ITEM2                                              
+081B 12  recv buying_store_update            ZC_UPDATE_ITEM_FROM_BUYING_STORE                                   
+0824 8   recv buying_store_fail              ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER                                
+084B 21  recv item_appeared                  ZC_ITEM_FALL_ENTRY4                                                
+0990 41  recv inventory_item_added           ZC_ITEM_PICKUP_ACK_V5                                              
+09AD 12  recv                                ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO                                 
+09AE 19  send                                CZ_REQ_APPLY_BARGAIN_SALE_ITEM                                     
+09B0 10  send                                CZ_REQ_REMOVE_BARGAIN_SALE_ITEM                                    
+09B2 10  recv                                ZC_NOTIFY_BARGAIN_SALE_SELLING                                     
+09B3 6   recv                                ZC_NOTIFY_BARGAIN_SALE_CLOSE                                       
+09C3 10  send                                CZ_REQ_COUNT_BARGAIN_SALE_ITEM                                     
+09C4 10  recv                                ZC_ACK_COUNT_BARGAIN_SALE_ITEM                                     
+09E6 24  recv                                ZC_UPDATE_ITEM_FROM_BUYING_STORE2                                  
+09F7 77  recv homunculus_property            ZC_PROPERTY_HOMUN_2                                                
+0A05 63  recv rodex_add_item                 ZC_ACK_ADD_ITEM_RODEX                                              
+0A09 55  recv deal_add_other                 ZC_ADD_EXCHANGE_ITEM3                                              
+0A0A 57  recv storage_item_added             ZC_ADD_ITEM_TO_STORE3                                              
+0A0B 57  recv cart_item_added                ZC_ADD_ITEM_TO_CART3                                               
+0A0C 66  recv inventory_item_added           ZC_ITEM_PICKUP_ACK_V6                                              
+0A1A 25  recv                                ZC_ACK_OPEN_ROULETTE                                               
+0A20 23  recv                                ZC_ACK_GENERATE_ROULETTE                                           
+0A22 7   recv                                ZC_RECV_ROULETTE_ITEM                                              
+0A37 69  recv inventory_item_added           ZC_ITEM_PICKUP_ACK_V7                                              
+0A3D 20  unkn                                                                                                   
+0A3F 11  unkn                                                                                                   
+0A49 22  unkn private_airship_request                                                                           
+0A4E 6   unkn                                                                                                   
+0A89 61  recv clone_vender_found             ZC_NOTIFY_OFFLINE_STORE                                            
+0A96 61  unkn                                                                                                   
+0AA3 9   unkn refineui_refine                                                                                   
+0AB4 6   unkn                                                                                                   
+0AB6 8   unkn                                                                                                   
+0AB9 47  unkn                                                                                                   
+0ADA 32  unkn                                                                                                   
+0ADD 24  unkn item_exists                                                                                       
+
+// 2018-07-25_2aRagexe_zero
+0B03 -1  unkn                                                                                                   
+
+// 2018-08-01cRagexe, 2018-08-01cRagexeRE
+0B03 -1  unkn                                                                                                   
+0B04 80  unkn                                                                                                   
+
+// 2018-08-08_2aRagexe_zero
+0B04 80  unkn                                                                                                   
+
+// 2018-08-22aRagexe_zero
+0B05 59  unkn                                                                                                   
+0B06 53  unkn                                                                                                   
+0B07 -1  unkn                                                                                                   
+0B08 26  unkn                                                                                                   
+0B09 -1  unkn                                                                                                   
+0B0A -1  unkn                                                                                                   
+0B0B 3   unkn                                                                                                   
+0B0C 155 unkn                                                                                                   

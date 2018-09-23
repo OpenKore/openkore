@@ -54,6 +54,8 @@ sub new {
 	$self->create_macro_list($parse_result->{macros});
 
 	$self->create_automacro_list($parse_result->{automacros});
+	
+	$self->{subs_list} = $parse_result->{subs};
 
 	$self->define_automacro_check_state;
 	
@@ -160,15 +162,23 @@ sub get_automacro_checking_status {
 
 sub create_macro_list {
 	my ($self, $macro) = @_;
-	while (my ($name,$lines) = each %{$macro}) {
+	foreach my $name (keys %{$macro}) {
 		####################################
 		#####Bad Name Check
 		####################################
 		if ($name =~ /\s/) {
 			error "[eventMacro] Ignoring macro '$name'. You cannot use spaces in macro names.\n";
-			next AUTOMACRO;
+			next;
 		}
-		my $currentMacro = new eventMacro::Macro($name, $lines);
+		
+		####################################
+		#####Duplicated Name Check
+		####################################
+		if (exists $macro->{$name}{'duplicatedMacro'}) {
+			error "[eventMacro] Ignoring macro '$name'. Macros can't have same name.\n";
+			next;
+		}
+		my $currentMacro = new eventMacro::Macro($name, $macro->{$name}{lines});
 		$self->{Macro_List}->add($currentMacro);
 	}
 }
@@ -205,10 +215,18 @@ sub create_automacro_list {
 			next AUTOMACRO;
 		}
 		
+		######################################
+		#####Duplicated name Check
+		######################################
+		if (exists $value->{'duplicatedAutomacro'}) {
+			error "[eventMacro] Ignoring automacro '$name'. Automacros can't have same name\n";
+			next AUTOMACRO;
+		}
+		
 		PARAMETER: foreach my $parameter (@{$value->{'parameters'}}) {
 			###Check Duplicate Parameter
 			if (exists $currentParameters{$parameter->{'key'}}) {
-				warning "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
+				error "[eventMacro] Ignoring automacro '$name' (parameter ".$parameter->{'key'}." duplicate)\n";
 				next AUTOMACRO;
 			}
 			###Parameter: call with or without param
@@ -216,11 +234,11 @@ sub create_automacro_list {
 				my ($macro_name, $params) = ($1 , $2); 
 				
 				if (!$self->{Macro_List}->getByName($macro_name) ) {
-					warning "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
+					error "[eventMacro] Ignoring automacro '$name' (call '".$macro_name."' is not a valid macro name)\n";
 					next AUTOMACRO;
 				} else {
 					unless (defined $params) {
-					$parameter->{'value'} = $macro_name;
+						$parameter->{'value'} = $macro_name;
 					}
 					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 				}
@@ -278,7 +296,7 @@ sub create_automacro_list {
 		
 		###Recheck Parameter call
 		if (!exists $currentParameters{'call'}) {
-			warning "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
+			error "[eventMacro] Ignoring automacro '$name' (all automacros must have a macro call)\n";
 			next AUTOMACRO;
 		}
 		
@@ -814,8 +832,9 @@ sub get_scalar_var {
 		}
 		
 		# Field-related variables.
-		elsif ( $variable_name eq '.map' )    { return $field ? $field->baseName : ''; }
-		elsif ( $variable_name eq '.incity' ) { return $field && $field->isCity ? 1 : 0; }
+		elsif ( $variable_name eq '.map' )      { return $field ? $field->baseName : ''; }
+		elsif ( $variable_name eq '.incity' )   { return $field && $field->isCity ? 1 : 0; }
+		elsif ( $variable_name eq '.inlockmap') { return $field && $field->baseName eq $config{lockMap} ? 1 : 0; }
 
 		# Character-related variables.
 		elsif ( $variable_name eq '.job' )          { return $char && $jobs_lut{ $char->{jobID} } || ''; }
@@ -838,6 +857,9 @@ sub get_scalar_var {
 			return '' if !$char;
 			return join ',', keys %{ $char->{statuses} } ;
 		}
+		
+		# Inventory-related variables.
+		elsif( $variable_name eq '.inventoryitems' )      { return $char && $char->inventory->isReady ? $char->inventory->size : 0; }
 
 		# Cart-related variables.
 		elsif ( $variable_name eq '.cartweight' )       { return $char && $char->cart->isReady ? $char->cart->{weight}     : 0; }
@@ -845,6 +867,7 @@ sub get_scalar_var {
 		elsif ( $variable_name eq '.cartmaxweight' )    { return $char && $char->cart->isReady ? $char->cart->{weight_max} : 0; }
 		elsif ( $variable_name eq '.cartitems' )        { return $char && $char->cart->isReady ? $char->cart->items        : 0; }
 		elsif ( $variable_name eq '.cartmaxitems' )     { return $char && $char->cart->isReady ? $char->cart->items_max    : 0; }
+		elsif ( $variable_name eq '.shopopen' )         { return $char && $shopstarted ? 1 : 0}
 
 		# Storage-related variables.
 		elsif ( $variable_name eq '.storageopen' )     { return $char && $char->storage->isReady              ? 1                         : 0; }

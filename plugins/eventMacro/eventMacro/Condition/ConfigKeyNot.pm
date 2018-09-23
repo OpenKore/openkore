@@ -4,8 +4,8 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals;
-use eventMacro::Data;
+use Globals qw(%config);
+use eventMacro::Data qw($general_wider_variable_qr);
 use eventMacro::Utilities qw(find_variable);
 
 sub _hooks {
@@ -31,7 +31,7 @@ sub _parse_syntax {
 	my @members = split(/\s*,\s*/, $condition_code);
 	foreach my $member (@members) {
 		my ($key, $value);
-		if ($member =~ /^((?:\w+(?:\d|\w|_)*|$general_wider_variable_qr))\s+(\S.*)$/i) {
+		if ($member =~ /^([\w\.]+|$general_wider_variable_qr)\s+(\S.*)$/i) {
 			$key = $1;
 			$value = $2;
 		} else {
@@ -139,30 +139,11 @@ sub validate_condition {
 	} elsif ($callback_type eq 'hook') {
 		
 		if ($callback_name eq 'configModify') {
+			
 			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
 			return $self->SUPER::validate_condition if (!defined $self->{fulfilled_key} && !exists $self->{config_keys_member}->{$args->{key}});
 			
-			$self->{fulfilled_key} = undef;
-			$self->{fulfilled_member_index} = undef;
-			$self->{fulfilled_key_value} = undef;
-			$self->{fulfilled_wanted_value} = undef;
-			foreach my $key (keys %{$self->{config_keys_member}}) {
-				my $config_key_value;
-				if ($key eq $args->{key}) {
-					$config_key_value = (defined $args->{val} ? $args->{val} : 'none');
-				} else {
-					$config_key_value = (!exists $config{$key} ? 'none' : (!defined $config{$key} ? 'none' : $config{$key}));
-				}
-				foreach my $member (@{$self->{config_keys_member}{$key}}) {
-					next unless ($member->{value} ne $config_key_value);
-					$self->{fulfilled_key} = $key;
-					$self->{fulfilled_member_index} = $member->{index};
-					$self->{fulfilled_key_value} = $config_key_value;
-					$self->{fulfilled_wanted_value} = $member->{value};
-					last;
-				}
-				last if (defined $self->{fulfilled_key});
-			}
+			$self->check_keys($args->{key}, $args->{val});
 			
 		} elsif ($callback_name eq 'pos_load_config.txt' || $callback_name eq 'in_game') {
 			$self->check_keys;
@@ -173,20 +154,27 @@ sub validate_condition {
 		$self->check_keys;
 		
 	}
+	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
 
 sub check_keys {
-	my ($self) = @_;
+	my ($self, $key_from_hook, $value_from_hook) = @_;
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	$self->{fulfilled_key_value} = undef;
 	$self->{fulfilled_wanted_value} = undef;
 	foreach my $key (keys %{$self->{config_keys_member}}) {
-		my $config_key_value = (!exists $config{$key} ? 'none' : (!defined $config{$key} ? 'none' : $config{$key}));
+		my $real_key = get_real_key($key); #when have a label, then key changes, else key is the same
+		my $config_key_value;
+		if (defined $key_from_hook && $real_key eq $key_from_hook) {
+			$config_key_value = (defined $value_from_hook ? $value_from_hook : 'none');
+		} else {
+			$config_key_value = (!exists $config{$real_key} ? 'none' : (!defined $config{$real_key} ? 'none' : $config{$real_key}));
+		}
 		foreach my $member (@{$self->{config_keys_member}{$key}}) {
 			next unless ($member->{value} ne $config_key_value);
-			$self->{fulfilled_key} = $key;
+			$self->{fulfilled_key} = $real_key;
 			$self->{fulfilled_member_index} = $member->{index};
 			$self->{fulfilled_key_value} = $config_key_value;
 			$self->{fulfilled_wanted_value} = $member->{value};
@@ -194,6 +182,27 @@ sub check_keys {
 		}
 		last if (defined $self->{fulfilled_key});
 	}
+}
+
+sub get_real_key {
+	# Basic Support for "label" in blocks. Thanks to "piroJOKE" (from Commands.pm, sub cmdConf)
+	$_[0] =~ s/\.+/\./; # Filter Out unnecessary dot's
+	my ($label, $param) = split /\./, $_[0], 2; # Split the label from parameter
+	foreach (keys %config) {
+		if ($_ =~ /_\d+_label/){ # we only need those blocks which have labels
+			if ($config{$_} eq $label) {
+				my ($real_key, undef) = split /_label/, $_, 2;
+				# "<label>.block" param support. Thanks to "vit"
+				if ($param ne "block") {
+					$real_key .= "_";
+					$real_key .= $param;
+				}
+				return $real_key;
+			}
+		}
+	}
+	#if not found any label, return UNchanged key
+	return $_[0];
 }
 
 sub get_new_variable_list {

@@ -70702,7 +70702,7 @@ Character Bound
 #
 
 19951#
-This blank certificate can be used with, forgery tokens, to forge a hat certificate. Look for Hank in Morroc.
+This blank certificate can be used with forgery tokens to forge a hat certificate. Look for Hank in Morroc.
 Weight: 1
 Character Bound
 #
@@ -71623,6 +71623,147 @@ Return this certificate and the following items to Frank, the owner of the Laure
 Shadowy rumors say the following about this certificate:
 It is Tier 1
 It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20049#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gray Drooping Cat!
+150 Black Hair
+150 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Silk Ribbon
+1000 Zeny
+1 Gray Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20050#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Bell Ribbon!
+200 Fabric
+25 Elastic Bands
+4 Pincher of Beetles
+3 Gold
+1 Scarlet Dyestuffs
+1000 Zeny
+1 Bell Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20051#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Friend Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1000 Zeny
+1 Friend Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20052#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Cancer Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+200 Rubys
+1 Cancer Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20053#
+A box that contains: 1x Blank Certificate^000000
+This blank certificate can be used with forgery tokens to forge a hat certificate. Look for Hank in Morroc.
+^ffffff_^000000
+#
+
+20054#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Filir Hat!
+300 Feathers
+200 Feather of Birds
+100 Ectoplasm
+5 Blue Feathers
+2 Yellow Gemstones
+1 Filir Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20055#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Tam!
+200 Fabric
+50 Elastic Bands
+4 Flowers
+2 Soft Silks
+1 Lemon Dyestuffs
+1 Tam Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20056#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hunter's Cap!
+200 Fabric
+100 Sea-Otter Fur
+25 Soft Silk
+5 Darkgreen Dyestuffs
+1 Death Word Card
+1 Hunter's Cap Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20057#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Hyuke's Black Cat Ears!
+200 Black Hairs
+100 Burning Hairs
+50 Animal Skins
+1 Black Cat Doll
+1 Hyuke's Black Cat Ears Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20058#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Sagittarius Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+1 Blue Gemstone
+100 Zircon
+1 Sagittarius Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #

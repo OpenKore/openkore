@@ -657,7 +657,3 @@ Internal:
 
 For older news, please read:
 http://www.openkore.com/misc/OldNews.txt
-
---------------------------
-
-# Commit Testing ;p

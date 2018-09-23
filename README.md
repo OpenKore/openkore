@@ -10,7 +10,12 @@ To run OpenKore you will need:
 
 ## Quickstart
 
-1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. You can also git clone it.
+1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) and extract it. Alternatively, you could press the **Windows Key + R**, type in ``cmd`` and enter. Run the following command in the cmd to clone.
+***Note: [Git](https://git-scm.com/) required.***
+```
+git clone https://github.com/OpenKore/openkore.git
+```
+
 2. Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
 3. Run openkore.pl (you can run start.exe or wxstart.exe if you use Windows).
 
@@ -22,24 +27,35 @@ To run OpenKore you will need:
 * Please use the issue template, please post information about the server and your configuration.
 * Remember, developers are doing this on free time.
 
+### Weekly Maintence on official Servers
+Some official servers (like bRO and iRO) have a weekly maintence.
+
+When this weekly maintence happens, openkore stops working on this server.
+
+To make it work again, a developer have to update openkore.
+
+So if you see a green message written: **timeout on map server... reconnecting....** that means you have to wait for developer to update openkore.
+
+So please wait, don't need to make an issue to tell this.
+
 ### Status of botting on Official Servers
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| `iRO` | International(US) RO | **** | Botable, Weekly Update | allanon |
-| `bRO` | Brazilian RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
-| `idRO` | Indonesian RO (Renewal) | **** | Botable | alisonrag, sctnightcore |
-| `idRO` | Indonesian RO (classic) | **** | Not Working | N/A  |
-| `fRO` | Europe(french) RO | **** | Botable | sctnightcore | 
-| `cRO` | Chinese RO | nProtect | Botable, Weekly Update | alisonrag, sctnightcore |
-| `kRO:Zero` | Korea Zero server | Cdclient | Not Working | alisonrag, sctnightcore  |
-| `kRO` | Korea RO | Cdclient | Need Verification |  N/A |
-| `jRO` | Japanese RO | HShield | Need Verification | N/A |
-| `thRO` | Thai RO | EAC | Need Verification | N/A |
-| `mRO` | Malaysian RO | EAC | Not Working | N/A |
-| `phRO` | Philippines RO | EAC | Not Working | N/A |
-| `ruRO` | Russian RO | **** | Need Verification | N/A |
-| `twRO` | Taiwanese RO | Cdclient | Not working | windhamwong |
+| [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
+| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
+| [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag |
+| [idRO](https://ragnarok.gravindo.id/) | Indonesia RO (classic) | *** | Not Working | N/A  |
+| [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | allanon | 
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag |
+| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag  |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Need Verification |  N/A |
+| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
+| [tRO](https://ro.exe.in.th/) | Thailand RO | EAC | Need Verification | N/A |
+| [mRO](https://roextreme.com/mysg/main) | Malaysia RO | EAC | Not Working | N/A |
+| [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
+| [ruRO](https://ru.4game.com/ro/play/) | Russia RO | *** | Need Verification | N/A |
+| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing
 

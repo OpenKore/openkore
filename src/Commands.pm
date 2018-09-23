@@ -133,7 +133,7 @@ sub initHandlers {
 	gmresetstate		=> \&cmdGmresetstate,
 	gmmute				=> \&cmdGmmute,
 	gmunmute			=> \&cmdGmunmute,
-	gmkillall			=> \&cmdGmkillall,
+	gmkickall			=> \&cmdGmkickall,
 	# GM Commands - End
 	guild				=> \&cmdGuild,
 	help				=> \&cmdHelp,
@@ -171,6 +171,7 @@ sub initHandlers {
 	relog				=> \&cmdRelog,
 	repair				=> \&cmdRepair,
 	respawn				=> \&cmdRespawn,
+	revive				=> \&cmdRevive,
 	rodex				=> \&cmdRodex,
 	s					=> \&cmdStatus,
 	sell				=> \&cmdSell,
@@ -1036,76 +1037,99 @@ sub cmdCart_get {
 
 sub cmdCash {
 	my (undef, $args) = @_;
-	my ($sub_cmd, $arg) = split(/\s+/,$args, 2);
-	if ($sub_cmd eq 'buy') {
-		if ($arg =~ /^\s+$/) {
-			error T("Syntax Error in function 'cash' (Cash shop)\n" .
-				"Usage: cash <buy|points>\n");
+	my (@args) = parseArgs($args);
+	
+	if ($args[0] eq 'open') {
+		if (defined $cashShop{points}) {
+			error T("Cash shop already opened this session\n");
 			return;
 		}
-		my $int_arg;
-		#my $r_arg;
-		if ($arg =~ s/(\d+)$//) { # ending with number
-			$int_arg = $1;
-		}
-		$arg =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
-		$arg =~ s/\s+$//g;	# Remove trailing whitespace
-
-		my $amount;
-		my $item;
-
-		if ($arg && $int_arg) { # recebi item (nao sei se é ID ou nome) e quantidade
-			$amount = $int_arg;
-			$item = $arg;
-		} elsif (!$arg && $int_arg) { # recebi itemID, sem quantidade
-			$amount = 1;
-			$item = $int_arg;
-		} elsif ($arg && !$int_arg) { # recebi nome do item, sem quantidade
-			$amount = 1;
-			$item = $arg;
-		} else {
-			error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
+		
+		$messageSender->sendCashShopOpen();
+		return;
+	}
+	
+	if ($args[0] eq 'close') {
+		if (not defined $cashShop{points}) {
+			error T("Cash shop is not open\n");
 			return;
 		}
-
-		if ($item !~ /^\d+$/) {
-			# transform itemName into itemID
+		
+		$messageSender->sendCashShopClose();
+		return;
+	}
+	
+	if (not defined $cashShop{points}) {
+		error T("Cash shop is not open\n");
+		error T("Please use 'cash open' first\n");
+		return;
+	}
+	
+	if ($args[0] eq 'buy') {
+		if (scalar @args < 2 || !$args[1]) {
+			error T("Syntax Error in function 'cash buy' (Cash shop)\n" .
+				"Usage: cash buy <item> [<amount>] [<kafra shop points>]\n");
+			return;
+		}
+		
+		my ($amount, $item, $kafra_points);
+		
+		if ($args[1] !~ /^\d+$/) {
 			$item = itemNameToID($item);
 			if (!$item) {
 				error TF("Error in function 'cash buy': invalid item name or tables needs to be updated \n");
 				return;
 			}
+		} else {
+			$item = $args[1];
+		}
+		
+		if (scalar @args < 3 || $args[2] !~ /^\d+$/) {
+			$amount = 1;
+		} else {
+			$amount = $args[2];
+		}
+		
+		if (scalar @args >= 4) {
+			$kafra_points = $args[3];
+		} else {
+			$kafra_points = 0;
 		}
 
-		$messageSender->sendCashShopOpen() unless (defined $cashShop{points});
-
-		for (my $tab = 0; $tab < @{$cashShop{list}}; $tab++) {
-			foreach my $itemloop (@{$cashShop{list}[$tab]}) {
-				if ($itemloop->{item_id} == $item) {
-					# found item! ... but do we have the money?
-					unless ((defined $cashShop{points}) && ($itemloop->{price} > $cashShop{points}->{cash})) {
-						# buy item
-						message TF("Buying %s from cash shop \n", itemNameSimple($itemloop->{item_id}));
-						$messageSender->sendCashBuy($itemloop->{item_id}, $amount, $tab);
-						return;
-					} else {
-						error TF("Not enough cash to buy item %s (%sC), we have %sC\n", itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price}), formatNumber($cashShop{points}->{cash}));
+		if ($kafra_points > $cashShop{points}->{kafra}) {
+			error TF("You don't have that many kafra shop points (Requested: %d, Available: %d)", $kafra_points, $cashShop{points}->{kafra});
+			return;
+		}
+		
+		for (my $i = 0; $i < scalar @{$cashShop{list}}; ++$i) {
+			foreach my $item_in_tab (@{$cashShop{list}[$i]}) {
+				if ($item_in_tab->{item_id} == $item) {
+					if ($item_in_tab->{price} * $amount > $cashShop{points}->{cash} + $kafra_points) {
+						error TF("Not enough cash to buy item %s x %d (%sC), we have %sC\n",
+							itemNameSimple($item_in_tab->{item_id}), $amount, formatNumber($item_in_tab->{price} * $amount),
+							formatNumber($cashShop{points}->{cash} + $kafra_points)
+						);
 						return;
 					}
+					
+					message TF("Buying %s from cash shop \n", itemNameSimple($item_in_tab->{item_id}));
+					$messageSender->sendCashBuy($kafra_points, [{nameID => $item_in_tab->{item_id}, amount => $amount, tab => $i}]);
+					return;
 				}
-			} 
+			}
 		}
 
 		error TF("Error in function 'cash buy': item %s not found or shop list is not ready yet.", itemNameSimple($item));
 		return;
 
-	} elsif ($sub_cmd eq 'points') {
-		if (defined $cashShop{points}) {
-			message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
-		} else {
-			$messageSender->sendCashShopOpen();
-		}
-	} elsif ($sub_cmd eq 'list') {
+	} 
+	
+	if ($args[0] eq 'points') {
+		message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
+		return;
+	}
+	
+	if ($args[0] eq 'list') {
 		my %cashitem_tab = (
 			0 => T('New'),
 			1 => T('Popular'),
@@ -1129,11 +1153,12 @@ sub cmdCash {
 		}
 		$msg .= ('-'x50) . "\n";
 		message $msg, "list";
-
-	} else {
-		error T("Syntax Error in function 'cash' (Cash shop)\n" .
-			"Usage: cash <buy|points|list>\n");
+		
+		return;
 	}
+	
+	error T("Syntax Error in function 'cash' (Cash shop)\n" .
+			"Usage: cash <open|close|buy|points|list>\n");
 }
 
 sub cmdCharSelect {
@@ -2415,26 +2440,21 @@ sub cmdGmb {
 
 	return unless ($char);
 	my ($cmd, $message) = @_;
-	my ($msg, $switch);
-
-	if ($message eq '') {
-		error TF("Usage: %s <MESSAGE>\n", $cmd);
-		return;
-	} elsif ($cmd =~ /^gml/) {
-		$switch = hex('019C');
-	} else {
-		$switch = hex('0099');
-	}
 
 	if ($cmd eq 'gmb' || $cmd eq 'gmlb') {
-		$message = stringToBytes("$char->{name}: $message");
+		$message = "$char->{name}: $message";
 	} elsif ($cmd eq 'gmbb' || $cmd eq 'gmlbb') {
-		$message = stringToBytes("blue$message");
-	} elsif ($cmd eq 'gmnb' || $cmd eq 'gmlnb') {
-		$message = stringToBytes($message);
+		$message = "blue$message";
+	} elsif ($cmd ne 'gmnb' && $cmd ne 'gmlnb') {
+		error TF("Usage: %s <MESSAGE>\n", $cmd);
+		return;
 	}
-	$msg = pack('v2 Z*', $switch, length($message) + 5, $message);
-	$messageSender->sendToServer($msg);
+	
+	if ($cmd =~ /^gml/) {
+		$messageSender->sendGMBroadcastLocal($message);
+	} else {
+		$messageSender->sendGMBroadcast($message);
+	}
 }
 
 sub cmdGmmapmove {
@@ -2455,8 +2475,7 @@ sub cmdGmmapmove {
 		return;
 	}
 
-	my $packet = pack("C*", 0x40, 0x01) . pack("a16", $map_name) . pack("v1 v1", $x, $y);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMMapMove($map_name, $x, $y);
 }
 
 sub cmdGmsummon {
@@ -2488,17 +2507,16 @@ sub cmdGmdc {
 		return;
 	}
 
-	my $packet = pack("C*", 0xCC, 0x00).pack("V1", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMKick($args);
 }
 
-sub cmdGmkillall {
+sub cmdGmkickall {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C*", 0xCE, 0x00);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMKickAll();
 }
 
 sub cmdGmcreate {
@@ -2513,8 +2531,7 @@ sub cmdGmcreate {
 		return;
 	}
 
-	my $packet = pack("C*", 0x3F, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMMonsterItem($args);
 }
 
 sub cmdGmhide {
@@ -2522,8 +2539,8 @@ sub cmdGmhide {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMChangeEffectState(0);
 }
 
 sub cmdGmresetstate {
@@ -2531,8 +2548,8 @@ sub cmdGmresetstate {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMResetStateSkill(0);
 }
 
 sub cmdGmresetskill {
@@ -2540,8 +2557,8 @@ sub cmdGmresetskill {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendGMResetStateSkill(1);
 }
 
 sub cmdGmmute {
@@ -2555,8 +2572,8 @@ sub cmdGmmute {
 		error T("Usage: gmmute <ID> <minutes>\n");
 		return;
 	}
-	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 1, $time);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendAlignment($ID, 1, $time);
 }
 
 sub cmdGmunmute {
@@ -2570,8 +2587,8 @@ sub cmdGmunmute {
 		error T("Usage: gmunmute <ID> <minutes>\n");
 		return;
 	}
-	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 0, $time);
-	$messageSender->sendToServer($packet);
+	
+	$messageSender->sendAlignment($ID, 0, $time);
 }
 
 sub cmdGmwarpto {
@@ -2586,8 +2603,7 @@ sub cmdGmwarpto {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBB, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMShift($args);
 }
 
 sub cmdGmrecall {
@@ -2602,8 +2618,7 @@ sub cmdGmrecall {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBC, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMRecall($args);
 }
 
 sub cmdGmremove {
@@ -2618,8 +2633,7 @@ sub cmdGmremove {
 		return;
 	}
 
-	my $packet = pack("C*", 0xBA, 0x01).pack("a24", $args);
-	$messageSender->sendToServer($packet);
+	$messageSender->sendGMRemove($args);
 }
 
 sub cmdGuild {
@@ -2736,7 +2750,7 @@ sub cmdGuild {
 			error T("Syntax Error in function 'guild create' (Create Guild)\n" .
 				"Usage: guild create <name>\n");
 		} else {
-			$messageSender->sendGuildCreate($arg2);
+			$messageSender->sendGuildCreate($arg2, $charID);
 		}
 
 	} elsif (!defined $char->{guild}) {
@@ -2747,7 +2761,7 @@ sub cmdGuild {
 		if (!$player) {
 			error TF("Player %s does not exist.\n", $arg2);
 		} else {
-			$messageSender->sendGuildJoinRequest($player->{ID});
+			$messageSender->sendGuildJoinRequest($player->{ID}, $charID);
 			message TF("Sent guild join request to %s\n", $player->{name});
 		}
 
@@ -2763,12 +2777,12 @@ sub cmdGuild {
 			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {
-			$messageSender->sendGuildSetAlly($net,$player->{ID},$accountID,$charID);
+			$messageSender->sendGuildSetAlly($player->{ID}, $accountID, $charID);
 			message TF("Sent guild alliance request to %s\n", $player->{name});
 		}
 
 	} elsif ($arg1 eq "leave") {
-		$messageSender->sendGuildLeave($arg2);
+		$messageSender->sendGuildLeave($arg2, $guild{ID}, $charID);
 		message TF("Sending guild leave: %s\n", $arg2);
 
 	} elsif ($arg1 eq "break") {
@@ -7159,8 +7173,8 @@ sub cmdSearchStore {
 		} elsif ($args[1] eq "exact") {
 			$searchMethod = \&itemNameToIDList;
 		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
+			error T("Error in function 'searchstore search' (store search)\n" .
+					"Syntax: searchstore search [match|exact] \"<item name>\" [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n");
 			
 			return;
 		}
@@ -7188,11 +7202,6 @@ sub cmdSearchStore {
 			if ($args[5] eq "card") {
 				@cards = $searchMethod->($args[6]);
 			}
-		} else {
-			error TF("Error in function 'searchstore search' (store search)\n" .
-					"Syntax: searchstore search [match|exact] [card <card name>] [price <min_price>..<max_price>] [sell|buy]\n", $args[1]);
-			
-			return;
 		}
 		
 		if ($args[-1] eq "buy") {
@@ -7252,6 +7261,50 @@ sub cmdSearchStore {
 			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
 			"searchstore select <page #> <store #> : Selects a store\n" .
 			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
+}
+
+sub cmdRevive {
+	my ($cmd, $args) = @_;
+	
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	if (!$char->{dead}) {
+		error TF("You must be dead to use this command '%s'\n", $cmd);
+		return;
+	}
+	
+	my @args = parseArgs($args);
+	my $item;
+	
+	if (scalar @args == 1) {
+		# User passed an item nameID
+		if ($args[0] =~ /^\d+$/) {
+			$item = $char->inventory->getByNameID($args[0]);
+		}
+		# User passed an item name
+		elsif ($args[0] ne "force") {
+			$item = $char->inventory->getByName($args[0]);
+		}
+	} elsif (scalar @args == 0) {
+		# Try to find Token Of Siegfried
+		$item = $char->inventory->getByNameID(7621);
+	} else {
+		error T("Error in 'revive' command (incorrect syntax)\n".
+				"revive [force|<item name>|<item ID>]\n");
+		return;
+	}
+	
+	if (!$item && $args[0] ne "force") {
+		error TF("Error in 'revive' command\n".
+				"Cannot use item %d in attempt to revive: item not found in inventory\n", $args[0]);
+		return;
+	}
+	
+	message TF("Trying to use item %s to self-revive\n", $item->name());
+	$messageSender->sendAutoRevive();
 }
 
 1;
