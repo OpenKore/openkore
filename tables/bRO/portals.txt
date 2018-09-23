@@ -2767,7 +2767,7 @@ alberta_in 75 39 moc_para01 31 14 c c r0
 aldebaran 133 119 moc_para01 31 14 c c r0
 amatsu 100 145 moc_para01 31 14 c c r0
 ayothaya 221 191 moc_para01 31 14 c c r0
-brasilis 191 224 moc_para01 31 14 c c r0
+brasilis 178 227 moc_para01 31 14 c c r0
 comodo 202 151 moc_para01 31 14 c c r0
 dewata 192 193 moc_para01 31 14 c c r0
 einbroch 250 211 moc_para01 31 14 c c r0
@@ -2968,3 +2968,5 @@ conch_in 137 66 conch_in 139 89
 conch_in 140 87 conch_in 137 64
 conch_in 142 60 conch_in 162 61
 conch_in 159 61 conch_in 140 59
+brasilis 316 57 alberta 224 115
+alberta 247 115 brasilis 314 60 0 c c r0 c 
