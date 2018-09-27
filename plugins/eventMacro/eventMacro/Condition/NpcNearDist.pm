@@ -1,8 +1,7 @@
 package eventMacro::Condition::NpcNearDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $npcsList $field $char );
 
 use base 'eventMacro::Condition::BaseActorNearDist';
 

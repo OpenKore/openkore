@@ -5,8 +5,6 @@ use Globals;
 use Utils;
 use base 'eventMacro::Condition::ActorNearCount';
 
-use Globals;
-
 sub _hooks {
 	my ( $self ) = @_;
 	my $hooks = $self->SUPER::_hooks;

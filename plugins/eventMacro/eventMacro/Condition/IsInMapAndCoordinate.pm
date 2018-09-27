@@ -1,10 +1,9 @@
 package eventMacro::Condition::IsInMapAndCoordinate;
 
 use strict;
-use Globals;
-use Utils;
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use Globals qw( $char $field );
+
+use eventMacro::Utilities qw( find_variable );
 
 use base 'eventMacro::Condition';
 

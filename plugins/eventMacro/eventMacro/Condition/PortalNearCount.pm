@@ -2,10 +2,8 @@ package eventMacro::Condition::PortalNearCount;
 
 use strict;
 use Globals;
-use Utils;
-use base 'eventMacro::Condition::ActorNearCount';
 
-use Globals;
+use base 'eventMacro::Condition::ActorNearCount';
 
 sub _hooks {
 	my ( $self ) = @_;

@@ -1,11 +1,9 @@
 package eventMacro::Condition::NoMobNear;
 
 use strict;
-use Globals;
-use Utils;
-use base 'eventMacro::Condition::NoActorNear';
+use Globals qw( $monstersList );
 
-use Globals;
+use base 'eventMacro::Condition::NoActorNear';
 
 sub _hooks {
 	my ( $self ) = @_;

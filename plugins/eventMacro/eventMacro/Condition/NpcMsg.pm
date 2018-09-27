@@ -1,8 +1,6 @@
 package eventMacro::Condition::NpcMsg;
 
 use strict;
-use Globals;
-use Utils;
 
 use base 'eventMacro::Condition::BaseMsg';
 

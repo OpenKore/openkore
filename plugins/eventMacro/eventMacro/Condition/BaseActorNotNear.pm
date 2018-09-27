@@ -2,7 +2,6 @@ package eventMacro::Condition::BaseActorNotNear;
 
 use strict;
 use Globals qw( $char ) ;
-#use Utils;
 
 use base 'eventMacro::Conditiontypes::RegexConditionState';
 

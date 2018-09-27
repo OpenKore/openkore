@@ -1,11 +1,8 @@
 package eventMacro::Condition::ZenyChanged;
 
 use strict;
-use Utils;
 
 use base 'eventMacro::Conditiontypes::NumericConditionEvent';
-
-use Globals qw( $char );
 
 sub _hooks {
 	['zeny_change'];
