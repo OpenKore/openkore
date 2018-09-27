@@ -1,8 +1,7 @@
 package eventMacro::Condition::PartyMsgDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $playersList );
 
 use eventMacro::Data;
 

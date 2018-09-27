@@ -126,7 +126,6 @@ sub get_new_variable_list {
 }
 
 sub condition_type {
-	my ($self) = @_;
 	EVENT_TYPE;
 }
 

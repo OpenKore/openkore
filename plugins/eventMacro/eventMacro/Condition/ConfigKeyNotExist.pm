@@ -4,9 +4,8 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals;
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use Globals qw( %config );
+use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
 	['configModify','pos_load_config.txt','in_game'];

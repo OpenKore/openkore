@@ -1,10 +1,7 @@
 package eventMacro::Condition::PrivMsgDist;
 
 use strict;
-use Globals;
-use Utils;
-
-use eventMacro::Data;
+use Globals qw( $playersList );
 
 use base 'eventMacro::Condition::BaseMsgDist';
 

@@ -1,8 +1,7 @@
 package eventMacro::Condition::PlayerNearDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $playersList $char $field );
 
 use base 'eventMacro::Condition::BaseActorNearDist';
 

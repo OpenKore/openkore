@@ -4,7 +4,7 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use Globals;
+use Globals qw( $currentChatRoom );
 
 sub _hooks {
 	['packet_mapChange','chat_created','chat_leave','chat_joined'];

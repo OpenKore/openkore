@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 #InProgressBar 1 -> Only triggers during a Progress Bar
 #InProgressBar 0 -> Only triggers while not in a Progress Bar
 
-use Globals;
+use Globals qw( $char $field );
 
 sub _hooks {
 	['packet/progress_bar','packet/progress_bar_stop','packet_mapChange','packet/map_property3'];
