@@ -1,8 +1,7 @@
 package eventMacro::Condition::BaseMsg;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( %monsters );
 
 use base 'eventMacro::Conditiontypes::RegexConditionEvent';
 

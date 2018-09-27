@@ -2,7 +2,7 @@ package eventMacro::Validator::RegexCheck;
 
 use strict;
 use base 'eventMacro::Validator';
-use eventMacro::Data;
+use eventMacro::Data qw( $valid_var_characters $general_variable_qr $scalar_variable_qr $array_variable_qr $hash_variable_qr);
 use eventMacro::Utilities qw(find_variable get_key_or_index);
 
 sub get_accessed_var {
@@ -16,12 +16,12 @@ sub get_accessed_var {
 		my $close_bracket = (($type eq 'hash') ? '}' : ']');
 		
 		my $rest = $3;
-			
+		
 		my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
 		if (!defined $key_index || $key_index eq '') {
 			return;
 		}
-			
+		
 		my $original_name = ('$'.$name.$open_bracket.$key_index.$close_bracket);
 		
 		return $original_name;
