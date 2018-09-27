@@ -6,8 +6,7 @@ use base 'eventMacro::Conditiontypes::RegexConditionState';
 use eventMacro::Data qw( EVENT_TYPE );
 
 sub condition_type {
-	my ($self) = @_;
-	return EVENT_TYPE;
+	EVENT_TYPE;
 }
 
 1;

@@ -6,9 +6,6 @@ use base 'eventMacro::Condition::BaseInCart';
 
 use Globals qw( $char );
 
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable getCartAmountbyID);
-
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	

@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 #InCity 1 -> Only triggers in cities
 #InCity 0 -> Only triggers outside of cities
 
-use Globals;
+use Globals qw( $field );
 
 sub _hooks {
 	['packet_mapChange'];

@@ -1,8 +1,7 @@
 package eventMacro::Condition::ChatRoomNear;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $accountID %chatRooms @chatRoomsID);
 
 
 use base 'eventMacro::Conditiontypes::RegexConditionState';
