@@ -37453,7 +37453,7 @@ This well written, detailed manual explains Extremely Efficient battle methods.
 ^000088EXP rate increases to 300% for 30 minutes.^000000
 ^ff0000Can be traded, stored, and vended^000000
 ^ffffff_^000000
-Weight : ^7777771^000000
+Weight : ^7777770^000000
 #
 18838#
 A hat applied a special engine which can move Angeling's wings. This engine seems to have a myterious function.
