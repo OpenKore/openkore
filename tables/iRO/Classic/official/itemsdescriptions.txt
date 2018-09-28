@@ -71767,3 +71767,18 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20059#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Choco Donut In Mouth!
+500 Bread
+100 Yams
+5 Level 3 Heal
+1 Sweet Milk
+1 Cacao
+1 Choco Donut In Mouth Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
