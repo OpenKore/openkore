@@ -17,7 +17,11 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	#warning "sub _parse_syntax+begin\n";
+	if ($condition_code =~ /,/) {
+		$self->{error} = "comma separeted values are not accepted on this condition";
+		return 0;
+	}
+	
 	$self->{is_on_stand_by} = 0;
 	
 	$self->{fulfilled_coordinate} = undef;
@@ -109,25 +113,7 @@ sub _parse_syntax {
 		}
 	}
 	
-	#use Data::Dumper;
-	#warning "\nbeggining\n";
-	#warning "condition_code: $condition_code\n";
-	#warning "parts: '". @parts ."'\n";
-	#warning "has_map: '$has_map'\n";
-	#warning "has_coords: '$has_coords'\n";
-	#warning "map: $map\n";
-	#warning "coord_x: $coord_x\n";
-	#warning "coord_y: $coord_y\n";
-	#warning "map\n";
-	#warning Dumper($self->{map_validators}{$member_index});
-	#warning "x\n";
-	#warning Dumper($self->{x_validators}{$member_index});
-	#warning "y\n";
-	#warning Dumper($self->{y_validators}{$member_index});
-	#warning "end\n";
-	
 	$self->{index_of_last_validator} = $member_index;
-	#warning "sub _parse_syntax+end\n";
 	return 1;
 }
 
