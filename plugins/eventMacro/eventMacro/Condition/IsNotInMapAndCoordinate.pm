@@ -18,7 +18,7 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	if ($condition_code =~ /,/) {
-		$self->{error} = "comma separeted values are not accepted on this condition";
+		$self->{error} = "Comma separated values are not accepted on this condition";
 		return 0;
 	}
 	
