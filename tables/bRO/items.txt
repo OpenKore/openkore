@@ -7031,11 +7031,14 @@
 31488#Balão de MVP#
 31490#Cachecol de Poring#
 31493#Peruca Branca de Waifu#
+31510#Peruca Curta de Gatinho#
+31511#Peruca Longa de Gatinho#
 31513#Orelhas do Coelho Minguante#
 31528#Tiara Cósmica#
 31531#Chapéu Mágico Duas-Pontas#
 31542#Vaso do Poring Saltitante#
 31543#Chapéu de Urso#
+31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
