@@ -55698,7 +55698,7 @@ Refino +9 ou mais:
 ^0000ffConjuração variável -5%.^000000
 ^0000ffResistência as propriedades Sombrio e Sagrado +10% adicional.^000000
 ^FF6347Conjunto^000000
-^FF6347[Botas do Serafim Caído]^000000
+^FF6347[Botas do Ocultista]^000000
 ^0000ffResistência a raça Humanoide +10%.^000000
 ^0000ffResistência as propriedades Sombrio e Sagrado +30%.^000000
 A cada nível de [Fé]:
@@ -60367,6 +60367,22 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31510#
+Cabelos curtos são tão bonitos e estilosos quanto os longos. Por isso, essa peruca esbanja um visual bem diferente e moderno, contando ainda com duas imitações de orelhas de gatinho. Mas saiba que, com ela, pode ser que te confundam com algum personagem famoso de Amatsu.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31511#
+Uma linda peruca completamente platinada, com pequenas tranças e franjinha. As próprias madeixas da peruca imitam orelhas de gatinho, e há quem diga que você vai ficar a cara do guerreiro yokai Inu Se Acha!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31513#
 Se outras pessoas perguntarem por que você se veste como um coelho, pergunte a elas por que se vestem como humanos. Se elas conhecerem tanto de filmes como você, talvez entendam o que você quis dizer.
 Tipo: ^777777Visual^000000
@@ -60405,6 +60421,14 @@ Classes: ^777777Todas^000000
 Basta colocá-lo na cabeça e todo o conforto e a fofura desse simpático chapéu o farão se sentir um verdadeiro ursinho de pelúcia. Só tome cuidado pra não te apertarem demais!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31544#
+Para ficar à imagem e semelhança da poderosa MVP, você não precisa de um bicho de pelúcia sinistro nem das roupas e apetrechos dela. Basta colocar a peruca loira e repleta de cachos que foi feita exatamente de acordo com o cabelo de Piamette, e pronto! Tão adorável e tenebroso quanto ela.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
