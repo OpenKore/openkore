@@ -46,7 +46,7 @@ READLINE_LIB = 'readline'
 perlconfig = {}
 env = Environment()
 if win32:
-	env = Environment(tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
+	env = Environment(ENV = {'PATH' : os.environ['PATH']}, tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
 
 if darwin:
 	env['LIBPATH'] = DARWIN_LIBRARY_DIRECTORIES
@@ -298,12 +298,12 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 perlenv = libenv.Clone()
 if win32:
 	# Windows
-	perlenv['CCFLAGS'] += Split('-Wno-comments -include stdint.h')
-	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
-		'_UINTPTR_T_DEFINED CHECK_FORMAT')
+	perlenv['CCFLAGS'] += Split('-s -Wno-comments -fwrapv -fno-strict-aliasing -mms-bitfields')
+	perlenv['CPPDEFINES'] += Split('__USE_MINGW_ANSI_STDIO PERL_TEXTMODE_SCRIPTS PERL_IMPLICIT_CONTEXT PERL_IMPLICIT_SYS USE_PERLIO')
 	#perlenv['LIBS'] += ['perl58']
 	#perlenv['LIBS'] += ['perl510']
-	perlenv['LIBS'] += ['perl512']
+	#perlenv['LIBS'] += ['perl512']
+	perlenv['LIBS'] += ['perl528']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)
