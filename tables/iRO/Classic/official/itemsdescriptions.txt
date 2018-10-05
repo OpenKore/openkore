@@ -71782,3 +71782,17 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20060#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Ramen Hat!
+300 Meat
+200 Brown Roots
+50 Yellow Plates
+1 Egg
+1 Ramen Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
