@@ -7776,20 +7776,47 @@ MATK + 115
 Variable Casting Time - 5%.
 #
 1617#
-^808080A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 50
-Property: Neutral
-Weight: 100
-Weapon Level: 3
-Required Level: 24
-Required Job: Mage Jobs, Soul Linker
-^FFFFFF_^000000
-DEX + 2
+A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Dex + 2
 Max HP + 300
-MATK + 120
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 3%.
+Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod^000000
+^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1618#
 A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
@@ -7842,20 +7869,47 @@ Increases the damage of Neutral property magical attacks on targets by 80%.
 Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1619#
-^808080A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 50
-Property: Neutral
-Weight: 100
-Weapon Level: 3
-Required Level: 24
-Required Job: Mage Jobs, Soul Linker
-^FFFFFF_^000000
-INT + 2
+A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Int + 2
 Max HP + 300
-MATK + 120
+^800080Set Bonus^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the variable casting time of skills by 3%.
+Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod^000000
+^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1620#
 A staff developed through the united efforts of the Mage Guild and Prontera Church. There are two different versions of this staff intended to help new trainees.
@@ -19282,14 +19336,13 @@ Weight : ^77777710^000000
 Job : ^777777All^000000
 #
 2776#
-This trusty towel truly is the sidearm of an experienced adventurer.
-Allowing one to remain cool in the face of adversity.
-^ffffff_^000000
-^FF0000Warning: Do not wear towel when in battle; it is only to be used in relaxed situations.^000000
-^ffffff_^000000
+This trusty towel truly is the sidearm of an experienced adventurer, allowing one to remain cool in the face of adversity
+Warning: Do not wear towel when in battle; it is only to be used in relaxed situations.
 Cannot be Dropped or Traded.
-^ffffff_^000000
-Weight : ^77777710^000000
+^FF0000Account Bound^000000
+Attack: ^8080800^000000
+Weight: ^80808010^000000
+Weapon Level: ^8080800^000000
 #
 2777#
 A ring worn only by those belonging to the Shaman order.
@@ -20537,39 +20590,39 @@ Job : ^777777All^000000
 #
 2951#
 Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
-MSP + 30.
-Lets you use Level 1 Snow Flip.
-Class : ^777777Accessory^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 30
+Enables ^0000FFLevel 1 Snow Flip^000000.
 #
 2952#
 Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
-MSP + 30.
-Lets you use Level 1 Peony Mommy.
-Class : ^777777Accessory^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 30
+Enables ^0000FFLevel 1 Peony Mommy^000000.
 #
 2953#
 Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
-MHP + 100.
-Lets you use Level 1 Sada Ear.
-Class : ^777777Accessory^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100
+Enables ^0000FFLevel 1 Slapping Herb^000000.
 #
 2954#
 Rumored to be imbued with the power of the deity and prophet Kvasir, this ring endows its wearer with special healing ability.
-MHP + 100.
-Let you use Level 1 Dust of Galaxy.
-Class: ^777777Accessory^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100
+Enables ^0000FFLevel 1 Yggdrasil Dust^000000.
 #
 2956#
 Magical ring that reduces damage towards the wearer.
@@ -26287,16 +26340,11 @@ Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4507#
-Additional 30% damage to Scaraba monsters.
-When defeat the enemy, Drop the ticket of Scaraba.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
-Additional 30% damage to Scaraba.
-When defeat the enemy, Drop the ticket of Scaraba.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases physical damage on Scaraba monsters by 30%.
+Adds a chance of gaining ^008080Scaraba Scroll^000000 when a monster is killed.
 #
 4508#
 ATK + 20, MHP - 1%.
@@ -26305,11 +26353,13 @@ Compound on : ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4509#
-INT + 3.
-Decrease Damage from Insect ememies by 10%, when refine Lv +9, damage decreases an additional 5%.
-Class : ^777777Card^000000
-Compound on : ^777777Headgear^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Int + 3
+Reduces damage taken from Insect race enemies by 10%.
+If upgrade level of the compounded item is +9 or higher, reduces damage taken from Insect race enemies by an additional 5%
 #
 4510#
 When short distance attacking, has a chance of inflicting deep sleep to enemies with certain rate.
@@ -27141,13 +27191,15 @@ Compound on : ^777777Shield^000000
 Weight : ^7777771^000000
 #
 4629#
-Increase resistance against Neutral property attack by 15%.
-Increases damage of Earth property magic by 3% per refine.
-When equipped with a shoes compounded to Time Keeper Card:
-further increase resistance against Neutral property attack by 5%.
-Class : ^777777Card^000000
-Compound on : ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Reduces damage taken from Neutral property attacks by 15%.
+Increases the damage of Earth property magical attacks on targets by 3% per upgrade level of the compounded item.
+^800080Set Bonus^000000
+^008080Arc Elder Card^000000
+^008080Time Keeper Card^000000
+Reduces damage taken from Neutral property attacks by an additional 5%.
 #
 4630#
 Has a chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attack.
@@ -28271,28 +28323,29 @@ If refined to +9 or higher, Atk +1 to all monster sizes
 If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
 #
 4855#
-Vit +1
-If refined to +8 or higher, additional Vit +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Vit + 1
+If upgrade level is +8 or higher, additional Vit + 3.
+If upgrade level is +9 or higher, Max SP + 1%.
+If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
 #
 4856#
-Int +1
-If refined to +8 or higher, additional Int +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Int + 1
+If upgrade level is +8 or higher, additional Int + 3.
+If upgrade level is +9 or higher, Matk + 1%.
+If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
 #
 4857#
-Dex +1
-If refined to +8 or higher, additional Dex +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Dex + 1
+If upgrade level is +8 or higher, additional Dex + 3.
+If upgrade level is +9 or higher, Matk + 1%.
+If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
+
 #
 4858#
-Luk +1
-If refined to +8 or higher, additional Luk +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Luk + 1
+If upgrade level is +8 or higher, additional Luk + 3.
+If upgrade level is +9 or higher, Max HP + 1%.
+If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
 #
 4859#
 FLEE +1
@@ -28326,7 +28379,7 @@ MHP + 3%.
 MHP + 4%.
 #
 4869#
-Increase Attacking speed.(Decrease Delay after attacking by 4%)
+Aspd + 4%
 #
 4870#
 SP + 25
@@ -28335,10 +28388,10 @@ SP + 25
 SP + 75
 #
 4872#
-Increase Attacking speed.(Decrease Delay after attacking by 6%)
+Aspd + 6%
 #
 4873#
-Increase Attacking speed.(Decrease Delay after attacking by 8%)
+Aspd + 8%
 #
 4875#
 When being attacked, has a chance of changing into a Bigfoot and increasing Str by 200 for 5 seconds while decreasing HP by 500 every second.
@@ -28359,8 +28412,7 @@ When attacking, has a low chance of increasing Dex by 200 for 5 seconds while de
 For all attacks, you could increase your Luck by 200 for 5 seconds at a low rate.
 #
 4881#
-Increase Attacking speed.(Decrease Delay after attacking by 10%)
-Increase Attack Speed. (Attack delay decreased 10%)
+Aspd + 10%
 #
 4882#
 ATK + 1%.
@@ -28677,13 +28729,13 @@ SP Cost -4%
 SP Cost -6%
 #
 4948#
-Delay after Skill -2%
+Reduces the global delay of skills by 2%.
 #
 4949#
-Delay after Skill -4%
+Reduces the global delay of skills by 4%.
 #
 4950#
-Delay after Skill -6%
+Reduces the global delay of skills by 6%.
 #
 4991#
 Adventurers can feel carefree exploring dangerous lands knowing that Kafra gal Blossom is supporting them back in town.
@@ -49717,23 +49769,10 @@ Weight : ^7777770^000000
 12801#
 #
 12806#
-^808080A rolled up piece
-of parchment, now
-brittle with age, on
-which faded text can
-scarcely be read.
-^ffffff_^000000
-Weight: ^7777772^000000
-^808080A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: General
-Weight: 2
-^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
+A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read. If you're able to read the faded text, an Antler Scaraba Mercenary will come to your aid.
+Class: ^808080Mercenary^000000
+Weight: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 12812#
 A Snow White Leaf that is cold to the touch. Caution : This really is colder than snow.
@@ -60076,14 +60115,21 @@ Required Level: ^777777160^000000
 Equip To: ^7777773rd Thief Classes^000000
 #
 15098#
-Max HP/SP +5%.
-All Stats +1, Ranged Physical Attack Strength +3%, ASPD +1.
-Physical attacks add a low chance of auto-casting Level 10 Improve Concentration/Double Strafe.
-The casting chance increases according to the Upgrade level.
-Class: ^777777Armor^000000 DEF: ^77777760^000000
-Weight: ^77777720^000000
-Required Level: ^777777160^000000
-Equip To: ^7777773rd Archer Classes^000000
+Honorable suit given to those who fought Satan Morroc. The suit is enhanced with powers to increase concentration and spirit, occasionally it will release unpredictable attacks.
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Weight: ^80808020^000000
+Requires Level: ^808080160^000000
+Usable By: ^808080Ranger, Maestro, Wanderer^000000
+All Stats + 1
+Max HP + 5%
+Max SP + 5%
+Aspd + 1
+Increases long-ranged damage on targets by 3%.
+
+Adds a chance of casting ^0000FFLevel 10 Improve Concentration^000000 on the user when performing a physical attack.
+Adds a chance of casting ^0000FFLevel 10 Double Strafe^000000 on the target when performing a long-ranged attack.
+The chance of casting the skills is increased per upgrade level of ^008080 Hero Target Suit^000000.
 #
 15100#
 A frozen breastplate that creates a cold steam.
@@ -69882,21 +69928,13 @@ Increases physical damage on Plant race targets by 2%.
 #
 18678#
 A freshly picked leek vegetable.
-decrease 2% damage from small type of monster.
-unable to refine.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777720^000000
-Req Level : ^77777720^000000
-Jobs : ^777777All except Novice^000000
-Made use of the shape of the Leek.
-Reduces 2% damage taken from small size monsters.
-Unrefinable.
-Series : ^777777Headgear^000000    Defense : ^7777770^000000
-Location :  ^777777Lower^000000    Weight : ^77777720^000000
-Level Requirement :  ^77777720^000000
-Job : ^777777All Job except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs except Novice^000000
+Reduces damage taken from small size enemies by 2%.
 #
 18679#
 A marvelous abacus that can recognize worthy of things.
@@ -70372,17 +70410,20 @@ jobs: ^777777All Jobs ^000000
 #
 18742#
 A strong feeling of being one with the night skies.
-Type : ^777777Costume^000000 Defense : ^7777770^000000
-Position : ^777777Mid ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18743#
 The soul of the Chung E, it is scary and horrible.
-Series : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Level Requirement : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18744#
 Sparkle emanating from the body.
@@ -78532,12 +78573,11 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20227#
-^ff0000Cannot trade with other accounts.^000000
-Puppy Hat.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20230#
 A mask that showing the deep sorrows for losing everything.
@@ -79868,6 +79908,12 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20524#
+
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20700#
 Egir's Manteau. It looks defending your body
 can not be destroyed
@@ -80130,27 +80176,20 @@ If upgrade level is +9 or higher, HP Recovery + 50%.
 Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
 #
 20733#
-^808080Designed to maximize the outputs of Madogears, this part is easy to assemble and disassemble.^000000
-^FFFFFF_^000000
-Type: Garment
-Defense: 25
-Weight: 150
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-Cast Delay - 10%
-^FFFFFF_^000000
-If upgrade level is +7 or higher,
-Reduces damage taken from Neutral property attacks by 10%.
-^FFFFFF_^000000
-If upgrade level is +9 or higher,
-Cast Delay - 10%
-^FFFFFF_^000000
+Designed to maximize the outputs of Madogears, this part is easy to assemble and disassemble.
+Class: ^808080Garment^000000
+Defense: ^80808025^000000
+Weight: ^808080150^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Reduces the global delay of skills by 10%.
+If upgrade level is +7 or higher, reduces damage taken from Neutral property attacks by 10%.
+If upgrade level is +9 or higher, reduces the global delay of skills by an additional 10%.
 ^800080Set Bonus^000000
-^008080Upgrade_Part - Booster^000000
-^008080Upgrade_Part - Engine^000000
-^008080Upgrade_Part - Gun Barrel^000000
-^008080Upgrade_Part - Plate^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
+^008080Upgrade Part - Plate^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 20734#
@@ -83871,125 +83910,126 @@ Costume Yellow Cherry Blossom Hat
 Costume Full Bloom Cherry Tree
 Costume Sinsuncho Hat
 #
+23988#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following:
+Costume: Drooping Sorin Doll Hat
+Costume: White Bird Rose
+Costume: Shaman Hat
+Costume: Radiant Rainbow Wings
+Costume: Stardust Hairband
+Costume: Happy Rabbit Ribbon
+Costume: Lovely Heart Cap
+Costume: Lovely Feeling
+#
 24012#
-Gloves worn to enhance attacking accuracy.
-Dex +1
-Each refine level increases Attack Power by 1
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance dexterity.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Dex + 1
+Atk + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24013#
-Armor worn to enhance luck.
-Luk +1
-+MaxHP +10 per refine level
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Item^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance luck.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 1
+Max HP + 10 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24014#
-Shoes worn to enhance speed.
-Agi +1
-+MaxHP +10 per refine level
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Footwear^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance agility.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Max HP + 10 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24015#
-Shield worn to enhance Vitality.
-Vit +1
-+MaxHP +10 per refine level
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance vitality.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Vit + 1
+Max HP + 10 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24016#
-An earring worn to enhance Intelligence.
-Int +1
-+MaxHP +10 per refine level
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance intelligence.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Max HP + 10 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24017#
 A pendant worn to enhance strength.
-Str +1
-+MaxHP +10 per refine level
-^0000ffOnly the Shadow Blacksmith in Prontera (behind Bestry) can refine this item^000000
-*Set Bonus*
-All Stats + 3.
-Shadow Set
-Shadow Weapon
-Shadow Armor
-Shadow Shoes
-Shadow Shield
-Shadow Earring
-Shadow Pendant
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 1
+Max HP + 10 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Shadow Armor^000000
+^008080Shadow Earring^000000
+^008080Shadow Pendant^000000
+^008080Shadow Shield^000000
+^008080Shadow Shoes^000000
+^008080Shadow Weapon^000000
+All Stats + 3
 #
 24018#
 A sacred earring which is believed to protect it's wearer. It also draws the wearer's potential abilities.
@@ -84199,15 +84239,21 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24035#
-STR + 1.
-When refined to +7, STR + 1.
-When refined to +9, STR + 1.
-When equipped with ^32CD32Power Shadow Pendant^000000, STR + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance strength.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 1
+Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Str + 1
+If upgrade level is +9 or higher,
+Additional Str + 1
+^800080Set Bonus^000000
+^008080Power Shadow Earring^000000
+^008080Power Shadow Pendant^000000
+Str + 1
 #
 24036#
 INT + 1.
@@ -84264,14 +84310,18 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24041#
-STR + 1.
-Increase ATK + 1 per 1 refine level.
-When equipped with ^32CD32Power Shadow Earring^000000, STR + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance strength.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 1
+Max HP + 10 per upgrade level of the item.
+Atk + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Power Shadow Earring^000000
+^008080Power Shadow Pendant^000000
+Str + 1
 #
 24042#
 INT + 1.
@@ -84394,16 +84444,21 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24053#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by bosstype monsters.
-When refine level is 7, 1% extra damage decrease when attacked by bosstype monsters.
-When refine level 9, 1% extra damage decrease when attacked by bosstype monsters.
-When equipped together with ^32CD32Safeguard Shield Shadow^000000 and ^32CD32Liberation Shoes Shadow^000000, 5% extra damage to boss type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance boss resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Boss enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Boss enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Boss enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Liberation Shadow Shoes^000000
+^008080Safeguard Shadow Shield^000000
+Increases physical and magical damage on Boss targets by 5%.
 #
 24054#
 Small extra shield gives you additional defense effect. Not really effective when worn alone.
@@ -84514,16 +84569,21 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24063#
-Special shoes wear over your original shoes. Not really effective when worn alone.
-2% extra damage to boss type monsters.
-When refine level is 7, 1% extra damage to boss type monsters.
-When refine level 9, 2% extra damage to boss type monsters.
-When equipped together with ^32CD32Liberation Shoes Shadow^000000 and ^32CD32Safeguard Shield Shadow^000000, 3% exp increase when hunting boss type monsters 5% extra damage.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance boss damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical damage on Boss targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical damage on Boss targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical damage on Boss targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Liberation Shadow Shoes^000000
+^008080Safeguard Shadow Shield^000000
+Increases physical damage on Boss targets by 5%.
 #
 24064#
 Special shoes worn over your original shoes. Not really effective when worn alone.
@@ -88166,30 +88226,27 @@ Max HP + 10%
 Max SP + 10%
 #
 28910#
-^808080A shield woven from magical thread that specializes in protecting the user from long ranged attacks.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Shield
-Defense: 80
-Weight: 80
-Required Level: 100
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A shield woven from magical thread that specializes in protecting the user from long ranged attacks.
+Class: ^808080Shield^000000
+Defense: ^80808080^000000
+Weight: ^80808080^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Reduces damage taken from long-ranged attacks by 5%.
-^FFFFFF_^000000
-If upgrade level is +5 or higher/lower,
+If upgrade level is +5 or higher,
 Reduces damage taken from long-ranged attacks by an additional 5%.
-^FFFFFF_^000000
-If upgrade level is +7 or higher/lower,
+If upgrade level is +7 or higher,
 Reduces damage taken from long-ranged attacks by an additional 10%.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
+If upgrade level is +9 or higher,
 Reduces damage taken from long-ranged attacks by an additional 15%.
-^FFFFFF_^000000
 ^800080Set Bonus^000000
+^008080Enforcer Cape^000000
 ^008080Imuke Upper Shield^000000
+Disables the following effects of ^008080Imuke Upper Shield^000000, Reduces damage taken from long-ranged attacks by 35%.
+^800080Set Bonus^000000
 ^008080Horn Card^000000
-Increases damage taken from long-ranged attacks by 35%.
+^008080Imuke Upper Shield^000000
+Disables the following effects of ^008080Horn Card^000000, Reduces damage taken from long-ranged attacks by 35%.
 #
 28913#
 A shield which has become a lot lighter thanks to powerful magic.
@@ -90049,6 +90106,14 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31371#
+So hot! A headgear with the figure of Kafra Sorin! Her cute appearance made the price of this hat rise at the auction place.
+
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
 Class: ^808080Costume^000000
@@ -90119,6 +90184,13 @@ Position: ^808080Upper^000000
 Weight: ^8080801^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+31389#
+A pink rose decorated with feathers of white birds.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 31390#
 ^808080This hat is made with spirit of people's hope for a place which doesn't snow during winter.^000000
@@ -90569,6 +90641,48 @@ Usable By: ^808080All Jobs^000000
 A cute black cap with long rabbit ears.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31526#
+A hat used to communicate with the spirits.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31527#
+Be the rainbow with this pair of beautiful Radiant Rainbow Wings!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31528#
+Using a form decorative star of Stardust, the hair band was created to bring the stars to everyone.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31529#
+A joyful costume that brings happiness to everyone that sees it.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31531#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31533#
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31538#
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 32203#
