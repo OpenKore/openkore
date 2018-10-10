@@ -1,10 +1,8 @@
 package eventMacro::Condition::BaseMsgName;
 
 use strict;
-use Globals;
-use Utils;
 
-use eventMacro::Data;
+use eventMacro::Data qw( EVENT_TYPE );
 
 use base 'eventMacro::Condition';
 

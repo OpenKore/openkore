@@ -1,7 +1,6 @@
 package eventMacro::Condition::BaseMsg;
 
 use strict;
-use Globals qw( %monsters );
 
 use base 'eventMacro::Conditiontypes::RegexConditionEvent';
 
@@ -22,8 +21,6 @@ sub validate_condition {
 sub get_new_variable_list {
 	my ($self) = @_;
 	my $new_variables;
-	
-	my $actor = $monsters{$self->{id}};
 	
 	$new_variables->{".".$self->{name}."Last"."Name"} = $self->{source};
 	$new_variables->{".".$self->{name}."Last"."Msg"} = $self->{message};
