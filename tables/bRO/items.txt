@@ -5732,10 +5732,17 @@
 15248#Traje de Wickebine#
 15254#Vestido Abissal#
 15272#Armadura da Khalitzburg#
+15278#Armadura do Herói Robusto#
+15279#Armadura do Herói Sábio#
 15345#Armadura do Dragão Azul#
+15346#Armadura do Herói Afortunado#
+15347#Armadura do Herói Vigoroso#
+15353#Armadura do Herói Ágil#
+15354#Armadura do Herói Astuto #
 15368#Saltos da Rainha Scaraba#
 15370#Gálea de Unicórnio#
 15371#Roupa de Natal do Antonio#
+15372#Vestes de Freeoni#
 15374#Armadura Eclipse#
 15375#Armadura Eclipse Desgastada#
 15385#Robozinho Sabe-Tudo#
@@ -6217,6 +6224,7 @@
 19117#Super Óculos Poring#
 19118#Super Óculos Poring#
 19136#Espírito da Donzela Verde#
+19137#Morango Delicioso#
 19138#Diadema do Serafim#
 19139#Orbes Arcanos#
 19143#Balão de Poring#
@@ -6641,6 +6649,8 @@
 20511#Asas Azuis de Fada#
 20514#Espada de Thanatos#
 20517#Miau-chila de Bichano#
+20528#Asas Douradas da Borboleta#
+20535#Holograma Futurista#
 20700#Manteau de Aegir#
 20701#Manteau Solar#
 20702#Sobrepeliz TE#
@@ -6903,7 +6913,7 @@
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
 28538#Luvas de H. Motto#
-28564#Lágrima de Valquíria #
+28564#Lágrima de Valquíria#
 28572#Broche da Celine#
 28598#Fragmento de Chip #
 28617#Bíblia Sagrada#
@@ -7026,6 +7036,7 @@
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
 31474#Cabelo Longo Preto#
+31480#Gioia Dorminhoco#
 31482#Cachecol de Lunático#
 31487#Tapa-Olho Pirata#
 31488#Balão de MVP#
@@ -7040,5 +7051,7 @@
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
+31569#Fones de Última Geração#
+31572#Auréolas Digitais#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
