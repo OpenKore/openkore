@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 use Globals qw( $char );
 
 sub _hooks {
-	['packet_storage_open','packet_storage_close'];
+	['in_game','packet_storage_open','packet_storage_close'];
 }
 
 sub _parse_syntax {
