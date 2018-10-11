@@ -10626,6 +10626,11 @@ Atk + 1% per upgrade level of the item.
 This item is indestructible in battle.
 If upgrade level is +10 or higher,
 Recovers all damage lost from size penalties.
+
+On 10-25 the following changes will take effect
+gains "Nullify reduction in damage inflicted on enemies resulting from enemy's size."
+loses "Increases damage versus all sizes by 100%"
+
 #
 1836#
 ^808080This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
@@ -16519,13 +16524,15 @@ Increases resistance to ^800000Frozen^000000 by 25%.
 #
 2499#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10 .
-Class : ^777777Shoes^000000
-Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^77777710^000000
-Jobs : ^777777All^000000
+Class: ^808080Shoes^000000
+Defense: ^80808020^000000
+Weight: ^80808060^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
 #
 2501#
 A simple, soft
@@ -20888,6 +20895,63 @@ Weight: ^77777720^000000
 Required Level: ^777777160^000000
 Equip To: ^777777All Classes^000000
 #
+2984#
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Increases EXP gained from defeating monsters by 5%
+Increases damage received from monsters by 5%
+Safe Limil Gloves
+Gajomart Card
+Increases EXP gained from defeating Plant Race monsters by 5%
+Increases damage received from Plant Race monsters by 10%
+
+Safe Limil Gloves
+Gullinbursti Card
+Increases EXP gained from defeating Fish Race monsters by 5%
+Increases damage received from Fish Race monsters by 10%
+
+Safe Limil Gloves
+Mini Demon Card
+Increases EXP gained from defeating Brute Race monsters by 5%
+Increases damage received from Brute Race monsters by 10%
+
+Safe Limil Gloves
+Skeleton General Card
+Increases EXP gained from defeating Insect Race monsters by 5%
+Increases damage received from Insect Race monsters by 10%
+
+Safe Limil Gloves
+Iron Fist Card
+Increases EXP gained from defeating Formless Race monsters by 5%
+Increases damage received from Formless Race monsters by 10%
+
+Safe Limil Gloves
+Ancient Worm Card
+Increases EXP gained from defeating Demon Race monsters by 5%
+Increases damage received from Demon Race monsters by 10%
+
+Safe Limil Gloves
+Explosion Card
+Increases EXP gained from defeating Dragon Race monsters by 5%
+Increases damage received from Dragon Race  monsters by 10%
+
+Safe Limil Gloves
+Zombie Prisoner Card
+Increases EXP gained from defeating Undead Race monsters by 5%
+Increases damage received from Undead Race  monsters by 10%
+
+Safe Limil Gloves
+XMAS Cookie Card
+Increases EXP gained from defeating Angel Race monsters by 5%
+Increases damage received from Angel Race monsters by 10%
+
+Safe Limil Gloves
+Am Mut Card
+Increases EXP gained from defeating Demi Human Race monsters by 5%
+Increases damage received from Demi Human Race monsters by 10%
+#
 2985#
 A gold ring that has the ability to make its wearer invisible. Shepherd Gyges used this ring to murder his king and take his queen.
 Class: ^808080Accessory^000000
@@ -20954,23 +21018,19 @@ Required Level: ^777777130^000000
 Equip To: ^7777773rd Classes^000000
 #
 2995#
-^808080This mechanical device promotes the precise and timely execution of spells.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
-Weight: 10
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-Cast Delay - 10%
-Variable Casting Time - 10%
-Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
+This mechanical device promotes the precise and timely execution of spells.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Reduces the global delay of skills by 10%.
 Reduces the SP cost of skills by 10%.
-^FFFFFF_^000000
+Reduces the variable casting time of skills by 10%.
 ^800080Set Bonus^000000
-^008080Supplement Part Dex^000000
+^008080Supplement Part Dex [1]^000000
 ^008080Supplement Part Str^000000
 Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
 #
 2996#
 Designed to strengthen the gun barrels of Madogears for enhanced firepower, this part is easy to assemble and disassemble.
@@ -25500,11 +25560,12 @@ Compound on: ^777777Garment^000000
 Weight : ^7777771^000000
 #
 4430#
-ATK, CRI, HIT is increased depending on the wearer's job level.
-Has a low chance of Autocasting ^FF0000Earthquake^000000 Lv.2 when receiving physical attack.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Atk + 1, Crit + 1, and Hit +1 for every 10 job levels.
+Adds a chance of casting ^0000FFLevel 2 Earthquake^000000 when receiving a physical attack.
 #
 4431#
 Has a chance of
@@ -28064,10 +28125,10 @@ MATK + 2%,
 Fixed casting time reduced by 1%.
 #
 4762#
-FLEE + 6.
+Flee + 6
 #
 4763#
-FLEE + 12.
+Flee + 12
 #
 4764#
 CRI + 5.
@@ -28076,10 +28137,10 @@ CRI + 5.
 CRI + 7.
 #
 4766#
-ATK + 2%.
+Atk + 2%
 #
 4767#
-ATK + 3%.
+Atk + 3%
 #
 4786#
 MDef +2
@@ -28139,7 +28200,7 @@ Decreases cooldown time for Highness Heal by 3 seconds.
 Decreases SP cost of Coluseo Heal by 30.
 #
 4805#
-Increases the effectiveness of healing skills by 3%.
+Increases the recovery rate of recovery skills by 3%.
 #
 4806#
 Matk +3%
@@ -28192,7 +28253,7 @@ Critical Rate +6%
 Hit +2
 #
 4819#
-Increases damage on enemies by 1%
+Atk + 1%
 #
 4820#
 Attack +18
@@ -28299,28 +28360,28 @@ Increases tolerance to Neutral Property monsters by 5%
 Increases Tolerance to Demihuman and other Players by 5%
 #
 4850#
-Increases heal efficiency by 6%
-Increases SP consumption by 5%
+Increases the recovery rate of recovery skills by 6%.
+Increases the SP cost of skills by 5%.
 #
 4851#
-Increases heal efficiency by 12%
-Increases SP consumption by 10%
+Increases the recovery rate of recovery skills by 12%.
+Increases the SP cost of skills by 10%.
 #
 4852#
-Increases heal efficiency by 20%
-Increases SP consumption by 15%
+Increases the recovery rate of recovery skills by 20%.
+Increases the SP cost of skills by 15%.
 #
 4853#
-Str +1
-If refined to +8 or higher, additional Str +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Str + 1
+If upgrade level is +8 or higher, additional Str + 3.
+If upgrade level is +9 or higher, Atk + 1%.
+If upgrade level is +12 or higher, Aspd + 1, reduces the fixed casting time of skills by 7%.
 #
 4854#
-Agi +1
-If refined to +8 or higher, additional Agi +3
-If refined to +9 or higher, Atk +1 to all monster sizes
-If refined to +12 or higher, Aspd +1% decreases fixed cast time by 7%.
+Agi + 1
+If upgrade level is +8 or higher, additional Agi + 3.
+If upgrade level is +9 or higher, Atk + 1%.
+If upgrade level is +12 or higher, Aspd + 1, reduces the fixed casting time of skills by 7%.
 #
 4855#
 Vit + 1
@@ -28332,26 +28393,25 @@ If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of 
 Int + 1
 If upgrade level is +8 or higher, additional Int + 3.
 If upgrade level is +9 or higher, Matk + 1%.
-If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
+If upgrade level is +12 or higher, Aspd + 1, reduces the fixed casting time of skills by 7%.
 #
 4857#
 Dex + 1
 If upgrade level is +8 or higher, additional Dex + 3.
 If upgrade level is +9 or higher, Matk + 1%.
-If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
-
+If upgrade level is +12 or higher, Aspd + 1, reduces the fixed casting time of skills by 7%.
 #
 4858#
 Luk + 1
 If upgrade level is +8 or higher, additional Luk + 3.
 If upgrade level is +9 or higher, Max HP + 1%.
-If upgrade level is +12 or higher, Aspd + 1%, reduces the fixed casting time of skills by 7%.
+If upgrade level is +12 or higher, Aspd + 1, reduces the fixed casting time of skills by 7%.
 #
 4859#
-FLEE +1
+Flee + 1
 #
 4860#
-FLEE +3
+Flee + 3
 #
 4861#
 MHP + 1%.
@@ -36801,6 +36861,44 @@ Reduces the SP cost of ^0000FFReverberation^000000 by 18.
 If upgrade level is +10 or higher,
 Reduces the cooldown of ^0000FFMetallic Sound^000000 by 2 seconds.
 #
+5967#
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Requires Level: ^808080110^000000
+Agi + 1
+Increases the damage of Blitzbeat by 40% for each level of Steel Crow Known
+Gives a chance of Auto Casting Blitzbeat at the the level known or 1 whichever is higher.
+Flying Galapago
+Falconer Claw
+Decreases Damage of Blitzbeat by 200%
+
+FlyingGalapago
+Galapago Card
+Increases Healing Effectiveness of Apple Juice by 1000%
+Increases Healing Effectiveness of Banana Juice by 1000%
+Increases Healing Effectiveness of Carrot Juice by 1000%
+
+Flying Galapago
+Condor Card
+Increases resistance to all elements by 10%
+
+Flying Galapago
+Gryphon Card
+ASPD +3%
+ASPD +1
+Atk -5%
+If currently equipped bow is refined to +10 or higher
+ASPD +1
+
+Flying Galapago
+Cendrawasih Card
+Int +1
+Crit Damage +5
+If Archer Base Job
+Crit Damage +15
+#
 5968#
 A hat worn by a nurse who took care of people who were hurt everyday.
 Class: ^808080Headgear^000000
@@ -36848,6 +36946,20 @@ Usable By: ^808080All Jobs^000000
 Luk + 10
 Mdef + 10
 Perfect Dodge + 2
+#
+5975#
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+MDef + 5
+Reduces Damage Received from Boss Type Monsters by 10%
+Zherlthsh Doll
+Zherlthsh Egg
+Reduces Damage Received from Boss Type Monsters by 5%
+If pet is friendly or higher
+Reduces Damage Received from Boss Type Monsters by 5%
+Become resistant to Knockback Effects
 #
 5978#
 It is not known what exactly is contained within this syringe.
@@ -60223,32 +60335,31 @@ Mdef + 5
 Increases physical damage on Poison property targets by 10%.
 #
 15110#
-^808080This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.^000000
-^FFFFFF_^000000
-Type: Armor
-Defense: 80
-Property: Neutral
-Weight: 200
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-ATK + 5%
-ATK + 1% per 4 upgrade levels of the item.
-^FFFFFF_^000000
+This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.
+Class: ^808080Armor^000000
+Defense: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^808080200^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Atk + 5%
+Additional Atk + 1% per upgrade level of the item.
+
 ^800080Set Bonus^000000
-^008080Supplement Part Agi^000000
+^008080Supplement Part Agi [1]^000000
 ^008080Supplement Part Str^000000
-ATK + 30
-^FFFFFF_^000000
+Atk + 30
+
 ^800080Set Bonus^000000
 ^008080Supplement Part Con^000000
 ^008080Supplement Part Str^000000
 Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
-^008080Supplement Part Dex^000000
+^008080Supplement Part Dex [1]^000000
 ^008080Supplement Part Str^000000
 Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
 #
 15111#
 ^808080Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.^000000
@@ -61172,6 +61283,33 @@ This item is indestructible in battle.
 If upgrade level is +9 or higher,
 Additional Atk + 30
 Bypass an additional 20% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+#
+15384#
+Class: ^808080Armor^000000
+Defense: ^8080800^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Reduces the cooldown of skills by 10%
+Max HP +5%
+Increases the recovery rate of recovery skills by 5%.
+
+If refined to +7
+Max HP +5%
+Increases the recovery rate of recovery skills by an additional 5%.
+
+If refined to +8
+Max HP +5%
+Increases the recovery rate of recovery skills by an additional 10%.
+SP Consumption Reduced by 10
+Immune to Sleep
+
+If refined to +9
+Max HP +5%
+Increases the recovery rate of recovery skills by an additional 10%.
+
+If equipped with a Bathory Card
+Immune to Freeze
 #
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
@@ -72222,6 +72360,27 @@ Location : ^777777Lower ^000000Weight : ^77777710^000000
 Req LvL : ^7777771^000000
 Job : ^777777All^000000
 #
+18959#
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^808080120^000000
+Reduces damage received from players by 13%
+Old Pink Poo Hat
+Steel Chonchon Card
+Immunity to Freeze
+Gives a small chance to case Wide Freeze when attacked by magic or melee sources
+
+Old Pink Poo Hat
+Sandals[1]
+Chonchon Card
+MaxHP + 4%
+MaxHP + 2% for each refine level of Sandals[1]
+MaxSP + 4%
+MaxSP + 2% for each refine level of Sandals[1]
+
+
+#
 18961#
 A hat made after fluffy monster Lunatic.
 Class : ^777777Headgear^000000 Def : ^7777772^000000
@@ -73426,6 +73585,14 @@ Required Jobs: Doram
 LUK + 1
 Adds a chance of casting ^0000FFLevel 3 Blessing^000000 on the user when performing a physical or magical attack.
 #
+19095#
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^8080801^000000
+EXP +5%
+Item Drop +10%
+#
 19101#
 ^808080A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.^000000
 Class: Headgear
@@ -73688,13 +73855,13 @@ If upgrade level is +8 or higher,
 Increases the damage of ^0000FFDragon Breath^000000 and ^0000FFWater Dragon Breath^000000 by an additional 15%.
 #
 19125#
-^808080Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.^000000
-Class: Headgear
-Position: Upper
-Defense: 12
-Weight: 30
-Required Level: 90
-Required Jobs: All Jobs
+Developed to hold the chemicals when fixing carts. The cylinders are made out of reinforced material but you still have to handle it with care.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808030^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Str + 5
 Int + 5
 Reduces the variable casting time of ^0000FFCart Cannon^000000 by 100%.
@@ -73708,6 +73875,9 @@ Increases the damage of ^0000FFCart Tornado^000000 by an additional 10%.
 If upgrade level is +7 or higher,
 Increases the damage of ^0000FFCart Cannon^000000 by an additional 30%.
 Increases the damage of ^0000FFCart Tornado^000000 by an additional 20%.
+
+On 10-25 the following changes take effect
+(Refine Level Required Increased to +8, was +7)
 #
 19137#
 ^808080At first glance it doesn't seem all that practical, but there is clearly more than meets the eye with this fruity mouth guard.^000000
@@ -73873,6 +74043,21 @@ Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Fr
 ^008080Lunar Rainbow^000000
 ^008080Red Ferus Card^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
+#
+19163#
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Restores 500 HP when a monster is killed
+Restores 50 SP when a monster is killed
+Catherina's Pawn Brand
+Succubus Egg
+Increases HP Recovery + 500
+Increases SP Recovery + 20
+If pet is Cordial
+Increases HP Recovery + 500 further
+Increases SP Recovery + 20 further
 #
 19171#
 A knit hat worn by a great magician. It contains fibers that has an absolute effect on the undead.
@@ -74386,6 +74571,9 @@ Reduces the variable casting time of ^0000FFLion's Howl^000000, ^0000FFMental St
 Reduces the cooldown of ^0000FFLion's Howl^000000 by 9.5 seconds, if ^0000FFEarth Shaker^000000 is at maximum level.
 Increases physical damage on boss monsters by 50%, if ^0000FFRampage Blast^000000 is at maximum level.
 Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+
+On 10-25 the following changes takes effect
+(Loses 50% FCT Reduction. Gains Skill Targeted FCT Reduction)
 #
 19337#
 A pair of safety glasses which helps you during your activities in Heart Hunter Base.
@@ -80069,26 +80257,24 @@ Agi + 2 per upgrade level of the item past the upgrade level of 5.
 Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 20717#
-The scalp of a Faceworm that was defeated in the Dimensional Crack. Faceworms were once called Jormungand's reincarnates.
-MDEF 10.
-This manteau resonates with all types of high-graded Time Boots.
-MHP + 15% and MSP + 5% when equipped with eligible Time Boots.
-Class: ^777777Hood^000000
-Defense: ^77777738^000000
-Weight: ^77777740^000000
-Required Level: ^7777771^000000
-Jobs: ^777777All Classes^000000
+The scalp of a Face Worm that was once called Jormungand's reincarnate.
+Class: ^808080Garment^000000
+Defense: ^80808038^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
+Max HP + 15% and Max SP + 5% if the user has an eligible Temporal or Modified Stat Boot equipped.
 #
 20718#
 The scalp of a Face Worm that was once called Jormungand's reincarnate.
-MDEF 10.
-This manteau resonates with all types of high-graded Time Boots.
-MHP + 15% and MSP + 5% when equipped with eligible Time Boots.
-Class: ^777777Hood^000000
-Defense: ^77777738^000000
-Weight: ^77777740^000000
-Required Level: ^7777771^000000
-Jobs: ^777777All Classes^000000
+Class: ^808080Garment^000000
+Defense: ^80808038^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
+Max HP + 15% and Max SP + 5% if the user has an eligible Temporal or Modified Stat Boot equipped.
 #
 20721#
 Sculpted out of Gray Shard and infused with Sakray's old, abandoned memories, this manteau protects its wearer against holiness and fear.
@@ -80501,18 +80687,20 @@ Reduces the cast delay of skills by an additional 10%, if the users base level i
 This item is indestructible in battle.
 #
 20778#
-^808080A reddish cloak invented by a guild of magicians to extend the wearer's magical power.^000000
-Class: Garment
-Defense: 8
-Weight: 70
-Required Level: 1
-Required Jobs: All Jobs
+A reddish cloak invented by the Magician's Guild to extend the magical power of the wearer.
+Class: ^808080Garment^000000
+Defense: ^8080808^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Max SP + 10%
 Mdef + 3
 Reduces the SP cost of skills by 1%.
 Reduces the SP cost of skills by an additional 2% per 3 upgrade levels of the item.
 If upgrade level is +9 or higher,
 Restores 20 SP to the user when a monster is killed by a short-ranged attack.
+
+On 10-25 the following change will take effect (Refine Level Required Increased to +10, was +9)
 ^800080Set Bonus^000000
 ^008080Red Lotus Stole^000000
 ^008080Undead Knight F Card^000000
@@ -81233,12 +81421,12 @@ Adds a 5% chance of buffing the user for 5 seconds when performing a physical at
 Reduces the cast delay of skills by 1% per upgrade level of ^008080YSF01 Manteau^000000.
 #
 20859#
-^808080A suit inspired by Phreeoni. You feel like you can fly!^000000
-Class: Garment
-Defense: 10
-Weight: 30
-Required Level: 100
-Required Jobs: All Jobs
+A suit inspired by Phreeoni. You feel like you can fly!
+Class: ^808080Garment^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Max HP + 10%
 Hit + 10
 If upgrade level is +7 or higher,
@@ -81249,6 +81437,8 @@ If upgrade level is +9 or higher,
 Additional Hit + 40
 If upgrade level is +10 or higher,
 Additional Hit + 100
+
+On 10-25 the following changes will take effect (Loses + Hit, gains + Perfect Hit)
 ^800080Set Bonus^000000
 ^008080Phreeoni Card^000000
 ^008080Phreeoni Wings^000000
@@ -81513,127 +81703,393 @@ This item is indestructible in battle.
 #
 22000#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, ATK + 7 .
-In case the original STR is more than 120,ATK + 50.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Atk + 7 per 3 upgrade levels of the item.
+If the users base Str is 120 or higher,
+Additional Atk + 50
+^800080Set Bonus^000000
+^008080Temporal Str Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Str Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Str Boots^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Atk + 30
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22001#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, MATK + 10 .
-In case the original INT is more than 120 MATK + 60
-MDEF + 5.
-Class : ^777777Shoes^000000 Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Mdef + 5
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Matk + 10 per 3 upgrade levels of the item.
+If the users base Int is 120 or higher,
+Additional Matk + 60
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots^000000
+^008080Temporal Manteau^000000
+Max HP + 15%
+Matk + 30
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22002#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, attack speed 3%(attack delay decreased 3%) .
-In case the original AGI is more than 120,ASPD + 1.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Aspd + 3% per 3 upgrade levels of the item.
+If the users base Agi is 120 or higher,
+Aspd + 1
+^800080Set Bonus^000000
+^008080Temporal Agi Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Agi Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Agi Boots^000000
+^008080Temporal Manteau^000000
+Max HP + 15%
+Mdef + 10
+Aspd + 5%
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22003#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 300, MSP + 10 .
-In case the original VIT is more than 120,MHP + 8%.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 300 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+If the users base Vit is 120 or higher,
+Max HP + 8%
+^800080Set Bonus^000000
+^008080Temporal Vit Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Vit Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Vit Boots^000000
+^008080Temporal Manteau^000000
+Max HP + 15%
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
+Increases the recovery rate of recovery items by 10%.
 #
 22004#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, DEX + 3 .
-In case the original DEX is more than 120, fixed casting decreased 0.5sec, long distance attack power + 5%.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Dex + 3 per 3 upgrade levels of the item.
+If the users base Dex is 120 or higher,
+Reduces the fixed casting time of skills by 0.5 seconds.
+Increases long-ranged damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Temporal Dex Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Dex Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Dex Boots^000000
+^008080Temporal Manteau^000000
+Max HP + 15%
+Mdef + 10
+Increases long-ranged damage on targets by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22005#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, critical damage2% .
-In case the original LUK is more than 120,critical damage30%.
-MDEF + 5.
-Class : ^777777Shoes^000000 Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Mdef + 5
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Increases critical damage on targets by 2% per 3 upgrade levels of the item.
+If the users base Luk is 120 or higher,
+Increases critical damage on targets by an additional 30%.
+^800080Set Bonus^000000
+^008080Temporal Luk Boots^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Luk Boots^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Luk Boots^000000
+^008080Temporal Manteau^000000
+Max HP + 15%
+Mdef + 10
+Increases critical damage on targets by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22006#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, ATK + 7 .
-In case the original STR is more than 120,ATK + 50 .
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Atk + 7 per 3 upgrade levels of the item.
+If the users base Str is 120 or higher,
+Additional Atk + 50
+^800080Set Bonus^000000
+^008080Temporal Str Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Str Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Str Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Atk + 30
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22007#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 300, MSP + 10 .
-In case the original VIT is more than 120,MHP + 8%.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 300 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+If the users base Vit is 120 or higher,
+Max HP + 8%
+^800080Set Bonus^000000
+^008080Temporal Vit Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Vit Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Vit Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
+Increases the recovery rate of recovery items by 10%.
 #
 22008#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, DEX + 3 .
-In case the originalDEX is more than 120, fixed casting - 0.5 sec, long distance attack power + 5%.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Dex + 3 per 3 upgrade levels of the item.
+If the users base Dex is 120 or higher,
+Reduces the fixed casting time of skills by 0.5 seconds.
+Increases long-ranged damage on targets by 5%.
+^800080Set Bonus^000000
+^008080Temporal Dex Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Dex Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Dex Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Mdef + 10
+Increases long-ranged damage on targets by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22009#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, MATK + 10 .
-In case the original INT is mre thatn 120 MATK + 60
-MDEF + 5.
-Class : ^777777Shoes^000000 Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Mdef + 5
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Matk + 10 per 3 upgrade levels of the item.
+If the users base Int is 120 or higher,
+Additional Matk + 60
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Int Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Matk + 30
+Mdef + 10
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22010#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, attack speed 3%(attack delay 3% decrease) .
-In case the original AGI is more than 120, ASPD + 1.
-Class : ^777777Shoes^000000 Defense : ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Aspd + 3% per 3 upgrade levels of the item.
+If the users base Agi is 120 or higher,
+Aspd + 1
+^800080Set Bonus^000000
+^008080Temporal Agi Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Agi Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Agi Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Mdef + 10
+Aspd + 5%
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22011#
 These boots are obviously old but they show no signs of wear and tear.
-MHP + 300, MSP + 30.
-For every 3 refine level, MHP + 100, MSP + 10, critical damage2% .
-In case the original LUK is more than 120, critical damage + 30%.
-MDEF + 5.
-Class : ^777777Shoes^000000 Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Only 3rd class^000000
+Class: ^808080Shoes^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock, Ranger, Royal Guard, Geneticist, Shadow Chaser, Sura, Sorcerer, Maestro, Wanderer^000000
+Mdef + 5
+Max HP + 300
+Additional Max HP + 100 per 3 upgrade levels of the item.
+Max SP + 30
+Additional Max SP + 10 per 3 upgrade levels of the item.
+Increases critical damage on targets by 2% per 3 upgrade levels of the item.
+If the users base Luk is 120 or higher,
+Increases critical damage on targets by an additional 30%.
+^800080Set Bonus^000000
+^008080Temporal Luk Boots [1]^000000
+^008080Giant Faceworm Snake Skin [1]^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Luk Boots [1]^000000
+^008080Giant Faceworm Snake Skin^000000
+Max HP + 15% and Max SP + 5%.
+
+^800080Set Bonus^000000
+^008080Temporal Luk Boots [1]^000000
+^008080Temporal Manteau [1]^000000
+Max HP + 15%
+Mdef + 10
+Increases critical damage on targets by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 22012#
 ^000088Rental Item^000000
@@ -82139,6 +82595,17 @@ Max HP + 4000
 Reduces the fixed casting time of skills by 25%.
 Reduces the fixed casting time of skills by an additional 1% per upgrade level of ^008080Elegant Doram Suit^000000, ^008080Elegant Doram Manteau^000000, ^008080Elegant Doram Shoes^000000.
 The users casting cannot be interrupted outside of WoE.
+#
+22091#
+Shoes that men wear to keep a living by fishing. The old experience comes out of the shoes. Even foot odor and fish smell ... ?
+
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+EXP from fish monster + 5%
+For every refinement upgrade, EXP from fish monster increases by +1%.
 #
 22093#
 These shoes were worn by a man who made a living out of performing exorcisms. These shoes contains the man's many years of experience.
@@ -83910,6 +84377,24 @@ Costume Yellow Cherry Blossom Hat
 Costume Full Bloom Cherry Tree
 Costume Sinsuncho Hat
 #
+23987#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one the the following
+Ritual Robes
+Brooch of Hero
+Ying Yang Talisman
+Flying Galapago
+Fisherman's Shoes
+Happy Balloon
+Catherina's Pawn Brand
+Zherlthsh Dool
+Old Pink Poo Hat
+Safe Limil Gloves
+Blacksmith Blessing x 8
+Battle Manual X3 x 6
+Bloody Dead Branch x 5
+#
 23988#
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
@@ -84032,88 +84517,106 @@ Max HP + 10 per upgrade level of the item.
 All Stats + 3
 #
 24018#
-A sacred earring which is believed to protect it's wearer. It also draws the wearer's potential abilities.
-Increases Attack Speed by 1%
-If refined to +7 or higher increases attack speed by an additional 2%
-Increases Max HP by 10 per refine level.
-If the set consisting of the Shadow Physical Earring, Shadow Physical Weapon, and Shadow Physical Pendant is worn together.
-Attack Power increased by the total combined refine levels of all three items.
-If the total combined refine levels of all three items is greater than 22 then attack power is increased a further 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance physical attack.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Aspd + 1%
+If upgrade level is +7 or higher,
+Additional Aspd + 2%
+^800080Set Bonus^000000
+^008080Physical Shadow Earring^000000
+^008080Physical Shadow Pendant^000000
+^008080Physical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
+Atk + 1%
 #
 24019#
-A glove equipped on wearer's hand to draw his/her potential ability.
-Increases attack power by 10 + the refine level of the Shadow Physical Weapon
-Increases M attack power by the refine level of the Shadow Physical Weaponn
-If refined to +7 or higher increases attack power by 1%
-If the set consisting of the Shadow Physical Earring, Shadow Physical Weapon, and Shadow Physical Pendant is worn together.
-Attack Power increased by the total combined refine levels of all three items.
-If the total combined refine levels of all three items is greater than 22 then attack power is increased a further 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance physical attack.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 10
+Additional Atk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Atk + 1%
+^800080Set Bonus^000000
+^008080Physical Shadow Earring^000000
+^008080Physical Shadow Pendant^000000
+^008080Physical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
+Atk + 1%
 #
 24020#
-A sacred necklace which is belived to protect its wearer. It also draws the wearer's potential abilities.
-Increases the wearer's Max HP by 100 + (Refine Level of the Shadow Physical Pendant * 10)
-If refined to +7 or greater increases the wearer's max hp by +1%
-If the set consisting of the Shadow Physical Earring, Shadow Physical Weapon, and Shadow Physical Pendant is worn together.
-Attack Power increased by the total combined refine levels of all three items.
-If the total combined refine levels of all three items is greater than 22 then attack power is increased a further 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance physical attack.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100
+Additional Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Max HP + 1%
+^800080Set Bonus^000000
+^008080Physical Shadow Earring^000000
+^008080Physical Shadow Pendant^000000
+^008080Physical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
+Atk + 1%
 #
 24021#
-A sacred earring which is belived to protect its wearer. It also draws the wearer's potential abilities.
-Increases the wearer's Max Hp by 10 for every refine level on the Shadow Magical Earring
-Decreases Spell Cast Time by 1%
-If refined to +7 or greater
-Decreases Spell Cast Time by and additional 2%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance magical attack.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces the variable casting time of skills by 1%.
+If upgrade level is +7 or higher,
+Reduces the variable casting time of skills by an additional 2%.
+^800080Set Bonus^000000
+^008080Magical Shadow Earring^000000
+^008080Magical Shadow Pendant^000000
+^008080Magical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
+Matk + 1%
 #
 24022#
-A glove equipped in wearer's hand to draw his/her potential ability.
-Increases Magic Attack power by 10 + the refine level of the Shadow Magical Weapon
-Increases Attack power by the refine level of the Shadow Magical Weapon
-If refined to +7 or higher then Magic Attack is increase by an extra 1%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance magical attack.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk + 10
+Additional Matk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Matk + 1%
+^800080Set Bonus^000000
+^008080Magical Shadow Earring^000000
+^008080Magical Shadow Pendant^000000
+^008080Magical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
+Matk + 1%
 #
 24023#
-A sacred necklace which is belived to protect its wearer. It also draws the wearer's potential abilities.
-Increases the wearer's Max HP by (Refine Level of the Shadow Magical Pendant * 10)
-Increases the wearer's max SP by 50
-If refined to +7 or greater increases the Max SP of the wearer by 1%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance magical attack.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Max SP + 50
+If upgrade level is +7 or higher,
+Max SP + 1%
+^800080Set Bonus^000000
+^008080Magical Shadow Earring^000000
+^008080Magical Shadow Pendant^000000
+^008080Magical Shadow Weapon^000000
+If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
+Matk + 1%
 #
 24024#
 An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
@@ -84256,58 +84759,86 @@ Additional Str + 1
 Str + 1
 #
 24036#
-INT + 1.
-When refined to +7, INT + 1.
-When refined to +9, INT + 1.
-When equipped with ^32CD32Intelligent Shadow Earring^000000, INT + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance intelligence.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Int + 1
+If upgrade level is +9 or higher,
+Additional Int + 1
+^800080Set Bonus^000000
+^008080Intelligent Shadow Earring^000000
+^008080Intelligent Shadow Pendant^000000
+Int + 1
 #
 24037#
-DEX + 1.
-When refined to +7, DEX + 1.
-When refined to +9, DEX + 1.
-When equipped with ^32CD32Dexterous Shadow Armor^000000, DEX + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance dexterity.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Dex + 1
+Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Dex + 1
+If upgrade level is +9 or higher,
+Additional Dex + 1
+^800080Set Bonus^000000
+^008080Dexterous Shadow Armor^000000
+^008080Dexterous Shadow Weapon^000000
+Dex + 1
 #
 24038#
-VIT + 1.
-When Refined to +7, VIT + 1.
-When Refined to +9, VIT + 1.
-When equipped with ^32CD32Vital Shadow Shield^000000, VIT + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance vitality.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Vit + 1
+Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Vit + 1
+If upgrade level is +9 or higher,
+Additional Vit + 1
+^800080Set Bonus^000000
+^008080Vital Shadow Shield^000000
+^008080Vital Shadow Shoes^000000
+Vit + 1
 #
 24039#
-AGI + 1.
-When Refined to +7, AGI + 1.
-When Refined to +9, AGI + 1.
-When equipped with ^32CD32Athletic Shadow Shoes^000000, AGI + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance agility.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Agi + 1
+If upgrade level is +9 or higher,
+Additional Agi + 1
+^800080Set Bonus^000000
+^008080Athletic Shadow Shield^000000
+^008080Athletic Shadow Shoes^000000
+Agi + 1
 #
 24040#
-LUK + 1.
-Increase CRI + 1  per 2 refine Levels.
-When equipped with ^32CD32Lucky Shadow Weapon^000000, LUK + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance luck.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 1
+Max HP + 10 per upgrade level of the item.
+Crit + 1 per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Lucky Shadow Armor^000000
+^008080Lucky Shadow Weapon^000000
+Luk + 1
 #
 24041#
 A pendant worn to enhance strength.
@@ -84324,14 +84855,18 @@ Atk + 1 per upgrade level of the item.
 Str + 1
 #
 24042#
-INT + 1.
-Increase MATK + 1 per 1 refine Level.
-When equipped with ^32CD32Intelligent Shadow Pendant^000000, INT + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance intelligence.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Max HP + 10 per upgrade level of the item.
+Matk + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Intelligent Shadow Earring^000000
+^008080Intelligent Shadow Pendant^000000
+Int + 1
 #
 24043#
 DEX + 1.
@@ -84344,24 +84879,32 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24044#
-VIT + 1.
-Increase DEF + 1 per 1 refine level.
-When equipped with ^32CD32Vital  Shadow Shoes^000000, VIT + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance vitality.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Vit + 1
+Max HP + 10 per upgrade level of the item.
+Def + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Vital Shadow Shield^000000
+^008080Vital Shadow Shoes^000000
+Vit + 1
 #
 24045#
-AGI + 1.
-Increase FLEE + 1 per refine level.
-When equipped with ^32CD32Athletic Shadow Shield^000000, AGI + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance agility.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Max HP + 10 per upgrade level of the item.
+Flee + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Athletic Shadow Shield^000000
+^008080Athletic Shadow Shoes^000000
+Agi + 1
 #
 24046#
 It is a Neckless that is known for protecting its owner. It brings out the potential from the owner.
@@ -84458,7 +85001,7 @@ Reduces damage taken from Boss enemies by an additional 1%.
 ^800080Set Bonus^000000
 ^008080Liberation Shadow Shoes^000000
 ^008080Safeguard Shadow Shield^000000
-Increases physical and magical damage on Boss targets by 5%.
+Increases physical damage on Boss targets by 5%.
 #
 24054#
 Small extra shield gives you additional defense effect. Not really effective when worn alone.
@@ -87228,6 +87771,7 @@ Perfect Dodge + 5
 Reduces the variable casting time of ^0000FFHigh Heal^000000 by 100%.
 Increases the recovery rate of recovery skills by 3%.
 Reduces the SP cost of skills by 5%.
+
 ^800080Set Bonus^000000
 ^008080Arch Bishop Ring^000000
 ^008080Catholic Lv1^000000
@@ -87237,6 +87781,7 @@ Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
 Increases the recovery rate of recovery skills by 3%.
 Reduces the SP cost of skills by 5%.
 Reduces the SP cost of ^0000FFColuseo Heal^000000 by 20.
+
 ^800080Set Bonus^000000
 ^008080Arch Bishop Ring^000000
 ^008080Cure Lv1^000000
@@ -87246,9 +87791,10 @@ Reduces the cooldown of ^0000FFEpiclesis^000000 by 10 seconds.
 Increases the recovery rate of recovery skills by 3%.
 Reduces the SP cost of skills by 5%.
 Reduces the SP cost of ^0000FFEpiclesis^000000 by 100.
+
 ^800080Set Bonus^000000
 ^008080Arch Bishop Ring^000000
-^008080Heal3^000000
+^008080Heal Lv3^000000
 Luk + 2
 Perfect Dodge + 5
 Reduces the cooldown time of ^0000FFHigh Heal^000000 by 1 second.
@@ -87484,11 +88030,11 @@ If the users base Dex is 90 or higher,
 Reduces the variable casting time of skills by 5%.
 #
 28501#
-^808080The horn of the legendary beast.^000000
-Class: Accessory
-Weight: 50
-Required Level: 50
-Required Jobs: All Jobs
+The horn of the legendary beast.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Agi + 2
 Aspd + 2%
 Reduces damage taken from Demi-Human, Brute and Fish race enemies by 1%.
@@ -87497,11 +88043,12 @@ Enables ^0000FFLevel 6 Increase Agility^000000.
 If the users base Agi is 100 or higher,
 Additional Aspd + 5%
 ^800080Set Bonus^000000
-^008080DelayafterAttack1Lv^000000
+^008080ASPD 1^000000
 ^008080Kirin Horn^000000
 Aspd + 1
+
 ^800080Set Bonus^000000
-^008080DelayafterAttack2Lv^000000
+^008080ASPD 2^000000
 ^008080Kirin Horn^000000
 Aspd + 1
 #
@@ -87804,6 +88351,38 @@ Increases long-ranged damage on targets by an additional 2% per level of ^0000FF
 Increases the damage of ^0000FFCannon Spear^000000 by 20%.
 Increases the damage of ^0000FFOverbrand^000000 by 20%.
 #
+28560#
+By converting the force of yin and yang into magic power and accumulate, it can release stronger magic power
+
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Matk + 5%
+Hit + 20
+Aspd + 5%
+
+when worn with sealed Magic Sword
+Increases damage of crimson rock by 2*Weapon Refine %
+
+when worn with sealed evil Sword
+Increases damage of Hell Inferno by 20*Weapon Refine %
+
+when worn with sealed Max Sword
+Increases damage of Judex by 20*Weapon Refine %
+
+when worn with sealed Magic Sword and Ultra Light Magic Shield
+Ht +5 per weapon refine
+aspd +5% per weapon refine
+
+when worn with sealed evil Sword and Ultra Light Magic Shield
+Ht +5 per weapon refine
+aspd +5% per weapon refine
+
+when worn with sealed max Sword and Ultra Light Magic Shield
+Ht +5 per weapon refine
+aspd +5% per weapon refine
+#
 28564#
 Crystallized teardrops of a Valkyrie who mourned for the death of a comrade. The drop possesses divine powers.
 Class: ^808080Accessory^000000
@@ -87817,6 +88396,10 @@ Reduces the cast delay of skills by 5%.
 Increases magical damage on Small, Medium and Large size targets by 3% per level of ^0000FFImpositio Manus^000000 known.
 Enables ^0000FFLevel 2 Odin's Power^000000, if ^0000FFImpositio Manus^000000 is at maximum level.
 Increases the damage of ^0000FFMagnus Exorcismus^000000 by 3% for every 2 base levels.
+
+
+On 10-25 the following changes will take effect
+(Loses 50% FCT Reduction. Gains Skill Targeted FCT Reduction)
 #
 28565#
 A demon mask found nearby a Buddha statue in Payon. Some say it has been used for some kind of ritual.
@@ -90669,6 +91252,7 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 31531#
+You're sure to turn heads with such a lovely headpiece!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -90680,7 +91264,7 @@ Position: ^808080Lower^000000
 Weight: ^8080800^000000
 #
 31538#
-
+An aura of love radiates from your entire body!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -90739,4 +91323,41 @@ Usable By: ^808080All Jobs^000000
 Aspd + 5%
 Reduces damage taken from Demi-Human race enemies by 3%.
 Reduces damage taken from Fire, Water, Wind and Earth property attacks by 5%.
+#
+32222#
+Class: ^808080Accessory^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Atk +5%
+mAtk +5%
+
+If equipped by a Rune Knight or Royal Guard
+Max HP +10%
+Increases Atk damage on All race targets by 5%.
+
+If equipped by an Archbishop or Sura
+Aspd + 10%
+Increases Atk damage on All race targets by 5%.
+
+If equipped by a Mechanic or Geneticist
+Reduces the SP cost of skills by 10.
+Increases Atk damage on All race targets by 5%.
+
+Brooch of Hero + Hero's Judgement Shawl
+Disabled auto casting of Kyrie and Lex Aterna
+Increases the damage of Judex by 5% per refine level of Armor
+Increases the damage of Adoramus by 5% per refine level of Armor
+Increases the damage of Skynetblow by 5% per refine level of Armor
+Increases the damage of Dragoncombo by 5% per refine level of Armor
+Increases the damage of Earthshaker by 5% per refine level of Armor
+
+Brooch of Hero + Hero Trade Mail
+All Stats +2 per refine level of Armor
+Grants .7% + (2.6 * refine level of Armor)% to inflict Stun, Silence, Curse, and Poison effects on melee attack.
+
+Brooch of Hero + Hero Plate
+Disable auto casting of Heal and Stormgust
+Increases the damage of Storm Blast by 5% per refine level of Armor
+Increases the damage of Vanishing Point by 5% per refine level of Armor
 #
