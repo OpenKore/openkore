@@ -20896,33 +20896,34 @@ Required Level: ^777777160^000000
 Equip To: ^777777All Classes^000000
 #
 2984#
+Gloves made from the skin of the boar Saehrimnir, whose flesh is replenished no matter how much is stripped away.
 Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
 Increases EXP gained from defeating monsters by 5%
 Increases damage received from monsters by 5%
-Safe Limil Gloves
+Saehrimnir Gloves
 Gajomart Card
 Increases EXP gained from defeating Plant Race monsters by 5%
 Increases damage received from Plant Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Gullinbursti Card
 Increases EXP gained from defeating Fish Race monsters by 5%
 Increases damage received from Fish Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Mini Demon Card
 Increases EXP gained from defeating Brute Race monsters by 5%
 Increases damage received from Brute Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Skeleton General Card
 Increases EXP gained from defeating Insect Race monsters by 5%
 Increases damage received from Insect Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Iron Fist Card
 Increases EXP gained from defeating Formless Race monsters by 5%
 Increases damage received from Formless Race monsters by 10%
@@ -20932,22 +20933,22 @@ Ancient Worm Card
 Increases EXP gained from defeating Demon Race monsters by 5%
 Increases damage received from Demon Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Explosion Card
 Increases EXP gained from defeating Dragon Race monsters by 5%
 Increases damage received from Dragon Race  monsters by 10%
 
-Safe Limil Gloves
+Safelimnir Gloves
 Zombie Prisoner Card
 Increases EXP gained from defeating Undead Race monsters by 5%
 Increases damage received from Undead Race  monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 XMAS Cookie Card
 Increases EXP gained from defeating Angel Race monsters by 5%
 Increases damage received from Angel Race monsters by 10%
 
-Safe Limil Gloves
+Saehrimnir Gloves
 Am Mut Card
 Increases EXP gained from defeating Demi Human Race monsters by 5%
 Increases damage received from Demi Human Race monsters by 10%
@@ -36862,6 +36863,7 @@ If upgrade level is +10 or higher,
 Reduces the cooldown of ^0000FFMetallic Sound^000000 by 2 seconds.
 #
 5967#
+Most Galapagos do not fly, but this one dreamt of flying so much that its dream came true. Fly, little Galapago, fly!
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
@@ -36948,6 +36950,7 @@ Mdef + 10
 Perfect Dodge + 2
 #
 5975#
+A doll created to celebrate the inauguration event of an old noble family.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
@@ -72361,6 +72364,7 @@ Req LvL : ^7777771^000000
 Job : ^777777All^000000
 #
 18959#
+Nobody knows why it's old and pink. You put it on your head anyway.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
@@ -73586,6 +73590,7 @@ LUK + 1
 Adds a chance of casting ^0000FFLevel 3 Blessing^000000 on the user when performing a physical or magical attack.
 #
 19095#
+^FF0000Cute Porings decorate these festive balloons!^000000
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
@@ -74045,13 +74050,16 @@ Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Fr
 Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 19163#
+Headgear modeled after the famed succubus. It's quite charming!
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^80808030^000000
 Restores 500 HP when a monster is killed
 Restores 50 SP when a monster is killed
-Catherina's Pawn Brand
+
+When unequipped lose 5000 hp 500 sp
+Catherina Von Blood
 Succubus Egg
 Increases HP Recovery + 500
 Increases SP Recovery + 20
@@ -84383,14 +84391,14 @@ Weight: ^8080800^000000
 When opened gives one the the following
 Ritual Robes
 Brooch of Hero
-Ying Yang Talisman
+Yin Yang Talisman [1]
 Flying Galapago
 Fisherman's Shoes
 Happy Balloon
-Catherina's Pawn Brand
+Catherina Von Blood [1]
 Zherlthsh Dool
 Old Pink Poo Hat
-Safe Limil Gloves
+Saehrimnir Gloves
 Blacksmith Blessing x 8
 Battle Manual X3 x 6
 Bloody Dead Branch x 5
