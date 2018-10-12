@@ -1892,7 +1892,7 @@
 2979#Strawberry_Decoration#
 2980#Evil_Spirit_Glove#
 2981#Hero_Ring#
-2984#Safe_Limil_Gloves#
+2984#Saehrimnir_Gloves#
 2985#Gyges's_Ring#
 2988#Hero_Ring_Of_Newoz#
 2989#Floral_Bracelet_Of_Aigu#
@@ -8151,7 +8151,7 @@
 19139#Survivor's_Orb#
 19141#Maero_Mask#
 19156#Lunar_Rainbow#
-19163#Catherina's_Pawn_Brand#
+19163#Catherina_Von_Blood#
 19171#Magician_Knit_Hat#
 19201#Classic_Battle_Manual_10_Box#
 19202#Classic_Bubble_Gum_10_Box#
@@ -9429,7 +9429,7 @@
 28521#Giant's_Protection#
 28531#Blacksmith's_Gloves#
 28551#Imperial_Glove#
-28560#Ying_Yang_Talisman#
+28560#Yin_Yang_Talisman#
 28564#Valkyrie_Drop#
 28565#Perverse_Demon_Mask#
 28573#Emerald_Ring#
