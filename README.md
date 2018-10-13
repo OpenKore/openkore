@@ -28,14 +28,10 @@ git clone https://github.com/OpenKore/openkore.git
 * Remember, developers are doing this on free time.
 
 ### Weekly Maintence on official Servers
-Some official servers (like bRO and iRO) have a weekly maintence.
-
-When this weekly maintence happens, openkore stops working on this server.
-
-To make it work again, a developer have to update openkore.
-
-So if you see a green message written: **timeout on map server... reconnecting....** that means you have to wait for developer to update openkore.
-
+Some official servers (like bRO and iRO) have a weekly maintence.  
+When this weekly maintence happens, openkore stops working on this server.  
+To make it work again, a developer have to update openkore.  
+So if you see a green message written: **timeout on map server... reconnecting....** that means you have to wait for developer to update openkore.  
 So please wait, don't need to make an issue to tell this.
 
 ### Status of botting on Official Servers
