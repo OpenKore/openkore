@@ -1892,6 +1892,7 @@
 2979#Strawberry_Decoration#
 2980#Evil_Spirit_Glove#
 2981#Hero_Ring#
+2984#Saehrimnir_Gloves#
 2985#Gyges's_Ring#
 2988#Hero_Ring_Of_Newoz#
 2989#Floral_Bracelet_Of_Aigu#
@@ -2627,12 +2628,12 @@
 4759#LUK+10#
 4760#MATK+1%#
 4761#MATK+2%#
-4762#FLEE+6#
-4763#FLEE+12#
+4762#FLEE_+_6#
+4763#FLEE_+_12#
 4764#CRI+5#
 4765#CRI+7#
-4766#ATK+2%#
-4767#ATK+3%#
+4766#ATK_+_2%#
+4767#ATK_+_3%#
 4786#MDEF+2#
 4787#MDEF+4#
 4788#MDEF+6#
@@ -2652,7 +2653,7 @@
 4802#SP+150#
 4803#Cure1Lv.#
 4804#Catholic1Lv.#
-4805#Archbishop1Lv.#
+4805#Archbishop_Lv1#
 4806#MATK+3%#
 4807#Atk_Speed1#
 4808#Fighting_Spirit4#
@@ -2666,7 +2667,7 @@
 4816#Sharp3#
 4817#Sharp2#
 4818#Sharp1#
-4819#Atk1#
+4819#ATK_+_1%#
 4820#Fighting_Spirit5#
 4821#Fighting_Spirit6#
 4822#Fighting_Spirit7#
@@ -2696,17 +2697,17 @@
 4847#Spelled_Stone#
 4848#Immune_Level_1#
 4849#Cranial_Level_1#
-4850#Heal_Amount3#
-4851#Heal_Amount4#
-4852#Heal_Amount5#
+4850#Heal_Lv3#
+4851#Heal_Lv4#
+4852#Heal_Lv5#
 4853#Special_Str#
 4854#Special_Agi#
 4855#Special_Vit#
 4856#Special_Int#
 4857#Special_Dex#
 4858#Special_Luk#
-4859#Evasion1#
-4860#Evasion3#
+4859#FLEE_+_1#
+4860#FLEE_+_3#
 4861#MHP+1%#
 4862#MHP+2%#
 4863#Fatal1Lv#
@@ -3580,9 +3581,11 @@
 5948#Loki_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
+5967#Flying_Galapago#
 5968#Clergy_Nurse_Cap#
 5971#Moon_Eyepatch#
 5973#Ancient_Elven_Ear#
+5975#Zherlthsh_Doll#
 5978#Toy_Syringe#
 6000#Ashes_of_Darkness#
 6001#Essence_of_Fire#
@@ -7030,6 +7033,7 @@
 15212#YSF01_Plate#
 15249#Antonio's_Coat#
 15283#Mighty_Black_Threaded_Armor#
+15384#Ritual_Robes#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -8050,6 +8054,7 @@
 18953#PRO_10th_Cap#
 18955#Pirate's_Folly#
 18956#Chocolate_Bomb#
+18959#Old_Pink_Poo_Hat#
 18961#Lunatic_Smelting_Hat#
 18962#Panda_Balloon#
 18963#Happy_Parrot#
@@ -8123,6 +8128,7 @@
 19082#Bio_Protector#
 19083#Mask_of_Hero#
 19084#Parfaille_Vigilante_Hat#
+19095#Happy_Balloon#
 19101#Glast_Heim_Spectator#
 19102#Pale_Moon_Hat#
 19103#Classic_New_Hairstyle_Coupon_Box#
@@ -8145,6 +8151,7 @@
 19139#Survivor's_Orb#
 19141#Maero_Mask#
 19156#Lunar_Rainbow#
+19163#Catherina_Von_Blood#
 19171#Magician_Knit_Hat#
 19201#Classic_Battle_Manual_10_Box#
 19202#Classic_Bubble_Gum_10_Box#
@@ -8926,6 +8933,7 @@
 22083#Doram_Shoes#
 22084#Luxurious_Doram_Shoes#
 22085#Elegant_Doram_Shoes#
+22091#Fisherman's_Shoes#
 22093#Exorcist's_Shoes#
 22094#Gardener_Shoes#
 22095#Gravekeeper_Shoes#
@@ -9107,6 +9115,7 @@
 23660#Dogly_Bottle_Z#
 23799#Overseas_Care_Package_XIX#
 23800#July_Costume_Box#
+23987#Overseas_Care_Package_XXIII#
 23988#October_Costume_Treat_Box#
 24012#Shadow_Weapon#
 24013#Shadow_Armor#
@@ -9114,12 +9123,12 @@
 24015#Shadow_Shield#
 24016#Shadow_Earring#
 24017#Shadow_Pendant#
-24018#Physical_Earring_(Shadow)#
-24019#Physical_Weapon_(Shadow)#
-24020#Physical_Pendant_(Shadow)#
-24021#Magical_Earring_(Shadow)#
-24022#Magical_Weapon_(Shadow)#
-24023#Magical_Pendant_(Shadow)#
+24018#Physical_Shadow_Earring#
+24019#Physical_Shadow_Weapon#
+24020#Physical_Shadow_Pendant#
+24021#Magical_Shadow_Earring#
+24022#Magical_Shadow_Weapon#
+24023#Magical_Shadow_Pendant#
 24024#Breeze_Armor_(Shadow)#
 24025#Champion_Shoes_(Shadow)#
 24026#Athena_Shield_(Shadow)#
@@ -9420,6 +9429,7 @@
 28521#Giant's_Protection#
 28531#Blacksmith's_Gloves#
 28551#Imperial_Glove#
+28560#Yin_Yang_Talisman#
 28564#Valkyrie_Drop#
 28565#Perverse_Demon_Mask#
 28573#Emerald_Ring#
@@ -9766,3 +9776,4 @@
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#
+32222#Brooch_Of_Hero#
