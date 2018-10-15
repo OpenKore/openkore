@@ -1,8 +1,7 @@
 package eventMacro::Condition::IsInCoordinate;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $char $field );
 
 use base 'eventMacro::Condition';
 

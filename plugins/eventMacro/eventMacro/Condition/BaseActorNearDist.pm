@@ -1,8 +1,8 @@
 package eventMacro::Condition::BaseActorNearDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $char );
+use Utils qw( distance ) ;
 
 use base 'eventMacro::Condition';
 

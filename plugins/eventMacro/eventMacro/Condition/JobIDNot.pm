@@ -5,8 +5,7 @@ use strict;
 use base 'eventMacro::Condition';
 
 use Globals qw( $char );
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
 	['in_game','packet/player_equipment'];
