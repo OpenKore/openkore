@@ -2,8 +2,8 @@ package eventMacro::Validator::NumericComparison;
 
 use strict;
 use base 'eventMacro::Validator';
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Data qw( $general_wider_variable_qr );
+use eventMacro::Utilities qw( find_variable );
 
 my $number_qr = qr/-?\d+(?:\.\d+)?/;
 

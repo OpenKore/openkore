@@ -1,12 +1,10 @@
 package eventMacro::Condition::StatusActiveHandle;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( %statusName $char );
 
 use base 'eventMacro::Condition';
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
 	['Actor::setStatus::change'];

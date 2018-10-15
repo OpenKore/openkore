@@ -1,7 +1,7 @@
 package eventMacro::Condition::StatAdded;
 
 use strict;
-use Globals;
+use Globals qw( $char );
 
 use base 'eventMacro::Conditiontypes::ListConditionEvent';
 

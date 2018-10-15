@@ -1,8 +1,8 @@
 package eventMacro::Condition::PlayerNearCount;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $playersList );
+
 use base 'eventMacro::Condition::ActorNearCount';
 
 use Globals;

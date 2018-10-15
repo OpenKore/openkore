@@ -1,10 +1,10 @@
 package eventMacro::Condition::BaseMsgNameDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $field $char);
+use Utils qw( distance );
 
-use eventMacro::Data;
+use eventMacro::Data qw( EVENT_TYPE );
 
 use base 'eventMacro::Condition';
 
@@ -143,7 +143,6 @@ sub get_new_variable_list {
 }
 
 sub condition_type {
-	my ($self) = @_;
 	EVENT_TYPE;
 }
 

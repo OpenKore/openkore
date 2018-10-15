@@ -1,11 +1,7 @@
 package eventMacro::Condition::NoActorNear;
 
 use strict;
-use Globals;
-use Utils;
 use base 'eventMacro::Condition';
-
-use Globals;
 
 #'packet/map_property3' has to exchanged
 sub _hooks {
