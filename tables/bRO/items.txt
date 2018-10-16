@@ -6431,6 +6431,7 @@
 19893#Chapéu de Bruxinha#
 19903#Chapéu de Bruxa Maligna#
 19904#Boina da Caveira#
+19905#Gorro do Bicho Papão#
 19910#Chapéu de Bruxa Brilhante#
 19911#Telhado#
 19912#Olhos Felinos#
@@ -7035,6 +7036,7 @@
 31453#Cachecol Marrom com Laço#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
+31472#Asinhas Floridas#
 31474#Cabelo Longo Preto#
 31480#Gioia Dorminhoco#
 31482#Cachecol de Lunático#
