@@ -3,6 +3,7 @@ package eventMacro::Automacro;
 use strict;
 use Globals qw( %config %timeout );
 use Log qw(message error warning debug);
+use Utils qw( timeOut );
 
 use eventMacro::Condition;
 use eventMacro::Data qw( EVENT_TYPE );
