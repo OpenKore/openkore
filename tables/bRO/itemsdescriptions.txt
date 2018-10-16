@@ -8332,7 +8332,7 @@ Peso: ^7777770.1^000000
 #
 1801#
 Garra comum e potente, conhecida como 'Presa do Tigre'.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^77777740^000000
 Nível da arma: ^7777771^000000
@@ -8341,7 +8341,7 @@ Classes que utilizam: ^777777Sacerdote/ Monge^000000
 #
 1802#
 Garra comum e potente, conhecida como 'Presa do Tigre'.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^77777740^000000
 Nível da arma: ^7777771^000000
@@ -8350,7 +8350,7 @@ Classes que utilizam: ^777777Sacerdote/ Monge^000000
 #
 1803#
 Protetor que cobre as costas da mão e parte do braço. Consiste em longas faixas de couro com várias pontas de ferro.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777750^000000
 Peso: ^77777745^000000
 Nível da arma: ^7777772^000000
@@ -8359,7 +8359,7 @@ Classes que utilizam: ^777777Sacerdote/ Monge^000000
 #
 1804#
 Protetor que cobre as costas da mão e parte do braço. Consiste em longas faixas de couro com várias pontas de ferro.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777750^000000
 Peso: ^77777745^000000
 Nível da arma: ^7777772^000000
@@ -8368,7 +8368,7 @@ Classes que utilizam: ^777777Sacerdote/ Monge^000000
 #
 1805#
 Protetor para o punho usado em lutas corpo-a-corpo. Originalmente trazidos por uma tribo antiga do Extremo Oriente. Lutadores costumam usar estes em campeonatos de luta livre.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777765^000000
 Peso: ^77777745^000000
 Nível da arma: ^7777772^000000
@@ -8377,7 +8377,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1806#
 Protetor para o punho usado em lutas corpo-a-corpo. Originalmente trazidos por uma tribo antiga do Extremo Oriente. Lutadores costumam usar estes em campeonatos de luta livre.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777765^000000
 Peso: ^77777745^000000
 Nível da arma: ^7777772^000000
@@ -8386,7 +8386,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1807#
 Arma que simula um punho humano. Grosseira mas eficiente.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777115^000000
 Peso: ^77777765^000000
 Nível da arma: ^7777773^000000
@@ -8395,7 +8395,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1808#
 Arma que simula um punho humano. Grosseira mas eficiente.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777115^000000
 Peso: ^77777765^000000
 Nível da arma: ^7777773^000000
@@ -8405,7 +8405,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 1809#
 Arma que simula uma mão com 3 dedos de aço. Essas lâminas causam ferimentos muito dolorosos no inimigo. Aumenta a força física de quem a usa.
 ^0000ffFOR +2^000000
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777786^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
@@ -8415,7 +8415,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 1810#
 Arma que simula uma mão com 3 dedos de aço. Essas lâminas causam ferimentos muito dolorosos no inimigo. Aumenta a força física de quem a usa.
 ^0000ffFOR +2^000000
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777786^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
@@ -8424,7 +8424,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1811#
 Garra que imita uma mão humana com unhas longas e afiadas.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777797^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
@@ -8433,7 +8433,7 @@ Classes que utilizam: ^777777Sacerdote / Monge^000000
 #
 1812#
 Garra que imita uma mão humana com unhas longas e afiadas.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777797^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
@@ -8455,7 +8455,7 @@ Classe: ^777777Monges, Sacerdotes e evoluções^000000
 1814#
 Garra da fúria. Tem o poder de enlouquecer quem a usa, que passa a procurar compulsivamente inimigos para matar.
 ^0000ffVelocidade de ataque +12%.^000000
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777120^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
@@ -8466,7 +8466,7 @@ Classes que utilizam: ^777777Sacerdote, Monge^000000
 Uma arma com manchas de sangue criada com as garras do Hatii, guardião da porta para o Mundo dos Mortos.
 ^0000ffHP máx. -2%.^000000
 ^0000ffAo realizar ataques físicos, pequena chance de infligir [Sangramento] no alvo.^000000
-Tipo: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777152^000000
 Peso: ^77777755^000000
 Propriedade:^777777Escuridão^000000
@@ -8477,7 +8477,7 @@ Classes que utilizam: ^777777Sacerdote, Monge^000000
 1816#
 Garra da fúria. Tem o poder de enlouquecer quem a usa, que passa a procurar compulsivamente inimigos para matar.
 ^0000ffVelocidade de ataque +12%.^000000
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777120^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
@@ -8488,7 +8488,7 @@ Classes que utilizam: ^777777Sacerdote, Monge^000000
 ^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
 Garra abençoada por Zefir, o Deus do Vento.
 Inflige 5% a mais de dano em monstros Morto-vivos e 10% a mais de dano em monstros da propriedade Terra, Água, Fogo e Vento.
-Classe: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^777777159^000000
 Peso: ^77777745^000000
 Nível da arma: ^7777774^000000
@@ -8498,7 +8498,7 @@ Classes que utilizam: ^777777Sacerdote/ Monge^000000
 1818#
 Uma garra feita de lava. Às vezes ela libera um tremendo calor. Parece que sua mão pode queimar quando isso acontece, mas ela tem um isolamento interno.
 ^0000ffAo realizar ataques físicos, pequena chance de autoconjurar [Encantar com Chama] nv. 5 no usuário.^000000
-Tipo de Item: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de ataque: ^77777780^000000
 Peso: ^77777765^000000
 Nível da Arma: ^7777773^000000
@@ -8508,7 +8508,7 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 1819#
 Uma garra feita de gelo. Às vezes ela libera um tremendo frio. Parece que sua mão pode congelar quando isso acontece, mas ela tem um isolamento interno.
 ^0000ffAo realizar ataques físicos, pequena chance de autoconjurar [Encantar com Geada] nv. 5 no usuário.^000000
-Tipo de Item: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de ataque: ^77777780^000000
 Peso: ^77777765^000000
 Nível da Arma: ^7777773^000000
@@ -8518,7 +8518,7 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 1820#
 Uma garra que possui o poder do trovão. Às vezes ela libera raios que eletrocutam o inimigo. Eles não afetam o usuário de maneira alguma.
 ^0000ffAo realizar ataques físicos, pequena chance de autoconjurar [Encantar com Ventania] nv. 5 no usuário.^000000
-Tipo de Item: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de ataque: ^77777780^000000
 Peso: ^77777765^000000
 Nível da Arma: ^7777773^000000
@@ -8528,7 +8528,7 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 1821#
 Uma garra que possui a força da Mãe Terra. Às vezes ela revela um tremendo poder que pode romper as defesas de qualquer inimigo. Esse poder não afeta o usuário.
 ^0000ffAo realizar ataques físicos, pequena chance de autoconjurar [Encantar com Terremoto] nv. 5 no usuário.^000000
-Tipo de Item: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de ataque: ^77777780^000000
 Peso: ^77777765^000000
 Nível da Arma: ^7777773^000000
@@ -8539,7 +8539,7 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 As palavras mágicas gravadas liberam um poder de ataque maior.
 ^0000ffDano de [O Último Dragão] +20%.^000000
 ^0000ffDano de [Combo Triplo] e [Combo Quádruplo] +15%.^000000
-Tipo de Item: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Força de ataque: ^77777730^000000
 Peso: ^77777750^000000
 Nível da Arma: ^7777773^000000
@@ -8553,7 +8553,7 @@ Aumenta o Ataque Físico contra Humanoides em 95%.
 Ignora a defesa física de humanoides em 20%.
 Indestrutível em batalha.
 Adiciona a chance de invocar automaticamente a habilidade 'Zen' quando atacar.
-Tipo: ^777777Punho^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^7777770^000000
 Nível da Arma: ^7777773^000000
@@ -8567,7 +8567,7 @@ Aumenta o Ataque Físico contra Humanoides em 95%.
 Reduz o tempo de conjuração da habilidade 'Punho Supremo de Asura' em 25%.
 Indestrutível em batalha.
 Ao atacar, adiciona a chance de reduzir por 6 segundos o tempo de conjuração variável da habilidade 'Punho Supremo de Asura' em 100%.
-Tipo: ^777777Punho^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^7777770^000000
 Nível da Arma: ^7777773^000000
@@ -8578,7 +8578,7 @@ Classes que utilizam: ^777777Sacerdote, Monge e evoluções^000000
 Uma garra feita com 3 chifres de Hilthrion. As pontas incrivelmente afiadas lançam Golpe Fatal nv. 1 ao atacar de perto.
 ^0000ffAo realizar ataques físicos, chance de autoconjurar [Golpe Fatal] nv. 1 ou [Invocar Esfera Espiritual] nv. 5.^000000
 ^0000ffAo usar [Golpe da Palma em Fúria], chance de autoconjurar [Impacto Psíquico] nv. 1.^000000
-Tipo: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Ataque: ^77777795^000000
 Peso: ^77777760^000000
 Nível da Arma: ^7777773^000000
@@ -8606,7 +8606,7 @@ Aumenta o dano físico contra monstros humanoides de acordo com o refino.
 ^0000ffRefino +12: 64%.^000000
 ^0000ffRefino +13: 81%.^000000
 ^0000ffRefino +14: 100%.^000000
-Tipo: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Ataque: ^77777730^000000
 Peso: ^7777770^000000
 Nível da Arma: ^7777774^000000
@@ -8635,7 +8635,7 @@ Aumenta o dano físico contra monstros humanoides de acordo com o refino.
 ^0000ffRefino +12: 64%.^000000
 ^0000ffRefino +13: 81%.^000000
 ^0000ffRefino +14: 100%.^000000
-Tipo: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Ataque: ^77777730^000000
 Peso: ^7777770^000000
 Nível da Arma: ^7777774^000000
@@ -8647,7 +8647,7 @@ Um punho muito bonito com dragões de bronze gravados em seu corpo.
 ^0000ffDano de [Impacto Sísmico] e [Soco Furacão] +20%.^000000
 ^0000ffConsumo de SP por habilidades +5%.^000000
 ^0000ffConsumo de SP -1% por refino acima do +6.^000000
-Tipo : ^777777Punho^000000
+Tipo: ^777777Soqueira^000000
 Força de Ataque : ^777777142^000000
 Peso : ^77777750^000000
 Nível da arma : ^7777773^000000
@@ -8656,7 +8656,7 @@ Classe : ^777777Shura^000000
 #
 1831#
 Uma garra feito pelo Grupo Éden. Destina-se àqueles que têm mais experiência como Monges.
-Tipo: ^777777Garra^000000
+Tipo: ^777777Soqueira^000000
 Ataque: ^777777120^000000
 Peso: ^7777770^000000
 Nível da Arma: ^7777773^000000
@@ -8688,7 +8688,8 @@ Classes: ^777777Sacerdotes, Monges e evoluções^000000
 *Funcionalidades ativas dentro da área da Guerra do Emperium TE*
 Aumenta o ataque físico em +40% contra outros jogadores.
 Chance de causar Hipotermia ao atacar fisicamente.
-Tipo: ^777777Punho^000000 Ataque: ^777777150^000000
+Tipo: ^777777Soqueira^000000
+Ataque: ^777777150^000000
 Peso : ^7777770^000000
 Nível da Arma : ^7777773^000000
 Nível Necessário : ^77777740^000000
@@ -8721,7 +8722,7 @@ Ao aprender [Punho do Tigre] nv. 5:
 ^0000ffATQ +20.^000000
 Ao aprender [Combo Esmagador] nv. 10:
 ^0000ffATQ +40.^000000
-Tipo: ^777777Punho^000000
+Tipo: ^777777Soqueira^000000
 Ataque: ^777777100^000000
 Peso: ^777777150^000000
 Nível da arma: ^7777773^000000
@@ -10839,7 +10840,7 @@ Classes: ^777777Todas^000000
 ^0000ffAdiciona 5% de resistência contra Cegueira.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -10847,7 +10848,7 @@ Classes que utilizam: ^777777Todas^000000
 Óculos com lentes escuras para proteger dos raios do sol.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -10855,7 +10856,7 @@ Classes que utilizam: ^777777Todas^000000
 Aparato ótico para compensar deficiências visuais.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -10863,7 +10864,7 @@ Classes que utilizam: ^777777Todas^000000
 Aparato ótico para compensar deficiências visuais.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -10871,7 +10872,7 @@ Classes que utilizam: ^777777Todas^000000
 Óculos usados por mergulhadores.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -10933,7 +10934,7 @@ Classes que utilizam: ^777777Todas^000000
 Cobertura usada para proteger um olho machucado.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11033,7 +11034,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 Óculos largos para prevenir ferimentos nos olhos. Aumenta a defesa.
 Arraste para a janela de equipamento para usar.
 Classe: ^777777Equipamento para a cabeça^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Defesa: ^7777775^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Espadachim/Mercador/Gatuno/Arqueiro e as respectivas evoluções^000000
@@ -11041,7 +11042,7 @@ Classes que utilizam: ^777777Espadachim/Mercador/Gatuno/Arqueiro e as respectiva
 2225#
 Óculos largos para prevenir ferimentos nos olhos. Aumenta a defesa. Arraste para a janela de equipamento para usar.
 Classe: ^777777Equipamento para a cabeça^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Defesa: ^7777775^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Espadachim/Mercador/Gatuno/Arqueiro e as respectivas evoluções^000000
@@ -11147,7 +11148,7 @@ Classes que utilizam: ^777777Todas^000000
 Óculos para um só olho. Parece ser usado mais por vaidade do que por necessidade.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11164,7 +11165,7 @@ Classes que utilizam: ^777777Todas^000000
 ^0000ffAdiciona 10% de resistência contra Cegueira.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11173,7 +11174,7 @@ Classes que utilizam: ^777777Todas^000000
 ^0000ffAdiciona 15% de resitência contra Cegueira.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11319,7 +11320,7 @@ Classes que utilizam: ^777777Todas^000000
 Óculos com pequenas lentes. Dá um ar de intelectual ao usuário.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11343,7 +11344,7 @@ Classes que utilizam: ^777777Todas^000000
 Máscara de disfarce lembrando o lendário Zorro.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11352,7 +11353,7 @@ Grande turbante chinês de cor vermelha usado pela Munak. Há uma fita com um ta
 ^0000ffReduz em 10% o dano casado por monstros da raça Morto-vivo.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11456,7 +11457,7 @@ Classes que utilizam: ^777777Todas^000000
 Óculos de lentes angulares.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11473,7 +11474,7 @@ Classes que utilizam: ^777777Noviço e suas evoluções^000000
 Máscara em forma de sorriso. Pode deixar as pessoas curiosas sobre como você realmente se parece.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -11498,7 +11499,7 @@ Classes que utilizam: ^777777Todas^000000
 Acessório para um baile de máscaras, típico do carnaval de Veneza. Dá ao usuário um ar misterioso.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11542,7 +11543,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 Protetores de orelha em forma de orelhas de elfo.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
@@ -11560,7 +11561,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 Protetor facial de aparência grotesca. Costuma ser usado no Dia das Bruxas para assustar as pessoas.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11586,7 +11587,7 @@ Máscara preta em forma de borboleta. Dá um ar pervertido ao usuário.
 ^0000ffAumenta em 3% o dano causado em monstros da raça Humanoide.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11595,7 +11596,7 @@ Máscara feita de aço. É essencial para os Ferreiros protegerem o rosto das fa
 ^0000ffAdiciona 10% de resistência contra ataques da Propriedade Fogo.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Mercador e suas evoluções^000000
@@ -11621,7 +11622,7 @@ Faixa para cobrir os dois olhos. Utilizada por pessoas com problemas de insônia
 ^0000ffTorna o usuário imune a Cegueira.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -11630,7 +11631,7 @@ Aparato ótico para os olhos usado para olhar à distância. Funciona com 2 pare
 ^0000ffDES +1^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
@@ -11639,7 +11640,7 @@ Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
 Máscara usada pelos Goblins para ocultar suas aparências horríveis. Como Goblins não são muito bons em fabricar coisas, a máscara é muito feia e não ajuda muito para melhorar a aparência.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -14772,7 +14773,7 @@ Garante a você orelhas pontudas, como as de um elfo – ou de um fã de ficçã
 INT + 1
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz ^000000
@@ -22423,7 +22424,7 @@ Aparato em forma de máscara usado sobre a boca e nariz. Usado para filtrar gase
 ^0000ffAdiciona 30% de resistência contra Veneno.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -22431,7 +22432,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 Óculos escuros que fazem o usuário se sentir forte e vigoroso. Sugerido para homens.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
@@ -22500,7 +22501,7 @@ Classes que utilizam: ^777777Todas^000000
 Protetores em forma de barbatanas de dragão. Simboliza as honrarias da classe os Espadachins.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
@@ -22573,7 +22574,7 @@ Elmo feito de ouro com grandes asas e o emblema do Deus-Sol. Tão grande que é 
 ^0000ffFOR +3, INT +2^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo,Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^777777240^000000
 Classes que utilizam: ^7777772ª Classe ou acima^000000
 #
@@ -22734,7 +22735,7 @@ Classes que utilizam: ^777777Todas^000000
 Maquiagem rosada para ser usada nas bochechas, dando à pessoa uma aparência envergonhada.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -22759,7 +22760,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 Diz a lenda que essa máscara foi usada por um herói trágico do passado.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777720^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
@@ -22787,7 +22788,7 @@ Classes que utilizam: ^777777Mago/ Noviço e as respectivas evoluções^000000
 Chapéu usado pelo monstro Bongun. A fita que pende do chapéu está rasgada, de modo que não obstrui a visão, mas não protege contra mortos-vivos.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo,Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -22845,7 +22846,7 @@ Ornamento tradicional dos monarcas de uma civilização antiga. Simboliza que o 
 ^0000ffFOR +2^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo,Baixo^000000
+Equipa em: ^777777Topo e Baixo^000000
 Peso: ^777777300^000000
 Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
@@ -22980,7 +22981,7 @@ Um acessório que deve ser usada na altura das orelhas, feito com Asas Malignas.
 ^0000ffFOR +1.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -23037,7 +23038,7 @@ Um acessório que deve ser usada na altura das orelhas e que se parece com belas
 ^0000ffFOR +1.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -23136,7 +23137,7 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 Um par de lacinhos vermelhos que podem ser usados para enfeitar o cabelo de garotinhas.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777745^000000
 Classes que utilizam: ^777777Todas^000000
@@ -23146,7 +23147,7 @@ Uma máscara que lembra o rosto do monstro Alarme.
 ^0000ffAumenta +50% a resistência a [Cegueira].^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 #
@@ -23154,7 +23155,7 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 Uma máscara com uma expressão vazia.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23162,7 +23163,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma máscara com uma expressão de surpresa.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23170,7 +23171,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma máscara com uma expressão aflita.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23178,7 +23179,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma máscara usada pelo líder Goblin. Parece tão feroz que é ridícula.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23186,7 +23187,7 @@ Classes que utilizam: ^777777Todas^000000
 Um acessório de cabeça que é feito conforme o sino dourado da Sohee.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777735^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
@@ -23195,7 +23196,7 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 Um chapéu bem justo usado sob um véu, normalmente utilizado pelas freiras.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Sacerdotes e Mercenários^000000
@@ -23205,7 +23206,7 @@ Um chapéu bem justo usado sob um véu, normalmente utilizado pelas freiras.
 ^0000ffMáx. SP +100.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Sacerdotes e Mercenários^000000
@@ -23215,7 +23216,7 @@ Um acessório de cabeça concedido para os verdadeiros Orcs Heróis.
 ^0000ffFOR +2, VIT +1.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777790^000000
 Nível necessário: ^77777755^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
@@ -23244,7 +23245,7 @@ Uma máscara que liberta a fúria da fera interior daquele que a usar. Prepare-s
 Este item não pode ser aprimorado.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Todas^000000
@@ -23272,14 +23273,14 @@ Classes que utilizam: ^777777Todas^000000
 Uma faixa escura dada pelo famoso Bruxo Zephyrus à Maga Takius. Apesar dela cobrir seus olhos, você não perderá a visão! Além disso, você vai arrasar com o novo visual.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5102#
 Sabe aquelas ocasiões em que você está boiando completamente na conversa, ou quando alguém diz algo que deixa você de queixo caído? Se você não fazia idéia de que cara fazer, aqui está a solução! Em breve, a Cara de Conteúdo!
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23450,7 +23451,7 @@ Essa máscara, que é o símbolo de Jirtas, senhora da prisão subterrânea de G
 ^0000ffAumenta o dano contra monstros Humanoides em 5% e diminui o dano de monstros Humanoides em 5%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Topo e Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
@@ -23571,7 +23572,7 @@ Uma máscara criada à imagem do rei das selvas, o poderoso Leão. Seus inimigos
 DEFM +1.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777770^000000
 Nível necessário: ^77777775^000000
 Classes que utilizam: ^777777Classes 2-1 e 2-2^000000
@@ -23581,7 +23582,7 @@ Um capacete completo, que cobre toda a sua cabeça para máxima proteção. Por 
 ^0000ffMáximo HP +3%, VIT +3.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^777777120^000000
 Nível necessário: ^77777775^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
@@ -23618,7 +23619,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma viseira de metal muito leve e resistente, com um visual arrojado e moderno. Ela possui uma lente de rubi de altíssima qualidade, capaz de despertar o poder espiritual do usuário. Mas não pense que você vai começar a disparar raios óticos! SP Máximo +50
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777775^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
@@ -23690,7 +23691,7 @@ Um elmo usado pelos militares de alta patente de Amatsu. Ele parece bem sólido 
 ^0000ffVIT +1, reduz em 5% o dano recebido por monstros do tipo Humanoide.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^777777300^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Espadachim e evoluções, Mercadores e evoluções^000000
@@ -23700,7 +23701,7 @@ Uma máscara muito popular nas ilhas orientais. Ela é usada principalmente pelo
 ^0000ffConcede 30% de tolerância ao status [Silêncio].^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Meio, Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
@@ -23775,7 +23776,7 @@ Estes fones vêm com rádio AM/FM estéreo, amplificador de seis canais e potên
 DEFM +3
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23784,7 +23785,7 @@ Uma tiara adornada com jóias azuladas e detalhes em prata. Geralmente é usada 
 ^0000ffINT +1, DEFM +2, +10% de tolerância a [Atordoamento].^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^777777200^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23896,7 +23897,7 @@ Não pode ser aprimorado.
 FOR + 2
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo,Baixo^000000
+Equipa em: ^777777Topo e Baixo^000000
 Peso: ^777777300^000000
 Nível necessário: ^77777765^000000
 Classes que utilizam: ^777777Espadachim e suas evoluções^000000
@@ -23908,7 +23909,7 @@ Reduz em 10% o dano casado por monstros da raça Morto-vivo.
 Não pode ser aprimorado.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -23918,7 +23919,7 @@ de modo que não obstrui a visão, mas não protege contra mortos-vivos.
 Não pode ser aprimorado.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo,Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24052,7 +24053,7 @@ Máscara de aparência sombria que cobre parte do rosto do personagem, ocultando
 ^0000ffFOR +2.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
@@ -24245,7 +24246,7 @@ Classes que utilizam: ^777777Todas^000000
 Máscara feita especialmente para comemorar o Dia das Crianças.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24263,7 +24264,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma coroa criada pelo deus Apolo para simbolizar a vitória e consagrar os grandes feitos dos heróis, vista normalmente nos jogos olímpicos.
 Todos os atributos +1, DEFM +3
 Tipo: ^777777Equipamento para a cabeça^000000
-Equipa em: ^777777Topo e centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Defesa: ^7777773^000000
 Peso: ^777777100^000000
 Classes que utilizam: ^777777Todas^000000
@@ -24352,7 +24353,7 @@ Um chapéu feito à imagem da MVP gatinha, Flor do Luar.
 ^0000ffPermite o uso da habilidade "Aumentar Agilidade" em nível 1 sempre que o usuário atingir o oponente.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24418,7 +24419,7 @@ Par de lacinhos que a Alice usa. São feitos de cetim vermelho bem macio.
 ^0000ffEsquiva +5.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777745^000000
 Classes que utilizam: ^777777Todas^000000
@@ -24438,7 +24439,7 @@ Um sino que as Sohees gostam de usar como presilha para manter o penteado.
 ^0000ffAGI +2.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Meio.^000000
+Equipa em: ^777777Topo e Meio.^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777735^000000
 Classes que utilizam: ^777777Todas exceto Aprendizes.^000000
@@ -24448,7 +24449,7 @@ A headgear bestowed only to true Orc Heroes.
 ^0000ffFOR +2, VIT +1, MHP +10%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defense: ^7777775^000000
-Head Position: ^777777Topo,Mid^000000
+Head Position: ^777777Topo e Meio^000000
 Peso: ^77777790^000000
 Nível necessário: ^77777755^000000
 Job: ^777777All Classes are available except for Novice.^000000
@@ -24630,7 +24631,7 @@ Um gorro feito de couro e lã de Amistr, altamente resistente e muito quentinho.
 10% de resistência contra Atordoamento e Congelamento
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777780^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24832,7 +24833,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores verde, branca e vermelha. Mas nada a ver com a Itália.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24840,7 +24841,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores amarelo, laranja e dourado para ficar radiante no sambódromo!
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24848,7 +24849,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores rosa, branco e violeta e chamar toda a atenção para você!
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24856,7 +24857,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores vermelho, branco e preto. Mas não tem nada a ver com times de futebol!
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -24934,7 +24935,7 @@ Sabe aqueles óculos de gatinho que sua professora usava e você achava o máxim
 INT+1 e DEFM + 5
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25001,7 +25002,7 @@ AGI + 3
 Aumenta o dano recebido por monstros da raça Fantasma em 10%
 Não pode ser aprimorado
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25011,7 +25012,7 @@ Um chapéu feito com muitas penas e plumas, todas dispostas para tomar a forma d
 Chance de usar a habilidade 'Escândalo' quando o usuário receber dano físico.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -25122,7 +25123,7 @@ Uma coroa muito bonita, cravejada de pedras preciosas. Equipá-la pode aumentar 
 INT + 1, ATQM + 3%. Reduz o tempo de conjuração variável em 3%.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -25130,7 +25131,7 @@ Classes que utilizam: ^777777Todas^000000
 Máscara usada por um dos principais ícones da cultura urbana de Einbroch, Mason Maiers. Algumas pessoas afirmam que usar esta máscara enquanto segura um Machado desperta uma fúria sem igual contra jovens! Não que você acredite nessas coisas. Certo...?
 Aumenta o dano causado a monstros da raça Humanoide em 5%.
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25139,7 +25140,7 @@ Classes que utilizam: ^777777Todas^000000
 Um visor ajustado junto ao olho do usuário, capaz de captar e transmitir uma série de informações sobre um oponente. É capaz de medir o poder de um monstro em números. O poder médio de um habitante de Rune-Midgard é 5. O de um Transclasse pode ultrapassar 6.000. Cuidado, o poder de um Senhor dos Mortos pode fazer seu Rastreador explodir pelo excesso de poder!
 Permite usar a habilidade 'Sentido Sobrenatural Nv1'.
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777735^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25233,7 +25234,7 @@ Chapéu de um capitão pirata supremo do passado. Em um navio pirata, representa
 VIT +3
 INT +3
 Tipo: Equipamento para a Cabeça.
-Equipa em: Topo
+Equipa em: ^777777Topo^000000
 Defesa: 14
 Peso: 0
 Nível necessário: 1
@@ -25244,7 +25245,7 @@ Uma máscara associada a Loki, o deus da Mentira. Ela parece sussurrar palavras 
 Esquiva Perfeita +3
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro, Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25450,7 +25451,7 @@ Dizem que esta coroa foi usado pelo Deus do Sol.
 FOR + 3, INT + 2
 Tipo de Arma: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
-Equipado em: ^777777Topo/Meio^000000
+Equipado em: ^777777Topo e Meio^000000
 Peso: ^777777240^000000
 Classe Aplicável: ^777777Classes 2-1 ou superior^000000
 #
@@ -25467,7 +25468,7 @@ Feitas com as mais finas plumas de Peco Peco, estas asinhas garantem uma bela pr
 AGI + 1, DEFM + 2
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25562,7 +25563,7 @@ Diminui o dano dado por monstros da raça Demônio em 10%.
 DEFM + 3, Não pode ser aprimorado.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Meio, Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Nv. mínimo necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -25598,7 +25599,7 @@ Um elmo criado pelas forças das trevas. Dizem que ele abriga uma centena de alm
 DES + 3
 DEFM + 1
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo e meio^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -25618,7 +25619,7 @@ FOR + 2
 Chance de conjurar a habilidade Manejo Perfeito Nv. 3 a cada ataque físico desferido.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777790^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -25754,7 +25755,7 @@ Uma máscara dourada que muitas pessoas acreditam ter sido usada pela Deusa da V
 Precisão + 15
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777730^000000
 Classe: ^777777Todas as classes.^000000
@@ -25934,7 +25935,7 @@ Aumenta em 4% a resistência contra Atordoamento.
 +100 de HP máximo
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777776^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -26004,7 +26005,7 @@ Chance de conjurar automaticamente a magia "Chuva de Meteoros" Nv. 3 sempre que 
 Chance de conjurar automaticamente a magia "Lanças de Fogo" Nv. 3 sempre que o usuário causar dano físico.
 Não é possível aprimorar esse item.
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
@@ -26017,7 +26018,7 @@ Reduz a resistência contra ataques da propriedade Água em 5%.
 Aumenta em 2% o dano das habilidades Lanças de Fogo, Coluna de Fogo e Chuva de Meteoros.
 Aumenta em 2% o dano das habilidades Golpe Fulminante, Perfurar e Impacto Explosivo
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
@@ -26191,7 +26192,7 @@ Uma caixa com um buraco para os olhos. Assim você pode mostrar aos outros que p
 Pode usar 'Grafitti Nv. 1'.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipar em: ^777777Topo-Centro-Baixo^000000
+Equipar em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -26200,7 +26201,7 @@ Uma caixa com um buraco para os olhos. Assim você pode mostrar aos outros que p
 Pode usar 'Grafitti Nv. 1'.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipar em: ^777777Topo-Centro-Baixo^000000
+Equipar em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -26382,7 +26383,7 @@ Uma venda mágica, abençoada pelo deus Mimir. O que você enxergar com ela, pas
 DES +1. Torna o usuário imune a cegueira.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26392,7 +26393,7 @@ Essa tiara é um presente da Valquíria Reginleif, cujo nome significa “Heran�
 Concede 3% de resistência contra as propriedades Água, Fogo, Sombrio e Maldito.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26421,12 +26422,12 @@ Classes que utilizam: ^777777Todas^000000
 Uma máscara com um Sorriso Maligno que amedronta todas as pessoas ao seu redor.
 Todos Atributos + 1.
 ^ff0000O item será removido após o evento^000000
-Classe : ^777777Equipamento para cabeça^000000
+Classe: ^777777Equipamento para cabeça^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Centro, baixo^000000
-Peso : ^77777710^000000
-Nível necessário : ^7777771^000000
-Classe : ^777777Todas as classes^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classe: ^777777Todas as classes^000000
 #
 5476#
 Um cocar feito com penas de Grand Peco. Era usado apenas pelos mais corajosos da tribo, como o lendário Chefe Minorous Sentado, simbolizando suas vitórias contra as selvagens tribos dos Orcs.
@@ -26434,7 +26435,7 @@ FOR + 2, máximo HP -10%.
 Aumenta em 15% o dano contra os monstros Guerreiro Orc, Senhora Orc, Filhote de Orc, Grand Orc, Orc Arqueiro, Orc Esqueleto e Orc Zumbi.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo e centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26485,7 +26486,7 @@ Reduz em 5% o dano recebido de monstros da raça Bruto.
 Aumenta em 5% o dano causado a monstros da raça Bruto.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777773^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777760^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26561,7 +26562,7 @@ Um chapéu feito a partir da pele de um Lobo Errante. Dizem que quem o usa adqui
 Esquiva + 10, VIT + 5. Não pode ser aprimorado.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26602,7 +26603,7 @@ Necromantes são senhores da morte, estudando as artes das trevas em busca da im
 Chance de usar a habilidade de monstro Ataque Sombrio em nível 5 no oponente sempre que for atingido por dano físico ou mágico.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777776^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26623,7 +26624,7 @@ Um belo véu coroado com flores brancas que realça a beleza. Muito usado pelas 
 DEFM + 10.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26633,7 +26634,7 @@ Criado em homenagem à estranha criatura mágica cantora, Modonna Midoki, ícone
 DES + 2, SOR + 2.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777750^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26696,7 +26697,7 @@ Uma tiara feita a partir das folhas de uma Samambaia. Perfeita para se camuflar 
 Aumenta a recuperação de SP em 8%.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^777777100^000000
 Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26836,7 +26837,7 @@ Concede 5% de resistência a ataques da propriedade Neutro.
 Permite o uso da habilidade Congelar em nível 1.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^77777712^000000
-Equipa em: ^777777Topo, Centro ^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26886,7 +26887,7 @@ Classes que utilizam: ^777777Todas^000000
 ^0000ffAGI +1, Esquiva Perfeita +2.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro e baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26916,7 +26917,7 @@ Representa um belíssimo tucano, ave famosa por seu grande bico colorido. Apesar
 DES + 3. Não pode ser aprimorado.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo, Centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777745^000000
 Classes que utilizam: ^777777Todas^000000
@@ -26927,7 +26928,7 @@ DEFM + 2.
 Permite o uso da habilidade Grito de Guerra.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777725^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27030,7 +27031,7 @@ INT + 1.
 Chance de usar a habilidade Congelar em nível 1 sempre que receber dano físico.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo, centro e baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777755^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27093,7 +27094,7 @@ Uma boina de coelho criada pela famosa estilista Motoyo Doidage. Basta vesti-la 
 INT +2. Reduz em 3% o intervalo entre conjuração de habilidades.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo, centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^777777100^000000
 Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27179,7 +27180,7 @@ Suas abas largas escondem a direção do seu olhar impedindo que seus inimigos p
 AGI + 2 e Esquiva +3.
 Tipo : ^777777Equipamento para cabeça^000000
 Defesa: ^7777772^000000
-Equipa em : ^777777Topo e meio^000000
+Equipa em : ^777777Topo e Meio^000000
 Peso : ^77777730^000000
 Nível necessário : ^77777770^000000
 Classe : ^777777Todas as classes^000000
@@ -27235,7 +27236,7 @@ Uma tiara coberta de runas brilhantes.
 ^0000ffPequena chance de converter 5% do dano físico causado em SP.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
-Equipa em: ^777777Topo e centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777740^000000
 Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27303,7 +27304,7 @@ Concede DES +1 para Arqueiro e evoluções e Justiceiro.
 Concede HP +80 e SP +30 para Aprendizes e Super Aprendizes.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777780^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27390,7 +27391,7 @@ Se você alguma vez imaginou como seria se tornar uma daquelas esculturas de gel
 Ao receber dano físico, pequena chance de auto-conjurar a habilidade "Lanças de Gelo" em nível 5.^000000
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27525,7 +27526,7 @@ Um grande capuz negro decorado com uma engraçada caveira com uma cicatriz num d
 ^0000ffFOR +3, VIT +2.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Topo e centro^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27613,7 +27614,7 @@ Quer dizer que você andou pilotando protótipos de M.E.C.H.A.s gigantes e enfre
 ^CD3278Precisão +10.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -27796,7 +27797,7 @@ DES +1, AGI +1, DEFM +5.
 Quando a AGI base é superior a 120: ATQ físicos de longo alcance +4%, Vel. de ATQ + 1.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^77777712^000000
-Equipa em: ^777777Topo e Centro ^000000
+Equipa em: ^777777Topo e Meio ^000000
 Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes que utilizam: ^777777Apenas Sentinelas^000000
@@ -27895,7 +27896,7 @@ INT +1, VIT +2, DEFM +5.
 Quando a INT base é superior a 120: ATQM +10, DEF +5.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^77777717^000000
-Equipa em: ^777777Topo e Centro ^000000
+Equipa em: ^777777Topo e Meio ^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Apenas Guardiões Reais^000000
 #
@@ -28197,7 +28198,7 @@ Algumas pessoas cheias de candura costumam ficar ruborizadas em momentos de calm
 Reduz em 3% o dano de monstros da raça Humanoide.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777775^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -28368,7 +28369,7 @@ Marca registrada de Alberto Vesquer, de alguma forma esses óculos escuros viera
 ^0000ffReduz em 2% o dano recebido de monstros da raça Humanoide.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777771^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -28378,7 +28379,7 @@ Quando você viu essas barbatanas na cabeça de um zumbi da Corporação Sombrin
 ^0000ffReduz em 2% o dano recebido de monstros da raça Humanoide.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777771^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -28388,7 +28389,7 @@ Maquiagem especial usada por Shiva Palomar, uma Atiradora de Elite que ajudou Cr
 ^0000ffReduz em 2% o dano recebido de monstros da raça Humanoide.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777771^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -28398,7 +28399,7 @@ Essas orelhas são sinais que você foi infectado pelo vírus mágico Ourobolos 
 ^0000ffReduz em 2% o dano recebido de monstros da raça Humanoide.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777771^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
@@ -43381,7 +43382,7 @@ Chance de conjurar automaticamente a magia "Chuva de Meteoros" Nv. 3 sempre que 
 Chance de conjurar automaticamente a magia "Lanças de Fogo" Nv. 3 sempre que o usuário causar dano físico.
 Não é possível aprimorar esse item.
 Defesa: ^7777778^000000
-Equipa em: ^777777Topo, Centro e Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
@@ -45162,7 +45163,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEF das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEF das raças Bruto e Demônio.^000000
+^0000ffDano físico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano físico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -45186,7 +45187,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEFM das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEFM das raças Bruto e Demônio.^000000
+^0000ffDano mágico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano mágico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -45228,7 +45229,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEF das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEF das raças Bruto e Demônio.^000000
+^0000ffDano físico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano físico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -45252,7 +45253,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEF das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEF das raças Bruto e Demônio.^000000
+^0000ffDano físico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano físico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -45276,7 +45277,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEF das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEF das raças Bruto e Demônio.^000000
+^0000ffDano físico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano físico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -45300,7 +45301,7 @@ A cada 3 refinos:
 Refino +7 ou mais:
 ^0000ffIgnora 30% de DEF das raças Bruto e Demônio.^000000
 Refino +9 ou mais:
-^0000ffIgnora 10% adicional de DEF das raças Bruto e Demônio.^000000
+^0000ffDano físico contra as raças Bruto e Demônio +10%.^000000
 Refino +11 ou mais:
 ^0000ffDano físico contra oponentes das propriedades Vento e Terra +10%.^000000
 ^FF6347Conjunto^000000
@@ -47743,7 +47744,7 @@ Classes: ^777777Todas^000000
 Protetores de orelha em forma de orelhas de elfo.
 Classe: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777770^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
@@ -47782,7 +47783,7 @@ Essas são penas ensangüentadas de um anjo caído, adquiridas do traidor do eve
 Se equipadas com as Asas Ensangüentadas: aumenta em 3% o dano contra monstros da raça Anjo, HP máx. +2% e SP máx. +1%.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário : ^77777760^000000
 Classes que utilizam: ^777777Todas^000000
@@ -47910,7 +47911,7 @@ Velocidade de Ataque + 3%
 Pequena possibilidade de conjurar 'Ganância' se equipado com 'Peixe Fresco'.
 Tipo : ^777777Equipamento para cabeça^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo-Centro^000000
+Equipa em : ^777777Topo e Meio^000000
 Peso : ^77777750^000000
 Nível Necessário : ^77777730^000000
 Classe : ^777777Todas as classes^000000
@@ -48037,12 +48038,12 @@ Devido aos custos do projeto, decidiram que seria mais prático apenas criar má
 Esta foi a 2ª máscara criada, que ficou famosa ao ser usada pela veloz heroína Akusa Leyglan.
 Velocidade de Ataque + 1%.
 -1 de SP a cada 2 segundos.
-Tipo : ^777777Equipamento para cabeça^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Defesa: ^7777773^000000
-Equipa em : ^777777Centro e Baixo^000000
-Peso : ^777777100^000000
-Nível necessário : ^77777710^000000
-Classe : ^777777Todas as classes^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777710^000000
+Classe: ^777777Todas as classes^000000
 #
 18541#
 Um pequeno e levíssimo chapéu com uma adornada pluma em sua lateral.
@@ -48653,12 +48654,12 @@ Classes: ^777777Todas, exceto Aprendizes^000000
 18620#
 Dizem em Amatsu que este tapa-olho foi usado no passado pelo lendário samurai Yago Jupei, que acabou deixando todo seu poder para sua descendente, a garota ninja Jupei-chan.
 Se isso é verdade ou apenas caduquice de um ancião de mais de 300 anos ninguém sabe, mas que você fica muito mais estiloso com ele, não há dúvida nenhuma.
-Tipo : ^777777Equipamento para cabeça^000000
+Tipo: ^777777Equipamento para cabeça^000000
 Defesa: ^7777772^000000
-Equipa em : ^777777Centro^000000
-Peso : ^7777775^000000
-Nível Necessário : ^77777720^000000
-Classes : ^777777Todas as Classes^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777775^000000
+Nível Necessário: ^77777720^000000
+Classes: ^777777Todas as Classes^000000
 #
 18626#
 Um belíssimo sorvete muito saboroso servido cuidadosamente em sua cabeça.
@@ -49593,7 +49594,7 @@ ATQ +15, ATQM +15 adicionais quando o nível de refinamento for +7
 ATQ +15, ATQM +15 adicionais quando o nível de refinamento for +9
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa : ^7777774^000000
-Equipa em : ^777777Topo Meio ^000000
+Equipa em : ^777777Topo e Meio ^000000
 Peso : ^777777240^000000
 Nível Necessário : ^77777799^000000
 Classe : ^777777Segundas classes e evoluções/Mestre Taekwon/Espiritualista/Kagerou/Oboro^000000
@@ -49618,7 +49619,7 @@ Reduz 10% do dano de monstros da raça Morto-Vivo.
 Aumenta 10% do dano causado em monstros da raça Morto-Vivo quando o nível de refinamento for +7.
 Tipo : ^777777Equipamento para Cabeça^000000
 Defesa : ^7777775^000000
-Equipa em : ^777777Topo Meio Baixo ^000000
+Equipa em : ^777777Topo, Meio e Baixo ^000000
 Peso : ^77777730^000000
 Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
@@ -51269,7 +51270,7 @@ Classes: ^777777Todas^000000
 #
 19137#
 De começo, seu sabor é docinho como o mel; no final, tem um azedo bem de leve. Em outras palavras, é um morango que está maduro no ponto. Vai perder a oportunidade de sentir esse sabor dos deuses ao longo das suas aventuras?
-^0000ffReflete 5% dos danos físicos recebidos.^000000
+^0000ffReflete 5% dos danos físicos de curta distância recebidos.^000000
 ^0000ffResistência a danos físicos a distância +5%.^000000
 Nv. base até 99:
 ^0000ffHP máx. +200.^000000
@@ -52146,7 +52147,7 @@ Classes : ^777777Todas as classes^000000
 19509#
 Um lindo acessório ornado com asas brilhantes de borboletas.
 Tipo : ^777777Visual^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso : ^7777770^000000
 Nível necessário : ^7777771^000000
 Classe : ^777777Todas as classes^000000
@@ -52154,7 +52155,7 @@ Classe : ^777777Todas as classes^000000
 19510#
 Você está tão maluco que até seus parafusos estão se soltando.
 Tipo : ^777777Visual^000000
-Equipa em: ^777777Centro^000000
+Equipa em: ^777777Meio^000000
 Peso : ^7777770^000000
 Nível necessário : ^7777771^000000
 Classe : ^777777Todas as classes^000000
@@ -52298,7 +52299,7 @@ Classes: ^777777Todas ^000000
 19540#
 Um protetor de orelhas bem quentinho com um visual fofinho de coelhinhos.
 Tipo : ^777777Visual^000000 Defesa: ^7777770^000000
-Equipa em : ^777777Topo e meio ^000000
+Equipa em : ^777777Topo e Meio ^000000
 Peso : ^7777770^000000
 Nível necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -52423,7 +52424,7 @@ Classe : ^777777Todas^000000
 Um belo elmo ornamentado, usado por valentes heróis do oriente.
 Tipo : ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em : ^777777Topo / Meio^000000
+Equipa em : ^777777Topo e Meio^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -52993,7 +52994,7 @@ Classe : ^777777Todas^000000
 Este capuz sombrio é perfeito para esconder seu rosto, deixando apenas seus malignos olhos vermelhos à mostra. Só tome cuidado quando for fazer suas malvadezas, porque parece que um bando de Pés Grandes com desenhos pintados na barriga pode aparecer atrás de você gritando “4...3...2...1!”
 Tipo: ^777777Visual^000000
 Defesa: ^7777770 ^000000
-Equipa em: ^777777Topo, meio e baixo^000000
+Equipa em: ^777777Topo, Meio e baixo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas ^000000
@@ -53020,7 +53021,7 @@ Classe : ^777777Todas^000000
 Dizem que este chapéu vermelho foi dado de presente para uma jovem aventureira que foi levar doces para sua vovozinha atravessando o Campo de Veins. Ele parece estar carregado de amor materno e você quase consegue ouvir uma voz quando o coloca na cabeça: “Olha que magreza, você precisa comer direito! Tá levando agasalho? Pode fazer frio mais tarde. Não fale com estranhos!”
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo/Meio^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -53038,7 +53039,7 @@ Classes: ^777777Todas^000000
 Um tule translúcido altamente colorido nas cores do arco-íris. Um olhar atento sobre o véu consegue identificar as sete cores presentes em seu tecido: o vermelho, laranja, amarelo, verde, azul, índigo e violeta.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo/Meio^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -53577,6 +53578,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19905#
+Direto das histórias de terror que sua mãe te contava, esse gorro macabro pode ou não ter pertencido ao temível Bicho Papão. Vestindo-o, você vai apavorar muita gente que ainda tem medo de passar pela cozinha com as luzes apagadas à meia-noite.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19910#
 Criado pela pequena bruxa Marilda, o chapéu recebeu um pequeno aprimoramento. Ele possui uma abóbora brilhante que pode servir como lanterna na noite de Halloween.
 Tipo: ^777777Visual^000000
@@ -53646,7 +53656,7 @@ Classes : ^777777Todas^000000
 19920#
 Uma máscara de Sussuro fortificada.
 Tipo : ^777777Visual^000000
-Equipa em : ^777777Topo/Meio/Baixo^000000
+Equipa em : ^777777Topo, Meio e Baixo^000000
 Peso : ^7777770^000000
 Nível Necessário:^7777771^000000
 Classes : ^777777Todas^000000
@@ -53734,7 +53744,7 @@ Classes: ^777777Todas^000000
 Tudo começou quando um mecânico decidiu criar um simpático robozinho... feito de papelão! Batizado de DanbRO, ele se tornou tão adorável que seus fãs fizeram esta máscara em sua homenagem e agora você pode sair por aí fantasiado de DanbRO!
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
-Equipa em: ^777777Topo/Meio/Baixo ^000000
+Equipa em: ^777777Topo, Meio e Baixo ^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -53881,7 +53891,7 @@ Máscara de cavalo com crina azul feita para a chegada de 2014, o Ano do Cavalo.
 Aumenta a Recuperação de HP com o item Cenoura em 1000% (Os efeitos acima durarão até 10/03/2014)^000000
 Tipo : ^777777Visual^000000
 Defesa : ^7777770^000000
-Equipa em : ^777777Topo/Meio/Baixo ^000000
+Equipa em : ^777777Topo, Meio e Baixo ^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -54272,7 +54282,7 @@ Classes : ^777777Todas^000000
 Ao amarrar este lenço como um capuz, nem os fantasmas vão te incomodar enquanto você sai para buscar doces no Halloween!
 Tipo : ^777777Visual^000000
 Defesa : ^7777770^000000
-Equipa em : ^777777Topo, meio e baixo ^000000
+Equipa em : ^777777Topo, Meio e Baixo ^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -54485,7 +54495,7 @@ Aumenta em 2015% a recuperação de HP ao usar o item Leite. ^000000
 ^ff0000Este item não pode ser negociado.^000000
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
-Equipa em: ^777777Topo / Meio / Baixo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas^000000
@@ -54737,7 +54747,7 @@ Classes: ^777777Todas^000000
 20300#
 Esta cabeçona do Vento da Colina pode até assustar um pouco, mas também pode ser divertida para quem gosta de um visual mais... Diferente. Só tome cuidado para não ser confundido com o verdadeiro!
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Baixo, Meio e Topo^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -55176,7 +55186,7 @@ Classes: ^777777Todas^000000
 Esse elmo tem um visual praticamente idêntico ao elmo da Ordem do Protetor. A única diferença é que dentro do elmo há um símbolo alquímico guardando a alma do alquimista Afonso El Rico até que você possa recuperar o seu corpo. E sim, Afonso pode falar com você.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo/Meio^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -59697,7 +59707,7 @@ Classes: ^777777Todas^000000
 Uma sobrepeliz fofinha com capuz com orelhinhas de gato. Feita pela Corporação Pata de Gato para sua fiel clientela. Há quem afirme que o sobrepeliz tem um significado mais profundo, e que representam a inocência de uma raça aliada à Pata de Gato, na qual humanos também possuem orelhas de gato, mas só enquanto estão “sem amor” e não perderam sua... err... seu BV.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo/Meio^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -59798,7 +59808,7 @@ Um chapéu criado por um chapeleiro fantasma de Nifflheim.
 Dizem que sua inspiração para este chapéu foram os pesadelos que as crianças de Rune-Midgard tinham quando seus pais contavam as histórias do bicho-papão.
 Tipo : ^777777Visual^000000
 Defesa : ^7777770^000000
-Equipa em : ^777777Topo e baixo ^000000
+Equipa em : ^777777Topo e Baixo ^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -60518,6 +60528,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31472#
+Um par de asas delicadas cujo tamanho adequa-se perfeitamente às suas orelhas. As flores desse acessório exalam uma fragrância que te acompanhará aonde quer que você vá — mesmo se você for até os mais pútridos esgotos de Glast Heim.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31474#
 Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira preta... Mesmo que isso seja apenas uma peruca! Se você sempre quis se sentir como a lendária guerreira Sailor Arte, habilidosa dominadora do fogo, com essa peruca não tem erro!
 Tipo: ^777777Visual^000000
@@ -60529,7 +60548,7 @@ Classes: ^777777Todas^000000
 31480#
 Um Gioia costuma ser bem agressivo, mas esse é o completo oposto: ele te acompanha aonde quer que você vá enquanto dorme tranquilamente. Só tome cuidado para não acordá-lo dessa soneca gostosa.
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Topo^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
