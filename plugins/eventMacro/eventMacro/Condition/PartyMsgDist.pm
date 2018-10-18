@@ -3,8 +3,6 @@ package eventMacro::Condition::PartyMsgDist;
 use strict;
 use Globals qw( $playersList );
 
-use eventMacro::Data;
-
 use base 'eventMacro::Condition::BaseMsgDist';
 
 sub _hooks {

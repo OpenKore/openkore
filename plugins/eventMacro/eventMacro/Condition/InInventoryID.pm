@@ -4,7 +4,6 @@ use strict;
 
 use base 'eventMacro::Condition::BaseInInventory';
 
-use Globals qw( $char );
 use eventMacro::Utilities qw( getInventoryAmountbyID );
 
 sub _parse_syntax {
