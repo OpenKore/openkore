@@ -2,7 +2,6 @@ package eventMacro::Condition::GuildMsgName;
 
 use strict;
 
-use eventMacro::Data;
 
 use base 'eventMacro::Condition::BaseMsgName';
 
