@@ -2,6 +2,7 @@ package eventMacro::Condition::NpcNear;
 
 use strict;
 use Globals qw( $npcsList $char $field );
+use Utils qw( distance );
 
 use base 'eventMacro::Condition::BaseActorNear';
 
