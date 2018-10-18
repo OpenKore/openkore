@@ -2,6 +2,7 @@ package eventMacro::Condition::MobNear;
 
 use strict;
 use Globals qw( $char $monstersList $field);
+use Utils qw( distance );
 
 use base 'eventMacro::Condition::BaseActorNear';
 

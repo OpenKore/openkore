@@ -2,6 +2,7 @@ package eventMacro::Condition::PlayerNear;
 
 use strict;
 use Globals qw( $playersList $char $field );
+use Utils qw( distance );
 
 use base 'eventMacro::Condition::BaseActorNear';
 
