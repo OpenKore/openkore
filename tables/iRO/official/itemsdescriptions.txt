@@ -5590,9 +5590,30 @@ Matk + 40
 Increases the damage of ^0000FFBanishing Point^000000 and ^0000FFCannon Spear^000000 by 20%.
 Increases the damage of ^0000FFBanishing Point^000000 and ^0000FFCannon Spear^000000 by an additional 3% per 2 upgrade levels of this item.
 ^800080Set Bonus^000000
+^008080Imperial Ring^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
+
+^800080Set Bonus^000000
 ^008080Imperial Guard^000000
 ^008080Imperial Spear^000000
 Increases the damage of ^0000FFGenesis Ray^000000 and ^0000FFGrand Cross^000000 by 10%.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Guard^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Guard^000000
+^008080Imperial Ring^000000
+^008080Imperial Spear^000000
+Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
+Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
+Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
+Reduces the SP cost of ^0000FFShield Press^000000 by 5.
 #
 1434#
 A spear that is made by the Eden Group. It is suitable for those who have more advanced experience handling spears.
@@ -8563,24 +8584,24 @@ Increases SP cost of ^0000FFHeal^000000 by 50.
 Reduces the cooldown time for ^0000FFLauda Agnus^000000, ^0000FFLauda Ramus^000000 and ^0000FFSacrement^000000 by 3 seconds.
 #
 1661#
-^808080A Staff that allows the user's magic to penetrate the enemy's mind.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Two-Handed Staff
-Attack: 100
-Property: Neutral
-Weight: 140
-Weapon Level: 4
-Required Level: 95
-Required Job: Transcendent Mage Jobs
-^FFFFFF_^000000
-INT + 10
-MATK + 50
-MDEF + 20
-Adds a 100% chance to drain 5% SP from the target when performing a physical attack.
-^FFFFFF_^000000
+A Staff that allows the user's magic to penetrate the enemy's mind.
+^FF0000This item is indestructible in battle.^000000
+Class: ^808080Two-Handed Staff^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080140^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080High Wizard Jobs^000000
+Int + 10
+Matk + 50
+Mdef + 20
+
+Adds a 100% chance to drain 5% SP from the target when performing a physical or magical attack.
 If upgrade level is +6 or higher,
-Adds a 100% chance to drain an additional 3% SP from the target when performing a physical attack.
+Adds a 100% chance to drain an additional 3% SP from the target when performing a physical or magical attack.
+
+Increases the SP cost of skills by 100%.
 #
 1664#
 A staff which is covered with thorns, containing strong meanings of sorcery.
@@ -10539,13 +10560,13 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
-This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
-Enables ^0000FFLevel 1 Slaughter^000000.
+Enables ^0000FFLevel 1 Slaughter^000000: Increases physical damage on Demi-Human race targets by (Refine-4) * (Refine-4) to a maximum upgrade level of +14.
 If upgrade level is +9 or higher,
-Reduces the variable casting time of ^0000FFGuillotine Fist^000000 by 100%.
+Reduces the fixed casting time of skills by 50%.
 Adds a 100% chance of casting ^0000FFLevel 1 Zen^000000 on the user when using ^0000FFFury^000000.
+This item is indestructible in battle.
 #
 1830#
 ^808080A knuckle engraved with splendid patterns of a bronze dragon.^000000
@@ -12868,13 +12889,39 @@ Jobs: ^777777Swordman Class^000000
 #
 2153#
 A beautiful shield engraved with the patterns of the Rune Kingdom.
-MDEF + 5.
-20% ATK increase of Shield Press. ATK increased by 2% with every upgrade above level 6.
-Class : ^777777Shield^000000
-Defense : ^777777120^000000
-Weight : ^777777250^000000
-Required Level : ^777777102^000000
-Jobs : ^777777Royal Guard Only^000000
+Class: ^808080Shield^000000
+Defense: ^808080120^000000
+Weight: ^808080250^000000
+Requires Level: ^808080102^000000
+Usable By: ^808080Royal Guard^000000
+Mdef + 5
+Increases the damage of ^0000FFShield Press^000000 by 20%.
+Increases the damage of ^0000FFShield Press^000000 by an additional 2% per upgrade level of the item past the upgrade level of 5.
+^800080Set Bonus^000000
+^008080Imperial Guard^000000
+^008080Imperial Ring^000000
+Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
+
+^800080Set Bonus^000000
+^008080Imperial Guard^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFGenesis Ray^000000 and ^0000FFGrand Cross^000000 by 10%.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Guard^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Guard^000000
+^008080Imperial Ring^000000
+^008080Imperial Spear^000000
+Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
+Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
+Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
+Reduces the SP cost of ^0000FFShield Press^000000 by 5.
 #
 2156#
 An ancient book of sacred songs handed down in the cathedral. It is said to have sold like hotcakes, published as one of a series.
@@ -16780,29 +16827,33 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 2519#
-A manteau made from
-gray crow feathers that were enchanted through
-the power of Morrigane, whose incarnation is
-the gray crow. Luk +2,
-Perfect Dodge +8.
-^ffffff_^000000
-^6A5ACDMorrigane's Set^000000
-^3CB371Morrigane's Helm^000000
-^3CB371Morrigane's Manteau^000000
-^3CB371Morrigane's Pendant^000000
-^3CB371Morrigane's Belt^000000
-Str +2
-Luk +9
-ATK +18
-Critical Attack Rate +13
-Perfect Dodge +13
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense: ^7777779^000000
-Weight : ^77777760^000000
-Required Level : ^77777761^000000
-Jobs: ^777777All except
-Novice Class^000000
+A manteau made from gray crow feathers that were enchanted through the power of Morrigane, whose incarnation is the gray crow.
+Class: ^808080Garment^000000
+Defense: ^8080809^000000
+Weight: ^80808060^000000
+Requires Level: ^80808061^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Luk + 2
+Perfect Dodge + 8
+^800080Set Bonus^000000
+^008080Morrigane's Helm^000000
+^008080Morrigane's Manteau^000000
+^008080Morrigane's Pendant^000000
+^008080Morrigane's Belt^000000
+Str + 2
+Luk + 9
+Atk + 18
+Crit + 13
+Perfect Dodge + 13
+
+^800080Set Bonus^000000
+^008080Abusive Robe^000000
+^008080Morrigane's Manteau^000000
+Luk + 3
+Additional Luk + 1 per upgrade level of ^008080Abusive Robe^000000.
+Crit + 10
+Additional Crit + 1 per upgrade level of ^008080Abusive Robe^000000.
+Bypass 15% of hard defense of Demi-Human, Demon and Undead race targets when performing a physical attack.
 #
 2520#
 Goibne's very first
@@ -20901,57 +20952,67 @@ Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
-Increases EXP gained from defeating monsters by 5%
-Increases damage received from monsters by 5%
-Saehrimnir Gloves
-Gajomart Card
-Increases EXP gained from defeating Plant Race monsters by 5%
-Increases damage received from Plant Race monsters by 10%
+Increases the experience given from all monsters by 5%.
+Increases damage taken from all monsters by 5%.
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Gajomart Card^000000
+Increases the experience given from Plant race monsters by 5%.
+Increases damage taken from Plant race enemies by 10%.
 
-Saehrimnir Gloves
-Gullinbursti Card
-Increases EXP gained from defeating Fish Race monsters by 5%
-Increases damage received from Fish Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Gullinbursti Card^000000
+Increases the experience given from Fish race monsters by 5%.
+Increases damage taken from Fish race enemies by 10%.
 
-Saehrimnir Gloves
-Mini Demon Card
-Increases EXP gained from defeating Brute Race monsters by 5%
-Increases damage received from Brute Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Mini Demon Card^000000
+Increases the experience given from Brute race monsters by 5%.
+Increases damage taken from Brute race enemies by 10%.
 
-Saehrimnir Gloves
-Skeleton General Card
-Increases EXP gained from defeating Insect Race monsters by 5%
-Increases damage received from Insect Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Skeleton General Card^000000
+Increases the experience given from Insect race monsters by 5%.
+Increases damage taken from Insect race enemies by 10%.
 
-Saehrimnir Gloves
-Iron Fist Card
-Increases EXP gained from defeating Formless Race monsters by 5%
-Increases damage received from Formless Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Iron Fist Card^000000
+Increases the experience given from Formless race monsters by 5%.
+Increases damage taken from Formless race enemies by 10%.
 
-Safe Limil Gloves
-Ancient Worm Card
-Increases EXP gained from defeating Demon Race monsters by 5%
-Increases damage received from Demon Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Ancient Worm Card^000000
+Increases the experience given from Demon race monsters by 5%.
+Increases damage taken from Demon race enemies by 10%.
 
-Saehrimnir Gloves
-Explosion Card
-Increases EXP gained from defeating Dragon Race monsters by 5%
-Increases damage received from Dragon Race  monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Explosion Card^000000
+Increases the experience given from Dragon race monsters by 5%.
+Increases damage taken from Dragon race enemies by 10%.
 
-Safelimnir Gloves
-Zombie Prisoner Card
-Increases EXP gained from defeating Undead Race monsters by 5%
-Increases damage received from Undead Race  monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Zombie Prisoner Card^000000
+Increases the experience given from Undead race monsters by 5%.
+Increases damage taken from Undead race enemies by 10%.
 
-Saehrimnir Gloves
-XMAS Cookie Card
-Increases EXP gained from defeating Angel Race monsters by 5%
-Increases damage received from Angel Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Christmas Cookie Card^000000
+Increases the experience given from Angel race monsters by 5%.
+Increases damage taken from Angel race enemies by 10%.
 
-Saehrimnir Gloves
-Am Mut Card
-Increases EXP gained from defeating Demi Human Race monsters by 5%
-Increases damage received from Demi Human Race monsters by 10%
+^800080Set Bonus^000000
+^008080Saehrimnir Gloves [1]^000000
+^008080Am Mut Card^000000
+Increases the experience given from Demi-Human race monsters by 5%.
+Increases damage taken from Demi-Human race enemies by 10%.
 #
 2985#
 A gold ring that has the ability to make its wearer invisible. Shepherd Gyges used this ring to murder his king and take his queen.
@@ -28754,13 +28815,13 @@ Reduces damage taken from Neutral property attacks by 3%.
 ^FFFFFFEnchantment^000000
 #
 4936#
-Increase 1% of damage to Big monsters.
+Increases physical damage on Large size targets by 1%.
 #
 4937#
-Increase 1% of damage to Mid-sized monsters.
+Increases physical damage on Medium size targets by 1%.
 #
 4938#
-Increase 1% of damage to Small monsters.
+Increases physical damage on Small size targets by 1%.
 #
 4939#
 CRI +2
@@ -28799,12 +28860,11 @@ Reduces the global delay of skills by 4%.
 Reduces the global delay of skills by 6%.
 #
 4991#
-Adventurers can feel carefree exploring dangerous lands knowing that Kafra gal Blossom is supporting them back in town.
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
 10% Resistance to fire/wind/water/earth/holy/shadow elements
 2% chance to increase resistance to fire/wind/water/earth/holy/shadow elements by 10% for 10 seconds when receiving magic damage
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
 #
 4992#
 Absorb 1% of damage dealt to enemy into HP with 1% chance.
@@ -36864,42 +36924,49 @@ Reduces the cooldown of ^0000FFMetallic Sound^000000 by 2 seconds.
 #
 5967#
 Most Galapagos do not fly, but this one dreamt of flying so much that its dream came true. Fly, little Galapago, fly!
+^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
 Weight: ^80808050^000000
 Requires Level: ^808080110^000000
+Usable By: ^808080All Jobs^000000
 Agi + 1
-Increases the damage of Blitzbeat by 40% for each level of Steel Crow Known
-Gives a chance of Auto Casting Blitzbeat at the the level known or 1 whichever is higher.
-Flying Galapago
-Falconer Claw
-Decreases Damage of Blitzbeat by 200%
+Adds a chance of casting ^0000FFBlitz Beat^000000 on the target when performing a physical attack.
+Level of this skill will be cast based on the known levels.
+Increases the damage of ^0000FFBlitz Beat^000000 by 40% per level of ^0000FFSteel Crow^000000 known.
+^800080Set Bonus^000000
+^008080Flying Galapago^000000
+^008080Galapago Card^000000
+Increases the recovery rate of ^008080Apple Juice^000000 consumables by 1000%.
+Increases the recovery rate of ^008080Banana Juice^000000 consumables by 1000%.
+Increases the recovery rate of ^008080Carrot Juice^000000 consumables by 1000%.
 
-FlyingGalapago
-Galapago Card
-Increases Healing Effectiveness of Apple Juice by 1000%
-Increases Healing Effectiveness of Banana Juice by 1000%
-Increases Healing Effectiveness of Carrot Juice by 1000%
+^800080Set Bonus^000000
+^008080Flying Galapago^000000
+^008080Gryphon Card^000000
+Aspd + 3%
+Aspd + 1
+Atk - 5%
+If compounded to an upgrade level of +10 or higher bow type weapon, additional Aspd + 1.
 
-Flying Galapago
-Condor Card
-Increases resistance to all elements by 10%
+^800080Set Bonus^000000
+^008080Flying Galapago^000000
+^008080Condor Card^000000
+Reduces damage taken from all property attacks by 10%.
 
-Flying Galapago
-Gryphon Card
-ASPD +3%
-ASPD +1
-Atk -5%
-If currently equipped bow is refined to +10 or higher
-ASPD +1
+^800080Set Bonus^000000
+^008080Flying Galapago^000000
+^008080Cendrawasih Card^000000
+Int + 1
+Crit + 5
+^F4AD42Archer Bonus^000000
+Crit +15
 
-Flying Galapago
-Cendrawasih Card
-Int +1
-Crit Damage +5
-If Archer Base Job
-Crit Damage +15
+^800080Set Bonus^000000
+^008080Flying Galapago^000000
+^008080Falconer Claw^000000
+Reduces the damage of ^0000FFBlitz Beat^000000 by 200%.
 #
 5968#
 A hat worn by a nurse who took care of people who were hurt everyday.
@@ -36951,18 +37018,23 @@ Perfect Dodge + 2
 #
 5975#
 A doll created to celebrate the inauguration event of an old noble family.
+^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
-Weight: ^8080800^000000
-MDef + 5
-Reduces Damage Received from Boss Type Monsters by 10%
-Zherlthsh Doll
-Zherlthsh Egg
-Reduces Damage Received from Boss Type Monsters by 5%
-If pet is friendly or higher
-Reduces Damage Received from Boss Type Monsters by 5%
-Become resistant to Knockback Effects
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Reduces damage taken from boss monsters by 10%.
+^800080Set Bonus^000000
+^008080Zealotus Doll^000000
+^008080Zealotus Cute Pet^000000
+Reduces damage taken from boss monsters by an additional 5%.
+
+If pet is friendly or higher,
+Reduces damage taken from boss monsters by an additional 5%.
+Prevents the user from being knocked back.
 #
 5978#
 It is not known what exactly is contained within this syringe.
@@ -37231,16 +37303,13 @@ Weight : ^7777770^000000
 #
 6080#
 Currency used in Manuk.
-^ffffff_^000000
-Weight : ^7777770^000000
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6081#
 Currency used in the Splendide Outpost.
-^ffffff_^000000
-Weight : ^7777770^000000
-^ff0000Cannot be traded^000000
-Laphine tribe coin that stands for 'Shining brightly'.
-Weight : ^7777770^000000
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6082#
 Perfume made from distilled flowers of Alfheim. It smells cozy and nostalgic.
@@ -38216,9 +38285,9 @@ Weight : ^7777771^000000
 6379#
 #
 6380#
-^ff0000This item cannot be traded between accounts.^000000
 A small coin with a polished surface. It is used for many purposes in the Village of Mora.
-Weight : ^7777770^000000
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6381#
 A tool for digging. Some people seem to use it to make Ramyeon, fry eggs, and scoop up rice.
@@ -38333,24 +38402,29 @@ Use these as currency to exchange for access to memorial dungeons and to exchang
 Weight : ^7777770^000000
 #
 6418#
-Glittering high class coin. Used for enchanting luxurious level 4 weapons.
-Weight : ^7777770^000000
+Glittering high class coin. Used for enchanting weapons in Malangdo.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6419#
-Glittering high class coin. Used for enchanting luxurious level 4 weapons.
-Weight : ^7777770^000000
+Glittering high class coin. Used for enchanting weapons in Malangdo.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6420#
-General normal coin. Used for enchanting middle class weapons.
-Weight : ^7777770^000000
+General normal coin. Used for enchanting weapons in Malangdo.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6421#
-General normal coin. Used for enchanting middle class weapons.
-Weight : ^7777770^000000
+General normal coin. Used for enchanting weapons in Malangdo.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6422#
-Poor low class coin. A high number of these can be used to to enhance weapons.
-Weight : ^7777770^000000
+Poor low class coin. Used for enchanting weapons in Malangdo.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6423#
 Relic of Seagod's anger. Nobody knows about the ability of this weapon.
@@ -39044,9 +39118,9 @@ Take this ticket to the RWC Enchanter so that you can change the enchantment of 
 Weight : ^7777771^000000
 #
 6671#
-^ff0000Cannot be traded to another game account.^000000
 This coin, given to the participants of the Geffen Magic Contest, can be exchanged for prizes.
-Weight : ^7777770^000000
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 6672#
 ^ff0000Cannot be traded to another game account.^000000
@@ -40774,8 +40848,7 @@ Weight : ^7777771^000000
 #
 7144#
 A book that describes how to create potions.
-^ffffff_^000000
-Weight : ^7777771^000000
+Weight: ^8080801^000000
 #
 7145#
 A cotton shirt with the Ragnarok logo printed on it.
@@ -41952,36 +42025,20 @@ etched on the surface.
 Weight : ^7777771^000000
 #
 7356#
-A piece of an ancient
-crest, whose purpose
-is unknown, that has
-many spikes nailed
-on its backside.
-Weight : ^7777771^000000
+A piece of an ancient crest, whose purpose is unknown, that has many spikes nailed on its backside.
+Weight: ^8080801^000000
 #
 7357#
-A piece of an ancient
-crest, whose purpose
-is unknown, that has
-many spikes nailed
-on its backside.
-Weight : ^7777771^000000
+A piece of an ancient crest, whose purpose is unknown, that has many spikes nailed on its backside.
+Weight: ^8080801^000000
 #
 7358#
-A piece of an ancient
-crest, whose purpose
-is unknown, that has
-many spikes nailed
-on its backside.
-Weight : ^7777771^000000
+A piece of an ancient crest, whose purpose is unknown, that has many spikes nailed on its backside.
+Weight: ^8080801^000000
 #
 7359#
-A piece of an ancient
-crest, whose purpose
-is unknown, that has
-many spikes nailed
-on its backside.
-Weight : ^7777771^000000
+A piece of an ancient crest, whose purpose is unknown, that has many spikes nailed on its backside.
+Weight: ^8080801^000000
 #
 7360#
 An invitation which has the word [Come to the RO Festival and have a wonderful action feagure!] written
@@ -43313,16 +43370,9 @@ Race Arena.
 ^ffffff_^000000
 #
 7515#
-A medal crafted from
-a rare and mysterious
-metal that can only
-be found in Hugel.
-These metals cannot
-be traded or given
-to other players.
-^ffffff_^000000
-This item cannot be dropped, traded, mailed or vended.
-^ffffff_^000000
+A medal crafted from a rare and mysterious metal that can only be found in Hugel. Can be exchanged for prizes and experience.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 7516#
 A flat, translucent
@@ -43855,10 +43905,8 @@ Weight: 1
 A first-aid kit. It also comes with a simple, easy-to-follow manual.
 #
 7642#
-^808080A coin estimated to be soiled by an old blood stain. It is difficult to guess the age of the stains.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Weight: 0
+A coin estimated to be soiled by an old blood stain, it is difficult to guess the age of the stains. Can be exchanged for prizes and enchantments in Lutie.
+Weight: ^8080800^000000
 #
 7643#
 ^808080A sheet of old letter crumpled and bloodstained in places. Managed to recognize the writings. "I may have made my masterpiece, not just some doll. When this letter comes to you, all of my work may be complete. I'd like to show my last work, no, my daughter to you."^000000
@@ -47005,32 +47053,24 @@ the drinker the feeling^FFFFFF  ^000000 of lounging on the beach.
 Weight : ^77777710^000000
 #
 12114#
-Temporarily enchant
-the user's weapon with
-the ^FF0000Fire^000000 property.
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Endows the user's weapon with Fire property for 3 minutes.
 #
 12115#
-Temporarily enchant
-the user's weapon with
-the ^6996ADWater^000000 property.
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Endows the user's weapon with Water property for 3 minutes.
 #
 12116#
-Temporarily enchant
-the user's weapon with
-the ^A68064Earth^000000 property.
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Endows the user's weapon with Earth property for 3 minutes.
 #
 12117#
-Temporarily enchant
-the user's weapon with
-the ^7BCC70Wind^000000 property.
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Endows the user's weapon with Wind property for 3 minutes.
 #
 12118#
 A potion that will
@@ -60190,17 +60230,36 @@ Required Level: ^777777160^000000
 Equip To: ^7777773rd Mage Classes^000000
 #
 15095#
-Max HP/SP +5%.
-ATK +10, MATK +10, HIT +10, FLEE +10.
-Dragon Combo, Sky Blow, and Earth Shaker damage +10%.
-Judex and Adoramus damage +10%.
-Magic attacks add a chance of auto-casting Level 1 Lex Aeterna.
-Physical attacks add a chance of auto-casting Level 10 Kyrie Eleison.
-The auto-casting chances increase according to the Upgrade level.
-Class: ^777777Armor^000000 DEF: ^77777777^000000
-Weight: ^77777750^000000
-Required Level: ^777777160^000000
-Equip To: ^7777773rd Acolyte Classes^000000
+Honorable robe given to those who fought Satan Morroc. The robe is enhanced with powers to increase concentration and spirit, occasionally it will release unpredictable attacks.
+Class: ^808080Armor^000000
+Defense: ^80808077^000000
+Weight: ^80808050^000000
+Requires Level: ^808080160^000000
+Usable By: ^808080Arch Bishop, Sura^000000
+Max HP + 5%
+Max SP + 5%
+Atk + 10
+Matk +10
+Hit + 10
+Flee + 10
+
+Increases the damage of ^0000FFDragon Combo^000000 10%.
+Increases the damage of ^0000FFSky Blow^000000 10%.
+Increases the damage of ^0000FFEarth Shaker^000000 10%.
+Increases the damage of ^0000FFJudex^000000 10%.
+Increases the damage of ^0000FFAdoramus^000000 10%.
+Adds a chance of casting ^0000FFLevel 1 Lex Aeterna^000000 on the target when performing a magical attack.
+Adds a chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 on the user when performing a physical attack.
+The chance of casting the skills is increased per upgrade level of ^008080Hero Judgement Shawl [1]^000000.
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Judgement Shawl [1]^000000
+Disables the following effects of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 and ^0000FFLevel 1 Lex Aterna^000000.
+Increases the damage of ^0000FFJudex^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFAdoramus^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFSky Blow^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFDragon Combo^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFEarth Shaker ^000000 by 5% per upgrade level of the armor.
 #
 15096#
 MDEF +5.
@@ -60244,7 +60303,7 @@ Increases long-ranged damage on targets by 3%.
 
 Adds a chance of casting ^0000FFLevel 10 Improve Concentration^000000 on the user when performing a physical attack.
 Adds a chance of casting ^0000FFLevel 10 Double Strafe^000000 on the target when performing a long-ranged attack.
-The chance of casting the skills is increased per upgrade level of ^008080 Hero Target Suit^000000.
+The chance of casting the skills is increased per upgrade level of the armor.
 #
 15100#
 A frozen breastplate that creates a cold steam.
@@ -60346,7 +60405,7 @@ Weight: ^808080200^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Mechanic^000000
 Atk + 5%
-Additional Atk + 1% per upgrade level of the item.
+Additional Atk + 1% per 4 upgrade levels of the item.
 
 ^800080Set Bonus^000000
 ^008080Supplement Part Agi [1]^000000
@@ -61288,31 +61347,33 @@ Additional Atk + 30
 Bypass an additional 20% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
 15384#
+An angel's raiment where the power of holy prayers once dwelt. It is worn during ritual ceremonies, etc.
 Class: ^808080Armor^000000
 Defense: ^8080800^000000
 Weight: ^80808040^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Reduces the cooldown of skills by 10%
-Max HP +5%
+Max HP + 5%
+Reduces the global delay of skills by 10%.
 Increases the recovery rate of recovery skills by 5%.
 
-If refined to +7
-Max HP +5%
+If upgrade level is +7 or higher,
+Additional Max HP + 5%.
 Increases the recovery rate of recovery skills by an additional 5%.
 
-If refined to +8
-Max HP +5%
+If upgrade level is +8 or higher,
+Additional Max HP + 5%.
 Increases the recovery rate of recovery skills by an additional 10%.
-SP Consumption Reduced by 10
-Immune to Sleep
+Reduces the SP cost of skills by 10%.
+Immune to ^800000Sleep^000000.
 
-If refined to +9
-Max HP +5%
+If upgrade level is +9 or higher,
+Additional Max HP + 5%.
 Increases the recovery rate of recovery skills by an additional 10%.
-
-If equipped with a Bathory Card
-Immune to Freeze
+^800080Set Bonus^000000
+^008080Ritual Robe^000000
+^008080Bathory Card^000000
+Immune to ^800000Freeze^000000.
 #
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
@@ -66016,6 +66077,20 @@ Luminous Blue Stone
 17387#
 #
 17388#
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+When opened gives one of the following
+Kafra Blossom Card
+Arquien's Necklace
+Mob Scarf
+Pegasus Ear Wings
+Witch Pumpkin Hat
+CD In Mouth
+Enforcer Cape
+Kirin Wing
+Black Devil Mask [1]
+Bloody Dead Branch 5-8cnt
+HE Bubble Gum 6-9cnt
 #
 17389#
 ^FF0000Account Bound^000000
@@ -69823,32 +69898,60 @@ Jobs : ^777777All jobs ^000000
 #
 18656#
 A tattered witch hat adorned with a baby pumpkin.
-Str +2, Int +2, Mdef +10.
-Increase Damage against Undead and Demon monsters by 15%.
-Bonus effects when worn with Mr. Smile, Hahoe Mask, Alarm Mask, Opera Mask or Gozarian Mask.
-^0000ffMr. Smile^000000: Adds a chance of gaining Pumpkin Pies when killing monsters.
-^0000ffHahoe Mask^000000: Increased Aspd and adds a chance of adding 50 Atk while attacking.
-^0000ffAlarm Mask^000000: Increases the healing power of Pumpkin and Well-Baked Cookies and has a chance of receiving those items while attacking.
-^0000ffOpera Mask^000000: Increases Flee by 10 and adds a chance of stunning your enemy while attacking.
-^0000ffGozarian Mask^000000: Atk and Matk +30 and adds a chance of gaining Pumpkin Pie, Well-Baked Cookie, Candy or Candy Canes while attacking.
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777720^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
+Str +2
+Int +2
+Mdef +10
+Increases physical and magical damage on Demon and Undead race targets by 15%.
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Mr. Smile^000000
+Adds a chance of gaining ^008080Pumpkin Pie^000000 when a monster is killed.
+
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Hahoe Mask^000000
+Aspd + 10%
+Adds a chance of buffing the user for 5 seconds when performing a physical or magical attack; Atk + 50.
+
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Alarm Mask^000000
+Increases the recovery rate of ^008080Pumpkin^000000 consumables by 2000%.
+Increases the recovery rate of ^008080Well-Baked Cookies^000000 consumables by 200%.
+Adds a chance of gaining ^008080Pumpkin Pie^000000 or ^008080Well-Baked Cookies^000000 when a monster is killed.
+
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Opera Mask^000000
+Flee + 10
+Adds a chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Gozarian Mask^000000
+Atk + 30
+Matk + 30
+Adds a chance of gaining ^008080Pumpkin Pie^000000, ^008080Well-Baked Cookies^000000, ^008080Candy^000000, or ^008080Candy Candes^000000 when a monster is killed.
 #
 18657#
 An accessory made with Valkyrie's wing feathers. Makes your body a little bit lighter.
-ASPD + 1%.
-+ 2% ASPD for Base Lv 100 characters.
-+ 3% ASPD for Base Lv 150 characters.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location: ^777777Mid ^000000
-Weight : ^77777750^000000
-Required Level : ^77777780^000000
-Jobs : ^777777All^000000
+
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Attack: ^8080800^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+ASPD + 1%
++ 2% ASPD for Base Lv 100 characters
++ 3% ASPD for Base Lv 150 characters
 #
 18658#
 The beard which asdignity of the holy Santa.
@@ -71227,11 +71330,18 @@ Aspd + 1, if the users base Agi is 108 or higher.
 Reduces damage taken from Wind property attacks by 5%.
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Glove^000000
-Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
-Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
-Increases the damage of ^0000FFCannon Spear^000000 by 30%.
-Increases the damage of ^0000FFOverbrand^000000 by 20%.
+^008080Imperial Guard^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Ring^000000
+Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
+Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
+Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
+Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
+
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Guard^000000
@@ -71241,17 +71351,7 @@ Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
 Reduces the SP cost of ^0000FFShield Press^000000 by 5.
-^800080Set Bonus^000000
-^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
-Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
-^008080Imperial Feather^000000
-^008080Imperial Ring^000000
-Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
-Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
-Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
-Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
+
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Royal Guard Necklace^000000
@@ -71265,6 +71365,14 @@ Reduces damage taken from Demi-Human race enemies by 2%.
 Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Agi is 108 or higher.
 Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Agi is 120 or higher.
 Immune to ^800000Blind^000000 and ^800000Silence^000000.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Glove^000000
+Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
+Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
+Increases the damage of ^0000FFCannon Spear^000000 by 30%.
+Increases the damage of ^0000FFOverbrand^000000 by 20%.
 #
 18824#
 Recovery a certain amount of HP and SP with a certain chance when attacking physically or magically.
@@ -72365,25 +72473,26 @@ Job : ^777777All^000000
 #
 18959#
 Nobody knows why it's old and pink. You put it on your head anyway.
+^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^808080120^000000
-Reduces damage received from players by 13%
-Old Pink Poo Hat
-Steel Chonchon Card
-Immunity to Freeze
-Gives a small chance to case Wide Freeze when attacked by magic or melee sources
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from players by 13%.
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat^000000
+^008080Steel Chonchon Card^000000
+Immune to ^800000Freeze^000000.
+Adds a chance of casting ^0000FFWide Area Freeze^000000 when receiving a physical or magical attack.
 
-Old Pink Poo Hat
-Sandals[1]
-Chonchon Card
-MaxHP + 4%
-MaxHP + 2% for each refine level of Sandals[1]
-MaxSP + 4%
-MaxSP + 2% for each refine level of Sandals[1]
-
-
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat^000000
+^008080Sandals[1]^000000
+^008080Chonchon Card^000000
+Max HP + 4%, Max SP + 4%.
+Additional Max HP + 2%, Max SP + 2% per upgrade level of ^008080Sandals[1]^000000.
 #
 18961#
 A hat made after fluffy monster Lunatic.
@@ -73221,15 +73330,39 @@ Jobs: ^777777Acolyte Class^000000
 #
 19026#
 Egir, the God of Sea's Helm. When all set item is combined, it arouses power of Sea.
-VIT + 3.
-MaxHP increases by 1000 and MaxSP by 100, when equipping Egir Helm, Egir Armor, Egir Cloak and Egir Shoes all together.
-EXP+20% when defeating Fish-type enemy.
-PhyATK, MagATK increases by  50% when attacking Fish-type enemy.
-Resistance against Water-type ATK increases by 50%
-Class : ^777777Helm^000000 Def : ^77777710^000000
-Location : ^777777Upper ^000000Weight : ^77777780^000000
-Required LvL : ^77777740^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Defense: ^80808010^000000
+Weight: ^80808080^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Vit + 3
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Armour [1]^000000
+Reduces damage taken from Fish race enemies by 10%.
+Reduces damage taken from Fish race enemies by an additional 1% per upgrade level of ^008080Egir Armour [1]^000000.
+
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+Restores 10 SP to the user when a Fish race monster is killed by a physical attack.
+
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Shoes [1]^000000
+Crit + 10 on Fish race targets.
+
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+^008080Egir Armour [1]^000000
+^008080Egir Shoes [1]^000000
+Max HP + 1000
+Max SP + 100
+Increases the experience given from Fish race monsters by 20%.
+Increases physical and magical damage on Fish race targets by 50%.
+Reduces damage taken from water property attacks by 50%.
 #
 19027#
 A box that contains:
@@ -73590,13 +73723,16 @@ LUK + 1
 Adds a chance of casting ^0000FFLevel 3 Blessing^000000 on the user when performing a physical or magical attack.
 #
 19095#
-^FF0000Cute Porings decorate these festive balloons!^000000
+Cute Porings decorate these festive balloons!
+^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
 Weight: ^8080801^000000
-EXP +5%
-Item Drop +10%
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 5%.
+Increases the drop rate of items by 10%.
 #
 19101#
 ^808080A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.^000000
@@ -74051,21 +74187,24 @@ Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fi
 #
 19163#
 Headgear modeled after the famed succubus. It's quite charming!
+^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^80808030^000000
-Restores 500 HP when a monster is killed
-Restores 50 SP when a monster is killed
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Restores 500 HP and 50 SP to the user when a monster is killed.
+Drains 5000 HP and 500 SP from the user when the item is unequipped.
+^800080Set Bonus^000000
+^008080Catherina Von Blood [1]^000000
+^008080Succubus Cute Pet^000000
+Restores 500 HP to the user every 5 seconds.
+Restores 20 SP to the user every 5 seconds.
 
-When unequipped lose 5000 hp 500 sp
-Catherina Von Blood
-Succubus Egg
-Increases HP Recovery + 500
-Increases SP Recovery + 20
-If pet is Cordial
-Increases HP Recovery + 500 further
-Increases SP Recovery + 20 further
+If pet is Cordial,
+Restores additional 500 HP to the user every 5 seconds.
+Restores additional 20 SP to the user every 5 seconds.
 #
 19171#
 A knit hat worn by a great magician. It contains fibers that has an absolute effect on the undead.
@@ -74733,7 +74872,7 @@ Max SP + 10%
 Reduces damage taken from enemy players by 5%.
 Immune to ^800000Blind^000000.
 If ^0000FFHallucination Drug^000000 is level 5, enables ^0000FFLevel 5 Dispel^000000.
-If ^0000FFMandragora Howl^000000 is level 5, reduces the fixed casting time of ^0000FFMandragora Howl^000000 by 70%.
+^d3d3d3If Mandragora Howl is level 5, reduces the fixed casting time of Mandragora Howl by 70%.^000000
 #
 19392#
 Large toasted bread garnished with huge amounts of meat, cheese, and vegetables. It's so big, no one has ever finished it.
@@ -74929,6 +75068,7 @@ Mdef + 15.
 Vit + 10.
 
 Increases the skill damage bonus of ^0000FFAxe Tornado^000000 by 20%.
+^d3d3d3Reduces casting time of Greed by 100%.^000000
 If ^0000FFFAW Magic Decoy^000000 is level 5, increases physical damage against boss monsters by 50%.
 If ^0000FFAxe Boomerang^000000 is level 5, Atk + 100.
 If ^0000FFLava Flow^000000 is level 5, adds a chance of gaining ^0080803carat Diamond^000000 when a monster is killed.
@@ -84739,15 +84879,22 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24034#
-LUK + 1.
-When refined to +7, LUK + 1.
-When refined to +9, LUK + 1.
-When equipped with ^32CD32Lucky Shadow Armor000000, LUK + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance luck.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 1
+Atk + 1 per upgrade level of the item.
+Matk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Additional Luk + 1
+If upgrade level is +9 or higher,
+Additional Luk + 1
+^800080Set Bonus^000000
+^008080Lucky Shadow Armor^000000
+^008080Lucky Shadow Weapon^000000
+Luk + 1
 #
 24035#
 An earring worn to enhance strength.
@@ -84877,14 +85024,19 @@ Matk + 1 per upgrade level of the item.
 Int + 1
 #
 24043#
-DEX + 1.
-Increase HIT + 1  per 1 refine Level.
-When equipped with ^32CD32Dexterous Shadow Armor^000000, DEX + 1.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance dexterity.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Dex + 1
+Atk + 1 per upgrade level of the item.
+Matk + 1 per upgrade level of the item.
+Hit + 1 per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Dexterous Shadow Armor^000000
+^008080Dexterous Shadow Weapon^000000
+Dex + 1
 #
 24044#
 A shield worn to enhance vitality.
@@ -87195,6 +87347,24 @@ Int + 1
 Max HP + 3%
 Max SP + 3%
 ^800080Set Bonus^000000
+^008080Imperial Guard^000000
+^008080Imperial Ring^000000
+Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
+
+^800080Set Bonus^000000
+^008080Imperial Ring^000000
+^008080Imperial Spear^000000
+Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Imperial Ring^000000
+Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
+Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
+Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
+Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
+
+^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Guard^000000
 ^008080Imperial Ring^000000
@@ -87203,21 +87373,6 @@ Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
 Reduces the SP cost of ^0000FFShield Press^000000 by 5.
-^800080Set Bonus^000000
-^008080Imperial Feather^000000
-^008080Imperial Ring^000000
-Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
-Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
-Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
-Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
-^800080Set Bonus^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
-Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
-^800080Set Bonus^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
-Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
 #
 28374#
 ^808080A small and cute foxtail-shaped ring. But you can feel a great power emanating from inside it.^000000
@@ -88360,7 +88515,7 @@ Increases the damage of ^0000FFCannon Spear^000000 by 20%.
 Increases the damage of ^0000FFOverbrand^000000 by 20%.
 #
 28560#
-By converting the force of yin and yang into magic power and accumulate, it can release stronger magic power
+By converting the force of yin and yang into magic power and accumulate, it can release stronger magic power.
 
 Class: ^808080Accessory^000000
 Weight: ^80808020^000000
@@ -88369,27 +88524,41 @@ Usable By: ^808080All Jobs^000000
 Matk + 5%
 Hit + 20
 Aspd + 5%
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Magic Sword [2]^000000
+Increases the damage of ^0000FFCrimson Rock^000000 by 2% per upgrade level of the weapon.
 
-when worn with sealed Magic Sword
-Increases damage of crimson rock by 2*Weapon Refine %
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Magic Sword [2]^000000
+^008080Ultralight Magic Shield [1]^000000
+Additional Hit + 5 per upgrade level of the weapon.
+Additional Aspd + 4% per upgrade level of the weapon.
 
-when worn with sealed evil Sword
-Increases damage of Hell Inferno by 20*Weapon Refine %
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Evil Sword [2]^000000
+Increases the damage of ^0000FFHell Inferno^000000 by 20% per upgrade level of the weapon.
 
-when worn with sealed Max Sword
-Increases damage of Judex by 20*Weapon Refine %
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Evil Sword [2]^000000
+^008080Ultralight Magic Shield [1]^000000
+Additional Hit + 5 per upgrade level of the weapon.
+Additional Aspd + 4% per upgrade level of the weapon.
 
-when worn with sealed Magic Sword and Ultra Light Magic Shield
-Ht +5 per weapon refine
-aspd +5% per weapon refine
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Maximum Sword [2]^000000
+Increases the damage of ^0000FFJudex^000000 by 10% per upgrade level of the weapon.
 
-when worn with sealed evil Sword and Ultra Light Magic Shield
-Ht +5 per weapon refine
-aspd +5% per weapon refine
-
-when worn with sealed max Sword and Ultra Light Magic Shield
-Ht +5 per weapon refine
-aspd +5% per weapon refine
+^800080Set Bonus^000000
+^008080Yin Yang Talisman [1]^000000
+^008080Sealed Maximum Sword [2]^000000
+^008080Ultralight Magic Shield [1]^000000
+Additional Hit + 5 per upgrade level of the weapon.
+Additional Aspd + 4% per upgrade level of the weapon.
 #
 28564#
 Crystallized teardrops of a Valkyrie who mourned for the death of a comrade. The drop possesses divine powers.
@@ -89870,16 +90039,15 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31091#
-^808080Thoughts of zeny cloud the mind.^000000
-Adds the chance of gaining a certain amount of Zeny each time a monster is killed.
-Created to celebrate the launch of Ragnarok Clicker! http://goo.gl/gmmiZI
-^FF0000Account Bound^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 1
-Required Level: 1
-Required Job: All Jobs
+Thoughts of zeny cloud the mind. Created to celebrate the launch of Ragnarok Clicker!
+
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Adds a 1% chance of gaining 1 to 500 zeny when a monster is killed.
 #
 31092#
 Gothic style bunny hat.
@@ -91333,39 +91501,45 @@ Reduces damage taken from Demi-Human race enemies by 3%.
 Reduces damage taken from Fire, Water, Wind and Earth property attacks by 5%.
 #
 32222#
+A brooch given to those who defeated Satan Morroc.
 Class: ^808080Accessory^000000
 Weight: ^80808040^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Atk +5%
-mAtk +5%
+Atk + 5%
+Matk + 5%
 
-If equipped by a Rune Knight or Royal Guard
-Max HP +10%
-Increases Atk damage on All race targets by 5%.
+^F4AD42Rune Knight Bonus^000000 & ^F4AD42Royal Guard Bonus^000000
+Max HP + 10%
+Increases physical damage on all race targets by 5%.
 
-If equipped by an Archbishop or Sura
+^F4AD42Archbishop Bonus^000000 & ^F4AD42Sura Bonus^000000
 Aspd + 10%
-Increases Atk damage on All race targets by 5%.
+Increases physical damage on all race targets by 5%.
 
-If equipped by a Mechanic or Geneticist
-Reduces the SP cost of skills by 10.
-Increases Atk damage on All race targets by 5%.
+^F4AD42Mechanic Bonus^000000 & ^F4AD42Geneticist Bonus^000000
+Reduces the SP cost of skills by 10%.
+Increases physical damage on all race targets by 5%.
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Judgement Shawl [1]^000000
+Disables the following effects of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 and ^0000FFLevel 1 Lex Aterna^000000.
+Increases the damage of ^0000FFJudex^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFAdoramus^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFSky Blow^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFDragon Combo^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFEarth Shaker ^000000 by 5% per upgrade level of the armor.
 
-Brooch of Hero + Hero's Judgement Shawl
-Disabled auto casting of Kyrie and Lex Aterna
-Increases the damage of Judex by 5% per refine level of Armor
-Increases the damage of Adoramus by 5% per refine level of Armor
-Increases the damage of Skynetblow by 5% per refine level of Armor
-Increases the damage of Dragoncombo by 5% per refine level of Armor
-Increases the damage of Earthshaker by 5% per refine level of Armor
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Trade Mail [1]^000000
+All Stats + 2 per upgrade level of the armor.
+Adds an additional chance of inflicting ^800000Stun^000000, ^800000Silence^000000, ^800000Curse^000000, and ^800000Poison^000000 per upgrade level of the armor on the target when performing a physical attack.
 
-Brooch of Hero + Hero Trade Mail
-All Stats +2 per refine level of Armor
-Grants .7% + (2.6 * refine level of Armor)% to inflict Stun, Silence, Curse, and Poison effects on melee attack.
-
-Brooch of Hero + Hero Plate
-Disable auto casting of Heal and Stormgust
-Increases the damage of Storm Blast by 5% per refine level of Armor
-Increases the damage of Vanishing Point by 5% per refine level of Armor
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Plate [1]^000000
+Disables the following effects of ^008080Hero Plate [1]^000000, chance of casting ^0000FFLevel 10 Heal^000000 and ^0000FFLevel 10 Storm Gust^000000.
+Increases the damage of ^0000FFStorm Blast^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFVanishing Point^000000 by 5% per upgrade level of the armor.
 #
