@@ -16,9 +16,9 @@ use strict;
 use base qw(Network::Send::kRO::RagexeRE_2015_10_29a);
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
+use Globals qw($char $rodexWrite);
 use Log qw(message warning error debug);
-use I18N qw(bytesToString stringToBytes);
+use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
