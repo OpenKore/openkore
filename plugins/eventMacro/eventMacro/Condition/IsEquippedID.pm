@@ -1,12 +1,12 @@
 package eventMacro::Condition::IsEquippedID;
 
 use strict;
-use Globals;
-use Utils;
+
+use Globals qw( %equipSlot_rlut $char %equipSlot_lut );
 
 use base 'eventMacro::Condition';
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+
+use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
 	['packet_mapChange','equipped_item','unequipped_item','inventory_ready'];

@@ -13,7 +13,6 @@ package Network::Send::kRO::RagexeRE_2015_11_25d;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2015_11_18a);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
@@ -26,7 +25,7 @@ sub new {
 		'0920' => ['actor_name_request', 'a4', [qw(ID)]],
 		'08AD' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0863' => ['buy_bulk_closeShop'],			
-		'0802' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0802' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0939' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0365' => ['character_move', 'a3', [qw(coordString)]],
 		'0899' => ['friend_request', 'a*', [qw(username)]],# len 26
@@ -42,6 +41,9 @@ sub new {
 		'0366' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0884' => ['storage_password'],
 		'088C' => ['sync', 'V', [qw(time)]],		
+		'089F' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0361' => ['search_store_request_next_page'],
+		'093E' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -69,9 +71,12 @@ sub new {
 		storage_item_remove 0366
 		storage_password 0884
 		sync 088C
+		search_store_info 089F
+		search_store_request_next_page 0361
+		search_store_select 093E
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #elif PACKETVER == 20151125 // 2015-11-25dRagexeRE

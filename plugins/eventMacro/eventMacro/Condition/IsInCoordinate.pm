@@ -1,12 +1,11 @@
 package eventMacro::Condition::IsInCoordinate;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $char $field );
+
+use base 'eventMacro::Condition';
 
 #Use: x1 y1, x2 y2, x3min..x3max y3, x4 y4min..y4max, x5min..x5max y5min..y5max
-
-use base 'eventMacro::Conditiontypes::MultipleValidatorState';
 
 sub _hooks {
 	['packet/actor_movement_interrupted','packet/high_jump','packet/character_moves','packet_mapChange','packet/map_property3'];
@@ -15,41 +14,103 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{validators_index} = {};
-	$self->{member_index_to_validator_indexes} = [];
 	$self->{is_on_stand_by} = 0;
+	
 	$self->{fulfilled_coordinate} = undef;
 	$self->{fulfilled_member_index} = undef;
 	
-	my $counter = 0;
-	my @members = split(/\s*,\s*/, $condition_code);
-	my @coordinates_array;
-	foreach my $member (@members) {
+	$self->{var_to_member_index_coord_x} = {};
+	$self->{var_to_member_index_coord_y} = {};
+	
+	$self->{x_validators} = [];
+	$self->{y_validators} = [];
+	
+	my $var_exists_hash = {};
+	
+	my $member_index = 0;
+	foreach my $member (split(/\s*,\s*/, $condition_code)) {
 		my ($coord_x, $coord_y) = split(/\s+/, $member);
 		
 		unless (defined $coord_x && defined $coord_y) {
-			$self->{error} = "List member '".$member."' must have a slot and an ID defined";
+			$self->{error} = "List member '".$member."' must have a x and a y coordinate defined";
 			return 0;
 		}
 		
-		push(@coordinates_array, $coord_x);
-		push(@coordinates_array, $coord_y);
+		my $x_validator = eventMacro::Validator::NumericComparison->new( $coord_x );
 		
-		push(@{$self->{member_index_to_validator_indexes}}, {x => ($counter*2), y => (($counter*2)+1), index => $counter});
+		if (defined $x_validator->error) {
+			$self->{error} = $x_validator->error;
+			return 0;
+		} else {
+			my @vars = @{$x_validator->variables};
+			foreach my $var (@vars) {
+				push ( @{ $self->{var_to_member_index_coord_x}{$var->{display_name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
+			}
+		}
+		
+		my $y_validator = eventMacro::Validator::NumericComparison->new( $coord_y );
+		
+		if (defined $y_validator->error) {
+			$self->{error} = $y_validator->error;
+			return 0;
+		} else {
+			my @vars = @{$y_validator->variables};
+			foreach my $var (@vars) {
+				push ( @{ $self->{var_to_member_index_coord_y}{$var->{display_name}} }, $member_index );
+				push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{display_name}});
+				$var_exists_hash->{$var->{display_name}} = undef;
+			}
+		}
+		
+		push ( @{ $self->{x_validators} }, $x_validator );
+		push ( @{ $self->{y_validators} }, $y_validator );
+		
 	} continue {
-		$counter++;
+		$member_index++;
 	}
 	
-	my $remade_condition_code = join(' ', @coordinates_array);
+	return 1;
+}
+
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
 	
-	$self->{number_of_validators} = @coordinates_array;
+	my %members_index_changed;
 	
-	my $counter;
-	for ($counter = 0; $counter < $self->{number_of_validators}; $counter++) {
-		$self->{validators_index}{$counter} = 'eventMacro::Validator::NumericComparison';
+	foreach my $member_index (@{$self->{var_to_member_index_coord_x}{$var_name}}) {
+		@{$self->{x_validators}}[$member_index]->update_vars($var_name, $var_value);
+		$members_index_changed{$member_index} = undef;
 	}
 	
-	$self->SUPER::_parse_syntax($remade_condition_code);
+	foreach my $member_index (@{$self->{var_to_member_index_coord_y}{$var_name}}) {
+		@{$self->{y_validators}}[$member_index]->update_vars($var_name, $var_value);
+		$members_index_changed{$member_index} = undef;
+	}
+	
+	my $changed_fulfilled_index = 0;
+	if (defined $self->{fulfilled_member_index}) {
+		foreach my $changed_index (keys %members_index_changed) {
+			if ($changed_index == $self->{fulfilled_member_index}) {
+				$changed_fulfilled_index = 1;
+			}
+		}
+	}
+	
+	if (!defined $self->{fulfilled_member_index} || $changed_fulfilled_index) {
+		$self->check_location;
+	}
+}
+
+sub validator_x_check {
+	my ( $self, $validator_index, $check ) = @_;
+	return @{$self->{x_validators}}[$validator_index]->validate($check);
+}
+
+sub validator_y_check {
+	my ( $self, $validator_index, $check ) = @_;
+	return @{$self->{y_validators}}[$validator_index]->validate($check);
 }
 
 sub validate_condition {
@@ -58,14 +119,14 @@ sub validate_condition {
 	if ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 		
-		$self->check_location;
-		
 	} elsif ($callback_type eq 'hook') {
 		
 		if ($callback_name eq 'packet/character_moves' || ($callback_name eq 'packet/actor_movement_interrupted' && Actor::get($args->{ID})->isa('Actor::You')) || ($callback_name eq 'packet/high_jump' && Actor::get($args->{ID})->isa('Actor::You'))) {
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_coordinate} &&
-			                                            $self->validator_check( @{$self->{member_index_to_validator_indexes}}[$self->{fulfilled_member_index}]->{x}, $char->{pos_to}{x} ) &&
-														$self->validator_check( @{$self->{member_index_to_validator_indexes}}[$self->{fulfilled_member_index}]->{y}, $char->{pos_to}{y} ));
+			return $self->SUPER::validate_condition if (
+				defined $self->{fulfilled_coordinate} &&
+			    $self->validator_x_check( $self->{fulfilled_member_index}, $char->{pos_to}{x} ) &&
+				$self->validator_y_check( $self->{fulfilled_member_index}, $char->{pos_to}{y} )
+			);
 			$self->check_location;
 			
 		} elsif ($callback_name eq 'packet_mapChange') {
@@ -92,10 +153,12 @@ sub check_location {
 	my $counter;
 	$self->{fulfilled_coordinate} = undef;
 	$self->{fulfilled_member_index} = undef;
-	foreach my $member (@{$self->{member_index_to_validator_indexes}}) {
-		next unless ( $self->validator_check( $member->{x}, $char->{pos_to}{x} ) && $self->validator_check( $member->{y}, $char->{pos_to}{y} ) );
+	
+	foreach my $validator_index	(0..$#{$self->{x_validators}}) {
+		next unless ( $self->validator_x_check( $validator_index, $char->{pos_to}{x} ) );
+		next unless ( $self->validator_y_check( $validator_index, $char->{pos_to}{y} ) );
 		$self->{fulfilled_coordinate} = sprintf("%d %d %s", $char->{pos_to}{x}, $char->{pos_to}{y}, $field->baseName);
-		$self->{fulfilled_member_index} = $member->{index};
+		$self->{fulfilled_member_index} = $validator_index;
 		last;
 	}
 }

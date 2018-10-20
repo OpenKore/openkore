@@ -20,19 +20,9 @@ package Network::Send::kRO::Sakexe_2006_03_13a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2006_03_06a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-sub sendMailReturn {
-	my ($self, $mailID, $sender) = @_;
-	my $msg = pack('v V Z24', 0x0273, $mailID, stringToBytes($sender));
-	$self->sendToServer($msg);
-	debug "Sent return mail.\n", "sendPacket", 2;
 }
 
 =pod

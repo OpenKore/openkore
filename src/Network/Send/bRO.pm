@@ -40,37 +40,6 @@ sub new {
 	return $self;
 }
 
-sub sendTop10 {
-	my ($self, $type) = @_;
-	my $type_msg;
-	
-	$self->sendToServer(pack("v2", 0x097C, $type));
-	
-	if ($type == 0x0) { $type_msg = T("Blacksmith"); }
-	elsif ($type == 0x1) { $type_msg = T("Alchemist"); }
-	elsif ($type == 0x2) { $type_msg = T("Taekwon"); }
-	elsif ($type == 0x3) { $type_msg = T("PK"); }
-	else { $type_msg = T("Unknown"); }
-	
-	debug TF("Sent Top 10 %s request\n", $type_msg), "sendPacket", 2;
-}
-
-sub sendTop10Blacksmith {
-	sendTop10(shift, 0x0);
-}
-
-sub sendTop10Alchemist {
-	sendTop10(shift, 0x1);
-}
-
-sub sendTop10Taekwon {
-	sendTop10(shift, 0x2);
-}
-
-sub sendTop10PK {
-	sendTop10(shift, 0x3);
-}
-
 sub reconstruct_char_delete2_accept {
 	my ($self, $args) = @_;
 

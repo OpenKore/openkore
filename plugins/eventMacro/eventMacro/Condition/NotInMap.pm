@@ -3,10 +3,9 @@ package eventMacro::Condition::NotInMap;
 use strict;
 
 use base 'eventMacro::Condition';
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Utilities qw( find_variable );
 
-use Globals;
+use Globals qw( $field );
 
 sub _hooks {
 	['packet_mapChange'];

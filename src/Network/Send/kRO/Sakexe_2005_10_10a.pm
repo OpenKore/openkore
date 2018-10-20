@@ -20,19 +20,9 @@ package Network::Send::kRO::Sakexe_2005_10_10a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_09_12b);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-# 0x025b,6,cooking,0
-sub sendCooking {
-	my ($self, $type, $nameID) = @_;
-	my $msg = pack('v3', 0x025B, $type, $nameID);
-	$self->sendToServer($msg);
-	debug "Sent Cooking.\n", "sendPacket", 2;
 }
 
 =pod

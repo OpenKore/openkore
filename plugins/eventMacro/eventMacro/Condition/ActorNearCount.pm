@@ -1,12 +1,8 @@
 package eventMacro::Condition::ActorNearCount;
 
 use strict;
-use Globals;
-use Utils;
 
 use base 'eventMacro::Conditiontypes::NumericConditionState';
-
-use Globals;
 
 #'packet/map_property3' has to exchanged
 sub _hooks {

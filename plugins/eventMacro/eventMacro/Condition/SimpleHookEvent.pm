@@ -4,8 +4,8 @@ use strict;
 
 use base 'eventMacro::Condition';
 
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Data qw( EVENT_TYPE );
+use eventMacro::Utilities qw( find_variable );
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
@@ -48,7 +48,6 @@ sub get_new_variable_list {
 }
 
 sub condition_type {
-	my ($self) = @_;
 	EVENT_TYPE;
 }
 

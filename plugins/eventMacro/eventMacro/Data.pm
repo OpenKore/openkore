@@ -67,6 +67,7 @@ our $macroKeywords = join '|', qw(
 	eval
 	arg
 	listitem
+	strip
 	nick
 	push pop unshift shift
 	exists delete

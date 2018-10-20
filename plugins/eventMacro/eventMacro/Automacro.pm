@@ -1,12 +1,12 @@
 package eventMacro::Automacro;
 
 use strict;
-use Globals;
+use Globals qw( %config %timeout );
 use Log qw(message error warning debug);
-use Utils;
+use Utils qw( timeOut );
 
 use eventMacro::Condition;
-use eventMacro::Data;
+use eventMacro::Data qw( EVENT_TYPE );
 
 sub new {
 	my ($class, $name, $parameters) = @_;
@@ -99,37 +99,37 @@ sub set_parameters {
 		$self->{parameters}{$key} = $value;
 	}
 	#all parameters must be defined
-	if (!defined $self->{parameters}{'timeout'})  {
+	if (!defined $self->{parameters}{'timeout'}) {
 		$self->{parameters}{'timeout'} = 0;
 	}
-	if (!defined $self->{parameters}{'delay'})  {
+	if (!defined $self->{parameters}{'delay'}) {
 		$self->{parameters}{'delay'} = 0;
 	}
-	if (!defined $self->{parameters}{'run-once'})  {
+	if (!defined $self->{parameters}{'run-once'}) {
 		$self->{parameters}{'run-once'} = 0;
 	}
-	if (!defined $self->{parameters}{'CheckOnAI'})  {
+	if (!defined $self->{parameters}{'CheckOnAI'}) {
 		$self->{parameters}{'CheckOnAI'} = $config{eventMacro_CheckOnAI};
 	}
-	if (!defined $self->{parameters}{'disabled'})  {
+	if (!defined $self->{parameters}{'disabled'}) {
 		$self->{parameters}{'disabled'} = 0;
 	}
-	if (!defined $self->{parameters}{'overrideAI'})  {
+	if (!defined $self->{parameters}{'overrideAI'}) {
 		$self->{parameters}{'overrideAI'} = 0;
 	}
-	if (!defined $self->{parameters}{'orphan'})  {
+	if (!defined $self->{parameters}{'orphan'}) {
 		$self->{parameters}{'orphan'} = $config{eventMacro_orphans};
 	}
-	if (!defined $self->{parameters}{'macro_delay'})  {
+	if (!defined $self->{parameters}{'macro_delay'}) {
 		$self->{parameters}{'macro_delay'} = $timeout{eventMacro_delay}{timeout};
 	}
-	if (!defined $self->{parameters}{'priority'})  {
+	if (!defined $self->{parameters}{'priority'}) {
 		$self->{parameters}{'priority'} = 0;
 	}
-	if (!defined $self->{parameters}{'exclusive'})  {
+	if (!defined $self->{parameters}{'exclusive'}) {
 		$self->{parameters}{'exclusive'} = 0;
 	}
-	if (!defined $self->{parameters}{'repeat'})  {
+	if (!defined $self->{parameters}{'repeat'}) {
 		$self->{parameters}{'repeat'} = 1;
 	}
 	$self->{parameters}{time} = 0;
@@ -162,7 +162,7 @@ sub create_conditions_list {
 				push ( @{ $self->{hooks}{$hook} }, $cond_index );
 			}
 			foreach my $variable ( @{ $cond->get_variables() } ) {
-				$self->define_var_types($variable,  $cond_index);
+				$self->define_var_types($variable, $cond_index);
 			}
 			if ($cond->condition_type == EVENT_TYPE) {
 				$self->{event_type_condition_index} = $cond_index;

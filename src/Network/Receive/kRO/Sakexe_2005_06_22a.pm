@@ -20,9 +20,9 @@ package Network::Receive::kRO::Sakexe_2005_06_22a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_06_08a);
 
-=pod
-//2005-06-22aSakexe
-0x022e,71
-=cut
+sub new {
+	my ($class) = @_;
+	return $class->SUPER::new(@_);
+}
 
 1;

@@ -126,7 +126,7 @@ sub get {
 	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
-		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList) {
+		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
 			my $actor = $list->getByID($ID);
 			if ($actor) {
 				return $actor;
@@ -785,7 +785,7 @@ sub route {
 	} else {
 		$task = new Task::Route(@params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute);
+	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk);
 	
 	$self->queue('route', $task);
 }

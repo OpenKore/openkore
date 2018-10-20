@@ -22,11 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_06_15a);
 
 sub new {
 	my ($class) = @_;
+
 	return $class->SUPER::new(@_);
 }
-=pod
-//2010-06-22aRagexeRE
-//0x083F,22
-=cut
 
 1;

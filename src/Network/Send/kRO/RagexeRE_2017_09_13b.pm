@@ -26,7 +26,7 @@ sub new {
 		'095C' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0927' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'085A' => ['buy_bulk_closeShop'],			
-		'0866' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0866' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'08A6' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0923' => ['character_move', 'a3', [qw(coordString)]],
 		'035F' => ['friend_request', 'a*', [qw(username)]],# len 26
@@ -42,6 +42,9 @@ sub new {
 		'07E4' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0892' => ['storage_password'],
 		'091B' => ['sync', 'V', [qw(time)]],		
+		'0437' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0920' => ['search_store_request_next_page'],
+		'0925' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -69,9 +72,12 @@ sub new {
 		storage_item_remove 07E4
 		storage_password 0892
 		sync 091B
+		search_store_info 0437
+		search_store_request_next_page 0920
+		search_store_select 0925
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #		#if PACKETVER == 20170913 //

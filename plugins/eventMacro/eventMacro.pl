@@ -94,8 +94,13 @@ sub parseAndHook {
 	$eventMacro = new eventMacro::Core($file);
 	if ($eventMacro->{parse_failed}) {
 		debug "[eventMacro] Loading error\n", "eventMacro", 2;
+		return;
 	} else {
 		debug "[eventMacro] Loading success\n", "eventMacro", 2;
+	}
+	
+	if ($char && $net && $net->getState() == Network::IN_GAME) {
+		$eventMacro->check_all_conditions();
 	}
 }
 

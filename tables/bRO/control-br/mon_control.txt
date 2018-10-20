@@ -147,20 +147,6 @@ Yellow Plant 0 0 0
 6045 -1 0 0
 6046 -1 0 0
 
-##### Monstros assistentes #####
-# Mímico (Monstro)
-1191 -1 0 0
-# Mascarado (Monstro)
-1506 -1 0 0
-# Alice (Monstro)
-1275 -1 0 0
-# Rosa Selvagem (Versão assistente, M_WILD_ROSE)
-1965 -1 0 0
-# Doppelganger (Versão assistente, M_DOPPELGANGER)
-1966 -1 0 0
-# Egnigem Cenia (Versão assistente, M_YGNIZEM)
-1967 -1 0 0
-
 ##### MVPs e mini-boss #####
 ##MOB ID : MVP
 1511 -1 1 0 #Amon Ra

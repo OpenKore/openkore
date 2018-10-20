@@ -1,11 +1,8 @@
 package eventMacro::Condition::NpcMsgDist;
 
 use strict;
-use Globals;
-use Utils;
 
-use eventMacro::Data;
-
+use Globals qw( $npcsList );
 use base 'eventMacro::Condition::BaseMsgDist';
 
 sub _hooks {

@@ -1,8 +1,7 @@
 package eventMacro::Condition::PlayerNotNear;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $playersList );
 
 use base 'eventMacro::Condition::BaseActorNotNear';
 

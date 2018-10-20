@@ -3868,7 +3868,7 @@
 11717#Yogurt#
 11718#Sushi_Kebab#
 11719#Bisket_Dessert#
-5881#Wei?ier_Hat#
+5881#Weißier_Hat#
 7674#Mysterious_Ingredient#
 17335#Mysterious_Ingredient_Box#
 22624#Riesen_Bretzel#
@@ -4871,6 +4871,30 @@
 23189#Small_Doll_Needle#
 23296#D.Burger#
 23297#Lovely_Egg_Box#
+
+17735#CostamaHorrorII#
+20451#Costume_Night Sky of Memory#
+31120#Costume_Vampire Familiar#
+31121#Costume_Bat Stole#
+31122#Costume_Bloody Vicious Stop Bandage#
+20398#Costume_Nifflheim_Bunny Hat#
+31117#Costume_Hoplite_Helmet#
+19915#Costume_Little Devil_S_Horn#
+31118#Costume_Assassin_Skull Mask#
+31119#Costume_Blue_Magician_Hat#
+31123#Costume_Ghostring_Tall_Hat#
+
+17741#CostamaMarchen#
+20452#C_Berry_Prince_Crown#
+31137#C_Blue_Rose_Ornament#
+31136#C_Clock_Casket#
+31138#C_Piamette_Hood_Red#
+31139#C_White_Rabbit_Ear#
+31135#C_Fancy_Mini_Crown#
+20144#C_Ancient_Elven_Ear#
+31088#C_Mad_Hatter#
+31134#C_Chatty_Parrot#
+31133#C_Gambler_Seal#
 
 
 // -------------- Item End ------------
@@ -7206,3 +7230,32 @@
 15117#Felrock's_Armor#
 20744#Felrock's_Cloak#
 22047#Felrock's_Boots#
+
+//-------- Horror Toy Factory ----------------------
+
+12490#Vivid_Notation#
+2486#Shadow_Walk#
+2976#Red_Lantern#
+11563#Hot_Tea#
+11564#Sweet_Canape#
+7640#Butterfly_Hairclip#
+2977#Hurt_Mind#
+13442#Old_Parasol#
+18848#Lush_Rose#
+19686#C_Santa_Hairband#
+7642#Bloody_Coin#
+19687#C_Lush_Rose#
+7643#Bloody_Letter#
+7644#Unsent_Mail#
+19701#C_Red_Bonnet#
+2978#Kind_Heart#
+18849#Celine's_Ribbon#
+22534#Closed_Mind_Box#
+16029#Noble_Cross#
+2980#Evilspirit_Gloves#
+22516#Dark_Red_Clot#
+6683#Thirsty_Flower#
+4828#Spell_Lv7#
+4829#Spell_Lv8#
+4830#Spell_Lv9#
+4825#Fighting_Spirit_Lv10#

@@ -1,8 +1,6 @@
 package eventMacro::Condition::BaseActorNotNear;
 
 use strict;
-use Globals;
-use Utils;
 
 use base 'eventMacro::Conditiontypes::RegexConditionState';
 
