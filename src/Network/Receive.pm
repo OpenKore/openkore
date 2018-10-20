@@ -1805,7 +1805,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "07F9" ||
 		$args->{switch} eq "0915" ||
 		$args->{switch} eq "09DD" ||
-		$args->{switch} eq "09FF") {
+		$args->{switch} eq "09FF" ||
+		$packetParser->{packet_list}->{$args->{switch}}[0] eq "actor_exists") {
 		# Actor Exists (standing)
 
 		if ($actor->isa('Actor::Player')) {
