@@ -245,11 +245,11 @@ gameGuard 0
 
 # https://ragnarokonline.com.ph/main
 [Philippines - pRO: Valkyrie]
-ip 202.57.118.235
+ip 139.99.113.156
 port 6900
-master_version 15
-version 1
-secureLogin 1
+master_version 217
+version 24
+secureLogin 0
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
