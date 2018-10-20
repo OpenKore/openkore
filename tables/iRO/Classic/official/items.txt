@@ -6987,3 +6987,4 @@
 20059#Choco_Donut_In_Mouth_Certificate#
 20060#Ramen_Hat_Certificate#
 20061#Whisper_Mask_Certificate#
+20062#Sleeper_Hat_Certificate#
