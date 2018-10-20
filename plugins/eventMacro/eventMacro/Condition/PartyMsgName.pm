@@ -1,10 +1,6 @@
 package eventMacro::Condition::PartyMsgName;
 
 use strict;
-use Globals;
-use Utils;
-
-use eventMacro::Data;
 
 use base 'eventMacro::Condition::BaseMsgName';
 

@@ -1,4 +1,4 @@
-2101#Guard#
+d2101#Guard#
 2102#Guard#
 2103#Buckler#
 2104#Buckler#
@@ -1590,12 +1590,9 @@
 //------------2005_할로윈_event----------------
 5134#Pumpkin-Head#
 7460#Niflheim_Express_Ticket#
-7461#Blue_A_Card#
 7462#Blue_E_Card#
 7463#Blue_F_Card#
-7464#Blue_H_Card#
 7465#Blue_L_Card#
-7466#Blue_N_Card#
 7467#Blue_O_Card#
 7468#Blue_P_Card#
 7469#Blue_U_Card#
@@ -2536,7 +2533,6 @@
 12216#Inc_Agi_Scroll#
 12217#Aspersio_Scroll#
 12218#Assumptio_Scroll#
-12219#Windwalk_Scroll#
 12220#Adrenaline_Scroll#
 12900#Battle_Manual_Box#
 12901#Insurance_Package#
@@ -2934,7 +2930,6 @@
 12216#LV10_Agil_Scroll#
 12217#LV5_Aspersio_Scroll#
 12218#LV5_Assumptio_Scroll#
-12219#LV10_Wind_Walker_Scroll#
 12220#LV5_Adrenaline_Scroll#
 12221#Megaphone#
 
@@ -3069,7 +3064,6 @@
 13717#Abrasive_5_Box#
 13718#Abrasive_10_Box#
 13719#Regeneration_Potion_5_Box#
-13720#Regeneration_10_Box#
 14534#Small_Life_Potion#
 14535#Medium_Life_Potion#
 14536#Abrasive#
@@ -3105,7 +3099,6 @@
 //_----------------_인도네시아_가벼운_캐쉬_아이템_--------------
 12999#Dead_Branch_Box#
 13809#Blue_Gemstone_Box#
-13810#Blue_Potion_Box#
 13811#Food_Box_Vol_1#
 13812#Food_Box_Vol_2#
 13813#Food_Box_Vol_3#
@@ -4317,7 +4310,6 @@
 14408#Happy_Egg#
 14527#Dungeon_Teleport_Scroll#
 5149#Silver_Tiara#
-12246#Magic_Card_Album#
 14508#Zeny_Pet_Egg#
 13517#Yggdrasilberry_Box#
 5179#Gold_Tiara#
@@ -4330,8 +4322,6 @@
 5305#Pirate_Dagger#
 5307#Carmen_Miranda's_Hat#
 5311#Large_Hibiscus#
-5314#Hockey_Mask#
-5315#Observer#
 5357#Wings_Of_Victory#
 5363#Helm_Of_Abyss#
 5364#Dark_Snake_Lord_Hat#
@@ -4690,7 +4680,6 @@
 2795#Green_Apple_Ring#
 2796#Magic_Stone_Ring#
 2797#Magical_Stone#
-5516#Hawk_Eyes#
 5517#Hawk_Eyes#
 6150#Key_of_The_Mansion#
 6151#Great_Bradium_Piece#
@@ -4958,7 +4947,6 @@
 6486#Blue_0_Card#
 6487#Blue_1_Card#
 7470#Blue_W_Card#
-7602#Blue_R_Card#
 
 //----RWC2011 EVENT FORTUNE EGG---------
 12391#Fortune_Egg#
@@ -5004,7 +4992,6 @@
 17123#Black_Devil's_Mask_Box#
 17124#Cat_Ears_Beret_Box#
 17125#Red_Bread_Hat_Box#
-18599#Black_Devil's_Mask#
 18600#Cat_Ears_Beret#
 18601#Red_Bread_Hat#
 18603#Black_Devil's_Mask#
@@ -5095,8 +5082,6 @@
 5317#Fisherman's_Hat#
 
 //-------Update Item Maintenance 20111214------
-14517#Chemical_Protection_Helm_Scroll#
-14515#Lex_Aeterna_Scroll#
 5531#Baby_Dragon_Hat#
 
 //-------Update Natal 20111221-----
@@ -5125,7 +5110,6 @@
 17064#Magical_Lucky_Egg#
 5474#Notice_Board#
 12259#Miracle_Tonic#
-14513#Storm_Gust_Scroll#
 13539#Storm_Gust_Scroll_Box#
 
 //-------Update Item Maintenance 20120208------
@@ -5162,7 +5146,6 @@
 13738#Glass_of_Illusion_5_Box#
 13538#Meteor_Storm_Scroll_Box#
 17113#Glorious_Egg#
-14512#Meteor_Storm_Scroll#
 
 //-------Update Izlude 6th Floor 20120411------
 2573#Archangel_Wing#
@@ -5194,7 +5177,6 @@
 6235#Safe_to_6_Armor_Certificate#
 5420#Mask_Of_Ifrit#
 
-5325#Robo_Eye#
 5389#Angel_Spirit#
 5361#Gang's_Scarf#
 
@@ -5302,7 +5284,6 @@
 5599#Virgo_Diadem#
 
 //-----Update New Cash Item 20120912-----
-2576#Bravery_Bag#
 16999#Bravery_Bag_Box#
 
 //-----Update New Cash Item 20120926-----
@@ -5365,16 +5346,15 @@
 12887#Unlimited_Wing_Of_Fly#
 13092#RWC_Memory_Knife#
 16026#RWC_Memory_Mace#
-17251#Unlimited_Wing_Of_Fly_3Day_Box#
+17251#Premium_Flywing#
 17252#RWC_Memorial_Set_Box#
 17253#RWC_Memorial_Ring_Box#
 17254#RWC_Memorial_Pendant_Box#
 18821#Rainbow_Feather_Decoration#
 19650#Costume_Rainbow_Feather_Decoration#
 6665#RWC_Initialization_Coupon#
-14614#Special_Potion#
+14614#Ex_Def_Potion#
 14613#2012_RWC_Scroll#
-17262# Special_Potion_Box#
 2177#Shield_Of_Death#
 2936#Recovery_Ring#
 18729#MVP_Basketball_Hat#
@@ -5391,7 +5371,6 @@
 
 //-----Update New Cash Item 20121107-----
 5135#Cyclops_Visor#
-5314#Hockey_Mask#
 5152#Chinese_Crown#
 5125#Kiss_Of_Angel#
 
@@ -5615,8 +5594,6 @@
 12851#Amore_Egg#
 
 //-----Update New Cash Item 20130306-----
-5480#Bijofnil Wings#
-5315#Observer#
 5567#Bright_Fury#
 2737#Foot_Ring#
 18540#Evil_Mask#
@@ -5627,7 +5604,6 @@
 4498#Sealed_Lady_Tanee_Card#
 4497#Sealed_Knight_of_Windstorm_Card#
 //-----Update New Cash Item 20130403-----
-18542#Benevolent_Guardian#
 5208#Rideword_Hat#
 5564#Crown_Of_Deceit#
 17106#Gym_Membership_Card_Box10#
@@ -5651,10 +5627,8 @@
 4488#Sealed_Dark_Lord_Card#
 4492#Sealed_Orc_Hero_Card#
 17320#Brithday_IdRO10th_Scroll#
-2959#Fidelity Necklace#
 18745#Choco Stick In_Mouth#
 2176#Dark Book#
-18756#Black Shiba Inu Hat#
 18759#Stretched Nose M#
 19574#Lord of Death#
 18742#MoonStar Accessory#
@@ -5840,7 +5814,6 @@
 17431#Miracle_Lucky_Egg#
 18748#Gold_Ingot_Poring_Hat#
 18625#Rocket_Helm#
-18673#Tare_Pope#
 15103#Kirin_Armor#
 15104#FishingMan_Mail#
 18823#Imperial_Feather#
@@ -6132,9 +6105,7 @@
 18891#Husky_Hat#
 2565#Beach_Towel#
 17482#Solaris_Festival_Scroll#
-2959#Fidelity_Necklace#
 18754#Blood_Sucker#
-18756#Black_Shiba_Inu_Hat#
 18832#Rolf_Von_Gigue_the666th#
 19589#Fallen_Angel's_beloning#
 19607#Love_Chick_Hat#
@@ -6284,7 +6255,6 @@
 //--------------- Update Epic Heroes Egg 20141022 ---------------
 17519#Epic_Heroes_Scroll#
 19020#Survive_Circlet#
-19021#Gigant_Helm#
 19019#Elemental_Crown#
 5366#Hat_of_King#
 
@@ -6315,8 +6285,6 @@
 19697#Rudolph_Santa_Hat_Costume#
 11565#White_Potion_B#
 11568#Red_Slim_Potion_B#
-11572#Blue_Potion#
-11573#White_Slim_Potion#
 11575#Lucky_Cookie_B#
 11576#Lucky_Candy_Cane_B#
 11577#Rice_Ball_B#
@@ -6663,7 +6631,6 @@
 20007#Costume_Bullock_Helm_J#
 20008#Costume_General_Helmet#
 20009#Costume_Dragon_Skull#
-20010#Costume_Rainbow_Wing_Ears#
 20011#Costume_Lightning_Speed#
 20012#Costume_Double_Horn_Helm#
 
@@ -6755,7 +6722,6 @@
 //--------------- Update Blessing Scarlet Scroll 20160607---------------
 20405#Eremes Scarf#
 20406#Commandments Of Chain#
-19109#Valhalla Idol#
 19111#Laser of Eagle#
 17692#Blessing Scarlet Egg#
 
@@ -6802,7 +6768,6 @@
 19788#Kostum_Heart_Eyepatch#
 20020#Kostum_Zaha_Doll_Topi_J#
 20021#Kostum_Heart_Ribbon_Band#
-20022#Kostum_Love_Piece#
 20023#Kostum_Red_Beret#
 20024#Kostum_Ribbon_Orange#
 20031#Kostum_Bunny_Head_Dress#
@@ -6816,7 +6781,7 @@
 20129#Kostum_Poporing_Topi#
 20130#Kostum_Whisper_Tall_Topi#
 20131#Kostum_Clocktower_Manager_Topi#
-20132#Kostum_Drak_Aura#
+20132#Kostum_Subject_Aura#
 20133#Kostum_Overlapped_Poring#
 20134#White_Abyss_Knight_Helm#
 17506#Kostum_AutumnParty#
@@ -6842,20 +6807,8 @@
 20174#Kostum_Halloween_Hat_Orange#
 20175#Kostum_Diabolic_Headphone#
 
-
 //--------------- Update 17 Oktober 2017--------------
 6243#Token_of_Luck#
-7361#Kupon_Undian_Headset#
-7362#Kupon_Undian_Keyboard#
-7363#Kupon_Undian_Mouse#
-7364#Kupon_Undian_Hoodie#
-7365#Kupon_Undian_T-Shirt#
-7366#Voucher_RO-Cash_500K#
-7367#Voucher_RO-Cash_175K#
-7368#Voucher_RO-Cash_65K#
-7369#Voucher_RO-Cash_35K#
-7370#Voucher_RO-Cash_20K#
-7371#Voucher_RO-Cash_10K#
 19115#C_Red_Baby_Dragon#
 16626#Half_Asprika_Box30#
 32076#Garuda_Hat_Box#
@@ -6888,8 +6841,6 @@
 20249#C_Red_Hair_of_the_Strong#
 14615#All_Dish_Box_15#
 13802#Bloody_Iron_Ball_Box#
-13718#Abrasive_Box_10#
-13720#Regeneration_Box_10#
 32114#Golden_Armor_Box#
 32125#Valhalla_Costume_Box_1#
 32126#Valhalla_Costume_Box_2#
@@ -6924,7 +6875,6 @@
 5977#Costume Blank Eyes#
 32168#Buwaya_Agimat_Box (30 Hari)#
 32169#Godly_Material_Box#
-5976#RO Festival Hat#
 32059#Costume Wandering Wolf Helm#
 31186#Costume Black Cat#
 31178#Costume Flame Muffler#
@@ -6934,5 +6884,525 @@
 31149#Costume Nydhog Wig#
 31062#Costume Eleanor Wig#
 20255#Costume Love Cheek#
-32077#Hyper_Pendant_Box#
 32069#Hyper Pendant#
+
+//----------Update 21 November 2017---------- 
+19036#Adventurer_Hat#
+12339#Pirate_Dagger_Box#
+12497#E_Bubble_Gum#
+12498#E_Kafra_Card#
+12496#E_Insurance#
+12495#E_Battle_Manual#
+6316#E_Token_Of_Siegfried#
+32055#Daily_Login_Box#
+32036#Crown_Of_Deceit_Box#
+
+//=================== UPDATE 28 November 2017 =======================
+12494#Giant Gly Wing#
+19567#Costume Hattah Black#
+32172#Magical_CD_in_Mouth#
+2870#Sarung Batik#
+32037#Sarung Batik#
+12400#Holy_Water_Blessing#
+
+//=================== UPDATE 5 Desember 2017 =======================
+20347#C_Poring_Pirate_Hat#
+32051#Acaraje_Box#
+32173#Hyper_Pendant_Box30#
+32174#Strength_Pendant_Box30#
+17262#Ex_Def_Potion_Box#
+13718#Abrasive_Box20#
+32010#Mental_Potion_Box#
+32071#Strength_Pendant#
+
+//=================== UPDATE QUEST HAT 2017 =======================
+2183#Advanced_Angelic_Guard#
+2956#Advanced_Safety_Ring#
+2957#Advanced_Ring_Of_Flame_Lord#
+2958#Advanced_Ring_Of_Resonance#
+6623#Rough_Energy_Crystal#
+6624#Purified_Energy_Crystal#
+6625#High_Energy_Crystal#
+11060#Energy_Crystal_Book#
+15068#Advanced_Angelic_Protection#
+18760#Improved_Mage_Hat#
+18761#Improved_Magician_Hat#
+18762#Improved_Kitsune_Mask#
+18763#Improved_Joker_Jester#
+18764#Improved_Bunny_Band#
+18765#Enhanced_Corsair#
+18766#Enhanced_Helm_of_Angel#
+18767#Enhanced_Hat_of_the_Sun_God#
+18768#Enhanced_Bone_Helm#
+18769#Improved_Munak_Hat#
+18770#Improved_Bongun_Hat#
+18771#Improved_Opera_Phantom_Mask#
+18772#Advanced_Binoculars#
+18773#Advanced_Fin_Helm#
+18774#Advanced_Assassin_Mask#
+18775#Advanced_Welding_Mask#
+18776#Advanced_Angel's_Kiss#
+20710#Advanced_Angelic_Cardigan#
+22014#Enhanced_Variant_Shoes#
+22015#Advanced_Angel's_Reincarnation#
+
+//=================== UPDATE Nightmare (ClockTower)_EN =======================
+4625#Time_Holder_Card#
+4626#Big_Ben_Card#
+4627#Big_Bell_Card#
+4628#Neo_Punk_Card#
+4629#Arc_Elder_Card#
+4630#Timer_Keeper_Card#
+4631#Owl_Viscount_Card#
+4632#Owl_Marquees_Card#
+2971#Pocket_Watch#
+16024#Quadrille#
+18752#Cursed_Book#
+1668#Sword_Stick#
+15089#Lounge_Suit#
+22515#Twisted_Time_Key#
+18874#Monocular_Glass#
+4652#Nightmare_Amon_Ra_Card#
+4653#Nightmare_Arclouse_Card#
+4654#Nightmare_Mimic_Card#
+4655#Nightmare_Minorous_Card#
+4656#Nightmare_Mummy_Card#
+4657#Nightmare_Ancient_Mummy_Card#
+4658#Nightmare_Verit_Card#
+
+//=================== UPDATE 12122017 =======================
+32179#Nightmare_Coupon_Box#
+32178#Nightmare_Coupon#
+22808#Christmas_Box#
+20480#C_Dog_Officer#
+5476#Hairband_Of_Grandpeco#
+20240#C_Gift_Of_Snow#
+20500#C_Archangel_Wing#
+20242#C_Snownow_Hat#
+16246#Neo_Crown_Of_Deceit#
+32180#Neo_Crown_Of_Deceit_Box7#
+32181#Special_Weapon_Box#
+
+
+/=================update Christmas 2017 ===============
+32182#Kado Millia#
+32183#kado_Joe#
+32184#Kado_Julia#
+31250#C_Wonderful_Beast_Ear#
+19824#C_Black_Evil_Druid_Hat#
+
+//=================update event rebellion ===============
+20430#Costume Morocc Kid Servant#
+20319#C_Crimson_Booster#
+31125#C_QueenAnzRevenge#
+31189#C_Cat_Ears_Cape_Red#
+20433#C_Louise_Red_Hat#
+19537#C_Gryphon_Hat#
+20442#C_RW_Mochiring_Hat#
+31315#C_Stall_Of_Angel#
+32185#Rebellion Coupon#
+14003#Elite_Siege_Supply_Box#
+32175#Rebellion Equipment Box#
+32176#Rebellion Costume Box#
+32186#New Year Box#
+32187#New Year Box_V#
+
+//=================== UPDATE REBELLION=======================
+13201#Silver_Bullet#
+13202#Shell_Of_Blood#
+13203#Flare_Sphere#
+13204#Lighting_Sphere#
+13205#Poison_Sphere#
+13206#Blind_Sphere#
+13207#Freezing_Sphere#
+13215#AP_Ammo#
+13216#Blaze_Bullet#
+13217#Freezing_Bullet#
+13218#Electric_Shock_Bullet#
+13219#Magical_Stone_Bullet#
+13220#Sanctified_Bullet#
+13221#Silver_Bullet#
+13222#Shell_Of_Blood#
+13223#Flare_Sphere#
+13224#Lighting_Spher#
+13225#Poison_Sphere#
+13226#Blind_Sphere#
+13227#Freezing_Sphere#
+28201#SOUTHERN_CROSS#
+28202#SOUTHERN_CROSS_#
+13120#H_FEATHER_H_FIRE#
+13122#ALTAIR_ARES#
+13189#COLORSCOPE#
+13190#RAG203_#
+13192#DEATHFIRE#
+13193#R_THUNDER#
+13194#P_BREAKER#
+13124#ALTAIR_ARES_#
+13195#RAG203#
+13196#P_BREAKER_#
+13198#TEMPEST#
+13199#TEMPEST_#
+28200#END_OF_HORIZON#
+22744#Bullet_Case_AP#
+22745#Bullet_Case_Blaze#
+22746#Bullet_Case_Fleeze#
+22747#Bullet_Case_Electric#
+22748#Bullet_Case_Stone#
+22749#Sanctified_Bullet_Case#
+13210#Slug_Bullet_1#
+13213#Slug_Bullet_4#
+13212#Slug_Bullet_3#
+13211#Slug_Bullet_2#
+13214#Slug_Bullet_5#
+7663#Full_Metal_Jacket#
+7664#Shooting_Mine#
+7665#Dragon_Tail_Missile#
+22738#Bullet_Case_Silver_#
+13197#MINIMAY#
+22737#Bullet_Case_Blood_#
+22738#Bullet_Case_Silver_#
+22739#Sphere_Case_Wind_#
+22740#Sphere_Case_Darkness_#
+22741#Sphere_Case_Poison_#
+22742#Sphere_Case_Water_#
+22743#Sphere_Case_Fire_#
+
+//============rebellion additional==============
+
+13228#Flare_Bullet#
+13229#Lighting_Bullet#
+13230#Ice_Bullet#
+13231#Poison_Bullet#
+13232#Blind_Bullet#
+25187#Slug_Bullet#
+23123#Bullet_Case_Flare#
+23124#Bullet_Case_Lighting#
+23125#Bullet_Case_Ice#
+23126#Bullet_Case_Poison#
+23127#Bullet_Case_Blind#
+
+//由щ꺼由ъ?
+20434#Costume:_Drooping_Gunslinger#
+13116#Novice_Revolver#
+13181#Novice_Shotgun#
+13182#Novice_Gatling#
+13183#Novice_Grenade_Launcher#
+13180#Novice_Rifle#
+6746#Steel_Article#
+6747#Steel_Article_#
+13209#FMJ_#
+13118#Fading Flame#
+13119#Freedom_Flame#
+
+//============Update 03012018==============
+13717#Abrasive Box 10#
+32188#All Dish Box +15#
+32007#Permit_Box#
+
+//============Update 16012018==============
+32199#Uriel Box#
+20509#C_Wings_Of_Uriel#
+20401#C_Angel_Guidance#
+
+//======================update quest rat extermination ====================
+12529#White Slim Potion Box#
+11573#White_Slim_Potion#
+13810#Blue Potion Box#
+11572#Blue_Potion#
+13973#Poison Bottle Box#
+14004#Acid Demonstration Box#
+14005#Coating Bottle Box#
+18793#Indonesian Sakkat Box#
+16624#half Asprika (3 Hari)#
+17310#half Brynhild(3 Hari)#
+32078#Brave_Pendant_Box#
+32070#Brave Pendant#
+17428#Shiny Box#
+15392#C. Louyang New Year Hat#
+5930#C_Magical_Feather#
+14228#Bloody Ring Box (30 Day)#
+14501#Cold_Medicine_Box#
+14285#Neo Valkyrja_Shield Box (7 Hari)#
+2137#Neo Valkyrja_Shield#
+32077#Hyper Pendant Box (7 Hari)#
+32069#Hyper Pendant Box#
+32047#Golden_Box#
+
+//============Update 06022018==============
+32201#Event Poring Box#
+19587#C. King Poring Hat#
+29038#New Year Doll Ticket#
+7539#Poring_Coin#
+
+//======================Update 13022018======================
+32208#Lunar_Box#
+19173#C. Floating Ice#
+18510#C_Bloody_Angel_Hairband#
+19599#C_Imp_Hat#
+19291#C. Shiba Inu#
+32204#Imlek Box AM#
+32205#Imlek Box V#
+15209#Drake Coat#
+7801#Surat Princess Munak#
+25322#Lukisan Prince Bongun#
+20022#C Love Piece#
+12332#Fruit Juice#
+11702#Moon Cookie#
+
+//======================Update 20022018======================
+32206#Imlek_Costume_Box#
+32207#Imlek_Equip_Box#
+32203#S_Takoyaki_Box#
+32202#Super_Takoyaki#
+25321#Imlek_Coupon#
+
+//=====================update 27022018================
+6243#Bloody_Coin#
+19642#C_Moonlight_F_Hat#
+32209#Buwaya_Agimat_Box7#
+32210#Bakonawa_Agimat_Box7#
+32211#Spiritual_Tunic_Box7#
+32212#C_Solar_God_Helm#
+32213#C_Big_Kafra_Band#
+32214#Bloody_Coin_Box#
+
+//=====================update 06032018================
+31177#C_Tail_Hat#
+19109#Valhalla_Idol#
+20010#C_Rainbow_Wing_Ears#
+32115#Spring_Time_Box#
+32116#Spring_Time_Box_AM#
+5325#Robo_Eye#
+19021#Gigant_Helm#
+2959#Fidelity_Necklace#
+2576#Bravery_Bag#
+18756#Black_Shiba_Inu_Hat#
+20746#C_Rudra_Wings#
+13720#Regeneration_Box_10#
+19083#Mask_Of_Hero#
+20459#C_Valhalla_Idol#
+
+//=====================update 13032018================
+28352#Vesper_Gear01#
+28353#Vesper_Gear02#
+28357#Vesper_Gear03#
+28359#Vesper_Gear04#
+
+//=====================update 20032018================
+6549#Courtesy_Ticket#
+
+//=====================update 27032018================
+32117#Happy_Passover_Box#
+32118#Easter_Package#
+32119#Easter_Package_AM#
+31088#C_Mad_Hatter#
+31301#C_Brief_Eye#
+15169#Kardui_Robe#
+20446#C_Bunny_Eggshell#
+14521#Repair_Weapon_Scroll#
+12219#LV10_Wind_Walker_Scroll#
+14519#Chemical_Protection_Armor_Scroll#
+14517#Chemical_Protection_Helm_Scroll#
+14518#Chemical_Protection_Shield_Scroll#
+14520#Chemical_Protection_Weapon_Scroll#
+14531#Concentration_Scroll#
+14530#Evasion_Scroll#
+14515#Lex_Aeterna_Scroll#
+14514#Lord_of_Vermilion_Scroll#
+14512#Meteor_Storm_Scroll#
+14593#Mystical_Amplification_Scroll#
+14594#Quagmire_Scroll#
+14513#Storm_Gust_Scroll#
+12412#HE_Bubble_Gum#
+
+//=====================update 03042018================
+5429#Hobgoblin's_Hat#
+32189#Rookie_Badge#
+32190#Advanced_Badge#
+32191#Expert_Badge#
+32192#Buff_Ticket_Pass#
+5314#Hockey_Mask#
+5516#Hawk_Eyes#
+18542#Benevolent_Guardian#
+5315#Observer#
+4494#Sealed_Turtle_General_Card#
+
+//====================update 10042018 =================
+32193#Bounty_Permit#
+15099#White_Tiger_Armor#
+15087#Azure_Dragon_Armor#
+15086#Vermilion_Bird_Armor#
+15092#Black_Tortoise_Armor#
+
+//====================update 17042018 =================
+32194#Special_Headgear_Box#
+32195#Silver_Supreme_Package_1#
+32196#Silver_Supreme_Package_2#
+32197#Silver_Supreme_Package_3#
+32198#Silver_Supreme_Package_4#
+32215#Gold_Supreme_Package_1#
+32216#Gold_Supreme_Package_2#
+32217#Gold_Supreme_Package_3#
+32218#Gold_Supreme_Package_4#
+32219#Mystery_Box#
+32220#Mystery_Box_AM#
+32221#Speed_Set_Box#
+32200#Large_Mvp_Hunt_Box#
+15108#Venomous_Insect_Armor# 
+28503#Keraunos#
+1835#Spartacus#
+20778#Red_Lotus_Stole#
+5976#RO_Festival_Hat#
+18599#Black_Devil's_Mask#
+12246#Magic_Card_Album#
+18673#Tare_Pope#
+5480#Bijofnil_Wings#
+
+//====================update 24042018 =================
+7807#Ymir's_Ore#
+2548#Neo_Muffler#
+
+//====================update 03052018 =================
+5978#Syringe_Toy#
+28394#King_Spirit's_Ring#
+28910#Imuke_Upper_Shield#
+32079#Time_Skip_Crown#
+32080#Time_Skip_Suit#
+32081#Time_Skip_Cloak#
+32082#Time_Skip_Shoes#
+32083#Time_Skip_Emblem#
+32084#Fruit_Of_Life#
+32085#Valkyrie_Set_Box#
+32086#Eden_Box#
+32087#Eden_Box_AM#
+14545#Field_Manual_300%#
+
+//====================update 15052018 =================
+32088#Paket_Dugdug_I#
+32089#Paket_Dugdug_II#
+32090#Paket_Ngabuburit_I#
+32091#Paket_Ngabuburit_II#
+32092#Paket_Bukber_I#
+32093#Paket_Bukber_II#
+12133#Es_Krim_Ramadhan#
+7870#Potongan_Daun_Kelapa#
+7868#Water#
+6015#M#
+7599#D#
+7602#R#
+7461#A#
+7464#H#
+7466#N#
+4502#Sealed_MasterSmith_Card#
+
+//====================update 22052018 =================
+5354#C_Peci#
+5355#C_Selendang#
+12983#Ramadhan_Box#
+20217#C_Arabian_Veil#
+20516#C_Wings_Of Michael#
+20862#C_Tas_Mudik_Gravindo#
+31330#C_Torturous_Redeemer_Helm#
+
+//====================update 30052018 =================
+20515#Costume_Magic_Circle#
+31396#Costume_Sorcerer_Hood#
+31395#Costume_Book_Of_Magic#
+32094#Lebaran_Equipment_Reward_Box#
+32095#Lebaran_Costume_Reward_Box#
+5401#Black_Frame_Glasses#
+
+//====================update 05062018 =================
+4593#Menblatt_Card#
+4594#Petal_Card#
+4595#Cenere_Card#
+4596#Antique_Book_Card#
+4597#Lichtern_Blue_Card#
+4598#Lichtern_Yellow_Card#
+4599#Lichtern_Red_Card#
+4600#Lichtern_Green_Card#
+4582#Bungisngis_Card#
+4583#Engkanto_Card#
+4584#Manananggal_Card#
+4585#Mangkukulam_Card#
+4586#Tikbalang_Card#
+4587#Tiyanak_Card#
+4588#Wakwak_Card#
+4505#Scaraba_Card#
+4506#Dolomedes_Card#
+4507#Queen_Scaraba_Card#
+4508#Gold_Scaraba_Card#
+4509#Gold_Queen_Scaraba_Card#
+4510#Miming_Card#
+4512#Parus_Card#
+4513#Angra_Mantis_Card#
+4514#Pom_Spider_Card#
+4515#Alnoldi_Card#
+4516#Comodo_Card#
+4517#Cendrawasih_Card#
+4518#Banaspaty_Card#
+4519#Butoijo_Card#
+4520#Leak_Card#
+
+//=================update Garment costume 26 June 2018================
+20514#C_Thanatos_Sword#
+32096#Lebaran_Coupon#
+// -------------- Lotto Ball World Cup --------------
+// -- Grup A --
+7361#Russia_for_WorldCup_2018#
+7362#Saudi_Arabia_for_WorldCup_2018#
+7363#Egypt_for_WorldCup_2018#
+7364#Uruguay_for_WorldCup_2018#
+
+// -- Grup B --
+7365#Portugal_for_WorldCup_2018#
+7366#Spain_for_WorldCup_2018#
+7367#Morocco_for_WorldCup_2018#
+7368#IR_Iran_for_WorldCup_2018#
+
+// -- Grup C --
+7369#France_for_WorldCup_2018#
+7370#Australia_for_WorldCup_2018#
+7371#Peru_for_WorldCup_2018#
+7372#Denmark_for_WorldCup_2018#
+
+// -- Grup D --
+7373#Argentina_for_WorldCup_2018#
+7374#Iceland_for_WorldCup_2018#
+7375#Croatia_for_WorldCup_2018#
+7376#Nigeria_for_WorldCup_2018#
+
+// -- Grup E --
+7377#Brazil_for_WorldCup_2018#
+7378#Switzerland_for_WorldCup_2018#
+7379#Costa_Rica_for_WorldCup_2018#
+7380#Serbia_for_WorldCup_2018#
+
+// -- Grup F --
+7381#Germany_for_WorldCup_2018#
+7382#Mexico_for_WorldCup_2018#
+7383#Sweden_for_WorldCup_2018#
+7384#Korea_Republic_for_WorldCup_2018#
+
+// -- Grup G --
+7385#Belgium_for_WorldCup_2018#
+7386#Panama_for_WorldCup_2018#
+7387#Tunisia_for_WorldCup_2018#
+7388#England_for_WorldCup_2018#
+
+// -- Grup H --
+7389#Poland_for_WorldCup_2018#
+7390#Senegal_for_WorldCup_2018#
+7391#Colombia_for_WorldCup_2018#
+7392#Japan_for_WorldCup_2018#
+
+//====================update 03072018 =================
+32097#Orleans_Set_Box#
+32098#Summer_Holiday_Box#
+32099#Summer_Holiday_Box_AM#
+
+//====================update 17072018 =================
+4574#General_Daehyon_Card#
+4576#Gioia_Card#
+4578#Pyuriel_Card#
+4580#Dark_Guardian_Kades_Card#

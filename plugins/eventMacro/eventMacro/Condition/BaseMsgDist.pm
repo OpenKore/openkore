@@ -1,12 +1,12 @@
 package eventMacro::Condition::BaseMsgDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $field $char);
+use Utils qw( distance );
 
-use eventMacro::Data;
+use eventMacro::Data qw( EVENT_TYPE );
 
-use base 'eventMacro::Conditiontypes::MultipleValidatorEvent';
+use base 'eventMacro::Condition';
 
 sub _hooks {
 	[];
@@ -15,19 +15,87 @@ sub _hooks {
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
-	$self->{validators_index} = {
-		0 => 'eventMacro::Validator::RegexCheck',
-		1 => 'eventMacro::Validator::NumericComparison'
-	};
+	$self->{message_validator} = undef;
+	$self->{dist_validator} = undef;
 	
-	$self->SUPER::_parse_syntax($condition_code);
+	$self->{var_in_message} = {};
+	$self->{var_in_dist} = {};
+	
+	my $var_exists_hash = {};
+	
+	if ($condition_code =~ /^(\/.*?\/\w?)\s+(.*?)$/) {
+		my $regex = $1;
+		my $dist = $2;
+		
+		unless (defined $regex && defined $dist) {
+			$self->{error} = "Condition code '".$condition_code."' must have a message regex and a distance comaparison defined";
+			return 0;
+		}
+		
+		my @validators = (
+			eventMacro::Validator::RegexCheck->new( $regex ),
+			eventMacro::Validator::NumericComparison->new( $dist ),
+		);
+		
+		my @var_setting = (
+			$self->{var_in_message},
+			$self->{var_in_dist},
+		);
+		
+		foreach my $validator_index (0..$#validators) {
+			my $validator = $validators[$validator_index];
+			my $var_hash = $var_setting[$validator_index];
+			if (defined $validator->error) {
+				$self->{error} = $validator->error;
+				return 0;
+			} else {
+				my @vars = @{$validator->variables};
+				foreach my $var (@vars) {
+					push ( @{ $self->{variables} }, $var ) unless (exists $var_exists_hash->{$var->{display_name}});
+					$var_hash->{$var->{display_name}} = undef;
+					$var_exists_hash->{$var->{display_name}} = undef;
+				}
+			}
+		}
+		
+		$self->{message_validator} = $validators[0];
+		$self->{dist_validator} = $validators[1];
+		
+	} else {
+		$self->{error} = "Condition code '".$condition_code."' must have a message regex and a distance comparison defined";
+		return 0;
+	}
+	
+	return 1;
+}
+
+sub update_validator_var {
+	my ( $self, $var_name, $var_value ) = @_;
+	
+	if (exists $self->{var_in_message}{$var_name}) {
+		$self->{message_validator}->update_vars($var_name, $var_value);
+	}
+	
+	if (exists $self->{var_in_dist}{$var_name}) {
+		$self->{dist_validator}->update_vars($var_name, $var_value);
+	}
+}
+
+sub validator_message_check {
+	my ( $self, $check ) = @_;
+	return $self->{message_validator}->validate($check);
+}
+
+sub validator_dist_check {
+	my ( $self, $check ) = @_;
+	return $self->{dist_validator}->validate($check);
 }
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
-		return $self->SUPER::validate_condition( 0 ) unless $self->validator_check( 0, $self->{message} );
+		return $self->SUPER::validate_condition( 0 ) unless $self->validator_message_check( $self->{message} );
 		
 		foreach my $actor (@{${$self->{actorList}}->getItems}) {
 			next unless ($actor->{name} eq $self->{source});
@@ -35,7 +103,7 @@ sub validate_condition {
 			$self->{dist} = distance($char->{pos_to}, $actor->{pos_to});
 		}
 		
-		return $self->SUPER::validate_condition( 0 ) unless ( defined $self->{dist} && $self->validator_check( 1, $self->{dist} ) );
+		return $self->SUPER::validate_condition( 0 ) unless ( defined $self->{dist} && $self->validator_dist_check( $self->{dist} ) );
 		
 		return $self->SUPER::validate_condition( 1 );
 		
@@ -55,6 +123,10 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."ID"} = $self->{actor}->{binID};
 	
 	return $new_variables;
+}
+
+sub condition_type {
+	EVENT_TYPE;
 }
 
 sub usable {

@@ -1,8 +1,7 @@
 package eventMacro::Condition::NoPortalNear;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $portalsList );
 use base 'eventMacro::Condition::NoActorNear';
 
 use Globals;

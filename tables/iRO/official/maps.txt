@@ -973,3 +973,10 @@ rockrdg2.rsw#Kiwawa Desert#
 
 // 믽쎼듸샼 뷅뇔룊 뿀샼 2013-12-18
 lhz_dun_n.rsw#The Bed of Honor#
+
+// 16.2 (쏟쒫 쓁엙쏷 뻸삽)
+1@slw.rsw#Werner_Laboratory central_room#
+1@swat.rsw#Heart_Hunter War_Base#
+que_swat.rsw#Heart_Hunter War_Base#
+slabw01.rsw#Werner Laboratory#
+rebel_in.rsw#Clana Nemieri#

@@ -20,27 +20,9 @@ package Network::Receive::kRO::Sakexe_2005_08_17a;
 use strict;
 use base qw(Network::Receive::kRO::Sakexe_2005_08_08a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-
-
-=pod
-0x0253,3
-0x0254,3,feelsaveok,0
-=cut
 
 1;

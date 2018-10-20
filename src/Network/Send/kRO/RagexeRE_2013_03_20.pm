@@ -13,7 +13,6 @@ package Network::Send::kRO::RagexeRE_2013_03_20;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2012_06_18a);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
@@ -58,6 +57,9 @@ sub new {
 		'09A1' => ['sync_received_characters'],#2
 		'0815' => undef,
 		'0938' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
+		'094E' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'092E' => ['search_store_request_next_page'],
+		'0365' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -80,6 +82,9 @@ sub new {
 		storage_item_add 08AC
 		storage_item_remove 0874
 		sync 0363
+		search_store_info 094E
+		search_store_request_next_page 092E
+		search_store_select 0365
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

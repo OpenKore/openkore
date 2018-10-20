@@ -20,46 +20,23 @@ package Network::Send::kRO::Sakexe_2005_06_08a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_05_31a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
-
-# 0x0217,2,blacksmith,0
-sub sendTop10Blacksmith {
-	$_[0]->sendToServer(pack('v', 0x0217));
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}	
-
-# 0x0231,26,changehomunculusname,0
-sub sendHomunculusName {
-	my $self = shift;
-	my $name = shift;
-	my $msg = pack('v a24', 0x0231, stringToBytes($name));
-	$self->sendToServer($msg);
-	debug "Sent Homunculus Rename: $name\n", "sendPacket", 2;
-}
-
-# 0x023b,24,storagepassword,0
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack('v2', 0x023B, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack('v2', 0x023B, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
+	my $self = $class->SUPER::new(@_);
+	
+	my %packets = (
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
+	);
+	
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		storage_password 023B
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 =pod

@@ -1,8 +1,8 @@
 package eventMacro::Condition::MobNearDist;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $char $monstersList $field );
+use Utils qw( distance );
 
 use base 'eventMacro::Condition::BaseActorNearDist';
 

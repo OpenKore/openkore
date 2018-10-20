@@ -25,14 +25,6 @@ sub new {
 	return $class->SUPER::new(@_);
 }
 
-# 0x044a,6
-# not used yet
-sub sendClientVersion {
-	my ($self, $version) = @_;
-	my $msg = pack('v V', 0x044a, $version);
-	$self->sendToServer($msg);
-}
-
 =pod
 //2009-04-08aSakexe
 0x02a6,-1

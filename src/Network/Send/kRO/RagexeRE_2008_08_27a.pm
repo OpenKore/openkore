@@ -18,9 +18,7 @@
 package Network::Send::kRO::RagexeRE_2008_08_27a;
 
 use strict;
-use base qw(Network::Send::kRO::Sakexe_2009_04_08a); #looks weird, inheriting from a newer file... but this is what eA has and we want to be able to play on eA servers
-
-use Log qw(debug);
+use base qw(Network::Send::kRO::RagexeRE_0);
 
 sub version {
 	return 24;
@@ -32,6 +30,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['skill_use', 'x7 V x2 v x a4', [qw(lv skillID targetID)]],#22
+		'007E' => ['skill_use_location_text', 'v x8 v x2 v x2 v x3 v Z80', [qw(lvl ID x y info)]],
 		'0085' => ['actor_look_at', 'x2 C x4 C', [qw(head body)]],
 		'0089' => ['sync', 'x5 V', [qw(time)]], # TODO
 		'008C' => ['actor_info_request', 'x8 a4', [qw(ID)]],
@@ -48,6 +47,7 @@ sub new {
 		'0436' => undef,
 		'0437' => undef,
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
@@ -55,19 +55,12 @@ sub new {
 		item_use 009F
 		map_login 009B
 		skill_use 0072
+		skill_use_location_text 007E
 	);
+	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-
-	my $msg = pack('v x8 v x2 v x2 v x3 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	return $self;
 }
 
 1;

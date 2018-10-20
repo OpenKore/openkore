@@ -1,10 +1,8 @@
 package eventMacro::Condition::QuestOnTime;
 
 use strict;
-use Globals;
-use Utils;
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use Globals qw( $questList );
+use eventMacro::Utilities qw( find_variable );
 
 use base 'eventMacro::Condition';
 

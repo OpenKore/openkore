@@ -447,66 +447,172 @@ sub modifyPacketIn {
 		}
 	}
 
-	if ($switch eq "0069" || $switch eq "0AC4") {
+	# server list
+	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9") {
 		use bytes; no encoding 'utf8';
-		my $accountInfo;
-		my $serverInfo;
 
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
-		# Modify the server config'ed on Kore to point to proxy
-		if($switch eq "0069") {
-			$accountInfo = substr($msg, 0, 47);
-			$serverInfo = substr($msg, 47, length($msg));
-		} else {
-			$accountInfo = substr($msg, 0, 64);
-			$serverInfo = substr($msg, 64, length($msg));
-		}
-		my $newServers = '';
-		my $serverCount = 0;
-
-		my $msg_size = length($serverInfo);
 		debug "Modifying Account Info packet...";
+		
+		# Show list of character servers.
+		my $serverCount = 0;
+		my @serverList;
+		my ($ip, $port, $name);
+		if($config{server} =~/\d+/) {
+			my %charServer;
+			foreach $charServer (@servers) {
+				if($serverCount == $config{server}) {
+					$ip = $self->{publicIP} || $self->{proxy}->sockhost;
+					$port = $self->{proxy}->sockport;
+					$name = $charServer->{name}.' (PROXIED)';
+					$self->{nextIp} = $charServer->{'ip'};
+					$self->{nextPort} = $charServer->{'port'};
+					$self->{charServerIp} = $charServer->{'ip'};
+					$self->{charServerPort} = $charServer->{'port'};
+				} else {
+					$ip = $charServer->{ip};
+					$port = $charServer->{port};
+					$name = $charServer->{name};
+				}
 
-		for (my $i = 0; $i < $msg_size; $i+=32) {
-			if ($config{'server'} == $serverCount++) {
-				$self->{nextIp} = makeIP(substr($serverInfo, $i, 4));
-				$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-				$self->{nextPort} = unpack("v1", substr($serverInfo, $i+4, 2));
-				debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
+				push @serverList, {
+					ip => $ip,
+					port => $port,
+					name => $name,
+					users => 0,
+					display => 5, # don't show number of players
+					state => 5,
+					property => 1,
+					unknown => 0,
+					ip_port => $ip.':'.$port,
+				};
 
-				$self->{charServerIp} = $self->{nextIp};
-				$self->{charServerPort} = $self->{nextPort};
-
-				my $newName = unpack("Z*", substr($serverInfo, $i + 6, 20));
-				#$newName = "$newName (proxied)";
-				$newServers .= encodeIP($self->{publicIP} || $self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) .
-					pack("Z20", $newName) . substr($serverInfo, $i + 26, 4) . pack("v1", 0);
-
-			} else {
-				$newServers .= substr($serverInfo, $i, 32);
+				$serverCount++;
 			}
+		} else {
+			$ip = $self->{publicIP} || $self->{proxy}->sockhost;
+			$name = $servers[0]{'name'}.' (PROXIED)';
+			$port = $self->{proxy}->sockport;
+			$self->{nextIp} = $servers[0]{'ip'};
+			$self->{nextPort} = $servers[0]{'port'};
+			$self->{charServerIp} = $servers[0]{'ip'};
+			$self->{charServerPort} = $servers[0]{'port'};
+			push @serverList, {
+					ip => $ip,
+					port => $port,
+					name => $name,
+					users => 0,
+					display => 5, # don't show number of players
+					state => 5,
+					property => 1,
+					unknown => 0,
+					ip_port => $ip.':'.$port,
+				};
 		}
 
+		$msg = $packetParser->reconstruct({
+			len => 100,
+			switch => $switch,
+			sessionID => $sessionID,
+			accountID => $accountID,
+			sessionID2 => $sessionID2,
+			accountSex => $accountSex,
+			lastLoginIP => "",
+			lastLoginTime => "",
+			unknown => "",
+			servers => \@serverList,
+		});
+		
+		substr($msg, 2, 2) = pack('v', length($msg));
+		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
 		message T("Closing connection to Account Server\n"), 'connection' if (!$self->{packetReplayTrial});
 		$self->serverDisconnect(1);
-		$msg = $accountInfo . $newServers;
 
-	} elsif ($switch eq "0071" || $switch eq "0092") {
+	} elsif ($switch eq "0071" || $switch eq "0AC5") { # login in map-server
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
 		# Proxy the Logon to Map server
 		debug "Modifying Map Logon packet...", "connection";
-		my $logonInfo = substr($msg, 0, 22);
-		my @mapServer = unpack("x22 a4 v1", $msg);
-		my $mapIP = $mapServer[0];
-		my $mapPort = $mapServer[1];
 
-		$self->{nextIp} = makeIP($mapIP);
-		$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-		$self->{nextPort} = $mapPort;
+		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
+		my $port = $self->{proxy}->sockport;
+
+		my $mapInfo;
+		if ($switch eq "0AC5") {
+			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort mapUrl)]}} = unpack('a4 Z16 a4 v a128', substr($msg, 2));
+			if($mapInfo->{'mapUrl'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
+				@{$mapInfo}{@{[qw(mapIP port)]}} = split (/\:/, $mapInfo->{'mapUrl'});
+				$mapInfo->{mapIP} =~ s/^\s+|\s+$//g;
+				$mapInfo->{port} =~ tr/0-9//cd;
+			}
+		} else {
+			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort)]}} = unpack('a4 Z16 a4 v', substr($msg, 2));
+			$mapInfo->{mapIP} = inet_ntoa($mapInfo->{mapIP});
+		}
+
+		if($masterServer->{'private'}) {
+			$mapInfo->{mapIP} = $masterServer->{ip};
+		}
+
+		$msg = $packetParser->reconstruct({
+			switch => $switch,
+			charID => $mapInfo->{'charID'},
+			mapName => $mapInfo->{'mapName'},
+			mapIP => inet_aton($ip),
+			mapPort => $port,
+			mapUrl => $ip.':'.$port,
+		});
+
+		$self->{nextIp} = $mapInfo->{'mapIP'};
+		$self->{nextPort} = $mapInfo->{'mapPort'};
+		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
+
+		# reset key when change map-server
+		if ($currentClientKey && $messageSender->{encryption}->{crypt_key}) {
+			$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
+			$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
+		}
+
+		if ($switch eq "0071" || $switch eq "0AC5") {
+			message T("Closing connection to Character Server\n"), 'connection' if (!$self->{packetReplayTrial});
+		} else {
+			message T("Closing connection to Map Server\n"), "connection" if (!$self->{packetReplayTrial});
+		}
+		$self->serverDisconnect(1);
+		
+	} elsif($switch eq "0092" || $switch eq "0AC7" || $switch eq "0A4C") { # In Game Map-server changed
+		my $mapInfo;
+
+		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
+		my $port = $self->{proxy}->sockport;
+
+		if ($switch eq "0AC7") {
+			@{$mapInfo}{@{[qw(map x y IP port url)]}} = unpack('Z16 v2 a4 v a128', substr($msg, 2));
+			if($mapInfo->{'url'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
+					@{$mapInfo}{@{[qw(ip port)]}} = split (/\:/, $mapInfo->{'url'});
+				$mapInfo->{ip} =~ s/^\s+|\s+$//g;
+				$mapInfo->{port} =~ tr/0-9//cd;
+			}
+		} else {
+			@{$mapInfo}{@{[qw(map x y IP port)]}} = unpack('Z16 v2 a4 v', substr($msg, 2));
+			$mapInfo->{IP} = inet_ntoa($mapInfo->{IP});
+		}
+	
+		$msg = $packetParser->reconstruct({
+			switch => $switch,
+			map => $mapInfo->{'map'},
+			x => $mapInfo->{'x'},
+			y => $mapInfo->{'y'},
+			IP => inet_aton($ip),
+			port => $port,
+			url => $ip.':'.$port,
+		});
+
+		$self->{nextIp} = $mapInfo->{'IP'};
+		$self->{nextPort} = $mapInfo->{'port'};
 		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
 		
 		# reset key when change map-server
@@ -514,15 +620,6 @@ sub modifyPacketIn {
 			$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
 			$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
 		}
-
-		if ($switch eq "0071") {
-			message T("Closing connection to Character Server\n"), 'connection' if (!$self->{packetReplayTrial});
-		} else {
-			message T("Closing connection to Map Server\n"), "connection" if (!$self->{packetReplayTrial});
-		}
-		$self->serverDisconnect(1);
-
-		$msg = $logonInfo . encodeIP($self->{publicIP} || $self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
 
 	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081") {
 		# An error occurred. Restart proxying

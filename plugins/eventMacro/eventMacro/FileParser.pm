@@ -51,14 +51,22 @@ sub parseMacroFile {
 			my ($key, $value) = $_ =~ /^(.*?)\s+(.*?)\s*{$/;
 			if ($key eq 'macro') {
 				%block = (name => $value, type => "macro");
-				$macro{$value} = [];
+				if (exists $macro{$value}) {
+					$macro{$value}{'duplicatedMacro'} = 1;
+				} else {
+					$macro{$value} = {};
+				}
 			} elsif ($key eq 'automacro') {
+				if (exists $automacro{$value}) {
+					#this is to detect automacros that have same name
+					$automacro{$value}{'duplicatedAutomacro'} = 1;
+				} 
 				%block = (name => $value, type => "automacro");
 			} elsif ($key eq 'sub') {
 				%block = (name => $value, type => "sub");
 			} else {
 				%block = (type => "bogus");
-				warning "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n";
+				error "$file: ignoring line '$_' in line $. (munch, munch, strange block)\n";
 			}
 			next;
 
@@ -75,7 +83,7 @@ sub parseMacroFile {
 		} elsif (%block && $block{type} eq "macro") {
 			if ($_ eq "}") {
 				if ($macroCountOpenBlock) {
-					push(@{$macro{$block{name}}}, '}');
+					push(@{$macro{$block{name}}{lines}}, '}');
 					$macroCountOpenBlock--;
 				} else {
 					undef %block;
@@ -84,10 +92,10 @@ sub parseMacroFile {
 				if (isNewCommandBlock($_)) {
 					$macroCountOpenBlock++
 				} elsif (!$macroCountOpenBlock && isNewWrongCommandBlock($_)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next;
 				}
-				push(@{$macro{$block{name}}}, $_);
+				push(@{$macro{$block{name}}{lines}}, $_);
 			}
 			
 			next;
@@ -99,7 +107,7 @@ sub parseMacroFile {
 			if ($_ eq "}") {
 				if ($block{loadmacro}) {
 					if ($macroCountOpenBlock) {
-						push(@{$macro{$block{loadmacro_name}}}, '}');
+						push(@{$macro{$block{loadmacro_name}}{lines}}, '}');
 						
 						if ($macroCountOpenBlock) {
 							$macroCountOpenBlock--;
@@ -115,7 +123,7 @@ sub parseMacroFile {
 			} elsif (/call [^{]/ && !$macro{$block{loadmacro_name}}) {
 				my ($key, $value, $param) = $_ =~ /^(call)\s+(\S+)(?:\s*(.*))?/;
 				if (!defined $key || !defined $value) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
 					next;
 				}
 				#check if macro is being called with params or not
@@ -127,20 +135,20 @@ sub parseMacroFile {
 				$block{loadmacro} = 1;
 				$block{loadmacro_name} = "tempMacro".$tempmacro++;
 				push(@{$automacro{$block{name}}{parameters}}, {key => 'call', value => $block{loadmacro_name}});
-				$macro{$block{loadmacro_name}} = []
+				$macro{$block{loadmacro_name}} = {}
 			} elsif ($block{loadmacro}) {
 				if (isNewCommandBlock($_)) {
 					$macroCountOpenBlock++
 				} elsif (!$macroCountOpenBlock && isNewWrongCommandBlock($_)) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not found the open block command)\n";
 					next
 				}
 
-				push(@{$macro{$block{loadmacro_name}}}, $_);
+				push(@{$macro{$block{loadmacro_name}}{lines}}, $_);
 			} else {
 				my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
 				if (!defined $key || !defined $value) {
-					warning "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
+					error "$file: ignoring '$_' in line $. (munch, munch, not a pair)\n";
 					next;
 				}
 				if (exists $parameters{$key}) {
@@ -180,16 +188,16 @@ sub parseMacroFile {
 
 		my ($key, $value) = $_ =~ /(?:^(.*?)\s|})+(.*)/;
 		unless (defined $key) {
-			warning "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
+			error "$file: ignoring '$_' in line $. (munch, munch, strange food)\n";
 			next
 		}
 	}
 	
 	if (%block) {
-		warning TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
+		error TF( "%s: unclosed %s block '%s'\n", $file, $block{type}, $block{name} );
 		return 0;
 	}
-	return {macros => \%macro, automacros => \%automacro};
+	return {macros => \%macro, automacros => \%automacro, subs => \@perl_name};
 }
 
 sub sub_execute {
@@ -197,11 +205,14 @@ sub sub_execute {
 	
 	my ($name, $arg) = @_;
 	my $run = "sub ".$name." {".$arg."}";
-	eval($run);			# cycle the macro sub between macros only
+	eval($run); # cycle the macro sub between macros only
 	$run = "eval ".$run;
-	Commands::run($run);		# exporting sub to the &main::sub, becarefull on your sub name
-					# dont name your new sub equal to any &main::sub, you should take
-					# the risk yourself.
+	
+	# exporting sub to the &main::sub, becarefull on your sub name
+	# dont name your new sub equal to any &main::sub, you should take
+	# the risk yourself.
+	Commands::run($run);
+	
 	message "[eventMacro] registering sub '".$name."'.\n", "menu";
 }
 

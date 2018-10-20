@@ -20,19 +20,9 @@ package Network::Send::kRO::Sakexe_2008_01_02a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2007_11_27a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-# 0x01df,6,gmreqaccname,2
-sub sendGMReqAccName {
-	my ($self, $targetID) = @_;
-	my $msg = pack('v V', 0x01DF, $targetID);
-	$self->sendToServer($msg);
-	debug "Sent GM Request Account Name.\n", "sendPacket", 2;
 }
 
 =pod

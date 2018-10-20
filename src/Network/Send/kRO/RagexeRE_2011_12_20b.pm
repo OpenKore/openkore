@@ -13,8 +13,6 @@ package Network::Send::kRO::RagexeRE_2011_12_20b;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_11_22a);
-use base qw(Network::Send);
-use Network::Send ();
 use Log qw(debug);
 use Utils qw(getCoordString);
 

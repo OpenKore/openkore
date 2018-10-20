@@ -14,37 +14,48 @@
 package Network::Send::ServerType21;
 
 use strict;
-use Globals;
-use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
+
+use Log qw(debug);
 
 sub new {
-   my ($class) = @_;
-   return $class->SUPER::new(@_);
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+	
+	my %handlers = qw(
+		character_move 0085
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub sendMove {
-   my $self = shift;
-   my $x = int scalar shift;
-   my $y = int scalar shift;
-   my $msg;
+	my ($self, $x, $y) = @_;
 
-   $msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y, 1);
-
-   $self->sendToServer($msg);
-   debug "Sent move to: $x, $y\n", "sendPacket", 2;
+	$self->sendToServer($self->reconstruct({
+		switch => 'character_move',
+		x => $x,
+		y => $y,
+		no_padding => 1,
+	}));
+	
+	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
 sub sendHomunculusMove {
-	my $self = shift;
-	my $homunID = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x32, 0x02) . $homunID . getCoordString($x, $y, 1);
-	$self->sendToServer($msg);
+	my ($self, $homunID, $x, $y) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'actor_move',
+		ID => $homunID,
+		x => $x,
+		y => $y,
+		no_padding => 1,
+	}));
+	
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
+
 1;

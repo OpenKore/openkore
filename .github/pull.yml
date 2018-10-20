@@ -1,0 +1,6 @@
+version: "1"
+rules:
+  - base: master
+    upstream: OpenKore:master
+    autoMerge: true
+    autoMergeHardReset: true

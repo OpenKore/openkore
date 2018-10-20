@@ -1,8 +1,6 @@
 package eventMacro::Condition::PubMsg;
 
 use strict;
-use Globals;
-use Utils;
 
 use base 'eventMacro::Condition::BaseMsg';
 

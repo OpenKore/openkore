@@ -1,8 +1,6 @@
 package eventMacro::Condition::PartyMsg;
 
 use strict;
-use Globals;
-use Utils;
 
 use base 'eventMacro::Condition::BaseMsg';
 

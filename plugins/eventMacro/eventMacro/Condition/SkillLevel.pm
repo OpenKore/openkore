@@ -4,7 +4,7 @@ use strict;
 
 use base 'eventMacro::Conditiontypes::NumericConditionState';
 
-use Globals;
+use Globals qw( $char );
 
 sub _hooks {
 	['packet/skill_update','packet/skills_list','packet/skill_add','packet/skill_delete'];

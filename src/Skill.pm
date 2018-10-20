@@ -75,7 +75,9 @@ use constant {
 # Owner type constants. See $Skill->getOwnerType() for description.
 use enum qw(OWNER_CHAR OWNER_HOMUN OWNER_MERC);
 
-use overload '""' => \&_nameString;
+use overload 
+	fallback => 1,
+	'""' => \&_nameString;
 sub _nameString { $_[0]->getName }
 
 ##

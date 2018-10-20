@@ -1,11 +1,8 @@
 package eventMacro::Condition::MobNearCount;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $monstersList );
 use base 'eventMacro::Condition::ActorNearCount';
-
-use Globals;
 
 sub _hooks {
 	my ( $self ) = @_;

@@ -20,9 +20,6 @@ package Network::Send::kRO::Sakexe_2005_07_18a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_06_28a);
 
-use Log qw(debug);
-use I18N qw(stringToBytes);
-
 sub version {
 	return 18;
 }
@@ -33,6 +30,7 @@ sub new {
 	
 	my %packets = (
 		'0072' => ['skill_use', 'x3 V x2 v x2 a4', [qw(lv skillID targetID)]],#19
+		'007E' => ['skill_use_location_text', 'v x7 v x4 v x6 v x3 v Z80', [qw(lvl ID x y info)]],
 		'0085' => ['actor_look_at', 'x4 C x3 C', [qw(head body)]],
 		'0089' => ['sync', 'x V', [qw(time)]],
 		'008C' => ['actor_info_request', 'x5 a4', [qw(ID)]],
@@ -47,86 +45,16 @@ sub new {
 		'0116' => ['item_drop', 'x4 a2 x2 v', [qw(ID amount)]],
 		'0190' => ['actor_action', 'x3 a4 x11 C', [qw(targetID type)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v x7 v x4 v x6 v x3 v Z80', 0x007E, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendMailboxOpen {
-	$_[0]->sendToServer(pack('v', 0x023F));
-	debug "Sent mailbox open.\n", "sendPacket", 2;
-}
-
-sub sendMailRead {
-	my ($self, $mailID) = @_;
-	my $msg = pack('v V', 0x0241, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent read mail.\n", "sendPacket", 2;
-}
-
-sub sendMailDelete {
-	my ($self, $mailID) = @_;
-	my $msg = pack('v V', 0x0243, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent delete mail.\n", "sendPacket", 2;
-}
-
-sub sendMailGetAttach {
-	my ($self, $mailID) = @_;
-	my $msg = pack('v V', 0x0244, $mailID);
-	$self->sendToServer($msg);
-	debug "Sent mail get attachment.\n", "sendPacket", 2;
-}
-
-sub sendMailOperateWindow {
-	my ($self, $window) = @_;
-	my $msg = pack('v C x', 0x0246, $window);
-	$self->sendToServer($msg);
-	debug "Sent mail window.\n", "sendPacket", 2;
-}
-
-sub sendMailSetAttach {
-	my $self = $_[0];
-	my $amount = $_[1];
-	my $ID = (defined $_[2]) ? $_[2] : 0;	# 0 for zeny
-	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
-	$self->sendToServer($msg);
-	debug "Sent mail set attachment.\n", "sendPacket", 2;
-}
-
-sub sendMailSend {
-	my ($self, $receiver, $title, $message) = @_;
-	my $msg = pack('v2 Z24 a40 C Z*', 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent mail send.\n", "sendPacket", 2;
-}
-
-sub sendAuctionAddItem {
-	my ($self, $ID, $amount) = @_;
-	my $msg = pack('v a2 V', 0x024C, $ID, $amount);
-	$self->sendToServer($msg);
-	debug "Sent Auction Add Item.\n", "sendPacket", 2;
-}
-
-sub sendAuctionCancel {
-	my ($self, $id) = @_;
-	my $msg = pack('v V', 0x024E, $id);
-	$self->sendToServer($msg);
-	debug "Sent Auction Cancel.\n", "sendPacket", 2;
-}
-
-sub sendAuctionBuy {
-	my ($self, $id, $bid) = @_;
-	my $msg = pack('v V2', 0x024F, $id, $bid);
-	$self->sendToServer($msg);
-	debug "Sent Auction Buy.\n", "sendPacket", 2;
+	my %handlers = qw(
+		skill_use_location_text 007E
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 1;

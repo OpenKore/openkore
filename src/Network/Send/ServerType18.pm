@@ -14,27 +14,51 @@
 package Network::Send::ServerType18;
 
 use strict;
-use Globals qw($char $syncSync $net %config $masterServer);
-use Network::Send::ServerType11;
 use Network::PaddedPackets;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString2);
+
+use Globals qw($masterServer);
+use Log qw(debug);
+use Utils qw(getHex getCoordString2);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
-}
+	my $self = $class->SUPER::new(@_);
 
-# Create a random byte string of a specified length.
-sub createRandomBytes {
-	my ($length) = @_;
-	my $str = '';
-	for (1..$length) {
-		$str .= chr(rand(256));
-	}
-	return $str;
+	my %packets = (
+		'007E' => ['item_drop', 'v2', [qw(amount ID)]],
+		'0085' => ['character_move', 'x4 a3', [qw(coords)]],
+		'008C' => ['skill_use_location', 'v3 x4 v', [qw(lv skillID x y)]],
+		'009B' => ['storage_item_remove', 'V x12 a2', [qw(amount ID)]],
+		'00A2' => ['storage_item_add', 'a2 V x8', [qw(ID amount)]],
+		'00A7' => ['sync', 'x6 V', [qw(time)]],
+		'009F' => ['item_use', 'v a4', [qw(ID targetID)]],
+		'00F3' => ['map_login', 'x3 a4 a4 x a4 x9 V C x5', [qw(charID accountID sessionID tick sex)]],
+		'0113' => ['storage_close'],
+		'0193' => ['actor_info_request', 'x3 a4', [qw(ID)]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
+	my %handlers = qw(
+		item_drop 007E
+		character_move 0085
+		skill_use_location 008C
+		storage_item_remove 009B
+		storage_item_add 00A2
+		sync 00A7
+		item_use 009F
+		map_login 00F3
+		actor_look_at 00F7
+		storage_close 0113
+		item_take 0116
+		public_chat 0190
+		actor_info_request 0193
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 sub sendAction {
@@ -56,80 +80,24 @@ sub sendStand {
 }
 =cut
 
-sub sendChat {
-	my ($self, $message) = @_;
-	$message = "|00$message" if $masterServer->{chatLangCode};
-
-	my ($data, $charName); # Type: Bytes
-	$message = stringToBytes($message); # Type: Bytes
-	$charName = stringToBytes($char->{name});
-
-	$data = pack("C*", 0x90, 0x01) .
-	pack("v*", length($charName) + length($message) + 8) .
-	$charName . " : " . $message . chr(0);
-	$self->sendToServer($data);
-}
-
-sub sendDrop {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x7E, 0x00) .
-		pack("v1", $amount) .
-		pack("v1", $index);
-	$self->sendToServer($msg);
-	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendGetPlayerInfo {
-	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0x93, 0x01) . createRandomBytes(3) . $ID;
-	$self->sendToServer($msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
-}
-
-sub sendItemUse {
-	my ($self, $ID, $targetID) = @_;
-	my $msg = pack("C*", 0x9F, 0x00) .
-		pack("v*", $ID) .
-		$targetID;
-	$self->sendToServer($msg);
-	debug "Item Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendLook {
-	my ($self, $body, $head) = @_;
-	my $msg = pack("C*", 0xF7, 0x00, $head, 0x00, $body);
-	$self->sendToServer($msg);
-	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$char->{look}{head} = $head;
-	$char->{look}{body} = $body;
-}
-
-sub sendMapLogin {
-	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
-	my $msg;
-
-	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	$msg = pack("C*", 0xF3, 0x00) .
-		createRandomBytes(3) .
-		$charID .
-		$accountID .
-		chr(0) .
-		$sessionID .
-		createRandomBytes(9) .
-		pack("V", getTickCount()) .
-		chr($sex) .
-		createRandomBytes(5);
-	$self->sendToServer($msg);
+sub reconstruct_character_move {
+	my ($self, $args) = @_;
+	
+	$args->{no_padding} = defined $args->{no_padding} ? $args->{no_padding} : $masterServer->{serverType} == 0;
+	
+	$args->{coords} = getCoordString2(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
 sub sendMove {
-	my $self = shift;
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	my $msg = pack("C*", 0x85, 0x00, 0x00, 0x00, 0x00, 0x00) .
-		getCoordString2($x, $y, 1);
-		
-	$self->sendToServer($msg);
+	my ($self, $x, $y) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'character_move',
+		x => $x,
+		y => $y,
+		no_padding => 1,
+	}));
+	
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
@@ -137,70 +105,6 @@ sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	$self->sendToServer(Network::PaddedPackets::generateSkillUse($ID, $lv,  $targetID));
 	debug "Skill Use: $ID\n", "sendPacket", 2;
-}
-
-sub sendSkillUseLoc {
-	my ($self, $ID, $lv, $x, $y) = @_;
-	my $msg = pack("C*", 0x8C, 0x00) .
-			pack("v", $lv) .
-			pack("v*", $ID) .
-			pack("v*", $x) .
-			pack("x4") .
-			pack("v*", $y);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
-}
-
-sub sendStorageAdd {
-	my $self = shift;
-	my $index = shift;
-	my $amount = shift;
-	my $msg = pack("C*", 0xA2, 0x00) .
-			pack("a2", $index) .
-			pack("V", $amount) .
-			pack("x8");
-	$self->sendToServer($msg);
-	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStorageGet {
-	my ($self, $index, $amount) = @_;
-	my $msg = pack("C*", 0x9B, 0x00) .
-			pack("V*", $amount) .
-			pack("x12") .
-			pack("a2", $index);
-			
-	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
-}
-
-sub sendStorageClose {
-        my ($self) = @_;
-        my $msg = pack("C*", 0x13, 0x01);
-        $self->sendToServer($msg);
-        debug "Sent Storage Done\n", "sendPacket", 2;
-}
-
-sub sendSync {
-	my ($self, $initialSync) = @_;
-	my $msg;
-	# XKore mode 1 lets the client take care of syncing.
-	return if ($self->{net}->version == 1);
-
-	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0xA7, 0x00) . 
-		pack("x6") .
-		$syncSync;
-	$self->sendToServer($msg);
-	debug "Sent Sync\n", "sendPacket", 2;
-}
-
-sub sendTake {
-	my $self = shift;
-	my $itemID = shift; # $itemID = long
-	my $msg = pack("C*", 0x16, 0x01) . $itemID;
-	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;
 }
 
 1;

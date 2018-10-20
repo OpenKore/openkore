@@ -20,17 +20,9 @@ package Network::Send::kRO::Sakexe_2005_05_30a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_05_23a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-# 0x0237,2,rankingpk,0
-sub sendTop10PK {
-	$_[0]->sendToServer(pack('v', 0x0237));
-	debug "Sent Top 10 PK request\n", "sendPacket", 2;	
 }
 
 =pod

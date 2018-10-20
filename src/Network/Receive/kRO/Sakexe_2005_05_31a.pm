@@ -22,23 +22,7 @@ use base qw(Network::Receive::kRO::Sakexe_2005_05_30a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	my %packets = (
-		# 0x0216,2
-		'0239' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
-	);
-	
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
-
-	return $self;
+	return $class->SUPER::new(@_);
 }
-
-=pod
-//2005-05-31aSakexe
-0x0216,2
-0x0239,11
-=cut
 
 1;

@@ -20,17 +20,9 @@ package Network::Send::kRO::Sakexe_2005_03_28a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_01_10b);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-# 0x0225,2,taekwon,0
-sub sendTop10Taekwon {
-	$_[0]->sendToServer(pack('v', 0x0225));
-	debug "Sent Top 10 Taekwon request\n", "sendPacket", 2;
 }
 
 =pod

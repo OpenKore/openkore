@@ -2,8 +2,8 @@ package eventMacro::Validator::NumericComparison;
 
 use strict;
 use base 'eventMacro::Validator';
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use eventMacro::Data qw( $general_wider_variable_qr );
+use eventMacro::Utilities qw( find_variable );
 
 my $number_qr = qr/-?\d+(?:\.\d+)?/;
 
@@ -97,10 +97,6 @@ sub validate {
 
 sub between {
 	$_[0] <= $_[1] && $_[1] <= $_[2];
-}
-
-sub _get_code_regex {
-	return '(?:<|<=|=|==|!=|!|>=|>|)\s*(?:-?\d+(?:\.\d+)?%?|(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters))(?:\s*\.\.\s*(?:-?\d+(?:\.\d+)?%?|(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)))?';
 }
 
 1;

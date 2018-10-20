@@ -20,27 +20,11 @@ package Network::Send::kRO::Sakexe_2004_08_16a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_08_09a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
 }
 
-# 0x0212,26,rc,2
-sub sendGMGiveMannerByName {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x0212, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
-
-# 0x0213,26,check,2
-sub sendGMRequestStatus {
-	my ($self, $playerName) = @_;
-	my $packet = pack('v a24', 0x0213, stringToBytes($playerName));
-	$self->sendToServer($packet);
-}
 =pod
 //2004-08-16aSakexe
 0x0212,26,rc,2

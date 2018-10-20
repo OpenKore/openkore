@@ -20,18 +20,9 @@ package Network::Send::kRO::Sakexe_2005_08_17a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_08_08a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-sub sendFeelSaveOk {
-	my ($self, $flag) = @_;
-	my $msg = pack('v C', 0x0254, $flag);
-	$self->sendToServer($msg);
-	debug "Sent FeelSaveOk.\n", "sendPacket", 2;
 }
 
 =pod

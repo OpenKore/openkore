@@ -1,8 +1,8 @@
 package eventMacro::Condition::AttackStart;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( %monsters $field $char);
+use Utils   qw( calcPosition distance );
 
 use base 'eventMacro::Conditiontypes::ListConditionEvent';
 
