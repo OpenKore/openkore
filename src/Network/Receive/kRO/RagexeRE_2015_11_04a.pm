@@ -18,7 +18,7 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2015_10_29a);
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
+use Globals qw($rodexWrite);
 use Log qw(message warning error debug);
 use Misc;
 use Utils;
@@ -38,7 +38,6 @@ sub new {
 
 sub rodex_open_write {
 	my ( $self, $args ) = @_;
-	use Data::Dumper;
 	$rodexWrite = {};
 	
 	$rodexWrite->{items} = new InventoryList;
