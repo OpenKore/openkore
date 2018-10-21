@@ -4250,7 +4250,10 @@ sub cmdReloadCode2 {
 
 sub cmdRelog {
 	my (undef, $arg) = @_;
-	if (!$arg || $arg =~ /^\d+$/) {
+	#stay offline if arg is 0
+	if (defined $arg && $arg == 0) {
+		offlineMode();
+	} elsif (!$arg || $arg =~ /^\d+$/) {
 		@cmdQueueList = ();
 		$cmdQueue = 0;
 		relog($arg);
