@@ -11662,77 +11662,77 @@ Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evolu
 #
 2301#
 Camisa simples de algodão. Para ser usada em qualquer ocasião. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777710^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2302#
 Camisa simples de algodão. Para ser usada em qualquer ocasião. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777710^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2303#
 Jaqueta barata feita de couro leve. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777715^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2304#
 Jaqueta barata feita de couro leve. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777715^000000
 Peso: ^77777720^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2305#
 Vestimenta leve e confortável para aventureiros. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777720^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2306#
 Vestimenta leve e confortável para aventureiros. Arraste para a janela de equipamento para aumentar sua defesa.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777720^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2307#
 Um casaco simples.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777737^000000
 Peso: ^77777760^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2308#
 Um casaco simples.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777737^000000
 Peso: ^77777760^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2309#
 Casaco longo que cobre até os joelhos.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777742^000000
 Peso: ^777777120^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2310#
 Casaco longo que cobre até os joelhos.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777742^000000
 Peso: ^777777120^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2311#
 Casaco feito de couro, revestido com o pêlo macio de um Lunático. É bastante pesado e quente.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777730^000000
 Peso: ^777777230^000000
 Nível necessário: ^77777730^000000
@@ -11740,35 +11740,35 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2312#
 Armadura mediana, feita de placas de metal presas a couro acolchoado.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777735^000000
 Peso: ^777777280^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 2313#
 Armadura mediana, feita de placas de metal presas a couro acolchoado.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777735^000000
 Peso: ^777777280^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 2314#
 Armadura feita de pequenos anéis de aço trançados de modo a formar um tipo de tecido.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777755^000000
 Peso: ^777777330^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 2315#
 Armadura feita de pequenos anéis trançados de modo a formar um tipo de tecido.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777755^000000
 Peso: ^777777330^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 2316#
 Armadura pesada, feita de placas de aço.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777770^000000
 Peso: ^777777450^000000
 Nível necessário: ^77777740^000000
@@ -11776,7 +11776,7 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 #
 2317#
 Armadura pesada, feita de placas de aço.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777770^000000
 Peso: ^777777450^000000
 Nível necessário: ^77777740^000000
@@ -11785,7 +11785,7 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 2318#
 Vestimenta formal para comerciantes elegantes.
 ^0000ffINT +1, DEFM +5^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777759^000000
 Peso: ^777777250^000000
 Nível necessário: ^77777770^000000
@@ -11795,7 +11795,7 @@ Classes que utilizam: ^777777Mercador e suas evoluções^000000
 Jaqueta extravagante com lantejoulas, normalmente usada por artistas performáticos.
 ^0000ffAdiciona aos seus ataques uma chance de 3% de cegar o oponente.^000000
 ^0000ffDEFM +5^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777250^000000
 Nível necessário: ^77777760^000000
@@ -11803,7 +11803,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2320#
 Terno formal para homens.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777740^000000
 Peso: ^77777730^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
@@ -11811,7 +11811,7 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 2321#
 Manto feito da mais pura seda, encantado magicamente.
 ^0000ffDEFM +10^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777720^000000
 Peso: ^77777740^000000
 Classes que utilizam: ^777777Espadachim/Mago/Mercador/Noviço e as respectivas evoluções^000000
@@ -11819,21 +11819,21 @@ Classes que utilizam: ^777777Espadachim/Mago/Mercador/Noviço e as respectivas e
 2322#
 Manto feito da mais pura seda, encantado magicamente.
 ^0000ffDEFM +10^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777720^000000
 Peso: ^77777740^000000
 Classes que utilizam: ^777777Espadachim/Mago/Mercador/Noviço e as respectivas evoluções^000000
 #
 2323#
 Vestimenta formal de religiosos.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777724^000000
 Peso: ^77777740^000000
 Classes que utilizam: ^777777Noviço e suas evoluções^000000
 #
 2324#
 Vestimenta formal de religiosos.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777724^000000
 Peso: ^77777740^000000
 Classes que utilizam: ^777777Noviço e suas evoluções^000000
@@ -11841,7 +11841,7 @@ Classes que utilizam: ^777777Noviço e suas evoluções^000000
 2325#
 Manto abençoado pelo poder divino.
 ^0000ffDEFM +5^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777750^000000
 Peso: ^77777760^000000
 Classes que utilizam: ^777777Mercador/ Noviço e as respectivas evoluções^000000
@@ -11849,7 +11849,7 @@ Classes que utilizam: ^777777Mercador/ Noviço e as respectivas evoluções^0000
 2326#
 Manto abençoado pelo poder divino.
 ^0000ffDEFM +5^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777750^000000
 Peso: ^77777760^000000
 Classes que utilizam: ^777777Mercador/ Noviço e as respectivas evoluções^000000
@@ -11859,7 +11859,7 @@ Vestimenta exclusiva para Noviços. Irradia uma aura santificada.
 ^0000ffDEFM +5^000000
 ^0000ffAdiciona 15% de resistência contra ataques de monstros da raça Demônio.^000000
 ^0000ffAdiciona 10% de resistência contra ataques da Propriedade Sombria.^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777757^000000
 Peso: ^777777170^000000
 Nível necessário: ^77777760^000000
@@ -11867,14 +11867,14 @@ Classes que utilizam: ^777777Noviço e suas evoluções^000000
 #
 2328#
 Armadura feita de madeira.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777725^000000
 Peso: ^777777100^000000
 Classes que utilizam: ^777777Espadachim/ Mercador e as respectivas evoluções^000000
 #
 2329#
 Armadura feita de madeira.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777725^000000
 Peso: ^777777100^000000
 Classes que utilizam: ^777777Espadachim/ Mercador e as respectivas evoluções^000000
@@ -11882,7 +11882,7 @@ Classes que utilizam: ^777777Espadachim/ Mercador e as respectivas evoluções^0
 2330#
 Vestimenta muito justa que facilita os movimentos.
 ^0000ffDES +1^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777727^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777745^000000
@@ -11891,7 +11891,7 @@ Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
 2331#
 Vestimenta muito justa que facilita os movimentos.
 ^0000ffDES +1^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777727^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777745^000000
@@ -11899,14 +11899,14 @@ Classes que utilizam: ^777777Arqueiro e suas evoluções^000000
 #
 2332#
 Manto tecido com fios de prata.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777723^000000
 Peso: ^77777770^000000
 Classes que utilizam: ^777777Mago e suas evoluções^000000
 #
 2333#
 Manto tecido com fios de prata.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777723^000000
 Peso: ^77777770^000000
 Classes que utilizam: ^777777Mago e suas evoluções^000000
@@ -11914,7 +11914,7 @@ Classes que utilizam: ^777777Mago e suas evoluções^000000
 2334#
 Vestimenta exclusica para Magos. Irradia uma aura mágica.
 ^0000ffDEFM +5, INT +1^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777740^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777750^000000
@@ -11923,7 +11923,7 @@ Classes que utilizam: ^777777Mago e suas evoluções^000000
 2335#
 Vestimenta de "trabalho" para Gatunos. Feita de tecido muito leve.
 ^0000ffAGI +1^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777740^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Gatuno e suas evoluções^000000
@@ -11931,7 +11931,7 @@ Classes que utilizam: ^777777Gatuno e suas evoluções^000000
 2336#
 Vestimenta de "trabalho" para Gatunos. Feita de tecido muito leve.
 ^0000ffAGI +1^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777740^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Gatuno e suas evoluções^000000
@@ -11939,7 +11939,7 @@ Classes que utilizam: ^777777Gatuno e suas evoluções^000000
 2337#
 Vestimenta típica dos antigos assassinos japoneses. Fabricada para facilitar os movimentos do usuário.
 ^0000ffAGI +1, DEFM +3^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777150^000000
 Nível necessário: ^77777750^000000
@@ -11948,14 +11948,14 @@ Classes que utilizam: ^777777Ninja, Gatuno e suas evoluções^000000
 2338#
 Vestido branco usado por noivas no dia de seu casamento.
 ^0000ffDEFM +15^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777710^000000
 Peso: ^77777750^000000
 Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 #
 2339#
 Roupa de baixo comum.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777722^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
@@ -12107,7 +12107,7 @@ Classes que utilizam: ^777777Aprendiz^000000
 2356#
 Os trajes sagrados usados pela inquisição de Glast Heim. Os detalhes vermelhos incitam o medo nos hereges e afastam o profano.
 ^0000ffConcede 80% de resistência a [Cegueira], DEFM +5.^000000
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777745^000000
 Peso: ^777777250^000000
 Nível necessário: ^77777770^000000
@@ -12130,7 +12130,7 @@ Classes: ^777777Classes 3 e Transclasses, exceto Aprendizes^000000
 2358#
 Vestimenta feita com tecido angelical.
 SOR + 4.
-Tipo: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^7777775^000000
 Peso: ^777777100^000000
 Classes que utilizam: ^777777Todas^000000
@@ -12139,7 +12139,7 @@ Classes que utilizam: ^777777Todas^000000
 Vestimenta típica dos antigos assassinos japoneses.
 Fabricada para facilitar os movimentos do usuário.
 AGI + 1,DEFM + 3
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777758^000000
 Peso: ^777777150^000000
 Nível necessário: ^77777750^000000
@@ -12219,7 +12219,7 @@ Vestimenta exclusiva para Noviços. Irradia uma aura santificada.
 DEFM + 5
 Adiciona 15% de resistência contra ataques de monstros da raça Demônio.
 Adiciona 10% de resistência contra ataques da Propriedade Sombria.
-Classe: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777757^000000
 Peso: ^777777170^000000
 Nível necessário: ^77777760^000000
@@ -12367,7 +12367,7 @@ Aumenta Atq em 10%. Aumenta AtqM em 10%.
 DEFM + 10
 Não permite que o usuário seja empurrado para trás em batalhas. Não pode ser refinada.
 Não pode ser destruida em batalha.
-Tipo: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^777777120^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777794^000000
@@ -12510,7 +12510,7 @@ Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 2397#
 Uma capa especial usada apenas pelos funcionários da Corporação Eventos Incriveis. Dizem que no inverno esquenta e esfria no verão.
-Tipo: ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777710^000000
 Peso: ^77777790^000000
 Classes que utilizam: ^777777Todas^000000
@@ -16891,287 +16891,287 @@ Classes: ^777777Todas^000000
 ^0000ffSOR +2, Esquiva Perfeita +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4002#
 ^0000ffMáx. HP +100, VIT +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4003#
 ^0000ffMáx. HP +700^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4004#
 ^0000ffDES +1, Precisão +3^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4005#
 Dano físico contra a propriedade Sombrio +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4006#
 ^0000ffSOR +1, Crítico +1, Esquiva Perfeita +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4007#
 Dano físico contra a raça Amorfo +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4008#
 ^0000ffFOR +1, ATQ +10^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4009#
 ^0000ffAGI +1, Esquiva +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4010#
 ^0000ffMáx. SP +80^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4011#
 ^0000ffMáx. HP +100, VIT + 1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4012#
 ^0000ffMáx. HP +400^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4013#
 ^0000ffMáx. HP +5% ^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4014#
 ^0000ffMáx. HP +400, máx. SP +50^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4015#
 ^0000ffEsquiva +10^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4016#
 ^0000ffAGI +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4017#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Atordoamento no inimigo.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4018#
 ^0000ffMáx. SP +10, INT + 1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4019#
 ^0000ffFOR +1, ATQ +3^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4020#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Cegueira no inimigo, ATQ +5^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4021#
 ^0000ffDES +1, ATQ +5^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4022#
 ^0000ffVIT +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4023#
 ^0000ffINT +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4024#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Sono no inimigo, ATQ +5^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4025#
 ^0000ffAdiciona a cada ataque 2% de chance de causar Atordoamento no inimigo, ATQ +10^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4026#
 ^0000ffAGI +1, Esquiva +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4027#
 ^0000ffAGI +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4028#
 ^0000ffFOR +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4029#
 ^0000ffATQ +15, Crítico +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4030#
 Dano físico contra a propriedade Vento +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4031#
 ^0000ffMáx. HP +10%^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4032#
 ^0000ffDEF +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4033#
 ^0000ffPermite o uso da habilidade "Desintoxicar" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4034#
 ^0000ffDES +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4035#
 Dano físico contra a raça Humanoide +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4036#
 ^0000ffRecuperação de HP +10%^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4037#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Envenenamento no inimigo, ATQ +5^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4038#
 ^0000ffRecuperação de HP +20%^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4039#
 ^0000ffConcede 20% de resistência contra Silêncio, DEF +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4040#
 ^0000ffPermite o uso da habilidade "Teleporte" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4041#
 ^0000ffConcede 20% de resistência contra Sono, DEF +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4042#
@@ -17185,104 +17185,104 @@ Peso: ^7777771^000000
 ^0000ffATQ +20^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4044#
 ^0000ffPermite o uso da habilidade "Esconderijo" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4045#
 Resistência a danos físicos a distância +35%.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4046#
 ^0000ffConcede 20% de resistência contra Cegueira, DEF +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4047#
 Encanta a vestimenta com a propriedade Fantasma.
 Regeneração natural de HP -25%.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4048#
 ^0000ffPermite o uso da habilidade "Envenenar" em nível 3.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4049#
 Dano físico contra a propriedade Fogo +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4050#
 ^0000ffAGI +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4051#
 ^0000ffEsquiva Perfeita +5, AGI +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4052#
 ^0000ffINT +2^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4053#
 ^0000ffPermite o uso da habilidade "Curar" em nível 1. Aumenta o consumo de SP de todas as habilidades utilizadas em 25%.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4054#
 ^0000ffAbençoa a vestimenta com a Propriedade Sagrado.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4055#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Congelamento no inimigo, ATQ +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4056#
 ^0000ffConcede 30% de resistência contra ataques da Propriedade Vento, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4057#
 ^0000ffAdiciona a cada ataque 5% de chance de causar Silêncio no inimigo, ATQ +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4058#
@@ -17295,21 +17295,21 @@ Peso: ^7777771^000000
 ^0000ffReduz em 30% o dano causado por monstros da raça Planta.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4060#
 Dano físico contra a raça Bruto +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4061#
 ^0000ffTorna a vestimenta indestrutível em batalha, DEF +1^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4062#
@@ -17322,28 +17322,28 @@ Peso: ^7777771^000000
 Dano físico contra a raça Inseto +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4064#
 ^0000ffDES +3.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4065#
 Dano físico contra a propriedade Terra +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4066#
 ^0000ffReduz em 30% o dano causado por monstros da raça Bruto.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4067#
@@ -17357,63 +17357,63 @@ Peso: ^7777771^000000
 Dano físico contra a raça Planta +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4069#
 Dano físico contra a propriedade Água +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4070#
 ^0000ffRecuperação de SP +15%.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4071#
 ^0000ffConcede 30% de resistência contra ataques da Propriedade Maldito, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4072#
 ^0000ffTorna a arma indestrutível em batalha, ATQ +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4073#
 ^0000ffPermite o uso da habilidade "Desconto" em nível 5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4074#
 ^0000ffReduz em 30% o dano causado por monstros da raça Inseto.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4075#
 ^000000Concede 20% de resistência contra [Petrificação], DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4076#
 ^0000ffAdiciona a cada ataque 5% de chance de causar [Maldição] no inimigo, ATQ +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4077#
@@ -17427,28 +17427,28 @@ Peso: ^7777771^000000
 ^0000ffVIT +3.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4079#
 ^0000ffFOR +3.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4080#
 Dano físico contra a raça Peixe +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4081#
 ^0000ffConcede 30% de resistência contra ataques da Propriedade Terra, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4082#
@@ -17456,35 +17456,35 @@ ATQ +5.
 Dano físico contra oponentes de tamanho pequeno +15%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4083#
 ^0000ffReduz em 30% o dano causado por monstros da raça Peixe.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4084#
 ^0000ffPermite o uso da habilidade "Impacto Explosivo" em nível 3.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4085#
 Dano físico contra a propriedade Sagrado +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4086#
 ^0000ffTaxa de Crítico +9.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4087#
@@ -17498,28 +17498,28 @@ Peso: ^7777771^000000
 ^0000ffPermite o uso da habilidade "Furtividade" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4089#
 ^0000ffEncanta a vestimenta com a propriedade Água, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4090#
 ^0000ffConcede 15% de resistência contra [Petrificação], concede 5% de resistência contra ataques da propriedade Terra, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4091#
 ^0000ffTaxa de Ataque Crítico +4, FOR +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4092#
@@ -17527,14 +17527,14 @@ ATQ +5.
 Dano físico contra oponentes de tamanho médio +15%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4093#
 ^0000ffPermite o uso da habilidade "Medicar" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4094#
@@ -17547,49 +17547,49 @@ Peso: ^7777771^000000
 ^0000ffConcede 30% de resistência contra ataques da propriedade Água.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4096#
 ^0000ffAdiciona a cada ataque 4% de chance de causar [Envenenamento] no inimigo, ATQ +10.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4097#
 ^0000ffMáx. HP +10%, AGI +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4098#
 ^0000ffEncanta a vestimenta com a propriedade Vento, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4099#
 ^0000ffEncanta a vestimenta com a propriedade Fogo, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4100#
 ^0000ffMáx. SP +15%, recuperação de SP +3%.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4101#
 ^000000Encanta a vestimenta com a propriedade Terra, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4102#
@@ -17603,14 +17603,14 @@ Peso: ^7777771^000000
 ^0000ffPermite o uso da habilidade "Chama Reveladora" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4104#
 ^0000ffAdiciona a cada ataque 5% de chance de causar [Confusão] no inimigo.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4105#
@@ -17624,14 +17624,14 @@ Peso: ^7777771^000000
 ^0000ffTaxa de Precisão +20.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4107#
 ^0000ffMáx. HP e SP +8%.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4108#
@@ -17645,7 +17645,7 @@ Peso: ^7777771^000000
 ^0000ffConcede 30% de resistência contra ataques da propriedade Fogo, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4110#
@@ -17659,7 +17659,7 @@ Peso: ^7777771^000000
 Dano físico contra a raça Demônio +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4112#
@@ -17672,56 +17672,56 @@ Peso: ^7777771^000000
 ^0000ffConcede 30% de resistência contra ataques da propriedade Fantasma, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4114#
 ^0000ffEncanta a vestimenta com a propriedade Veneno, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4115#
 ^0000ff3% de chance de converter 15% do dano físico causado em HP.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4116#
 ^0000ffConcede 30% de resistência contra ataques da propriedade Sombrio, Esquiva +5.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4117#
 ^0000ffPermite o uso da habilidade "Ataque Duplo" em nível 1, com todas as armas. O efeito não é cumulativo.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4118#
 Dano físico contra a raça Dragão +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4119#
 ^0000ffEncanta a vestimenta com a propriedade Sombrio.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4120#
 ^0000ffReduz em 30% o dano causado por monstros da raça Dragão.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4121#
@@ -17762,7 +17762,7 @@ ATQ +5.
 Dano físico contra oponentes de tamanho grande +15%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4127#
@@ -17783,14 +17783,14 @@ Peso: ^7777771^000000
 ^0000ffAGI +3, Taxa de Crítico +1%.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Capa^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4130#
 Dano físico contra a raça Morto-Vivo +20%.
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4131#
@@ -17829,7 +17829,7 @@ Peso: ^7777771^000000
 ^0000ffReduz em 30% o dano causado por monstros da raça Demônio.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4137#
@@ -17842,27 +17842,27 @@ Peso: ^7777771^000000
 ^0000ffReduz em 30% o dano causado por monstros da raça Anjo.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com:  ^777777Escudo^000000
+Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4139#
 ^0000ffPermite o uso da habilidade "Furto" em nível 1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Acessório^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4140#
 Dano físico contra monstros Chefes +25%.
 Classe: ^777777Carta^000000
-Combina com: ^777777Armamento^000000
+Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4141#
 ^0000ffEncanta a vestimenta com a propriedade Maldito. INT +1, DEF +1.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Vestimenta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4142#
@@ -18318,7 +18318,7 @@ Peso: ^7777771^000000
 ^0000ffPermite ao usuário detectar monstros escondidos.^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4199#
@@ -20673,7 +20673,7 @@ Peso : ^7777771^000000
 Se o item com esta carta tiver refinamento +15 ou superior, Máx. HP -35%^000000
 Combine com um item para utilizar sua propriedade.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4505#
@@ -20893,7 +20893,7 @@ Se o refinamento do Calçado for +15 ou acima,
 ATQM +8%, SP Máximo -50%.
 Aumenta o dano mágico em monstros da raça Anjo e Humanoide em 33%.
 Classe: ^777777Carta^000000
-Combina com: ^777777Calçado^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4556#
@@ -22130,7 +22130,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +1. INT -1.^000000
 ^0000ffATQ +3.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22139,7 +22139,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +2. INT -2.^000000
 ^0000ffATQ +6.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22148,7 +22148,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffFOR +4. INT -4.^000000
 ^0000ffATQ +12.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22157,7 +22157,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +1. FOR -1.^000000
 ^0000ffATQM +3.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22166,7 +22166,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +2. FOR -2.^000000
 ^0000ffATQM +6.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22175,7 +22175,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffINT +4. FOR -4.^000000
 ^0000ffATQM +12.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22184,7 +22184,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +1. VIT -1.^000000
 ^0000ffEsquiva +2.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22193,7 +22193,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +2. VIT -2.^000000
 ^0000ffEsquiva +4.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22202,7 +22202,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffAGI +4. VIT -4.^000000
 ^0000ffEsquiva +8.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22211,7 +22211,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +1. AGI -1.^000000
 ^0000ffDEF +3. DEFM +2.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22220,7 +22220,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +2. AGI -2.^000000
 ^0000ffDEF +6. DEFM +4.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22229,7 +22229,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffVIT +4. AGI -4.^000000
 ^0000ffDEF +12. DEFM +8.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22238,7 +22238,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +1. SOR -1.^000000
 ^0000ffPrecisão +2.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22247,7 +22247,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +2. SOR -2.^000000
 ^0000ffPrecisão +4.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22256,7 +22256,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffDES +4. SOR -4.^000000
 ^0000ffPrecisão +8.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22265,7 +22265,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +1. DES -1.^000000
 ^0000ffCRIT +1.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22274,7 +22274,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +2. DES -2.^000000
 ^0000ffCRIT +2.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -22283,7 +22283,7 @@ Essência do Rei Demoníaco Morroc. Funciona como um encantamento.
 ^0000ffSOR +4. DES -4.^000000
 ^0000ffCRIT +4.^000000
 ^ff0000Uma vez combinado, poderá ser perdido em processos de reset de encantamento e remoção de carta.^000000
-Tipo: ^777777Encantamento^000000
+Tipo: ^777777Essência^000000
 Equipa em: ^777777Slots disponíveis^000000
 Peso: ^7777771^000000
 #
@@ -44137,10 +44137,10 @@ Túnica criada para simbolizar a preocupação com o próximo.
 Abençoa o usuário com a propriedade Sagrada.
 ^0000ffINT +1. DEFM +10.^000000
 ^0000ffConsumo de SP de [Clementia] -50.^000000
-Tipo : ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777722^000000
-Peso : ^77777730^000000
-Nível Necessário : ^777777100^000000
+Peso: ^77777730^000000
+Nível Necessário: ^777777100^000000
 Classe: ^777777Arcebispo^000000
 #
 15030#
@@ -44149,10 +44149,10 @@ Abençoa o usuário com a propriedade Sombria.
 ^0000ffFOR +1, INT +1, DEFM +10.^000000
 ^0000ffResistência contra as raças Demônio e Morto-Vivo +10%.^000000
 ^0000ffResistência contra outras raças -10%.^000000
-Tipo : ^777777Vestimenta^000000
+Tipo: ^777777Armadura^000000
 Defesa: ^77777722^000000
-Peso : ^77777730^000000
-Nível Necessário : ^777777100^000000
+Peso: ^77777730^000000
+Nível Necessário: ^777777100^000000
 Classe: ^777777Arcebispo^000000
 #
 15031#
@@ -45481,6 +45481,21 @@ Tipo: ^777777Armadura^000000
 Defesa: ^7777770^000000
 Peso: ^77777760^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15383#
+Sobretudo indispensável para um Senhor do Tempo. Basta equipá-lo, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
+^0000ffHP máx. +500.^000000
+^0000ffSP máx. +100.^000000
+^0000ffATQ e ATQM +50.^000000
+^0000ffPós-conjuração -10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Manto do Senhor do Tempo]^000000
+^0000ffPós-conjuração -10% adicional.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777762^000000
+Peso: ^7777770^000000
+Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
 15385#
@@ -53582,7 +53597,7 @@ Classes: ^777777Todas^000000
 Direto das histórias de terror que sua mãe te contava, esse gorro macabro pode ou não ter pertencido ao temível Bicho Papão. Vestindo-o, você vai apavorar muita gente que ainda tem medo de passar pela cozinha com as luzes apagadas à meia-noite.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Topo, Meio e Baixo^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -56030,6 +56045,23 @@ Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+20939#
+Manto indispensável para um Senhor do Tempo. Basta equipá-lo, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
+^0000ffEsquiva +30.^000000
+^0000ffPrecisão +10.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffResistência às propriedades Fogo, Água, Terra e Vento +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Botas do Senhor do Tempo]^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+^0000ffConjuração variável -10% adicional.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777730^000000
+Peso: ^7777770^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
 21000#
 Uma Espada especial revestido de Oridecon e Ouro em uma combinação perfeita.
 ^0000ffA cada refino:^000000
@@ -57292,6 +57324,21 @@ Nível base 100 ou mais:
 Tipo: ^777777Calçado^000000
 Defesa: ^77777718^000000
 Peso: ^777777100^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+22204#
+Botas indispensáveis para um Senhor do Tempo. Basta equipá-las, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
+^0000ffCRIT +10.^000000
+^0000ffDano crítico +10%.^000000
+^0000ffDano mágico de todas as propriedades +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sobretudo do Senhor do Tempo]^000000
+^0000ffDano mágico +5%.^000000
+^0000ffATQ da arma +5%.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
@@ -60727,5 +60774,21 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+32221#
+Anel indispensável para um Senhor do Tempo. Basta equipá-lo, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
+^0000ffConjuração variável -10%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Sobretudo do Senhor do Tempo]^000000
+^FF6347[Botas do Senhor do Tempo]^000000
+^FF6347[Manto do Senhor do Tempo]^000000
+^0000ffVelocidade de ataque +2.^000000
+^0000ffConjuração variável -10% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^77777715^000000
+Peso: ^7777770^000000
+Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
