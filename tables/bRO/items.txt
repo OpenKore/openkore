@@ -5745,6 +5745,7 @@
 15372#Vestes de Freeoni#
 15374#Armadura Eclipse#
 15375#Armadura Eclipse Desgastada#
+15383#Sobretudo do Senhor do Tempo#
 15385#Robozinho Sabe-Tudo#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
@@ -6681,6 +6682,7 @@
 20904#Bata de Etran#
 20908#Manto da Bruxa#
 20909#Haori de Batalha#
+20939#Manto do Senhor do Tempo#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -6742,6 +6744,7 @@
 22182#Sapatos da Penitência#
 22189#Sapato Social#
 22191#Sapato Infernal#
+22204#Botas do Senhor do Tempo#
 22507#Velho Pergaminho#
 22508#Emblema do Éden#
 22511#Carta Fenris Fenrir#
@@ -7057,3 +7060,4 @@
 31572#Auréolas Digitais#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
+32221#Anel do Senhor do Tempo#
