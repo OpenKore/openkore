@@ -265,6 +265,20 @@ recvpackets recvpackets.txt
 addTableFolders pRO
 pinCode 1
 
+# https://ru.4game.com/ro/play/
+[Russia - rRO-Renewal]
+ip 109.105.140.145
+port 6800
+master_version 25
+version 1
+serverType rRO
+serverEncoding Russian
+addTableFolders rRO
+charBlockSize 145
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+blockingPlayerCancel 1
+gameGuard 0
+
 # https://ro.gnjoy.com.tw/
 [Taiwan - twRO: OldFriend (ChaosFree, IrisFree, LokiFree)]
 ip 220.130.113.235
@@ -371,8 +385,3 @@ pinCode 1
 [Europe - euRO]
 dead 1
 dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
-
-# http://www.raggame.ru/
-[Russia - rRO-Renewal]
-dead 1
-dead_message rRO was closed on 16 November 2015. New opening in August 18, 2018.
