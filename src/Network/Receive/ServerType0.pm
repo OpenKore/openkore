@@ -959,7 +959,7 @@ sub map_loaded {
 		$timeout{'ai'}{'time'} = time;
 		our $quest_generation++;
 
-		$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq 'bRO'); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendRequestCashItemsList() if ($masterServer->{serverType} eq qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
 	}
