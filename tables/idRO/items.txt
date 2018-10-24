@@ -1,4 +1,4 @@
-d2101#Guard#
+2101#Guard#
 2102#Guard#
 2103#Buckler#
 2104#Buckler#
@@ -1475,6 +1475,24 @@ d2101#Guard#
 681#Memory_of_Wedding#
 
 //_-----_중국로컬라이징_-----
+7234#Soul_Of_Guild#
+7235#Soul_Of_Courage#
+7236#Soul_Of_Guard#
+7237#Soul_Of_Partnership#
+7238#Soul_Of_Correspondence#
+7239#Soul_Of_Proceeding#
+7240#Soul_Of_Confidence#
+7241#Soul_Of_Agreement#
+7242#Soul_Of_Harmony#
+7243#Soul_Of_Cooperate#
+7244#Soul_Of_Unity#
+7245#Soul_Of_Friendship#
+7246#Soul_Of_Peace#
+7247#Soul_Of_Spirit#
+7248#Soul_Of_Honor#
+7249#Soul_Of_Service#
+7250#Soul_Of_Glory#
+7251#Soul_Of_Victory#
 7252#Eastern_Medicine#
 678#Poison_Bottle#
 679#Gold_Pill#
@@ -7406,3 +7424,124 @@ d2101#Guard#
 4576#Gioia_Card#
 4578#Pyuriel_Card#
 4580#Dark_Guardian_Kades_Card#
+
+//====================update 24072018 =================
+18663#Costume_Sunglasses_Baseball_Hat#
+19883#Costume_Piamette_Hood#
+19823#Costume_White_Cat_Hood#
+32100#Costume_Fisherman's_Hat#
+32101#Costume_Jejecap#
+6770#Shark#
+6774#Piranha#
+32233#Fishing_Point#
+
+//====================update 14082018 =================
+//Update August 2018
+2022#Staff Of Geffen#
+2499#Temporal_Boots#
+4875#Bear's_Power#
+4876#Runaway_Magic#
+4877#Speed_Of_Light#
+4878#Muscle_Fool#
+4879#Hawkeye#
+4880#Lucky_Day#
+6607#Temporal_Crystal#
+6608#Coagulated_Spell#
+6609#Glast_Decayed_Nail#
+6610#Glast_Horrendous_Mouth#
+6611#Colorful_Key#
+6612#Gold_Coin_Basket#
+6613#Colorful_Brooch#
+7228#Gold_Bullion#
+7229#Silver_Bullion#
+7230#White_Gold_Bullion#
+13086#Goldsmithing_Dagger#
+13440#Ceremonial_Sword#
+15066#Engraved_Armor#
+18752#Cursed_Book#
+21003#Muramasa_#
+21007#Heavy_Sword#
+22000#Temporal_Str_Boots#
+22001#Temporal_Int_Boots#
+22002#Temporal_Agi_Boots#
+22003#Temporal_Vit_Boots#
+22004#Temporal_Dex_Boots#
+22005#Temporal_Luk_Boots#
+22006#Temporal_Str_Boots_#
+22007#Temporal_Vit_Boots_#
+22008#Temporal_Dex_Boots_#
+22009#Temporal_Int_Boots_#
+22010#Temporal_Agi_Boots_#
+22011#Temporal_Luk_Boots_#
+//August Update
+6648#Old Crown#
+6649#Broken Horn#
+6650#Old Ring#
+6651#Rusty Bracelet#
+6652#Old Photo Album#
+6653#Old Pill#
+13090#Faceworm Queen Leg#
+20717#Giant Faceworm Snake Skin#
+20718#Giant Faceworm Snake Skin#
+22507#Shabby Old Scroll#
+
+//====================update 21082018 =================
+32234#Merdeka_Lucky_Box#
+32235#Merdeka_Lucky_Box_AM#
+28521#Giant's_Protection#
+
+7830#Goddess_Tear#
+7831#Valkyrie's_Token#
+7832#Brynhild_Armor_Piece#
+7833#Hero's_Remains#
+7834#Andvari's_Ring#
+7835#Dusk_Glow#
+7836#Dawn_Essence#
+7837#Cold_Moonlight#
+7838#Hazy_Starlight#
+7839#Crystal_Key#
+7840#Valkyrie's_Gift#
+
+//====================update 04092018 =================
+5933#Crow Tengu Mask#
+28437#Hibram's Gloves#
+28438#Fairy Leaf Powder#
+32001#Loyalty Point#
+32236#Costume: Fox Ears Bell Ribbon#
+32237#Costume: Alchemist Mask#
+32238#Costume: Magical Booster#
+32239#Costume: Reginleif Hairband#
+32240#Costume: Tipsy#
+32241#Lovely Autumn Box#
+32242#Lovely Autumn Box AM#
+32243#Equinox Costume Box#
+31265#Costume: Straight Pony Blue#
+31266#Costume: Straight Pony Red#
+31268#Costume: Straight Pony Green#
+
+//==================== update 09102018 =================
+32244#Spooktober Costume Box#
+32245#Costume: Chain Puppet#
+32246#Costume: Niffleheim Bunny Hat#
+32247#Costume: Witch's Pumpkin Hat#
+32248#Costume: Cat's Eye#
+32249#Costume: Deviruchi Balloon#
+32250#Costume: Secret Bandana#
+32251#Costume: Khalitzburg Helm#
+32252#Costume: Skull Cap#
+32253#Costume: Helm of Abyss#
+32254#Costume: Black Frame Glasses#
+22314#Enforcer_Shoes#
+5795#Red Dress Hat#
+
+//====================update 16102018 =================
+32255#Costume : Criatura Academy Hat#
+32257#Festa Ticket#
+32260#Costume : ROR 1st Anniversary Crown#
+
+//====================update 23102018 =================
+28901#Mad Bunny Special#
+28902#Mad Bunny Special#
+32262#Mad_Bunny_Scroll#
+32263#Enriched_Elunium_Box25#
+32264#Enriched_Oridecon_Box25#

@@ -11037,7 +11037,7 @@ VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam mons
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 
 19106#Delay Bounty#SG_FEEL#QUE_NOIMAGE#
-Kamu harus menunggu 3 jam sebelum bisa mengulang atau mengambil quest lagi.#
+Kamu harus menunggu 23 jam sebelum bisa mengulang atau mengambil quest lagi.#
 #
 
 19107#Delay VIP Bounty#SG_FEEL#QUE_NOIMAGE#
@@ -11162,4 +11162,566 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 
 19134#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
 VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// update event Fishing
+
+19135#Delay Fishing Alberta 1#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19136#Delay Fishing Alberta 2#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19137#Delay Fishing Hugel 1#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19138#Delay Fishing Hugel 2#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19139#Delay Fishing Izlude 1#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19140#Delay Fishing Izlude 2#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19141#Delay Fishing Ayothaya 1#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19142#Delay Fishing Ayothaya 2#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19143#Delay Fishing Field Prontera 1#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+19144#Delay Fishing Field Prontera 2#SG_FEEL#QUE_NOIMAGE#
+Kamu harus menunggu 30 Menit untuk memancing kembali.#
+#
+
+//--- Daily Quest 24 Juli 2018
+
+19145#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19146#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19147#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19148#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 31 Juli 2018
+
+19149#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19150#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19151#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19152#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 7 Agustus 2018
+
+19153#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19154#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19155#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19156#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 14 Agustus 2018
+
+19157#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19158#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19159#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19160#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//-- 영웅의 흔적과 차원이동
+7565#Return of Rayan Moore#SG_FEEL#QUE_NOIMAGE#
+Dimensional Crack telah ditemukan berdasarkan informasi dari Rayan Moore. Cari tau apa kabarnya ketika dia ditahan di Eclage.#
+Pembicaraan dengan Rayan Moore#
+
+7566#Dimension Traveller#SG_FEEL#QUE_NOIMAGE#
+Dimensional device dibuat secara khusus untuk memasuki dimensional gap antara tempat dan waktu.#
+#
+
+//- Old Glast Heim
+//-------글래스트헤임 시간의 틈
+12316#Meeting Hugin#SG_FEEL#QUE_NOIMAGE#
+Finally met Hugin for the first time. He probably remembers me, but not sure I would do the same.#
+First encounter.#
+
+
+12317#Trace of Time Travel#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glast Heim has been prohibited for 23hours.#
+Dimension distorted.#
+
+
+12318#Corrupted Soul Hunt#SG_FEEL#QUE_NOIMAGE#
+Find and destroy the Corrupted Soul located in Old Glast Heim 1F.#
+#
+
+
+12319#Amdarais Hunt#SG_FEEL#QUE_NOIMAGE#
+Proceed to the 2nd floor of Old Glast Heim and destroy Amdarais#
+#
+
+12320#Time Traveler#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glastheim has been partially finished.#
+Old castle time travel#
+
+12321#Time Conqueror#SG_FEEL#QUE_NOIMAGE#
+Time travel to Old Glastheim has been completely finished.#
+Old castle time travel#
+
+12322#Space Distortion#SG_FEEL#QUE_NOIMAGE#
+Inside of Glastheim has been distorted by Hugin. Anything can happen inside of this castle. #
+Space distorted#
+
+
+
+//- 영웅의 흔적
+12325#Faceworm's Nest after-effects#SG_FEEL#QUE_NOIMAGE#
+Kamu tidak bisa masuk lagi kedalam Faceworm's Nest sampai waktunya selesai.#
+#
+
+12326#The owner of old ring#SG_FEEL#QUE_NOIMAGE#
+Kamu telah menemukan pemilik cincin tua.#
+#
+
+12327#The memory of old photo album#SG_FEEL#QUE_NOIMAGE#
+Si Pedagang akan sangat senang jika dia menerima album foto itu. Mari cari album foto lain yang mungkin hilang dan bawa kepadanya.#
+#
+
+12328#Dol-Seoi's Sorrow#SG_FEEL#QUE_NOIMAGE#
+Dol-Seoi menangis ketika kamu memberikan pil yang kamu temukan. Cari pil yang lain jika kamu menemukannya di Faceworm Nest.#
+#
+
+12329#Keaton's Bracelet#SG_FEEL#QUE_NOIMAGE#
+Mengapa arwah ini tidak bisa tidur dengan tenang? Bawakan gelang yang kamu bisa temukan di Faceworm Nest kepada Keaton.#
+#
+//-영웅의 흔적
+15002#Memorial dungeon: Sara's Memory#SG_FEEL#QUE_NOIMAGE#
+Kamu tidak bisa masuk lagi kedalam sampai waktunya selesai.#
+#
+
+15003#Adventurer Leon#SG_FEEL#QUE_NOIMAGE#
+Memorial dungeon : Bicara kepada Adventurer Leon setelah apa yang kamu alami di Sara Memory.#
+#
+
+//--- Daily Quest 21 Agustus 2018
+
+19161#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19162#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19163#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19164#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 28 Agustus 2018
+
+19165#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19166#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19167#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19168#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 3 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 4 September 2018
+
+19169#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19170#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19171#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19172#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 12 September 2018
+
+19173#Rookie Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Bounty ( Tingkat kesulitan : Mudah ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19174#Advanced Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19175#Expert Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Bounty ( Tingkat kesulitan : ^ff0000Sulit^000000 ) : Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19176#VIP Bounty Quest#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 18 September 2018
+
+19177#Les Hunting#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Les ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19178#Metaling Hunting#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Metaling ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19179#Anolian Hunting#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Anolian ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19180#Remover Hunting#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Remover ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19181#Errende Hunting#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Errende ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19182#Frus Hunting#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Frus ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19183#VIP Hunting#SG_FEEL#QUE_NOIMAGE#
+VIP Bounty ( Tingkat kesulitan : ^ff0000Menengah^000000 ): Kalahkan 2 macam monster yang tertera pada kolom dibawah untuk dapat menyelesaikan misi ini#
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 26 September 2018
+
+19184#Stapo Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Stapo ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19185#Porcellio Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Porcellio ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19186#Ice Titan Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Ice Titan ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19187#Zakudam Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Zakudam ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19188#Banshee Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Banshee ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19189#Antler Scaraba Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Antler Scaraba ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 2 Oktober 2018
+
+19191#Pasana Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Pasana ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19192#Teddy Bear Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Teddy Bear ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19193#Raydric Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Raydric ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19194#Incubus Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Incubus ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19195#Uni-horn Scaraba Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Uni-horn Scaraba ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19196#Dolomedes Hunting Quest#SG_FEEL#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Dolomedes ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 9 Oktober 2018
+
+19197#Petite Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Petite ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19198#Alarm Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Alarm ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19199#Vanberk Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Vanberk ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19200#Dimik Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Dimik ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19201#Cenia Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Cenia ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19202#Kavach Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Kavach ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+//--- Daily Quest 16 Oktober 2018
+
+19203#High Orc Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster High Orc ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19204#Firelock Soldier Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Firelock Soldier ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19205#Loli Ruri Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Loli Ruri ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19206#Isilla Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Isilla ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19207#Bradium Golem Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Bradium Golem ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19208#Petal Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Petal ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- Cooldown Jam 12 Vip Buff
+
+19209#Cooldown VIP Buff#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu sampai jam 12 malam sampai cooldown ini selesai#
+Setelah selesai, kembalilah kepada Shia untuk mendapatkan buff kembali#
+
+// -- Quest Log Poring Coin MVP
+
+19210#[Poring Coin] Eddga Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Eddga.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19211#[Poring Coin] Eddga Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19212#[Poring Coin] Tao Gunka Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Tao Gunka.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19213#[Poring Coin] Tao Gunka Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19214#[Poring Coin] Phreeoni Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Phreeoni.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19215#[Poring Coin] Phreeoni Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19216#[Poring Coin] Atroce Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Atroce.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19217#[Poring Coin] Atroce Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19218#[Poring Coin] Mistress Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Mistress.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19219#[Poring Coin] Mistress Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19220#[Poring Coin] Lady Tanee Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Lady Tanee.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19221#[Poring Coin] Lady Tanee Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19222#[Poring Coin] Drake Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Drake.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19223#[Poring Coin] Drake Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19224#[Poring Coin] Hatii Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Hatii.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19225#[Poring Coin] Hatii Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19226#[Poring Coin] Maya Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Maya.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19227#[Poring Coin] Maya Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#.
+#
+19228#[Poring Coin] Kiel Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Kiel.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19229#[Poring Coin] Kiel Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19230#[Poring Coin] Incantation Samurai Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Incantation Samurai.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19231#[Poring Coin] Incantation Samurai Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19232#[Poring Coin] Baphomet Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Baphomet.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19233#[Poring Coin] Baphomet Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19234#[Poring Coin] Dark Lord Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Dark Lord.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19235#[Poring Coin] Dark Lord Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19236#[Poring Coin] Detale Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Detale.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19237#[Poring Coin] Detale Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19238#[Poring Coin] Lord of the Dead Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Lord of the Dead.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19239#[Poring Coin] Lord of the Dead Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19240#[Poring Coin] Orc Lord Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Orc Lord.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19241#[Poring Coin] Orc Lord Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19242#[Poring Coin] RSX-0806 Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP RSX-0806.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19243#[Poring Coin] RSX-0806 Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19244#[Poring Coin] Valkyrie Randgris Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Valkyrie Randgris.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19245#[Poring Coin] Valkyrie Randgris Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19246#[Poring Coin] Beelzebub Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Beelzebub.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19247#[Poring Coin] Beelzebub Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19248#[Poring Coin] Ifrit Hunting#SC_UNLUCKY#QUE_NOIMAGE#
+Kalahkan MVP Beelzebub.#
+Setelah itu laporkan kepada Old Man Chuck di Eden HQ Lantai 1#
+
+19249#[Poring Coin] Ifrit Hunting Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu 2 jam untuk mengambil quest dari Old Man Chuck kembali#
+#
+19250#[Poring Coin] NPC Poring Coin MVP Hunter#HT_CLAYMORETRAP#QUE_NOIMAGE#
+#
+#
+
+// -- DAILY QUEST 20 : 23 Oktober 2018 --
+19251#Wood Goblin Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Wood Goblin ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19252#Bloody Murderer Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Bloody Murderer ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19253#Khalitzburg Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Khalitzburg ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19254#Nightmare Evil Druid Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Nightmare Evil Druid ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
