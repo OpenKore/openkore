@@ -1850,7 +1850,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "0858" ||
 		$args->{switch} eq "090F" ||
 		$args->{switch} eq "09DC" ||
-		$args->{switch} eq "09FE") {
+		$args->{switch} eq "09FE" ||
+		$packetParser->{packet_list}->{$args->{switch}}[0] eq "actor_connected") {
 		# Actor Connected (new)
 
 		if ($actor->isa('Actor::Player')) {
@@ -1873,7 +1874,8 @@ typedef enum <unnamed-tag> {
 		$args->{switch} eq "0856" ||
 		$args->{switch} eq "0914" ||
 		$args->{switch} eq "09DB" ||
-		$args->{switch} eq "09FD") {
+		$args->{switch} eq "09FD" ||
+		$packetParser->{packet_list}->{$args->{switch}}[0] eq "actor_moved") {
 		# Actor Moved
 
 		# Correct the direction in which they're looking
