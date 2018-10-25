@@ -50,7 +50,7 @@ sub new {
 		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0835' => ['search_store_request_next_page'],
 		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
-		'09EC' => ['rodex_send_mail', 'v Z24 Z24 V2 v v a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len title body)]],   # -1 -- RodexSendMail
+		'09EC' => ['rodex_send_mail', 'v Z24 Z24 V v v a* a*', [qw(len receiver sender zeny title_len body_len title body)]],   # -1 -- RodexSendMail
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -101,8 +101,7 @@ sub rodex_send_mail {
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{name},
 		sender => $char->{name},
-		zeny1 => $rodexWrite->{zeny},
-		zeny2 => 0,
+		zeny => $rodexWrite->{zeny},
 		title_len => length($title)+1,
 		body_len => length($body)+1,
 		title => $title,
