@@ -1139,6 +1139,18 @@ sub next {
 		$self->parse_log($log_command);
 		
 	##########################################
+	# warning log command
+	} elsif ($self->{current_line} =~ /^warning\s+/) {
+		my ($warning_command) = $self->{current_line} =~ /^warning\s+(.*)/;
+		$self->parse_warning_log($warning_command);
+	
+	##########################################
+	# error log command
+	} elsif ($self->{current_line} =~ /^error\s+/) {
+		my ($error_command) = $self->{current_line} =~ /^error\s+(.*)/;
+		$self->parse_error_log($error_command);
+	
+	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
 		my ($pause_command) = $self->{current_line} =~ /^pause\s*(.*)/;
@@ -1639,6 +1651,34 @@ sub parse_log {
 		$self->error("Could not define log value");
 	} else {
 		message "[eventmacro log] $parsed_log\n", "eventMacro";
+	}
+	$self->timeout($self->macro_delay);
+	$self->next_line;
+}
+
+sub parse_warning_log {
+	my ($self, $log_command) = @_;
+	my $parsed_log = $self->parse_command($log_command);
+	return if (defined $self->error);
+	
+	unless (defined $parsed_log) {
+		$self->error("Could not define warning log value");
+	} else {
+		Log::warning "[eventMacro log] $parsed_log\n", "eventMacro";
+	}
+	$self->timeout($self->macro_delay);
+	$self->next_line;
+}
+
+sub parse_error_log {
+	my ($self, $log_command) = @_;
+	my $parsed_log = $self->parse_command($log_command);
+	return if (defined $self->error);
+	
+	unless (defined $parsed_log) {
+		$self->error("Could not define error log value");
+	} else {
+		Log::error "[eventMacro log] $parsed_log\n", "eventMacro";
 	}
 	$self->timeout($self->macro_delay);
 	$self->next_line;
