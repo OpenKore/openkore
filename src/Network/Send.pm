@@ -1237,16 +1237,11 @@ sub sendItemListWindowSelected {
 		items => $items,
 	}));
 	if ($act == 1) {
-		debug "Selected items: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$items)."\n", "sendPacket";
+		debug "Selected ".(scalar @{$items})." items: ".(join ', ', map {"".$_->{amount}." x ".$_->{itemName}." (binID:".$_->{itemIndex}.")"} @{$items})."\n", "sendPacket";
 	} else {
 		debug "Selected items were canceled.\n", "sendPacket";
 	}
 	undef $skillExchangeItem;
-}
-
-sub parse_item_list_window_selected {
-	my ($self, $args) = @_;
-	@{$args->{items}} = map {{ itemIndex => unpack('v', $_), amount => unpack('v', $_) }} unpack '(a4)*', $args->{itemInfo};
 }
 
 sub reconstruct_item_list_window_selected {

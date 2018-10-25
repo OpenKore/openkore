@@ -6797,8 +6797,8 @@ sub cmdExchangeItem {
 				} elsif ($item->{equipped} != 0) {
 					warning TF("Equipped item was selected %s (%d)!\n", $item->{name}, $invIndex);
 				} else {
-					#message TF("Selected: %dx %s\n", $amt, $item->{name});
-					push(@items,{itemIndex => $item->{index}, amount => $amt, itemName => $item->{name}});
+					#message TF("Selected: %dx %s invIndex:%d binID:%d\n", $amt, $item->{name}, $invIndex, unpack 'v', (unpack 'v', $item->{ID}));
+					push(@items,{itemIndex => (unpack 'v', $item->{ID}), amount => $amt, itemName => $item->{name}});
 				}
 			} else {
 				warning TF("Item in index '%d' is not exists.\n", $invIndex);
