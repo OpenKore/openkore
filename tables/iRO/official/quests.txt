@@ -22272,3 +22272,122 @@ Campitor might be right outside Juno according to the Band Members.#
 63180#Poring Con#SG_FEEL#QUE_NOIMAGE#
 Maybe the Poring Con Volunteer at the entrance knows about Camp?#
 #
+
+63187#Poring Con - Cosplay Scavenger Hunt#SG_FEEL#QUE_NOIMAGE#
+There is a 22 hour cooldown on this quest.#
+Come back to hunt for cosplays again later!#
+
+63188#Poring Con - Help Cosplayer Freya#SG_FEEL#QUE_NOIMAGE#
+There is a 22 hour cooldown on this quest.#
+Come back to help Freya again!#
+
+
+//The Illusion of Moonlight
+
+7776#Suspicious Sign#SG_FEEL#QUE_NOIMAGE#
+The Elders of Payon are worried about the apprentice Soul Linker, Muyeon, who disappeared during a ritual. I should talk to the young scholar at the entrance to the Payon Cave.#
+Talk to Young Scholar.#
+
+7777#What Happened?#SG_FEEL#QUE_NOIMAGE#
+Muyeon left for the detached palace. The young scholar wants to ask her what happened.#
+Talk to Muyeon.#
+
+7778#What Muyeon Saw#SG_FEEL#QUE_NOIMAGE#
+Muyeon is agitated by something she saw during the purging ritual. She said I should see it for myself.#
+Talk to Muyeon.#
+
+7779#Distressing Ritual#SG_FEEL#QUE_NOIMAGE#
+Muyeon says she could let me have a first-hand experience of the purging ritual. I'd better brace myself and talk to her.#
+Talk to Muyeon.#
+
+7780#Nightmare in the Ruined Village#SG_FEEL#QUE_NOIMAGE#
+I blacked out during the ritual and arrived at the ruined village inside Payon Cave. Is this shimmering portal in front of me connected to the nightmare that Muyeon told me about?#
+Investigate the shimmering portal.#
+
+7781#Nightmare in the Ruined Village#SG_FEEL#QUE_NOIMAGE#
+The young scholar was sucked into the shimmering portal in the ruined village inside the Payon Cave.#
+Talk to Chunghae on the other side of the portal.#
+
+7782#Stop the Wizard!#SG_FEEL#QUE_NOIMAGE#
+Scholar Chunghae in the Nightmare of the Moonlight Flower dungeon thinks the ^4d4dffWizard of the Truth^000000 is responsible for this incident. He asked me to take care of him.#
+Eliminate 1 Wizard of the Truth.#
+
+7783#Stop the Wizard! - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Scholar Chunghae in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7784#No Mercy for Illusions#SG_FEEL#QUE_NOIMAGE#
+Soldier Junghee in the Nightmare of the Moonlight Flower dungeon asked me to clear the area around him of ^4d4dffAngry Nine Tails^000000.#
+Eliminate Angry Nine Tails.#
+
+7785#No Mercy for Illusions - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Soldier Junghee in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7786#Remembering My Ancestors#SG_FEEL#QUE_NOIMAGE#
+Soldier Junghee in the Nightmare of the Moonlight Flower dungeon asked me to send ^4d4dffResentful Soldiers^000000 to Heaven.#
+Eliminate Resentful Soldiers.#
+
+7787#Remebering My Ancestors - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Soldier Junghee in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7788#Back to Muyeon#SG_FEEL#QUE_NOIMAGE#
+Relay Chunghae's investigation results to ^4d4dffMuyeon^000000 in the ^4d4dffDetached Payon Palace^000000.#
+Talk to Muyeon in the Detached Palace.#
+
+//Halloween 2018
+
+63223#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+And your trick or treating begins... speak to the Crying Kid again if you haven't already.#
+
+#
+
+63224#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Start by examining the body.#
+
+#
+
+63225#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Maybe there is a clue on the floor...#
+
+#
+
+63226#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+So there are wet footprints. Where could these have come from?#
+
+#
+
+63227#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+There's a book here. I should check the study room.#
+
+#
+
+63228#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+I should check the dresser. He had to have changed out of his clothes to take a bath.#
+
+#
+
+63229#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Inform Detective Squirrel and Moose about the sketchy candy wrappers.#
+
+#
+
+63230#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Looks like you've discovered the source of the mysterious candy. Go back and speak to Jane.#
+
+#
+
+63232#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Jane asked me to meet her in Niflheim near the bridge to the north-west.#
+
+#

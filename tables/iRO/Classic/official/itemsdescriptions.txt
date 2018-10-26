@@ -71825,3 +71825,18 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20063#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Witch's Pumpkin Hat!
+300 Pieces of Black Cloth
+150 Ectoplasm
+75 Black Hairs
+25 Torn Magic Books
+1 Jack o' Pumpkin
+1 Witch's Pumpkin Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
