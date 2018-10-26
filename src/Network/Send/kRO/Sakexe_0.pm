@@ -185,6 +185,7 @@ sub new {
 		'025C' => ['auction_info_self', 'v', [qw(type)]],
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
+		'0288' => ['cash_dealer_buy', 'v2 V', [qw(itemid amount kafra_points)]],
 		'0292' => ['auto_revive'],
 		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],

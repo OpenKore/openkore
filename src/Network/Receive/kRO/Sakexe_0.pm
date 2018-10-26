@@ -394,7 +394,7 @@ sub new {
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]], # 8
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]], #v 14
 		'0283' => ['account_id', 'a4', [qw(accountID)]], # 6
-		'0287' => ['cash_dealer'], # -1
+		'0287' => ['cash_dealer', 'v V2 a*', [qw(len cash_points kafra_points item_list)]], # -1
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12		
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
 		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
@@ -1091,39 +1091,9 @@ sub card_merge_status {
 	undef $cardMergeIndex;
 }
 
-sub cash_dealer {
-	my ($self, $args) = @_;
+# kRO client from 2007-07-11 sends cash_points and kafra_points
+sub parse_cash_dealer {
 
-	undef @cashList;
-	my $cashList = 0;
-	$char->{cashpoint} = unpack("x4 V", $args->{RAW_MSG});
-
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my ($price, $dcprice, $type, $ID) = unpack("V2 C v", substr($args->{RAW_MSG}, $i, 11));
-		my $store = $cashList[$cashList] = {};
-		my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $dcprice;
-		$cashList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'cash';
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("------------CashList (Cash Point: %-5d)-------------\n" .
-		"#    Name                    Type               Price\n", $char->{cashpoint}), "list";
-	my $display;
-	for (my $i = 0; $i < @cashList; $i++) {
-		$display = $cashList[$i]{name};
-		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
-			[$i, $display, $itemTypes_lut{$cashList[$i]{type}}, $cashList[$i]{price}]),
-			"list");
-	}
-	message("-----------------------------------------------------\n", "list");
 }
 
 sub combo_delay {
