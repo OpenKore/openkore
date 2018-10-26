@@ -6988,3 +6988,4 @@
 20060#Ramen_Hat_Certificate#
 20061#Whisper_Mask_Certificate#
 20062#Sleeper_Hat_Certificate#
+20063#Witch's_Pumpkin_Hat_Certificate#
