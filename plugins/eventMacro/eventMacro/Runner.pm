@@ -1134,10 +1134,10 @@ sub next {
 		
 	##########################################
 	# log command
-	} elsif ($self->{current_line} =~ /^log\s+/) {
-		my ($log_command) = $self->{current_line} =~ /^log\s+(.*)/;
-		$self->parse_log($log_command);
-		
+	} elsif ($self->{current_line} =~ /^(log|warning|error)\s+(.*)/) {
+		my ($type, $log_text) = ($1, $2);
+		$self->parse_log($type, $log_text);
+	
 	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
@@ -1631,14 +1631,22 @@ sub parse_do {
 
 #From here functions are intended to parse/execute macro commands
 sub parse_log {
-	my ($self, $log_command) = @_;
-	my $parsed_log = $self->parse_command($log_command);
-	return if (defined $self->error);
+	my ($self, $type, $log_text) = @_;
+	my $parsed_log = $self->parse_command($log_text);
+	#type can be message, warning or error
+	#log_text have the text that will be printed
 	
+	return if (defined $self->error);
 	unless (defined $parsed_log) {
 		$self->error("Could not define log value");
 	} else {
-		message "[eventmacro log] $parsed_log\n", "eventMacro";
+		$type = "message" if $type eq "log";
+		if (my $sub_ref = Log->can($type)) {
+			$sub_ref->("[eventmacro $type] $parsed_log\n", "eventMacro");
+		} else {
+			$self->error("Unknown error found while trying to print '$type' log. Report to developers");
+			return;
+		}
 	}
 	$self->timeout($self->macro_delay);
 	$self->next_line;
