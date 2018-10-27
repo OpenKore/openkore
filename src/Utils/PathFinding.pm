@@ -98,11 +98,11 @@ sub reset {
 	$hookArgs{return} = 1;
 	Plugins::callHook("PathFindingReset", \%hookArgs);
 	if ($hookArgs{return}) {
-		$args{weight_map} = \($args{field}->{weightMap}) unless (exists $args{weight_map});
-		$args{width} = $args{field}{width} unless (exists $args{width});
-		$args{height} = $args{field}{height} unless (exists $args{height});
-		$args{timeout} = 1500 unless (exists $args{timeout});
-		$args{avoidWalls} = 1 unless (exists $args{avoidWalls});
+		$args{weight_map} = \($args{field}->{weightMap}) unless (defined $args{weight_map});
+		$args{width} = $args{field}{width} unless (defined $args{width});
+		$args{height} = $args{field}{height} unless (defined $args{height});
+		$args{timeout} = 1500 unless (defined $args{timeout});
+		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
 	}
 
 	return $class->_reset(
