@@ -20,16 +20,14 @@ use strict;
 use Actor;
 use Globals;
 use base qw/Actor/;
+use Translation qw(T);
 
 sub new {
 	my ($class, $type) = @_;
 	
-	my $actorType =
-		(($type >= 6001 && $type <= 6016) || ($type >= 6048 && $type <= 6052)) ? 'Homunculus' :
-		($type >= 6017 && $type <= 6046) ? 'Mercenary' :
-	'Unknown';
-	
-	return $class->SUPER::new ($actorType);
+	return $class->SUPER::new('Homunculus', T('Homunculus')) if ($type >= 6001 && $type <= 6016 || $type >= 6048 && $type <= 6052);
+	return $class->SUPER::new('Mercenary', T('Mercenary')) if ($type >= 6017 && $type <= 6046);
+	return $class->SUPER::new('Unknown', T('Unknown'));
 }
 
 ##

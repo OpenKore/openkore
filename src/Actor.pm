@@ -84,16 +84,18 @@ sub _not_is {
 
 ### CATEGORY: Class methods
 
-# protected Actor->new(String actorType)
+# protected Actor->new(String actorType, String localizedType)
 # actorType: A type name for this actor, like 'Player', 'Monster', etc.
+# localizedType: Like actorType, but translatable.
 # Requires: defined($actorType)
 #
 # A default abstract constructor that subclasses should call. Must not
 # be directly used.
 sub new {
-	my ($class, $actorType) = @_;
+	my ($class, $actorType, $localizedType) = @_;
 	my %self = (
 		actorType => $actorType,
+		localizedType => $localizedType || $actorType,
 		onNameChange => new CallbackList('onNameChange'),
 		onUpdate => new CallbackList('onUpdate'),
 		
@@ -368,7 +370,7 @@ sub nameString {
 
 	my $nameString = "";
 	$nameString .= T('Your ') if $char && exists $char->{slaves}{$self->{ID}};
-	$nameString .= "$self->{actorType} " . $self->name;
+	$nameString .= "$self->{localizedType} " . $self->name;
 	$nameString .= " ($self->{binID})" if defined $self->{binID};
 	return $nameString;
 }

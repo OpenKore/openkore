@@ -2061,20 +2061,20 @@ sub actor_died_or_disappeared {
 	} elsif (defined $slavesList->getByID($ID)) {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
-			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
+			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{localizedType});
 			$slave->{state} = 4;
 		} else {
 			if ($args->{type} == 0) {
-				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{localizedType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
 				$slave->{disappeared} = 1;
 			} elsif ($args->{type} == 2) {
-				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{localizedType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
 				$slave->{disconnected} = 1;
 			} elsif ($args->{type} == 3) {
-				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{localizedType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
 				$slave->{teleported} = 1;
 			} else {
-				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{actorType}\n", "parseMsg_presence";
+				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{localizedType}\n", "parseMsg_presence";
 				$slave->{disappeared} = 1;
 			}
 
@@ -2087,10 +2087,10 @@ sub actor_died_or_disappeared {
 	} elsif (defined $elementalsList->getByID($ID)) {
 		my $elemental = $elementalsList->getByID($ID);
 		if ($args->{type} == 0) {
-			message "Elemental Disappeared: " .$elemental->{name}. " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
+			message "Elemental Disappeared: " .$elemental->{name}. " ($elemental->{binID}) $elemental->{localizedType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
 			$elemental->{disappeared} = 1;
 		} else {
-			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
+			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{localizedType}\n", "parseMsg_presence";
 			$elemental->{disappeared} = 1;
 		}
 
@@ -4398,7 +4398,7 @@ sub emoticon {
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 
 		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
-		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{actorType}, $monster->name, $monster->{binID}, $emotion), "emotion";
+		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{localizedType}, $monster->name, $monster->{binID}, $emotion), "emotion";
 
 	} else {
 		my $actor = Actor::get($args->{ID});
