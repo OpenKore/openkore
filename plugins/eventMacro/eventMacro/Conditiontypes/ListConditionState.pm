@@ -19,6 +19,11 @@ sub validator_check {
 	return $self->{validator}->validate($possible_member);
 }
 
+sub validator_check_opposite {
+	my ( $self, $possible_member ) = @_;
+	return $self->{validator}->validate_opposite($possible_member);
+}
+
 sub update_validator_var {
 	my ( $self, $var_name, $var_value ) = @_;
 	$self->{validator}->update_vars($var_name, $var_value);
