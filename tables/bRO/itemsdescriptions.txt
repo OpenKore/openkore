@@ -17998,11 +17998,11 @@ Utilização: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4160#
-^0000ffFOR +2.
-Caso os Sapatos tenham o aprimoramento +9 ou maior, adiciona +10% ao HP e SP máximo. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Calçado^000000
+^0000ffFOR +2.^000000
+Refino +9 ou mais:
+^0000ffHP e SP máx. +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4161#
@@ -18123,7 +18123,7 @@ Peso: ^7777771^000000
 #
 4174#
 ^0000ffResistência a propriedade Neutro +50%.^000000
-^0000ffResistência as propriedades Fogo, Água, Terra, Vento, Maldito, Fantasma, Sombrio, Sagrado e Veneno -50%.^000000
+^0000ffResistência as propriedades Fogo, Água, Terra, Vento, Maldito, Fantasma, Sombrio, Sagrado e Veneno^000000 ^ff0000-50%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
@@ -19750,12 +19750,13 @@ Equipado em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4375#
-Carta Filhote de Orc.
-Taxa de Esquiva +10.
-Acrescenta 10% de resistência a ataques Neutros. Se o nível de aprimoramento da capa for 9 ou mais,
-esses bônus serão aumentados para +15 na Esquiva e +15% de resistência a dano Neutro.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+^0000ffEsquiva +10.^000000
+^0000ffResistência a propriedade Neutro +10%.^000000
+Refino +9 ou mais:
+^0000ffEsquiva +5 adicional.^000000
+^0000ffResistência a propriedade Neutro +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4376#
@@ -20047,15 +20048,24 @@ Classe: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4411#
-FOR + 2. Ao atacar, chance de Crítico + 100 por 5 segundos
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Equipamento para a cabeça^000000
+^0000ffFOR +2.^000000
+Ao realizar ataques físicos:
+^0000ff0,5% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffCRIT +100.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4412#
-INT + 2. Ao atacar com magia, há chance de reduzir o tempo de conjuração variável em 50% e conceder Esquiva + 30 por 5 segundos.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Equipamento para a cabeça^000000
+^0000ffINT +2.^000000
+Ao realizar ataques mágicos:
+^0000ff5% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffEsquiva +30.^000000
+^0000ffConjuração variável -50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4413#
@@ -20357,11 +20367,10 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4457#
-Aumenta o dano de habilidades mágicas do tipo Fantasma em 30%.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Armadura^000000
-Peso : ^7777771^000000
+^0000ffDano mágico de propriedade Fantasma +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
 #
 4458#
 ATQ + 10.
@@ -20372,12 +20381,14 @@ Utilização: ^777777Equipamento para a cabeça^000000
 Peso : ^7777771^000000
 #
 4459#
-ATQM + 10.
-Adiciona a chance de reduzir o tempo de conjuração em 50% por 4 segundos quando atacar magicamente.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
-Peso : ^7777771^000000
+^0000ffATQM +10.^000000
+Ao realizar ataques mágicos:
+^0000ff0,5% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffConjuração fixa -50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso: ^7777771^000000
 #
 4460#
 Efetividade de cura +4%.
@@ -26421,7 +26432,6 @@ Classes que utilizam: ^777777Todas^000000
 5475#
 Uma máscara com um Sorriso Maligno que amedronta todas as pessoas ao seu redor.
 Todos Atributos + 1.
-^ff0000O item será removido após o evento^000000
 Classe: ^777777Equipamento para cabeça^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio e Baixo^000000
@@ -37676,12 +37686,12 @@ Uma cesta contendo todos os tipos de frutas. Há algumas que são encontradas so
 Peso: ^7777775^000000
 #
 12574#
-Fruta vermelha e cheirosa.
-Dizem que, quando você morde a fruta, nunca mais consegue esquecê-la.
-^000088Restaura aproximadamente 50 SP^000000.
-Aumenta sua resistência aos monstros nativos de Bifröst.
+Fruta vermelha e cheirosa. Dizem que, quando você morde a fruta, nunca mais consegue esquecê-la.
+^0000ffRecupera 50 de SP.^000000
+Por 2 minutos:
+^0000ffResistência a Chapim, Plagiador, Louva-a-Deus Angra, Aranha Pom e Pequeno Fatum +50%.^000000
+Nível necessário: ^777777120^000000
 Peso: ^7777772^000000
-Nível Necessário: ^777777120^000000
 #
 12575#
 Uma aljava contendo 500 Flechas Élficas.
@@ -39514,15 +39524,16 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Magos, Arqueiros, Merc
 #
 13038#
 Especializada para ataques pelas costas. Esta adaga é personalizada para Desordeiros.
-FOR + 2, AGI + 1, DES + 1
-20% de aumento na habilidade Apunhalar.
-Ao usar Apunhalar, há chance de ativar Golpe Fulminante nv. 10.
+^0000ffFOR +2. AGI +1. DES +1.^000000
+^0000ffDano de [Apunhalar] +20%.^000000
+Ao usar [Apunhalar]:
+^0000ff10% de chance de autoconjurar [Golpe Fulminante] nv. 10.^000000
 Tipo: ^777777Adaga^000000
 Ataque: ^777777120^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Desordeiro^000000
+Classes: ^777777Desordeiros e evoluções^000000
 #
 13039#
 Uma adaga feita com o marfim do Mamute. É muito difícil de fabricar, por causa da solidez do marfim. A ponta afiada a torna mais eficiente para perfurar do que para cortar.
@@ -48890,17 +48901,42 @@ Classes: ^777777Todas^000000
 #
 18656#
 O obscuro e misterioso poder das Bruxas está contido neste chapéu.
-FOR + 2, INT + 2.
-Aumenta o ataque mágico contra monstros da propriedade Morto-Vivo em 15%
-DEFM + 10.
-Existe uma surpresa ao utilizar esse chapéu com outros itens.
-^ff0000O item será removido após o evento^000000
-Classe : ^777777Equipamento para cabeça^000000
+^0000ffDEFM +10.^000000
+^0000ffFOR +2. INT +2.^000000
+^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +15%.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara Feliz]^000000
+^0000ffAo derrotar monstros, 3% de chance de derrubar Torta de Abóbora.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara Hahoe]^000000
+^0000ffVelocidade de ataque +10%.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff1% de chance de ativar [ATQ +50] por 5 segundos.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara de Alarme]^000000
+^0000ffRecuperação de HP de Abóbora e Biscoito de Gengibre +200%.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff1% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffAo derrotar monstros, 100% de chance de derrubar Abóbora ou Biscoito de Gengibre.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara do Fantasma]^000000
+^0000ffEsquiva +10.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff1% de chance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffAo realizar ataques físicos, 50% de chance de infligir Atordoamento.^000000
+^FF6347Conjunto^000000
+^FF6347[Sorriso Maligno]^000000
+^0000ffATQ e ATQM +30.^000000
+Ao derrotar monstros:
+^0000ffAo derrotar monstros, chance de derrubar Torta de Abóbora, Biscoito de Gengibre, Bala ou Bengala Doce.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível necessário : ^77777720^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777720^000000
+Classes: ^777777Todas^000000
 #
 18657#
 Um par de pequenas asas para enfeitar a cabeça, criado com as penas do lendário corcel alado, Pégaso.
