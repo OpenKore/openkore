@@ -48905,31 +48905,38 @@ O obscuro e misterioso poder das Bruxas está contido neste chapéu.
 ^0000ffFOR +2. INT +2.^000000
 ^0000ffDano físico e mágico contra as raças Demônio e Morto-Vivo +15%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Máscara Feliz]^000000
-^0000ffAo derrotar monstros, 3% de chance de derrubar Torta de Abóbora.^000000
-^FF6347Conjunto^000000
 ^FF6347[Máscara Hahoe]^000000
 ^0000ffVelocidade de ataque +10%.^000000
-Ao realizar ataques físicos ou mágicos:
+Ao realizar ataques físicos:
 ^0000ff1% de chance de ativar [ATQ +50] por 5 segundos.^000000
-^FF6347Conjunto^000000
-^FF6347[Máscara de Alarme]^000000
-^0000ffRecuperação de HP de Abóbora e Biscoito de Gengibre +200%.^000000
-Ao realizar ataques físicos ou mágicos:
-^0000ff1% de chance de ativar um [efeito] por 5 segundos.^000000
-^CD3278Efeito:^000000
-^0000ffAo derrotar monstros, 100% de chance de derrubar Abóbora ou Biscoito de Gengibre.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Máscara do Fantasma]^000000
 ^0000ffEsquiva +10.^000000
 Ao realizar ataques físicos ou mágicos:
-^0000ff1% de chance de ativar um [efeito] por 5 segundos.^000000
+^0000ffchance de ativar um [efeito] por 5 segundos.^000000
 ^CD3278Efeito:^000000
-^0000ffAo realizar ataques físicos, 50% de chance de infligir Atordoamento.^000000
+^0000ffAo realizar ataques físicos ou mágicos, 50% de chance de infligir Atordoamento.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara Feliz]^000000
+^0000ffAo derrotar monstros, 3% de chance de derrubar Torta de Abóbora.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ffchance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffAo derrotar monstros, chance de derrubar Torta de Abóbora.^000000
+^FF6347Conjunto^000000
+^FF6347[Máscara de Alarme]^000000
+^0000ffRecuperação de HP de Abóbora +2000%.^000000
+^0000ffRecuperação de HP de Biscoito de Gengibre +200%.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ffchance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffAo derrotar monstros, chance de derrubar Abóbora ou Biscoito de Gengibre.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Sorriso Maligno]^000000
 ^0000ffATQ e ATQM +30.^000000
-Ao derrotar monstros:
+Ao realizar ataques físicos ou mágicos:
+^0000ffchance de ativar um [efeito] por 5 segundos.^000000
+^CD3278Efeito:^000000
 ^0000ffAo derrotar monstros, chance de derrubar Torta de Abóbora, Biscoito de Gengibre, Bala ou Bengala Doce.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
@@ -53615,10 +53622,10 @@ Classes que utilizam: ^777777Todas^000000
 19903#
 Velho chapéu de Bruxa encantado por magia negra.
 Tipo : ^777777Visual^000000
-Def. : ^7777770^000000
+Defesa : ^7777770^000000
 Equipa em : ^777777Topo^000000
-Peso : ^7777770^00000
-Nível Necessário. : ^7777771^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19904#
@@ -53650,7 +53657,7 @@ Classes que utilizam: ^777777Todas^000000
 19911#
 Agora você não precisa se preocupar em procurar abrigo quando chover mas certifique-se que seu chapéu não tenha goteiras.
 Tipo : ^777777Visual^000000
-Def. : ^7777770^000000
+Defesa : ^7777770^000000
 Equipa em : ^777777Topo^000000
 Peso : ^7777770^000000
 Nível Necessário: ^7777771^000000
@@ -53659,10 +53666,10 @@ Classes : ^777777Todas^000000
 19912#
 Olhos que imitam os de gatos. Não pense que com eles você ganhará visão noturna ou que eles vão brilhar à noite.
 Tipo : ^777777Visual^000000
-Def. : ^7777770^000000
+Defesa : ^7777770^000000
 Equipa em : ^777777Meio^000000
 Peso : ^7777770^000000
-Nível Necessário. : ^7777771^000000
+Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19913#
@@ -53685,23 +53692,24 @@ Classes: ^777777Todas^000000
 19917#
 Um chapéu de abóbora com o humor "iluminado".
 Tipo : ^777777Visual^000000
-Equipa em : ^777777Topo ^000000 Peso : ^7777770^000000
-Nível Necessário. : ^7777771^000000
+Equipa em : ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19918#
 Uma mascára de Lude, a mascote de Nifflheim.
 Tipo : ^777777Visual^000000
-Equipa em : ^777777Meio/Baixo ^000000 Peso : ^7777770^000000
-Nível Necessário. : ^7777771^000000
+Equipa em : ^777777Meio e Baixo ^000000 Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19919#
 Uma máscara de Quve, a mascote de Nifflheim.
 Tipo : ^777777Visual^000000
-Equipa em : ^777777Meio/Baixo^000000
+Equipa em : ^777777Meio e Baixo^000000
 Peso : ^7777770^000000
-Nível Necessário. : ^7777771^000000
+Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19920#
@@ -54378,7 +54386,7 @@ Classes : ^777777Todas^000000
 Muitos conhecem a trágica história do triste palhaço Pierrot, que viu sua amada Colombina partir seu coração ao deixa-lo para ficar com o Arlequim. Mas você sabia que a história tem um final feliz, e no fim Colombina percebe o amor do Pierrot e volta para seus braços?
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Meio/Baixo^000000
+Equipa em: ^777777Meio e Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
