@@ -149,6 +149,8 @@ sub handleNPCTalk {
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
 			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
 			
+		} elsif ($hook_name eq 'packet/cash_dealer') {
+			message TF("%s: Type 'cashbuy' to start buying\n", $self->{target}), "npc";
 		}
 	}
 	$self->{time} = time;
@@ -195,7 +197,8 @@ sub activate {
 		['packet/npc_talk_text',      \&handleNPCTalk, \@holder],
 		['packet/npc_store_begin',    \&handleNPCTalk, \@holder],
 		['packet/npc_store_info',     \&handleNPCTalk, \@holder],
-		['packet/npc_sell_list',      \&handleNPCTalk, \@holder]
+		['packet/npc_sell_list',      \&handleNPCTalk, \@holder],
+		['packet/cash_dealer',        \&handleNPCTalk, \@holder]
 	);
 	
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
@@ -420,7 +423,7 @@ sub iterate {
 
 		if ($self->noMoreSteps) {
 			# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
-			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell)$/) {
+			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell|cash)$/) {
 				$self->conversation_end;
 			}
 			#Wait for more commands
@@ -777,6 +780,9 @@ sub cancelTalk {
 		$messageSender->sendTalkText($talk{ID}, $default_text);
 		
 	} elsif ( $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' ) {
+		$self->conversation_end;
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+	} elsif ( $ai_v{'npc_talk'}{'talk'} eq 'cash' ) {
 		$self->conversation_end;
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 	

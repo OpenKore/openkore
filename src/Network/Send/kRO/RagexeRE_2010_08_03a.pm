@@ -13,10 +13,44 @@ package Network::Send::kRO::RagexeRE_2010_08_03a;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2010_07_14a);
+use Log qw(debug);
+use Translation qw(TF);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0288' => ['cash_dealer_buy', 'v V v a*', [qw(len kafra_points item_count item_list)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
+	my %handlers = qw(
+		cash_dealer_buy 0288
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	return $self;
+}
+
+# Buy multiple items from cash dealer
+sub sendCashShopBuy {
+	my ($self, $points, $items) = @_;
+	my $len = (scalar @{$items}) * 4 + 8;
+
+	debug TF("Sent buying request from cash shop for %d items using %d kafra points.\n", scalar @{$items}, $points), "sendPacket", 2;
+	$self->sendToServer($self->reconstruct({
+		switch => 'cash_dealer_buy',
+		len => $len,
+		kafra_points => $points,
+		item_count => (scalar @{$items}),
+		items => $items,
+	}));
+}
+
+sub reconstruct_cash_dealer_buy {
+	my ($self, $args) = @_;
+	$args->{item_list} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemID)} } @{$args->{items}};
 }
 
 # 0x0842,6,recall2,2

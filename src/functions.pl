@@ -534,6 +534,7 @@ sub finalInitialization {
 	$elementalsList = new ActorList('Actor::Elemental');
 	$venderItemList = InventoryList->new;
 	$storeList = InventoryList->new;
+	$cashList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList, $elementalsList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
@@ -691,6 +692,7 @@ sub initMapChangeVars {
 	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
+	$cashList->clear;
 	
 	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();

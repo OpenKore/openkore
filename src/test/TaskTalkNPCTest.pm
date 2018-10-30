@@ -16,6 +16,7 @@ our @taskHooks = qw(
 	packet/npc_store_begin
 	packet/npc_store_info
 	packet/npc_sell_list
+	packet/cash_dealer
 );
 
 sub start {

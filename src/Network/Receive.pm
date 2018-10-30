@@ -7197,4 +7197,42 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
+# Receive list of items from cash shop NPC
+#
+# ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]]
+# ['cash_dealer', 'v V2 a*', [qw(len cash_points kafra_points item_list)]]
+sub cash_dealer {
+	my ($self, $args) = @_;
+
+	undef %talk;
+	$ai_v{npc_talk}{talk} = 'cash';
+	# continue talk sequence now
+	$ai_v{npc_talk}{time} = time;
+
+	# Parse item_list => ['V2 C v', [qw(price price_discount type nameid)]]
+	$cashList->clear;
+	@{$args->{items}} = map { my %item; @item{qw(price price_discount type nameid)} = unpack 'V2 C v', $_; \%item } unpack '(a11)*', $args->{item_list};
+
+	# Just keep cash_points and kafra_points locally not as $char->{cashpoint}, $cashShop{points}->{cash}, $cashShop{points}->{kafra}
+	# private servers can add custom currency that may overwrite the cash & points from cash shop
+	message TF("------------CashList (Cash Point: %-5d. Kafra Points: %-d)-------------\n" .
+		"#    Name                    Type               Price\n", $args->{cash_points}, $args->{kafra_points}), "list";
+
+	foreach my $curr_item (@{$args->{items}}) {
+		my $item = Actor::Item->new;
+
+		@$item{qw(price type nameID)} = ($curr_item->{price}, $curr_item->{type}, $curr_item->{nameid});
+		$item->{ID} = $cashList->size;
+		$item->{name} = itemName($item);
+		$cashList->add($item);
+
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
+			[$item->{ID}, $item->{name}, $itemTypes_lut{$item->{type}}, $curr_item->{price_discount}]),
+			"list");
+	}
+	message("-----------------------------------------------------\n", "list");
+}
+
 1;

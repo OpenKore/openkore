@@ -3047,4 +3047,24 @@ sub sendCaptchaAnswer {
 	}));
 }
 
+# kRO Client before 2010-08-03 only allow 1 item per transaction
+# idRO_Renewal and iRO Chaos use this packet
+#
+# Since RagexeRE_2010_08_03a it's allowed for multiple items at once see Network/Send/kRO/RagexeRE_2010_08_03a.pm
+sub sendCashShopBuy {
+	my ($self, $points, $items) = @_;
+
+	if (scalar @{$items}) {
+		debug sprintf("Sent buying request from cashshop for %d items.\n", scalar @{$items}), "sendPacket", 2;
+		foreach my $item (@{$items}) {
+			$self->sendToServer($self->reconstruct({
+				switch => 'cash_dealer_buy',
+				itemid => $item->{itemID},
+				amount => $item->{amount},
+				kafra_points => $points,
+			}));
+		}
+	}
+}
+
 1;
