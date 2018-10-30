@@ -378,7 +378,7 @@ sub new {
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'a4', [qw(accountID)]],
 		'0284' => ['GANSI_RANK', 'c24 c24 c24 c24 c24 c24 c24 c24 c24 c24 V10 v', [qw(name1 name2 name3 name4 name5 name6 name7 name8 name9 name10 pt1 pt2 pt3 pt4 pt5 pt6 pt7 pt8 pt9 pt10 switch)]], #TODO: PACKET_ZC_GANGSI_RANK
-		'0287' => ['cash_dealer'],
+		'0287' => ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]], # -1
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]],
 		'0291' => ['message_string', 'v', [qw(msg_id)]],
@@ -1168,40 +1168,11 @@ sub card_merge_status {
 	undef $cardMergeIndex;
 }
 
-sub cash_dealer {
+# Non kRO client still use old packet that without kafra_points (equals to kRO 2007-07-11)
+# Confirmed on idRO_Renewal and iRO Chaos
+sub parse_cash_dealer {
 	my ($self, $args) = @_;
-
-	undef @cashList;
-	my $cashList = 0;
-	$char->{cashpoint} = unpack("x4 V", $args->{RAW_MSG});
-
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my ($price, $dcprice, $type, $ID) = unpack("V2 C v", substr($args->{RAW_MSG}, $i, 11));
-		my $store = $cashList[$cashList] = {};
-		# TODO: use itemName() or itemNameSimple()?
-		my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
-		$store->{name} = $display;
-		$store->{nameID} = $ID;
-		$store->{type} = $type;
-		$store->{price} = $dcprice;
-		$cashList++;
-	}
-
-	$ai_v{npc_talk}{talk} = 'cash';
-	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
-
-	message TF("------------CashList (Cash Point: %-5d)-------------\n" .
-		"#    Name                    Type               Price\n", $char->{cashpoint}), "list";
-	my $display;
-	for (my $i = 0; $i < @cashList; $i++) {
-		$display = $cashList[$i]{name};
-		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
-			[$i, $display, $itemTypes_lut{$cashList[$i]{type}}, $cashList[$i]{price}]),
-			"list");
-	}
-	message("-----------------------------------------------------\n", "list");
+	$args->{kafra_points} = 0;
 }
 
 sub combo_delay {

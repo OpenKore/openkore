@@ -79,6 +79,7 @@ sub initHandlers {
 	card				=> \&cmdCard,
 	cart				=> \&cmdCart,
 	cash				=> \&cmdCash,
+	cashbuy				=> \&cmdCashShopBuy,
 	charselect			=> \&cmdCharSelect,
 	chat				=> \&cmdChatRoom,
 	chist				=> \&cmdChist,
@@ -7308,6 +7309,59 @@ sub cmdRevive {
 	
 	message TF("Trying to use item %s to self-revive\n", $item->name());
 	$messageSender->sendAutoRevive();
+}
+
+sub cmdCashShopBuy {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if (!$cashList || $cashList->size < 1) {
+		error T("No cash shop info to buy\n");
+		return;
+	}
+
+	my (undef, $args) = @_;
+	my ($points, $items) = $args =~ /(\d+) (.*)/;
+	my @buylist;
+	my $cost_total = 0;
+	foreach (split /\,/, $items) {
+		my($index, $amount) = $_ =~ /^\s*(\d+)\s*(\d*)\s*$/;
+		if ($index eq "") {
+			error T("Syntax Error in function 'cashbuy' (Buy Cash Item)\n" .
+				"Usage: cashbuy <kafra_points> <item #> [<amount>][, <item #> [<amount>]]...\n");
+			return;
+    
+		} elsif ($amount eq "" || $amount <= 0) {
+			$amount = 1;
+		}
+		my $item = $cashList->get($index);
+		if (!$item) {
+			error TF("Error in function 'cashbuy' (Buy Cash Item)\n" .
+				"Cash Item at index %s does not exist.\n", $index);
+			return;
+		}
+		$cost_total += $item->{price};
+		push (@buylist,{itemID  => $item->{nameID}, amount => $amount});
+	}
+
+	if (!scalar @buylist) {
+		error T("Syntax Error in function 'cashbuy' (Buy Cash Item)\n" .
+			"Usage: cashbuy <kafra_points> <item #> [<amount>][, <item #> [<amount>]]...\n");
+		return;
+	}
+
+
+	# TODO: Add check to ignore the cost for private servers
+	#if (!$cashShop{points} || $cost_total > ($cashShop{points}->{cash} + $cashShop{points}->{kafra})) {
+	#	error TF("You dont' have enough cash and points to buy the items. %d > %d + %d\n", $cost_total, $cashShop{points}->{cash}, $cashShop{points}->{kafra});
+	#	return;
+	#}
+
+	message TF("Attempt to buy %d items from cash dealer\n", (scalar @buylist)), "info";
+	debug "Buying cash ".(scalar @buylist)." items: ".(join ', ', map {"".$_->{amount}."x ".$_->{itemID}.""} @buylist)."\n", "sendPacket";
+	$messageSender->sendCashShopBuy($points, \@buylist);
 }
 
 1;
