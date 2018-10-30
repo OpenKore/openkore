@@ -2102,7 +2102,7 @@
 4349#Carta Errende Ebecee#
 4350#Carta Laurell Weinder#
 4351#Carta Kavach Icarus#
-4352#Carta Egnigem Cenia [Chefe]#
+4352#Carta Espadachim Egnigem#
 4353#Carta Remover#
 4354#Carta Gemini-S58#
 4355#Carta Gremlin#
