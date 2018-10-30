@@ -316,7 +316,7 @@ gameguard 1
 
 # http://ggamerz-ro.com/
 [GGamerzRO]
-ip 116.251.223.136
+ip 139.99.21.135
 port 6900
 private 1
 master_version 1
