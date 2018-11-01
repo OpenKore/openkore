@@ -897,6 +897,10 @@ sub map_loaded {
 		message(T("You are now in the game\n"), "connection");
 		Plugins::callHook('in_game');
 		$messageSender->sendMapLoaded();
+		
+		# request to unfreeze char alisonrag
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel} || if $self->{blockingPlayerCancel};
+		
 		$timeout{'ai'}{'time'} = time;
 	}
 

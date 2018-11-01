@@ -60,6 +60,7 @@ sub new {
 		'094E' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'092E' => ['search_store_request_next_page'],
 		'0365' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
+		'0447' => ['blocking_play_cancel'],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -85,10 +86,13 @@ sub new {
 		search_store_info 094E
 		search_store_request_next_page 092E
 		search_store_select 0365
+		blocking_play_cancel 0447
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
-	$self;
+	$self->{blockingPlayerCancel} = 1; # rathena PR 3640
+	
+	return $self;
 }
 
 1;
