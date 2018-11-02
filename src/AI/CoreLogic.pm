@@ -1037,7 +1037,7 @@ sub processTransferItems {
 		my $item = $source->get( $row->{item}->{binID} );
 		
 		if ( !$item || $item->nameString ne $row->{item}->nameString ) {
-			error TF( "$row->{source} item '%s' disappeared!\n", $row->{item} );
+			error TF( "%s item '%s' disappeared!\n", $row->{source}, $row->{item} );
 			redo;
 		}
 
