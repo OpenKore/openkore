@@ -1028,18 +1028,16 @@ sub processTransferItems {
 		foreach ( [ $row->{source}, $source ], [ $row->{target}, $target ] ) {
 			my ( $name, $list ) = @$_;
 			next if $list->isReady;
-			error T( "Your inventory is not available. Unable to transfer item '%s'.\n", $row->{item} ) if $name eq 'inventory';
-			error T( "Your storage is not available. Unable to transfer item '%s'.\n",   $row->{item} ) if $name eq 'storage';
-			error T( "Your cart is not available. Unable to transfer item '%s'.\n",      $row->{item} ) if $name eq 'cart';
+			#name can be storage, inventory or cart
+			error T( "Your $name is not available. Unable to transfer item '%s'.\n", $row->{item} );
 			redo;
 		}
 
 		# Verify that the item is still in the source list and has not changed.
 		my $item = $source->get( $row->{item}->{binID} );
+		
 		if ( !$item || $item->nameString ne $row->{item}->nameString ) {
-			error TF( "Inventory item '%s' disappeared!\n", $row->{item} ) if $row->{source} eq 'inventory';
-			error TF( "Storage item '%s' disappeared!\n",   $row->{item} ) if $row->{source} eq 'storage';
-			error TF( "Cart item '%s' disappeared!\n",      $row->{item} ) if $row->{source} eq 'cart';
+			error TF( "$row->{source} item '%s' disappeared!\n", $row->{item} );
 			redo;
 		}
 
@@ -1059,16 +1057,23 @@ sub processTransferItems {
 				#need to low down the amount
 				$row->{amount} = $freeWeight / ( $item->weight()/10 );
 				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
-			}		
+			}
 		}
 
 		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
 			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
 			redo;
 		}
-
+		
+		my $target_item = $target->getByName( $row->{item}->name );
+		
 		# Transfer the item!
-		$messageSender->$method( $item->{ID}, min( $item->{amount}, $row->{amount} || $item->{amount} ) );
+		if ( (30000 - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
+			warning TF("Amount of %s will surpass the maximun %s capacity (30000), transfering maximum possible (%d)\n", $row->{item}->name, $row->{target}, 30000 - $target_item->{amount} );
+			$messageSender->$method( $item->{ID}, ( 30000 - $target_item->{amount} ) );
+		} else {
+			$messageSender->$method( $item->{ID}, min( $item->{amount}, $row->{amount} || $item->{amount} ) );
+		}
 	}
 
 	AI::args->{time} = time;
