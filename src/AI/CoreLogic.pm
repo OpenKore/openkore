@@ -1029,7 +1029,7 @@ sub processTransferItems {
 			my ( $name, $list ) = @$_;
 			next if $list->isReady;
 			#name can be storage, inventory or cart
-			error T( "Your $name is not available. Unable to transfer item '%s'.\n", $row->{item} );
+			error TF( "Your %s is not available. Unable to transfer item '%s'.\n", $name, $row->{item} );
 			redo;
 		}
 
