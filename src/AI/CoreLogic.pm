@@ -1068,7 +1068,9 @@ sub processTransferItems {
 		my $target_item = $target->getByName( $row->{item}->name );
 		
 		# Transfer the item!
-		if ( (30000 - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
+		if ((30000 - $target_item->{amount} ) <= 0) {
+			error TF("Unable to add %s to %s. You can't stack over 30,000 of the same item\n", $item->name, $row->{target});
+		} elsif ( (30000 - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
 			warning TF("Amount of %s will surpass the maximun %s capacity (30000), transfering maximum possible (%d)\n", $row->{item}->name, $row->{target}, 30000 - $target_item->{amount} );
 			$messageSender->$method( $item->{ID}, ( 30000 - $target_item->{amount} ) );
 		} else {
