@@ -45,6 +45,9 @@ use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
+use Actor::Slave::Homunculus;
+use Actor::Slave::Mercenary;
+use Actor::Slave::Unknown;
 
 our %EXPORT_TAGS = (
 	actor_type => [qw(PC_TYPE NPC_TYPE ITEM_TYPE SKILL_TYPE UNKNOWN_TYPE NPC_MOB_TYPE NPC_EVT_TYPE NPC_PET_TYPE NPC_HO_TYPE NPC_MERSOL_TYPE
@@ -1504,8 +1507,8 @@ sub actor_display {
 				NPC_MOB_TYPE, 'Actor::Monster',
 				NPC_EVT_TYPE, 'Actor::NPC', # both NPCs and portals
 				NPC_PET_TYPE, 'Actor::Pet',
-				NPC_HO_TYPE, 'Actor::Slave',
-				NPC_MERSOL_TYPE, 'Actor::Slave',
+				NPC_HO_TYPE, 'Actor::Slave::Homunculus',
+				NPC_MERSOL_TYPE, 'Actor::Slave::Mercenary',
 				# NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
 			}->{$args->{object_type}};
 		}
@@ -1514,10 +1517,14 @@ sub actor_display {
 
 	unless (defined $object_class) {
 		if ($jobs_lut{$args->{type}}) {
-			unless ($args->{type} > 6000) {
+			if ($args->{type} <= 6000) {
 				$object_class = 'Actor::Player';
+			} elsif (($args->{type} >= 6001 && $args->{type} <= 6016) || ($args->{type} >= 6048 && $args->{type} <= 6052)) {
+				$object_class = 'Actor::Slave::Homunculus';
+			} elsif ($$args->{type} >= 6017 && $$args->{type} <= 6046) {
+				$object_class = 'Actor::Slave::Mercenary';
 			} else {
-				$object_class = 'Actor::Slave';
+				$object_class = 'Actor::Slave::Unknown';
 			}
 		} elsif ($args->{type} == 45) {
 			$object_class = 'Actor::Portal';
@@ -1551,11 +1558,14 @@ sub actor_display {
 		}
 		$actor->{nameID} = $nameID;
 	} elsif ($object_class eq 'Actor::Slave') {
+		require ErrorHandler;
+		die "Unset Actor::Slave type, this shouldn't happen\n";
+	} elsif ($object_class eq 'Actor::Slave::Homunculus' || $object_class eq 'Actor::Slave::Mercenary' || $object_class eq 'Actor::Slave::Unknown') {
 		# Actor is a homunculus or a mercenary
 		$actor = $slavesList->getByID($args->{ID});
 		if (!defined $actor) {
 			$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
-			? $char->{slaves}{$args->{ID}} : new Actor::Slave ($args->{type});
+			? $char->{slaves}{$args->{ID}} : $object_class->new();
 
 			$actor->{appear_time} = time;
 			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};

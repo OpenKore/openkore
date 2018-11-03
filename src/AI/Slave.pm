@@ -204,7 +204,7 @@ sub iterate {
 			}
 		
 		# homunculus is lost
-		} elsif ($slave->{actorType} eq 'Homunculus' && $slave_dist >= MAX_DISTANCE && !$slave->{slave_lost}) {
+		} elsif ($slave->isa("Actor::Slave::Homunculus") && $slave_dist >= MAX_DISTANCE && !$slave->{slave_lost}) {
 			$slave->{slave_lost} = 1;
 			message TF("You lost %s!\n", $slave), 'homunculus';
 =cut
@@ -222,7 +222,7 @@ sub iterate {
 	
 		# if you are idle, move near the homunculus
 		} elsif (
-			$slave->{actorType} eq 'Homunculus' &&
+			$slave->isa("Actor::Slave::Homunculus") &&
 			AI::state == AI::AUTO && AI::isIdle && !$slave->isIdle
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}

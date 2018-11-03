@@ -10,6 +10,7 @@
 package state;
 use strict;
 use Data::YAML::Writer;
+use Scalar::Util qw(blessed);
 
 use Globals;
 use Utils;
@@ -33,7 +34,7 @@ my $hook = Plugins::addHook('mainLoop_post', sub {
 			);
 			$state{actors} = {};
 			foreach my $actor (@{$npcsList->getItems()}, @{$playersList->getItems()}, @{$monstersList->getItems()}, @{$slavesList->getItems()}) {
-				my $actorType = $actor->{actorType};
+				my $actorType = blessed($actor);
 				$state{actors}{$actorType} ||= [];
 				push @{$state{actors}{$actorType}}, {
 					x => $actor->{pos_to}{x},
