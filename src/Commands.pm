@@ -4769,8 +4769,7 @@ sub cmdStorage {
 }
 
 sub cmdStorage_add {
-	my $name = shift;
-	my $amount = shift;
+	my ($name, $amount) = @_;
 
 	my @items = $char->inventory->getMultiple( $name );
 	if ( !@items ) {
@@ -4782,8 +4781,7 @@ sub cmdStorage_add {
 }
 
 sub cmdStorage_addfromcart {
-	my $name = shift;
-	my $amount = shift;
+	my ($name, $amount) = @_;
 
 	if (!$char->cart->isReady) {
 		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
@@ -4800,8 +4798,7 @@ sub cmdStorage_addfromcart {
 }
 
 sub cmdStorage_get {
-	my $name = shift;
-	my $amount = shift;
+	my ($name, $amount) = @_;
 	
 	my @items = $char->storage->getMultiple( $name );
 	if ( !@items ) {
@@ -4813,8 +4810,7 @@ sub cmdStorage_get {
 }
 
 sub cmdStorage_gettocart {
-	my $name = shift;
-	my $amount = shift;
+	my ($name, $amount) = @_;
 
 	if ( !$char->cart->isReady ) {
 		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
