@@ -24,10 +24,11 @@ package Actor::Elemental;
 use strict;
 use Actor;
 use base qw(Actor);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('Elemental');
+	return $class->SUPER::new(T('Elemental'));
 }
 
 ##

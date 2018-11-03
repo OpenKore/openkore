@@ -25,10 +25,11 @@ use strict;
 use Actor;
 
 use base qw(Actor);
+use Translation qw(T);
 
 sub new {
 	my ($class, $ID) = @_;
-	my $self = $class->SUPER::new('Unknown');
+	my $self = $class->SUPER::new(T('Unknown'));
 	$self->{ID} = $ID;
 	$self->{nameID} = unpack("V", $ID);
 	return $self;
@@ -37,7 +38,7 @@ sub new {
 sub nameString {
 	my ($self, $otherActor) = @_;
 
-	return 'self' if $self->{ID} eq $otherActor->{ID};
+	return T('self') if $self->{ID} eq $otherActor->{ID};
 	return $self->name;
 }
 

@@ -19,11 +19,12 @@ package Actor::Slave::Mercenary;
 use strict;
 use Actor::Slave;
 use base qw(Actor::Slave);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
 	
-	return $class->SUPER::new('Mercenary');
+	return $class->SUPER::new(T('Mercenary'));
 }
 
 1;

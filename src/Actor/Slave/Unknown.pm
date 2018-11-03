@@ -27,7 +27,7 @@ sub new {
 	
 	warning T("Creating new slave actor of unknown type\n");
 	
-	return $class->SUPER::new('Unknown');
+	return $class->SUPER::new(T('Unknown'));
 }
 
 1;

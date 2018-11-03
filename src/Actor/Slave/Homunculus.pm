@@ -19,11 +19,12 @@ package Actor::Slave::Homunculus;
 use strict;
 use Actor::Slave;
 use base qw(Actor::Slave);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
 	
-	return $class->SUPER::new('Homunculus');
+	return $class->SUPER::new(T('Homunculus'));
 }
 
 1;
