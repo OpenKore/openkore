@@ -64,6 +64,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [IRC Channel](https://webchat.freenode.net/?channels=openkore) 
 * [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
 * [Brazilian Community](http://openkorebrasil.org/)
+* [Russian Community](https://RO-fan.ru/)
 
 ## Warning
 
