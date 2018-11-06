@@ -41274,7 +41274,7 @@ Berat : ^7777773^000000
 11595#
 Memulihkan HP sebesar 45
 [Effect hanya tersedia selama periode event]
-Ketika digunakan, akan berubah menjadi Cube selama 10 menit.  HIT + 10, FLEE + 20 pada saat berubah.
+Ketika digunakan, akan berubah menjadi Raydric selama 10 menit.  HIT + 10, FLEE + 20 pada saat berubah.
 Berat : ^7777773^000000
 #
 22067#
@@ -49944,3 +49944,118 @@ Berat : ^7777770^000000
 Kotak yang berisi 25 Enriched Oridecon.
 Berat : ^7777770^000000
 #
+
+//====================update 30102018 =================
+9101#
+^808080An egg where the cute pet Scatleton is sleeping.^000000
+^FF0000Once the pet egg has been named, it can never be undone. This is marked by a Beloved prefix.^000000
+^FFFFFF_^000000
+Type: Monster Egg
+Weight: 0
+Food Required: Fresh Fish
+^FFFFFF_^000000
+^800080While Summoned^000000
+Increases the recovery rate of ^008080ITEM^000000 consumables by 100%.
+#
+
+//====================update 06112018 =================
+32265#Gulungan spesial bertema futuristik. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard. Menuju Masa Depan!
+Berat : ^7777771^000000.#
+
+32266#
+Costume: Nekomimi Cyber Headphone
+Sepasang kuping kucing yang dibuat dari mesin. Tampak sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32267#
+Costume: Open Air Headset
+Headset kekinian yang suka dipakai anak muda di masa depan. Terlihat sangat keren untuk dipakai jalan-jalan.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32268#
+Costume: Cyclops Visor
+Penutup mata unik yang kelihatannya meningkatkan energi spiritual pemakai.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32269#
+Costume: Mobile Pursuit System
+Alat pemburu target yang melayang disekitarmu.
+Alat ini akan mengikuti gerakanmu, ketika menyerang akan mengeluarkan sinar laser.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32270#
+Costume: Mecha Nekomimi
+Headphone yang mirip kuping kucing.
+Headphone ini bisa berubah warna ketika kamu berkonsentrasi.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32271#
+Costume: Cyber Commander
+Kostum Headset yang digunakan untuk komando dari pusat strategi.
+Sangat cocok digunakan oleh para ahli strategi.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+28573#
+DEX+5,  AGI+5, VIT+5.
+Serangan skill [Arrow Shower] dan [Double Strafe] meningkat 1% untuk setiap 1 base level.
+Serangan skill [Severe Rainstorm] meningkat 2% setiap 10 Base level.
+Penggunaan SP dari skill [Improvised Song] berkurang 18.
+Meningkatkan AGI+1 setiap 2 Level [Double Strafe] yang diketahui.
+Meningkatkan VIT+1 setiap 2 Level [Double Strafe] yang diketahui.
+Meningkatkan DEX+1 setiap 2 Level [Double Strafe] yang diketahui.
+Meningkatkan ATK+20 setiap 2 Level [Double Strafe] yang diketahui.
+Jenis : ^777777Accessory^000000 Defense : ^7777773^000000
+Weight : ^77777730^000000
+Required Lv. : ^777777100^000000
+Equip : ^777777All class^000000
+#
+
+14588#
+Gulungan untuk yang memiliki spesial efek yaitu memberikan level 10 Blessing kepada party.
+^ffffff_^000000
+Berat : ^7777771^000000
+#
+
+14589#
+Gulungan untuk yang memiliki spesial efek yaitu memberikan level 10 Increase AGI kepada party. 
+^ffffff_^000000
+Berat : ^7777771^000000
+#
+
+32272#
+Sebuah tas bagasi yang berisi barang yang bertemakan liburan akhir tahun. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard. Libur telah tiba!
+Berat : ^7777771^000000.#
+
+12373#Boy's_Naivety#
+12374#Flaming_Ice#
+12395#Tantan Noodle#
+14574#Skull_Of_Vagabond#
+12360#Very_Red_Juice#
+23189#Small Doll Needle#
+23187#Sap_Jelly#
+23188#Airship_Part#
+23189#Little_Dall_Needle#

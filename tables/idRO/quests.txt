@@ -11725,3 +11725,49 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19254#Nightmare Evil Druid Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Nightmare Evil Druid ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 21 : 30 Oktober 2018 --
+19255#Sleeper Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Sleeper ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19256#Holden Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Holden ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19257#Magmaring Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Magmaring ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19258#Cenere Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Cenere ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19259#Margaretha Sorin Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Margaretha Sorin ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 22 : 6 November 2018 --
+19260#Dragon Tail Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Dragon Tail ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19261#Wraith Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Wraith ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19262#Majoruros Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Majoruros ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19263#Dimik (Blue) Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Dimik (Blue) ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19264#Green Ferus Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Green Ferus ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19265#Armeyer Dinze Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Armeyer Dinze ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
