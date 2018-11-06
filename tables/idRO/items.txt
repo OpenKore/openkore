@@ -7545,3 +7545,29 @@
 32262#Mad_Bunny_Scroll#
 32263#Enriched_Elunium_Box25#
 32264#Enriched_Oridecon_Box25#
+
+//====================update 30102018 =================
+9101#Portable_cage_for_Scatleton#
+
+//====================update 06112018 =================
+32265#Cyber November Costume Scroll#
+32266#Costume: Nekomimi Cyber Headphone#
+32267#Costume: Open Air Headset#
+32268#Costume: Cyclops Visor#
+32269#Costume: Mobile Pursuit System#
+32270#Costume: Mecha Nekomimi#
+32271#Costume: Cyber Commander#
+28573#Emerald_Ring#
+14588#Party Blessing 10 Scroll#
+14589#Party Inc Agility 10 Scroll#
+32272#Holiday Groove Pack#
+
+12373#Boy's_Naivety#
+12374#Flaming_Ice#
+12395#Tantan Noodle#
+14574#Skull_Of_Vagabond#
+12360#Very_Red_Juice#
+23189#Small Doll Needle#
+23187#Sap_Jelly#
+23188#Airship_Part#
+23189#Little_Dall_Needle#
