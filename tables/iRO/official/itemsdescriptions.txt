@@ -2523,6 +2523,7 @@ Weight: ^808080120^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Int + 5
 Dex - 1
 Luk + 10
 #
@@ -10648,10 +10649,6 @@ This item is indestructible in battle.
 If upgrade level is +10 or higher,
 Recovers all damage lost from size penalties.
 
-On 10-25 the following changes will take effect
-gains "Nullify reduction in damage inflicted on enemies resulting from enemy's size."
-loses "Increases damage versus all sizes by 100%"
-
 #
 1836#
 ^808080This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
@@ -12925,11 +12922,13 @@ Reduces the SP cost of ^0000FFShield Press^000000 by 5.
 #
 2156#
 An ancient book of sacred songs handed down in the cathedral. It is said to have sold like hotcakes, published as one of a series.
-Allows the user to use Level 1 Odin's Power which increases Atk and Matk by 70 while lowering defense and Mdef by 20.
-Type : ^777777Shield^000000 Defense : ^77777710^000000
-Weight : ^77777750^000000
-Required Level : ^777777110^000000
-Job : ^777777Archbishop^000000
+Class: ^808080Shield^000000
+Defense: ^80808010^000000
+Weight: ^80808050^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Arch Bishop^000000
+Mdef + 2
+Enables ^0000FFLevel 1 Odin's Power^000000: Buffs the user for 60 seconds; Atk + 70, Matk + 70, Def - 20 and Mdef - 20.
 #
 2158#
 A magical shield endowed with the power of undead.
@@ -12975,14 +12974,14 @@ Job : ^777777Warlock^000000
 #
 2162#
 An ancient book of sacred songs handed down in the cathedral.
-Mdef +5
-Allows the user to use Level 2 Odin's Power which increases Atk and Matk by 100 while lowering defense and Mdef by 20.
-Increases effectiveness of your Heal, Sanctuary and Potion Pitcher by 5%.
-Type : ^777777Shield^000000
-Defense : ^77777720^000000
-Weight : ^77777750^000000
-Required Level : ^777777140^000000
-Job : ^777777Archbishop^000000
+Class: ^808080Shield^000000
+Defense: ^80808020^000000
+Weight: ^80808050^000000
+Requires Level: ^808080140^000000
+Usable By: ^808080Arch Bishop^000000
+Mdef + 5
+Enables ^0000FFLevel 2 Odin's Power^000000: Buffs the user for 60 seconds; Atk + 100, Matk + 100, Def - 20 and Mdef - 20.
+Increases the recovery rate of recovery skills by 5%.
 #
 2164#
 a shield that has internal resistance.
@@ -24288,12 +24287,11 @@ Compound on: ^777777Shield^000000
 Weight : ^7777771^000000
 #
 4315#
-Pest Card.
-Add the chance of auto casting Stone Curse on an enemy when the user receives Physical Damage.
-The chance is increased if the user has 77 or more INT points.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Adds a 3% chance of inflicting ^800000Stone^000000 on the attacker when receiving a physical attack.
+Adds an additional 3% chance, if the user's base Int is 77 or higher.
 #
 4316#
 False Angel Card.
@@ -25413,29 +25411,33 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4408#
-Increases Physical
-damage to Holy,
-Shadow, Angel, and
-Demon monsters by 40%.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Increases physical damage on Holy property targets by 40%.
+Increases physical damage on Shadow property targets by 40%
+Increases physical damage on Angel race targets by 40%.
+Increases physical damage on Demon race targets by 40%.
 #
 4409#
-MATK +5%, DEF -10,
-If wearer is a Mage class character:
-Max SP +100
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Matk + 5%
+Def - 10
+
+^F4AD42Mage Bonus^000000
+Max SP + 100
 #
 4410#
-ATK +15
-If wearer is a Swordman class character:
-MaxHP +500
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Atk + 15
+
+^F4AD42Swordman Bonus^000000
+Max HP + 500
 #
 4411#
 Str +2. Each attack
@@ -25470,35 +25472,26 @@ Compound on: ^777777Shield^000000
 Weight : ^7777771^000000
 #
 4414#
-MDEF +10.
-Enables use of
-Lv.1 Stone Curse.
-Adds 30% tolerance
-to Stone Curse status.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Mdef + 10
+Enables ^0000FFLevel 1 Stone Curse^000000.
+Increases resistance to ^800000Stone^000000 by 30%.
 #
 4415#
-Adds a high chance
-that defeated monsters
-will drop Ice Cream.
-Increases Recovery
-Rate of Ice Cream
-by 100%.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Adds a chance of gaining ^008080Ice Cream^000000 when a monster is killed.
+Increases the recovery rate of ^008080Ice Cream^000000 consumables by 100%.
 #
 4416#
-Reduces Variable Casting Time
-of Cold Bolt skill by
-25%, and increases
-that Cold Bolt's
-damage by 25%.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Reduces the variable casting time of ^0000FFCold Bolt^000000 by 25%.
+Increases the damage of ^0000FFCold Bolt^000000 by 25%.
 #
 4417#
 Vit +2.
@@ -25543,39 +25536,32 @@ Compound on: ^777777Shield^000000
 Weight : ^7777771^000000
 #
 4421#
-CRI +15 bonus when
-performing long ranged
-physical attacks.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Crit + 15 when performing a long-ranged attack.
 #
 4422#
-Flee +5, Perfect
-Dodge +3. Increases
-damage to Water
-monsters by 10%.
-Adds a CRI +15 bonus
-to Fish monsters.
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 5
+Perfect Dodge + 3
+Increases physical damage on Water property targets by 10%.
+Crit + 15 on Fish race targets.
 #
 4423#
-Hit +5. Increases
-damage to Water
-monsters by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Hit + 5
+Increases physical damage on Water property targets by 5%.
 #
 4424#
-Enables use of
-Find Stone and
-Stone Fling skills.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Enables ^0000FFLevel 1 Find Stone^000000 and ^0000FFLevel 1 Stone Fling^000000.
 #
 4425#
 ATK +25.
@@ -25585,41 +25571,36 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4426#
-If the wearer is a Rogue or Stalker,
-ATK +10%
-MATK +10%
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+^F4AD42Rogue Bonus^000000
+Atk + 10%
+Matk + 10%
 #
 4427#
-When compounded into a One-Handed or Two-Handed Sword,
-CRI +5, Hit +5,
-increases power
-of ^FF0000Bowling Bash^000000
-skill by 25%
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+If compounded to One-Handed or Two-Handed Sword,
+Hit + 5
+Crit + 5
+Increases the damage of ^0000FFBowling Bash^000000 by 25%.
 #
 4428#
-When compounded to a Bow,
-CRI+5, Hit +5,
-increases the power
-of the ^FF0000Arrow Shower^000000
-skill by 50%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+If compounded to a Bow,
+Hit + 5
+Crit + 5
+Increases the damage of ^0000FFArrow Shower^000000 by 50%.
 #
 4429#
-Increases damage
-of the ^FF0000Fire Pillar^000000
-and ^FF0000Meteor Storm^000000
-skills by 40%.
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFFire Pillar^000000 and ^0000FFMeteor Storm^000000 by 40%.
 #
 4430#
 ^FF0000Account Bound^000000
@@ -25650,40 +25631,29 @@ Compound on: ^777777Garment^000000
 Weight : ^7777771^000000
 #
 4433#
-Reduces Variable Casting Time of ^FF0000Fire Bolt^000000 by 25% and Increases damage of ^FF0000Fire Bolt^000000 skill by 25%.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Reduces the variable casting time of ^0000FFFire Bolt^000000 by 25%.
+Increases the damage of ^0000FFFire Bolt^000000 by 25%.
 #
 4434#
-Increases damage
-to formless monsters
-by 5%.
-Has a low chance
-that defeated
-formless monsters will
-drop Rough Oridecons
-or Rough Eluniums.
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Increases physical damage on Formless race targets by 5%.
+Adds a chance of gaining ^008080Rough Oridecon^000000 or ^008080Rough Elunium^000000 when a Formless race monster is killed.
 #
 4435#
-Increases physical
-and magic damage to Demihuman enemies by 1%.
-Recovers 50 HP each
-time a monster is
-defeated by melee attack.
-Combined with the
-Ragged Zombie
-Card will recover
-2 SP each time a
-demihuman monster
-is defeated by
-melee attack.
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Increases physical and magical damage on Demi-Human race targets by 1%.
+Restores 50 HP to the user when a monster is killed by a physical attack.
+^800080Set Bonus^000000
+^008080Zombie Slaughter Card^000000
+^008080Ragged Zombie Card^000000
+Restores 2 SP to the user when a Demi-Human Race monster is killed by a physical attack.
 #
 4436#
 Increases physical
@@ -25720,16 +25690,13 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4438#
-If the wearer is a
-Mage class character.
-MaxSP +100
-MaxHP -100
-Increases damage of
-^FF0000Soul Strike^000000, ^FF0000Napalm Beat^000000,
- and ^FF0000Napalm Vulcan^000000 by 20%.
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+^F4AD42Mage Bonus^000000
+Max HP - 100
+Max SP + 100
+Increases the damage of ^0000FFSoul Strike^000000, ^0000FFNapalm Beat^000000, and ^0000FFNapalm Vulcan^000000 by 20%.
 #
 4439#
 Increases tolerance
@@ -25753,12 +25720,13 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4441#
-MATK +10%.
-Reduces Max SP by 50%.
-Increases magic damage to Demihuman and  Angel monsters by 50%.
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Matk + 10%
+Max SP - 50%
+Increases magical damage on Demi-Human and Angel race targets by 50%.
 #
 4442#
 Decreases damage from Neutral Property by 20%.
@@ -30025,18 +29993,14 @@ Weight : ^77777710^000000
 Jobs : ^777777Every Job except Novice^000000
 #
 5105#
-A birthday cake replica that won't fit a Dancer
-inside, but it's almost just as much fun to
-wear it on top of your
-head. Almost.
-^ff0000While wearing this, monsters have a chance of dropping Stolen Cacao when killed.^000000
-MaxSP +60
-Class : ^777777Costume^000000
-Defense: ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+A birthday cake replica that won't fit a Dancer inside, but it's almost just as much fun to wear it on top of your head. Almost.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 60
+Adds a chance of gaining ^008080Stolen Cacao^000000 when a monster is killed.
 #
 5106#
 A festive party hat for celebrating Ragnarok's
@@ -33276,13 +33240,15 @@ Job : ^777777All^000000
 #
 5410#
 A hat in the form of an upside-down paperbag, to celebrate the festival.
-Decrease the damage from demi-human monsters by 4%.
-Increase the resistance against stun by 4%, MHP +100
-Class : ^777777Headgear^000000
-Defense : ^7777776^000000
-Head Location : ^777777Upper-Mid-Lower^000000
-Weight : ^77777720^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle, Lower^000000
+Defense: ^8080806^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100.
+Reduces damage taken from Demi-Human race enemies by 4%.
+Increases resistance to ^800000Stun^000000 by 4%.
 #
 5411#
 A white snake that balances naturally on your head. It's beady eyes stare into your soul.
@@ -36099,29 +36065,37 @@ Location: ^777777Upper-Mid^000000
 #
 5758#
 A beautiful head ornament of a ballerina.
-Int +1, Luk +1, Mdef +5.
-Increases long range physical attack power by 5%.
-Swing dance, for the consumed SP for the symphony decreased by 10.
-Class : ^777777Headgear^000000
-Defense : ^77777712^000000
-Location: ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Wanderer^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Wanderer^000000
+Int + 1
+Luk + 1
+Mdef + 5
+
+Increases long-ranged damage on targets by 5%.
+Reduces the SP cost of ^0000FFSwing Dance^000000 and ^0000FFLover Symphony^000000 by 10.
 #
 5759#
 placeholder
 #
 5760#
 A special hairband which is designed to use the most frequently used tools.
-Str +1, Dex +1, Mdef +5.
-When pure Str is 120, Atk +10, Cri +3.
-Class : ^777777Headgear^000000
-Defense : ^77777712^000000
-Location: ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Mechanic^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Str + 1
+Dex + 1
+Mdef + 5
+
+Atk + 10 and Crit + 3, if the user's base Str is 120 or higher.
 #
 5761#
 This cute Sloth must think you look like a tree. At least it warms the top of your head.
@@ -47176,11 +47150,9 @@ sublimely delicious.
 Weight : ^7777777^000000
 #
 12130#
-A bag, stuffed with
-various snacks, that's
-generally coveted by
-those with a sweet tooth. ^ffffff_^000000
-Weight : ^7777777^000000
+A bag, stuffed with various snacks, that's generally coveted by those with a sweet tooth.
+Class: ^808080Item Giver^000000
+Weight: ^8080807^000000
 #
 12131#
 A drink that is
@@ -47192,12 +47164,12 @@ potency. Or does it?
 Weight : ^77777710^000000
 #
 12132#
-A small, red bag that
-magically changes your
-clothes into a ^000088Santa^000000
-^000088Suit^000000 for 10 minutes.
-^ffffff_^000000
-Weight : ^77777720^000000
+A small red magical bag.
+^FF0000This item cannot be used by Doram class.^000000
+Class: ^808080Generic^000000
+Weight: ^80808020^000000
+Changes the user's clothes to Santa Suit for 10 minutes.
+This item forbids the user from attacking or using skills while used.
 #
 12133#
 #
@@ -49372,7 +49344,8 @@ Unknown Item, can be identified by [Magnifier].
 #
 12612#
 A small, worn out bag which makes a tiny sound. Cling! No one has any idea what's in it.
-Weight : ^7777771^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 12613#
 A small bag which makes a tiny sound. Cling! It is said that sometimes a pretty good Coin was discovered in it.
@@ -49380,7 +49353,8 @@ Weight : ^7777771^000000
 #
 12614#
 A small bag which makes a tiny sound. Cling! It is said that sometimes a fairly fine Coin was discovered in it.
-Weight : ^7777771^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 12615#
 A small bag which makes a tiny sound. Cling!
@@ -60206,17 +60180,29 @@ Required Level : ^777777120^000000
 Job : ^777777Mage and Acolyte 3rd Classes^000000
 #
 15093#
-MDEF + 5.
-Max HP/SP +5%.
-ATK +10, MATK +10, HIT +10, FLEE +10.
-Banishing Point damage +10%.
-Storm Blast damage +10%.
-Physical attacks add a chance of auto-casting Level 10 Auto Spell Healing/Storm Gust.
-The casting chance increases according to the Upgrade level.
-Class: ^777777Armor^000000 DEF: ^777777120^000000
-Weight: ^777777400^000000
-Required Level: ^777777160^000000
-Equip To: ^7777773rd Swordsman Classes^000000
+Class: ^808080Armor^000000
+Defense: ^808080120^000000
+Weight: ^808080400^000000
+Requires Level: ^808080160^000000
+Usable By: ^808080Rune Knight, Royal Guard^000000
+Max HP + 5%
+Max SP + 5%
+Atk + 10
+Matk + 10
+Mdef + 5
+Hit + 10
+Flee + 10
+
+Increases the damage of ^0000FFVanishing Point^000000 by 10%.
+Increases the damage of ^0000FFStorm Blast^000000 by 10%.
+Adds a chance of casting ^0000FFLevel 10 Heal^000000 and ^0000FFLevel 10 Storm Gust^000000 when performing a physical attack.
+Adds an additional chance of casting ^0000FFLevel 10 Heal^000000 and ^0000FFLevel 10 Storm Gust^000000 per upgrade level of the armor.
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Plate [1]^000000
+Disables the following effects of ^008080Hero Plate [1]^000000, chance of casting ^0000FFLevel 10 Heal^000000 and ^0000FFLevel 10 Storm Gust^000000.
+Increases the damage of ^0000FFStorm Blast^000000 by 5% per upgrade level of the armor.
+Increases the damage of ^0000FFVanishing Point^000000 by 5% per upgrade level of the armor.
 #
 15094#
 Max HP/SP +5%.
@@ -60262,20 +60248,31 @@ Increases the damage of ^0000FFDragon Combo^000000 by 5% per upgrade level of th
 Increases the damage of ^0000FFEarth Shaker ^000000 by 5% per upgrade level of the armor.
 #
 15096#
-MDEF +5.
-Max HP/SP +5%, ATK + 10, MATK + 10.
-If pure STR is 90 or greater, then STR +1 every 2 Upgrade levels.
-If pure INT is 90 or greater, then INT +1 every 2 Upgrade levels.
-If pure VIT is 90 or greater, then VIT +1 every 2 Upgrade levels.
-If pure AGI is 90 or greater, then AGI +1 every 2 Upgrade levels.
-If pure DEX is 90 or greater, then DEX +1 every 2 Upgrade levels.
-If pure LUK is 90 or greater, then LUK +1 every 2 Upgrade levels.
-Melee Physical attacks add a chance of casting Stun, Poison, Silence, and Curse.
-The casting chance upgrades according to the Upgrade level.
-Class: ^777777Armor^000000 DEF: ^777777100^000000
-Weight: ^77777750^000000
-Required Level: ^777777160^000000
-Equip To: ^7777773rd Merchant Classes^000000
+Honorable armor given to those who defeated Satan Morroc. It can empower strength, stamina and spirit to higher levels.
+Class: ^808080Armor^000000
+Defense: ^808080100^000000
+Weight: ^80808050^000000
+Requires Level: ^808080160^000000
+Usable By: ^808080Mechanic, Geneticist^000000
+Max HP + 5%
+Max SP + 5%
+Atk + 10
+Matk + 10
+Mdef + 5
+
+Str + 1 per 2 upgrade levels of the item, if the user's base Str is 90 or higher.
+Agi + 1 per 2 upgrade levels of the item, if the user's base Agi is 90 or higher.
+Vit + 1 per 2 upgrade levels of the item, if the user's base Vit is 90 or higher.
+Int + 1 per 2 upgrade levels of the item, if the user's base Int is 90 or higher.
+Dex + 1 per 2 upgrade levels of the item, if the user's base Dex is 90 or higher.
+Luk + 1 per 2 upgrade levels of the item, if the user's base Luk is 90 or higher.
+
+Adds a chance of inflicting ^800000Stun^000000, ^800000Silence^000000, ^800000Curse^000000, and ^800000Poison^000000 per upgrade level of the armor on the target when performing a physical attack.
+^800080Set Bonus^000000
+^008080Brooch of Hero [1]^000000
+^008080Hero Trade Mail [1]^000000
+All Stats + 2 per upgrade level of the armor.
+Adds an additional chance of inflicting ^800000Stun^000000, ^800000Silence^000000, ^800000Curse^000000, and ^800000Poison^000000 per upgrade level of the armor on the target when performing a physical attack.
 #
 15097#
 Max HP/SP +5%.
@@ -60782,37 +60779,42 @@ Adds an additional 2% chance of restoring an additional 2% of damage as HP when 
 Adds an additional 2% chance of restoring an additional 2% of damage as SP when performing a physical attack.
 #
 15146#
-^808080Attire for those who would use whatever means necessary to bring their desires to pass.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Armor
-Defense: 0
-Property: Neutral
-Weight: 10
-Required Level: 100
-Required Jobs: All Jobs
-^FFFFFF_^000000
+Attire for those who would use whatever means necessary to bring their desires to pass.
+Class: ^808080Armor^000000
+Defense: ^8080800^000000
+Property: ^808080Neutral^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Matk + 50
 Enables ^0000FFLevel 1 Endure^000000.
 If the users base level is 120 or higher,
 Additional Matk + 50
 If the users base level is 140 or higher,
 Additional Matk + 50
-^FFFFFF_^000000
 ^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
 ^008080Ancient Cape^000000
-^008080Flattery Robe^000000
 Max SP + 10%
-Additional Max HS + 1% per upgrade level of ^008080Flattery Robe^000000.
+Additional Max SP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 Flee + 10
-Additional Flee + 1 per upgrade level of ^008080Flattery Robe^000000.
+Additional Flee + 1 per upgrade level of ^008080Flattery Robe [1]^000000.
+
 ^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
+^008080Ancient Cape [1]^000000
+Max SP + 10%
+Additional Max SP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
+Flee + 10
+Additional Flee + 1 per upgrade level of ^008080Flattery Robe [1]^000000.
+
+^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
 ^008080Cloak of Survival^000000
-^008080Flattery Robe^000000
 Max HP + 10%
-Additional Max HP + 1% per upgrade level of ^008080Flattery Robe^000000.
+Additional Max HP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 Matk + 2%
-Additional Matk + 1% per upgrade level of ^008080Flattery Robe^000000.
+Additional Matk + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 #
 15147#
 ^808080Attire for those who can inflict critical damage straight to the soul by talking.^000000
@@ -74013,12 +74015,11 @@ Increases the damage of ^0000FFCart Tornado^000000 by 5%.
 If upgrade level is +5 or higher,
 Increases the damage of ^0000FFCart Cannon^000000 by an additional 20%.
 Increases the damage of ^0000FFCart Tornado^000000 by an additional 10%.
-If upgrade level is +7 or higher,
+If upgrade level is +8 or higher,
 Increases the damage of ^0000FFCart Cannon^000000 by an additional 30%.
 Increases the damage of ^0000FFCart Tornado^000000 by an additional 20%.
 
-On 10-25 the following changes take effect
-(Refine Level Required Increased to +8, was +7)
+
 #
 19137#
 ^808080At first glance it doesn't seem all that practical, but there is clearly more than meets the eye with this fruity mouth guard.^000000
@@ -74704,7 +74705,7 @@ Weight: ^808080100^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Aspd + 10%
-Reduces the fixed casting time of skills by 50%.
+Reduces the fixed casting time of ^0000ffLion's Howl^000000 by 100%.
 Increases the damage of ^0000FFLion's Howl^000000 by 20%.
 The users casting cannot be interrupted outside of WoE.
 If upgrade level is +7 or higher,
@@ -74719,8 +74720,6 @@ Reduces the cooldown of ^0000FFLion's Howl^000000 by 9.5 seconds, if ^0000FFEart
 Increases physical damage on boss monsters by 50%, if ^0000FFRampage Blast^000000 is at maximum level.
 Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 
-On 10-25 the following changes takes effect
-(Loses 50% FCT Reduction. Gains Skill Targeted FCT Reduction)
 #
 19337#
 A pair of safety glasses which helps you during your activities in Heart Hunter Base.
@@ -78878,12 +78877,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20217#
-^808080This lovely veil can be worn in all sorts of social situations.^000000
-Class: Costume
-Position: Middle, Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This lovely veil can be worn in all sorts of social situations.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20218#
 ^808080A cool cyber-hat for the cyber age.^000000
@@ -80152,12 +80151,11 @@ Required Jobs: All Jobs
 #
 20458#
 Two monsters became a team! To loot your heart!
-Type : ^777777Costume^000000
-DEF : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Lv. req. : ^7777771^000000
-Class : ^777777All classes^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20459#
 ^808080A headdress worn by a girl during fights in the battlefield. The light protecting the girl shines like a spotlight.^000000
@@ -80229,6 +80227,12 @@ Position: Garment
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
+#
+20512#
+A backpack befitting of any hero.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
 #
 20515#
 A mystical, magical circle beneath your feet.
@@ -80845,10 +80849,10 @@ Max SP + 10%
 Mdef + 3
 Reduces the SP cost of skills by 1%.
 Reduces the SP cost of skills by an additional 2% per 3 upgrade levels of the item.
-If upgrade level is +9 or higher,
+If upgrade level is +10 or higher,
 Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 
-On 10-25 the following change will take effect (Refine Level Required Increased to +10, was +9)
+
 ^800080Set Bonus^000000
 ^008080Red Lotus Stole^000000
 ^008080Undead Knight F Card^000000
@@ -81586,7 +81590,6 @@ Additional Hit + 40
 If upgrade level is +10 or higher,
 Additional Hit + 100
 
-On 10-25 the following changes will take effect (Loses + Hit, gains + Perfect Hit)
 ^800080Set Bonus^000000
 ^008080Phreeoni Card^000000
 ^008080Phreeoni Wings^000000
@@ -84678,6 +84681,7 @@ Additional Aspd + 2%
 ^008080Physical Shadow Earring^000000
 ^008080Physical Shadow Pendant^000000
 ^008080Physical Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000, and ^008080Physical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
 Atk + 1%
 #
@@ -84695,6 +84699,7 @@ Atk + 1%
 ^008080Physical Shadow Earring^000000
 ^008080Physical Shadow Pendant^000000
 ^008080Physical Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000, and ^008080Physical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
 Atk + 1%
 #
@@ -84712,6 +84717,7 @@ Max HP + 1%
 ^008080Physical Shadow Earring^000000
 ^008080Physical Shadow Pendant^000000
 ^008080Physical Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000, and ^008080Physical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Physical Shadow Earring^000000, ^008080Physical Shadow Pendant^000000 and ^008080Physical Shadow Weapon^000000 are +23 or higher,
 Atk + 1%
 #
@@ -84729,6 +84735,7 @@ Reduces the variable casting time of skills by an additional 2%.
 ^008080Magical Shadow Earring^000000
 ^008080Magical Shadow Pendant^000000
 ^008080Magical Shadow Weapon^000000
+Matk + 1 per upgrade level of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000, and ^008080Magical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
 Matk + 1%
 #
@@ -84746,6 +84753,7 @@ Matk + 1%
 ^008080Magical Shadow Earring^000000
 ^008080Magical Shadow Pendant^000000
 ^008080Magical Shadow Weapon^000000
+Matk + 1 per upgrade level of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000, and ^008080Magical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
 Matk + 1%
 #
@@ -84763,6 +84771,7 @@ Max SP + 1%
 ^008080Magical Shadow Earring^000000
 ^008080Magical Shadow Pendant^000000
 ^008080Magical Shadow Weapon^000000
+Matk + 1 per upgrade level of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000, and ^008080Magical Shadow Weapon^000000.
 If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080Magical Shadow Pendant^000000 and ^008080Magical Shadow Weapon^000000 are +23 or higher,
 Matk + 1%
 #
@@ -84777,97 +84786,142 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24025#
-Shoes worn on top of normal shoes for additional DEF. Can be equipped alone but needs a set to have any effect.
-HP + 20, SP + 10.
-MHP + 1%, MSP + 1%, when Refined over +7.
-HP, SP increases by total number of Refinement of Set Items,when equiped with^32CD32Champion Shoes Shadow^000000 and ^32CD32Hard Armor Shadow^000000
-Additional HP + 1%, when total Refinement is over 15
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance health and mana.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 20
+Additional Max HP + 10 per upgrade level of the item.
+Max SP + 10
+If upgrade level is +7 or higher,
+Max HP + 1%
+Max SP + 1%
+^800080Set Bonus^000000
+^008080Champion Shadow Shoes^000000
+^008080Hard Shadow Armor^000000
+Max HP + 1 per upgrade level of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000.
+Max SP + 1 per upgrade level of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000.
+If the combined upgrade levels of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000 are +15 or higher,
+Max HP + 1%
 #
 24026#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-DEF + 10.
-Additional DEF + 10,when Refined over +7.
-DEF increases by total number of Refinement of Set Items,when equiped with^32CD32Athena Shield Shadow^000000 and  ^32CD32Immuned Armor Shadow^000000
-Additional Resistance to Non Elemental  +1%, when total Refinement is over 15
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance physical defense.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Def + 10
+If upgrade level is +7 or higher,
+Additional Def + 10
+^800080Set Bonus^000000
+^008080Athena Shadow Shield^000000
+^008080Immune Shadow Armor^000000
+Def + 1 per upgrade level of ^008080Athena Shadow Shield^000000 and ^008080Immune Shadow Armor^000000.
+If the combined upgrade levels of ^008080Athena Shadow Shield^000000 and ^008080Immune Shadow Armor^000000 are +15 or higher,
+Reduces damage taken from Neutral property attacks by 1%.
 #
 24027#
-Can be equipped alone but needs a set to have any effect.
-Resistance to Non Elemental  +1%
-DEF increases by total number of Refinement of Set Items when equiped with ^32CD32Athena Shield Shadow^000000
-Additional Resistance to Non Elemental  +1%, when total combined Refinement is over 15
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance physical defense.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Neutral property attacks by 1%.
+^800080Set Bonus^000000
+^008080Athena Shadow Shield^000000
+^008080Immune Shadow Armor^000000
+Def + 1 per upgrade level of ^008080Athena Shadow Shield^000000 and ^008080Immune Shadow Armor^000000.
+If the combined upgrade levels of ^008080Athena Shadow Shield^000000 and ^008080Immune Shadow Armor^000000 are +15 or higher,
+Reduces damage taken from Neutral property attacks by 1%.
 #
 24028#
-Can be equipped alone but needs a set to have any effect.
-HP + 50.
-When refined to +7, increases HP by 1%.
-If equipped with ^32CD32Hard Shadow Armor^000000 with ^32CD32Champion's Shadow Shoes^000000, HP and SP increased up to the sum of combined refine level.
-When the sum of combined refine is over 15,  additional +1% HP increase.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance health and mana.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 50
+Additional Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Max HP + 1%
+^800080Set Bonus^000000
+^008080Champion Shadow Shoes^000000
+^008080Hard Shadow Armor^000000
+Max HP + 1 per upgrade level of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000.
+Max SP + 1 per upgrade level of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000.
+If the combined upgrade levels of ^008080Champion Shadow Shoes^000000 and ^008080Hard Shadow Armor^000000 are +15 or higher,
+Max HP + 1%
 #
 24029#
-Can be equipped alone but needs a set to have any effect.
-HIT + 10.
-When refined to +7, +10 HIT
-When equipped with ^32CD32Kingbird's Shadow Weapon^000000 increase ATK by the sum of the combined refine levels.
-When the combined sum of refine is over 15, increases additional long distance damage by 1%.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance accuracy.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Hit + 10
+If upgrade level is +7 or higher,
+Additional Hit + 10
+^800080Set Bonus^000000
+^008080Ancient Shadow Armor^000000
+^008080Kingbird's Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Ancient Shadow Armor^000000 and ^008080Kingbird's Shadow Weapon^000000.
+If the combined upgrade levels of ^008080Ancient Shadow Armor^000000 and ^008080Kingbird's Shadow Weapon^000000 are +15 or higher,
+Increases long-ranged damage on targets by 1%.
 #
 24030#
-Can be equipped alone but needs a set to have any effect.
-CRI + 5.
-When refined to +7, +5 CRI
-When equipped with ^32CD32Critical Hit Shadow Weapon^000000 increases ATK by the sum of the combined refine levels.
-When the combined sum of refine is over 15, increases additional critical damage by 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance critical attacks.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Crit + 5
+If upgrade level is +7 or higher,
+Additional Crit + 5
+^800080Set Bonus^000000
+^008080Critical Shadow Armor^000000
+^008080Critical Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Critical Shadow Armor^000000 and ^008080Critical Shadow Weapon^000000.
+If the combined upgrade levels of ^008080Critical Shadow Armor^000000 and ^008080Critical Shadow Weapon^000000 are +15 or higher,
+Increases critical damage on targets by 1%.
 #
 24031#
-ATK + 10.
-When refined to +7, increases long distance damage by 1%.
-When equipped with ^32CD32Ancient Shadow Armor^000000, increase ATK by the sum of the combined refine levels.
-When the combined sum of refine is over 15, increases additional critical damage by 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance long ranged attacks.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 10
+Additional Atk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Increases long-ranged damage on targets by 1%.
+^800080Set Bonus^000000
+^008080Ancient Shadow Armor^000000
+^008080Kingbird's Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Ancient Shadow Armor^000000 and ^008080Kingbird's Shadow Weapon^000000.
+If the combined upgrade levels of ^008080Ancient Shadow Armor^000000 and ^008080Kingbird's Shadow Weapon^000000 are +15 or higher,
+Increases long-ranged damage on targets by 1%.
 #
 24032#
-ATK + 10.
-When refined to +7, increase critical damage by 1%.
-When equipped with ^32CD32Critical Shadow Armor^000000 increase ATK by the sum of the combined refine levels.
-When the combined sum of refine is over 15, increases additional critical damage by 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance critical attacks.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 10
+Additional Atk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Increases critical damage on targets by 1%.
+^800080Set Bonus^000000
+^008080Critical Shadow Armor^000000
+^008080Critical Shadow Weapon^000000
+Atk + 1 per upgrade level of ^008080Critical Shadow Armor^000000 and ^008080Critical Shadow Weapon^000000.
+If the combined upgrade levels of ^008080Critical Shadow Armor^000000 and ^008080Critical Shadow Weapon^000000 are +15 or higher,
+Increases critical damage on targets by 1%.
 #
 24033#
 MATK + 10.
@@ -85067,16 +85121,21 @@ Flee + 1 per upgrade level of the item.
 Agi + 1
 #
 24046#
-It is a Neckless that is known for protecting its owner. It brings out the potential from the owner.
-MDEF + 3.
-When Refined by Lv.7, MDEF + 3 added.
-^32CD32Resist Spell power Pendant Shadow^000000 and ^32CD32Athena Earring Shadow^000000is equipped together, Increase non-property tolerance by 1%.
-if the total refine value is over 15, increase extra non-property tolerance by 1%.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance magical defense.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Mdef + 3
+If upgrade level is +7 or higher,
+Additional Mdef + 3
+^800080Set Bonus^000000
+^008080Athena Shadow Earring^000000
+^008080Resist Spell Power Shadow Pendant^000000
+Reduces damage taken from Neutral property attacks by 1%.
+If the combined upgrade levels of ^008080Athena Shadow Earring^000000 and ^008080Resist Spell Power Shadow Pendant^000000 are +15 or higher,
+Reduces damage taken from Neutral property attacks by an additional 1%.
 #
 24047#
 It is a Neckless that is known for protecting its owner. It brings out the potential from the owner.
@@ -85123,28 +85182,38 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24051#
-Sacred earring protecting the owner. Enables user's potential ability.
-DEF + 10.
-When refine level is 7, DEF + 10 increase.
-When equipped together with ^32CD32Athena Earring Shadow^000000 and ^32CD32Resist Spell Power Pendant Shadow^000000, Non Elemental resistance 1% increase.
-When refine rate total is 15 , Non Elemental resistance 1% extra increase.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance physical defense.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Def + 10
+If upgrade level is +7 or higher,
+Additional Def + 10
+^800080Set Bonus^000000
+^008080Athena Shadow Earring^000000
+^008080Resist Spell Power Shadow Pendant^000000
+Reduces damage taken from Neutral property attacks by 1%.
+If the combined upgrade levels of ^008080Athena Shadow Earring^000000 and ^008080Resist Spell Power Shadow Pendant^000000 are +15 or higher,
+Reduces damage taken from Neutral property attacks by an additional 1%.
 #
 24052#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by human type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by human type monsters.
-When refine level 9, 1% extra damage decrease when attacked by human type monsters.
-When equipped together with ^32CD32Cranial Shield Shadow^000000 and ^32CD32Bloody Shoes Shadow^000000, 3% exp increase when hunting human type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance demi-human resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Demi-Human race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Bloody Shadow Shoes^000000
+^008080Cranial Shadow Shield^000000
+Increases the experience given from Demi-Human race monsters by 3%.
 #
 24053#
 A shield worn to enhance boss resistance.
@@ -85164,16 +85233,21 @@ Reduces damage taken from Boss enemies by an additional 1%.
 Increases physical damage on Boss targets by 5%.
 #
 24054#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by animal type monsters damage.
-When refine level is 7, 1% extra damage decrease when attacked by animal type monsters.
-When refine level 9, 1% extra damage decrease when attacked by animal type monsters.
-When equipped together with ^32CD32Brutal Shield Shadow^000000 and ^32CD32Clamorous Shoes Shadow^000000, 3% exp increase when hunting animal type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance brute resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Brute race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Brute race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Brute race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Brutal Shadow Shield^000000
+^008080Clamorous Shadow Shoes^000000
+Increases the experience given from Brute race monsters by 3%.
 #
 24055#
 Small extra shield gives you additional defense effect. Not really effective when worn alone.
@@ -85188,88 +85262,123 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24056#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by fish type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by fish type monsters.
-When refine level 9, 1% extra damage decrease when attacked by fish type monsters.
-When equipped together with ^32CD32Homers Shield Shadow^000000 and ^32CD32Fisher Shoes Shadow^000000, 3% exp increase when hunting fish type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance fish resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Fish race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Fish race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Fish race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Fisher Shadow Shoes^000000
+^008080Homer's Shadow Shield^000000
+Increases the experience given from Fish race monsters by 3%.
 #
 24057#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by dragon type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by dragon type monsters.
-When refine level 9, 1% extra damage decrease when attacked by dragon type monsters.
-When equipped together with ^32CD32Dragoon Shield Shadow^000000 and ^32CD32Dragoon Shoes Shadow^000000, 3% exp increase when hunting dragon type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance dragon resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Dragon race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Dragon race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Dragon race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Dragoon Shadow Shoes^000000
+^008080Dragoon Shadow Shield^000000
+Increases the experience given from Dragon race monsters by 3%.
 #
 24058#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by angel type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by angel type monsters.
-When refine level 9, 1% extra damage decrease when attacked by angel type monsters.
-When equipped together with ^32CD32Satanic Shield Shadow^000000 and ^32CD32Seraphim Shoes Shadow^000000, 3% exp increase when hunting angel type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance angel resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Angel race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Angel race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Angel race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Satanic Shadow Shield^000000
+^008080Seraphim Shadow Shoes^000000
+Increases the experience given from Angel race monsters by 3%.
 #
 24059#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by non type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by non type monsters.
-When refine level 9, 1% extra damage decrease when attacked by non type monsters.
-When equipped together with ^32CD32Frame Guard Shield Shadow^000000 and ^32CD32Beholder Shoes Shadow^000000, 3% exp increase when hunting non type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance formless resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Formless race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Formless race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Formless race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Beholder Shadow Shoes^000000
+^008080Flameguard Shadow Shield^000000
+Increases the experience given from Formless race monsters by 3%.
 #
 24060#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by immortal type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by immortal type monsters.
-When refine level 9, 1% extra damage decrease when attacked by immortal type monsters.
-When equipped together with ^32CD32Requiem Shield Shadow^000000 and ^32CD32Divine Shoes Shadow^000000, 3% exp increase when hunting immortal type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance undead resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Undead race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Undead race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Undead race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Divine Shadow Shoes^000000
+^008080Requiem Shadow Shield^000000
+Increases the experience given from Undead race monsters by 3%.
 #
 24061#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by plant type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by plant type monsters.
-When refine level 9, 1% extra damage decrease when attacked by plant type monsters.
-When equipped together with ^32CD32Cadi Shield Shadow^000000 and ^32CD32Chemical Shoes Shadow^000000, 3% exp increase when hunting plant type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance plant resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Plant race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Plant race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Plant race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Cadi Shadow Shield^000000
+^008080Chemical Shadow Shoes^000000
+Increases the experience given from Plant race monsters by 3%.
 #
 24062#
-Special shoes wear over your original shoes. Not really effective when worn alone.
-2% extra damage to human type monsters.
-When refine level is 7, 1% extra damage to human type monsters.
-When refine level 9, 2% extra damage to human type monsters.
-When equipped together with ^32CD32Bloody Shoes Shadow^000000 and ^32CD32Cranial Shield Shadow^000000, 3% exp increase when hunting human type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance demi-human damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Demi-Human race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Demi-Human race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Demi-Human race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Bloody Shadow Shoes^000000
+^008080Cranial Shadow Shield^000000
+Increases the experience given from Demi-Human race monsters by 3%.
 #
 24063#
 A pair of shoes worn to enhance boss damage.
@@ -85289,28 +85398,38 @@ Increases physical damage on Boss targets by an additional 2%.
 Increases physical damage on Boss targets by 5%.
 #
 24064#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to plant type monsters.
-When refine level is 7, 1% extra damage to plant type monsters.
-When refine level 9, 2% extra damage to plant type monsters.
-When equipped together with ^32CD32Chemical Shoes Shadow^000000 and ^32CD32Cadi Shield Shadow^000000, 3% exp increase when hunting plant type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance plant damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Plant race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Plant race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Plant race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Cadi Shadow Shield^000000
+^008080Chemical Shadow Shoes^000000
+Increases the experience given from Plant race monsters by 3%.
 #
 24065#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to animal type monsters.
-When refine level is 7, 1% extra damage to animal type monsters.
-When refine level 9, 2% extra damage to animal type monsters.
-When equipped together with ^32CD32Clamorous Shoes Shadow^000000 and ^32CD32Brutal Shield Shadow^000000, 3% exp increase when hunting animal type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance brute damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Brute race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Brute race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Brute race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Brutal Shadow Shield^000000
+^008080Clamorous Shadow Shoes^000000
+Increases the experience given from Brute race monsters by 3%.
 #
 24066#
 Special shoes worn over your original shoes. Not really effective when worn alone.
@@ -85325,64 +85444,89 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24067#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to fish type monsters.
-When refine level is 7, 1% extra damage to fish type monsters.
-When refine level 9, 2% extra damage to fish type monsters.
-When equipped together with ^32CD32Fisher Shoes Shadow^000000 and ^32CD32Homers Shield Shadow^000000, 3% exp increase when hunting fish type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance fish damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Fish race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Fish race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Fish race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Fisher Shadow Shoes^000000
+^008080Homer's Shadow Shield^000000
+Increases the experience given from Fish race monsters by 3%.
 #
 24068#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to angel type monsters.
-When refine level is 7, 1% extra damage to angel type monsters.
-When refine level 9, 2% extra damage to angel type monsters.
-When equipped together with ^32CD32Seraphim Shoes Shadow^000000 and ^32CD32Satanic Shield Shadow^000000, 3% exp increase when hunting angel type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance angel damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Angel race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Angel race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Angel race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Satanic Shadow Shield^000000
+^008080Seraphim Shadow Shoes^000000
+Increases the experience given from Angel race monsters by 3%.
 #
 24069#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to non type monsters.
-When refine level is 7, 1% extra damage to non type monsters.
-When refine level 9, 2% extra damage to non type monsters.
-When equipped together with ^32CD32Beholder Shoes Shadow^000000 and ^32CD32Frame Guard Shield Shadow^000000, 3% exp increase when hunting non type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance formless damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Formless race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Formless race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Formless race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Beholder Shadow Shoes^000000
+^008080Flameguard Shadow Shield^000000
+Increases the experience given from Formless race monsters by 3%.
 #
 24070#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to immortal type monsters.
-When refine level is 7, 1% extra damage to immortal type monsters.
-When refine level 9, 2% extra damage to immortal type monsters.
-When equipped together with ^32CD32Divine Shoes Shadow^000000 and ^32CD32Requiem Shield Shadow^000000, 3% exp increase when hunting immortal type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance undead damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Undead race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Undead race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Undead race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Divine Shadow Shoes^000000
+^008080Requiem Shadow Shield^000000
+Increases the experience given from Undead race monsters by 3%.
 #
 24071#
-Special shoes worn over your original shoes. Not really effective when worn alone.
-2% extra damage to dragon type monsters.
-When refine level is 7, 1% extra damage to dragon type monsters.
-When refine level 9, 2% extra damage to dragon type monsters.
-When equipped together with ^32CD32Dragoon Shoes Shadow^000000 and ^32CD32Dragoon Shield Shadow^000000, 3% exp increase when hunting dragon type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shoes^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pair of shoes worn to enhance dragon damage.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Dragon race targets by 2%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Dragon race targets by an additional 1%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Dragon race targets by an additional 2%.
+^800080Set Bonus^000000
+^008080Dragoon Shadow Shoes^000000
+^008080Dragoon Shadow Shield^000000
+Increases the experience given from Dragon race monsters by 3%.
 #
 24081#
 An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
@@ -85417,303 +85561,447 @@ Required Level : 1
 Jobs : All Jobs
 #
 24090#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-DEF+3.
-Increases resistance against Stun, Freezing, Bleeding, Curse status by 1% per every 2 refine levels.
-Increases resistance against Stone Curse, Sleeping, Silence, Blind status by 1% per every refine level.
-If Stability Shield  Shadow and the set consisting of Unfreezing Weapon Shadow, Unfreezing Earring Shadow, and Unfreezing Pendant Shadow are worn together, DEF+4.
-If the total combined refine levels of four items are greater than 30, gains immunity to the Freezing status.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance status resistance.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Def + 3
+Increases resistance to ^800000Bleed^000000, ^800000Curse^000000, ^800000Frozen^000000 and ^800000Stun^000000 by 1% per 2 upgrade levels of the item.
+Increases resistance to ^800000Blind^000000, ^800000Silence^000000, ^800000Sleep^000000 and ^800000Stone Curse^000000 by 1% per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Stability Shadow Shield^000000
+^008080Unfreezing Shadow Earring^000000
+^008080Unfreezing Shadow Pendant^000000
+^008080Unfreezing Shadow Weapon^000000
+Def + 4
+If the combined upgrade levels of ^008080Stability Shadow Shield^000000, ^008080Unfreezing Shadow Earring^000000, ^008080Unfreezing Shadow Pendant^000000 and ^008080Unfreezing Shadow Weapon^000000 are +30 or higher,
+Immune to ^800000Frozen^000000.
 #
 24099#
-A glove equipped on wearer's hand to draw his/her potential ability.
-DEF+1.
-Increases resistance against Freezing status by 1% per every refine level.
-If Stability Shield  Shadow and the set consisting of Unfreezing Weapon Shadow, Unfreezing Earring Shadow, and Unfreezing Pendant Shadow are worn together, DEF+4.
-If the total combined refine levels of four items are greater than 30, gains immunity to the Freezing status.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Weapon^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A glove worn to enhance frozen resistance.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 1 per upgrade level of the item.
+Def + 1
+Increases resistance to ^800000Frozen^000000 by 1% per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Stability Shadow Shield^000000
+^008080Unfreezing Shadow Earring^000000
+^008080Unfreezing Shadow Pendant^000000
+^008080Unfreezing Shadow Weapon^000000
+Def + 4
+If the combined upgrade levels of ^008080Stability Shadow Shield^000000, ^008080Unfreezing Shadow Earring^000000, ^008080Unfreezing Shadow Pendant^000000 and ^008080Unfreezing Shadow Weapon^000000 are +30 or higher,
+Immune to ^800000Frozen^000000.
 #
 24100#
-A sacred earring which is believed to protect it's wearer. It also draws the wearer's potential abilities.
-DEF+1.
-Increases resistance against Freezing status by 1% per every refine level.
-If Stability Shield  Shadow and the set consisting of Unfreezing Weapon Shadow, Unfreezing Earring Shadow, and Unfreezing Pendant Shadow are worn together, DEF+4.
-If the total combined refine levels of four items are greater than 30, gains immunity to the Freezing status.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Earring^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An earring worn to enhance frozen resistance.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Def + 1
+Increases resistance to ^800000Frozen^000000 by 1% per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Stability Shadow Shield^000000
+^008080Unfreezing Shadow Earring^000000
+^008080Unfreezing Shadow Pendant^000000
+^008080Unfreezing Shadow Weapon^000000
+Def + 4
+If the combined upgrade levels of ^008080Stability Shadow Shield^000000, ^008080Unfreezing Shadow Earring^000000, ^008080Unfreezing Shadow Pendant^000000 and ^008080Unfreezing Shadow Weapon^000000 are +30 or higher,
+Immune to ^800000Frozen^000000.
 #
 24101#
-A sacred necklace which is belived to protect its wearer. It also draws the wearer's potential abilities.
-DEF+1.
-Increases resistance against Freezing status by 1% per every refine level.
-If Stability Shield  Shadow and the set consisting of Unfreezing Weapon Shadow, Unfreezing Earring Shadow, and Unfreezing Pendant Shadow are worn together, DEF+4.
-If the total combined refine levels of four items are greater than 30, gains immunity to the Freezing status.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Pendant^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A pendant worn to enhance frozen resistance.
+^FF0000Account Bound^000000
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Def + 1
+Increases resistance to ^800000Frozen^000000 by 1% per upgrade level of the item.
+^800080Set Bonus^000000
+^008080Stability Shadow Shield^000000
+^008080Unfreezing Shadow Earring^000000
+^008080Unfreezing Shadow Pendant^000000
+^008080Unfreezing Shadow Weapon^000000
+Def + 4
+If the combined upgrade levels of ^008080Stability Shadow Shield^000000, ^008080Unfreezing Shadow Earring^000000, ^008080Unfreezing Shadow Pendant^000000 and ^008080Unfreezing Shadow Weapon^000000 are +30 or higher,
+Immune to ^800000Frozen^000000.
 #
 24111#
-These shoes lets the magic just flow through you.
-Increase Max HP by 10 per refine level
-Reduces SP Cost of skills by 1%
-If refined to +7 or higher
-Increases SP receovery by 5
-When the Spellflow Shadow Set is worn together
-Spell Casting can no longer be interrupted
-Increases SP Costs of skills by 40%
-Reduces SP Cost of skills for each refine level of the set.
-Class : ^777777Shadow^000000
-Location : ^777777Shoes^000000 Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777all jobs^000000
+A pair of shoes worn to enhance casting.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces the SP cost of skills by 1%.
+If upgrade level is +7 or higher,
+SP Recovery + 5%
+^800080Set Bonus^000000
+^008080Spellflow Shadow Armor^000000
+^008080Spellflow Shadow Shield^000000
+^008080Spellflow Shadow Shoes^000000
+Reduces the SP cost of skills by 1% per upgrade level of ^008080Spellflow Shadow Armor^000000, ^008080Spellflow Shadow Shield^000000 and ^008080Spellflow Shadow Shoes^000000.
+Increases the SP cost of skills by 40%.
+The users casting cannot be interrupted outside of WoE.
 #
 24112#
-This armor lets the magic just flow through you.
-Increase Max HP by 10 per refine level
-Reduces SP Cost of skills by 1%
-If refined to +7 or higher reduces SP Cost of skills by 1%
-If refined to +9 or higher further reduces SP Cost of skills by 1%
-When the Spellflow Shadow Set is worn together
-Spell Casting can no longer be interrupted
-Increases SP Costs of skills by 40%
-Reduces SP Cost of skills for each refine level of the set.
-Class : ^777777Shadow^000000
-Location : ^777777Armor ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777all jobs^000000
+An armor worn to enhance casting.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces the SP cost of skills by 1%.
+If upgrade level is +7 or higher,
+Reduces the SP cost of skills by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces the SP cost of skills by an additional 1%.
+^800080Set Bonus^000000
+^008080Spellflow Shadow Armor^000000
+^008080Spellflow Shadow Shield^000000
+^008080Spellflow Shadow Shoes^000000
+Reduces the SP cost of skills by 1% per upgrade level of ^008080Spellflow Shadow Armor^000000, ^008080Spellflow Shadow Shield^000000 and ^008080Spellflow Shadow Shoes^000000.
+Increases the SP cost of skills by 40%.
+The users casting cannot be interrupted outside of WoE.
 #
 24113#
-This shield lets the magic just flow through you.
-Increase Max HP by 10 per refine level
-Reduces SP Cost of skills by 1%
-If refined to +7 or higher increase Max SP by 1%
-When the Spellflow Shadow Set is worn together
-Spell Casting can no longer be interrupted
-Increases SP Costs of skills by 40%
-Reduces SP Cost of skills for each refine level of the set.
-Class : ^777777Shadow^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777all jobs^000000
+A shield worn to enhance casting.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces the SP cost of skills by 1%.
+If upgrade level is +7 or higher,
+Max SP + 1%
+^800080Set Bonus^000000
+^008080Spellflow Shadow Armor^000000
+^008080Spellflow Shadow Shield^000000
+^008080Spellflow Shadow Shoes^000000
+Reduces the SP cost of skills by 1% per upgrade level of ^008080Spellflow Shadow Armor^000000, ^008080Spellflow Shadow Shield^000000 and ^008080Spellflow Shadow Shoes^000000.
+Increases the SP cost of skills by 40%.
+The users casting cannot be interrupted outside of WoE.
 #
 24186#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Neutral property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Neutral property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance neutral monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Neutral property targets by 1%.
+Increases physical and magical damage on Neutral property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Basis Shadow Armor^000000
+^008080Basis Shadow Shield^000000
+Reduces damage taken from Neutral property enemies by 2%.
 #
 24187#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Shadow property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Shadow property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance shadow monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Shadow property targets by 1%.
+Increases physical and magical damage on Shadow property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Hallowed Shadow Armor^000000
+^008080Hallowed Shadow Shield^000000
+Reduces damage taken from Shadow property enemies by 2%.
 #
 24188#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Water property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Water property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance water monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Water property targets by 1%.
+Increases physical and magical damage on Water property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Saharic Shadow Armor^000000
+^008080Saharic Shadow Shield^000000
+Reduces damage taken from Water property enemies by 2%.
 #
 24189#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Earth property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Earth property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance earth monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Earth property targets by 1%.
+Increases physical and magical damage on Earth property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Underneath Shadow Armor^000000
+^008080Underneath Shadow Shield^000000
+Reduces damage taken from Earth property enemies by 2%.
 #
 24190#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Fire property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Fire property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance fire monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Fire property targets by 1%.
+Increases physical and magical damage on Fire property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Flame Shadow Armor^000000
+^008080Flame Shadow Shield^000000
+Reduces damage taken from Fire property enemies by 2%.
 #
 24191#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Wind property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Wind property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance wind monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Wind property targets by 1%.
+Increases physical and magical damage on Wind property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Windy Shadow Armor^000000
+^008080Windy Shadow Shield^000000
+Reduces damage taken from Wind property enemies by 2%.
 #
 24192#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Poison property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Poison property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance poison monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Poison property targets by 1%.
+Increases physical and magical damage on Poison property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Envenom Shadow Armor^000000
+^008080Envenom Shadow Shield^000000
+Reduces damage taken from Poison property enemies by 2%.
 #
 24193#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Holy property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Holy property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance holy monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Holy property targets by 1%.
+Increases physical and magical damage on Holy property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Damned Shadow Armor^000000
+^008080Damned Shadow Shield^000000
+Reduces damage taken from Holy property enemies by 2%.
 #
 24194#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Ghost property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Ghost property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance ghost monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Ghost property targets by 1%.
+Increases physical and magical damage on Ghost property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Geist Shadow Armor^000000
+^008080Geist Shadow Shield^000000
+Reduces damage taken from Ghost property enemies by 2%.
 #
 24195#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-Increases additional physical and magical DMG inflicted on Undead property monsters by 1%.
-Increases additional physical and magical DMG inflicted on Undead property monsters by 1% per every 2 refine levels.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Armor^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+An armor worn to enhance undead monster damage.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Increases physical and magical damage on Undead property targets by 1%.
+Increases physical and magical damage on Undead property targets by an additional 1% per 2 upgrade levels of the item.
+^800080Set Bonus^000000
+^008080Divine Shadow Armor^000000
+^008080Divine Shadow Shield^000000
+Reduces damage taken from Undead property enemies by 2%.
 #
 24198#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Neutral property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Neutral property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Neutral property physical and magical attacks by 1%.
-If the set consisting of Basis Shadow Shield and Basis Shadow Armor is worn together,
-decreases DMG from Neutral property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance neutral monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Neutral property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Neutral property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Neutral property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Basis Shadow Armor^000000
+^008080Basis Shadow Shield^000000
+Reduces damage taken from Neutral property enemies by 2%.
 #
 24199#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Shadow property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Shadow property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Shadow property physical and magical attacks by 1%.
-If the set consisting of Hallowed Shadow Shield and Hallowed Shadow Armor is worn together,
-decreases DMG from Shadow property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance shadow monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Shadow property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Shadow property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Shadow property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Hallowed Shadow Armor^000000
+^008080Hallowed Shadow Shield^000000
+Reduces damage taken from Shadow property enemies by 2%.
 #
 24200#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Water property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Water property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Water property physical and magical attacks by 1%.
-If the set consisting of Saharic Shadow Shield and Saharic Shadow Armor is worn together,
-additionally decreases DMG from Water property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance water monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Water property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Water property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Water property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Saharic Shadow Armor^000000
+^008080Saharic Shadow Shield^000000
+Reduces damage taken from Water property enemies by 2%.
 #
 24201#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Earth property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Earth property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Earth property physical and magical attacks by 1%.
-If the set consisting of Underneath Shadow Shield and Underneath Shadow Armor is worn together,
-additionally decreases DMG from Earth property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance earth monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Earth property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Earth property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Earth property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Underneath Shadow Armor^000000
+^008080Underneath Shadow Shield^000000
+Reduces damage taken from Earth property enemies by 2%.
 #
 24202#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Fire property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Fire property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Fire property physical and magical attacks by 1%.
-If the set consisting of Flame Shadow Shield and Flame Shadow Armor is worn together,
-additionally decreases DMG from Fire property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance fire monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Fire property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Fire property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Fire property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Flame Shadow Armor^000000
+^008080Flame Shadow Shield^000000
+Reduces damage taken from Fire property enemies by 2%.
 #
 24203#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Wind property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Wind property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Wind property physical and magical attacks by 1%.
-If the set consisting of Windy Shadow Shield and Windy Shadow Armor is worn together,
-additionally decreases DMG from Wind property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance wind monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Wind property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Wind property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Wind property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Windy Shadow Armor^000000
+^008080Windy Shadow Shield^000000
+Reduces damage taken from Wind property enemies by 2%.
 #
 24204#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Poison property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Poison property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Poison property physical and magical attacks by 1%.
-If the set consisting of Envenom Shadow Shield and Envenom Shadow Armor is worn together,
-additionally decreases DMG from Poison property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance poison monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Poison property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Poison property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Poison property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Envenom Shadow Armor^000000
+^008080Envenom Shadow Shield^000000
+Reduces damage taken from Poison property enemies by 2%.
 #
 24205#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Holy property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Holy property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Holy property physical and magical attacks by 1%.
-If the set consisting of Damned Shadow Shield and Damned Shadow Armor is worn together,
-additionally decreases DMG from Holy property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance holy monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Holy property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Holy property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Holy property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Damned Shadow Armor^000000
+^008080Damned Shadow Shield^000000
+Reduces damage taken from Holy property enemies by 2%.
 #
 24206#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Ghost property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Ghost property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Ghost property physical and magical attacks by 1%.
-If the set consisting of Geist Shadow Shield and Geist Shadow Armor is worn together,
-additionally decreases DMG from Ghost property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance ghost monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Ghost property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Ghost property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Ghost property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Geist Shadow Armor^000000
+^008080Geist Shadow Shield^000000
+Reduces damage taken from Ghost property enemies by 2%.
 #
 24207#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-Decreases DMG from Undead property physical and magical attacks by 1%.
-If refined to +7, additionally decreases DMG from Undead property physical and magical attacks by 1%.
-If refined to +9, additionally decreases DMG from Undead property physical and magical attacks by 1%.
-If the set consisting of Divine Shadow Shield and Divine Shadow Armor is worn together,
-additionally decreases DMG from Undead property physical and magical attacks by 2%.
-Type: ^777777Shadow equipment^000000
-Location : ^777777Shield^000000 Weight : ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A shield worn to enhance undead monster resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Undead property enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Undead property enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Undead property enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Divine Shadow Armor^000000
+^008080Divine Shadow Shield^000000
+Reduces damage taken from Undead property enemies by 2%.
 #
 25000#
 A stone with SP absorption ability.
@@ -87369,7 +87657,7 @@ Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
 ^008080Imperial Guard^000000
 ^008080Imperial Ring^000000
 ^008080Imperial Spear^000000
-Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
+Reduces the SP cost of ^0000FFVanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
 Reduces the SP cost of ^0000FFShield Press^000000 by 5.
@@ -88568,15 +88856,12 @@ Requires Level: ^808080100^000000
 SP Recovery + 50%
 Reduces the variable casting time of skills by 10%.
 Reduces the variable casting time of ^0000FFOratio^000000 by 50%.
-Reduces the fixed casting time of skills by 50%.
+Reduces the fixed casting time of ^0000FFOratio^000000 by 100%.
 Reduces the cast delay of skills by 5%.
 Increases magical damage on Small, Medium and Large size targets by 3% per level of ^0000FFImpositio Manus^000000 known.
 Enables ^0000FFLevel 2 Odin's Power^000000, if ^0000FFImpositio Manus^000000 is at maximum level.
 Increases the damage of ^0000FFMagnus Exorcismus^000000 by 3% for every 2 base levels.
 
-
-On 10-25 the following changes will take effect
-(Loses 50% FCT Reduction. Gains Skill Targeted FCT Reduction)
 #
 28565#
 A demon mask found nearby a Buddha statue in Payon. Some say it has been used for some kind of ritual.
@@ -90040,11 +90325,10 @@ Required Jobs: All Jobs
 #
 31091#
 Thoughts of zeny cloud the mind. Created to celebrate the launch of Ragnarok Clicker!
-
 ^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
-Weight: ^8080801^000000
+Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Adds a 1% chance of gaining 1 to 500 zeny when a monster is killed.
@@ -90058,47 +90342,52 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 31117#
-A Helm used in ancient western country that was famous for close formation and tight defense.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper,Middle,Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A helm used in ancient western country that was famous for close formation and tight defense.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31118#
 A mask worn by a group of eastern assassins. It's shaped like a skull to notify targets of their imminent death.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Middle,Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31119#
-Talented Wizard's magic hat. It looks weird, but works just fine.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A talented Wizard's magic hat. It looks weird, but works just fine.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31120#
-A costume makes feel like being a Vampire.
-One of most popular halloween item.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A costume that makes the user feel like a Vampire, it is a very popular Halloween item.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31121#
-Bat wing-ed stole. Don't even think to fly with this wings.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Bat winged stole. It does not make one fly sadly.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31122#
 Tight bandages for wounds of the eyes. It seems that they were already used.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31123#
 A cute shabby tall hat with a flying Ghostring. It makes its' wearer feel haunted.
@@ -90170,85 +90459,76 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31160#
-^808080This mysterious helm can increase the power of rune stones.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This mysterious helm can increase the power of rune stones.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31161#
-^808080A mask rumored to make its wearer ferociously aggressive.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper, Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A mask rumored to make its wearer ferociously aggressive.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31162#
-^808080The foam will help the razor slide smoothly over your skin. But since it’s so slippery, it’s very dangerous when you accidentally step on the foam.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The foam will help the razor slide smoothly over your skin. But since it's so slippery, it's very dangerous when you accidentally step on the foam.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31163#
-^808080An adorable sheep hat. It’s so cute that you will feel sorry if you hit someone who's wearing it.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+An adorable sheep hat. It's so cute that you will feel sorry if you hit someone who's wearing it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31164#
-^808080A nice warm brown stole that is perfect for the Winter weather.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A nice warm brown stole that is perfect for the Winter weather.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31165#
-^808080Carry a novice on your back, but be careful as they may be heavy.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Carry a novice on your back, but be careful as they may be heavy.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31166#
-^808080A hat made to look like a teddy bear's face. It feels so fluffy.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat made to look like a teddy bear's face. It feels so fluffy.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31167#
-^808080Droopy Lunatic ears that have been cutely garnished with clover flower bouquets.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Droopy Lunatic ears that have been cutely garnished with clover flower bouquets.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31168#
-^808080A blue hairband made with lamb's wool and horn.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A blue hairband made with lamb's wool and horn.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31172#
 ^808080A strange looking rooster hat. Let's all celebrate the year of Rooster by wearing this hat!^000000
@@ -90257,6 +90537,12 @@ Position: Upper, Middle, Lower
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
+#
+31176#
+Every move you make.. always watching
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 31177#
 ^808080A hat inspired by the beautiful color palette and elegant look of a simple koi.^000000
@@ -90293,58 +90579,52 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31181#
-^808080The necklace of the Holy Rosary, who received powers from the apostle of God. It's filled with mystical powers. ^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The necklace of the Holy Rosary, who received powers from the apostle of God. It's filled with mystical powers.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31182#
-^808080A cool looking military cap from an unknown era. Rumor has it that there is a matching suit somewhere. ^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A cool looking military cap from an unknown era. Rumor has it that there is a matching suit somewhere.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31183#
-^808080The wings dropped by a fallen angel who once ruled the celestial world. A strong hatred seethes from it when worn around other angels. ^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The wings dropped by a fallen angel who once ruled the celestial world. A strong hatred seethes from it when worn around other angels.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31184#
-^808080Increase your concentration skills by wearing this patch. Since you can't see very well while wearing this patch, the rest of your senses will improve. ^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Increase your concentration skills by wearing this patch. Since you can't see very well while wearing this patch, the rest of your senses will improve.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31185#
-^808080An old cap worn by an engineer. You can see the master engineer's eye through the hole of the worn-out cap. ^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+An old cap worn by an engineer. You can see the master engineer's eye through the hole of the worn-out cap.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31186#
-^808080This black cat took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This black cat took a liking to you and now it won't leave you alone. Aren't you lucky!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31187#
 ^808080A huge ribbon styled in the gothic fashion. It's so bold, you feel braver just wearing it.^000000
@@ -90356,13 +90636,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31188#
-^808080A luxuriously decorated bonnet fashioned after the gothic style, including delicate frills, black and white checkered inner cloth, and elegant purple flower.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A luxuriously decorated bonnet fashioned after the gothic style, including delicate frills, black and white checkered inner cloth, and elegant purple flower.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31189#
 A cute red hood with fluffy cat ears attached. An essential piece for any gothic lolita ensemble.
@@ -91443,6 +91722,46 @@ Weight: ^8080800^000000
 An aura of love radiates from your entire body!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31540#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31541#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31542#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31543#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31544#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31545#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31546#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31547#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 32203#
