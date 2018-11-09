@@ -26,10 +26,11 @@ use strict;
 use Actor;
 
 use base qw(Actor);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('Party');
+	return $class->SUPER::new(T('Party'));
 }
 
 ##

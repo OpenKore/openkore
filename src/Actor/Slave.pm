@@ -20,16 +20,18 @@ use strict;
 use Actor;
 use Globals;
 use base qw/Actor/;
+use ErrorHandler;
 
 sub new {
 	my ($class, $type) = @_;
 	
-	my $actorType =
-		(($type >= 6001 && $type <= 6016) || ($type >= 6048 && $type <= 6052)) ? 'Homunculus' :
-		($type >= 6017 && $type <= 6046) ? 'Mercenary' :
-	'Unknown';
+	if (defined $type) {
+		return $class->SUPER::new($type) unless (do { no warnings "numeric"; $type eq $type+0 });
+		
+		die "Requested new Actor::Slave with numeric type, this is not allowed\n";
+	}
 	
-	return $class->SUPER::new ($actorType);
+	die "Requested new Actor::Slave with unset type, this is not allowed\n";
 }
 
 ##

@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Unknown actor object
+#  OpenKore - Slave actor object
 #  Copyright (c) 2005 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public
@@ -9,38 +9,22 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
-# MODULE DESCRIPTION: Unknown actor object
+# MODULE DESCRIPTION: Mercenary Slave actor object
 #
-# The Actor::Unknown class represents any actors who are off-screen.
-#
-# Actor.pm is the base class for this class.
-package Actor::Unknown;
+# @MODULE(Actor::Slave) is the base class for this class.
+package Actor::Slave::Mercenary;
 
 use strict;
-use Actor;
-
-use base qw(Actor);
+use Actor::Slave;
+use base qw(Actor::Slave);
 use Translation qw(T);
 
 sub new {
-	my ($class, $ID) = @_;
-	my $self = $class->SUPER::new(T('Unknown'));
-	$self->{ID} = $ID;
-	$self->{nameID} = unpack("V", $ID);
-	return $self;
+	my ($class) = @_;
+	
+	return $class->SUPER::new(T('Mercenary'));
 }
-
-sub nameString {
-	my ($self, $otherActor) = @_;
-
-	return T('self') if $self->{ID} eq $otherActor->{ID};
-	return $self->name;
-}
-
 
 1;

@@ -72,7 +72,7 @@ sub avoidSkill {
 
                 if (existsInList($config{"avoidSkill_$i"}, $skillName)) {
                         # if source is specified, make sure type is correct
-                        next if ($config{"avoidSkill_$i"."_source"} && $config{"avoidSkill_$i"."_source"} ne $source->{actorType});
+                        next if ($config{"avoidSkill_$i"."_source"} && $source->isa("Actor::" . $config{"avoidSkill_$i"."_source"}));
 
                         debug "checking avoid radius on $skillName \n";
 
@@ -224,14 +224,14 @@ sub avoidSkill {
                                         main::useTeleport(1);
 
                                 } elsif ($config{"avoidSkill_$i"."_method"} == 4) {
-                                        return unless ($source->{actorType} eq 'Monster');
+                                        return unless ($source->isa("Actor::Monster"));
                                         message "Avoid skill $skillName, attack to $source->nameString()\n", $domain, 1;
                                         # may not care about portal distance, oh well
                                         $char->sendAttackStop();
                                         main::attack($sourceID);
 
                                 } elsif ($config{"avoidSkill_$i"."_method"} == 5 && timeOut($AI::Timeouts::avoidSkill_skill, 3)) {
-                                        return unless ($source->{actorType} eq 'Monster');
+                                        return unless ($source->isa("Actor::Monster"));
                                         message "Avoid skill $skillName from $source->nameString(), use ".$config{"avoidSkill_$i"."_skill"}." to $source->nameString()\n", $domain, 1;
 
                                         $skill = new Skill(name => $config{"avoidSkill_$i"."_skill"});

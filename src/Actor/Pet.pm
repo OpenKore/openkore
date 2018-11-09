@@ -24,10 +24,11 @@ package Actor::Pet;
 use strict;
 use Actor;
 use base qw(Actor);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('Pet');
+	return $class->SUPER::new(T('Pet'));
 }
 
 1;

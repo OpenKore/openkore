@@ -2157,11 +2157,11 @@ sub cmdSlave {
 	if (!$slave || !$slave->{appear_time}) {
 		error T("Error: No slave detected.\n");
 
-	} elsif ($slave->{actorType} eq 'Homunculus' && $slave->{state} & 2) {
+	} elsif ($slave->{state} & 2 && $slave->isa("Actor::Slave::Homunculus")) {
 			my $skill = new Skill(handle => 'AM_CALLHOMUN');
 			error TF("Homunculus is in rest, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
-	} elsif ($slave->{actorType} eq 'Homunculus' && $slave->{state} & 4) {
+	} elsif ($slave->{state} & 4 && $slave->isa("Actor::Slave::Homunculus")) {
 			my $skill = new Skill(handle => 'AM_RESURRECTHOMUN');
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 		
@@ -2243,9 +2243,9 @@ sub cmdSlave {
 			error TF("You must be logged in the game to use this command '%s'\n", $cmd .' ' .$subcmd);
 			return;
 		}
-		if ($slave->{actorType} eq 'Mercenary') {
+		if ($slave->isa("Actor::Slave::Mercenary")) {
 			$messageSender->sendMercenaryCommand (2);
-		} elsif ($slave->{actorType} eq 'Homunculus') {
+		} elsif ($slave->isa("Actor::Slave::Homunculus")) {
 			$messageSender->sendHomunculusCommand (2);
 		}
 	} elsif ($args[0] eq "move") {
