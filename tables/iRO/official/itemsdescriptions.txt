@@ -21966,6 +21966,11 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Hit + 100
+^800080Set Bonus^000000
+^008080Phreeoni Card^000000
+^008080Phreeoni Wings^000000
+Perfect Hit + 50
+Immune to ^800000Stone^000000.
 #
 4122#
 Class: ^808080Card^000000
@@ -25244,12 +25249,18 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4391#
-Adds a chance of
-dropping Fried Sweet
-Potatoes when defeating^FFFFFF   ^000000 Angel type monsters.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Adds a chance of gaining ^008080Fried Sweet Potato^000000 when Angel race monster is killed.
+^800080Set Bonus^000000
+^008080Baroness of Retribution Card^000000
+^008080Book of Soyga^000000
+Increases the experience given from Angel race monsters by 5%.
+If ^008080Book of Soyga^000000 upgrade level is +6 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
+If ^008080Book of Soyga^000000 upgrade level is +8 or higher,
+Increases the experience given from Angel race monsters by an additional 5%.
 #
 4392#
 Adds 1 DEX for every
@@ -25729,52 +25740,32 @@ Max SP - 50%
 Increases magical damage on Demi-Human and Angel race targets by 50%.
 #
 4442#
-Decreases damage from Neutral Property by 20%.
-Increases damage dealt to Neutral Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Neutral Property by 20%.
-Increases damage dealt to Neutral Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Neutral property enemies by 20%.
+Increases physical damage on Neutral property targets by 5%.
 #
 4443#
-Decreases damage from Water Property by 20%.
-Increases damage dealt to Water Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Water Property by 20%.
-Increases damage dealt to Water Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Water property enemies by 20%.
+Increases physical damage on Water property targets by 5%.
 #
 4444#
-Decreases damage from Earth Property by 20%.
-Increases damage dealt to Earth Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Earth Property by 20%.
-Increases damage dealt to Earth Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Earth property enemies by 20%.
+Increases physical damage on Earth property targets by 5%.
 #
 4445#
-Decreases damage from Wind Property by 20%.
-Increases damage dealt to Wind Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Wind Property by 20%.
-Increases damage dealt to Wind Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Wind property enemies by 20%.
+Increases physical damage on Wind property targets by 5%.
 #
 4446#
 Class: ^808080Card^000000
@@ -25786,92 +25777,66 @@ If the users base level is 100 or higher,
 Adds an additional 1% chance of inflicting ^800000Stun^000000 on the attacker when performing a physical attack.
 #
 4447#
-Decreases damage from Poison Property by 20%.
-Increases damage dealt to Poison Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Poison Property by 20%.
-Increases damage dealt to Poison Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Poison property enemies by 20%.
+Increases physical damage on Poison property targets by 5%.
 #
 4448#
-Decreases damage from Holy Property by 20%.
-Increases damage dealt to Holy Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Holy Property by 20%.
-Increases damage dealt to Holy Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Holy property enemies by 20%.
+Increases physical damage on Holy property targets by 5%.
 #
 4449#
-Decreases damage from Shadow Property by 20%.
-Increases damage dealt to Shadow Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
-Decreases damage from Shadow Property by 20%.
-Increases damage dealt to Shadow Property by 5%.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Shadow property enemies by 20%.
+Increases physical damage on Shadow property targets by 5%.
 #
 4450#
-Int +1, Matk +10
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
-Int +1, Matk +10
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Int + 1
+Matk + 10
 #
 4451#
-Matk +100
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
-Matk +100
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Matk + 100
 #
 4452#
-Int +1, Matk +3
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
-Int +1, Matk +3
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Int + 1
+Matk + 3
 #
 4453#
-Atk +25
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
-Atk +25
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 25
 #
 4456#
-INT + 5. When equipped by a High Wizard or Warlock Jobs, Fixed cast of all skills -50%.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Int + 5
+^F4AD42High Wizard & Warlock Bonus^000000
+Reduces the fixed casting time of skills by 50%.
 #
 4457#
-Increases damage of all ghost element magic attacks by 30%.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Increases the damage of Ghost property magical attacks on targets by 30%.
 #
 4458#
 ATK + 10. When dealing physical damage, there's a chance that for 4 seconds your perfect dodge will increase by 10.
@@ -25898,16 +25863,25 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4462#
-Hardrock Mammoth DEF + 5. If the armor is refined to +12 or higher, DEF + 20, MaxHP + 10%. If the armor is refined to +14 or higher, MaxHP + 3%.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Def + 5
+If the compounded item upgrade level is +12 or higher,
+Max HP + 10%
+Def + 20
+If the compounded item upgrade level is +14 or higher,
+Additional Max HP + 3%
 #
 4463#
-Tendrillion CRIT + 5. If the weapon is refined to +12 or higher, ATK + 35. If the weapon is refined to +14 or higher, CRIT + 10.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Crit + 5
+If the compounded item upgrade level is +12 or higher,
+Atk + 35
+If the compounded item upgrade level is +14 or higher,
+Additional Crit + 10
 #
 4464#
 Critical Attack Damage + 20%.
@@ -25916,82 +25890,101 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4465#
-ATK + 10. If compounded on a two hand sword, at +10 refine or higher grants ASPD +1, at +14 refine or higher grants an additional ASPD + 1.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 10
+
+If compounded to Two Handed Sword,
+If upgrade level is +10 or higher, Aspd + 1.
+If upgrade level is +14 or higher, additional Aspd + 1.
 #
 4466#
-Ranged Attack Damage + 3%. If compounded on a bow, at +10 refine or higher crants ASPD + 1, at +14 refine or higher grants an additional ASPD + 1.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Attack Range + 3%
+
+If compounded to bow,
+If upgrade level is +10 or higher, Aspd + 1.
+If upgrade level is +14 or higher, additional Aspd + 1.
 #
 4467#
-STR + 2. If equipped by a merchant job, increases cart revolution damage by 50%, but increases its SP cost by 12.
-Class : ^777777Card^000000
-Compound on: ^777777Shoes^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Str + 2
+
+^F4AD42Merchant Bonus^000000
+Increases the damage of ^0000FFCart Revolution^000000 by 50%.
+Increases the SP cost of ^0000FFCart Revolution^000000 by 12.
 #
 4468#
-ATK + 10. When killing a monster, adds a chance to have a poisonous herb drop.
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Atk + 10
+Adds a chance of gaining
+^008080Poison Herb Nerium^000000,
+^008080Poison Herb Rantana^000000,
+^008080Poison Herb Makulata^000000,
+^008080Poison Herb Seratum^000000,
+^008080Poison Herb Amoena^000000,
+or ^008080Poison Herb Scopolia^000000 when a monster is killed.
 #
 4469#
-Increases magic damage on Fish type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Fish race targets by 10%.
 #
 4470#
-Increases magic damage on Plant type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Plant race targets by 10%.
 #
 4471#
-Increases magic damage on Dragon type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Dragon race targets by 10%.
 #
 4472#
-Increases magic damage on Brute type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Brute race targets by 10%.
 #
 4473#
-Increases magic damage on Undead type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Undead race targets by 10%.
 #
 4474#
-Increases magic damage on DemiHuman type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Demi-Human race targets by 10%.
 #
 4475#
-Increases magic damage on Formless type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Formless race targets by 10%.
 #
 4476#
-Increases magic damage on Insect type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Insect race targets by 10%.
 #
 4477#
-Increases magic damage on Demon type monsters by 10%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Demon race targets by 10%.
 #
 4480#
 ^808080룰뗧 붺얳샇 죄 뗴랹샌낡 15% 남볒쟑듙.
@@ -26419,10 +26412,11 @@ Weight: 0
 Weapon Level: 0
 #
 4505#
-MATK + 20, MSP - 1%.
-Class : ^777777Card^000000
-Compound on : ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Max SP - 1%
+Matk + 20
 #
 4506#
 DEX + 2, If you are an Archer class, increase addtional DEX + 1 per 3 refine levelS.
@@ -26438,10 +26432,11 @@ Increases physical damage on Scaraba monsters by 30%.
 Adds a chance of gaining ^008080Scaraba Scroll^000000 when a monster is killed.
 #
 4508#
-ATK + 20, MHP - 1%.
-Class : ^777777Card^000000
-Compound on : ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Max HP - 1%
+Atk + 20
 #
 4509#
 ^FF0000Account Bound^000000
@@ -26477,33 +26472,39 @@ Location : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4513#
-Increase Critical damage by 2%.
-If Thief class, Increase additionally 1% per 2 refine.
-Class : ^777777Card^000000
-Compound on : ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Increases critical damage on targets by 2%.
+^F4AD42Thief Bonus^000000
+Increases critical damage on targets by an additional 1% per 2 upgrade levels of the compounded item.
 #
 4514#
-Increases damage against undead monsters by 20%.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
-20% addtional damage to immortal monster.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases physical damage on Undead property targets by 20%.
 #
 4515#
-Reduce damage from Plant type enemies by 30%.
-Class : ^777777Card^000000
-Compound on : ^777777맦원^00000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Plant race enemies by 30%.
+^800080Set Bonus^000000
+^008080Alnold Card^000000
+^008080Happy Shield [1]^000000
+Increases the experience given from Plant race monsters by 5%.
+If ^008080Happy Shield [1]^000000 upgrade level is +6 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
+If ^008080Happy Shield [1]^000000 upgrade level is +8 or higher,
+Increases the experience given from Plant race monsters by an additional 5%.
 #
 4516#
-DEF + 50, FLEE - 25.
-Class : ^777777Card^000000
-Compound on : ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Def + 50
+Flee - 25
 #
 4517#
 INT + 2.
@@ -26518,38 +26519,29 @@ Location : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4518#
-Physical and Ranged Attacks have a chance of inflicting the burning status to enemies.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Burn^000000 on the target when performing a physical attack.
 #
 4519#
-Increases damage against angel type monsters by 20%.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
-20% additional damage to angel type of monster
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases physical damage on Angel race targets by 20%.
 #
 4520#
-STR + 3.
-Chance of causing Confusion on target enemy when hit by magic damage.
-Class : ^777777Card^000000
-Location : ^777777Clothes^000000
-Weight : ^7777771^000000
-STR + 3.
-cast panic to enemy when receiving physical and magic attck
-Class : ^777777Card^000000
-Location : ^777777Clothes^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Str + 3
+Adds a chance of inflicting ^800000Chaos^000000 on the attacker when receiving a physical or a magical attack.
 #
 4521#
-Increase critical attacks by 15%.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases critical damage on targets by 15%.
 #
 4522#
 When attack closely, make enemy to freeze.
@@ -26558,16 +26550,11 @@ Location : ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4523#
-Changes armor to water property.
-Reduce damage taken from Fish type monsters by 10%.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
-The armor type is changed to water type.
-10% damage decreased from seafood.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Reduces damage taken from Fish race enemies by 10%.
+When compounded, the item's property becomes Water.
 #
 4524#
 STR + 2.
@@ -26582,38 +26569,26 @@ Location : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4525#
-FLEE + 10.
-Enables usage of Hide level 1 & Raid level 1.
-Chance of causing Bleeding effect when using Raid.
-Class : ^777777Card^000000
-Location : ^777777Upper^000000
-Weight : ^7777771^000000
-FLEE + 10.
-[Hiding] 1Lv, [Surprise attack] 1Lv available to use.
-[Surprise attack] make enemy to bleed.
-Class : ^777777Card^000000
-Location : ^777777Upper^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Enables ^0000FFLevel 1 Hide^000000 and ^0000FFLevel 1 Sightless Mind^000000.
+Adds a chance of inflicting ^800000Bleed^000000 on the target when using ^0000FFSightless Mind^000000.
 #
 4526#
-MaxSP + 5%, MDEF + 50.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
-MSP + 5%, MDEF + 50.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max SP + 5%
+Mdef + 50
 #
 4527#
-MaxHP + 10%, DEF + 100.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
-MHP + 10%, DEF + 100.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 10
+Def + 100
 #
 4528#
 MATK + 2%
@@ -26638,55 +26613,39 @@ Location : ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4530#
-LUK + 2
-If used by merchant types, each 3 refine adds LUK + 1
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
-LUK + 2, per 3 refineLUK + 1 for merchant class
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Luk + 2
+
+^F4AD42Merchant Bonus^000000
+Additional Luk + 1 per 3 upgrade levels of the compounded item.
 #
 4531#
-Magic attacks have a chance of inflicting curse status to enemies.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Curse^000000 on the target when performing a magical attack.
 #
 4532#
-AGI + 1.
-When dealing physical damage there is a high chance to cast Agi Up Lv1 on yourself.
-Class : ^777777Card^000000
-Location : ^777777shoes^000000
-Weight : ^7777771^000000
-AGI + 1.
-cast agility increase 1lv for himself.
-Class : ^777777Card^000000
-Location : ^777777shoes^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Agi + 1
+Adds a chance of casting ^0000FFLevel 1 Increase Agility^000000 on the user when performing a physical attack.
 #
 4533#
-When dealing magic damage there's a chance to cause blind status.
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
-cast black when magic attack
-Class : ^777777Card^000000
-Location : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Blind^000000 on the target when performing a magical attack.
 #
 4534#
-MaxHP + 12%.
-Enables usage of Waterball Lv 5.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
-MHP + 12%.
-[waterball] 5Lv available.
-Class : ^777777Card^000000
-Location : ^777777armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 12%
+Enables ^0000FFLevel 5 Waterball^000000.
 #
 4536#
 ^808080ATK + 15.
@@ -26901,73 +26860,83 @@ Compound on: ^777777Helm^000000
 Weight : ^7777771^000000
 #
 4557#
-MATK +25.
-Class : ^777777Card^000000
-Compound on: ^777777Helm^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Matk + 25
 #
 4559#
-ASPD + 1
-MSP - 10%
-Class : ^777777Card^000000
-Location : ^777777Shoes^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Aspd + 1
+Max SP - 10%
 #
 4560#
-Enables Level 10 Magic Strings (if equipped with a Musical Instrument/Whip).
-FLEE +20. If VIT 110 or greater, additional FLEE +20.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Flee + 20
+Additional Flee + 20, if the user's base Vit is 110 or higher.
+Enables ^0000FFLevel 10 Magic Strings^000000, if the user has a Musical Instrument/Whip equipped.
 #
 4561#
-Magic attacks from enemies create a high chance of auto-casting Level 5 Magnetic Earth.
-MATK +7%. If DEX 110 or greater, additional MATK +7%.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Matk + 7%
+Additional Matk + 7%, if the user's base Dex is 110 or higher.
+Adds a chance of casting ^0000FFLevel 5 Magnetic Earth^000000 on the user when receiving a magical attack.
 #
 4562#
-Physical attacks from enemies create a high chance of auto-casting Level 5 Occult Impaction.
-ATK +7%. If AGI 110 or greater, additional ATK +7%.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Atk + 7%
+Additional Atk + 7%, if the user's base Agi is 110 or higher.
+Adds a chance of casting ^0000FFLevel 5 Occult Impaction^000000 on the attacker when receiving a physical attack.
 #
 4563#
-Physical attacks from enemies create a high chance of auto-casting Level 5 Acid Terror. (Requires Acid Bottles.)
-CRI +20. If STR 110 or greater, additional CRI +20.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Crit + 20
+Additional Crit + 20, if the user's base Str is 110 or higher.
+Adds a chance of casting ^0000FFLevel 5 Acid Terror^000000 on the attacker when receiving a physical attack, consumes ^008080Acid Bottle^000000.
 #
 4564#
-Physical attacks from enemies create a high chance of auto-casting Level 1 Full Divestment.
-HIT + 20. If LUK 110 or greater, additional HIT +20.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Hit + 20
+Additional Hit + 20, if the user's base Luk is 110 or higher.
+Adds a chance of casting ^0000FFLevel 1 Full Divestment^000000 on the attacker when receiving a physical attack.
 #
 4565#
-Magic attacks from enemies create a high chance of auto-casting Level 10 Grand Cross.
-MHP + 10%. If INT 110 or greater, additional MHP +10%.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 10%
+Additional Max HP + 10%, if the user's base Int is 110 or higher.
+Adds a chance of casting ^0000FFLevel 10 Grand Cross^000000 on the user when receiving a physical attack.
 #
 4566#
-Enables Level 10 Lady Luck (if equipped with a Musical Instrument/Whip).
-FLEE +20. If VIT 110 or greater, additional FLEE +20.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Flee + 20
+Additional Flee + 20, if the user's base Vit is 110 or higher.
+Enables ^0000FFLevel 10 Lady Luck^000000, if the user has a Musical Instrument/Whip equipped.
 #
 4567#
-FLEE +10.
-(For Bard classes) MHP +10%, MSP +5%.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+
+^F4AD42Bard Bonus^000000
+Max HP +10%
+Max SP +5%
 #
 4568#
 FLEE +10.
@@ -26977,86 +26946,92 @@ Compound on: ^777777Garment^000000
 Weight: ^7777771^000000
 #
 4569#
-FLEE +10.
-Enables Level 2 Summon Spirit Sphere.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Enables ^0000FFLevel 2 Summon Spirit Sphere^000000.
 #
 4570#
-FLEE +10.
-Red/Yellow/Condensed White Potions effectiveness +200%.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Increases the recovery rate of ^008080Condensed Red Potion^000000, ^008080Condensed Yellow Potion^000000, and ^008080Condensed White Potion^000000 consumables by 200%.
 #
 4571#
-FLEE +10.
-Enables Level 1 Close Confine.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Enables ^0000FFLevel 1 Close Confine^000000.
 #
 4572#
-FLEE +10.
-Enables Level 3 Guard.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Enables ^0000FFLevel 3 Guard^000000.
 #
 4573#
-FLEE +10.
-(For Dancer classes) MHP +10%, MSP +5%.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+
+^F4AD42Dancer Bonus^000000
+Max HP + 10%
+Max SP + 5%
 #
 4574#
-One/two-handed Swords ATK +100.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 100, if compounded to One-Handed or Two-Handed Sword.
 #
 4575#
-ATK + 10.
-(For Daggers) ASPD +1 when Upgraded to +10 and above, additional ASPD +1 when Upgraded to +14 and above.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 10
+Aspd + 1, if compounded to upgrade level +10 or higher Dagger.
+If Dagger upgrade level is +14 or higher, additional Aspd + 1.
 #
 4576#
-Wind/Ghost Magic damage +100%.
-All elemental resistances -30%.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Increases the damage of Wind and Ghost property magical attacks on targets by 100%.
+Increases damage taken from all property attacks by 30%.
 #
 4577#
-Wind/Ghost Magic damage +20%.
-Class: ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Increases the damage of Wind and Ghost property magical attacks on targets by 20%.
 #
 4578#
-Critical damage +30%.
-Damage from all monster types +10%.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases critical damage on targets by 30%.
+Increases damage taken from all race enemies by 10%.
 #
 4579#
-(For Maces) ATK + 20, CRI + 10.
-Additional ATK +1/CRI +1 depending on the Upgrade levels.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+If compounded to a Mace,
+Atk + 20
+Crit + 10
+Additional Atk + 1 and Crit + 1 per upgrade level of the Mace.
 #
 4580#
-Fire/Water/Earth/Wind/Shadow/Undead Resistances +50%.
-Ghost/Holy damage from enemies +100%.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Reduces damage taken from Water, Earth, Fire, Wind, Shadow, and Undead property attacks by 50%.
+Increases damage taken from Holy and Ghost property attacks by 100%.
 #
 4581#
 Physical attacks from enemies create a chance of increasing Attack Speed for 3 seconds, increasing AGI +44, and casting Endure at the cost of 40 SP.
@@ -27078,18 +27053,18 @@ Compound on: ^777777Helm^000000
 Weight: ^7777771^000000
 #
 4584#
-Each attack on enemies restores 1 SP.
-MSP -1%.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Max SP - 1%
+Restores 1 SP to the user when performing a physical attack.
 #
 4585#
-MaxSP +10%
-Each kill consumes 666 of your HP.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max SP + 10%
+Drains 666 HP from the user when a monster is killed by a physical attack.
 #
 4586#
 MATK +10. Wind Magic damage +5%.
@@ -27099,64 +27074,71 @@ Compound on: ^777777Helm^000000
 Weight: ^7777771^000000
 #
 4587#
-+12 Critical damage on Human/Animal/Fish monsters.
-Class: ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Crit + 12 on Demi-Human, Brute and Fish race targets.
 #
 4588#
-ATK +5 every 10 pure STR.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Atk + 5  for every 10 base Str.
+^800080Set Bonus^000000
+^008080Wakwak Card^000000
+^008080Wakwak Manteau^000000
+Disables the following effects of ^008080Wakwak Card^000000, Atk + 5 for every 10 base Str.
 #
 4589#
-MHP +200 every 10 pure VIT.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Max HP + 200 for every 10 base Vit.
 #
 4590#
-INT + 4. Magic attacks from enemies create a high chance of casting Sleep on enemies within a 23x23 cell area around you.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Int + 4
+Adds a chance of inflicting ^800000Sleep^000000 on any target within 23-23 cells of the user when receiving a magical attack.
 #
 4591#
-STR + 4. Physical attacks from enemies create a high chance of casting Bleeding on enemies within a 23x23 cell area around you.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Str + 4
+Adds a chance of inflicting ^800000Bleed^000000 on any target within 23-23 cells of the user when receiving a physical attack.
 #
 4592#
-VIT + 4. Magic attacks from enemies create a high chance of casting Petrification on enemies within a 23x23 cell area around you.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Vit + 4
+Adds a chance of inflicting ^800000Stone^000000 on any target within 23-23 cells of the user when receiving a magical attack.
 #
 4593#
-Long-ranged Attack Strength +1% for every 10 pure DEX.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Attack Range + 1% for every 10 base Dex.
 #
 4594#
-Critical damage +2% for every 10 pure LUK.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Increases critical damage on targets by 2% for every 10 base Luk.
 #
 4595#
-Bonus on Attack Speed for every 10 pure AGI. (-2% post-attack delay)
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Aspd + 2% for every 10 base Agi.
 #
 4596#
-MATK +5 every 10 pure INT.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Matk + 5 for every 10 base Int.
 #
 4597#
 MATK +10. Water Magic damage +5%.
@@ -27187,12 +27169,13 @@ Compound on: ^777777Helm^000000
 Weight: ^7777771^000000
 #
 4601#
-ATK +15%, MATK +15%.
--666 HP and -66 SP every 4 seconds.
--6,666 HP and -666 HP when unequipped.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Atk + 15%
+Matk + 15%
+Drains 666 HP and 66 SP from the user every 4 seconds.
+Drains 6666 HP and 666 SP from the user when the compounded item is unequipped.
 #
 4602#
 ATK +20%, MATK +20%.
@@ -27203,11 +27186,11 @@ Compound on: ^777777Armor^000000
 Weight: ^7777771^000000
 #
 4603#
-ATK +20.
-Melee Physical attacks create a high chance of casting Petrification, Sleep, and Curse on all monsters within a 5x5 cell area around you.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 20
+Adds a chance of inflicting ^800000Curse^000000, ^800000Sleep^000000, and ^800000Stone^000000 on any target within 5-5 cells of the user when receiving a physical attack.
 #
 4604#
 ATK +30.
@@ -27217,29 +27200,47 @@ Compound on: ^777777Weapon^000000
 Weight: ^7777771^000000
 #
 4605#
-MHP -44%
-If a Melee Physical attack finishes a monster, HP +200. (Additional HP +10 every Upgrade level)
--4,444 HP when unequipped.
-Neutral Resistance +20%, FLEE +20, HP -100 and SP -6 every 6 seconds when equipped with Undead Knight (F) Card.
-Class: ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP - 44%
+Restores 200 HP to the user when a monster is killed by a physical attack,
+Restores an additional 10 HP to the user per upgrade level of the compounded item.
+
+Drains 4444 HP from the user when the compounded item is unequipped.
+^800080Set Bonus^000000
+^008080Undead Knight of Agony Card^000000
+^008080Undead Knight of Grudge Card^000000
+Flee + 20
+Reduces damage taken from Neutral property attacks by 20%.
+Drains 100 HP and 6 SP from the user every 6 seconds.
 #
 4606#
-MSP -44%.
-If a Melee Physical attack finishes a monster, SP +20. (Additional SP +1 every 2 Upgrade levels)
-SP -444 when unequipped.
-Neutral Resistance +20%, FLEE +20, HP -100, and SP -6 every 6 seconds when equipped with Undead Knight (M) Card.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Max SP - 44%.
+Restores 20 SP to the user when a monster is killed by a physical attack,
+Restores an additional 1 SP to the user per 2 upgrade levels of the compounded item.
+
+Drains 444 SP from the user when the compounded item is unequipped.
+^800080Set Bonus^000000
+^008080Undead Knight of Agony Card^000000
+^008080Undead Knight of Grudge Card^000000
+Flee + 20
+Reduces damage taken from Neutral property attacks by 20%.
+Drains 100 HP and 6 SP from the user every 6 seconds.
 #
 4607#
-ATK +5, MATK +5.
-(For Books) ATK + 20 and MATK + 20 when Upgraded to +10 and above. ATK + 20, MATK + 20 when Upgraded to +14 and above.
-Class: ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Atk + 5
+Matk + 5
+
+If compounded to a Book,
+If upgrade level is +10 or higher, Atk +20 and Matk + 20.
+If upgrade level is +14 or higher, additional Atk + 20 and Matk + 20.
 #
 4610#
 Type: Card
@@ -27249,37 +27250,50 @@ Weight: 1
 If the user receives damage greater than their current maximum HP amount, this card will decrease the damage received by a large amount.
 #
 4625#
-MATK+ 20%.
-Increase SP consumption of skills by 10%.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Matk + 20%
+Increases the SP cost of skills by 10%.
 #
 4626#
-Increase magical damage against Formless and Demon races by 5%.
-When equipped with a shield compounded to Neo Punk Card:
-ignores 50% of Formless and Demon monster's Magic Defense Rate.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Formless and Demon race targets by 5%.
+^800080Set Bonus^000000
+^008080Big Ben Card^000000
+^008080Neo Punk Card^000000
+Reduces damage taken from Formless and Demon race enemies by an additional 5%.
+Bypass 50% of hard magic defense of Formless and Demon race targets when performing a magical attack.
 #
 4627#
-Increase physical damage against Formless and Demon races by 10%.
-When equipped with a shield compounded to Neo Punk Card:
-ignores 50% of Formless and Demon monster's Defense Rate.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases physical damage on Formless and Demon race targets by 10%.
+^800080Set Bonus^000000
+^008080Big Bell Card^000000
+^008080Neo Punk Card^000000
+Reduces damage taken from Formless and Demon race enemies by an additional 5%.
+Bypass 50% of hard defense of Formless and Demon race targets when performing a physical attack.
 #
 4628#
-Reduce damage taken from Formless and Demon races by 20%.
-When equipped with a weapon compounded to Big Ben Card:
-further reduce damage taken from Formless and Demon races by 5%.
-When equipped with a weapon compounded to Big Bell Card:
-further reduce damage taken from Formless and Demon races by 5%.
-Class : ^777777Card^000000
-Compound on : ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Formless and Demon race enemies by 20%.
+^800080Set Bonus^000000
+^008080Big Ben Card^000000
+^008080Neo Punk Card^000000
+Reduces damage taken from Formless and Demon race enemies by an additional 5%.
+Bypass 50% of hard magic defense of Formless and Demon race targets when performing a magical attack.
+
+^800080Set Bonus^000000
+^008080Big Bell Card^000000
+^008080Neo Punk Card^000000
+Reduces damage taken from Formless and Demon race enemies by an additional 5%.
+Bypass 50% of hard defense of Formless and Demon race targets when performing a physical attack.
 #
 4629#
 Class: ^808080Card^000000
@@ -27291,29 +27305,39 @@ Increases the damage of Earth property magical attacks on targets by 3% per upgr
 ^008080Arc Elder Card^000000
 ^008080Time Keeper Card^000000
 Reduces damage taken from Neutral property attacks by an additional 5%.
+Adds an additional chance of inflicting ^800000Curse^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
 #
 4630#
-Has a chance of inflicting the Curse status to all enemy in 11x11 around the wearer when attack.
-When equipped with a garment compounded with Arc Elder Card:
-the chance is further increased.
-Class : ^777777Card^000000
-Compound on : ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Curse^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
+^800080Set Bonus^000000
+^008080Arc Elder Card^000000
+^008080Time Keeper Card^000000
+Reduces damage taken from Neutral property attacks by an additional 5%.
+Adds an additional chance of inflicting ^800000Curse^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
 #
 4631#
-ASPD +3%
-Class : ^777777Card^000000
-Compound on : ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Aspd + 3%
+^800080Set Bonus^000000
+^008080Owl Viscount Card^000000
+^008080Owl Marquees Card^000000
+Adds a chance of casting ^0000FFLevel 1 Lord of Vermilion^000000 on the target when performing a physical attack.
 #
 4632#
-Add a chance of auto casting Level 1 Whirlwind when dealing physical attack.
-If the user has mastered the skill at Level 5, it will cast Level 5 instead.
-When equipped with an accessory compounded to Owl Viscount Card:
-add a chance of auto casting level 1 Lord of Vermilion when dealing physical attack.
-Class : ^777777Card^000000
-Compound on : ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Adds a chance of casting ^0000FFLevel 1 Whirlwind^000000 when performing a physical attack.
+If ^0000FFWhirlwind^000000 is at level 5, ^0000FFLevel 5 Whirlwind^000000 will be cast instead.
+^800080Set Bonus^000000
+^008080Owl Viscount Card^000000
+^008080Owl Marquees Card^000000
+Adds a chance of casting ^0000FFLevel 1 Lord of Vermilion^000000 on the target when performing a physical attack.
 #
 4633#
 Class: ^808080Card^000000
@@ -27371,7 +27395,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Armor^000000
 Weight: ^8080801^000000
 Atk + 30
-Drains 5 SP from the user when performing a physical attack.
+Drains 5 SP from the user when receiving a physical attack.
 #
 4639#
 Class: ^808080Card^000000
@@ -27400,54 +27424,74 @@ Compound on : ^777777Armor^000000
 Weight : ^7777771^000000
 #
 4653#
-Reduce damage from Brute and Undead monsters by 20%
-Class : ^777777Card^000000
-Compound on : ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from Brute and Undead race enemies by 20%.
+^800080Set Bonus^000000
+^008080Nightmare Arclouse Card^000000
+^008080Nightmare Mimic Card^000000
+Reduces damage taken from Brute and Undead race enemies by an additional 5%.
+Bypass 50% of hard magic defense of Brute and Undead race targets when performing a magical attack.
+
+^800080Set Bonus^000000
+^008080Nightmare Arclouse Card^000000
+^008080Nightmare Minorous Card^000000
+Reduces damage taken from Brute and Undead race enemies by an additional 5%.
+Bypass 50% of hard defense of Brute and Undead race targets when performing a physical attack.
 #
 4654#
-Increase magical damage against Brute and Undead monster by 5%
-When equipped with equip compounded with Nightmare Arclouse card
-Reduce damage from Brute and Undead monsters by 5%
-Ignore 50% magic defense of Brute and Undead monsters
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases magical damage on Brute and Undead race targets 5%.
+^800080Set Bonus^000000
+^008080Nightmare Arclouse Card^000000
+^008080Nightmare Mimic Card^000000
+Reduces damage taken from Brute and Undead race enemies by an additional 5%.
+Bypass 50% of hard magic defense of Brute and Undead race targets when performing a magical attack.
 #
 4655#
-Increase physical damage against Brute and Undead monster by 10%
-When equipped with equip compounded with Nightmare Arclouse card
-Reduce damage from Brute and Undead monsters by 5%
-Ignore 50% physical defense of Brute and Undead monsters
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases physical damage on Brute and Undead race targets by 10%.
+^800080Set Bonus^000000
+^008080Nightmare Arclouse Card^000000
+^008080Nightmare Minorous Card^000000
+Reduces damage taken from Brute and Undead race enemies by an additional 5%.
+Bypass 50% of hard defense of Brute and Undead race targets when performing a physical attack.
 #
 4656#
-When physically and magically attacked,
-chance to cause Sleep to all targets on 11x11 cells.
-When equipped with equip compounded with Nightmare Ancient Mummy card
-Increase the probability of causing Sleep
-Class : ^777777Card^000000
-Compound on : ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Sleep^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
+^800080Set Bonus^000000
+^008080Nightmare Mummy Card^000000
+^008080Nightmare Ancient Mummy Card^000000
+Reduces damage taken from Neutral property attacks by an additional 5%.
+Adds an additional chance of inflicting ^800000Sleep^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
 #
 4657#
-Reduce damage from Neutral property by 15%
-Every refine of garment increase magical Fire damage by 3%
-When equipped with equip compounded with Nightmare Mummy card
-Increase resistance against Neutral property attack by 5%
-Class : ^777777Card^000000
-Compound on : ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Reduces damage taken from Neutral property attacks by 15%.
+Increases the damage of Fire property magical attacks on targets by 3% per upgrade level of the compounded item.
+^800080Set Bonus^000000
+^008080Nightmare Mummy Card^000000
+^008080Nightmare Ancient Mummy Card^000000
+Reduces damage taken from Neutral property attacks by an additional 5%.
+Adds an additional chance of inflicting ^800000Sleep^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
 #
 4658#
-MATK + 5%
-When refined to +7, increase magical damage inflicted by 3%
-When refined to +9, increase magical damage inflicted by 2%
-Class : ^777777Card^000000
-Compound on : ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Matk + 5%
+If upgrade level is +7 or higher, additional Matk + 3%.
+If upgrade level is +9 or higher, additional Matk + 2%.
 #
 4659#
 Class: ^808080Card^000000
@@ -27932,27 +27976,35 @@ Increases the damage of ^0000FFReverberation^000000 by an additional 20%.
 Adds a 3% chance of buffing the user for 6 seconds when performing a physical attack; Atk + 100.
 #
 4697#
-MSP -300.
-Each short ranged Physical attack has a high chance of destroying an enemy's armor.
-Equip with Kick Step Card, no consumes Madogear energy.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Max SP - 300
+Adds a chance of damaging the target's armor when performing a physical attack.
+^800080Set Bonus^000000
+^008080Charleston Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
 #
 4698#
-Increase 30% of [Axe Boomerang] damage.
-Increase additional 30% of [Axe Boomerang] damage if weapon has +10 refined or higher.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 30%.
+If upgrade level of the compounded item is +10 or higher,
+Increases the damage of ^0000FFAxe Boomerang^000000 by an additional 30%.
 #
 4699#
-Increase 20% of [Arm Cannon] damage.
-Increase additional 20% of [Arm Cannon] damage if weapon has + 10 refined or higher.
-Equip with Kick Step Card, no consumes Madogear energy.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 20%.
+If upgrade level of the compounded item is +10 or higher,
+Increases the damage of ^0000FFArm Cannon^000000 by an additional 20%.
+^800080Set Bonus^000000
+^008080Rock Step Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
 #
 4700#
 STR+1
@@ -31968,16 +32020,11 @@ Jobs: ^777777All^000000
 #
 5267#
 The stylish Hat of the Eastern warrior.
-East Costume Set :
-Costume Sakkat
-Costume Dark Blindfold,
-Costume Angry Mouth
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5268#
 ^000088Rental Item^000000
@@ -33551,19 +33598,15 @@ Weight : ^77777730^000000
 Job : ^777777All Classes^000000
 #
 5451#
-Gold Dragonhelm is specially constructed to offer the utmost in protection and offense against Dragon Type Monsters.
 The Gold Dragonhelm is the epitome of Dragonhelm technology, making it a wonderful showpiece, as such it is a Costume item.
-Available by quest until February 7, 2012 in celebration of the Year of the Dragon.
-12% tolerance to Dragon Race monsters
-8% damage to Dragon Race monsters
-5% bonus XP when fighting Dragons.
-^770000Cannot be upgraded^000000
-Class : ^777777Costume Headgear^000000
-Location : ^777777Upper^000000
-Defense: ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Dragon race enemies by 12%.
+Increases physical damage on Dragon race targets by 8%.
+Increases the experience given from Dragon race monsters by 5%.
 #
 5452#
 Silver Dragonhelm is specially constructed to offer the utmost in protection and offense against Dragon Type Monsters.
@@ -37590,11 +37633,9 @@ A consumable item used for destroying a fixed installed fort.
 Weight : ^7777771^000000
 #
 6187#
-This card appears to be defective because it's blank!
-The manufacturer may have forgotten to put in it's stats or it may be someone's cruel joke.
-Bring this to the Kafra Staff in the Kafra Headquarters in Aldebaran.
-^ffffff_^000000
-Weight : ^7777771^000000
+This card appears to be defective because it's blank! The manufacturer may have forgotten to put in it's stats or it may be someone's cruel joke. Bring this to the Kafra Staff in the Kafra Headquarters in Aldebaran.
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6188#
 Troy in Payon is going to do the safe slotting attempts for the price of this coupon.  No Zeny, no Elunium, just this ad + the gear you are trying to slot!
@@ -70556,14 +70597,20 @@ Required Level : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
 18730#
-a beginner's hat for newbie adventurers. Also known as a chick cap.
-MHP + 15, MSP + 5.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A beginner's hat for newbie adventurers. Also known as a chick cap.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 15
+Max SP + 5
+^800080Set Bonus^000000
+^008080Criatura Academy Hat [1]^000000
+^008080Novice Poring Card^000000
+Atk + 5
+Matk + 5
 #
 18731#
 Valkyrie's favorite Sunday fighting hat. It doesn't look much different than the battle helm.
@@ -75211,18 +75258,13 @@ Box Weight : ^7777771^000000
 19501#
 #
 19502#
-A pair of goggles
-designed for pilots
-in order to reduce
-vision impairment
-when traveling at
-very high speeds.
-^ff0000Grants 30% extra EXP per monster kill^000000
-Class : ^777777Costume^000000
-Location : ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+A pair of goggles designed for pilots in order to reduce vision impairment when traveling at very high speeds.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 30%.
 #
 19503#
 #
@@ -75234,33 +75276,29 @@ Jobs: ^777777All^000000
 #
 19507#
 A brightly shining sun that floats above your head.
-^ff0000This item is account bound^000000
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19508#
 #
 19509#
 Have the appearance of wearing the wings of a butterfly as your ears with this accessory.
-Class : ^777777Costume^000000
-Location: ^777777Middle^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19510#
 You can look like you just rolled off the assembly line with these bolt-on ear accessories.
-Class : ^777777Costume^000000
-Location: ^777777Middle^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19511#
 A blue eye patch with a small heart embroidery.
@@ -75273,140 +75311,123 @@ Usable By: ^808080All Jobs^000000
 #
 19513#
 A simple bird beak. Wearing this won't make you less fearful of things.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Lower^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19514#
 A neatly trimmed mustache reminiscent of the style worn by an 'Old Timey' actor from the past.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19515#
 A simple yellow hat with a long feather in it. Fashionistas wear it to the side lest they be shunned.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19516#
 A newly hatched baby bird chirps it's tunes on a twig of dreams.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19517#
 A roosters dignified comb. But don't be fooled while wearing this or the yolk's on you!
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19518#
 Share your happiness with others with this brightly colored rainbow.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19519#
 A dark thunder cloud that rivals the bolts created by Thor... well maybe not.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19520#
 When it rains it pours. Especially when it's only raining above your head.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19521#
 A circular shaped bowler hat reminiscent of the style worn by an 'Old Timey' actor from the past.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19522#
 A mini red crown affixed to a headband and worn off to the side. Though not a true symbol of royalty, this crown does have a regal air about it.
-Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19525#
-A pair of glasses that
-are worn on the head
-for a more charming
-appearance, instead of
-vision related purposes.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+A pair of glasses that are worn on the head for a more charming appearance, instead of vision related purposes.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19526#
 A lightweight replica of the famous warrior's helmet, the latest in Rune-Midgards fashion. It won't really protect you from anything.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19527#
-A headband with
-two dangerously
-fashionable spikes.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All Except Novice^000000
+A headband with two dangerously fashionable spikes.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19528#
-Specialized face armor
-that protects the jaw
-and teeth in battle.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777730^000000
+Specialized face armor that protects the jaw and teeth in battle.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19529#
-A headband adorned
-with what appears to
-be the wings of an angel.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+A headband adorned with what appears to be the wings of an angel.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19532#
 #
@@ -75430,16 +75451,24 @@ Req Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19537#
+A wonderful hat modeled after the great gryphon, a symbol of bravery.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19538#
-Bright full moon which is the biggest on the15th of August.
-Has a chance of adding +50 Atk or +50 Matk while physically attacking or magically attacking for 5 seconds.
-This effect does not work during War of Emperium
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Bright full moon which is the biggest on the 15th of August.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of buffing the user for 5 seconds when performing a physical or a magical attack;
+Atk + 50
+Matk + 50
+The item's effects are disabled in WoE environment.
 #
 19539#
 Hair ornament took the name of Valkyrie 'Reginleif'. Those who wear it, and receive the gift of God.
@@ -75467,10 +75496,11 @@ Usable By: ^808080All Jobs^000000
 #
 19542#
 You can get strong power if you resist its sweetness!
-Class : ^777777Costume^000000
-Location : ^777777Mid ^000000 Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19543#
 Wolf face shaped fluffy hood. Useful when you cannot sleep well.
@@ -75488,55 +75518,45 @@ Req Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19545#
-A black cap that is
-usually worn by boys
-attending schools that
-require uniforms.
-^ff0000Grants 30% extra EXP per monster kill^000000
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
-Lousy black hat for school kids.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+A black cap that is usually worn by boys attending schools that require uniforms.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 30%.
 #
 19546#
 A Helm of 'Battle Princess' who serves Odin.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19547#
 Copied hat of Baby Deviruchi.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19548#
 Frog god shaped Hat.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19549#
 Goat shape helm gives spot light for the user.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19550#
 Wear this when you want to look cute for your beloved.
@@ -75547,12 +75567,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19551#
-Modeled after the long ears of a fairy, when worn you can hear fairys playing in the blue forest.
-Class : ^777777Costume^000000
-Location : ^777777Middle ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Modeled after the long ears of a fairy, when worn you can hear fairies playing in the blue forest.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19552#
 A little flower leaf. The whole world seems pretty and happy.
@@ -75565,107 +75585,99 @@ Job : ^777777All^000000
 #
 19553#
 A dark mask for assassins.
-Class : ^777777Costume^000000
-Location : ^777777Low ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19554#
 A smily face mask eastern style, sculpted carefully. Makes you feel like home.
-Class : ^777777Costume^000000
-Location : ^777777Middle Low^000000 Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 #
 19555#
 A solid hat decorated very colorful, which was from the far east.
-Class : ^777777Costume^000000
-Location : ^777777Upper Mid ^000000 Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19556#
 A traditional artistic mask from a far eastern country.
-Class : ^777777Costume^000000
-Location : ^777777Upper Mid Lower ^000000 Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19566#
 A Samurai mask to protect its neck.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19573#
 a girlish hairband that has small heart and lace.
-Class : ^777777Clothes^000000
-location : ^777777Upper ^000000 Weight : ^7777770^000000
-Req Lv : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19574#
-it looks from a headgear which was owned by deat
-Type : ^777777Costume Equipment^000000
-Location : ^777777Upper-mid ^000000 Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+Modeled after a headgear owned by the master of death.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19577#
 A Poring hat made to celebrate Ragnarok Online's 10th anniversary.
-Class  : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19580#
-The ornamental version of long dead Pharaoh Amset-Ra's headdress. It is lightweight and can be worn over your existing hat-
-For decorative use.
-Class : ^777777Costume^000000
-Location: ^777777Upper & Lower^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+The ornamental version of long dead Pharaoh Amset-Ra's headdress. It is lightweight and can be worn over your existing hat- For decorative use.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19581#
 The lucky, well-worn hat of former adventurer Mort Whimsey.
-Class : ^777777Costume^000000
-Location: ^777777Upper & Lower^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777730^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 #
 19582#
-The fancy Cowboy hat of the western Cowboy.  Part of the Western Costume Set, obtainable from the ^0000CCGoCash East West Costume Box^000000.
-West Costume Set :
-Costume Cowboy Hat
-Costume Zorro Mask,
-Costume Dagger in Mouth
-Untradable
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+The fancy Cowboy hat of the western Cowboy.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19583#
-The mysterious mask of the roguish hero.  Part of the Western Costume Set, obtainable from the ^0000CCGoCash East West Costume Box^000000.
-West Costume Set :
-Costume Cowboy Hat
-Costume Zorro Mask,
-Costume Dagger in Mouth
-Class : ^777777Costume^000000
-Location: ^777777Middle^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+The mysterious mask of the roguish hero.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19584#
 ^808080A small silver knife held between your teeth to free up the use of your hands for swimming or swashbuckling. It's perfectly safe!^000000
@@ -75683,12 +75695,11 @@ Job : ^777777All^000000
 #
 19587#
 The Master of all porings, the King Poring's hat.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19589#
 A beatiful helm shaped as a rising angel's wing.
@@ -75725,23 +75736,21 @@ Required Jobs: All Jobs
 #
 19600#
 A cute doll of a drooping Kiehl from the Robot Factory.
-^FF0000Created by Allysia^000000
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777740^000000
-Required Level : ^77777730^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^67CDC9Concept by Allysia.^000000
 #
 19601#
 A cute doll of a drooping Aliot from the Robot Factory.
-^FF0000Created by Allysia^000000
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^67CDC9Concept by Allysia.^000000
 #
 19602#
 ^00CC00A Tradable Box that contains 1 Hunter's Cap.^000000
@@ -75806,12 +75815,12 @@ Contains the following:
 Weight :^7777770^000000
 #
 19607#
-The power of love made change to this chick.
-Need delicate care.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777All^000000
+The power of love made change to this chick. Need delicate care.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19608#
 ^808080A hat adorned with a cute chick that brings joy to those that see it hopping!^000000
@@ -75822,34 +75831,30 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19616#
-Wickebine's black cat ears
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Wickebine's black cat ears.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19617#
 A cute headband that looks just like a pair of adorable puppy ears.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19618#
 #
 19619#
-A flamboyant hat worn
-only by the strongest
-of pirates.
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+A flamboyant hat worn only by the strongest of pirates.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19620#
 This type of cap is known to have been worn by a world famous detective. It feels like  a Pipe would perfectly complement this cap for some reason.
@@ -75860,70 +75865,71 @@ Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 #
 19621#
+A replica of the devil's ear ornaments, made from black feathers. You can feel the devil's charisma from them.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19622#
+Crescent shaped hair ornament, for cosmetic purposes.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19623#
 A hat made to honor Bijofnil, the legendary bird that lives above the Yggdrasil tree.
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19624#
 A special item that makes its wearer look absent-minded.
-Class : ^777777Costume^000000
-Location : ^777777Middle ^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19625#
 A hairband that gives one the appearance of having rabbit ears, a lasting symbol of extremely good luck.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
 #
 19627#
-Stay in tuned with the universe with this orbital headpiece
-^ff0000Grants 30% extra EXP per monster kill^000000
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+Stay in tuned with the universe with this orbital headpiece.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 30%.
 #
 19629#
-A jeweled coronet said
-to grant the wisdom of
-an ancient queen that
-had worn it.
-^ff0000Grants 30% extra EXP per monster kill^000000
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+A jeweled coronet said to grant the wisdom of an ancient queen that had worn it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 30%.
 #
 19630#
-A crown adorned with
-gorgeous jewels that
-is said to be worn by a wise, ancient king who
-will grant his wisdom
-to the wearer.
-^ff0000Grants 30% extra EXP per monster kill^000000
-Class : ^777777Costume^000000
-Location: ^777777Upper^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^77777720^000000
-Jobs : ^777777All^000000
+A crown adorned with gorgeous jewels that is said to be worn by a wise, ancient king who will grant his wisdom to the wearer.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from monsters by 30%.
 #
 19634#
 A mask that is effective when you have a cold, sometimes people use to keep warm
@@ -75935,13 +75941,12 @@ Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 19636#
-You can make people laugh by wearing this oversized red nose
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Costume^000000
-Location : ^777777Bottom ^000000
-Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+You can make people laugh by wearing this oversized red nose.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19643#
 Wickebine's one of favorite ear cap. Cute and… just cute.
@@ -75953,11 +75958,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 19649#
-A white kitten looking cute hairlace.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777All^000000
+A white kitten looking cute hair lace.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19650#
 #
@@ -76023,24 +76029,27 @@ Job : ^777777All^000000
 #
 19659#
 A woolly hat made for warming heads, but it seems that some people wear it for fashion.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19660#
 Marco's favorite hat. Inside you can find a short phrase Andrea had written, 'His memories to you...'.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19661#
 A sweet bonnet.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19667#
 ^808080A helm worn by a dragonslayer. It is told that the treasure which belonged to the slain dragon was cursed.^000000
@@ -76114,45 +76123,51 @@ Required Jobs: All Jobs
 #
 19677#
 A mysterious ring floating above your head. It feels like that you don't have a soul?!
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19678#
 A cute ribbon with small bells. The bells seem to jingle.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19679#
-White round eyes make you look innocent and cute.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+A special item that makes its wearer look absent-minded.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19680#
 A funny mask that children love to put on.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Mid Lower ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19681#
 A silver shining hair accessory with a star at the center.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19682#
 A cute santa poring is tumbling on your head!
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19683#
 ^808080The sweetest yummy candy for good children.^000000
@@ -76165,19 +76180,19 @@ Jobs : ^777777All^000000
 #
 19684#
 A funky afro wig! The warmer your head, the warmer your heart.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19685#
-A cute hat made from a hopping Poring wearing a Santa's Hat
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A cute hat made from a hopping Poring wearing a Santa's Hat.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19686#
 ^808080A hairband with a Santa motif.^000000
@@ -76201,41 +76216,35 @@ Required Job: All Jobs
 #
 19688#
 A hairband decorated with small flowers.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19689#
 A grand, magnificent-looking headgear that is made of rings of various attributes.
-Class : ^777777HeadGear^000000 Defense : ^7777770^000000
-Location : ^777777UpperMiddleLower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
-A grand, magnificent-looking headgear that is made of rings of various attributes.
-Class : ^777777HeadGear^000000 Defense : ^7777770^000000
-Location : ^777777UpperMiddleLower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19690#
 Dark Snake Lord's hat that affects an air of authority.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
-Dark Snake Lord's hat that affects an air of authority.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19691#
 The symbol of an honor student!
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19692#
 An antique pipe for making a perfect fashion of captain.
@@ -76245,12 +76254,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19693#
-A hat which seems to stack a few of the most popular monster, Poring.
-Are they Angeling at the bottom, Masterling in the middle, Poring at the top?
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+A hat which seems to stack a few of the most popular monster, Poring. Are they Angeling at the bottom, Masterling in the middle, Poring at the top?
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19694#
 A hairpin shaped like a windmill rolling. Can you check the wind velocity with this?
@@ -77208,12 +77217,12 @@ Weight : ^77777710^000000
 Job : ^777777All Jobs^000000
 #
 19896#
-A headgear to commemorate pRO's 10th Anniversary!
-Happy 10th Anniversary pRO!
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location: ^777777Upper ^000000 Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+A headgear to commemorate pRO's 10th Anniversary! Happy 10th Anniversary pRO!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19897#
 #
@@ -77386,12 +77395,11 @@ Job : ^777777All^000000
 #
 19923#
 A hat of black feathers made by the power of demons who bless the arrival of the Dark Ages.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19924#
 #
@@ -77409,12 +77417,11 @@ Job : ^777777All^000000
 #
 19927#
 This fuzzy costume accurately replicates a cute, lazy kitten. Conveniently fits over your existing hats!
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19928#
 Gothic style hairband with small heart wing and lace decoration.
@@ -77434,10 +77441,11 @@ Required Jobs: All Jobs
 #
 19930#
 Cute hat with angel wings on top!
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19936#
 A neatted cap with sacred water god power.
@@ -77491,13 +77499,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 19955#
-A 'fashionable' Christmas Tree hat
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A 'fashionable' Christmas Tree hat.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19956#
 Cruiser's hat. It somehow gives an urge to march.
@@ -77523,10 +77530,11 @@ Required Jobs: All Jobs
 #
 19959#
 Argiope put on top of head. Be careful, sometimes it might move fiercely.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19960#
 Chains for controlling puppets. It feels like I have become a doll.
@@ -77852,11 +77860,12 @@ Position: Upper, Middle, Lower
 Weight: 0
 #
 20007#
-^808080A costume helm made of heavy metal that trembles with every attack.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
+A costume helm made of heavy metal that trembles with every attack.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20008#
 ^808080A costume helm modeled after a general notorious for taming dragons. Just wearing it gives you that same powerful feeling.^000000
@@ -77975,39 +77984,36 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 20034#
-Nothing says 'I am the night' better than a flying bat
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Costume^000000
-Location : ^777777Bottom ^000000
-Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+A castle's bat, follows his master wherever he goes.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20035#
-A blue rose that can never exist.
-This is a total dream to make it to geneticists.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+A blue rose that doesn't exist in nature. It is a plant breeder dream to make such a perfect blue rose.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20036#
 A costume equipment that replicated from a crown of a famous swordsman.
-This can be exchanged with [Designer Heidam] for enchantment stones that are used to enchant other kitcoin costume items.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item on slot 1.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20037#
 A silk hat of Owlduke.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20038#
 Class : ^777777Costume^000000 Def : ^7777770^000000
@@ -78170,7 +78176,12 @@ Required Lv : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
 20100#
-A costume of the Volumne FHat Item! Wear it with pride.
+A costume of the Volume Hat Item! Wear it with pride.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20106#
 ^808080A classic hat.^000000
@@ -78589,10 +78600,11 @@ Jobs: ^777777Swordman, Acolyte, and Merchant Classes^000000
 #
 20164#
 Deer skeleton shaped helm worn by monster Duneyrr.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20165#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -78806,6 +78818,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20190#
+A doll hat that resembles a chicken.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20191#
 ^808080A replica of the stylish cat ear beret. Can be worn over other headgears.^000000
@@ -78952,15 +78970,11 @@ Job : ^777777All^000000
 #
 20234#
 Warm and cozy hat made with top class lamb's wool.
-HP+15%, SP+15%.
-15% magic damage increase to all types of monsters.
-2015% Recovery amount increases when drinking milk.
-^ff0000These effects will vanish after the event period.^000000
-Class : ^777777Costume^000000
-Location : ^777777Upper Middle Lower ^000000
-Weight : ^7777770^000000
-Req LvL : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20235#
 A rose said to blossom only in a frozen land. It never melts down.
@@ -79063,15 +79077,12 @@ Required Job: All Jobs
 ^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 #
 20266#
-Odd and secretive zip.
-Some sort of Rabbit creature was seen from the zip.
-^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
-^b4b4b4Can be exchanged with costume enchant stone box.^000000
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Odd and secretive zip. Some sort of Rabbit creature was seen from the zip.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20268#
 ^808080A sleepy Eclipse with his family. Your head will stay fluffy and warm.^000000
@@ -79094,13 +79105,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20278#
-^808080A hat resembles the man's hairdo who always looks for someone to fight with.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat resembles the man's hairdo who always looks for someone to fight with.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20279#
 ^808080A cheering whistle. Only blowing makes you feel vitalized.^000000
@@ -79121,13 +79131,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20281#
-^808080A magical hat which protects kids' head from a pool of radiant summer sunlight.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+^808080A magical hat which protects kids' head from a pool of radiant summer sunlight.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20282#
 ^808080A white crude hat usually worn by the leader of students.^000000
@@ -79139,13 +79148,12 @@ Required Level: 1
 Required Job: All Jobs
 #
 20283#
-^808080A hat having a story that a father left it to his son. You can feel how much he loved his son from its stout design.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat having a story that a father left it to his son. You can feel how much he loved his son from its stout design.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20284#
 A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.
@@ -79157,13 +79165,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20285#
-^808080Petals of cherry blossoms are failling gently. The petals dance beautifully as if they inform you that spring has come.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Lower)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Petals of cherry blossoms are falling gently. The petals dance beautifully as if they inform you that spring has come.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20286#
 Glasses rimmed under the lens only. They fit any types of coordination nicely either cool or cute.
@@ -79192,13 +79200,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20293#
-^808080A hat taken after the monster Sleeper living in Juno fields.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat taken after the monster Sleeper living in Juno fields.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20294#
 A hat commemorating the inauguration of 29th head of Maximilian family among the babe of the babes. It symbolize courage against the big as one of the small.
@@ -79218,58 +79225,51 @@ Required Level: 1
 Required Job: All Jobs
 #
 20296#
-^808080A hat modeled after mischievous monkey monster Yoyo.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat modeled after mischievous monkey monster Yoyo.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20297#
-^808080A hat taken after Muka of Sograt Desert.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A hat taken after Muka of Sograt Desert.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20298#
-^808080Droopy Lunatic ears. Cutely garnished with clover flower bouquets.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Droopy Lunatic ears. Cutely garnished with clover flower bouquets.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20299#
-^808080A mask made up with a pie to bury one's head in a party. It makes wearer's face dirty, but the liberally spread cream tastes sweet and delicious.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle, Lower)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A mask made up with a pie to bury one's head in a party. It makes wearer's face dirty, but the liberally spread cream tastes sweet and delicious.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20300#
-^808080A mask resembles a head of Hill Wind inhabiting in Rachel fields. Surprisingly, this complicated expression seems to be popular.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle, Lower)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A mask resembles a head of Hill Wind inhabiting in Rachel fields. Surprisingly, this complicated expression seems to be popular.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20301#
-^808080A Savage Babe doll dyed with gold. It is a pretty doll but makes you feel hunger when you look at it.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A Savage Babe doll dyed with gold. It is a pretty doll but makes you feel hunger when you look at it.
+Class: ^808080Costume^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20302#
 ^808080A crown taken after Beelzebub known for exposing its existence from a depth of Nameless Island. A crown exduing elegance.^000000
@@ -79290,13 +79290,12 @@ Required Jobs: All Jobs
 ^67CDC9Concept by WarlockFier.^000000
 #
 20311#
-^808080A tool amplifying the wearer's magical ability by controlling brainwave. It also has a voice recognition function and is said to resonate some types of equipment.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A tool amplifying the wearer's magical ability by controlling brainwave. It also has a voice recognition function and is said to resonate some types of equipment.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20312#
 ^808080An eye patch modeled after the evil eye of Demon Baron.
@@ -79307,40 +79306,37 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20313#
-^808080It feels that a lot of data in CDs flow into the brain through the mouth.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Lower)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+It feels that a lot of data in CDs flow into the brain through the mouth.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20314#
-^808080Sunglasses feel like a futuristic design.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Sunglasses feel like a futuristic design.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20315#
-^808080An item developed by fusing uncharted technology and magic power of Juperos Ruin. When you wear as if it is overlapped on eyes, an image is projected right in front of the eyes. Its principle is not fully explained yet.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Lower)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+An item developed by fusing uncharted technology and magic power of Juperos Ruin. When you wear as if it is overlapped on eyes, an image is projected right in front of the eyes. Its principle is not fully explained yet.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20316#
-^808080A helm features the decorations describe a shield and the wings symbolize a Cerub. Especially, it was designed to suit Royal Guards well.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A helm features the decorations describe a shield and the wings symbolize a Cerub. Especially, it was designed to suit Royal Guards well.
+^FF0000Account Bound^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20317#
 ^808080A pair of headphones with cat ears.^000000
@@ -79351,13 +79347,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20318#
-^808080A costume item resembles a decoration of the robot Charleston's body in Verus. It is said to be an antenna having a receiving function, but the details are unknown.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A costume item resembles a decoration of the robot Charleston's body in Verus. It is said to be an antenna having a receiving function, but the details are unknown.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20319#
 ^808080A booster features its red color. The design looks like a magical booster, but the purpose of its development is unknown.^000000
@@ -80089,10 +80084,11 @@ Required Jobs: All Jobs
 #
 20434#
 This gunslinger doll perches on your head.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000 Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20449#
 Class :^777777Costume^000000 Defense : ^7777770^000000
@@ -80855,8 +80851,8 @@ Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 
 ^800080Set Bonus^000000
 ^008080Red Lotus Stole^000000
-^008080Undead Knight F Card^000000
-Disables the following effects of ^008080Undead Knight F Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
+^008080Undead Knight of Grudge Card^000000
+Disables the following effects of ^008080Undead Knight of Grudge Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 #
 20783#
 ^808080A cape wore by a kid who's dream is to become a hero. Despite it's look, the robe has outstanding protection abilities.^000000
@@ -81594,7 +81590,7 @@ Additional Hit + 100
 ^008080Phreeoni Card^000000
 ^008080Phreeoni Wings^000000
 Perfect Hit + 50
-Immune to ^800000Stone Curse^000000.
+Immune to ^800000Stone^000000.
 #
 20860#
 A replica of the surcoat which is worn by the lord of Amatsu Castle. Once worn, you will be able to move rapidly.
@@ -84559,6 +84555,21 @@ Costume: Happy Rabbit Ribbon
 Costume: Lovely Heart Cap
 Costume: Lovely Feeling
 #
+23997#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened gives one of the following:
+Costume: Clay Poring Jar
+Costume: Clockwork Cap
+Costume: Drosera Hairpin
+Costume: Eremes Scarf Blue
+Costume: Gryphon Hat
+Costume: Piamette's Curls
+Costume: Poporing Mascot Head
+Costume: Red Gemini Eyes
+Costume: Siorava Hat
+Costume: Wild Poring Rider
+#
 24012#
 A glove worn to enhance dexterity.
 ^FF0000Account Bound^000000
@@ -84776,14 +84787,15 @@ If the combined upgrade levels of ^008080Magical Shadow Earring^000000, ^008080M
 Matk + 1%
 #
 24024#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-FLEE + 5.
-FLEE + 10, when refined over +7.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Armor^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An armor worn to enhance dodging capabilities.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Flee + 5
+If upgrade level is +7 or higher,
+Additional Flee + 10
 #
 24025#
 A pair of shoes worn to enhance health and mana.
@@ -84924,13 +84936,15 @@ If the combined upgrade levels of ^008080Critical Shadow Armor^000000 and ^00808
 Increases critical damage on targets by 1%.
 #
 24033#
-MATK + 10.
-When refined to +7, increase healing power by 5%.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A glove worn to enhance healing.
+Class: ^808080Shadow Weapon^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk + 10
+Additional Matk + 1 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Increases the recovery rate of recovery skills by 5%.
 #
 24034#
 A glove worn to enhance luck.
@@ -85138,48 +85152,56 @@ If the combined upgrade levels of ^008080Athena Shadow Earring^000000 and ^00808
 Reduces damage taken from Neutral property attacks by an additional 1%.
 #
 24047#
-It is a Neckless that is known for protecting its owner. It brings out the potential from the owner.
-Increase Attack spd.(reduce the delay by 1% after attacking).
-When Refined by Lv.7,  reduce delay after attack by 1% additionally.
-When Refined by Lv.9,  reduce delay after attack by 2% additionally.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance attack speed.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Aspd + 1%
+If upgrade level is +7 or higher,
+Additional Aspd + 1%
+If upgrade level is +9 or higher,
+Additional Aspd + 2%
 #
 24048#
-Sacred necklace protecting the owner. Enables user's potential ability.
-Fluctuant Casting  -1%.
-When refine level is 7, extra Fluctuant Casting 1% decrease.
-When refine level 9, extra Fluctuant Casting 2% decrease.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A pendant worn to enhance casting speed.
+Class: ^808080Shadow Pendant^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces the variable casting time of skills by 1%.
+If upgrade level is +7 or higher,
+Reduces the variable casting time of skills by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces the variable casting time of skills by an additional 2%.
 #
 24049#
-Sacred earring protecting the owner. Enables user's potential ability.
-HP +100.
-When refine level is 7, MHP +1% increase.
-When refine level 9, MHP +1% increase.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance health.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100
+Additional Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Max HP + 1%
+If upgrade level is +9 or higher,
+Additional Max HP + 1%
 #
 24050#
-Sacred earring protecting the owner. Enables user's potential ability.
-SP +50.
-When refine level is 7, MSP +1% increase.
-When refine level 9, MSP +1% increase.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An earring worn to enhance mana.
+Class: ^808080Shadow Earring^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Max SP + 50
+If upgrade level is +7 or higher,
+Max SP + 1%
+If upgrade level is +9 or higher,
+Additional Max SP + 1%
 #
 24051#
 An earring worn to enhance physical defense.
@@ -85250,16 +85272,21 @@ Reduces damage taken from Brute race enemies by an additional 1%.
 Increases the experience given from Brute race monsters by 3%.
 #
 24055#
-Small extra shield gives you additional defense effect. Not really effective when worn alone.
-1% damage decrease when attacked by insect type monsters.
-When refine level is 7, 1% extra damage decrease when attacked by insect type monsters.
-When refine level 9, 1% extra damage decrease when attacked by insect type monsters.
-When equipped together with ^32CD32Gargantua Shield Shadow^000000 and ^32CD32Insecticide Shoes Shadow^000000, 3% exp increase when hunting insect type monsters.
-Class : ^777777Shadow Armor^000000
-Location : ^777777Shield^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A shield worn to enhance insect resistance.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Reduces damage taken from Insect race enemies by 1%.
+If upgrade level is +7 or higher,
+Reduces damage taken from Insect race enemies by an additional 1%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Insect race enemies by an additional 1%.
+^800080Set Bonus^000000
+^008080Gargantua Shadow Shield^000000
+^008080Insecticide Shadow Shoes^000000
+Increases the experience given from Insect race monsters by 3%.
 #
 24056#
 A shield worn to enhance fish resistance.
@@ -85529,36 +85556,55 @@ Increases physical and magical damage on Dragon race targets by an additional 2%
 Increases the experience given from Dragon race monsters by 3%.
 #
 24081#
-An armor worn on top of normal armor for additional DEF. Can be equipped alone but needs a set to have any effect.
-HP+100.
-If refined to +7 or greater, increases Max HP by 1%.
-If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
-Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
-Class : Shadow Equipment
-Location : Armor
-Required Level : 1
-Jobs : All Jobs
+An armor worn to enhance health leeching.
+Class: ^808080Shadow Armor^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 100
+Additional Max HP + 10 per upgrade level of the item.
+If upgrade level is +7 or higher,
+Max HP + 1%
+^800080Set Bonus^000000
+^008080Malicious Shadow Armor^000000
+^008080Malicious Shadow Shield^000000
+^008080Malicious Shadow Shoes^000000
+Adds a 4% chance of restoring 4% of damage as HP when performing a physical attack.
+Adds a 4% chance of restoring an additional 1% of damage as HP when performing a physical attack per 5 upgrade levels of ^008080Malicious Shadow Armor^000000, ^008080Malicious Shadow Shield^000000 and ^008080Malicious Shadow Shoes^000000.
 #
 24082#
-Shoes worn on top of normal shoes for additional DEF. Can be equipped alone but needs a set to have any effect. Max HP+1%. If refined to +7 or greater, increases Max HP by 1%.
-If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together,
-enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
-Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
-Class : Shadow Equipment
-Location : Footwear
-Required Level : 1
-Jobs : All Jobs
+A pair of shoes worn to enhance health leeching.
+Class: ^808080Shadow Shoes^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+Max HP + 1%
+If upgrade level is +7 or higher,
+Additional Max HP + 1%
+^800080Set Bonus^000000
+^008080Malicious Shadow Armor^000000
+^008080Malicious Shadow Shield^000000
+^008080Malicious Shadow Shoes^000000
+Adds a 4% chance of restoring 4% of damage as HP when performing a physical attack.
+Adds a 4% chance of restoring an additional 1% of damage as HP when performing a physical attack per 5 upgrade levels of ^008080Malicious Shadow Armor^000000, ^008080Malicious Shadow Shield^000000 and ^008080Malicious Shadow Shoes^000000.
 #
 24083#
-A small shield worn on the arm for additional DEF. Can be equipped alone but needs a set to have any effect.
-HP regeneration+5%.
-If refined to +7 or greater, increases additional HP regeneration by 5%.
-If the set consisting of Malicious Shield Shadow, Malicious Armor Shadow, and Malicious Shoes Shadow is worn together, enables 4% chance of gaining 2% of DMG inflicted upon an enemy as HP with each physical attack.
-Increases additional 1% of DMG inflicted upon an enemy as HP per every 5 refine level of all three items in the set.
-Class : Shadow Equipment
-Location : Shield
-Required Level : 1
-Jobs : All Jobs
+A shield worn to enhance health leeching.
+Class: ^808080Shadow Shield^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10 per upgrade level of the item.
+HP Recovery + 5%
+If upgrade level is +7 or higher,
+Additional HP Recovery + 5%
+^800080Set Bonus^000000
+^008080Malicious Shadow Armor^000000
+^008080Malicious Shadow Shield^000000
+^008080Malicious Shadow Shoes^000000
+Adds a 4% chance of restoring 4% of damage as HP when performing a physical attack.
+Adds a 4% chance of restoring an additional 1% of damage as HP when performing a physical attack per 5 upgrade levels of ^008080Malicious Shadow Armor^000000, ^008080Malicious Shadow Shield^000000 and ^008080Malicious Shadow Shoes^000000.
 #
 24090#
 A shield worn to enhance status resistance.
@@ -86814,19 +86860,38 @@ Aspd + 1
 Increases critical damage on targets by 20%.
 #
 27012#
-MHP + 8%.
-For Mechanic class, decreasing 30% long distance physical damage.
-Class : ^777777Card^000000
-Compound on : ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 8%
+^F4AD42Mechanic Bonus^000000
+Reduces damage taken from long-ranged attacks by 30%.
+^800080Set Bonus^000000
+^008080Charleston Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
+
+^800080Set Bonus^000000
+^008080Rock Step Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
+
+^800080Set Bonus^000000
+^008080Kick And Kick Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
 #
 27013#
-Increasing 10% of [Vulcan Arm] damage.
-+10 Refined, 20% additional [Vulcan Arm] damage incaresed.
-Equip with Kick Step Card, no consumes Madogear energy.
-Class : ^777777Card^000000
-Compound on : ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFVulcan Arm^000000 by 10%.
+If upgrade level is +10 or higher,
+Increases the damage of ^0000FFVulcan Arm^000000 by an additional 20%.
+^800080Set Bonus^000000
+^008080Kick And Kick Card^000000
+^008080Kick Step Card^000000
+Madogear will no longer consume ^008080Magic Gear Fuel^000000.
 #
 27014#
 MHP + 2%
@@ -90300,12 +90365,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 31087#
-Dwarf's heavy beard.
-You don't need a scarf.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A heavy dwarven beard. It's so thick and warm, you don't even need a scarf.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31089#
 ^808080It is time to demonstrate your true power!^000000
@@ -90334,12 +90399,12 @@ Usable By: ^808080All Jobs^000000
 Adds a 1% chance of gaining 1 to 500 zeny when a monster is killed.
 #
 31092#
-Gothic style bunny hat.
-Elegant and cute stylish hat.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Elegant and cute gothic-style hat with bunny ears on top. What more could you ask for?
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31117#
 A helm used in ancient western country that was famous for close formation and tight defense.
@@ -91725,41 +91790,64 @@ Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 31540#
+Costume colored contacts made to mimic the eyes of Gemini-S58.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31541#
+A hairpin fashioned from the leaves of the Drosera. It's cuter on you than it is on them!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31542#
+A happy little Poring has decided to take a bath in this giant jug of water you were carrying. He doesn't seem to want to leave... lucky you!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31543#
+Soft as a Siorava. I wonder what it's made of...?
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31544#
+A luxurious costume wig modeled after Piamette's hair style. Its soft and perfect curls frame your face perfectly!
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31545#
+The classic Eremes scarf, long and tattered, dyed blue to match the rest of your blue outfits.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31546#
+A wonderful red cap inspired by the design of the Aldebaran Clock Tower. It looks so fancy on you!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31547#
+Have you ever dreamed of your entire head becoming a Poporing?
+Well, your dreams have just come true.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
