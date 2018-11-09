@@ -139,14 +139,6 @@ sub get {
 ### CATEGORY: Hash members
 
 ##
-# String $Actor->{actorType}
-# Invariant: defined(value)
-#
-# An identifier for this actor's type. The meaning for this field
-# depends on the actor's class. For example, for Player actors,
-# this is the job ID (though you should use $ActorPlayer->{jobID} instead).
-
-##
 # int $Actor->{binID}
 # Invariant: value >= 0
 #

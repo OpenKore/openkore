@@ -9,6 +9,7 @@ use Cwd qw/cwd/;
 use File::Copy::Recursive qw/dircopy fmove/;
 use IO::File ();
 use XML::Writer ();
+use Scalar::Util qw(blessed);
 
 my $timeout;
 
@@ -79,7 +80,7 @@ my $hook = Plugins::addHook('mainLoop_post', sub {
 		[actors => map {[
 			actor =>
 				[name => $_->name],
-				[actorType => $_->{actorType}],
+				[actorType => blessed($_)],
 				[x => $_->{pos_to}{x}],
 				[y => $_->{pos_to}{y}],
 				[binID => $_->{binID}],

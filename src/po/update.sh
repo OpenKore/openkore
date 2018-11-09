@@ -13,6 +13,7 @@ xgettext --from-code=utf-8 -L Perl --force-po -o openkore.pot --keyword=T --keyw
 	../functions.pl \
 	../*.pm \
 	../Actor/*.pm \
+	../Actor/Slave/*.pm \
 	../AI/*.pm \
 	../AI/Slave/*.pm \
 	../Interface/*.pm \
