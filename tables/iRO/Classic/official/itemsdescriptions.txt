@@ -71840,3 +71840,32 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20064#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Zaha Doll Hat!
+300 Fabric
+150 Blue Hair
+75 Moth Dust
+5 Cobaltblue Dyestuffs
+1 Zaha Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20065#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Helm Of Abyss!
+400 Mould Powder
+200 Ectoplasm
+100 Black Bear Skin
+50 Crystals of Darkness
+1 Book of the Devil
+1 Helm Of Abyss Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
