@@ -5634,7 +5634,7 @@ sub received_character_ID_and_Map {
 
 	if($args->{'mapUrl'} =~ /.*\:\d+/) {
 		$map_ip = $args->{mapUrl};
-		$map_ip =~ s/:[0-9]+//;
+		$map_ip =~ s/:[0-9\0]+//;
 		$map_port = $args->{mapPort};
 	} else {
 		$map_ip = makeIP($args->{mapIP});
