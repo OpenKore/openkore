@@ -28477,6 +28477,15 @@ Equipa em: ^777777Equipamento para a cabeça^000000 Peso: ^77777750^000000
 Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Todas^000000
 #
+5855#
+Um verdadeiro mestre nunca culpa suas ferramentas. Apesar de ser uma vara de pescar normal, parece que ela pode pescar qualquer peixe que apareca no mar.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Tipo: ^777777Vara^000000
+Defesa: ^7777770^000000
+Peso: ^77777725^000000
+Nivel necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 5856#
 Um chapéu que traz o clima todo de torcida e vibração!
 ^0000ffFOR +1, INT +1, VIT +2, DES +2, AGI +2, SOR +2, DEFM +1.^000000
@@ -30530,6 +30539,11 @@ Peso: ^7777771^000000
 Peça de metal com agulhas afiadas. É doloroso de se pisar. Útil para jogar no chão em emergências para atrasar perseguidores.
 Peso: ^7777770,1^000000
 #
+6495#
+O Grupo Eden reconhece que o portador dessa insignia concluiu grandes feitos. Essas moedas podem ser trocadas por servicos e bens.
+^FF0000Vinculado a conta^000000
+Peso: ^8080801^000000
+#
 6496#
 Espinha grossa e forte de Tikbalang. Venda a qualquer colecionador.
 ^ffffff_^000000
@@ -31103,6 +31117,41 @@ Peso: ^7777770^000000
 Um registro peculiar encontrado nas ruínas de Verus. Você pode escutar parte da vida ou os incidentes da cidade.
 Peso: ^7777770^000000
 #
+6770#
+Um tubarão, predador do mar e símbolo de medo. É dito ser uma das melhores comidas pela dificuldade em capturá-lo.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6771#
+Um dos melhores peixes, usado em muitos pratos. Nem sempre pode estar presente na mesa pelo seu custo alto.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6772#
+Molusco de 8 pernas. Cuidado com o jato de tinta que eles soltam!
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6773#
+Peixe colorido e saboroso. Pode ser cozido em muitos pratos.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6774#
+Um peixe com dentes e temperamentos ferozes.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6775#
+Um peixe que instintivamente retorna ao seu local de nascimento. Muito apreciado na culinária.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6778#
+A lula, além de ser colocada em alguns pratos, é também usada como isca.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
 6804#
 Honestamente é difícil identificar as diferenças entre as orgânicas e inorgânicas.
 Apenas os adesivos "inorgânicos" garantem tudo.
@@ -31163,6 +31212,21 @@ Peso : ^7777771^000000
 Uma crina de um lendário Cavalo Azul!
 Realmente muito macia.
 Peso : ^7777771^000000
+#
+6897#
+O maior mamífero marinho. Elas também são conhecidas por serem o maior animal da Terra.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6901#
+São predadores do mar e símbolo de medo.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
+#
+6902#
+Um camarão suculento. É tambem conhecido como Camarão Jumbo, perfeito para iscas.
+^FF0000Atenção! O item não podem ser negociado, vendido em NPCs nem jogado ao chão, mas pode ser transferido para o armazém^000000
+Peso: ^8080801^000000
 #
 6913#
 ^ff0000Este item não pode ser negociado.^000000
@@ -53457,6 +53521,14 @@ Nível Necessário: ^7777771^000000
 Peso: ^7777770^000000
 Classes que Utilizam: ^777777Todas^000000
 #
+19848#
+E um chapéu feito com a aparência de um Angeling, mãe de todos os Porings, cujo objetivo era progeteger todos dos seres humanos.
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Topo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
+#
 19852#
 Feito com a aparência dos pinguins de mesmo nome das redondezas de Comodo, este boné foi criado pela grande estilista Leira para atender ao público infantil, mas aparentemente caiu no gosto de alguns marmanjos.
 Tipo: ^777777Visual ^000000
@@ -54203,6 +54275,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20129#
+Esse chapéu foi criado pra ser uma réplica de um Poporing que você possa usar na cabeça, mas não se preocupe: ele não é pegajoso e nenhum Poporing foi ferido durante sua confecção.
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Topo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
+#
 20130#
 Uma cartola produzida com tecidos do monstro Sussurro. Dizem que ela sussurra coisas tenebrosas no ouvido daqueles que a usam.
 Tipo : ^777777Visual^000000
@@ -54712,6 +54792,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20281#
+^808080Um chapéu mágico criado para proteger as crianças dos raios de sol no verão.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20282#
 Os Irmãos Bróder são dois famosos cavaleiros que começaram como encanadores em Einbroch. Apesar de serem uma dupla, é inegável que Mario, o irmão mais velho, se tornou muito mais famoso que seu caçula, Luís. Assim, enquanto Mario usava um uniforme vermelho com o nº 1, Luís, que usava um branco com o nº 2 passou a ser chamado de “Mario Branco. Pobre Luís...
 Tipo: ^777777Visual ^000000
@@ -54777,6 +54866,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20294#
+Um chapéu comemorativo da nomeação do 29o líder da família Maximilian. Um bebe selvagem como nunca se viu. Ele simboliza a coragem dos pequenos sobre os grandes.
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Topo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
+#
 20295#
 Alguns jovens Super Aprendizes que não dominam suas habilidades encontram abrigo na Escola do Professor Chavier, perto de Hugel. Como o jovem Iscóte Samers, que só conseguiu controlar suas rajadas de Lanças de Fogo ao ir lá e ganhar este visor.
 Tipo: ^777777Visual ^000000
@@ -54828,6 +54925,14 @@ Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
+#
+20312#
+Um tapa-olho modelado pra parecer com o olho maligno do Barão Demoníaco.
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Meio^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
 #
 20313#
 Dizem que este belo disco prateado é fruto da tecnologia esquecida de Juperos. Não chega a ser um blue-ray, mas sempre que você o encosta nos lábios, consegue ouvir em sua mente as suas músicas favoritas, sejam elas os hits da Valeska Poringzuda ou do The Cura.
@@ -54974,13 +55079,12 @@ Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
 20349#
-Desde que você ouviu a história sobre Rap Feet, o pinguim “breakdancer”, você sempre quis adotar um e agora conseguiu. Esse pequeno e folgado Pingu é seu novo companheiro de aventuras! Hora de curtir o sol e o verão!
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
-Equipa em: ^777777Baixo^000000
-Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas^000000
+Desde que você ouviu a história sobre Rap Feet, o pinguim breakdancer, você sempre quis adotar um e agora conseguiu. Esse pequeno e folgado Pingu é seu novo companheiro de aventuras!
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Baixo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
 #
 20350#
 Alguns podem achar que você não se penteia direito, mas você sabe que ter uma mecha loira espetada para cima na verdade é um charme! Afinal, se nem mesmo o alquimista Eduardo El Rico conseguiu domar a mecha rebelde dele, por que você deveria tentar pentear a sua?
@@ -55608,6 +55712,15 @@ Classes: ^777777Todas^000000
 20514#
 A lendária espada que selou o Imperador Morroc no passado distante, e que foi brandida por um inesquecível herói. Só a visão da espada já é capaz de colocar medo no coração de seus inimigos.
 ^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20516#
+Asas brancas que representam o Arcanjo Miguel, o baluarte do céu. Asas como essas são extremamente raras de se replicar, até mesmo por mãos experientes. Dizem que existem asas de outros Arcanjos espalhadas por aí.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -57673,6 +57786,17 @@ Peso: ^77777725^000000
 Contém 500 projéteis de purificação.
 ^ffffff_^000000
 Peso: ^77777725^000000
+#
+22819#
+Uma bebida especial feita com algumas das comidas e bebidas mais saudáveis disponíveis no mundo.
+^FF0000Vinculado a conta^000000
+Tipo: ^808080Consumivel^000000
+Classe: ^808080Bônus de Atributos^000000
+Peso: ^8080801^000000
+Todos os Atributos + 10 por 60 minutos.
+Atq + 30 por 60 minutos.
+Matq + 30 por 60 minutos.
+Velocidade de Movimento Aumentada por 10 minutos.
 #
 22822#
 Uma bolsa com uma roupa de banho novinha em folha. Tá esperando o quê? Vai lá dar um mergulho!
@@ -59858,14 +59982,21 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31054#
+Um chapéu feito na forma de um Sting celebrando sua vitória sobre mais um aventureiro.
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Topo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
+#
 31055#
 Dizem que o velho mago animador de festas Ganfald criou esse divertido brinquedo depois de tomar um calote num aniversário no qual o anfitrião sumiu sem deixar vestígios. Para ajuda-lo a relaxar, ele fez esse assoprador de porings de sabão bem fofíneos!
-Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
-Equipa em: ^777777Baixo^000000
-Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas^000000
+Classe: ^808080Chapéu^000000
+Equipa em: ^808080Baixo^000000
+Peso: ^8080800^000000
+Nivel necessário: ^8080801^000000
+Classe: ^808080Todas^000000
 #
 31057#
 Esse cachecol preto pertencia ao Algoz Eremes, quando ele ainda era vivo e estava na sua fase gótica. Vítima dos bizarros experimentos da Corporação Rekenber, o espírito vingativo do Eremes ainda vaga os corredores sombrios do Laboratório de Somatologia, mas lá você o encontrará usando seu clássico cachecol vermelho.
@@ -60589,6 +60720,15 @@ Classes: ^777777Todas^000000
 Um laço azul-claro com algumas listras brancas e pequenas rendas ao redor. Delicado e charmoso, ele vai manter o seu visual discreto e simples.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31452#
+Apesar de não ter uma Lua na testa, esta gata é extremamente adorável e fofa. Quando quer carinho, se esfrega nas pernas do seu dono até conseguir.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
