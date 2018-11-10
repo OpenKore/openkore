@@ -29,6 +29,7 @@ sub new {
 		received_characters 099D
 		received_characters_info 082D
 		sync_received_characters 09A0
+		account_server_info 0AC4
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
