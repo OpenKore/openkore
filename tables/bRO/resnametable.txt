@@ -1502,3 +1502,24 @@ ecl_tdun03.rsw#ecl_tdun03.rsw#
 1@lab.gat#1@lab.gat#
 1@lab.rsw#1@lab.rsw#
 유저인터페이스\map\1@lab.bmp#유저인터페이스\map\1@lab.bmp#
+
+//iRO event
+epay_dun00l.gnd#pay_dun00.gnd#
+epay_dun00l.gat#pay_dun00.gat#
+epay_dun00l.rsw#pay_dun00.rsw#
+유저인터페이스\map\epay_dun00l.bmp#유저인터페이스\map\pay_dun00.bmp#
+
+egef_dun03m.gnd#gef_dun03.gnd#
+egef_dun03m.gat#gef_dun03.gat#
+egef_dun03m.rsw#gef_dun03.rsw#
+유저인터페이스\map\egef_dun03m.bmp#유저인터페이스\map\gef_dun03.bmp#
+
+eabyss_03h.gnd#abyss_03.gnd#
+eabyss_03h.gat#abyss_03.gat#
+eabyss_03h.rsw#abyss_03.rsw#
+유저인터페이스\map\eabyss_03h.bmp#유저인터페이스\map\abyss_03.bmp#
+
+enif_in.gnd#nif_in.gnd#
+enif_in.gat#nif_in.gat#
+enif_in.rsw#nif_in.rsw#
+유저인터페이스\map\enif_in.bmp#유저인터페이스\map\nif_in.bmp#

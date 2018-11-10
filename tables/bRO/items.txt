@@ -3163,6 +3163,7 @@
 5849#Disfarce de Médico#
 5850#Chapéu de Selvagem Dourado#
 5852#Casca de Ovo de Páscoa#
+5855#Vara de Pescar#
 5856#Chapéu do Torneio: Paixão#
 5857#Chapéu do Torneio: Coragem#
 5858#Chapéu do Torneio: Vitória#
@@ -3495,6 +3496,7 @@
 6488#Bilhete de Agradecimento por Investimento#
 6489#Certificado de Investimento dos Gatos#
 6493#Makibishi#
+6495#Medalha de Mérito do Eden#
 6496#Espinha Grossa de Tikbalang#
 6497#Amuleto Menor#
 6498#Jejellopy#
@@ -3617,6 +3619,13 @@
 6754#Erva Colhida#
 6756#Energia Condensada#
 6757#Registro de Memórias do Instituto#
+6770#Tubarão#
+6771#Atum#
+6772#Polvo#
+6773#Pargo#
+6774#Piranha#
+6775#Salmão#
+6778#Lula#
 6804#Abóbora Orgânica#
 6805#Abóbora Inorgânica#
 6821#Insígnia de Tropas dos Solteiros#
@@ -3629,6 +3638,9 @@
 6832#Peça Misteriosa#
 6834#Pelo Lendário#
 6835#Crina Lendária#
+6897#Baleia Azul#
+6901#Esturjão#
+6902#Camarão Rei#
 6913#Rosário Sagrado#
 6914#Alma Sombria#
 6915#Alma Capturada#
@@ -6412,6 +6424,7 @@
 19839#Bonequinho de Vanilmirth#
 19840#Elmo Solar Dourado#
 19841#Elmo do Espírito do Dragão#
+19848#Chapéu de Angeling#
 19852#Boné de Pingu#
 19862#Chifres de Succubus#
 19865#Coroa de Bufão#
@@ -6496,6 +6509,7 @@
 20113#Chapéu do Oráculo#
 20115#Óculos do Sabe-Tudo#
 20116#Fones de Sereia#
+20129#Chapéu de Poporing#
 20130#Cartola Sussurrante#
 20131#Fone dos Vocalroks#
 20132#Aura Fantasmagórica#
@@ -6551,6 +6565,7 @@
 20278#Cabeleira do Rei do Rock#
 20279#Apiutube#
 20280#Lápis do Ansioso#
+20281#Chapéu Pré-Escolar#
 20282#Boné do Mario Branco#
 20283#Boné Abençoado#
 20284#Boina de Cerejeira#
@@ -6558,12 +6573,14 @@
 20286#Óculos da Persona#
 20287#Cabeleira do Rei do Rock Saiadim#
 20290#Cartola Carcomida#
+20294#Maximilian Von Babe XXIX#
 20295#Visor de Quartzo-Poring#
 20298#Orelhas Brancas de Lunático#
 20299#Torta de Baunilha#
 20300#Máscara Vento da Colina#
 20306#Boné do Príncipe Ali#
 20311#Fone da Ratishune Meeku#
+20312#Olho Maligno do Barão#
 20313#CD Labial#
 20314#Óculos da Gaga#
 20315#Visor Holográfico#
@@ -6650,6 +6667,7 @@
 20507#Mochila de Poring#
 20511#Asas Azuis de Fada#
 20514#Espada de Thanatos#
+20516#Asas de Miguel#
 20517#Miau-chila de Bichano#
 20528#Asas Douradas da Borboleta#
 20535#Holograma Futurista#
@@ -6794,6 +6812,7 @@
 22747#Cartucho de Projétil de Eletrochoque#
 22748#Cartucho de Projétil Tectônico#
 22749#Cartucho de Projétil de Purificação#
+22819#Elixir Ultra Milagroso#
 22822#Bolsa com Roupa de Banho#
 22838#Sacola de Doces Misteriosa#
 22881#Corda de Caça#
@@ -6952,6 +6971,7 @@
 31046#Diadema de Rosas Brancas#
 31048#Par de Lírios#
 31052#Máscara do Alquimista#
+31054#Chapéu do Sting Vitorioso#
 31055#Sopra-Poring de Sabão#
 31057#Cachecol Preto do Eremes#
 31062#Peruca de Eleanor #
@@ -7036,6 +7056,7 @@
 31438#Capa Angelical#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
+31452#Gata Branca#
 31453#Cachecol Marrom com Laço#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
