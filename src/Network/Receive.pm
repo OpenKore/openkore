@@ -850,11 +850,18 @@ sub parse_account_server_info {
 			keys => [qw(ip port name users display)],
 		};
 
-	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4' && $masterServer->{serverType} ne "bRO") { # kRO Zero 2017, kRO ST 201703+
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
 			keys => [qw(ip port name users state property unknown)],
+		};
+		
+	} elsif ($args->{switch} eq '0AC4') {
+		$server_info = {
+			len => 160,
+			types => 'a6 Z20 v3 a128',
+			keys => [qw(unknown name users state property ip_port)],
 		};
 		
 	} elsif ($args->{switch} eq '0AC9') { # cRO 2017
@@ -873,7 +880,7 @@ sub parse_account_server_info {
 		@server{@{$server_info->{keys}}} = unpack($server_info->{types}, $_);
 		if ($masterServer && $masterServer->{private}) {
 			$server{ip} = $masterServer->{ip};
-		} elsif ($args->{switch} eq '0AC9') {
+		} elsif ($args->{switch} eq '0AC9' || ($args->{switch} eq '0AC4' && $masterServer->{serverType} eq "bRO")) {
 			@server{qw(ip port)} = split (/\:/, $server{ip_port});
 			$server{ip} =~ s/^\s+|\s+$//g;
 			$server{port} =~ tr/0-9//cd;
