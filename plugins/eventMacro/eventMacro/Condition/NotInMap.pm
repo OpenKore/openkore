@@ -4,6 +4,17 @@ use strict;
 use Globals qw( $field );
 use base 'eventMacro::Condition::InMap';
 
+sub _parse_syntax {
+	my ( $self, $condition_code ) = @_;
+	
+	if ($condition_code =~ /,/) {
+		$self->{error} = "You can't use comma separated values on this Condition";
+		return 0;
+	}
+	
+	$self->SUPER::_parse_syntax( $condition_code );
+}
+
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
