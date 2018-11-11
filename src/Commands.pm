@@ -921,7 +921,7 @@ sub cmdCart_desc {
 			error TF("Error in function 'cart desc' (Show Cart Item Description)\n" .
 				"Cart Item %s does not exist.\n", $arg);
 		} else {
-			printItemDesc($item->{nameID}, 'cart');
+			printItemDesc($item);
 		}
 	}
 }
@@ -3145,7 +3145,7 @@ sub cmdInventory_desc {
 		return;
 	}
 
-	printItemDesc($item->{nameID}, 'inventory');
+	printItemDesc($item);
 }
 
 sub cmdItemList {
@@ -4862,7 +4862,7 @@ sub cmdStorage_desc {
 		error TF("Error in function 'storage desc' (Show Storage Item Description)\n" .
 			"Storage Item %s does not exist.\n", $items);
 	} else {
-		printItemDesc($item->{nameID}, 'storage');
+		printItemDesc($item);
 	}
 }
 
@@ -4891,7 +4891,7 @@ sub cmdStore {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
 			"Store item %s does not exist\n", $arg2);
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		printItemDescSimple($storeList->get($arg2)->{nameID});
+		printItemDesc($storeList->get($arg2));
 
 	} else {
 		error T("Syntax Error in function 'store' (Store Functions)\n" .
