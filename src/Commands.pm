@@ -285,7 +285,7 @@ sub run {
 	}
 
 	# Remove trailing spaces from input
-	$input =~ s/^\s+//;
+	$input =~ s/^\s+|\s+$//g;
 
 	my @commands = split(';;', $input);
 	# Loop through all of the commands...
