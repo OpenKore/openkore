@@ -2450,40 +2450,15 @@ sub positionNearPortal {
 }
 
 ##
-# printItemDesc(int itemID, string location)
-# $location can only be: 'inventory', 'cart', 'store' or 'storage'
+# printItemDesc(obj $item)
 #
-# Print the description for $itemID.
+# Print the description for $item.
 sub printItemDesc {
-	my $itemID = shift;
-	my $location = shift;
-	
-	my $itemName = itemNameSimple($itemID);
-	my $amount;
-	if ($location eq 'store') {
-		$amount = $storeList->get($itemID)->{amount};
-	} elsif ($location ne '') {
-		$amount = $char->$location->sumByName($itemName);
-	}
+	my $item = shift;
 		
-	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
+	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
 	message T("===============Item Description===============\n");
-	message TF("Item: %s, ID: %s, Amount: %s\n\n", $itemName, $itemID, $amount), "info";
-	message($description, "info");
-	message("==============================================\n", "info");
-}
-
-##
-# printItemDesc(itemID)
-#
-# Print the description for $itemID.
-sub printItemDescSimple {
-	my $itemID = shift;
-	my $itemName = itemNameSimple($itemID);
-	my $amount = $char->storage->sumByName($itemName);
-	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
-	message T("===============Item Description===============\n");
-	message TF("Item: %s, ID: %s\n\n", $itemName, $itemID), "info";
+	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }
