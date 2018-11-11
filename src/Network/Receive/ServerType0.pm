@@ -1738,7 +1738,7 @@ sub map_changed {
 
 	if($args->{'url'} =~ /.*\:\d+/) {
 		$map_ip = $args->{url};
-		$map_ip =~ s/:[0-9]+//;
+		$map_ip =~ s/:[0-9\0]+//;
 		$map_port = $args->{port};
 	} else {
 		$map_ip = makeIP($args->{IP});
