@@ -846,28 +846,21 @@ sub parse_account_server_info {
 	if ($args->{switch} eq '0069') {  # DEFAULT PACKET
 		$server_info = {
 			len => 32,
-			types => 'a4 v Z20 v2 x2',
-			keys => [qw(ip port name users display)],
+			types => 'a4 v Z20 v3',
+			keys => [qw(ip port name users display unknown)],
 		};
 
-	} elsif ($args->{switch} eq '0AC4' && $masterServer->{serverType} ne "bRO") { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
-			keys => [qw(ip port name users state property unknown)],
-		};
-		
-	} elsif ($args->{switch} eq '0AC4') {
-		$server_info = {
-			len => 160,
-			types => 'a6 Z20 v3 a128',
-			keys => [qw(unknown name users state property ip_port)],
+			keys => [qw(ip port name users state property ip_port)],
 		};
 		
 	} elsif ($args->{switch} eq '0AC9') { # cRO 2017
 		$server_info = {
 			len => 154,
-			types => 'a20 V a2 a126',
+			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
 		
@@ -880,7 +873,7 @@ sub parse_account_server_info {
 		@server{@{$server_info->{keys}}} = unpack($server_info->{types}, $_);
 		if ($masterServer && $masterServer->{private}) {
 			$server{ip} = $masterServer->{ip};
-		} elsif ($args->{switch} eq '0AC9' || ($args->{switch} eq '0AC4' && $masterServer->{serverType} eq "bRO")) {
+		} elsif (exists $server{ip_port} && $server{ip_port} =~ /.*\:\d+/) {
 			@server{qw(ip port)} = split (/\:/, $server{ip_port});
 			$server{ip} =~ s/^\s+|\s+$//g;
 			$server{port} =~ tr/0-9//cd;
@@ -901,29 +894,35 @@ sub parse_account_server_info {
 sub reconstruct_account_server_info {
 	my ($self, $args) = @_;
 	$args->{lastLoginIP} = inet_aton($args->{lastLoginIP});
-
-	if($args->{'switch'} eq "0AC4") {
-		$args->{serverInfo} = pack '(a160)*', map { pack(
-			'a4 v Z20 v3 a128',
-			inet_aton($_->{ip}),
-			$_->{port},
-			stringToBytes($_->{name}),
-			@{$_}{qw(users state property unknown)},
-		) } @{$args->{servers}};
-	} elsif($args->{'switch'} eq "0AC9") {
-		$args->{serverInfo} = pack '(a154)*', map { pack(
-			'a20 V a2 a126',
-			@{$_}{qw(name users unknown ip_port)},
-		) } @{$args->{servers}};
+	
+	my $serverInfo;
+	
+	if ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
+		$serverInfo = {
+			len => 160,
+			types => 'a4 v Z20 v3 a128',
+			keys => [qw(ip port name users state property ip_port)],
+		};
+	} elsif ($args->{switch} eq "0AC9" || $self->{packet_lut}{$args->{switch}} eq "0AC9") {
+		$serverInfo = {
+			len => 154,
+			types => 'a20 V a2 a126',
+			keys => [qw(name users unknown ip_port)],
+		};
 	} else {
-		$args->{serverInfo} = pack '(a32)*', map { pack(
-			'a4 v Z20 v2 x2',
-			inet_aton($_->{ip}),
-			$_->{port},
-			stringToBytes($_->{name}),
-			@{$_}{qw(users display)},
-		) } @{$args->{servers}};
+		$serverInfo = {
+			len => 32,
+			types => 'a4 v Z20 v2 x2',
+			keys => [qw(ip port name users display)],
+		};
 	}
+	
+	foreach my $server (@{$args->{servers}}) {
+		$server->{ip} = inet_aton($server->{ip});
+		$server->{name} = stringToBytes($server->{name});
+	}
+	
+	$args->{serverInfo} = pack '(a' . $serverInfo->{len} .')*', map { pack($serverInfo->{types}, @{$_}{@{$serverInfo->{keys}}}) } @{$args->{servers}};
 }
 
 sub account_server_info {
@@ -5632,7 +5631,7 @@ sub received_character_ID_and_Map {
 		}
 	}
 
-	if($args->{'mapUrl'} =~ /.*\:\d+/) {
+	if(exists $args->{mapUrl} && $args->{'mapUrl'} =~ /.*\:\d+/) {
 		$map_ip = $args->{mapUrl};
 		$map_ip =~ s/:[0-9\0]+//;
 		$map_port = $args->{mapPort};
