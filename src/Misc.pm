@@ -2450,14 +2450,15 @@ sub positionNearPortal {
 }
 
 ##
-# printItemDesc(itemID)
+# printItemDesc(obj $item)
 #
-# Print the description for $itemID.
+# Print the description for $item.
 sub printItemDesc {
-	my $itemID = shift;
-	my $itemName = itemNameSimple($itemID);
-	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
-	message TF("===============Item Description===============\nItem: %s (ID: %s)\n\n", $itemName, $itemID), "info";
+	my $item = shift;
+		
+	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
+	message T("===============Item Description===============\n");
+	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }
