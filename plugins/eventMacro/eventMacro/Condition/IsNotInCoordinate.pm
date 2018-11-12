@@ -1,13 +1,16 @@
-package eventMacro::Condition::IsNotInMapAndCoordinate;
+package eventMacro::Condition::IsNotInCoordinate;
 
 use strict;
 use Globals qw( $char $field );
 
-use base 'eventMacro::Condition::IsInMapAndCoordinate';
+use base 'eventMacro::Condition::IsInCoordinate';
+
+#Use: x1 y1, x2 y2, x3min..x3max y3, x4 y4min..y4max, x5min..x5max y5min..y5max
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
+	#if $condition_code have other thing besides letters, spaces and commas
 	if ($condition_code =~ /,/) {
 		$self->{error} = "You can't use comma separated values on this Condition";
 		return 0;
@@ -23,9 +26,6 @@ sub check_location {
 	$self->{fulfilled_coordinate} = undef;
 	$self->{fulfilled_member_index} = undef;
 	foreach my $validator_index (0..$self->{index_of_last_validator}) {
-		if (exists $self->{map_validators}{$validator_index}) {
-			next unless ( $self->validator_map_check( $validator_index, $field->baseName ) );
-		}
 		
 		if (exists $self->{x_validators}{$validator_index}) {
 			next unless ( $self->validator_x_check( $validator_index, $char->{pos_to}{x} ) );
