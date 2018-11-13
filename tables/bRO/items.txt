@@ -874,6 +874,7 @@
 1675#Cajado do Cavalheiro#
 1676#Cajado Demoníaco#
 1679#Cajado dos Esplêndidos#
+1682#Cajado da Magia Oculta#
 1701#Arco#
 1702#Arco#
 1703#Arco#
@@ -4445,15 +4446,15 @@
 10040#Coleira Vermelha com Sino#
 10042#Juba Negra#
 11000#História de Prontera#
-11001#Histórias de Aventura Vol.1#
+11001#A Redenção de Grashnir#
 11002#Mestre-Cuca Orleans Vol.1#
 11003#Lendas das Kafras Vol.1#
 11004#Livro Antigo#
 11005#A Família Real de Rune-Midgard#
-11006#Flores de Sangue Vol.1#
-11007#Flores de Sangue Vol.2#
+11006#A Maldição do Navio Itinerante#
+11007#Boteco de Quinta Categoria#
 11008#Dicionário Biográfico#
-11009#Histórias de Aventura Vol.2#
+11009#Os invasores de Prontera#
 11011#Caderno de Varmunt#
 11012#Relatório da Expedição#
 11013#Relatório da Expedição Vol. 1#
@@ -6953,6 +6954,7 @@
 28909#Escudo da Terra#
 28910#Escudo de Placas Samurai#
 28912#Escudo Higiênico#
+28921#Escudo de Anemos#
 28927#Égide da Nobreza#
 28933#Escudo de Ferro#
 28944#Escudo de Sleiporing#
