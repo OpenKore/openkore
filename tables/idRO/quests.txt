@@ -11771,3 +11771,17 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19265#Armeyer Dinze Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Armeyer Dinze ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 23 : 13 November 2018 --
+
+19266#Clock Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Clock ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19267#Creamy Fear Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Creamy Fear ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19268#Tatacho Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Tatacho ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
