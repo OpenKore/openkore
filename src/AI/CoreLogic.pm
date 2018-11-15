@@ -1065,17 +1065,25 @@ sub processTransferItems {
 			redo;
 		}
 		
-		my $target_item = $target->getByName( $row->{item}->name );
+		my $target_item = $target->getByName( $row->{item}->{name} );
+		my $stack_limit = $target->item_max_stack( $row->{item}->{nameID} );
 		
-		# Transfer the item!
-		if ((30000 - $target_item->{amount} ) <= 0) {
-			error TF("Unable to add %s to %s. You can't stack over 30,000 of the same item\n", $item->name, $row->{target});
-		} elsif ( (30000 - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
-			warning TF("Amount of %s will surpass the maximun %s capacity (30000), transfering maximum possible (%d)\n", $row->{item}->name, $row->{target}, 30000 - $target_item->{amount} );
-			$messageSender->$method( $item->{ID}, ( 30000 - $target_item->{amount} ) );
+		my $amount;
+		if (( $stack_limit - $target_item->{amount} ) <= 0) {
+			error TF("Unable to add %s to %s. You can't stack over %s of this item\n", $item->name, $row->{target}, $stack_limit);
+			redo;
+			
+		} elsif ( ($stack_limit - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
+			warning TF("Amount of %s will surpass the maximum %s capacity (%d), transfering maximum possible (%d)\n",
+			$row->{item}->name, $row->{target}, $stack_limit, $stack_limit - $target_item->{amount} );
+			
+			$amount = $stack_limit - $target_item->{amount};
+			
 		} else {
-			$messageSender->$method( $item->{ID}, min( $item->{amount}, $row->{amount} || $item->{amount} ) );
+			$amount = min( $item->{amount}, $row->{amount} || $item->{amount} );
 		}
+		# Transfer the item!
+		$messageSender->$method( $item->{ID}, $amount );
 	}
 
 	AI::args->{time} = time;
