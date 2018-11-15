@@ -62,6 +62,7 @@ our @EXPORT = qw(
 	parseSkillsSPLUT
 	parseTimeouts
 	parseWaypoint
+	parseItemStackLimit
 	processUltimate
 	writeDataFile
 	writeDataFileIntact
@@ -920,6 +921,32 @@ sub parseWaypoint {
 		push @{$r_array}, \%point;
 	}
 	close FILE;
+	return 1;
+}
+
+sub parseItemStackLimit {
+	my ($file, $r_hash) = @_;
+	my $reader = Utils::TextReader->new($file);
+	
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/#.*$//g;
+		$line =~ s/^\s+//g;
+		
+		next unless length $line;
+		
+		my ($ID, $stack, $mask) = split /\s+/, $line;
+		
+		next unless $mask;
+		
+		for (my $i = 1; $i < 16; $i = $i << 1) {
+			next unless $mask & $i;
+			$r_hash->{$ID}->{$i} = $stack;
+		}
+	}
+	
 	return 1;
 }
 

@@ -408,4 +408,10 @@ sub isReady {
     1;
 }
 
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	return 30000;
+}
+
 1;
