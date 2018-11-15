@@ -1228,7 +1228,7 @@ sub processAutoStorage {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1 || AI::isIdle) && $needitem ne "" &&
-			$char->inventory->isReady()){
+			$char->inventory->isReady() && ai_canOpenStorage()){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
 		}
@@ -1335,6 +1335,11 @@ sub processAutoStorage {
 						$timeout{ai_storageAuto_useItem}{time} = time;
 					}
 				} else {
+					if (!ai_canOpenStorage()) {
+						warning TF("Cannot open storage, giving up\n");
+						AI::dequeue while (AI::is("storageAuto"));
+					}
+					
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
 						$config{'storageAuto_npc_steps'} = "c r1";
