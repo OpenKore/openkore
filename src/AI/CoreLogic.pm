@@ -1068,19 +1068,17 @@ sub processTransferItems {
 		my $target_item = $target->getByName( $row->{item}->{name} );
 		my $stack_limit = $target->item_max_stack( $row->{item}->{nameID} );
 		
-		my $amount;
-		if (( $stack_limit - $target_item->{amount} ) <= 0) {
+		my $amount = min($stack_limit, min( $item->{amount}, $row->{amount} || $item->{amount} ));
+		if ( ( $stack_limit - $amount ) < 0 || ($target_item->{amount} - $stack_limit) == 0) {
 			error TF("Unable to add %s to %s. You can't stack over %s of this item\n", $item->name, $row->{target}, $stack_limit);
 			redo;
 			
-		} elsif ( ($stack_limit - $target_item->{amount} ) < min( $item->{amount}, $row->{amount} ) ) {
+		} elsif ( ($target_item->{amount} + $amount) > $stack_limit ) {
 			warning TF("Amount of %s will surpass the maximum %s capacity (%d), transfering maximum possible (%d)\n",
 			$row->{item}->name, $row->{target}, $stack_limit, $stack_limit - $target_item->{amount} );
 			
 			$amount = $stack_limit - $target_item->{amount};
 			
-		} else {
-			$amount = min( $item->{amount}, $row->{amount} || $item->{amount} );
 		}
 		# Transfer the item!
 		$messageSender->$method( $item->{ID}, $amount );
