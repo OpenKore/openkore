@@ -2660,15 +2660,15 @@ sub system_chat {
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
 	} elsif ($message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/) { #appears in twRO   ## [micc][name][\x00\x00][unknown][\x00\x00][color][name][blablabla][message]
-		($color, $message) = $message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/;
+		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
 	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/) {
-		($color, $message) = $message =~ /^micc.*([0-9a-fA-F]{6})(.*)/;
+		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');
 	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/) {
-		($color, $message) = $message =~ /^tool([0-9a-fA-F]{6})(.*)/;
+		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
 	} else {
 		$prefix = T('[S]');
