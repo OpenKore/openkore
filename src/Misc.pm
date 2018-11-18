@@ -2046,7 +2046,11 @@ sub itemName {
 		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
 			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
 		} else {
-			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		    if ( $itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}} ) {
+				$suffix = join ':', sort sprintf($itemOption_lut{$itemOptionHandle{$_->{type}}}, $_->{value}), split ':', $suffix;
+			} else {
+				$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+			}
 		}
 	}
 
