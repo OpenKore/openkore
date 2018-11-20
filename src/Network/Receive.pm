@@ -7251,4 +7251,31 @@ sub cash_dealer {
 	message("-----------------------------------------------------\n", "list");
 }
 
+sub login_error2 {
+	my ($self, $args) = @_;
+
+	$net->serverDisconnect();
+	
+	my $msgID = $args->{type} - 0x75E + 1;
+	error $msgTable[$msgID] . "\n";
+	
+	if ($args->{type} == 0x1454) {
+		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
+		Plugins::callHook('invalid_password');
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
+			if (defined($password)) {
+				configModify('password', $password, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
+	} else {
+		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
+	}
+}
+
 1;
