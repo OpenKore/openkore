@@ -1428,6 +1428,8 @@ sub rodex_checkname {
 	}));
 }
 
+#note ! 
+#merge sub of 0A6E / 09EC ? [sctnightcore]
 sub rodex_send_mail {
 	my ($self) = @_;
 
