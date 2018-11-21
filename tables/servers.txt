@@ -27,7 +27,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x3DB32CFA, 0x15815FB0, 0x01A40597
+sendCryptKeys 0x724441E1, 0x39DE451C, 0x69EE554C
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -49,7 +49,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x3DB32CFA, 0x15815FB0, 0x01A40597
+sendCryptKeys 0x724441E1, 0x39DE451C, 0x69EE554C
 blockingPlayerCancel 1
 rankingSystemType 1
 
