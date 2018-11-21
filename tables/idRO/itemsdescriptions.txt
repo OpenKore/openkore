@@ -50059,3 +50059,107 @@ Berat : ^7777771^000000.#
 23187#Sap_Jelly#
 23188#Airship_Part#
 23189#Little_Dall_Needle#
+
+//====================update 21112018 Harvest Box=================
+32282#
+Kotak spesial untuk menyambut Thanksgiving. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard. Happy Thanksgiving!
+#
+
+32283#
+Costume: Costume Chick Hat
+Sebuah topi dengan anak ayam yang lucu yang dapat membuat perasaan senang bagi yang  
+melihatnya melompat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32284#
+Costume: Clockwork Cap
+Topi yang di desain khusus untuk operator Jam Besar yang berada di Aldebaran.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32285#
+Costume: Poporing Mascot Head
+Apa Poporing memakan kamu hidup-hidup?!
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32286#
+Costume: Red Gemini Eyes
+Lensa kontak yang dibuat mirip seperti mata Gemini yang berwarna merah.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32287#
+Costume: Wild Poring Rider
+Seekor Wild Rose yang sedang bermain dengan Poring.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32288#
+Costume: Droopy Lunatic Ears
+Hiasan yang berbentuk kuping lunatic yang turun kebawah dan ditambah hiasan karangan bunga kecil.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32289#
+Costume: Minstrel Hat
+Topi berbentuk runcing berwarna hijau yang biasa di kenakan oleh penyihir hebat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+32290#
+Costume: Teddy Bear Hood
+Penutup kepala yang dibuat agar mirip Boneka Teddy Bear. Terasa sangat lembut.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+
+12335#
+Bawang, Daging Sapi, Daging Ayam dan lain lain yang ditusuk menjadi 1.
+Heal 60% HP & SP
+Weight : ^77777735^000000
+#
+
+12336#
+Sebuah masakan yang sempurna untuk orang yang takut gendut.
+Heal 30% HP & SP
+Weight : ^77777730^000000
+#
+
+12337#
+Sosis Panggang yang disajikan dengan bawang.
+Heal 20% HP & SP
+Weight : ^77777720^000000
+#
