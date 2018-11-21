@@ -7080,7 +7080,7 @@ sub buying_store_items_list {
 	message $msg, "list";
 
 	Plugins::callHook('packet_buying_store2', {
-		venderID => $buyerID,
+		buyerID => $buyerID,
 		buyingStoreID => $buyingStoreID,
 		itemList => \@buyerItemList
 	});
