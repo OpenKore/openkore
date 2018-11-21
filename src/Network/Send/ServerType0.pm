@@ -237,7 +237,7 @@ sub new {
 		'0811' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0815' => ['buy_bulk_closeShop'],
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
-		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0819' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]], # kRO Zero 2017/2018 login
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
