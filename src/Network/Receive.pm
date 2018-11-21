@@ -7081,6 +7081,7 @@ sub buying_store_items_list {
 
 	Plugins::callHook('packet_buying_store2', {
 		venderID => $buyerID,
+		buyingStoreID => $buyingStoreID,
 		itemList => \@buyerItemList
 	});
 }
