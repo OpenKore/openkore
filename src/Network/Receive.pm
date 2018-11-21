@@ -7256,10 +7256,28 @@ sub login_error2 {
 
 	$net->serverDisconnect();
 	
-	my $msgID = $args->{type} - 0x75E + 1;
-	error $msgTable[$msgID] . "\n";
+	use constant {
+		REFUSE_INVALID_ID2 => 0x1451,
+		REFUSE_INVALID_PASSWD2 => 0x1454,
+	};
 	
-	if ($args->{type} == 0x1454) {
+	my $msgID = $args->{type} - 0x75E + 1;
+	error $msgTable[$msgID] . "\n" if (length $msgTable[$msgID] > 0);
+	
+	if ($args->{type} == REFUSE_INVALID_ID2) {
+		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
+			if (defined($username)) {
+				configModify('username', $username, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
+	} elsif ($args->{type} == REFUSE_INVALID_PASSWD2) {
 		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
 		Plugins::callHook('invalid_password');
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
