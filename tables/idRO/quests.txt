@@ -11771,3 +11771,34 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19265#Armeyer Dinze Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Armeyer Dinze ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 24 : 21 November 2018 --
+19269#Stem Worm Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Stem Worm ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19270#Parasite Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Parasite ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19271#Aunoe Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Aunoe ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19272#Naga Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Naga ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19273#Agav Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Agav ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+
+// -- Thanksgiving 2018 : 21 November 2018 --
+19276#Thanksgiving Quest Cooldown#LG_RAGEBURST#QUE_NOIMAGE#
+Madam Sizka akan membutuhkan bantuanmu besok.#
+Kembali bicara kepada Madam Sizka besok.#
+
+19277#Thanksgiving Quest Turkey Collecting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan Grand Peco dan bawa daging nya untuk dimasak oleh Madam Sizka#
+Setelah selesai, kembalilah kepada Madam Sizka.#
