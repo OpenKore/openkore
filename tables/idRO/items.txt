@@ -7571,3 +7571,17 @@
 23187#Sap_Jelly#
 23188#Airship_Part#
 23189#Little_Dall_Needle#
+
+//====================update 21112018 Harvest Box=================
+32282#Harvest Costume Box#
+32283#Costume: Costume Chick Hat#
+32284#Costume: Clockwork Cap#
+32285#Costume: Poporing Mascot Head#
+32286#Costume: Red Gemini Eyes#
+32287#Costume: Wild Poring Rider#
+32288#Costume: Droopy Lunatic Ears#
+32289#Costume: Minstrel Hat#
+32290#Costume: Teddy Bear Hood#
+12335#Grilled Delicious Skewer#
+12336#Grilled Mushroom#
+12337#Grilled Sausages#
