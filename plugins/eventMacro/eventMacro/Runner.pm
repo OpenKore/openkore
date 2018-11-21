@@ -558,8 +558,8 @@ sub define_next_valid_command {
 		######################################
 		# While statement: while (foo <= bar) {
 		######################################
-		if ($self->{current_line} =~ /^while\s/) {
-			my ($condition_text) = $self->{current_line} =~ /^while\s+(\(.*\))\s+{$/;
+		if ($self->{current_line} =~ /^while\s*\(/) {
+			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s+{$/;
 			
 			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
 			
@@ -599,7 +599,7 @@ sub define_next_valid_command {
 		######################################
 		# Initial 'if'
 		######################################
-		} elsif ($self->{current_line} =~ /^if\s/) {
+		} elsif ($self->{current_line} =~ /^if\s*\(/) {
 			
 			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
 			
@@ -647,7 +647,7 @@ sub define_next_valid_command {
 							$block_count--;
 							
 						#Elsif check
-						} elsif ( $self->{current_line} =~ /^}\s*elsif\s+(\(.*\)).*{$/ && $block_count == 1 ) {
+						} elsif ( $self->{current_line} =~ /^}\s*elsif\s*(\(.*\)).*{$/ && $block_count == 1 ) {
 							($result) = $self->parse_and_check_condition_text($1);
 							return if (defined $self->error);
 							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3;

@@ -279,6 +279,7 @@ sub loadDataFiles {
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
 	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
 	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
+	Settings::addTableFile('item_stack_limit.txt', loader => [\&parseItemStackLimit, \%itemStackLimit]);
 
 	use utf8;
 

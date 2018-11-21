@@ -7635,6 +7635,28 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Magos, Noviços e evoluções^000000
 #
+1682#
+O grande poder escondido nesse cajado faz dele um artefato ideal para lançar poderosos (e perigosos) feitiços.
+^a400cdIndestrutível em batalha.^000000
+^0000ffATQM +130.^000000
+Ao aprender [Chamas de Hela] nv. 5:
+^0000ffDano de [Chamas de Hela] +100%.^000000
+Refino +1 ou mais:
+^0000ffAo usar [Chamas de Hela], 4% de chance de ativar um [efeito] por 5 segundos.^000000
+A cada refino:
+^0000ffDano de [Chamas de Hela] +10%.^000000
+^0000ffChance de ativar o [efeito] +4%.^000000
+A cada refino até o +10:
+^0000ffIgnora 5% da DEFM de monstros normais e Chefes.^000000
+^CD3278Efeito:^000000
+^0000ffConjuração variável de [Chamas de Hela] -30%.^000000
+Tipo: ^777777Cajado^000000
+Ataque: ^7777770^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Arcano^000000
+#
 1701#
 Arco básico. Esta arma necessita de flechas para ser utilizada. Arraste esta arma para a janela de equipamento para utilizar.
 Classe: ^777777Arco^000000
@@ -33929,8 +33951,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000001.10.2018.^000000
-Este item será removido no dia ^ff000002.10.2018.^000000
+Promoção limitada até o dia ^ff000013.11.2018.^000000
+Este item será removido no dia ^ff000026.11.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -35421,7 +35443,7 @@ Há um capítulo inteiro dedicado a Tristam III.
 ^ffffff_^000000
 #
 11001#
-Um novo romance do famoso autor Mihir.
+Um novo romance do famoso autor Lazarento.
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
@@ -35447,14 +35469,12 @@ A página com informações sobre o autor foi rasgada.
 Peso: ^7777771^000000
 #
 11006#
-Um livro publicado em Arunafeltz, o país onde se idolatra a deusa Freya.
-Essa história começou na tradição oral, mas foi religiosamente enfeitada em sua forma escrita.
+Um novo romance do famoso autor Multi.
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
 11007#
-Um livro publicado em Arunafeltz, o país onde se idolatra a deusa Freya.
-Essa história começou na tradição oral, mas foi religiosamente enfeitada
+Um novo romance do famoso autor Rpnt.
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
@@ -35464,7 +35484,7 @@ Um caderno que contém uma cópia parcial de um enorme dicionário biográfico.
 Peso: ^7777771^000000
 #
 11009#
-O segundo capítulo da série de aventuras sobre Mercenários, de autoria de Mihir, um autor famoso.
+Um novo romance do famoso autor Cain Justin.
 ^ffffff_^000000
 Peso: ^7777771^000000
 #
@@ -59730,6 +59750,40 @@ Defesa: ^7777770^000000
 Peso: ^7777771^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Magos, Noviços e evoluções^000000
+#
+28921#
+Após sua forja, esse imponente escudo foi resfriado pelos ventos mais gelados já testemunhados em Rune-Midgard.
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffDEFM +15.^000000
+^0000ffResistência a propriedade Vento +10%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Vento +5%.^000000
+--------------------------
+Refino +8 ou mais:
+^0000ffResistência a propriedade Vento +15% adicional.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Vento +10% adicional.^000000
+--------------------------
+Refino +10 ou mais:
+^6A5ACDFOR base 90 ou mais:^000000
+^0000ffATQ +50.^000000
+^6A5ACDAGI base 90 ou mais:^000000
+^0000ffVelocidade de ataque +5%.^000000
+^6A5ACDVIT base 90 ou mais:^000000
+^0000ffEfetividade de cura recebida +10%.^000000
+^0000ffRecuperação de HP por itens +10%.^000000
+^6A5ACDINT base 90 ou mais:^000000
+^0000ffATQM +30.^000000
+^6A5ACDDES base 90 ou mais:^000000
+^0000ffConjuração variável -5%.^000000
+^6A5ACDSOR base 90 ou mais:^000000
+^0000ffDano crítico +5%.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+Defesa: ^777777150^000000
+Peso: ^777777350^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
 #
 28927#
 Quando mais nenhuma defesa funcionava, os guardiões de Prontera se apoiavam nesse espesso escudo. Eles eram abençoados por poderes divinos toda vez que iam à luta com essa Égide e o Gládio da Nobreza.

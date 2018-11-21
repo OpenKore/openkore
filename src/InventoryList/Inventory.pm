@@ -41,4 +41,10 @@ sub onMapChange {
 	$self->clear();
 }
 
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	return $itemStackLimit{$nameID}->{1} || $itemStackLimit{-1}->{1} || 30000;
+}
+
 1;

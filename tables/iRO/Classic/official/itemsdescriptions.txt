@@ -41639,7 +41639,7 @@ Increases resistence against Fire Property attacks by 10%
 Decreases resistence against Water Property attacks 10%.
 Enables use of Lv.1 Sight.
 Has a chance of auto-casting Lv. 3 Meteor Storm when receiving physical attack.
-Has a chance of auto-casting Lv. 3 Fire Bolt Lv.3 dealing physical damage.
+Has a chance of auto-casting Lv. 3 Fire Bolt when dealing physical damage.
 Unable to refine.
 Item Class : ^777777Headgear^000000
 Defense : ^7777778^000000
@@ -71866,6 +71866,21 @@ Return this certificate and the following items to Frank, the owner of the Laure
 Shadowy rumors say the following about this certificate:
 It is Tier 3
 It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20066#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mask Of Ifrit!
+500 Burning Hearts
+250 Burning Hair
+1 Level 3 Fire Bolt scroll
+1 Level 5 Fire Ball scroll
+1 Flame Heart
+1 Mask Of Ifrit Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #

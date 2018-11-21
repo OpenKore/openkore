@@ -72,4 +72,10 @@ sub type {
 	return $self->{type};
 }
 
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	return $itemStackLimit{$nameID}->{2} || $itemStackLimit{-1}->{2} || 30000;
+}
+
 1;
