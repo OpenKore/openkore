@@ -1,0 +1,35 @@
+# Item Stacking Restriction File
+# Prevents an item to be stacked more than x times in given
+# inventory types.
+#
+# Based off rAthena's item_stack.txt
+#
+# Structure of Database:
+# <NameID> <StackLimit> <Mask>
+#
+# <StackLimit>:
+#	Stack limit for the item.
+#
+# <Mask>:
+#	&1: Character inventory restriction
+#	&2: Character cart restriction
+#	&4: Account storage restriction
+#	&8: Guild storage restriction
+#
+# Example:
+# 512 4 12  # Will not allow more than 4 Apples in storages.
+
+# Default
+-1 30000 15 # Allow no more than 30k in any inventory
+
+# Rune Knight
+12725 60 1  # Nauthiz Rune
+12726 60 1  # Raido Rune
+12727 60 1  # Berkana Rune
+12728 60 1  # Isa Rune
+12730 60 1  # Uruz Rune
+12733 60 1  # Hagalaz Rune
+22540 60 1  # Lux Anima Rune
+
+# Arch Bishop
+12333 3 1  # Ancilla
