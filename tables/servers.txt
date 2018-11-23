@@ -111,6 +111,7 @@ charBlockSize 144
 charDeleteDateType 1
 blockingPlayerCancel 1
 pauseCharLogin 1
+rankingSystemType 1
 
 # Renewal
 # http://playragnarok.com
