@@ -68,7 +68,9 @@ our %EXPORT_TAGS = (
 						REFUSE_SSO_AUTH_BLOCK_ACCOUNT_STEAL REFUSE_SSO_AUTH_BLOCK_BUG_INVESTIGATION REFUSE_SSO_NOT_PAY_USER
 						REFUSE_SSO_ALREADY_LOGIN_USER REFUSE_SSO_CURRENT_USED_USER REFUSE_SSO_OTHER_1 REFUSE_SSO_DROP_USER
 						REFUSE_SSO_NOTHING_USER REFUSE_SSO_OTHER_2 REFUSE_SSO_WRONG_RATETYPE_1 REFUSE_SSO_EXTENSION_PCBANG_TIME
-						REFUSE_SSO_WRONG_RATETYPE_2)],
+						REFUSE_SSO_WRONG_RATETYPE_2 REFUSE_UNKNOWN REFUSE_INVALID_ID2 REFUSE_BLOCKED_ID REFUSE_BLOCKED_COUNTRY REFUSE_INVALID_PASSWD2
+						REFUSE_EMAIL_NOT_CONFIRMED2 REFUSE_BILLING REFUSE_BILLING2 REFUSE_WEB REFUSE_CHANGE_PASSWD_FORCE2 REFUSE_SERVER_ERROR
+						REFUSE_SERVER_ERROR2 REFUSE_SERVER_ERROR3)],
 	stat_info => [qw(VAR_SPEED VAR_EXP VAR_JOBEXP VAR_VIRTUE VAR_HONOR VAR_HP VAR_MAXHP VAR_SP VAR_MAXSP VAR_POINT VAR_HAIRCOLOR VAR_CLEVEL VAR_SPPOINT
 						VAR_STR VAR_AGI VAR_VIT VAR_INT VAR_DEX VAR_LUK VAR_JOB VAR_MONEY VAR_SEX VAR_MAXEXP VAR_MAXJOBEXP VAR_WEIGHT VAR_MAXWEIGHT VAR_POISON
 						VAR_STONE VAR_CURSE VAR_FREEZING VAR_SILENCE VAR_CONFUSION VAR_STANDARD_STR VAR_STANDARD_AGI VAR_STANDARD_VIT VAR_STANDARD_INT
@@ -193,6 +195,21 @@ use constant {
 	REFUSE_SSO_WRONG_RATETYPE_1 => 0x13c1,
 	REFUSE_SSO_EXTENSION_PCBANG_TIME => 0x13c2,
 	REFUSE_SSO_WRONG_RATETYPE_2 => 0x13c3,
+	
+	# 0x0AE0
+	REFUSE_UNKNOWN => 0x1450,
+	REFUSE_INVALID_ID2 => 0x1451,
+	REFUSE_BLOCKED_ID => 0x1452,
+	REFUSE_BLOCKED_COUNTRY => 0x1453,
+	REFUSE_INVALID_PASSWD2 => 0x1454,
+	REFUSE_EMAIL_NOT_CONFIRMED2 =>  0x1455,
+	REFUSE_BILLING => 0x1456,
+	REFUSE_WEB => 0x1457,
+	REFUSE_BILLING2 => 0x1458,
+	REFUSE_CHANGE_PASSWD_FORCE2 => 0x1459,
+	REFUSE_SERVER_ERROR => 0x145A,
+	REFUSE_SERVER_ERROR2 => 0x145B,
+	REFUSE_SERVER_ERROR3 => 0x145C,
 };
 
 # stat_info
@@ -3931,7 +3948,7 @@ sub login_error {
 	my ($self, $args) = @_;
 
 	$net->serverDisconnect();
-	if ($args->{type} == REFUSE_INVALID_ID) {
+	if ($args->{type} == REFUSE_INVALID_ID || $args->{type} == REFUSE_INVALID_ID2) {
 		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
 			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
@@ -3944,7 +3961,7 @@ sub login_error {
 				return;
 			}
 		}
-	} elsif ($args->{type} == REFUSE_INVALID_PASSWD) {
+	} elsif ($args->{type} == REFUSE_INVALID_PASSWD || $args->{type} == REFUSE_INVALID_PASSWD2) {
 		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
 		Plugins::callHook('invalid_password');
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
@@ -3978,6 +3995,33 @@ sub login_error {
 		relog(10);
 	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
 		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
+	} elsif ($args->{type} == REFUSE_EMAIL_NOT_CONFIRMED2) {
+		error T("Account email address not confirmed.\n"), "connection";
+		Misc::offlineMode() unless $config{ignoreInvalidLogin};
+	} elsif ($args->{type} == REFUSE_BLOCKED_ID) {
+		error TF("The server is blocking connection from this user (%d).\n", $args->{error}), "connection";
+		Misc::offlineMode() unless $config{ignoreInvalidLogin};
+	} elsif ($args->{type} == REFUSE_BLOCKED_COUNTRY) {
+		error T("The server is blocking connections from your country.\n");
+		Misc::offlineMode() unless $config{ignoreInvalidLogin};
+	} elsif ($args->{type} == REFUSE_BILLING || $args->{type} == REFUSE_BILLING2) {
+		error TF("The server is blocking your connection due to billing issues (%d) (%d).\n", $args->{type}, $args->{error});
+		Misc::offlineMode() unless $config{ignoreInvalidLogin};
+	} elsif ($args->{type} == REFUSE_CHANGE_PASSWD_FORCE2) {
+		error T("The server demands a password change for this account.\n");
+		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
+		Plugins::callHook('invalid_password');
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
+			if (defined($password)) {
+				configModify('password', $password, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
@@ -7249,51 +7293,6 @@ sub cash_dealer {
 			"list");
 	}
 	message("-----------------------------------------------------\n", "list");
-}
-
-sub login_error2 {
-	my ($self, $args) = @_;
-
-	$net->serverDisconnect();
-	
-	use constant {
-		REFUSE_INVALID_ID2 => 0x1451,
-		REFUSE_INVALID_PASSWD2 => 0x1454,
-	};
-	
-	my $msgID = $args->{type} - 0x75E + 1;
-	error $msgTable[$msgID] . "\n" if (length $msgTable[$msgID] > 0);
-	
-	if ($args->{type} == REFUSE_INVALID_ID2) {
-		error TF("Account name [%s] doesn't exist\n", $config{'username'}), "connection";
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
-			my $username = $interface->query(T("Enter your Ragnarok Online username again."));
-			if (defined($username)) {
-				configModify('username', $username, 1);
-				$timeout_ex{master}{time} = 0;
-				$conState_tries = 0;
-			} else {
-				quit();
-				return;
-			}
-		}
-	} elsif ($args->{type} == REFUSE_INVALID_PASSWD2) {
-		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
-		Plugins::callHook('invalid_password');
-		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
-			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
-			if (defined($password)) {
-				configModify('password', $password, 1);
-				$timeout_ex{master}{time} = 0;
-				$conState_tries = 0;
-			} else {
-				quit();
-				return;
-			}
-		}
-	} else {
-		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
-	}
 }
 
 1;
