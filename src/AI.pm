@@ -585,11 +585,13 @@ sub ai_storageAutoCheck {
 }
 
 sub ai_canOpenStorage {
-	# Check NV_BASIC skill only for Novice and High Novice
-	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6  && ($char->{jobID} == 0 || $char->{jobID} == 161));
+	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
+	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
 	
 	# Check if we have enough zeny to open storage (and if it matters)
-	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 && $char->{zeny} < $config{minStorageZeny});
+	# Also check for a Free Ticket for Kafra Storage (7059)
+	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 && 
+					$char->{zeny} < $config{minStorageZeny} && !$char->inventory->getByNameID(7059));
 	
 	return 1;
 }

@@ -1338,6 +1338,7 @@ sub processAutoStorage {
 					if (!ai_canOpenStorage()) {
 						warning TF("Cannot open storage, giving up\n");
 						AI::dequeue while (AI::is("storageAuto"));
+						return;
 					}
 					
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
