@@ -33951,8 +33951,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000013.11.2018.^000000
-Este item será removido no dia ^ff000026.11.2018.^000000
+Promoção limitada até o dia ^ff000001.10.2018.^000000
+Este item será removido no dia ^ff000002.10.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -52438,6 +52438,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19538#
+Uma lua cheia que o acompanhará até mesmo sob o maior sol de rachar (por mais controverso que isso pareça ser). Só não chegue perto de possíveis lobisomens ou saiadins...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 19540#
 Um protetor de orelhas bem quentinho com um visual fofinho de coelhinhos.
 Tipo : ^777777Visual^000000 Defesa: ^7777770^000000
@@ -54590,6 +54599,15 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+20215#
+Sempre tem uma galera que é do lado negro da força e quer mostrar isso no próprio visual. Talvez a metade de uma máscara assustadoramente macabra passe esse recado bem o suficiente.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
 #
 20217#
 Este véu pertencia à Odalisca Cheirazedo, que adorava contar as histórias das Mil e uma Noites. Histórias essas estreladas por Aladino e seus amigos: o riquinho bastardo Alibabão e a ex-escrava Morgiovana, acompanhados também pelo gênio Ugh.
@@ -60203,6 +60221,15 @@ Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31136#
+O item número 1 vendido para turistas que visitam Al de Baran e desejam levar uma lembrancinha da Torre do Relógio. Se bem que aquela surra que você levou dos Despertadores já foi bem inesquecível...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
 #
 31139#
 Você está atrasado! Você está atrasado! Já passou da hora de você encontrar a Alice lá na Fábrica de Kiel Hyre e leva-la pra cair no buraco de Umbala. Ou seria encontrar o KeaNeo Rives e leva-lo pra encontrar o Morphadus? Não importa, você sempre parece um lunático quando usa essas orelhas de coelho branco.

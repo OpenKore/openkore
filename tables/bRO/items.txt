@@ -6299,6 +6299,7 @@
 19526#Elmo de Sucata#
 19528#Bevor de Plástico#
 19533#Touca de Esporo#
+19538#Luar Intenso#
 19540#Protetor com Coelhinhos#
 19541#Flor Amável Branca#
 19542#Fantasma Travesso#
@@ -6542,6 +6543,7 @@
 20203#Bandana para Testa#
 20209#Bolhas de Sabão#
 20212#Boneco de Loki e Nidhogg#
+20215#Máscara Macabra#
 20217#Véu das Mil e Uma Noites#
 20218#Auréola dos Aesir#
 20219#Chapéu da Banda Sagrada#
@@ -6992,6 +6994,7 @@
 31125#Chapéu da Realeza Pirata#
 31132#Guirlanda Natalina#
 31134#Maritaca Faladeira#
+31136#Boina da Torre do Relógio#
 31139#Orelhas do Coelho Branco#
 31149#Peruca da Nidhogg#
 31151#Orelhas Felpudas#
