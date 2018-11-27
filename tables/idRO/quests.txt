@@ -11814,3 +11814,13 @@ Kembali bicara kepada Madam Sizka besok.#
 19277#Thanksgiving Quest Turkey Collecting#LG_RAGEBURST#QUE_NOIMAGE#
 Kalahkan Grand Peco dan bawa daging nya untuk dimasak oleh Madam Sizka#
 Setelah selesai, kembalilah kepada Madam Sizka.#
+
+// -- DAILY QUEST 25 : 27 November 2018 --
+
+19278#Zipper Bear Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Zipper Bear ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19279#Dark Pinguicula Fear Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Dark Pinguicula ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
