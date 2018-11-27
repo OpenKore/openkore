@@ -1,4 +1,4 @@
-501#
+﻿501#
 Potion yang memberikan ^000088sejumlah HP^000000,terbuat dari Red herb.
 ^ffffff_^000000
 Berat : ^7777777^000000
@@ -50173,6 +50173,7 @@ Location : ^777777Middle^000000
 Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777Semua Job^000000
+#
 
 32291#
 Topi Sulap spesial yang bisa kamu gunakan untuk mengambil kelinci di dalamnya kalau kamu beruntung. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
