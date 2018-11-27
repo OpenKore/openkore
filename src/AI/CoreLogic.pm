@@ -1337,7 +1337,7 @@ sub processAutoStorage {
 				} else {
 					if (!ai_canOpenStorage()) {
 						warning TF("Cannot open storage, giving up\n");
-						AI::dequeue while (AI::is("storageAuto"));
+						AI::args->{done} = 1;
 						return;
 					}
 					
