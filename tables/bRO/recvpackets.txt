@@ -1,6 +1,6 @@
 # Packet Extractor by lututui
-# Generated in Nov 21, 2018, 10:31:22 AM
-# Encryption Keys : 0x724441E1 0x39DE451C 0x69EE554C
+# Generated in Nov 27, 2018, 12:19:13 PM
+# Encryption Keys : 0x5BAA341E 0x4D106F7C 0x232B007D
 0187 6 6 0
 0081 3 3 0
 01C6 4 4 0
@@ -1257,14 +1257,14 @@
 0B0E -1 4 1
 0B0F -1 4 1
 0369 7 7 0	# actor_action
-0363 10 10 0	# skill_use
+083C 10 10 0	# skill_use
 0437 5 5 0	# character_move
-023B 6 6 0	# sync
-089A 5 5 0	# actor_look_at
-0882 6 6 0	# item_take
-083C 6 6 0	# item_drop
-092C 8 8 0	# storage_item_add
-035F 8 8 0	# storage_item_remove
+035F 6 6 0	# sync
+08A5 5 5 0	# actor_look_at
+07E4 6 6 0	# item_take
+0362 6 6 0	# item_drop
+07EC 8 8 0	# storage_item_add
+0364 8 8 0	# storage_item_remove
 0438 10 10 0	# skill_use_location
 0366 90 90 0	# skill_use_location_text
 096A 6 6 0	# actor_info_request
@@ -1275,28 +1275,28 @@
 0811 -1 12 0	# buy_bulk_buyer
 0360 6 6 0	# buy_bulk_request
 0817 2 2 0	# buy_bulk_closeShop
-0202 -1 89 0	# buy_bulk_openShop
-094E 18 18 0	# booking_register
-0955 8 8 0	# unknown/unused
-0879 -1 12 0	# item_list_window_selected
-0967 19 19 0	# map_login
-087A 26 26 0	# party_join_request_by_name
-0937 4 4 0	# unknown/unused
-0815 26 26 0	# friend_request
-0889 5 5 0	# homunculus_command
-0365 36 36 0	# storage_password
+0815 -1 89 0	# buy_bulk_openShop
+0365 18 18 0	# booking_register
+0363 8 8 0	# unknown/unused
+0281 -1 12 0	# item_list_window_selected
+0864 19 19 0	# map_login
+0802 26 26 0	# party_join_request_by_name
+0918 4 4 0	# unknown/unused
+0944 26 26 0	# friend_request
+085C 5 5 0	# homunculus_command
+0938 36 36 0	# storage_password
 0367 2 2 0	# sync_ex_reply
 085A 2 2 0	# sync_ex_reply
 085B 2 2 0	# sync_ex_reply
-085C 2 2 0	# sync_ex_reply
+022D 2 2 0	# sync_ex_reply
 085D 2 2 0	# sync_ex_reply
 085E 2 2 0	# sync_ex_reply
-0888 2 2 0	# sync_ex_reply
-022D 2 2 0	# sync_ex_reply
+085F 2 2 0	# sync_ex_reply
+0860 2 2 0	# sync_ex_reply
 0861 2 2 0	# sync_ex_reply
 0862 2 2 0	# sync_ex_reply
 0863 2 2 0	# sync_ex_reply
-0864 2 2 0	# sync_ex_reply
+0436 2 2 0	# sync_ex_reply
 0865 2 2 0	# sync_ex_reply
 0866 2 2 0	# sync_ex_reply
 0867 2 2 0	# sync_ex_reply
@@ -1317,8 +1317,8 @@
 0876 2 2 0	# sync_ex_reply
 0877 2 2 0	# sync_ex_reply
 0878 2 2 0	# sync_ex_reply
-07E4 2 2 0	# sync_ex_reply
-02C4 2 2 0	# sync_ex_reply
+0879 2 2 0	# sync_ex_reply
+087A 2 2 0	# sync_ex_reply
 087B 2 2 0	# sync_ex_reply
 087C 2 2 0	# sync_ex_reply
 087D 2 2 0	# sync_ex_reply
@@ -1326,14 +1326,14 @@
 087F 2 2 0	# sync_ex_reply
 0880 2 2 0	# sync_ex_reply
 0881 2 2 0	# sync_ex_reply
-0362 2 2 0	# sync_ex_reply
+0882 2 2 0	# sync_ex_reply
 0883 2 2 0	# sync_ex_reply
+0940 2 2 0	# sync_ex_reply
 0917 2 2 0	# sync_ex_reply
-0918 2 2 0	# sync_ex_reply
 0919 2 2 0	# sync_ex_reply
 091A 2 2 0	# sync_ex_reply
 091B 2 2 0	# sync_ex_reply
-0884 2 2 0	# sync_ex_reply
+091C 2 2 0	# sync_ex_reply
 091D 2 2 0	# sync_ex_reply
 091E 2 2 0	# sync_ex_reply
 091F 2 2 0	# sync_ex_reply
@@ -1349,7 +1349,7 @@
 0929 2 2 0	# sync_ex_reply
 092A 2 2 0	# sync_ex_reply
 092B 2 2 0	# sync_ex_reply
-0364 2 2 0	# sync_ex_reply
+092C 2 2 0	# sync_ex_reply
 092D 2 2 0	# sync_ex_reply
 092E 2 2 0	# sync_ex_reply
 092F 2 2 0	# sync_ex_reply
@@ -1360,22 +1360,22 @@
 0934 2 2 0	# sync_ex_reply
 0935 2 2 0	# sync_ex_reply
 0936 2 2 0	# sync_ex_reply
-0281 2 2 0	# sync_ex_reply
-0938 2 2 0	# sync_ex_reply
+0937 2 2 0	# sync_ex_reply
+023B 2 2 0	# sync_ex_reply
 0939 2 2 0	# sync_ex_reply
 093A 2 2 0	# sync_ex_reply
 093B 2 2 0	# sync_ex_reply
 093C 2 2 0	# sync_ex_reply
 093D 2 2 0	# sync_ex_reply
-0885 2 2 0	# sync_ex_reply
+093E 2 2 0	# sync_ex_reply
 093F 2 2 0	# sync_ex_reply
-091C 2 2 0	# sync_request_ex
-093E 2 2 0	# sync_request_ex
-089E 2 2 0	# sync_request_ex
-0956 2 2 0	# sync_request_ex
-085F 2 2 0	# sync_request_ex
-0860 2 2 0	# sync_request_ex
-0361 2 2 0	# sync_request_ex
+02C4 2 2 0	# sync_request_ex
+0884 2 2 0	# sync_request_ex
+0885 2 2 0	# sync_request_ex
+0886 2 2 0	# sync_request_ex
+0887 2 2 0	# sync_request_ex
+0888 2 2 0	# sync_request_ex
+0889 2 2 0	# sync_request_ex
 088A 2 2 0	# sync_request_ex
 088B 2 2 0	# sync_request_ex
 088C 2 2 0	# sync_request_ex
@@ -1391,19 +1391,19 @@
 0896 2 2 0	# sync_request_ex
 0897 2 2 0	# sync_request_ex
 0898 2 2 0	# sync_request_ex
-0940 2 2 0	# sync_request_ex
 0899 2 2 0	# sync_request_ex
+089A 2 2 0	# sync_request_ex
 089B 2 2 0	# sync_request_ex
 089C 2 2 0	# sync_request_ex
 089D 2 2 0	# sync_request_ex
-0886 2 2 0	# sync_request_ex
+089E 2 2 0	# sync_request_ex
 089F 2 2 0	# sync_request_ex
 08A0 2 2 0	# sync_request_ex
 08A1 2 2 0	# sync_request_ex
 08A2 2 2 0	# sync_request_ex
 08A3 2 2 0	# sync_request_ex
 08A4 2 2 0	# sync_request_ex
-08A5 2 2 0	# sync_request_ex
+0361 2 2 0	# sync_request_ex
 08A6 2 2 0	# sync_request_ex
 08A7 2 2 0	# sync_request_ex
 08A8 2 2 0	# sync_request_ex
@@ -1415,7 +1415,7 @@
 0941 2 2 0	# sync_request_ex
 0942 2 2 0	# sync_request_ex
 0943 2 2 0	# sync_request_ex
-0944 2 2 0	# sync_request_ex
+0202 2 2 0	# sync_request_ex
 0945 2 2 0	# sync_request_ex
 0946 2 2 0	# sync_request_ex
 0947 2 2 0	# sync_request_ex
@@ -1425,15 +1425,15 @@
 094B 2 2 0	# sync_request_ex
 094C 2 2 0	# sync_request_ex
 094D 2 2 0	# sync_request_ex
-0802 2 2 0	# sync_request_ex
+094E 2 2 0	# sync_request_ex
 094F 2 2 0	# sync_request_ex
 0950 2 2 0	# sync_request_ex
 0951 2 2 0	# sync_request_ex
 0952 2 2 0	# sync_request_ex
 0953 2 2 0	# sync_request_ex
 0954 2 2 0	# sync_request_ex
-07EC 2 2 0	# sync_request_ex
-0887 2 2 0	# sync_request_ex
+0955 2 2 0	# sync_request_ex
+0956 2 2 0	# sync_request_ex
 0957 2 2 0	# sync_request_ex
 0958 2 2 0	# sync_request_ex
 0959 2 2 0	# sync_request_ex
@@ -1450,6 +1450,6 @@
 0964 2 2 0	# sync_request_ex
 0965 2 2 0	# sync_request_ex
 0966 2 2 0	# sync_request_ex
-0436 2 2 0	# sync_request_ex
+0967 2 2 0	# sync_request_ex
 0968 2 2 0	# sync_request_ex
 0969 2 2 0	# sync_request_ex
