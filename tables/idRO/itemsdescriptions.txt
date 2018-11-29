@@ -1,4 +1,4 @@
-501#
+﻿501#
 Potion yang memberikan ^000088sejumlah HP^000000,terbuat dari Red herb.
 ^ffffff_^000000
 Berat : ^7777777^000000
@@ -50162,4 +50162,38 @@ Weight : ^77777730^000000
 Sosis Panggang yang disajikan dengan bawang.
 Heal 20% HP & SP
 Weight : ^77777720^000000
+#
+
+//====================update 27112018 IM=================
+5397#
+Kacamata renang untuk penyelam. Jika kamu memakainya di daratan orang akan berpikir bahwa kamu aneh.
+Toleransi terhadap serangan berelemen air sebesar 10%.
+Class : ^777777Headgear^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Job : ^777777Semua Job^000000
+#
+
+32291#
+Topi Sulap spesial yang bisa kamu gunakan untuk mengambil kelinci di dalamnya kalau kamu beruntung. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+
+31512#
+^000088Costume Tuxedo Rabbit^000000
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31513#
+^000088Costume Black Rabbit Ears^000000
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #
