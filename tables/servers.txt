@@ -27,7 +27,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x3DB32CFA, 0x15815FB0, 0x01A40597
+sendCryptKeys 0x5BAA341E, 0x4D106F7C, 0x232B007D
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -49,7 +49,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x3DB32CFA, 0x15815FB0, 0x01A40597
+sendCryptKeys 0x5BAA341E, 0x4D106F7C, 0x232B007D
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -111,6 +111,7 @@ charBlockSize 144
 charDeleteDateType 1
 blockingPlayerCancel 1
 pauseCharLogin 1
+rankingSystemType 1
 
 # Renewal
 # http://playragnarok.com
@@ -127,7 +128,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 145
 charDeleteDateType 1
-sendCryptKeys 0x09AE5C33, 0x24DB74DB, 0x659B2ADB
+sendCryptKeys 0x79983A07, 0x11F01662, 0x03BD32BA
 blockingPlayerCancel 1
 rankingSystemType 1
 pauseCharLogin 1
@@ -175,7 +176,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x5C3F0C1E, 0x51E20C45, 0x083C3491
+sendCryptKeys 0x61086B4D, 0x2B161F04, 0x19CB2B27
 rankingSystemType 1
 pauseCharLogin 1
 

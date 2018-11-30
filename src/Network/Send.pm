@@ -746,22 +746,18 @@ sub parse_buy_bulk_buyer {
 }
 
 sub reconstruct_buy_bulk_buyer {
-	my ($self, $args) = @_;
-	# ITEM index. There were any other indexes expected to be in item buying packet?
-	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
+    my ($self, $args) = @_;
+    $args->{itemInfo} = pack('(a6)*', map { pack 'a2 v2', @{$_}{qw(ID itemID amount)} } @{$args->{items}});
 }
 
 sub sendBuyBulkBuyer {
-	#FIXME not working yet
-	#field index still wrong and remain unknown
-	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
-	my $msg = pack('v2', 0x0819, 12+6*@{$r_array});
-	$msg .= pack ('a4 a4', $buyerID, $buyingStoreID);
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		debug 'Send Buying Buyer Request: '.$r_array->[$i]{itemIndex}.' '.$r_array->[$i]{itemID}.' '.$r_array->[$i]{amount}."\n", "sendPacket", 2;
-		$msg .= pack('v3', $r_array->[$i]{itemIndex}, $r_array->[$i]{itemID}, $r_array->[$i]{amount});
-	}
-	$self->sendToServer($msg);
+    my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'buy_bulk_buyer',
+        buyerID => $buyerID,
+        buyingStoreID => $buyingStoreID,
+        items => $r_array,
+    }));
 }
 
 sub sendEnteringBuyer {
