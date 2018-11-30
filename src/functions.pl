@@ -280,6 +280,7 @@ sub loadDataFiles {
 	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
 	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
 	Settings::addTableFile('item_stack_limit.txt', loader => [\&parseItemStackLimit, \%itemStackLimit]);
+	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
 
 	use utf8;
 
