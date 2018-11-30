@@ -6992,3 +6992,5 @@
 20064#Zaha_Doll_Hat_Certificate#
 20065#Helm_Of_Abyss_Certificate#
 20066#Mask_Of_Ifrit_Certificate#
+20067#Mercury_Riser_Certificate#
+20068#Pisces_Diadem_Certificate#
