@@ -23,7 +23,7 @@ Place your control folders on the same openkore directory.
 You dont need to have programing skills to do this, just add or remove your lines deppending on how many bots are you planning to run
 
 Note: leave a 10 seconds delay on each bot running to dont stress your CPU.
-This affects old machines or slow disk lecture on some devices such raspberry pi
+This affects old machines or slow disk reading on some devices such as raspberry Pi
 For faster machine with SSD, you may remove this delay.
 
 5.Run the file using this command
