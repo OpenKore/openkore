@@ -1,4 +1,4 @@
-#This script is taked from rAthena function.sh as a checker for files in forlder.
+#This script is taked from rAthena function.sh as a checker for files in folder.
 #Modified for educational purposes.
 #This file is adapted for run shell to run many openkore instances.
 
