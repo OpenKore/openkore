@@ -20,7 +20,7 @@ No matter if the only line you change is the username on config.txt
 Place your control folders on the same openkore directory.
 
 4.Modify the file openkore-all, Use notepad or any text editor:
-You dont need to have programing skills to do this, just add or remove your lines deppending on how many bots are you planning to run
+You don't need to have programming skills to do this, just add or remove your lines deppending on how many bots you are planning to run
 
 Note: leave a 10 seconds delay on each bot running to dont stress your CPU.
 This affects old machines or slow disk reading on some devices such as raspberry Pi
