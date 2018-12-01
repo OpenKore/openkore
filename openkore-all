@@ -44,8 +44,8 @@ run_openkores() {
 
 print_start() {
 	echo "Welcome to Openkore Linux"
-	echo "This script is developed by Zelecktor to run multiples Openkore instances"
-	echo "All coppyrights reserved to developers and contributors (c) 2019"
+	echo "This script is under GNU v3, is free and anyone can use, distrubute and modify it"
+	echo "Thanks to Openkore developers and contributors"
 	echo "Lets check for files if everything is in order"
 	echo "Checking files..."
 }
