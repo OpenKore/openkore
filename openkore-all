@@ -1,0 +1,74 @@
+#!/bin/sh
+
+#source var/function
+. ./checkfiles.sh
+PATH=./:$PATH
+
+run_openkores() {
+	echo "Creating screen sessions..."
+	sleep 5
+	screen -dmS bot0 
+	sleep 0.5
+	screen -dmS bot1
+	sleep 0.5
+	screen -dmS bot2
+	sleep 0.5
+	screen -dmS bot3
+	sleep 0.5
+	screen -dmS bot4
+	sleep 0.5
+	screen -dmS bot5
+	sleep 1
+	echo "Screen sessions were created successfully!"
+	echo "Now Openkore will execute in each session. This may take a while."
+	echo "Please do not touch until the process has finished."
+	sleep 3
+	echo "Openkore will start in 5 seconds"
+	sleep 5
+	screen -S bot0 -X stuff 'perl ./openkore.pl --control=control0 --logs=logs/bot0\n'
+	sleep 10
+	screen -S bot1 -X stuff 'perl ./openkore.pl --control=control1 --logs=logs/bot1\n'
+	sleep 10
+	screen -S bot2 -X stuff 'perl ./openkore.pl --control=control2 --logs=logs/bot2\n'
+	sleep 10
+	screen -S bot3 -X stuff 'perl ./openkore.pl --control=control3 --logs=logs/bot3\n'
+	sleep 10
+	screen -S bot4 -X stuff 'perl ./openkore.pl --control=control4 --logs=logs/bot4\n'
+	sleep 10
+	screen -S bot5 -X stuff 'perl ./openkore.pl --control=control5 --logs=logs/bot5\n'
+	sleep 10
+	echo "The process has finished!"
+	echo "You may check screens using "screen -r bot'<number>' command""
+	echo "Or "screen -r '<PID>' command""
+}
+
+print_start() {
+	echo "Welcome to Openkore Linux"
+	echo "This script is developed by Zelecktor to run multiples Openkore instances"
+	echo "All coppyrights reserved to developers and contributors (c) 2019"
+	echo "Lets check for files if everything is in order"
+	echo "Checking files..."
+}
+
+get_status(){
+	PIDFILE=.$1.pid
+	if [ -e ${PIDFILE} ]; then
+		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
+		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
+	fi
+	#return ${PSRUN} #seems to cause an issue for some os
+}
+
+case $1 in
+    'start')
+		print_start
+		sleep 1
+		check_files
+		echo "Check complete."
+		echo "Looks like all files are fine, Lets Start!"
+		for i in ${O_CLI}
+		do
+			run_openkores $i
+		done
+	;;
+esac
