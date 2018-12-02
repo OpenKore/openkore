@@ -6187,16 +6187,29 @@ sub rodex_open_write {
 	$rodexWrite = {};
 	
 	$rodexWrite->{items} = new InventoryList;
+	$rodexWrite->{name} = $args->{name} if $args->{switch} eq '0A14';
 	
 }
 
 sub rodex_check_player {
 	my ( $self, $args ) = @_;
+	my $rodex_check_player_unpack;
 	
 	if (!$args->{char_id}) {
 		error "Could not find player with name '".$args->{name}."'.";
 		return;
 	}
+	
+	if ($args->{switch} eq '0A14') {
+		$rodex_check_player_unpack = {
+			target => [qw(char_id class base_level)],
+		};	
+	} elsif ($args->{switch} eq '0A51') {
+		$rodex_check_player_unpack = {
+			target => [qw(char_id class base_level name)],
+		};
+	}
+	
 	
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 	
@@ -6205,7 +6218,7 @@ sub rodex_check_player {
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
 	
-	@{$rodexWrite->{target}}{qw(name base_level class char_id)} = @{$args}{qw(name base_level class char_id)};
+	@{$rodexWrite->{target}}{@{$rodex_check_player_unpack->{target}}} = @{$args}{@{$rodex_check_player_unpack->{target}}};
 }
 
 sub rodex_write_result {
