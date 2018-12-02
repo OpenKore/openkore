@@ -97,7 +97,7 @@ sub rodex_send_mail {
 	my $body = stringToBytes($rodexWrite->{body});
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
-		receiver => $rodexWrite->{target}{name},
+		receiver => $rodexWrite->{name},
 		sender => $char->{name},
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
