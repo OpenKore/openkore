@@ -6187,7 +6187,7 @@ sub rodex_open_write {
 	$rodexWrite = {};
 	
 	$rodexWrite->{items} = new InventoryList;
-	$rodexWrite->{name} = $args->{name} if $args->{switch} eq '0A14';
+	$rodexWrite->{name} = $args->{name};
 	
 }
 
@@ -6205,6 +6205,7 @@ sub rodex_check_player {
 			target => [qw(char_id class base_level)],
 		};	
 	} elsif ($args->{switch} eq '0A51') {
+		$rodexWrite->{name} = $args->{name};
 		$rodex_check_player_unpack = {
 			target => [qw(char_id class base_level name)],
 		};
@@ -6213,7 +6214,7 @@ sub rodex_check_player {
 	
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 	
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $args->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
+	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
 	
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
