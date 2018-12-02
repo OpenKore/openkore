@@ -3168,6 +3168,7 @@ mora 41 133 moc_para01 31 14 c r0 n
 mora 108 117 moc_para01 31 14 c r0 n
 eclage 116 40 moc_para01 31 14 c r0 n
 harboro1 90 221 moc_para01 31 14 c r0 n
+verus04 116 243 moc_para01 31 14 c r0 n
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
