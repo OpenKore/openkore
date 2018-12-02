@@ -295,6 +295,8 @@ sub new {
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
