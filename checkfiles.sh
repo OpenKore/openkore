@@ -1,6 +1,5 @@
-#This script is taked from rAthena function.sh as a checker for files in forlder.
-#Coppyrights are to their respective developers.
-#Modified by Zelecktor 2019 for educational purposes.
+#This script is taked from rAthena function.sh as a checker for files in folder.
+#Modified for educational purposes.
 #This file is adapted for run shell to run many openkore instances.
 
 O_CLI=openkore.pl
