@@ -19,21 +19,19 @@ For example if you are running 25 bots, create 25 control folder, control1, cont
 No matter if the only line you change is the username on config.txt
 Place your control folders on the same openkore directory.
 
-4.Modify the file openkore-all, Use notepad or any text editor:
-You don't need to have programming skills to do this, just add or remove your lines deppending on how many bots you are planning to run
-
-Note: leave a 10 seconds delay on each bot running to dont stress your CPU.
-This affects old machines or slow disk reading on some devices such as raspberry Pi
-For faster machine with SSD, you may remove this delay.
-
-5.Run the file using this command
+4.Run the file using this command
 
 sudo ./openkore-all start
 
+5. The script ask you how many bot are you planning to run. Enter only numbers! it starts from number 1 (not 0)
 
 
 
-Not working step 5? you need to add admin permission to the folder if you are not root user
+Note: You can modify this script if you got a faster machine. by default there is 10 seconds delay on each bot running to dont stress your CPU. This affects old machines or slow disk reading on some devices such as raspberry Pi
+For faster machine with SSD, you may lower this delay.
+
+
+Not working step 4? you need to add admin permission to the folder if you are not root user
 
 You may use chmod 777
 sudo chmod -R 777 /<path of openkore folder>/
