@@ -3,71 +3,66 @@
 #source var/function
 . ./checkfiles.sh
 PATH=./:$PATH
-
-run_openkores() {
-	echo "Creating screen sessions..."
-	sleep 5
-	screen -dmS bot0 
-	sleep 0.5
-	screen -dmS bot1
-	sleep 0.5
-	screen -dmS bot2
-	sleep 0.5
-	screen -dmS bot3
-	sleep 0.5
-	screen -dmS bot4
-	sleep 0.5
-	screen -dmS bot5
-	sleep 1
-	echo "Screen sessions were created successfully!"
-	echo "Now Openkore will execute in each session. This may take a while."
-	echo "Please do not touch until the process has finished."
-	sleep 3
-	echo "Openkore will start in 5 seconds"
-	sleep 5
-	screen -S bot0 -X stuff 'perl ./openkore.pl --control=control0 --logs=logs/bot0\n'
-	sleep 10
-	screen -S bot1 -X stuff 'perl ./openkore.pl --control=control1 --logs=logs/bot1\n'
-	sleep 10
-	screen -S bot2 -X stuff 'perl ./openkore.pl --control=control2 --logs=logs/bot2\n'
-	sleep 10
-	screen -S bot3 -X stuff 'perl ./openkore.pl --control=control3 --logs=logs/bot3\n'
-	sleep 10
-	screen -S bot4 -X stuff 'perl ./openkore.pl --control=control4 --logs=logs/bot4\n'
-	sleep 10
-	screen -S bot5 -X stuff 'perl ./openkore.pl --control=control5 --logs=logs/bot5\n'
-	sleep 10
-	echo "The process has finished!"
-	echo "You may check screens using "screen -r bot'<number>' command""
-	echo "Or "screen -r '<PID>' command""
-}
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NOCOLOR='\033[0m'
+RED='\033[0;31m'
 
 print_start() {
 	echo "Welcome to Openkore Linux"
-	echo "This script is under GNU v3, is free and anyone can use, distrubute and modify it"
-	echo "Thanks to Openkore developers and contributors"
-	echo "Lets check for files if everything is in order"
-	echo "Checking files..."
+	echo "This script is under GNU v3, is free, anyone can use and modify it."
+	echo "Thanks to Openkore developers and contributors."
+	sleep 1.5
+	echo "${YELLOW}Checking for files if everything is in order..."
 }
 
-get_status(){
-	PIDFILE=.$1.pid
-	if [ -e ${PIDFILE} ]; then
-		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
-		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
-	fi
-	#return ${PSRUN} #seems to cause an issue for some os
+run_screens () {
+	read -p 'Please enter the number of bots you want to run: ' bot_number
+	echo "Setting up screen sessions..."
+	i=0
+	while [ "$i" -ne $bot_number ]
+		do
+		screen -dmS bot$i
+		echo "Screen Creating bot$i"
+		sleep 0.5
+		i=$(( i + 1 ))
+	done
+	echo "${GREEN}Screen sessions were created successfully!"
+}
+
+run_openkores () {
+	echo "${NOCOLOR}Now Openkore will execute in each screen session."
+	echo "This may take a while deppending on how many bots are you running."
+	echo "${YELLOW}Please do not touch until the process has finished.${NOCOLOR}"
+	sleep 2
+	echo "Openkore will start in each session in 5 seconds"
+	sleep 5
+	echo "Starting..."
+	i=0
+	while [ "$i" -ne $bot_number ]
+		do
+		screen -S bot$i -X stuff 'perl ./openkore.pl --control=control'$i' --logs=logs/bot'$i'\n'
+		echo "Oppening bot$i"
+		sleep 10 #Change this if you are running on a faster machine
+		i=$(( i + 1 ))
+	done
+	echo "${GREEN}The process has finished!${NOCOLOR}"
+	echo "You may check your bot screens using the command ${YELLOW}screen -ls${NOCOLOR}"
+	echo "To enter to a screen use the command: ${YELLOW}screen -r bot'<number>' "
+	echo "${NOCOLOR}Or ${YELLOW}screen -r '<PID>'${NOCOLOR}"
 }
 
 case $1 in
     'start')
 		print_start
-		sleep 1
+		sleep 1.5
 		check_files
-		echo "Check complete."
-		echo "Looks like all files are fine, Lets Start!"
+		echo "${GREEN}Check complete!"
+		echo "${GREEN}Looks like all files are fine, Lets Start!${NOCOLOR}"
 		for i in ${O_CLI}
 		do
+			run_screens $i
+			sleep 1.5
 			run_openkores $i
 		done
 	;;
