@@ -23,7 +23,7 @@ Place your control folders on the same openkore directory.
 
 sudo ./openkore-all start
 
-5. The script ask you how many bot are you planning to run. Enter only numbers! it starts from number 1 (not 0)
+5. The script will ask you how many bot are you planning to run. Enter only numbers! it starts from number 1 (not 0)
 
 
 
