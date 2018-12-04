@@ -33951,8 +33951,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000001.10.2018.^000000
-Este item será removido no dia ^ff000002.10.2018.^000000
+Promoção limitada até o dia ^ff000017.12.2018.^000000
+Este item será removido no dia ^ff000018.12.2018.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -52141,6 +52141,31 @@ Peso: ^77777730^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
+19308#
+Um quepe com as principais características do homúnculo Amistr: orelhas e rabo felpudos, chifres afiados e um sino bem barulhento.
+^0000ffATQ e ATQM +10 a cada 2 refinos.^000000
+Refino +7 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Neutro e Sagrado +10%.^000000
+Refino +11 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffDano mágico +3%.^000000
+A cada refino do +11 até o +15:
+^0000ffConjuração fixa -0,1 segundo.^000000
+^FF6347Conjunto^000000
+^FF6347[Vara Sagrada]^000000
+A cada 2 refinos da arma:
+^0000ffATQM +10.^000000
+^0000ffDano de [Adoramus] +30%.^000000
+^FF6347Conjunto^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777715^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19314#
 Uma requintada sobrepeliz repleta de aspectos dignos da realeza: seda azul com detalhes dourados e um laço branco adornado por uma joia preciosa. Só pra quem pode.
 ^0000ffDEFM +5.^000000
@@ -59145,6 +59170,25 @@ Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+28503#
+Um artefato esculpido pelo antigo rei bravio de mesmo nome. Diz a lenda que sua ira despertou os poderes adormecidos nesse artigo mágico, que agora concede forças a qualquer um que usá-lo.
+^0000ffHP máx. +5%.^000000
+^0000ffDano físico +5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffDano de [Tempestade Espiritual] +5%.^000000
+^0000ffRecarga de [Absorção Espiritual] -3 segundos.^000000
+A cada 15 níveis de base:
+^0000ffConjuração variável de [Tempestade Espiritual] -5%.^000000
+A cada 20 níveis de base:
+^0000ffConjuração variável de [Portões do Inferno] -3%.^000000
+Nivel base 165 ou mais:
+^0000ffConjuração variável de [Tempestade Espiritual] ^FF0000+10%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 28505#
 Um anel dado por Nephisto, o lorde infernal, quando vocês fizeram um pacto para te deixar mais agressivo e melhorar seus ataques. O que, devo dizer, não foi nada inteligente da sua parte. Será que você nunca ouviu falar da história do Pedro Parque, que fez um pacto com Nephisto para salvar a vida da sua tia velhinha? Ok, a tia dele até que foi ficando cada vez mais jovem, mas o preço pra isso foi acabar com o casamento do Pedro com a bela Maria Joana. Eu gostava da Maria Joana... maldito Nephisto.
 ^0000ffDano mágico +5%.^000000
@@ -59370,6 +59414,42 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+28561#
+Escamas de um lendário dragão adornam esse acessório, que foi usado por um herói que encarou incontáveis lutas e perigos.
+--------------------------
+^0000ffVelocidade de ataque +10%.^000000
+--------------------------
+FOR base 120 ou mais:
+^0000ffATQ +50.^000000
+^0000ffHP e SP máx. +5%.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Espada Veterana]^000000
+^FF6347[Botas Veteranas]^000000
+^0000ffCusto de SP de [Impacto de Tyr] -10.^000000
+^0000ffCusto de SP de [Golpe Fulminante] -5.^000000
+Arma com refino +9 ou mais:
+^0000ffDano de [Impacto de Tyr] +100%.^000000
+Arma com refino +11 ou mais:
+^0000ffDano de [Impacto de Tyr] +100% adicional.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Machado Veterano]^000000
+^FF6347[Botas Veteranas]^000000
+^0000ffRecarga de [Fúria do Furacão] -0,5 segundos.^000000
+Ao derrotar monstros:
+^0000ff2% de chance de derrubar Mastela.^000000
+Arma com refino +9 ou mais:
+^0000ffDano de [Fúria do Furacão] +20%.^000000Arma com refino +11 ou mais:
+Arma com refino +11 ou mais:
+^0000ffDano de [Fúria do Furacão] +20% adicional.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 28564#

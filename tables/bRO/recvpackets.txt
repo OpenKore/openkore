@@ -1,6 +1,6 @@
 # Packet Extractor by lututui
-# Generated in Nov 27, 2018, 12:19:13 PM
-# Encryption Keys : 0x5BAA341E 0x4D106F7C 0x232B007D
+# Generated in Dec 4, 2018, 1:02:01 PM
+# Encryption Keys : 0x58586529 0x049D1C9D 0x0D3D6F9D
 0187 6 6 0
 0081 3 3 0
 01C6 4 4 0
@@ -1260,7 +1260,7 @@
 083C 10 10 0	# skill_use
 0437 5 5 0	# character_move
 035F 6 6 0	# sync
-08A5 5 5 0	# actor_look_at
+0202 5 5 0	# actor_look_at
 07E4 6 6 0	# item_take
 0362 6 6 0	# item_drop
 07EC 8 8 0	# storage_item_add
@@ -1279,16 +1279,16 @@
 0365 18 18 0	# booking_register
 0363 8 8 0	# unknown/unused
 0281 -1 12 0	# item_list_window_selected
-0864 19 19 0	# map_login
+022D 19 19 0	# map_login
 0802 26 26 0	# party_join_request_by_name
-0918 4 4 0	# unknown/unused
-0944 26 26 0	# friend_request
-085C 5 5 0	# homunculus_command
-0938 36 36 0	# storage_password
+0436 4 4 0	# unknown/unused
+023B 26 26 0	# friend_request
+0361 5 5 0	# homunculus_command
+094E 36 36 0	# storage_password
 0367 2 2 0	# sync_ex_reply
 085A 2 2 0	# sync_ex_reply
 085B 2 2 0	# sync_ex_reply
-022D 2 2 0	# sync_ex_reply
+085C 2 2 0	# sync_ex_reply
 085D 2 2 0	# sync_ex_reply
 085E 2 2 0	# sync_ex_reply
 085F 2 2 0	# sync_ex_reply
@@ -1296,7 +1296,7 @@
 0861 2 2 0	# sync_ex_reply
 0862 2 2 0	# sync_ex_reply
 0863 2 2 0	# sync_ex_reply
-0436 2 2 0	# sync_ex_reply
+0864 2 2 0	# sync_ex_reply
 0865 2 2 0	# sync_ex_reply
 0866 2 2 0	# sync_ex_reply
 0867 2 2 0	# sync_ex_reply
@@ -1328,8 +1328,8 @@
 0881 2 2 0	# sync_ex_reply
 0882 2 2 0	# sync_ex_reply
 0883 2 2 0	# sync_ex_reply
-0940 2 2 0	# sync_ex_reply
 0917 2 2 0	# sync_ex_reply
+0918 2 2 0	# sync_ex_reply
 0919 2 2 0	# sync_ex_reply
 091A 2 2 0	# sync_ex_reply
 091B 2 2 0	# sync_ex_reply
@@ -1361,7 +1361,7 @@
 0935 2 2 0	# sync_ex_reply
 0936 2 2 0	# sync_ex_reply
 0937 2 2 0	# sync_ex_reply
-023B 2 2 0	# sync_ex_reply
+0938 2 2 0	# sync_ex_reply
 0939 2 2 0	# sync_ex_reply
 093A 2 2 0	# sync_ex_reply
 093B 2 2 0	# sync_ex_reply
@@ -1403,7 +1403,7 @@
 08A2 2 2 0	# sync_request_ex
 08A3 2 2 0	# sync_request_ex
 08A4 2 2 0	# sync_request_ex
-0361 2 2 0	# sync_request_ex
+08A5 2 2 0	# sync_request_ex
 08A6 2 2 0	# sync_request_ex
 08A7 2 2 0	# sync_request_ex
 08A8 2 2 0	# sync_request_ex
@@ -1415,7 +1415,7 @@
 0941 2 2 0	# sync_request_ex
 0942 2 2 0	# sync_request_ex
 0943 2 2 0	# sync_request_ex
-0202 2 2 0	# sync_request_ex
+0944 2 2 0	# sync_request_ex
 0945 2 2 0	# sync_request_ex
 0946 2 2 0	# sync_request_ex
 0947 2 2 0	# sync_request_ex
@@ -1424,8 +1424,8 @@
 094A 2 2 0	# sync_request_ex
 094B 2 2 0	# sync_request_ex
 094C 2 2 0	# sync_request_ex
+0940 2 2 0	# sync_request_ex
 094D 2 2 0	# sync_request_ex
-094E 2 2 0	# sync_request_ex
 094F 2 2 0	# sync_request_ex
 0950 2 2 0	# sync_request_ex
 0951 2 2 0	# sync_request_ex

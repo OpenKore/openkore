@@ -6275,6 +6275,7 @@
 19300#Quepe do Cão-mandante#
 19305#Lampião das Fadas#
 19306#Carta de Comodo#
+19308#Quepe de Amistr#
 19314#Sobrepeliz Real#
 19315#Chapéu do Éden#
 19316#Capuz de Esquilo#
@@ -6931,6 +6932,7 @@
 28492#Diário do Renegado#
 28501#Chifres de Kirin#
 28502#Lenço Infame#
+28503#Keraunos#
 28505#Anel do Capiroto#
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
@@ -6939,6 +6941,7 @@
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
 28538#Luvas de H. Motto#
+28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
 28572#Broche da Celine#
 28598#Fragmento de Chip #
