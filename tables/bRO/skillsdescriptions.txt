@@ -1,6 +1,7 @@
 NV_BASIC#
 Habilidades Básicas ^777777(Basic Skill)^000000
 Nível máximo: ^7777779^000000
+Descrição:
 ^777777Libera os controles básicos de interface.^000000
 [Nv 1]: ^777777Libera Negociação.
           Clique com o botão direito em cima
@@ -30,7 +31,7 @@ Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Aumenta o ATQ de perícia ao usar Adagas
 ou Espadas de uma mão.^000000
-Nível l ATQ
+Nível l ATQp
 [Nv 1]: ^777777+4^000000
 [Nv 2]: ^777777+8^000000
 [Nv 3]: ^777777+12^000000
@@ -49,7 +50,7 @@ Pré requisitos: ^777777Perícia com Espada 1^000000
 Tipo: ^777777Passiva^000000
 ^777777Aumenta o ATQ de perícia ao usar
 Espadas de duas mãos.^000000
-Nível l ATQ
+Nível l ATQp
 [Nv 1]: ^777777+4^000000
 [Nv 2]: ^777777+8^000000
 [Nv 3]: ^777777+12^000000
@@ -62,7 +63,7 @@ Nível l ATQ
 [Nv 10]: ^777777+40^000000
 #
 SM_RECOVERY#
-Aumentar Recuperação de HP
+Aumentar Recuperação de HP ^777777(HP Recovery)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
 Descrição:
@@ -82,7 +83,7 @@ Nível l Regeneração de HP
 [Nv 10]: ^777777+50^000000
 #
 SM_BASH#
-Golpe Fulminante
+Golpe Fulminante ^777777(Bash)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -101,7 +102,7 @@ Nível l ATQ
 [Nv 10]: ^777777400%^000000
 #
 SM_PROVOKE#
-Provocar
+Provocar ^777777(Provoke)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ativa^000000
 Descrição:
@@ -122,7 +123,7 @@ Nível l DEF l ATQ
 [Nv 10]: ^777777-55%^000000 l ^777777+32%^000000
 #
 SM_MAGNUM#
-Impacto Explosivo
+Impacto Explosivo ^777777(Magnum Break)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Golpe Fulminante 5^000000
 Tipo: ^777777Ofensiva^000000
@@ -146,7 +147,7 @@ Nível l ATQ
 [Nv 10]: ^777777300%^000000
 #
 SM_ENDURE#
-Vigor
+Vigor ^777777(Endure)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Provocar 5^000000
 Tipo: ^777777Suporte^000000
@@ -169,7 +170,7 @@ Nível l Duração l DEFM
 [Nv 10]: ^77777737 segundos^000000 l ^777777+10^000000
 #
 MG_SRECOVERY#
-Aumentar recuperação de SP
+Aumentar recuperação de SP ^777777(SP Recovery)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
 Descrição:
@@ -189,7 +190,7 @@ Nível l Regeneração de SP
 [Nv 10]: ^777777+30^000000
 #
 MG_SIGHT#
-Chama Reveladora
+Chama Reveladora ^777777(Sight)^000000
 Nível máximo: ^7777771^000000
 Tipo: ^777777Ativa^000000
 Descrição:
@@ -198,7 +199,7 @@ de 7x7 células ao redor do personagem.
 Consome 10 de SP.^000000
 #
 MG_NAPALMBEAT#
-Ataque Espiritual
+Ataque Espiritual ^777777(Napalm Beat)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -217,7 +218,7 @@ Nível l Pós-conjuração l ATQM
 [Nv 10]: ^7777770,5 segundos^000000 l ^777777170%^000000
 #
 MG_SAFETYWALL#
-Escudo Mágico
+Escudo Mágico ^777777(Safety Wall)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos (^008080Magos^000000):
 ^777777Ataque Espiritual 7, Espíritos Anciões 5^000000
@@ -241,7 +242,7 @@ Nível l Duração l Bloqueios
 [Nv 10]: ^77777750 segundos^000000 l ^77777711 ataques^000000
 #
 MG_SOULSTRIKE#
-Espíritos Anciões
+Espíritos Anciões ^777777(Soul Strike)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Ataque Espiritual 4^000000
 Tipo: ^777777Ofensiva^000000
@@ -262,7 +263,7 @@ Nível l Pós-conjuração l Dano adicional
 [Nv 10]: ^7777772,7 segundos^000000 l ^777777+50%^000000
 #
 MG_COLDBOLT#
-Lanças de Gelo
+Lanças de Gelo ^777777(Cold Bolt)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -272,7 +273,7 @@ O número de lanças atiradas é igual ao
 nível da habilidade aprendido.^000000
 #
 MG_FROSTDIVER#
-Rajada Congelante
+Rajada Congelante ^777777(Frost Diver)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Lanças de Gelo 5^000000
 Tipo: ^777777Ofensiva^000000
@@ -292,7 +293,7 @@ Nível l Chance l ATQM
 [Nv 10]: ^77777765%^000000 l ^777777200%^000000
 #
 MG_STONECURSE#
-Petrificar
+Petrificar ^777777(Stone Curse)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ativa^000000
 Descrição:
@@ -314,7 +315,7 @@ Nível l Custo de SP l Chance
 [Nv 10]:^777777 16^000000 l ^77777760%^000000
 #
 MG_FIREBALL#
-Bolas de Fogo
+Bolas de Fogo ^777777(Fire Ball)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Lanças de Fogo 4^000000
 Tipo: ^777777Ofensiva^000000
@@ -326,7 +327,7 @@ Alvos próximos recebem 25% menos de dano.
 O dano aumenta com o nv. da habilidade.^000000
 #
 MG_FIREWALL#
-Barreira de Fogo
+Barreira de Fogo ^777777(Fire Wall)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos:
 ^777777Chama Reveladora 1, Bolas de Fogo 5^000000
@@ -339,7 +340,7 @@ A duração da barreira aumenta conforme
 o nível da habilidade.^000000
 #
 MG_FIREBOLT#
-Lanças de Fogo
+Lanças de Fogo ^777777(Fire Bolt)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -349,7 +350,7 @@ O número de lanças atiradas é igual ao
 nível da habilidade aprendido.^000000
 #
 MG_LIGHTNINGBOLT#
-Relâmpago
+Relâmpago ^777777(Lightning Bolt)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
@@ -359,7 +360,7 @@ O número de raios atirados é igual ao
 nível da habilidade aprendido.^000000
 #
 MG_THUNDERSTORM#
-Tempestade de Raios
+Tempestade de Raios ^777777(Thunder Storm)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Relâmpago 4^000000
 Tipo: ^777777Ofensiva^000000
@@ -370,311 +371,355 @@ O número de raios atirados é igual ao
 nível da habilidade aprendido.^000000
 #
 AL_DP#
-Proteção Divina
-Nível Máximo: 10
-14^777777Pré requisitos: Curar 1^000000
+Proteção Divina ^777777(Divine Protection)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Curar 1^000000
 Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta defesa contra Mortos-Vivos e Demônios
-com base no nível do usuário.^000000
-[Nv 1]: ^777777DEF +3^000000
-[Nv 2]: ^777777DEF +6^000000
-[Nv 3]: ^777777DEF +9^000000
-[Nv 4]: ^777777DEF +12^000000
-[Nv 5]: ^777777DEF +15^000000
-[Nv 6]: ^777777DEF +18^000000
-[Nv 7]: ^777777DEF +21^000000
-[Nv 8]: ^777777DEF +24^000000
-[Nv 9]: ^777777DEF +27^000000
-[Nv 10]: ^777777DEF +30^000000
+Descrição:
+^777777Aumenta a DEF contra monstros
+das raças Morto-Vivo e Demônio.^000000
+Nível l DEF
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 AL_DEMONBANE#
-Flagelo do Mal
-Nível Máximo: 10
+Flagelo do Mal ^777777(Demon Bane)^000000
+Nível máximo: ^77777710^000000
 Pré-requisitos : ^777777Proteção Divina 3^000000
 Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta força de ataque contra Mortos-Vivos e Demônios
-com base no nível do usuário.^000000
-[Nv 1]: ^777777ATQ +3^000000
-[Nv 2]: ^777777ATQ +6^000000
-[Nv 3]: ^777777ATQ +9^000000
-[Nv 4]: ^777777ATQ +12^000000
-[Nv 5]: ^777777ATQ +15^000000
-[Nv 6]: ^777777ATQ +18^000000
-[Nv 7]: ^777777ATQ +21^000000
-[Nv 8]: ^777777ATQ +24^000000
-[Nv 9]: ^777777ATQ +27^000000
-[Nv 10]: ^777777ATQ +30^000000
+Descrição:
+^777777Aumenta o ATQ de perícia contra monstros
+das raças Morto-Vivo e Demônio.^000000
+Nível l ATQp
+[Nv 1]: ^777777+3^000000
+[Nv 2]: ^777777+6^000000
+[Nv 3]: ^777777+9^000000
+[Nv 4]: ^777777+12^000000
+[Nv 5]: ^777777+15^000000
+[Nv 6]: ^777777+18^000000
+[Nv 7]: ^777777+21^000000
+[Nv 8]: ^777777+24^000000
+[Nv 9]: ^777777+27^000000
+[Nv 10]: ^777777+30^000000
 #
 AL_RUWACH#
-Revelação
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Detecta oponentes escondidos e causa dano Sagrado.
-O alcance é de 5x5 células.^000000
+Revelação ^777777(Ruwach)^000000
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Detecta oponentes escondidos na área de
+5x5 células e causa dano mágico de
+propriedade Sagrado neles.^000000
 #
 AL_PNEUMA#
-Escudo Sagrado
-Nível Máximo: 1
-^777777Pré requisitos (Odin e Asgard): Portal 4^000000
-^777777Pré requisitos (Thor): Revelação 1^000000
+Escudo Sagrado ^777777(Pneuma)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos (^008080Valhala^000000):
+^777777Portal 4^000000
+Pré requisitos (^008080Thor^000000):
+^777777Revelação 1^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Cria um escudo temporário contra
-ataques físicos de longo alcance.^000000
+Descrição:
+^777777Cria uma barreira de 3x3 células que
+bloqueia ataques físicos a distância
+pelos próximos 10 segundos.^000000
 #
 AL_TELEPORT#
-Teleporte
-Nível Máximo: 2
-^777777Pré requisitos: Revelação 1^000000
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Permite o teleporte para outra área.^000000
-[Nv 1]: ^777777Teleporta para um ponto aleatório nas proximidades.^000000
-[Nv 2]: ^777777Teleporta para o Ponto de Retorno.^000000
+Teleporte ^777777(Teleportation)^000000
+Nível máximo: ^7777772^000000
+Pré requisitos: ^777777Revelação 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Permite teleportar para a área escolhida.^000000
+Nível l Teleporte para
+[Nv 1]: ^777777Área aleatória do mapa^000000
+[Nv 2]: ^777777Ponto de Retorno.^000000
 #
 AL_WARP#
-Portal
-Nível Máximo: 4
-^777777Pré requisitos: Teleporte 2^000000
-Tipo: ^777777Suporte^000000
-Alvo: ^777777Área^000000
-Descrição: ^777777Abre um Portal Dimensional que teleporta para outra área.
-Cada Portal pode teleportar até 8 pessoas.
-Requer ^9900991 Gema Azul^777777 para cada uso.^000000
-[Nv 1]: ^777777Portal para Ponto de Retorno.^000000
-[Nv 2]: ^777777Permite a memorização de 1 ponto de transporte.^000000
-[Nv 3]: ^777777Permite a memorização de 2 pontos de transporte.^000000
-[Nv 4]: ^777777Permite a memorização de 3 pontos de rransporte.^000000
-^990000[Ponto de transporte]: ^777777Área criada como destino do portal utilizando o comando: '/memo'.^000000
+Portal ^777777(Warp)^000000
+Nível máximo: ^7777774^000000
+Pré requisitos: ^777777Teleporte 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Abre um portal que teleporta até
+8 personagens para uma coordenada
+memorizada pelo usuário.
+Para memorizar, digite^000000 /memo
+^000088Consome 1 Gema Azul.^000000
+Nível l Memoriza
+[Nv 1]: ^777777Ponto de Retorno.^000000
+[Nv 2]: ^777777Retorno + 1 mapa.^000000
+[Nv 3]: ^777777Retorno + 2 mapas.^000000
+[Nv 4]: ^777777Retorno + 3 mapas.^000000
 #
 AL_HEAL#
-Curar
-Nível Máximo: 10
-14^777777Pré requisitos: Fé 10, Flagelo do Mal 5^000000
-Tipo: ^777777Recuperação^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Recupera HP de um personagem,
-e pode causar danos em monstros Morto-Vivos se utilizado com a tecla SHIFT.
-O nível de base e INT do usuário influenciam na quantidade de HP recuperada por Curar.^000000
+Curar ^777777(Heal)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos (^008080Noviços^000000):
+^777777Nenhum^000000
+Pré requisitos (^008080Templários^000000):
+^777777Fé 10, Flagelo do Mal 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Recupera HP de Personagens.
+Ao segurar a tecla SHIFT, é possível
+causar dano mágico de propriedade Sagrado
+em monstros da propriedade Maldito.
+Curar é afetada pela INT do usuário e
+por melhorias na Efetividade de Cura.^000000
 #
 AL_INCAGI#
-Aumentar Agilidade
-Nível Máximo: 10
-^777777Pré requisitos: Curar 3^000000
+Aumentar Agilidade ^777777(Increase AGI)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Curar 3^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Aumenta temporariamente a velocidade de movimento e ataque do personagem.
-Um pouco de HP será utilizado neste processo.
-Consumo de SP, Agilidade aumentada:^000000
-[Nv 1]:^777777 18 SP, +3 AGI^000000
-[Nv 2]:^777777 21 SP, +4 AGI^000000
-[Nv 3]:^777777 24 SP, +5 AGI^000000
-[Nv 4]:^777777 27 SP, +6 AGI^000000
-[Nv 5]:^777777 30 SP, +7 AGI^000000
-[Nv 6]:^777777 33 SP, +8 AGI^000000
-[Nv 7]:^777777 36 SP, +9 AGI^000000
-[Nv 8]:^777777 39 SP, +10 AGI^000000
-[Nv 9]:^777777 42 SP, +11 AGI^000000
-[Nv 10]:^777777 45 SP, +12 AGI^000000
+Descrição:
+^777777Consome 15 de HP para aumentar a AGI
+e o movimento do alvo selecionado.^000000
+Nível l Custo de SP l AGI
+[Nv 1]: ^77777718^000000 l ^777777+3^000000
+[Nv 2]: ^77777721^000000 l ^777777+4^000000
+[Nv 3]: ^77777724^000000 l ^777777+5^000000
+[Nv 4]: ^77777727^000000 l ^777777+6^000000
+[Nv 5]: ^77777730^000000 l ^777777+7^000000
+[Nv 6]: ^77777733^000000 l ^777777+8^000000
+[Nv 7]: ^77777736^000000 l ^777777+9^000000
+[Nv 8]: ^77777739^000000 l ^777777+10^000000
+[Nv 9]: ^77777742^000000 l ^777777+11^000000
+[Nv 10]: ^77777745^000000 l ^777777+12^000000
 #
 AL_DECAGI#
-Diminuir Agilidade
-Nível Máximo: 10
-^777777Pré requisitos: Aumentar Agilidade 1^000000
-Tipo: ^777777Suporte^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Diminui temporariamente a velocidade de movimento e ataque de um oponente.
-Consumo de SP, Agilidade diminuída:^000000
-[Nv 1]:^777777 15 SP, -3 AGI^000000
-[Nv 2]:^777777 17 SP, -4 AGI^000000
-[Nv 3]:^777777 19 SP, -5 AGI^000000
-[Nv 4]:^777777 21 SP, -6 AGI^000000
-[Nv 5]:^777777 23 SP, -7 AGI^000000
-[Nv 6]:^777777 25 SP, -8 AGI^000000
-[Nv 7]:^777777 27 SP, -9 AGI^000000
-[Nv 8]:^777777 29 SP, -10 AGI^000000
-[Nv 9]:^777777 31 SP, -11 AGI^000000
-[Nv 10]:^777777 33 SP, -12 AGI^000000
+Diminuir Agilidade ^777777(Decrease AGI)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Aumentar Agilidade 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Haverá uma chance de reduzir a AGI
+e o movimento do alvo selecionado.^000000
+Nível l Custo de SP l AGI
+[Nv 1]: ^77777715^000000 l ^777777-3^000000
+[Nv 2]: ^77777717^000000 l ^777777-4^000000
+[Nv 3]: ^77777719^000000 l ^777777-5^000000
+[Nv 4]: ^77777721^000000 l ^777777-6^000000
+[Nv 5]: ^77777723^000000 l ^777777-7^000000
+[Nv 6]: ^77777725^000000 l ^777777-8^000000
+[Nv 7]: ^77777727^000000 l ^777777-9^000000
+[Nv 8]: ^77777729^000000 l ^777777-10^000000
+[Nv 9]: ^77777731^000000 l ^777777-11^000000
+[Nv 10]: ^77777733^000000 l ^777777-12^000000
 #
 AL_HOLYWATER#
-Aqua Benedicta
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Cria Água Benta a partir de uma Garrafa Vazia e um pouco de água.
-Para utilizar essa técnica é necessário estar sobre a água ou na area da habilidade [Dilúvio] dos Sábios.^000000
+Aqua Benedicta ^777777(Holy Water)^000000
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria o item [Água Benta].
+Será necessário estar com seus pés
+dentro de uma área com água.^000000
+^000088Consome 1 Garrafa Vazia.^000000
 #
 AL_CRUCIS#
 Signum Crucis
-Nível Máximo: 10
-Pré-requisitos : ^777777Flagelo do Mal 3^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Flagelo do Mal 3^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Enfraquece a defesa de monstros Mortos-Vivos e Fantasmas que estiverem na tela do usuário.^000000
+Descrição:
+^777777Concede uma chance de reduzir a DEF de
+monstros Demônios e Malditos na tela.^000000
 #
 AL_ANGELUS#
 Angelus
-Nível Máximo: 10
-^777777Pré requisitos: Proteção Divina 3^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Proteção Divina 3^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Aumenta a defesa dos personagens do grupo (inclusive do usuário) temporariamente.
-Este aumento de defesa cresce conforme a Vitalidade do personagem.^000000
-[Nv 1]: 23 SP, +5% DEF
-[Nv 2]: 26 SP, +10% DEF
-[Nv 3]: 29 SP, +15% DEF
-[Nv 4]: 32 SP, +20% DEF
-[Nv 5]: 35 SP, +25% DEF
-[Nv 6]: 38 SP, +30% DEF
-[Nv 7]: 41 SP, +35% DEF
-[Nv 8]: 44 SP, +40% DEF
-[Nv 9]: 47 SP, +45% DEF
-[Nv 10]: 50 SP, +50% DEF
+Descrição:
+^777777Aumenta a DEF proveniente da VIT de todos
+os membros do grupo ao redor do usuário.^000000
 #
 AL_BLESSING#
-Bênção
-Nível Máximo: 10
-^777777Pré requisitos: Proteção Divina 5^000000
+Bênção ^777777(Blessing)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Proteção Divina 5^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Aumenta DES, INT, FOR de um jogador temporariamente.
-Cura atributos anormais do personagem como Maldição e Petrificação
-e pode amaldiçoar Mortos-Vivos.^000000
-[Nv 1]:^777777 +1, DES, INT e FOR^000000
-[Nv 2]:^777777 +2, DES, INT e FOR^000000
-[Nv 3]:^777777 +3, DES, INT e FOR^000000
-[Nv 4]:^777777 +4, DES, INT e FOR^000000
-[Nv 5]:^777777 +5, DES, INT e FOR^000000
-[Nv 6]:^777777 +6, DES, INT e FOR^000000
-[Nv 7]:^777777 +7, DES, INT e FOR^000000
-[Nv 8]:^777777 +8, DES, INT e FOR^000000
-[Nv 9]:^777777 +9, DES, INT e FOR^000000
-[Nv 10]:^777777 +10, DES, INT e FOR^000000
+Descrição:
+^777777Fornece um bônus de DES, INT e FOR.
+Remove [Maldição] e [Petrificação].
+Causa efeitos anormais em monstros
+das raças Demônio e Morto-Vivo.^000000
+Nível l Bônus l Duração
+[Nv 1]: ^777777+1^000000 l ^77777760 segundos^000000
+[Nv 2]: ^777777+2^000000 l ^77777780 segundos^000000
+[Nv 3]: ^777777+3^000000 l ^777777100 segundos^000000
+[Nv 4]: ^777777+4^000000 l ^777777120 segundos^000000
+[Nv 5]: ^777777+5^000000 l ^777777140 segundos^000000
+[Nv 6]: ^777777+6^000000 l ^777777160 segundos^000000
+[Nv 7]: ^777777+7^000000 l ^777777180 segundos^000000
+[Nv 8]: ^777777+8^000000 l ^777777200 segundos^000000
+[Nv 9]: ^777777+9^000000 l ^777777220 segundos^000000
+[Nv 10]: ^777777+10^000000 l ^777777240 segundos^000000
 #
 AL_CURE#
-Medicar
-Nível Máximo: 1
-4^777777Pré requisitos: Curar 2 ^000000
-14^777777Pré requisitos: Fé 5^000000
-Tipo: ^777777Recuperação^000000
-Alvo: ^777777Jogador^000000
-Descrição: ^777777Cura atributos anormais de um jogador,
-como Silêncio, Caos, e Cegueira.
+Medicar ^777777(Cure)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos (^008080Noviços^000000):
+^777777Curar 2^000000
+Pré requisitos (^008080Templários^000000):
+^777777Fé 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Cura Silêncio, Caos e Cegueira do alvo.^000000
 #
 MC_INCCARRY#
-Aumentar Capacidade de Carga
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta limite de peso máximo.^000000
-[Nv 1]: ^777777Limite sobe em +200^000000
-[Nv 2]: ^777777Limite sobe em +400^000000
-[Nv 3]: ^777777Limite sobe em +600^000000
-[Nv 4]: ^777777Limite sobe em +800^000000
-[Nv 5]: ^777777Limite sobe em +1000^000000
-[Nv 6]: ^777777Limite sobe em +1200^000000
-[Nv 7]: ^777777Limite sobe em +1400^000000
-[Nv 8]: ^777777Limite sobe em +1600^000000
-[Nv 9]: ^777777Limite sobe em +1800^000000
-[Nv 10]: ^777777Limite sobe em +2000^000000
+Aumentar Capacidade de Carga ^777777(Carry)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o limite de peso máximo que
+pode ser carregado no inventário.^000000
+Nível l Limite
+[Nv 1]: ^777777+200^000000
+[Nv 2]: ^777777+400^000000
+[Nv 3]: ^777777+600^000000
+[Nv 4]: ^777777+800^000000
+[Nv 5]: ^777777+1.000^000000
+[Nv 6]: ^777777+1.200^000000
+[Nv 7]: ^777777+1.400^000000
+[Nv 8]: ^777777+1.600^000000
+[Nv 9]: ^777777+1.800^000000
+[Nv 10]: ^777777+2.000^000000
 #
 MC_DISCOUNT#
-Desconto
-Nível Máximo: 10
-^777777Pré requisitos: Aumentar Capacidade de Carga 3^000000
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Permite compra de itens por preço menor em lojas de NPCs.^000000
-[Nv 1]: ^7777777% de redução de preço de NPC^000000
-[Nv 2]: ^7777779% de redução de preço de NPC^000000
-[Nv 3]: ^77777711% de redução de preço de NPC^000000
-[Nv 4]: ^77777713% de redução de preço de NPC^000000
-[Nv 5]: ^77777715% de redução de preço de NPC^000000
-[Nv 6]: ^77777717% de redução de preço de NPC^000000
-[Nv 7]: ^77777719% de redução de preço de NPC^000000
-[Nv 8]: ^77777721% de redução de preço de NPC^000000
-[Nv 9]: ^77777723% de redução de preço de NPC^000000
-[Nv 10]: ^77777724% de redução de preço de NPC^000000
+Desconto ^777777(Discount)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Aumentar Capacidade de Carga 3^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite comprar itens vendidos por NPCs
+em um preço mais barato que o normal.^000000
+Nível l Desconto
+[Nv 1]: ^7777777%^000000
+[Nv 2]: ^7777779%^000000
+[Nv 3]: ^77777711%^000000
+[Nv 4]: ^77777713%^000000
+[Nv 5]: ^77777715%^000000
+[Nv 6]: ^77777717%^000000
+[Nv 7]: ^77777719%^000000
+[Nv 8]: ^77777721%^000000
+[Nv 9]: ^77777723%^000000
+[Nv 10]: ^77777724%^000000
 #
 MC_OVERCHARGE#
-Superfaturar
-Nível Máximo: 10
-^777777Pré requisitos: Desconto 3^000000
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Permite venda de itens por preço maior em lojas de NPCs.^000000
-[Nv 1]: ^7777777% de aumento de preço em NPC^000000
-[Nv 2]: ^7777779% de aumento de preço em NPC^000000
-[Nv 3]: ^77777711% de aumento de preço em NPC^000000
-[Nv 4]: ^77777713% de aumento de preço em NPC^000000
-[Nv 5]: ^77777715% de aumento de preço em NPC^000000
-[Nv 6]: ^77777717% de aumento de preço em NPC^000000
-[Nv 7]: ^77777719% de aumento de preço em NPC^000000
-[Nv 8]: ^77777721% de aumento de preço em NPC^000000
-[Nv 9]: ^77777723% de aumento de preço em NPC^000000
-[Nv 10]: ^77777724% de aumento de preço em NPC^000000
+Superfaturar ^777777(Overcharge)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Desconto 3^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite vender itens para NPCs por
+um preço mais caro que o normal.^000000
+Nível l Lucro
+[Nv 1]: ^7777777%^000000
+[Nv 2]: ^7777779%^000000
+[Nv 3]: ^77777711%^000000
+[Nv 4]: ^77777713%^000000
+[Nv 5]: ^77777715%^000000
+[Nv 6]: ^77777717%^000000
+[Nv 7]: ^77777719%^000000
+[Nv 8]: ^77777721%^000000
+[Nv 9]: ^77777723%^000000
+[Nv 10]: ^77777724%^000000
 #
 MC_PUSHCART#
-Usar Carrinho
-Nível Máximo: 10
-^777777Pré requisitos: Aumentar Capacidade de Carga 5^000000
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Permite uso do carrinho, um inventário especial para Mercadores e evoluções. Quanto maior o nível, maior será a velocidade de movimento do Mercador.
-Não é possível usar itens que estejam no carrinho.
-Alugue um carrinho com uma funcionária Kafra.^000000
-Acesse o carrinho com o atalho^000099(Alt+W)^000000
-[Nv 1]: ^77777755% da velocidade de movimento^000000
-[Nv 2]: ^77777760% da velocidade de movimento^000000
-[Nv 3]: ^77777765% da velocidade de movimento^000000
-[Nv 4]: ^77777770% da velocidade de movimento^000000
-[Nv 5]: ^77777775% da velocidade de movimento^000000
-[Nv 6]: ^77777780% da velocidade de movimento^000000
-[Nv 7]: ^77777785% da velocidade de movimento^000000
-[Nv 8]: ^77777790% da velocidade de movimento^000000
-[Nv 9]: ^77777795% da velocidade de movimento^000000
-[Nv 10]: ^777777100% da velocidade de movimento^000000
+Usar Carrinho ^777777(Push Cart)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Aumentar Capacidade de Carga 5^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite alugar um carrinho com a
+Kafra para guardar até 100 itens.
+Enquanto usar o carrinho, o movimento é
+reduzido, sendo recuperado conforme o
+nível da habilidade vai aumentando.^000000
+^008080Para acessar o carrinho,
+use o comando ALT + W.^000000
+Nível l Movimento
+[Nv 1]: ^77777755%^000000
+[Nv 2]: ^77777760%^000000
+[Nv 3]: ^77777765%^000000
+[Nv 4]: ^77777770%^000000
+[Nv 5]: ^77777775%^000000
+[Nv 6]: ^77777780%^000000
+[Nv 7]: ^77777785%^000000
+[Nv 8]: ^77777790%^000000
+[Nv 9]: ^77777795%^000000
+[Nv 10]: ^777777Normal^000000
 #
 MC_IDENTIFY#
-Identificar Item
-Nível Máximo: 1
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Identifica um item não identificado,
-tornando-o pronto para uso.^000000
+Identificar Item ^777777(Identify)^000000
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Identifica um item não identificado.
+Itens derrubados por monstros não podem
+ser equipados até serem identificados.^000000
 #
 MC_VENDING#
-Comércio
-Nível Máximo: 10
-^777777Pré requisitos: Usar Carrinho 3^000000
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Permite venda de itens na rua, criando seus próprios preços.
-O limite de itens aumenta conforme o nível da habilidade.^000000
-[Nv 1]: Máximo de 3 itens a venda
-[Nv 2]: Máximo de 4 itens a venda
-[Nv 3]: Máximo de 5 itens a venda
-[Nv 4]: Máximo de 6 itens a venda
-[Nv 5]: Máximo de 7 itens a venda
-[Nv 6]: Máximo de 8 itens a venda
-[Nv 7]: Máximo de 9 itens a venda
-[Nv 8]: Máximo de 10 itens a venda
-[Nv 9]: Máximo de 11 itens a venda
-[Nv 10]: Máximo de 12 itens a venda
+Comércio ^777777(Vending)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Usar Carrinho 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Abre uma loja para vender itens.
+Os itens deverão estar no carrinho.
+O limite de itens vendidos aumenta
+conforme o nível da habilidade.^000000
+Nível l Limite de itens
+[Nv 1]: ^7777773^000000
+[Nv 2]: ^7777774^000000
+[Nv 3]: ^7777775^000000
+[Nv 4]: ^7777776^000000
+[Nv 5]: ^7777777^000000
+[Nv 6]: ^7777778^000000
+[Nv 7]: ^7777779^000000
+[Nv 8]: ^77777710^000000
+[Nv 9]: ^77777711^000000
+[Nv 10]: ^77777712^000000
 #
 MC_MAMMONITE#
 Mammonita
-Nível Máximo: 10
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Surpreende o inimigo usando dinheiro para atacar.
-O nível da habilidade determina a quantidade de dinheiro gasto.^000000
-[Nv 1]: ^777777ATQ 150%, 100 Zeny^000000
-[Nv 2]: ^777777ATQ 200%, 200 Zeny^000000
-[Nv 3]: ^777777ATQ 250%, 300 Zeny^000000
-[Nv 4]: ^777777ATQ 300%, 400 Zeny^000000
-[Nv 5]: ^777777ATQ 350%, 500 Zeny^000000
-[Nv 6]: ^777777ATQ 400%, 600 Zeny^000000
-[Nv 7]: ^777777ATQ 450%, 700 Zeny^000000
-[Nv 8]: ^777777ATQ 500%, 800 Zeny^000000
-[Nv 9]: ^777777ATQ 550%, 900 Zeny^000000
-[Nv 10]: ^777777ATQ 600%, 1,000 Zeny^000000
+Descrição:
+^777777Causa dano físico de curta distância.^000000
+^000088Consome zenys.^000000
+Nível l Dano l Zenys gastos
+[Nv 1]: ^777777150%^000000 l ^777777100 zenys^000000
+[Nv 2]: ^777777200%^000000 l ^777777200 zenys^000000
+[Nv 3]: ^777777250%^000000 l ^777777300 zenys^000000
+[Nv 4]: ^777777300%^000000 l ^777777400 zenys^000000
+[Nv 5]: ^777777350%^000000 l ^777777500 zenys^000000
+[Nv 6]: ^777777400%^000000 l ^777777600 zenys^000000
+[Nv 7]: ^777777450%^000000 l ^777777700 zenys^000000
+[Nv 8]: ^777777500%^000000 l ^777777800 zenys^000000
+[Nv 9]: ^777777550%^000000 l ^777777900 zenys^000000
+[Nv 10]: ^777777600%^000000 l ^7777771.000 zenys^000000
 #
 AC_OWL#
-Precisão
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta DES.^000000
+Precisão ^777777(Owl's Eye)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a Destreza (DES).^000000
+Nível l Bônus
 [Nv 1]: ^777777DES +1^000000
 [Nv 2]: ^777777DES +2^000000
 [Nv 3]: ^777777DES +3^000000
@@ -687,187 +732,219 @@ Descrição: ^777777Aumenta DES.^000000
 [Nv 10]: ^777777DES +10^000000
 #
 AC_VULTURE#
-Olhos de Águia
-Nível Máximo: 10
-^777777Pré requisitos: Precisão 3^000000
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta o alcance e melhora a Precisão de armas tipo Arco.^000000
-[Nv 1]: ^777777Alcance +1^000000
-[Nv 2]: ^777777Alcance +2^000000
-[Nv 3]: ^777777Alcance +3^000000
-[Nv 4]: ^777777Alcance +4^000000
-[Nv 5]: ^777777Alcance +5^000000
-[Nv 6]: ^777777Alcance +6^000000
-[Nv 7]: ^777777Alcance +7^000000
-[Nv 8]: ^777777Alcance +8^000000
-[Nv 9]: ^777777Alcance +9^000000
-[Nv 10]: ^777777Alcance +10^000000
+Olhos de Águia ^777777(Vulture's Eye)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Precisão 3^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a Precisão e o alcance
+dos ataques físicos a distância.^000000
+Nível l Precisão l Alcance
+[Nv 1]: ^777777+1^000000 l ^7777771 célula^000000
+[Nv 2]: ^777777+2^000000 l ^7777772 células^000000
+[Nv 3]: ^777777+3^000000 l ^7777773 células^000000
+[Nv 4]: ^777777+4^000000 l ^7777774 células^000000
+[Nv 5]: ^777777+5^000000 l ^7777775 células^000000
+[Nv 6]: ^777777+6^000000 l ^7777776 células^000000
+[Nv 7]: ^777777+7^000000 l ^7777777 células^000000
+[Nv 8]: ^777777+8^000000 l ^7777778 células^000000
+[Nv 9]: ^777777+9^000000 l ^7777779 células^000000
+[Nv 10]: ^77777710^000000 l ^77777710 células^000000
 #
 AC_CONCENTRATION#
-Concentração
-Nível Máximo: 10
-^777777Pré requisitos: Olhos de Águia 1^000000
+Concentração ^777777(Improve Concentration)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Olhos de Águia 1^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Aumenta DES e AGI temporariamente,
-além de detectar oponentes escondidos nas proximidades.^000000
-[Nv 1]:^777777 +3% AGI/DES, 60 segundos de duração^000000
-[Nv 2]:^777777 +4% AGI/DES, 80 segundos de duração^000000
-[Nv 3]:^777777 +5% AGI/DES, 100 segundos de duração^000000
-[Nv 4]:^777777 +6% AGI/DES, 120 segundos de duração^000000
-[Nv 5]:^777777 +7% AGI/DES, 140 segundos de duração^000000
-[Nv 6]:^777777 +8% AGI/DES, 160 segundos de duração^000000
-[Nv 7]:^777777 +9% AGI/DES, 180 segundos de duração^000000
-[Nv 8]:^777777 +10% AGI/DES, 200 segundos de duração^000000
-[Nv 9]:^777777 +11% AGI/DES, 220 segundos de duração^000000
-[Nv 10]:^777777 +12% AGI/DES, 240 segundos de duração^000000
+Descrição:
+^777777Fornece um bônus de DES e AGI.
+Pode revelar alvos em Esconderijo na
+área de 3x3 células ao redor do usuário.^000000
+Nível l DES/AGI l Duração
+[Nv 1]: ^777777 +3%^000000 l ^77777760 segundos^000000
+[Nv 2]: ^777777 +4%^000000 l ^77777780 segundos^000000
+[Nv 3]: ^777777 +5%^000000 l ^777777100 segundos^000000
+[Nv 4]: ^777777 +6%^000000 l ^777777120 segundos^000000
+[Nv 5]: ^777777 +7%^000000 l ^777777140 segundos^000000
+[Nv 6]: ^777777 +8%^000000 l ^777777160 segundos^000000
+[Nv 7]: ^777777 +9%^000000 l ^777777180 segundos^000000
+[Nv 8]: ^777777+10%^000000 l ^777777200 segundos^000000
+[Nv 9]: ^777777+11%^000000 l ^777777220 segundos^000000
+[Nv 10]: ^777777+12%^000000 l ^777777240 segundos^000000
 #
 AC_DOUBLE#
-Rajada de Flechas
-Nível Máximo: 10
+Rajada de Flechas ^777777(Double Strafe)^000000
+Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Provoca um dano maior, atirando duas flechas em um ataque.
-Consome 12 de SP não importanto o nível da habilidade e consome uma flecha.^000000
-[Nv 1]:^777777 200% de dano^000000
-[Nv 2]:^777777 220% de dano^000000
-[Nv 3]:^777777 240% de dano^000000
-[Nv 4]:^777777 260% de dano^000000
-[Nv 5]:^777777 280% de dano^000000
-[Nv 6]:^777777 300% de dano^000000
-[Nv 7]:^777777 320% de dano^000000
-[Nv 8]:^777777 340% de dano^000000
-[Nv 9]:^777777 360% de dano^000000
-[Nv 10]:^777777 380% de dano^000000
+Descrição:
+^777777Causa dano físico a distância no alvo.^000000
+^000088Consome 1 Flecha.^000000
+Nível l Dano
+[Nv 1]: ^777777200%^000000
+[Nv 2]: ^777777220%^000000
+[Nv 3]: ^777777240%^000000
+[Nv 4]: ^777777260%^000000
+[Nv 5]: ^777777280%^000000
+[Nv 6]: ^777777300%^000000
+[Nv 7]: ^777777320%^000000
+[Nv 8]: ^777777340%^000000
+[Nv 9]: ^777777360%^000000
+[Nv 10]: ^777777380%^000000
 #
 AC_SHOWER#
-Chuva de Flechas
-Nível Máximo: 10
-^777777Pré requisitos: Rajada de Flechas 5^000000
+Chuva de Flechas ^777777(Arrow Shower)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Rajada de Flechas 5^000000
 Tipo: ^777777Ofensiva^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Ataca um oponente com 9 tiros e causa dano de área.
-Consome 15 de SP não importanto o nível da habilidade e consome uma flecha.^000000
-[Nv 1]: 80% de dano^000000
-[Nv 2]: 85% de dano^000000
-[Nv 3]: 90% de dano^000000
-[Nv 4]: 95% de dano^000000
-[Nv 5]: 100% de dano^000000
-[Nv 6]: 105% de dano^000000
-[Nv 7]: 110% de dano^000000
-[Nv 8]: 115% de dano^000000
-[Nv 9]: 120% de dano^000000
-[Nv 10]: 125% de dano^000000
+Descrição:
+^777777Causa dano físico a distância nos alvos
+da área selecionada, empurrando-os.^000000
+^000088Consome 1 Flecha.^000000
+Nível l Dano l Área
+[Nv 1]: ^777777160%^000000 l ^7777773x3 células^000000
+[Nv 2]: ^777777170%^000000 l ^7777773x3 células^000000
+[Nv 3]: ^777777180%^000000 l ^7777773x3 células^000000
+[Nv 4]: ^777777190%^000000 l ^7777773x3 células^000000
+[Nv 5]: ^777777200%^000000 l ^7777773x3 células^000000
+[Nv 6]: ^777777210%^000000 l ^7777775x5 células^000000
+[Nv 7]: ^777777220%^000000 l ^7777775x5 células^000000
+[Nv 8]: ^777777230%^000000 l ^7777775x5 células^000000
+[Nv 9]: ^777777240%^000000 l ^7777775x5 células^000000
+[Nv 10]: ^777777250%^000000 l ^7777775x5 células^000000
 #
 TF_DOUBLE#
-Ataque Duplo
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta a chance de realizar um ataque duplo
-com armas tipo Adaga
-Esta habilidade também afeta o dano da mão esquerda com armas tipo Katar.^000000
-[Nv 1]:^777777 5% de chance de sucesso^000000
-[Nv 2]:^777777 10% de chance de sucesso^000000
-[Nv 3]:^777777 15% de chance de sucesso^000000
-[Nv 4]:^777777 20% de chance de sucesso^000000
-[Nv 5]:^777777 25% de chance de sucesso^000000
-[Nv 6]:^777777 30% de chance de sucesso^000000
-[Nv 7]:^777777 35% de chance de sucesso^000000
-[Nv 8]:^777777 40% de chance de sucesso^000000
-[Nv 9]:^777777 45% de chance de sucesso^000000
-[Nv 10]:^777777 50% de chance de sucesso^000000
+Ataque Duplo ^777777(Double Attack)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^008080Apenas com Adagas.^000000
+^777777Ao realizar ataques físicos, tem a
+chance de atingir o alvo mais uma vez.
+Em armas do tipo Katar, aumenta o
+dano causado pela mão Esquerda.^000000
+^000088Ao habilitar [Ataque Duplo] através de
+itens, funciona com qualquer arma.^000000
+Nível l Chance l Precisão
+[Nv 1]: ^777777 5%^000000 l ^777777+1%^000000
+[Nv 2]: ^77777710%^000000 l ^777777+2%^000000
+[Nv 3]: ^77777715%^000000 l ^777777+3%^000000
+[Nv 4]: ^77777720%^000000 l ^777777+4%^000000
+[Nv 5]: ^77777725%^000000 l ^777777+5%^000000
+[Nv 6]: ^77777730%^000000 l ^777777+6%^000000
+[Nv 7]: ^77777735%^000000 l ^777777+7%^000000
+[Nv 8]: ^77777740%^000000 l ^777777+8%^000000
+[Nv 9]: ^77777745%^000000 l ^777777+9%^000000
+[Nv 10]: ^77777750%^000000 l ^777777+10%^000000
 #
 TF_MISS#
-Perícia em Esquiva
-Nível Máximo: 10
-Tipo: ^000099Passiva^000000
-Descrição: ^777777Aumenta a chance de sucesso na esquiva.^000000
-^777777A taxa de esquiva aumenta com base na classe do usuário.^000000
-[Nv 1]: +3 na 1a classe, +4 na 2a classe
-[Nv 2]: +6 na 1a classe, +8 na 2a classe
-[Nv 3]: +9 na 1a classe, +12 na 2a classe
-[Nv 4]: +12 na 1a classe, +16 na 2a classe
-[Nv 5]: +15 na 1a classe, +20 na 2a classe
-[Nv 6]: +18 na 1a classe, +24 na 2a classe
-[Nv 7]: +21 na 1a classe, +28 na 2a classe
-[Nv 8]: +24 na 1a classe, +32 na 2a classe
-[Nv 9]: +27 na 1a classe, +36 na 2a classe
-[Nv 10]: +30 na 1a classe, +40 na 2a classe
+Perícia em Esquiva ^777777(Improve Dodge)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a Esquiva (ESQV).
+Em Mercenários, Arruaceiros e evoluções,
+o bônus na Esquiva é aumentado.^000000
+Nível l ESQV: Gatunos l Evoluções
+[Nv 1]: ^777777+3^000000 l ^777777+4^000000
+[Nv 2]: ^777777+6^000000 l ^777777+8^000000
+[Nv 3]: ^777777+9^000000 l ^777777+12^000000
+[Nv 4]: ^777777+12^000000 l ^777777+16^000000
+[Nv 5]: ^777777+15^000000 l ^777777+20^000000
+[Nv 6]: ^777777+18^000000 l ^777777+24^000000
+[Nv 7]: ^777777+21^000000 l ^777777+28^000000
+[Nv 8]: ^777777+24^000000 l ^777777+32^000000
+[Nv 9]: ^777777+27^000000 l ^777777+36^000000
+[Nv 10]: ^777777+30^000000 l ^777777+40^000000
 #
 TF_STEAL#
-Furto
-Nível Máximo: 10
-Tipo: ^777777Suporte^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Rouba itens dos monstros.^000000
-[Nv 1]:^777777 10% de chance de sucesso^000000
-[Nv 2]:^777777 16% de chance de sucesso^000000
-[Nv 3]:^777777 22% de chance de sucesso^000000
-[Nv 4]:^777777 28% de chance de sucesso^000000
-[Nv 5]:^777777 34% de chance de sucesso^000000
-[Nv 6]:^777777 40% de chance de sucesso^000000
-[Nv 7]:^777777 46% de chance de sucesso^000000
-[Nv 8]:^777777 52% de chance de sucesso^000000
-[Nv 9]:^777777 58% de chance de sucesso^000000
-[Nv 10]:^777777 64% de chance de sucesso^000000
+Furto ^777777(Steal)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tenta roubar 1 item de um monstro.
+Não pode ser usada duas vezes no mesmo
+alvo e não funciona contra Chefes.
+A chance de sucesso é afetada pela DES.^000000
+Nível l Chance
+[Nv 1]: ^77777710%^000000
+[Nv 2]: ^77777716%^000000
+[Nv 3]: ^77777722%^000000
+[Nv 4]: ^77777728%^000000
+[Nv 5]: ^77777734%^000000
+[Nv 6]: ^77777740%^000000
+[Nv 7]: ^77777746%^000000
+[Nv 8]: ^77777752%^000000
+[Nv 9]: ^77777758%^000000
+[Nv 10]: ^77777764%o^000000
 #
 TF_HIDING#
-Esconderijo
-Nível Máximo: 10
-Pré-requisitos : ^777777Furto 5^000000
-Tipo: ^777777Suporte^000000
-Descrição: ^777777O usuário se esconde para sua proteção.
-Pode ser detectado com habilidades como Chama Reveladora,
-Revelação, Concentração, Alerta e Fúria da Terra.^000000
-Consome 10 de SP quando usada, em qualquer nível.
-[Nv 1]:^777777 30 segundos de duração, 1 SP / 5 segundos consumindo^000000
-[Nv 2]:^777777 60 segundos de duração, 1 SP / 6 segundos consumindo^000000
-[Nv 3]:^777777 90 segundos de duração, 1 SP / 7 segundos consumindo^000000
-[Nv 4]:^777777 120 segundos de duração, 1 SP / 8 segundos consumindo^000000
-[Nv 5]:^777777 150 segundos de duração, 1 SP / 9 segundos consumindo^000000
-[Nv 6]:^777777 180 segundos de duração, 1 SP / 10 segundos consumindo^000000
-[Nv 7]:^777777 210 segundos de duração, 1 SP / 11 segundos consumindo^000000
-[Nv 8]:^777777 240 segundos de duração, 1 SP / 12 segundos consumindo^000000
-[Nv 9]:^777777 270 segundos de duração, 1 SP / 13 segundos consumindo^000000
-[Nv 10]:^777777 300 segundos de duração, 1 SP / 14 segundos consumindo^000000
+Esconderijo ^777777(Hiding)^000000
+Nível máximo: ^77777710^000000
+Pré-requisitos: ^777777Furto 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Esconde-se para evitar ataques.
+Durante o esconderijo, 1 de SP é drenado
+continuamente por alguns segundos.
+Pode ser cancelada ao usar Esconderijo
+novamente ou ser revelado por habilidades
+como [Revelação], [Concentração], etc.
+Monstros Chefes, Insetos e Demônios
+poderão detectar o usuário escondido.^000000
+Nível l Duração l Dreno de SP
+[Nv 1]: ^77777730 segundos^000000 l ^777777A cada 5 segundos^000000
+[Nv 2]: ^77777760 segundos^000000 l ^777777A cada 6 segundos^000000
+[Nv 3]: ^77777790 segundos^000000 l ^777777A cada 7 segundos^000000
+[Nv 4]: ^777777120 segundos^000000 l ^777777A cada 8 segundos^000000
+[Nv 5]: ^777777150 segundos^000000 l ^777777A cada 9 segundos^000000
+[Nv 6]: ^777777180 segundos^000000 l ^777777A cada 10 segundos^000000
+[Nv 7]: ^777777210 segundos^000000 l ^777777A cada 11 segundos^000000
+[Nv 8]: ^777777240 segundos^000000 l ^777777A cada 12 segundos^000000
+[Nv 9]: ^777777270 segundos^000000 l ^777777A cada 13 segundos^000000
+[Nv 10]: ^777777300 segundos^000000 l ^777777A cada 14 segundos^000000
 #
 TF_POISON#
-Envenenar
-Nível Máximo: 10
-Tipo: ^777777Ofensiva (Veneno)^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Causa dano venenoso em um oponente.
-Adiciona a chance de envenenar o oponente.
-Consome 12 de SP quando usada, em qualquer nível.^000000
-[Nv 1]:^777777 +15 ATQ, 14% de chance de envenenar^000000
-[Nv 2]:^777777 +30 ATQ, 18% de chance de envenenar^000000
-[Nv 3]:^777777 +45 ATQ, 22% de chance de envenenar^000000
-[Nv 4]:^777777 +60 ATQ, 26% de chance de envenenar^000000
-[Nv 5]:^777777 +75 ATQ, 30% de chance de envenenar^000000
-[Nv 6]:^777777 +90 ATQ, 34% de chance de envenenar^000000
-[Nv 7]:^777777 +105 ATQ, 38% de chance de envenenar^000000
-[Nv 8]:^777777 +120 ATQ, 42% de chance de envenenar^000000
-[Nv 9]:^777777 +135 ATQ, 46% de chance de envenenar^000000
-[Nv 10]:^777777 +150 ATQ, 50% de chance de envenenar^000000
+Envenenar ^777777(Envenom)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico de curta distância
+da propriedade Veneno, com chances de
+infligir [Envenenamento] no alvo.^000000
+Nível l Dano l Chance
+[Nv 1]: ^777777+15%^000000 l ^77777714%^000000
+[Nv 2]: ^777777+30%^000000 l ^77777718%^000000
+[Nv 3]: ^777777+45%^000000 l ^77777722%^000000
+[Nv 4]: ^777777+60%^000000 l ^77777726%^000000
+[Nv 5]: ^777777+75%^000000 l ^77777730%^000000
+[Nv 6]: ^777777+90%^000000 l ^77777734%^000000
+[Nv 7]: ^777777+105%^000000 l ^77777738%^000000
+[Nv 8]: ^777777+120%^000000 l ^77777742%^000000
+[Nv 9]: ^777777+135%^000000 l ^77777746%^000000
+[Nv 10]: ^777777+150%^000000 l ^77777750%^000000
 #
 TF_DETOXIFY#
-Desintoxicar
-Nível Máximo: 1
-^777777Pré requisitos:  Envenenar 3^000000
-Tipo: ^777777Suporte (Veneno)^000000
-Descrição: ^777777Remove o envenenamento do alvo.^000000
+Desintoxicar ^777777(Detoxify)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Envenenar 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Cura o efeito de [Envenenamento] do alvo.^000000
 #
 ALL_RESURRECTION#
-Ressuscitar
-Nível Máximo: 4
-Pré requisitos: ^777777Aumentar recuperação de SP 4
-Graça Divina 1^000000
+Ressuscitar ^777777(Resurrection)^000000
+Nível máximo: ^7777774^000000
+Pré requisitos: ^777777Graça Divina 1,
+Aumentar recuperação de SP 4^000000
 Tipo: ^777777Suporte^000000
-Alvo: ^777777Jogadores derrotados^000000
-Descrição: ^777777Levanta jogadores derrotados.^000000
-[Nv 1]: ^777777Alvo retorna com 10% do HP total^000000
-[Nv 2]: ^777777Alvo retorna com 30% do HP total^000000
-[Nv 3]: ^777777Alvo retorna com 50% do HP total^000000
-[Nv 4]: ^777777Alvo retorna com 80% do HP total^000000
+Descrição:
+^777777Revive personagens mortos.
+O alvo ressuscita com parte do HP curado.^000000
+Nível l HP recuperado
+[Nv 1]: ^77777710% do HP máx.^000000
+[Nv 2]: ^77777730% do HP máx.^000000
+[Nv 3]: ^77777750% do HP máx.^000000
+[Nv 4]: ^77777780% do HP máx.^000000
 #
 KN_SPEARMASTERY#
 Perícia com Lança
@@ -1042,12 +1119,12 @@ Descrição: ^777777Melhora velocidade de ataque quando montado em um Peco Peco^
 [Nv 5]:^777777 100% de velocidade de ataque^000000
 #
 PR_MACEMASTERY#
-Perícia com Maça
+Perícia com Maça ^777777(Mace Mastery)^000000
 Nível máximo: ^77777710^000000
 Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Aumenta o ATQ de perícia ao usar Maças.^000000
-Nível l ATQ
+Nível l ATQp
 [Nv 1]: ^777777+3^000000
 [Nv 2]: ^777777+6^000000
 [Nv 3]: ^777777+9^000000
@@ -1127,7 +1204,7 @@ Nível l Duração
 [Nv 5]: ^7777773 minutos e 20 segundos^000000
 #
 PR_SANCTUARY#
-Santuário
+Santuário ^777777(Sanctuary)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Curar 1^000000
 Tipo: ^777777Suporte^000000
@@ -1150,7 +1227,7 @@ Nível l HP recuperado l Duração
 [Nv 10]: ^777777777^000000 l ^77777731 segundos^000000
 #
 PR_SLOWPOISON#
-Retardar Veneno
+Retardar Veneno ^777777(Slow Poison)^000000
 Nível máximo: ^7777774^000000
 Tipo: ^777777Suporte^000000
 Descrição:
@@ -1163,7 +1240,7 @@ Nível l Duração
 [Nv 4]: ^77777740 segundos^000000
 #
 PR_STRECOVERY#
-Graça Divina
+Graça Divina ^777777(Status Recovery)^000000
 Nível máximo: ^7777771^000000
 Tipo: ^777777Suporte^000000
 Descrição:
@@ -1244,7 +1321,7 @@ Nível l Custo de SP l Duração do Silêncio
 [Nv 10]: ^77777710^000000 l ^77777760 segundos^000000
 #
 PR_TURNUNDEAD#
-Esconjurar
+Esconjurar ^777777(Turn Undead)^000000
 Nível máximo: ^77777710^000000
 Pré requisitos:
 ^777777Ressuscitar 1, Lex Divina 3^000000
@@ -4268,70 +4345,87 @@ Arremessar Tomahawk
 Descrição: ^777777Arremessa um tomahawk para atacar o oponente em longas distências.^000000
 #
 LK_AURABLADE#
-Lâmina de Aura
-Nível Máximo: 5
-^777777Pré requisitos: Golpe Fulminante 5, Impacto Explosivo 5,
+Lâmina de Aura ^777777(Aura Blade)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Impacto Explosivo 5,
 Perícia com Espada de Duas Mãos 5^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Uma aura envolve a arma para aumentar o dano causado.
-Esse dano não é afetado pela defesa do usuário garantindo o aumento de dano no oponente.^000000
-[Nv 1]: ^777777Dano Adicional +20^000000
-[Nv 2]: ^777777Dano Adicional +40^000000
-[Nv 3]: ^777777Dano Adicional +60^000000
-[Nv 4]: ^777777Dano Adicional +80^000000
-[Nv 5]: ^777777Dano Adicional +100^000000
+Descrição:
+^777777Envolve a arma com uma aura capaz de
+acrescentar dano fixo nos ataques.^000000
+Nível l Dano l Duração
+[Nv 1]: ^777777+20^000000 l ^77777740 segundos^000000
+[Nv 2]: ^777777+40^000000 l ^77777760 segundos^000000
+[Nv 3]: ^777777+60^000000 l ^77777780 segundos^000000
+[Nv 4]: ^777777+80^000000 l ^777777100 segundos^000000
+[Nv 5]: ^777777+100^000000 l ^777777120 segundos^000000
 #
 LK_PARRYING#
-
-Aparar Golpe
-Nível Máximo: 10
-^777777Pré requisitos: Provocar 5,
-Perícia com Espada de Duas Mãos 10, Rapidez com Duas Mãos 3^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Bloqueia um ataque inimigo com uma Espada de Duas Mãos. Se tiver sucesso, o usuário poderá escapar de um ataque inimigo, mas ao mesmo tempo terá um ataque seu cancelado.
-Requer uma espada de duas mãos.^000000
-[Nv 1]: ^777777Bloqueio +23%^000000
-[Nv 2]: ^777777Bloqueio +26%^000000
-[Nv 3]: ^777777Bloqueio +29%^000000
-[Nv 4]: ^777777Bloqueio +32%^000000
-[Nv 5]: ^777777Bloqueio +35%^000000
-[Nv 6]: ^777777Bloqueio +38%^000000
-[Nv 7]: ^777777Bloqueio +41%^000000
-[Nv 8]: ^777777Bloqueio +44%^000000
-[Nv 9]: ^777777Bloqueio +47%^000000
-[Nv 10]: ^777777Bloqueio +50%^000000
+Aparar Golpe ^777777(Parry)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Provocar 5,
+Rapidez com Duas Mãos 3,
+Perícia com Espada de Duas Mãos 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com Espada de Duas Mãos.^000000
+^777777Interrompe as ações do usuário para
+ter a chance de bloquear um ataque.^000000
+Nível l Chance l Duração
+[Nv 1]: ^77777723%^000000 l ^77777715 segundos^000000
+[Nv 2]: ^77777726%^000000 l ^77777720 segundos^000000
+[Nv 3]: ^77777729%^000000 l ^77777725 segundos^000000
+[Nv 4]: ^77777732%^000000 l ^77777730 segundos^000000
+[Nv 5]: ^77777735%^000000 l ^77777735 segundos^000000
+[Nv 6]: ^77777738%^000000 l ^77777740 segundos^000000
+[Nv 7]: ^77777741%^000000 l ^77777745 segundos^000000
+[Nv 8]: ^77777744%^000000 l ^77777750 segundos^000000
+[Nv 9]: ^77777747%^000000 l ^77777755 segundos^000000
+[Nv 10]: ^77777750%^000000 l ^77777760 segundos^000000
 #
 LK_CONCENTRATION#
-Dedicação
-Nível Máximo: 5
-^777777Pré requisitos: Aumentar Recuperação de HP 5,
-Perícia com Lança 5, Montaria 1^000000
+Dedicação ^777777(Concentration)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Montaria 1, Perícia com Lança 5,
+Aumentar Recuperação de HP 5^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Quando usado, aumenta a precisão e a força de ataque do seu usuário e ao mesmo tempo, ativa o efeito da Habilidade Vigor. No entanto, a defesa do usuário ficará diminuída pela duração da habilidade.
-A alteração de qualquer equipamento resultará no cancelamento da habilidade.^000000
-[Nv 1]: ^777777Precisão +10, ATQ +5%, DEF -5%^000000
-[Nv 2]: ^777777Precisão +20, ATQ +10%, DEF -10%^000000
-[Nv 3]: ^777777Precisão +30, ATQ +15%, DEF -15%^000000
-[Nv 4]: ^777777Precisão +40, ATQ +20%, DEF -20%^000000
-[Nv 5]: ^777777Precisão +50, ATQ +25%, DEF -25%^000000
+Descrição:
+^777777Ativa [Vigor], melhora o dano físico e a
+Precisão ao custo de reduzir a DEF.^000000
+Nível l Precisão l ATQ l DEF l Duração
+[Nv 1]: ^777777+10^000000 l ^777777+5%^000000 l ^777777-5%^000000 l ^77777725 segundos^000000
+[Nv 2]: ^777777+20^000000 l ^777777+10%^000000 l ^777777-10%^000000 l ^77777730 segundos^000000
+[Nv 3]: ^777777+30^000000 l ^777777+15%^000000 l ^777777-15%^000000 l ^77777735 segundos^000000
+[Nv 4]: ^777777+40^000000 l ^777777+20%^000000 l ^777777-20%^000000 l ^77777740 segundos^000000
+[Nv 5]: ^777777+50^000000 l ^777777+25%^000000 l ^777777-25%^000000 l ^77777745 segundos^000000
 #
 LK_TENSIONRELAX#
-Relaxar
-Nível Máximo: 1
-^777777Pré requisitos: Provocar 5,
-Aumentar Recuperação de HP 10, Vigor 3^000000
+Relaxar ^777777(Tension Relax)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Vigor 3,
+Aumentar Recuperação de HP 10^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta a velocidade de restauração de HP ao sentar e descansar.
-Ao se levantar, ou usar qualquer item, a habilidade é cancelada.^000000
+Descrição:
+^777777Senta para acelerar a regeneração de HP.
+Ao levantar-se, usar itens ou sofrer
+ataques, a habilidade é cancelada.^000000
 #
 LK_BERSERK#
-Frenesi
-Nível Máximo: 1
-^777777Pré requisitos: Lorde com Classe acima do nível 50^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta o HP máximo, a velocidade de movimento e a força de ataque enquanto durar a habilidade. No entanto, essa habilidade diminui a esquiva do usuário ao mesmo tempo.
-Além disso, as ações do usuário ficam limitadas a atacar e se movimentar. O usuário também não poderá restaurar HP com habilidades de cura.
-Essa habilidade drena um pouco de HP por segundo. Depois de usar essa habilidade, não será possível regenerar HP e SP por 5 minutos.^000000
+Frenesi ^777777(Bersek)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Nv. de classe 50^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Recupera todo o HP para ativar.
+Aumenta a velocidade de ataque, o ATQ, o
+movimento, ativa [Vigor] e triplica o HP.
+Reduz a DEF, DEFM, Esquiva e todo o SP.
+Drena HP a cada 15 segundos e não poderá
+regenerar o HP e SP normalmente.
+Enquanto estiver ativa, não poderá equipar
+ou usar itens, habilidades e conversar.
+Deslogar o personagem cancela o efeito.^000000
 #
 HP_ASSUMPTIO#
 Assumptio
@@ -4401,279 +4495,348 @@ Nível l SP máx. l Regeneração
 [Nv 10]: ^777777+10%^000000 l ^777777+30%^000000
 #
 HW_SOULDRAIN#
-Dreno de Alma
-Nível Máximo: 10
-^777777Pré requisitos: Aumentar Recuperação de SP 5,
-Espíritos Anciões 7^000000
+Dreno de Alma ^777777(Soul Drain)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Espíritos Anciões 7,
+Aumentar Recuperação de SP 5^000000
 Tipo: ^777777Passiva^000000
-Conteúdo: ^777777Aumenta o SP máximo e recupera uma certa quantidade de SP a cada vez que um inimigo é derrotado. A quantidade de SP ganho com esta habilidade é afetada pelo nível dos inimigos. O SP será drenado apenas de um alvo fixo. Não funciona com magias de área.^000000
-[Nv 1]: ^777777SP Máximo +2%^000000
-[Nv 2]: ^777777SP Máximo +4%^000000
-[Nv 3]: ^777777SP Máximo +6%^000000
-[Nv 4]: ^777777SP Máximo +8%^000000
-[Nv 5]: ^777777SP Máximo +10%^000000
-[Nv 6]: ^777777SP Máximo +12%^000000
-[Nv 7]: ^777777SP Máximo +14%^000000
-[Nv 8]: ^777777SP Máximo +16%^000000
-[Nv 9]: ^777777SP Máximo +18%^000000
-[Nv 10]: ^777777SP Máximo +20%^000000
+Descrição:
+^777777Aumenta o SP máx. do usuário.
+Ao derrotar monstros com magias de
+alvo único, recupera um pouco de SP.
+O SP recuperado varia com o nv. do alvo.
+Não funciona com monstros do tipo Chefe.^000000
+Nível l SP máx.
+[Nv 1]: ^777777+2%^000000
+[Nv 2]: ^777777+4%^000000
+[Nv 3]: ^777777+6%^000000
+[Nv 4]: ^777777+8%^000000
+[Nv 5]: ^777777+10%^000000
+[Nv 6]: ^777777+12%^000000
+[Nv 7]: ^777777+14%^000000
+[Nv 8]: ^777777+16%^000000
+[Nv 9]: ^777777+18%^000000
+[Nv 10]: ^777777+20%^000000
 #
 HW_MAGICCRASHER#
-Esmagamento Mágico
-Nível Máximo: 1
-^777777Pré requisitos: Aumentar Recuperação de SP 1^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Lança um ataque físico neutro em um alvo. O dano é afetado pelo ATQ e pelo MATQ do usuário e reduzido pela defesa física do alvo.^000000
-#
-HW_MAGICPOWER#
-Amplificação Mística
-Nível Máximo: 10
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Amplifica temporariamente a força de ataque mágico de uma habilidade.^000000
-[Nv 1]: ^777777ATQM +5%^000000
-[Nv 2]: ^777777ATQM +10%^000000
-[Nv 3]: ^777777ATQM +15%^000000
-[Nv 4]: ^777777ATQM +20%^000000
-[Nv 5]: ^777777ATQM +25%^000000
-[Nv 6]: ^777777ATQM +30%^000000
-[Nv 7]: ^777777ATQM +35%^000000
-[Nv 8]: ^777777ATQM +40%^000000
-[Nv 9]: ^777777ATQM +45%^000000
-[Nv 10]: ^777777ATQM +50%^000000
-#
-PA_PRESSURE#
-Gloria Domini
-Nível Máximo: 5
-^777777Pré requisitos: Vigor 5, Fé 5, Punição Divina 2^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Invoca um grande crucifixo para esmagar os inimigos.
-O dano é fixo, não sendo afetado pelo DEF nem pelo ATQ,
-mas remove parte do SP do adversário quando usado em outros jogadores.
-A habilidade só pode ser usada em 1 alvo apenas.
-Gloria Domini não pode ser cancelada.^000000
-[Nv 1]: ^777777Dano 800 / 20% de Redução de SP do Adversário ^000000
-[Nv 2]: ^777777Dano 1100 / 25% de Redução de SP do Adversário ^000000
-[Nv 3]: ^777777Dano 1400 / 30% de Redução de SP do Adversário ^000000
-[Nv 4]: ^777777Dano 1700 / 35% de Redução de SP do Adversário ^000000
-[Nv 5]: ^777777Dano 2000 / 40% de Redução de SP do Adversário ^000000
-#
-PA_SACRIFICE#
-Sacrifício do Mártir
-Nível Máximo: 5
-^777777Pré requisitos: Vigor 1, Redenção 3^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Sacrifica o HP para causar mais dano ao inimigo.
-5 ataques serão afetados pela habilidade depois que ela for usada.
-Cada ataque consumirá 9% do HP do usuário.^000000
-[Nv 1]: ^777777ATQ x 1^000000
-[Nv 2]: ^777777ATQ x 1,1^000000
-[Nv 3]: ^777777ATQ x 1,2^000000
-[Nv 4]: ^777777ATQ x 1,3^000000
-[Nv 5]: ^777777ATQ x 1,4^000000
-#
-PA_GOSPEL#
-Canto de Batalha
-Nível Máximo: 10
-^777777Pré requisitos: Fé 8,
-Proteção Divina 3, Flagelo do Mal 5^000000
-Tipo: ^777777Suporte^000000
-Alcance: ^7777777 células ao redor do usuário^000000
-Conteúdo: ^777777Canta um hino para causar efeitos negativos nos oponentes e efeitos positivos nos aliados do usuário.
-Isso afeta todo jogador e oponente dentro do alcance.^000000
-#
-CH_PALMSTRIKE#
-Golpe da Palma em Fúria
-Nível Máximo: 5
-^777777Pré requisitos: Punhos de Ferro 7,
-Invocar Esfera Espiritual 5^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Atinge um inimigo usando as palmas das mãos. Há uma demora de um segundo até o ataque realmente atingir um inimigo. Quando ativada, essa habilidade também empurra o inimigo para trás.
-Só pode ser usada durante o estado de Fúria.^000000
-[Nv 1]: ^777777ATQ +300%^000000
-[Nv 2]: ^777777ATQ +400%^000000
-[Nv 3]: ^777777ATQ +500%^000000
-[Nv 4]: ^777777ATQ +600%^000000
-[Nv 5]: ^777777ATQ +700%^000000
-#
-CH_TIGERFIST#
-Punho do Tigre
-Nível Máximo: 5
-^777777Pré requisitos: Punhos de Ferro 5,
-Combo Triplo 5, O Último Dragão 3^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Uma habilidade de combo que pode ser utilizada depois de usar o Último Dragão.
-Um inimigo acertado por essa habilidade fica congelado por um curto período de tempo.
-Requer 1 esfera espiritual.^000000
-[Nv 1]: ^777777ATQ +140%, Chance de 20% de Congelar^000000
-[Nv 2]: ^777777ATQ +240%, Chance de 30% de Congelar^000000
-[Nv 3]: ^777777ATQ +340%, Chance de 40% de Congelar^000000
-[Nv 4]: ^777777ATQ +440%, Chance de 50% de Congelar^000000
-[Nv 5]: ^777777ATQ +540%, Chance de 60% de Congelar^000000
-#
-CH_CHAINCRUSH#
-Combo Esmagador
-Nível Máximo: 10
-^777777Pré requisitos: Punhos de Ferro 5,
-Invocar Esfera Espiritual 5, Punho do Tigre 2^000000
-Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Uma habilidade de combo que pode ser usada depois do Punho do Tigre.
-Consome 2 esferas espirituais para causar dano adicional.
-Depois de usar essa habilidade, é possível usar o Punho Supremo de Asura.
-Depois de executar o Punho Supremo de Asura, é impossível usar o Combo Esmagador ou o Punho do Tigre.
-^000000
-[Nv 1]: ^777777ATQ +500%^000000
-[Nv 2]: ^777777ATQ +600%^000000
-[Nv 3]: ^777777ATQ +700%^000000
-[Nv 4]: ^777777ATQ +800%^000000
-[Nv 5]: ^777777ATQ +900%^000000
-[Nv 6]: ^777777ATQ +1000%^000000
-[Nv 7]: ^777777ATQ +1100%^000000
-[Nv 8]: ^777777ATQ +1200%^000000
-[Nv 9]: ^777777ATQ +1300%^000000
-[Nv 10]: ^777777ATQ +1400%^000000
-#
-PF_HPCONVERSION#
-Indulgir
-Nível Máximo: 5
-^777777Pré requisitos: Aumentar Recuperação de SP 1,
-Espelho Mágico 1^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Consome 10% do HP para recuperar certa quantidade de SP.^000000
-[Nv 1]: ^77777710% do HP consumido convertido em SP^000000
-[Nv 2]: ^77777720% do HP consumido convertido em SP^000000
-[Nv 3]: ^77777730% do HP consumido convertido em SP^000000
-[Nv 4]: ^77777740% do HP consumido convertido em SP^000000
-[Nv 5]: ^77777750% do HP consumido convertido em SP^000000
-#
-PF_SOULCHANGE#
-Exalar Alma
+Esmagamento Mágico ^777777(Magic Crasher)^000000
 Nível máximo: ^7777771^000000
 Pré requisitos:
-^777777Espelho Mágico 3
-Desconcentrar 2^000000
+^777777Aumentar Recuperação de SP 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico de propriedade Neutro.
+O dano é baseado no ATQ e ATQM do usuário.^000000
+#
+HW_MAGICPOWER#
+Amplificação Mística ^777777(Magic Power)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o ATQM da próxima habilidade.
+Dura 30 segundos ou até que qualquer
+outra habilidade seja conjurada.^000000
+Nível l ATQM
+[Nv 1]: ^777777+5%^000000
+[Nv 2]: ^777777+10%^000000
+[Nv 3]: ^777777+15%^000000
+[Nv 4]: ^777777+20%^000000
+[Nv 5]: ^777777+25%^000000
+[Nv 6]: ^777777+30%^000000
+[Nv 7]: ^777777+35%^000000
+[Nv 8]: ^777777+40%^000000
+[Nv 9]: ^777777+45%^000000
+[Nv 10]: ^777777+50%^000000
+#
+PA_PRESSURE#
+Gloria Domini ^777777(Pressure)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Vigor 5, Fé 5,
+Punição Divina 2^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano fixo em um alvo único.
+Em outros personagens, drena parte do SP.
+A conjuração não pode ser interrompida.^000000
+Nível l Dano fixo l Dreno de SP
+[Nv 1]: ^777777  800^000000 l ^77777720%^000000
+[Nv 2]: ^7777771.100^000000 l ^77777725%^000000
+[Nv 3]: ^7777771.400^000000 l ^77777730%^000000
+[Nv 4]: ^7777771.700^000000 l ^77777735%^000000
+[Nv 5]: ^7777772.000^000000 l ^77777740%^000000
+#
+PA_SACRIFICE#
+Sacrifício do Mártir ^777777(Sacrifice)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Vigor 1, Redenção 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
-^777777Ao segurar a tecla SHIFT,
-troca 50% do seu SP atual
-por 50% de SP do membro
-de seu grupo.^000000
+^777777Ao realizar ataques físicos normais,
+causa dano físico de propriedade Neutro
+que ignora a DEF e Esquiva do alvo.
+Cada ataque drena 9% de HP do usuário.
+Funciona somente até 5 ataques normais.
+Não funciona com habilidades.^000000
+Nível l Dano
+[Nv 1]: ^777777100%^000000
+[Nv 2]: ^777777110%^000000
+[Nv 3]: ^777777120%^000000
+[Nv 4]: ^777777130%^000000
+[Nv 5]: ^777777140%^000000
+#
+PA_GOSPEL#
+Canto de Batalha ^777777(Gospel)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Fé 8, Flagelo do Mal 5,
+Proteção Divina 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^7777777Mantém-se imóvel para entoar uma canção.
+Membros do grupo e oponentes na área ao
+redor do usuário terão a chance de receber
+efeitos aleatórios a cada 10 segundos.
+Drena HP e SP do usuário continuamente.^000000
+Nível l Chance
+[Nv 1]: ^777777+55%^000000
+[Nv 2]: ^777777+60%^000000
+[Nv 3]: ^777777+65%^000000
+[Nv 4]: ^777777+70%^000000
+[Nv 5]: ^777777+75%^000000
+[Nv 6]: ^777777+80%^000000
+[Nv 7]: ^777777+85%^000000
+[Nv 8]: ^777777+90%^000000
+[Nv 9]: ^777777+95%^000000
+[Nv 10]: ^777777+100%^000000
+#
+CH_PALMSTRIKE#
+Golpe da Palma em Fúria ^777777(Palm Strike)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Punhos de Ferro 7,
+Invocar Esfera Espiritual 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas em estado de Fúria Interior.^000000
+^777777Causa dano físico e empurra o alvo
+3 células para trás após 1 segundo.^000000
+Nível l Dano
+[Nv 1]: ^777777300%^000000
+[Nv 2]: ^777777400%^000000
+[Nv 3]: ^777777500%^000000
+[Nv 4]: ^777777600%^000000
+[Nv 5]: ^777777700%^000000
+#
+CH_TIGERFIST#
+Punho do Tigre ^777777(Tiger Fist)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Punhos de Ferro 5,
+Combo Triplo 5, O Último Dragão 3^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Combo^000000
+Descrição:
+^777777Deve ser usada após [O Último Dragão].
+Causa dano físico adicional com chance de
+imobilizar o alvo por alguns segundos.^000000
+^000088Consome 1 Esfera Espiritual.^000000
+Nível l Dano l Chance
+[Nv 1]: ^777777140%^000000 l ^77777720%^000000
+[Nv 2]: ^777777240%^000000 l ^77777730%^000000
+[Nv 3]: ^777777340%^000000 l ^77777740%^000000
+[Nv 4]: ^777777440%^000000 l ^77777750%^000000
+[Nv 5]: ^777777540%^000000 l ^77777760%^000000
+#
+CH_CHAINCRUSH#
+Combo Esmagador ^777777(Chain Crush)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Punhos de Ferro 5,
+Punho do Tigre 2, Inv. Esfera Espiritual 5^000000
+Tipo: ^777777Ofensiva^000000 / ^CD3278Combo^000000
+Descrição:
+^777777Deve ser usada após [O Último Dragão]
+ou [Punho do Tigre].
+Causa dano físico adicional no alvo.
+Se o usuário estiver em estado de Fúria e
+possuir 1 Esfera Espiritual sobrando, é
+possível usar [Punho Supremo de Asura]
+logo em seguida.^000000
+^000088Consome 2 Esferas Espirituais.^000000
+Nível l Socos l Dano
+[Nv 1]: ^7777771^000000 l ^777777500%^000000
+[Nv 2]: ^7777771^000000 l ^777777600%^000000
+[Nv 3]: ^7777772^000000 l ^777777700%^000000
+[Nv 4]: ^7777772^000000 l ^777777800%^000000
+[Nv 5]: ^7777773^000000 l ^777777900%^000000
+[Nv 6]: ^7777773^000000 l ^7777771.000%^000000
+[Nv 7]: ^7777774^000000 l ^7777771.100%^000000
+[Nv 8]: ^7777774^000000 l ^7777771.200%^000000
+[Nv 9]: ^7777775^000000 l ^7777771.300%^000000
+[Nv 10]: ^7777775^000000 l ^7777771.400%^000000
+#
+PF_HPCONVERSION#
+Indulgir ^777777(HP Conversion)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Espelho Mágico 1,
+Aumentar Recuperação de SP 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Converte 10% de HP para recuperar SP.
+Quanto maior o nível da habilidade e
+o HP máximo do usuário, maior será
+a quantia de SP recuperada.^000000
+Nível l SP convertido de 10% do HP
+[Nv 1]: ^77777710%^000000
+[Nv 2]: ^77777720%^000000
+[Nv 3]: ^77777730%^000000
+[Nv 4]: ^77777740%^000000
+[Nv 5]: ^77777750%^000000
+#
+PF_SOULCHANGE#
+Exalar Alma ^777777(Soul Change)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Espelho Mágico 3, Desconcentrar 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ao segurar a tecla SHIFT, troca 50% do
+seu SP atual por 50% de SP do membro
+do seu grupo.^000000
 #
 PF_SOULBURN#
-Sifão de Alma
-Nível Máximo: 5
-^777777Pré requisitos: Cancelar Magia 5,
+Sifão de Alma ^777777(Soul Burn)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Cancelar Magia 5,
 Espelho Mágico 3, Desencantar 3^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Drena todo o SP de um alvo ao acaso.
-No nível 5, esta habilidade também causa uma quantidade de dano que é o dobro do SP restante do usuário.
-No entanto, se a habilidade falhar, o usuário será ferido por esse efeito.
-Só pode ser usado em áreas de PvP e Guerra do Emperium.^000000
-[Nv 1]: ^77777740% de Chance de Sucesso^000000
-[Nv 2]: ^77777750% de Chance de Sucesso^000000
-[Nv 3]: ^77777760% de Chance de Sucesso^000000
-[Nv 4]: ^77777770% de Chance de Sucesso^000000
-[Nv 5]: ^77777770% de Chance de Sucesso, Dano = 2 x SP^000000
+Descrição:
+^777777Concede a chance de drenar o SP do alvo.
+No nível 5, causa dano mágico que varia
+de acordo com a quantia de SP drenada.
+Se falhar, o usuário sofre o dano.
+Funciona apenas em PvP/GdE.^000000
+Nível l Chance de sucesso
+[Nv 1]: ^77777740%^000000
+[Nv 2]: ^77777750%^000000
+[Nv 3]: ^77777760%^000000
+[Nv 4]: ^77777770%^000000
+[Nv 5]: ^77777770%^000000
 #
 ASC_KATAR#
-Perícia com Katar Avançada
-Nível Máximo: 5
-^777777Pré requisitos: Ataque Duplo 5,
+Perícia com Katar Avançada ^777777(Adv. Katar)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Ataque Duplo 5,
 Perícia em Katar 7^000000
 Tipo: ^777777Passiva^000000
-Conteúdo: ^777777Aumenta o dano com o Katar.^000000
-[Nv 1]: ^777777ATQ +12%^000000
-[Nv 2]: ^777777ATQ +14%^000000
-[Nv 3]: ^777777ATQ +16%^000000
-[Nv 4]: ^777777ATQ +18%^000000
-[Nv 5]: ^777777ATQ +20%^000000
+Descrição:
+^777777Aumenta o ATQ ao usar armas do tipo Katar.^000000
+Nível l ATQ
+[Nv 1]: ^777777+12%^000000
+[Nv 2]: ^777777+14%^000000
+[Nv 3]: ^777777+16%^000000
+[Nv 4]: ^777777+18%^000000
+[Nv 5]: ^777777+20%^000000
 #
 ASC_EDP#
-Encantar com Veneno Mortal
-Nível Máximo: 5
-Pré-requisitos: ^777777Envenenar 10, Envenenar Arma 5, Criar Veneno Mortal 1^000000
+Encantar com Veneno Mortal ^777777(EDP)^000000
+Nível máximo: ^7777775^000000
+Pré-requisitos: ^777777Criar Veneno Mortal 1^000000
 Tipo: ^777777Suporte^000000
-Descrição: ^777777Encanta a arma com um veneno mortal, acrescentando dano adicional. Requer 1 Garrafa de Veneno Mortal.
-Ao realizar ataques físicos, chance de infligir Envenenamento Mortal no oponente. Não funciona com monstros tipo Chefe.^000000
-^00BB00Consome 1 Garrafa de Veneno.^000000
+Descrição:
+^777777Aumenta os danos físicos causados.
+Ao realizar ataques físicos, haverá chance
+de infligir [Envenenamento Mortal] no alvo.
+Enquanto estiver ativa, o dano de certas
+habilidades será reduzido pela metade.^000000
+^000088Consome 1 Garrafa de Veneno.^000000
+Nível l Duração
+[Nv 1]: ^77777740 segundos^000000
+[Nv 2]: ^77777745 segundos^000000
+[Nv 3]: ^77777750 segundos^000000
+[Nv 4]: ^77777755 segundos^000000
+[Nv 5]: ^77777760 segundos^000000
 #
 ASC_BREAKER#
-Destruidor de Almas
-Nível Máximo: 10
-^777777Pré requisitos: Ataque Duplo 5, Esconderijo 2, Envenenar 5,
-Furtividade 3, Envenenar Arma 6^000000
+Destruidor de Almas ^777777(Soul Breaker)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Envenenar Arma 6,
+Ataque Duplo 5, Esconderijo 2,
+Envenenar 5, Furtividade 3^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Inflige um dano baseado no ATQ e INT do usuário.
-Pode ser reduzido pela DEF e MDEF do alvo.^000000
+Descrição:
+^777777Causa dano híbrido a distância.
+O dano é baseado no ATQ e ATQM do usuário
+e é reduzido pela DEF, DEFM do alvo ou se
+o usuário usar Encantar com Veneno Mortal.^000000
 #
 SN_SIGHT#
-Visão Real
-Nível Máximo: 10
-^777777Pré requisitos: Precisão 10,
-Olhos de Águia 10, Concentração 10, Adestrar Falcão 1^000000
+Visão Real ^777777(True Sight)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Precisão 10,
+Olhos de Águia 10, Concentração 10,
+Adestrar Falcão 1^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Acrescenta 5 pontos a todos os atributos e aumenta a precisão, o dano da arma e a taxa de ataque crítico enquanto durar a habilidade.^000000
-[Nv 1]: ^777777Precisão +3%, Dano +2%, Crítico +1^000000
-[Nv 2]: ^777777Precisão +6%, Dano +4%, Crítico +2^000000
-[Nv 3]: ^777777Precisão +9%, Dano +6%, Crítico +3^000000
-[Nv 4]: ^777777Precisão +12%, Dano +8%, Crítico +4^000000
-[Nv 5]: ^777777Precisão +15%, Dano +10%, Crítico +5^000000
-[Nv 6]: ^777777Precisão +18%, Dano +12%, Crítico +6^000000
-[Nv 7]: ^777777Precisão +21%, Dano +14%, Crítico +7^000000
-[Nv 8]: ^777777Precisão +24%, Dano +16%, Crítico +8^000000
-[Nv 9]: ^777777Precisão +27%, Dano +18%, Crítico +9^000000
-[Nv 10]: ^777777Precisão +30%, Dano +20%, Crítico +10^000000
+Descrição:
+^777777Por 30 segundos, aumenta o ATQ, CRIT,
+e Precisão e +5 em todos os atributos.^000000
+Nível l Precisão l ATQ l CRIT
+[Nv 1]: ^777777 +3%^000000 l ^777777 +2%^000000 l ^777777+1^000000
+[Nv 2]: ^777777 +6%^000000 l ^777777 +4%^000000 l ^777777+2^000000
+[Nv 3]: ^777777 +9%^000000 l ^777777 +6%^000000 l ^777777+3^000000
+[Nv 4]: ^777777+12%^000000 l ^777777 +8%^000000 l ^777777+4^000000
+[Nv 5]: ^777777+15%^000000 l ^777777+10%^000000 l ^777777+5^000000
+[Nv 6]: ^777777+18%^000000 l ^777777+12%^000000 l ^777777+6^000000
+[Nv 7]: ^777777+21%^000000 l ^777777+14%^000000 l ^777777+7^000000
+[Nv 8]: ^777777+24%^000000 l ^777777+16%^000000 l ^777777+8^000000
+[Nv 9]: ^777777+27%^000000 l ^777777+18%^000000 l ^777777+9^000000
+[Nv 10]: ^777777+30%^000000 l ^777777+20%^000000 l ^777777+10^000000
 #
 SN_FALCONASSAULT#
-Assalto do Falcão
-Nível Máximo: 5
-^777777Pré requisitos: Olhos de Águia 5,
-Adestrar Falcão 1, Ataque Aéreo 5, Garras de Aço 3^000000
+Assalto do Falcão ^777777(Falcon Assault)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Olhos de Águia 5, Garras de Aço 3^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Comanda o Falcão para atacar um alvo.^000000
+Descrição:
+^008080Apenas com Ave.^000000
+^777777Comanda a ave para atacar um alvo único.^000000
 #
 SN_SHARPSHOOTING#
-Tiro Preciso
-Nível Máximo: 5
-^777777Pré requisitos: Rajada de Flechas 5,
-Concentração 10^000000
+Tiro Preciso ^777777(Sharp Shooting)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Rajada de Flechas 5, Concentração 10^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Atira uma flecha com força na direção de um alvo.
-A flecha irá direto para o alvo e causará grandes danos aos inimigos no caminho.
-[Nv 1]: ^777777ATQ +150%^000000
-[Nv 2]: ^777777ATQ +200%^000000
-[Nv 3]: ^777777ATQ +250%^000000
-[Nv 4]: ^777777ATQ +300%^000000
-[Nv 5]: ^777777ATQ +350%^000000
+Descrição:
+^777777Causa dano físico a distância no alvo
+e em todos os oponentes ao redor dele.
+No momento do ataque, garante CRIT +20.^000000
+^000088Consome 1 Flecha.^000000
+Nível l Dano
+[Nv 1]: ^777777150%^000000
+[Nv 2]: ^777777200%^000000
+[Nv 3]: ^777777250%^000000
+[Nv 4]: ^777777300%^000000
+[Nv 5]: ^777777350%^000000
 #
 SN_WINDWALK#
-Caminho do Vento
-Nível Máximo: 10
-^777777Pré requisitos: Concentração 9^000000
+Caminho do Vento ^777777(Wind Walk)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Concentração 9^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta a velocidade de movimento e a esquiva do usuário e dos membros do seu grupo.
-Não pode ser usado com outras habilidades com efeitos similares, como Aumentar AGI ou alguma que aumenta a velocidade de movimento.
-Além disso, outras habilidades que diminuam a velocidade de movimento, como Pântano dos Mortos, vão cancelar esta habilidade.^000000
+Descrição:
+^777777Aumenta a Esquiva e o movimento
+do usuário e membros do grupo.
+O movimento não acumula com efeitos
+semelhantes, como [Aumentar Agilidade].^000000
 #
 WS_MELTDOWN#
-Golpe Estilhaçante
-Nível Máximo: 10
-^777777Pré requisitos: Resistência ao Fogo 3,
-Punho Firme 1, Perícia em Armamento 5,
-Força Violenta 3^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Chance de destruir a arma ou armadura de um jogador em modo PVP, pela duração da habilidade.
-Em monstros, esta habilidade diminui a força de ataque ou a defesa.
-O nível da habilidade afeta a chance de sucesso.^000000
-[Nv 1]: ^777777Duração de 15 segundos^000000
-[Nv 2]: ^777777Duração de 20 segundos^000000
-[Nv 3]: ^777777Duração de 25 segundos^000000
-[Nv 4]: ^777777Duração de 30 segundos^000000
-[Nv 5]: ^777777Duração de 35 segundos^000000
-[Nv 6]: ^777777Duração de 40 segundos^000000
-[Nv 7]: ^777777Duração de 45 segundos^000000
-[Nv 8]: ^777777Duração de 50 segundos^000000
-[Nv 9]: ^777777Duração de 55 segundos^000000
-[Nv 10]: ^777777Duração de 60 segundos^000000
+Golpe Estilhaçante ^777777(Melt Down)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Resistência ao Fogo 3,
+Força Violenta 3, Perícia em Armamento 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ao realizar ataques físicos, chance de
+destruir a arma ou a armadura do alvo.
+Em monstros, reduz o ATQ ou a DEF.
+Não funciona contra monstros Chefe.^000000
 #
 WS_CREATECOIN#
 Criar_Moeda
@@ -4682,19 +4845,24 @@ WS_CREATENUGGET#
 Criar_Pepita
 #
 WS_CARTBOOST#
-Impulso no Carrinho
-Nível Máximo: 1
-^777777Pré requisitos: Usar Carrinho 5, Punho Firme 1,
-Cavalo de Pau 1, Personalizar Carrinho 1^000000
+Impulso no Carrinho ^777777(Cart Boost)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: Punho Firme 1,
+Cavalo de Pau 1, Usar Carrinho 5,
+Personalizar Carrinho 1^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Aumenta a velocidade de movimento do usuário enquanto usar um carrinho.
-Outros efeitos que aumentam a velocidade de movimento de um personagem não se somam a esta habilidade.^000000
+Descrição:
+^008080Apenas com Carrinho.^000000
+^777777Acelera o movimento do usuário.
+Não acumula com efeitos semelhantes,
+como [Aumentar Agilidade], mas cancela
+a habilidade [Diminuir Agilidade].^000000
 #
 WS_SYSTEMCREATE#
 Criação de Máquina de Batalha
 #
 ST_CHASEWALK#
-Espreitar
+Espreitar ^777777(Chase Walk)^000000
 Nível máximo: ^7777775^000000
 Pré requisitos:
 ^777777Esconderijo 5, Tunel de Fuga 3^000000
@@ -4716,19 +4884,22 @@ Nv. l SP drenado l Movimento l FOR
 [Nv 5]: ^77777720^000000 l ^77777790%^000000 l ^777777+16^000000
 #
 ST_REJECTSWORD#
-Instinto de Defesa
-Nível Máximo: 5
-Tipo: ^777777Suporte^000000
-Descrição: ^777777Se um oponente está usando uma Espada
-ativar esta habilidade pode bloquear ataques, reduzindo
-o dano de Espadas pela metade.
-No máximo 3 ataques podem ser bloqueados.
-Com monstros, o dano volta ao oponente.
-[Nv 1]: ^77777715% de Chance de Bloqueio^000000
-[Nv 2]: ^77777730% de Chance de Bloqueio^000000
-[Nv 3]: ^77777745% de Chance de Bloqueio^000000
-[Nv 4]: ^77777760% de Chance de Bloqueio^000000
-[Nv 5]: ^77777775% de Chance de Bloqueio^000000
+Instinto de Defesa ^777777(Reject Sword)^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Concede uma chance de reduzir em 50%
+o dano de personagens que atacarem você
+com arma do tipo Adaga ou Espadas.
+A outra metade do dano será refletida.
+Em monstros, reflete 50% do dano.
+Até 3 ataques podem ser refletidos.^000000
+Nível l Chance
+[Nv 1]: ^77777715%^000000
+[Nv 2]: ^77777730%^000000
+[Nv 3]: ^77777745%^000000
+[Nv 4]: ^77777760%^000000
+[Nv 5]: ^77777775%^000000
 #
 ST_STEALBACKPACK#
 #
@@ -4737,178 +4908,217 @@ CR_ALCHEMY#
 CR_SYNTHESISPOTION#
 #
 CG_ARROWVULCAN#
-Vulcão de Flechas
-Nível Máximo: 10
-^777777Pré requisitos: Rajada de Flechas 5,
+Vulcão de Flechas ^777777(Arrow Vulcan)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Rajada de Flechas 5,
 Chuva de Flechas 5, Flecha Melódica 1^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Atira várias flechas num inimigo. Um Bardo precisa estar equipado com um Instrumento Musical para usar esta habilidade e a Odalisca, com um Chicote.^000000
-[Nv 1]: ^777777ATQ 300%^000000
-[Nv 2]: ^777777ATQ 400%^000000
-[Nv 3]: ^777777ATQ 500%^000000
-[Nv 4]: ^777777ATQ 600%^000000
-[Nv 5]: ^777777ATQ 700%^000000
-[Nv 6]: ^777777ATQ 800%^000000
-[Nv 7]: ^777777ATQ 900%^000000
-[Nv 8]: ^777777ATQ 1000%^000000
-[Nv 9]: ^777777ATQ 1100%^000000
-[Nv 10]: ^777777ATQ 1200%^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Causa dano físico a distância no alvo.^000000
+^000088Consome 1 flecha.^000000
+Nível l Dano
+[Nv 1]: ^777777300%^000000
+[Nv 2]: ^777777400%^000000
+[Nv 3]: ^777777500%^000000
+[Nv 4]: ^777777600%^000000
+[Nv 5]: ^777777700%^000000
+[Nv 6]: ^777777800%^000000
+[Nv 7]: ^777777900%^000000
+[Nv 8]: ^7777771.000%^000000
+[Nv 9]: ^7777771.100%^000000
+[Nv 10]: ^7777771.200%^000000
 #
 CG_MOONLIT#
-Bênção Protetora
-Nível Máximo: 5
-^777777Pré requisitos: Concentração 5,
-Lições de Música 7^000000
-Tipo: ^777777Dueto^000000
-Conteúdo: ^777777Como uma habilidade de dueto de Bardo e Odalisca, ela cria uma área de 5x5 células ao redor dos usuários, na qual outros personagens e monstros não podem entrar.
-No entanto, a área só impede que os personagens entrem, mas não protege os usuários de ataques mágicos ou de longo alcance. Se houver um obstáculo na área desejada, a habilidade não poderá ser usada.^000000
-[Nv 1]: ^77777720 segundos de duração^000000
-[Nv 2]: ^77777725 segundos de duração^000000
-[Nv 3]: ^77777730 segundos de duração^000000
-[Nv 4]: ^77777735 segundos de duração^000000
-[Nv 5]: ^77777740 segundos de duração^000000
+Bênção Protetora ^777777(Moonlight Water Mill)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Concentração 5,
+Lições de Música 7^000000 ou ^777777Lições de Dança 7^000000
+Tipo: ^777777Suporte^000000 / ^CD3278Dueto^000000
+Descrição:
+^777777Empurra oponentes e impede que eles se
+aproximem da área de 5x5 células ao redor.
+Os artistas estarão imunes a danos
+físicos de curta distância.
+Se houver obstáculos na área,
+o dueto não poderá ser iniciado.
+Consome SP a cada 10 segundos ativo.^000000
 #
 CG_MARIONETTE#
-Controle de Marionete
-Nível Máximo: 1
-^777777Pré requisitos: Concentração 10,
-Lições de Música 5^000000
+Controle de Marionete ^777777(Marionette Control)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Concentração 10,
+Lições de Música 5^000000 ou ^777777Lições de Dança 5^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Passa cada atributo do usuário para um membro do grupo, que receberá metade de cada um deles.
-O jogador-alvo não poderá ter atributos maiores que 99. A habilidade consome 100 SP.
-Se o membro do grupo estiver a mais de 7 células de distância do usuário, a habilidade será cancelada.^000000
+Descrição:
+^777777Ao pressionar a tecla SHIFT,
+transfere metade dos seus atributos base
+para o membro do grupo selecionado.
+Os atributos não podem passar de 99.
+É cancelada ao ser conjurada novamente ou
+se o alvo estiver distante do usuário.^000000
 #
 LK_SPIRALPIERCE#
-Perfurar em Espiral
-Nível Máximo: 5
-^777777Pré requisitos: Perícia com Lança 5,
-Perfurar 5, Montaria 1, Estocada 5^000000
+Perfurar em Espiral ^777777(Spiral Pierce)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Perícia com Lança 5,
+Perfurar 5, Estocada 5^000000
 Tipo: ^777777Ofensiva^000000
-^777777Causa vários ataques de espirais a um inimigo.
-Quando atingido, o inimigo fica sem poder se mover por um segundo.
-O nível de habilidade aumenta o dano, mas também o tempo de conjuração e o tempo de 'congelamento'. O peso da arma afeta a quantidade de dano. Pode ser utilizada com lanças e espadas.^000000
+Descrição:
+^008080Apenas com Lanças e Espadas.^000000
+^777777Causa dano físico a distância no alvo,
+que ficará imóvel por 1 segundo.
+O dano é afetado pelo peso da arma.^000000
 #
 LK_HEADCRUSH#
-Golpe Traumático
-Nível Máximo: 5
-^777777Pré requisitos: Perícia com Lança 9,
-Montaria 1^000000
+Golpe Traumático ^777777(Head Crush)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Perícia com Lança 9, Montaria 1^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Acerta um monstro em cheio, causando um efeito de sangramento ao acaso.
-Se o golpe acertar, o monstro receberá continuamente um dano extra por algum tempo.^000000
-[Nv 1]: ^777777ATQ 140%^000000
-[Nv 2]: ^777777ATQ 180%^000000
-[Nv 3]: ^777777ATQ 220%^000000
-[Nv 4]: ^777777ATQ 260%^000000
-[Nv 5]: ^777777ATQ 300%^000000
+Descrição:
+^777777Causa dano físico a distância com chance
+de infligir [Sangramento] no oponente.^000000
+Nível l Dano
+[Nv 1]: ^777777140%^000000
+[Nv 2]: ^777777180%^000000
+[Nv 3]: ^777777220%^000000
+[Nv 4]: ^777777260%^000000
+[Nv 5]: ^777777300%^000000
 #
 LK_JOINTBEAT#
-Ataque Vital
-Nível Máximo: 10
-^777777Pré requisitos:  Perícia com Lança 9,
-Montaria 1, Perícia em Montaria 3, Golpe Traumático 3^000000
+Ataque Vital ^777777(Joint Beat)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Perícia com Lança 9,
+Perícia em Montaria 3, Golpe Traumático 3^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Requer uma Lança. Acerta um ponto vital de um alvo, causando vários estados anormais.
-O nível da habilidade afeta a força de ataque e a chance de sucesso.^000000
-[Nv 1]: ^777777ATQ 60%^000000
-[Nv 2]: ^777777ATQ 70%^000000
-[Nv 3]: ^777777ATQ 80%^000000
-[Nv 4]: ^777777ATQ 90%^000000
-[Nv 5]: ^777777ATQ 100%^000000
-[Nv 6]: ^777777ATQ 110%^000000
-[Nv 7]: ^777777ATQ 120%^000000
-[Nv 8]: ^777777ATQ 130%^000000
-[Nv 9]: ^777777ATQ 140%^000000
-[Nv 10]: ^777777ATQ 150%^000000
+Descrição:
+^008080Apenas com Lanças.^000000
+^777777Causa dano físico a distância com chance
+de atingir pontos vitais do alvo.
+Cada ponto vital atingido causará efeitos
+adversos, como reduzir a DEF e o ATQ.^000000
+Nível l Dano l Chance
+[Nv 1]: ^77777760%^000000
+[Nv 2]: ^77777770%^000000
+[Nv 3]: ^77777780%^000000
+[Nv 4]: ^77777790%^000000
+[Nv 5]: ^777777100%^000000
+[Nv 6]: ^777777110%^000000
+[Nv 7]: ^777777120%^000000
+[Nv 8]: ^777777130%^000000
+[Nv 9]: ^777777140%^000000
+[Nv 10]: ^777777150%^000000
 #
 HW_NAPALMVULCAN#
-Vulcão Napalm
-Nível Máximo: 5
-^777777Pré requisitos: Ataque Espiritual 5^000000
-Tipo: ^777777Ofensiva ^bb00bbFantasma^000000
-Alvo: ^777777Oponente^000000
-Conteúdo: ^777777Lança vários golpes a distância contra um inimigo e amaldiçoa o alvo usando psicocinese ao acaso.
-O nível da habilidade afeta o número de golpes.^000000
+Vulcão Napalm ^777777(Napalm Vulcan)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Ataque Espiritual 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano mágico de propriedade Fantasma
+no alvo e nos arredores de 3x3 células
+com chance de infligir [Maldição].^000000
 #
 CH_SOULCOLLECT#
-Zen
-Nível Máximo: 1
-^777777Pré requisitos: Fúria Interior 5^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^7777775 Esferas Espirituais são conjuradas com esta habilidade. O tempo de conjuração é de 2 segundos.^000000
+Zen ^777777(Dangerous Soul Collect)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Fúria Interior 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777De uma só vez, invoca o maior número
+possível de Esferas Espirituais.^000000
 #
 PF_MINDBREAKER#
-Enlouquecedor
-Nível Máximo: 5
-^777777Pré requisitos: Aumentar Recuperação de SP 3,
-Sifão de Alma 2^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Confunde um inimigo para deixá-lo vulnerável.
-Diminui a defesa mágica do inimigo, mas ao mesmo tempo aumenta sua força mágica de ataque.
-O nível da habilidade afeta a chance de sucesso.^000000
-[Nv 1]: ^777777ATQM do alvo +20%, MDEF -12%^000000
-[Nv 2]: ^777777ATQM do alvo +40%, MDEF -24%^000000
-[Nv 3]: ^777777ATQM do alvo +60%, MDEF -36%^000000
-[Nv 4]: ^777777ATQM do alvo +80%, MDEF -48%^000000
-[Nv 5]: ^777777ATQM do alvo +100%, MDEF -60%^000000
+Enlouquecedor ^777777(Mind Breaker)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Sifão de Alma 2,
+Aumentar Recuperação de SP 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tenta irritar o alvo para atraí-lo.
+Em caso de sucesso, diminui a DEFM
+e aumenta o ATQM do oponente.
+Não funciona em monstros mortos-vivos.^000000
+Nível l ATQM l DEFM
+[Nv 1]: ^777777+20%^000000 l ^777777DEFM -12%^000000
+[Nv 2]: ^777777+40%^000000 l ^777777DEFM -24%^000000
+[Nv 3]: ^777777+60%^000000 l ^777777DEFM -36%^000000
+[Nv 4]: ^777777+80%^000000 l ^777777DEFM -48%^000000
+[Nv 5]: ^777777+100%^000000 l ^777777DEFM -60%^000000
 #
 PF_MEMORIZE#
-Presciência
-Nível Máximo: 1
-^777777Pré requisitos: Estudo de Livros 5, Desejo Arcano 1,
-Conjuração Livre 5^000000
+Presciência ^777777(Memorize)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Desejo Arcano 1,
+Estudo de Livros 5, Conjuração Livre 5^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Reduz o tempo de conjuração de habilidades em 5 conjurações.
-Fora a limitação de 5 usos, não há limite de duração para esta habilidade. No entanto, se o usuário morrer, a habilidade será cancelada.
-O tempo de conjuração da Presciência não é afetado pela DES, e é de 5 segundos.^000000
+Descrição:
+^777777Reduz o tempo de conjuração variável
+em 50% das próximas 5 habilidades.^000000
 #
 PF_FOGWALL#
-Bruma Ofuscante
-Nível Máximo: 1
-^777777Pré requisitos: Furacão 2, Dilúvio 2^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Cria uma cortina de névoa numa área de 5x3 células, causando efeito ofuscante nos personagens, incluindo monstros.
-Cada ataque de longo alcance, ou habilidade mágica, terá mais chance de errar alvos, e seu dano também será reduzido.
-Efeitos negativos funcionam contra monstros em mapas normais e em PvP funcionam também, contra personagens.^000000
+Bruma Ofuscante ^777777(Wall of Fog)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Furacão 2, Dilúvio 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Cria uma neblina na área de 5x3 células
+que inflige [Cegueira] nos oponentes.
+O usuário e alvos dentro da neblina terão
+mais chances de errar os ataques e
+todo o dano causado será reduzido.^000000
 #
 PF_SPIDERWEB#
-Prisão de Teia
-Nível Máximo: 1
-^777777Pré requisitos: Dragonologia 4^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Atira uma teia de aranha prendendo o alvo e diminuindo sua Esquiva pela metade. É possível atirar 2 teias, no máximo.
-A teia dura 8 segundos; a habilidade Fogo Grego do Alquimista pode queimá-la. Necessita da uma Teia de Aranha.
-No entanto, a teia de aranha dobrará o dano do Fogo Grego enquanto estiver sendo queimada.^000000
+Prisão de Teia ^777777(Spider Web)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Dragonologia 4^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Imobiliza o alvo, reduzindo a Esquiva.
+Ataques físicos ou mágicos de propriedade
+Fogo causarão dano adicional no alvo,
+mas ele será libertado da imobilização.^000000
+^000088Consome 1 Teia de Aranha.^000000
 #
 ASC_METEORASSAULT#
-Impacto Meteoro
-Nível Máximo: 10
-Pré-requisitos :^777777 Esconderijo 2, Envenenar 1, Perícia com a Mão Direita 3, Perícia em Katar 5, Envenenar Arma 6,
-Lâminas Destruidoras 5, Destruidor de Almas 1
-Destruidor de Almas 1^000000
+Impacto Meteoro ^777777(Meteor Assault)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Perícia com Mão Direita 3
+Perícia com Katar, Destruidor de Almas 1
+Lâminas Destruidoras 5^000000
 Tipo: ^777777Ofensiva^000000
-Conteúdo: ^777777Causa um golpe nos inimigos dentro do raio de 5 células ao redor do usuário. Também causa vários estados anormais nos inimigos ao acaso.^000000
-[Nv 1]: ^777777ATQ 80%^000000
-[Nv 2]: ^777777ATQ 120%^000000
-[Nv 3]: ^777777ATQ 160%^000000
-[Nv 4]: ^777777ATQ 200%^000000
-[Nv 5]: ^777777ATQ 240%^000000
-[Nv 6]: ^777777ATQ 280%^000000
-[Nv 7]: ^777777ATQ 320%^000000
-[Nv 8]: ^777777ATQ 360%^000000
-[Nv 9]: ^777777ATQ 400%^000000
-[Nv 10]: ^777777ATQ 440%^000000
+Descrição:
+^777777Causa dano físico de curta distância na
+área de 5x5 células ao redor do usuário.
+Alvos atingidos poderão ter [Sangramento],
+[Cegueira] ou [Atordoamento].^000000
+Nível l Dano
+[Nv 1]: ^77777780%^000000
+[Nv 2]: ^777777120%^000000
+[Nv 3]: ^777777160%^000000
+[Nv 4]: ^777777200%^000000
+[Nv 5]: ^777777240%^000000
+[Nv 6]: ^777777280%^000000
+[Nv 7]: ^777777320%^000000
+[Nv 8]: ^777777360%^000000
+[Nv 9]: ^777777400%^000000
+[Nv 10]: ^777777440%^000000
 #
 ASC_CDP#
-Criar Veneno Mortal
-Nível Máximo: 1
-^777777Pré requisitos:  Envenenar 10, Desintoxicar 1,
-Envenenar Arma 5^000000
-Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Cria uma garrafa de veneno mortal, usando alguns materiais.
-Os materiais são os seguintes: 1 Esporo Venenoso, 1 Canino Venenoso, 1 Espinho de Cacto, 1 Ferrão de Abelha, 1 Karvodailnirol, 1 Poção da Fúria Selvagem e 1 Garrafa Vazia
-A DES e a SOR do usuário afetam a chance de sucesso e, se a habilidade falhar, são retirados 25% do HP máximo.
-Se um Algoz beber dessa garrafa, isso envenena o usuário, mas ao mesmo tempo aumenta a velocidade de ataque; mas, para os outros personagens, é morte instantânea.^000000
+Criar Veneno Mortal ^777777(CPD)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Envenenar Arma 5,
+Envenenar 10, Desintoxicar 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tenta criar uma Garrafa de Veneno Mortal.
+Em caso de falha, drena 25% de HP.
+A chance é afetada pela DES e SOR.^000000
+^000088Consome 1 Garrafa Vazia, 1 Esporo Venenoso,
+1 Canino Venenoso, 1 Espinho de Cacto,
+1 Ferrão de Abelha, 1 Karvodailnirol e
+1 Poção da Fúria Selvagem.^000000
 #
 WE_BABY#
 Mãe, Pai, amo vocês!
@@ -5942,102 +6152,117 @@ Nível l Duração l Custo de SP l Conjuração
 [Nv 3] ^77777730 segundos^000000 l ^77777760^000000 l ^7777771 segundo^000000
 #
 ST_PRESERVE#
-Preservar
-Nível Máximo: 1
-^777777Pré requisitos: Plágio 10^000000
-Descrição: ^777777Evita a cópia automática de habilidades através da habilidade Plágio durante 10 minutos, para preservar a última habilidade copiada.^000000
+Preservar ^777777(Preserve)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Plágio 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Por 10 minutos, impede que habilidades
+sejam copiadas por [Plágio], evitando
+perder a última habilidade aprendida.^000000
 #
 ST_FULLSTRIP#
-Remoção Total
-Nível Máximo: 5
-^777777Pré requisitos: Remover Arma 5^000000
-Tipo: ^777777Suporte^000000
-Alvo: ^777777Oponente^000000
-Descrição: ^777777Lança as quatro habilidades Remover (Arma, Armadura, Capacete, Escudo) ao mesmo tempo. A chance de sucesso desta habilidade aumenta se o usuário tiver DES maior que a do alvo.^000000
-[Nv 1]: ^7777777% de Chance de Sucesso^000000
-[Nv 2]: ^7777779% de Chance de Sucesso^000000
-[Nv 3]: ^77777711% de Chance de Sucesso^000000
-[Nv 4]: ^77777713% de Chance de Sucesso^000000
-[Nv 5]: ^77777715% de Chance de Sucesso^000000
+Remoção Total ^777777(Full Strip)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Remover Arma 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tenta remover a armadura, a arma, o escudo
+e o capacete do oponente, impedindo-o de
+equipá-los temporariamente.
+A chance é afetada pela DES do usuário.^000000
+Nível l Chance l Duração
+[Nv 1]: ^777777 7%^000000 l ^777777 75 segundos^000000
+[Nv 2]: ^777777 9%^000000 l ^777777 90 segundos^000000
+[Nv 3]: ^77777711%^000000 l ^777777105 segundos^000000
+[Nv 4]: ^77777713%^000000 l ^777777120 segundos^000000
+[Nv 5]: ^77777715%^000000 l ^777777135 segundos^000000
 #
 WS_WEAPONREFINE#
-Aprimorar Armamento
-Nível Máximo: 10
-^777777Pré requisitos: Perícia em Armamento 10^000000
-Tipo: ^777777Criação^000000
-Descrição:^777777Refina armas para melhorar seu nível. Ao contrário das forjas de armas, que é afetada pela DES ou SOR, a chance de sucesso desta habilidade é afetada pelo Nível de Classe do usuário.
-Mestres Ferreiros têm praticamente a mesma chance de sucesso que os NPCs para Aprimorar no Nível de Classe 50, têm uma chance de sucesso 5% maior no Nível de Classe 60, e uma chance 10% maior no Nível de Classe 70.
-Se a tentativa de aprimorar falhar, a arma será destruída.
-^00BB00Aprimorar armas de nível 1 requer 1 Fracon.
-Aprimorar armas de nível 2 requer 1 Emveretarcon.
-Aprimorar armas de nível 3 e 4 requer 1 Oridecon.^000000
-^FFFFFF_^000000
-Atualização Máxima Possível por Nível
-[Nv 1]:^777777 +1^000000
-[Nv 2]:^777777 +2^000000
-[Nv 3]:^777777 +3^000000
-[Nv 4]:^777777 +4^000000
-[Nv 5]:^777777 +5^000000
-[Nv 6]:^777777 +6^000000
-[Nv 7]:^777777 +7^000000
-[Nv 8]:^777777 +8^000000
-[Nv 9]:^777777 +9^000000
-[Nv 10]:^777777 +10^000000
+Aprimorar Armamento ^777777(Weapon Refine)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Perícia em Armamento 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Permite refinar armas do inventário.
+O nível usado da habilidade determina
+o limite de refino da arma selecionada.
+A chance de sucesso é a mesma dos NPCs de
+refino, mas é aumentada em 0,5% para cada
+nível de classe do usuário acima do 50.
+Em caso de falha, a arma será perdida.^000000
+^000088Armas nv. 1 consomem 1 Fracon.
+Armas nv. 2 consomem 1 Emveretarcon.
+Armas nv. 3 e 4 consomem 1 Oridecon.^000000
 #
 CR_SLIMPITCHER#
-Arremessar Poção Compacta
-Nível Máximo: 10
-^777777Pré requisitos: Arremessar Poção 5^000000
+Arremessar Poção Compacta ^777777(Slim Pitcher)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Arremessar Poção 5^000000
 Tipo: ^777777Suporte^000000
-Descrição:^777777Consome uma poção compacta para curar membros do grupo num raio de 7x7 células^000000
-^777777ao redor de um ponto escolhido.^000000
-[Nv 1]: ^777777Eficiência da Poção de 110% [Vermelha]^000000
-[Nv 2]: ^777777Eficiência da Poção de 120% [Vermelha]^000000
-[Nv 3]: ^777777Eficiência da Poção de 130% [Vermelha]^000000
-[Nv 4]: ^777777Eficiência da Poção de 140% [Vermelha]^000000
-[Nv 5]: ^777777Eficiência da Poção de 150% [Vermelha]^000000
-[Nv 6]: ^777777Eficiência da Poção de 160% [Amarela]^000000
-[Nv 7]: ^777777Eficiência da Poção de 170% [Amarela]^000000
-[Nv 8]: ^777777Eficiência da Poção de 180% [Amarela]^000000
-[Nv 9]: ^777777Eficiência da Poção de 190% [Amarela]^000000
-[Nv 10]: ^777777Eficiência da Poção de 200% [Branca]^000000
+Descrição:
+^777777Atira uma poção compacta na área de
+7x7 células, regenerando o HP de membros
+do grupo com uma efetividade de cura
+maior que uma poção compacta normal.^000000
+^000088Consome 1 Poção Compacta.^000000
+Nível l Efetividade l Poção Compacta
+[Nv 1]: ^777777110%^000000 l ^777777Vermelha^000000
+[Nv 2]: ^777777120%^000000 l ^777777Vermelha^000000
+[Nv 3]: ^777777130%^000000 l ^777777Vermelha^000000
+[Nv 4]: ^777777140%^000000 l ^777777Vermelha^000000
+[Nv 5]: ^777777150%^000000 l ^777777Vermelha^000000
+[Nv 6]: ^777777160%^000000 l ^777777Amarela^000000
+[Nv 7]: ^777777170%^000000 l ^777777Amarela^000000
+[Nv 8]: ^777777180%^000000 l ^777777Amarela^000000
+[Nv 9]: ^777777190%^000000 l ^777777Amarela^000000
+[Nv 10]: ^777777200%^000000 l ^777777Branca^000000
 #
 CR_FULLPROTECTION#
-Proteção Química Total
-Nível Máximo: 5
-^777777Pré requisitos: Revestir
-Arma, Escudo, Armadura, Capacete 5^000000
+Proteção Química Total ^777777(Full Protection)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Revestir Capacete 5,
+Revestir Arma, Escudo, Armadura 5^000000
 Tipo: ^777777Suporte^000000
-Conteúdo: ^777777Esta habilidade funciona como as 4 habilidades de Revestir (Arma, Escudo, Armadura, Capacete) ao mesmo tempo.^000000
-^777777Requer 1 Frasco de Revestimento.^000000
-[Nv 1]: ^777777Duração de 120 segundos^000000
-[Nv 2]: ^777777Duração de 240 segundos^000000
-[Nv 3]: ^777777Duração de 360 segundos^000000
-[Nv 4]: ^777777Duração de 480 segundos^000000
-[Nv 5]: ^777777Duração de 600 segundos^000000
+Descrição:
+^777777Reveste a arma, o escudo, o capacete e a
+armadura do alvo, impedindo-os de serem
+removidos ou quebrados por habilidades.^000000
+^000088Consome 1 Frasco de Revestimento.^000000
+Nível l Duração
+[Nv 1]: ^777777120 segundos^000000
+[Nv 2]: ^777777240 segundos^000000
+[Nv 3]: ^777777360 segundos^000000
+[Nv 4]: ^777777480 segundos^000000
+[Nv 5]: ^777777600 segundos^000000
 #
 PA_SHIELDCHAIN#
-Choque Rápido
-Nível Máximo: 5
-^777777Pré requisitos: Escudo Bumerangue 5^000000
-Alcance: ^7777774 células ^000000
-Descrição: ^777777Dá a chance de atingir um inimigo 5 vezes com um Escudo durante a batalha.
-A Precisão afeta a chance de sucesso, e o peso e o aprimoramento do Escudo afetam a quantidade de dano.
-Choque Rápido tem uma demora de 1 segundo, e ^00BB00requer um escudo^777777.^000000
-[Nv 1]:^777777 +30% de Dano, +20 de Precisão^000000
-[Nv 2]:^777777 +60% de Dano, +20 de Precisão^000000
-[Nv 3]:^777777 +90% de Dano, +20 de Precisão^000000
-[Nv 4]:^777777 +120% de Dano, +20 de Precisão^000000
-[Nv 5]:^777777 +150% de Dano, +20 de Precisão^000000
+Choque Rápido ^777777(Shield Chain)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Escudo Bumerangue 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Escudo.^000000
+^777777Causa dano físico de curta distância.
+Atinge o oponente até 5 vezes, mas o
+número de golpes varia com a sua Precisão.
+É afetado pelo peso e refino do escudo.^000000
+Nível l Dano
+[Nv 1]: ^77777730%^000000
+[Nv 2]: ^77777760%^000000
+[Nv 3]: ^77777790%^000000
+[Nv 4]: ^777777120%^000000
+[Nv 5]: ^777777150%^000000
 #
 HP_MANARECHARGE#
-Riqueza de Espírito
+Riqueza de Espírito ^777777(Mana Recharge)^000000
 Nível máximo: ^7777775^000000
 Pré requisitos:
 ^777777Perícia com Maça 10, Flagelo do Mal 10^000000
+Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Reduz o custo de SP ao usar habilidades.^000000
-Nível l Consumo de SP
+Nível l Custo de SP
 [Nv 1]: ^777777-4%^000000
 [Nv 2]: ^777777-8%^000000
 [Nv 3]: ^777777-12%^000000
@@ -6045,12 +6270,15 @@ Nível l Consumo de SP
 [Nv 5]: ^777777-20%^000000
 #
 PF_DOUBLECASTING#
-Lanças Duplas
-Nível Máximo: 5
-^777777Pré requisitos: Desejo Arcano 1^000000
-Descrição: ^777777Dá a chance de repetir qualquer habilidade de Lança/Relâmpago que for lançada enquanto durar esta habilidade (90 segundos).^000000
-^FFFFFF_^000000
-Chance de Duplicar Lanças por Nível
+Lanças Duplas ^777777(Double Casting)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Desejo Arcano 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Por 90 segundos, concede a chance de
+repetir Lanças de Fogo, Gelo ou Relâmpago
+ao atacar com essas habilidades.^000000
+Nível l Chance
 [Nv 1]: ^77777740%^000000
 [Nv 2]: ^77777750%^000000
 [Nv 3]: ^77777760%^000000
@@ -6059,131 +6287,172 @@ Chance de Duplicar Lanças por Nível
 #
 HW_GANBANTEIN#
 Ganbantein
-Nível Máximo: 1
-^777777Pré requisitos: Sentido Sobrenatural 1, Barreira de Gelo 1^000000
-Alvo: ^777777Chão^000000
-Descrição: ^777777Dá a chance de cancelar qualquer feitiço de solo lançado, numa área de 3 x 3 células ao redor do ponto-alvo.
-Esta habilidade irá cancelar a habilidade Proteger Terreno em áreas por ela encantada. Esta habilidade não é afetada por itens ou habilidades que removeriam o consumo de Gemas.
-^00BB00Cada uso consome 1 Gema Azul e 1 Gema Amarela.
-^777777Tempo de Conjuração de 5 segundos.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos:
+^777777Barreira de Gelo 1 Sentido Sobrenatural 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Dá a chance de anular as habilidades
+de solo em uma área de 3x3 células.^000000
+^000088Consome 1 Gema Azul e 1 Gema Amarela.^000000
+^008080O consumo de gemas não pode ser anulado.^000000
 #
 HW_GRAVITATION#
-Campo Gravitacional
-Nível Máximo: 5
-^777777Pré requisitos: Pântano dos Mortos 1,Fúria da Terra 1,
-Esmagamento Mágico 1, Coluna de Pedra 1, Amplificação Mística 10^000000
-Alvo: ^777777Chão^000000
-Descrição: ^777777Aumenta a gravidade numa área de 5 x 5 células ao redor do ponto-alvo, diminuindo as Velocidades de Movimento e
-Ataque dos inimigos dentro dela, além de causar um dano contínuo que elimina a Defesa. O efeito desta habilidade nas Velocidades de Movimento e Ataque não se aplica a Chefes.
-Enquanto esta habilidade estiver ativa, o usuário não poderá se mover, não poderá usar ataques normais e não poderá utilizar itens de nenhum tipo.
-Ao receber dano, a habilidade é cancelada mesmo depois de lançada. ^00BB00Cada uso consome 1 Gema Azul.^777777
-[Nv 1]:^777777 Duração de 5 s, -5% na Velocidade dos Inimigos, 600 de dano / 0,5 Segundos^000000
-[Nv 2]:^777777 Duração de 6 s, -10% na Velocidade dos Inimigos, 700 de dano / 0,5 Segundos^000000
-[Nv 3]:^777777 Duração de 7 s, -15% na Velocidade dos Inimigos, 800 de dano / 0,5 Segundos^000000
-[Nv 4]:^777777 Duração de 8 s, -20% na Velocidade dos Inimigos, 900 de dano / 0,5 Segundos^000000
-[Nv 5]:^777777 Duração de 9 s, -25% na Velocidade dos Inimigos, 1000 de dano / 0,5 Segundos^000000
+Campo Gravitacional ^777777(Gravitational Field)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Amplificação Mística 10,
+Esmagamento Mágico 1, Pântano dos Mortos 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano fixo a cada 0,5 segundos nos
+alvos dentro da área de 5x5 células.
+A velocidade de ataque dos atingidos será
+reduzida, mas não afeta monstros Chefes.
+O usuário não poderá se mover, atacar ou
+usar itens, mas se receber dano durante o
+efeito, a habilidade é cancelada.^000000
+^000088Consome 1 Gema Azul.^000000
+Nível l Duração l Dano fixo
+[Nv 1]: ^7777775 segundos^000000 l ^777777600^000000
+[Nv 2]: ^7777776 segundos^000000 l ^777777700^000000
+[Nv 3]: ^7777777 segundos^000000 l ^777777800^000000
+[Nv 4]: ^7777778 segundos^000000 l ^777777900^000000
+[Nv 5]: ^7777779 segundos^000000 l ^7777771.000000000
 #
 WS_CARTTERMINATION#
-Choque do Carrinho
-Nível Máximo: 10
-^777777Pré requisitos: Martelo de Thor 5,
+Choque do Carrinho ^777777(Cart Termination)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Martelo de Thor 5,
 Mammonita 10, Impulso do Carrinho 1^000000
-Descrição: ^777777Esta habilidade só é ativada enquanto Impulso no Carrinho estiver sendo usada.
-Gasta certa quantidade de zenys para empurrar um Carrinho contra um inimigo, com uma chance de Atordoar.
-O dano causado por esta habilidade depende do nível da habilidade e do peso dos itens levados pelo Carrinho.^000000
-[Nv 1]:^777777 600 zenys, 5% de Chance de Atordoar^000000
-[Nv 2]:^777777 700 zenys, 10% de Chance de Atordoar^000000
-[Nv 3]:^777777 800 zenys, 15% de Chance de Atordoar^000000
-[Nv 4]:^777777 900 zenys, 20% de Chance de Atordoar^000000
-[Nv 5]:^777777 1.000 zenys, 25% de Chance de Atordoar^000000
-[Nv 6]:^777777 1.100 zenys, 30% de Chance de Atordoar^000000
-[Nv 7]:^777777 1.200 zenys, 35% de Chance de Atordoar^000000
-[Nv 8]:^777777 1.300 zenys, 40% de Chance de Atordoar^000000
-[Nv 9]:^777777 1.400 zenys, 45% de Chance de Atordoar^000000
-[Nv 10]:^777777 1.500 zenys, 50% de Chance de Atordoar^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Carrinho.
+Precisa de [Impulso no Carrinho] ativo.^000000
+^777777Causa dano físico de curta distância com
+chance de infligir [Atordoamento] no alvo.
+O dano é afetado pelo peso do carrinho.^000000
+^000088Consome zenys.^000000
+Nível l Zenys l Chance
+[Nv 1]:^777777 600^000000 l ^7777775%^000000
+[Nv 2]:^777777 700^000000 l ^77777710%^000000
+[Nv 3]:^777777 800^000000 l ^77777715%^000000
+[Nv 4]:^777777 900^000000 l ^77777720%^000000
+[Nv 5]:^777777 1.000^000000 l ^77777725%^000000
+[Nv 6]:^777777 1.100^000000 l ^77777730%^000000
+[Nv 7]:^777777 1.200^000000 l ^77777735%^000000
+[Nv 8]:^777777 1.300^000000 l ^77777740%^000000
+[Nv 9]:^777777 1.400^000000 l ^77777745%^000000
+[Nv 10]:^777777 1.500^000000 l ^77777750%^000000
 #
 WS_OVERTHRUSTMAX#
-Força Violentíssima
-Nível Máximo: 5
-^777777Pré requisitos: Força Violenta^000000
-Alvo: ^777777Somente o Usuário^000000
-Descrição: ^777777Aumenta o dano da arma do usuário gastando certa quantia de zenys.
-Não pode ser ativada para ninguém além do usuário.
-Tem 0,1% de chance de destruir a arma a cada ataque.^000000
-[Nv 1]:^777777 +20% de ATQ, 3.000 zenys^000000
-[Nv 2]:^777777 +40% de ATQ, 3.500 zenys^000000
-[Nv 3]:^777777 +60% de ATQ, 4.000 zenys^000000
-[Nv 4]:^777777 +80% de ATQ, 4.000 zenys^FFFFFFaaaa^000000
-[Nv 5]:^FFFFFF ^777777100% de ATQ, 5.000 zenys^000000
+Força Violentíssima ^777777(Maximum Over Thrust)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Força Violenta 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o dano físico do usuário.
+Enquanto estiver ativo, cada ataque terá
+0,1% de chance de quebrar sua arma.^000000
+^000088Consome zenys.^000000
+Nível l Zenys l ATQ
+[Nv 1]: ^7777773.000^000000 l ^777777+20%^000000
+[Nv 2]: ^7777773.500^000000 l ^777777+40%^000000
+[Nv 3]: ^7777774.000^000000 l ^777777+60%^000000
+[Nv 4]: ^7777774.500^000000 l ^777777+80%^000000
+[Nv 5]: ^7777775.000^000000 l ^777777+100%^000000
 #
 CG_LONGINGFREEDOM#
-Grito de Liberdade
-Nível Máximo: 5
-^777777Pré requisitos: Controle de Marionete 1,
-Dança do Ventre 3, Lições de Música 10^000000
-Descrição: ^777777Permite o movimento da Cigana e do Menestrel enquanto executam uma habilidade de Dueto,
-sem sair de seu alcance, e também permite o uso de ataques normais e habilidades que não sejam de Dueto. O usuário gastará continuamente 3 SP enquanto durar a habilidade de Dueto.
-Grito de Liberdade é cancelada se a Cigana ou o Menestrel sair do alcance da habilidade de Dueto, morrer ou usar a habilidade Encerramento.^000000
-Velocidades de Movimento e Ataque Durante o Dueto por Nível
-[Nv 1]:^FFFFFF ^77777760%^000000
-[Nv 2]:^777777 70%^000000
-[Nv 3]:^777777 80%^000000
-[Nv 4]:^777777 90%^000000
-[Nv 5]:^777777 100%^000000
+Grito de Liberdade ^777777(Longing for Freedom)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Controle de Marionete 1,
+Dança do Ventre 3, Lições de Dança 10^000000 ou
+Dissonância 3, Lições de Música 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Permite o movimento, o ataque e o uso de
+habilidades enquanto executa um Dueto.
+É cancelada se o usuário sair do dueto.
+Drena 3 de SP por segundo.^000000
+Nível l Velocidade de ataque / movimento
+[Nv 1]: ^77777760%^000000
+[Nv 2]: ^77777770%^000000
+[Nv 3]: ^77777780%^000000
+[Nv 4]: ^77777790%^000000
+[Nv 5]: ^777777Normal^000000
 #
 CG_HERMODE#
-Bastão de Hermod
-Nível Máximo: 5
-^777777Pré requisitos: Concentração 10,
-Lições de Música 10^000000
-Descrição: ^777777Esta habilidade só pode ser usada próxima a Portais em mapas de Cerco durante a Guerra do Emperium.
-Bastão de Hermod vai cancelar todos os status positivos, exceto Frenesi/Fúria Selvagem, de todos os alvos aliados, com exceção do usuário;
-e bloqueará todos os feitiços mágicos lançados pelos alvos desta habilidade. Ninguém, inclusive o usuário, poderá usar qualquer habilidade pela duração da habilidade.
-O Bastão de Hermod é cancelado se o usuário sair de sua área de efeito.^000000
-[Nv 1]:^777777 10 s de Duração^000000
-[Nv 2]:^777777 20 s de Duração^000000
-[Nv 3]:^777777 30 s de Duração^000000
-[Nv 4]:^777777 40 s de Duração^000000
-[Nv 5]:^777777 50 s de Duração^000000
+Bastão de Hermod ^777777(Wand of Hermode)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Concentração 10,
+Lições de Música 10^000000 ou ^777777Lições de Dança 10^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas Chicotes ou Instrumentos.^000000
+^777777Todos os aliados na área 7x7 células ao
+redor do usuário ficarão imunes a magias,
+mas não poderão usar habilidades e todos
+receberão o efeito de [Desencantar].
+Funciona apenas nos castelos da GdE.^000000
+^000088Precisa estar próximo de 1 Portal.^000000
+Nível l Duração
+[Nv 1]:^777777 10 segundos^000000
+[Nv 2]:^777777 20 segundos^000000
+[Nv 3]:^777777 30 segundos^000000
+[Nv 4]:^777777 40 segundos^000000
+[Nv 5]:^777777 50 segundos^000000
 #
 CG_TAROTCARD#
-Destino nas Cartas
-Nível Máximo: 5
-^777777Pré requisitos: Concentração 10,
-Dança do Ventre 3^000000
-Descrição: ^777777Lança um efeito escolhido aleatoriamente de uma entre 14 cartas do tarô. O nível desta habilidade afeta a chance de sucesso.
-Tempo de Conjuração de 3 segundos.^FFFFFFaaa^000000
-[Nv 1]: ^7777778% de Chance de Sucesso^000000
-[Nv 2]:^777777 16% de Chance de Sucesso^000000
-[Nv 3]:^777777 24% de Chance de Sucesso^000000
-[Nv 4]:^777777 32% de Chance de Sucesso^000000
-[Nv 5]:^777777 40% de Chance de Sucesso^000000
+Destino nas Cartas ^777777(Tarot Card)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Concentração 10,
+Dança do Ventre 3^000000 ou ^777777Dissonância 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Sorteia 1 das 14 cartas de tarô no alvo.
+Cada carta possui um efeito específico.^000000
+Nível l Chance de sucesso
+[Nv 1]: ^7777778%^000000
+[Nv 2]: ^77777716%^000000
+[Nv 3]: ^77777724%^000000
+[Nv 4]: ^77777732%^000000
+[Nv 5]: ^77777740%^000000
 #
 CR_ACIDDEMONSTRATION#
-Bomba Ácida
-Nível Máximo: 10
-^777777Pré requisitos: Fogo Grego 5, Terror Ácido 5^000000
-Descrição: ^777777Ataca um inimigo lançando um Frasco de Fogo Grego e uma Garrafa de Ácido, causando uma quantidade de dano que depende do nível da habilidade, dos atributos do usuário e do alvo.
-Esta habilidade só causa metade do dano em outros jogadores, mas tem a chance de danificar a arma ou armadura desses outros jogadores. ^00BB00Cada uso consome 1 Frasco de Fogo Grego e 1 Garrafa de Ácido.^000000
-^FFFFFF_^000000
-Chance de Dano a Arma/Armadura por Nível^000000
-[Nv 1]^777777 1%^000000
-[Nv 2]^777777 2%^000000
-[Nv 3]^777777 3%^000000
-[Nv 4]^777777 4%^000000
-[Nv 5]^777777 5%^000000
-[Nv 6]^777777 6%^000000
-[Nv 7]^777777 7%^000000
-[Nv 8]^777777 8%^000000
-[Nv 9]^777777 9%^000000
-[Nv 10]^777777 10%^000000
+Bomba Ácida ^777777(Acid Demonstration)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Fogo Grego 5, Terror Ácido 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância.
+Se usada contra personagens, tem chance
+de destruir a Arma ou a Armadura do alvo.
+O dano é influenciado pela VIT do alvo.^000000
+^000088Consome 1 Frasco de Ácido e
+1 Frasco de Fogo Grego.^000000
+Nível l Chance de quebrar
+[Nv 1]: ^777777 1%^000000
+[Nv 2]: ^777777 2%^000000
+[Nv 3]: ^777777 3%^000000
+[Nv 4]: ^777777 4%^000000
+[Nv 5]: ^777777 5%^000000
+[Nv 6]: ^777777 6%^000000
+[Nv 7]: ^777777 7%^000000
+[Nv 8]: ^777777 8%^000000
+[Nv 9]: ^777777 9%^000000
+[Nv 10]: ^777777 10%^000000
 #
 CR_CULTIVATION#
-Cultivar Planta
-Nível Máximo: 2
-Descrição: ^777777Tenta, com chance de sucesso de 50%, criar um tipo aleatório de Cogumelo a partir de um Esporo de Cogumelo, ou uma Planta a partir de um Caule. Esta habilidade é desativada durante a Guerra do Emperium. As plantas possuem duração de 5 minutos após a criação.^000000
-[Nv 1]: ^777777Cultivar Cogumelos ^00BB00Requer Esporo de Cogumelo^000000
-[Nv 2]: ^777777Cultivar Plantas ^00BB00Requer Caule^000000
+Cultivar Planta ^777777(Plant Cultivation)^000000
+Nível máximo: ^7777772^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tem 50% de chance de cultivar um Cogumelo
+ou uma Planta aleatória a partir de itens.
+Não funciona nos castelos da GdE.^000000
+Nível l Cultivo l Material
+[Nv 1]: ^777777Cogumelo^000000 l ^7777771 Esporo de Cogumelo^000000
+[Nv 2]: ^777777Planta^000000 l ^7777771 Caule^000000
 #
 TK_MISSION#
 Missão Taekwon
@@ -6391,7 +6660,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Ataque Concentrado 1^000000
 Tipo: ^777777Passiva^000000
 Descrição:
-^008080Somente com Pistolas.^000000
+^008080Apenas com Pistolas.^000000
 ^777777Cria a chance de disparar um projétil
 adicional em ataques a distância,
 sem consumir munição extra. Aumentar o nv.
@@ -6403,7 +6672,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Ataque Concentrado 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas ou Rifles.^000000
+^008080Apenas com Pistolas ou Rifles.^000000
 ^777777Mira em um alvo para causar dano
 físico a distância.^000000
 Nível l Dano l Conjuração
@@ -6424,7 +6693,7 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Rastrear Alvo 7^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas ou Rifles.^000000
+^008080Apenas com Pistolas ou Rifles.^000000
 ^777777Atira nas mãos do alvo para tentar remover
 a arma por 30 segundos.
 Em monstros, ATQ -25%.
@@ -6436,7 +6705,7 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Rastrear Alvo 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas ou Rifles.^000000
+^008080Apenas com Pistolas ou Rifles.^000000
 ^777777Atira contra um oponente, ignorando a DEF
 e chance de infligir Sangramento.^000000
 Nível l Dano (Pistola) l Dano (Rifle) l Chance
@@ -6452,7 +6721,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Reação em Cadeia 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas.^000000
+^008080Apenas com Pistolas.^000000
 ^777777Dispara 5 tiros a distância no alvo.
 Consome 1 Projétil.^000000
 Nível l Dano l SP
@@ -6473,7 +6742,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Rajada Certeira 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas.^000000
+^008080Apenas com Pistolas.^000000
 ^777777Atira a distância até 10 vezes nos alvos
 ao redor do usuário, consumindo 10 projéteis.^000000
 Nível l Dano l SP
@@ -6495,7 +6764,7 @@ Pré requisitos:
 ^777777Desperado 5, Rajada Certeira 7^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^008080Somente com Metralhadoras.^000000
+^008080Apenas com Metralhadoras.^000000
 ^777777Aumenta o dano e a velocidade de ataque
 ao custo de perder esquiva e movimento.
 O efeito é cancelado ao ser reusada.^000000
@@ -6526,7 +6795,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Ataque Concentrado 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas.^000000
+^008080Apenas com Espingardas.^000000
 ^777777Dispara em um alvo a curta distância,
 empurrando-o 5 células para trás.^000000
 Nível l Dano l SP
@@ -6547,7 +6816,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Controle de Multidão 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas.^000000
+^008080Apenas com Espingardas.^000000
 ^777777Explode 2 projéteis no alvo,
 criando uma chance de infligir
 cegueira no usuário.^000000
@@ -6590,7 +6859,7 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Disparo Espalhado 7^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Lança-Granadas.^000000
+^008080Apenas com Lança-Granadas.^000000
 ^777777Lança uma mina no chão que explodirá
 caso um oponente se aproximar, causando
 dano físico na área de 3x3 células.
@@ -7264,18 +7533,22 @@ NPC_WIDESOULDRAIN#
 #
 ALL_INCCARRY#
 Aumentar Capacidade de Carga Especial
-Tipo: ^000099Passiva^000000
-Resultado : ^777777Aumenta limite de peso máximo.^000000
-[Nv 1]: ^777777Limite Máximo +200^000000
-[Nv 2]: ^777777Limite Máximo +400^000000
-[Nv 3]: ^777777Limite Máximo +600^000000
-[Nv 4]: ^777777Limite Máximo +800^000000
-[Nv 5]: ^777777Limite Máximo +1000^000000
-[Nv 6] : ^777777Limite Máximo +1200^000000
-[Nv 7] : ^777777Limite Máximo +1400^000000
-[Nv 8] : ^777777Limite Máximo +1600^000000
-[Nv 9] : ^777777Limite Máximo +1800^000000
-[Nv 10]: ^777777Limite Máximo +2000^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o limite de peso máximo que
+pode ser carregado no inventário.^000000
+Nível l Limite
+[Nv 1]: ^777777+200^000000
+[Nv 2]: ^777777+400^000000
+[Nv 3]: ^777777+600^000000
+[Nv 4]: ^777777+800^000000
+[Nv 5]: ^777777+1.000^000000
+[Nv 6]: ^777777+1.200^000000
+[Nv 7]: ^777777+1.400^000000
+[Nv 8]: ^777777+1.600^000000
+[Nv 9]: ^777777+1.800^000000
+[Nv 10]: ^777777+2.000^000000
 #
 NPC_HELLPOWER#
 #
@@ -7523,13 +7796,13 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Arpão 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
+^008080Apenas com Lança.^000000
 ^777777Causa dano físico de curta distância.
 Se tiver aprendido [Lança Bumerangue],
 ela terá uma chance de ser autoconjurada
 ao usar a habilidade, empurando os alvos.
 O dano aumenta com o peso da arma e o
 nível aprendido de [Perfurar em Espiral].^000000
-^000088Precisa de Lança equipada.^000000
 Nível l ATQ l Chance de autoconjuração
 [Nv 1]: ^777777680%^000000 l ^77777713%^000000
 [Nv 2]: ^777777760%^000000 l ^77777716%^000000
@@ -7548,11 +7821,11 @@ Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Encantar Lâmina 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
+^008080Apenas com Espada de 2 mãos.^000000
 ^777777Comprime o ar para causar dano físico da
 propriedade Vento na área de 7x7 células.
 Alvos atingidos serão empurrados e terão a
 chance de receber o efeito [Medo].^000000
-^000088Precisa de Espada de 2 mãos equipada.^000000
 Nível l ATQ l Chance de Medo
 [Nv 1]: ^777777150%^000000 l ^7777775%^000000
 [Nv 2]: ^777777200%^000000 l ^7777777%^000000
@@ -7604,11 +7877,11 @@ Nível máximo: ^77777710^000000
 Pré requisito: ^777777Adestrar Dragão 2^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
+^008080Apenas com montaria de Ferus.^000000
 ^777777Comanda o dragão para cuspir em área,
 causando dano físico a distância de
 propriedade Fogo com chance de
 infligir [Incêndio] nos atingidos.^000000
-^000088Precisa da montaria de Ferus.^000000
 #
 RK_DRAGONHOWLING#
 Rugido do Dragão ^777777(Dragon Howling)^000000
@@ -7616,9 +7889,9 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Adestrar Dragão 2^000000
 Tipo: ^777777Ativa^000000
 Descrição:
+^008080Apenas com montaria de Ferus.^000000
 ^777777Ao rugir, concede uma chance de infligir
 [Medo] nos oponentes ao redor do usuário.^000000
-^000088Precisa da montaria de Ferus.^000000
 Nível l Chance l Área
 [Nv 1]: ^77777756%^000000 l ^7777777x7 células^000000
 [Nv 2]: ^77777762%^000000 l ^7777779x9 células^000000
@@ -7683,13 +7956,13 @@ Nível máximo: ^77777710^000000
 Pré requisitos: ^777777Brandir Lança 2^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
+^008080Apenas com Lança.^000000
 ^777777Causa dano físico a distância em monstros
 e pode puxar alvos para perto do usuário.
 Pode puxar membros do grupo sem causar
 dano ao segurar a tecla Shift, mas não
 funciona no PvP ou contra monstros Chefes.
 O dano é afetado por [Perícia com Lança].^000000
-^000088Precisa de Lança equipada.^000000
 Nível l Alcance l ATQ
 [Nv 1]: ^7777775 células^000000 l ^77777750%^000000
 [Nv 2]: ^7777776 células^000000 l ^777777100%^000000
@@ -8226,6 +8499,8 @@ O alvo exilado só poderá receber danos
 mágicos de propriedade Fantasma.
 Quando a duração acabar, o alvo recebe um
 dano fixo que não pode ser reduzido.
+A FOR do alvo reduz a chance de sucesso e
+a VIT e SOR do alvo reduzem a duração.
 Funciona no próprio usuário, mas não
 afeta monstros do tipo chefe.^000000
 Nível l Chance l Dano fixo
@@ -8304,7 +8579,7 @@ Nível l Movimento
 [Nv 5]: ^777777-50%^000000
 #
 WL_RECOGNIZEDSPELL#
-Maestria Arcana^777777(Recognized Spell)^000000
+Maestria Arcana ^777777(Recognized Spell)^000000
 Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Disparo Arcano 2
 Distorção Arcana 1 e Exílio 1^000000
@@ -8445,7 +8720,7 @@ Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Causa dano mágico de propriedade Vento
 que atinge o alvo e oponentes ao redor
-uma vez por sequência.^00000
+uma vez por sequência.^000000
 Nível l Dano l Correntes
 [Nv 1]: ^777777600%^000000 l ^7777775^000000
 [Nv 2]: ^777777700%^000000 l ^7777776^000000
@@ -8602,253 +8877,366 @@ Nível l Pontos Mágicos
 [Nv 5]: ^777777+20^000000
 #
 RA_ARROWSTORM#
-Tempestade de Flechas
-Nível Máximo: 10
-^777777Pré requisitos: Disparo Certeiro 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Dispara uma tempestade de flechas em uma área ao redor do usuário.
-O dano dependerá do nível de Base do usuário. Consome 10 flechas. ^000000
-[Nv 1] : ^777777 ATQ 1080% / Alcance de 7 x 7 Cel^000000
-[Nv 2] : ^777777 ATQ 1160% / Alcance de 7 x 7 Cel^000000
-[Nv 3] : ^777777 ATQ 1240% / Alcance de 7 x 7 Cel^000000
-[Nv 4] : ^777777 ATQ 1320% / Alcance de 7 x 7 Cel^000000
-[Nv 5] : ^777777 ATQ 1400% / Alcance de 7 x 7 Cel^000000
-[Nv 6] : ^777777 ATQ 1480% / Alcance de 9 x 9 Cel^000000
-[Nv 7] : ^777777 ATQ 1560% / Alcance de 9 x 9 Cel^000000
-[Nv 8] : ^777777 ATQ 1640% / Alcance de 9 x 9 Cel^000000
-[Nv 9] : ^777777 ATQ 1720% / Alcance de 9 x 9 Cel^000000
-[Nv 10] : ^777777 ATQ 1800% / Alcance de 11 x 11 Cel^000000
+Tempestade de Flechas ^777777(Arrow Storm)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Disparo Certeiro 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância na área.^000000
+^000088Consome 10 flechas.^000000
+Nível l Dano l Área
+[Nv 1]: ^7777771.080%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^7777771.160%^000000 l ^7777777x7 células^000000
+[Nv 3]: ^7777771.240%^000000 l ^7777777x7 células^000000
+[Nv 4]: ^7777771.320%^000000 l ^7777777x7 células^000000
+[Nv 5]: ^7777771.400%^000000 l ^7777777x7 células^000000
+[Nv 6]: ^7777771.480%^000000 l ^7777779x9 células^000000
+[Nv 7]: ^7777771.560%^000000 l ^7777779x9 células^000000
+[Nv 8]: ^7777771.640%^000000 l ^7777779x9 células^000000
+[Nv 9]: ^7777771.720%^000000 l ^7777779x9 células^000000
+[Nv 10]: ^7777771.800%^000000 l ^77777711x11 células^000000
 #
 RA_FEARBREEZE#
-Disparo Selvagem
-Nível Máximo: 5
-^777777Pré requisitos: Camuflagem 1, Tempestade de Flechas 5 ^000000
-Tipo: ^777777  Ofensiva / Efeito positivo (para o usuário) ^000000
-Descrição: ^777777  Adiciona a chance de ativar disparos adicionais. Nestes ataques, flechas adicionais são consumidas. ^000000
-[Nv 1]: ^777777 Número de Ataques +1 / Chance de ativação 12%  / 60 segundos de duração.  ^000000
-[Nv 2]: ^777777 Número de Ataques +1 / Chance de ativação 12 %  / 90 segundos de duração.  ^000000
-[Nv 3]: ^777777 Número de Ataques +1 ~ +2  / Chance de ativação 21 % / 120 segundos de duração.  ^000000
-[Nv 4]: ^777777 Número de Ataques +1 ~ +3  / Chance de ativação 27 % / 150 segundos de duração.  ^000000
-[Nv 5]: ^777777 Número de Ataques +1 ~ +4  / Chance de ativação 30% / 180 segundos de duração.  ^000000
+Disparo Selvagem ^777777(Fear Breeze)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Camuflagem 1, Tempestade de Flechas 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Ao causar dano físico a distância, há
+chance de disparar flechas adicionais.
+As flechas adicionais serão consumidas.^000000
+Nível l Chance l Duração
+[Nv 1]: ^77777712%^000000 l ^77777760 segundos^000000
+[Nv 2]: ^77777712%^000000 l ^77777790 segundos^000000
+[Nv 3]: ^77777721%^000000 l ^777777120 segundos^000000
+[Nv 4]: ^77777727%^000000 l ^777777150 segundos^000000
+[Nv 5]: ^77777730%^000000 l ^777777180 segundos^000000
 #
 RA_RANGERMAIN#
-Táticas de Sobrevivência
-Nível Máximo: 10
-Tipo: ^777777 Passiva ^000000
-Descrição: ^777777 Aumenta o ATQ contra monstros tipo Bruto, Planta e Peixe, e aumenta a resistência a estes monstros.^000000
-[Nv 1]: ^777777 ATQ / Resistência + 5  ^000000
-[Nv 2]: ^777777 ATQ / Resistência + 10  ^000000
-[Nv 3]: ^777777 ATQ / Resistência + 15  ^000000
-[Nv 4]: ^777777 ATQ / Resistência + 20  ^000000
-[Nv 5]: ^777777 ATQ / Resistência + 25  ^000000
-[Nv 6]: ^777777 ATQ / Resistência + 30  ^000000
-[Nv 7]: ^777777 ATQ / Resistência + 35  ^000000
-[Nv 8]: ^777777 ATQ / Resistência + 40  ^000000
-[Nv 9]: ^777777 ATQ / Resistência + 45  ^000000
-[Nv 10] : ^777777 ATQ / Resistência + 50  ^000000
+Táticas de Sobrevivência ^777777(Main Ranger)^000000
+Nível máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ e a DEF contra monstros
+das raças Bruto, Planta e Peixe.^000000
+Nível l ATQp e DEF
+[Nv 1]: ^777777+5^000000
+[Nv 2]: ^777777+10^000000
+[Nv 3]: ^777777+15^000000
+[Nv 4]: ^777777+20^000000
+[Nv 5]: ^777777+25^000000
+[Nv 6]: ^777777+30^000000
+[Nv 7]: ^777777+35^000000
+[Nv 8]: ^777777+40^000000
+[Nv 9]: ^777777+45^000000
+[Nv 10]: ^777777+50^000000
 #
 RA_AIMEDBOLT#
-Disparo Certeiro
-Nível Máximo: 10
-^777777Pré requisitos: Instalar Armadilha 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Se o alvo está imobilizado por Armadilha, Mordida Feroz, etc, o alvo recebe mais dano de Disparo Certeiro. O número de ataques depende do tamanho do alvo.
-A habilidade falhará se o usuário não possuir flechas suficientes. O adversário é libertado do aprisionamento assim que esta habilidade for usada. ^000000
-[Nv 1]: ^777777 ATQ 550%, acerta 2x Pequenos, 3x Médios, 4x Grandes^000000
-[Nv 2]: ^777777 ATQ 600%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 3]: ^777777 ATQ 650%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 4]: ^777777 ATQ 700%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 5]: ^777777 ATQ 750%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 6]: ^777777 ATQ 800%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 7]: ^777777 ATQ 850%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 8]: ^777777 ATQ 900%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 9]: ^777777 ATQ 950%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
-[Nv 10] : ^777777 ATQ 1000%, acerta 2x Pequenos, 3x Médios, 4x Grandes ^000000
+Disparo Certeiro ^777777(Aimed Bolt)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Instalar Armadilha 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico a distância no alvo.
+Se o alvo estiver imobilizado, o dano
+causado aumenta de acordo com o tamanho
+e ele será libertado da imobilização.^000000
+Dano por tamanho:
+Pequeno: ^777777x2^000000
+Médio: ^777777x3^000000
+Grande: ^777777x4^000000
+^000088Consome mais de 1 flecha.^000000
+Nível l Dano
+[Nv 1]: ^777777550%^000000
+[Nv 2]: ^777777600%^000000
+[Nv 3]: ^777777650%^000000
+[Nv 4]: ^777777700%^000000
+[Nv 5]: ^777777750%^000000
+[Nv 6]: ^777777800%^000000
+[Nv 7]: ^777777850%^000000
+[Nv 8]: ^777777900%^000000
+[Nv 9]: ^777777950%^000000
+[Nv 10]: ^7777771.000%^000000
 #
 RA_DETONATOR#
 Detonador
-Nível Máximo: 1
-^777777Pré requisitos: Bomba Relógio 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Ativa imediatamente a armadilha ativada no chão. Alcance de 7 x 7 células ao redor da armadilha.
-Só pode ativar as armadilhas do próprio usuário. Tem a chance de anular armadilhas de outros usuários.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Bomba Relógio 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Ativa o efeito de todas as armadilhas
+instaladas pelo usuário na área de
+7x7 células ao redor dele.^000000
 #
 RA_ELECTRICSHOCKER#
-Armadilha Energizada
-Nível Máximo: 5
-^777777Pré requisitos: Armadilha Extenuante 5^000000
-Tipo: ^777777  Ofensiva / Armadilha^000000
-Descrição: ^777777 Imobiliza oponentes que chegarem na área de 3 x 3 células do efeito da armadilha, continuamente consumindo SP do alvo. Não pode ser desativada por Remover Armadilha. Consome 1 Armadilha Especial.
-No máximo 3 armadilhas deste tipo podem ser ativadas ao mesmo tempo.^000000
-[Nv 1]: ^777777 SP consumido por segundo 5% / 20 segundos de duração ^000000
-[Nv 2]: ^777777 SP consumido por segundo 10% / 22 segundos de duração ^000000
-[Nv 3]: ^777777 SP consumido por segundo 15% / 24 segundos de duração  ^000000
-[Nv 4]: ^777777 SP consumido por segundo 20% / 26 segundos de duração   ^000000
-[Nv 5]: ^777777 SP consumido por segundo 25% / 28 segundos de duração  ^000000
+Armadilha Energizada ^777777(Eletric Shocker)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Armadilha Extenuante 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Instala uma armadilha na área de 5x5
+células que imobiliza oponentes e
+drena o SP deles continuamente.
+A armadilha dura 15 segundos e não pode
+ser removida por [Remover Armadilha].
+Apenas 3 armadilhas ativas por vez.^000000
+^000088Consome 1 Armadilha Especial.^000000
+Nível l Dreno l Duração da imobilização
+[Nv 1]: ^777777 5% de SP^000000 l ^77777720 segundos^000000
+[Nv 2]: ^77777710% de SP^000000 l ^77777722 segundos^000000
+[Nv 3]: ^77777715% de SP^000000 l ^77777724 segundos^000000
+[Nv 4]: ^77777720% de SP^000000 l ^77777726 segundos^000000
+[Nv 5]: ^77777725% de SP^000000 l ^77777728 segundos^000000
 #
 RA_CLUSTERBOMB#
-Bomba Relógio
-Nível Máximo: 5
-^777777Pré requisitos: Perícia com Armadilha 3 ^000000
-Tipo: ^777777  Ofensiva / Armadilha ^000000
-Descrição: ^777777  No máximo 3 armadilhas deste tipo podem ser ativadas ao mesmo tempo. Explode a armadilha em área de 7 x 7 células.
-Pode ser usada em conjunto com Detonador. Não pode ser desativada por Remover Armadilha. Consome 1 Armadilha Especial.  ^000000
-[Nv 1]: ^777777 Dano 300% + Dano da Armadilha / 15 segundos de duração  ^000000
-[Nv 2]: ^777777 Dano 400% + Dano da Armadilha / 15 segundos de duração ^000000
-[Nv 3]: ^777777 Dano 500% + Dano da Armadilha / 15 segundos de duração   ^000000
-[Nv 4]: ^777777 Dano 600% + Dano da Armadilha / 15 segundos de duração   ^000000
-[Nv 5]: ^777777 Dano 700% + Dano da Armadilha / 15 segundos de duração  ^000000
+Bomba Relógio ^777777(Cluster Bomb)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Perícia com Armadilha 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Instala uma armadilha no chão, causando
+dano físico de propriedade Neutro na área
+de 7x7 células ao redor dela.
+A armadilha dura 15 segundos e não pode
+ser removida por [Remover Armadilha].
+Apenas 3 armadilhas ativas por vez.^000000
+^000088Consome 1 Armadilha Especial.^000000
+Nível l Dano
+[Nv 1]: ^777777300%^000000
+[Nv 2]: ^777777400%^000000
+[Nv 3]: ^777777500%^000000
+[Nv 4]: ^777777600%^000000
+[Nv 5]: ^777777700%^000000
 #
 RA_WUGMASTERY#
-Adestrar Worg
-Nível Máximo: 1
-Tipo: ^777777  Suporte ^000000
-Descrição: ^777777 Invoca um lobo Worg com a Flauta Uivante. Para liberá-lo, basta usar novamente a habilidade.^000000
+Adestrar Worg ^777777(Worg Mastery)^000000
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Chama um Worg para ser seu companheiro.
+Para liberá-lo, reuse a habilidade.^000000
+^000088Precisa de 1 Flauta Uivante.^000000
 #
 RA_WUGRIDER#
-Montaria em Worg
-Nível Máximo: 3
-^777777Pré requisitos: Adestrar Worg 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Permite ao Sentinela montar no Worg. A velocidade de movimento do Worg aumenta com o nível da habilidade. Apenas habilidades do Worg podem ser usadas enquanto o usuário estiver montado. ^000000
+Montaria em Worg ^777777(Worg Rider)^000000
+Nível máximo: ^7777773^000000
+Pré requisitos: ^777777Adestrar Worg 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Permite montar em um Worg.
+O movimento é acelerado enquanto monta.^000000
 #
 RA_WUGDASH#
-Assalto do Worg
-Nível Máximo: 1
-^777777Pré requisitos: Montaria em Worg 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Usada apenas quando o Sentinela estiver montado no Worg. O lobo corre em linha reta até que a habilidade seja usada novamente ou que um obstáculo seja encontrado.
-Causa dano a um oponente se a habilidade Investida de Worg for aprendida. ^000000
+Assalto de Worg ^777777(Worg Dash)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Montaria em Worg 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas montado no Worg.^000000
+^777777Corre em linha reta até encontrar um
+obstáculo ou reusar a habilidade.
+Ao aprender [Investida de Worg],
+causa 300% de dano físico em área
+se o obstáculo for um oponente.^000000
 #
 RA_WUGSTRIKE#
-Investida de Worg
-Nível Máximo: 5
-^777777Pré requisitos: Presas Afiadas 1 ^000000
-Tipo: ^777777  Ofensiva  ^000000
-Descrição: ^777777  Pode ser usada quando o Sentinela estiver acompanhado do Worg. O lobo ataca 1 alvo. O dano é aumentado de acordo com o nível da habilidade. ^000000
-[Nv 1]: ^777777 Dano 200%  ^000000
-[Nv 2]: ^777777 Dano 400%  ^000000
-[Nv 3]: ^777777 Dano 600%  ^000000
-[Nv 4]: ^777777 Dano 800%  ^000000
-[Nv 5]: ^777777 Dano 1000%  ^000000
+Investida de Worg ^777777(Worg Strike)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Presas Afiadas 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Worg.^000000
+^777777Ordena o Worg a atacar, causando
+dano físico a distância no alvo.^000000
+Nível l Dano
+[Nv 1]: ^777777200%^000000
+[Nv 2]: ^777777400%^000000
+[Nv 3]: ^777777600%^000000
+[Nv 4]: ^777777800%^000000
+[Nv 5]: ^7777771.000%^000000
 #
 RA_WUGBITE#
-Mordida Feroz
-Nível Máximo: 5
-^777777Pré requisitos: Investida de Worg 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Não pode ser usada quando o Sentinela estiver montado no Worg. O lobo ataca 1 alvo, imobilizando o oponente com uma mordida.^000000
-[Nv 1]: ^777777 Dano 600%  / 1 segundos de duração + Bônus para Presas Afiadas^000000
-[Nv 2]: ^777777 Dano 800%  / 2 segundos de duração + Bônus para Presas Afiadas ^000000
-[Nv 3]: ^777777 Dano 1000%  / 3 segundos de duração + Bônus para Presas Afiadas ^000000
-[Nv 4]: ^777777 Dano 1200%  / 4 segundos de duração + Bônus para Presas Afiadas ^000000
-[Nv 5]: ^777777 Dano 1500%  / 5 segundos de duração + Bônus para Presas Afiadas ^000000
+Mordida Feroz ^777777(Worg Bite)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Investida de Worg 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Worg.^000000
+^777777Ordena o Worg a morder o alvo, causando
+dano físico a distância com chance
+de imobilizar o oponente.
+Não funciona se estiver montado no Worg.^000000
+Nível l Duração da imobilização l Dano
+[Nv 1]: ^7777771 segundo ^000000 l ^777777600%^000000
+[Nv 2]: ^7777772 segundos^000000 l ^777777800%^000000
+[Nv 3]: ^7777773 segundos^000000 l ^7777771.000%^000000
+[Nv 4]: ^7777774 segundos^000000 l ^7777771.200%^000000
+[Nv 5]: ^7777775 segundos^000000 l ^7777771.500%^000000
 #
 RA_TOOTHOFWUG#
-Presas Afiadas
-Nível Máximo: 10
-^777777Pré requisitos: Adestrar Worg 1 ^000000
-Tipo: ^777777 Passiva ^000000
-Descrição: ^777777 Aumenta o dano do Worg e de suas habilidades. O dano é aumentado de acordo com o nível da habilidade. ^000000
-[Nv 1]: ^777777 ATQ + 30  ^000000
-[Nv 2]: ^777777 ATQ + 60 ^000000
-[Nv 3]: ^777777 ATQ + 90 ^000000
-[Nv 4]: ^777777 ATQ + 120 ^000000
-[Nv 5]: ^777777 ATQ + 150 ^000000
-[Nv 6]: ^777777 ATQ + 180 ^000000
-[Nv 7]: ^777777 ATQ + 210 ^000000
-[Nv 8]: ^777777 ATQ + 240 ^000000
-[Nv 9]: ^777777 ATQ + 270 ^000000
-[Nv 10] : ^777777 ATQ + 300 ^000000
+Presas Afiadas ^777777(Tooth of Worg)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Adestrar Worg 1^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta o ATQ de perícia do Worg e o dano
+de Investida de Worg, Mordida Feroz e
+Assalto de Worg.^000000
+Nível l ATQp
+[Nv 1]: ^777777+30^000000
+[Nv 2]: ^777777+60^000000
+[Nv 3]: ^777777+90^000000
+[Nv 4]: ^777777+120^000000
+[Nv 5]: ^777777+150^000000
+[Nv 6]: ^777777+180^000000
+[Nv 7]: ^777777+210^000000
+[Nv 8]: ^777777+240^000000
+[Nv 9]: ^777777+270^000000
+[Nv 10]: ^777777+300^000000
 #
 RA_SENSITIVEKEEN#
-Faro Aguçado
-Nível Máximo: 5
-^777777Pré requisitos: Presas Afiadas 3 ^000000
-Tipo: ^777777  Revelação ^000000
-Descrição: ^777777  O Worg encontra armadilhas e oponentes escondidos e causa dano ao revelar. Adiciona a chance de atacar o oponente na área com Mordida Feroz.  ^000000
-[Nv 1]: ^777777 Alcance 7 x 7 / Dano 150% / Chance de ativar Mordida Feroz 8% ^000000
-[Nv 2]: ^777777 Alcance 9 x 9 / Dano 200% / Chance de ativar Mordida Feroz 16%^000000
-[Nv 3]: ^777777 Alcance 11 x11 / Dano 250% / Chance de ativar Mordida Feroz 24% ^000000
-[Nv 4]: ^777777 Alcance 13 x13 / Dano 300% / Chance de ativar Mordida Feroz 32% ^000000
-[Nv 5]: ^777777 Alcance 15 x15 / Dano 350% / Chance de ativar Mordida Feroz 40% ^000000
+Faro Aguçado ^777777(Sensitive Keen)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Presas Afiadas 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Worg.^000000
+^777777Fareja e revela armadilhas e oponentes
+escondidos, causando dano físico com
+chances de autoconjurar [Mordida Feroz].^000000
+Nível l Dano l Área l Chance
+[Nv 1]: ^777777150%^000000 l ^7777777x7 células^000000 l ^7777778%^000000
+[Nv 2]: ^777777200%^000000 l ^7777779x9 células^000000 l ^77777716%^000000
+[Nv 3]: ^777777250%^000000 l ^77777711x11 células^000000 l ^77777724% ^000000
+[Nv 4]: ^777777300%^000000 l ^77777713x13 células^000000 l ^77777732% ^000000
+[Nv 5]: ^777777350%^000000 l ^77777715x15 células^000000 l ^77777740% ^000000
 #
 RA_CAMOUFLAGE#
-Camuflagem
-Nível Máximo: 5
-^777777Pré requisitos: Táticas de Sobrevivência 1 ^000000
-Tipo: ^777777  Efeito no usuário ^000000
-Descrição: ^777777  Esconde o Sentinela perto de paredes e obstáculos por 10 segundos, deixando-o translúcido. Monstros Demônios e Insetos revelarão a Camuflagem. Aumenta o ATQ e Crítico enquanto escondido, mas reduz DEF.
-A habilidade pode ser cancelada ao ser usada novamente ou até que encerre o tempo de duração. Enquanto ativa, o SP é drenado continuamente. Pode ser usada longe de paredes nos níveis mais altos. ^000000
-[Nv 1]: ^777777 Consome 6 SP por segundo / Não pode se mover ^000000
-[Nv 2]: ^777777 Consome 5 SP por segundo / Não pode se mover ^000000
-[Nv 3]: ^777777 Consome 4 SP por segundo / Movimento -50%  ^000000
-[Nv 4]: ^777777 Consome 3 SP por segundo / Movimento -25%  ^000000
-[Nv 5]: ^777777 Consome 2 SP por segundo / Movimento Normal  ^000000
+Camuflagem ^777777(Camouflage)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Táticas de Sobrevivência 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Entra em estado de esconderijo, podendo
+ser detectado por Demônios e Insetos.
+Enquanto estiver ativa, drena o SP,
+aumenta o ATQ o CRIT e reduz a DEF
+a cada segundo da Camuflagem.
+Nos dois primeiros níveis, só pode ser
+usada próximo a paredes.^000000
+Nível l Dreno de SP l Movimento
+[Nv 1]: ^7777776^000000 l ^777777Imóvel^000000
+[Nv 2]: ^7777775^000000 l ^777777Imóvel^000000
+[Nv 3]: ^7777774^000000 l ^777777-50%^000000
+[Nv 4]: ^7777773^000000 l ^777777-25%^000000
+[Nv 5]: ^7777772^000000 l ^777777Normal^000000
 #
 RA_RESEARCHTRAP#
-Perícia com Armadilha
-Nível Máximo: 5
-^777777Pré requisitos: Armadilha Explosiva 1, Remover Armadilha 1 ^000000
-Tipo: ^777777  Passiva  ^000000
-Descrição: ^777777  Aumenta o dano e alcance de armadilhas. Aumenta INT e SP Máx. ^000000
-[Nv 1]: ^777777 Dano adicional +40 / INT +1 / SP Máx. +220  / Alcance +1 ^000000
-[Nv 2]: ^777777 Dano adicional +80 / INT +2 / SP Máx. +240  / Alcance +1 ^000000
-[Nv 3]: ^777777 Dano adicional +120 / INT +3 / SP Máx. +260  / Alcance +2 ^000000
-[Nv 4]: ^777777 Dano adicional +160 / INT +4 / SP Máx. +280  / Alcance +2 ^000000
-[Nv 5]: ^777777 Dano adicional +200 / INT +5 / SP Máx. +300  / Alcance +3 ^000000
+Perícia com Armadilha ^777777(Research Trap)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Armadilha Explosiva 1, Remover Armadilha 1^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta a INT, o SP máx., o dano das
+armadilhas e o alcance de instalação delas.
+Aprender a habilidade permite que as
+armadilhas de Caçador possam ser
+instaladas usando Armadilha Especial.^000000
+Nível l INT l SP Máx. l Alcance l Dano
+[Nv 1]: ^777777+1^000000 l ^777777+220^000000 l ^777777+1 células^000000 l ^777777+40^000000
+[Nv 2]: ^777777+2^000000 l ^777777+240^000000 l ^777777+1 células^000000 l ^777777+80^000000
+[Nv 3]: ^777777+3^000000 l ^777777+260^000000 l ^777777+2 células^000000 l ^777777+120^000000
+[Nv 4]: ^777777+4^000000 l ^777777+280^000000 l ^777777+2 células^000000 l ^777777+160^000000
+[Nv 5]: ^777777+5^000000 l ^777777+300^000000 l ^777777+3 células^000000 l ^777777+200^000000
 #
 RA_MAGENTATRAP#
-Armadilha Escarlate
-Nível Máximo: 1
-^777777Pré requisitos:  Perícia com Armadilha 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha  ^000000
-Descrição: ^777777  Monstros que entrarem na área de 3 x 3 células terão a propriedade mudada para Fogo, assim como o ambiente em área de 5 x 5 células. Não pode ser usada em monstros tipo Chefe e jogadores. Consome 1 Armadilha Especial e um Fragmento Escarlate. Apenas 1 armadilha pode ser ativada por vez. ^000000
+Armadilha Escarlate ^777777(Magenta Trap)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Perícia com Armadilha 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Instala uma armadilha no chão.
+Monstros que se aproximarem terão sua
+propriedade alterada para Fogo.
+Não funciona contra Personagens e Chefes.^000000
+^000088Consome 1 Fragmento Escarlate
+e 1 Armadilha Especial.^000000
 #
 RA_COBALTTRAP#
-Armadilha Cobalto
-Nível Máximo: 1
-^777777Pré requisitos:  Perícia com Armadilha 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha   ^000000
-Descrição: ^777777  Monstros que entrarem na área de 3 x 3 células terão a propriedade mudada para Água, assim como o ambiente em área de 5 x 5 células. Não pode ser usada em monstros tipo Chefe e jogadores. Consome 1 Armadilha Especial e um Fragmento Azul. Apenas 1 armadilha pode ser ativada por vez. ^000000
+Armadilha Cobalto ^777777(Cobalt Trap)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Perícia com Armadilha 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Instala uma armadilha no chão.
+Monstros que se aproximarem terão sua
+propriedade alterada para Água.
+Não funciona contra Personagens e Chefes.^000000
+^000088Consome 1 Fragmento Azul
+e 1 Armadilha Especial.^000000
 #
 RA_MAIZETRAP#
-Armadilha Ocre
-Nível Máximo: 1
-^777777Pré requisitos:  Perícia com Armadilha 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha   ^000000
-Descrição: ^777777  Monstros que entrarem na área de 3 x 3 células terão a propriedade mudada para Terra, assim como o ambiente em área de 5 x 5 células. Não pode ser usada em monstros tipo Chefe e jogadores. Consome 1 Armadilha Especial e uma Fragmento Verde. Apenas 1 armadilha pode ser ativada por vez.  ^000000
+Armadilha Ocre ^777777(Maize Trap)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Perícia com Armadilha 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Instala uma armadilha no chão.
+Monstros que se aproximarem terão sua
+propriedade alterada para Terra.
+Não funciona contra Personagens e Chefes.^000000
+^000088Consome 1 Fragmento Verde
+e 1 Armadilha Especial.^000000
 #
 RA_VERDURETRAP#
-Armadilha Esmeralda
-Nível Máximo: 1
-^777777Pré requisitos:  Perícia com Armadilha 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha   ^000000
-Descrição: ^777777  Monstros que entrarem na área de 3 x 3 células terão a propriedade mudada para Vento, assim como o ambiente em área de 5 x 5 células. Não pode ser usada em monstros tipo Chefe e jogadores. Consome 1 Armadilha Especial e um Fragmento Amarelo. Apenas 1 armadilha pode ser ativada por vez.  ^000000
+Armadilha Esmeralda ^777777(Verdure Trap)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Perícia com Armadilha 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Instala uma armadilha no chão.
+Monstros que se aproximarem terão sua
+propriedade alterada para Vento.
+Não funciona contra Personagens e Chefes.^000000
+^000088Consome 1 Fragmento Amarelo
+e 1 Armadilha Especial.^000000
 #
 RA_FIRINGTRAP#
-Armadilha Incendiária
-Nível Máximo: 5
-^777777Pré requisitos:  Detonador 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha  ^000000
-Descrição: ^777777  Adiciona a chance de afetar oponentes que entrarem na área de 3 x 3 células com o efeito negativo Incêndio. Quanto maior o nível da habilidade, maior a chance. Consome 1 Armadilha Especial. Apenas 1 armadilha pode ser ativada por vez. ^000000
-[Nv 1]: ^777777 Chance de sucesso 60%  ^000000
-[Nv 2]: ^777777 Chance de sucesso 70%  ^000000
-[Nv 3]: ^777777 Chance de sucesso 80%  ^000000
-[Nv 4]: ^777777 Chance de sucesso 90%  ^000000
-[Nv 5]: ^777777 Chance de sucesso 100%  ^000000
+Armadilha Incendiária ^777777(Fire Trap)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Detonador 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Instala uma armadilha no chão, causando
+dano físico de propriedade Fogo com chance
+de infligir Incêndio na área.
+O dano é baseado na DES, INT e no nível
+aprendido de [Perícia com Armadilha].^000000
+Nível l Chance
+[Nv 1]: ^77777760%^000000
+[Nv 2]: ^77777770%^000000
+[Nv 3]: ^77777780%^000000
+[Nv 4]: ^77777790%^000000
+[Nv 5]: ^777777100%^000000
 #
 RA_ICEBOUNDTRAP#
-Armadilha Glacial
-Nível Máximo: 5
-^777777Pré requisitos:  Detonador 1 ^000000
-Tipo: ^777777  Ofensiva / Armadilha  ^000000
-Descrição: ^777777   Adiciona a chance de afetar oponentes que entrarem na área de 3 x 3 células com o efeito negativo Hipotermia. Quanto maior o nível da habilidade, maior a chance. Consome 1 Armadilha Especial. Apenas 1 armadilha pode ser ativada por vez.^000000
-[Nv 1]: ^777777 Chance de sucesso 60%  ^000000
-[Nv 2]: ^777777 Chance de sucesso 70%  ^000000
-[Nv 3]: ^777777 Chance de sucesso 80%  ^000000
-[Nv 4]: ^777777 Chance de sucesso 90%  ^000000
-[Nv 5]: ^777777 Chance de sucesso 100%  ^000000
+Armadilha Glacial ^777777(Ice Trap)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Detonador 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Instala uma armadilha no chão, causando
+dano físico de propriedade Água com
+chance de infligir Hipotermia na área.
+O dano é baseado na DES, INT e no nível
+aprendido de [Perícia com Armadilha].^000000
+Nível l Chance
+[Nv 1]: ^77777760%^000000
+[Nv 2]: ^77777770%^000000
+[Nv 3]: ^77777780%^000000
+[Nv 4]: ^77777790%^000000
+[Nv 5]: ^777777100%^000000
 #
 NC_MADOLICENCE#
 Licença de Pilotagem ^777777(Madogear License)^000000
@@ -9369,7 +9757,7 @@ O nível autoconjurado é determinado pelo
 nível aprendido de [Desejo das Sombras].^000000
 Nível l Chance l Duração l Autoconjuração
 [Nv 1]: ^77777728%^000000 l ^777777 60 segundos^000000 l ^777777Nv. 1^000000
-[Nv 2]: ^77777726%^000000 l ^777777 80 segundos^000000 l ^777777Nv. 1^0000000
+[Nv 2]: ^77777726%^000000 l ^777777 80 segundos^000000 l ^777777Nv. 1^000000
 [Nv 3]: ^77777724%^000000 l ^777777100 segundos^000000 l ^777777Nv. 2^000000
 [Nv 4]: ^77777722%^000000 l ^777777120 segundos^000000 l ^777777Nv. 2^000000
 [Nv 5]: ^77777720%^000000 l ^777777140 segundos^000000 l ^777777Nv. 3^000000
@@ -9435,15 +9823,15 @@ reduzida temporariamente.^000000
 Precisa de 1 Pincel de Maquiagem.^000000
 Nível l Chance l Duração
 [Nv 1]: Cegueira: ^77777755%^000000 l  ^7777775 segundos^000000
-          Vel. Atq: ^77777725%^000000
+            Vel. Atq: ^77777725%^000000
 [Nv 2]: Cegueira: ^77777757%^000000 l  ^7777777 segundos^000000
-          Vel. Atq: ^77777730%^000000
+            Vel. Atq: ^77777730%^000000
 [Nv 3]: Cegueira: ^77777759%^000000 l  ^7777779 segundos^000000
-          Vel. Atq: ^77777735%^000000
+            Vel. Atq: ^77777735%^000000
 [Nv 4]: Cegueira: ^77777761%^000000 l  ^77777711 segundos^000000
-          Vel. Atq: ^77777740%^000000
+            Vel. Atq: ^77777740%^000000
 [Nv 1]: Cegueira: ^77777763%^000000 l  ^77777713 segundos^000000
-          Vel. Atq: ^77777745%^000000
+            Vel. Atq: ^77777745%^000000
 #
 SC_INVISIBILITY#
 Forma Etérea ^777777(Invisibility)^000000
@@ -9709,235 +10097,369 @@ Nível l Recuo l SP
 [Nv 3]: ^7777779 células^000000 l ^77777732^000000
 #
 LG_CANNONSPEAR#
-Disparo Perfurante
-Nível Máximo: 5
-^777777Pré requisitos: Estocada Precisa 1^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Habilidade usada apenas com Lanças. Ataca todos os oponentes em uma linha reta de 11 células e largura de 3 células. Aumenta o dano de acordo com a FOR do usuário. ^000000
-[Nv 1]: ^777777 ATQ 50% ^000000
-[Nv 2]: ^777777 ATQ 100%  ^000000
-[Nv 3]: ^777777 ATQ 150%  ^000000
-[Nv 4]: ^777777 ATQ 200%  ^000000
-[Nv 5]: ^777777 ATQ 250%  ^000000
+Disparo Perfurante ^777777(Cannon Spear)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Estocada Precisa 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Causa dano físico a distância em uma área
+de 11x3 células ao redor do alvo.
+A FOR do usuário influencia no dano.
+Tem 2 segundos de recarga.^000000
+Nível l Dano
+[Nv 1]: ^77777750%^000000
+[Nv 2]: ^777777100%^000000
+[Nv 3]: ^777777150%^000000
+[Nv 4]: ^777777200%^000000
+[Nv 5]: ^777777250%^000000
 #
 LG_BANISHINGPOINT#
-Toque do Oblívio
-Nível Máximo: 10
-^777777Pré requisitos: Perícia com Lança 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Habilidade usada apenas com Lanças. Ataque a distância que acerta oponentes em até 7 células de distância. Aumenta a Precisão a medida que o nível da habilidade aumenta. O dano é aumentado de acordo com o nível de Golpe Fulminante. ^000000
-[Nv 1]: ^777777 ATQ 50% ^000000
-[Nv 2]: ^777777 ATQ 110%  ^000000
-[Nv 3]: ^777777 ATQ 150%  ^000000
-[Nv 4]: ^777777 ATQ 200%  ^000000
-[Nv 5]: ^777777 ATQ 250%  ^000000
-[Nv 6]: ^777777 ATQ 300% ^000000
-[Nv 7]: ^777777 ATQ 350%  ^000000
-[Nv 8]: ^777777 ATQ 400%  ^000000
-[Nv 9]: ^777777 ATQ 450%  ^000000
-[Nv 10]: ^777777 ATQ 500%  ^000000
+Toque do Oblívio ^777777(Vanishing Point)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Perícia com Lança 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Causa dano físico a distância no alvo.
+Aumentar o nível da habilidade melhora
+a Precisão para acertar o ataque.^000000
+Nível l Dano l Precisão
+[Nv 1]: ^77777750%^000000 l ^777777+3^000000
+[Nv 2]: ^777777110%^000000 l ^777777+6^000000
+[Nv 3]: ^777777150%^000000 l ^777777+9^000000
+[Nv 4]: ^777777200%^000000 l ^777777+12^000000
+[Nv 5]: ^777777250%^000000 l ^777777+15^000000
+[Nv 6]: ^777777300%^000000 l ^777777+18^000000
+[Nv 7]: ^777777350%^000000 l ^777777+21^000000
+[Nv 8]: ^777777400%^000000 l ^777777+24^000000
+[Nv 9]: ^777777450%^000000 l ^777777+27^000000
+[Nv 10]: ^777777500%^000000 l ^777777+30^000000
 #
 LG_TRAMPLE#
-Pisotear Armadilha
-Nível Máximo: 3
-Tipo: ^777777  Especial ^000000
-Descrição: ^777777  Pisoteia o chão para libertar os usuários de armadilhas e desarma as que não foram ativadas em área de 5 x 5.
-Se a armadilha for do tipo explosiva, adiciona a chance de não ativá-la. A armadilha explosiva pode não causar dano dependendo da DES e AGI do usuário.^000000
-[Nv 1]: ^777777 Chance de sucesso 50% ^000000
-[Nv 2]: ^777777 Chance de sucesso 75%  ^000000
-[Nv 3]: ^777777 Chance de sucesso 100%  ^000000
+Pisotear Armadilha ^777777(Trample)^000000
+Nível máximo: ^7777773^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Tem a chance de remover armadilhas na
+área de 5x5 células ao redor do usuário,
+liberando alvos e destruindo as ofensivas.
+Ao pisotear uma armadilha ofensiva, há
+chance de bloquear o dano recebido.^000000
+Nível l Chance de destruir
+[Nv 1]: ^77777750%^000000
+[Nv 2]: ^77777775%^000000
+[Nv 3]: ^777777100%^000000
 #
 LG_SHIELDPRESS#
-Escudo Compressor
-Nível Máximo: 5
-^777777Pré requisitos: Punição Divina 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Esta habilidade necessita de um Escudo equipado.
-Ataca um alvo único com escudo, causando dano e adicionando chance de Atordoar.
-O dano é afetado pelo peso e nível de refinamento do Escudo. A chance de causar o efeito Atordoamento depende do nível de classe e DES do usuário.  ^000000
-[Nv 1]: ^777777 Chance de Atordoar 38% ^000000
-[Nv 2]: ^777777 Chance de Atordoar 46%   ^000000
-[Nv 3]: ^777777 Chance de Atordoar 54%   ^000000
-[Nv 4]: ^777777 Chance de Atordoar 62%   ^000000
-[Nv 5]: ^777777 Chance de Atordoar 70%   ^000000
+Escudo Compressor ^777777(Shield Press)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Punição Divina 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Escudo.^000000
+^777777Causa dano físico de curta distância que
+ignora a esquiva do alvo e com chance
+de infligir [Atordoamento].
+O dano é afetado pelo peso
+e refinamento do escudo.^000000
+Nível l Dano l Chance
+[Nv 1]: ^777777150%^000000 l ^77777738%^000000
+[Nv 2]: ^777777300%^000000 l ^77777746%^000000
+[Nv 3]: ^777777450%^000000 l ^77777754%^000000
+[Nv 4]: ^777777600%^000000 l ^77777762%^000000
+[Nv 5]: ^777777750%^000000 l ^77777770%^000000
 #
 LG_REFLECTDAMAGE#
-Reflexão Amplificada
-Nível Máximo: 5
-^777777Pré requisitos: Escudo Refletor 5 ^000000
-Tipo: ^777777  Efeito positivo no usuário ^000000
-Descrição: ^777777  Esta habilidade necessita de um Escudo equipado. Reflete parcialmente os ataques físicos recebidos a curta distância para uma área ao redor do usuário. A quantidade máxima de dano refletido é igual ao HP Máx. Consome SP continuamente enquanto ativa. Não pode ser usada em conjunto com Escudo Refletor.^000000
-[Nv 1]: ^777777 Reflete 20% do dano / Taxa do Reflexo 40% / Reflete 30 vezes ^000000
-[Nv 2]: ^777777 Reflete 25% do dano / Taxa do Reflexo 50% / Reflete 35 vezes ^000000
-[Nv 3]: ^777777 Reflete 30% do dano / Taxa do Reflexo 60% / Reflete 40 vezes ^000000
-[Nv 4]: ^777777 Reflete 35% do dano / Taxa do Reflexo 70% / Reflete 45 vezes ^000000
-[Nv 5]: ^777777 Reflete 40% do dano / Taxa do Reflexo 80% / Reflete 50 vezes ^000000
+Reflexão Amplificada ^777777(Reflect Damage)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Escudo Refletor 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com Escudo.^000000
+^777777Ao receber danos de curta distância, tem
+a chance de refletir o ataque para uma
+área de 5x5 células ao redor do usuário.
+O efeito é cancelado quando a acaba a
+duração, o SP chegar a zero ou
+ao atingir o número limite de reflexões.
+Drena SP a cada 10 segundos.^000000
+Nível l Chance l Parte do dano refletido
+[Nv 1]: ^77777740%^000000 l ^77777720%^000000
+[Nv 2]: ^77777750%^000000 l ^77777725%^000000
+[Nv 3]: ^77777760%^000000 l ^77777730%^000000
+[Nv 4]: ^77777770%^000000 l ^77777735%^000000
+[Nv 5]: ^77777780%^000000 l ^77777740%^000000
 #
 LG_PINPOINTATTACK#
-Estocada Precisa
-Nível Máximo: 5
-^777777Pré requisitos: Toque do Oblívio 5 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Habilidade usada apenas com Lanças. Ataque forte em um ponto vital do oponente.
-O efeito no alvo depende do nível da habilidade. O dano é afetado pela AGI do usuário. Crítico 100%.  ^000000
-[Nv 1]: ^777777 ATQ 100% / Chance de causar Sangramento ^000000
-[Nv 2]: ^777777 ATQ 200% / Chance de quebrar Elmo ^000000
-[Nv 3]: ^777777 ATQ 300% / Chance de quebrar Escudo ^000000
-[Nv 4]: ^777777 ATQ 400% / Chance de quebrar Armadura ^000000
-[Nv 5]: ^777777 ATQ 500% / Chance de quebrar Arma^000000
+Estocada Precisa ^777777(Pinpoint Attack)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Toque do Oblívio 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Pula instantaneamente no alvo para causar
+dano físico a distância com chance de
+infligir um efeito adicional.
+A AGI do usuário afeta o dano.^000000
+Nível l Dano l Efeito
+[Nv 1]: ^777777100%^000000 l ^777777Causar Sangramento^000000
+[Nv 2]: ^777777200%^000000 l ^777777Quebrar Elmo^000000
+[Nv 3]: ^777777300%^000000 l ^777777Quebrar Escudo^000000
+[Nv 4]: ^777777400%^000000 l ^777777Quebrar Armadura^000000
+[Nv 5]: ^777777500%^000000 l ^777777Quebrar Arma^000000
 #
 LG_FORCEOFVANGUARD#
-Proteção da Vanguarda
-Nível Máximo: 5
-Tipo: ^777777  Efeito positivo no usuário ^000000
-Descrição: ^777777  Ao utilizar esta habilidade, o HP Máx e DEF são aumentados. Além disso, aumenta o nível de 'Fúria' a cada vez
-que o usuário for atingido com esta habilidade ativada. O nível de Fúria é usado com a habilidade Retribuição da Vanguarda.
-A habilidade é cancelada com o tempo ou se for usada novamente. Consome SP continuamente enquanto ativa. ^000000
-[Nv 1]: ^777777 Chance de conseguir pontos de Fúria 20% / Máx 7 pontos de Fúria ^000000
-[Nv 2]: ^777777 Chance de conseguir pontos de Fúria 32% / Máx 9 pontos de Fúria ^000000
-[Nv 3]: ^777777 Chance de conseguir pontos de Fúria 44% / Máx 11 pontos de Fúria ^000000
-[Nv 4]: ^777777 Chance de conseguir pontos de Fúria 56% / Máx 13 pontos de Fúria ^000000
-[Nv 5]: ^777777 Chance de conseguir pontos de Fúria 68% / Máx 15 pontos de Fúria ^000000
+Proteção da Vanguarda ^777777(Vanguard Force)^000000
+Nível máximo: ^7777775^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta a DEF e o HP máx.
+Drena SP a cada 10 segundos.
+Ao receber dano, o usuário terá a chance
+de ganhar um [Ponto de Fúria].
+O limte de [Pontos de Fúria] é determinado
+pelo nível da habilidade.^000000
+Nível l Chance l Limite
+[Nv 1]: ^77777720%^000000 l ^7777777^000000
+[Nv 2]: ^77777732%^000000 l ^7777779^000000
+[Nv 3]: ^77777744%^000000 l ^77777711^000000
+[Nv 4]: ^77777756%^000000 l ^77777713^000000
+[Nv 5]: ^77777768%^000000 l ^77777715^000000
 #
 LG_RAGEBURST#
-Retribuição da Vanguarda
-Nível Máximo: 1
-^777777Pré requisitos: Proteção da Vanguarda 1 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Libera todos os pontos de Fúria acumulados com Proteção da Vanguarda em um alvo único para causar grande dano. Quanto mais pontos, maior o dano. ^000000
+Retribuição da Vanguarda ^777777(Rage Burst)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Proteção da Vanguarda 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Consome todos os [Pontos de Fúria] para
+causar dano físico de curta distância.
+Utilize [Proteção da Vanguarda] para
+adquirir [Pontos de Fúria].^000000
 #
 LG_SHIELDSPELL#
-Aegis Domini
-Nível Máximo: 3
-^777777Pré requisitos: Escudo Compressor 3 / Aegis Inferi 2  ^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777  Esta habilidade necessita de um Escudo equipado. Invoca magias dependendo da DEF, MDEF e refinamento do Escudo. ^000000
-[Nv 1]: ^777777 Ativa magias dependendo da DEF do Escudo ^000000
-[Nv 2]: ^777777 Ativa magias dependendo da MDEF do Escudo ^000000
-[Nv 3]: ^777777 Ativa magias dependendo do refinamento do Escudo ^000000
+Aegis Domini ^777777(Shield Spell)^000000
+Nível máximo: ^7777773^000000
+Pré requisitos:
+^777777Escudo Compressor 3, Aegis Inferi 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^008080Apenas com Escudo.^000000
+^777777Conjura efeitos aleatórios de acordo
+com a DEF, DEFM ou o refino do Escudo.^000000
+Nível l Escudo l Efeitos
+[Nv 1]: ^777777DEF^000000
+          ^777777Causa dano físico,^000000
+          ^777777Chance de reflexão ou^000000
+          ^777777Bônus no ATQ.^000000
+[Nv 2]: ^777777DEFM ^000000
+          ^777777Causa dano mágico,^000000
+          ^777777Chance de Silenciar ou^000000
+          ^777777Ativar Magnificat.^000000
+[Nv 3]: ^777777Refino^000000
+          ^777777Quebra armaduras dos alvos,^000000
+          ^777777Bônus de DEF ou^000000
+          ^777777Regenerar HP.^000000
 #
 LG_EXEEDBREAK#
-Exceder Limite
-Nível Máximo: 5
-^777777Pré requisitos: Toque do Oblívio 3  ^000000
-Tipo: ^777777  Efeito positivo no usuário ^000000
-Descrição: ^777777  Acumula toda a força para causar um grande dano no próximo ataque normal (não afeta habilidades). Um ataque físico de curto alcance no usuário cancelará esta preparação. O dano é aumentado dependendo do nível de classe do usuário.
-Nível e peso da arma. A vel. de movimento é reduzida enquanto a habilidade estiver ativa. ^000000
-[Nv 1]: ^777777 ATQ 100% / Redução da vel. de movimento 50% ^000000
-[Nv 2]: ^777777 ATQ 200% / Redução da vel. de movimento 40% ^000000
-[Nv 3]: ^777777 ATQ 300% / Redução da vel. de movimento 50%  ^000000
-[Nv 4]: ^777777 ATQ 400% / Redução da vel. de movimento 20%  ^000000
-[Nv 5]: ^777777 ATQ 500% / Redução da vel. de movimento 10% ^000000
+Exceder Limite ^777777(Exceed Break)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Toque do Oblívio 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Ao acertar o alvo no próximo ataque,
+o dano causado terá um bônus maior.
+Não funciona com habilidades.
+É possível andar enquanto conjura, mas
+o movimento será reduzido nesse tempo.
+O efeito é cancelado ao trocar de arma.^000000
+Nível l Dano l Movimento
+[Nv 1]: ^777777+100%^000000 l ^777777-50%^000000
+[Nv 2]: ^777777+200%^000000 l ^777777-40%^000000
+[Nv 3]: ^777777+300%^000000 l ^777777-30%^000000
+[Nv 4]: ^777777+400%^000000 l ^777777-20%^000000
+[Nv 5]: ^777777+500%^000000 l ^777777-10%^000000
 #
 LG_OVERBRAND#
-Lança do Destino
-Nível Máximo: 5
-^777777Pré requisitos: Espiral Lunar 3 / Estocada Precisa 1  ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Habilidade usada apenas com Lanças. Cria uma cruz no chão com a lança para causar dano em área de 6 x 6.
-Oponentes que recebem o dano são empurrados para trás, e este dano é aumentado se o alvo atingir um obstáculo. O dano varia conforme o nível de Rapidez com Lança, DES e FOR do usuário. ^000000
-[Nv 1]: ^777777 ATQ Perfurante 200% / ATQ Esmagador 100%  ^000000
-[Nv 2]: ^777777 ATQ Perfurante 400% / ATQ Esmagador 200%  ^000000
-[Nv 3]: ^777777 ATQ Perfurante 600% / ATQ Esmagador 300%  ^000000
-[Nv 4]: ^777777 ATQ Perfurante 800% / ATQ Esmagador 400%  ^000000
-[Nv 5]: ^777777 ATQ Perfurante 1000% / ATQ Esmagador 500%  ^000000
+Lança do Destino ^777777(Overbrand)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Espiral Lunar 3, Estocada Precisa 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Causa danos físicos de curta distância
+nos oponentes da área de até 7x3 células.
+O dano é dividido em 3 partes, sendo o
+Perfurante, o Esmagador e o Adicional.
+Caso os oponentes não forem empurrados,
+eles receberão o dano adicional.
+É afetada por FOR, DES e o nível
+aprendido de [Rapidez com Lança].^000000
+Nível l Dano Esmagador l Dano Perfurante
+[Nv 1]: ^777777100%^000000 l ^777777200%^000000
+[Nv 2]: ^777777200%^000000 l ^777777400%^000000
+[Nv 3]: ^777777300%^000000 l ^777777600%^000000
+[Nv 4]: ^777777400%^000000 l ^777777800%^000000
+[Nv 5]: ^777777500%^000000 l ^7777771.000%^000000
 #
 LG_PRESTIGE#
-Prestígio Divino
-Nível Máximo: 5
-^777777Pré requisitos: Pisotear Armadilha 3  ^000000
-Tipo: ^777777  Efeito positivo no usuário ^000000
-Descrição: ^777777  Aumenta a DEF adiciona a chance de esquivar de ataques mágicos por tempo limitado. A taxa de esquiva contra magia é afetada pelos atributos do usuário, e a taxa de defesa pelo nível da habilidade.^000000
-[Nv 1]: ^777777 30 segundos de duração  ^000000
-[Nv 2]: ^777777 45 segundos de duração   ^000000
-[Nv 3]: ^777777 60 segundos de duração   ^000000
-[Nv 4]: ^777777 75 segundos de duração   ^000000
-[Nv 5]: ^777777 90 segundos de duração   ^000000
+Prestígio Divino ^777777(Prestige)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Pisotear Armadilha 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta a DEF dos equipamentos e dá
+a chance de bloquear danos mágicos.
+Não pode ser usada simultaneamente com
+[Consagração] ou [Formação Real].^000000
+Nível l Duração
+[Nv 1]: ^77777730 segundos^000000
+[Nv 2]: ^77777745 segundos^000000
+[Nv 3]: ^77777760 segundos^000000
+[Nv 4]: ^77777775 segundos^000000
+[Nv 5]: ^77777790 segundos^000000
 #
 LG_BANDING#
-Formação Real
-Nível Máximo: 5
-^777777Pré requisitos: Estocada Precisa 3 / Retribuição da Vanguarda 1  ^000000
-Tipo: ^777777  Efeito positivo no usuário ^000000
-Descrição: ^777777  Se outros Guardiões Reais estão no mesmo grupo e próximos uns dos outros, o ATQ e DEF deles será aumentado e eles dividirão o HP.
-O SP é continuamente consumido enquanto a habilidade estiver ativa e ela será cancelada se for usada novamente ou se o tempo de duração encerrar.
-O efeito aumenta conforme aumenta o número de usuários na formação. Oponentes que se aproximarem da formação poderão ter a vel. de movimento reduzida. ^000000
+Formação Real ^777777(Banding)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Estocada Precisa 3,
+Retribuição da Vanguarda 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Se houver outros Guardiões Reais no grupo
+em uma área 7x7 células, aumenta o ATQ e
+a DEF de todos os Guardiões Reais.
+O HP máx. de todos os Guardiões será
+igual e adversários que se aproximarem
+poderão ter o movimento reduzido.
+Drena SP a cada 5 segundos.
+Não pode ser usada simultaneamente com
+[Consagração] ou [Prestígio Divino].^000000
+^000088Precisa de 2 ou mais Guardiões Reais.^000000
 #
 LG_MOONSLASHER#
-Espiral Lunar
-Nível Máximo: 5
-^777777Pré requisitos: Perícia com Lança 1  ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Atinge oponentes em uma área de 3 células, forçando-os a sentarem. Imobiliza monstros por 1~3 segundos. Aumenta o dano dependendo do nível de Lança do Destino. ^000000
-[Nv 1]: ^777777 ATQ 120% / Chance de sucesso 40%  ^000000
-[Nv 2]: ^777777 ATQ 240% / Chance de sucesso 48% ^000000
-[Nv 3]: ^777777 ATQ 360% / Chance de sucesso 56% ^000000
-[Nv 4]: ^777777 ATQ 480% / Chance de sucesso 64% ^000000
-[Nv 5]: ^777777 ATQ 600% / Chance de sucesso 72% ^000000
+Espiral Lunar ^777777(Moon Slasher)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Perícia com Lança 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Causa dano físico de curta distânca na
+área de 7x7 células ao redor do usuário.
+Haverá uma chance de forçar Personagens
+atingidos a se sentarem e monstros a
+ficarem imóveis por 1 a 3 segundos.^000000
+Nível l Dano l Chance l Recarga
+[Nv 1]: ^777777120%^000000 l ^77777740%^000000 l ^7777776 segundos^000000
+[Nv 2]: ^777777240%^000000 l ^77777748%^000000 l ^7777775 segundos^000000
+[Nv 3]: ^777777360%^000000 l ^77777756%^000000 l ^7777774 segundos^000000
+[Nv 4]: ^777777480%^000000 l ^77777764%^000000 l ^7777773 segundos^000000
+[Nv 5]: ^777777600%^000000 l ^77777772%^000000 l ^7777772 segundos^000000
 #
 LG_RAYOFGENESIS#
-Luz da Criação
-Nível Máximo: 5
-^777777Pré requisitos: Crux Magnum 5 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Um raio divino acerta inimigos em área de 5 células. Para conjurar esta habilidade, mais que 2 Guardiões Reais precisam estar em 'Formação Real' ou o usuário precisa estar no estado de 'Consagração'.
-O dano aumenta de acordo com a quantidade de Guardiões Reais no estado de Formação Real. Se o alvo for Morto-Vivo ou Demônio, adiciona 50% de chance de causar Cegueira.^000000
-[Nv 1]: ^777777 ATQ Físico 600%, ATQM 300%  / Consome 3% do HP  ^000000
-[Nv 2]: ^777777 ATQ Físico 900%, ATQM 600% / Consome 6% do HP ^000000
-[Nv 3]: ^777777 ATQ Físico 1200%, ATQM 900% / Consome 9% do HP ^000000
-[Nv 4]: ^777777 ATQ Físico 1500%, ATQM 1200% / Consome 12% do HP ^000000
-[Nv 5]: ^777777 ATQ Físico 1800%, ATQM 1500% / Consome 15% do HP ^000000
+Luz da Criação ^777777(Ray of Genesis)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Crux Magnum 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico e mágico de propriedade
+Sagrado em uma área de 5x5 células.
+Alvos das raças Morto-Vivo ou Demônio
+terão 50% de chance de [Cegueira].
+Se for usada com [Formação Real] ativa,
+o dano mágico causado será maior.
+Consome HP para ser usada.^000000
+^000088Precisa de [Consagração] ou
+[Formação Real] ativada.^000000
+Nível l ATQ l ATQM l HP
+[Nv 1]: ^777777600%^000000 l ^777777300%^000000 l ^7777773%^000000
+[Nv 2]: ^777777900%^000000 l ^777777600%^000000 l ^7777776%^000000
+[Nv 3]: ^7777771.200%^000000 l ^777777900%^000000 l ^7777779%^000000
+[Nv 4]: ^7777771.500%^000000 l ^7777771200%^000000 l ^77777712%^000000
+[Nv 5]: ^7777771.800%^000000 l ^7777771500%^000000 l ^77777715%^000000
 #
 LG_PIETY#
-Devoção
-Nível Máximo: 5
-^777777Pré requisitos: Fé 3 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Encanta a armadura do usuário ou de um alvo único e os aliados ao redor com propriedade Sagrada. Consome 2 Águas Bentas. ^000000
-[Nv 1]: ^777777 60 segundos de duração ^000000
-[Nv 2]: ^777777 80 segundos de duração  ^000000
-[Nv 3]: ^777777 100 segundos de duração  ^000000
-[Nv 4]: ^777777 120 segundos de duração  ^000000
-[Nv 5]: ^777777 140 segundos de duração  ^000000
+Devoção ^777777(Piety)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Fé 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Encanta a armadura com propriedade Sagrado
+do usuário e membros do grupo ao redor.^000000
+^000088Consome 2 Águas Bentas.^000000
+Nível l Duração
+[Nv 1]: ^77777760 segundos^000000
+[Nv 2]: ^77777780 segundos^000000
+[Nv 3]: ^777777100 segundos^000000
+[Nv 4]: ^777777120 segundos^000000
+[Nv 5]: ^777777140 segundos^000000
 #
 LG_EARTHDRIVE#
-Aegis Inferi
-Nível Máximo: 5
-^777777Pré requisitos: Reflexão Amplificada3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Arrasta o Escudo no chão causando dano tipo Terra em oponentes ao redor. Reduz a vel. de ataque e DEF em 25%. Remove magias colocadas no chão. Permite o ataque a oponentes escondidos.
-O aumento no nível da habilidade afeta a duração da redução da vel. de ataque e DEF. O dano é aumentado de acordo com o peso do Escudo. Adiciona uma pequena chance de quebrar o Escudo.^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / Redução de vel. de ATQ e DEF: 3 seg ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células/ Rredução de vel. de ATQ e DEF: 6 seg ^000000
-[Nv 3]: ^777777 Alcance 5 x 5 células / Redução de vel. de ATQ e DEF: 9 seg ^000000
-[Nv 4]: ^777777 Alcance 5 x 5 células / Redução de vel. de ATQ e DEF: 12 seg ^000000
-[Nv 5]: ^777777 Alcance 7 x 7 células / Redução de vel. de ATQ e DEF: 15 seg ^000000
+Aegis Inferi ^777777(Earth Drive)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Reflexão Amplificada 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Escudo.^000000
+^777777Causa dano físico de propriedade Terra
+nos oponentes ao redor do usuário.
+Magias de solo serão destruídas e alvos
+atingidos terão a chance de ter sua DEF
+e movimento reduzidas temporariamente.
+Revela oponentes escondidos e o dano é
+influenciado pelo peso do escudo.
+Escudos destrutíveis poderão se quebrar.^000000
+Nível l Área l Recarga
+[Nv 1]: ^7777773x3 células^000000 l ^7777777 segundos^000000
+[Nv 2]: ^7777773x3 células^000000 l ^7777776 segundos^000000
+[Nv 3]: ^7777775x5 células^000000 l ^7777775 segundos^000000
+[Nv 4]: ^7777775x5 células^000000 l ^7777774 segundos^000000
+[Nv 5]: ^7777777x7 células^000000 l ^7777773 segundos^000000
 #
 LG_HESPERUSLIT#
-Trindade
-Nível Máximo: 5
-^777777Pré requisitos: Prestígio Divino 3 / Formação Real 3 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Necessita de 3 Guardiões Reais em 'Formação Real' ou 1 Guardião Real em 'Consagração'.
-Todos os Guardiões Reais atacam em conjunto o mesmo alvo. O ataque aumenta dependendo do número de aliados em Formação Real, e estados negativos podem ocorrer nos alvos.
-Consome parte da SP do usuário, e metade deste SP é consumido dos aliados em formação também. ^000000
-[Nv 1]: ^777777 ATQ 120% ^000000
-[Nv 2]: ^777777 ATQ 240% ^000000
-[Nv 3]: ^777777 ATQ 360% ^000000
-[Nv 4]: ^777777 ATQ 480% ^000000
-[Nv 5]: ^777777 ATQ 600% ^000000
+Trindade ^777777(Hesperus Lit)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Prestígio Divino 3, Formação Real 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas com Lança.^000000
+^777777Causa dano físico de curta
+distância em um alvo único.
+Se for usada com [Formação Real] ativa,
+haverá efeitos especiais e acordo com o
+número de Guardiões Reais em formação.
+^000088Precisa de [Consagração] ou
+[Formação Real] ativada.^000000
+Nível l Dano
+[Nv 1]: ^777777120%^000000
+[Nv 2]: ^777777240%^000000
+[Nv 3]: ^777777360%^000000
+[Nv 4]: ^777777480%^000000
+[Nv 5]: ^777777600%^000000
 #
 LG_INSPIRATION#
-Consagração
-Nível Máximo: 5
-^777777Pré requisitos: Aegis Domini 3 / Luz da Criação 4 / Devoção 5 ^000000
-Tipo: ^777777  Efeito positivo para o usuário ^000000
-Descrição: ^777777  Aumenta temporariamente Precisão e atributos. Efeitos positivos e negativos são cancelados Reduz SP e HP do alvo continuamente. Faz com que o usuário receba parte do dano que causa como retorno. A habilidade é cancelada se o SP chegar a zero. Adiciona a chance de ter todo o HP e SP drenados ao conjurar a habilidade. 1% da EXP de base do usuário é perdida ao utilizar a habilidade. A habilidade não pode ser usada em conjunto com Formação Real e Prestígio Divino. ^000000
-[Nv 1]: ^777777 30 segundos de duração ^000000
-[Nv 2]: ^777777 45 segundos de duração   ^000000
-[Nv 3]: ^777777 60 segundos de duração  ^000000
-[Nv 4]: ^777777 75 segundos de duração  ^000000
-[Nv 5]: ^777777 90 segundos de duração   ^000000
+Consagração ^777777(Inspiration)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Aegis Domini 3,
+Luz da Criação 4, Devoção 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o ATQ, o HP máx., a Precisão, os
+atributos e fica imune a status negativos.
+Drena HP e SP por segundo e causa 1% de
+dano no próprio usuário ao atacar.
+Não pode ser usada simultaneamente com
+[Prestígio Divino] ou [Formação Real].^000000
+^000088Consome de 1% de EXP base.^000000
+Nível l Duração
+[Nv 1]: ^77777730 segundos^000000
+[Nv 2]: ^77777745 segundos^000000
+[Nv 3]: ^77777760 segundos^000000
+[Nv 4]: ^77777775 segundos^000000
+[Nv 5]: ^77777790 segundos^000000
 #
 SR_DRAGONCOMBO#
 Punho do Dragão
@@ -11241,7 +11763,7 @@ regenera HP do usuário a cada segundo.
 Até 3 Plantas podem estar ativas ao mesmo
 tempo, mas apenas uma por alvo.
 É cancelada se o alvo se afastar
- mais de 12 células do usuário.^000000
+mais de 12 células do usuário.^000000
 ^000088Consome 1 Semente de Planta Sanguessuga.^000000
 Nível l Duração
 [Nv 1]: ^77777720 segundos^000000
@@ -11337,24 +11859,18 @@ Pré requisitos: ^777777Bomba Napalm 3^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Atira um item na área da [Bomba Napalm]
-ativa, alterando o efeito dessa habilidade
-de acordo com o item consumido.^000000
+ativa, alterando o efeito da habilidade.^000000
 ^000088Consome 1 item.^000000
 Nível l Item l Efeito
 [Nv. 1]: ^777777Garrafa com Óleo^000000
              ^777777Aumenta o dano mágico causado.^000000
-             ^777777Estende a duração da Bomba Napalm.^000000
 [Nv. 2]: ^777777Pó Explosivo^000000
              ^777777Causa dano mágico maior.^000000
-             ^777777Cancela a Bomba Napalm.^000000
 [Nv. 3]: ^777777Gás de Fumaça^000000
-             ^777777Aumenta a Esquiva.^000000
              ^777777Reduz o dano a distância.^000000
 [Nv. 4]: ^777777Gás Lacrimejante^000000
              ^777777Drena HP continuamente.^000000
-             ^777777Reduz Esquiva e Precisão.^000000
 [Nv. 5]: ^777777Frasco de Ácido^000000
-             ^777777Cancela a Bomba Napalm.^000000
              ^777777Altera para [Bomba Ácida] em área.^000000
 #
 GN_HELLS_PLANT#
@@ -11440,8 +11956,8 @@ Pré requisitos: ^777777Culinária Avançada 1^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^777777Cria bombas de fruta usando ingredientes.
-As Bombas podem ser equipadas como munição
-e usadas com [Arremessar Item].^000000
+As Bombas servem como munição e são
+usadas por [Arremessar Item].^000000
 ^000088Consome 1 Neurônio e
 ingredientes de acordo com a bomba.
 Precisa de 1 Livro de Bombas.^000000
@@ -11526,8 +12042,15 @@ Descrição:
 #
 ALL_BUYING_STORE#
 Loja de Compras
-Tipo: Suporte
-Descrição: ^777777Abre uma Loja que permite deixar uma lista de itens que o usuário deseja comprar. Consome 1 ^FF0000Licença de Loja de Compras^777777.^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Completar quest^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Abre uma loja com uma lista de
+itens que você deseja comprar.
+É necessário que os itens desejados
+para a compra estejam no inventário.^000000
+^000088Consome 1 Licença de Loja de Compras.^000000
 #
 ALL_GUARDIAN_RECALL#
 Chamado do Guardião
@@ -11592,7 +12115,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Ferir Alvo 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Rifles.^000000
+^008080Apenas com Rifles.^000000
 ^777777Consome 1 Projétil Revestido para causar
 dano físico com chance de infligir
 Sangramento no alvo selecionado.
@@ -11611,7 +12134,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Rajada Estilhaçante 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas.^000000
+^008080Apenas com Espingardas.^000000
 ^777777Dispara 1 projétil para causar dano
 físico com chance de remover efeitos
 positivos e negativos do alvo.^000000
@@ -11659,7 +12182,7 @@ Pré-requisitos:
 ^777777Desarmar 1, Controle de Multidão 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas.^000000
+^008080Apenas com Espingardas.^000000
 ^777777Consome 1 bala para causar dano físico
 com chance de destruir o elmo do alvo.
 A chance é aumentada pelo nível da habilidade
@@ -11729,7 +12252,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Desperado 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Pistolas.^000000
+^008080Apenas com Pistolas.^000000
 ^777777Consome 5 projéteis para causar dano físico
 na área de 7x7 células ao seu redor.
 O dano aumenta com o nível de 'Desperado'.^000000
@@ -11746,7 +12269,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Mina do Justiceiro 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Lança-Granadas.^000000
+^008080Apenas com Lança-Granadas.^000000
 ^777777Atira 1 Granada Aderente no alvo
 para causar dano instantaneamente.
 A granada ficará presa no alvo
@@ -11771,7 +12294,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Farta Fortuna 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^008080Somente com Projéteis Sagrados.^000000
+^008080Apenas com Projéteis Sagrados.^000000
 ^777777Consome todas as moedas para ativar
 uma proteção que bloqueia
 alguns ataques recebidos.
@@ -11793,7 +12316,7 @@ Nível máximo: ^7777771^000000
 Pré-requisitos: ^777777Desperado 10^000000
 Tipo: ^777777Ativa^000000
 Descrição:
-^008080Somente com Pistolas.^000000
+^008080Apenas com Pistolas.^000000
 ^777777Consome 1 Moeda para mover-se.
 Nos próximos 2 segundos após o uso,
 'Desperado' causará mais dano.
@@ -11805,7 +12328,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Disparo Labareda 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Metralhadoras.^000000
+^008080Apenas com Metralhadoras.^000000
 ^777777Atira enquanto gira em torno de si.
 Alvos atingidos serão empurrados 3 células.
 Haverá um dano extra se os alvos
@@ -11826,7 +12349,7 @@ Pré-requisitos:
 ^777777Marcar em Brasa 1, Arremessar Granada 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Lança-Granadas.^000000
+^008080Apenas com Lança-Granadas.^000000
 ^777777Lança um míssil nos alvos
 marcados em brasa.
 Se houver mais de um alvo marcado,
@@ -11848,7 +12371,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Ataque Gatling 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Metralhadoras.^000000
+^008080Apenas com Metralhadoras.^000000
 ^777777Dispara em uma área de 3x10 células,
 com chance de remover habilidades
 de terreno no alcance da labareda.
@@ -11887,7 +12410,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Espiral Perfurante 1^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Rifles.^000000
+^008080Apenas com Rifles.^000000
 ^777777Atira 1 projétil para causar dano
 físico com chance de infligir um efeito que
 reduz a resistência a raça Humanoide do alvo.^000000
@@ -11904,7 +12427,7 @@ Nível máximo: ^7777775^000000
 Pré-requisitos: ^777777Tiro Neutralizante 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Espingardas.^000000
+^008080Apenas com Espingardas.^000000
 ^777777Consome 1 Projétil Pesado para causar dano
 e empurrar um alvo 6 células para trás.
 Possui um alcance de 9 células, porém
@@ -11930,7 +12453,7 @@ Pré-requisitos:
 ^777777Farta Fortuna 1, Explosão Antimatéria 3^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^008080Somente com Rifles.^000000
+^008080Apenas com Rifles.^000000
 ^777777Atinge alvos marcados em brasa
 e nos oponentes ao redor da área de 5x5.
 Se não houver alvos marcados, a habilidade
@@ -12403,11 +12926,11 @@ Nível máximo: ^77777710^000000
 Pré requisito: ^777777Adestrar Dragão 2^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
+^008080Apenas com montaria de Ferus.^000000
 ^777777Comanda o dragão para cuspir em área,
 causando dano físico a distância de
 propriedade Água com chance de
 infligir [Hipotermia] nos atingidos.^000000
-^000088Precisa da montaria de Ferus.^000000
 #
 NC_MAGMA_ERUPTION#
 Erupção de Magma ^777777(Magma Eruption)^000000
