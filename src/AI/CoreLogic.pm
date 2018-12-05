@@ -1069,11 +1069,11 @@ sub processTransferItems {
 		my $stack_limit = $target->item_max_stack( $row->{item}->{nameID} );
 		
 		my $amount = min($stack_limit, min( $item->{amount}, $row->{amount} || $item->{amount} ));
-		if ( ( $stack_limit - $amount ) < 0 || ($target_item->{amount} - $stack_limit) == 0) {
+		if ( $stack_limit - $amount < 0 || $target_item->{amount} - $stack_limit == 0) {
 			error TF("Unable to add %s to %s. You can't stack over %s of this item\n", $item->name, $row->{target}, $stack_limit);
 			redo;
 			
-		} elsif ( ($target_item->{amount} + $amount) > $stack_limit ) {
+		} elsif ( $target_item->{amount} + $amount > $stack_limit ) {
 			warning TF("Amount of %s will surpass the maximum %s capacity (%d), transfering maximum possible (%d)\n",
 			$row->{item}->name, $row->{target}, $stack_limit, $stack_limit - $target_item->{amount} );
 			
