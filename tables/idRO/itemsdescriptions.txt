@@ -50197,3 +50197,42 @@ Location : ^777777Upper ^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+
+//====================update 05122018=================
+29100#
+Sebuah Balon Santa Poring
+yang terbang diatas kepalamu.
+Kamu akan merasa beruntung apabila memakainya.
+
+Menambah drop rate dan exp rate dari monster sebesar 5%
+
+Menambah Efek penyembuhan Candy sebesar 200%
+Class : ^777777Headgear^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+5595#
+Sebuah tanduk dengan kekuatan jahat. Kamu bisa merasakan kekuatan vital dari benda ini.
+MDEF +2
+Mengurangi serangan berlemen Netral dan Air sebesar Job Level / 14.
+Jika dipakai oleh Swordman, Merchant, Thief AGI+2 dan VIT+2.
+Jika dipakai Mage, Archer, Acolyte INT+2 dan DEX+2.
+Jenis : ^777777Headgear^000000    Defense : ^7777772^000000
+Location : ^777777Upper^000000    Berat : ^77777740^000000
+Minimum Lvl : ^77777771^000000
+Job : ^777777Semua^000000
+#
+
+18553#
+Sebuah penutup kepala berbentuk pohon natal yang dibuat oleh Louise Carol.
+Meningkatkan pertahanan terhadap status Blind, Stun, Curse dan Confusion sebesar 20%.
+Terdapat kemungkinan 1% menjatuhkan Cookie Bags untuk setiap monster yang dikalahkan.
+Jika ditempa sampai +7, Drop Rate Cookie Bag bertambah sebesar 2%.
+Jika ditempa sampai +9, Drop Rate Cookie Bag bertambah sebesar 4%.
+Jenis : ^777777Headgear^000000    Defense : ^7777775^000000
+Location : ^777777Upper^000000    Berat : ^7777775^000000
+Minimum Lvl : ^77777771^000000
+Job : ^777777Semua^000000
+#

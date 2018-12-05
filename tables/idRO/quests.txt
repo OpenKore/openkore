@@ -11824,3 +11824,25 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19279#Dark Pinguicula Fear Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Advanced Turn-in : Kalahkan ^ff0000400 Monster Dark Pinguicula ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 26 : 5 Desember 2018 --
+
+19280#Noxious Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Noxious ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19281#Nightmare Terror Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Nightmare Terror ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19282#Gremlin Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Gremlin ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19283#Skogul Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Skogul ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19284#Rake Scaraba Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Rake Scaraba ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
