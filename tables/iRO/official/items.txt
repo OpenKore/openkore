@@ -1069,8 +1069,8 @@
 1944#Hippie_Guitar#
 1950#Rope#
 1951#Rope#
-1952#Whip#
-1953#Whip#
+1952#Line#
+1953#Line#
 1954#Wire_Whip#
 1955#Wire_Whip#
 1956#Rante_Whip#
@@ -5010,7 +5010,7 @@
 9021#Isis_Egg#
 9022#Green_Petite_Egg#
 9023#Deviruchi_Egg#
-9024#Bapho_Jr._Egg#
+9024#Baphomet_Jr._Egg#
 9025#Bongun_Egg#
 9026#Zealotus_Egg#
 9027#Alice_Egg#
@@ -5049,7 +5049,8 @@
 9099#Teddy_Bear_Egg#
 9101#Scatleton's_Portable_Cage#
 9113#Skelion_Egg#
-10001#Skull_Helm#
+9518#December_Robotic_Costume_Box#
+10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
 10004#Pacifier#
@@ -7954,7 +7955,7 @@
 18794#Ordinary_Black_Magician_Hat#
 18795#Night_Sparrow_Hat#
 18796#RWC_Champ_Crown_Fourth_Place#
-18797#Deep_Angel_Hairband#
+18797#Blue_Angel_Hairband#
 18798#Pink_Angel_Hairband#
 18799#Nero_Mask#
 18802#Poring_Fedora_Hat#
@@ -7977,7 +7978,7 @@
 18824#Mask_Of_Bankrupt#
 18825#Money_Lost_Spirit#
 18827#Valkyrie_Circlet#
-18832#Rolf_Von_Gigue_the666th#
+18832#Rolf_Von_Gigue_the_666th#
 18833#Marin_Crown#
 18834#Sakura_Hairband#
 18837#Cheering_Whistle#
@@ -8544,7 +8545,7 @@
 19978#Costume_Silver_Exclamation#
 19979#Costume_Golden_Question#
 19980#Costume_Silver_Question#
-19982#Costume:_Santa_Hat#
+19982#Costume_Santa_Hat#
 19984#Costume_Cold_Protection_Hat#
 19985#Costume_Aura_Quartz_Crown#
 19986#Costume_Lunatic_Hat#
@@ -8806,6 +8807,7 @@
 20515#Costume_Magic_Circle#
 20519#Costume_Full_Bloom_Cherry_Tree#
 20524#Costume:_Shining_Angel_Wings#
+20535#Costume_Digital_Space#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9777,6 +9779,7 @@
 31452#Costume_White_Cat#
 31453#Costume_Large_Ribbon_Muffler_(Black)#
 31455#Costume_Super_Cute_Dog#
+31463#Costume_Flying_Drone#
 31470#Costume_Tengu_Scroll#
 31471#Costume_Celestial_Woman_Flower#
 31472#Costume_Fairy_Feathers#
@@ -9817,6 +9820,13 @@
 31545#Costume_Eremes_Scarf_Blue#
 31546#Costume_Clockwork_Cap#
 31547#Costume_Poporing_Mascot_Head#
+31569#Costume_Open_Air_Headset#
+31570#Costume_Cyclops_Visor#
+31571#Costume_Guardian_Processor#
+31572#Costume_Mobile_Pursuit_System#
+31573#Costume_Mecha_Cat_Ears#
+31574#Costume_Cyber_Income#
+31575#Costume_Electric_Two_Sides_Up_Hair#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#

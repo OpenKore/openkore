@@ -22391,3 +22391,170 @@ Looks like you've discovered the source of the mysterious candy. Go back and spe
 Jane asked me to meet her in Niflheim near the bridge to the north-west.#
 
 #
+
+
+
+
+//The Illusion of Moonlight
+
+7776#Suspicious Sign#SG_FEEL#QUE_NOIMAGE#
+The Elders of Payon are worried about the apprentice Soul Linker, Muyeon, who disappeared during a ritual. I should talk to the young scholar at the entrance to the Payon Cave.#
+Talk to Young Scholar.#
+
+7777#What Happened?#SG_FEEL#QUE_NOIMAGE#
+Muyeon left for the detached palace. The young scholar wants to ask her what happened.#
+Talk to Muyeon.#
+
+7778#What Muyeon Saw#SG_FEEL#QUE_NOIMAGE#
+Muyeon is agitated by something she saw during the purging ritual. She said I should see it for myself.#
+Talk to Muyeon.#
+
+7779#Distressing Ritual#SG_FEEL#QUE_NOIMAGE#
+Muyeon says she could let me have a first-hand experience of the purging ritual. I'd better brace myself and talk to her.#
+Talk to Muyeon.#
+
+7780#Nightmare in the Ruined Village#SG_FEEL#QUE_NOIMAGE#
+I blacked out during the ritual and arrived at the ruined village inside Payon Cave. Is this shimmering portal in front of me connected to the nightmare that Muyeon told me about?#
+Investigate the shimmering portal.#
+
+7781#Nightmare in the Ruined Village#SG_FEEL#QUE_NOIMAGE#
+The young scholar was sucked into the shimmering portal in the ruined village inside the Payon Cave.#
+Talk to Chunghae on the other side of the portal.#
+
+7782#Stop the Wizard!#SG_FEEL#QUE_NOIMAGE#
+Scholar Chunghae in the Nightmare of the Moonlight Flower dungeon thinks the ^4d4dffWizard of the Truth^000000 is responsible for this incident. He asked me to take care of him.#
+Eliminate 1 Wizard of the Truth.#
+
+7783#Stop the Wizard! - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Scholar Chunghae in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7784#No Mercy for Illusions#SG_FEEL#QUE_NOIMAGE#
+Soldier Junghee in the Nightmare of the Moonlight Flower dungeon asked me to clear the area around him of ^4d4dffAngry Nine Tails^000000.#
+Eliminate Angry Nine Tails.#
+
+7785#No Mercy for Illusions - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Soldier Junghee in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7786#Remembering My Ancestors#SG_FEEL#QUE_NOIMAGE#
+Soldier Junghee in the Nightmare of the Moonlight Flower dungeon asked me to send ^4d4dffResentful Soldiers^000000 to Heaven.#
+Eliminate Resentful Soldiers.#
+
+7787#Remebering My Ancestors - Pending#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this Daily quest from Soldier Junghee in the Nightmare of the Moonlight Flower dungeon after it cools down.#
+Reset at 4:00 a.m.#
+
+7788#Back to Muyeon#SG_FEEL#QUE_NOIMAGE#
+Relay Chunghae's investigation results to ^4d4dffMuyeon^000000 in the ^4d4dffDetached Payon Palace^000000.#
+Talk to Muyeon in the Detached Palace.#
+
+//The Illusion of Geffen
+
+14652#Detailed Account 01#SG_FEEL#QUE_NOIMAGE#
+Could you help us? This is going to be a long story. Let me drink some water first.#
+Talk to Priest Grimm.#
+
+14653#Detailed Account 02#SG_FEEL#QUE_NOIMAGE#
+Please read this notebook.#
+Talk to Priest Grimm.#
+
+14654#Detailed Account 03#SG_FEEL#QUE_NOIMAGE#
+If you're done reading the notebook, I'd like to talk to you.#
+Talk to Priest Grimm.#
+
+14655#I'm Ready#SG_FEEL#QUE_NOIMAGE#
+Let me know when you're ready.#
+Talk to Priest Grimm.#
+
+14656#Finding Father Grimm's Colleagues#SG_FEEL#QUE_NOIMAGE#
+Please go to the place beyond this notebook and see if Nun Gem and the others in my group are safe.#
+Find Nun Gem.#
+
+14657#Jojo Is the Mage's Name#SG_FEEL#QUE_NOIMAGE#
+The mage who hasn't returned is called Jojo. He's a typical mage, so I'm pretty sure you won't miss him.#
+Find the mage.#
+
+14658#Jubilee Is the Priest's Name#SG_FEEL#QUE_NOIMAGE#
+The priest who hasn't returned is called Jubilee. He's a typical priest, so I'm pretty sure you won't miss him.#
+Find the priest.#
+
+14659#Lost in Thought#SG_FEEL#QUE_NOIMAGE#
+Bomi is lost in thought. I should talk to her again later.#
+Talk to Bomi.#
+
+14660#Ingredients for Fake Blood#SG_FEEL#QUE_NOIMAGE#
+I need some things to create fake blood: the sticky blood of Matte Drainliars and the sap of Neon Mushrooms. I only need 10 of each.#
+Collect Sticky Bloods and Mushroom Saps.#
+
+14661#Jojo Is the Mage's Name 02#SG_FEEL#QUE_NOIMAGE#
+We aren't the only ones in here. If you're looking for your friends, then you'd better hurry.#
+Find the mage.#
+
+14662#You're Scaring Me#SG_FEEL#QUE_NOIMAGE#
+Everyone, stop what you're doing! I smell something...#
+Talk to King.#
+
+14663#Bloody Fight#SG_FEEL#QUE_NOIMAGE#
+I smell blood. A fight's broken out near here!#
+Locate the fighting scene.#
+
+14664#Deep Misunderstanding#SG_FEEL#QUE_NOIMAGE#
+Bomi is having mixed feelings, looking at the wounded Dracula. I should give her some time to collect herself.#
+Talk to Bomi.#
+
+14665#Is the Fight Over?#SG_FEEL#QUE_NOIMAGE#
+I need some time to myself. You should go back to your friends.#
+Back to Nun Gem#
+
+14666#Warden's Role#SG_FEEL#QUE_NOIMAGE#
+We're going to stay here and keep an eye on those vampires. Please let Father Grimm know.#
+Back to Father Grimm#
+
+14667#Send the Dead Back to Earth#SG_FEEL#QUE_NOIMAGE#
+These poor souls need rest. Please send all the dead back to the earth. Eliminate all 3 kinds, 10 per kind.#
+Restless Dead#
+
+14668#Get Some Rest#SG_FEEL#QUE_NOIMAGE#
+Thank you for your hard work. You should get some rest. Please come back after dawn. - Nun Gem#
+Quest resets at 4:00 a.m.#
+
+14669#Sweet Dreams#SG_FEEL#QUE_NOIMAGE#
+Maybe Sweet Nightmares' mane is the source of nightmares. I want to study it. Please bring me 20 Wavy Manes, and also hunt 10 Sweet Nightmares, so I can examine possible changes in dreaming patterns.#
+20 Wavy Manes#
+
+14670#Time for Dreaming#SG_FEEL#QUE_NOIMAGE#
+Adventurer, why don't you go catch some Zs? You can come back after dawn. - Antoine#
+Quest resets at 4:00 a.m.#
+
+14671#Unreliable Fake Blood#SG_FEEL#QUE_NOIMAGE#
+I need some things to create fake blood: the sticky blood of Matte Drainliars and the sap of Neon Mushrooms. I only need 10 of each. You can get them if you hunt at least 5 Matte Drainliars and 5 Neon Mushrooms.#
+Collect Sticky Bloods and Mushroom Saps.#
+
+14674#Time to Digest#SG_FEEL#QUE_NOIMAGE#
+I'm not hungry yet, but I will be by the next morning. Please come back after dawn. - Bomi#
+Quest resets at 4:00 a.m.#
+
+14675#Noisy Neighbors#SG_FEEL#QUE_NOIMAGE#
+These loud Matte Drainliars are getting on my nerves. Hunt 10 of them around me, will you? Oh, and this guy needs about 20 Short Bat Hairs.#
+Matte Drainliars and Short Bat Hairs#
+
+14676#Break Time#SG_FEEL#QUE_NOIMAGE#
+Thanks to you, it's quiet now, but those Matte Drainliars can't keep themselves quiet for too long. Come back later and hunt a few more for me, will you? - King#
+Quest resets at 4:00 a.m.#
+
+14677#Studying in Dim Light#SG_FEEL#QUE_NOIMAGE#
+I've heard Clusters of Nightmares from Sweet Nightmares, when mixed with shining spores from Neon Mushrooms and pasted on a surface, make a decent reading light. Could you bring me 10 clusters and 10 spores?#
+Shining Spores and Clusters of Nightmares#
+
+14678#Time to Study#SG_FEEL#QUE_NOIMAGE#
+These shining spores won't be glowing forever. Please come back later and help me replace them. In the meantime, I'll focus on my studies. - Jojo#
+Quest resets at 4:00 a.m.#
+
+14679#Curious by Nature#SG_FEEL#QUE_NOIMAGE#
+Please bring me 10 Dried Yggdrasil Leaves and 10 Suspicious Pentacles. I want to study and test them. Oh, and it'll be great if you can hunt 5 of each Restless Dead type for Father Grimm.#
+Dried Yggdrasil Leaves and Suspicious Pentacles#
+
+14680#Time to Research#SG_FEEL#QUE_NOIMAGE#
+I'm sorry, but I need to focus on my research. Please come back later. - Mojo#
+Quest resets at 4:00 a.m.#
