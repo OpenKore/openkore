@@ -170,7 +170,7 @@ sub loadDataFiles {
 	Settings::addControlFile('overallAuth.txt',
 		loader => [\&parseDataFile, \%overallAuth]);
 	Settings::addControlFile('pickupitems.txt',
-		loader => [\&parseDataFile_lc, \%pickupitems]);
+		loader => [\&parsePickUpItems, \%pickupitems, \@pickupitems_regexes]);
 	Settings::addControlFile('responses.txt',
 		loader => [\&parseResponses, \%responses]);
 	Settings::addControlFile('timeouts.txt',

@@ -48,6 +48,7 @@ our @EXPORT = qw(
 	parseList
 	parseNPCs
 	parseMonControl
+	parsePickUpItems
 	parsePortals
 	parsePortalsLOS
 	parsePriority
@@ -564,6 +565,30 @@ sub parseMonControl {
 			$r_hash->{$key}{attack_hp} = $args[6];
 			$r_hash->{$key}{attack_sp} = $args[7];
 			$r_hash->{$key}{weight} = $args[8];
+		}
+	}
+	return 1;
+}
+
+sub parsePickUpItems {
+	my $file = shift;
+	my $r_hash = shift;
+	my $r_array = shift;
+	undef %{$r_hash};
+	undef @{$r_array};
+	
+	my ($key,$value);
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		next if ($line =~ /^#/);
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+$//g;
+		if ($line =~ /\/(.*)\/ (-?\d)/) {
+			push (@{$r_array}, {expression => $1, value => $2});
+		} elsif ($line =~ /([\s\S]*) (-?\d)/) {
+			$$r_hash{lc($1)} = $2;
 		}
 	}
 	return 1;

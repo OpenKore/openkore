@@ -2418,11 +2418,15 @@ sub pickupitems {
 		return $pickupitems{lc($name)};
 	} elsif (exists $pickupitems{$nameID}) {
 		return $pickupitems{$nameID};
-	} elsif (exists $pickupitems{all}) {
-		return $pickupitems{all};
 	}
 	
-	return 1;
+	foreach my $regex (@pickupitems_regexes) {
+		if ($name =~ /$regex->{expression}/) {
+			return $regex->{value};
+		}
+	}
+	
+	return $pickupitems{all} or 1;
 }
 
 sub positionNearPlayer {
