@@ -71913,3 +71913,17 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20069#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gemini Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+500 Blue Gemstones
+1 Gemini Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
