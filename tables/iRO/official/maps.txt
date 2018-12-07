@@ -980,3 +980,9 @@ lhz_dun_n.rsw#The Bed of Honor#
 que_swat.rsw#Heart_Hunter War_Base#
 slabw01.rsw#Werner Laboratory#
 rebel_in.rsw#Clana Nemieri#
+
+// Illusion - Payon (Moonlight)
+pay_d03_i.rsw#Nightmare_of_the_Moonlight_Flower#
+
+// Illusion - Geffen (vampire)
+gef_d01_i.rsw#250 Page#
