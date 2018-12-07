@@ -2693,13 +2693,16 @@ sub system_chat {
 	$message =~ s/\000//g; # remove null charachters
 	$message =~ s/^ +//g; $message =~ s/ +$//g; # remove whitespace in the beginning and the end of $message
 	stripLanguageCode(\$message);
-	chatLog("s", "$message\n") if ($config{logSystemChat});
+	my $parsed_msg = solveMessage($message);
+	chatLog("s", "$parsed_msg\n") if ($config{logSystemChat});
 	# Translation Comment: System/GM chat
-	message "$prefix $message\n", "schat";
-	ChatQueue::add('gm', undef, undef, $message) if ($config{callSignGM});
+	message "$prefix $parsed_msg\n", "schat";
+	ChatQueue::add('gm', undef, undef, $parsed_msg) if ($config{callSignGM});
+	debug "schat: $message\n", "schat", 1;
 
 	Plugins::callHook('packet_sysMsg', {
-		Msg => $message,
+		Msg => $parsed_msg,
+		RawMsg => $message,
 		MsgColor => $color,
 		MsgUser => undef # TODO: implement this value, we can get this from "micc" messages by regex.
 	});
@@ -5818,16 +5821,19 @@ sub party_chat {
 	$chatMsgUser =~ s/ $//;
 
 	stripLanguageCode(\$chatMsg);
+	my $parsed_msg = solveMessage($chatMsg);
 	# Type: String
-	my $chat = "$chatMsgUser : $chatMsg";
+	my $chat = "$chatMsgUser : $parsed_msg";
 	message TF("[Party] %s\n", $chat), "partychat";
 
 	chatLog("p", "$chat\n") if ($config{'logPartyChat'});
-	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
+	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $parsed_msg);
+	debug "partychat: $chatMsg\n", "partychat", 1;
 
 	Plugins::callHook('packet_partyMsg', {
 		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
+		Msg => $parsed_msg,
+		RawMsg => $chatMsg,
 	});
 }
 
@@ -5841,6 +5847,7 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
+	message "share:".$args->{type}." itemPickup:".$args->{itemPickup}." itemDivision:".$args->{itemDivision}."\n";
 	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
 		$char->{party}{itemPickup} = $args->{itemPickup};
 		$char->{party}{itemDivision} = $args->{itemDivision};
@@ -6428,21 +6435,24 @@ sub clan_info {
 
 sub clan_chat {
 	my ($self, $args) = @_;
-	my ($chatMsgUser, $chatMsg); # Type: String
+	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
 
 	return unless changeToInGameState();
 	$chatMsgUser = bytesToString($args->{charname});
 	$chatMsg = bytesToString($args->{message});
+	$parsed_msg = solveMessage($chatMsg);
 
-	chatLog("clan", "$chatMsgUser : $chatMsg\n") if ($config{'logClanChat'});
+	chatLog("clan", "$chatMsgUser : $parsed_msg\n") if ($config{'logClanChat'});
 	# Translation Comment: Guild Chat
-	message TF("[Clan]%s %s\n", $chatMsgUser, $chatMsg), "clanchat";
+	message TF("[Clan]%s %s\n", $chatMsgUser, $parsed_msg), "clanchat";
 	# Only queue this if it's a real chat message
-	ChatQueue::add('clan', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+	ChatQueue::add('clan', 0, $chatMsgUser, $parsed_msg) if ($chatMsgUser);
+	debug "clanchat: $chatMsg\n", "clanchat", 1;
 
 	Plugins::callHook('packet_clanMsg', {
 		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
+		Msg => $parsed_msg,
+		RawMsg => $chatMsg,
 	});
 }
 

@@ -1365,7 +1365,7 @@ sub guild_skills_list {
 
 sub guild_chat {
 	my ($self, $args) = @_;
-	my ($chatMsgUser, $chatMsg); # Type: String
+	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
 	my $chat; # Type: String
 
 	return unless changeToInGameState();
@@ -1374,18 +1374,23 @@ sub guild_chat {
 	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?)\s?: (.*)/) {
 		$chatMsgUser =~ s/ $//;
 		stripLanguageCode(\$chatMsg);
-		$chat = "$chatMsgUser : $chatMsg";
+		$parsed_msg = solveMessage($chatMsg);
+		$chat = "$chatMsgUser : $parsed_msg";
+	} else {
+		$parsed_msg = solveMessage($chat);
 	}
 
 	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 	# Translation Comment: Guild Chat
 	message TF("[Guild] %s\n", $chat), "guildchat";
 	# Only queue this if it's a real chat message
-	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+	ChatQueue::add('g', 0, $chatMsgUser, $parsed_msg) if ($chatMsgUser);
+	debug "guildchat: $chatMsg\n", "guildchat", 1;
 
 	Plugins::callHook('packet_guildMsg', {
 		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
+		Msg => $parsed_msg,
+		RawMsg => $chatMsg,
 	});
 }
 
@@ -2047,7 +2052,7 @@ sub public_chat {
 	my ($self, $args) = @_;
 	# Type: String
 	my $message = bytesToString($args->{message});
-	my ($chatMsgUser, $chatMsg); # Type: String
+	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
 	my ($actor, $dist);
 
 	if ($message =~ /:/) {
@@ -2062,10 +2067,11 @@ sub public_chat {
 			$dist = distance($char->{pos_to}, $actor->{pos_to});
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
-		$message = "$chatMsgUser ($actor->{binID}): $chatMsg";
+		$parsed_msg = solveMessage($chatMsg);
+		$message = "$chatMsgUser ($actor->{binID}): $parsed_msg";
 
 	} else {
-		$chatMsg = $message;
+		$chatMsg = $parsed_msg = solveMessage($message);
 	}
 
 	my $position = sprintf("[%s %d, %d]",
@@ -2082,14 +2088,16 @@ sub public_chat {
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "$position $message\n") if ($config{logChat});
 	message TF("%s%s\n", $distInfo, $message), "publicchat";
+	debug "publicchat: $chatMsg\n", "publicchat", 1;
 
-	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $chatMsg);
+	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $parsed_msg);
 	Plugins::callHook('packet_pubMsg', {
 		pubID => $args->{ID},
 		pubMsgUser => $chatMsgUser,
-		pubMsg => $chatMsg,
+		pubMsg => $parsed_msg,
 		MsgUser => $chatMsgUser,
-		Msg => $chatMsg
+		Msg => $parsed_msg,
+		RawMsg => $chatMsg,
 	});
 }
 
@@ -2101,26 +2109,30 @@ sub private_message {
 	# Type: String
 	my $privMsgUser = bytesToString($args->{privMsgUser});
 	my $privMsg = bytesToString($args->{privMsg});
+	stripLanguageCode(\$privMsg);
+	my $parsed_msg = solveMessage($privMsg);
 
 	if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 		push @privMsgUsers, $privMsgUser;
 		Plugins::callHook('parseMsg/addPrivMsgUser', {
 			user => $privMsgUser,
-			msg => $privMsg,
+			msg => $parsed_msg,
+			rawMsg => $privMsg,
 			userList => \@privMsgUsers
 		});
 	}
 
-	stripLanguageCode(\$privMsg);
-	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $privMsg)) if ($config{'logPrivateChat'});
- 	message TF("(From: %s) : %s\n", $privMsgUser, $privMsg), "pm";
+	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $parsed_msg)) if ($config{'logPrivateChat'});
+ 	message TF("(From: %s) : %s\n", $privMsgUser, $parsed_msg), "pm";
 
-	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
+	ChatQueue::add('pm', undef, $privMsgUser, $parsed_msg);
+	debug "pm: $privMsg\n", "pm", 1;
 	Plugins::callHook('packet_privMsg', {
 		privMsgUser => $privMsgUser,
-		privMsg => $privMsg,
+		privMsg => $parsed_msg,
 		MsgUser => $privMsgUser,
-		Msg => $privMsg
+		Msg => $parsed_msg,
+		RawMsg => $privMsg,
 	});
 
 	if ($config{dcOnPM} && AI::state == AI::AUTO) {
