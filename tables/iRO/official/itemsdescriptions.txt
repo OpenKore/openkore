@@ -105,6 +105,9 @@ Restores ^00800070^000000 to ^008000100^000000 HP.
 #
 518#
 A sweet product made by bees that is endowed with yummy flavor and medicinal uses.
+^179AECUsed for Alchemist skills.^000000
+^179AECUsed for Rune Knight skills.^000000
+^FF0000This is considered food for Baphomet Jr. pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^80808010^000000
 Restores ^00800070^000000 to ^008000100^000000 HP and ^00800020^000000 to ^00800040^000000 SP.
@@ -823,8 +826,7 @@ Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 642#
-A forbidden book in which the secret for summoning high level demons is detailed.
-^FF0000Taming item for Baphomet Jr.^000000
+A forbidden book in which the secret for summoning high level demons is detailed. Favored by Baphomet Jr.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
@@ -7206,7 +7208,7 @@ Weapon Level: ^8080803^000000
 Requires Level: ^80808060^000000
 Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
 Int + 3
-Max SP + 5%
+SP Recovery + 5%
 
 ^800080Set Bonus^000000
 ^008080Principles of Magic [2]^000000
@@ -9630,13 +9632,11 @@ Property: ^808080Neutral^000000
 Weight: ^8080800.1^000000
 #
 1751#
-^808080An arrow tipped with a silver point enchanted with the power of holiness.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Holy
-Weight: 0.2
+An arrow tipped with a silver point enchanted with the power of holiness.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Holy^000000
+Weight: ^8080800.2^000000
 #
 1752#
 ^808080A flaming arrow that will inflict Fire property damage.^000000
@@ -9718,68 +9718,51 @@ Property: ^808080Ghost^000000
 Weight: ^8080800.1^000000
 #
 1758#
-^808080A thick, heavy arrow.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Neutral
-Weight: 0.3
-^FFFFFF_^000000
-Adds a 10% chance of inflicting ^800000Stun^000000 on the target when dealing ranged attacks.
+A thick, heavy arrow.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
+Adds a 10% chance of inflicting ^800000Stun^000000 on the target when performing a long-ranged attack.
 #
 1759#
-^808080An arrow enchanted with the power of ice.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Water
-Weight: 0.3
-^FFFFFF_^000000
-Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when dealing ranged attacks.
+An arrow enchanted with the power of ice.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Water^000000
+Weight: ^8080800.3^000000
+Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when performing a long-ranged attack.
 #
 1760#
-^808080An arrow that explodes with a flash of light upon impact.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Neutral
-Weight: 0.3
-^FFFFFF_^000000
-Adds a 10% chance of inflicting ^800000Blind^000000 on the target when dealing ranged attacks.
+An arrow that explodes with a flash of light upon impact.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
+Adds a 10% chance of inflicting ^800000Blind^000000 on the target when performing a long-ranged attack.
 #
 1761#
-^808080An arrow enchanted with curse magic.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Neutral
-Weight: 0.3
-^FFFFFF_^000000
-Adds a 10% chance of inflicting ^800000Curse^000000 on the target when dealing ranged attacks.
+An arrow enchanted with curse magic.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
+Adds a 10% chance of inflicting ^800000Curse^000000 on the target when performing a long-ranged attack.
 #
 1762#
-^808080An old, rusty arrow.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Poison
-Weight: 0.2
+An old, rusty arrow.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Poison^000000
+Weight: ^8080800.2^000000
 #
 1763#
-^808080An arrow whose tip has been dipped in lethal poison.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Poison
-Weight: 0.3
-^FFFFFF_^000000
-Adds a 20% chance of inflicting ^800000Poison^000000 on the target when dealing ranged attacks.
+An arrow whose tip has been dipped in lethal poison.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Poison^000000
+Weight: ^8080800.3^000000
+Adds a 20% chance of inflicting ^800000Poison^000000 on the target when performing a long-ranged attack.
 #
 1764#
 ^808080An arrow with topped with a serrated blade.^000000
@@ -9801,62 +9784,48 @@ If ^008080Little Feather Hat [1]^000000 upgrade level is +7 or higher,
 Increases critical damage on targets by 5%.
 #
 1765#
-^808080A very powerful arrow made out of Oridecon.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 50
-Property: Neutral
-Weight: 0.3
+A very powerful arrow made out of Oridecon.
+Class: ^808080Arrow^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
 #
 1766#
-^808080An arrow that is said to have the might to counter evil.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 50
-Property: Holy
-Weight: 0.3
+An arrow that is said to have the might to counter evil.
+Class: ^808080Arrow^000000
+Attack: ^80808050^000000
+Property: ^808080Holy^000000
+Weight: ^8080800.3^000000
 #
 1767#
-^808080An arrow imbued with the power of darkness.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Shadow
-Weight: 0.2
+An arrow imbued with the power of darkness.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Shadow^000000
+Weight: ^8080800.2^000000
 #
 1768#
-^808080An arrow that can render targets unconscious.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Neutral
-Weight: 0.3
-^FFFFFF_^000000
-A 20% chance of inflicting ^800000Sleep^000000 on the target when dealing ranged attacks.
+An arrow that can render targets unconscious.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
+Adds a 20% chance of inflicting ^800000Sleep^000000 on the target when performing a long-ranged attack.
 #
 1769#
-^808080An arrow coated with a chemical that will paralyze a target's mouth.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 1
-Property: Neutral
-Weight: 0.3
-^FFFFFF_^000000
-A 10% chance of inflicting ^800000Silence^000000 on the target when dealing ranged attacks.
+An arrow coated with a chemical that will paralyze a target's mouth.
+Class: ^808080Arrow^000000
+Attack: ^8080801^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
+Adds a 10% chance of inflicting ^800000Silence^000000 on the target when performing a long-ranged attack.
 #
 1770#
-^808080Forged out of iron, this arrow will inflict more damage than one crafted of wood.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Neutral
-Weight: 0.3
+Forged out of iron, this arrow will inflict more damage than one crafted of wood.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.3^000000
 #
 1771#
 A throwing knife laced with toxin that can inflict the Poison effect to enemies.
@@ -9867,14 +9836,11 @@ Weight: ^8080800.5^000000
 Adds a chance of inflicting ^800000Poison^000000 on the target when performing a long-ranged attack.
 #
 1772#
-^808080A metal arrow blessed with holy water.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 50
-Property: Holy
-Weight: 0.2
-^FFFFFF_^000000
+A metal arrow blessed with holy water.
+Class: ^808080Arrow^000000
+Attack: ^80808050^000000
+Property: ^808080Holy^000000
+Weight: ^8080800.2^000000
 Increases physical damage on Demon race targets by 5%.
 #
 1773#
@@ -9964,186 +9930,152 @@ Requires Level: ^8080801^000000
 Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1803#
-^808080A protective covering that shields the back of the hand and forearm, and has raised studs for offensive purposes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 50
-Property: Neutral
-Weight: 45
-Weapon Level: 2
-Required Level: 12
-Required Job: Priest Jobs, Monk Jobs
+A protective covering that shields the back of the hand and forearm, and has raised studs for offensive purposes.
+Class: ^808080Knuckle^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808045^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808012^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1804#
-^808080A protective covering that shields the back of the hand and forearm, and has raised studs for offensive purposes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 50
-Property: Neutral
-Weight: 45
-Weapon Level: 2
-Required Level: 12
-Required Job: Priest Jobs, Monk Jobs
+A protective covering that shields the back of the hand and forearm, and has raised studs for offensive purposes.
+Class: ^808080Knuckle^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808045^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808012^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1805#
-^808080Silver, spiked Knuckle with diamond studs that are usually worn by the best fighters in a tribe.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 65
-Property: Neutral
-Weight: 45
-Weapon Level: 2
-Required Level: 12
-Required Job: Priest Jobs, Monk Jobs
+Silver, spiked Knuckle with diamond studs that are usually worn by the best fighters in a tribe.
+Class: ^808080Knuckle^000000
+Attack: ^80808065^000000
+Property: ^808080Neutral^000000
+Weight: ^80808045^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808012^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1806#
-^808080Silver, spiked Knuckle with diamond studs that are usually worn by the best fighters in a tribe.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 65
-Property: Neutral
-Weight: 45
-Weapon Level: 2
-Required Level: 12
-Required Job: Priest Jobs, Monk Jobs
+Silver, spiked Knuckle with diamond studs that are usually worn by the best fighters in a tribe.
+Class: ^808080Knuckle^000000
+Attack: ^80808065^000000
+Property: ^808080Neutral^000000
+Weight: ^80808045^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808012^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1807#
-^808080A weapon made in the form of a human fist which effectively inflicts damage on enemies.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 115
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
+A weapon made in the form of a human fist which effectively inflicts damage on enemies.
+Class: ^808080Knuckle^000000
+Attack: ^808080115^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest, Monk Jobs, High Priest^000000
 #
 1808#
-^808080A weapon made in the form of a human fist which effectively inflicts damage on enemies.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 115
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
+A weapon made in the form of a human fist which effectively inflicts damage on enemies.
+Class: ^808080Knuckle^000000
+Attack: ^808080115^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1809#
-^808080A weapon with three long steel claws that have proven effective in close combat.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 86
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-STR + 2
+A weapon with three long steel claws that have proven effective in close combat.
+Class: ^808080Knuckle^000000
+Attack: ^80808086^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest, Monk Jobs, High Priest^000000
+Str + 2
 #
 1810#
-^808080A weapon with three long steel claws that have proven effective in close combat.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 86
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-STR + 2
+A weapon with three long steel claws that have proven effective in close combat.
+Class: ^808080Knuckle^000000
+Attack: ^80808086^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Str + 2
 #
 1811#
-^808080Claws shaped like human fingers with long, sharp nails.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 97
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
+Claws shaped like human fingers with long, sharp nails.
+Class: ^808080Knuckle^000000
+Attack: ^80808097^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1812#
-^808080Claws shaped like human fingers with long, sharp nails.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 97
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 24
-Required Job: Priest Jobs, Monk Jobs
+Claws shaped like human fingers with long, sharp nails.
+Class: ^808080Knuckle^000000
+Attack: ^80808097^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1813#
-^808080A claw blessed by Zephyrus, god of the West wind.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 110
-Property: Wind
-Weight: 45
-Weapon Level: 4
-Required Level: 36
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+A claw blessed by Zephyrus, god of the West wind.
+Class: ^808080Knuckle^000000
+Attack: ^808080110^000000
+Property: ^808080Wind^000000
+Weight: ^80808045^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808036^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Increases physical damage on Undead race targets by 5%.
 Increases physical damage on Water, Earth, Fire and Wind property targets by 10%.
 #
 1814#
-^808080A claw imbued with the essence of madness.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 120
-Property: Neutral
-Weight: 50
-Weapon Level: 4
-Required Level: 36
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-ASPD + 12%
+A claw imbued with the essence of madness.
+Class: ^808080Knuckle^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808036^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Aspd + 12%
 #
 1815#
-^808080A blood stained weapon created from the claws of Hatii, keeper to the door the netherworld.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 152
-Property: Shadow
-Weight: 55
-Weapon Level: 4
-Required Level: 70
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-HP - 2%
+A blood stained weapon created from the claws of Hatii, keeper to the door the netherworld.
+Class: ^808080Knuckle^000000
+Attack: ^808080152^000000
+Property: ^808080Shadow^000000
+Weight: ^80808055^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Max HP - 2%
 Adds a 2% chance of inflicting ^800000Bleed^000000 on the target when performing a physical attack.
 #
 1816#
-^808080A claw imbued with the essence of madness.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 120
-Property: Neutral
-Weight: 50
-Weapon Level: 4
-Required Level: 36
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-ASPD + 12%
+A claw imbued with the essence of madness.
+Class: ^808080Knuckle^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808036^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Aspd + 12%
 #
 1817#
 ^808080A claw blessed by Zephyrus, god of the West wind.^000000
@@ -10163,74 +10095,60 @@ Increases physical damage on Undead race targets by 5%.
 Increases physical damage on Water, Earth, Fire and Wind property targets by 10%.
 #
 1818#
-^808080A knuckle made of superheated lava that has a special lining so that it can be worn.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 80
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 75
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+A knuckle made of superheated lava that has a special lining so that it can be worn.
+Class: ^808080Knuckle^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Adds a 1% chance of casting ^0000FFLevel 5 Endow Blaze^000000 on the user when performing a physical attack.
 #
 1819#
-^808080A knuckle made of extremely cold ice that has a special lining so that it can be worn.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 80
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 75
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+A knuckle made of extremely cold ice that has a special lining so that it can be worn.
+Class: ^808080Knuckle^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Adds a 1% chance of casting ^0000FFLevel 5 Endow Tsunami^000000 on the user when performing a physical attack.
 #
 1820#
-^808080A knuckle imbued with the power of lightning that occasionally shocks enemies.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 80
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 75
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+A knuckle imbued with the power of lightning that occasionally shocks enemies.
+Class: ^808080Knuckle^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Adds a 1% chance of casting ^0000FFLevel 5 Endow Tornado^000000 on the user when performing a physical attack.
 #
 1821#
-^808080A knuckle imbued with the power of Mother Earth that can be used to crush your enemies.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 80
-Property: Neutral
-Weight: 65
-Weapon Level: 3
-Required Level: 75
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+A knuckle imbued with the power of Mother Earth that can be used to crush your enemies.
+Class: ^808080Knuckle^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Adds a 1% chance of casting ^0000FFLevel 5 Endow Quake^000000 on the user when performing a physical attack.
 #
 1822#
-^808080The magic words engraved on these gloves can grant incredible power to the Monk that wears them.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 30
-Property: Neutral
-Weight: 50
-Weapon Level: 3
-Required Level: 60
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+The magic words engraved on these gloves can grant incredible power to the Monk that wears them.
+Class: ^808080Knuckle^000000
+Attack: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Increases the damage of ^0000FFRaging Quadruple Blow^000000 and ^0000FFRaging Trifecta Blow^000000 by 15%.
+Increases the damage of ^0000FFRaging Thrust^000000 by 20%.
 #
 1823#
 A knuckle that has been designed specifically for battles against humans.
@@ -10267,17 +10185,14 @@ Adds a 5% chance of buffing the user for 6 seconds when performing a physical at
 This item is indestructible in battle.
 #
 1825#
-^808080A knuckle made from 3 of Hillslion's horns.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 95
-Property: Neutral
-Weight: 60
-Weapon Level: 3
-Required Level: 60
-Required Job: Champion Jobs
-^FFFFFF_^000000
+A knuckle made from 3 of Hillslion's horns.
+Class: ^808080Knuckle^000000
+Attack: ^80808095^000000
+Property: ^808080Neutral^000000
+Weight: ^80808060^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Champion Jobs^000000
 Adds a 3% chance of casting ^0000FFLevel 1 Fatal Wound^000000 on the target when performing a physical attack.
 Adds a 10% chance of casting ^0000FFLevel 1 Occult Impaction^000000 on the target when using ^0000FFRaging Palm Strike^000000.
 Adds a 1% chance of casting ^0000FFLevel 5 Summon Spirit Sphere^000000 on the user when performing a physical attack.
@@ -10339,18 +10254,15 @@ Increases the SP cost of ^0000FFEarth Shaker^000000 and ^0000FFSky Blow^000000 b
 Max SP - 1% per upgrade level of the item past the upgrade level of 6.
 #
 1831#
-^808080A claw that is made by the Eden Group. It is suitable for those who have more advanced experience as Champions.^000000
+A claw that is made by the Eden Group. It is suitable for those who have more advanced experience as Champions.
 ^FF0000Character Bound^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 120
-Property: Neutral
-Weight: 0
-Weapon Level: 3
-Required Level: 60
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
+Class: ^808080Knuckle^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 This item cannot be upgraded.
 #
 1832#
@@ -10404,38 +10316,24 @@ Recovers all damage lost from size penalties.
 
 #
 1836#
-^808080This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Knuckle
-Attack: 160
-Property: Neutral
-Weight: 60
-Weapon Level: 4
-Required Level: 120
-Required Job: Sura
-^FFFFFF_^000000
-VIT + 6
-INT + 6
-LUK - 6
-MATK + 100
+This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.
+Class: ^808080Knuckle^000000
+Attack: ^808080160^000000
+Magic Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^80808060^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Sura^000000
+Vit + 6
+Int + 6
+Luk - 6
+
 Adds a 5% chance of restoring 5% of damage as HP when performing a physical attack.
 Adds a 1% chance of restoring 5% of damage as SP when performing a physical attack.
 Drains 100 HP from the user every 10 seconds.
+
 Drains 1000 HP from the user when the item is unequipped.
-This magic knuckle, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
-It offers incredible power and mana at a great cost.
-INT + 6. VIT + 6. LUK -6.
-Creates a low chance of regaining HP and SP from 5% of your damage dealt while you are Physically attacking.
-Consumes 100 HP every 10 seconds.
-Consumes 1,000 HP when unequipped.
-MATK +100.
-Class : ^777777Knuckle^000000
-Attack  : ^777777160^000000
-Weight : ^77777760^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777120^000000
-Job : ^777777Sura^000000
 #
 1837#
 An arm-length gauntlet with giant claws attached to it. The claws can penetrate even the thickest gloves.
@@ -10487,278 +10385,229 @@ Matk + 50
 Additional Matk + ((upgrade level * upgrade level) / 2) up to a maximum upgrade level of 15.
 #
 1901#
-^808080The classical stringed instrument favored by Rocker, the grasshopper monster who'd rather play music than do actual work.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 50
-Property: Neutral
-Weight: 70
-Weapon Level: 1
-Required Level: 2
-Required Job: Bard Jobs
+The classical stringed instrument favored by Rocker, the grasshopper monster who'd rather play music than do actual work.
+Class: ^808080Musical Instrument^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^8080802^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1902#
-^808080The classical stringed instrument favored by Rocker, the grasshopper monster who'd rather play music than do actual work.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 50
-Property: Neutral
-Weight: 70
-Weapon Level: 1
-Required Level: 2
-Required Job: Bard Jobs
+The classical stringed instrument favored by Rocker, the grasshopper monster who'd rather play music than do actual work.
+Class: ^808080Musical Instrument^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^8080802^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1903#
-^808080A small, stringed instrument used in baroque, classical, country, and folk music.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 90
-Property: Neutral
-Weight: 40
-Weapon Level: 2
-Required Level: 14
-Required Job: Bard Jobs
+A small, stringed instrument used in baroque, classical, country, and folk music.
+Class: ^808080Musical Instrument^000000
+Attack: ^80808090^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1904#
-^808080A small, stringed instrument used in baroque, classical, country, and folk music.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 90
-Property: Neutral
-Weight: 40
-Weapon Level: 2
-Required Level: 14
-Required Job: Bard Jobs
+A small, stringed instrument used in baroque, classical, country, and folk music.
+Class: ^808080Musical Instrument^000000
+Attack: ^80808090^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1905#
-^808080A classical plucked string instrument that is incredibly difficult to tune and adjust.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 105
-Property: Neutral
-Weight: 50
-Weapon Level: 2
-Required Level: 14
-Required Job: Bard Jobs
+A classical plucked string instrument that is incredibly difficult to tune and adjust.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080105^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1906#
-^808080A classical plucked string instrument that is incredibly difficult to tune and adjust.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 105
-Property: Neutral
-Weight: 50
-Weapon Level: 2
-Required Level: 14
-Required Job: Bard Jobs
+A classical plucked string instrument that is incredibly difficult to tune and adjust.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080105^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1907#
-^808080A six stringed musical instrument that is played by plucking the strings with fingers or a pick.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 142
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A six stringed musical instrument that is played by plucking the strings with fingers or a pick.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080142^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1908#
-^808080A six-stringed musical instrument that is played by plucking the strings with fingers or a pick.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 142
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A six-stringed musical instrument that is played by plucking the strings with fingers or a pick.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080142^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1909#
-^808080A stringed instrument known for the beautiful sound of each note that is played.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 114
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
-^FFFFFF_^000000
-INT + 2
+A stringed instrument known for the beautiful sound of each note that is played.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080114^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
+Int + 2
 #
 1910#
-^808080A stringed instrument known for the beautiful sound of each note that is played.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 114
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
-^FFFFFF_^000000
-INT + 2
+A stringed instrument known for the beautiful sound of each note that is played.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080114^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
+Int + 2
 #
 1911#
-^808080A traditional chordophone, favored by the aristocracy in days past, which plays deep, subtle notes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 126
-Property: Neutral
-Weight: 130
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A traditional chordophone, favored by the aristocracy in days past, which plays deep, subtle notes.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080126^000000
+Property: ^808080Neutral^000000
+Weight: ^808080130^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1912#
-^808080A traditional chordophone, favored by the aristocracy in days past, which plays deep, subtle notes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 126
-Property: Neutral
-Weight: 130
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A traditional chordophone, favored by the aristocracy in days past, which plays deep, subtle notes.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080126^000000
+Property: ^808080Neutral^000000
+Weight: ^808080130^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1913#
-^808080An electric guitar which amplifies its user's power.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Wind
-Weight: 180
-Weapon Level: 4
-Required Level: 70
-Required Job: Bard Jobs
-^FFFFFF_^000000
-AGI + 1
-INT + 2
+An electric guitar which amplifies its user's power.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Wind^000000
+Weight: ^808080180^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Bard Jobs^000000
+Agi + 1
+Int + 2
+
 Enables ^0000FFLevel 1 Jupitel Thunder^000000.
 Adds a 10% chance of casting ^0000FFLevel 1 Jupitel Thunder^000000 on the target when performing a physical attack.
 #
 1914#
-^808080A magically dazzling guitar that bewitches its user to play songs of passion once it's held in his hands.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Fire
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A magically dazzling guitar that bewitches its user to play songs of passion once it's held in his hands.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Fire^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1915#
-^808080A guitar which makes a depressing sound when strummed, and is said to have been played by a bard who spend his entire life in complete loneliness.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Water
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A guitar which makes a depressing sound when strummed, and is said to have been played by a bard who spend his entire life in complete loneliness.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Water^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1916#
-^808080According to rumor, this quaint guitar can be used to communicate with stones and even the very earth itself.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Earth
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+According to rumor, this quaint guitar can be used to communicate with stones and even the very earth itself.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Earth^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1917#
-^808080A magical guitar which fills the one who plays it with a desire for traveling.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Wind
-Weight: 90
-Weapon Level: 3
-Required Level: 27
-Required Job: Bard Jobs
+A magical guitar which fills the one who plays it with a desire for traveling.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Wind^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808027^000000
+Usable By: ^808080Bard Jobs^000000
 #
 1918#
-^808080An ancient lute seen on display in oriental towns such as Payon, Amatsu or Kunlun. Nowadays, no one really knows how to play it.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 150
-Property: Neutral
-Weight: 120
-Property: Neutral
-Weapon Level: 4
-Required Level: 65
-Required Job: Bard Jobs
-^FFFFFF_^000000
+An ancient lute seen on display in oriental towns such as Payon, Amatsu or Kunlun. Nowadays, no one really knows how to play it.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Bard Jobs^000000
 Increases the damage of ^0000FFArrow Vulcan^000000 and ^0000FF^Melody Strike^000000 by 10%.
 #
 1919#
-^808080An instrument that produces low pitched sound.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 130
-Property: Neutral
-Weight: 150
-Weapon Level: 3
-Required Level: 70
-Required Job: Minstrel Jobs
-^FFFFFF_^000000
-Restores 3 SP to the user when a monster is killed by short-ranged attacks.
-Adds a 3% chance of casting ^0000FFLevel 3 Heaven's Drive^000000 on the target when receiving a physical attack.
-Adds a 10% chance of casting ^0000FFLevel 2 Wide Confusion^000000 on the target when performing a physical attack.
+An instrument that produces low pitched sound.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080130^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Minstrel Jobs^000000
+Restores 3 SP to the user when a monster is killed by a short-ranged attack.
+Adds a 3% chance of casting ^0000FFLevel 3 Heaven's Drive^000000 on the attacker when receiving a physical attack.
+Adds a 10% chance of inflicting ^800000Chaos^000000 on any target within 11-11 cells of the user when performing a physical attack.
 #
 1920#
-^808080When musicians play this legendary instrument, their consciousness is fully absorbed, returning only once they've realized that they've finished their performance.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 10
-Property: Neutral
-Weight: 180
-Weapon Level: 4
-Required Level: 70
-Required Job: Minstrel Jobs
-^FFFFFF_^000000
-DEX - 100%
-ASPD + 100%
-HP Recovery -100%
+When musicians play this legendary instrument, their consciousness is fully absorbed, returning only once they've realized that they've finished their performance.
+Class: ^808080Musical Instrument^000000
+Attack: ^80808010^000000
+Property: ^808080Neutral^000000
+Weight: ^808080180^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Minstrel Jobs^000000
+Dex - 100%
+HP Recovery - 100%
+Aspd + 100%
 Drains 50 HP from the user every 5 seconds.
 #
 1922#
-^808080An ancient lute seen on display in oriental towns such as Payon, Amatsu or Kunlun. Nowadays, no one really knows how to play it.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 150
-Property: Neutral
-Weight: 120
-Weapon Level: 4
-Required Level: 65
-Required Job: Bard Jobs
-^FFFFFF_^000000
+An ancient lute seen on display in oriental towns such as Payon, Amatsu or Kunlun. Nowadays, no one really knows how to play it.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Bard Jobs^000000
 Increases the damage of ^0000FFArrow Vulcan^000000 and ^0000FF^Melody Strike^000000 by 10%.
 #
 1923#
@@ -10792,21 +10641,19 @@ Increases the damage of ^0000FFArrow Vulcan^000000 by 20%.
 This item is indestructible in battle.
 #
 1925#
-^808080An instrument with a low tone. Its 4 strings play nice calm sounds so this instrument is good for both solo and concert play.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 110
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 70
-Required Job: Minstrel Jobs
-^FFFFFF_^000000
-AGI + 2
-DEX + 3
-Knocks the target back 3 cells when using ^0000FFArrow Vulcan^000000.
-Knocks the target back 2 cells when using ^0000FFMelody Strike^000000.
+An instrument with a low tone. Its 4 strings play nice calm sounds so this instrument is good for both solo and concert play.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Minstrel Jobs^000000
+Agi + 2
+Dex + 3
+
+The target gets knocked back by 2 cells when using ^0000FFMelody Strike^000000.
+The target gets knocked back by 3 cells when using ^0000FFArrow Vulcan^000000.
 #
 1926#
 ^808080A harp with its strings made from the tentacles of Nepenthes.^000000
@@ -10846,33 +10693,28 @@ If upgrade level is +9 or higher,
 Adds a 10% chance of casting ^0000FFLevel 5 Tarot Card of Fate^000000 on the target when using ^0000FFArrow Vulcan^000000.
 #
 1930#
-^808080A flute made of sturdy plant stem.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 170
-Property: Neutral
-Weight: 80
-Weapon Level: 3
-Required Level: 102
-Required Job: Minstrel Jobs
-^FFFFFF_^000000
-MATK + 50
-Variable Casting Time - 2 for ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000.
-Reduces the SP cost of ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000 by 4 per upgrade level of the item past the upgrade level of 6.
+A flute made of sturdy plant stem.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080170^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080102^000000
+Usable By: ^808080Minstrel Jobs^000000
+Reduces the variable casting time of ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000 by 2 seconds.
+Reduces the SP cost of ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000 by 4 per upgrade level of the item past the upgrade level of 5.
 #
 1931#
-^808080An instrument that is made by the Eden Group. It is suitable for those who have more advanced experience as Bards.^000000
+An instrument that is made by the Eden Group. It is suitable for those who have more advanced experience as Bards.
 ^FF0000Character Bound^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 125
-Weight: 0
-Weapon Level: 3
-Required Level: 60
-Required Job: Bard Jobs
-^FFFFFF_^000000
+Class: ^808080Musical Instrument^000000
+Attack: ^808080125^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Bard Jobs^000000
 This item cannot be upgraded.
 #
 1932#
@@ -10890,93 +10732,54 @@ Increases physical damage on players by 40%.
 Adds a 10% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
 #
 1933#
-^808080This magic violin, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 200
-Property: Neutral
-Weight: 200
-Weapon Level: 4
-Required Level: 120
-Required Job: Maestro
-^FFFFFF_^000000
-VIT + 6
-INT + 6
-LUK - 6
-MATK + 130
+This magic violin, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080200^000000
+Magic Attack: ^808080130^000000
+Property: ^808080Neutral^000000
+Weight: ^808080200^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Maestro^000000
+Vit + 6
+Int + 6
+Luk - 6
+
 Increases long-ranged damage on targets by 20%.
 Adds a 5% chance of restoring 5% of damage as HP when performing a physical attack.
 Adds a 1% chance of restoring 5% of damage as SP when performing a physical attack.
 Drains 100 HP from the user every 10 seconds.
+
 Drains 1000 HP from the user when the item is unequipped.
-This magic violin, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
-It offers incredible power and mana at a great cost.
-INT + 6. VIT + 6. LUK -6.
-Creates a low chance of regaining HP and SP from 5% of your damage dealt while you are Physically attacking.
-+20% Ranged Physical damage.
-Consumes 100 HP every 10 seconds.
-Consumes 1,000 HP when unequipped.
-MATK +130.
-Class : ^777777Musical Instrument^000000
-Attack  : ^777777200^000000
-Weight : ^777777200^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777120^000000
-Job : ^777777Minstrel^000000
 #
 1934#
-^808080The largest bowed string instrument of the viola family is also known as a double bass. Its giant frame and heavy weight make it a deadly weapon.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 180
-Property: Neutral
-Weight: 25
-Weapon Level: 3
-Required Level: 130
-Required Job: Maestro
-^FFFFFF_^000000
-MATK + 120
-Reduces the cooldown of ^0000FFImprovised Song^000000 by 2 seconds.
 The largest bowed string instrument of the viola family is also known as a double bass. Its giant frame and heavy weight make it a deadly weapon.
-MATK +120.
-Improvised Song cooldown -2 seconds.
-Class: ^777777Musical Instrument^000000 ATK: ^777777180^000000
-Weight: ^77777725^000000
-Weapon Level: ^7777773^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Maestro^000000
+Class: ^808080Musical Instrument^000000
+Attack: ^808080180^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808025^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Maestro^000000
+Reduces the cooldown of ^0000FFImprovised Song^000000 by 2 seconds.
 #
 1935#
-^808080Newoz's ukulele in a color that complements his clothes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 160
-Property: Neutral
-Weight: 100
-Weapon Level: 4
-Required Level: 130
-Required Job: Maestro
-^FFFFFF_^000000
+Newoz's ukulele in a color that complements his clothes.
+Class: ^808080Musical Instrument^000000
+Attack: ^808080160^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Maestro^000000
 Reduces the SP cost of ^0000FFWindmill Rush^000000 by 20.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
 ^008080Hero Ring Of Newoz [1]^000000
 ^008080Ukulele Of Newoz [2]^000000
 Increases the damage of ^0000FFArrow Vulcan^000000 by 200%.
 Increases the SP cost of ^0000FFArrow Vulcan^000000 by 50.
-Newoz's ukulele in a color that complements his clothes.
-Windmill Rush reduces consumed SP -20.
-When equipped with Newoz's Winged Ring.
-Arrow Vulcan damage +200%
-Arrow Vulcan increase consumed SP 50.
-Class: ^777777Musical Instrument^000000 ATK: ^777777160^000000
-Weight: ^777777100^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Maestro^000000
 #
 1936#
 ^808080A blue violin with huge power.
@@ -11081,233 +10884,192 @@ Aspd + 1
 Increases critical damage on targets by 20%.
 #
 1950#
-^808080A strong, thick cord composed of tightly braided fibers.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 45
-Property: Neutral
-Weight: 40
-Weapon Level: 1
-Required Level: 3
-Required Job: Dancer Jobs
+A strong, thick cord composed of tightly braided fibers.
+Class: ^808080Whip^000000
+Attack: ^80808045^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^8080803^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1951#
-^808080A strong, thick cord composed of tightly braided fibers.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 45
-Property: Neutral
-Weight: 40
-Weapon Level: 1
-Required Level: 3
-Required Job: Dancer Jobs
+A strong, thick cord composed of tightly braided fibers.
+Class: ^808080Whip^000000
+Attack: ^80808045^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^8080803^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1952#
-^808080A standard whip that's perfect for adventuring Dancers.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 80
-Property: Neutral
-Weight: 30
-Weapon Level: 2
-Required Level: 16
-Required Job: Dancer Jobs
+A standard whip that's perfect for adventuring Dancers.
+Class: ^808080Whip^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808030^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808016^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1953#
-^808080A standard whip that's perfect for adventuring Dancers.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 80
-Property: Neutral
-Weight: 30
-Weapon Level: 2
-Required Level: 16
-Required Job: Dancer Jobs
+A standard whip that's perfect for adventuring Dancers.
+Class: ^808080Whip^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^80808030^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808016^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1954#
-^808080A whip made of a flexible wire attached to an iron handle.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 95
-Property: Neutral
-Weight: 100
-Weapon Level: 2
-Required Level: 16
-Required Job: Dancer Jobs
+A whip made of a flexible wire attached to an iron handle.
+Class: ^808080Whip^000000
+Attack: ^80808095^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808016^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1955#
-^808080A whip made of a flexible wire attached to an iron handle.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 95
-Property: Neutral
-Weight: 100
-Weapon Level: 2
-Required Level: 16
-Required Job: Dancer Jobs
+A whip made of a flexible wire attached to an iron handle.
+Class: ^808080Whip^000000
+Attack: ^80808095^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808016^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1956#
-^808080A whip with a spiked ball attached at the end.^000000
-^FFFFFF_^000000
-Class: Whip
-Attack: 135
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A whip with a spiked ball attached at the end.
+Class: ^808080Whip^000000
+Attack: ^808080135^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1957#
-^808080A whip with a spiked ball attached at the end.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 135
-Property: Neutral
-Weight: 90
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A whip with a spiked ball attached at the end.
+Class: ^808080Whip^000000
+Attack: ^808080135^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1958#
-^808080A whip fashioned out of an animal's tail that is said to bring good luck.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 105
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-LUK + 3
+A whip fashioned out of an animal's tail that is said to bring good luck.
+Class: ^808080Whip^000000
+Attack: ^808080105^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
+Luk + 3
 #
 1959#
-^808080A whip fashioned out of an animal's tail that is said to bring good luck.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 105
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-LUK + 3
+A whip fashioned out of an animal's tail that is said to bring good luck.
+Class: ^808080Whip^000000
+Attack: ^808080105^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
+Luk + 3
 #
 1960#
-^808080A fairly common and very normal whip.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 120
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A fairly common and very normal whip.
+Class: ^808080Whip^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1961#
-^808080A fairly common and very normal whip.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 120
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A fairly common and very normal whip.
+Class: ^808080Whip^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1962#
-^808080A hefty whip made from toughened snake skin.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 100
-Property: Neutral
-Weight: 40
-Weapon Level: 4
-Required Level: 44
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-AGI + 1
-DEX + 5
+A hefty whip made from toughened snake skin.
+Class: ^808080Whip^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808044^000000
+Usable By: ^808080Dancer Jobs^000000
+Agi + 1
+Dex + 5
 #
 1963#
-^808080Constructed purely of thorny stems from rosebushes.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 115
-Property: Neutral
-Weight: 30
-Property: Poison
-Weapon Level: 4
-Required Level: 44
-Required Job: Dancer Jobs
-^FFFFFF_^000000
+Constructed purely of thorny stems from rosebushes.
+Class: ^808080Whip^000000
+Attack: ^808080115^000000
+Property: ^808080Poison^000000
+Weight: ^80808030^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808044^000000
+Usable By: ^808080Dancer Jobs^000000
 Adds a 50% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
 #
 1964#
-^808080A powerful whip made of steel chain for heavy duty battles.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 135
-Property: Neutral
-Weight: 70
-Weapon Level: 4
-Required Level: 44
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-CRIT + 5
-FLEE + 10
+A powerful whip made of steel chain for heavy duty battles.
+Class: ^808080Whip^000000
+Attack: ^808080135^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808044^000000
+Usable By: ^808080Dancer Jobs^000000
+Flee + 10
+Crit + 5
 Perfect Dodge + 2
 #
 1965#
-^808080A whip made from the tough leather of a Fire property monster.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Fire
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A whip made from the tough leather of a Fire property monster.
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Fire^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1966#
-^808080A whip created from enchanted icicles that are eternally frozen.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Water
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A whip created from enchanted icicles that are eternally frozen.
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Water^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1967#
-^808080A whip fashioned out of tough tree roots that have been braided together.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Earth
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+A whip fashioned out of tough tree roots that have been braided together.
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Earth^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1968#
 ^808080A skipping rope with wooden handles.^000000
@@ -11324,76 +11086,64 @@ Required Job: Dancer Jobs
 CRIT + 20
 #
 1969#
-^808080A wire in which blade fragments are interwoven, making this whip as sharp as a sword.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 140
-Property: Neutral
-Weight: 120
-Weapon Level: 4
-Required Level: 30
-Required Job: Dancer Jobs
-^FFFFFF_^000000
+A wire in which blade fragments are interwoven, making this whip as sharp as a sword.
+Class: ^808080Whip^000000
+Attack: ^808080140^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 Adds a 3% chance of inflicting ^800000Bleed^000000 on the target when performing a physical attack.
 #
 1970#
-^808080This whip is the best of the best.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 150
-Property: Neutral
-Weight: 110
-Weapon Level: 4
-Required Level: 65
-Required Job: Dancer Jobs
-^FFFFFF_^000000
+This whip is the best of the best.
+Class: ^808080Whip^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080110^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Dancer Jobs^000000
 Increases the damage of ^0000FFArrow Vulcan^000000 and ^0000FF^Slinging Arrow^000000 by 10%.
 #
 1971#
-^808080An electric wire. Beware of electric shock.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Wind
-Weight: 70
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
+An electric wire. Beware of electric shock!
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Wind^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
 #
 1972#
-^808080A whip made from a slippery electric eel.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 100
-Property: Wind
-Weight: 200
-Weapon Level: 4
-Required Level: 70
-Required Job: Gypsy Jobs
-^FFFFFF_^000000
-AGI + 2
-INT + 2
+A whip made from a slippery electric eel.
+Class: ^808080Whip^000000
+Attack: ^808080100^000000
+Property: ^808080Wind^000000
+Weight: ^808080200^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Gypsy Jobs^000000
+Agi + 2
+Int + 2
+
 Adds a 2% chance of casting ^0000FFLevel 3 Jupitel Thunder^000000 on the target when performing a physical attack.
+Adds a chance of casting ^0000FFArrow Vulcan^000000 on the target when performing a physical attack, where the level of the skill is equal to the upgrade level of the item up to a maximum upgrade level of 10.
 #
 1973#
-^808080A whip made from the foot of an evil witch who lived in the sea to the west and was feared for her ability to siphon her enemies' energy.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Neutral
-Weight: 150
-Weapon Level: 4
-Required Level: 70
-Required Job: Gypsy Jobs
-^FFFFFF_^000000
-Restores 5 SP to the user when a monster is killed by short-ranged attacks.
-Adds a 5% chance of casting ^0000FFLevel 3 Frost Nova^000000 on the target when receiving a physical attack.
-Adds a 10% chance of casting ^0000FFLevel 2 Wide Silence^000000 on the target when performing a physical attack.
+A whip made from the foot of an evil witch who lived in the sea to the west and was feared for her ability to siphon her enemies' energy.
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Gypsy Jobs^000000
+Restores 5 SP to the user when a monster is killed by a short-ranged attack.
+Adds a 5% chance of casting ^0000FFLevel 3 Frost Nova^000000 on the attacker when receiving a physical attack.
+Adds a 10% chance of inflicting ^800000Silence^000000 on any target within 11-11 cells of the user when performing a physical attack.
 #
 1974#
 ^808080A whip that rewards the wearer when she does her best.^000000
@@ -12074,17 +11824,18 @@ This item is indestructible in battle.
 #
 2039#
 Rumored to have been crafted by an ancient wizard, this staff is imbued with awesome energies.
-INT +6, DEX +2. Additional INT +1 and DEX +1 for every 2 Refining levels (up to +10).
-MATK +250
-Class: ^777777Two-handed Staff^000000 ATK: ^777777150^000000
-Weight: ^777777240^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777100^000000
-Job: ^777777Transcendent Mage Classes^000000
+Class: ^808080Two-Handed Staff^000000
+Attack: ^808080150^000000
+Magic Attack: ^808080250^000000
+Property: ^808080Neutral^000000
+Weight: ^808080240^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock, Sorcerer^000000
+Int + 6
+Dex + 2
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Additional Int + 1 and Dex + 1 for every 2 upgrade levels of the item up to a maximum upgrade level of 10.
 #
 2101#
 A square shield
@@ -20918,11 +20669,17 @@ Enables ^0000FFLevel 1 Hiding^000000.
 #
 2988#
 Newoz's winged ring.
-Decreases Floating Casting Time for all skills by 25%.
-Class: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight: ^77777710^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Maestro^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Maestro^000000
+Reduces the variable casting time of skills by 25%.
+
+^800080Set Bonus^000000
+^008080Hero Ring Of Newoz [1]^000000
+^008080Ukulele Of Newoz [2]^000000
+Increases the damage of ^0000FFArrow Vulcan^000000 by 200%.
+Increases the SP cost of ^0000FFArrow Vulcan^000000 by 50.
 #
 2989#
 IGU's flower bracelet.
@@ -40557,7 +40314,7 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 7060#
-A ticket that entitles the bearer to use the Kafra Teleport Service\r\none time free of charge.
+A ticket that entitles the bearer to use the Kafra Teleport Service one time free of charge.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
@@ -45069,16 +44826,20 @@ Atk & Matk +1%.
 Class : ^777777Monster Egg^000000
 #
 9024#
-An egg in which a
-Baphomet Jr. Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Def +1, MDef +1,
-Resistance to Stun -1%.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Baphomet Jr. pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Honey
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Def + 1
+Mdef + 1
+Reduces resistance to ^800000Stun^000000 by 1%.
+
+^800080Set Bonus^000000
+^008080Rolf Von Gigue the666th^000000
+^008080Baphomet Jr. Cute Pet^000000
+Adds an additional chance of casting ^0000FFLevel 2 Adrenaline Rush^000000 on the user when performing a physical attack.
+Additional chance of casting, if pet is Loyal.
 #
 9025#
 An egg in which
@@ -45392,11 +45153,25 @@ Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
 #
+9518#
+Randomly gives 1 of the following items when opened:
+
+Costume Flying Drone
+Costume Open Air Headset
+Costume Cyclops Visor
+Costume Guardian Processor
+Costume Mobile Pursuit System
+Costume Mecha Cat Ears
+Costume Cyber Income
+Costume Electric Two Sides Up Hair
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Baphomet Jr.^000000
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Baphomet Jr. pets.
 #
 10002#
 A protective mask
@@ -69007,17 +68782,26 @@ Increases the damage of ^0000FFDouble Strafe^000000 by 50%.
 Reduces the SP cost of ^0000FFTriangle Shot^000000 by 10.
 #
 18149#
-A giant bow which was used in ancient battles.
-Ranged Physical damage +1% for every Refining level.
-Class: ^777777Bow^000000 ATK: ^777777200^000000
-Weight: ^777777350^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777100^000000
-Job: ^777777Transcendent Archer Classes^000000
+A giant bow which was used in the ancient battles. It is been said, the bow was designed to storm through fortress walls and gates, but now it is reduced in size and damage, perhaps for a remodel.
+Class: ^808080Bow^000000
+Attack: ^808080200^000000
+Weight: ^808080350^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Ranger, Maestro, Wanderer^000000
+Increases long-ranged damage on targets by 1% per upgrade level of the item.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Illusion Ballista [2]^000000
+^008080Illusion Apple of Archer [1]^000000
+Atk + 50
+Increases long-ranged damage on targets by  5%.
+If ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +7 or higher,
+Increases the damage of ^0000FFArrow Storm^000000 by 20%.
+If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +18 or higher,
+Atk + 10%
+If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +22 or higher,
+Increases the damage of ^0000FFArrow Storm^000000 by an additional 30%.
 #
 18505#
 An accessory which is traditionally used in piercings by the Umbala tribespeople.
@@ -71246,24 +71030,27 @@ Job : ^777777Swordman Class^000000
 #
 18774#
 Dark mask for famous assassins. Calms you down just by wearing it.
-CRI +1, Critical damage +1%
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Low ^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Job : ^777777Assassin, Priest Class^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Assassin Jobs, Priest Jobs^000000
+Crit +1
+Increases critical damage on targets by 1%.
 #
 18775#
-Steel made mask. Focussing on utility only. Protects your face from any kind of fire impacts.
-Fire property resistance + 10%
-DEX +5, LUK+ 5.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle & Lower^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Job : ^777777Merchant Class^000000
+Steel made mask, focusing on utility only. Protects your face from any kind of fire impacts.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080802^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Merchant Jobs^000000
+Dex + 5
+Luk + 5
+
+Reduces damage taken from Fire property attacks by 10%.
 #
 18776#
 A hair ornament blessed by a Super Novice guardian angel.
@@ -71296,37 +71083,49 @@ Max SP + 100
 Adds a 3% chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 18779#
-^ff0000Account Bound^000000
-RWC Crown of victory
-All Stats + 7, MDEF + 5.
-Indestructible
-Immunity to Stun, Curse and Blind
-Class : ^777777Headgear^000000 Defense : ^77777712^000000
-Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+RWC Crown of victory.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 7
+Mdef + 5
+Immune to ^800000Blind^000000, ^800000Curse^000000 and ^800000Stun^000000.
+
+This item is indestructible in battle.
 #
 18780#
-^ff0000Account Bound^000000
-RWC Crown of victory
-All Stats + 5, MDEF + 3.
-indestructible
-Immunity to Stun and Curse
-Class : ^777777Headgear^000000 Defense : ^77777712^000000
-Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+RWC Crown of victory.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 5
+Mdef + 3
+Immune to ^800000Curse^000000 and ^800000Stun^000000.
+
+This item is indestructible in battle.
 #
 18781#
-^ff0000Account Bound^000000
-RWC Crown of victory
-All Stats + 3, MDEF + 1.
-indestructible
-Immunity to Curse
-Class : ^777777Headgear^000000 Defense : ^77777712^000000
-Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+RWC Crown of victory.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 3
+Mdef + 1
+Immune to ^800000Curse^000000.
+
+This item is indestructible in battle.
 #
 18782#
 Beautiful wings with dexterous power within.
@@ -71340,24 +71139,26 @@ Dex + 2
 #
 18785#
 A hat made in honor of the warrior King Poring.
-Dex +1, Luk +1.
-Additional Dex+1, Luk+1 per refine level above +5.
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777760^000000
-Required Level : ^77777710^000000
-Job : ^777777All jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808060^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Dex + 1
+Luk + 1
+
+Additional Dex + 1 and Luk + 1 per upgrade level of the item past the upgrade level of 5.
 #
 18786#
 A golden mask which was rumored to have been worn by that the god of wind Njord.
-Increases Wind magic damage by 4%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777720^000000
-Required Level : ^77777710^000000
-Job : ^777777All jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Increases the damage of Wind property magical attacks on targets by 4%.
 #
 18787#
 ^808080An ice hockey goal tenders mask. When others see you wearing this mask they feel scared.^000000
@@ -71429,33 +71230,46 @@ If upgrade level is +9 or higher,
 Increases the damage of ^0000FFSevere Rainstorm^000000 by 25%.
 #
 18796#
-^ff0000Account Bound^000000
-RWC Crown of victory
-All Stats + 2.
-indestructible
-Immunity to Curse
-Class : ^777777Headgear^000000 Defense : ^77777712^000000
-Location : ^777777Upper ^000000Weight : ^77777750^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+RWC Crown of victory.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 2
+Immune to ^800000Curse^000000.
+
+This item is indestructible in battle.
 #
 18797#
 A beautiful featherlike hat made by feathers of angels. It makes you high with its tenderness and you can move very pleasantly.
-AGI + 1 , LUK + 1
-MDEF + 3
-Decrease 3% damages when being attacked by Demons.
-Class : ^777777Headgear^000000    Defense : ^7777774^000000
-Location : ^777777Upper^000000    Weight : ^77777710^000000
-jobs : ^777777all jobs without Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 1
+Luk + 1
+Mdef + 3
+
+Reduces damage taken from Demon race enemies by 3%.
 #
 18798#
 A beautiful featherlike hat made by feathers of angels. It makes you high with its tenderness and you can move very pleasantly.
-AGI + 1 , LUK + 1
-MDEF + 3
-Decrease 3% damages when being attacked by Demons.
-Class : ^777777Headgear^000000    Defense : ^7777774^000000
-Location : ^777777Upper^000000    Weight : ^77777710^000000
-jobs : ^777777all jobs without Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 1
+Luk + 1
+Mdef + 3
+
+Reduces damage taken from Demon race enemies by 3%.
 #
 18799#
 ^808080A golden mask which is rumored to belong to the goddess of water.^000000
@@ -71471,24 +71285,33 @@ Required Jobs: All Jobs
 Increases the damage of Water property magical attacks on targets by 4%.
 #
 18802#
-^FF0000Can be obtained from Anniversary Quest or Item Mall.^000000
-MaxHP + 5%.
-If upgraded to +5 or higher, MaxHP + 1%, MaxSP - 2% per refine level
-If upgraded to +10, MaxHP + 4%, MaxSP - 3%.
-Class  : ^777777Headgear^000000
-Defense  : ^77777710^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777all jobs^000000
+A simple looking fedora hat decorated with lifelike Poring.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 5%
+
+If upgrade level is +5 or higher,
+Additional Max HP + 1%
+Max SP - 2% per upgrade level
+
+If upgrade level is +10 or higher,
+Additional Max HP + 4%
+Additional Max SP - 3%
 #
 18805#
-Eclipse hat from lunatic leader
-LUK + 3, MDEF+ 5.
-Class : ^777777Headgear^000000 Defense : ^7777772^000000
-Location : ^777777Upper ^000000weight : ^77777730^000000
-Req Lv : ^7777771^000000
-Jobs : ^777777All^000000
+Eclipse hat from lunatic leader.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 3
+Mdef + 5
 #
 18806#
 a black-rabbit hat that might be in magic show
@@ -71632,18 +71455,28 @@ Matk + 10%
 #
 18821#
 A feather decorated with elaborately bright colors to celebrate the 2012 RWC.
-Atk +1% versus all monster sizes, Matk +1%.
-If refined to +3 or higher, adds additional +1% to Atk and Matk for each refine level.
-^0000ffSet Bonus^000000
-If equipped with RWC 2012 Ring grants +1% versus all monster sizes for every 2 upgrade levels
-If equipped with RWC 2012 Pendant grants +1% MAtk for every 2 upgrade levels
-^ff0000These set bonuses do not work with the card-slotted RWC accessories^000000
-Type : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 1%
+Matk + 1%
+
+Additional Atk + 1% and additional Matk + 1% per upgrade level of the item past the upgrade level of 2.
+
+^800080Set Bonus^000000
+^008080RWC 2012 Ring^000000
+^008080RWC Commemorative Pin [1]^000000
+Atk + 1% per 2 upgrade levels of ^008080RWC Commemorative Pin [1]^000000.
+
+^800080Set Bonus^000000
+^008080RWC 2012 Pendant^000000
+^008080RWC Commemorative Pin [1]^000000
+Matk + 1% per 2 upgrade levels of ^008080RWC Commemorative Pin [1]^000000.
+
+^ff0000These set bonuses do not work with the card-slotted RWC accessories.^000000
 #
 18822#
 Wing-like ears made of burning flames.
@@ -71746,24 +71579,33 @@ Jobs : ^777777All^000000
 #
 18832#
 A celebration hat for the sworn of 666th Gigue family grand master.
-Certain chance of activating 2 LV Adrenalin Rush skill when performing physical attacks.
-2 LV Adrenalin Rush skill activation chance goes up when playing with Cute pet, Baphomet junior.
-Extra 2 LV Adrenalin Rush skill activation chance goes up when friendly rate is "best friend".
-Class : ^777777Helm^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^77777730^000000
-Required LV : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of casting ^0000FFLevel 2 Adrenaline Rush^000000 on the user when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Rolf Von Gigue the666th^000000
+^008080Baphomet Jr. Cute Pet^000000
+Adds an additional chance of casting ^0000FFLevel 2 Adrenaline Rush^000000 on the user when performing a physical attack.
+Additional chance of casting, if pet is Loyal.
 #
 18833#
 A brand-new hairband designed by combining flower wreaths and Marine.
-All state +1. MDEF +2.
-When being attacked physically, it can activate Frost Diver Lv 3 with a certain chance.
-When attacking physically, it can activate Coldbolt Lv 5 with a certain chance.
-^ff0000It cannot be traded with another account.^000000
-Class : ^777777Headgear^000000 Defense : ^7777773^000000
-Location : ^777777Upper ^000000Weight : ^7777771^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Mdef + 2
+
+Adds a chance of casting ^0000FFLevel 3 Frost Driver^000000 on the attacker when receiving a physical attack.
+Adds a chance of casting ^0000FFLevel 5 Cold Bolt^000000 on the target when performing a physical attack.
 #
 18834#
 A Sakura-shaped hairband.
@@ -71777,12 +71619,13 @@ Jobs : ^777777All^000000
 #
 18837#
 A whistle to cheer you up!
-STR +2.
-^ff0000It cannot be traded with another account.^000000
-Class : ^777777Headgear^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^77777710^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
 #
 18838#
 A hat applied a special engine which can move Angeling's wings. This engine seems to have a myterious function.
@@ -71805,42 +71648,54 @@ Jobs : ^777777All^000000
 #
 18841#
 Small Porings are so cute.
-Attack speed + 2% (Decrease attack delay) for every 3 refine levels
-When killed monsters, EXP + 3%.
-Refined 10, ASPD + 1.
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper ^000000
-Weight : ^77777735^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808035^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+For every 3 upgrade levels of the item,
+Aspd + 2%
+If upgrade level is +10 or higher,
+Aspd + 1
+
+Increases the experience given from monsters by 3%.
 #
 18842#
-Hat to protect you from the Sun.
-Refined 3, INT + 2.
-Decrease 7% damage from human style monsters.
-MaxHP - 3%.
-Class : ^777777Helmet^000000 Defense : ^7777778^000000
-Location : ^777777Upper ^000000Weight : ^77777735^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Hat to protect you from the sun.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808035^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP - 3%
+Reduces damage taken from Demi-Human race enemies by 7%.
+
+If upgrade level is +3 or higher,
+Int + 2
 #
 18843#
 Porings are having a party.
-Decrease 5% damage from human style monsters.
-Refined over 8, MaxHP + 1% per 1 refinement.
-Class : ^777777Helmet^000000 Defense : ^7777777^000000
-Location : ^777777Upper ^000000Weight : ^77777735^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808035^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi-Human race enemies by 5%.
+Max HP + 1% per upgrade level of the item past the upgrade level of 8.
 #
 18844#
-Blue Porings fly on the sky.
-All State + 2, Dodge + 2.
-Class : ^777777Helmet^000000 Defense : ^7777775^000000
-Location : ^777777bottom^000000Weight : ^7777775^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Blue Porings fly to the sky.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080805^000000
+Weight: ^8080805^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 2
+Perfect Dodge + 2
 #
 18845#
 Kiss of Banshee Master. It could give the powerful force.
@@ -72037,21 +71892,18 @@ Mdef + 5
 #
 18863#
 This robe, once worn by a famous exorcist, instantly improves your resistance to unholy creatures.
-Every 3 upgrade levels increase Undead Resistance by 5%.
-For the Acolyte classes, the Resistance bonus increases to 10%.
-MDEF +5.
-Class : ^777777Armour^000000 Defense : ^77777757^000000
-Weight : ^777777170^000000
-Required Level : ^77777760^000000
-Job : ^777777All^000000
-This robe, once worn by a famous exorcist, instantly improves your resistance to unholy creatures.
-Every 3 upgrade levels increase Undead Resistance by 5%.
-For the Acolyte classes, the Resistance bonus increases to 10%.
-MDEF +5.
-Class : ^777777Armour^000000 Defense : ^77777757^000000
-Weight : ^777777170^000000
-Required Level : ^77777760^000000
-Job : ^777777All^000000
+Class: ^808080Armor^000000
+Defense: ^80808057^000000
+Weight: ^808080170^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+
+For every 3 upgrade levels of the item,
+Reduces damage taken from Undead race enemies by 5%.
+
+^F4AD42Acolyte Bonus^000000
+Reduces damage taken from Undead race enemies by an additional 10%.
 #
 18864#
 This flower decoration blessed by the goddess of earth, protects its wearer against Earth damage.
@@ -72835,10 +72687,12 @@ Additional Max HP + 2%, Max SP + 2% per upgrade level of ^008080Sandals[1]^00000
 #
 18961#
 A hat made after fluffy monster Lunatic.
-Class : ^777777Headgear^000000 Def : ^7777772^000000
-Location : ^777777Upper ^000000Weight : ^77777710^000000
-Req LvL : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18962#
 Cute panda balloon!
@@ -74693,6 +74547,18 @@ Requires Level: ^80808099^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Dex + 3
 Additional Dex + 1 per 2 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Illusion Ballista [2]^000000
+^008080Illusion Apple of Archer [1]^000000
+Atk + 50
+Increases long-ranged damage on targets by  5%.
+If ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +7 or higher,
+Increases the damage of ^0000FFArrow Storm^000000 by 20%.
+If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +18 or higher,
+Atk + 10%
+If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +22 or higher,
+Increases the damage of ^0000FFArrow Storm^000000 by an additional 30%.
 #
 19212#
 ^808080The cat ears makes this a cute hat to wear.^000000
@@ -78108,19 +77974,18 @@ Job : ^777777All^000000
 #
 19982#
 A red, pompom topped cap that is associated with Santa Claus's legend.
-^0000ffONLY DURING DECEMBER^000000
-^00ff00MaxHP 1000
-MaxSP 100
-ASPD +3
-Increases attack to all monster sizes by 10%
-Matk +10%
-Heal effectiveness +10%^000000
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of December.^000000
+Max HP + 1000
+Max SP + 100
+Matk + 10%
+Aspd + 3
+Increases physical damage on normal monsters and boss monsters by 10%.
+Increases the recovery rate of recovery skills by 10%.
 #
 19984#
 ^808080A hat popularly worn in always-winter country. When worn, you faintly recall happy memories.^000000
@@ -80662,6 +80527,11 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20535#
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20700#
 Egir's Manteau. It looks defending your body
 can not be destroyed
@@ -81915,20 +81785,25 @@ Additional Max SP + 5 per upgrade level of the item.
 #
 20840#
 A fancy cape said to have once been worn by marquises long ago.
-AGI +2. AGI +1 for every 2 Refining levels (up to +10).
-Additional option for Rogue class
-Set effect with Illusion Moonlight Sword: MATK +80
-If each item has +7 or above, then adding MATK +80
-If both item has +18 in total, then adding MATK +40
-If both item has +22 in total, then increase Fire Magic Damage 15%
-Class: ^777777Garment^000000 DEF: ^77777718^000000
-Weight: ^77777760^000000
-Required Level: ^777777100^000000
-Job: ^777777All Jobs Except Novice Classes^000000
+Class: ^808080Garment^000000
+Defense: ^80808018^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 2
+Additional Agi + 1 per 2 upgrade levels of the item up to a maximum upgrade level of 10.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^800080Illusion Ancient Cape [1]^000000
+^800080Illusion Moonlight Dagger [1]^000000
+^F4AD42Shadow Chaser Bonus^000000
+Matk + 80
+If ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
+Additional Matk + 80
+If the combined upgrade levels of ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
+Additional Matk + 40
+If the combined upgrade levels are +22 or higher,
+Increases the damage of Fire property magical attacks on targets by 15%.
 #
 20841#
 A pair of wings from a golden angel.
@@ -83946,31 +83821,32 @@ Increases neutral property magical damage by additional 5%.
 #
 22207#
 Beautiful boots adorned with patterns representing the Rune Midgard kingdom.
-
-
 Class: ^808080Shoes^000000
 Defense: ^80808012^000000
 Weight: ^80808040^000000
 Requires Level: ^808080100^000000
-Enables ^0000FFLevel 1 Increase Agility^000000.
+Usable By: ^808080All Jobs^000000
 Max HP + 3%
 Max SP + 3%
-Atk + 4% per level of Sacrifice known
-Increases the damage of ^0000FFVanishing Point^000000 by 10% for every level of Cannon Spear known.
-Bypass 20% of hard defense of All race targets when performing a physical attack for every level of Pinpoint Attack known.
-If user learned Inspiration level 5, reduces cooldown of Shield Spell by 2 seconds.
+Mdef + 10
+Enables ^0000FFLevel 1 Increase Agility^000000.
 
-If refined to +4 or higher
+If ^0000FFInspiration^000000 is at level 5,
+Reduces the cooldown of ^0000FFShield Spell^000000 by 2 seconds.
+
+Increases the damage of ^0000FFVanishing Point^000000 by 10% for every level of ^0000FFCannon Spear^000000 known.
+Atk + 4% per level of ^0000FFSacrifice^000000 known
+Bypass 20% of hard defense of All race targets when performing a physical attack for every level of ^0000FFPinpoint Attack^000000 known.
+
+If upgrade level is +5 or higher,
 Additional Max HP + 7%
 Additional Max SP + 7%
-Increases Long Range damage on targets by 5%.
+Increases long-ranged damage on targets by 5%.
 
-If refined to +7 or higher
+If upgrade level is +7 or higher,
 Additional Max HP + 10%
 Additional Max SP + 10%
-Increases Long Range damage on targets by an additional 5%.
-
-
+Increases long-ranged damage on targets by an additional 5%.
 #
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
@@ -87173,93 +87049,62 @@ Weight: 0
 #
 25261#
 An old piece of paper that is filled with writing. It's believed to be torn off an old journal.
-"My name is... I'm writing this in an effort to remember myself... I'm a mage of Geffen..."
+'My name is... I'm writing this in an effort to remember myself... I'm a mage of Geffen...'.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25262#
-A carefully dried four-leaf clover. It's believed to bring good luck to its bearer.
-It has a message written on it in small letters.
-"You need this more than I do."
+A carefully dried four-leaf clover. It's believed to bring good luck to its bearer. It has a message written on it in small letters, 'You need this more than I do.'.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25263#
 Short, stiff hair that is so dark that it absorbs light instead of reflecting it. Capes made with this hair are popular among people with secretive, unsavory jobs.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25264#
 A cluster of nightmares that causes you to wake up sweating and panting.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25265#
 Glowing mushroom spores. They grow into mushrooms that illuminate dark caves.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25266#
 An old dry Yggdrasil leaf that is partially used. It's cut into tiny pieces.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25267#
 A creepy-looking magic scroll. It has a pentacle drawn in red paint, and has a faint, unpleasant odor.
 Sold to Collection Merchants.
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25268#
 Sticky blood that is sustained with the sinister energy of catacombs. It's highly toxic, and thus requires careful handling.
-Weight: ^7777770^000000
-
-Attack: ^8080800^000000
+Class: ^808080Generic^000000
 Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #
 25269#
 Sap from mushrooms that grow in extreme conditions. Used for making detoxifying and diluent medicines.
-Weight: ^7777770^000000
-
-Attack: ^8080800^000000
+Class: ^808080Generic^000000
 Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #
 25270#
 A lock of mane that waves like dancing flames. Rumor has it that this mane lets those who gaze upon it peek into someone else's dream.
-Weight: ^7777770^000000
 
-Attack: ^8080800^000000
+Class: ^808080Generic^000000
 Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #
 25271#
 A mysterious ore that is rarely found. Rumor has it that this clear ore lets those who gaze into it experience lifelike illusions. Only the wisest can see the true value of this ore.
@@ -87756,64 +87601,79 @@ Adds a 0.5% chance of buffing the user for 5 seconds when performing a short-ran
 Buff: ^0000FFLevel 1 Endure^000000.
 #
 27101#
-MATK +20. Casting cannot be interrupted.
-Armor MATK +1% for every 3 Refining levels when equipped with Vampire's Familiar
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Matk + 20
+The user's casting cannot be interrupted outside of WoE.
 
-Class: ^777777Card^000000
-Target: ^777777Armor^000000
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Sweet Nightmare Card^000000
+^008080Vampire's Familiar [1]^000000
+Matk + 1% per 3 upgrade levels of the compounded armor.
 #
 27102#
-Negates the Ignite effect.
-Perfect Dodge +5 when equipped with Vampire's Familiar
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Immune to ^800000Burn^000000.
 
-Class: ^777777Card^000000
-Target: ^777777Helm^000000
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Matte Drainliar Card^000000
+^008080Vampire's Familiar [1]^000000
+Perfect Dodge + 5
 #
 27103#
-ATK +20. Armor and weapons cannot be destroyed.
-Armor ATK +1% for every 3 Refining levels when equipped with Vampire's Familiar
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Atk + 20
+Armor and Weapon are indestructible in battle.
 
-Class: ^777777Card^000000
-Target: ^777777Armor^000000
-Weight: ^7777771^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Restless Dead Card^000000
+^008080Vampire's Familiar [1]^000000
+Atk + 1% per 3 upgrade levels of the compounded armor.
 #
 27104#
-Enables Level 1 Health Conversion.
-HP +30 and SP +1 every 3 seconds when equipped with Vampire's Familiar
-MHP +1,000 and MSP +50 when equipped Bomi Card. +9 Garment Effects: MHP +1,000 and MSP +50.
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Enables ^0000FFLevel 1 Indulge^000000.
 
-Class: ^777777Card^000000
-Target: ^777777Garment^000000
-Weight: ^7777771^000000
+^800080Set Bonus^000000
+^008080Angry Dracula Card^000000
+^008080Vampire's Familiar [1]^000000
+Restores 30 HP and 1 SP to the user every 3 seconds.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Angry Dracula Card^000000
+^008080Bomi Card^000000
+Max HP + 1000
+Max SP + 50
+If compounded garment upgrade level is +9 or higher,
+Additional Max HP + 1000
+Additonal Max SP + 50
 #
 27105#
-Enables Level 4 Napalm Vulcan.
-MATK +30 when equipped with Vampire's Familiar
-Class: ^777777Card^000000
-Target: ^777777Accessory^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Enables ^0000FFLevel 4 Napalm Vulcan^000000.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Bomi Card^000000
+^008080Vampire's Familiar [1]^000000
+Matk + 30
+
+^800080Set Bonus^000000
+^008080Angry Dracula Card^000000
+^008080Bomi Card^000000
+Max HP + 1000
+Max SP + 50
+If compounded garment upgrade level is +9 or higher,
+Additional Max HP + 1000
+Additonal Max SP + 50
 #
 27147#
 Class: ^808080Card^000000
@@ -87960,32 +87820,44 @@ This item is indestructible in battle.
 #
 28022#
 A lethal katar that has been perfectly designed to carry out quick assassinations.
-60% more damage on Demi-human enemies.
-DEF +3, FLEE +5, Perfect Dodge +2.
-+9 Effects: Additional FLEE + 5, Perfect Dodge + 2.
-+10 Effect: ATK +5%.
-Class: ^777777Katar^000000 ATK: ^777777200^000000
-Weight: ^777777150^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777100^000000
-Job: ^777777Assassin Cross Classes^000000
+Class: ^808080Katar^000000
+Attack: ^808080200^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Def + 3
+Flee + 5
+Perfect Dodge + 2
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Increases physical damage on Demi-Human race targets by 60%.
+If upgrade level is +9 or higher,
+Additional Flee + 5
+Additional Perfect Dodge + 2
+
+If upgrade level is +10 or higher,
+Atk + 5%
+^800080Set Bonus^000000
+^008080Illusion Infiltrator^000000
+^008080Illusion Ring^000000
+Aspd + 10%
+If Illusion Infiltrator upgrade level is +9 or higher,
+Increases critical damage on targets by 10%.
+If Illusion Infiltrator upgrade level is +11 or higher,
+Increases physical damage on Brute race targets by 25%.
+
 #
 28023#
 A katar crafted from a ghoul's femur that still radiates a dark, deathly aura.
-Melee Physical attacks create a certain (4%) chance of transforming you into a Ghoul for 6 seconds. This Ghoul mode changes your body property to Immortal and casts Endure on you.
-Class: ^777777Katar^000000 ATK: ^777777220^000000
-Weight: ^777777170^000000
-Weapon Level: ^7777773^000000
-Required Level: ^777777100^000000
-Job: ^777777Assassin Cross Classes^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Class: ^808080Katar^000000
+Attack: ^808080220^000000
+Weight: ^808080170^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Guillotine Cross^000000
+Adds a 4% chance of transforming the user into Ghoul for 6 seconds when performing a short-ranged attack;
+The user's property becomes Undead.
+Applies ^0000FFEndure^000000 effect for the duration of the transformation.
 #
 28100#
 This two-handed axe, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -89578,40 +89450,79 @@ Increases the damage of Water, Earth, Fire, Wind and Ghost property magical atta
 Bypass 50% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack.
 #
 28508#
-A weird ring adorned with a skull on which the words, "Forever, until death..." are engraved.
-Melee Physical attacks create a high chance of Cursing you and your target.
-Class: ^777777Accessory (Right)^000000 DEF: ^7777770^000000
-Weight: ^77777710^000000
-Required Level: ^777777100^000000
-Job: ^777777All Jobs^000000
+A weird ring adorned with a skull on which the words, 'Forever, until death...' are engraved.
+^FF0000This accessory can only be equipped in the right accessory slot.^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of inflicting ^800000Curse^000000 on the target and the user when performing a short-ranged attack.
+^800080Set Bonus^000000
+^008080Illusion Skull Ring^000000
+^008080Illusion Book of the Apocalypse^000000
+Aspd + 8%
+Increases critical damage on targets by 5% for every 2 upgrade levels on Illusion Book of the Apocalypse
+If Illusion Book of the Apocalypse upgrade level is +9 or higher,
+Crit + 15
+Immune to ^800000Curse^000000.
+If Illusion Book of the Apocalypse upgrade level is +11 or higher,
+Atk + 100
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+
 #
 28509#
 An ancient ring.
-STR + 3. ATK + 30 if you have 100 or more pure STR.
-Class: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight: ^77777720^000000
-Required Level: ^777777100^000000
-Job: ^777777All Jobs Except Novice Classes^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Str + 3
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+If the user's base Str is 100 or higher,
+Atk + 30
+^800080Set Bonus^000000
+^008080Illusion Infiltrator^000000
+^008080Illusion Ring^000000
+Aspd + 10%
+If Illusion Infiltrator upgrade level is +9 or higher,
+Increases critical damage on targets by 10%.
+If Illusion Infiltrator upgrade level is +11 or higher,
+Increases physical damage on Brute race targets by 25%.
+
 #
 28510#
 A vampire's familiar.
-Physical attacks create a certain chance of regaining as much SP as 1% of your outgoing damage.
-Class: ^777777Accessory (Right)^000000 DEF: ^7777771^000000
-Weight: ^77777710^000000
-Required Level: ^777777100^000000
-Job: ^777777All Jobs^000000
+^FF0000This accessory can only be equipped in the right accessory slot.^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of restoring 1% of damage as SP when performing a physical attack.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+^800080Set Bonus^000000
+^008080Sweet Nightmare Card^000000
+^008080Vampire's Familiar [1]^000000
+Matk + 1% per 3 upgrade levels of the compounded armor.
+
+^800080Set Bonus^000000
+^008080Matte Drainliar Card^000000
+^008080Vampire's Familiar [1]^000000
+Perfect Dodge + 5
+
+^800080Set Bonus^000000
+^008080Restless Dead Card^000000
+^008080Vampire's Familiar [1]^000000
+Atk + 1% per 3 upgrade levels of the compounded armor.
+
+^800080Set Bonus^000000
+^008080Bomi Card^000000
+^008080Vampire's Familiar [1]^000000
+Matk + 30
+
+^800080Set Bonus^000000
+^008080Angry Dracula Card^000000
+^008080Vampire's Familiar [1]^000000
+Restores 30 HP and 1 SP to the user every 3 seconds.
 #
 28513#
 A high quality brooch that is made by one of the best craftsman in the world. It has been together with Celine since she was created.
@@ -89962,17 +89873,28 @@ Adds a 100% chance of buffing the user for 1 minute when using ^0000FFDouble Bol
 #
 28612#
 A book that details prophesies concerning the end of the world.
-Damage on Earth/Water/Fire/Wind monsters +10%. Additional +10% for every 3 Refining levels (up to +10).
-Incoming damage from Holy monsters +30%.
-Class: ^777777Book^000000 ATK: ^777777170^000000
-Weight: ^77777780^000000      Property: ^777777Shadow^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777100^000000
-Job: ^777777Sage/Priest Classes^000000
+Class: ^808080Book^000000
+Attack: ^808080170^000000
+Property: ^808080Shadow^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop, Sorcerer^000000
+Increases physical damage on Water, Earth, Fire, and Wind property targets by 10%.
+Increases physical damage by an additional 10% per 3 upgrade levels of the item up to a maximum upgrade level of 10.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+Increases damage taken from Holy property enemies by 30%.
+^800080Set Bonus^000000
+^008080Illusion Skull Ring^000000
+^008080Illusion Book of the Apocalypse^000000
+Aspd + 8%
+Increases critical damage on targets by 5% for every 2 upgrade levels on Illusion Book of the Apocalypse
+If Illusion Book of the Apocalypse upgrade level is +9 or higher,
+Crit + 15
+Immune to ^800000Curse^000000.
+If Illusion Book of the Apocalypse upgrade level is +11 or higher,
+Atk + 100
+
 #
 28618#
 A book that contains the writings of the Sun God, it has the power to attract materials from space.
@@ -90127,6 +90049,18 @@ Max SP + 10%
 Restores 3 SP to the user when performing a physical attack.
 If upgrade level is +10 or higher,
 Restores an additional 7 SP to the user when performing a physical attack.
+
+^800080Set Bonus^000000
+^800080Illusion Ancient Cape [1]^000000
+^800080Illusion Moonlight Dagger [1]^000000
+^F4AD42Shadow Chaser Bonus^000000
+Matk + 80
+If ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
+Additional Matk + 80
+If the combined upgrade levels of ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
+Additional Matk + 40
+If the combined upgrade levels are +22 or higher,
+Increases the damage of Fire property magical attacks on targets by 15%.
 #
 28900#
 ^808080The official shield of the Prontera Royal Guard.^000000
@@ -92150,12 +92084,12 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 31390#
-^808080This hat is made with spirit of people's hope for a place which doesn't snow during winter.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This hat is made with spirit of people's hope for a place which doesn't snow during winter.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 ^FF0000The following effects are active during the month of December.^000000
 Max HP + 250 for every 20 base levels.
 Increases physical and magical damage on targets by 2% for every 30 base levels.
@@ -92417,6 +92351,11 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 ^FF0000The following effects are active during the month of February.^000000
 Increases the recovery rate of ^008080Meat^000000 consumables by 2018%.
+#
+31463#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
 #
 31470#
 A magically radiated scroll that is dropped by a disciplined Tengu. It is said mysterious events may occur in various places when using this scroll.
@@ -92706,15 +92645,50 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
+31569#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31570#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31571#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31572#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31573#
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31574#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31575#
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.
 Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Atk + 5%
+Matk + 5%
 Aspd + 5%
-Increases physical and magical damage on targets by 5%.
-
 ^d3d3d3
 Set Bonus
 Accelerator Chip [1]
