@@ -139,8 +139,8 @@ sub checkItem {
 
 sub itemEquiped {
 	my ($self, $args) = @_;
-	return if ($args->{switch} ne "00AA" || $args->{switch} ne "00AC"); # 00AA = Item is Equiped packet, 00AC = unequipped	
-	$item->{equipped} = ($args->{switch} eq "00AA") ? 1 : 0; # If 00AA then 1, else 0
+	return if ($args->{switch} ne "00AA" || $args->{switch} ne "00AC" || $args->{switch} ne "0999" || $args->{switch} ne "099A"); # 00AA/0999 = Item is Equiped packet, 00AC/099A = unequipped	
+	$item->{equipped} = ($args->{switch} eq "00AA" || $args->{switch} ne "0999") ? 1 : 0; # If 00AA/0999 then 1, else 0
 }
 
 sub MapLoaded {
