@@ -350,7 +350,7 @@ sub parseDataFile {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		$line =~ s/#.*// if ($file eq "routeweights.txt");
+		$line =~ s/\s*#.*// if ($file eq "routeweights.txt");
 		next unless length $line;
 		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
@@ -372,7 +372,7 @@ sub parseDataFile_lc {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		$line =~ s/#.*// if ($file eq "pickupitems.txt" or $file eq "arrowcraft.txt");
+		$line =~ s/\s*#.*// if ($file eq "pickupitems.txt" or $file eq "arrowcraft.txt");
 		next unless length $line;
 		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
@@ -460,7 +460,7 @@ sub parseShopControl {
 		}
 		
 		# Strip mid-line comments after parsing the shop title, so shops can use '#' in their titles
-		$line =~ s/#.*//;
+		$line =~ s/\s*#.*//;
 		next unless length $line;
 
 		my ($name, $price, $amount) = split(/\t+/, $line);
@@ -520,8 +520,7 @@ sub parseItemsControl {
 		}
 		
 		next if $key =~ /^$/;
-		$args_text =~ s/\s+//;
-		$args_text =~ s/#.*//;
+		$args_text =~ s/\s*#.*//;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
@@ -562,7 +561,7 @@ sub parseMonControl {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		$line =~ s/#.*//;
+		$line =~ s/\s*#.*//;
 		next unless length $line;
 
 		if ($line =~ /\t/) {
@@ -673,7 +672,7 @@ sub parsePriority {
 		s/\x{FEFF}//g;
 		next if (/^#/);
 		s/[\r\n]//g;
-		s/#.*//;
+		s/\s*#.*//;
 		next unless length;
 		$$r_hash{lc($_)} = $pri + 1;
 		$pri--;
@@ -911,7 +910,7 @@ sub parseTimeouts {
 		$line =~ s/\x{FEFF}//g;
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
-		$line =~ s/#.*//;
+		$line =~ s/\s*#.*//;
 		next unless length $line;
 
 		my ($key, $value) = $line =~ /([\s\S]+?) ([\s\S]*?)$/;
