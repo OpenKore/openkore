@@ -4731,14 +4731,21 @@ sub cmdStorage {
 			cmdStorage_desc($items);
 		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && ($items || $args =~ /$switch 0/)) || $switch eq 'close') {
 			if ($char->storage->isReady()) {
+				my ( $name, $amount );
+				if ( $items =~ /^[^"'].* .+$/ ) {
+					# Backwards compatibility: "storage add Empty Bottle 1" still works.
+					( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+				} else {
+					( $name, $amount ) = parseArgs( $items );
+				}
 				if ($switch eq 'add') {
-					cmdStorage_add($items);
+					cmdStorage_add($name, $amount);
 				} elsif ($switch eq 'addfromcart') {
-					cmdStorage_addfromcart($items);
+					cmdStorage_addfromcart($name, $amount);
 				} elsif ($switch eq 'get') {
-					cmdStorage_get($items);
+					cmdStorage_get($name, $amount);
 				} elsif ($switch eq 'gettocart') {
-					cmdStorage_gettocart($items);
+					cmdStorage_gettocart($name, $amount);
 				} elsif ($switch eq 'close') {
 					cmdStorage_close();
 				}
@@ -4762,15 +4769,8 @@ sub cmdStorage {
 }
 
 sub cmdStorage_add {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage add Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
 	my @items = $char->inventory->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Inventory item '%s' does not exist.\n", $name );
@@ -4781,20 +4781,13 @@ sub cmdStorage_add {
 }
 
 sub cmdStorage_addfromcart {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
 	if (!$char->cart->isReady) {
 		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
 		return;
 	}
-
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage addfromcart Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
+	
 	my @items = $char->cart->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Cart item '%s' does not exist.\n", $name );
@@ -4805,15 +4798,8 @@ sub cmdStorage_addfromcart {
 }
 
 sub cmdStorage_get {
-	my $items = shift;
-
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage get Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
+	my ($name, $amount) = @_;
+	
 	my @items = $char->storage->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Storage item '%s' does not exist.\n", $name );
@@ -4824,20 +4810,13 @@ sub cmdStorage_get {
 }
 
 sub cmdStorage_gettocart {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
 	if ( !$char->cart->isReady ) {
 		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
 		return;
 	}
 
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage get Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
 	my @items = $char->storage->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Storage item '%s' does not exist.\n", $name );
