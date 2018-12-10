@@ -899,7 +899,7 @@ sub map_loaded {
 		$messageSender->sendMapLoaded();
 		
 		# request to unfreeze char alisonrag
-		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel} || if $self->{blockingPlayerCancel};
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel} || $self->{blockingPlayerCancel};
 		
 		$timeout{'ai'}{'time'} = time;
 	}
