@@ -2970,3 +2970,112 @@ conch_in 142 60 conch_in 162 61
 conch_in 159 61 conch_in 140 59
 brasilis 316 57 alberta 224 115 0 c r0
 alberta 247 115 brasilis 314 60 0 c c r0 c 
+
+# Rock Ridge
+#alberta 240 103 harboro1 70 215 10000 c r0 n
+#harboro1 60 215 alberta 172 131 c r0 n
+harboro1 241 218 har_in01 18 18
+harboro1 362 206 rockrdg1 37 246
+rockmi1 247 16 rockrdg2 304 350
+rockrdg2 304 350 rockmi1 247 19
+harboro1 312 193 har_in01 26 87
+har_in01 26 90 harboro1 312 193
+har_in01 18 15 harboro1 241 218
+har_in01 34 28 harboro1 241 218
+har_in01 99 30 har_in01 34 31
+har_in01 34 28 har_in01 99 27
+rockrdg1 33 246 harboro1 362 206
+rockrdg1 371 206 rockrdg2 31 207
+rockrdg2 27 207 rockrdg1 371 206
+
+#Verus
+#yuno_fild07 216 157 verus04 122 217 c r0 c c r1 c c n
+#verus04 122 218 yuno_fild07 230 156 c r0 c r1 n
+verus04 204 163 ver_tunn 13 35
+ver_tunn 10 36 verus04 202 165
+ver_eju 107 36 ver_tunn 84 82
+ver_tunn 84 86 ver_eju 113 38
+ver_eju 10 148 juperos_01 242 84
+juperos_01 245 87 ver_eju 13 148
+verus04 121 267 verus03 121 20
+verus03 122 17 verus04 121 264
+verus04 44 267 verus03 44 20
+verus03 44 17 verus04 44 264
+verus02 72 16 verus03 169 255
+verus03 169 259 verus02 72 19
+verus03 52 254 verus01 243 62
+verus01 247 58 verus03 55 251
+#verus01 123 181 un_bunker 98 91 c r0 c n
+un_bunker 98 85 verus01 115 190
+un_bunker 97 124 un_bunker 100 144
+un_bunker 97 141 un_bunker 98 121
+un_bunker 75 128 un_bunker 276 196
+un_bunker 275 191 un_bunker 76 121
+un_bunker 69 118 un_bunker 53 117
+un_bunker 57 118 un_bunker 72 117
+un_bunker 47 135 un_bunker 37 134
+un_bunker 40 135 un_bunker 50 134
+un_bunker 60 169 un_bunker 72 168
+un_bunker 69 167 un_bunker 57 168
+un_bunker 60 183 un_bunker 75 235
+un_bunker 71 236 un_bunker 57 182
+un_bunker 51 196 un_bunker 68 378
+un_bunker 67 375 un_bunker 52 193
+un_bunker 31 196 un_bunker 22 378
+un_bunker 21 375 un_bunker 32 193
+un_bunker 23 190 un_bunker 21 256
+un_bunker 24 256 un_bunker 26 190
+un_bunker 24 276 un_bunker 45 275
+un_bunker 41 275 un_bunker 21 276
+un_bunker 124 236 un_bunker 140 184
+un_bunker 137 185 un_bunker 120 235
+un_bunker 147 196 un_bunker 106 378
+un_bunker 105 375 un_bunker 148 193
+un_bunker 167 196 un_bunker 152 378
+un_bunker 151 375 un_bunker 168 193
+un_bunker 174 190 un_bunker 172 229
+un_bunker 169 230 un_bunker 171 189
+un_bunker 137 168 un_bunker 122 167
+un_bunker 126 168 un_bunker 140 167
+un_bunker 140 118 un_bunker 125 117
+un_bunker 128 118 un_bunker 144 117
+un_bunker 119 128 un_bunker 319 196
+un_bunker 320 191 un_bunker 120 121
+un_bunker 324 200 un_bunker 344 199
+un_bunker 339 200 un_bunker 321 199
+un_bunker 350 214 un_bunker 368 213
+un_bunker 365 214 un_bunker 347 213
+un_bunker 337 236 un_bunker 323 235
+un_bunker 326 236 un_bunker 340 235
+un_bunker 337 262 un_bunker 321 289
+un_bunker 324 290 un_bunker 340 261
+un_bunker 343 270 un_bunker 382 328
+un_bunker 381 325 un_bunker 344 267
+un_bunker 370 264 un_bunker 388 263
+un_bunker 385 264 un_bunker 367 263
+un_bunker 271 290 un_bunker 255 261
+un_bunker 258 262 un_bunker 274 289
+un_bunker 281 279 un_bunker 282 263
+un_bunker 281 266 un_bunker 282 282
+un_bunker 313 266 un_bunker 314 282
+un_bunker 313 279 un_bunker 314 262
+un_bunker 297 206 un_bunker 298 224
+un_bunker 297 221 un_bunker 298 203
+un_bunker 271 200 un_bunker 258 199
+un_bunker 245 214 un_bunker 226 213
+un_bunker 230 214 un_bunker 248 213
+un_bunker 258 236 un_bunker 272 235
+un_bunker 269 236 un_bunker 255 235
+un_bunker 249 268 un_bunker 390 380
+un_bunker 389 377 un_bunker 250 265
+un_bunker 217 262 un_bunker 213 279
+un_bunker 216 300 un_bunker 216 345
+un_bunker 213 346 un_bunker 213 299
+un_bunker 216 280 un_bunker 220 261
+un_bunker 262 200 un_bunker 274 199
+un_bunker 297 192 un_bunker 298 181
+un_bunker 297 186 un_bunker 298 196
+un_bunker 229 163 un_bunker 159 52
+un_bunker 164 51 un_bunker 233 164
+un_bunker 366 164 un_bunker 31 51
+un_bunker 27 52 un_bunker 361 163
