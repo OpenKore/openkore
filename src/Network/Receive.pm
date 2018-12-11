@@ -3040,6 +3040,45 @@ sub vending_start {
 	$shopEarned ||= 0;
 }
 
+sub vender_items_list {
+	my ($self, $args) = @_;
+
+	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_len = length pack $item_pack;
+	my $item_list_len = length $args->{itemList};
+
+	my $player = Actor::get($args->{venderID});
+
+	$venderItemList->clear;
+
+	message TF("%s\n" .
+		"#   Name                                      Type        Amount          Price\n",
+		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), $config{showDomain_Shop} || 'list';
+	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
+		my $item = Actor::Item->new;
+
+ 		@$item{qw( price amount ID type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
+
+		$item->{name} = itemName($item);
+		$venderItemList->add($item);
+
+		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		Plugins::callHook('packet_vender_store', { item => $item });
+
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
+			$config{showDomain_Shop} || 'list');
+	}
+	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
+
+	Plugins::callHook('packet_vender_store2', {
+		venderID => $args->{venderID},
+		itemList => $venderItemList,
+	});
+}
+
 # 01D0 (spirits), 01E1 (coins), 08CF (amulets)
 sub revolving_entity {
 	my ($self, $args) = @_;
