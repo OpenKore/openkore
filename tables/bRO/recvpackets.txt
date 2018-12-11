@@ -1,6 +1,6 @@
 # Packet Extractor by lututui
-# Generated in Dec 4, 2018, 1:02:01 PM
-# Encryption Keys : 0x58586529 0x049D1C9D 0x0D3D6F9D
+# Generated in Dec 11, 2018, 12:53:01 PM
+# Encryption Keys : 0x65BE29F9 0x00D52119 0x05C40D7C
 0187 6 6 0
 0081 3 3 0
 01C6 4 4 0
@@ -1260,7 +1260,7 @@
 083C 10 10 0	# skill_use
 0437 5 5 0	# character_move
 035F 6 6 0	# sync
-0202 5 5 0	# actor_look_at
+093B 5 5 0	# actor_look_at
 07E4 6 6 0	# item_take
 0362 6 6 0	# item_drop
 07EC 8 8 0	# storage_item_add
@@ -1279,12 +1279,12 @@
 0365 18 18 0	# booking_register
 0363 8 8 0	# unknown/unused
 0281 -1 12 0	# item_list_window_selected
-022D 19 19 0	# map_login
+088F 19 19 0	# map_login
 0802 26 26 0	# party_join_request_by_name
-0436 4 4 0	# unknown/unused
-023B 26 26 0	# friend_request
-0361 5 5 0	# homunculus_command
-094E 36 36 0	# storage_password
+0939 4 4 0	# unknown/unused
+08A4 26 26 0	# friend_request
+094B 5 5 0	# homunculus_command
+088D 36 36 0	# storage_password
 0367 2 2 0	# sync_ex_reply
 085A 2 2 0	# sync_ex_reply
 085B 2 2 0	# sync_ex_reply
@@ -1361,10 +1361,10 @@
 0935 2 2 0	# sync_ex_reply
 0936 2 2 0	# sync_ex_reply
 0937 2 2 0	# sync_ex_reply
+0940 2 2 0	# sync_ex_reply
 0938 2 2 0	# sync_ex_reply
-0939 2 2 0	# sync_ex_reply
 093A 2 2 0	# sync_ex_reply
-093B 2 2 0	# sync_ex_reply
+0361 2 2 0	# sync_ex_reply
 093C 2 2 0	# sync_ex_reply
 093D 2 2 0	# sync_ex_reply
 093E 2 2 0	# sync_ex_reply
@@ -1379,9 +1379,9 @@
 088A 2 2 0	# sync_request_ex
 088B 2 2 0	# sync_request_ex
 088C 2 2 0	# sync_request_ex
-088D 2 2 0	# sync_request_ex
+023B 2 2 0	# sync_request_ex
 088E 2 2 0	# sync_request_ex
-088F 2 2 0	# sync_request_ex
+0436 2 2 0	# sync_request_ex
 0890 2 2 0	# sync_request_ex
 0891 2 2 0	# sync_request_ex
 0892 2 2 0	# sync_request_ex
@@ -1402,7 +1402,7 @@
 08A1 2 2 0	# sync_request_ex
 08A2 2 2 0	# sync_request_ex
 08A3 2 2 0	# sync_request_ex
-08A4 2 2 0	# sync_request_ex
+0202 2 2 0	# sync_request_ex
 08A5 2 2 0	# sync_request_ex
 08A6 2 2 0	# sync_request_ex
 08A7 2 2 0	# sync_request_ex
@@ -1422,10 +1422,10 @@
 0948 2 2 0	# sync_request_ex
 0949 2 2 0	# sync_request_ex
 094A 2 2 0	# sync_request_ex
-094B 2 2 0	# sync_request_ex
+022D 2 2 0	# sync_request_ex
 094C 2 2 0	# sync_request_ex
-0940 2 2 0	# sync_request_ex
 094D 2 2 0	# sync_request_ex
+094E 2 2 0	# sync_request_ex
 094F 2 2 0	# sync_request_ex
 0950 2 2 0	# sync_request_ex
 0951 2 2 0	# sync_request_ex
