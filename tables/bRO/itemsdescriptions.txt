@@ -2416,17 +2416,19 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 1131#
-Espada de uma mão de aparência solene com a propriedade da água.
-^0000ffTem a possibilidade de Conjuração Automática de "Lanças de Gelo".^000000
-^0000ffHabilita utilização de "Lanças de Gelo nível 3".^000000
-^0000ffExiste 5% de chance do inimigo congelar quando atacado, mas também existe 1% de chance de você congelar.^000000
-Classe: ^777777Espada^000000
-Força de Ataque: ^777777100^000000
+Espada de uma mão de aparência solene.
+^0000ffHabilita [Lanças de Gelo] nv. 3.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Lanças de Gelo] nv. 3.^000000
+^0000ff5% de chance de infligir [Congelamento] no alvo.^000000
+^0000ff0,1% de chance de infligir [Congelamento] no usuário.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777100^000000
 Peso: ^77777760^000000
 Propriedade: ^777777Água^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777740^000000
-Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 1132#
 Espada de uma mão com lâmina extremamente afiada. Traz a morte quase sempre que é usada.
@@ -2440,15 +2442,17 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 1133#
-Espada de uma mão de aparência solene com a propriedade do fogo. Tem a possibilidade de Conjuração Automática de [Lanças de Fogo].
-^0000ffHabilita utilização de "Lanças de Fogo" em nível 3.^000000
-Classe: ^777777Espada^000000
-Força de Ataque: ^777777100^000000
+Espada de uma mão de aparência solene.
+^0000ffHabilita [Lanças de Fogo] nv. 3.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Lanças de Fogo] nv. 3.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777100^000000
 Peso: ^77777750^000000
 Propriedade: ^777777Fogo^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777740^000000
-Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 1134#
 Espada de uma mão que parece um torquês. É especialmente eficiente quando usada para cortar a vegetação densa.
@@ -3495,13 +3499,15 @@ Nível necessário: ^77777736^000000
 Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções^000000
 #
 1238#
-Essa adaga dá ao usuário uma chance de conseguir zeny dos monstros que mata.
-Classe: ^777777Adaga^000000
-Força de Ataque: ^77777764^000000
+Essa adaga possui um formato peculiar que sugere garantir dinheiro ao seu dono.
+^0000ffAo derrotar monstros:^000000
+^0000ff40% de chance de ganhar entre 1 a 100 zenys.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777764^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Espadachim/Mago/Arqueiro/Mercador/Gatuno e as respectivas evoluções^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Mercadores, Gatunos e evoluções^000000
 #
 1239#
 Adaga terrível de lâmina púrpura embebida em veneno.
@@ -18123,16 +18129,23 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4172#
-Inflige 20% a mais de dano com Ataque Crítico.
-^0000ffGasta 1 SP cada vez que atacar.
-Se o usuário estiver equipado com itens que tenham as cartas Andarilho, Rosa Selvagem, Shinobi e Zhu Po Long ao mesmo tempo, a conjuração automática da habilidade ‘Rapto’ é desativada.
-Aumenta Velocidade de Ataque e de Movimento em 5%.
-AGI +5 e FOR +5.
-Ganha 1 SP cada vez que atacar.
-Se utilizada por personagens da Classe Gatuno e suas evoluções, permite ao usuário usar certas habilidades sem gastar Gemas. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano crítico +20%.^000000
+A cada ataque físico:
+^0000ffDrena 1 de SP do usuário.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Shinobi]^000000
+^FF6347[Carta Andarilho]^000000
+^FF6347[Carta Zhu Po Long]^000000
+^FF6347[Carta Rosa Selvagem]^000000
+^0000ffAGI +5. FOR +5.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffAumenta a velocidade de movimento.^000000
+^0000ffDesativa a autoconjuração de [Rapto].^000000
+^0000ffRegenera 1 de SP do usuário a cada ataque físico.^000000
+Gatunos e evoluções:
+^0000ffAnula o consumo de Gema ao usar habilidades.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4173#
@@ -19116,11 +19129,13 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4296#
-^0000ffAdiciona-se uma chance de ganhar uma certa quantia de Zenys cada vez que um monstro for derrotado.
-Se o usuário estiver equipado com um item que tenha a carta Tarou, FOR +3.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+Ao derrotar monstros:
+^0000ff1% de chance de ganhar entre 1 a 500 zenys.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Tarou]^000000
+^0000ffFOR +3.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4297#
@@ -20444,11 +20459,10 @@ Utilização: ^777777Arma^000000
 Peso : ^7777771^000000
 #
 4464#
-Dano de Ataque Crítico + 20%.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Arma^000000
-Peso : ^7777771^000000
+^0000ffDano crítico +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 4465#
 ^0000ffATQ +10.^000000
@@ -20471,12 +20485,13 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4467#
-FOR + 2.
-Se equipado por um Mercador, aumenta o dano da habilidade ^ff0000Cavalo de Pau^000000 em 50%, mas o SP gasto aumentará para 12.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Calçado^000000
-Peso : ^7777771^000000
+^0000ffFOR +2.^000000
+Mercadores e evoluções:
+^0000ffDano de [Cavalo-de-Pau] +50%.^000000
+^0000ffCusto de SP de [Cavalo-de-Pau] +12.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
 #
 4468#
 ATQ + 10.
@@ -26797,14 +26812,15 @@ Classes que utilizam: ^777777Arqueiros e evoluções^000000
 #
 5518#
 Um equipamento para a cabeça feito a partir dos chifres de um Bafomé. Possui um forte significado místico.
-Concede 12% de resistência a monstros da raça Humanoide.
-Aumenta o ATQ proporcionalmente ao Nível de Classe.
+^0000ffResistência a raça Humanoide +12%.^000000
+A cada 7 níveis de classe:
+^0000ffATQ +2.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^77777710^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^77777710^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5519#
 Um chapéu feito com penas, lembrando a cauda de um pavão. Elas são sintéticas, criadas por biotecnologia, e nenhum pavão foi ferido nesse processo. Ele não apenas serve para chamar a atenção, mas o deixa com um ar mais inteligente.
@@ -32544,7 +32560,7 @@ Passe que deve ser usado sempre que desejar acessar um local.
 <NAVI>[Rachel]<INFO>rachel,132,144,0,000,0</INFO></NAVI>
 <NAVI>[Lighthalzen]<INFO>lighthalzen,203,140,0,000,0</INFO></NAVI>
 --------------------------
-Encerramento do evento: ^ff000030/07/18.^000000
+Encerramento do evento: ^ff000007/01/19.^000000
 O passe perderá validade após a data.
 --------------------------
 Negociação: ^777777Não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser transferido para o armazém.^000000
@@ -41770,13 +41786,13 @@ Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evolu
 #
 13404#
 Uma espada temível, com uma lâmina curvada e única.
-Crítico + 50%
-Tipo de Item: ^777777Espada^000000
-Força de ataque: ^777777130^000000
+^0000ffCRIT +50.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777130^000000
 Peso: ^777777150^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim/Mercador/Gatuno^000000
+Classes: ^777777Tranclasses de Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 13405#
 Uma espada grossa e flexível, feita de uma liga elástica.
@@ -41856,16 +41872,24 @@ Nível necessário: ^77777775^000000
 Classes: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
 #
 13414#
-Uma espada mágica que porta 4 diferentes propriedades naturais. Muito eficiente contra inimigos com propriedades diferentes de Água, Vento, Terra e Fogo.
-FOR + 2, INT + 4, DES + 1, ATQM +95
-10% de dano adicional contra monstros de propriedade Neutro.
-Ao atacar, há chance de lançar automaticamente Lanças de Fogo, Lanças de Gelo, Relâmpago e Coluna de Pedra.
-Tipo: ^777777Espada de Uma Mão^000000
+Uma espada mágica que porta 4 diferentes propriedades elementais.
+^0000ffATQM +95.^000000
+^0000ffINT +4. FOR +2. DES +1.^000000
+^0000ffDano físico contra a propriedade Neutro +10%.^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Lanças de Gelo] nv. 3.^000000
+Ao usar [Lanças de Gelo]:
+^0000ffAutoconjura [Lanças de Fogo] nv. 3.^000000
+Ao usar [Lanças de Fogo]:
+^0000ffAutoconjura [Relâmpago] nv. 3.^000000
+Ao usar [Relâmpago]:
+^0000ffAutoconjura [Coluna de Pedra] nv. 3.^000000
+Tipo: ^777777Espada^000000
 Ataque: ^777777105^000000
 Peso: ^777777120^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim / Mercador / Gatuno^000000
+Classes: ^777777Tranclasses de Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 13415#
 Uma espada de lâmina larga e arredondada.
@@ -48444,16 +48468,20 @@ Classe : ^777777Todas^000000
 Um elmo feito com a semelhança do utilizado pelo Senhor dos Mortos.
 ^0000ffDEFM +5.^000000
 ^0000ffDano físico contra monstros Chefes +10%.^000000
-^0000ffResistência a monstros normais -5%.^000000
-A partir do refino +5:
-^0000ffDano físico contra monstros Chefes +1% por refino.^000000
-^6A5ACD Efeitos especiais podem existir se combinados com certa carta.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ffResistência a monstros normais^000000 ^ff0000-5%.^000000
+A cada refino a partir do +5:
+^0000ffDano físico contra Chefes +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cavaleiro do Abismo]^000000
+^0000ffDano físico contra Chefes +5% adicional.^000000
+A cada refino a partir do +6 até o +10:
+^0000ffResistência a monstros normais +1%.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
-Equipa em : ^777777Topo^000000
-Peso : ^777777100^000000
-Nível necessário : ^77777770^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
 #
 18575#
 Pode parecer ridículo, mas essa simples caixa de papelão é o disfarce supremo do famoso sicário espião conhecido como Solid Sorrateiro, perito em infiltração e sabotagem.
@@ -52143,7 +52171,8 @@ Classes: ^777777Todas^000000
 #
 19308#
 Um quepe com as principais características do homúnculo Amistr: orelhas e rabo felpudos, chifres afiados e um sino bem barulhento.
-^0000ffATQ e ATQM +10 a cada 2 refinos.^000000
+^0000ffA cada 2 refinos:^000000
+^0000ffATQ e ATQM +10.^000000
 Refino +7 ou mais:
 ^0000ffConjuração variável -10%.^000000
 Refino +9 ou mais:
@@ -52158,7 +52187,6 @@ A cada refino do +11 até o +15:
 A cada 2 refinos da arma:
 ^0000ffATQM +10.^000000
 ^0000ffDano de [Adoramus] +30%.^000000
-^FF6347Conjunto^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^77777715^000000
@@ -59442,7 +59470,7 @@ Arma com refino +11 ou mais:
 Ao derrotar monstros:
 ^0000ff2% de chance de derrubar Mastela.^000000
 Arma com refino +9 ou mais:
-^0000ffDano de [Fúria do Furacão] +20%.^000000Arma com refino +11 ou mais:
+^0000ffDano de [Fúria do Furacão] +20%.^000000
 Arma com refino +11 ou mais:
 ^0000ffDano de [Fúria do Furacão] +20% adicional.^000000
 --------------------------
