@@ -31,6 +31,7 @@ use Text::Balanced qw(extract_delimited);
 use Utils;
 use Utils::TextReader;
 use Plugins;
+use Settings;
 use Log qw(warning error debug);
 use Translation qw/T TF/;
 
@@ -372,7 +373,7 @@ sub parseDataFile_lc {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		$line =~ s/\s*#.*// if ($file eq "pickupitems.txt" or $file eq "arrowcraft.txt");
+		$line =~ s/\s*#.*// if ($file eq Settings::getControlFilename('pickupitems.txt') or $file eq Settings::getControlFilename("arrowcraft.txt"));
 		next unless length $line;
 		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
