@@ -351,7 +351,7 @@ sub parseDataFile {
 		next if ($line =~ /^#/);
 		$line =~ s/[\r\n]//g;
 		$line =~ s/\s+$//g;
-		$line =~ s/\s*#.*// if ($file eq "routeweights.txt");
+		$line =~ s/\s*#.*// if ($file eq Settings::getControlFilename("routeweights.txt"));
 		next unless length $line;
 		($key, $value) = $line =~ /([\s\S]*) ([\s\S]*?)$/;
 		if ($key ne "" && $value ne "") {
