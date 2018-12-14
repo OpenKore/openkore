@@ -3585,6 +3585,7 @@
 5967#Flying_Galapago#
 5968#Clergy_Nurse_Cap#
 5971#Moon_Eyepatch#
+5972#Chatty_Parrot#
 5973#Ancient_Elven_Ear#
 5975#Zealotus_Doll#
 5978#Toy_Syringe#
@@ -5050,6 +5051,7 @@
 9101#Scatleton's_Portable_Cage#
 9113#Skelion_Egg#
 9518#December_Robotic_Costume_Box#
+9524#Overseas_Care_Package_XXV#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -8887,6 +8889,7 @@
 20922#Leviathan_Muffler#
 20931#Prism_Rangers_Scarf#
 20932#Old_Morroc_Shawl#
+20949#Skin_Of_Ladon#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
@@ -8975,6 +8978,7 @@
 22189#Pilgrim_Shoes#
 22198#Traveler_Shoes#
 22207#Imperial_Boots#
+22210#Fluffy_Fish_Shoes#
 22507#Old_Scroll#
 22508#Eden_Group_Mark#
 22511#Fenrir's_Power_Scroll#
@@ -9832,3 +9836,4 @@
 32206#Prontera_Militia_Glove#
 32222#Brooch_of_Hero#
 32234#Unrivaled_Ring#
+32242#Old_DetachmentsRing#
