@@ -71927,3 +71927,17 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20070#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pink Beanie!
+300 Fabric
+150 Burning Hair
+2 Scarlet Dyestuffs
+2 White Dyestuffs
+1 Pink Beanie Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
