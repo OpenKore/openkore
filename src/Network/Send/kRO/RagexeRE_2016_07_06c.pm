@@ -14,6 +14,7 @@ package Network::Send::kRO::RagexeRE_2016_07_06c;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2016_04_14b);
+use Globals qw($char $rodexWrite);
 use I18N qw(stringToBytes);
 
 sub new {
