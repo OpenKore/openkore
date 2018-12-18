@@ -1,10 +1,7 @@
 package eventMacro::Condition::NpcMsgNameDist;
 
 use strict;
-use Globals;
-use Utils;
-
-use eventMacro::Data;
+use Globals qw( $npcsList );
 
 use base 'eventMacro::Condition::BaseMsgNameDist';
 

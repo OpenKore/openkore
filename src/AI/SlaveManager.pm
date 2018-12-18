@@ -20,11 +20,11 @@ sub addSlave {
 	$actor->{slave_skillsID} = [];
 	$actor->{slave_AI} = AI::AUTO;
 
-	if ($actor->{actorType} eq 'Homunculus') {
+	if ($actor->isa("Actor::Slave::Homunculus")) {
 		$actor->{configPrefix} = 'homunculus_';
 		bless $actor, 'AI::Slave::Homunculus';
 		
-	} elsif ($actor->{actorType} eq 'Mercenary') {
+	} elsif ($actor->isa("Actor::Slave::Mercenary")) {
 		$actor->{configPrefix} = 'mercenary_';
 		bless $actor, 'AI::Slave::Mercenary';
 		

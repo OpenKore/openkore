@@ -26,10 +26,11 @@ use strict;
 use base qw(Actor);
 
 use Globals qw($messageSender);
+use Translation qw(T);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('NPC');
+	return $class->SUPER::new(T('NPC'));
 }
 
 sub sendTalk {

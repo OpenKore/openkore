@@ -1,0 +1,152 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-07 17:42-0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../vendingLog.pl:39
+msgid "Command used by vendingLog plugin"
+msgstr ""
+
+#: ../vendingLog.pl:56
+msgid "Logs vending for servers with shop_sold_long"
+msgstr ""
+
+#: ../vendingLog.pl:65
+#, perl-format
+msgid "%s We sold something to %s!\n"
+msgstr ""
+
+#: ../vendingLog.pl:68
+#, perl-format
+msgid "%s Your sever doesn't use %s, unloading %s\n"
+msgstr ""
+
+#: ../vendingLog.pl:74
+#, perl-format
+msgid "%s Already known buyer, using cached name (%s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:76
+#, perl-format
+msgid "%s New charID, queuing name request.\n"
+msgstr ""
+
+#: ../vendingLog.pl:91
+#, perl-format
+msgid "%s Queue is empty.\n"
+msgstr ""
+
+#: ../vendingLog.pl:95
+#, perl-format
+msgid "%s Shutting down...\n"
+msgstr ""
+
+#: ../vendingLog.pl:116
+#, perl-format
+msgid "%s Max name request attempts reached, giving up on charID %s\n"
+msgstr ""
+
+#: ../vendingLog.pl:123
+#, perl-format
+msgid "%s Requesting player name with charID %s (attempt number %d)\n"
+msgstr ""
+
+#: ../vendingLog.pl:172
+msgid " Vending Log "
+msgstr ""
+
+#: ../vendingLog.pl:183
+msgid ""
+"#  Item                    Amount       Earned Buyer                 "
+"When     \n"
+msgstr ""
+
+#: ../vendingLog.pl:186
+msgid "Unknown"
+msgstr ""
+
+#: ../vendingLog.pl:205
+msgid " Nothing sold yet "
+msgstr ""
+
+#: ../vendingLog.pl:208
+msgid "Total"
+msgstr ""
+
+#: ../vendingLog.pl:219
+#, perl-format
+msgid ""
+"%s timeout %s is undefined, equal to zero or invalid. Defaulting to %s "
+"second(s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:223
+#, perl-format
+msgid "%s timeout %s set to %s second(s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:228
+#, perl-format
+msgid ""
+"%s max tries %s is undefined, equal to zero or invalid. Defaulting to %s "
+"attempt(s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:235
+#, perl-format
+msgid "%s date format %s is undefined or invalid. Defaulting to %s (%s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:239
+#, perl-format
+msgid "%s date format %s set to %s (%s)\n"
+msgstr ""
+
+#: ../vendingLog.pl:248
+#, perl-format
+msgid "%s Unloading plugin...\n"
+msgstr ""
+
+#: ../vendingLog.pl:264
+#, perl-format
+msgid "%s Plugin unloaded.\n"
+msgstr ""
+
+#: ../vendingLog.pl:270
+#, perl-format
+msgid "%s Reloading plugin...\n"
+msgstr ""
+
+#: ../vendingLog.pl:277
+#, perl-format
+msgid "%s Plugin reloaded.\n"
+msgstr ""
+
+#: ../vendingLog.pl:293
+#, perl-format
+msgid "%s Logging vending\n"
+msgstr ""
+
+#: ../VendingLog/HookManager.pm:32
+#, perl-format
+msgid "%s Hooked onto %s!\n"
+msgstr ""
+
+#: ../VendingLog/HookManager.pm:42
+#, perl-format
+msgid "%s Unhooked from %s!\n"
+msgstr ""

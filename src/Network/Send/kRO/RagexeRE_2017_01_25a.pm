@@ -24,15 +24,15 @@ sub new {
 		'0965' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0881' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0898' => ['actor_name_request', 'a4', [qw(ID)]],
-		'087D' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'087D' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'091D' => ['buy_bulk_closeShop'],			
-		'08A5' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'08A5' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'091B' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0930' => ['character_move', 'a3', [qw(coordString)]],
 		'0920' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0876' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'0877' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0895' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0895' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'087B' => ['item_take', 'a4', [qw(ID)]],
 		'0811' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'086E' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -42,6 +42,9 @@ sub new {
 		'095C' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0893' => ['storage_password'],
 		'0943' => ['sync', 'V', [qw(time)]],		
+		'093C' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0968' => ['search_store_request_next_page'],
+		'0929' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -59,7 +62,7 @@ sub new {
 		friend_request 0920
 		homunculus_command 0876
 		item_drop 0877
-		item_list_res 0895
+		item_list_window_selected 0895
 		item_take 087B
 		map_login 0811
 		party_join_request_by_name 086E
@@ -69,9 +72,12 @@ sub new {
 		storage_item_remove 095C
 		storage_password 0893
 		sync 0943
+		search_store_info 093C
+		search_store_request_next_page 0968
+		search_store_select 0929
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 # 	elif PACKETVER == 20170125 // 2017-01-25aRagexeRE

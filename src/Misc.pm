@@ -86,13 +86,16 @@ our @EXPORT = (
 	cardName
 	itemName
 	itemNameSimple
-	itemNameToID/,
+	itemNameToID
+	itemNameToIDList
+	containsItemNameToIDList/,
 
 	# File Parsing and Writing
 	qw/chatLog
 	shopLog
 	monsterLog
-	deadLog/,
+	deadLog
+	searchStoreInfo/,
 
 	# Logging
 	qw/itemLog/,
@@ -198,6 +201,9 @@ our @EXPORT = (
 	makeShop
 	openShop
 	closeShop
+	makeBuyerShop
+	openBuyerShop
+	closeBuyerShop
 	inLockMap
 	parseReload
 	setCharDeleteDate/,
@@ -375,8 +381,52 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
-	message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $timeout{$timeout}{timeout}), "info";
-	$timeout{$timeout}{'timeout'} = $time;
+	my %args;
+
+	if (@_ == 1) {
+		$args{silent} = $_[0];
+	} else {
+		%args = @_;
+	}
+	
+	$args{autoCreate} = 1 if (!exists $args{autoCreate});
+	
+	Plugins::callHook('setTimeout', {
+		timeout => $timeout,
+		time => $time,
+		additionalOptions => \%args
+	});
+	
+	if (!$args{silent}) {
+		my $oldtime = $timeout{$timeout}{timeout};
+		if (!defined $oldtime) {
+			$oldtime = "not set";
+		}
+		
+		if ($timeout{$timeout}{timeout} eq $time) {
+			if ($time) {
+				message TF("Timeout '%s' is already %s\n", $timeout, $time), "info";
+			} else {
+				message TF("Timeout '%s' is already *None*\n", $timeout), "info";
+			}
+			return;
+		}
+		
+		if (!defined $time) {
+			message TF("Timeout '%s' unset (was %s)\n", $timeout, $oldtime), "info";
+		} else {
+			message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $oldtime), "info";
+		}
+	}
+	if ($args{autoCreate} && !exists $timeout{$timeout}{timeout}) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			print $f "$timeout\n";
+			close($f);
+		}
+	}
+	
+	$timeout{$timeout}{timeout} = $time;
 	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
@@ -748,7 +798,7 @@ sub objectInsideSpell {
 	my ($x, $y) = ($object->{pos_to}{x}, $object->{pos_to}{y});
 	foreach (@spellsID) {
 		my $spell = $spells{$_};
-		if ((!$ignore_party_members || !$char->{party} || !$char->{party}{users}{$spell->{sourceID}})
+		if ((!$ignore_party_members || !$char->{party}{joined} || !$char->{party}{users}{$spell->{sourceID}})
 		  && $spell->{sourceID} ne $accountID
 		  && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
 			return 1;
@@ -792,7 +842,7 @@ sub objectIsMovingTowardsPlayer {
 		for my $player (@$playersList) {
 			my $ID = $player->{ID};
 			next if (
-			     ($ignore_party_members && $char->{party} && $char->{party}{users}{$ID})
+			     ($ignore_party_members && $char->{party}{joined} && $char->{party}{users}{$ID})
 			  || (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}))
 			  || $player->statusActive('EFFECTSTATE_SPECIALHIDING'));
 			if (checkMovementDirection($obj->{pos}, \%vec, $player->{pos}, 15)) {
@@ -961,7 +1011,9 @@ sub actorAddedRemovedVars {
 		return ('npc', \@npcsID, \%npcs);
 	} elsif ($actor->isa ('Actor::Slave')) {
 		return ('slave', \@slavesID, \%slaves);
-	} else {
+	} elsif ($actor->isa ('Actor::Elemental')) {
+		return ('elemental', \@elementalsID, \%elementals);
+	}else {
 		return (undef, undef, undef);
 	}
 }
@@ -975,7 +1027,7 @@ sub actorAdded {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
-		debug TF("actorAdded: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		debug TF("Actor added: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
 		
 		if (DEBUG && scalar(keys %{$hash}) + 1 != $source->size()) {
 			use Data::Dumper;
@@ -1014,7 +1066,7 @@ sub actorRemoved {
 	my ($type, $list, $hash) = actorAddedRemovedVars ($actor);
 
 	if (defined $type) {
-		debug TF("actorRemoved: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
+		debug TF("Actor removed: %s %s (%s), size %s\n", $type, (unpack 'V', $actor->{ID}), $actor->{binID}, $source->size), 'actorlist', 3;
 		
 		if (DEBUG && scalar(keys %{$hash}) - 1 != $source->size()) {
 			use Data::Dumper;
@@ -1064,6 +1116,7 @@ sub actorListClearing {
 	undef %npcs;
 	undef %pets;
 	undef %slaves;
+	undef %elementals;
 	undef @itemsID;
 	undef @playersID;
 	undef @monstersID;
@@ -1071,6 +1124,7 @@ sub actorListClearing {
 	undef @npcsID;
 	undef @petsID;
 	undef @slavesID;
+	undef @elementalsID;
 }
 
 sub avoidGM_talk {
@@ -1185,14 +1239,26 @@ sub charSelectScreen {
 			}
 		}
 		
-		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d, %s)%s",
+		my $messageMapName;
+		
+		if (exists $chars[$num]{last_map} && $chars[$num]{last_map}) {
+			my $map_lut_key = $chars[$num]{last_map} . ".rsw";
+			
+			if (exists $maps_lut{$map_lut_key} && length $maps_lut{$map_lut_key} <= 16) {
+				$messageMapName = sprintf(", %s", $maps_lut{$map_lut_key});
+			} else {
+				$messageMapName = sprintf(", %s", $chars[$num]{last_map});
+			}
+		}
+		
+		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
 			$sex_lut{$chars[$num]{sex}},
 			$chars[$num]{lv},
 			$chars[$num]{lv_job},
-			$chars[$num]{map_name},
+			$messageMapName,
 			$messageDeleteDate);
 		push @charNameIndices, $num;
 	}
@@ -1329,7 +1395,7 @@ sub charSelectScreen {
 					message TF("Canceling delete request for character %s...\n", $chars[$charIndex]{name}), "connection";
 					$messageSender->sendCharDelete2Cancel($chars[$charIndex]{charID});
 				} elsif ($confirm == 2 && int(time) > $chars[$charIndex]{deleteDateTimestamp}) {
-					my $code = $interface->query("Enter your birthdate or deletion code.");
+					my $code = $interface->query(T("Enter your birthdate, deletion code or e-mail."));
 					if (!defined($code)) {
 						goto TOP;
 					}
@@ -1477,7 +1543,7 @@ sub checkMonsterCleanness {
 			my $ID1=$_; 
 			my $source = Actor::get($_); 
 			unless ( existsInList($config{tankersList}, $source->{name}) || 
-				($char->{party} && %{$char->{party}} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
+				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
 			{ 
 				$allowed = 0; 
 				last; 
@@ -2009,6 +2075,40 @@ sub itemNameToID {
 	}
 }
 
+sub itemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if ($itemName eq lc($items_lut{$hashID})) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
+}
+
+sub containsItemNameToIDList {
+	my $itemName = lc shift;
+	return if !$itemName;
+	$itemName =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
+	$itemName =~ s/\s+$//g;	# Remove trailing whitespace
+	
+	my @id_list;
+	
+	for my $hashID (keys %items_lut) {
+		if (index(lc($items_lut{$hashID}), $itemName) != -1) {
+			push @id_list, $hashID;
+		}
+	}
+	
+	return @id_list;
+}
+
 ##
 # DEPRECATED: Use transferItems() instead.
 #
@@ -2279,36 +2379,50 @@ sub objectRemoved {
 }
 
 ##
-# items_control($name)
+# items_control($name, $nameID)
 #
 # Returns the items_control.txt settings for item name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "do nothing" (empty hash);
 sub items_control {
-	my $name = shift;
-	my $nameID = shift;	
-	return $items_control{lc($name)} || $items_control{lc($nameID)} || $items_control{all} || {};
+	my ($name, $nameID) = @_;
+
+	return $items_control{lc($name)} || $items_control{$nameID} || $items_control{all} || {};
 }
 
 ##
-# mon_control($name)
+# mon_control($name, $nameID)
 #
 # Returns the mon_control.txt settings for monster name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "attack";
 sub mon_control {
-	my $name = shift;
-	my $nameID = shift;
+	my ($name, $nameID) = @_;
+	
 	return $mon_control{lc($name)} || $mon_control{$nameID} || $mon_control{all} || { attack_auto => 1 };
 }
 
 ##
-# pickupitems($name)
+# pickupitems($name, $nameID)
 #
 # Returns the pickupitems.txt settings for item name $name.
-# If $name has no specific settings, use 'all'.
+# If $name has no specific settings, try using the setting for $nameID.
+# If both have no specific setting, use 'all'.
+# If 'all' is not set, return "pick up" (1);
 sub pickupitems {
-	my ($name) = @_;
+	my ($name, $nameID) = @_;
 
-	return ($pickupitems{lc($name)} ne '') ? $pickupitems{lc($name)} : $pickupitems{all};
+	if (exists $pickupitems{lc($name)}) {
+		return $pickupitems{lc($name)};
+	} elsif (exists $pickupitems{$nameID}) {
+		return $pickupitems{$nameID};
+	} elsif (exists $pickupitems{all}) {
+		return $pickupitems{all};
+	}
+	
+	return 1;
 }
 
 sub positionNearPlayer {
@@ -2317,7 +2431,7 @@ sub positionNearPlayer {
 
 	for my $player (@$playersList) {
 		my $ID = $player->{ID};
-		next if ($char->{party} && $char->{party}{users} &&
+		next if ($char->{party}{joined} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
 		next if (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}));
 		return 1 if (distance($r_hash, $player->{pos_to}) <= $dist);
@@ -2336,14 +2450,15 @@ sub positionNearPortal {
 }
 
 ##
-# printItemDesc(itemID)
+# printItemDesc(obj $item)
 #
-# Print the description for $itemID.
+# Print the description for $item.
 sub printItemDesc {
-	my $itemID = shift;
-	my $itemName = itemNameSimple($itemID);
-	my $description = $itemsDesc_lut{$itemID} || T("Error: No description available.\n");
-	message TF("===============Item Description===============\nItem: %s (ID: %s)\n\n", $itemName, $itemID), "info";
+	my $item = shift;
+		
+	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
+	message T("===============Item Description===============\n");
+	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
 	message($description, "info");
 	message("==============================================\n", "info");
 }
@@ -2491,6 +2606,8 @@ sub sendMessage_send {
 		$sender->sendPrivateMsg($user, $msg);
 	} elsif ($type eq "k") {
 		$sender->injectMessage($msg);
+	} elsif ($type eq "cln") {
+		$sender->sendClanChat($msg);
 	}
 }
 
@@ -2904,7 +3021,7 @@ sub updateDamageTables {
 				);
 			if (existsInList($config{tankersList}, $player->{name}) ||
 			    ($char->{slaves} && %{$char->{slaves}} && $char->{slaves}{$targetID} && %{$char->{slaves}{$targetID}}) ||
-			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$targetID} && %{$char->{party}{users}{$targetID}})) {
+			    ($char->{party}{joined} && $char->{party}{users}{$targetID} && %{$char->{party}{users}{$targetID}})) {
 				# Monster attacks party member or our slave
 				$monster->{dmgToParty} += $damage;
 				$monster->{missedToParty}++ if ($damage == 0);
@@ -3030,7 +3147,7 @@ sub updateDamageTables {
 			}
 
 			if (existsInList($config{tankersList}, $player->{name}) || ($char->{slaves} && $char->{slaves}{$sourceID}) ||
-			    ($char->{party} && %{$char->{party}} && $char->{party}{users}{$sourceID} && %{$char->{party}{users}{$sourceID}})) {
+			    ($char->{party}{joined} && $char->{party}{users}{$sourceID} && %{$char->{party}{users}{$sourceID}})) {
 				$monster->{dmgFromParty} += $damage;
 				
 				if ($damage == 0) {
@@ -3490,7 +3607,7 @@ sub skillUse_string {
 		$source->nameString(),
 		$source->verb(T('use'), T('uses')),
 		$skillName,
-		($level != 65535) ? ' ' . TF("(Lv: %s)", $level) : '',
+		($level != 65535 && $level != 4294967295) ? ' ' . TF("(Lv: %s)", $level) : '',
 		T('on'),
 		$target->nameString($source),
 		($damage != -30000) ? ' ' . TF("(Dmg: %s)", $damage || T('Miss')) : '',
@@ -3505,7 +3622,7 @@ sub skillUseLocation_string {
 		$source->nameString(),
 		$source->verb(T('use'), T('uses')),
 		$skillName,
-		($args->{lv} != 65535) ? ' ' . TF("(Lv: %s)", $args->{lv}) : '',
+		($args->{lv} != 65535 && $args->{lv} != 4294967295) ? ' ' . TF("(Lv: %s)", $args->{lv}) : '',
 		T('on location'),
 		$args->{x},
 		$args->{y});
@@ -3523,7 +3640,7 @@ sub skillUseNoDamage_string {
 		$skillName,
 		T('on'),
 		$target->nameString($source),
-		($skillID == 28) ? ' ' . TF("(Gained: %s hp)", $amount) : ($amount) ? ' ' . TF("(Lv: %s)", $amount) : '');
+		($skillID == 28) ? ' ' . TF("(Gained: %s hp)", $amount) : ($amount && $amount != 65535 && $amount != 4294967295) ? ' ' . TF("(Lv: %s)", $amount) : '');
 }
 
 sub status_string {
@@ -3884,7 +4001,7 @@ sub getActorNames {
 
 # return ID based on name if party member is online
 sub findPartyUserID {
-	if ($char->{party} && %{$char->{party}}) {
+	if ($char->{party}{joined}) {
 		my $partyUserName = shift;
 		for (my $j = 0; $j < @partyUsersID; $j++) {
 	        	next if ($partyUsersID[$j] eq "");
@@ -3967,7 +4084,7 @@ sub checkSelfCondition {
 	if ($char->{homunculus}) {
 		if ($config{$prefix . "_homunculus_hp"}) {
 			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{hpPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
 			}
@@ -3975,7 +4092,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_homunculus_sp"}) {
 			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}{spPercent}, $1));
+				return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
 			}
@@ -3997,7 +4114,7 @@ sub checkSelfCondition {
 	if ($char->{mercenary}) {
 		if ($config{$prefix . "_mercenary_hp"}) {
 			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{hpPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
 			}
@@ -4005,7 +4122,7 @@ sub checkSelfCondition {
 
 		if ($config{$prefix."_mercenary_sp"}) {
 			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}{spPercent}, $1));
+				return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 			}
@@ -4078,7 +4195,8 @@ sub checkSelfCondition {
 		my $nowMonsters = $monstersList->size();
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
 				for my $monster (@$monstersList) {
-					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}));
+					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) || 
+										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}));
                 }
             }
 		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
@@ -4086,7 +4204,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4097,7 +4216,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($accountID)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}->{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4108,7 +4228,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name)) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) || 
+				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
 				return 0;
 			}
 		}
@@ -4191,8 +4312,36 @@ sub checkSelfCondition {
 		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
 	}
 	
-	if (defined $config{$prefix.'_devotees'}) {
+	if ($config{$prefix.'_devotees'}) {
 		return 0 unless inRange(scalar keys %{$devotionList->{$accountID}{targetIDs}}, $config{$prefix.'_devotees'});
+	}
+	
+	if ($config{$prefix."_whenPartyMembersNear"}) {
+		# Short circuit if there's not enough players nearby, party members or not
+		# +1 account for self
+		return 0 unless inRange(scalar @{$playersList} + 1, $config{$prefix."_whenPartyMembersNear"});
+
+		# Short circuit if there's not enough players in our party
+		return 0 unless inRange(scalar @partyUsersID, $config{$prefix."_whenPartyMembersNear"});
+
+		my $dist;
+		my $amountInRange = 1; # account for self
+		
+		if ($config{$prefix."_whenPartyMembersNearDist"}) {
+			$dist = $config{$prefix."_whenPartyMembersNearDist"};
+		} else {
+			$dist = "< ";
+			$dist .= ($config{removeActorWithDistance} || $config{clientSight} || 15);
+		}
+
+		foreach my $player (@{$playersList}) {
+			next unless (exists $char->{party}{users}{$player->{ID}} && $char->{party}{users}{$player->{ID}});
+			next unless inRange(distance(calcPosition($char), calcPosition($player)), $dist);
+			 
+			++$amountInRange;
+		}
+
+		return 0 unless inRange($amountInRange, $config{$prefix."_whenPartyMembersNear"});
 	}
 
 	my %hookArgs;
@@ -4235,7 +4384,7 @@ sub checkPlayerCondition {
 				return 0 if (!inRange($char->{hp}, $config{$prefix."_hp"}));
 			}
 		# Target is Actor::Player in our Party
-		} elsif ($char->{party} && $char->{party}{users}{$id}) {
+		} elsif ($char->{party}{joined} && $char->{party}{users}{$id}) {
 			# Fix Heal when Target HP is not set yet.
 			# return 0 if (!defined($player->{hp}) || $player->{hp} == 0);
 			return 0 if ($char->{party}{users}{$id}{hp} == 0);
@@ -4278,7 +4427,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($id)) {
-			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name}) || 
+				existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4289,7 +4439,8 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_monsters"}) {
 		my $exists;
 		foreach (ai_getPlayerAggressives($id)) {
-			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name}) ||
+				existsInList($config{$prefix . "_monsters"}, $monsters{$_}{nameID})) {
 				$exists = 1;
 				last;
 			}
@@ -4337,6 +4488,10 @@ sub checkPlayerCondition {
 	if ($config{$prefix."_isNotMyDevotee"}) {
 		return 0 if (defined $devotionList->{$accountID}->{targetIDs}->{$id});
 	}
+	
+	if ($config{$prefix."_spirit"}) {
+		return 0 unless inRange(defined $player->{spirits} ? $player->{spirits} : 0, $config{$prefix . "_spirit"});
+	}
 
 	my %args = (
 		player => $player,
@@ -4353,14 +4508,25 @@ sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
 
 	if ($config{$prefix . "_hp"}) {
-		return 0 if (!$monster->{hp});
-		if ($config{$prefix . "_hp"} =~ /^(.*)\%$/) {
-			return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $1)); 
+		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange(($monster->{hp} * 100 / $monster->{hp_max}), $config{$prefix . "_hp"}));
+			} elsif($monster->{hp_percent}) {
+				return 0 unless (inRange($monster->{hp_percent}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
+		} elsif($config{$prefix . "_hp"} =~ /(\d+)$/) {
+			if($monster->{hp} && $monster->{hp_max}) {
+				return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"}));
+			} else {
+				return 0;
+			}
 		} else {
-			return 0 unless (inRange($monster->{hp}, $config{$prefix . "_hp"})); 
+			return 0;
 		}
 	}
-	
+
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$monster->{ID}}, $config{$prefix . "_timeout"}) }
 
 	if (my $misses = $config{$prefix . "_misses"}) {
@@ -4495,6 +4661,7 @@ sub openShop {
 	@shopnames = split(/;;/, $shop{title_line});
 	$shop{title} = $shopnames[int rand($#shopnames + 1)];
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
+	Plugins::callHook ('open_shop', {title => $shop{title}, items => \@items});
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	message T("Trying to set up shop...\n"), "vending";
 	$shopstarted = 1;
@@ -4511,7 +4678,120 @@ sub closeShop {
 	$shopstarted = 0;
 	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("shop_closed");
 	message T("Shop closed.\n");
+}
+
+sub makeBuyerShop {
+	if ($buyershopstarted) {
+		error T("A shop has already been opened.\n");
+		return;
+	}
+
+	return unless $char;
+
+	my $max_items = 2;
+	my @items = ();
+	
+	if($char->inventory->getByNameID(6377)) {
+		$max_items = 5;
+	}
+
+	# Iterate through items to be sold
+	shuffleArray(\@{$buyer_shop{items}}) if ($config{'buyerShop_random'} eq "2");
+	my %used_items;
+	for my $sale (@{$buyer_shop{items}}) {
+		my $inventory_item;
+		for my $item (@{$char->inventory}) {
+			next unless $item->{name} eq $sale->{name};
+			next if $used_items{$item->{binID}};
+			$inventory_item = $used_items{$item->{binID}} = $item;
+			last;
+		}
+		next unless ($inventory_item);
+
+		my %item;
+		$item{name} = $inventory_item->{name};
+		$item{nameID} = $inventory_item->{nameID};
+			if ($sale->{priceMax}) {
+				$item{price} = int(rand($sale->{priceMax} - $sale->{price})) + $sale->{price};
+			} else {
+				$item{price} = $sale->{price};
+			}
+		$item{amount} = $sale->{amount};
+		push(@items, \%item);
+
+		# We can't buy anymore items
+		last if @items >= $max_items;
+	}
+
+	if (!@items) {
+		error T("There are no items to sell.\n");
+		return;
+	}
+
+	shuffleArray(\@items) if ($config{'buyerShop_random'} eq "1");
+
+	if (!$char->{skills}{ALL_BUYING_STORE}{lv}) { # don't have skill but have the necessary item
+		my $item = $char->inventory->getByNameID(12548);
+		if(!$item) {
+			error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
+			return;
+		} else {
+			$item->use;
+		}
+	} elsif(!$char->inventory->getByNameID(6377)) { # have skill but don't have the necessary item
+		error T("You don't have Bulk Buyer Shop License.\n");
+		return;
+	} else { # have skill and item
+		my $skill = new Skill(auto => "ALL_BUYING_STORE");
+		$messageSender->sendSkillUse($skill->getIDN(), $skill->getLevel(), $char->{ID});
+	}
+	
+	if (!$buyer_shop{title_line}) {
+		error T("Your buyer shop does not have a title.\n");
+		return;
+	}
+
+	return @items;
+}
+
+sub openBuyerShop {
+	my @items = makeBuyerShop();
+	my @buyershopnames;
+	my $limitZeny = 0;
+	return unless @items;
+	@buyershopnames = split(/;;/, $buyer_shop{title_line});
+	$buyer_shop{title} = $buyershopnames[int rand($#buyershopnames + 1)];
+	$buyer_shop{title} = ($config{buyerShopTitleOversize}) ? $buyer_shop{title} : substr($buyer_shop{title},0,36);
+
+	foreach my $item (@items) {
+		$limitZeny += ($item->{amount} * $item->{price});
+	}
+
+	if($limitZeny > $char->{zeny}) {
+		$limitZeny = $char->{zeny};
+	}
+
+	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
+	
+	message T("Trying to set up buyer shop...\n"), "vending";
+	$buyershopstarted = 1;
+}
+
+sub closeBuyerShop {
+	if (!$buyershopstarted) {
+		error T("A Buyer Shop has not been opened.\n");
+		return;
+	}
+
+	$messageSender->sendCloseBuyShop();
+
+	$buyershopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+	Plugins::callHook("buyer_shop_closed");
+	message T("Buyer Shop closed.\n");
 }
 
 ##
@@ -4624,6 +4904,27 @@ sub CharacterLogin {
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
+}
+
+sub searchStoreInfo {
+	my ($page) = @_;
+	
+	message T("============================================== Search Store Result ==============================================\n");
+	message TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
+	message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+		["#", T("Shop Name"), T("Item"), T("Price"), T("Amount")]));
+	
+	for (my $i = 0; $i < scalar(@{${$universalCatalog{list}}[$page]}); ++$i) {
+		message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+				[$i, ${$universalCatalog{list}}[$page][$i]{shopName},
+				itemName({
+					nameID => ${$universalCatalog{list}}[$page][$i]{nameID},
+					cards => ${$universalCatalog{list}}[$page][$i]{cards_nameID},
+					upgrade => ${$universalCatalog{list}}[$page][$i]{refine}
+				}), formatNumber(${$universalCatalog{list}}[$page][$i]{price}), ${$universalCatalog{list}}[$page][$i]{amount}]), "list");
+	}
+	
+	message T("=================================================================================================================\n");
 }
 
 return 1;

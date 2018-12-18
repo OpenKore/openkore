@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2016_12_07e;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2016_02_03a);
+use base qw(Network::Send::kRO::RagexeRE_2016_08_24a);
 
 sub new {
 	my ($class) = @_;
@@ -24,15 +24,15 @@ sub new {
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'08A1' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0811' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0811' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'0817' => ['buy_bulk_closeShop'],			
-		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0815' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
 		'0867' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'023B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'08AD' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'087E' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'087E' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'08A2' => ['item_take', 'a4', [qw(ID)]],
 		'0361' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0965' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -41,7 +41,13 @@ sub new {
 		'0875' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'091D' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'095D' => ['storage_password'],
-		'035F' => ['sync', 'V', [qw(time)]],		
+		'035F' => ['sync', 'V', [qw(time)]],
+		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
+		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA4' => ['refineui_close', '' ,[qw()]],
+		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0835' => ['search_store_request_next_page'],
+		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -59,7 +65,7 @@ sub new {
 		friend_request 0867
 		homunculus_command 023B
 		item_drop 08AD
-		item_list_res 087E
+		item_list_window_selected 087E
 		item_take 08A2
 		map_login 0361
 		party_join_request_by_name 0965
@@ -69,9 +75,12 @@ sub new {
 		storage_item_remove 091D
 		storage_password 095D
 		sync 035F
+		search_store_info 0819
+		search_store_request_next_page 0835
+		search_store_select 0838
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 # 		#elif PACKETVER == 20161207 // 2016-12-07eRagexeRE

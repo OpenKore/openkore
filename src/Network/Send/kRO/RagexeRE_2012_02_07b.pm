@@ -14,10 +14,6 @@ package Network::Send::kRO::RagexeRE_2012_02_07b;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2011_12_20b);
 
-use Log qw(debug);
-use Utils qw(getHex);
-use I18N qw(stringToBytes);
-
 sub version { 29 }
 
 sub new {

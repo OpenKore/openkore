@@ -62,6 +62,7 @@ our @EXPORT = qw(
 	parseSkillsSPLUT
 	parseTimeouts
 	parseWaypoint
+	parseItemStackLimit
 	processUltimate
 	writeDataFile
 	writeDataFileIntact
@@ -504,6 +505,7 @@ sub parseItemsControl {
 		}
 		
 		next if $key =~ /^$/;
+		$args_text =~ s/\s*#.*//;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
@@ -922,6 +924,32 @@ sub parseWaypoint {
 	return 1;
 }
 
+sub parseItemStackLimit {
+	my ($file, $r_hash) = @_;
+	my $reader = Utils::TextReader->new($file);
+	
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/#.*$//g;
+		$line =~ s/^\s+//g;
+		
+		next unless length $line;
+		
+		my ($ID, $stack, $mask) = split /\s+/, $line;
+		
+		next unless $mask;
+		
+		for (my $i = 1; $i < 16; $i = $i << 1) {
+			next unless $mask & $i;
+			$r_hash->{$ID}->{$i} = $stack;
+		}
+	}
+	
+	return 1;
+}
+
 
 # The ultimate config file format. This function is a parser and writer in one.
 # The config file can be divided in section, example:
@@ -1218,7 +1246,7 @@ sub writeDataFileIntact2 {
 	my $data;
 	my $key;
 
-	my $reader = new Utils::TextReader($file);
+	my $reader = new Utils::TextReader($file, { hide_includes => 0, hide_comments => 0 });
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/\x{FEFF}//g;

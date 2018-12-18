@@ -20,19 +20,9 @@ package Network::Send::kRO::Sakexe_2005_10_13a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_10_10a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-# 0x025c,4,auctionbuysell,0
-sub sendAuctionReqMyInfo {
-	my ($self, $type) = @_;
-	my $msg = pack('v2', 0x025C, $type);
-	$self->sendToServer($msg);
-	debug "Sent Auction Request My Info.\n", "sendPacket", 2;
 }
 
 =pod

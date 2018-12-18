@@ -22,16 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_06_01a);
 
 sub new {
 	my ($class) = @_;
+
 	return $class->SUPER::new(@_);
 }
-=pod
-//2010-06-08aRagexeRE
-//0x0838,2
-//0x0839,66
-//0x083A,4      // Search Stalls Feature
-//0x083B,2
-//0x083C,12
-//0x083D,6
-=cut
 
 1;

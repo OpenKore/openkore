@@ -20,28 +20,9 @@ package Network::Send::kRO::Sakexe_2005_11_07a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_10_24a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-# 0x024e,6,auctioncancel,0
-sub sendAuctionCancel {
-	my ($self, $id) = @_;
-	my $msg = pack('v V', 0x024E, $id);
-	$self->sendToServer($msg);
-	debug "Sent Auction Cancel.\n", "sendPacket", 2;
-}
-
-# 0x0251,34,auctionsearch,0
-sub sendAuctionItemSearch {
-	my ($self, $type, $price, $text, $page) = @_;
-	$page = (defined $page) ? $page : 1;
-	my $msg = pack('v2 V Z24 v', 0x0251, $type, $price, stringToBytes($text), $page);
-	$self->sendToServer($msg);
-	debug "Sent Auction Item Search.\n", "sendPacket", 2;
 }
 
 =pod

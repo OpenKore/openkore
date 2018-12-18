@@ -1,10 +1,8 @@
 package eventMacro::Condition::QuestHuntCompleted;
 
 use strict;
-use Globals;
-use Utils;
-use eventMacro::Data;
-use eventMacro::Utilities qw(find_variable);
+use Globals qw( $questList );
+use eventMacro::Utilities qw( find_variable );
 
 use base 'eventMacro::Condition';
 
@@ -120,10 +118,19 @@ sub check_quests {
 		next unless ($quest->{active});
 		
 		next unless (exists $quest->{missions});
-		next unless (exists $quest->{missions}->{$mob_ID});
-		next unless (exists $quest->{missions}->{$mob_ID}->{count});
-		next unless (exists $quest->{missions}->{$mob_ID}->{goal});
-		next unless ($quest->{missions}->{$mob_ID}->{count} == $quest->{missions}->{$mob_ID}->{goal});
+		
+		my $quest_hunt_ID;
+		foreach (keys %{$quest->{missions}}) {
+			if ($quest->{missions}->{$_}->{mobID} == $mob_ID) {
+				$quest_hunt_ID = $_;
+				last;
+			}
+		}
+		
+		next unless (exists $quest->{missions}->{$quest_hunt_ID});
+		next unless (exists $quest->{missions}->{$quest_hunt_ID}->{count});
+		next unless (exists $quest->{missions}->{$quest_hunt_ID}->{goal});
+		next unless ($quest->{missions}->{$quest_hunt_ID}->{count} == $quest->{missions}->{$quest_hunt_ID}->{goal});
 		
 		$self->{fulfilled_quest_id} = $quest_ID;
 		$self->{fulfilled_mob_id} = $mob_ID;

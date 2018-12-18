@@ -63,7 +63,7 @@ sub foe {
 		return 0;
 	}
 
-	if ($char->{party} && $char->{party}{users}{$player->{ID}}) {
+	if ($char->{party}{joined} && $char->{party}{users}{$player->{ID}}) {
 		$reason = 'party member';
 		return 0;
 	}

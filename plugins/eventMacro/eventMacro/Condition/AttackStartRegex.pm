@@ -1,10 +1,10 @@
 package eventMacro::Condition::AttackStartRegex;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( %monsters $field $char );
+use Utils   qw( calcPosition distance );
 
-use eventMacro::Data;
+use eventMacro::Data qw( EVENT_TYPE );
 
 use base 'eventMacro::Conditiontypes::RegexConditionEvent';
 

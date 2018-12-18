@@ -159,6 +159,10 @@ sub loadDataFiles {
 		loader => [\&parseItemsControl, \%items_control],
 		internalName => 'items_control.txt',
 		autoSearch => 0);
+	Settings::addControlFile(Settings::getBuyerShopFilename(),
+		loader => [\&parseShopControl, \%buyer_shop],
+		internalName => 'buyer_shop.txt',
+		autoSearch => 0);
 	Settings::addControlFile(Settings::getShopFilename(),
 		loader => [\&parseShopControl, \%shop],
 		internalName => 'shop.txt',
@@ -275,6 +279,8 @@ sub loadDataFiles {
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
 	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
 	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
+	Settings::addTableFile('item_stack_limit.txt', loader => [\&parseItemStackLimit, \%itemStackLimit]);
+	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
 
 	use utf8;
 
@@ -517,6 +523,7 @@ sub finalInitialization {
 		tie %npcs, 'Tie::ActorHash';
 		tie %portals, 'Tie::ActorHash';
 		tie %slaves, 'Tie::ActorHash';
+		tie %elementals, 'Tie::ActorHash';
 	}
 
 	$itemsList = new ActorList('Actor::Item');
@@ -526,9 +533,11 @@ sub finalInitialization {
 	$npcsList = new ActorList('Actor::NPC');
 	$portalsList = new ActorList('Actor::Portal');
 	$slavesList = new ActorList('Actor::Slave');
+	$elementalsList = new ActorList('Actor::Elemental');
 	$venderItemList = InventoryList->new;
 	$storeList = InventoryList->new;
-	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList) {
+	$cashList = InventoryList->new;
+	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList, $elementalsList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
 		$list->onClearBegin()->add(undef, \&actorListClearing);
@@ -593,6 +602,7 @@ sub initConnectVars {
 		delete $char->{muted};
 		delete $char->{party};
 		delete $char->{statuses};
+		$char->{party}{joined} = 0;
 	}
 	undef @skillsID;
 	undef @partyUsersID;
@@ -663,10 +673,17 @@ sub initMapChangeVars {
 	undef $repairList;
 	undef $devotionList;
 	undef $cookingList;
+	undef $makableList;
 	undef $rodexList;
 	undef $rodexWrite;
+	undef $skillExchangeItem;
+	undef $refineUI;
+	undef $currentCookingType;
 	undef @mergeItemList;
 	$captcha_state = 0;
+	$universalCatalog{open} = 0;
+	$universalCatalog{has_next} = 0;
+	delete $universalCatalog{type};
 
 	$itemsList->clear();
 	$monstersList->clear();
@@ -675,14 +692,18 @@ sub initMapChangeVars {
 	$portalsList->clear();
 	$npcsList->clear();
 	$slavesList->clear();
+	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
-
+	$cashList->clear;
+	
+	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();
 	@unknownNPCs = ();
 	@sellList = ();
 
 	$shopstarted = 0;
+	$buyershopstarted = 0;
 	$timeout{ai_shop}{time} = time;
 	$timeout{ai_storageAuto}{time} = time + 5;
 	$timeout{ai_buyAuto}{time} = time + 5;
@@ -882,9 +903,9 @@ sub mainLoop_initialized {
 		my ($basePercent, $jobPercent, $weight, $pos);
 
 		assert(defined $char);
-		$basePercent = sprintf("%.2f", $char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
-		$jobPercent = sprintf("%.2f", $char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
-		$weight = int($char->{weight} / $char->{weight_max} * 100) . "%" if ($char->{weight_max});
+		$basePercent = sprintf("%.2f", $char->exp_base_percent);
+		$jobPercent = sprintf("%.2f",$char->exp_job_percent);
+		$weight = int($char->weight_percent) . "%";
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 		my $aiSeq = join(",", @ai_seq);
 		# Translation Comment: Interface Title with character status
