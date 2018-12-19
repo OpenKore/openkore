@@ -7322,8 +7322,19 @@ sub merge_item_open {
 
 sub parse_merge_item_open {
 	my ($self, $args) = @_;
-	@mergeItemList = map {{ itemIndex => unpack('v', $_) }} unpack '(a2)*', $args->{itemList};
-	debug "Merging items ".length(@mergeItemList).". itemList: ".(join ', ', map {"$_->{itemIndex}"} @mergeItemList)."\n";
+	my @list = map { { ID => $_ } } unpack '(a2)*', $args->{itemList}; # received index from server is +2
+	$mergeItemList = {};
+	# Grouping items by ItemID, easier to merge by user later
+	debug "Enable to merge ".(scalar @list)." items\n";
+	foreach (@list) {
+		my $item = $char->inventory->getByID($_->{ID});
+		if (!defined $mergeItemList->{$item->{nameID}}) {
+			$mergeItemList->{$item->{nameID}}->{name} = $item->{name};
+			@{$mergeItemList->{$item->{nameID}}->{list}} = ();
+		}
+		push @{$mergeItemList->{$item->{nameID}}->{list}},{ ID => $_->{ID}, info => $item };
+		debug "- ".(unpack "v",$_->{ID}).": ".$item->{name}." (".$item->{binID}.") x ".$item->{amount}."\n";
+	}
 }
 
 ##
@@ -7332,15 +7343,14 @@ sub parse_merge_item_open {
 ##
 sub merge_item_result {
 	my ($self, $args) = @_;
-	undef @mergeItemList;
 	if ($args->{result} == 0) {
 		# now update inventory data
-		my $item = $char->inventory->getByServerIndex($args->{itemIndex});
+		my $item = $char->inventory->getByID(pack "a2",$args->{itemIndex});
 		message T("Items were merged successfully!\n"), "info";
 		if ($item) {
 			my $oldAmount = $item->{amount};
 			$item->{amount} = $args->{total};
-			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{invIndex}, $oldAmount, $item->{amount});
+			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{ID}, $oldAmount, $item->{amount});
 		} else {
 			error TF("Item was moved during merging process. Index: %d. New amount: %d\n", $args->{itemIndex}, $args->{total});
 		}

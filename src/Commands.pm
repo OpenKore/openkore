@@ -7377,8 +7377,8 @@ sub cmdMergeItem {
 		return;
 	}
 
-	if (not defined @mergeItemList) {
-		error T("You cannot use thos command yet. Only available after talk with Mergician-like NPC!\n");
+	if (not defined $mergeItemList) {
+		error T("You cannot use this command yet. Only available after talking with Mergician-like NPC!\n");
 		return;
 	}
 
@@ -7386,23 +7386,21 @@ sub cmdMergeItem {
 	my ($mode) = $args =~ /^(\w+)/;
 
 	if ($mode eq "" || $mode eq "list") {
-		my $title = TF("Available Items for Merger");
+		my $title = TF("Available Items to merge");
 		my $msg = center(' '. $title . ' ', 50, '-') ."\n".
-					T ("#   Item Name                                 \n");
-		foreach my $it (@mergeItemList) {
-			my $item = $char->inventory->getByServerIndex($it->{itemIndex});
-			if ($item) {
-				my $display = "$item->{name} x $item->{amount}";
-				$it->{item} = $item;
-				$it->{invIndex} = $item->{invIndex};
+					T ("#     Item Name\n");
+		foreach my $itemid (keys %{$mergeItemList}) {
+			$msg .= "-- ".$mergeItemList->{$itemid}->{name}." (".$itemid.") x ".scalar(@{$mergeItemList->{$itemid}->{list}})."\n";
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				my $display = $item->{info}->{name}." x ".$item->{info}->{amount};
 				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$item->{invIndex}, $display]);
+					"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$item->{info}->{binID}, $display]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
 		message $msg, "list";
-		message T("Usages: merge <item #>,<item #>[,<item #>,<item #>,...]\n"), "info";
+		message T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
 		return;
 
 	} elsif ($mode eq "cancel") {
@@ -7414,38 +7412,50 @@ sub cmdMergeItem {
 	# Merging process
 	my @list = split(/,/, $args);
 	my @items = ();
-    
+
 	@list = grep(!/^$/, @list); # Remove empty entries
 	foreach (@list) {
-		my ($invIndex) = $_ =~ /^(\d+)/;
-		my $found = 0;
-		my $i = 0;
-		foreach my $it (@mergeItemList) {
-			if ($it->{invIndex} == $invIndex) {
-				$found = 1;
-				last;
+		my ($id) = $_ =~ /^(\d+)/;
+		# Merge by item ID
+		if ((scalar @list) == 1 && $char->inventory->getByNameID($id)) {
+			debug "Merge item by item ID $id\n";
+			foreach my $item (@{$mergeItemList->{$id}->{list}}) {
+				push @items, $item;
 			}
-		} continue {
-			$i++;
+			last;
+		}
+
+		# User defined, however must be same item id
+		my $merge_itemid = 0;
+		my $found = 0;
+		foreach my $itemid (keys %{$mergeItemList}) {
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				if ($merge_itemid != 0 && $merge_itemid != $item->{info}->{nameID}) {
+					error T("Seletcted items are not same, use 'merge list' and select proper items.\n");
+					return;
+				}
+				if ($item->{info}->{binID} eq $id) {
+					push @items, $item;
+					$merge_itemid = $item->{info}->{nameID};
+					$found = 1;
+					last;
+				}
+			}
+			if ($found == 1) {
+				next;
+			}
 		}
 		if ($found != 1) {
-			error TF("Please type 'merge info' to see available items.\n");
-			return;
-		}
-		my $item = $mergeItemList[$i]->{item};
-		if ($item) {
-			push(@items,{itemIndex => $item->{index}, amount => $item->{amount}, itemName => $item->{name}});
-		} else {
-			warning TF("Item in index '%d' is not exists.\n", $invIndex);
+			warning TF("Cannot find item with id '%d'.\n", $id);
 		}
 	}
+
 	if (@items > 1) {
 		my $num = scalar @items;
-		message T("Number of selected items\n"), "info";
 		message T("======== Merge Item List ========\n");
-		map {message "$_->{itemName} $_->{amount}x ($_->{itemIndex})\n"} @items;
+		map { message unpack("v2", $_->{ID})." ".$_->{info}->{name}." (".$_->{info}->{binID}.") x ".$_->{info}->{amount}."\n" } @items;
 		message "==============================\n";
-		undef @mergeItemList;
+		$mergeItemList = {};
 		$messageSender->sendMergeItemRequest($num, \@items);
 		return;
 	}
