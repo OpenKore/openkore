@@ -20,8 +20,6 @@ package Network::Send::kRO::Sakexe_2004_10_05a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_09_20a);
 
-use Log qw(debug);
-
 sub version {
 	return 12;
 }
@@ -34,6 +32,7 @@ sub new {
 		'0072' => ['item_use', 'x4 a2 x5 a4', [qw(ID targetID)]],#17
 		'007E' => ['storage_item_add', 'x3 a2 x5 V', [qw(ID amount)]],
 		'0089' => ['character_move', 'x1 a3', [qw(coords)]],
+		'008C' => ['skill_use_location_text', 'v2 x2 v x9 v x2 v Z80', [qw(lvl ID x y info)]],
 		'0094' => ['item_drop', 'x3 a2 x5 v', [qw(ID amount)]],
 		'009B' => ['actor_info_request', 'x9 a4', [qw(ID)]],
 		'00A2' => ['actor_name_request', 'x6 a4', [qw(ID)]],
@@ -45,16 +44,16 @@ sub new {
 		'0190' => ['skill_use', 'x5 V x v x2 a4', [qw(lv skillID targetID)]],#20
 		'0193' => ['storage_item_remove', 'x8 a2 x10 V', [qw(ID amount)]],
 	);
+	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
-	$self;
-}
-
-sub sendSkillUseLocInfo {
-	my ($self, $ID, $lv, $x, $y, $moreinfo) = @_;
-	my $msg = pack('v2 x2 v x9 v x2 v Z80', 0x008C, $lv, $ID, $x, $y, $moreinfo);
-	$self->sendToServer($msg);
-	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
+	my %handlers = qw(
+		skill_use_location_text 008C
+	);
+	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 1;

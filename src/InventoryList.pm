@@ -395,7 +395,7 @@ sub sumByName {
 	assert(defined $name) if DEBUG;
 	my $sum = 0;
 	for my $item (@$self) {
-		if ($item->{name} eq $name) {
+		if (lc($item->{name}) eq lc($name)) {
 			$sum = $sum + $item->{amount};
 		}
 	}
@@ -406,6 +406,12 @@ sub sumByName {
 # isReady is true if this InventoryList has actionable data. Eg, storage is open, or we have a cart, etc.
 sub isReady {
     1;
+}
+
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	return 30000;
 }
 
 1;

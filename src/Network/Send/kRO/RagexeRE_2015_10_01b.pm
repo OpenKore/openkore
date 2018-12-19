@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2015_10_01b;
 
 use strict;
-use base 'Network::Send::kRO::RagexeRE_2015_05_13a';
+use base qw(Network::Send::kRO::RagexeRE_2015_09_23d);
 
 sub new {
 	my ($class) = @_;
@@ -31,8 +31,11 @@ sub new {
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]], #f
 		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'035F' => ['sync', 'V', [qw(time)]],
-		'0281' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0860' => ['storage_password'],
+		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0835' => ['search_store_request_next_page'],
+		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -54,11 +57,14 @@ sub new {
 		storage_item_add 07EC
 		storage_item_remove 0364
 		sync 035F
-		item_list_res 0281
+		item_list_window_selected 0281
 		storage_password 0860
+		search_store_info 0819
+		search_store_request_next_page 0835
+		search_store_select 0838
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

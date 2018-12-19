@@ -103,6 +103,7 @@ our $config_file;
 our $mon_control_file;
 our $items_control_file;
 our $shop_file;
+our $buyer_shop_file;
 our $recvpackets_name;
 
 # The base log file names, as set by the command line.
@@ -167,6 +168,7 @@ sub parseArguments {
 	undef $mon_control_file;
 	undef $items_control_file;
 	undef $shop_file;
+	undef $buyer_shop_file;
 	undef $chat_log_file;
 	undef $console_log_file;
 	undef $storage_log_file;
@@ -189,6 +191,7 @@ sub parseArguments {
 		'mon_control=s',      \$mon_control_file,
 		'items_control=s',    \$items_control_file,
 		'shop=s',             \$shop_file,
+		'buyer_shop=s',		  \$buyer_shop_file,
 		'chat-log=s',         \$base_chat_log_file,
 		'console-log=s',      \$base_console_log_file,
 		'storage-log=s',      \$base_storage_log_file,
@@ -709,12 +712,36 @@ sub getMonControlFilename {
 	}
 }
 
+sub setMonControlFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getMonControlFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$mon_control_file = $new_filename;
+}
+
 sub getItemsControlFilename {
 	if (defined $items_control_file) {
 		return $items_control_file;
 	} else {
 		return getControlFilename("items_control.txt");
 	}
+}
+
+sub setItemsControlFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getItemsControlFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$items_control_file = $new_filename;
 }
 
 sub getShopFilename {
@@ -724,6 +751,39 @@ sub getShopFilename {
 		return getControlFilename("shop.txt");
 	}
 }
+
+sub getBuyerShopFilename {
+	if (defined $buyer_shop_file) {
+		return $buyer_shop_file;
+	} else {
+		return getControlFilename("buyer_shop.txt");
+	}
+}
+
+sub setShopFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getShopFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$shop_file = $new_filename;
+}
+
+sub setBuyerShopFilename {
+	my ($new_filename) = @_;
+	my $current_filename = getBuyerShopFilename();
+	foreach my $object (@{$files->getItems()}) {
+		if ($object->{name} eq $current_filename) {
+			$object->{name} = $new_filename;
+			last;
+		}
+	}
+	$buyer_shop_file = $new_filename;
+}
+
 
 sub getSysFilename {
 	if (defined $sys_file) {

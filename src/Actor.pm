@@ -126,7 +126,7 @@ sub get {
 	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
-		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList) {
+		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
 			my $actor = $list->getByID($ID);
 			if ($actor) {
 				return $actor;
@@ -137,14 +137,6 @@ sub get {
 }
 
 ### CATEGORY: Hash members
-
-##
-# String $Actor->{actorType}
-# Invariant: defined(value)
-#
-# An identifier for this actor's type. The meaning for this field
-# depends on the actor's class. For example, for Player actors,
-# this is the job ID (though you should use $ActorPlayer->{jobID} instead).
 
 ##
 # int $Actor->{binID}
@@ -578,7 +570,7 @@ sub setStatus {
 			));
 		}
 		
-		if ($char->{party} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
+		if ($char->{party}{joined} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
 			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
 		}
@@ -587,7 +579,7 @@ sub setStatus {
 		return unless ($self->{statuses} && $self->{statuses}{$handle}); # silent when "again no status"
 		$again = 'no longer';
 		delete $self->{statuses}{$handle};
-		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
+		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{joined} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
 	}
 	message
 		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
@@ -785,7 +777,7 @@ sub route {
 	} else {
 		$task = new Task::Route(@params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute);
+	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk);
 	
 	$self->queue('route', $task);
 }

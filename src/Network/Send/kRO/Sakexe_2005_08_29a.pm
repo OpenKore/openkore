@@ -20,19 +20,9 @@ package Network::Send::kRO::Sakexe_2005_08_29a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2005_08_17a);
 
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-
-sub sendMailSend {
-	my ($self, $receiver, $title, $message) = @_;
-	my $msg = pack('v2 Z24 a40 C Z*', 0x0248, length($message)+70 , stringToBytes($receiver), stringToBytes($title), length($message), stringToBytes($message));
-	$self->sendToServer($msg);
-	debug "Sent mail send.\n", "sendPacket", 2;
 }
 
 =pod

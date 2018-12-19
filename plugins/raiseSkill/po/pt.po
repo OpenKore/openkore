@@ -1,0 +1,105 @@
+# LANGUAGE translation for OpenKore
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as OpenKore.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-30 17:02-0200\n"
+"PO-Revision-Date: 2018-06-29 12:27-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.8\n"
+
+#: ../raiseSkill.pl:14
+msgid "automatically raise character skills"
+msgstr "adiciona pontos de habilidade automaticamente"
+
+#: ../raiseSkill.pl:41
+msgid "[raiseSkill] Plugin unloading or reloading\n"
+msgstr "[raiseSkill] Plugin descarregando ou recarregando\n"
+
+#: ../raiseSkill.pl:64
+msgid "[raiseSkill] Plugin stage changed to 'INACTIVE'\n"
+msgstr "[raiseSkill] Estado do plugin alterado para 'INATIVO' (INACTIVE)\n"
+
+#: ../raiseSkill.pl:71
+msgid "[raiseSkill] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n"
+msgstr ""
+"[raiseSkill] Estado do plugin alterado para "
+"'AGUARDANDO_CHANCE_OU_RESPOSTA' (AWAITING_CHANCE_OR_ANSWER)\n"
+
+#: ../raiseSkill.pl:76
+msgid "[raiseSkill] Plugin stage changed to 'ADDING'\n"
+msgstr "[raiseSkill] Estado do plugin alterado apra 'ADICIONANDO' (ADDIND)\n"
+
+#: ../raiseSkill.pl:90
+msgid "[raiseSkill] Received a raise chance or answer\n"
+msgstr "[raiseSkill] Recebida chance ou resposta\n"
+
+#: ../raiseSkill.pl:106
+#, perl-format
+msgid "[raiseSkill] Decided next skill to raise: '%s'\n"
+msgstr "[raiseSkill] Próxima habilidade a ser adicionada: '%s'\n"
+
+#: ../raiseSkill.pl:110
+msgid "[raiseSkill] No more skills to raise; disabling skillsAddAuto\n"
+msgstr ""
+"[raiseSkill] Não há mais habilidades para adicionar; desativando "
+"skillsAddAuto\n"
+
+#: ../raiseSkill.pl:132
+msgid "[raiseSkill] We don't have any free skill point\n"
+msgstr "[raiseSkill] Não há mais pontos de habilidade livres\n"
+
+#: ../raiseSkill.pl:135
+msgid "[raiseSkill] We have free skill points\n"
+msgstr "[raiseSkill] Há pontos de habilidade livres\n"
+
+#: ../raiseSkill.pl:137
+#, perl-format
+msgid "[raiseSkill] Skill '%s' cannot be raised further\n"
+msgstr "[raiseSkill] Não é possível adicionar mais pontos à habilidade '%s'\n"
+
+#: ../raiseSkill.pl:140
+#, perl-format
+msgid "[raiseSkill] We can raise '%s' further\n"
+msgstr "[raiseSkill] Podemos adicionar mais pontos à habilidade '%s'\n"
+
+#: ../raiseSkill.pl:147
+#, perl-format
+msgid ""
+"[raiseSkill] Skill '%s' does not exist in your skill tree; disabling "
+"skillsAddAuto\n"
+msgstr ""
+"[raiseSkill] A habilidade '%s' não existe na árvore de habilidades; "
+"desativando skillsAddAuto\n"
+
+#: ../raiseSkill.pl:150
+#, perl-format
+msgid ""
+"[raiseSkill] Skill '%s' reached its maximum level or prerequisite not "
+"reached; disabling skillsAddAuto\n"
+msgstr ""
+"[raiseSkill] Habilidade '%s' atingiu o nível máximo ou não cumpriu algum pré-"
+"requisito; desativando skillsAddAuto\n"
+
+#: ../raiseSkill.pl:160
+#, perl-format
+msgid "Auto-adding skill '%s' to '%d'\n"
+msgstr "Adicionando ponto à habilidade '%s', para '%d' pontos\n"
+
+#: ../raiseSkill.pl:198
+#, perl-format
+msgid "Unknown skill '%s' in '%s'; disabling skillsAddAuto\n"
+msgstr "Habilidade '%s' desconhecida em '%s'; desativando skillsAddAuto\n"
+
+#: ../raiseSkill.pl:202
+msgid "[raiseSkill] Configuration set in config.txt is valid\n"
+msgstr "[raiseSkill] Configuração em config.txt é válida\n"

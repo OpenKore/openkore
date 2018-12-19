@@ -1,8 +1,7 @@
 package eventMacro::Condition::NpcNotNear;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $npcsList );
 
 use base 'eventMacro::Condition::BaseActorNotNear';
 

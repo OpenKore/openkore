@@ -256,7 +256,7 @@ sub send_pet {
 sub send_party_list {
 	my ($self, $client, $char) = @_;
 	my $data = undef;
-	if ($char->{party}) {
+	if ($char->{party}{joined}) {
 		my $num = 0;
 		foreach my $ID (@partyUsersID) {
 			next if !defined($ID) || !$char->{party}{users}{$ID};
@@ -761,6 +761,8 @@ sub map_login {
 				switch => 'account_id',
 				accountID => $args->{accountID},
 			}));
+		} elsif ($masterServer->{serverType} eq 'iRO_Classic') {
+			$client->send($args->{accountID});
 		} else {
 			# BUGGY $client->send($args->{accountID});
 		}

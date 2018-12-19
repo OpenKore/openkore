@@ -13,7 +13,7 @@
 package Network::Send::kRO::RagexeRE_2017_09_13b;
 
 use strict;
-use base qw(Network::Send::kRO::RagexeRE_2017_06_14b);
+use base qw(Network::Send::kRO::RagexeRE_2017_07_26c);
 
 sub new {
 	my ($class) = @_;
@@ -24,15 +24,15 @@ sub new {
 		'0281' => ['actor_info_request', 'a4', [qw(ID)]],
 		'08AC' => ['actor_look_at', 'v C', [qw(head body)]],
 		'095C' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0927' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0927' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'085A' => ['buy_bulk_closeShop'],			
-		'0866' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0866' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'08A6' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0923' => ['character_move', 'a3', [qw(coordString)]],
 		'035F' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'088C' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
 		'091D' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'08AD' => ['item_list_res', 'v V2 a*', [qw(len type action itemInfo)]],
+		'08AD' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0860' => ['item_take', 'a4', [qw(ID)]],
 		'0835' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0865' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
@@ -42,6 +42,9 @@ sub new {
 		'07E4' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0892' => ['storage_password'],
 		'091B' => ['sync', 'V', [qw(time)]],		
+		'0437' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
+		'0920' => ['search_store_request_next_page'],
+		'0925' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -59,7 +62,7 @@ sub new {
 		friend_request 035F
 		homunculus_command 088C
 		item_drop 091D
-		item_list_res 08AD
+		item_list_window_selected 08AD
 		item_take 0860
 		map_login 0835
 		party_join_request_by_name 0865
@@ -69,9 +72,12 @@ sub new {
 		storage_item_remove 07E4
 		storage_password 0892
 		sync 091B
+		search_store_info 0437
+		search_store_request_next_page 0920
+		search_store_select 0925
 	);
 	
-	while (my ($k, $v) = each %packets) { $handlers{$v->[0]} = $k}
+	
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #		#if PACKETVER == 20170913 //

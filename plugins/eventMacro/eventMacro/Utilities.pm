@@ -6,7 +6,7 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
-	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getStorageIDs getSoldOut getInventoryAmount
+	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
 	getStorageAmountbyID getCartAmountbyID getQuestStatus);
@@ -30,9 +30,12 @@ sub between {
 sub cmpr {
 	my ($first, $cond, $second) = @_;
 	
-	if (!defined $first || !defined $cond || !defined $second) {
-		# this produces a warning but that's what we want
-		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n", "eventMacro";
+	if (defined $first && !defined $cond & !defined $second) {
+		if ($first eq '' || $first == 0) {
+			return 0;
+		} else {
+			return 1;
+		}
 		
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
@@ -45,9 +48,11 @@ sub cmpr {
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
+				return;
 			}
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
+		return;
 		
 	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($second1, $second2) = ($1, $2);
@@ -60,22 +65,24 @@ sub cmpr {
 				
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
+				return;
 			}
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
+		return;
 		
 	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
 		return ($first <= $second ? 1 : 0) if ($cond eq "<=");
-		return ($first > $second  ? 1 : 0) if ($cond eq ">");
-		return ($first < $second  ? 1 : 0) if ($cond eq "<");
+		return ($first >  $second ? 1 : 0) if ($cond eq ">");
+		return ($first <  $second ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
 		
 	} elsif (($cond eq "=" || $cond eq "==")) {
 		return ($first eq $second ? 1 : 0);
 		
-	} elsif ($cond eq "!=" && $first ne $second) {
+	} elsif ($cond eq "!=") {
 		return ($first ne $second ? 1 : 0);
 		
 	} elsif ($cond eq "~") {
@@ -85,7 +92,7 @@ sub cmpr {
 		}
 		
 	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
-		return match($first, $second, 1);
+		return match($first, $second);
 	}
 
 	return 0;
@@ -106,30 +113,26 @@ sub q4rx2 {
 }
 
 sub match {
-	my ($text, $kw, $cmpr) = @_;
+	my ($text_to_be_compared, $regex) = @_;
 
-	unless (defined $text && defined $kw) {
+	unless (defined $text_to_be_compared && defined $regex) {
 		# this produces a warning but that's what we want
-		error "match: wrong # of arguments ($text) ($kw)\n", "eventMacro";
-		return 0
+		error "match: wrong # of arguments ($text_to_be_compared) ($regex)\n", "eventMacro";
+		return;
 	}
 
-	if ($kw =~ /^"(.*?)"$/) {
-		return $text eq $1
-	}
-
-	if ($kw =~ /^\/(.*?)\/(\w?)$/) {
-		if ($text =~ /$1/ || ($2 eq 'i' && $text =~ /$1/i)) {
-			if (!defined $cmpr) {
-				no strict;
-				foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
-				use strict;
-			}
-			return 1
+	if ($regex =~ /^\/(.*?)\/(\w?)$/) {
+		if ($text_to_be_compared =~ /$1/ || ($2 eq 'i' && $text_to_be_compared =~ /$1/i)) {
+			no strict;
+			foreach my $idx (1..$#-) {$eventMacro->set_scalar_var(".lastMatch$idx",${$idx})}
+			use strict;
+			return 1;
+		} else {
+			return 0;
 		}
 	}
 
-	return 0
+	return;
 }
 
 sub getArgs {
@@ -204,6 +207,8 @@ sub getQuestStatus {
 			$result->{$quest_id} = 'incomplete';
         } elsif ( grep { $_->{goal} && $_->{count} < $_->{goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
+        } elsif ( grep { !$_->{goal} && $_->{count} == 0 } values %{ $quest->{missions} } ) {
+			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';
 		}
@@ -243,8 +248,8 @@ sub getPlayerID {
 
 # get monster array index
 sub getMonsterID {
-	foreach my $ml (@{$monstersList->getItems()}) {
-		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0]);
+	foreach my $ml (@{$monstersList}) {
+		return $ml->{binID} if ($ml->name eq $_[0] || $ml->{binType} eq $_[0] || $ml->{name_given} eq $_[0]);
 	}
 	return -1
 }
@@ -266,8 +271,24 @@ sub getInventoryIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
+		if (lc($item->name) eq $find || $item->{nameID} == $find) {push @ids, $item->{binID}}
 	}
+	unless (@ids) {push @ids, -1}
+	return @ids
+}
+
+# get inventory item type ids
+# checked and ok
+sub getInventoryTypeIDs {
+	return unless $char->inventory->isReady();
+	my $find = lc($_[0]);
+	my @ids;
+	foreach my $item (@{$char->inventory->getItems}) {
+        if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
+        if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
+        if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
+        if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
+    }
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
@@ -276,7 +297,7 @@ sub getInventoryIDs {
 sub getItemIDs {
 	my ($item, $pool) = (lc($_[0]), $_[1]);
 	return if !$pool->isReady;
-	my @ids = map { $_->{binID} } grep { $item eq lc $_->name } @$pool;
+	my @ids = map { $_->{binID} } grep { $item eq lc $_->name || $item == $_->{nameID} } @$pool;
 	push @ids, -1 if !@ids;
 	@ids;
 }
@@ -298,7 +319,7 @@ sub getStorageIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $find) {push @ids, $item->{binID}}
+		if (lc($item->name) eq $find|| $item->{nameID} == $find) {push @ids, $item->{binID}}
   	}
 	unless (@ids) {push @ids, -1}
 	return @ids
@@ -321,7 +342,7 @@ sub getInventoryAmount {
 	return -1 unless ($char->inventory->isReady());
 	my $amount = 0;
 	foreach my $item (@{$char->inventory->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
 	}
 	return $amount
 }
@@ -345,7 +366,7 @@ sub getCartAmount {
 	return -1 unless ($char->cart->isReady());
 	my $amount = 0;
 	foreach my $item (@{$char->cart->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
   	}
 	return $amount
 }
@@ -369,7 +390,7 @@ sub getShopAmount {
 	my $amount = 0;
 	foreach my $aitem (@::articles) {
 		next unless $aitem;
-		if (lc($aitem->{name}) eq $arg) {$amount += $aitem->{quantity}}
+		if (lc($aitem->{name}) eq $arg || $aitem->{nameID} == $arg) {$amount += $aitem->{quantity}}
 	}
 	return $amount
 }
@@ -381,7 +402,7 @@ sub getStorageAmount {
 	return -1 unless ($char->storage->wasOpenedThisSession());
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
-		if (lc($item->name) eq $arg) {$amount += $item->{amount}}
+		if (lc($item->name) eq $arg || $item->{nameID} == $arg ) {$amount += $item->{amount}}
   	}
 	return $amount
 }

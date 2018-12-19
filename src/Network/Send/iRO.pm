@@ -27,6 +27,8 @@ sub new {
 	
 	my %packets = (
 		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -44,6 +46,9 @@ sub new {
 		buy_bulk_vender 0801
 		char_delete2_accept 098f
 		send_equip 0998
+		map_login 0436
+		actor_action 0437
+		skill_use 0438
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
@@ -61,7 +66,7 @@ sub reconstruct_char_delete2_accept {
 	my ($self, $args) = @_;
 	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
 	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{CharID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
+	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 sub sendCharCreate {
@@ -82,21 +87,5 @@ sub sendCharCreate {
 #			$charID . pack("a50", stringToBytes($email));
 #	$self->sendToServer($msg);
 #}
-
-sub sendTop10Alchemist {
-	shift->sendToServer( pack 'vv', 0x097C, 1 );
-}
-
-sub sendTop10Blacksmith {
-	shift->sendToServer( pack 'vv', 0x097C, 0 );
-}
-
-sub sendTop10PK {
-	shift->sendToServer( pack 'vv', 0x097C, 3 );
-}
-
-sub sendTop10Taekwon {
-	shift->sendToServer( pack 'vv', 0x097C, 2 );
-}
 
 1;

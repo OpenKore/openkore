@@ -1,8 +1,7 @@
 package eventMacro::Condition::MobNotNear;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw( $monstersList );
 
 use base 'eventMacro::Condition::BaseActorNotNear';
 

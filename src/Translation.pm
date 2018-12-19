@@ -41,10 +41,10 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 
 
 # Note: some of the functions in this module are implemented in
-# src/auto/XSTools/translation/wrapper.xs
+# src/auto/XSTools/Translation/Translation.xs
 
 ##
-# boolean Translation::initDefault([String podir, String locale])
+# boolean Translation::initDefault(String locale)
 # Ensures: Translation::T() and Translation::TF() will be usable.
 # Returns: Whether initialization succeeded. It is not fatal if
 #          initialization failed: this module will automatically
@@ -53,9 +53,10 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 # Initialize the default translation object. Translation::T() and
 # Translation::TF() will only be usable after calling this function once.
 sub initDefault {
-	my ($podir, $locale) = @_;
-	$podir = DEFAULT_PODIR if (!defined $podir);
-	$_translation = _load(_autodetect($podir, $locale));
+	my ($locale) = @_;
+
+	$_translation = new Translation(DEFAULT_PODIR, $locale); 
+
 	return defined $_translation;
 }
 
@@ -155,6 +156,12 @@ sub translate {
 	return $message;
 }
 
+sub translatef {
+	my ($self, $rawMessage, @content) = @_;
+	_translate($self->{trans}, \$rawMessage);
+	return sprintf($rawMessage, @content);
+}
+
 ##
 # String Translation::T(String message)
 # message: The message to translate.
@@ -173,7 +180,7 @@ sub translate {
 # print(T("hello world\n"));
 sub T {
 	my ($message) = @_;
-	_translate($_translation, \$message);
+	_translate($_translation->{trans}, \$message);
 	return $message;
 }
 
@@ -192,9 +199,8 @@ sub T {
 # print(TF("Go to %s for more information", $url));
 sub TF {
 	my $message = shift;
-	_translate($_translation, \$message);
+	_translate($_translation->{trans}, \$message);
 	return sprintf($message, @_);
-	#return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
 }
 
 ##

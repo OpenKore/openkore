@@ -20,11 +20,14 @@
 #package Poseidon;
 
 use strict;
+
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
 use lib "$RealBin/../..";
 use lib "$RealBin/../deps";
 use Time::HiRes qw(time sleep);
+use Getopt::Long;
+
 use Poseidon::Config;
 use Poseidon::RagnarokServer;
 use Poseidon::QueryServer;
@@ -34,20 +37,26 @@ use constant SLEEP_TIME => 0.01;
 
 our ($roServer, $queryServer);
 
-sub initialize 
-{
-	# Loading Configuration
-	Poseidon::Config::parse_config_file ("poseidon.txt", \%config);
-
+sub initialize {
 	# Starting Poseidon
-	print "Starting Poseidon 2.1 (26 Sep 2012)...\n";
+	print ">>> Starting Poseidon 2.1 <<<\n";
+	print "Loading configuration...\n";
+	
+	# Loading Configuration
+	Getopt::Long::Configure('default');
+	Poseidon::Config::parseArguments();
+	Poseidon::Config::parse_config_file($config{file});
+	
+	print "Starting servers...\n";
+	
 	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
 	print "Ragnarok Online Server Ready At : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
+	
 	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
 	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
-	print ">>> Poseidon 2.1 initialized <<<\n\n";
-	print "Please read " . POSEIDON_SUPPORT_URL . "\n";
-	print "for further instructions.\n";
+	
+	print ">>> Poseidon 2.1 initialized (Debug : ". (($config{debug}) ? "On" : "Off") . ") <<<\n\n";
+	print "Please read " . POSEIDON_SUPPORT_URL . " for further instructions.\n";
 }
 
 sub __start {

@@ -14,12 +14,12 @@
 package Network::Send::ServerType1;
 
 use strict;
-use Globals qw($accountID $sessionID $sessionID2 $accountSex $char $charID %config %guild @chars $masterServer $syncSync $net);
 use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(message warning error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
+
+use Globals qw($char $syncSync);
+use Log qw(debug);
+use Utils qw(getTickCount getHex);
 
 sub new {
 	my ($class) = @_;
@@ -127,7 +127,7 @@ sub sendLook {
 	$char->{look}{body} = $body;
 }
 
-	sub sendMapLogin {	
+sub sendMapLogin {	
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 

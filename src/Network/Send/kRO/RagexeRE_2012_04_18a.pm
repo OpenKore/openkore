@@ -14,7 +14,6 @@ package Network::Send::kRO::RagexeRE_2012_04_18a;
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2012_04_10a);
 
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
@@ -44,6 +43,7 @@ sub new {
 		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0884' => undef,
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
+		'08A8' => ['storage_password', 'v a*', [qw(type data)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -60,29 +60,11 @@ sub new {
 		party_join_request_by_name 0802
 		homunculus_command 0361
 		actor_name_request 0368
+		storage_password 08A8
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	$self;
-}
-
-#0x08A8,36,storagepassword,0
-sub sendStoragePassword {
-	my $self = shift;
-	# 16 byte packed hex data
-	my $pass = shift;
-	# 2 = set password ?
-	# 3 = give password ?
-	my $type = shift;
-	my $msg;
-	if ($type == 3) {
-		$msg = pack('v2', 0x08A8, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	} elsif ($type == 2) {
-		$msg = pack('v2', 0x08A8, $type).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8").$pass;
-	} else {
-		ArgumentException->throw("The 'type' argument has invalid value ($type).");
-	}
-	$self->sendToServer($msg);
 }
 
 1;

@@ -315,12 +315,12 @@ sub request {
 			push @unusableID, $item->{nameID};
 			push @unusable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @unusableAmount, $item->{amount};
-			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+			push @unusableJS, '<td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' . '">' . T('Drop 1') . '</a></td>';
 		} elsif ($item->{type} <= 2) {
 			push @usableID, $item->{nameID};
 			push @usable, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
 			push @usableAmount, $item->{amount};
-			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{binID} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+			push @usableJS, '<td><a class="btn btn-mini btn-success" href="/handler?csrf=' . $csrf . '&command=is+' . $item->{binID} . '">' . T('Use 1 on self') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' .'">' . T('Drop 1') . '</a></td>';
 		} else {
 			if ($item->{equipped}) {
 				push @equipmentID, $item->{nameID};
@@ -329,7 +329,7 @@ sub request {
 			} else {
 				push @uequipmentID, $item->{nameID};
 				push @uequipment, '<a href="' . sprintf($config{webDBLink_item} || 'http://ratemyserver.net/index.php?page=item_db&item_id=%s', $item->{nameID}) . "\">$item->{name}</a>";
-				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{binID} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '">' . T('Drop 1') . '</a></td>';
+				push @uequipmentJS, '<td><a class="btn btn-mini btn-inverse" href="/handler?csrf=' . $csrf . '&command=eq+' . $item->{binID} . '">' . T('Equip') . '</a></td><td><a class="btn btn-mini btn-danger" href="/handler?csrf=' . $csrf . '&command=drop+' . $item->{binID} . '+1' .'">' . T('Drop 1') . '</a></td>';
 			}
 		}
 	}
@@ -380,7 +380,7 @@ sub request {
 	my ($i, $name, $class, $lvl, $title, $online, $ID, $charID);
 	my (@listMemberIndex, @listMemberName, @listMemberClass, @listMemberLvl, @listMemberTitle, @listMemberOnline, @listMemberID, @listMemberCharID);
 	
-	if (defined @{$guild{member}}) {
+	if ($guild{member} && @{$guild{member}}) {
 		my $count = @{$guild{member}};
 			for ($i = 0; $i < $count; $i++) {
 				$name  = $guild{member}[$i]{name};
@@ -664,13 +664,13 @@ sub request {
 		'homunculusID' => $char->{homunculus},
 		'homunculusHP' => $char->{homunculus}{'hp'},
 		'homunculusHPMax' => $char->{homunculus}{'hp_max'},
-		'homunculusHPPercent' => sprintf("%.2f", $char->{homunculus}{hpPercent}),
+		'homunculusHPPercent' => sprintf("%.2f", $char->{homunculus}->hp_percent),
 		'homunculusSP' => $char->{homunculus}{'sp'},
 		'homunculusSPMax' => $char->{homunculus}{'sp_max'},
-		'homunculusSPPercent' => sprintf("%.2f", $char->{homunculus}{spPercent}),
+		'homunculusSPPercent' => sprintf("%.2f", $char->{homunculus}->sp_percent),
 		'homunculusEXP' => $char->{homunculus}{'exp'},
 		'homunculusEXPMax' => $char->{homunculus}{'exp_max'},
-		'homunculusEXPPercent' => sprintf("%.2f", $char->{homunculus}{expPercent}),
+		'homunculusEXPPercent' => sprintf("%.2f", $char->{homunculus}->exp_percent),
 		'homunculusHunger' => $char->{homunculus}{'hunger'},
 		'homunculusAccessory' => $char->{homunculus}{'accessory'},
 		'homunculusIntimacy' => $char->{homunculus}{'intimacy'},

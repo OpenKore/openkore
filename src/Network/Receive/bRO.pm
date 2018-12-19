@@ -21,18 +21,20 @@ sub new {
 	
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
-		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 	);
 	
-	foreach my $switch (keys %packets) { $self->{packet_list}{$switch} = $packets{$switch}; }
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D
 		sync_received_characters 09A0
+		account_server_info 0AC4
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
 	
 	return $self;
 }

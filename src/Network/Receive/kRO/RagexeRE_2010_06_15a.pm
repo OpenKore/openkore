@@ -22,19 +22,8 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_06_08a);
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new(@_);
-	
-	my %packets = (
-		#'006A' => undef, # Athena still sends it
-		'083E' => ['login_error', 'V Z20', [qw(type date)]],
-	);
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
-	$self;
+
+	return $class->SUPER::new(@_);
 }
-=pod
-//2010-06-15aRagexeRE
-//0x083E,26
-=cut
 
 1;

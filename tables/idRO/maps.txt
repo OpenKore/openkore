@@ -1,4 +1,4 @@
-
+//공성전 TE 복사맵 
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -14,6 +14,10 @@ te_aldecas4.rsw#Bennit#
 te_aldecas5.rsw#W#
 teg_dun02.rsw#Subterranean Dungeon of Guild#
 
+ti_high.rsw#Turn-in High level#
+ti_mid.rsw#Turn-in Medium level#
+ti_low.rsw#Turn-in Low level#
+ti_vip.rsw#Turn-in VIP#
 
 gefenia04.rsw#Geffenia #
 gefenia03.rsw#Geffenia #
@@ -445,7 +449,7 @@ pvp_y_6-5.rsw#PvP : Ruangan Morroc#
 pvp_y_7-5.rsw#PvP : Ruangan Morroc#
 pvp_y_8-5.rsw#PvP : Ruangan Morroc#
 pvp_2vs2.rsw#PvP : Colosseum#
-
+//------움발라 관련 추가------------------
 um_dun01.rsw#Toko Tukang Kayu di Dalam Hutan#
 um_dun02.rsw#Jalan Menuju ke Dunia Lain#
 um_in.rsw#Dalam Umbala#
@@ -454,7 +458,7 @@ um_fild02.rsw#Hutan Humga#
 um_fild03.rsw#Rawa-rawa Karara#
 um_fild04.rsw#Hutan Humga#
 umbala.rsw#Umbala, Desa Suku Wootan#
-
+//--------------니플헤임-----------
 nif_in.rsw#Dalam Niflheim#
 yggdrasil01.rsw#?Pulau Herbet Camlet (Batang Pohon Yggdrasil)#
 nif_fild02.rsw#Kubah Setan#
@@ -853,9 +857,32 @@ mal_dun01.rsw#malangdo Dungeon#
 2@pump.rsw#Culvert Dungeon2#
 
 
+//생체던전
 lhz_dun04.rsw#Human Experimentation Laboratory B4#
 que_lhz.rsw#Human Experimentation Laboratory B4#
 1@lhz.rsw#Wolfchev's Lab#
 
+//-크리스마스 이벤트 신규 추가 맵 지역정보
 
 niflxmas.rsw#Deadman's land Niffelheim#
+moc_prydn1.rsw#Morocc Pyramid Underground 1st Floor - Challenge#
+moc_prydn2.rsw#Morocc Pyramid Underground 2nd Floor - Challenge#
+
+//시계탑나이트메어던전
+c_tower2_.rsw#Twisted Clock Tower 2#
+c_tower3_.rsw#Twisted Clock Tower 3#
+
+
+// 리벨리온 전직맵
+job_gun.rsw#Shelter of Rebellion#
+
+//고성메모리얼던전
+gl_cas02_.rsw#Glast Heim 2F#
+gl_chyard_.rsw#Churchyard#
+2@gl_k.rsw#Old Glast Heim Chivalry 2F#
+1@gl_k.rsw#Old Glast Heim Chivalry 1F#
+
+//영웅의흔적
+1@face.rsw#Faceworm's Nest#
+1@sara.rsw#Sara's Memory#
+dali.rsw#Dimensional Gap#

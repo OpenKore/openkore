@@ -4,8 +4,6 @@ use strict;
 
 use base 'eventMacro::Condition::BaseInventory';
 
-use Globals qw( $char );
-
 sub _hooks {
 	['packet_mapChange','inventory_ready','item_gathered','inventory_item_removed'];
 }

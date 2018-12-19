@@ -20,22 +20,9 @@ package Network::Send::kRO::Sakexe_2004_11_09a;
 use strict;
 use base qw(Network::Send::kRO::Sakexe_2004_11_01a);
 
-use Log qw(message warning error debug);
-
 sub new {
 	my ($class) = @_;
 	return $class->SUPER::new(@_);
-}
-# 0x0217,2,blacksmith,0
-sub sendTop10Blacksmith {
-	$_[0]->sendToServer(pack('v', 0x0217));
-	debug "Sent Top 10 Blacksmith request\n", "sendPacket", 2;
-}
-
-# 0x0218,2,alchemist,0
-sub sendTop10Alchemist {
-	$_[0]->sendToServer(pack('v', 0x0218));
-	debug "Sent Top 10 Alchemist request\n", "sendPacket", 2;
 }
 
 =pod
