@@ -3072,10 +3072,10 @@ sub sendCashShopBuy {
 ##
 sub sendMergeItemRequest {
 	my ($self, $num, $items) = @_;
-	my $len = ($num * 4) + 12;
+	#my $len = ($num * 4) + 12;
 	$self->sendToServer($self->reconstruct({
 		switch => 'merge_item_request',
-		len => $len,
+		#len => $len,
 		items => $items,
 	}));
 	debug "Sent merge item request: ".(join ', ', map { $_->{info}->{binID}." x ".$_->{info}->{amount} } @$items)."\n", "sendPacket";

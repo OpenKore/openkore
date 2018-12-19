@@ -7316,17 +7316,10 @@ sub cash_dealer {
 ##
 sub merge_item_open {
 	my ($self, $args) = @_;
-	my $num = ($args->{length} - 4) / 2;
-	message TF("Received %d items to be merged. Use 'merge' to continue\n", $num), "info";
-}
-
-sub parse_merge_item_open {
-	my ($self, $args) = @_;
-	my @list = map { { ID => $_ } } unpack '(a2)*', $args->{itemList}; # received index from server is +2
 	$mergeItemList = {};
+	debug "Enable to merge ".(scalar @{$args->{list}})." items\n";
 	# Grouping items by ItemID, easier to merge by user later
-	debug "Enable to merge ".(scalar @list)." items\n";
-	foreach (@list) {
+	foreach (@{$args->{list}}) {
 		my $item = $char->inventory->getByID($_->{ID});
 		if (!defined $mergeItemList->{$item->{nameID}}) {
 			$mergeItemList->{$item->{nameID}}->{name} = $item->{name};
@@ -7335,6 +7328,12 @@ sub parse_merge_item_open {
 		push @{$mergeItemList->{$item->{nameID}}->{list}},{ ID => $_->{ID}, info => $item };
 		debug "- ".(unpack "v",$_->{ID}).": ".$item->{name}." (".$item->{binID}.") x ".$item->{amount}."\n";
 	}
+	message TF("Received %d items that can be merged. Use 'merge' to continue\n", (scalar @{$args->{list}})), "info";
+}
+
+sub parse_merge_item_open {
+	my ($self, $args) = @_;
+	@{$args->{list}} = map { { ID => $_ } } unpack '(a2)*', $args->{itemList}; # received index from server is +2
 }
 
 ##
@@ -7345,14 +7344,14 @@ sub merge_item_result {
 	my ($self, $args) = @_;
 	if ($args->{result} == 0) {
 		# now update inventory data
-		my $item = $char->inventory->getByID(pack "a2",$args->{itemIndex});
+		my $item = $char->inventory->getByID($args->{itemIndex});
 		message T("Items were merged successfully!\n"), "info";
 		if ($item) {
 			my $oldAmount = $item->{amount};
 			$item->{amount} = $args->{total};
-			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{ID}, $oldAmount, $item->{amount});
+			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{binID}, $oldAmount, $item->{amount});
 		} else {
-			error TF("Item was moved during merging process. Index: %d. New amount: %d\n", $args->{itemIndex}, $args->{total});
+			error TF("Item was moved during merging process. itemIndex: %d. New amount: %d\n", $args->{index}, $args->{total});
 		}
 	} elsif ($args->{result} == 1) {
 		error T("Items cannot be merged.\n");
@@ -7361,7 +7360,12 @@ sub merge_item_result {
 	} else {
 		error TF("An error occured to merge item. Error:%d\n", $args->{result});
 	}
-	debug "Merge item result: index:$args->{itemIndex} total:$args->{total} result:$args->{result}\n";
+	debug "Merge item result: itemIndex:$args->{index} total:$args->{total} result:$args->{result}\n";
+}
+
+sub parse_merge_item_result {
+	my ($self, $args) = @_;
+	$args->{index} = (unpack "(a2)", $args->{itemIndex})-2;
 }
 
 1;

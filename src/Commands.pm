@@ -7412,6 +7412,7 @@ sub cmdMergeItem {
 	# Merging process
 	my @list = split(/,/, $args);
 	my @items = ();
+	my $merge_itemid = 0;
 
 	@list = grep(!/^$/, @list); # Remove empty entries
 	foreach (@list) {
@@ -7426,24 +7427,22 @@ sub cmdMergeItem {
 		}
 
 		# User defined, however must be same item id
-		my $merge_itemid = 0;
 		my $found = 0;
 		foreach my $itemid (keys %{$mergeItemList}) {
 			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
-				if ($merge_itemid != 0 && $merge_itemid != $item->{info}->{nameID}) {
-					error T("Seletcted items are not same, use 'merge list' and select proper items.\n");
-					return;
-				}
-				if ($item->{info}->{binID} eq $id) {
+				if ($item->{info}->{binID} == $id) {
+					if ($merge_itemid > 0 && $merge_itemid != $item->{info}->{nameID}) {
+						error TF("Selected item is not same. Index:'%d' nameID:'%d' first selected:'%d'\n", $id, $item->{info}->{nameID}, $merge_itemid);
+						return;
+					} elsif ($merge_itemid == 0) {
+						$merge_itemid = $item->{info}->{nameID};
+					}
 					push @items, $item;
-					$merge_itemid = $item->{info}->{nameID};
 					$found = 1;
 					last;
 				}
 			}
-			if ($found == 1) {
-				next;
-			}
+			last if ($found == 1);
 		}
 		if ($found != 1) {
 			warning TF("Cannot find item with id '%d'.\n", $id);
@@ -7461,7 +7460,7 @@ sub cmdMergeItem {
 	}
 
 	error T("No item was selected or at least need 2 same items.\n");
-	error T("Usages: merge <item #>,<item #>[,<item #>,<item #>,...]\n");
+	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
 }
 
 1;
