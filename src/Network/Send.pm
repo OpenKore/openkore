@@ -3065,6 +3065,18 @@ sub sendCashShopBuy {
 	}
 }
 
+sub sendStartSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'start_skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
+	debug "Start Skill Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendStopSkillUse {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
+	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
+}
+
 ##
 # Move character slot
 # 08D4 <FromSlot>.W <ToSlot>.W <MovesCount>.W

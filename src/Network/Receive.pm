@@ -5451,6 +5451,7 @@ sub deal_add_you {
 	$currentDeal{you}{$item->{nameID}}{nameID} = $item->{nameID};
 	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
 	inventoryItemRemoved($item->{binID}, $currentDeal{lastItemAmount});
+	Plugins::callHook("deal_you_added", {id => $id, item => $item});
 }
 
 sub skill_exchange_item {

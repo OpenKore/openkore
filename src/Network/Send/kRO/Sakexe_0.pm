@@ -247,6 +247,8 @@ sub new {
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],		
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

@@ -27,7 +27,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x58586529, 0x049D1C9D, 0x0D3D6F9D
+sendCryptKeys 0x793E6C60, 0x728D35E2, 0x13C96D20
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -49,7 +49,7 @@ addTableFolders bRO
 charBlockSize 144
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x58586529, 0x049D1C9D, 0x0D3D6F9D
+sendCryptKeys 0x793E6C60, 0x728D35E2, 0x13C96D20
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -176,7 +176,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x50C4733B, 0x06522384, 0x350D10A0
+sendCryptKeys 0x36757F38, 0x3B5D367D, 0x70B36AA5
 rankingSystemType 1
 pauseCharLogin 1
 
