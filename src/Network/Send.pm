@@ -3102,7 +3102,7 @@ sub sendCharRename {
 
 sub reconstruct_char_rename {
 	my ($self, $args) = @_;
-	debug "Request rename character ".hex($args->{charID})." (".hex($args->{accountID}).") to $args->{newName}\n", "sendPacket";
+	debug "Renaming character to $args->{newName} CID:".unpack("V",$args->{charID})."/AID:".unpack("V",$args->{accountID})."\n", "sendPacket";
 }
 
 1;

@@ -1331,6 +1331,7 @@ sub charSelectScreen {
 	} elsif ($choice == @charNames) {
 		# 'Create character' chosen
 		$mode = "create";
+
 	} elsif ($choice == @charNames+2) {
 		# 'Move a character slot' chosen
 		$mode = "move";
@@ -1490,8 +1491,7 @@ sub charSelectScreen {
 			goto TOP;
 		}
 
-		my $message = TF("Input new name for %s in format\n".
-			"\"(name)\"", $chars[$charIndex]{name});
+		my $message = TF("Input new name for \"%s\" (4-23 characters)\n", $chars[$charIndex]{name});
 		my $input = $interface->query($message);
 		unless ($input =~ /\S/) {
 			goto TOP;

@@ -536,7 +536,7 @@ sub new {
 		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08D5' => ['char_move_slot_reply', 'v3', [qw(unknown reply moveCount)]],
-		'08E3' => ['char_renamed', 'a4 x74 a*', [qw(charID charInfo)]],
+		'08E3' => ['char_renamed', 'a*', [qw(charInfo)]],
 		'08FD' => ['char_rename_result', 'v x', [qw(result)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5

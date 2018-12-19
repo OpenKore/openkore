@@ -738,7 +738,7 @@ sub received_characters {
 			$character->{exp_job} = join '', reverse split / /, $character->{exp_job};
 			$character->{exp_job} = hex $character->{exp_job};	
 		}
-		debug "AID:$accountID CID:$char->{charID} rename:$character->{addon_rename} move:$character->{slot_addon}\n";
+		debug "rename:$character->{rename_addon} move:$character->{slot_addon}\n";
 
 		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 
@@ -7363,28 +7363,17 @@ sub char_renamed {
 	if (defined $AI::temp::charRenameIndex) {
 		my $charIndex = $AI::temp::charRenameIndex;
 		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
-		my $unpack_string = $self->received_characters_unpackString_Min;
-		my ($name, $str, $agi, $vit, $int, $dex, $luk, $slot, $rename, $unknown, $mapname, $deleteDate,
-			$robe, $slot_addon, $rename2,$charSex) =
-			unpack($unpack_string, $args->{charInfo});
+		my $char_info = $self->received_characters_unpackString;
+		my $character = new Actor::You;
+		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, 0, $masterServer->{charBlockSize}));
+		my $name = bytesToString($character->{name});
 
 		if ($name ne $AI::temp::charRenameName) {
 			error TF("Name mismatch! %s <-> %s\n", $name, $AI::temp::charRenameName), "info";
 		}
 
 		$chars[$charIndex]{name} = $name;
-		$chars[$charIndex]{str} = $str;
-		$chars[$charIndex]{agi} = $agi;
-		$chars[$charIndex]{vit} = $vit;
-		$chars[$charIndex]{int} = $int;
-		$chars[$charIndex]{dex} = $dex;
-		$chars[$charIndex]{luk} = $luk;
-		setCharDeleteDate($charIndex, $deleteDate) if $deleteDate;
-		$chars[$charIndex]{name} = bytesToString($chars[$charIndex]{name});
-		$chars[$charIndex]{robe} = $robe;
-		$chars[$charIndex]{slot_addon} = $slot_addon;
-		$chars[$charIndex]{rename_addon} = $rename2;
-		$chars[$charIndex]{charSex} = $charSex;
+		$chars[$charIndex]{rename_addon} = $character->{rename_addon};
 
 		undef $AI::temp::charRenameIndex;
 		undef $AI::temp::charRenameName;
