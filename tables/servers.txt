@@ -379,22 +379,6 @@ addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 
-# clientside: RagexeRE_2015_11_04a
-# serverside: rAthena
-# For server with Packet Obfuscation is off
-[rAthena - RagexeRE_2015_11_04a]
-ip 127.0.0.1
-port 6900
-private 1
-master_version 2
-version 66
-serverType kRO_RagexeRE_2015_11_04a
-recvpackets recvpackets.txt
-serverEncoding Western
-charBlockSize 147
-addTableFolders kRO/RagexeRE_2015_11_04a;translated;translated/kRO_english;kRO
-pinCode 0
-
 ####################
 # Dead
 
