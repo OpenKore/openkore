@@ -61048,6 +61048,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31530#
+Imponente e grande. Talvez grande até demais... Mas nem pense em fazer piada disso com alguém que está usando esse elmo, afinal, arianos são conhecidos por serem beeem briguentos.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31531#
 Chapéu que Sarakura Dropa-Cartas conquistou após selar a carta de Gêmeos. Ele pode até não ter o poder de duplicar coisas ou pessoas, mas não há dúvidas de que vai te deixar duas vezes mais bonito.
 Tipo: ^777777Visual^000000
@@ -61090,6 +61098,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31568#
+Com origens na filosofia de Kunlun, esses espíritos representam a harmonia do mundo: o bem e o mal, o cheio e o vazio. O equilíbrio dessas forças é o caminho para atingir o potencial máximo do seu Chi.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Meio^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31569#
 Acessório perfeito para os audiófilos: som cristalino, volume alto sem distorcer os instrumentos, além de baixos e graves perfeitos. Tudo isso sem precisar se preocupar com fios! Não dá pra reclamar da tecnologia quando existe uma maravilha dessas, né?
 Tipo: ^777777Visual^000000
@@ -61107,6 +61123,14 @@ Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31575#
+Uma belíssima peruca com um tom bem suave de turquesa, mas muito lindo. Se você quer entrar em termos técnicos mesmo, essa cor tem vários nomes chiques: Tiffany Blue. Sereia. Brisa de Verão. Use-os pra impressionar seus amigos e mostrar como você entende de moda.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 32018#
 Uma lança cuja ponta foi afiada com a minúcia de 1000 artesãos, com o intuito de que o primeiro golpe seja o último.

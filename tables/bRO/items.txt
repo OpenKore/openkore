@@ -7080,13 +7080,16 @@
 31511#Peruca Longa de Gatinho#
 31513#Orelhas do Coelho Minguante#
 31528#Tiara Cósmica#
+31530#Elmo de Áries#
 31531#Chapéu Mágico Duas-Pontas#
 31542#Vaso do Poring Saltitante#
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
+31568#Espíritos Taiji#
 31569#Fones de Última Geração#
 31572#Auréolas Digitais#
+31575#Peruca Turquesa de Waifu#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
