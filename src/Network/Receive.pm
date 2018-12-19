@@ -738,7 +738,6 @@ sub received_characters {
 			$character->{exp_job} = join '', reverse split / /, $character->{exp_job};
 			$character->{exp_job} = hex $character->{exp_job};	
 		}
-		debug "rename:$character->{rename_addon} move:$character->{slot_addon}\n";
 
 		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 

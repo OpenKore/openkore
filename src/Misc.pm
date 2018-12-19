@@ -1194,6 +1194,7 @@ sub charSelectScreen {
 	# An array which maps an index in @charNames to an index in @chars
 	my @charNameIndices;
 	my $mode;
+	my $charSlots;
 
 	# Check system version to delete a character
 	my $charDeleteVersion;
@@ -1250,8 +1251,8 @@ sub charSelectScreen {
 				$messageMapName = sprintf(", %s", $chars[$num]{last_map});
 			}
 		}
-		
-		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
+
+		my $char_str = TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
@@ -1260,7 +1261,9 @@ sub charSelectScreen {
 			$chars[$num]{lv_job},
 			$messageMapName,
 			$messageDeleteDate);
+		push @charNames, $char_str;
 		push @charNameIndices, $num;
+		$charSlots->{$num} = $char_str;
 	}
 
 	if (@charNames) {
@@ -1461,14 +1464,26 @@ sub charSelectScreen {
 			message TF("Character %s cannot be moved.\n", $chars[$charIndex]{name}), "info";
 			goto TOP;
 		}
+		my @available_slots;
+		#TODO:
+		# 1. Check for premium service slots
+		# 2. Overslots. Example char slots are 40 in screen and producible only 6 but players have 27 chars!
+		# 3. Billing slots, idk how it works
+		for (my $i = 0; $i < ($charSvrSet{total_slot} > 0 ? $charSvrSet{total_slot} : $charSvrSet{producible_slot}); $i++) {
+			if ($charSlots->{$i} ne "") {
+				push @available_slots,$charSlots->{$i};
+			} else {
+				push @available_slots, TF("Slot %d: Empty", $i);
+			}
+		}
 		my $choice2 = $interface->showMenu(
 			T("Select the destination slot."),
-			\@charNames,
+			\@available_slots,
 			title => T("Move a character - Destination"));
 		if ($choice2 == -1) {
 			goto TOP;
 		}
-		my $charToIndex = @charNameIndices[$choice2];
+		my $charToIndex = (defined @charNameIndices[$choice2] ? @charNameIndices[$choice2] : $choice2);
 
 		$messageSender->sendCharMoveSlot($charIndex, $charToIndex, $chars[$charIndex]{slot_addon});
 		message TF("Moving character %s from slot %d to %d...\n", $chars[$charIndex]{name}, $charIndex, $charToIndex), "connection";
