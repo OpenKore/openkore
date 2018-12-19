@@ -220,6 +220,8 @@ sub new {
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
+		'08D4' => ['char_move_slot','v3', [qw(fromSlot toSlot movesCount)]],
+		'08FC' => ['char_rename', 'a4 a24', [qw(charID newName)]],
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox

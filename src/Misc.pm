@@ -1447,10 +1447,6 @@ sub charSelectScreen {
 		}
 
 	} elsif ($mode eq "move") {
-		# TODO:
-		# 1. Character still can be moved to empty slot, so list the empty slot too.
-		# 2. Character move maybe fail when try to move to "Not Available" slots.
-		# 3. Character move maybe fail when try to move "Premium Service" or "Billing Service" slots.
 		my $choice = $interface->showMenu(
 			T("Select the character you want to move."),
 			\@charNames,
@@ -1460,7 +1456,7 @@ sub charSelectScreen {
 		}
 		my $charIndex = @charNameIndices[$choice];
 
-		if (!$chars[$charIndex]{moveCount}) {
+		if (!$chars[$charIndex]{slot_addon}) {
 			message TF("Character %s cannot be moved.\n", $chars[$charIndex]{name}), "info";
 			goto TOP;
 		}
@@ -1473,7 +1469,7 @@ sub charSelectScreen {
 		}
 		my $charToIndex = @charNameIndices[$choice2];
 
-		$messageSender->sendCharMoveSlot($charIndex, $charToIndex, $chars[$charIndex]{moveCount});
+		$messageSender->sendCharMoveSlot($charIndex, $charToIndex, $chars[$charIndex]{slot_addon});
 		message TF("Moving character %s from slot %d to %d...\n", $chars[$charIndex]{name}, $charIndex, $charToIndex), "connection";
 		$AI::temp::moveIndex = $charIndex;
 		$AI::temp::moveToIndex = $charToIndex;
@@ -1489,7 +1485,7 @@ sub charSelectScreen {
 		}
 		my $charIndex = @charNameIndices[$choice];
 
-		if (!$chars[$charIndex]{rename}) {
+		if (!$chars[$charIndex]{rename_addon}) {
 			message TF("Character %s cannot be renamed.\n", $chars[$charIndex]{name}), "info";
 			goto TOP;
 		}

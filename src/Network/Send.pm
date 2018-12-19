@@ -3072,7 +3072,12 @@ sub sendCashShopBuy {
 ##
 sub sendCharMoveSlot {
 	my ($self, $from, $to, $count) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'char_move_slot', fromSlot => $from, toSlot => $to, movesCount => $count}));
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_move_slot',
+		fromSlot => $from,
+		toSlot => $to,
+		movesCount => $count
+	}));
 }
 
 sub reconstruct_char_move_slot {
@@ -3087,7 +3092,12 @@ sub reconstruct_char_move_slot {
 ##
 sub sendCharRename {
 	my ($self, $accID, $charID, $newName) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'char_rename', accountID => $accID, charID => $charID, newName => $newName}));
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_rename',
+		accountID => $accID,
+		charID => $charID,
+		newName => $newName
+	}));
 }
 
 sub reconstruct_char_rename {

@@ -738,7 +738,7 @@ sub received_characters {
 			$character->{exp_job} = join '', reverse split / /, $character->{exp_job};
 			$character->{exp_job} = hex $character->{exp_job};	
 		}
-		$character->{addon_rename} = $character->{addon_rename};
+		debug "AID:$accountID CID:$char->{charID} rename:$character->{addon_rename} move:$character->{slot_addon}\n";
 
 		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 
@@ -819,6 +819,8 @@ sub character_creation_successful {
 
 	$character->{exp} = 0;
 	$character->{exp_job} = 0;
+	$character->{rename_addon} = 0;
+	$character->{slot_addon} = 0;
 
 	if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
 
@@ -7323,7 +7325,7 @@ sub char_move_slot_reply {
 			my $movedChar = $chars[$AI::temp::moveIndex]; # Save temp
 			$chars[$AI::temp::moveIndex] = $chars[$AI::temp::moveToIndex];
 			$chars[$AI::temp::moveToIndex] = $movedChar;
-			$chars[$AI::temp::moveToIndex]{moveCount} = $args->{moveCount};
+			$chars[$AI::temp::moveToIndex]{slot_addon} = $args->{slot_addon};
 			undef $AI::temp::moveIndex;
 			undef $AI::temp::moveToIndex;
 		} else {
@@ -7347,7 +7349,7 @@ sub char_move_slot_reply {
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
 	}
-	debug "char_move_slot_reply unknown:$args->{unknown}, reply:$args->{reply}, moveCount:$args->{moveCount}\n", "parseMsg";
+	debug "char_move_slot_reply unknown:$args->{unknown}, reply:$args->{reply}, slot_addon:$args->{slot_addon}\n", "parseMsg";
 }
 
 ##
@@ -7363,7 +7365,7 @@ sub char_renamed {
 		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
 		my $unpack_string = $self->received_characters_unpackString_Min;
 		my ($name, $str, $agi, $vit, $int, $dex, $luk, $slot, $rename, $unknown, $mapname, $deleteDate,
-			$robe, $moveCount, $rename2,$charSex) =
+			$robe, $slot_addon, $rename2,$charSex) =
 			unpack($unpack_string, $args->{charInfo});
 
 		if ($name ne $AI::temp::charRenameName) {
@@ -7380,8 +7382,8 @@ sub char_renamed {
 		setCharDeleteDate($charIndex, $deleteDate) if $deleteDate;
 		$chars[$charIndex]{name} = bytesToString($chars[$charIndex]{name});
 		$chars[$charIndex]{robe} = $robe;
-		$chars[$charIndex]{moveCount} = $moveCount;
-		$chars[$charIndex]{rename} = $rename2;
+		$chars[$charIndex]{slot_addon} = $slot_addon;
+		$chars[$charIndex]{rename_addon} = $rename2;
 		$chars[$charIndex]{charSex} = $charSex;
 
 		undef $AI::temp::charRenameIndex;
@@ -7430,7 +7432,7 @@ sub char_rename_result {
 		error TF("Unknown rename result occured:%d\n", $args->{result});
 	}
 
-	debug "char_rename_result result:$args->{result}\n", "parseMsg";
+	debug "char_rename_result result:$args->{result}\n";
 
 	undef $AI::temp::charRenameIndex;
 	undef $AI::temp::charRenameName;
