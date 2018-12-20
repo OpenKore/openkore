@@ -9977,7 +9977,7 @@ Property: ^808080Neutral^000000
 Weight: ^80808065^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^80808024^000000
-Usable By: ^808080Priest, Monk Jobs, High Priest^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 #
 1808#
 A weapon made in the form of a human fist which effectively inflicts damage on enemies.
@@ -9997,7 +9997,7 @@ Property: ^808080Neutral^000000
 Weight: ^80808050^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^80808024^000000
-Usable By: ^808080Priest, Monk Jobs, High Priest^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Str + 2
 #
 1810#
@@ -11072,18 +11072,15 @@ Requires Level: ^80808030^000000
 Usable By: ^808080Dancer Jobs^000000
 #
 1968#
-^808080A skipping rope with wooden handles.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 120
-Property: Neutral
-Weight: 40
-Weapon Level: 3
-Required Level: 30
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-CRIT + 20
+A skipping rope with wooden handles.
+Class: ^808080Whip^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808040^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Dancer Jobs^000000
+Crit + 20
 #
 1969#
 A wire in which blade fragments are interwoven, making this whip as sharp as a sword.
@@ -11146,32 +11143,26 @@ Adds a 5% chance of casting ^0000FFLevel 3 Frost Nova^000000 on the attacker whe
 Adds a 10% chance of inflicting ^800000Silence^000000 on any target within 11-11 cells of the user when performing a physical attack.
 #
 1974#
-^808080A whip that rewards the wearer when she does her best.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 185
-Property: Neutral
-Weight: 130
-Weapon Level: 4
-Required Level: 70
-Required Job: Gypsy Jobs
-^FFFFFF_^000000
-Adds a 1% chance of casting ^0000FFIncrease AGI^000000 on the target when performing a physical attack, where the level of the skill is equal to the upgrade level of the item up to a maximum upgrade level of 10.
+A whip that rewards those who work the hardest.
+Class: ^808080Whip^000000
+Attack: ^808080185^000000
+Property: ^808080Neutral^000000
+Weight: ^808080130^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Gypsy Jobs^000000
+Adds a 1% chance of casting ^0000FFIncrease Agility^000000 on the user when performing a physical attack, where the level of the skill is equal to the upgrade level of the item up to a maximum upgrade level of 10.
 #
 1976#
-^808080The best of the best whips.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 150
-Property: Neutral
-Weight: 110
-Weapon Level: 4
-Required Level: 65
-Required Job: Dancer Jobs
-^FFFFFF_^000000
-Increases the damage of ^0000FFArrow Vulcan^000000 and ^0000FF^Slinging Arrow^000000 by 10%.
+The best of the best whips.
+Class: ^808080Whip^000000
+Attack: ^808080150^000000
+Property: ^808080Neutral^000000
+Weight: ^808080110^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Dancer Jobs^000000
+Increases the damage of ^0000FFArrow Vulcan^000000 and ^0000FFSlinging Arrow^000000 by 10%.
 #
 1977#
 A whip that has been designed specifically for battles against humans.
@@ -11204,39 +11195,34 @@ Increases the damage of ^0000FFArrow Vulcan^000000 by 20%.
 This item is indestructible in battle.
 #
 1979#
-^808080Strong and flexible whip made of Nepenthes' tentacle.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 120
-Property: Neutral
-Weight: 100
-Weapon Level: 4
-Required Level: 60
-Required Job: Gypsy Jobs
-^FFFFFF_^000000
-INT + 2
+Strong and flexible whip made of Nepenthes tentacle.
+Class: ^808080Whip^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Gypsy Jobs^000000
+Int + 2
+
 Adds a 10% chance of inflicting ^0000FFFrozen^000000 on the target when using ^0000FFSlinging Arrow^000000.
-^FFFFFF_^000000
-If upgrade level is +10 or higher,
+If upgrade level is +9 or higher,
 Adds an additional 10% chance of inflicting ^0000FFFrozen^000000 on the target when using ^0000FFSlinging Arrow^000000.
 #
 1980#
-^808080A balance is attached at the tip of the whip.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 110
-Property: Neutral
-Weight: 70
-Weapon Level: 3
-Required Level: 70
-Required Job: Gypsy Jobs
-^FFFFFF_^000000
-AGI + 2
-DEX + 3
-Knocks the target back 3 cells when using ^0000FFArrow Vulcan^000000.
-Knocks the target back 2 cells when using ^0000FFMelody Strike^000000.
+A balance is attached at the tip of the whip.
+Class: ^808080Whip^000000
+Attack: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Gypsy Jobs^000000
+Agi + 2
+Dex + 3
+
+The target gets knocked back by 2 cells when using ^0000FFSlinging Arrow^000000.
+The target gets knocked back by 3 cells when using ^0000FFArrow Vulcan^000000.
 #
 1981#
 A weapon that has been designed specifically for battles against humans.
@@ -36646,6 +36632,19 @@ Requires Level: ^80808010^000000
 Usable By: ^808080All Jobs^000000
 Reduces damage taken from Water property attacks by 5%.
 #
+5972#
+A parrot can talk well. It seems to help the user's action.
+
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+Matk +1% for every 50 base levels.
+Reduces the variable casting time of skills by 1%. for every 40 base Int.
+
+#
 5973#
 An accessory with the spirit of an ancient elf who loved nature.
 Class: ^808080Headgear^000000
@@ -45164,6 +45163,23 @@ Costume Mobile Pursuit System
 Costume Mecha Cat Ears
 Costume Cyber Income
 Costume Electric Two Sides Up Hair
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+9524#
+When opened gives you one of the following at random,
+Chatty Parrot
+Skin Of Ladon [1]
+Fluffy Fish Shoes
+King Of Spirit Circlet
+Red Baby Dragon Hat [1]
+Dragon Trainer Shoes
+Tree Sprout
+Party Hard Pack
+(8) Blacksmith Blessing
+(6) Battle Manual X3
+(5) Bloody Branch
+^FF0000Account Bound^000000
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
@@ -75422,17 +75438,17 @@ Reduces the cooldown of skills by 10%
 Increases the skill damage bonus of ^0000FFEarth Grave^000000 by 10%.
 Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by 10%.
 
-if refined to +7 or higher
+if upgraded to +7 or higher
 Reduces the cooldown of skills by an additional 5%
 Increases the skill damage bonus of ^0000FFEarth Grave^000000 by an additional 15%.
 Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by an additional 15%.
 
-if refined to +9 or higher
+if upgraded to +9 or higher
 Reduces the cooldown of skills by an additional 5%
 Increases the skill damage bonus of ^0000FFEarth Grave^000000 by an additional 25%.
 Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by an additional 25%.
 
-if refined to +10 or higher
+if upgraded to +10 or higher
 Bypass 100% of hard magic defense of All race targets when performing a magic attack.
 
 if Warmer is learned to level 5 or higher
@@ -75445,12 +75461,6 @@ Increases magic damage on boss monsters by 25%.
 
 for every level of Spirit Sympathy learned
 Reduces the variable casting time of skills by 6%.
-^800080Set Bonus^000000
-^008080Spirit King's Ring^000000
-if Warmer is learned to level 5 or higher
-Increases the cooldown of ^0000FFEarth Grave^000000 by 1 second
-Increases the cooldown of ^0000FFDiamond Dust^000000 by 1 second.
-Increases the cooldown of ^0000FFVaretyr Spear^000000 by 0.5 seconds
 #
 19500#
 #
@@ -81794,13 +81804,13 @@ Agi + 2
 Additional Agi + 1 per 2 upgrade levels of the item up to a maximum upgrade level of 10.
 
 ^800080Set Bonus^000000
-^800080Illusion Ancient Cape [1]^000000
-^800080Illusion Moonlight Dagger [1]^000000
+^008080Illusion Ancient Cape [1]^000000
+^008080Illusion Moonlight Dagger [1]^000000
 ^F4AD42Shadow Chaser Bonus^000000
 Matk + 80
-If ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
+If ^008080Illusion Ancient Cape [1]^000000 and ^008080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
 Additional Matk + 80
-If the combined upgrade levels of ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
+If the combined upgrade levels of ^008080Illusion Ancient Cape [1]^000000 and ^008080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
 Additional Matk + 40
 If the combined upgrade levels are +22 or higher,
 Increases the damage of Fire property magical attacks on targets by 15%.
@@ -82076,6 +82086,33 @@ Additional Max HP + 15%
 Reduces damage taken from Fire property attacks by 50%.
 Reduces damage taken from Shadow property attacks by 100%.
 Immune to ^800000Curse^000000.
+#
+20949#
+A brown dragon's shell with 100 heads guarding a golden apple.
+
+Class: ^808080Garment^000000
+Defense: ^80808015^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Agi + 5
+Vit + 5
+Mdef + 10
+
+Reduces damage taken from Demi-Human and Brute race enemies by 5%.
+Reduces damage taken from Earth and Wind property attacks by 5%.
+
+If upgrade level is +7 or higher,
+Restores 10 SP to the user when a monster is killed by a physical or a long-ranged attack.
+If upgrade level is +8 or higher,
+For every combined sum of 20 base Agi and Vit,
+Atk + 15
+Hit + 15
+If upgrade level is +9 or higher,
+Restores an additional 10 SP to the user when a monster is killed by a physical or a long-ranged attack.
+
+
+
 #
 21001#
 *Stats during WoE & PVP
@@ -82974,14 +83011,31 @@ Increases the experience given from Brute race monsters by 5%.
 Increases the experience given from Brute race monsters by an additional 1% per upgrade level of the item.
 #
 22061#
-Holy spiritual shoes.
-MDefense +3.
-Reduce damage from Holy property attack by 5%.
-Each refine increase MaxHP +1% and MaxSP +1%
-Class : ^777777Shoes^000000 Defense : ^77777712^000000
-Weight : ^77777725^000000
-Required Level : ^77777790^000000
-Job : ^777777All^000000
+A pair of shoes that feel radiant.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808025^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 1% per upgrade level of the item.
+Max SP + 1% per upgrade level of the item.
+Mdef + 3
+Reduces damage taken from Holy property attacks by 5%.
+Increases the drop rate of items by 10% if the user has active vip.
+
+^800080Set Bonus^000000
+^008080Lumiere Shield [1]^000000
+^008080Lumiere Shoes [1]^000000
+Reduces damage taken from Holy race enemies by 5%.
+Reduces damage taken from Holy property attacks by 2% for every upgrade level of ^008080Lumiere Shield [1]^000000.
+
+^800080Set Bonus^000000
+^008080Lumiere Manteau [1]^000000
+^008080Lumiere Shoes [1]^000000
+Increases physical damage on Holy race targets by 5%.
+For every upgrade level of ^008080Lumiere Manteau [1]^000000,
+Max HP + 1%
+Max SP + 1%
 #
 22062#
 ^808080These shoes were worn by a man who made a living out of engineering. They contain the man's many years of experience.^000000
@@ -83847,6 +83901,42 @@ If upgrade level is +7 or higher,
 Additional Max HP + 10%
 Additional Max SP + 10%
 Increases long-ranged damage on targets by an additional 5%.
+#
+22210#
+A popular brand in the Kingdom of Rune Midget, with a fluffy fish print on the shoe.
+
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+MaxHP + 3%
+MaxSP + 3%
+Reduces the variable casting time of ^0000FFFresh Shrimp^000000 by 10% per level of Tasty Shrimp Party known.
+Reduces the variable casting time of ^0000FFBunch of Shrimp^000000 by 10% per level of Tasty Shrimp Party known.
+Reduces the variable casting time of ^0000FFTuna Belly^000000 by 10% per level of Tasty Shrimp Party known.
+Reduces the variable casting time of ^0000FFTuna Party^000000 by 10% per level of Tasty Shrimp Party known.
+Reduces the variable casting time of ^0000FFGrooming^000000 by 10% per level of Tasty Shrimp Party known.
+Reduces the variable casting time of ^0000FFTasty Shrimp Party^000000 by 10% per level of Tasty Shrimp Party known.
+Increases the recovery rate of recovery skills by 10% per level of Purring Known.
+
+
+If Fluffy Fish Shoes upgrade levels are +5 or higher,
+Increases MaxHP an additional + 7%
+Increases MaxSP an additional + 7%
+Reduces the After Cast Delay of skills by 10%.
+If Fluffy Fish Shoes upgrade levels are +7 or higher,
+Increases MaxHP an additional + 10%
+Increases MaxSP an additional + 10%
+Reduces the After Cast Delay of skills by an additional 10%.
+
+If ^0000FFGrooming^000000 is level 5 or higher.
+Reduces fixed casting time of skills by 50%.
+Prevents the user from being knocked back.
+
+If Spirit Of Sea is known
+Immune to ^800000Sleep^000000 for 30 seconds when Grooming is cast.
+Immune to ^800000Stun^000000 for 30 seconds when Grooming is cast.
+Immune to ^800000Stone Curse^000000 for 30 seconds when Grooming is cast.
 #
 22507#
 This old, discolored scroll, sustained with the mana used for maintaining distorted spaces, sends its user to a random space.
@@ -87829,23 +87919,21 @@ Usable By: ^808080Guillotine Cross^000000
 Def + 3
 Flee + 5
 Perfect Dodge + 2
-
 Increases physical damage on Demi-Human race targets by 60%.
 If upgrade level is +9 or higher,
 Additional Flee + 5
 Additional Perfect Dodge + 2
-
 If upgrade level is +10 or higher,
 Atk + 5%
-^800080Set Bonus^000000
-^008080Illusion Infiltrator^000000
-^008080Illusion Ring^000000
-Aspd + 10%
-If Illusion Infiltrator upgrade level is +9 or higher,
-Increases critical damage on targets by 10%.
-If Illusion Infiltrator upgrade level is +11 or higher,
-Increases physical damage on Brute race targets by 25%.
 
+^800080Set Bonus^000000
+^008080Illusion Infiltrator [2]^000000
+^008080Illusion Ring [1]^000000
+Aspd + 10%
+If ^008080Illusion Infiltrator [2]^000000 upgrade level is +9 or higher,
+Increases critical damage on targets by 10%.
+If ^008080Illusion Infiltrator [2]^000000 upgrade level is +11 or higher,
+Increases physical damage on Brute race targets by 25%.
 #
 28023#
 A katar crafted from a ghoul's femur that still radiates a dark, deathly aura.
@@ -89457,17 +89545,17 @@ Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Adds a chance of inflicting ^800000Curse^000000 on the target and the user when performing a short-ranged attack.
+
 ^800080Set Bonus^000000
-^008080Illusion Skull Ring^000000
-^008080Illusion Book of the Apocalypse^000000
+^008080Illusion Skull Ring [1]^000000
+^008080Illusion Book of the Apocalypse [2]^000000
 Aspd + 8%
-Increases critical damage on targets by 5% for every 2 upgrade levels on Illusion Book of the Apocalypse
-If Illusion Book of the Apocalypse upgrade level is +9 or higher,
+Increases critical damage on targets by 5% for every 2 upgrade levels of ^008080Illusion Book of the Apocalypse [2]^000000.
+If ^008080Illusion Book of the Apocalypse [2]^000000 upgrade level is +9 or higher,
 Crit + 15
 Immune to ^800000Curse^000000.
-If Illusion Book of the Apocalypse upgrade level is +11 or higher,
+If ^008080Illusion Book of the Apocalypse [2]^000000 upgrade level is +11 or higher,
 Atk + 100
-
 
 #
 28509#
@@ -89477,18 +89565,17 @@ Weight: ^80808020^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Str + 3
-
 If the user's base Str is 100 or higher,
 Atk + 30
-^800080Set Bonus^000000
-^008080Illusion Infiltrator^000000
-^008080Illusion Ring^000000
-Aspd + 10%
-If Illusion Infiltrator upgrade level is +9 or higher,
-Increases critical damage on targets by 10%.
-If Illusion Infiltrator upgrade level is +11 or higher,
-Increases physical damage on Brute race targets by 25%.
 
+^800080Set Bonus^000000
+^008080Illusion Infiltrator [2]^000000
+^008080Illusion Ring [1]^000000
+Aspd + 10%
+If ^008080Illusion Infiltrator [2]^000000 upgrade level is +9 or higher,
+Increases critical damage on targets by 10%.
+If ^008080Illusion Infiltrator [2]^000000 upgrade level is +11 or higher,
+Increases physical damage on Brute race targets by 25%.
 #
 28510#
 A vampire's familiar.
@@ -89884,17 +89971,17 @@ Increases physical damage on Water, Earth, Fire, and Wind property targets by 10
 Increases physical damage by an additional 10% per 3 upgrade levels of the item up to a maximum upgrade level of 10.
 
 Increases damage taken from Holy property enemies by 30%.
+
 ^800080Set Bonus^000000
-^008080Illusion Skull Ring^000000
-^008080Illusion Book of the Apocalypse^000000
+^008080Illusion Skull Ring [1]^000000
+^008080Illusion Book of the Apocalypse [2]^000000
 Aspd + 8%
-Increases critical damage on targets by 5% for every 2 upgrade levels on Illusion Book of the Apocalypse
-If Illusion Book of the Apocalypse upgrade level is +9 or higher,
+Increases critical damage on targets by 5% for every 2 upgrade levels of ^008080Illusion Book of the Apocalypse [2]^000000.
+If ^008080Illusion Book of the Apocalypse [2]^000000 upgrade level is +9 or higher,
 Crit + 15
 Immune to ^800000Curse^000000.
-If Illusion Book of the Apocalypse upgrade level is +11 or higher,
+If ^008080Illusion Book of the Apocalypse [2]^000000 upgrade level is +11 or higher,
 Atk + 100
-
 #
 28618#
 A book that contains the writings of the Sun God, it has the power to attract materials from space.
@@ -90051,13 +90138,13 @@ If upgrade level is +10 or higher,
 Restores an additional 7 SP to the user when performing a physical attack.
 
 ^800080Set Bonus^000000
-^800080Illusion Ancient Cape [1]^000000
-^800080Illusion Moonlight Dagger [1]^000000
+^008080Illusion Ancient Cape [1]^000000
+^008080Illusion Moonlight Dagger [1]^000000
 ^F4AD42Shadow Chaser Bonus^000000
 Matk + 80
-If ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
+If ^008080Illusion Ancient Cape [1]^000000 and ^008080Illusion Moonlight Dagger [1]^000000 upgrade levels are +7 or higher,
 Additional Matk + 80
-If the combined upgrade levels of ^800080Illusion Ancient Cape [1]^000000 and ^800080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
+If the combined upgrade levels of ^008080Illusion Ancient Cape [1]^000000 and ^008080Illusion Moonlight Dagger [1]^000000 are +18 or higher,
 Additional Matk + 40
 If the combined upgrade levels are +22 or higher,
 Increases the damage of Fire property magical attacks on targets by 15%.
@@ -92353,6 +92440,9 @@ Usable By: ^808080All Jobs^000000
 Increases the recovery rate of ^008080Meat^000000 consumables by 2018%.
 #
 31463#
+Flying drone is called
+Replica for an aircraft
+Backup always here
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -92646,36 +92736,57 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 31569#
+Open air headphones
+To increase concentration
+The sound is flowing
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
 #
 31570#
+Eye of the cyclops
+Replicate eye protection
+No change in vision
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 31571#
+Protect the owner
+A guardian never sleeps
+Always by your side
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 31572#
+Portable pursuit
+Floating and chasing system
+Lighting a fire
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
 #
 31573#
+Mecha neko ears
+Made of hard material
+Mimi cat costume
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 31574#
+Cool cyber color
+A costume for an income
+Essential fashion
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 31575#
+Electric side locks
+Feel like you have brand new hair
+Curl up to the side
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
@@ -92810,6 +92921,53 @@ to wind?earth type monster
 give additional DMG of?15%
 Class : ^777777Accessory^000000 Defense : ^7777770^000000
 Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Equip To : ^777777All Classes^000000
+
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+#
+32242#
+A ring with omnious power.
+It seems that the spirit of the master is resonating with the power nearby.
+
+MDEF + 10
+Reduce incoming damage from Player
+by -3%
+
+When worn together with [Old Wind Whisper], additionally
+ Enable to cast Lv3 [Trample]
+When worn together with [Old Shadow Handicraft], additionally
+increase the damage of [Triangle Shot] by 70%
+When worn together with [Old Protect of Crown], additionally
+increase the damage of [Canon Spear] by 70%
+When worn together with one of following items, additionally
+[Old Driver Band R)]
+Old Driver Band Y
+[increase damage of ],
+[Cold Slower by 70%]
+Flare Launcher by 70%
+When worn together with [Old Dying Swan], additionally
+be immune to stun effect permanently.
+When worn together with [Old Blazing Soul], additionally
+increase damage of [Lightning Ride] by 70%
+When worn together with [Old Circlet of Bone], additionally
+increase Strength by 200 for 10 seconds after casting [Counter Slash]
+When worn together with [Old Magic Stone Hat], additionally
+increase Matk + 100 , reduce cooldown of [Crimson Rock] by 0.5 seconds
+When worn together with [Old Midas Whisper], additionally
+reduce casting delay of [Mandragora Howling] by 100%
+When worn together with [Old Mitra], additionally
+MaxHP + 50%
+When worn together with [Old Minstrel Song Hat], additionally
+be immune to freeze effect permanently.
+When worn together with [Old Camo Rabbit Hat], additionally
+Cri + 70 , Cri DMG + 70%
+When worn togther with [Old Rune Circlet], additionally
+reduce fixed casting time of [Storm Blast] by 100%
+Class : ^777777Accessory^000000 Defense : ^7777770^000000
+Weight : ^7777770^000000
 Required Level : ^777777100^000000
 Equip To : ^777777All Classes^000000
 

@@ -6995,3 +6995,4 @@
 20067#Mercury_Riser_Certificate#
 20068#Pisces_Diadem_Certificate#
 20069#Gemini_Diadem_Certificate#
+20070#Pink_Beanie_Certificate#
