@@ -22385,3 +22385,35 @@ Inform Detective Squirrel and Moose about the sketchy candy wrappers.#
 Looks like you've discovered the source of the mysterious candy. Go back and speak to Jane.#
 
 #
+
+//Sleigh To Yesterday
+
+63233#Sleigh To Yesterday#SG_FEEL#QUE_NOIMAGE#
+
+Gather the materials for Doc Holiday and Marvy McChonChon. They need 20 Ectoplasm, 3 Iron Ore, and 1 Zargon.#
+
+Bring back 20 Ectoplasm, 3 Iron Ore, and 1 Zargon.#
+
+63234#Sleigh To Yesterday#SG_FEEL#QUE_NOIMAGE#
+
+Speak to Doc Holiday again to see if he's completed repairs on the Sledorian.#
+
+Speak to Doc Holiday again.#
+
+63235#Sleigh To Yesterday#SG_FEEL#QUE_NOIMAGE#
+
+Prepare yourself for... time travel???? Speak to Doc Holiday again once you're ready.#
+
+Speak to Doc Holiday again once you're ready.#
+
+63236#Sleigh To Yesterday#SG_FEEL#QUE_NOIMAGE#
+
+You can sleigh back to yesterday in 8 hours.#
+
+You can sleigh back to yesterday in 8 hours.#
+
+63237#Sleigh To Yesterday#SG_FEEL#QUE_NOIMAGE#
+
+Stop Antonio from changing the future!#
+
+Stop Antonio from changing the future!#
