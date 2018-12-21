@@ -1194,6 +1194,7 @@ sub charSelectScreen {
 	# An array which maps an index in @charNames to an index in @chars
 	my @charNameIndices;
 	my $mode;
+	my $charSlots;
 
 	# Check system version to delete a character
 	my $charDeleteVersion;
@@ -1250,8 +1251,8 @@ sub charSelectScreen {
 				$messageMapName = sprintf(", %s", $chars[$num]{last_map});
 			}
 		}
-		
-		push @charNames, TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
+
+		my $char_str = TF("Slot %d: %s (%s, %s, level %d/%d%s)%s",
 			$num,
 			$chars[$num]{name},
 			$jobs_lut{$chars[$num]{'jobID'}},
@@ -1260,7 +1261,9 @@ sub charSelectScreen {
 			$chars[$num]{lv_job},
 			$messageMapName,
 			$messageDeleteDate);
+		push @charNames, $char_str;
 		push @charNameIndices, $num;
+		$charSlots->{$num} = $char_str;
 	}
 
 	if (@charNames) {
@@ -1297,6 +1300,8 @@ sub charSelectScreen {
 		} else {
 			push @choices, T('Delete a character');
 		}
+		push @choices, T('Move a character slot');
+		push @choices, T('Rename a character');
 	} else {
 		message T("There are no characters on this account.\n"), "connection";
       if ($config{char} ne "switch" && defined($char)) {
@@ -1330,6 +1335,12 @@ sub charSelectScreen {
 		# 'Create character' chosen
 		$mode = "create";
 
+	} elsif ($choice == @charNames+2) {
+		# 'Move a character slot' chosen
+		$mode = "move";
+	} elsif ($choice == @charNames+3) {
+		# 'Rename a character' chosen
+		$mode = "rename";
 	} else {
 		# 'Delete character' chosen
 		$mode = "delete";
@@ -1436,6 +1447,84 @@ sub charSelectScreen {
 			$messageSender->sendCharDelete($chars[$charIndex]{charID}, $email);
 			message TF("Deleting character %s...\n", $chars[$charIndex]{name}), "connection";
 			$AI::temp::delIndex = $charIndex;
+			$timeout{charlogin}{time} = time;
+		}
+
+	} elsif ($mode eq "move") {
+		my $choice = $interface->showMenu(
+			T("Select the character you want to move."),
+			\@charNames,
+			title => T("Move a character - Origin"));
+		if ($choice == -1) {
+			goto TOP;
+		}
+		my $charIndex = @charNameIndices[$choice];
+
+		if (!$chars[$charIndex]{slot_addon}) {
+			message TF("Character %s cannot be moved.\n", $chars[$charIndex]{name}), "info";
+			goto TOP;
+		}
+		my @available_slots;
+		#TODO:
+		# 1. Check for premium service slots
+		# 2. Overslots. Example char slots are 40 in screen and producible only 6 but players have 27 chars!
+		# 3. Billing slots, idk how it works
+		for (my $i = 0; $i < ($charSvrSet{total_slot} > 0 ? $charSvrSet{total_slot} : $charSvrSet{producible_slot}); $i++) {
+			if ($charSlots->{$i} ne "") {
+				push @available_slots,$charSlots->{$i};
+			} else {
+				push @available_slots, TF("Slot %d: Empty", $i);
+			}
+		}
+		my $choice2 = $interface->showMenu(
+			T("Select the destination slot."),
+			\@available_slots,
+			title => T("Move a character - Destination"));
+		if ($choice2 == -1) {
+			goto TOP;
+		}
+		my $charToIndex = (defined @charNameIndices[$choice2] ? @charNameIndices[$choice2] : $choice2);
+
+		$messageSender->sendCharMoveSlot($charIndex, $charToIndex, $chars[$charIndex]{slot_addon});
+		message TF("Moving character %s from slot %d to %d...\n", $chars[$charIndex]{name}, $charIndex, $charToIndex), "connection";
+		$AI::temp::moveIndex = $charIndex;
+		$AI::temp::moveToIndex = $charToIndex;
+		$timeout{charlogin}{time} = time;
+
+	} elsif ($mode eq "rename") {
+		my $choice = $interface->showMenu(
+			T("Select the character you want to rename."),
+			\@charNames,
+			title => T("Rename a character"));
+		if ($choice == -1) {
+			goto TOP;
+		}
+		my $charIndex = @charNameIndices[$choice];
+
+		if (!$chars[$charIndex]{rename_addon}) {
+			message TF("Character %s cannot be renamed.\n", $chars[$charIndex]{name}), "info";
+			goto TOP;
+		}
+
+		my $message = TF("Input new name for \"%s\" (4-23 characters)\n", $chars[$charIndex]{name});
+		my $input = $interface->query($message);
+		unless ($input =~ /\S/) {
+			goto TOP;
+		} else {
+			my @args = parseArgs($input);
+			if (@args < 1) {
+				$interface->errorDialog(T("You didn't specify enough parameters."), 0);
+				goto TOP;
+			}
+			if (length $args[0] > 23) {
+				$interface->errorDialog(T("Name must not be longer than 23 characters."), 0);
+				goto TOP;
+			}
+
+			$messageSender->sendCharRename($accountID, $chars[$charIndex]{charID}, $args[0]);
+			message TF("Renaming character \"%s\" to \"%s\"...\n", $chars[$charIndex]{name}, $args[0]), "connection";
+			$AI::temp::charRenameIndex = $charIndex;
+			$AI::temp::charRenameName = $args[0];
 			$timeout{charlogin}{time} = time;
 		}
 	}

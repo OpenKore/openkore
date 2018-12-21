@@ -818,6 +818,8 @@ sub character_creation_successful {
 
 	$character->{exp} = 0;
 	$character->{exp_job} = 0;
+	$character->{rename_addon} = 0;
+	$character->{slot_addon} = 0;
 
 	if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
 
@@ -7309,6 +7311,127 @@ sub cash_dealer {
 			"list");
 	}
 	message("-----------------------------------------------------\n", "list");
+}
+
+##
+# 08D5 <unknown>.W <Reply>.W <MoveCountLeft>.W
+# @author [Cydh]
+##
+sub char_move_slot_reply {
+	my ($self, $args) = @_;
+	if ($args->{reply} == 0) {
+		if (defined $AI::temp::moveIndex) {
+			message TF("Character %s moved from %d to %d.\n", $chars[$AI::temp::moveIndex]{name}, $AI::temp::moveIndex, $AI::temp::moveToIndex), "info";
+			my $movedChar = $chars[$AI::temp::moveIndex]; # Save temp
+			$chars[$AI::temp::moveIndex] = $chars[$AI::temp::moveToIndex];
+			$chars[$AI::temp::moveToIndex] = $movedChar;
+			$chars[$AI::temp::moveToIndex]{slot_addon} = $args->{slot_addon};
+			undef $AI::temp::moveIndex;
+			undef $AI::temp::moveToIndex;
+		} else {
+			message T("Character moved.\n"), "info";
+			relog(10);
+			return;
+		}
+	} else {
+		if (defined $AI::temp::moveIndex) {
+			message TF("Failed to move character %s from %d to %d.\n", $chars[$AI::temp::moveIndex]{name}, $AI::temp::moveIndex, $AI::temp::moveToIndex), "info";
+			undef $AI::temp::moveIndex;
+			undef $AI::temp::moveToIndex;
+		} else {
+			message T("Failed to move a character slot.\n"), "info";
+		}
+	}
+
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+	debug "char_move_slot_reply unknown:$args->{unknown}, reply:$args->{reply}, slot_addon:$args->{slot_addon}\n", "parseMsg";
+}
+
+##
+# 08E3 <charID>.L <unknown>.74B <CharInfo>.66B
+# CharInfo: 'Z24 C8 v Z16 V4'
+# @author [Cydh]
+##
+sub char_renamed {
+	my ($self, $args) = @_;
+
+	if (defined $AI::temp::charRenameIndex) {
+		my $charIndex = $AI::temp::charRenameIndex;
+		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
+		my $char_info = $self->received_characters_unpackString;
+		my $character = new Actor::You;
+		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, 0, $masterServer->{charBlockSize}));
+		my $name = bytesToString($character->{name});
+
+		if ($name ne $AI::temp::charRenameName) {
+			error TF("Name mismatch! %s <-> %s\n", $name, $AI::temp::charRenameName), "info";
+		}
+
+		$chars[$charIndex]{name} = $name;
+		$chars[$charIndex]{rename_addon} = $character->{rename_addon};
+
+		undef $AI::temp::charRenameIndex;
+		undef $AI::temp::charRenameName;
+
+		if (charSelectScreen() == 1) {
+			$net->setState(3);
+			$firstLoginMap = 1;
+			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+			$sentWelcomeMessage = 1;
+		}
+	} else {
+		message T("Character renamed.\n"), "info";
+		relog(10);
+		return;
+	}
+
+	debug "char_renamed result:$args->{result}\n", "parseMsg";
+}
+
+##
+# 08FD <Result>.W <unknown>.W
+# @author [Cydh]
+##
+sub char_rename_result {
+	my ($self, $args) = @_;
+
+	# 0: Success
+	if ($args->{result} == 0 && defined $AI::temp::charRenameIndex) {
+		my $charIndex = $AI::temp::charRenameIndex;
+		message TF("Character \"%s\" renamed to \"%s\"\n", $chars[$charIndex]{name}, $AI::temp::charRenameName), "info";
+		return;
+	# 4: Fail already exists
+	} elsif ($args->{result} == 4) {
+		error TF("Cannot rename character to \"%s\". Name is already exists.\n", $AI::temp::charRenameName);
+	# 5: Fail in guild
+	} elsif ($args->{result} == 5) {
+		error TF("To rename a character you must withdraw from the guild.\n");
+	# 5: Fail in party
+	} elsif ($args->{result} == 6) {
+		error TF("To rename a character you must withdraw from the party.\n");
+	# 9: Invalid name
+	} elsif ($args->{result} == 9) {
+		error TF("Invalid new name \"%s\".\n", $AI::temp::charRenameName);
+	} else {
+		error TF("Unknown rename result occured:%d\n", $args->{result});
+	}
+
+	debug "char_rename_result result:$args->{result}\n";
+
+	undef $AI::temp::charRenameIndex;
+	undef $AI::temp::charRenameName;
+
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 1;

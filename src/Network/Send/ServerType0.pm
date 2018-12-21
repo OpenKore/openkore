@@ -260,6 +260,8 @@ sub new {
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
+		'08D4' => ['char_move_slot','v3', [qw(fromSlot toSlot movesCount)]],
+		'08FC' => ['char_rename', 'a4 a24', [qw(charID newName)]],
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],

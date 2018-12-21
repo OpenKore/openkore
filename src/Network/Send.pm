@@ -3076,4 +3076,45 @@ sub sendStopSkillUse {
 	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
 	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
 }
+
+##
+# Move character slot
+# 08D4 <FromSlot>.W <ToSlot>.W <MovesCount>.W
+# @author [Cydh]
+##
+sub sendCharMoveSlot {
+	my ($self, $from, $to, $count) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_move_slot',
+		fromSlot => $from,
+		toSlot => $to,
+		movesCount => $count
+	}));
+}
+
+sub reconstruct_char_move_slot {
+	my ($self, $args) = @_;
+	debug "Move character slot from $args->{from} to $args->{to}. Move chance $args->{movesCount}\n", "sendPacket";
+}
+
+##
+# Request to rename char
+# 08FC <charID>.L <newName>.24B
+# @author [Cydh]
+##
+sub sendCharRename {
+	my ($self, $accID, $charID, $newName) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'char_rename',
+		accountID => $accID,
+		charID => $charID,
+		newName => $newName
+	}));
+}
+
+sub reconstruct_char_rename {
+	my ($self, $args) = @_;
+	debug "Renaming character to $args->{newName} CID:".unpack("V",$args->{charID})."/AID:".unpack("V",$args->{accountID})."\n", "sendPacket";
+}
+
 1;
