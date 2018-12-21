@@ -6996,3 +6996,4 @@
 20068#Pisces_Diadem_Certificate#
 20069#Gemini_Diadem_Certificate#
 20070#Pink_Beanie_Certificate#
+20071#Rudolph_Santa_Hat_Certificate#
