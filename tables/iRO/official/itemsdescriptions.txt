@@ -7214,7 +7214,7 @@ SP Recovery + 5%
 ^008080Principles of Magic [2]^000000
 ^008080Librarian Glove [1]^000000
 ^008080Pocket Watch^000000 or ^008080Pocket Watch [1]^000000
-Additional Int + 5
+Int + 5
 Max HP + 700
 Aspd + 5%
 #
@@ -11244,51 +11244,42 @@ If upgrade level is +9 or higher,
 Adds a 10% chance of casting ^0000FFLevel 5 Tarot Card of Fate^000000 on the target when using ^0000FFArrow Vulcan^000000.
 #
 1984#
-^808080A flexible whip made of renovated plant stem.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 170
-Property: Neutral
-Weight: 80
-Weapon Level: 3
-Required Level: 102
-Required Job: Wanderer
-^FFFFFF_^000000
-MATK + 50
-Variable Casting Time - 2 for ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000.
-Reduces the SP cost of ^0000FFLullaby^000000 and ^0000FFWindmill Rush^000000 by 4 per upgrade level of the item past the upgrade level of 6.
+A flexible whip made of renovated plant stem.
+Class: ^808080Whip^000000
+Attack: ^808080170^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080102^000000
+Usable By: ^808080Wanderer^000000
+Reduces the variable casting time of ^0000FFSwing Dance^000000 and ^0000FFDeep Sleep Lullaby^000000 by 2 seconds.
+Reduces the SP cost of ^0000FFSwing Dance^000000 and ^0000FFDeep Sleep Lullaby^000000 by 4 per upgrade level of the item past the upgrade level of 5.
 #
 1985#
-^808080A whip of alluring fragrance made of a magical rose stem.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 100
-Property: Neutral
-Weight: 100
-Weapon Level: 4
-Required Level: 110
-Required Job: Wanderer
-^FFFFFF_^000000
-INT + 2
-AGI - 2
-MATK + 130
+A whip of alluring fragrance made of a magical rose stem.
+Class: ^808080Whip^000000
+Attack: ^808080100^000000
+Magic Attack: ^808080130^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Wanderer^000000
+Int + 2
+Agi - 2
 Adds a 0.01% chance of casting ^0000FFLevel 1 Siren's Voice^000000 on the target when performing a physical attack.
 #
 1986#
-^808080A whip that is made by the Eden Group. It is suitable for those who have more advanced experience as Dancers.^000000
+A whip that is made by the Eden Group. It is suitable for those who have more advanced experience as Dancers.
 ^FF0000Character Bound^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 125
-Property: Neutral
-Weight: 0
-Weapon Level: 3
-Required Level: 60
-Required Job: Dancer Jobs
-^FFFFFF_^000000
+Class: ^808080Whip^000000
+Attack: ^808080125^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Dancer Jobs^000000
 This item cannot be upgraded.
 #
 1987#
@@ -11306,93 +11297,53 @@ Increases physical damage on players by 40%.
 Adds a 10% chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
 #
 1988#
-^808080This two-handed magic spear, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Whip
-Attack: 200
-Property: Neutral
-Weight: 220
-Weapon Level: 4
-Required Level: 120
-Required Job: Wanderer
-^FFFFFF_^000000
-VIT + 6
-INT + 6
-LUK - 6
-MATK + 130
-Increases long-ranged damage on targets by 20%.
+This two-handed magic spear, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard. It offers incredible power and mana at a great cost.
+Class: ^808080Whip^000000
+Attack: ^808080200^000000
+Magic Attack: ^808080130^000000
+Property: ^808080Neutral^000000
+Weight: ^808080220^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080120^000000
+Usable By: ^808080Wanderer^000000
+Vit + 6
+Int + 6
+Luk - 6
+
 Adds a 5% chance of restoring 5% of damage as HP when performing a physical attack.
 Adds a 1% chance of restoring 5% of damage as SP when performing a physical attack.
+Increases long-ranged damage on targets by 20%.
 Drains 100 HP from the user every 10 seconds.
+
 Drains 1000 HP from the user when the item is unequipped.
-This whip, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
-It offers incredible power and mana at a great cost.
-INT +6. VIT +6. LUK -6.
-Creates a low chance of regaining HP and SP from 5% of your damage dealt while you are Physically attacking.
-+20% Ranged Physical damage.
-Consumes 100 HP every 10 seconds.
-Consumes 1,000 HP when unequipped.
-MATK +130.
-Class : ^777777Whip^000000
-Attack  : ^777777200^000000
-Weight : ^777777220^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777120^000000
-Job : ^777777Wanderer^000000
 #
 1989#
-^808080A component of rhythmic gymnastics.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 150
-Property: Neutral
-Weight: 30
-Weapon Level: 3
-Required Level: 130
-Required Job: Wanderer
-^FFFFFF_^000000
-MATK + 120
-ASPD + 20%
 A component of rhythmic gymnastics.
-MATK +120.
-Increases Attack Speed. (-20% post-attack delay)
-Class: ^777777Whip^000000 ATK: ^777777150^000000
-Weight: ^77777730^000000
-Weapon Level: ^7777773^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Wanderer^000000
+Class: ^808080Whip^000000
+Attack: ^808080150^000000
+Magic Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^80808030^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Wanderer^000000
+Aspd + 20%
 #
 1990#
-^808080IGU's whip plus microphone. It looks a bit menacing.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Instrument
-Attack: 160
-Property: Neutral
-Weight: 100
-Weapon Level: 4
-Required Level: 130
-Required Job: Wanderer
-^FFFFFF_^000000
-Reduces the SP cost of ^0000FFMoonlit Serenade^000000 by 20.
-^FFFFFF_^000000
+Flower-decorated whip comes with a microphone, used by Aigu. It looks a bit menacing.
+Class: ^808080Whip^000000
+Attack: ^808080160^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Wanderer^000000
+Reduces the SP cost of ^0000FFMoonlight Serenade^000000 by 20.
+
 ^800080Set Bonus^000000
 ^008080Floral Bracelet Of Igu [1]^000000
 ^008080Floral Mic Of Igu [2]^000000
 Increases the damage of ^0000FFArrow Vulcan^000000 by 200%.
-Increases the SP cost of ^0000FFArrow Vulcan^000000 by 50.
-IGU's whip plus microphone. It looks a bit menacing.
-Moonlit Serenade consumes -SP 20.
-When equipped with IGU's Floral Bracelet,
-Arrow Vulcan damage +200%
-Arrow Vulcan increase consumed SP 50.
-Class: ^777777Whip^000000 ATK: ^777777160^000000
-Weight: ^777777100^000000
-Weapon Level: ^7777774^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Wanderer^000000
 #
 1991#
 ^808080A blue whip with huge power.
@@ -11488,24 +11439,22 @@ Matk + 50
 Additional Matk + ((upgrade level * upgrade level) / 2) up to a maximum upgrade level of 15.
 #
 2000#
-^808080A tremendously powerful Two-Handed Staff that can only be wielded by someone who is spiritually strong.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Two-Handed Staff
-Attack: 130
-Property: Neutral
-Weight: 250
-Weapon Level: 4
-Required Level: 80
-Required Job: High Wizard Jobs
-^FFFFFF_^000000
-AGI + 10
-INT + 3
-MATK + 280
-Variable Casting Time - 50% for ^0000FFMystic Amplification^000000.
-Adds a 2% chance of casting ^0000FFLevel 5 Jupitel Thunder^000000 on the target when performing a physical attack per upgrade level of the item.
-MATK + 1% per 2 upgrade levels of the item.
+A tremendously powerful Two-Handed Staff that can only be wielded by someone who is spiritually strong.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^808080130^000000
+Magic Attack: ^808080280^000000
+Property: ^808080Neutral^000000
+Weight: ^808080250^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080High Wizard Jobs^000000
+Agi + 10
+Int + 3
+
+Reduces the variable casting time of ^0000FFMystical Amplification^000000 by 50%.
+Matk + 1% per 2 upgrade levels of the item.
 Increases the SP cost of skills by 2% per upgrade level of the item.
+Adds a 2% chance of casting ^0000FFLevel 5 Jupitel Thunder^000000 on the attacker when receiving a physical attack per upgrade level of the item.
 #
 2001#
 This staff is made
@@ -11553,27 +11502,38 @@ Adds a 20% chance of casting ^0000FFLevel 10 Safety Wall^000000 on the user when
 #
 2004#
 This piece's upper part is decorated with a golden dragon and a crystal with strong magical power compressed into it. It looks nice, but it's too heavy to easily carry around.
-Matk +240, Int +3, MaxHP +300
-For every 2 refine Levels, Int +1, MaxHP +50.
-When attacking with a magical spell has a chance of adding Matk +12% and consumed SP decreases by 20% for 5 seconds.
-Class : ^777777Two-Handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^777777100^000000
-Weapon Level:^7777774^000000
-Required Level : ^77777750^000000
-Job : ^777777Transcendent Mage Classes^000000
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080240^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080High Wizard Jobs, Scholar Jobs^000000
+Int + 3
+Max HP + 300
+
+For every 2 upgrade levels of the item,
+Additional Int  + 1.
+Additional Max HP + 50.
+
+Adds a chance of buffing the user for 5 seconds when performing a magical attack;
+Matk + 12%
+Increases the SP cost of skills by 20%.
 #
 2005#
 The image of the Sacred Goddess of Light is carved onto this long staff.
-Matk + 220, Int +6, Vit +2. Holy Elemental.
-Has a chance of Recovering 200 SP when using 'Heal'.
-Increases  Matk by 1% for every refine level.
-Class : ^777777Two-Handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^777777100^000000
-Weapon Level:^7777773^000000
-Required Level : ^77777750^000000
-Job : ^777777Transcendent Acolyte Classes^000000
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080220^000000
+Property: ^808080Holy^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080High Priest Jobs, Champion Jobs^000000
+Int + 6
+Vit + 2
+Adds a chance of restoring 200 SP to the user when using ^0000FFHeal^000000.
+Matk + 1% per 2 upgrade level of the item.
 #
 2006#
 A staff that possesses holy force and holds bright sunshine in it.
@@ -11585,101 +11545,180 @@ Required Level : ^77777760^000000
 Jobs : ^777777Mage Class^000000
 #
 2007#
-A magic staff charged with whirling power of wind.
-Increases the effectiveness of Jupitel Thunder by 12%.
-INT + 3, MATK + 230.
-When you equip a whole set of Golden Rod items - the staff, the robe, the shoes, and the orb, the effectiveness of all the wind spells is increased by 40%, the effectiveness of all the earth spells is decreased by 30%, and resistance to earth attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000 Attack : ^77777730^000000
-Weight : ^77777790^000000 Property : ^777777Wind^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A magic staff charged with whirling power of the wind.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080230^000000
+Property: ^808080Wind^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 3
+Increases the damage of ^0000FFJupitel Thunder^000000 by 12%.
+
+^800080Set Bonus^000000
+^008080Golden Rod Staff [2]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 40%.
+Reduces the damage of Earth property magical attacks on targets by 30%.
+Increases damage taken from Earth property attacks by 50%.
 #
 2008#
-A magic staff charged with freezing power of water.
-Increases the effectiveness of Cold Bolt and Frost Diver by 10%.
-INT + 3, MATK + 230.
-When you equip a whole set of Aqua items - the staff, the robe, the shoes, and the orb, the effectiveness of all the water spells is increased by 40%, the effectiveness of all the wind spells is decreased by 30%, and resistance to wind attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000 Attack : ^77777730^000000
-Weight : ^77777790^000000 Weight : ^777777Water^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A magic staff charged with the freezing power of water.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080230^000000
+Property: ^808080Water^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 3
+Increases the damage of ^0000FFCold Bolt^000000 and ^0000FFFrost Driver^000000 by 10%.
+
+^800080Set Bonus^000000
+^008080Aqua Staff [2]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 40%.
+Reduces the damage of Wind property magical attacks on targets by 30%.
+Increases damage taken from Wind property attacks by 50%.
 #
 2009#
-A magic staff charged with blazing power of fire.
-Increases the effectiveness of Fire Bolt and Fire Ball by 10%.
-INT + 3, MATK + 230.
-When you equip a whole set of Crimson items - the staff, the robe, the shoes, and the orb, the effectiveness of all the fire spells is increased by 40%, the effectiveness of all the water spells is decreased by 30%, and resistance to water attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000 Attack : ^77777730^000000
-Weight : ^77777790^000000 Weight : ^777777Fire^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A magic staff charged with the blazing power of fire.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080230^000000
+Property: ^808080Fire^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 3
+Increases the damage of ^0000FFFire Bolt^000000 and ^0000FFFire Ball^000000 by 10%.
+
+^800080Set Bonus^000000
+^008080Crimson Staff [2]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 40%.
+Reduces the damage of Water property magical attacks on targets by 30%.
+Increases damage taken from Water property attacks by 50%.
 #
 2010#
-A magic staff charged with massive power of earth.
-Increases the effectiveness of Earth Spike and Heaven's Drive by 10%.
-INT + 3, MATK + 230.
-When you equip a whole set of Forest items - the staff, the robe, the shoes, and the orb, the effectiveness of all the earth spells is increased by 40%, the effectiveness of all the fire spells is decreased by 30%, and resistance to fire attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000 Attack : ^77777730^000000
-Weight : ^77777790^000000 Weight : ^777777Earth^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A magic staff charged with massive power of the earth.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080230^000000
+Property: ^808080Earth^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 3
+Increases the damage of ^0000FFEarth Spike^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+
+^800080Set Bonus^000000
+^008080Forest Staff [2]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 40%.
+Reduces the damage of Fire property magical attacks on targets by 30%.
+Increases damage taken from Fire property attacks by 50%.
 #
 2011#
-A magic staff charged with massive power of wind.
-Increase Jupitel Thunder damage by 30%.
-INT + 5, MATK + 270.
-If worn with Golden Robe, Golden Shoes, and Golden Orb Increase Wind Magic damage by 60%.
-Lower Earth Magic damage by 60% and resistance to Earth by 50%.
-Type : ^777777Two-handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^77777790^000000
-Element : ^777777Wind^000000
-Weapon Level : ^7777774^000000 ^ff0000
-Required Level : ^777777130^000000
-Job : ^777777Warlock^000000
+A magic staff charged with massive power of the wind.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080270^000000
+Property: ^808080Wind^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Warlock^000000
+Int + 5
+Increases the damage of ^0000FFJupitel Thunder^000000 by 30%.
+
+^800080Set Bonus^000000
+^008080Empowered Golden Rod Staff [1]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 60%.
+Reduces the damage of Earth property magical attacks on targets by 60%.
+Increases damage taken from Earth property attacks by 50%.
 #
 2012#
-A magic staff charged with freezing power of water.
-Increases the effectiveness of Cold Bolt and Frost Diver by 30%.
-INT + 5, MATK + 270.
-When you equip a whole set of Aqua items - the staff, the robe, the shoes, and the orb, the effectiveness of all the water spells is increased by 60%, the effectiveness of all the wind spells is decreased by 60%, and resistance to wind attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^77777790^000000
-Element : ^777777Water^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777130^000000
-Job : ^777777Warlock^000000
+A magic staff charged with the freezing power of water.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080270^000000
+Property: ^808080Water^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Warlock^000000
+Int + 5
+Increases the damage of ^0000FFCold Bolt^000000 and ^0000FFFrost Driver^000000 by 30%.
+
+^800080Set Bonus^000000
+^008080Empowered Aqua Staff [1]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 60%.
+Reduces the damage of Wind property magical attacks on targets by 60%.
+Increases damage taken from Wind property attacks by 50%.
 #
 2013#
-A magic staff charged with blazing power of fire.
-Increases the effectiveness of Fire Bolt and Fire Ball by 30%.
-INT + 5, MATK + 270.
-When you equip a whole set of Crimson items - the staff, the robe, the shoes, and the orb, the effectiveness of all the fire spells is increased by 60%, the effectiveness of all the water spells is decreased by 60%, and resistance to water attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^77777790^000000
-Element : ^777777Fire^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777130^000000
-Job : ^777777Warlock^000000
+A magic staff charged with the blazing power of fire.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080270^000000
+Property: ^808080Fire^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Warlock^000000
+Int + 5
+Increases the damage of ^0000FFFire Bolt^000000 and ^0000FFFire Ball^000000 by 30%.
+
+^800080Set Bonus^000000
+^008080Empowered Crimson Staff [1]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 60%.
+Reduces the damage of Water property magical attacks on targets by 60%.
+Increases damage taken from Water property attacks by 50%.
 #
 2014#
-A magic staff charged with massive power of earth.
-Increases the effectiveness of Earth Spike and Heaven's Drive by 30%.
-INT + 5, MATK + 270.
-When you equip a whole set of Forest items - the staff, the robe, the shoes, and the orb, the effectiveness of all the earth spells is increased by 60%, the effectiveness of all the fire spells is decreased by 60%, and resistance to fire attacks is decreased by 50%.
-Type : ^777777Two-handed Staff^000000
-Attack : ^77777730^000000
-Weight : ^77777790^000000
-Element : ^777777Earth^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777130^000000
-Job : ^777777Warlock^000000
+A magic staff charged with massive power of the earth.
+Class: ^808080Two-Handed Staff^000000
+Attack: ^80808030^000000
+Magic Attack: ^808080270^000000
+Property: ^808080Earth^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Warlock^000000
+Int + 5
+Increases the damage of ^0000FFEarth Spike^000000 and ^0000FFHeaven's Drive^000000 by 30%.
+
+^800080Set Bonus^000000
+^008080Empowered Forest Staff [1]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 60%.
+Reduces the damage of Fire property magical attacks on targets by 60%.
+Increases damage taken from Fire property attacks by 50%.
 #
 2016#
 *Stats during WoE & PVP
@@ -11741,13 +11780,14 @@ Job: ^777777Warlock^000000
 #
 2022#
 It seems to be old because of how dusty it is. An ancient language is carved into the wood of the handle.
-INT + 20, MATK + 300.
-Class : ^777777Two Hands  Staff^000000
-Attack : ^777777100^000000
-Weight : ^777777100^000000
-Weapon Level : ^7777771^000000
-Required Level : ^777777150^000000
-Jobs : ^777777HighWizardClass^000000
+Class: ^808080Two-Handed Staff^000000
+Attack: ^808080100^000000
+Magic Attack: ^808080300^000000
+Weight: ^808080100^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^808080150^000000
+Usable By: ^808080High Wizard Jobs^000000
+Int + 20
 #
 2023#
 This magic staff, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -11824,131 +11864,128 @@ Dex + 2
 Additional Int + 1 and Dex + 1 for every 2 upgrade levels of the item up to a maximum upgrade level of 10.
 #
 2101#
-A square shield
-that is small, yet
-effective in combat.
-Class : ^777777Shield^000000
-Defense : ^77777720^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+A square shield that is small, yet effective in combat.
+Class: ^808080Shield^000000
+Defense: ^80808020^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2102#
-A square shield
-that is small, yet
-effective in combat.
-Class : ^777777Shield^000000
-Defense : ^77777740^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+A square shield that is small, yet effective in combat.
+Class: ^808080Shield^000000
+Defense: ^80808020^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2103#
-A rounded shield
-that readily absorbs
-impact from attacks.
-Class : ^777777Shield^000000
-Defense : ^77777740^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman, Acolyte, Merchant, and Thief
-Classes; Bard and
-Dancer Jobs^000000
+A rounded shield that readily absorbs impact from attacks.
+Class: ^808080Shield^000000
+Defense: ^80808040^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Acolyte Jobs, Bard Jobs, Dancer Jobs^000000
 #
 2104#
-A rounded shield
-that readily absorbs
-impact from attacks.
-Class : ^777777Shield^000000
-Defense : ^77777740^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman, Acolyte, Merchant, and Thief
-Classes; Bard and
-Dancer Jobs^000000
+A rounded shield that readily absorbs impact from attacks.
+Class: ^808080Shield^000000
+Defense: ^80808040^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Acolyte Jobs, Bard Jobs, Dancer Jobs^000000
 #
 2105#
-A well crafted shield
-which most kinds of^FFFFFF      ^000000 attack cannot penetrate.
-Class : ^777777Shield^000000
-Defense : ^77777760^000000
-Weight : ^777777130^000000
-Jobs: ^777777Swordman Class^000000
+A well crafted shield which most kinds of attacks cannot penetrate.
+Class: ^808080Shield^000000
+Defense: ^80808060^000000
+Weight: ^808080130^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2106#
-A well crafted shield
-which most kinds of^FFFFFF      ^000000 attack cannot penetrate.
-Class : ^777777Shield^000000
-Defense : ^77777760^000000
-Weight : ^777777130^000000
-Jobs: ^777777Swordman Class^000000
+A well crafted shield which most kinds of attacks cannot penetrate.
+Class: ^808080Shield^000000
+Defense: ^80808060^000000
+Weight: ^808080130^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2107#
-A shield with a
-surface constructed
-of mirror that might
-reflect harmful magic.
-MDEF + 5
-Class : ^777777Shield^000000
-Defense : ^77777745^000000
-Weight : ^777777100^000000
-Jobs: ^777777Swordman Class and Taekwon Master^000000
+A shield with a surface constructed of mirror that might reflect harmful magic.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Taekwon Master^000000
+Mdef + 5
 #
 2108#
-A shield with a
-surface constructed
-of mirror that might
-reflect harmful magic.
-MDEF + 5
-Class : ^777777Shield^000000
-Defense : ^77777745^000000
-Weight : ^777777100^000000
-Jobs: ^777777Swordman Class and Taekwon Master^000000
+A shield with a surface constructed of mirror that might reflect harmful magic.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Taekwon Master^000000
 #
 2109#
-A magic book filled
-with long, impractical spells that is so large, it can actually be used
-just like a shield.
-Int +1 , MDEF +2
-Class : ^777777Shield^000000
-Defense: ^77777725^000000
-Weight : ^777777100^000000
-Jobs: ^777777Mage Class and Soul Linker^000000
+A magic book filled with long, impractical spells that is so large, it can actually be used just like a shield.
+Class: ^808080Shield^000000
+Defense: ^80808025^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Int +1
+Mdef + 2
+^800080Set Bonus^000000
+^008080Memory Book^000000
+^008080Monocle^000000 or ^008080Monocle [1]^000000
+^008080Pocket Watch^000000 or ^008080Pocket Watch [1]^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
 #
 2110#
 A blessed guard with God's symbol engraved on it.
-Vit +2, MDEF +2, Unavailable for item upgrade
-Class : ^777777Shield^000000
-Defense : ^777777110^000000
-Weight : ^777777140^000000
-Required Level : ^77777768^000000
-Jobs : ^777777Crusader^000000
+Class: ^808080Shield^000000
+Defense: ^808080110^000000
+Weight: ^808080140^000000
+Requires Level: ^80808068^000000
+Usable By: ^808080Crusader Jobs^000000
+Vit + 2
+Mdef + 2
+
+This item cannot be upgraded.
 #
 2111#
 A symbolic shield, rumored to have been given from God to his messenger.
-Int +2, Vit +3, MDEF +3, Indestructible
-Class : ^777777Shield^000000
-Defense : ^777777120^000000
-Weight : ^777777160^000000
-Required Level : ^77777783^000000
-Jobs : ^777777Crusader^000000
+Class: ^808080Shield^000000
+Defense: ^808080120^000000
+Weight: ^808080160^000000
+Requires Level: ^80808083^000000
+Usable By: ^808080Crusader Jobs^000000
+Int + 2
+Vit + 3
+Mdef + 3
+This item is indestructible in battle.
 #
 2112#
 An exclusive shield for new adventurers.
-Impossible to refine this item.
-Class : ^777777Shield^000000    Defense : ^77777720^000000
-Weight : ^7777770.1^000000
-Required Level : ^777777NA^000000
-Jobs : ^777777Novice^000000
+Class: ^808080Shield^000000
+Defense: ^80808020^000000
+Weight: ^8080800.1^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs^000000
+This item cannot be upgraded.
 #
 2113#
-A cute shield made
-out of a special metal
-for the Novice class.
-Reduce all property
-damage by 20%, with
-the exception of Neutral property damage.
-Class : ^777777Shield^000000
-Defense: ^77777720^000000
-Weight : ^777777100^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Novice Class^000000
+A cute shield made out of a special metal for the Novice class.
+Class: ^808080Shield^000000
+Defense: ^80808020^000000
+Weight: ^808080100^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Novice Jobs^000000
+Reduces damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost, and Undead property attacks by 20%.
 #
 2114#
 A stone shield which
@@ -12003,168 +12040,131 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 2116#
-Super Novice Guardian
-Angel's shield which
-contains holy power that
-can nullify evil. Reduces
-damage from Demon
-monsters by 5%.
-^6A5ACDAngel's Protection Set^000000
-^3CB371Angel's Kiss^000000
-^3CB371Angelic Protection^000000
-^3CB371Angelic Cardigan^000000
-^3CB371Angel's Reincarnation^000000
-^3CB371Angelic Guard^000000
-HP +900
-SP +100
-A low Chance of casting
-level 1 Assumptio
-when attacked physically.
-Class : ^777777Shield^000000
-Defense: ^77777730^000000
-Weight : ^77777750^000000
-Required Level : ^77777720^000000
-Jobs: ^777777Novice Class^000000
+Super Novice Guardian Angel's shield which contains holy power that can nullify evil.
+Class: ^808080Shield^000000
+Defense: ^80808030^000000
+Weight: ^80808050^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080Novice Jobs^000000
+Reduces damage taken from Demon race enemies by 5%.
+
+^800080Set Bonus^000000
+^008080Angelic Cardigan [1]^000000
+^008080Angelic Protection [1]^000000
+^008080Angel's Reincarnation [1]^000000
+^008080Angelic Guard [1]^000000
+^008080Angel's Kiss [1]^000000
+Max HP + 900
+Max SP + 100
+Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2117#
-A wrist protector,
-designed exclusively
-for the Ninja class,
-that is padded with
-a steel plate for
-increased defense
-and durability.
-Class : ^777777Shield^000000
-Defense :^77777750^000000
-Weight : ^77777715^000000
-Required Level : ^77777720^000000
-Jobs :^777777Ninja^000000
+A wrist protector, designed exclusively for the Ninja class, that is padded with a steel plate for increased defense and durability.
+Class: ^808080Shield^000000
+Defense: ^80808050^000000
+Weight: ^80808015^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080Ninja Jobs^000000
 #
 2118#
-A wrist protector,
-designed exclusively
-for the Ninja class,
-that is padded with
-a steel plate for
-increased defense
-and durability.
-Class : ^777777Shield^000000
-Defense : ^77777750^000000
-Weight : ^77777715^000000
-Required Level : ^77777720^000000
-Jobs :^777777Ninja^000000
+A wrist protector, designed exclusively for the Ninja class, that is padded with a steel plate for increased defense and durability.
+Class: ^808080Shield^000000
+Defense: ^80808050^000000
+Weight: ^80808015^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080Ninja Jobs^000000
 #
 2119#
-A wrist protector,
-designed exclusively
-for the Ninja class,
-that has been enhanced
-with high Magic Defense^FFFFFF  ^000000 by a gifted artisan.
-MDEF +5.
-Class : ^777777Shield^000000
-Defense : ^77777745^000000
-Weight : ^77777715^000000
-Required Level : ^77777750^000000
-Jobs :^777777Ninja^000000
+A wrist protector, designed exclusively for the Ninja class, that has been enhanced with high Magic Defense by a gifted artisan.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^80808015^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Ninja Jobs^000000
+Mdef + 5
 #
 2120#
-A wrist protector,
-designed exclusively
-for the Ninja class,
-that has been enhanced
-with high Magic Defense^FFFFFF  ^000000 by a gifted artisan.
-MDEF +5.
-Class : ^777777Shield^000000
-Defense : ^77777745^000000
-Weight : ^77777715^000000
-Required Level : ^77777750^000000
-Jobs :^777777Ninja^000000
+A wrist protector, designed exclusively for the Ninja class, that has been enhanced with high Magic Defense by a gifted artisan.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^80808015^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Ninja Jobs^000000
+Mdef + 5
 #
 2121#
-A spellbook that is
-impractically huge,
-and more useful as
-a shield than as a
-spell reference.
-Int +1, MDEF +2
-Class : ^777777Shield^000000
-Defense: ^77777725^000000
-Weight : ^777777100^000000
-Jobs: ^777777Mage Class;
-Soul Linker Job^000000
+A spellbook that is impractically huge, and more useful as a shield than as a spell reference.
+Class: ^808080Shield^000000
+Defense: ^80808025^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Int + 1
+Mdef + 2
+
+^800080Set Bonus^000000
+^008080Memory Book [1]^000000
+^008080Monocle^000000 or ^008080Monocle [1]^000000
+^008080Pocket Watch^000000 or ^008080Pocket Watch [1]^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
 #
 2122#
-A magnificent
-platinum shield that
-is rumored to be able
-to reflect harmul magic. Reduces damage from
-Mid and Large sized
-monsters by 15%, and
-reduces damage from
-Undead monsters by
-10%. Has a 40% chance
-to reflect magic for
-2 seconds with each
-magic spell attack.
-MDEF +5
-Class : ^777777Shield^000000
-Defense : ^77777795^000000
-Weight : ^777777120^000000
-Required Level : ^77777768^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A magnificent platinum shield that is rumored to be able to reflect harmful magic.
+Class: ^808080Shield^000000
+Defense: ^80808095^000000
+Weight: ^808080120^000000
+Requires Level: ^80808068^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 5
+Reduces damage taken from medium and large size enemies by 15%.
+Reduces damage taken from Undead property enemies by 10%.
+Adds a 40% chance to reflect magical attacks back to the attacker for 2 seconds.
 #
 2123#
-A shiny, round steel
-plate used for serving
-food. 5% chance of
-reflecting magic.
-MDEF +2. Variable Casting Time
-reduced by 10% when
-worn with Orlean's
-Gloves.
-Class : ^777777Shield^000000
-Defense : ^77777775^000000
-Weight : ^777777100^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A shiny, round steel plate used for serving food.
+Class: ^808080Shield^000000
+Defense: ^80808075^000000
+Weight: ^808080100^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 2
+Adds a 5% chance to reflect magical attacks that do not target the ground back to the attacker.
+
+^800080Set Bonus^000000
+^008080Orleans's Server [1]^000000
+^008080Orleans's Glove [1]^000000
+Reduces the variable casting time of skills by 10%.
+
+^800080Set Bonus^000000
+^008080Orleans's Server [1]^000000
+^008080Orleans's Necklace [1]^000000
+Matk + 2 per upgrade level of ^008080Orleans's Server [1]^000000.
 #
 2124#
-A rough shield
-covered in spikes
-that deters rushing
-enemies. MDEF +2.
-When worn with
-Bison Horn:
-^6A5ACDBison Set^000000
-^3CB371Thorny Buckler^000000
-^3CB371Bison Horn^000000
-+10% Aspd Bonus
-+5% Reflect Melee damage
-Class : ^777777Shield^000000
-Defense : ^77777785^000000
-Weight : ^777777100^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A rough shield covered in spikes that deters rushing enemies.
+Class: ^808080Shield^000000
+Defense: ^80808085^000000
+Weight: ^808080100^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 2
+^800080Set Bonus^000000
+^008080Thorny Buckler [1]^000000
+^008080Bison Horn [1]^000000
+Aspd + 10%
+Reflects 5% of the received short-ranged damage back to the attacker.
 #
 2125#
-A massive shield
-that can withstand
-any attack, but it lacks shock absorption.
-Prevents knock-back
-effect, but increases
-Physical and Magic
-damage to the
-wearer by 20%.
-Class : ^777777Shield^000000
-Defense : ^77777790^000000
-Weight : ^777777250^000000
-Required Level : ^77777775^000000
-Jobs: ^777777Transcendent
-Swordman, Merchant,
-and Thief Classes^000000
+A massive shield that can withstand any attack, but it lacks shock absorption.
+Class: ^808080Shield^000000
+Defense: ^80808090^000000
+Weight: ^808080250^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Prevents the user from being knocked back.
+Increases damage taken from physical and magical attacks by 20%.
 #
 2126#
 placeholder
@@ -12174,12 +12174,15 @@ placeholder
 #
 2128#
 A symbolic shield, rumored to have been given from God to his messenger.
-Int +2, Vit +3, MDEF +3, Indestructible
-Class : ^777777Shield^000000
-Defense : ^777777120^000000
-Weight : ^777777160^000000
-Required Level : ^77777783^000000
-Jobs : ^777777Crusader^000000
+Class: ^808080Shield^000000
+Defense: ^808080120^000000
+Weight: ^808080160^000000
+Requires Level: ^80808083^000000
+Usable By: ^808080Crusader Jobs^000000
+Int + 2
+Vit + 3
+Mdef + 3
+This item is indestructible in battle.
 #
 2129#
 A thick book that contains basic skills for the clergy.
@@ -12200,24 +12203,25 @@ Increases the damage of ^0000FFMagnus Exorcismus^000000 by 20%.
 #
 2130#
 A big and thick cross-shaped shield.
-Str + 1.
-Increase SP Consumption of skills by 10%.
-Increases damage when using ^FF0000Rapid Smiting^000000 and ^FF0000Shield Boomerang^000000 by 30%.
-Item Clsss : ^777777Shield^000000
-Defense : ^777777130^000000
-Weight : ^777777200^000000
-Required Level : ^77777780^000000
-Jobs : ^777777Crusader Jobs^000000
+Class: ^808080Shield^000000
+Defense: ^808080130^000000
+Weight: ^808080200^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Crusader Jobs^000000
+Str + 1
+Increases the SP cost of skills by 10%.
+Increases the damage of ^0000FFShield Boomerang^000000 and ^0000FFRapid Smiting^000000 by 30%.
 #
 2131#
 A thick book which is full of unknown words. It seems to be published in series.
-MDEF + 3. Int + 2.
-Has a chance of inflicting the ^FF0000Stun^000000 status when receiving physical damage.
-Class : ^777777Shield^000000
-Defense : ^77777718^000000
-Weight : ^777777100^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Transcendent Mage Classes/Soul Linker^000000
+Class: ^808080Shield^000000
+Defense: ^80808018^000000
+Weight: ^808080100^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080High Wizard Jobs, Scholar Jobs, Soul Linker^000000
+Int + 2
+Mdef + 3
+Adds a chance of inflicting ^800000Stun^000000 on the attacker when receiving a physical attack.
 #
 2132#
 ^000088Rental Item^000000
@@ -12232,14 +12236,20 @@ Jobs: ^777777All^000000
 #
 2133#
 A Shield that a lance can be placed on top of. Very efficient to defend oneself while attacking with a lance.
-Damage increases by 1% against all monsters.
-When equipped with Long Horn, Battle Hook, or Hunting Spear, damage increases by 4% against all monsters.
-If equipped by a Lord Knight, Attack speed decreases(Delay after attacking increasesby 5%)
-Class : ^777777Shield^000000
-Defense : ^777777105^000000
-Weight : ^777777100^000000
-Required Level : ^77777750^000000
-Jobs : ^777777Transcendent Swordman Class^000000
+Class: ^808080Shield^000000
+Defense: ^808080105^000000
+Weight: ^808080100^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+Atk + 1%
+^F4AD42Lord Knight Bonus^000000
+Aspd - 5%
+
+^800080Set Bonus^000000
+^008080Tournament Shield [1]^000000
+^008080Long Horn [1]^000000 or ^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000
+Atk + 4%
+Def + 2
 #
 2134#
 A hard, firm-looking shield made from the scales of Naga. The scales are as sharp as blades.
@@ -12263,16 +12273,16 @@ Required Level : ^77777770^000000
 Jobs : ^777777Stalker^000000
 #
 2136#
-A cracked shield used for the October Upgrading Event.
-All stats -5
-Equip and let 'Spooky Machine' upgrade it to give you prizes.
-^FF0000Warning: If this item is refined with normal methods i.e. Elunium, the Spooky Machine will not take those levels into consideration when giving out prizes^000000
-Will Disappear ^00CC00November 1st^000000
-Class : ^777777Shield^000000
-Defense : ^7777770^000000
-Weight : ^777777100^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+A cracked shield used for the Spooky Machine Upgrading Event. Equip and let 'Spooky Machine' upgrade it to give you prizes.
+^FF0000Character Bound^000000
+^FF0000Warning: If this item is refined with normal methods i.e. Elunium, the Spooky Machine will not take those levels into consideration when giving out prizes.
+Only Valid during active event periods.^000000
+Class: ^808080Shield^000000
+Defense: ^8080800^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats - 5
 #
 2137#
 ^000088Rental Item^000000
@@ -12287,30 +12297,33 @@ Jobs : ^777777All Transcendent Jobs except Novice^000000
 #
 2138#
 A heavy and strong shield made out of Bradium.
-MaxHP + 500, Agi -1.
-The attack power of the skill 'Shield Boomerang' increases by 60%.
-Class : ^777777Shield^000000
-Defense : ^77777798^000000
-Weight : ^777777180^000000
-Required Level : ^77777765^000000
-Job : ^7777772nd Transcendent Job Classes^000000
+Class: ^808080Shield^000000
+Defense: ^80808098^000000
+Weight: ^808080180^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi - 1
+Max HP + 500
+Increases the damage of ^0000FFShield Boomerang^000000 by 60%.
 #
 2139#
-It sends out a hot flames that it burns enemies out in a short time.
-Class : ^777777Shield^000000
-Defense : ^77777760^000000
-Weight : ^777777200^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Mechanic only^000000
+It sends out hot flames that it burns enemies out in a short time.
+Class: ^808080Shield^000000
+Defense: ^80808060^000000
+Weight: ^808080200^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Mechanic^000000
+This item cannot be upgraded.
 #
 2140#
 A wing-shaped guard nailed with a luxurious bluish energy rune. A clear energy comes out that stimulates spirit.
-MaxSP +2
-Class : ^777777Shield^000000
-Defense : ^77777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777770^000000
-Jobs : ^777777Swordman Class^000000
+^FF0000Character Bound^000000
+Class: ^808080Shield^000000
+Defense: ^80808070^000000
+Weight: ^8080800^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight^000000
+Max SP + 2
 #
 2141#
 ^000088Rental Item^000000
@@ -12350,28 +12363,27 @@ Jobs : ^777777All^000000
 #
 2146#
 A shield which is a guard covered with thin layer of mixed silver and steel. It looks good when it reflects light.
-Class : ^777777Shield^000000
-Defense : ^77777760^000000
-Weight : ^77777730^000000
-Required Level : ^77777722^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Shield^000000
+Defense: ^80808060^000000
+Weight: ^80808030^000000
+Requires Level: ^80808022^000000
+Usable By: ^808080All Jobs^000000
 #
 2147#
-A round-shape shield that is used generally. It has heightened a defense power by adding ernium thick at the round part.
-Class : ^777777Shield^000000
-Defense : ^77777790^000000
-Weight : ^77777760^000000
-Required Level : ^77777722^000000
-Jobs : ^777777All Transcendent Jobs except Novice^000000
+A round shaped shield for common use. Its defense is strengthened by a thick layer of Elunium at the edges.
+Class: ^808080Shield^000000
+Defense: ^80808090^000000
+Weight: ^80808060^000000
+Requires Level: ^80808022^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
 #
 2148#
-A shield made by crafting the metal from the Ash Vacuum.
-It looks like a bloomed flower due to the metal pieces rounded on it.
-Class : ^777777Shield^000000
-Defense : ^777777130^000000
-Weight : ^777777130^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Rune Knight and Royal Guard^000000
+A shield made by crafting the metal from the Ash Vacuum. It looks like a bloomed flower due to the metal pieces rounded on it.
+Class: ^808080Shield^000000
+Defense: ^808080130^000000
+Weight: ^808080130^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight, Royal Guard^000000
 #
 2149#
 MHP + 3%
@@ -12463,13 +12475,13 @@ Reduces damage taken from Undead property attacks by 2% per upgrade level of ^00
 #
 2160#
 Made similar to a Giant's shield that was an Ancient Temple guardian.
-Reduces damage from big monsters by 5%.
-If upgraded to Level 9 or higher, adds additional 5% reduction.
-Class : ^777777Shield^000000
-Defense : ^777777130^000000
-Weight : ^777777280^000000
-Required Level : ^777777100^000000
-Job : ^7777773rd job Swordman classes^000000
+Class: ^808080Shield^000000
+Defense: ^808080130^000000
+Weight: ^808080280^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight, Royal Guard^000000
+Reduces damage taken from large size enemies by 5%.
+If upgrade level is +9 or higher, reduces damage taken by an additional 5%.
 #
 2161#
 One of Geffenia's secret treasures. There are not many people who can use this shield's magic.
@@ -12533,56 +12545,90 @@ Reduces damage taken from Earth property attacks by 2% per upgrade level of ^008
 #
 2168#
 Very unique, square formed shield with a special jewel on it which protects from physical power.
-If upgraded to +5 or higher, increases 1% of tolerance against Neutral attack. (The tolerance increase is limited to refine level 12) per refine level.
-If upgraded to +7 increased tolerance against Neutral by 5%
-If upgraded to +9 or higher increases tolerance to Water, Earth, Fire, and Wind by 5%
-Class : ^777777Shield^000000
-Defense : ^77777755^000000
-Weight : ^77777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Shield^000000
+Defense: ^80808055^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Neutral property attacks by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 12.
+
+If upgrade level is +7 or higher,
+Reduces damage taken from Neutral property attacks by an additional 5%.
+
+If upgrade level is +9 or higher,
+Reduces damage taken from Water, Earth, Fire and Wind property attacks by 5%.
 #
 2169#
 Sturdy yet light, practical shield made from rattan.
-1% damage decrease from boss monsters per
-3 refinement.
-If Kalasag, Buwaya Sack Cloth, Bakonawa Scale Armor, and Bangungot Boots of Nightmare are obtained, damage decreased by 30%, and MHP increases at +20%, and MSP by +10% by from all monsters within Philippine Localizing.
-Class : ^777777Shield^000000
-Defense : ^77777740^000000
-Weight : ^77777740^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Shield^000000
+Defense: ^80808040^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from boss monsters by 1% per 3 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Kalasag^000000
+^008080Buwaya Sack Cloth^000000
+^008080Bakonawa Scale Armor^000000
+^008080Bangungot Boots of Nightmare^000000
+Max HP + 20%
+Max SP + 10%
+Reduces damage taken from Malaya monsters by 30%.
 #
 2170#
 Sturdy yet light, practical shield made from rattan.
-1% damage decrease from boss monsters per 3 refinement.
-Class : ^777777Shield^000000
-Defense : ^77777740^000000
-Weight : ^77777740^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Shield^000000
+Defense: ^80808040^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from boss monsters by 1% per 3 upgrade levels of the item.
 #
 2171#
 Armguard with a charming fox drawing. You feel swift when wearing this.
-FLEE + 5.
-Class : ^777777Shield^000000    Defense : ^77777745^000000
-Weight : ^77777720^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Flee + 5
+^800080Set Bonus^000000
+^008080Fox Armguard [1]^000000
+^008080Special Ninja Suit^000000 or ^008080Special Ninja Suit [1]^000000
+Agi + 2
 #
 2172#
 Armguard with a threatening wolf drawing. You feel indiscriminating wild instincts when wearing this.
-ATK +100, FLEE -50 for 5 seconds with Physical Atk.
-Class : ^777777Shield^000000    Defense : ^77777770^000000
-Weight : ^77777725^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Class: ^808080Shield^000000
+Defense: ^80808070^000000
+Weight: ^80808025^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Adds a chance of buffing the user for 5 seconds when performing a physical attack;
+Atk + 100
+Flee - 50
+
+^800080Set Bonus^000000
+^008080Wolf Armguard [1]^000000
+^008080Ninja Scale Armor [1]^000000
+Str + 2
+Atk + 10%
 #
 2173#
 Armguard with a glowing crescent moon drawing. You feel a sense of mystical fullness when wearing this.
-Reduces delay by 2% per 1 Refine after skill is used.
-Class : ^777777Shield^000000    Defense : ^77777745^000000
-Weight : ^77777725^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^80808025^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Reduces the global delay of skills by 2% per upgrade level of the item.
+
+^800080Set Bonus^000000
+^008080Crescent Armguard [1]^000000
+^008080Tenebris Latitantes [1]^000000
+Flee + 10
+Perfect Dodge + 10
 #
 2174#
 Holy spiritual magical shield.
@@ -12721,15 +12767,16 @@ Aspd - 5%
 #
 2185#
 This anti-magic shield effectively reflects magic.
-MDEF +10.
-Creates a 3% chance of reflecting single-target attack spells.
-Additional +3% magic-reflecting chance when upgraded to +7.
-Additional +3% magic-reflecting chance when upgraded to +9.
-Class : ^777777Shield^000000
-Defense : ^77777750^000000
-Weight : ^777777100^000000
-Required Level : ^77777799^000000
-Job : ^777777All Classes^000000
+Class: ^808080Shield^000000
+Defense: ^80808050^000000
+Weight: ^808080100^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
+
+Adds a 3% chance to reflect magical attacks that do not target the ground back to the attacker.
+If upgrade level is +7 or higher, additional 3% chance to reflect magical attacks.
+If upgrade level is +9 or higher, additional 3% chance to reflect magical attacks.
 #
 2186#
 A revised edition of an encyclopedia that is printed by a Prontera publisher. Thick and sharp-edged, this book is popularly used as a shield.
@@ -12774,14 +12821,18 @@ For every upgrade level of the item,
 Reduces damage taken from Holy property attacks by an additional 1%.
 #
 2188#
-The name of this shield surrounded by chilling cold energy means "freeze."
-+10% resistance against Water attacks.
-Every 3 upgrade levels increase Max HP by 1% and Water Resistance by 5%.
-MDEF +5.
-Class : ^777777Shield^000000 Defense : ^77777780^000000
-Weight : ^77777750^000000
-Req Lev : ^77777765^000000
-Job : ^777777All^000000
+The name of this shield surrounded by chilling cold energy means 'freeze'.
+Class: ^808080Shield^000000
+Defense: ^80808080^000000
+Weight: ^80808050^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Reduces damage taken from Water property attacks by 10%.
+
+For every 3 upgrade levels of the item,
+Max HP + 1%
+Reduces damage taken from Water property attacks by an additional 5%.
 #
 2189#
 A rag doll that Piamette is using for both attack and defense? It looks so real and alive!
@@ -12961,415 +13012,357 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 2206#
-A transparent veil
-worn by brides on the
-day of their wedding.
-MDEF + 5
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Female Only
-All^000000
+A transparent veil worn by brides on the day of their wedding.
+Class: ^808080Headgear^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
 #
 2207#
-A floral decoration
-used to adorn the head. Reduces damage from
-Plant monsters by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^^000000
-Jobs: ^777777All^000000
+A floral decoration used to adorn the head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Plant race enemies by 10%.
 #
 2208#
-A hairpin made from
-indigo blue satin that
-wards off harmful magic. MDEF + 3
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A hairpin made from indigo blue satin that wards off harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 3
 #
 2209#
-A hairpin made from
-indigo blue satin that
-wards off harmful magic. MDEF + 3
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A hairpin made from indigo blue satin that wards off harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 3
 #
 2210#
-A simple hairband that
-holds hair in place quite neatly. It's a very cute
-look for girls, but dudes, on the other hand...
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A simple cute looking hairband that holds hair in place quite neatly.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2211#
-A common, ivory
-colored bandana.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A common, ivory colored bandana.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2212#
-A patch used to
-cover one eye.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A patch used to cover one eye.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2213#
-A hairband that gives
-one the appearance of
-having ears like a cat.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A hairband that gives one the appearance of having ears like a cat.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2214#
-A hairband that gives
-one the appearance
-of having rabbit ears,
-a lasting symbol of
-extremely good luck.
+A hairband that gives one the appearance of having rabbit ears, a lasting symbol of extremely good luck.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Luk + 2
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
 #
 2215#
-A fragrant hairband
-crafted from only the
-daintiest of flowers.
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A fragrant hairband crafted from only the daintiest of flowers.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2216#
-A stiff, squarish
-formal hat usually
-worn by clerics.
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Acolyte Class^000000
+A stiff, squarish formal hat usually worn by clerics.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
 #
 2217#
-A stiff, squarish
-formal hat usually
-worn by clerics.
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Acolyte Class^000000
+A stiff, squarish formal hat usually worn by clerics.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
 #
 2218#
-A mask that is worn
-by people with the flu
-to prevent spreading
-sickness to others.
-Adds 10% resistance
-to the Silence status.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A mask that is worn by people with the flu to prevent spreading sickness to others.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases resistance to ^800000Silence^000000 by 10%.
 #
 2219#
-A mask that is worn
-by people with the flu
-to prevent spreading
-sickness to others.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A mask that is worn by people with the flu to prevent spreading sickness to others.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2220#
 A simple, pink hat.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2221#
 A simple, pink hat.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2222#
-A small, tight
-fitting headdress
-made of fine silk.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A small, tight fitting headdress made of fine silk.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2223#
-A small, tight
-fitting headdress
-made of fine silk.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A small, tight fitting headdress made of fine silk.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2224#
-A pair of goggles
-designed for pilots
-in order to reduce
-vision impairment
-when traveling at
-very high speeds.
-Class : ^777777Headgear^000000
-Location : ^777777Upper, Mid^000000
-Defense : ^7777775^000000
-Weight : ^77777730^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-and Thief Classes^000000
+A pair of goggles designed for pilots in order to reduce vision impairment when traveling at very high speeds.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs^000000
 #
 2225#
 A pair of Goggles especially created for pilots to reduce impaired vision while riding at high speeds.
-Class : ^777777Headgear^000000
-Location : ^777777Upper & Mid^000000
-Defense : ^7777775^000000
-Weight : ^77777730^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-and Thief Classes^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs^000000
 #
 2226#
-A brimless hat that
-offers very little in
-the way of fashion,
-but does provide
-decent defense.
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-and Thief Classes^000000
+A brimless hat that offers very little in the way of fashion, but does provide decent defense.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs^000000
 #
 2227#
-A brimless hat that
-offers very little in
-the way of fashion,
-but does provide
-decent defense.
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-and Thief Classes^000000
+A brimless hat that offers very little in the way of fashion, but does provide decent defense.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs^000000
 #
 2228#
-This steel helmet,
-made in the style worn
-by roman soldiers, offers great protection, covering
-most of the head.
-Class : ^777777Headgear^000000
-Defense : ^77777713^000000
-Location : ^777777Upper^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman Class^000000
+This steel helmet, made in the style worn by roman soldiers, offers great protection, covering most of the head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808013^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2229#
-This steel helmet,
-made in the style worn
-by roman soldiers, offers great protection, covering
-most of the head.
-Class : ^777777Headgear^000000
-Defense : ^77777713^000000
-Location : ^777777Upper^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman Class^000000
+This steel helmet, made in the style worn by roman soldiers, offers great protection, covering most of the head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808013^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2230#
-A jeweled headdress
-that wards off harmful
-magic. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+A jeweled headdress that wards off harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Mdef + 3
 #
 2231#
-A jeweled headdress
-that wards off harmful
-magic. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+A jeweled headdress that wards off harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Mdef + 3
 #
 2232#
-A jeweled, metal
-band worn on the head
-that wards off the effects of harmful magic. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777776^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Mage,
-Acolyte Classes, and Soul Linker^000000
+A jeweled, meta band worn on the head hat wards off the effects of harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Mdef + 3
 #
 2233#
-A jeweled, metal
-band worn on the head
-that wards off the effects of harmful magic. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777776^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Mage,
-Acolyte Classes, and Soul Linker^000000
+A jeweled, metal band worn on the head that wards off the effects of harmful magic.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Mdef + 3
 #
 2234#
-A jeweled coronet said
-to grant the wisdom of
-an ancient queen that
-had worn it. Int +2
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Female Only
-All except Novice Job^000000
+A jeweled coronet said to grant the wisdom of an ancient queen that had worn it.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808040^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 2
 #
 2235#
-A crown adorned with
-gorgeous jewels that
-is said to be worn by a wise, ancient king who
-will grant his wisdom
-to the wearer. Int +2
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Male Only
-All except Novice Job^000000
+A crown adorned with gorgeous jewels that is said to be worn by a wise, ancient king who will grant his wisdom to the wearer.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808040^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 2
 #
 2236#
-A red, pompom topped
-cap that is associated
-with Santa Claus's
-legend. It brings luck
-and magic protection
-to whoever wears it.
-MDEF + 1 , Luk + 1
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A red, pompom topped cap that is associated with Santa Claus's legend. It brings luck and magic protection to whoever wears it.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 1
+Mdef + 1
 #
 2237#
 #
 2238#
 #
 2239#
-An aristrocratically
-stylish lense that is
-worn for only one eye.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+An aristocratically stylish lens that is worn for only one eye.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^008080Memory Book^000000 or ^008080Memory Book [1]^000000
+^008080Monocle^000000
+^008080Pocket Watch^000000 or ^008080Pocket Watch [1]^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
 #
 2240#
 #
 2241#
-A white colored
-moustache, symbol
-of experience and well
-aged sophistication.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A white colored mustache, symbol of experience and well aged sophistication.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2242#
-High quality
-sunglasses that
-effectively block
-glare from the sun.
-Adds 10% resistance
-to the ^880000Blind^000000 status.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+High quality sunglasses that effectively block glare from the sun.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases resistance to ^800000Blind^000000 by 10%.
 #
 2243#
-A pair of glasses
-that make the wearer's
-eyes look like they're
-spinning without focus. Adds 15% resistance
-to the ^880000Blind^000000 status.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A pair of glasses that make the wearer's eyes look like they're spinning without focus.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases resistance to ^800000Blind^000000 by 15%.
 #
 2244#
-An over-sized red
-ribbon that contains
-hidden magical power.
-MDEF + 3
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Jobs: ^777777Every Job
-except Novice^000000
+An over-sized red ribbon that contains hidden magical power.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef + 3
 #
 2245#
 A dark colored and
@@ -14617,25 +14610,23 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 2355#
-Super Novice Guardian Angel's robe. MDEF + 20.
-^ffffff_^000000
-^6A5ACDAngel's Protection Set^000000
-^3CB371Angel's Kiss^000000
-^3CB371Angelic Protection^000000
-^3CB371Angelic Cardigan^000000
-^3CB371Angel's Reincarnation^000000
-^3CB371Angelic Guard^000000
-HP +900
-SP +100
-A low Chance of casting
-level 1 Assumptio
-when attacked physically.
-^ffffff_^000000
-Class : ^777777Armor^000000
-Defense: ^77777725^000000
-Weight : ^77777760^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Novice Class^000000
+Super Novice Guardian Angel's robe.
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^80808060^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Novice Jobs^000000
+Mdef + 20
+
+^800080Set Bonus^000000
+^008080Angelic Cardigan [1]^000000
+^008080Angelic Protection [1]^000000
+^008080Angel's Reincarnation [1]^000000
+^008080Angelic Guard [1]^000000
+^008080Angel's Kiss [1]^000000
+Max HP + 900
+Max SP + 100
+Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2356#
 A blessed holy robe
@@ -14738,21 +14729,19 @@ Swordman and
 Merchant Classes^000000
 #
 2365#
-A uniform that was
-once worn by a chef
-that was obsessed
-with cleanliness.
-Nobody could stop
-him once he started
-talking about cuisine.
-Wearer's magic cannot
-be interrupted (except during WoE) at the cost of increasing Cast Time by 15%.
-Class : ^777777Armor^000000
-Defense : ^77777715^000000
-Weight : ^77777730^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A uniform that was once worn by a chef that was obsessed with cleanliness. Nobody could stop him once he started talking about cuisine.
+Class: ^808080Armor^000000
+Defense: ^80808015^000000
+Weight: ^80808030^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Increases the variable casting time of skills by 15%.
+The users casting cannot be interrupted outside of WoE.
+
+^800080Set Bonus^000000
+^008080Orleans's Gown [1]^000000
+^008080Orleans's Necklace [1]^000000
+Reduces the variable casting time of skills by 15%.
 #
 2366#
 A holy garment that
@@ -15388,28 +15377,23 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 2420#
-Heavenly sandals worn
-by the Guardian Angel
-of Super Novices.
-Max HP + 100.
-^ffffff_^000000
-^6A5ACDAngel's Protection Set^000000
-^3CB371Angel's Kiss^000000
-^3CB371Angelic Protection^000000
-^3CB371Angelic Cardigan^000000
-^3CB371Angel's Reincarnation^000000
-^3CB371Angelic Guard^000000
-HP +900
-SP +100
-A low Chance of casting
-level 1 Assumptio
-when attacked physically.
-^ffffff_^000000
-Class : ^777777Footwear^000000
-Defense: ^7777778^000000
-Weight : ^77777770^000000
-Required Level : ^77777725^000000
-Jobs: ^777777Novice Class^000000
+Heavenly sandals worn by the Guardian Angel of Super Novices.
+Class: ^808080Shoes^000000
+Defense: ^8080808^000000
+Weight: ^80808070^000000
+Requires Level: ^80808025^000000
+Usable By: ^808080Novice Jobs^000000
+Max HP + 100
+
+^800080Set Bonus^000000
+^008080Angelic Cardigan [1]^000000
+^008080Angelic Protection [1]^000000
+^008080Angel's Reincarnation [1]^000000
+^008080Angelic Guard [1]^000000
+^008080Angel's Kiss [1]^000000
+Max HP + 900
+Max SP + 100
+Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2421#
 A pair of shoes worn
@@ -15865,36 +15849,120 @@ Required Level : ^777777105^000000
 Jobs : ^777777Wanderer Only^000000
 #
 2467#
-A pair of golden long boots imbued with power of wind.
-MDEF + 2, MHP + 500, Increases resistance to wind attacks by 15%.
-Type : ^777777Shoes^000000 Defense : ^77777712^000000
-Weight : ^77777750^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A pair of golden long boots imbued with the power of the wind.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Max HP + 500
+Mdef + 2
+Reduces damage taken from Wind property attacks by 15%.
+
+^800080Set Bonus^000000
+^008080Golden Rod Staff [2]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 40%.
+Reduces the damage of Earth property magical attacks on targets by 30%.
+Increases damage taken from Earth property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Golden Rod Staff [1]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 60%.
+Reduces the damage of Earth property magical attacks on targets by 60%.
+Increases damage taken from Earth property attacks by 50%.
 #
 2468#
-A pair of sea-blue long boots imbued with power of water.
-MDEF + 2, MHP + 500, Increases resistance to water attacks by 15%.
-Type : ^777777Shoes^000000 Defense : ^77777712^000000
-Weight : ^77777750^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A pair of sea-blue long boots imbued with the power of water.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Max HP + 500
+Mdef + 2
+Reduces damage taken from Water property attacks by 15%.
+
+^800080Set Bonus^000000
+^008080Aqua Staff [2]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 40%.
+Reduces the damage of Wind property magical attacks on targets by 30%.
+Increases damage taken from Wind property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Aqua Staff [1]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 60%.
+Reduces the damage of Wind property magical attacks on targets by 60%.
+Increases damage taken from Wind property attacks by 50%.
 #
 2469#
-A pair of red long boots imbued with power of fire.
-MDEF + 2, MHP + 500, Increases resistance to fire attacks by 15%
-Type : ^777777Shoes^000000 Defense : ^77777712^000000
-Weight : ^77777750^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A pair of red long boots imbued with the power of fire.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Max HP + 500
+Mdef + 2
+Reduces damage taken from Fire property attacks by 15%.
+
+^800080Set Bonus^000000
+^008080Crimson Staff [2]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 40%.
+Reduces the damage of Water property magical attacks on targets by 30%.
+Increases damage taken from Water property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Crimson Staff [1]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 60%.
+Reduces the damage of Water property magical attacks on targets by 60%.
+Increases damage taken from Water property attacks by 50%.
 #
 2470#
-A pair of turquoise long boots imbued with power of earth.
-MDEF + 2, MHP + 500, Increases resistance to earth attacks by 15%
-Type : ^777777Shoes^000000 Defense : ^77777712^000000
-Weight : ^77777750^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A pair of turquoise long boots imbued with power of the earth.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Max HP + 500
+Mdef + 2
+Reduces damage taken from Earth property attacks by 15%.
+
+^800080Set Bonus^000000
+^008080Forest Staff [2]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 40%.
+Reduces the damage of Fire property magical attacks on targets by 30%.
+Increases damage taken from Fire property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Forest Staff [1]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 60%.
+Reduces the damage of Fire property magical attacks on targets by 60%.
+Increases damage taken from Fire property attacks by 50%.
 #
 2471#
 A blessed artifact, said to have been used by priests to ease the suffering of people during an ancient war.
@@ -16083,11 +16151,24 @@ Adds a X% chance of casting ^0000FFLevel 2 Cloaking^000000 on the user when rece
 #
 2491#
 Ominous boots emitting Bangungot's revenge and powerful hatred of humans.
-MDEF +1 increase per 1 refinement. Speed increased with 14 refinement and above.
-Class : ^777777Shoes^000000
-Defense : ^77777710^000000
-Weight : ^77777760^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 1 per upgrade level of the item.
+
+If upgrade level is +14 or higher,
+Increased Movement Speed.
+
+^800080Set Bonus^000000
+^008080Kalasag^000000
+^008080Buwaya Sack Cloth^000000
+^008080Bakonawa Scale Armor^000000
+^008080Bangungot Boots of Nightmare^000000
+Max HP + 20%
+Max SP + 10%
+Reduces damage taken from Malaya monsters by 30%.
 #
 2492#
 Ominous boots emitting Bangungot's revenge and powerful hatred of humans.
@@ -16465,28 +16546,23 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 2521#
-The Super Novice
-Guardian Angel's warm
-and comforatble cardigan. Increases natural
-HP Recovery by 5%.
-^ffffff_^000000
-^6A5ACDAngel's Protection Set^000000
-^3CB371Angel's Kiss^000000
-^3CB371Angelic Protection^000000
-^3CB371Angelic Cardigan^000000
-^3CB371Angel's Reincarnation^000000
-^3CB371Angelic Guard^000000
-HP +900
-SP +100
-A low Chance of casting
-level 1 Assumptio
-when attacked physically.
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense: ^7777776^000000
-Weight : ^77777740^000000
-Required Level : ^77777720^000000
-Jobs: ^777777Novice Class^000000
+The Super Novice Guardian Angel's warm and comfortable cardigan.
+Class: ^808080Garment^000000
+Defense: ^8080806^000000
+Weight: ^80808040^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080Novice Jobs^000000
+HP Recovery + 5%
+
+^800080Set Bonus^000000
+^008080Angelic Cardigan [1]^000000
+^008080Angelic Protection [1]^000000
+^008080Angel's Reincarnation [1]^000000
+^008080Angelic Guard [1]^000000
+^008080Angel's Kiss [1]^000000
+Max HP + 900
+Max SP + 100
+Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2522#
 Lightweight armor
@@ -17190,12 +17266,22 @@ Reduces damage taken from Neutral property attacks by 1% for every 20 base Vit.
 #
 2590#
 Clothes tailored from Buwaya's kidnapping sack. Full of vindictive spirits that cannot rest in peace.
-Healing capacity and healing item effect increases 1% per 3 refinement.
-10% damage decrease from Water, Earth, Fire and Wind Converter monsters.
-Class : ^777777Garment^000000
-Defense : ^7777778^000000
-Weight : ^77777720^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Garment^000000
+Defense: ^8080808^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the recovery rate of recovery items and recovery skills by 1% per 3 upgrade levels of the item.
+Reduces damage taken from Water, Earth, Fire and Wind property enemies by 10%.
+
+^800080Set Bonus^000000
+^008080Kalasag^000000
+^008080Buwaya Sack Cloth^000000
+^008080Bakonawa Scale Armor^000000
+^008080Bangungot Boots of Nightmare^000000
+Max HP + 20%
+Max SP + 10%
+Reduces damage taken from Malaya monsters by 30%.
 #
 2591#
 Clothes tailored from Buwaya's kidnapping sack. Full of vindictive spirits that cannot rest in peace.
@@ -18306,44 +18392,37 @@ Jobs: ^777777Transcendent
 Swordman Classes^000000
 #
 2701#
-A pair of gloves
-that were once worn
-by a palace chef.
-Wearing these make
-you feel as if you
-could draw upon
-the dexterity that
-chef used in cooking.
-Dex +2, MATK +3%
-Cast Time
-reduced by 10% when
-worn with Orlean's
-Server.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777790^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A pair of gloves that were once worn by a palace chef. Wearing these make you feel as if you could draw upon the dexterity that chef used in cooking.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Dex + 2
+Matk + 3%
+
+^800080Set Bonus^000000
+^008080Orleans's Server [1]^000000
+^008080Orleans's Glove [1]^000000
+Reduces the variable casting time of skills by 10%.
+
+^800080Set Bonus^000000
+^008080Orleans's Glove [1]^000000
+^008080Orleans's Necklace [1]^000000
+Matk + 20
 #
 2702#
-An ornament made
-from wild bison horns.
-Agi +2.
-When worn with
-Thorny Buckler:
-^6A5ACDBison Set^000000
-^3CB371Thorny Buckler^000000
-^3CB371Bison Horn^000000
-+10% Aspd Bonus
-+5% Reflect Melee damage
-^ffffff_^000000
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777790^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+An ornament made from wild bison horns.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 2
+
+^800080Set Bonus^000000
+^008080Thorny Buckler [1]^000000
+^008080Bison Horn [1]^000000
+Aspd + 10%
+Reflects 5% of the received short-ranged damage back to the attacker.
 #
 2703#
 Beings that obtained
@@ -18440,13 +18519,33 @@ Aspd + 5%
 #
 2717#
 A silver-colored watch with connecting chain.
-If equipped with a Monocle and Memory Book,
-HP and SP recovery speed increased by 15%,
-MATK +7%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^77777720^000000
-Required Level : ^77777780^000000
-Jobs : ^777777Mage Jobs/Soul Linker^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+^800080Set Bonus^000000
+^008080Memory Book^000000 or ^008080Memory Book [1]^000000
+^008080Monocle^000000 or ^008080Monocle [1]^000000
+^008080Pocket Watch^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
+
+^800080Set Bonus^000000
+^008080Librarian Glove [1]^000000
+^008080Principles of Magic [2]^000000
+^008080Pocket Watch^000000
+Int + 5
+Max HP + 700
+Aspd + 5%
+
+^800080Set Bonus^000000
+^008080Ancient Magic [2]^000000
+^008080Librarian Glove [1]^000000
+^008080Pocket Watch^000000
+Int + 5
+Max HP + 700
+Aspd + 5%
 #
 2718#
 A crescent-shaped golden shining brooch.
@@ -19682,48 +19781,121 @@ Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 2859#
-A golden crystal ball imbued with power of wind.
-INT + 1, MDEF + 2.
-Increases resistance to wind attacks by 15%.
-Has a certain chance of casting LV 3 Jupitel Thunder when hit by physical/magical attacks.
-Type : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A golden crystal ball imbued with the power of the wind.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 2
+Reduces damage taken from Wind property attacks by 15%.
+Adds a chance of casting ^0000FFLevel 3 Jupitel Thunder^000000 on the attacker when receiving a physical or a magical attack.
+
+^800080Set Bonus^000000
+^008080Golden Rod Staff [2]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 40%.
+Reduces the damage of Earth property magical attacks on targets by 30%.
+Increases damage taken from Earth property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Golden Rod Staff [1]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 60%.
+Reduces the damage of Earth property magical attacks on targets by 60%.
+Increases damage taken from Earth property attacks by 50%.
 #
 2860#
-A sea-blue crystal ball imbued with power of water.
-INT + 1, MDEF + 2.
-Increases resistance to water attacks by 15%.
-Has a certain chance of casting LV 3 Frost Nova when hit by physical/magical attacks.
-Type : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A sea-blue crystal ball imbued with the power of water.
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 2
+
+Reduces damage taken from Water property attacks by 15%.
+Adds a chance of casting ^0000FFLevel 3 Frost Nova^000000 on the attacker when receiving a physical or a magical attack.
+
+^800080Set Bonus^000000
+^008080Aqua Staff [2]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 40%.
+Reduces the damage of Wind property magical attacks on targets by 30%.
+Increases damage taken from Wind property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Aqua Staff [1]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 60%.
+Reduces the damage of Wind property magical attacks on targets by 60%.
+Increases damage taken from Wind property attacks by 50%.
 #
 2861#
-A bloody crystal ball imbued with power of fire.
-INT + 1, MDEF + 2.
-Increases resistance to fire attacks by 15%
-Has a certain chance of casting LV 3 Sightrasher when hit by physical/magical attacks.
-Type : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A bloody crystal ball imbued with the power of fire.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 2
+Reduces damage taken from Fire property attacks by 15%.
+Adds a chance of casting ^0000FFLevel 3 Sightrasher^000000 on the user when receiving a physical or a magical attack.
+
+^800080Set Bonus^000000
+^008080Crimson Staff [2]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 40%.
+Reduces the damage of Water property magical attacks on targets by 30%.
+Increases damage taken from Water property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Crimson Staff [1]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 60%.
+Reduces the damage of Water property magical attacks on targets by 60%.
+Increases damage taken from Water property attacks by 50%.
 #
 2862#
-A green crystal ball imbued with power of earth.
-INT + 1, MDEF + 2.
-Increases resistance to earth attacks by 15%
-Has a certain chance of casting LV 3 Quagmire when hit by physical/magical attacks.
-Type : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A green crystal ball imbued with power of the earth.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 2
+Reduces damage taken from Earth property attacks by 15%.
+Adds a chance of casting ^0000FFLevel 3 Quagmire^000000 on the user when receiving a physical or a magical attack.
+
+^800080Set Bonus^000000
+^008080Forest Staff [2]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 40%.
+Reduces the damage of Fire property magical attacks on targets by 30%.
+Increases damage taken from Fire property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Forest Staff [1]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 60%.
+Reduces the damage of Fire property magical attacks on targets by 60%.
+Increases damage taken from Fire property attacks by 50%.
 #
 2864#
 An old but shiny gold ring entwined with rings. It is rumored to be a relic of a saint.
@@ -19788,18 +19960,21 @@ Requires Level: ^80808010^000000
 Usable By: ^808080All Jobs^000000
 Dex + 2
 Matk + 20
+
 ^800080Set Bonus^000000
-^008080Orleans's Glove^000000
-^008080Orleans's Necklace^000000
+^008080Orleans's Glove [1]^000000
+^008080Orleans's Necklace [1]^000000
 Matk + 20
+
 ^800080Set Bonus^000000
-^008080Orleans's Gown^000000
-^008080Orleans's Necklace^000000
+^008080Orleans's Gown [1]^000000
+^008080Orleans's Necklace [1]^000000
 Reduces the variable casting time of skills by 15%.
+
 ^800080Set Bonus^000000
-^008080Orleans's Necklace^000000
-^008080Orleans's Server^000000
-Matk + 2 per upgrade level of ^008080Orleans's Server^000000.
+^008080Orleans's Server [1]^000000
+^008080Orleans's Necklace [1]^000000
+Matk + 2 per upgrade level of ^008080Orleans's Server [1]^000000.
 #
 2883#
 A seal created by refining an Ur Runestone
@@ -20489,13 +20664,33 @@ Matk + 4%
 #
 2971#
 A silver-colored watch with connecting chain.
-If equipped with a Monocle and Memory Book,
-HP and SP recovery speed increased by 15%,
-MATK +7%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^77777720^000000
-Required Level : ^77777780^000000
-Jobs : ^777777Mage Jobs/Soul Linker^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+^800080Set Bonus^000000
+^008080Memory Book^000000 or ^008080Memory Book [1]^000000
+^008080Monocle^000000 or ^008080Monocle [1]^000000
+^008080Pocket Watch [1]^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
+
+^800080Set Bonus^000000
+^008080Librarian Glove [1]^000000
+^008080Principles of Magic [2]^000000
+^008080Pocket Watch [1]^000000
+Int + 5
+Max HP + 700
+Aspd + 5%
+
+^800080Set Bonus^000000
+^008080Ancient Magic [2]^000000
+^008080Librarian Glove [1]^000000
+^008080Pocket Watch [1]^000000
+Int + 5
+Max HP + 700
+Aspd + 5%
 #
 2976#
 A spooky red lantern.
@@ -20668,12 +20863,17 @@ Increases the damage of ^0000FFArrow Vulcan^000000 by 200%.
 Increases the SP cost of ^0000FFArrow Vulcan^000000 by 50.
 #
 2989#
-IGU's flower bracelet.
-Decreases Floating Casting Time for all skills by 25%.
-Class: ^777777Accessory^000000 DEF: ^7777770^000000
-Weight: ^77777710^000000
-Required Level: ^777777130^000000
-Equip To: ^777777Wanderer^000000
+Aigu's flower bracelet.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Wanderer^000000
+Reduces the variable casting time of skills by 25%.
+
+^800080Set Bonus^000000
+^008080Floral Bracelet Of Igu [1]^000000
+^008080Floral Mic Of Igu [2]^000000
+Increases the damage of ^0000FFArrow Vulcan^000000 by 200%.
 #
 2990#
 Pendant of Harmony.
@@ -29944,29 +30144,24 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 5125#
-A hair ornament
-that was kissed by
-the Super Novice's
-Guardian Angel.
-Increases natural
-SP Recovery by 3%.
-^6A5ACDAngel's Protection Set^000000
-^3CB371Angel's Kiss^000000
-^3CB371Angelic Protection^000000
-^3CB371Angelic Cardigan^000000
-^3CB371Angel's Reincarnation^000000
-^3CB371Angelic Guard^000000
-HP +900
-SP +100
-A low Chance of casting
-level 1 Assumptio
-when attacked physically.
-Class : ^777777Headgear^000000
-Defense: ^7777776^000000
-Location: ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Novice Class^000000
+A hair ornament that was kissed by the Super Novice's Guardian Angel.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Novice Jobs^000000
+SP Recovery + 3%
+
+^800080Set Bonus^000000
+^008080Angelic Cardigan [1]^000000
+^008080Angelic Protection [1]^000000
+^008080Angel's Reincarnation [1]^000000
+^008080Angelic Guard [1]^000000
+^008080Angel's Kiss [1]^000000
+Max HP + 900
+Max SP + 100
+Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 5126#
 A hood that is one
@@ -36634,7 +36829,6 @@ Reduces damage taken from Water property attacks by 5%.
 #
 5972#
 A parrot can talk well. It seems to help the user's action.
-
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
@@ -36642,8 +36836,7 @@ Weight: ^80808010^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080All Jobs^000000
 Matk +1% for every 50 base levels.
-Reduces the variable casting time of skills by 1%. for every 40 base Int.
-
+Reduces the variable casting time of skills by 1% for every 30 base Int.
 #
 5973#
 An accessory with the spirit of an ancient elf who loved nature.
@@ -59540,40 +59733,128 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 15025#
-An ornate golden robe imbued with power of winds.
-INT + 1, MDEF + 10.
-Decreases the variable casting time of Lord of Vermilion by 3 seconds, INT + 1 when unmodified INT is 120 or more.
-Type : ^777777Armor^000000 Defense : ^77777740^000000
-Weight : ^77777750^000000 Property : ^777777Wind^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+An ornate golden robe imbued with the power of the wind.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Property: ^808080Wind^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 10
+Reduces the variable casting time of ^0000FFLord of Vermillion^000000 by 3 seconds.
+If the user's base Int is 120 or higher, additional Int + 1.
+
+^800080Set Bonus^000000
+^008080Golden Rod Staff [2]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 40%.
+Reduces the damage of Earth property magical attacks on targets by 30%.
+Increases damage taken from Earth property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Golden Rod Staff [1]^000000
+^008080Golden Rod Robe^000000
+^008080Golden Rod Shoes [1]^000000
+^008080Golden Rod Orb [1]^000000
+Increases the damage of Wind property magical attacks on targets by 60%.
+Reduces the damage of Earth property magical attacks on targets by 60%.
+Increases damage taken from Earth property attacks by 50%.
 #
 15026#
-An elegant blue robe imbued with power of water.
-INT + 1, MDEF + 10.
-Decreases the variable casting time of Storm Gust by 3 seconds, INT + 1 when unmodified INT is 120 or more.
-Type : ^777777Armor^000000 Defense : ^77777740^000000
-Weight : ^77777750^000000 Property : ^777777Water^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+An elegant blue robe imbued with the power of water.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Property: ^808080Water^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 10
+Reduces the variable casting time of ^0000FFStorm Gust^000000 by 3 seconds.
+If the user's base Int is 120 or higher, additional Int + 1.
+
+^800080Set Bonus^000000
+^008080Aqua Staff [2]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 40%.
+Reduces the damage of Wind property magical attacks on targets by 30%.
+Increases damage taken from Wind property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Aqua Staff [1]^000000
+^008080Aqua Robe^000000
+^008080Aqua Shoes [1]^000000
+^008080Aqua Orb [1]^000000
+Increases the damage of Water property magical attacks on targets by 60%.
+Reduces the damage of Wind property magical attacks on targets by 60%.
+Increases damage taken from Wind property attacks by 50%.
 #
 15027#
-An elaborate red robe imbued with power of fire.
-INT + 1, MDEF + 10.
-Decreases the variable casting time of Meteor Storm by 3 seconds, INT + 1 when unmodified INT is 120 or more.
-Type : ^777777Armor^000000 Defense : ^77777740^000000
-Weight : ^77777750^000000 Property : ^777777Fire^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+An elaborate red robe imbued with the power of fire.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Property: ^808080Fire^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 10
+Reduces the variable casting time of ^0000FFMeteor Storm^000000 by 3 seconds.
+If the user's base Int is 120 or higher, additional Int + 1.
+
+^800080Set Bonus^000000
+^008080Crimson Staff [2]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 40%.
+Reduces the damage of Water property magical attacks on targets by 30%.
+Increases damage taken from Water property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Crimson Staff [1]^000000
+^008080Crimson Robe^000000
+^008080Crimson Shoes [1]^000000
+^008080Crimson Orb [1]^000000
+Increases the damage of Fire property magical attacks on targets by 60%.
+Reduces the damage of Water property magical attacks on targets by 60%.
+Increases damage taken from Water property attacks by 50%.
 #
 15028#
-A simple turquoise robe imbued with power of earth.
-INT + 1, MDEF + 10.
-Decreases the variable casting time of Heaven's Drive by 1 second, INT + 1 when unmodified INT is 120 or more.
-Type : ^777777Armor^000000 Defense : ^77777740^000000
-Weight : ^77777750^000000 Property : ^777777Earth^000000
-Required Level : ^777777100^000000
-Job : ^777777Warlock^000000
+A simple turquoise robe imbued with power of the earth.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Property: ^808080Earth^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Warlock^000000
+Int + 1
+Mdef + 10
+Reduces the variable casting time of ^0000FFHeaven's Drive^000000 by 3 seconds.
+If the user's base Int is 120 or higher, additional Int + 1.
+
+^800080Set Bonus^000000
+^008080Forest Staff [2]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 40%.
+Reduces the damage of Fire property magical attacks on targets by 30%.
+Increases damage taken from Fire property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Empowered Forest Staff [1]^000000
+^008080Forest Robe^000000
+^008080Forest Shoes [1]^000000
+^008080Forest Orb [1]^000000
+Increases the damage of Earth property magical attacks on targets by 60%.
+Reduces the damage of Fire property magical attacks on targets by 60%.
+Increases damage taken from Fire property attacks by 50%.
 #
 15029#
 A blessed artifact, said to have been used by priests to ease the suffering of people during an ancient war.
@@ -59836,11 +60117,22 @@ Jobs : ^777777Novice / Wizard / Acolyte / Soul Linker^000000
 #
 15051#
 Armor made from Bakonawa Scale. Lets off a mysterious moonlight effect.
-1% damage decrease from boss monsters per 2 refinement.
-All stance gains +1.
-Class : ^777777Armor^000000    Defense : ^77777755^000000
-Weight : ^77777750^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Armor^000000
+Defense: ^80808055^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Reduces damage taken from boss monsters by 1% per 2 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Kalasag^000000
+^008080Buwaya Sack Cloth^000000
+^008080Bakonawa Scale Armor^000000
+^008080Bangungot Boots of Nightmare^000000
+Max HP + 20%
+Max SP + 10%
+Reduces damage taken from Malaya monsters by 30%.
 #
 15052#
 Armor made from Bakonawa Scale. Lets off a mysterious moonlight effect.
@@ -59852,40 +60144,65 @@ Jobs : ^777777All Jobs^000000
 #
 15053#
 Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
-AGI +1 and increases AGI 1 per 3 Refine.
-Additional AGI +2 with Applicable Job and For Armguard.
-Class : ^777777Armor^000000    Defense : ^77777770^000000
-Weight : ^777777120^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Class: ^808080Armor^000000
+Defense: ^80808070^000000
+Weight: ^808080120^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Agi + 1
+Additional Agi + 1 per 3 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Fox Armguard [1]^000000
+^008080Special Ninja Suit^000000
+Agi + 2
 #
 15054#
-Scale Armor told to be worn by a legendary ninja who used unique ninja skills. Specialized for close range Atk.
-MHP + 15%, MSP - 30%.
-Additional ATK +10%, STR +2 with Applicable Job and Wolf Armguard.
-Class : ^777777Armor^000000    Defense : ^77777790^000000
-Weight : ^777777180^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Scale Armor told to be worn by a legendary ninja who used unique ninja skills. Specialized for close range attack.
+Class: ^808080Armor^000000
+Defense: ^80808090^000000
+Weight: ^808080180^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Max HP + 15%
+Max SP - 30%
+
+^800080Set Bonus^000000
+^008080Wolf Armguard [1]^000000
+^008080Ninja Scale Armor [1]^000000
+Str + 2
+Atk + 10%
 #
 15055#
-Armor specially made to protect high ranking officials from Ninja assassins. Armor creates a clone of the user when under Atk to trick the enemy.
-Additional AGI + 1.
-Illusion-Shadow Lv 1 activated at a certain rate when under physical attack.
-Additional Total Flee +1, FLEE +10 with Applicable Job and Crescent Armguard.
-Class : ^777777Armor^000000    Defense : ^77777760^000000
-Weight : ^777777150^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Armor specially made to protect high ranking officials from Ninja assassins. Armor creates a clone of the user when under attack to trick the enemy.
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Weight: ^808080150^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Agi + 1
+Adds a chance of casting ^0000FFLevel 1 Illusion - Shadow^000000 when receiving a physical attack.
+
+^800080Set Bonus^000000
+^008080Crescent Armguard [1]^000000
+^008080Tenebris Latitantes [1]^000000
+Flee + 10
+Perfect Dodge + 10
 #
 15056#
 Newly improved ninja shoes which took into consideration the opinions of skilled ninjas. Lighter and durability of the textile is better than before.
-AGI + 1. Increases AGI 1 per 3 Refine.
-Additional AGI +2 with Applicable Job and For Armguard.
-Class : ^777777Armor^000000    Defense : ^77777770^000000
-Weight : ^777777120^000000
-Required level : ^777777100^000000
-Applicable Job : ^777777Ninja Class^000000
+Class: ^808080Armor^000000
+Defense: ^80808070^000000
+Weight: ^808080120^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Kagerou/Oboro^000000
+Agi + 1
+Additional Agi + 1 per 3 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Fox Armguard [1]^000000
+^008080Special Ninja Suit [1]^000000
+Agi + 2
 #
 15061#
 Egir's armor. It looks like you gonna swin in water
@@ -72002,11 +72319,12 @@ Weight: ^80808010^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 ^800080Set Bonus^000000
-^008080Monocle [1]^000000
-^008080Pocket Watch [1]^000000
 ^008080Memory Book^000000 or ^008080Memory Book [1]^000000
-HP Recovery and SP Recovery + 15%.
-Matk +7%
+^008080Monocle [1]^000000
+^008080Pocket Watch^000000 or ^008080Pocket Watch [1]^000000
+Matk + 7%
+HP Recovery + 15%
+SP Recovery + 15%
 #
 18877#
 ^808080In spite of its name, it really does have a feel for a certain space themed television show.^000000
@@ -74199,6 +74517,7 @@ Usable By: ^808080All Jobs^000000
 Max HP + 5%
 Max SP + 5%
 Increases the damage of ^0000FFDragon Breath^000000 and ^0000FFWater Dragon Breath^000000 by 15%.
+
 If upgrade level is +6 or higher,
 Increases the damage of ^0000FFDragon Breath^000000 and ^0000FFWater Dragon Breath^000000 by an additional 15%.
 If upgrade level is +8 or higher,
@@ -75383,25 +75702,12 @@ Jobs : ^777777All^000000
 Box Weight : ^7777771^000000
 #
 19413#
-A Box that contains 1 Red Framed Glasses
-Description:
-A must-have item for
-those that care about
-appearances: it can
-increase your beauty
-threefold. Magic
-Defense +5.
-Impossible to Upgrade
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense: ^7777771^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Required Level: ^77777710^000000
-Jobs : ^777777All^000000
-Box Weight : ^7777771^000000
+Snowflakes on your hair. It twinkles like the stars
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 #
 19414#
 A Box that contains 1 Evolved Pipe
@@ -75433,34 +75739,34 @@ Position: ^808080Upper^000000
 Defense: ^80808012^000000
 Weight: ^80808060^000000
 Requires Level: ^808080100^000000
-Reduced fixed cast time by 7% per refine level of the Circlet. (Max 70%)
-Reduces the cooldown of skills by 10%
-Increases the skill damage bonus of ^0000FFEarth Grave^000000 by 10%.
-Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by 10%.
+Usable By: ^808080All Jobs^000000
+Mdef + 15
+Reduces the global delay of skills by 10%.
+Increases the skill damage bonus of ^0000FFEarth Grave^000000 and ^0000FFDiamond Dust^000000 by 10%.
 
-if upgraded to +7 or higher
-Reduces the cooldown of skills by an additional 5%
-Increases the skill damage bonus of ^0000FFEarth Grave^000000 by an additional 15%.
-Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by an additional 15%.
-
-if upgraded to +9 or higher
-Reduces the cooldown of skills by an additional 5%
-Increases the skill damage bonus of ^0000FFEarth Grave^000000 by an additional 25%.
-Increases the skill damage bonus of ^0000FFDiamond Dust^000000 by an additional 25%.
-
-if upgraded to +10 or higher
-Bypass 100% of hard magic defense of All race targets when performing a magic attack.
-
-if Warmer is learned to level 5 or higher
+If ^0000FFWarmer^000000 is level 5,
 Reduces the cooldown of ^0000FFEarth Grave^000000 by 1 second
 Reduces the cooldown of ^0000FFDiamond Dust^000000 by 1 second.
 Reduces the cooldown of ^0000FFVaretyr Spear^000000 by 1 second.
 
-if Elemental Shield is learned to level 5 or higher
-Increases magic damage on boss monsters by 25%.
+If ^0000FFElemental Shield^000000 is level 5,
+Increases magical damage on boss monsters by 25%.
 
-for every level of Spirit Sympathy learned
+For every level of ^0000FFSpirit Sympathy^000000 known,
 Reduces the variable casting time of skills by 6%.
+
+Reduces the fixed casting time of skills by 7% per upgrade level of the item up to a maximum upgrade level of 10.
+
+If upgrade level is +7 or higher,
+Reduces the global delay of skills by an additional 5%.
+Increases the skill damage bonus of ^0000FFEarth Grave^000000 and ^0000FFDiamond Dust^000000 by an additional 15%.
+
+If upgrade level is +9 or higher,
+Reduces the global delay of skills by an additional 5%.
+Increases the skill damage bonus of ^0000FFEarth Grave^000000 and ^0000FFDiamond Dust^000000 by an additional 25%.
+
+If upgrade level is +10 or higher,
+Bypass 100% of hard magic defense of All race targets when performing a magical attack.
 #
 19500#
 #
@@ -82107,12 +82413,9 @@ Restores 10 SP to the user when a monster is killed by a physical or a long-rang
 If upgrade level is +8 or higher,
 For every combined sum of 20 base Agi and Vit,
 Atk + 15
-Hit + 15
+Hit + 5
 If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a physical or a long-ranged attack.
-
-
-
 #
 21001#
 *Stats during WoE & PVP
@@ -92789,6 +93092,12 @@ Feel like you have brand new hair
 Curl up to the side
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31588#
+Like snowflakes on your hair. It twinkles like the stars
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 32203#
