@@ -3277,7 +3277,7 @@ xmas 139 307 evt_xmas 129 129 0 c r1
 # mora <-> bif_fild02
 mora 182 74 bif_fild02 286 327
 mora 56 25 bif_fild02 176 162
-mora 20 168 bif_fild02 99 308
+mora 20 158 bif_fild02 99 308
 bif_fild02 285 332 mora 179 74 0 c r0 n
 bif_fild02 173 162 mora 58 27 0 c r0 n
 bif_fild02 95 310 mora 25 158 0 c r0 n
