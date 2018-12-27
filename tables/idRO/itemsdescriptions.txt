@@ -50476,3 +50476,24 @@ Location : ^777777Upper^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+
+//====================update 26122018=================
+32301#
+Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32302#
+[PREMIUM] Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32303#
+Kembang api yang digunakan untuk merayakan tahun baru 2019 !
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#

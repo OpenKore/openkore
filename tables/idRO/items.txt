@@ -8471,3 +8471,8 @@
 31314#Costume: White Fox Ear#
 31317#Costume: Piamette Red Hood#
 31316#Costume: Parfaille Vigilante Hat#
+
+//====================update 26122018=================
+32301#New Year Login Card I#
+32302#New Year Login Card II#
+32303#Costume: Sparkler Stick#
