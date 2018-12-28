@@ -13365,125 +13365,103 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Mdef + 3
 #
 2245#
-A dark colored and
-very stylish hat that
-was popularized by
-smooth crooners.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A dark colored and very stylish hat that was popularized by smooth crooners.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2246#
-A helmet forged from
-pure gold which blocks
-attacks effectively, but is also unaffordable.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777790^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A helmet forged from pure gold which blocks attacks effectively, but is also unaffordable.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^80808090^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2247#
-An ivory hat worn by
-classy men during
-classy occasions.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Every Job
-except Novice^000000
+An ivory hat worn by classy men during classy occasions.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2248#
-A broad brimmed
-casual hat, usually
-worn by cowboys
-and ranchers, that
-is rustically stylish.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A broad brimmed casual hat, usually worn by cowboys and ranchers, that is rustically stylish.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2249#
-A small decorative
-crown, fashioned out
-of pure gold, worn by
-members of nobility.
+A small decorative crown, fashioned out of pure gold, worn by members of nobility.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Int + 1
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2250#
-A small, decorative
-ribbon for the head.
+A small, decorative ribbon for the head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Max SP + 20
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2251#
-A ceremonial hat worn
-by monks that contains
-a sacred force which
-offers protection from
-evil. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Acolyte Class^000000
+A ceremonial hat worn by monks that contains a sacred force which offers protection from evil.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
+Mdef + 3
 #
 2252#
-A mystic hat, made
-specifically for wizards, which amplifies pyschic
-power. Max SP +100
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777Mage Class and Soul Linker^000000
+A mystic hat, made specifically for wizards, which amplifies psychic power.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Max SP + 100
 #
 2253#
-Peculiar headgear
-designed to look like
-a sunflower. Reduces
-damage from Insect
-monsters by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+Peculiar headgear designed to look like a sunflower.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Insect race enemies by 10%.
 #
 2254#
-A headband adorned
-with what appears to
-be the wings of an angel. It contains holiness that
-blesses the wearer's soul and offers protection from
-dark forces. Reduces
-damage from Demon
-monsters by 3%. Agi +1, Luk +1. MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A headband adorned with what appears to be the wings of an angel. It contains holiness that blesses the wearer's soul and offers protection from dark forces.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 1
+Luk + 1
+Mdef + 3
+Reduces damage taken from Demon race enemies by 3%.
 #
 2255#
 A headgear that look like the wings of a Demon. Demonic power increases the wearer's strength and offers protection from sacred powers.
@@ -13498,125 +13476,106 @@ Mdef + 2
 Reduces damage taken from Angel race enemies by 3%.
 #
 2256#
-A helmet, made to look
-like mighty goat horns, that can increase the
-strength of its wearer. Str +1
-Class : ^777777Headgear^000000
-Defense : ^7777779^000000
-Location : ^777777Upper^000000
-Weight : ^77777780^000000
-Jobs: ^777777Swordman,
-Merchant Classes, Taekwon Boy/Girl, Taekwon Master^000000
+A helmet, made to look like mighty goat horns, that can increase the strength of its wearer.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^80808080^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Taekwon, Taekwon Master^000000
+Str + 1
 #
 2257#
-A pristinely white
-horn worn on the
-forehead that makes
-one look like a unicorn.
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A pristinely white horn worn on the forehead that makes one look like a unicorn.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2258#
-A headband with
-two dangerously
-fashionable spikes.
-Class : ^777777Headgear^000000
-Defense : ^77777712^000000
-Location : ^777777Upper^000000
-Weight : ^777777100^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Swordman
-Acolyte, Merchant,
-Thief Classes, Taekwon Boy/Girl, Taekwon Master^000000
+A headband with two dangerously fashionable spikes.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^808080100^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Acolyte Jobs, Taekwon, Taekwon Master^000000
 #
 2259#
-A headgear topped
-with a fashionably
-experimental propeller.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A headgear topped with a fashionably experimental propeller.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2260#
-Glasses worn by
-true sophisticates.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Glasses worn by true sophisticates.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2261#
-A squad cap issued
-by the Prontera Military.
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+A squad cap issued by the Prontera Military.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
 #
 2262#
-A fashion accessory
-used in clown or town
-drunk disguises.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A fashion accessory used in clown or town drunk disguises.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2263#
-A mask patterned after
-the one worn by a fencer of legendary repute who
-always kept his identity as a wealthy don secret.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A mask patterned after the one worn by a fencer of legendary repute who always kept his identity as a wealthy don secret.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2264#
-An exact replica of the turban worn by Munak,
-complete with a queue
-and talisman. Reduces
-damage from Undead
-monsters by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper, Middle, Lower^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+An exact replica of the turban worn by Munak, complete with a queue and talisman.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle, Lower^000000
+Defense: ^8080805^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Undead race enemies by 10%.
 #
 2265#
-This mask marked
-with an ''X'' is a popular fashion item for bona
-fide street toughs. Adds 15% resistance to the
-^880000Silence^000000 status.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+This mask marked with an 'X' is a popular fashion item for bona fide street toughs.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases resistance to ^800000Silence^000000 by 15%.
 #
 2266#
-Specialized face armor
-that protects the jaw
-and teeth in battle.
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Lower^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Swordman Class^000000
+Specialized face armor that protects the jaw and teeth in battle.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080804^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2267#
 A narrow, short
@@ -13648,205 +13607,176 @@ except Novice Job
 (Parental Advisory)^000000
 #
 2269#
-A delicate flower that
-is placed in the mouth
-for romantic seduction. Reduces damage from
-Plant monsters by 3%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A delicate flower that is placed in the mouth, you can feel the romance while wearing it and sitting still.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Plant race enemies by 3%.
 #
 2270#
-A slender leaf that
-is placed in the mouth
-for a seductive look.
-Reduces damage from
-Plant monsters by 3%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A slender long leaf. You can feel the romance while wearing it and sitting still.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Plant race enemies by 3%.
 #
 2271#
-A pair of glasses that
-are worn on the head
-for a more charming
-appearance, instead of
-vision related purposes.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A pair of glasses that are worn on the head for a more charming appearance, instead of vision related purposes.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2272#
-A signpost that
-declares its wearer's
-desire that people
-should stop whatever
-they are doing. Causes
-catastrophes during
-wedding ceremonies.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Jobs: ^777777All^000000
+A signpost that declares its wearer's desire that people should stop whatever they are doing. Causes catastrophes during wedding ceremonies.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2273#
-A headband worn by
-doctors in the past
-during medical
-examinations.
+A headband worn by doctors in the past during medical examinations.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Int + 1
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2274#
-A traditional Japanese
-headpiece associated
-with the afterlife.
+A traditional Japanese headpiece associated with the afterlife.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Agi + 2
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Reduces damage taken from Ghost property attacks by 15%.
 #
 2275#
-A boldly red bandana
-that was possibly left
-over from the 80's.
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A boldly red bandana that was possibly left over from the 80's.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2276#
-A pair of glasses
-with lenses that are
-angled up and outward.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A pair of glasses with lenses that are angled up and outward.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2277#
-A cap worn by nurses
-both great and small.
+A cap worn by nurses both great and small.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
 Int + 1
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Acolyte Class^000000
 #
 2278#
-A simple mask with
-a smile carved into it.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Mid,Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A simple mask with a smile carved into it.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Mr. Smile^000000
+Adds a chance of gaining ^008080Pumpkin Pie^000000 when a monster is killed.
 #
 2279#
-A wick-like ornament
-worn on top of the head for a dangerous look.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A wick-like ornament worn on top of the head for a dangerous look.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2280#
-A rustic hat knit
-from rough reeds and
-bamboos that shields
-against the rain and
-the glare of the sun.
-Ssaurabi, the ancient
-Korean warrior, was
-known to wear one
-of these. Agi +1
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+A rustic hat knit from rough reeds and bamboos that shields against the rain and the glare of the sun. Ssaurabi, the ancient Korean warrior, was known to wear one of these.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
 #
 2281#
-A mysterious mask
-traditionally worn by
-opera phantoms.
-Class : ^777777Headgear^000000
-Defense : ^7777772^FFFFFF          ^000000 Location : ^777777Mid,Lower^000000
-Weight : ^77777720^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A mysterious mask traditionally worn by opera phantoms.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+^800080Set Bonus^000000
+^008080Witch's Pumpkin Hat^000000
+^008080Opera Masque^000000
+Flee + 10
+Adds a chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
 #
 2282#
-A spiritual symbol
-that typically appears
-over the heads of those who are holy. Increases
-resistance to the Holy
-property by 15%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A spiritual symbol that typically appears over the heads of those who are holy.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Holy property attacks by 15%.
 #
 2283#
-Ear coverings, linked
-by a headband, that
-protect the wearer's
-ears from the cold.
-Increases resistance
-to ^880000Curse^000000 status by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+Ear coverings, linked by a headband, that protect the wearer's ears from the cold.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases resistance to ^800000Curse^000000 by 10%.
 #
 2284#
-A set of deer antlers
-that humans, finally,
-can proudly wear.
-Class : ^777777Headgear^000000
-Defense : ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A set of deer antlers that humans, finally, can proudly wear.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2285#
-A headgear made in the
-honor of the legendary
-archer who shot an apple, on top of a friend's head,
-from a long distance.
+A headgear made in the honor of the legendary archer who shot an apple, on top of a friend's head, from a long distance.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808020^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Dex + 3
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2286#
 A fashion accessory that gives ears that vaunted, elvish look. For some, it is an incredible turn-on.
@@ -13861,101 +13791,80 @@ Usable By: ^808080All Jobs except Novice^000000
 Reduces the SP cost of skills by 3%.
 #
 2287#
-A bandana that is the
-mark of the lawless
-pirates of the oceans.
+A bandana that is the mark of the lawless pirates of the oceans.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Str + 1
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2288#
-A mask that expresses
-anguish and despair
-borne of insanity.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Mid,Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A mask that expresses anguish and despair borne of insanity.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2289#
-A hat which looks just
-like fecal matter that
-is guaranteed to end
-a date on a tragic note. Reduces damage
-from Demihuman
-monsters by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777770^000000
-Jobs: ^777777All^000000
+A hat which looks just like fecal matter that is guaranteed to end a date on a tragic note.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
 #
 2290#
-Traditional Korean
-headdress worn during
-funeral ceremonies by
-the bereaved family
-and close friends.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+Traditional Korean headdress worn during funeral ceremonies by the bereaved family and close friends.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2291#
-A black leather mask,
-shaped like butterfly
-wings, that increases
-damage inflicted
-upon Demihuman
-monsters by 3%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A black leather mask, shaped like butterfly wings.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Increases physical damage on Demi-Human race targets by 3%.
 #
 2292#
-A durable mask made
-from a fat metal plate
-that is usually worn by welders and Blacksmiths.
-Increases resistance to Fire property by 10%.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Mid,Lower^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Merchant Class^000000
+A durable mask made from a fat metal plate that is usually worn by welders and Blacksmiths.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080802^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Merchant Jobs^000000
+Reduces damage taken from Fire property attacks by 10%.
 #
 2293#
-A stage prop that
-creates the illusion
-that the wearer has
-a knife sticking out
-of his head.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A stage prop that creates the illusion that the wearer has a knife sticking out of his head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2294#
-A small, star
-shaped hairclip
-that makes a great
-present for ladies.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A small, star shaped hairclip that makes a great present for ladies.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2295#
 A face mask that is worn by those who have trouble sleeping.
@@ -13968,379 +13877,326 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Immune to ^800000Blind^000000.
 #
 2296#
-A special optical
-tool that enables one
-to observe objects
-from a great distance.
+A special optical tool that enables one to observe objects from a great distance.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Archer Jobs^000000
 Dex + 1
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Archer Class^000000
 #
 2297#
-A mask worn by Goblins
-to scare and intimidate unsuspecting enemies.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Mid,Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A mask worn by Goblins to scare and intimidate unsuspecting enemies.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2298#
-Large insect antennae
-that humans can wear.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+Large insect antennae that humans can wear.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2299#
-A hardy helmet that
-was crafted by the most expert of Orcish smiths.
-Class : ^777777Headgear^000000
-Defense : ^7777779^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+A hardy helmet that was crafted by the most expert of Orcish smiths.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
 #
 2301#
-A simple, sturdily
-made shirt of cotton.
-Class : ^777777Armor^000000
-Defense : ^77777710^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A simple, sturdily made shirt of cotton.
+Class: ^808080Armor^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2302#
-A simple, sturdily
-made shirt of cotton.
-Class : ^777777Armor^000000
-Defense : ^77777710^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A simple, sturdily made shirt of cotton.
+Class: ^808080Armor^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2303#
-A jacket made out
-of mediocre leather.
-Class : ^777777Armor^000000
-Defense : ^77777715^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+A jacket made out of mediocre leather.
+Class: ^808080Armor^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2304#
-A jacket made out
-of mediocre leather.
-Class : ^777777Armor^000000
-Defense : ^77777715^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+A jacket made out of mediocre leather.
+Class: ^808080Armor^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2305#
-A light, comfortable
-suit made just for
-young adventurers.
-Class : ^777777Armor^000000
-Defense : ^77777720^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+A light, comfortable suit made just for young adventurers.
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2306#
-A light, comfortable
-suit made just for
-young adventurers.
-Class : ^777777Armor^000000
-Defense : ^77777720^000000
-Weight : ^77777730^000000
-Jobs: ^777777All^000000
+A light, comfortable suit made just for young adventurers.
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2307#
-A cloak that is
-simple, yet elegant.
-Class : ^777777Armor^000000
-Defense : ^77777737^000000
-Weight : ^77777760^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A cloak that is simple, yet elegant.
+Class: ^808080Armor^000000
+Defense: ^80808037^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2308#
-A cloak that is
-simple, yet elegant.
-Class : ^777777Armor^000000
-Defense : ^77777737^000000
-Weight : ^77777760^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A cloak that is simple, yet elegant.
+Class: ^808080Armor^000000
+Defense: ^80808037^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2309#
-A long coat that
-provides remarkable
-warmth in cold weather.
-Class : ^777777Armor^000000
-Defense : ^77777742^000000
-Weight : ^777777120^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A long coat that provides remarkable warmth in cold weather.
+Class: ^808080Armor^000000
+Defense: ^80808042^000000
+Weight: ^808080120^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice^000000
 #
 2310#
-A long coat that
-provides remarkable
-warmth in cold weather.
-Class : ^777777Armor^000000
-Defense : ^77777742^000000
-Weight : ^777777120^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A long coat that provides remarkable warmth in cold weather.
+Class: ^808080Armor^000000
+Defense: ^80808042^000000
+Weight: ^808080120^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2311#
-A fur coat that is
-actually made using
-hides from Lunatics.
-Class : ^777777Armor^000000
-Defense : ^77777730^000000
-Weight : ^777777230^000000
-Required Level : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A fur coat that is actually made using hides from Lunatics.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Weight: ^808080230^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2312#
-Armor constructed
-of solid metal plates
-that have been padded
-on the inside for comfort.
-Class : ^777777Armor^000000
-Defense : ^77777735^000000
-Weight : ^777777280^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+Armor constructed of solid metal plates that have been padded on the inside for comfort.
+Class: ^808080Armor^000000
+Defense: ^80808035^000000
+Weight: ^808080280^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+^800080Set Bonus^000000
+^008080Padded Armor^000000
+^008080Armor Charm^000000
+Max HP + 150
+Def + 5
 #
 2313#
-Armor constructed
-of solid metal plates
-that have been padded
-on the inside for comfort.
-Class : ^777777Armor^000000
-Defense : ^77777735^000000
-Weight : ^777777280^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+Armor constructed of solid metal plates that have been padded on the inside for comfort.
+Class: ^808080Armor^000000
+Defense: ^80808035^000000
+Weight: ^808080280^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+^800080Set Bonus^000000
+^008080Padded Armor [1]^000000
+^008080Armor Charm^000000
+Max HP + 150
+Def + 5
 #
 2314#
-Heavy mail made
-entirely of polished,
-metal chain links.
-Class : ^777777Armor^000000
-Defense : ^77777755^000000
-Weight : ^777777330^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+Heavy mail made entirely of polished, metal chain links.
+Class: ^808080Armor^000000
+Defense: ^80808055^000000
+Weight: ^808080330^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
 #
 2315#
-Heavy mail made
-entirely of polished,
-metal chain links.
-Class : ^777777Armor^000000
-Defense : ^77777755^000000
-Weight : ^777777330^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+Heavy mail made entirely of polished, metal chain links.
+Class: ^808080Armor^000000
+Defense: ^80808055^000000
+Weight: ^808080330^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
 #
 2316#
-Heavy, solid armor
-made of durable plates
-of impenetrable metal.
-Class : ^777777Armor^000000
-Defense : ^77777770^000000
-Weight : ^777777450^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Swordman Class^000000
+Heavy, solid armor made of durable plates of impenetrable metal.
+Class: ^808080Armor^000000
+Defense: ^80808070^000000
+Weight: ^808080450^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2317#
-Heavy, solid armor
-made of durable plates
-of impenetrable metal.
-Class : ^777777Armor^000000
-Defense : ^77777770^000000
-Weight : ^777777450^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Swordman Class^000000
+Heavy, solid armor made of durable plates of impenetrable metal.
+Class: ^808080Armor^000000
+Defense: ^80808070^000000
+Weight: ^808080450^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Swordman Jobs^000000
 #
 2318#
-Formal clothing made
-in a Renaissance style
-that evokes thoughts of romance and elegance.
-Int + 1 , MDEF + 5
-Class : ^777777Armor^000000
-Defense : ^77777759^000000
-Weight : ^777777250^000000
-Required Level : ^77777770^000000
-Jobs: ^777777Merchant Class^000000
+Formal clothing made in a Renaissance style that evokes thoughts of romance and elegance.
+Class: ^808080Armor^000000
+Defense: ^80808059^000000
+Weight: ^808080250^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Merchant Jobs^000000
+Int + 1
+Mdef + 5
 #
 2319#
-A jacket covered in
-fake, yet glamorous,
-rhinestones that is
-favored by hipsters
-and lounge singers.
-Adds a 3% chance of
-causing ^880000Blind^000000 status
-to enemies with each
-attack. MDEF +5
-Class : ^777777Armor^000000
-Defense : ^77777758^000000
-Weight : ^777777250^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Every Job
-except Novice^000000
+A jacket covered in fake, yet glamorous, rhinestones that is favored by hipsters and lounge singers.
+Class: ^808080Armor^000000
+Defense: ^80808058^000000
+Weight: ^808080250^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef +5
+Adds a 3% chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
 #
 2320#
 A formal suit for males.
-Class : ^777777Armor^000000
-Defense : ^77777740^000000
-Weight : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2321#
-A finely woven, silk
-robe that has been
-enchanted with magic.
-MDEF + 10
-Class : ^777777Armor^000000
-Defense : ^77777720^000000
-Weight : ^77777740^000000
-Jobs: ^777777Swordman,
-Mage, Acolyte,
-Merchant Classes, and Soul Linker^000000
+A finely woven, silk robe that has been enchanted with magic.
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Mdef + 10
 #
 2322#
-A finely woven, silk
-robe that has been
-enchanted with magic.
-MDEF + 10
-Class : ^777777Armor^000000
-Defense : ^77777720^000000
-Weight : ^77777740^000000
-Jobs: ^777777Swordman,
-Mage, Acolyte,
-Merchant Classes, and Soul Linker^000000
+A finely woven, silk robe that has been enchanted with magic.
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Mdef + 10
 #
 2323#
-A blessed outer
-garment worn by
-clerics for religious
-ceremonies.
-Class : ^777777Armor^000000
-Defense : ^77777724^000000
-Weight : ^77777740^000000
-Jobs: ^777777Acolyte Class^000000
+A blessed outer garment worn by clerics for religious ceremonies.
+Class: ^808080Armor^000000
+Defense: ^80808024^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
 #
 2324#
-A blessed outer
-garment worn by
-clerics for religious
-ceremonies.
-Class : ^777777Armor^000000
-Defense : ^77777724^000000
-Weight : ^77777740^000000
-Jobs: ^777777Acolyte Class^000000
+A blessed outer garment worn by clerics for religious ceremonies.
+Class: ^808080Armor^000000
+Defense: ^80808024^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs^000000
 #
 2325#
-A robe that has
-been baptized with
-saintly power. MDEF +5
-Class : ^777777Armor^000000
-Defense : ^77777750^000000
-Weight : ^77777760^000000
-Jobs: ^777777Acolyte and
-Merchant Classes^000000
+A robe that has been baptized with saintly power.
+Class: ^808080Armor^000000
+Defense: ^80808050^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Merchant Jobs, Acolyte Jobs^000000
+Mdef + 5
 #
 2326#
-A robe that has
-been baptized with
-saintly power. MDEF +5
-Class : ^777777Armor^000000
-Defense : ^77777750^000000
-Weight : ^77777760^000000
-Jobs: ^777777Acolyte and
-Merchant Classes^000000
+A robe that has been baptized with saintly power.
+Class: ^808080Armor^000000
+Defense: ^80808050^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Merchant Jobs, Acolyte Jobs^000000
+Mdef + 5
 #
 2327#
-A robe that emanates
-an aura of holiness.
-Increases resistance to Demon monsters by 15%
-and resistance against Shadow property by 10%.
-MDEF + 5
-Class : ^777777Armor^000000
-Defense : ^77777757^000000
-Weight : ^777777170^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Acolyte Class^000000
+A robe that emanates an aura of holiness.
+Class: ^808080Armor^000000
+Defense: ^80808057^000000
+Weight: ^808080170^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Acolyte Jobs^000000
+Mdef + 5
+Reduces damage taken from Demon race enemies by 15%.
+Reduces damage taken from Shadow property attacks by 10%.
 #
 2328#
 Armor constructed out of wood.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777100^000000
-Jobs : ^777777Swordman and
-Merchant Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2329#
-A simple set of armor
-carved out of solid wood.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777100^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+A simple set of armor carved out of solid wood.
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2330#
-Skintight, form
-fitting clothing
-that allows easy
-movement. Dex +1
-Class : ^777777Armor^000000
-Defense : ^77777727^000000
-Weight : ^77777750^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Archer Class^000000
+Skintight, form fitting clothing that allows easy movement.
+Class: ^808080Armor^000000
+Defense: ^80808027^000000
+Weight: ^80808050^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Archer Jobs^000000
+Dex + 1
 #
 2331#
-Skintight, form
-fitting clothing
-that allows easy
-movement. Dex +1
-Class : ^777777Armor^000000
-Defense : ^77777727^000000
-Weight : ^77777750^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Archer Class^000000
+Skintight, form fitting clothing that allows easy movement.
+Class: ^808080Armor^000000
+Defense: ^80808027^000000
+Weight: ^80808050^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Archer Jobs^000000
+Dex + 1
 #
 2332#
-A robe knit out
-of silver thread.
-Class : ^777777Armor^000000
-Defense : ^77777723^000000
-Weight : ^77777770^000000
-Jobs: ^777777Mage Class and Soul Linker^000000
+A robe knit out of silver thread.
+Class: ^808080Armor^000000
+Defense: ^80808023^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
 #
 2333#
-A robe knit out
-of silver thread.
-Class : ^777777Armor^000000
-Defense : ^77777723^000000
-Weight : ^77777770^000000
-Jobs: ^777777Mage Class and Soul Linker^000000
+A robe knit out of silver thread.
+Class: ^808080Armor^000000
+Defense: ^80808023^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
 #
 2334#
 An exclusive robe for Mage Class characters that contains magic power.
@@ -14360,53 +14216,47 @@ Max SP + 10%
 Mdef + 8
 #
 2335#
-Extremely light
-clothes outfitted with
-many pockets, making
-it handy for stashing
-stolen goods. Agi +1
-Class : ^777777Armor^000000
-Defense : ^77777740^000000
-Weight : ^77777710^000000
-Jobs: ^777777Thief Class and Ninja^000000
+Extremely light  clothes outfitted with many pockets, making it handy for stashing stolen goods.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Thief Jobs, Ninja Jobs^000000
+Agi + 1
 #
 2336#
-Extremely light
-clothes outfitted with
-many pockets, making
-it handy for stashing
-stolen goods. Agi +1
-Class : ^777777Armor^000000
-Defense : ^77777740^000000
-Weight : ^77777710^000000
-Jobs: ^777777Thief Class and Ninja^000000
+Extremely light clothes outfitted with many pockets, making it handy for stashing stolen goods.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Thief Jobs, Ninja^000000
+Agi +1
 #
 2337#
-A suit for assassins
-that allows the wearer
-to move more quickly
-and stealthily.
-Agi +1, MDEF +3
-^99FF66Ninja Shinobi armor set^000000
-^00FF00Ninja Suit^000000
-^00FF00Shinobi Sash^000000
-Set bonus +300 HP
--20% SP consumption
-Class : ^777777Armor^000000
-Defense : ^77777758^000000
-Weight : ^777777150^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Thief Class & Ninja^000000
+A suit for assassins that allows the wearer to move more quickly and stealthily.
+Class: ^808080Armor^000000
+Defense: ^80808058^000000
+Weight: ^808080150^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Thief Jobs, Ninja Jobs^000000
+Agi + 1
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Ninja Suit^000000
+^008080Shinobi Sash^000000
+Max HP + 300
+Reduces the SP cost of skills by 20%.
 #
 2338#
-A wedding dress that
-is immaculately white.
-MDEF +15
-Class : ^777777Armor^000000
-Defense : ^7777710^000000
-Weight : ^77777750^^000000
-Jobs: ^777777Female Only
-All except Novice Job^000000
+A wedding dress that is immaculately white.
+Class: ^808080Armor^000000
+Defense: ^80808010^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef + 15
 #
 2339#
 A risque undergarment
@@ -14421,55 +14271,55 @@ Jobs: ^777777All^000000
 #
 2340#
 A piece of armor that covers the chest of a Novice.
-Class : ^777777Armor^000000
-Defense : ^77777732^000000
-Weight : ^77777750^000000
-Required Level : ^77777710^000000
-Jobs : ^777777Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808032^000000
+Weight: ^80808050^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080Novice Jobs^000000
 #
 2341#
 An extremely heavy piece of armor worn by members of the Legion.
-Class : ^777777Armor^000000
-Defense : ^77777779^000000
-Weight : ^777777550^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Crusader^000000
+Class: ^808080Armor^000000
+Defense: ^80808079^000000
+Weight: ^808080550^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Crusader Jobs^000000
 #
 2342#
 An extremely heavy piece of armor worn by members of the Legion.
-Class : ^777777Armor^000000
-Defense : ^77777779^000000
-Weight : ^777777550^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Crusader^000000
+Class: ^808080Armor^000000
+Defense: ^80808079^000000
+Weight: ^808080550^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Crusader Jobs^000000
 #
 2343#
 A robe which aids its wearer in reducing magic casting time.
-Reduce 3 % Variable Casting delay.
-MDEF + 4.
-Class : ^777777Armor^000000
-Defense : ^77777740^000000
-Weight : ^777777110^000000
-Required Level : ^77777775^000000
-Jobs: ^777777Wizard,
-Sage, and Soul Linker^000000
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^808080110^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Wizard Jobs, Sage Jobs, Soul Linker^000000
+Mdef + 4
+Reduces the variable casting time of skills by 3%.
 #
 2344#
 An armor that is enchanted with the Fire Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Fire^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2345#
 An armor that is enchanted with the Fire Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777All Jobs except Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Fire^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2346#
 An armor that is enchanted with the ^6996ADWater^000000 Property.
@@ -14677,21 +14527,20 @@ Weight : ^777777100^000000
 Jobs : ^777777All^000000
 #
 2359#
-A sneaking suit that
-enables its wearer to
-move more quickly
-and stealthily.
-Agi + 1, MDEF + 3
-^99FF66Ninja Shinobi armor set^000000
-^00FF00Ninja Suit^000000
-^00FF00Shinobi Sash^000000
-Set bonus +300 HP
--20% SP consumption
-Class : ^777777Armor^000000
-Defense: ^77777740^000000
-Weight : ^777777150^000000
-Required Level : ^77777750^000000
-Jobs : ^777777Thief Class & Ninja^000000
+A sneaking suit that enables its wearer to move more quickly and stealthily.
+Class: ^808080Armor^000000
+Defense: ^80808058^000000
+Weight: ^808080150^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Thief Jobs, Ninja Jobs^000000
+Agi + 1
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Ninja Suit [1]^000000
+^008080Shinobi Sash^000000
+Max HP + 300
+Reduces the SP cost of skills by 20%.
 #
 2360#
 A robe that enhances
@@ -17910,21 +17759,20 @@ about the mysterious
 Sacrifice Ring...
 #
 2654#
-A sash that is said
-to have been owned by
-a renown ninja. With its embroidered emblem
-of nobility, it seems to contain some strange
-and mysterious power.
-^99FF66Ninja Shinobi armor set^000000
-^00FF00Ninja Suit^000000
-^00FF00Shinobi Sash^000000
-Set bonus +300 HP
--20% SP consumption
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^77777730^000000
-Required Level : ^77777730^000000
-Jobs: ^777777Thief Class and Ninja^000000
+A sash that is said to have been owned by a renown ninja. With its embroidered emblem of nobility, it seems to contain some strange and mysterious power.
+Class: ^808080Accessory^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Thief Jobs, Ninja Jobs^000000
+Str + 1
+Agi + 1
+Mdef + 1
+
+^800080Set Bonus^000000
+^008080Ninja Suit^000000 or ^008080Ninja Suit [1]^000000
+^008080Shinobi Sash^000000
+Max HP + 300
+Reduces the SP cost of skills by 20%.
 #
 2655#
 A heavy steel ball attached to a shackle that was supposed to keep prisoners from escaping in an earlier era. However, prisoners outfitted with this ball managed to use it as a weapon.
@@ -17939,18 +17787,18 @@ Atk + 50
 Reduces damage taken from Skel Prisoners and Zombie Prisoners by 20%.
 #
 2656#
-A mysterious, ancient
-artifact that can endow normal armor with great
-defensive power, although it does make the wearer
-feel very sluggish. Max HP +50. When owner is also
-equipped with Padded
-Armor, Armor Charm adds DEF +5 and Max HP +150.
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^777777100^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+A mysterious, ancient artifact that can endow normal armor with great defensive power, although it does make the wearer feel very sluggish.
+Class: ^808080Accessory^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Max HP + 50
+
+^800080Set Bonus^000000
+^008080Padded Armor^000000 or ^008080Padded Armor [1]^000000
+^008080Armor Charm^000000
+Max HP + 150
+Def + 5
 #
 2657#
 A pass for Regenschirm
@@ -26960,7 +26808,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Atk + 20
-Adds a chance of inflicting ^800000Curse^000000, ^800000Sleep^000000, and ^800000Stone^000000 on any target within 5-5 cells of the user when receiving a physical attack.
+Adds a chance of inflicting ^800000Curse^000000, ^800000Sleep^000000, and ^800000Stone^000000 on any target within 5-5 cells of the user when performing a short-ranged attack.
 #
 4604#
 ATK +30.
@@ -66404,6 +66252,21 @@ Luminous Blue Stone
 17386#
 #
 17387#
+When opened gives one of the following at random
+Medical Scrubs
+Anemos Shield
+Crow Tengu Mask
+Luminous Blue Stone
+Shepherd's Clothes
+Wak Wak Manteau
+Hunting Knife
+Thieves Guide Vol 1
+Bloody Branch 5-8 cnt
+HE Bubble Gum 6-9 cnt
+Blacksmith Blessings 8 cnt
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17388#
 ^FF0000Account Bound^000000
@@ -70320,6 +70183,7 @@ Str +2
 Int +2
 Mdef +10
 Increases physical and magical damage on Demon and Undead race targets by 15%.
+
 ^800080Set Bonus^000000
 ^008080Witch's Pumpkin Hat^000000
 ^008080Mr. Smile^000000
@@ -70340,7 +70204,7 @@ Adds a chance of gaining ^008080Pumpkin Pie^000000 or ^008080Well-Baked Cookies^
 
 ^800080Set Bonus^000000
 ^008080Witch's Pumpkin Hat^000000
-^008080Opera Mask^000000
+^008080Opera Masque^000000
 Flee + 10
 Adds a chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
 
