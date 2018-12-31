@@ -11846,3 +11846,26 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19284#Rake Scaraba Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Rake Scaraba ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 27 : 11 Desember 2018 --
+
+19285#Goat Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Goat ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19286#Dimik Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Dimik ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19287#Aliot Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Aliot ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- New Year Login 26 Desember 2018 --
+19288#New Year Login Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+New Year Login Cooldown - Rabu#
+Kembali lah lagi setelah tengah malam#
+
+19289#New Year Login Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+New Year Login Cooldown - Kamis#
+Kembali lah lagi setelah tengah malam#
