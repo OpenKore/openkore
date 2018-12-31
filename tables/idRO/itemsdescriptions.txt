@@ -50236,3 +50236,264 @@ Location : ^777777Upper^000000    Berat : ^7777775^000000
 Minimum Lvl : ^77777771^000000
 Job : ^777777Semua^000000
 #
+
+//====================update 11122018=================
+31302#
+Seekor kelinci putih yang bulunya sangat halus. Mirip seperti bola salju !
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31303#
+Sebuah topi yang lucu yang bisa melindungi kamu dari udara dingin dan memberikanmu penampilan yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31304#
+Sebuah anting yang dibuat dari bulu dari sayap malaikat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31305#
+Kesucian Dewa Air disegel didalam topi ini.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31306#
+Penutup kepala yang menyerupai kuping kelinci yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31307#
+Topi yang dipakai oleh kapten pesawat udara. Menyerupai tanduk Rudolph.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31308#
+Kotak yang berisi kostum-kostum untuk menyambut natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+31309#
+Kotak yang berisi equipment untuk menyambut datangnya natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+19125#
+Penutup kepala yang dibuat untuk memegang bahan kimia ketika memeriksa Cart.
+Silinder nya dibuat dari bahan yang bagus tetapi kamu harus menggunakannya dengan hati-hati.
+STR +5
+INT +5
+Mengurangi Variable Casting dari skill [Cart Cannon] sebesar 100%.
+Mengurangi penggunaan SP dari skill [Cart Cannon] sebesar 30.
+Mengurangi penggunaan SP dari skill [Cart Tornado] sebesar 5.
+Meningkatkan serangan dari skill [Cart Cannon] sebesar 10%.
+Meningkatkan serangan dari skill [Cart Tornado] sebesar 5%.
+Jika ditempa +5 atau lebih,
+Tambahan peningkatan serangan dari skill [Cart Cannon] sebesar 20%.
+Tambahan peningkatan serangan dari skill [Cart Tornado] sebesar 10%.
+Jika ditempa +8 atau lebih,
+Tambahan peningkatan serangan dari skill [Cart Cannon] sebesar 30%.
+Tambahan peningkatan serangan dari skill [Cart Tornado] sebesar 20%.
+
+Jenis : ^777777Headgear^000000    Defense : ^77777712^000000
+Location : ^777777Upper^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777790^000000
+Job : ^777777Semua^000000
+#
+
+19246#
+Sebuah kalung yang dibuat secara spesifik untuk Royal Guard. Kalung ini memiliki arti melindungi orang lain.
+ASPD +1
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Royal Guard Necklace^000000
+Atk +40
+Tambahan Atk +60 jika base AGI user 108 atau lebih.
+Tambahan Atk +80 jika base AGI user 120 atau lebih.
+ASPD +3%
+Tambahan ASPD +5% jika base AGI user 108 atau lebih.
+Tambahan ASPD +7% jika base AGI user 120 atau lebih.
+Mengurangi serangan dari Race Player sebesar 2%.
+Tambahan pengurangan serangan dari Race Player sebesar 2% jika base AGI user 108 atau lebih.
+Tambahan pengurangan serangan dari Race Player sebesar 4% jika base AGI user 120 atau lebih.
+Imun terhadap status [Blind] dan [Silence].
+
+Jenis : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777780^000000
+Job : ^777777Semua^000000
+#
+
+15166#
+Sebuah rosario suci yang mendapat kekuatan dari titisan Dewa. Kalung ini berisi kekuatan misterius.
+Perfect Dodge +2.
+Meningkatkan recovery rate dari skill recovery sebesar 3%.
+
+^800080Set Bonus^000000
+^008080Croce Staff [1]^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge +2 untuk setiap tingkat tempa dari [Croce Staff [1]]
+
+^800080Set Bonus^000000
+^008080Clergy Nurse Cap[1]^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge +1 untuk setiap tingkat tempa dari [Clergy Nurse Cap [1]]
+Meningkatkan recovery rate dari skill recovery sebesar 2% untuk setiap tingkat tempa [Clergy Nurse Cap [1]].
+
+Jenis : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777760^000000
+Job : ^777777Semua^000000
+#
+
+//====================update merger 18122018=================
+31500#
+Dahulu digunakan oleh Dewa Petir Thor, sabuk ini akan merasuk ke tubuhmu dan mengeluarkan kekuatan super.
+STR +40, MDEF +7
+Tambahan bonus STR berdasarkan level kamu.
+Serangan Fisik  +10% pada monster Bos ketika STR kamu diatas 120 atau lebih.
+Job: ^777777Aksesoris^000000
+Pertahanan : ^7777772^000000      Berat : ^777777800^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31501#
+Dahulu digunakan oleh Dewi Freyja, kalung ini meningkatkan penampilan dan kemampuan penggunanya dengan hebat sekaligus.
+STR/AGI/DEX/VIT +6. LUK/INT +10.
+MDEF +5
+Jumlah Pemulihan +6% untuk skill Heal dan Sanctuary.
+Job : ^777777Aksesoris^000000
+Pertahanan : ^7777771^000000      Berat : ^777777150^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31502#
+Sepatu ini yang dinamakan seperti kuda perang Odin memiliki efek yang didambakan oleh semua pejuang.
+MHP/MSP +20%
+SP Recovery Speed +25%
+INT + 25, MDEF + 10
+Meningkatkan Kecepatan Gerak.
+Tidak dapat dihancurkan.
+Job : ^777777Sepatu^000000    Pertahanan : ^77777740^000000
+Berat : ^777777350^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31503#
+Palu yang katanya digunakan oleh Thor, dewa petir yang katanya bisa kembali ke pemiliknya setelah dilempar kemanapun.
+Menghancurkan musuh dengan petir.
+DEX +50
+STR +20
+Melee Physical attacks have a high chance of auto-casting Level 10 Thunderstorm.
+Melee Physical attacks have a high chance of inflicting Splashed damage for 10 seconds.
+Indefinitely accelerates Attack Speed.
+Tidak dapat dihancurkan.
+Jenis: ^777777Blunt Weapon^000000 Serangan : ^777777350^000000
+Berat : ^777777600^000000
+Weapon Level: ^7777774^000000
+Level Dibutuhkan : ^77777795^000000
+Job: ^777777Merchant Job/Swordsman Job^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31310#
+White Christmas Costume Box
+Kotak yang berisi kostum-kostum untuk menyambut natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+31311#
+Costume: Baby Penguin
+Seekor bayi penguin yang akan berjalan menuju ke hatimu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31312#
+Costume: White Eremes Scarf
+Syal berwarna putih ini menyerupai salju yang segar.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31313#
+Costume: Christmas Cat Beanie
+Penutup kepala yang hangat untuk musim dingin, lengkap dengan kuping dan buntut seperti kucing.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31314#
+Costume: White Fox Ear
+Sebuah kostum yang menyerupai kuping dari rubah putih.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31317#
+Costume: Piamette Red Hood
+Penutup kepala dari Piamette berwarna merah dengan motif yang menyeramkan.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31316#
+Costume: Parfaille Vigilante Hat
+Sebuah topi yang kamu dapatkan ketika menjadi anggota dari Parfaille Vigilante.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 26122018=================
+32301#
+Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32302#
+[PREMIUM] Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32303#
+Kembang api yang digunakan untuk merayakan tahun baru 2019 !
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
