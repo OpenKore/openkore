@@ -271,6 +271,7 @@ sub processMsg {
 # about the parameters.
 sub message {
 	my ($message, $domain, $level) = @_;
+	$domain ||= "console";
 	$level = 5 if existsInList($config{squelchDomains}, $domain);
 	$level = 0 if existsInList($config{verboseDomains}, $domain);
 	return processMsg("message",	# type
@@ -290,6 +291,7 @@ sub message {
 # See the description for Log.pm for more details about the parameters.
 sub warning {
 	my ($message, $domain, $level) = @_;
+	$domain ||= "console";
 	$level = 5 if existsInList($config{squelchDomains}, $domain);
 	$level = 0 if existsInList($config{verboseDomains}, $domain);
 	return processMsg("warning",
@@ -321,6 +323,7 @@ sub warning {
 # See the description for Log.pm for more details about the parameters.
 sub error {
 	my ($message, $domain, $level) = @_;
+	$domain ||= "console";
 	return processMsg("error",
 		$message,
 		$domain,
@@ -338,6 +341,7 @@ sub error {
 # Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {
 	my ($message, $domain, $level) = @_;
+	$domain ||= "console";
 	$level = 1 if (!defined $level);
 	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
 	$level = 5 if (existsInList($config{squelchDomains}, $_[1]));
