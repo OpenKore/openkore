@@ -50497,3 +50497,33 @@ Location : ^777777Lower^000000Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+
+//====================update 03012019=================
+32304#
+Kupon ini digunakan untuk klaim hadiah Daily Login di NPC Ossas setiap hari.
+Weight : ^7777770^000000
+#
+
+5744#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Vit +2
+Jika ditempa +7 atau lebih, ketika melakukan serangan jarak dekat, ada kemungkinan auto-cast Lv 1 Mild Wind (Earth).
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+5745#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Mdef +5.
+Meningkatkan ketahanan terhadap serangan elemen Tanah sebesar 5%
+Jika ditempa +7 atau lebih, Int +2.
+Jika ditempa +8 atau lebih, mengurangi casting time sebesar 3%.
+Jika ditempa +9 atau lebih, meningkatkan efektivitas Skill Heal dan Sanctuary sebesar 4%.
+Jika ditempa +10 atau lebih, ketika diserang, ada kemungkinan kecil untuk auto-cast Lv 5 [Hammer Fall].
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
