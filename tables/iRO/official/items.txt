@@ -1193,7 +1193,7 @@
 2165#Sol_Shield#
 2168#Immune_Shield#
 2169#Kalasag#
-2170#Kalasag(Bayani)#
+2170#Kalasag_(Bayani)#
 2171#Fox_Armguard#
 2172#Wolf_Armguard#
 2173#Crescent_Armguard#
@@ -7548,7 +7548,7 @@
 17384#Amistr_Bag_Box#
 17385#OCP_Remix_IV#
 17386#Chemical_Shoes_Shadow_Box#
-17387#Clamorous_Shoes_Shadow_Box#
+17387#Overseas_Care_Package_Remix_XI#
 17388#OCP_Remix_X#
 17389#Overseas_Care_Package_Remix_IX#
 17390#OCP_Remix_VII#
@@ -8224,7 +8224,7 @@
 19410#Classic_Charming_Ribbon_Box#
 19411#Classic_Parade_Hat_Box#
 19412#Classic_Vacation_Hat_Box#
-19413#Classic_Red_Framed_Glasses_Box#
+19413#Snow_Flower#
 19414#Classic_Evolved_Pipe_Box#
 19426#King_Of_Spirit_Circlet#
 19500#(null)#
@@ -9831,6 +9831,7 @@
 31573#Costume_Mecha_Cat_Ears#
 31574#Costume_Cyber_Income#
 31575#Costume_Electric_Two_Sides_Up_Hair#
+31588#Costume_Snow_Flower#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#

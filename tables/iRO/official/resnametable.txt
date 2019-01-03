@@ -2184,3 +2184,9 @@ hal_in18.rsw#prt_in.rsw#
 1@rossi.rsw#kh_rossi.rsw#
 
 삯샺샎엍웤샌붺\map\1@rossi.bmp#삯샺샎엍웤샌붺\map\kh_rossi.bmp#
+
+//Xmas 2018 Antonio's Workshop
+1@xlab.gnd#1@lab.gnd#
+1@xlab.gat#1@lab.gat#
+1@xlab.rsw#1@lab.rsw#
+삯샺샎엍웤샌붺\map\1@xlab.bmp#삯샺샎엍웤샌붺\map\1@lab.bmp#
