@@ -8738,67 +8738,67 @@ Membersihkan culvert selama 1 jam#
 
 12255#Kalahkan deep sea crab#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea crab ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 deep sea crabs - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 deep sea Crab - Muncul di Culvert Dungeon Normal mode#
 
 12256#Kalahkan deep sea squid#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea squid ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 deep sea squids - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 deep sea Marse - Muncul di Culvert Dungeon Normal mode#
 
 12257#Kalahkan Ancient crustacean#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffancient crustacean ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 ancient crustaceans - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 ancient Vadon - Muncul di Culvert Dungeon Normal mode#
 
 12258#Kalahkan deep sea shell#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea shell ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 deep sea shells - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 deep sea Shellfish - Muncul di Culvert Dungeon Normal mode#
 
 12259#Kalahkan ancient kukre#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffancient kukre ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 ancient kukres - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 ancient Kukre - Muncul di Culvert Dungeon Normal mode#
 
 12260#Kalahkan deep sea conch#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea conch ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 20 deep sea conches - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 20 deep sea Cornutus - Muncul di Culvert Dungeon Normal mode#
 
 12261#Kalahkan deep sea horse#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea horse ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 deep sea horses - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 deep sea Marc - Muncul di Culvert Dungeon Hard mode#
 
 12262#Kalahkan ancient sword fish#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffancient sword fish ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 ancient sword fishes - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 ancient Sword Fish - Muncul di Culvert Dungeon Hard mode#
 
 12263#Kalahkan ancient sea god#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffancient sea god ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 ancient sea gods - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 ancient sea Strouf - Muncul di Culvert Dungeon Hard mode#
 
 12264#Kalahkan mutation anolian#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffmutation anolian ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 mutation anolians - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 mutation Anolian - Muncul di Culvert Dungeon Hard mode#
 
 12265#Kalahkan deep sea mermaid#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000ffdeep sea mermaid ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 deep sea mermaids - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 deep sea Obeaune - Muncul di Culvert Dungeon Hard mode#
 
 12266#Kalahkan transformable kapha#SG_FEEL#QUE_NOIMAGE#
 Hari ini, pahlawan Culvert, kami menetapkan tanggal pemusnahan dari^0000fftransformable kapha ^000000dan kita tingkatkan. Pahlawan! Jangan takut kepada mereka datanglah kemari! Ini hanya satu hari!#
-Kalahkan 30 transformable kaphas - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 30 transformable Kapha - Muncul di Culvert Dungeon Hard mode#
 
 12267#Kalahkan weird coelacanth#SG_FEEL#QUE_NOIMAGE#
 Pahlawan Culvert,  kami menetapkan perburuan selama seminggu ^0000ffweird coelacanth ^000000 Dan tingkatkan suara kita! Saya akan memberikan Anda hanya satu minggu untuk menyelesaikan tugas ini! Musnahkan mereka semua dari normal mode didalam culvert dungeon!#
-Kalahkan 1 weird coelacanth - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 1 Weird Coelacanth - Muncul di Culvert Dungeon Normal mode#
 
 12268#Kalahkan dark coelacanth#SG_FEEL#QUE_NOIMAGE#
 Pahlawan Culvert,  kami menetapkan perburuan selama seminggu ^0000ffdark coelacanth ^000000 Dan tingkatkan suara kita! Saya akan memberikan Anda hanya satu minggu untuk menyelesaikan tugas ini! Musnahkan mereka semua dari normal mode didalam culvert dungeon!#
-Kalahkan 1 dark coelacanth - Muncul di Culvert Dungeon Normal mode#
+Kalahkan 1 Dark Coelacanth - Muncul di Culvert Dungeon Normal mode#
 
-12269#Kalahkan Cruel coelacanth#SG_FEEL#QUE_NOIMAGE#
+12269#Kalahkan Cruel Coelacanth#SG_FEEL#QUE_NOIMAGE#
 Pahlawan Culvert,  kami menetapkan perburuan selama seminggu ^0000ffCruel coelacanth ^000000 Dan tingkatkan suara kita! Saya akan memberikan Anda hanya satu minggu untuk menyelesaikan tugas ini! Musnahkan mereka semua dari hard mode didalam culvert dungeon!#
-Kalahkan 1 Cruel coelacanth - Muncul di Culvert Dungeon Hard mode#
+Kalahkan 1 Cruel Coelacanth - Muncul di Culvert Dungeon Hard mode#
 
-12270#Kalahkan mutation coelacanth#SG_FEEL#QUE_NOIMAGE#
+12270#Kalahkan Mutant Coelacanth#SG_FEEL#QUE_NOIMAGE#
 Pahlawan Culvert, kami menetapkan perburuan selama seminggu ^0000ffmutation coelacanth ^000000 Dan tingkatkan suara kita! Saya akan memberikan Anda hanya satu minggu untuk menyelesaikan tugas ini! Musnahkan mereka semua dari hard mode didalam culvert dungeon!#
-Hunt 1 mutation coelacanth - Appear in Culvert Dungeon Hard mode#
+Hunt 1 Mutant Coelacanth - Appear in Culvert Dungeon Hard mode#
 
 12271#Dalam proses normal culvert service satu hari#SG_FEEL#QUE_NOIMAGE#
 Anda sudah punya 1 layanan yang diminta. Karena Anda sudah melakukannya, Anda tidak bisa mendapatkan permintaan baru untuk 1 hari.#
