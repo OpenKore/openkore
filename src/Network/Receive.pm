@@ -7311,4 +7311,62 @@ sub cash_dealer {
 	message("-----------------------------------------------------\n", "list");
 }
 
+##
+# 096D <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub merge_item_open {
+	my ($self, $args) = @_;
+	$mergeItemList = {};
+	debug "Enable to merge ".(scalar @{$args->{list}})." items\n";
+	# Grouping items by ItemID, easier to merge by user later
+	foreach (@{$args->{list}}) {
+		my $item = $char->inventory->getByID($_->{ID});
+		if (!defined $mergeItemList->{$item->{nameID}}) {
+			$mergeItemList->{$item->{nameID}}->{name} = $item->{name};
+			@{$mergeItemList->{$item->{nameID}}->{list}} = ();
+		}
+		push @{$mergeItemList->{$item->{nameID}}->{list}},{ ID => $_->{ID}, info => $item };
+		debug "- ".(unpack "v",$_->{ID}).": ".$item->{name}." (".$item->{binID}.") x ".$item->{amount}."\n";
+	}
+	message TF("Received %d items that can be merged. Use 'merge' to continue\n", (scalar @{$args->{list}})), "info";
+}
+
+sub parse_merge_item_open {
+	my ($self, $args) = @_;
+	@{$args->{list}} = map { { ID => $_ } } unpack '(a2)*', $args->{itemList}; # received index from server is +2
+}
+
+##
+# 096F <index>.W <total>.W <result>.B
+# @author [Cydh]
+##
+sub merge_item_result {
+	my ($self, $args) = @_;
+	if ($args->{result} == 0) {
+		# now update inventory data
+		my $item = $char->inventory->getByID($args->{itemIndex});
+		message T("Items were merged successfully!\n"), "info";
+		if ($item) {
+			my $oldAmount = $item->{amount};
+			$item->{amount} = $args->{total};
+			message TF("Updated amount of item %s (%d): %d -> %d\n", $item->{name}, $item->{binID}, $oldAmount, $item->{amount});
+		} else {
+			error TF("Item was moved during merging process. itemIndex: %d. New amount: %d\n", $args->{index}, $args->{total});
+		}
+	} elsif ($args->{result} == 1) {
+		error T("Items cannot be merged.\n");
+	} elsif ($args->{result} == 2) {
+		error T("The amount of merged item will be exceed stack limit.\n");
+	} else {
+		error TF("An error occured to merge item. Error:%d\n", $args->{result});
+	}
+	debug "Merge item result: itemIndex:$args->{index} total:$args->{total} result:$args->{result}\n";
+}
+
+sub parse_merge_item_result {
+	my ($self, $args) = @_;
+	$args->{index} = (unpack "(a2)", $args->{itemIndex})-2;
+}
+
 1;
