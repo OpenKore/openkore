@@ -71941,3 +71941,17 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20071#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Rudolph Santa Hat!
+200 Fabric
+100 Skel-Bones
+50 Sea-Otter Fur
+2 Scarlet Dyestuffs
+1 Rudolph Santa Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
