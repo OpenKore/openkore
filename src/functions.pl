@@ -679,6 +679,7 @@ sub initMapChangeVars {
 	undef $skillExchangeItem;
 	undef $refineUI;
 	undef $currentCookingType;
+	undef $mergeItemList;
 	$captcha_state = 0;
 	$universalCatalog{open} = 0;
 	$universalCatalog{has_next} = 0;

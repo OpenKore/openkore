@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -3076,4 +3076,42 @@ sub sendStopSkillUse {
 	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
 	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
 }
+
+##
+# Request to merge item
+# 096E <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub sendMergeItemRequest {
+	my ($self, $num, $items) = @_;
+	#my $len = ($num * 4) + 12;
+	$self->sendToServer($self->reconstruct({
+		switch => 'merge_item_request',
+		#len => $len,
+		items => $items,
+	}));
+	debug "Sent merge item request: ".(join ', ', map { $_->{info}->{binID}." x ".$_->{info}->{amount} } @$items)."\n", "sendPacket";
+}
+
+sub reconstruct_merge_item_request {
+	my ($self, $args) = @_;
+	$args->{itemList} = pack '(a2)*', map { $_->{ID} } @{$args->{items}};
+}
+
+##
+# Request to cancel merge item
+# 0974
+# @author [Cydh]
+##
+sub sendMergeItemCancel {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'merge_item_cancel' }));
+	debug "Cancel Merge item\n", "sendPacket";
+	$mergeItemList = {};
+}
+
+#sub reconstruct_merge_item_cancel {
+#	my ($self, $args) = @_;
+#}
+
 1;

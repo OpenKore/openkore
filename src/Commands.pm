@@ -248,6 +248,7 @@ sub initHandlers {
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
 	clan				=> \&cmdClan,
+	merge				=> \&cmdMergeItem,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -7342,6 +7343,103 @@ sub cmdCashShopBuy {
 	message TF("Attempt to buy %d items from cash dealer\n", (scalar @buylist)), "info";
 	debug "Buying cash ".(scalar @buylist)." items: ".(join ', ', map {"".$_->{amount}."x ".$_->{itemID}.""} @buylist)."\n", "sendPacket";
 	$messageSender->sendCashShopBuy($points, \@buylist);
+}
+
+
+##
+# 'merge' Merge Item
+# @author [Cydh]
+##
+sub cmdMergeItem {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if (not defined $mergeItemList) {
+		error T("You cannot use this command yet. Only available after talking with Mergician-like NPC!\n");
+		return;
+	}
+
+	my ($switch, $args) = @_;
+	my ($mode) = $args =~ /^(\w+)/;
+
+	if ($mode eq "" || $mode eq "list") {
+		my $title = TF("Available Items to merge");
+		my $msg = center(' '. $title . ' ', 50, '-') ."\n".
+					T ("#     Item Name\n");
+		foreach my $itemid (keys %{$mergeItemList}) {
+			$msg .= "-- ".$mergeItemList->{$itemid}->{name}." (".$itemid.") x ".scalar(@{$mergeItemList->{$itemid}->{list}})."\n";
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				my $display = $item->{info}->{name}." x ".$item->{info}->{amount};
+				$msg .= swrite(
+					"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$item->{info}->{binID}, $display]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+		message T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
+		return;
+
+	} elsif ($mode eq "cancel") {
+		$messageSender->sendMergeItemCancel();
+		message TF("Merge Item is canceled.\n"), "info";
+		return;
+	}
+
+	# Merging process
+	my @list = split(/,/, $args);
+	my @items = ();
+	my $merge_itemid = 0;
+
+	@list = grep(!/^$/, @list); # Remove empty entries
+	foreach (@list) {
+		my ($id) = $_ =~ /^(\d+)/;
+		# Merge by item ID
+		if ((scalar @list) == 1 && $char->inventory->getByNameID($id)) {
+			debug "Merge item by item ID $id\n";
+			foreach my $item (@{$mergeItemList->{$id}->{list}}) {
+				push @items, $item;
+			}
+			last;
+		}
+
+		# User defined, however must be same item id
+		my $found = 0;
+		foreach my $itemid (keys %{$mergeItemList}) {
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				if ($item->{info}->{binID} == $id) {
+					if ($merge_itemid > 0 && $merge_itemid != $item->{info}->{nameID}) {
+						error TF("Selected item is not same. Index:'%d' nameID:'%d' first selected:'%d'\n", $id, $item->{info}->{nameID}, $merge_itemid);
+						return;
+					} elsif ($merge_itemid == 0) {
+						$merge_itemid = $item->{info}->{nameID};
+					}
+					push @items, $item;
+					$found = 1;
+					last;
+				}
+			}
+			last if ($found == 1);
+		}
+		if ($found != 1) {
+			warning TF("Cannot find item with id '%d'.\n", $id);
+		}
+	}
+
+	if (@items > 1) {
+		my $num = scalar @items;
+		message T("======== Merge Item List ========\n");
+		map { message unpack("v2", $_->{ID})." ".$_->{info}->{name}." (".$_->{info}->{binID}.") x ".$_->{info}->{amount}."\n" } @items;
+		message "==============================\n";
+		$mergeItemList = {};
+		$messageSender->sendMergeItemRequest($num, \@items);
+		return;
+	}
+
+	error T("No item was selected or at least need 2 same items.\n");
+	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
 }
 
 1;
