@@ -5602,27 +5602,28 @@ Usable By: ^808080Royal Guard^000000
 Matk + 40
 Increases the damage of ^0000FFBanishing Point^000000 and ^0000FFCannon Spear^000000 by 20%.
 Increases the damage of ^0000FFBanishing Point^000000 and ^0000FFCannon Spear^000000 by an additional 3% per 2 upgrade levels of this item.
-^800080Set Bonus^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
-Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
 
 ^800080Set Bonus^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
+Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear [1]^000000.
+
+^800080Set Bonus^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Spear [1]^000000
 Increases the damage of ^0000FFGenesis Ray^000000 and ^0000FFGrand Cross^000000 by 10%.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Spear [1]^000000
 Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
 Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
@@ -11988,56 +11989,52 @@ Usable By: ^808080Novice Jobs^000000
 Reduces damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost, and Undead property attacks by 20%.
 #
 2114#
-A stone shield which
-Thor obtained by killing
-Hrungnir, king of giants.
-It possesses the powers of
-giants which rival
-the might of the gods.
-Reduces damage from
-Large sized monsters by
-5%.
-^99FF66Magni Set^000000
-^00FF00Magni's Hat^000000
-^00FF00Stone Buckler^000000
-^00FF00Odin's Blessing^000000
-+2 STR
-+5 MDEF
-+5 DEF
-Swordsman Class :
-+6 Additional Defense
-Class : ^777777Shield^000000
-Defense: ^77777745^000000
-Weight : ^777777150^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A stone shield which Thor obtained by killing Hrungnir, king of giants. It possesses the powers of giants which rival the might of the gods.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^808080150^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Large size enemies by 5%.
+
+^800080Set Bonus^000000
+^008080Stone Buckler [1]^000000
+^008080Magni's Cap^000000
+^008080Odin's Blessing [1]^000000
+Str + 2
+Def + 5
+Mdef + 5
+^F4AD42Swordsman Bonus^000000
+Additional Def + 6
 #
 2115#
-A shield used by Gna,
-messenger of Freyja,
-when she served as
-a Valkyrie. Adds 20%
-resistance to Water,
-Fire, Undead and
-Shadow properties.
-MDEF +5
-^99FF66Frigg's Set^000000
-^00FF00Fricca's Circlet^000000
-^00FF00Valkyrja's Shield^000000
-^00FF00Odin's Blessing^000000
-+2 DEF
-+5 MDEF
-All upgrade levels of
-the Shield and Circlet
-adds to MDEF
-^770000Instead^000000 of Def.
-Class : ^777777Shield^000000
-Defense: ^77777780^000000
-Weight : ^77777750^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A shield used by Gna, messenger of Freyja, when she served as a Valkyrie.
+^FF0000^F67E04Used for War of Emperium TE God Item Creation.^000000^000000
+Class: ^808080Shield^000000
+Defense: ^80808080^000000
+Weight: ^80808050^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef + 5
+Reduces damage taken from Water, Fire, Shadow and Undead property attacks by 20%.
+
+^800080Set Bonus^000000
+^008080IValkyrja's Shield [1]^000000
+^008080Fricca's Circlet^000000
+^008080Odin's Blessing [1]^000000
+Def + 2
+Mdef + 5
+For every upgrade level of ^008080IValkyrja's Shield [1],
+Def - 1
+Mdef + 1
+For every upgrade level of ^008080Fricca's Circlet^000000,
+Def - 1
+Mdef + 1
+
+^800080Set Bonus^000000
+^008080Valkyrja's Shield [1]^000000
+^008080Long Horn [1]^000000
+Adds a 0.5% chance of casting ^0000FFLevel 2 Assumptio^000000 on the user when receiving a physical attack.
 #
 2116#
 Super Novice Guardian Angel's shield which contains holy power that can nullify evil.
@@ -12416,27 +12413,28 @@ Usable By: ^808080Royal Guard^000000
 Mdef + 5
 Increases the damage of ^0000FFShield Press^000000 by 20%.
 Increases the damage of ^0000FFShield Press^000000 by an additional 2% per upgrade level of the item past the upgrade level of 5.
+
 ^800080Set Bonus^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
 Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
 
 ^800080Set Bonus^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Spear [1]^000000
 Increases the damage of ^0000FFGenesis Ray^000000 and ^0000FFGrand Cross^000000 by 10%.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Spear [1]^000000
 Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
 Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
@@ -14322,142 +14320,141 @@ Requires Level: ^80808045^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2346#
-An armor that is enchanted with the ^6996ADWater^000000 Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+An armor that is enchanted with the Water Property.
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Water^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2347#
-An armor that is enchanted with the ^6996ADWater^000000 Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777All Jobs except Novice^000000
+An armor that is enchanted with the Water Property.
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Water^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2348#
 An armor that is enchanted with the Wind Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Wind^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2349#
 An armor that is enchanted with the Wind Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777All Jobs except Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Wind^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2350#
 An armor that is enchanted with the Earth Property.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Earth^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 #
 2351#
 An armor that is enchanted with the Earth Property.
-Class : ^777777Armor^000000    Defense : ^77777725^000000
-Weight : ^777777220^000000
-Required Level : ^77777745^000000
-Jobs: ^777777All Jobs except Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Property: ^808080Earth^000000
+Weight: ^808080220^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2352#
 An exclusive armor for new adventurers.
-Impossible to refine this item.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^7777770.1^000000
-Required Level : ^777777NA^000000
-Jobs : ^777777Novice^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^8080800.1^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs^000000
+This item cannot be upgraded.
 #
 2353#
-The main component of
-the Hermod Armor set.
-^ffffff_^000000
-^99FF66Magni Set^000000
-^00FF00Magni's Hat^000000
-^00FF00Stone Buckler^000000
-^00FF00Odin's Blessing^000000
-+2 STR
-+5 MDEF
-+5 DEF
-Swordsman Class :
-+6 Additional Defense
-^ffffff_^000000
-^99FF66Frigg's Set^000000
-^00FF00Fricca's Circlet^000000
-^00FF00Valkyrja's Shield^000000
-^00FF00Odin's Blessing^000000
-+2 DEF
-+5 MDEF
-All upgrade levels of
-the Shield and Circlet
-adds to MDEF
-^770000Instead^000000 of DEF.
-^ffffff_^000000
-^6A5ACDUlle's Armor Set^000000
-^3CB371Ulle's Cap^000000
-^3CB371Odin's Blessing^000000
-If Base Dex is 70 or higher:
--10% SP consumption
-^ffffff_^000000
-^6A5ACDNjord's Armor Set^000000
-^3CB371Fricco's Shoes^000000
-^3CB371Falcon Muffler^000000
-^3CB371Odin's Blessing^000000
-Agi +3
-Max HP/SP +5%
-^ffffff_^000000
-^6A5ACDOdin's Armor Set^000000
-^3CB371Vali's Manteau^000000
-^3CB371Vidar's Boots^000000
-^3CB371Odin's Blessing^000000
-Vit +5
-HP/SP Recovery +10%
-^ffffff_^000000
-Class : ^777777Armor^000000
-Defense: ^77777753^000000
-Weight : ^777777250^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+The main component of the Hermod Armor set.
+Class: ^808080Armor^000000
+Defense: ^80808053^000000
+Weight: ^808080250^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+^800080Set Bonus^000000
+^008080Stone Buckler [1]^000000
+^008080Magni's Cap^000000
+^008080Odin's Blessing [1]^000000
+Str + 2
+Def + 5
+Mdef + 5
+^F4AD42Swordsman Bonus^000000
+Additional Def + 6
+
+^800080Set Bonus^000000
+^008080IValkyrja's Shield [1]^000000
+^008080Fricca's Circlet^000000
+^008080Odin's Blessing [1]^000000
+Def + 2
+Mdef + 5
+For every upgrade level of ^008080IValkyrja's Shield [1],
+Def - 1
+Mdef + 1
+For every upgrade level of ^008080Fricca's Circlet^000000,
+Def - 1
+Mdef + 1
+
+^800080Set Bonus^000000
+^008080Ulle's Cap [1]^000000
+^008080Odin's Blessing [1]^000000
+If the user's base Dex is 70 or higher,
+Reduces the SP cost of skills by 10%.
+
+^800080Set Bonus^000000
+^008080Fricco's Shoes^000000
+^008080Falcon Muffler^000000
+^008080Odin's Blessing [1]^000000
+Agi + 3
+Max HP + 5%
+Max SP + 5%
+
+^800080Set Bonus^000000
+^008080Vali's Manteau^000000
+^008080Vidar's Boots^000000
+^008080Odin's Blessing [1]^000000
+Vit + 5
+HP Recovery + 10%
+SP Recovery + 10%
 #
 2354#
-An armor that was
-accidentally enchanted   by Goibne the blacksmith
-when he spilled the mystic ale of life all over it.
-Vit +2, Max HP +10%.
-^ffffff_^000000
-^6A5ACDGoibne's Armor Set^000000
-^3CB371Goibne's Spaulders^000000
-^3CB371Goibne's Greaves^000000
-^3CB371Goibne's Armor^000000
-^3CB371Goibne's Helm^000000
-Vit +5
-Max HP +15%
-Max SP +5%
-DEF +5
-MDEF +5
-+10% Resistance to Water,
-Wind, Earth, and Fire
-property
-^ffffff_^000000
-Class : ^777777Armor^000000
-Defense: ^77777758^000000
-Weight : ^777777350^000000
-Required Level : ^77777754^000000
-Jobs: ^777777All except
-Novice Class^000000
+An armor that was accidentally enchanted by Goibne the blacksmith when he spilled the mystic ale of life all over it.
+Class: ^808080Armor^000000
+Defense: ^80808058^000000
+Weight: ^808080350^000000
+Requires Level: ^80808054^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Vit + 2
+Max HP + 10%
+
+^800080Set Bonus^000000
+^008080Goibne's Armor^000000
+^008080Goibne's Helm^000000
+^008080Goibne's Spaulders^000000
+^008080Goibne's Greaves^000000
+Vit + 5
+Max HP + 15%
+Max SP + 5%
+Def + 5
+Mdef + 15
+Reduces damage taken from Water, Earth, Fire, and Wind property attacks by 10%.
 #
 2355#
 Super Novice Guardian Angel's robe.
@@ -14479,52 +14476,53 @@ Max SP + 100
 Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2356#
-A blessed holy robe
-that protects its wearer from being tainted by
-evil. Adds +80% Blind
-resistance, MDEF +5.
-Class : ^777777Armor^000000
-Defense: ^7777745^000000
-Weight : ^777777250^000000
-Required Level : ^77777770^000000
-Jobs: ^777777Priest, Monk^000000
+A blessed holy robe that protects its wearer from being tainted by evil.
+Class: ^808080Armor^000000
+Defense: ^80808045^000000
+Weight: ^808080250^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+Mdef + 5
+Increases resistance to ^800000Blind^000000 by 80%.
 #
 2357#
-A set of shining white
-armor worn by Valkyries,^FFFFFF ^000000 the battle maidens that
-serve the god Odin.
-Increases resistance
-to Mute status when
-worn by Mage, Archer,
-and Acolyte Classes.
-Increases resistance
-to Stun status when
-worn by Swordman,
-Merchant, and Thief
-Classes. Cannot be
-destroyed in battle.
-All Stats +1.
-^ffffff_^000000
-^6A5ACDValkyrian Armor Set^000000
-^3CB371Valkyrie Helm^000000
-^3CB371Valkyrie Armor^000000
-^3CB371Valkyrie Manteau^000000
-^3CB371Valkyrie Shoes^000000
-All Stats +1
-^ffffff_^000000
-Class : ^777777Armor^000000
-Defense : ^77777755^000000
-Weight : ^777777280^000000
-Jobs:^777777All Transcendent
-Classes except Novice^000000
+A set of shining white armor worn by Valkyries, the battle maidens that serve the god Odin.
+^F67E04Used for War of Emperium 2 God Item Creation.^000000
+Class: ^808080Armor^000000
+Defense: ^80808055^000000
+Weight: ^808080280^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+All Stats + 1
+^F4AD42Acolyte, Mage and Archer Bonus^000000
+Increases resistance to ^800000Silence^000000 by 50%.
+^F4AD42Swordman, Merchant and Thief Bonus^000000
+Increases resistance to ^800000Stun^000000 by 50%.
+This item is indestructible in battle.
+
+^800080Set Bonus^000000
+^008080Valkyrie Helm [1]^000000
+^008080Valkyrian Armor [1]^000000
+^008080Valkyrian Shoes [1]^000000
+^008080Valkyrian Manteau [1]^000000
+All Stats + 1
 #
 2358#
 An evening dress worn by an Angel. You will feel blessed when you wear it.
-LUK + 4.
-Item Class : ^777777Armor^000000
-Defense : ^7777775^000000
-Weight : ^777777100^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^8080805^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Luk + 4
+
+^800080Set Bonus^000000
+^008080Angel's Dress^000000
+^008080Angeling Hairpin^000000
+Int + 2
+Luk + 6
+Flee + 5
 #
 2359#
 A sneaking suit that enables its wearer to move more quickly and stealthily.
@@ -14543,17 +14541,14 @@ Max HP + 300
 Reduces the SP cost of skills by 20%.
 #
 2360#
-A robe that enhances
-the wearer's magic
-casting capability.
-Reduces Variable Casting Time
-of skills by 3%.
-Class : ^777777Armor^000000
-Defense: ^7777775^000000
-Weight : ^777777110^000000
-Required Level : ^77777775^000000
-Jobs: ^777777Wizard, Sage,
-and Soul Linker Jobs^000000
+A robe that enhances the wearer's magic casting capability.
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^808080110^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Wizard Jobs, Sage Jobs, Soul Linker^000000
+Mdef + 4
+Reduces the variable casting time of skills by 3%.
 #
 2361#
 #
@@ -14562,20 +14557,13 @@ and Soul Linker Jobs^000000
 2363#
 #
 2364#
-This plate armor
-was forged using
-mysterious materials
-from a meteor. Adds
-30% tolerance to
-Stun and Freeze
-statuses.
-Class : ^777777Armor^000000
-Defense : ^77777785^000000
-Weight : ^777777300^000000
-Required Level : ^77777755^000000
-Jobs: ^777777Transcendent
-Swordman and
-Merchant Classes^000000
+This plate armor was forged using mysterious materials from a meteor.
+Class: ^808080Armor^000000
+Defense: ^80808085^000000
+Weight: ^808080300^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Paladin Jobs, Biochemist Jobs^000000
+Increases resistance to ^800000Stun^000000 and ^800000Frozen^000000 by 30%.
 #
 2365#
 A uniform that was once worn by a chef that was obsessed with cleanliness. Nobody could stop him once he started talking about cuisine.
@@ -14593,20 +14581,13 @@ The users casting cannot be interrupted outside of WoE.
 Reduces the variable casting time of skills by 15%.
 #
 2366#
-A holy garment that
-has been purified by
-a series of religious
-rituals. Increases
-tolerance to Curse,
-Silence, Stun, Sleep,
-and Stone Curse
-statuses by 5%.
-Class : ^777777Armor^000000
-Defense : ^77777750^000000
-Weight : ^777777150^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A holy garment that has been purified by a series of religious rituals.
+Class: ^808080Armor^000000
+Defense: ^80808050^000000
+Weight: ^808080150^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Increases resistance to ^800000Curse^000000, ^800000Silence^000000, ^800000Sleep^000000, ^800000Stone^000000, and ^800000Stun^000000 by 5%.
 #
 2367#
 A sniping suit that
@@ -14670,41 +14651,51 @@ Max SP + 10%
 Mdef + 8
 #
 2373#
-A robe that emanates
-an aura of holiness.
-Increases resistance to Demon monsters by 15%
-and resistance against Shadow property by 10%.
-MDEF + 5
-Class : ^777777Armor^000000
-Defense : ^77777757^000000
-Weight : ^777777170^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Acolyte Class^000000
+A robe that emanates an aura of holiness.
+Class: ^808080Armor^000000
+Defense: ^80808057^000000
+Weight: ^808080170^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Acolyte Jobs^000000
+Mdef + 5
+Reduces damage taken from Demon race enemies by 15%.
+Reduces damage taken from Shadow property attacks by 10%.
 #
 2374#
 A robe which is decorated with unknown letters. The wearer feels like they're learning a new language.
-MaxSP +150, MDEF +5
-Reduces casting delay by 10%
-Increases effectiveness of ^FF0000Heal^000000 skill by 6%.
-When equipped with Diabolus Ring,
-MATK +3% and ATK +3%.
-Class : ^777777Armor^000000
-Defense : ^77777757^000000
-Weight : ^77777730^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Transcendent Archer, Mage, Acolyte^000000
+Class: ^808080Armor^000000
+Defense: ^80808057^000000
+Weight: ^80808030^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080High Priest Jobs, High Wizard Jobs, Sniper Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Max SP + 150
+Mdef + 5
+Reduces the global delay of skills by 10%.
+Increases the recovery rate of recovery skills by 6%.
+
+^800080Set Bonus^000000
+^008080Diabolus Robe [1]^000000
+^008080Diabolus Ring [1]^000000
+Atk + 3%
+Matk + 3%
 #
 2375#
 An Armor which is made of an unknown metal in the human-world. Mysterious power is hidden in the armor.
-Str +2, Dex +1,
-MaxHP +150.
-Tolerance to ^FF0000Stun^000000 and ^FF0000Stone^000000 +5%.
-When equipped with Diabolus Ring,
-MATK +3% and ATK +3%.
-Class : ^777777Armor^000000
-Defense : ^77777779^000000
-Weight : ^77777760^000000
-Jobs: ^777777Transcendent Swordman, Merchant, Thief^000000
+Class: ^808080Armor^000000
+Defense: ^80808079^000000
+Weight: ^80808060^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Str + 2
+Dex + 1
+Max HP + 150
+Increases resistance to ^800000Stone^000000 and ^800000Stun^000000 by 5%.
+
+^800080Set Bonus^000000
+^008080Diabolus Armor [1]^000000
+^008080Diabolus Ring [1]^000000
+Atk + 3%
+Matk + 3%
 #
 2376#
 Designed for brave warriors who face enemies at the forefront. It gives off multiple effects when compounded as a set.
@@ -15155,75 +15146,63 @@ Required Level : ^77777740^000000
 Jobs: ^777777Novice Class^000000
 #
 2417#
-A pair of shoes that were blessed by Freyr, the god of earth and the son of Njord.
-His blessing would release its owner from pain.
-Increase value of Red, Orange, Yellow and White Potion by 20%, adds Agi+ 2.
-If the owner is equipped with the armor set, it adds Agi+ 3, MHP/MSP + 5%.
-^ffffff_^000000
-^6A5ACDNjord's Armor Set^000000
-^3CB371Fricco's Shoes^000000
-^3CB371Falcon Muffler^000000
-^3CB371Odin's Blessing^000000
-Agi +3
-Max HP/SP +5%
-^ffffff_^000000
-Class : ^777777Footwear^000000
-Defense: ^77777712^000000
-Weight : ^77777750^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A pair of shoes that were blessed by Freyr, the god of earth and the son of Njord. His blessing would release its owner from pain.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808050^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 2
+Increases the recovery rate of ^008080Red Potion^000000, ^008080Orange Potion^000000, ^008080Yellow Potion^000000, and ^008080White Potion^000000 consumables by 20%.
+
+^800080Set Bonus^000000
+^008080Fricco's Shoes^000000
+^008080Falcon Muffler^000000
+^008080Odin's Blessing [1]^000000
+Agi + 3
+Max HP + 5%
+Max SP + 5%
 #
 2418#
-The boots worn by
-Vidar, son of Odin,
-when he killed the
-Fenrir Wolf. These
-represent the great
-physical and mental
-strength Vidar displayed in that epic final battle.
-Max HP/Max SP +9%.
-^ffffff_^000000
-^6A5ACDOdin's Armor Set^000000
-^3CB371Vali's Manteau^000000
-^3CB371Vidar's Boots^000000
-^3CB371Odin's Blessing^000000
-Vit +5
-HP/SP Recovery +10%
-^ffffff_^000000
-Class : ^777777Footwear^000000
-Defense: ^77777713^000000
-Weight : ^77777765^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+The boots worn by Vidar, son of Odin, when he killed the Fenrir Wolf. These represent the great physical and mental strength Vidar displayed in that epic final battle.
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808065^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max HP + 9%
+Max SP + 9%
+
+^800080Set Bonus^000000
+^008080Vali's Manteau^000000
+^008080Vidar's Boots^000000
+^008080Odin's Blessing [1]^000000
+Vit + 5
+HP Recovery + 10%
+SP Recovery + 10%
 #
 2419#
-A pair of shoes rumored  to be forged by Goibne in
-response to competition from his rival, Dulb.
-Max HP/Max SP +5%.
-MDEF +3.
-^ffffff_^000000
-^6A5ACDGoibne's Armor Set^000000
-^3CB371Goibne's Spaulders^000000
-^3CB371Goibne's Greaves^000000
-^3CB371Goibne's Armor^000000
-^3CB371Goibne's Helm^000000
-Vit +5
-Max HP +15%
-Max SP +5%
-DEF +5
-MDEF +5
-+10% Resistance to Water,
-Wind, Earth, and Fire
-property
-^ffffff_^000000
-Class : ^777777Footwear^000000
-Defense: ^77777713^000000
-Weight : ^77777770^000000
-Required Level : ^77777754^000000
-Jobs: ^777777All except
-Novice Class^000000
+A pair of shoes rumored  to be forged by Goibne in response to competition from his rival, Dulb.
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808070^000000
+Requires Level: ^80808054^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max HP + 5%
+Max SP + 5%
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Goibne's Armor^000000
+^008080Goibne's Helm^000000
+^008080Goibne's Spaulders^000000
+^008080Goibne's Greaves^000000
+Vit + 5
+Max HP + 15%
+Max SP + 5%
+Def + 5
+Mdef + 15
+Reduces damage taken from Water, Earth, Fire, and Wind property attacks by 10%.
 #
 2420#
 Heavenly sandals worn by the Guardian Angel of Super Novices.
@@ -15245,33 +15224,24 @@ Max SP + 100
 Adds a chance of casting ^0000FFLevel 1 Assumptio^000000 on the user when receiving a physical attack.
 #
 2421#
-A pair of shoes worn
-by the Valkyries, Odin's battle maidens. These
-shoes grow more powerful^FFFFFF ^000000 as the wearer improves
-his own abilities.
-Increases Max HP by
-(Base Level*5) when
-worn by Mage, Archer,
-and Acolyte Classes.
-Increases Max SP by
-(Job Level*2) when
-worn by Swordman,
-Merchant, and Thief
-Classes. Cannot be
-destroyed in battle.
-^ffffff_^000000
-^6A5ACDValkyrian Armor Set^000000
-^3CB371Valkyrie Helm^000000
-^3CB371Valkyrie Armor^000000
-^3CB371Valkyrie Manteau^000000
-^3CB371Valkyrie Shoes^000000
-All Stats +1
-^ffffff_^000000
-Class : ^777777Footwear^000000
-Defense : ^77777713^000000
-Weight : ^77777750^000000
-Jobs:^777777All Transcendent
-Classes except Novice^000000
+A pair of shoes worn by the Valkyries, Odin's battle maidens. These shoes grow more powerful as the wearer improves his own abilities.
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+^F4AD42Acolyte, Mage and Archer Bonus^000000
+Max HP + 5 for every base level.
+^F4AD42Swordman, Merchant and Thief Bonus^000000
+Max SP + 2 for every job level.
+This item is indestructible in battle.
+
+^800080Set Bonus^000000
+^008080Valkyrie Helm [1]^000000
+^008080Valkyrian Armor [1]^000000
+^008080Valkyrian Shoes [1]^000000
+^008080Valkyrian Manteau [1]^000000
+All Stats + 1
 #
 2422#
 Jeweled, golden
@@ -16267,49 +16237,39 @@ Usable By: ^808080Mage Jobs, Soul Linker^000000
 Increased Movement Speed.
 #
 2516#
-A muffler owned by
-Freyja, daughter of Njord, that was often borrowed
-by Loki. Wearing it makes its wearer as nimble as
-a falcon in flight.
-Perfect Dodge +5.
-Flee +15.
-^ffffff_^000000
-^6A5ACDNjord's Armor Set^000000
-^3CB371Fricco's Shoes^000000
-^3CB371Falcon Muffler^000000
-^3CB371Odin's Blessing^000000
-Agi +3
-Max HP/SP +5%
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense: ^7777778^000000
-Weight : ^77777740^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A muffler owned by Freyja, daughter of Njord, that was often borrowed by Loki. Wearing it makes its wearer as nimble as a falcon in flight.
+Class: ^808080Garment^000000
+Defense: ^8080808^000000
+Weight: ^80808040^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Flee + 15
+Perfect Dodge + 5
+
+^800080Set Bonus^000000
+^008080Fricco's Shoes^000000
+^008080Falcon Muffler^000000
+^008080Odin's Blessing [1]^000000
+Agi + 3
+Max HP + 5%
+Max SP + 5%
 #
 2517#
-A manteau once
-owned by Vali, son
-of Odin. It represents
-Vali's fighting spirit
-which allowed him to
-defeat Hoedr the warrior despite his blindness.
-Reduces Neutral property damage by 15%.
-^ffffff_^000000
-^6A5ACDOdin's Armor Set^000000
-^3CB371Vali's Manteau^000000
-^3CB371Vidar's Boots^000000
-^3CB371Odin's Blessing^000000
-Vit +5
-HP/SP Recovery +10%
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense: ^77777713^000000
-Weight : ^77777760^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A manteau once owned by Vali, son\ of Odin. It represents Vali's fighting spirit which allowed him to defeat Hoedr the warrior despite his blindness.
+Class: ^808080Garment^000000
+Defense: ^80808013^000000
+Weight: ^80808060^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Neutral property attacks by 15%.
+
+^800080Set Bonus^000000
+^008080Vali's Manteau^000000
+^008080Vidar's Boots^000000
+^008080Odin's Blessing [1]^000000
+Vit + 5
+HP Recovery + 10%
+SP Recovery + 10%
 #
 2518#
 A shawl marked with
@@ -16366,33 +16326,27 @@ Additional Crit + 1 per upgrade level of ^008080Abusive Robe^000000.
 Bypass 15% of hard defense of Demi-Human, Demon and Undead race targets when performing a physical attack.
 #
 2520#
-Goibne's very first
-creation, his much
-prized and precious
-armor. Reduces long
-range physical damage
-by 10%. Vit +1, MDEF +2.
-^ffffff_^000000
-^6A5ACDGoibne's Armor Set^000000
-^3CB371Goibne's Spaulders^000000
-^3CB371Goibne's Greaves^000000
-^3CB371Goibne's Armor^000000
-^3CB371Goibne's Helm^000000
-Vit +5
-Max HP +15%
-Max SP +5%
-DEF +5
-MDEF +5
-+10% Resistance to Water,
-Wind, Earth, and Fire
-property
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense: ^77777711^000000
-Weight : ^77777770^000000
-Required Level : ^77777754^000000
-Jobs: ^777777All except
-Novice Class^000000
+Goibne's very first creation, his much prized and precious armor.
+Class: ^808080Garment^000000
+Defense: ^80808011^000000
+Weight: ^80808070^000000
+Requires Level: ^80808054^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Vit + 1
+Mdef + 2
+Reduces damage taken from long-ranged attacks by 10%.
+
+^800080Set Bonus^000000
+^008080Goibne's Armor^000000
+^008080Goibne's Helm^000000
+^008080Goibne's Spaulders^000000
+^008080Goibne's Greaves^000000
+Vit + 5
+Max HP + 15%
+Max SP + 5%
+Def + 5
+Mdef + 15
+Reduces damage taken from Water, Earth, Fire, and Wind property attacks by 10%.
 #
 2521#
 The Super Novice Guardian Angel's warm and comfortable cardigan.
@@ -16449,23 +16403,25 @@ Available Jobs : ^777777Every Job^000000
 2524#
 A manteau that is worn by the Valkyries, Odin's battle maidens.
 Class: ^808080Garment^000000
-Position: ^808080Garment^000000
 Defense: ^80808010^000000
 Weight: ^80808050^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
-This item is indestructible in battle.
-^F4AD42Mage, Archer, Acolyte Bonus^000000
+^F4AD42Acolyte, Mage and Archer Bonus^000000
 Perfect Dodge + 5
 Additional Perfect Dodge + 2 per upgrade level of the item up to a maximum upgrade level of 10.
-^F4AD42Swordman, Merchant, Thief Bonus^000000
+^F4AD42Swordman, Merchant and Thief Bonus^000000
 Reflects 5% of the received short-ranged damage back to the attacker.
 Reflects an additional 2% of the received short-ranged damage back to the attacker per upgrade level of the item up to a maximum upgrade level of 10.
+This item is indestructible in battle.
+
 ^800080Set Bonus^000000
-^008080Valkyrian Armor [1]^000000
 ^008080Valkyrie Helm [1]^000000
-^008080Valkyrian Manteau [1]^000000
+^008080Valkyrian Armor [1]^000000
 ^008080Valkyrian Shoes [1]^000000
+^008080Valkyrian Manteau [1]^000000
 All Stats + 1
+
 ^800080Set Bonus^000000
 ^008080Abusive Robe [1]^000000
 ^008080Valkyrie Manteau [1]^000000
@@ -18566,13 +18522,26 @@ Jobs: ^777777All Jobs except Novice^000000
 #
 2729#
 A ring with mysterious letters carved into it. It is so beautiful, it fascinates all people.
-MaxHP+100, MaxSP+100.
-Increases effectiveness of ^FF0000Heal^000000 skill by 5%.
-Increases Physical Damage to Satan Morocc by 10%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^7777775^000000
-Jobs: ^777777Transcendent 2nd Class or higher^000000
+Class: ^808080Accessory^000000
+Weight: ^8080805^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Max HP + 100
+Max SP + 100
+Increases the recovery rate of recovery skills by 5%.
+Increases physical damage on Satan Morocc and Wounded Morocc by 10%.
+
+^800080Set Bonus^000000
+^008080Diabolus Robe [1]^000000
+^008080Diabolus Ring [1]^000000
+Atk + 3%
+Matk + 3%
+
+^800080Set Bonus^000000
+^008080Diabolus Armor [1]^000000
+^008080Diabolus Ring [1]^000000
+Atk + 3%
+Matk + 3%
 #
 2730#
 A royal gift to a member of the Continental Guard.
@@ -26838,7 +26807,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Garment^000000
 Weight: ^8080801^000000
 Max SP - 44%.
-Restores 20 SP to the user when a monster is killed by a physical attack,
+Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 Restores an additional 1 SP to the user per 2 upgrade levels of the compounded item.
 
 Drains 444 SP from the user when the compounded item is unequipped.
@@ -26848,6 +26817,11 @@ Drains 444 SP from the user when the compounded item is unequipped.
 Flee + 20
 Reduces damage taken from Neutral property attacks by 20%.
 Drains 100 HP and 6 SP from the user every 6 seconds.
+
+^800080Set Bonus^000000
+^008080Red Lotus Stole [1]^000000
+^008080Undead Knight of Grudge Card^000000
+Disables the following effects of ^008080Undead Knight of Grudge Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 #
 4607#
 Class: ^808080Card^000000
@@ -29922,74 +29896,66 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 5122#
-Once owned by Magni,
-son of Thor, the wearer
-of this cap is supposedly
-granted a measure of
-Magni's awesome might.
-Str +2.
-Class : ^777777Headgear^000000
-Defense: ^7777779^000000
-Location: ^777777Upper^000000
-Weight : ^777777100^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
-^99FF66Magni Set^000000
-^00FF00Magni's Hat^000000
-^00FF00Stone Buckler^000000
-^00FF00Odin's Blessing^000000
-+2 STR
-+5 MDEF
-+5 DEF
-Swordman Class :
-Additional +6 DEF
-(Total 11 DEF)
+Once owned by Magni, son of Thor, the wearer of this cap is supposedly granted a measure of Magni's awesome might.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^808080100^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Str + 2
+
+^800080Set Bonus^000000
+^008080Stone Buckler [1]^000000
+^008080Magni's Cap^000000
+^008080Odin's Blessing [1]^000000
+Str + 2
+Def + 5
+Mdef + 5
+^F4AD42Swordsman Bonus^000000
+Additional Def + 6
 #
 5123#
-A woolen hunting
-cap once worn by
-Ulle, god of hunting.
-Just wearing it makes
-you feel like you can
-hunt down any beast.
-Dex +2, Agi +1.
-^6A5ACDUlle's Armor Set^000000
-^3CB371Ulle's Cap^000000
-^3CB371Odin's Blessing^000000
-If Base Dex is 70 or higher:
--10% SP consumption
-Class : ^777777Headgear^000000
-Defense: ^7777776^000000
-Location: ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A woolen hunting cap once worn by Ulle, god of hunting. Just wearing it makes you feel like you can hunt down any beast.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808050^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 1
+Dex + 2
+
+^800080Set Bonus^000000
+^008080Ulle's Cap [1]^000000
+^008080Odin's Blessing [1]^000000
+If the user's base Dex is 70 or higher,
+Reduces the SP cost of skills by 10%.
 #
 5124#
-A circlet blessed by
-Freyja, mother of Baldur.
-MDEF +10
-Int +2
-Max SP +50
-^99FF66Frigg's Set^000000
-^00FF00Fricca's Circlet^000000
-^00FF00Valkyrja's Shield^000000
-^00FF00Odin's Blessing^000000
-+2 DEF
-+5 MDEF
-All upgrade levels of
-the Shield and Circlet
-adds to MDEF
-^770000Instead^000000 of DEF.
-Class : ^777777Headgear^000000
-Defense: ^7777776^000000
-Location: ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777765^000000
-Jobs: ^777777All except
-Novice Class^000000
+A circlet blessed by Freyja, mother of Baldur.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 2
+Max SP + 50
+Mdef + 10
+
+^800080Set Bonus^000000
+^008080IValkyrja's Shield [1]^000000
+^008080Fricca's Circlet^000000
+^008080Odin's Blessing [1]^000000
+Def + 2
+Mdef + 5
+For every upgrade level of ^008080IValkyrja's Shield [1],
+Def - 1
+Mdef + 1
+For every upgrade level of ^008080Fricca's Circlet^000000,
+Def - 1
+Mdef + 1
 #
 5125#
 A hair ornament that was kissed by the Super Novice's Guardian Angel.
@@ -30058,31 +30024,27 @@ Jobs: ^777777All except
 Novice Class^000000
 #
 5128#
-One of the few armors
-that was forged by Goibe the blacksmith. It is said
-that the gods valued his armors more than the
-weapons he had forged.
-Vit +3, MDEF +3.
-^6A5ACDGoibne's Armor Set^000000
-^3CB371Goibne's Spaulders^000000
-^3CB371Goibne's Greaves^000000
-^3CB371Goibne's Armor^000000
-^3CB371Goibne's Helm^000000
-Vit +5
-Max HP +15%
-Max SP +5%
-DEF +5
-MDEF +15
-+10% Resistance to Water,
-Wind, Earth, and Fire
-property
-Class : ^777777Headgear^000000
-Defense: ^77777710^000000
-Location: ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777754^000000
-Jobs: ^777777All except
-Novice Class^000000
+One of the few armors that was forged by Goibe the blacksmith. It is said that the gods valued his armors more than the weapons he had forged.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808050^000000
+Requires Level: ^80808054^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Vit + 3
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Goibne's Armor^000000
+^008080Goibne's Helm^000000
+^008080Goibne's Spaulders^000000
+^008080Goibne's Greaves^000000
+Vit + 5
+Max HP + 15%
+Max SP + 5%
+Def + 5
+Mdef + 15
+Reduces damage taken from Water, Earth, Fire, and Wind property attacks by 10%.
 #
 5129#
 A mysterious bird's nest that makes the wearer feel like flying.
@@ -30379,9 +30341,21 @@ Weight : ^777777200^000000
 Jobs : ^777777All^000000
 #
 5153#
-A hairpin designed to resemble a popular monster, Angeling.
-It makes a wearer lightened. FLEE + 5.
-If putting it on with wearing 'a dress of angel', Luk + 6, Flee +5, Int +2 will be given.
+A hairpin designed to resemble a popular monster, Angeling. It makes a wearer lightened.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Flee + 5
+
+^800080Set Bonus^000000
+^008080Angel's Dress^000000
+^008080Angeling Hairpin^000000
+Int + 2
+Luk + 6
+Flee + 5
 #
 5154#
 Father's sunglasses. It seems elegant and dignified when worn.
@@ -30591,22 +30565,20 @@ Weight : ^77777760^000000
 Jobs : ^777777All except Novice^000000
 #
 5171#
-An ornate, winged
-helmet worn by the
-warrior maidens that
-serve Odin. MDEF +5
-^6A5ACDValkyrian Armor Set^000000
-^3CB371Valkyrie Helm^000000
-^3CB371Valkyrie Armor^000000
-^3CB371Valkyrie Manteau^000000
-^3CB371Valkyrie Shoes^000000
-All Stats +1
-Class : ^777777Headgear^000000
-Defense: ^77777710^000000
-Location : ^777777Upper^000000
-Weight : ^777777100^000000
-Jobs: ^777777All Transcendent
-Classes except Novice^000000
+An ornate, winged helmet worn by the warrior maidens that serve Odin.
+Class: ^808080Headgear^000000
+Defense: ^80808010^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 5
+
+^800080Set Bonus^000000
+^008080Valkyrie Helm [1]^000000
+^008080Valkyrian Armor [1]^000000
+^008080Valkyrian Shoes [1]^000000
+^008080Valkyrian Manteau [1]^000000
+All Stats + 1
 #
 5172#
 A bright green,
@@ -32975,15 +32947,15 @@ Required Level : ^7777771^000000
 Jobs: ^777777All^000000
 #
 5414#
-A good 'ol summer campfire
-Increases resistance to Fire Property by 10%.
-Adds a chance autocast Level 5 Fire Ball on enemy when the user receives Physical Damage.
-Class : ^777777Headgear^000000
-Defense: ^7777772^000000
-Location: ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+A good 'ol summer campfire.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Fire property attacks by 10%.
+Adds a chance of casting ^0000FFLevel 5 Fire Ball^000000 on the attacker when receiving a short-ranged attack.
 #
 5415#
 placeholder
@@ -36600,7 +36572,7 @@ Weight: ^80808050^000000
 Requires Level: ^808080110^000000
 Usable By: ^808080All Jobs^000000
 Agi + 1
-Adds a chance of casting ^0000FFBlitz Beat^000000 on the target when performing a physical attack.
+Adds a chance of casting ^0000FFBlitz Beat^000000 on the target when performing a physical attack. The chance is increased per base Luk added up to a maximum base value of 120.
 Level of this skill will be cast based on the known levels.
 Increases the damage of ^0000FFBlitz Beat^000000 by 40% per level of ^0000FFSteel Crow^000000 known.
 ^800080Set Bonus^000000
@@ -38036,6 +38008,9 @@ Base Lvl ^0000FF91 ~ 110 ^006400[4 Magical Stone]^000000
 Base Lvl ^0000FF111 ~ 125 ^006400[5 Magical Stone]^000000
 Base Lvl ^0000FF126 ~ 140 ^006400[6 Magical Stone]^000000
 Base Lvl ^0000FF141 ~ 150 ^006400[7 Magical Stone]^000000
+Base Lvl ^0000FF151 ~ 160 ^006400[8 Magical Stone]^000000
+Base Lvl ^0000FF161 ~ 170 ^006400[9 Magical Stone]^000000
+Base Lvl ^0000FF171 ~ 175 ^006400[10 Magical Stone]^000000
 #
 6321#
 A sturdy helm with hooked horns. Can be sold to Item Collectors.
@@ -45221,6 +45196,21 @@ Party Hard Pack
 (6) Battle Manual X3
 (5) Bloody Branch
 ^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+9543#
+When Opened gives one of the following at random
+Costume Royal Guard Necklace
+Costume Clergy Nurse Cap
+Costume Heavenly Dark Flame
+Costume Zealotus Doll
+Costume Blue Eye Shadow
+Costume Variant Veil
+Costume Crowned Princess Ribbon
+Costume Stole of Dominion
+Costume Sheep's Horns
+
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
@@ -60885,25 +60875,43 @@ Reduces damage taken from Insect race enemies by 5%.
 Reduces damage taken from Insect race enemies by an additional 1% per upgrade level of the item.
 #
 15145#
-^808080An armor made out of the scales of a powerful dragon that was once feared by the world. It has the power to absorb all kinds of energy.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Armor
-Defense: 60
-Property: Neutral
-Weight: 400
-Required Level: 99
-Required Jobs: All Jobs
-^FFFFFF_^000000
+An armor made from the scales of a powerful evil dragon.
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Property: ^808080Neutral^000000
+Weight: ^808080400^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
 If upgrade level is +8 or higher,
 Adds a 3% chance of restoring 3% of damage as HP when performing a physical attack.
 Adds a 2% chance of restoring 2% of damage as SP when performing a physical attack.
+
 If upgrade level is +9 or higher,
 Adds an additional 1% chance of restoring an additional 1% of damage as HP when performing a physical attack.
 Adds an additional 1% chance of restoring an additional 1% of damage as SP when performing a physical attack.
+
 If upgrade level is +10 or higher,
 Adds an additional 2% chance of restoring an additional 2% of damage as HP when performing a physical attack.
 Adds an additional 2% chance of restoring an additional 2% of damage as SP when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Evil Dragon Armor [1]^000000
+^008080Rideword Hat [1]^000000
+Disables the following effect of ^008080Rideword Hat [1]^000000,
+Restoring damage as HP/SP when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Evil Dragon Armor [1]^000000
+^008080Vanargand Helm [1]^000000
+^ff0000Updated 4/4/2019^000000
+Disables the following effect of ^008080Vanargand Helm [1]^000000,
+Restoring damage as HP/SP when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Evil Dragon Armor [1]^000000
+^008080Nidhoggur's Shadow Garb [1]^000000
+Disables the following effect of ^008080Nidhoggur's Shadow Garb [1]^000000,
+Restoring damage as SP when performing a physical attack.
 #
 15146#
 Attire for those who would use whatever means necessary to bring their desires to pass.
@@ -61086,13 +61094,13 @@ If ^008080Consultation Robe^000000 upgrade level is +10 or higher,
 Reduces damage taken from Neutral property attacks by an additional 10%.
 #
 15165#
-Str + 2
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^80808030^000000
 Requires Level: ^80808060^000000
 Usable By: ^808080All Jobs^000000
+Str + 2
 When performing a physical attack, adds a chance of endowing the users weapon with Ghost property for 60 seconds.
 Adds an additional chance to endow the weapon per upgrade level of ^008080Pure White Marching Hat^000000.
 #
@@ -71695,15 +71703,16 @@ Aspd + 1%
 Additional Aspd + 1%, if the users base Agi is 108 or higher.
 Aspd + 1, if the users base Agi is 108 or higher.
 Reduces damage taken from Wind property attacks by 5%.
+
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Spear [1]^000000
 Increases the damage of ^0000FFBanishing Point^000000, ^0000FFCannon Spear^000000 and ^0000FFShield Press^000000 by 20%.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Ring^000000
+^008080Imperial Ring [1]^000000
 Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
 Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
 Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
@@ -71711,9 +71720,9 @@ Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
 Reduces the SP cost of ^0000FFBanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
@@ -71735,7 +71744,8 @@ Immune to ^800000Blind^000000 and ^800000Silence^000000.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Glove^000000
+^008080Imperial Glove [1]^000000
+^d3d3d3Reduces the cooldown of ^0000FFOverbrand^000000 by 2 seconds.^000000
 Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
 Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
 Increases the damage of ^0000FFCannon Spear^000000 by 30%.
@@ -71904,31 +71914,52 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 18848#
-^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
-Class: Headgear
-Position: Upper
-Defense: 0
-Weight: 20
-Required Level: 70
-Required Jobs: All Jobs
+Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Matk + 20
 Additional Matk + 5 per upgrade level of the item.
 Restores 100 HP to the user when a monster is killed by a magical attack.
 Drains 50 HP from the user every 5 seconds.
+
+^800080Set Bonus^000000
+^008080Celine's Brooch [1]^000000
+^008080Lush Rose [1]^000000
+Reduces the fixed casting time of skills by 50%.
+All Stats + 1 per upgrade level of ^008080Lush Rose [1]^000000 up to a maximum upgrade level of 10.
+If upgrade level is +7 or higher,
+Increases magical damage on boss monster by 20%.
 #
 18849#
-^808080A luxurious, gold-rimmed ribbon. It has been with Kimi since it was thrown away by its previous owner.^000000
-Class: Headgear
-Position: Upper
-Defense: 0
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
+A luxurious, gold-rimmed ribbon. It has been with Kimi since it was thrown away by its previous owner.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Dex + 3
 Matk + 40
 Additional Matk + 7 per upgrade level of the item.
 Restores 200 HP to the user when a monster is killed by a magical attack.
 Drains 50 HP from the user every 5 seconds.
+
+^800080Set Bonus^000000
+^008080Celine's Brooch [1]^000000
+^008080Celine's Ribbon [1]^000000
+Reduces the fixed casting time of skills by 50%.
+Increases magical damage on boss monsters by 10%.
+All Stats + 1 per upgrade level of ^008080Celine's Ribbon [1]^000000 up to a maximum upgrade level of 10.
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by 10%.
+Increases magical damage on boss monster by an additional 20%.
+If upgrade level is +9 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+Increases magical damage on boss monster by an additional 20%.
 #
 18850#
 Christmas hat that Raccoon Hooray team 'borrowed' from Santa.
@@ -74920,12 +74951,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19294#
-^808080A pair of headphones with cat ears.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A pair of headphones with cat ears.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19299#
 The magical power from this Eclage tree sprout is overwhelming.
@@ -75955,13 +75986,12 @@ Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 #
 19552#
-A little flower leaf. The whole world seems pretty and happy.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
-Class : ^777777Costume^000000
-Location : ^777777Low ^000000
-Weight : ^77777710^000000
-Required Level : ^777777100^000000
-Job : ^777777All^000000
+A replica of a delicate flower that is placed in the mouth, you can feel the romance while wearing it and sitting still.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19553#
 A dark mask for assassins.
@@ -76090,13 +76120,12 @@ Required LV : ^7777771^000000
 Job : ^777777All^000000
 #
 19597#
-^808080A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
-^000000
-Class: Costume
-Position: Upper
-Weight: 10
-Required Level: 1
-Required Jobs: All Jobs
+A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19598#
 Can feel a high dignity of the Northern Wolf Tribe.
@@ -76203,12 +76232,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19608#
-^808080A hat adorned with a cute chick that brings joy to those that see it hopping!^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat adorned with a cute chick that brings joy to those that see it hopping!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19616#
 Wickebine's black cat ears.
@@ -76378,12 +76407,12 @@ Req Lvl. : ^7777771^000000
 Job : ^777777All^000000
 #
 19654#
-^808080A replica of the hats worn by the strange antlered captains of the airships that sail across Rune Midgard.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A replica of the hats worn by the strange antlered captains of the airships that sail across Rune Midgard.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19655#
 A long and big bonnet. It is not sure when it is used for.
@@ -76726,12 +76755,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19712#
-^808080You'll never feel anything less than blessed with this adorable angel relaxing atop your head!^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You'll never feel anything less than blessed with this adorable angel relaxing atop your head!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19713#
 A four leaf clover. It brings you with good luck.
@@ -76782,12 +76811,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19721#
-^808080This headgear with dark wings that stretch menacingly to both sides.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This headgear with dark wings that stretch menacingly to both sides.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19722#
 A dark-colored plastic frame glasses. Why don't you try this on?
@@ -77355,12 +77384,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19823#
-^808080A hood of soft cat ears. No cats were harmed in the making of this headgear.^000000
-Class: Costume
-Position: Upper, Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hood of soft cat ears. No cats were harmed in the making of this headgear.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19824#
 You can be chic and cynical while wearing this.
@@ -77617,11 +77646,12 @@ Required LV : ^7777771^000000
 Job : ^777777all jobs^000000
 #
 19884#
-^808080Vanargand is a another name of Fenrir: the God Biter, which inspired the design of this helmet.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
+Vanargand is a another name of Fenrir: the God Biter, which inspired the design of this helmet.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19886#
 Be the coolest one in the sun with these stylish sunglasses.
@@ -77784,10 +77814,11 @@ Usable By: ^808080All Jobs^000000
 #
 19915#
 Young and growing devil's horn.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19917#
 Pumpkin hat with gloomy mood.
@@ -77915,10 +77946,11 @@ Usable By: ^808080All Jobs^000000
 #
 19939#
 A big Antler.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19951#
 A yellow colored paper box with eye holes. You can play super awesome just by yourself.
@@ -78066,12 +78098,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19969#
-^808080A hat made for those who decide to become a Sura. It expresses a burning spirit.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat made for those who decide to become a Sura. It expresses a burning spirit.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19970#
 ^808080A hat for a ritual ceremony which is made from a spiritual feather.^000000
@@ -78126,31 +78158,35 @@ Increased Movement Speed.
 #
 19977#
 Golden exclamation mark.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19978#
 Silver exclamation mark.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19979#
 Golden question mark.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19980#
 Silver question mark.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19982#
 A red, pompom topped cap that is associated with Santa Claus's legend.
@@ -78305,18 +78341,20 @@ Required Level : ^7777771^000000
 Jobs : ^777777Bard^000000
 #
 20005#
-^808080Made from the feathers of a Valkyrie's noble steed, this costume makes the body feel lighter when worn.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
+Made from the feathers of a Valkyrie's noble steed, this costume makes the body feel lighter when worn.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20006#
-^808080An evil mask, made in the image of darkness itself.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper, Middle, Lower
-Weight: 0
+An evil mask, made in the image of darkness itself.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20007#
 A costume helm made of heavy metal that trembles with every attack.
@@ -78327,25 +78365,28 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20008#
-^808080A costume helm modeled after a general notorious for taming dragons. Just wearing it gives you that same powerful feeling.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
+A costume helm modeled after a general notorious for taming dragons. Just wearing it gives you that same powerful feeling.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20009#
-^808080The skull of a dragon, used as a costume helm.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
+The skull of a dragon, used as a costume helm.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20010#
-^808080Beautiful feathers of mysterious origin adorn this costume, shining brilliantly as it catches the light.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
+Beautiful feathers of mysterious origin adorn this costume, shining brilliantly as it catches the light.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20011#
 ^808080The sleek, sharp lines of the headpiece mimic a lightning bolt's swift descent to Earth.^000000
@@ -78355,11 +78396,12 @@ Position: Upper
 Weight: 0
 #
 20012#
-^808080A soft, plush hat adorned with sharp steel horns. The opposing features make for a dashing and fashionable costume.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
+A soft, plush hat adorned with sharp steel horns. The opposing features make for a dashing and fashionable costume.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20014#
 Replica of an Emancipator's tall black hat.
@@ -78475,10 +78517,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20038#
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A ghostly helmet, one of a kind, it seems to be haunted..
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20039#
 ^808080Beautiful magical butterfly wing ears.^000000
@@ -78824,12 +78868,12 @@ Jobs: ^777777Swordman
 and Merchant Classes^000000
 #
 20132#
-^808080A mysterious aura that shrouds the body.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A mysterious aura that shrouds the body.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20133#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -78941,28 +78985,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
 20145#
-^808080A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A weird item that spreads a strange-shaped beam around the eyes. It seems to have been made in outer space.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20146#
-^808080A golden mask which is rumored to belong to the goddess of water.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A golden mask which is rumored to belong to the goddess of water.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20147#
-^808080It seems that this handsome pigeon has flocked to you! Don't worry about about feeding it, beakcause it's coo' enough to find its own food!^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+It seems that this handsome pigeon has flocked to you! Don't worry about about feeding it, because it's coo' enough to find its own food!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20152#
 ^808080Someone pulled all the rice out of this bag. Time to wear it on my head!^000000
@@ -79006,10 +79050,11 @@ Required Jobs: All Jobs
 #
 20160#
 PecoPoco Fried Egg.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20161#
 ^CC0000This Rental Weapon is not Tradable^000000
@@ -79794,12 +79839,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20317#
-^808080A pair of headphones with cat ears.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A pair of headphones with cat ears.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20318#
 A costume item resembles a decoration of the robot Charleston's body in Verus. It is said to be an antenna having a receiving function, but the details are unknown.
@@ -80121,28 +80166,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
 20340#
-Stylish Wig.
-An extended ponytail that came with different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that came with different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20341#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A black hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20342#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20344#
 ^808080Colorful balloons decorated with cute Porings - guaranteed to bring smiles to everyone!^000000
@@ -80161,60 +80206,60 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20350#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A yellow hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20351#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A green hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20352#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A purple hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20353#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A red hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20354#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+An orange hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20355#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A blue hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20356#
-Stylish Wig.
-A hair extension that looks like a sharp cowlick.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A white hair extension that looks like a sharp cowlick.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20357#
 Stylish Wig.
@@ -80273,60 +80318,60 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20364#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20365#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20366#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20367#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20368#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20369#
-Stylish Wig.
-A hair extension that looks like a wavy twin tail.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20370#
-^808080Stylish Wig. A hair extension that looks like a wavy twin tail.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Stylish Wig. A hair extension that looks like a wavy twin tail.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20371#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
@@ -80430,22 +80475,20 @@ Required Level : ^7777771^000000
 Jobs :^777777Gunslinger^000000
 #
 20377#
-^00CC00Fly high and easy to find dangerous spot.^000000
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+You'll be lookin' so fly with this special costume on your head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20378#
-^00CC00Schwartzvald's pilot helm.^000000
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper/Middle/Lower ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A fashionable helm modeled after that of a Schwartzvald pilot.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20379#
 ^00CC00This 2 Week Rental Box contains 1 Item.  The Box is Tradable, but the item that comes out of it may not be, please read the description.^000000
@@ -80502,10 +80545,11 @@ Adds a 3.1% chance of transforming the user into Jakk for 10 seconds when receiv
 #
 20398#
 A hat from famous Healer of Niflheim, Hylozoist.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20399#
 ^FF0000The mask carries the grudge of its previous owner.^000000
@@ -80522,20 +80566,20 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20407#
-^808080A mysterious aura that shrouds the body.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A mysterious aura that shrouds the body.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20430#
-^808080A costume that imitates the protection aura of Morroc.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A costume that imitates the protection aura of Morroc.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20434#
 This gunslinger doll perches on your head.
@@ -80546,35 +80590,44 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20449#
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A white cat and a black cat relaxing on your head. Their tails hold each earpiece in place to warm your ears.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20450#
-A beautiful magician hat with flower on it.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A beautiful magician's hat decorated with a peony blossom.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20451#
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A costume hat of sentimental value, filled with courage and an overflowing memory of a starry night.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20453#
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+A cute cloth bundle to carry on top of your head, just like elderly women do!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20454#
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Gold and jewels adorn this costume crown, just like the one worn by a beautiful ancient Queen.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20455#
 A hat which appears to have been made in Schwaltzvalt Republic.
@@ -80609,12 +80662,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20459#
-^808080A headdress worn by a girl during fights in the battlefield. The light protecting the girl shines like a spotlight.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A headdress worn by a girl during fights in the battlefield. The light protecting the girl shines like a spotlight.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20468#
 ^808080The meaning of this mask is: He was one of us.^000000
@@ -80640,44 +80693,52 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20495#
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A stuffed toy based on a Coati which sits nicely on the head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20496#
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A hat designed after a black Amatsu hound.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20497#
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+An accessory which is traditionally used in piercings by the Umbala tribespeople.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20498#
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A headress shaped like a magnificent Elephant.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20499#
-A hat with attached cat ears
-If you want to wear cat ears and hat at the same time, this is the one for you.
-Class :^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A hat with attached cat ears. If you want to wear cat ears and hat at the same time, this is the one for you.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20500#
-^808080White wings of a holy Archangel.^000000
-Class: Costume
-Position: Garment
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+White wings of a holy Archangel.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20512#
 A costume model of a backpack befitting of any hero.
@@ -80689,6 +80750,7 @@ Usable By: ^808080All Jobs^000000
 #
 20515#
 A mystical, magical circle beneath your feet.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the garment will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
@@ -81123,12 +81185,12 @@ Required LV : ^77777771^000000
 Job : ^777777All^000000
 #
 20746#
-^808080These angelic wings burn with holy energy.^000000
-Class: Costume
-Position: Garment
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+These angelic wings burn with holy energy.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20747#
 ^000088Rental Item^000000
@@ -81322,12 +81384,12 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20763#
-^808080An adorable backpack that looks like a cute Amistr hitched a ride on top of you!^000000
-Class: Costume
-Position: Garment
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+An adorable backpack that looks like a cute Amistr hitched a ride on top of you!
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20773#
 A power wing made from lost technology found in the research building ruins.
@@ -81361,9 +81423,8 @@ Reduces the SP cost of skills by an additional 2% per 3 upgrade levels of the it
 If upgrade level is +10 or higher,
 Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 
-
 ^800080Set Bonus^000000
-^008080Red Lotus Stole^000000
+^008080Red Lotus Stole [1]^000000
 ^008080Undead Knight of Grudge Card^000000
 Disables the following effects of ^008080Undead Knight of Grudge Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 #
@@ -87768,6 +87829,48 @@ Class : ^777777Card^000000
 Compound on : ^777777Weapon^000000
 Weight : ^7777771^000000
 #
+27026#
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080800^000000
+Reduces the variable casting time of ^0000FFFireball^000000 by 50%.
+Increases the skill damage bonus of ^0000FFFireball^000000 by 100%.
+#
+27027#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080800^000000
+DEF + 50.
+Reduces damage taken from Fire property enemies by 10%.
+#
+27028#
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080800^000000
+
+Increases Magic damage on Ground property targets by 3%.
+When Upgraded to + 7 or higher
+Increases Magic damage on Ground property targets by an additional 2%.
+When Upgraded to + 9 or higher
+Increases Magic damage on Ground property targets by an additional 2%.
+
+
+#
+27029#
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080800^000000
+Reduces damage taken from Fire property enemies by 20%.
+Increases Physical damage on Fire property targets by 5%.
+
+#
+27030#
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080800^000000
+Adds a 20% chance of inflicting ^800000Burning^000000 on the target when performing a melee attack.
+Adds a 2% chance of inflicting ^800000Burning^000000 on the target when performing a magical attack.
+#
 27081#
 Class: ^808080Card^000000
 Compounds On: ^808080Armor^000000
@@ -88638,19 +88741,20 @@ Str + 1
 Int + 1
 Max HP + 3%
 Max SP + 3%
+
 ^800080Set Bonus^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
 Increases the damage of ^0000FFShield Press^000000 by 8% per upgrade level of the item past the upgrade level of 5.
 
 ^800080Set Bonus^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
-Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear^000000.
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
+Increases the damage of ^0000FFCannon Spear^000000 and ^0000FFVanishing Point^000000 by 7% per 2 upgrade levels of ^008080Imperial Spear [1]^000000.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Ring^000000
+^008080Imperial Ring [1]^000000
 Reduces the variable casting time of ^0000FFGrand Cross^000000 by 100%.
 Increases the damage of ^0000FFGenesis Ray^000000 by 1% for every 30 base levels.
 Increases the damage of ^0000FFGrand Cross^000000 by 1% for every base level.
@@ -88658,9 +88762,9 @@ Reduces the SP cost of ^0000FFGenesis Ray^000000 by 10.
 
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Guard^000000
-^008080Imperial Ring^000000
-^008080Imperial Spear^000000
+^008080Imperial Guard [1]^000000
+^008080Imperial Ring [1]^000000
+^008080Imperial Spear [1]^000000
 Reduces the SP cost of ^0000FFVanishing Point^000000 by 15.
 Reduces the SP cost of ^0000FFCannon Spear^000000 by 10.
 Reduces the SP cost of ^0000FFGrand Cross^000000 by 30.
@@ -89872,12 +89976,14 @@ Usable By: ^808080All Jobs^000000
 Atk + 5%
 Reduces the variable casting time of skills by 10%.
 The users casting cannot be interrupted outside of WoE.
+
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
-^008080Imperial Glove^000000
+^008080Imperial Glove [1]^000000
+^d3d3d3Reduces the cooldown of ^0000FFOverbrand^000000 by 2 seconds.^000000
 Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
 Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
-Increases the damage of ^0000FFCannon Spear^000000 by 20%.
+Increases the damage of ^0000FFCannon Spear^000000 by 30%.
 Increases the damage of ^0000FFOverbrand^000000 by 20%.
 #
 28560#
@@ -91232,6 +91338,7 @@ Usable By: ^808080All Jobs^000000
 #
 31040#
 Sponsored by Aldebaran Alchemists Guild! Oh Holy Light! Strike down my foes! Blessings be upon me as I strike the undead and demonic with my Demon Bane! I am a Magical Acolyte who fights against the black Porings of Satan Morroc! Every day I struggle against the darkness, but today will be magical!
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -91271,12 +91378,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31045#
-^808080A beautiful blue ribbon that reminds you of the sea. ^000000
-^FFFFFF_^000000
-Type: Costume
-Class: Headgear
-Position: Upper
-Weight: 0
+A beautiful blue ribbon that reminds you of the sea.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31046#
 A coronet decorated with white roses. It may have been worn by royalty once upon a time.
@@ -91343,68 +91450,76 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31057#
-^808080A scarf which once belonged to an old hero.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A scarf which once belonged to an old hero.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31063#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute blue hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31064#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute red hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31065#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute yellow hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31066#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute green hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31067#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute black hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31068#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute white hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31069#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute brown hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31070#
-Cute hair in a bun.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Cute purple hair fashioned into two little buns.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31087#
 A heavy dwarven beard. It's so thick and warm, you don't even need a scarf.
@@ -91652,12 +91767,12 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
 31177#
-^808080A hat inspired by the beautiful color palette and elegant look of a simple koi.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat inspired by the beautiful color palette and elegant look of a simple koi.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31178#
 Muffler made from the feathers of KASA.
@@ -91734,13 +91849,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31187#
-^808080A huge ribbon styled in the gothic fashion. It's so bold, you feel braver just wearing it.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A huge ribbon styled in the gothic fashion. It's so bold, you feel braver just wearing it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31188#
 A luxuriously decorated bonnet fashioned after the gothic style, including delicate frills, black and white checkered inner cloth, and elegant purple flower.
@@ -92129,52 +92243,52 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31296#
-^808080The sweet and delicious strawberry in the mouth.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The sweet and delicious strawberry in the mouth.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31298#
-^808080A hat that is provided only for members of the Eden Group. It's designed to go well with a suit.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat that is provided only for members of the Eden Group. It's designed to go well with a suit.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31299#
-^808080This white rabbit took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+This white rabbit took a liking to you and now it won't leave you alone. Aren't you lucky!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31300#
-^808080A warm muffler you want to wear when the weather gets cold. The wiggling tail is just too adorable.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A warm muffler you want to wear when the weather gets cold. The wiggling tail is just too adorable.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31301#
-^808080The world we live in... one where you must pay to blink!^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The world we live in... one where you must pay to blink!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31302#
-^808080A pair of very long, silky and dark ribbons.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A pair of very long, silky and dark ribbons.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31318#
 Inflate the body, intimidate the enemy! This Deviruchi balloon is so sinister, yet so cute!
@@ -92253,11 +92367,11 @@ Usable By: ^808080All Jobs^000000
 #
 31371#
 So hot! A headgear with the figure of Kafra Sorin! Her cute appearance made the price of this hat rise at the auction place.
-
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
@@ -92332,10 +92446,11 @@ Usable By: ^808080All Jobs^000000
 #
 31389#
 A pink rose decorated with feathers of white birds.
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31390#
 This hat is made with spirit of people's hope for a place which doesn't snow during winter.
@@ -92350,8 +92465,7 @@ Increases physical and magical damage on targets by 2% for every 30 base levels.
 #
 31391#
 A stone of a wealthy sage.
-
-
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -92360,8 +92474,6 @@ Usable By: ^808080All Jobs^000000
 #
 31392#
 A hat designed to receive electric waves through its small antennas. It sometimes even receives electric waves from outer space.
-
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -92607,12 +92719,12 @@ Usable By: ^808080All Jobs^000000
 Increases the recovery rate of ^008080Meat^000000 consumables by 2018%.
 #
 31463#
-Flying drone is called
-Replica for an aircraft
-Backup always here
+A miniature replica of a cool aircraft, it is designed to be always here by your side.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31470#
 A magically radiated scroll that is dropped by a disciplined Tengu. It is said mysterious events may occur in various places when using this scroll.
@@ -92801,31 +92913,40 @@ A hat used to communicate with the spirits.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31527#
 Be the rainbow with this pair of beautiful Radiant Rainbow Wings!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31528#
 Using a form decorative star of Stardust, the hair band was created to bring the stars to everyone.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31529#
 A joyful costume that brings happiness to everyone that sees it.
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31531#
 You're sure to turn heads with such a lovely headpiece!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31533#
 
@@ -92838,6 +92959,8 @@ An aura of love radiates from your entire body!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31540#
 Costume colored contacts made to mimic the eyes of Gemini-S58.
@@ -92902,21 +93025,80 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
-31569#
-Open air headphones
-To increase concentration
-The sound is flowing
+31559#
+Necklace fashioned after those worn by guardian knights sworn to protect the castle.
+May it inspire you to protect those you love!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+#
+31560#
+Cute nurse's cap! It's just a costume though, doesn't give you any nursing credentials.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31561#
+Wings made of dark flame, its shape formless and twisting, intimidating all who pass by!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31562#
+You've always wanted a tiny Zealotus doll sitting on your head? Well, today's your lucky day!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31563#
+Lush blue eye shadow to make your whole look pop.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31564#
+This fancy veil also has horns on it!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31565#
+An elaborate headpiece fit for royalty!
+Make your debut in this wondrous costume and you'll be sure to turn heads.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31566#
+This heavenly stole comes with the wings of an angel.
+Put it on and feel the prestige of the gods themselves!
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
 #
-31570#
-Eye of the cyclops
-Replicate eye protection
-No change in vision
+31567#
+Large sheep's horns to decorate the sides of your head.
+Don't try to headbutt anyone with it, it's just a costume!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+#
+31569#
+Open air headphones to increase concentration and flowing of sound.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31570#
+A replica of eye of the cyclops for protection purposes. Due to its cosmetic nature, wearing it has no effect on vision.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31571#
 Protect the owner
@@ -92927,36 +93109,36 @@ Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 31572#
-Portable pursuit
-Floating and chasing system
-Lighting a fire
+A pursuit system floating around. It emits cool lights like a laser beam.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31573#
-Mecha neko ears
-Made of hard material
-Mimi cat costume
+Cute mechanical ears resembling those of a cat. Beware they are not as soft!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31574#
-Cool cyber color
-A costume for an income
-Essential fashion
+A cool cyber color costume for Income, seems to be an essential item in cyber fashion.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31575#
-Electric side locks
-Feel like you have brand new hair
-Curl up to the side
+Electric side locks. Feel like you have brand new hair, curled up to the side.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31588#
 Like snowflakes on your hair. It twinkles like the stars
