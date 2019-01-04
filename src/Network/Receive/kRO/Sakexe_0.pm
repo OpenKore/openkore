@@ -201,7 +201,7 @@ sub new {
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
-		'0133' => ['vender_items_list', 'v a4', [qw(len venderID)]], # -1
+		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
 		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
@@ -489,7 +489,7 @@ sub new {
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
-		'0800' => ['vender_items_list', 'v a4 a4', [qw(len venderID venderCID)]], # -1
+		'0800' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
 		'0803' => ['booking_register_request', 'v', [qw(result)]],
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
@@ -3074,55 +3074,6 @@ sub vender_found {
 	}
 	$venderLists{$ID}{title} = bytesToString($args->{title});
 	$venderLists{$ID}{id} = $ID;
-}
-
-sub vender_items_list {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen;
-	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
-	my $item_len = length pack $item_pack;
-
-	# a hack, but the best we can do now
-	if ($args->{switch} eq "0133") {
-		$headerlen = 8;
-	} else { # switch 0800
-		$headerlen = 12;
-	}
-
-	$venderID = $args->{venderID};
-	$venderCID = $args->{venderCID};
-	my $player = Actor::get($venderID);
-	$venderItemList->clear;
-
-	message TF("%s\n" .
-		"#   Name                                      Type        Amount          Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), $config{showDomain_Shop} || 'list';
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$item_len) {
-		my $item = Actor::Item->new;
-
- 		@$item{qw( price amount ID type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $args->{RAW_MSG}, $i, $item_len;
-
-		$item->{name} = itemName($item);
-		$venderItemList->add($item);
-
-		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
-
-		Plugins::callHook('packet_vender_store', { item => $item });
-
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$item->{ID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
-			$config{showDomain_Shop} || 'list');
-	}
-	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
-
-	Plugins::callHook('packet_vender_store2', {
-		venderID => $venderID,
-		itemList => $venderItemList,
-	});
 }
 
 sub vender_lost {
