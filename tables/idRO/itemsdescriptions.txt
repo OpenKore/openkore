@@ -34075,12 +34075,24 @@ Profesi : ^777777Semua Job Kecuali Novice^000000
 2589#
 Sayap raksasa hitam dari malaikat yang jatuh ke rune midgard.
 LUK +2, MDEF +18
-Meningkatkan Pertahanan terhadap Element Darkness Attack + 30%,Mengurangi Pertahanan terhadap Element Holy attack
-Meningkatkan pertahanan terhadap Demi-Human class sebesar +10%
+All stats +1.
+[Setiap 20 base STR]
+Meningkatkan ATK +1
+[Setiap 20 base INT]
+Meningkatkan MATK +1
+[Setiap 20 base VIT]
+Meningkatkan pertahanan terhadap serangan Netral sebesar 1%
+[Setiap 20 base AGI]
+Meningkatkan ASPD sebesar 1%
+[Setiap 20 base DEX]
+Meningkatkan serangan jarak jauh sebesar 1%
+[Setiap 20 base LUK]
+Meningkatkan serangan kritikal sebesar 1%
 Jenis : ^777777Garment^000000  Def : ^77777718^000000
 Berat : ^77777720^000000
 Level Persyaratan : ^7777771^000000
 Profesi : ^777777Semua Job^000000
+#
 4502#
 Menambahkan kesempatan 5% menghancurkan senjata musuh dan kesempatan 4% menghancurkan armor nya setiap kali melakukan serangan fisik.
 Jika senjata di tempa hingga  +15 atau lebih,  Menambahkan kesempatan 8% menghancurkan senjata musuh dan kesempatan 6% menghancurkan armor nya setiap kali melakukan serangan fisik.
