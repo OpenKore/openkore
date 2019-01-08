@@ -1093,7 +1093,7 @@ Armadura#
 Carta#
 Variados#
 N° do Leilão#
-Encontrar#
+Pesquisa#
 O Leilão Selecionado foi fechado.#
 O Leilão Selecionado não pode ser fechado.#
 O N° do Leilão está incorreto.#
@@ -1845,13 +1845,13 @@ esvaziar carrinho#
 primeira página#
 última página#
 Novo#
-Popular#
-limitado#
-Equipamento de aluguel#
-Equipamento permanente#
-Buff#
 Consumível#
-Outros#
+Utilitário#
+Equipamento de Aluguel#
+Chapéus#
+Equipamentos Permanentes#
+Mascotes#
+Cartas#
 preço#
 Qtd:#
 Unidade(s)#

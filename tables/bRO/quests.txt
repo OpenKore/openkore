@@ -711,8 +711,8 @@ Traga 60 Troncos #
 20 Caudas de Yoyo, 5 Minérios de Ferro e 3 Ervas Azuis #
 
 3019#Mudança de Classe: Monge#SG_FEEL#QUE_NOIMAGE#
-'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCaules, Jellopies e Peles de Verme^000000.' #
-30 Caules, 5 Jellopies e 10 Peles de Verme #
+'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCaules, Jellopys e Peles de Verme^000000.' #
+30 Caules, 5 Jellopys e 10 Peles de Verme #
 
 3020#Mudança de Classe: Monge#SG_FEEL#QUE_NOIMAGE#
 'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCascas Rijas, Cascas e Zargônios^000000.' #
@@ -832,7 +832,7 @@ O Sr. Lockenlock diz que precisa de Sabão Chamelepu para fazer um molde da chav
 
 3065#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 O Sabão Chamelepu está esgotado no momento. Mas ela pode fabricar mais se você trouxer os ingredientes. #
-10 unidades de Leite, 100 Ervas Verdes, 50 Jellopies e 5 Garrafas Vazias #
+10 unidades de Leite, 100 Ervas Verdes, 50 Jellopys e 5 Garrafas Vazias #
 
 3066#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Leve os ingredientes ao Sr. Saraman, o dono da Fazenda de Camelos.  Ele lhe dirá o que fazer com eles. Vamos indo! #
@@ -856,23 +856,23 @@ A Camela de Veludo fugiu da fazenda e desapareceu. Vá encontrar a Camela de Vel
 
 3071#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 A Camela de Veludo finalmente apareceu. Vamos conseguir 5 blocos de estrume de camelo. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3072#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 1 bloco de estrume da Camela de Veludo. Você precisa de mais 4. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3073#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 2 blocos de estrume da Camela de Veludo. Você precisa de mais 3. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3074#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 3 blocos de estrume da Camela de Veludo. Você precisa de mais 2. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3075#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 4 blocos de estrume da Camela de Veludo. Você precisa de mais 1. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3076#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você terminou de coletar os blocos de estrume de camelo. Volte ao Sr. Saraman e diga a ele onde está a Camela de Veludo. #
@@ -1337,7 +1337,7 @@ Taxa de 10.000 zenys, 5 Peles de Minhoca e 1 par de Botas #
 
 7003#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Certos materiais devem ser preparados antes da aula de dança.  Confirme a lista de materiais com Ale. #
-Taxa de 10.000 zenys, 2 Cascos de Ostra, 5 Poções Amarelas, 20 Jellopies, 10 Cabelos Morenos e 1 par de Sandálias #
+Taxa de 10.000 zenys, 2 Cascos de Ostra, 5 Poções Amarelas, 20 Jellopys, 10 Cabelos Morenos e 1 par de Sandálias #
 
 7004#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Prepare todos os materiais de que vai precisar. É hora da entrevista com Borwaju! Você precisa passar na entrevista! #
