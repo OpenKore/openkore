@@ -3043,6 +3043,9 @@ sub vending_start {
 sub vender_items_list {
 	my ($self, $args) = @_;
 
+    $venderID = $args->{venderID};
+    $venderCID = $args->{venderCID};
+
 	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
