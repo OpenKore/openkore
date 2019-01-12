@@ -4343,6 +4343,14 @@ sub checkSelfCondition {
 
 		return 0 unless inRange($amountInRange, $config{$prefix."_whenPartyMembersNear"});
 	}
+	
+	if ($config{$prefix . "_inParty"}) {
+		return 0 unless $char->{party}{joined};
+	}
+	
+	if ($config{$prefix . "_notInParty"}) {
+		return 0 if $char->{party}{joined};
+	}
 
 	my %hookArgs;
 	$hookArgs{prefix} = $prefix;
