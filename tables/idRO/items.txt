@@ -5932,7 +5932,7 @@
 19517#Cocks_Comb#
 19518#Rainbow#
 19519#Lightning_Cloud#
-19520#Rain_Cloud#
+19520#Costume: Rain Cloud#
 19521#Charlie_Hat#
 19522#Mini_Crown1#
 
@@ -7473,7 +7473,7 @@
 20109#Costume_Jolly_Roger#
 20112#Aqua_Ten_Gallon_Hat#
 20113#Star_Reading_Hat#
-20115#Under_Rim_Glasses#
+20115#Costume: Under_Rim_Glasses#
 20116#Mermaid_Headphone#
 20117#Raspberry_Mousse_Hat#
 
@@ -8481,3 +8481,23 @@
 32304#Kupon Ossas#
 5744#Capricorn Crown#
 5745#Capricorn Diadem#
+
+//====================update 15012019=================
+20860#Battle Surcoat#
+15135#Dragon Cloth#
+15130#Dragon Mail#
+20932#Old Morroc Shawl#
+2598#Lamor Manteau#
+22051#Lamor Shoes#
+28929#Happy Shield#
+31318#Prontera Militia Glove#
+31319#January Prosperity Lucky Bag#
+31320#Cloudy Costume Box#
+31321#Costume: Fluffy Angel Cape#
+31322#Costume: Dark Blinker#
+31323#Costume: Rosary Necklace#
+31324#Costume: Poring Muffler#
+31325#Costume: Valkyrie Circlet#
+31326#Costume: False Ears#
+31327#Costume: Make US Great Again#
+31328#Costume: Dark Elves Ears#
