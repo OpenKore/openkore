@@ -34075,12 +34075,24 @@ Profesi : ^777777Semua Job Kecuali Novice^000000
 2589#
 Sayap raksasa hitam dari malaikat yang jatuh ke rune midgard.
 LUK +2, MDEF +18
-Meningkatkan Pertahanan terhadap Element Darkness Attack + 30%,Mengurangi Pertahanan terhadap Element Holy attack
-Meningkatkan pertahanan terhadap Demi-Human class sebesar +10%
+All stats +1.
+[Setiap 20 base STR]
+Meningkatkan ATK +1
+[Setiap 20 base INT]
+Meningkatkan MATK +1
+[Setiap 20 base VIT]
+Meningkatkan pertahanan terhadap serangan Netral sebesar 1%
+[Setiap 20 base AGI]
+Meningkatkan ASPD sebesar 1%
+[Setiap 20 base DEX]
+Meningkatkan serangan jarak jauh sebesar 1%
+[Setiap 20 base LUK]
+Meningkatkan serangan kritikal sebesar 1%
 Jenis : ^777777Garment^000000  Def : ^77777718^000000
 Berat : ^77777720^000000
 Level Persyaratan : ^7777771^000000
 Profesi : ^777777Semua Job^000000
+#
 4502#
 Menambahkan kesempatan 5% menghancurkan senjata musuh dan kesempatan 4% menghancurkan armor nya setiap kali melakukan serangan fisik.
 Jika senjata di tempa hingga  +15 atau lebih,  Menambahkan kesempatan 8% menghancurkan senjata musuh dan kesempatan 6% menghancurkan armor nya setiap kali melakukan serangan fisik.
@@ -50524,6 +50536,309 @@ Jika ditempa +9 atau lebih, meningkatkan efektivitas Skill Heal dan Sanctuary se
 Jika ditempa +10 atau lebih, ketika diserang, ada kemungkinan kecil untuk auto-cast Lv 5 [Hammer Fall].
 Class : ^777777Headgear^000000 Defense : ^7777773^000000
 Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 03012019=================
+32304#
+Kupon ini digunakan untuk klaim hadiah Daily Login di NPC Ossas setiap hari.
+Weight : ^7777770^000000
+#
+
+5744#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Vit +2
+Jika ditempa +7 atau lebih, ketika melakukan serangan jarak dekat, ada kemungkinan auto-cast Lv 1 Mild Wind (Earth).
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+5745#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Mdef +5.
+Meningkatkan ketahanan terhadap serangan elemen Tanah sebesar 5%
+Jika ditempa +7 atau lebih, Int +2.
+Jika ditempa +8 atau lebih, mengurangi casting time sebesar 3%.
+Jika ditempa +9 atau lebih, meningkatkan efektivitas Skill Heal dan Sanctuary sebesar 4%.
+Jika ditempa +10 atau lebih, ketika diserang, ada kemungkinan kecil untuk auto-cast Lv 5 [Hammer Fall].
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 15012019=================
+20860#
+Sebuah replika jubah yang dipakai oleh Raja Amatsu. Ketika dipakai, kamu akan bisa bergerak secara cepat.
+Flee +10, Aspd +3%.
+Dapat menggunakan Level 3 [Double Attack]
+Dapat menggunakan Level 3 [Triple Attack]
+Jika ditempa sampai +9 atau lebih :
+Tambahan Aspd + 3%
+Tambahan Flee + 10
+Dapat menggunakan Level 5 [Double Attack]
+Dapat menggunakan Level 5 [Triple Attack]
+Jika ditempa sampai +12 atau lebih :
+Tambahan Aspd + 3%
+Tambahan Flee + 10
+Dapat menggunakan Level 10 [Double Attack]
+Dapat menggunakan Level 10 [Triple Attack]
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^77777730^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+15135#
+Sebuah jubah ritual yang nampaknya membuat naga ketakutan.
+Mdef +5.
+Tambahan Mdef +1 untuk setiap tingkat tempa.
+Mengurangi serangan dari monster jenis [Dragon] sebesar 5%
+Tambahan pengurangan serangan dari monster jenis [Dragon] sebesar 1% untuk setiap tingkat tempa.
+Class : ^777777Armor^000000 Def : ^77777730^000000
+Weight : ^777777120^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+15130#
+Baju zirah yang dipakai petarung untuk melindungi mereka dari naga yang sangat besar.
+Menambahkan serangan fisik kepada monster jenis [Dragon] sebesar 3%
+Tambahan serangan fisik kepada monster jenis [Dragon] sebesar 1% untuk setiap tingkat tempa diatas +5.
+Class : ^777777Armor^000000 Def : ^77777730^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+20932#
+Benda yang digunakan oleh pemuka keyakinan Morocc kuno. Ini sangat enteng dan sejuk.
+Jika tingkat tempa +7 atau lebih, tambahan Flee +20
+Jika tingkat tempa +10 atau lebih, tambahan Flee +30 dan memulihkan 100% HP dan SP ketika dibangkitkan kembali.
+Jika tingkat tempa +11 atau lebih, tambahan Flee + 40.
+Jika tingkat tempa +12 atau lebih, tambahan Dodge + 25.
+
+^777777[Set bonus dengan Osiris Card]:^000000
+Tambahan Max HP + 15%
+Mengurangi serangan yang diterima dari elemen [Fire] sebesar 30%
+Mengurangi serangan yang diterima dari elemen [Shadow] sebesar 50%
+Anti terhadap status [Curse].
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Jobs : ^777777All 3rd Job^000000
+#
+2598#
+Sebuah jubah yang berisi kekuatan dari orang mati.
+Mengurangi serangan yang diterima dari properti [Undead] sebesar 5%
+Meningkatkan serangan yang diterima dari [Demi-Human] sebesar 5%
+Class : ^777777Garment^000000 Def : ^7777770^000000
+Weight : ^77777770^000000
+Required Level : ^77777765^000000
+Jobs : ^777777All^000000
+#
+22051#
+Meningkatkan Drop Rate sebesar 10% jika dalam masa Premium Service.
+Max HP + 1% setiap tingkat tempa.
+Max SP + 1% setiap tingkat tempa.
+Mengurangi serangan dari monster jenis [Undead] sebesar 5%
+Class : ^777777Sepatu^000000 Def : ^77777712^000000
+Weight : ^77777725^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+28929#
+Sebuah tameng yang membuat penggunanya merasa sangat senang.
+Mdef +10.
+^777777Set bonus dengan Arnoldi Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+
+^777777Set bonus dengan Anubis Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+
+^777777Set bonus dengan Bigfoot Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+
+^777777Set bonus dengan Khalitzburg Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+
+^777777Set bonus dengan Orc Warrior Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+
+^777777Set bonus dengan Penomena Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+
+^777777Set bonus dengan Rafflesia Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+
+^777777Set bonus dengan Sky Petite Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+
+^777777Set bonus dengan Teddy Bear Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+
+^777777Set bonus dengan Thara Frog Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Class : ^777777Shield^000000 Def : ^777777150^000000
+Weight : ^777777350^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+
+#
+31318#
+Sarung tangan yang disediakan dari Prontera. Penggunanya akan tidak terkalahkan.
+Aspd +5%.
+Mengurangi serangan yang diterima dari jenis [Demi-Human] sebesar 3%.
+Mengurangi serangan yang diterima yang berlemen [Fire], [Water], [Wind], [Earth] sebesar 5%.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^777777350^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+
+31319#
+Kotak spesial untuk Awal Tahun 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Heart Wing Hairband [1]
+Love Piece
+Toy Syringe
+Battle Surcoat [1]
+Dragon Cloth [1]
+Dragon Mail [1]
+Old Morroc Shawl [1]
+Etran Shirt [1]
+Lamor Manteau [1]
+Lamor Shoes [1]
+Lamor Shield [1]
+Happy Shield [1]
+Prontera Militia Glove [1]
+Gyges Ring [1]
+25 Enriched Oridecon Box
+25 Enriched Elunium Box
+5 Battle Manual X3
+8 Job Battle Manual
+^000000
+Berat : ^7777771^000000
+#
+
+31320#
+Kotak yang berisi kostum spesial untuk Awal Tahun 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Cloud Burst
+Costume: Fluffy Angel Cape
+Costume: Dark Blinker
+Costume: Rosary Necklace
+Costume: Poring Muffler
+Costume: Valkyrie Circlet
+Costume: False Ears
+Costume: Make US Great Again
+Costume: Dark Elves Ears
+Costume: Under Rim Glasses
+^000000
+Berat : ^7777771^000000
+#
+
+31321#
+Costume: Fluffy Angel Cape
+Sebuah penutup bahu yang sangat nyaman dipakai. Kamu akan terlihat seperti malaikat jika memakai ini.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31322#
+Costume: Dark Blinker
+Sebuah penutup mata yang mempunyai kekuatan sihir.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31323#
+Costume: Rosary Necklace
+Sebuah rosario suci yang mendapat kekuatan dari titisan Dewa. Kalung ini berisi kekuatan misterius.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31324#
+Costume: Poring Muffler
+Sebuah syal penghangat yang berbentuk poring lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31325#
+Costume: Valkyrie Circlet
+Sebuah circlet suci  yang melambangkan murid Valkyrie yang menghukum orang-orang jahat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31326#
+Costume: False Ears
+Kostum yang menyerupai kuping manusia yang sesungguhnya.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31327#
+Costume: Make US Great Again
+Topi yang melambangkan semangat persatuan di Negeri Paman Sam!
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31328#
+Costume: Dark Elves Ears
+Kostum yang menyerupai kuping dark elf.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
