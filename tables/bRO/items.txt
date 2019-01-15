@@ -6937,6 +6937,7 @@
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
 28521#Proteção do Gigante#
+28531#Luvas do Vigor#
 28534#Amuleto da Coragem#
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
@@ -6944,6 +6945,7 @@
 28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
 28572#Broche da Celine#
+28596#Anel de Brinquedo#
 28598#Fragmento de Chip #
 28617#Bíblia Sagrada#
 28630#Tomo Ancestral#
@@ -6962,6 +6964,7 @@
 28921#Escudo de Anemos#
 28927#Égide da Nobreza#
 28933#Escudo de Ferro#
+28940#Escudo das Divindades#
 28944#Escudo de Sleiporing#
 28947#Escudo de Gaia#
 29148#Gema de Leão#
@@ -7051,6 +7054,7 @@
 31382#Touca de Patinhas#
 31383#Peruca Azul de Waifu#
 31387#Jakk Aventureiro#
+31388#Chapéu Dupliponta#
 31390#Chapéu da Nevasca#
 31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
@@ -7086,6 +7090,8 @@
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
+31564#Véu do Submundo#
+31565#Laço com Coroa#
 31568#Espíritos Taiji#
 31569#Fones de Última Geração#
 31572#Auréolas Digitais#

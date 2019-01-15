@@ -26037,7 +26037,7 @@ Uma caneca cheia de refrigerante de guaraná, produzido a partir dos melhores fr
 Aumenta os danos críticos em +7%.
 Adiciona +10% de resistência ao efeito [Congelamento].^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
+Defesa: ^7777774^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777760^000000
 Nível necessário: ^77777718^000000
@@ -33967,8 +33967,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000017.12.2018.^000000
-Este item será removido no dia ^ff000018.12.2018.^000000
+Promoção limitada até o dia ^ff000028.01.2019.^000000
+Este item será removido no dia ^ff000029.01.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -59376,6 +59376,17 @@ Peso: ^77777750^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+28531#
+Não se sabe por quem foram forjadas, quando foram forjadas e nem do que foram forjadas. Mas são luvas poderosas, então por que duvidar da procedência?
+^0000ffPós-conjuração -10%.^000000
+^0000ffDano físico contra monstros Chefes +5%.^000000
+^0000ffIgnora 20% da DEF de todas as raças, incluindo personagens.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
 28534#
 Um amuleto vermelho, que representa a coragem e o poder dos mais destemidos aventureiros. Só de usá-lo, você já sente seu espírito ser inundado por uma bravura inabalável.
 ^0000ffATQ da arma +3%.^000000
@@ -59535,6 +59546,26 @@ Refino +9 ou mais:
 Refino +11 ou mais:
 ^0000ffResistência a raça Humanoide +2%.^000000
 ^0000ffDano mágico contra monstros Chefes +20% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28596#
+Acessório encontrado nas profundezas da Fábrica do Terror. Apesar da aparência e nome, suas propriedades não são brincadeira!
+^0000ffFOR, AGI e VIT +5.^000000
+A cada 2 níveis de base:
+^0000ffDano de [Golpe Fulminante] +1%.^000000
+A cada 5 níveis de base:
+^0000ffDano de [Impacto de Tyr] +3%.^000000
+A cada 2 níveis de [Perícia com Espada]:
+^0000ffATQ +10.^000000
+^0000ffFOR, AGI e VIT +1 adicional.^000000
+^FF6347Conjunto^000000
+^FF6347[Martelo Cósmico]^000000
+^0000ffATQ +100.^000000
+^0000ffDano de [Impacto de Tyr] +50%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
@@ -59940,6 +59971,22 @@ Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^777777280^000000
 Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+28940#
+^0000ffEfetividade de cura +10%.^000000
+A cada refino:
+^0000ffEfetividade de cura +1%.^000000
+Refino +8 ou mais:
+^0000ffHabilita [Curar] nv. 1.^000000
+Refino +10 ou mais:
+^0000ffTolerância a Sangramento +100%.^000000
+Refino +13 ou mais:
+^0000ffTolerância a Petrificação +100%.^000000
+Tipo: ^777777Escudo^000000
+Defesa: ^777777150^000000
+Peso: ^777777120^000000
+Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
 28944#
@@ -60801,6 +60848,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31388#
+Um chapéu indispensável pra você que gosta de exagerar: é adornado com vários frufrus, como flores, asas e, na ausência de uma ponta, este aqui tem duas. Talvez atraia olhares de julgamento de outras pessoas, mas ignore — eles não têm uma noção de moda tão boa quanto a sua.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em : ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31390#
 Um chapéu feito das esperanças das pessoas de lugares onde não neva durante o inverno. A neve cai como uma Nevasca.
 ^008080Até o dia 16/01/2018:^000000
@@ -61097,6 +61153,24 @@ Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31564#
+O acessório trevoso perfeito para sua cerimônia de enlace matrimonial gótica no cemitério.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em : ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
+31565#
+Uma união de beleza e autoridade. Mostre a todos que você não só tem bom gosto pra coisas fofas, mas também possui o poder e autoridade de um membro da família real!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em : ^777777Topo ^000000
+Peso : ^7777770^000000
+Nível necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 31568#
 Com origens na filosofia de Kunlun, esses espíritos representam a harmonia do mundo: o bem e o mal, o cheio e o vazio. O equilíbrio dessas forças é o caminho para atingir o potencial máximo do seu Chi.
