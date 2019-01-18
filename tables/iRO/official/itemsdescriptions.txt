@@ -10345,13 +10345,14 @@ Weight: ^808080150^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^80808050^000000
 Usable By: ^808080Priest Jobs, Monk Jobs^000000
-Atk + 40, if ^0000FFChain Crush Combo^000000 is at maximum level.
-Additional Atk + 20, if ^0000FFGlacier Fist^000000 is at maximum level.
-Additional Atk + 20, if ^0000FFRaging Quadruple Blow^000000 is at maximum level.
-Additional Atk + 20, if ^0000FFRaging Thrust^000000 is at maximum level.
 Aspd - 5%
 Aspd + 1% per 2 upgrade levels of the item.
 Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+Atk + 20, if ^0000FFGlacier Fist^000000 is at maximum level.
+Atk + 20, if ^0000FFRaging Thrust^000000 is at maximum level.
+Atk + 20, if ^0000FFRaging Quadruple Blow^000000 is at maximum level.
+Atk + 40, if ^0000FFChain Crush Combo^000000 is at maximum level.
+
 This item is indestructible in battle.
 #
 1839#
@@ -12019,12 +12020,13 @@ Mdef + 5
 Reduces damage taken from Water, Fire, Shadow and Undead property attacks by 20%.
 
 ^800080Set Bonus^000000
-^008080IValkyrja's Shield [1]^000000
+^008080Valkyrja's Shield [1]^000000
 ^008080Fricca's Circlet^000000
 ^008080Odin's Blessing [1]^000000
 Def + 2
 Mdef + 5
-For every upgrade level of ^008080IValkyrja's Shield [1],
+
+For every upgrade level of ^008080Valkyrja's Shield [1]^000000,
 Def - 1
 Mdef + 1
 For every upgrade level of ^008080Fricca's Circlet^000000,
@@ -14857,61 +14859,96 @@ Jobs : ^7777772nd Transcendent Class^000000
 #
 2387#
 Very nimble looking armor that lets you gallop like a Peco Peco. It looks like a running shirt, while it has the function of an armor.
-Vit +1.
-HP Recovery +5%
-Improves the effectiveness of receiving Heals and Recovery items by 3%
-Class : ^777777Armor^000000
-Defense : ^77777720^000000
-Weight : ^777777100^000000
-Required Level : ^7777770^000000
-Jobs : ^7777772nd Transcendent Class^000000
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Vit + 1
+HP Recovery + 5%
+Increases the recovery rate of recovery skills and recovery items by 3%.
+
+^800080Set Bonus^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Max HP + 7%
+Max SP + 7%
+Reduces the variable casting time of skills by 3%.
+Reduces the global delay of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+Max HP + 3%
+If ^008080Sprint Mail [1]^000000 upgrade level is +7 or higher,
+Max SP + 2%
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Reduces the variable casting time of skills by 5%.
+Reduces the cast delay of skills by 5%.
 #
 2388#
 A traditional garb worn by desert dwellers that is specially designed for hot weather environments.
-Agi +1
-Flee +5, Aspd +2%,Increase in attack speed(Delay after attacking reduces by 2%)
-Class : ^777777Armor^000000
-Defense : ^77777736^000000
-Weight : ^77777730^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Assassin Cross^000000
+Class: ^808080Armor^000000
+Defense: ^80808036^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Assassin Cross Jobs^000000
+Agi + 1
+Flee + 5
+Aspd + 2%
 #
 2389#
 An armor made from the scales of Naga. It is very sharp and shiny and it seems like it will hurt anything that goes near it.
+Class: ^808080Armor^000000
+Defense: ^80808045^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
 Mdef +2
-Has a chance of adding Atk +20 when the wearer physically attacks an enemy.
-Class : ^777777Armor^000000
-Defense : ^77777745^000000
-Weight : ^777777100^000000
-Jobs : ^7777772nd Transcendent Class^000000
+
+Adds a chance of buffing the user for 10 seconds when performing a physical attack;
+Atk + 20
 #
 2390#
-Brand new tights developed by the Rekenber Corporation.  Made of very advanced material which fit close to the body and still allows maximum movement.
-Mdef +2
-Perfect Dodge +3
-Class : ^777777Armor^000000
-Defense : ^77777738^000000
-Weight : ^77777740^000000
-Required Level : ^77777775^000000
-Jobs : ^777777Transcendent Archer Class^000000
+Brand new tights developed by the Rekenber Corporation. Made of very advanced material which fit close to the body and still allows maximum movement.
+Class: ^808080Armor^000000
+Defense: ^80808038^000000
+Weight: ^80808040^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Sniper Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 2
+Perfect Dodge + 3
+
+^800080Set Bonus^000000
+^008080Improved Tights [1]^000000
+^008080Linen Glove [1]^000000
+Perfect Dodge + 5
 #
 2391#
-A holy armor made by the Goddess in order to cure the chosen warrior.  Increases the speed of natural recovery of the wearer.
-Vit +2. Mdef +5
-HP Natual Recovery Speed +50%
-Class : ^777777Armor^000000
-Defense : ^77777775^000000
-Weight : ^777777350^000000
-Required Level : ^77777782^000000
-Jobs : ^777777Transcendent Swordman Class^000000
+A holy armor made by the Goddess in order to cure the chosen warrior. Increases the speed of natural recovery of the wearer.
+Class: ^808080Armor^000000
+Defense: ^80808075^000000
+Weight: ^808080350^000000
+Requires Level: ^80808082^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+Vit + 2
+HP Recovery + 50%
+Mdef + 5
 #
 2393#
 A light, comfortable suit made just for young adventurers.
-Impossible to refine.
-Class : ^777777Armor^000000
-Defense : ^77777745^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+^FF0000Character Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808045^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+This item cannot be upgraded.
 #
 2394#
 A piece of equipment that has been designed specifically for battles against humans.
@@ -14959,79 +14996,72 @@ Max HP + 500
 #
 2399#
 Inner wear made out of a draco's mane.
+Class: ^808080Armor^000000
+Defense: ^80808020^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
 Mdef + 3
-When equipped with Dragon Manteau:  Agi +5 / Flee +15
-Class : ^777777Armor^000000
-Defense : ^7777773^000000
-Weight : ^77777750^000000
-Job : ^777777All Transcendent Job Classes^000000
+
+^800080Set Bonus^000000
+^008080Dragon Vest [1]^000000
+^008080Dragon Manteau [1]^000000
+Agi + 5
+Flee + 15
 #
 2401#
-Cute, feminine shoes
-that are a part of the
-standard schoolgirl's
-uniform. Fortunately,
-these are unisex.
-Class : ^777777Footwear^000000
-Defense :^7777775
-^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+Cute, feminine shoes that are a part of the standard schoolgirl's uniform. Fortunately, these are unisex.
+Class: ^808080Shoes^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2402#
-Cute, feminine shoes
-that are a part of the
-standard schoolgirl's
-uniform. Fortunately,
-these are unisex.
-Class : ^777777Footwear^000000
-Defense :^7777775^000000
-Weight : ^77777720^000000
-Jobs: ^777777All^000000
+Cute, feminine shoes that are a part of the standard schoolgirl's uniform. Fortunately, these are unisex.
+Class: ^808080Shoes^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat [1]^000000
+^008080Sandals [1]^000000
+^008080Chonchon Card^000000
+Max HP + 4%
+Max SP + 4%.
+Additional Max HP + 2% and Max SP + 2% per upgrade level of ^008080Sandals [1]^000000.
 #
 2403#
-A pair of shoes
-made of supple,
-high quality leather.
-Class : ^777777Footwear^000000
-Defense : ^77777710^000000
-Weight : ^77777740^000000
-Jobs: ^777777Every
-Job except Novice^000000
+A pair of shoes made of supple, high quality leather.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2404#
-A pair of shoes
-made of supple,
-high quality leather.
-Class : ^777777Footwear^000000
-Defense : ^77777710^000000
-Weight : ^77777740^000000
-Jobs: ^777777Every
-Job except Novice^000000
+A pair of shoes made of supple, high quality leather.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808040^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2405#
-A pair of heavy
-leather boots, padded
-with Lunatic fur, that
-is suited to warriors.
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-Thief Classes, Taekwon Boy/Girl, Taekwon Master, and Gunslinger^000000
+A pair of heavy leather boots, padded with Lunatic fur, that is suited to warriors.
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs, Taekwon, Taekwon Master, Gunslinger Jobs^000000
 #
 2406#
-A pair of heavy
-leather boots, padded
-with Lunatic fur, that
-is suited to warriors.
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^77777760^000000
-Jobs: ^777777Swordman,
-Archer, Merchant,
-Thief Classes, Taekwon Boy/Girl, Taekwon Master, and Gunslinger^000000
+A pair of heavy leather boots, padded with Lunatic fur, that is suited to warriors.
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^80808060^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs, Taekwon, Taekwon Master, Gunslinger Jobs^000000
 #
 2407#
 A pair of feminine high heeled shoes made of
@@ -15445,15 +15475,38 @@ Required Level : ^7777770^000000
 Jobs: ^777777All^000000
 #
 2440#
-Very useful for running.  Tighten the strips and you're off to the races!
-Agi +1,
-SP Recovery +5%
-When worn with Sprint Mail and Ring, 7% increase in each MaxHP & MaxSP,
-Variable Casting Time reduces by 3% before using the skill and reduces by 15% after using the skill.
-Class : ^777777Footwear^000000
-Defense : ^77777710^000000
-Weight : ^77777730^000000
-Jobs : ^7777772nd Transcendent Class^000000
+Very useful for running. Tighten the strips and you're off to the races!
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 1
+SP Recovery + 5%
+
+^800080Set Bonus^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Max HP + 7%
+Max SP + 7%
+Reduces the variable casting time of skills by 3%.
+Reduces the global delay of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Shoes [1]^000000
+Max SP + 3%
+If ^008080Sprint Shoes [1]^000000 upgrade level is +7 or higher,
+Max HP + 2%
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Reduces the variable casting time of skills by 5%.
+Reduces the cast delay of skills by 5%.
 #
 2441#
 A sandals received as a gift from Comodo Environmental Commission.
@@ -15957,16 +16010,14 @@ Required Level : ^77777795^000000
 Jobs : ^777777Novice / Wizard / Acolyte / Soul Linker^000000
 #
 2486#
-^808080A pair of shoes helps the user to melt into the dark easily because it was made up of darkness, the opponent of light. The wizard who made this Shadow Walk imbued a magic to protect the wearer of itself.^000000
-^FFFFFF_^000000
-Type: Shoes
-Defense: 0
-Weight: 200
-Required Level: 75
-Required Job: All Transcendent Jobs except Novice Jobs
-^FFFFFF_^000000
-MDEF + 10
-Adds a X% chance of casting ^0000FFLevel 2 Cloaking^000000 on the user when receiving a magical attack, if a higher level of this skill is known, it will be cast instead.
+A pair of shoes helps the user to melt into the dark easily because it was made up of darkness, the opponent of light. The wizard who made this Shadow Walk imbued a magic to protect the wearer of itself.
+Class: ^808080Shoes^000000
+Defense: ^8080800^000000
+Weight: ^808080200^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 10
+Adds a chance of casting ^0000FFLevel 2 Cloaking^000000 on the user when receiving a magical attack, if a higher level of this skill is known, it will be cast instead.
 #
 2491#
 Ominous boots emitting Bangungot's revenge and powerful hatred of humans.
@@ -16724,11 +16775,19 @@ Job : ^777777All^000000
 #
 2553#
 Manteau from a Draco's mane.
-Agi +1, Mdef +5
-Class : ^777777Clothes^000000
-Defense : ^7777775^000000
-Weight : ^777777100^000000
-Job : ^777777All Transcendent Job Classes except Novice Classes^000000
+Class: ^808080Garment^000000
+Defense: ^8080805^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 1
+Mdef + 5
+
+^800080Set Bonus^000000
+^008080Dragon Vest [1]^000000
+^008080Dragon Manteau [1]^000000
+Agi + 5
+Flee + 15
 #
 2554#
 Made from a scale of Nidhoggur's Shadow, it still possesses its strong power.
@@ -18645,11 +18704,34 @@ Jobs : ^7777772nd Transcendent Class^000000
 #
 2744#
 A ring that gives you a feeling of flying like a rocket through the wind.
-Reduces Variable Casting Tiime of skills by 10%, but increases after skill delay by 5%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Jobs : ^7777772nd Transcendent Class^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Reduces the variable casting time of skills by 10%.
+Increases the global delay of skills by 5%.
+^800080Set Bonus^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Max HP + 7%
+Max SP + 7%
+Reduces the variable casting time of skills by 3%.
+Reduces the global delay of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Ring^000000
+Reduces the variable casting time of skills by 4%.
+Reduces the cast delay of skills by 4%.
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
+Reduces the variable casting time of skills by 5%.
+Reduces the cast delay of skills by 5%.
 #
 2745#
 A small Corsge that looks like Pinguicula.
@@ -18702,16 +18784,19 @@ Atk + 25
 Adds an additional 2% chance of inflicting ^800000Curse^000000 on the target when performing a long-ranged attack.
 #
 2749#
-A glove made of material you've never seen before.
-Amazingly light and suitable for use with just about any weapon.
-Agi +2, Dex +1,
-Mdef +1
-When equipped with Improved Tights, Perfect Dodge +5.
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^77777712^000000
-Required Level : ^77777790^000000
-Jobs : ^7777772nd Transcendent Class^000000
+A glove made of material you've never seen before. Amazingly light and suitable for use with just about any weapon.
+Class: ^808080Accessory^000000
+Weight: ^80808012^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 2
+Dex + 1
+Mdef + 1
+
+^800080Set Bonus^000000
+^008080Improved Tights [1]^000000
+^008080Linen Glove [1]^000000
+Perfect Dodge + 5
 #
 2751#
 A badge which can get when they graduate the probationary period of magical school with high grade.
@@ -20136,27 +20221,32 @@ Requires Level: ^8080801^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
 Reduces the variable casting time of skills by 1%.
 Reduces the cast delay of skills by 1%.
+
 ^800080Set Bonus^000000
-^008080Sprint Glove^000000
+^008080Sprint Glove [1]^000000
 ^008080Sprint Ring^000000
 Reduces the variable casting time of skills by 4%.
 Reduces the cast delay of skills by 4%.
+
 ^800080Set Bonus^000000
-^008080Sprint Glove^000000
-^008080Sprint Mail^000000
-Max HP + 3%
-If ^008080Sprint Mail^000000 upgrade level is +7 or higher,
-Max SP + 2%
-^800080Set Bonus^000000
-^008080Sprint Glove^000000
-^008080Sprint Shoes^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Shoes [1]^000000
 Max SP + 3%
-If ^008080Sprint Shoes^000000 upgrade level is +7 or higher,
+If ^008080Sprint Shoes [1]^000000 upgrade level is +7 or higher,
 Max HP + 2%
+
 ^800080Set Bonus^000000
-^008080Sprint Glove^000000
-^008080Sprint Mail^000000
-^008080Sprint Shoes^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+Max HP + 3%
+If ^008080Sprint Mail [1]^000000 upgrade level is +7 or higher,
+Max SP + 2%
+
+^800080Set Bonus^000000
+^008080Sprint Glove [1]^000000
+^008080Sprint Mail [1]^000000
+^008080Sprint Shoes [1]^000000
+^008080Sprint Ring^000000
 Reduces the variable casting time of skills by 5%.
 Reduces the cast delay of skills by 5%.
 #
@@ -20572,10 +20662,21 @@ Usable By: ^808080All Jobs^000000
 Max HP + 500
 Max SP + 200
 Enables ^0000FFLevel 1 Fiber Lock^000000.
-Adds a 1% chance of casting ^0000FFLevel 10 Frost Nova^000000 on the target when performing a physical or magical attack.
-Adds a 0.1% chance of casting ^0000FFLevel 1 Mystical Amplification^000000 on the user when performing a magical attack.
+Adds a 1% chance of casting ^0000FFLevel 10 Frost Nova^000000 on the target when performing a physical attack.
 Adds a 0.1% chance of casting ^0000FFLevel 1 Psychic Wave^000000 on the target when performing a physical attack.
-Adds a 0.1% chance of casting ^0000FFLevel 1 Scream^000000 on the attacker when receiving a short-ranged or magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Mystical Amplification^000000 on the user when performing a magical attack.
+Adds a 0.1% chance of casting ^0000FFLevel 1 Dazzler^000000 on the attacker when receiving a short-ranged or magical attack.
+
+^800080Set Bonus^000000
+^008080Celine's Brooch [1]^000000
+^008080Evil Spirit Glove [1]^000000
+Atk + 50
+Matk + 50
+Aspd + 2
+Adds a 2% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
+Adds a 2% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
+Adds a 1% chance of casting ^0000FFLevel 1 Recognized Spell^000000 on the user when performing a magical attack.
+Adds a 5% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the user when receiving a physical or magical attack.
 #
 2981#
 A ring made for warriors on the quest to defeat Morroc.
@@ -20847,11 +20948,24 @@ Str + 1
 Atk + 10
 #
 4009#
-Agi +1
-Flee +2
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Agi + 1
+Flee + 2
+
+^800080Set Bonus^000000
+^008080Chonchon Card^000000
+^008080Dragon Fly Card^000000
+Flee + 18
+
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat [1]^000000
+^008080Sandals [1]^000000
+^008080Chonchon Card^000000
+Max HP + 4%
+Max SP + 4%.
+Additional Max HP + 2% and Max SP + 2% per upgrade level of ^008080Sandals [1]^000000.
 #
 4010#
 Class: ^808080Card^000000
@@ -21097,6 +21211,12 @@ Compounds On: ^808080Armor^000000
 Weight: ^8080801^000000
 Def + 2
 Reduces damage taken from Wind property attacks by 10%.
+
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat [1]^000000
+^008080Steel Chonchon Card^000000
+Immune to ^800000Frozen^000000.
+Adds a chance of inflicting ^800000Frozen^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
 #
 4043#
 Class: ^808080Card^000000
@@ -21115,6 +21235,11 @@ Class: ^808080Card^000000
 Compounds On: ^808080Shield^000000
 Weight: ^8080801^000000
 Reduces damage taken from long-ranged attacks by 35%.
+
+^800080Set Malus^000000
+^008080Horn Card^000000
+^008080Imuke Upper Shield [1]^000000
+Disables the following effects of ^008080Horn Card^000000, Reduces damage taken from long-ranged attacks by 35%.
 #
 4046#
 Class: ^808080Card^000000
@@ -45214,6 +45339,25 @@ Costume Sheep's Horns
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9544#
+When opened gives one of the following at random
+Botany Mail [1]
+Menblatt Wing Manteau [1]
+Manteau Of Guardsman [1]
+Mysterious Muffler
+Tengu Shoes
+Nature Dress
+Evil Dragon Armor [1]
+Scutum [1]
+Critical Anklet [1]
+Party Hard Pack
+(2000) Prize Medal
+(8) Blacksmith Blessing
+(6) Battle Manual X3
+(5) Bloody Branch
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -49030,24 +49174,32 @@ Weight : ^7777770^000000
 "^ff0000Caution - Item can be lost if you are possessing more than weight or quantity limit when opening the box!^000000"
 #
 12531#
-A box that contains 100 White Potions
-Box Weight : ^7777770^000000
+A box that contains a stack of White Potions.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF100^000000 ^008080White Potion^000000.
 #
 12532#
-A box that contains 100 Royal Jelly
-Royal Jelly Description:
-Highly nutritious jelly secreted from honeybees that they only feed to larvae and future queens.
-^000088Cures every abnormal status^000000; ^000088Recovers 250 HP^000000.
-Weight : ^7777770^000000
+A box that contains a stack of Royal Jelly.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF100^000000 ^008080Royal Jelly^000000.
 #
 12533#
-A box that contains 100 Blue Herbs
-Blue Herb Description:
-A very valuable medicinal herb whose unique aroma gratifies one's spirit.
-^000088Recovers a little SP^000000.
-Weight : ^7777770^000000
+A box that contains a stack of Blue Herbs.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF100^000000 ^008080Blue Herb^000000.
 #
 12534#
+A box that contains a stack of Yggdrasil Seed.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF30^000000 ^008080Yggdrasil Seed^000000.
 #
 12535#
 A pile of berries can be seen inside.
@@ -49091,12 +49243,18 @@ You must have at least 1 of the items in your inventory that you wish to Buy in 
 Weight : ^7777771^000000
 #
 12549#
-A box that contains 200 Condensed White Potions
-Box Weight : ^7777770^000000
+A box that contains a stack of Condensed White Potions.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF200^000000 ^008080Condensed White Potions^000000.
 #
 12550#
-A box that contains 30 Poison Bottles.
-Box Weight : ^7777770^000000
+A box that contains a stack of Poison Bottles.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces ^0000FF30^000000 ^008080Poison Bottle^000000.
 #
 12553#
 Contains a permanent Brysingamen, which is UNTRADABLE, you can trade a permanent Godly Item at the Godly item Confiscator in Prontera Castle.
@@ -49431,8 +49589,10 @@ A supply box with various weapons stamped with the seal of a forgotten guild.
 Weight : ^77777750^000000
 #
 12676#
-A box containing 50 different potions and theoretical studies for expensive weapons.
-Weight : ^77777720^000000
+A box that contains a stack of WoE Violet Potions.
+Class: ^808080Item Giver^000000
+Weight: ^80808020^000000
+Produces ^0000FF50^000000 ^008080WoE Violet Potion^000000.
 #
 12677#
 Ammunition case, contains a stack of arrows.
@@ -49450,16 +49610,22 @@ Requires Level: ^80808095^000000
 Produces ^0000FF200^000000 ^008080WoE Arrow A^000000.
 #
 12679#
-A box that contains WoE White Potions
-Weight : ^77777720^000000
+A box that contains a stack of WoE White Potions.
+Class: ^808080Item Giver^000000
+Weight: ^80808020^000000
+Produces ^0000FF30^000000 ^008080WoE White Potion^000000.
 #
 12680#
-A box that contains WoE Blue Potions
-Weight : ^77777720^000000
+A box that contains a stack of WoE Blue Potions.
+Class: ^808080Item Giver^000000
+Weight: ^80808020^000000
+Produces ^0000FF10^000000 ^008080WoE Blue Potion^000000.
 #
 12683#
-A box that contains WoE Violet Potions
-Weight : ^77777720^000000
+A box that contains a stack of WoE Violet Potions.
+Class: ^808080Item Giver^000000
+Weight: ^80808020^000000
+Produces ^0000FF200^000000 ^008080WoE Violet Potion^000000.
 #
 12684#
 #
@@ -51091,11 +51257,11 @@ preserve its contents,
 Weight : ^7777771^000000
 #
 12996#
-A box designed to
-preserve its contents,
-15 Blue Herbs.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains a stack of Blue Herbs.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF15^000000 ^008080Blue Herb^000000.
 #
 12997#
 A box designed to
@@ -52016,27 +52182,23 @@ Required Level : ^7777771^000000
 Jobs : ^777777Swordmen/Magicians/Merchants/Thieves/Soul Linker/Ninja^000000
 #
 13088#
-^808080An original Kris from ancient Jati clan. It gives off an intense magical aura.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Dagger
-Attack: 110
-Property: Neutral
-Weight: 50
-Weapon Level: 4
-Required Level: 30
-Required Jobs: All Jobs except Novice, Super Novice, Acolyte, Priest, Monk, High Priest, Champion, Arch Bishop, Sura, Taekwon, Taekwon Master, Gunslinger, Rebel
-^FFFFFF_^000000
-MATK + 50
-^FFFFFF_^000000
+An original Kris from ancient Jati clan. It gives off an intense magical aura.
+Class: ^808080Dagger^000000
+Attack: ^808080110^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Soul Linker, Ninja Jobs^000000
 If upgrade level is +5 or higher,
-Additional MATK + 30
-^FFFFFF_^000000
+Matk + 30
+
 If upgrade level is +7 or higher,
-Additional MATK + 40
-^FFFFFF_^000000
+Additional Matk + 40
+
 If upgrade level is +9 or higher,
-Additional MATK + 50
+Additional Matk + 50
 #
 13089#
 A broken razor-like leg that was severed from a Faceworm. It's sustained with potent time-warping energy.
@@ -54698,8 +54860,16 @@ Jobs: ^777777Acolyte Class^000000
 13515#
 #
 13516#
+A box that contains a stack of Royal Jelly.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF5^000000 ^008080Royal Jelly^000000.
 #
 13517#
+A box that contains a stack of Yggdrasilberry.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF3^000000 ^008080Yggdrasilberry^000000.
 #
 13518#
 #
@@ -56782,6 +56952,11 @@ Weight : ^7777771^000000
 13972#
 #
 13973#
+A box that contains a stack of Poison Bottles.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF30^000000 ^008080Poison Bottle^000000.
 #
 13974#
 Contains 1 RWC Rally Box and 1 RWC Arms Box
@@ -56915,8 +57090,18 @@ Box Weight : ^7777771^000000
 14003#
 #
 14004#
+A box that contains a stack of Poison Bottles.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF10^000000 ^008080Poison Bottle^000000.
 #
 14005#
+A box that contains a stack of Poison Bottles.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF5^000000 ^008080Poison Bottle^000000.
 #
 14017#
 A box that contains:
@@ -58206,6 +58391,11 @@ Weight : ^7777771^000000
 14229#
 #
 14232#
+A box that contains a stack of Yggdrasilberry.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF10^000000 ^008080Yggdrasilberry^000000.
 #
 14234#
 #
@@ -58559,8 +58749,16 @@ Rogue, Mage, Wizard^000000
 Weight : ^77777720^000000
 #
 14512#
+A spell scroll made with the essence of ancient magic.
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Casts ^0000FFLevel 10 Meteor Storm^000000.
 #
 14513#
+A spell scroll made with the essence of ancient magic.
+Class: ^808080Scroll^000000
+Weight: ^8080801^000000
+Casts ^0000FFLevel 10 Storm Gust^000000.
 #
 14514#
 A spell scroll made with the essence of ancient magic.
@@ -60158,18 +60356,16 @@ If used by Acolyte, Mage and Archer Classes,
 Increases resistance to ^800000Silence^000000 by 50%.
 #
 15072#
-^808080The dye used in the suit has been mixed with the nectar of eternal youth.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Armor
-Defense: 35
-Property: Neutral
-Weight: 30
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-VIT + 3
-Max HP + 1% and Max SP + 1% per 2 upgrade levels of the item.
+The dye used in the suit has been mixed with the nectar of eternal youth.
+Class: ^808080Armor^000000
+Defense: ^80808035^000000
+Property: ^808080Neutral^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Vit + 3
+Max HP + 1% per 2 upgrade levels of the item.
+Max SP + 1% per 2 upgrade levels of the item.
 #
 15073#
 This suit, developed in Geffen over a long period of time, effectively protects its wearer against potent magic.
@@ -60332,18 +60528,19 @@ Matk +10
 Hit + 10
 Flee + 10
 
-Increases the damage of ^0000FFDragon Combo^000000 10%.
-Increases the damage of ^0000FFSky Blow^000000 10%.
-Increases the damage of ^0000FFEarth Shaker^000000 10%.
-Increases the damage of ^0000FFJudex^000000 10%.
-Increases the damage of ^0000FFAdoramus^000000 10%.
+Increases the damage of ^0000FFDragon Combo^000000 by 10%.
+Increases the damage of ^0000FFSky Blow^000000 by 10%.
+Increases the damage of ^0000FFEarth Shaker^000000 by 10%.
+Increases the damage of ^0000FFJudex^000000 by 10%.
+Increases the damage of ^0000FFAdoramus^000000 by 10%.
 Adds a chance of casting ^0000FFLevel 1 Lex Aeterna^000000 on the target when performing a magical attack.
 Adds a chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 on the user when performing a physical attack.
 The chance of casting the skills is increased per upgrade level of ^008080Hero Judgement Shawl [1]^000000.
+
 ^800080Set Bonus^000000
 ^008080Brooch of Hero [1]^000000
 ^008080Hero Judgement Shawl [1]^000000
-Disables the following effects of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 and ^0000FFLevel 1 Lex Aterna^000000.
+Disables the following effect of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000.
 Increases the damage of ^0000FFJudex^000000 by 5% per upgrade level of the armor.
 Increases the damage of ^0000FFAdoramus^000000 by 5% per upgrade level of the armor.
 Increases the damage of ^0000FFSky Blow^000000 by 5% per upgrade level of the armor.
@@ -60433,13 +60630,13 @@ Increases physical and magical damage on Brute race targets by 3%.
 Increases physical and magical damage on Brute race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
 #
 15103#
-^808080An armor containing the soul of the legendary Kirin.^000000
-Class: Armor
-Defense: 55
-Property: Holy
-Weight: 50
-Required Level: 70
-Required Jobs: All Jobs
+An armor containing the soul of the legendary Kirin.
+Class: ^808080Armor^000000
+Defense: ^80808055^000000
+Property: ^808080Holy^000000
+Weight: ^80808050^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 #
 15104#
 ^808080Armor worn by fishermen to protect themselves from rough seas.^000000
@@ -60652,6 +60849,18 @@ Required Level: 145
 Required Job: All classes
 ^FFFFFF_^000000
 When using magic attacks has a small chance of increasing mATK by 8*the refine level of the robe for a short period of time.
+#
+15122#
+Armor worn by Botanists when collecting rare plants.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Increases physical and magical damage on Plant race targets by 3%.
+
+For every upgrade level past the upgrade level of +5,
+Increases physical and magical damage on Plant race targets by an additional 1%.
 #
 15124#
 ^808080An armor that is worn by a priest to fight demons.^000000
@@ -61485,51 +61694,39 @@ Additional Atk + 30
 Bypass an additional 20% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
 15352#
-A dress that you can feel has the power of nature.
-Proof that you are a member of Nature's children.
+A dress empowered with nature's essence. Wearing this will prove that you are a member of Nature's Children.
+^FF0000Disabled during WoE TE.^000000
 Class: ^808080Armor^000000
 Defense: ^808080120^000000
+Property: ^808080Earth^000000
 Weight: ^80808040^000000
 Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Prevents the user from being knocked back.
-The users property becomes Level 1 Earth
 
-If refined to +5 or Higher
-Increases Physical damage on Demi Human race targets by 10%.
-Increases Physical damage on Player race targets by 10%.
-Increases Physical damage on Brute race targets by 10%.
-Increases Magic damage on Demi Human race targets by 10%.
-Increases Magic damage on Player race targets by 10%.
-Increases Magic damage on Brute race targets by 10%.
-Increases Physical damage on Wind property targets by 10%.
-Increases Physical damage on Earth property targets by 10%.
-Increases Magic damage on Wind property targets by 10%.
-Increases Magic damage on Earth property targets by 10%.
+If upgrade level is +5 or higher,
+Increases physical and magical damage on Demi-Human race targets by 10%.
+Increases physical and magical damage on Player race targets by 10%.
+Increases physical and magical damage on Brute race targets by 10%.
+Increases physical and magical damage on Wind property targets by 10%.
+Increases physical and magical damage on Earth property targets by 10%.
 
-If refined to +7 or Higher
-Increases Physical damage on Demi Human race targets by 15%.
-Increases Physical damage on Player race targets by 15%.
-Increases Physical damage on Brute race targets by 15%.
-Increases Magic damage on Demi Human race targets by 15%.
-Increases Magic damage on Player race targets by 15%.
-Increases Magic damage on Brute race targets by 15%.
-Increases Physical damage on Wind property targets by 15%.
-Increases Physical damage on Earth property targets by 15%.
-Increases Magic damage on Wind property targets by 15%.
-Increases Magic damage on Earth property targets by 15%.
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Demi-Human race targets by an additional 15%.
+Increases physical and magical damage on Player race targets by an additional 15%.
+Increases physical and magical damage on Brute race targets by an additional 15%.
+Increases physical and magical damage on Wind property targets by an additional 15%.
+Increases physical and magical damage on Earth property targets by an additional 15%.
 
-If refined to +9 or Higher
-Increases Physical damage on Demi Human race targets by 15%.
-Increases Physical damage on Player race targets by 15%.
-Increases Physical damage on Brute race targets by 15%.
-Increases Magic damage on Demi Human race targets by 15%.
-Increases Magic damage on Player race targets by 15%.
-Increases Magic damage on Brute race targets by 15%.
-Increases Physical damage on Wind property targets by 15%.
-Increases Physical damage on Earth property targets by 15%.
-Increases Magic damage on Wind property targets by 15%.
-Increases Magic damage on Earth property targets by 15%.
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Demi-Human race targets by an additional 15%.
+Increases physical and magical damage on Player race targets by an additional 15%.
+Increases physical and magical damage on Brute race targets by an additional 15%.
+Increases physical and magical damage on Wind property targets by an additional 15%.
+Increases physical and magical damage on Earth property targets by an additional 15%.
 
+This item is indestructible in battle.
+^800080Disabled during WoE TE^000000
 #
 15384#
 An angel's raiment where the power of holy prayers once dwelt. It is worn during ritual ceremonies, etc.
@@ -64893,12 +65090,17 @@ Weight : ^7777771^000000
 Box Weight : ^7777771^000000
 #
 17066#
-^ff0000 unable to trade with other account.^000000
-A box that contains 50 Poison Bottles. Use caution when handling it.
-^ff0000Cannot be refunded once opened.^000000
-Weight: ^7777771^000000
+A box that contains a stack of Poison Bottles.
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF50^000000 ^008080Poison Bottle^000000.
 #
 17067#
+A box that contains a stack of Poison Bottles.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Produces ^0000FF100^000000 ^008080Poison Bottle^000000.
 #
 17068#
 A demolition specialist's starter kit, designed to help with creation of Acid Bombs.
@@ -71366,16 +71568,13 @@ Usable By: ^808080All Jobs^000000
 Increases the damage of Wind property magical attacks on targets by 4%.
 #
 18787#
-^808080An ice hockey goal tenders mask. When others see you wearing this mask they feel scared.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle, Lower
-Defense: 5
-Weight: 20
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+An ice hockey goal tenders mask. When others see you wearing this mask they feel scared.
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Increases physical damage on Demi-Human race targets by 8%.
 #
 18791#
@@ -71477,16 +71676,13 @@ Mdef + 3
 Reduces damage taken from Demon race enemies by 3%.
 #
 18799#
-^808080A golden mask which is rumored to belong to the goddess of water.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 20
-Required Level: 10
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A golden mask which is rumored to belong to the goddess of water.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
 Increases the damage of Water property magical attacks on targets by 4%.
 #
 18802#
@@ -71563,17 +71759,14 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 18813#
-^808080Sunglasses with a futuristic design.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 10
-Required Level: 30
-Required Jobs: All Jobs
-^FFFFFF_^000000
-Skill Usage Delay - 10%
+Sunglasses with a futuristic design.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Reduces the global delay of skills by 10%.
 #
 18814#
 ^ff0000This item cannot be traded with other account.^000000f
@@ -71745,7 +71938,7 @@ Immune to ^800000Blind^000000 and ^800000Silence^000000.
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Glove [1]^000000
-^d3d3d3Reduces the cooldown of ^0000FFOverbrand^000000 by 2 seconds.^000000
+^d3d3d3Reduces the cooldown of Overbrand by 2 seconds.^000000
 Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
 Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
 Increases the damage of ^0000FFCannon Spear^000000 by 30%.
@@ -72222,17 +72415,14 @@ HP Recovery + 15%
 SP Recovery + 15%
 #
 18877#
-^808080In spite of its name, it really does have a feel for a certain space themed television show.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 30
-Required Level: 30
-Required Jobs: All Jobs
-^FFFFFF_^000000
-Skill Usage Delay - 5%
+In spite of its name, it really does have a feel for a certain space themed television show.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Reduces the global delay of skills by 5%.
 Increases the SP cost of skills by 5%.
 #
 18878#
@@ -72893,26 +73083,28 @@ Job : ^777777All^000000
 #
 18959#
 Nobody knows why it's old and pink. You put it on your head anyway.
-^FF0000This item cannot be upgraded.^000000
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080800^000000
 Weight: ^808080120^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
-Reduces damage taken from players by 13%.
-^800080Set Bonus^000000
-^008080Old Pink Poo Hat^000000
-^008080Steel Chonchon Card^000000
-Immune to ^800000Freeze^000000.
-Adds a chance of casting ^0000FFWide Area Freeze^000000 when receiving a physical or magical attack.
+Reduces damage taken from Players by 13%.
+This item cannot be upgraded.
 
 ^800080Set Bonus^000000
-^008080Old Pink Poo Hat^000000
-^008080Sandals[1]^000000
+^008080Old Pink Poo Hat [1]^000000
+^008080Steel Chonchon Card^000000
+Immune to ^800000Frozen^000000.
+Adds a chance of inflicting ^800000Frozen^000000 on any target within 11-11 cells of the user when receiving a physical or a magical attack.
+
+^800080Set Bonus^000000
+^008080Old Pink Poo Hat [1]^000000
+^008080Sandals [1]^000000
 ^008080Chonchon Card^000000
-Max HP + 4%, Max SP + 4%.
-Additional Max HP + 2%, Max SP + 2% per upgrade level of ^008080Sandals[1]^000000.
+Max HP + 4%
+Max SP + 4%.
+Additional Max HP + 2% and Max SP + 2% per upgrade level of ^008080Sandals [1]^000000.
 #
 18961#
 A hat made after fluffy monster Lunatic.
@@ -74115,18 +74307,15 @@ Increases the damage of ^0000FFSpore Explosion^000000 by 5% per upgrade level of
 Reduces the SP cost of ^0000FFSpore Explosion^000000 by 20.
 #
 19083#
-^808080The mask owned by the hero of an unknown clan which brings health and well being to the user.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 20
-Required Level: 70
-Required Jobs: All Jobs
-^FFFFFF_^000000
-VIT + 10
-MDEF + 10
+The mask owned by the hero of an unknown clan which brings health and well being to the user.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Vit + 10
+Mdef + 10
 Reflects 1% of the received short-ranged damage back to the attacker.
 #
 19084#
@@ -79049,7 +79238,7 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20160#
-PecoPoco Fried Egg.
+A replica of an egg fryer, used for PecoPeco Eggs. This is not your typical egg fryer.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -79798,7 +79987,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20312#
-^808080An eye patch modeled after the evil eye of Demon Baron.
+An eye patch modeled after the evil eye of Demon Baron.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -80552,10 +80741,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20399#
-^FF0000The mask carries the grudge of its previous owner.^000000
+The mask carries the grudge of its previous owner.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20405#
 ^808080A scarf which once belonged to an old hero.^000000
@@ -81429,27 +81620,26 @@ Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 Disables the following effects of ^008080Undead Knight of Grudge Card^000000, Restores 20 SP to the user when a monster is killed by a short-ranged attack.
 #
 20783#
-^808080A cape wore by a kid who's dream is to become a hero. Despite it's look, the robe has outstanding protection abilities.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 0
-Weight: 10
-Required Level: 10
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A cape wore by a kid who's dream is to become a hero. Despite it's look, the robe has outstanding protection abilities.
+Class: ^808080Garment^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
 Flee + 1
-Additional Flee + 1 per 3 upgrade levels of the item.
 Reduces damage taken from Neutral property attacks by 1%.
-Reduces damage taken from Neutral property attacks by an additional 1% per 3 upgrade levels of the item.
+
+Additional Flee + 3 per 3 upgrade levels of the item.
+Reduces damage taken from Neutral property attacks by an additional 3% per 3 upgrade levels of the item.
+
 If upgrade level is +10 or higher,
 Additional Flee + 20
 Reduces damage taken from Neutral property attacks by an additional 20%.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
 ^008080Deviling Card^000000
-^008080Hero Cape^000000
-Increases damage taken from Neutral property attacks by 50%.
+^008080Hero Manteau [1]^000000
+Disables the following effects of ^008080Deviling Card^000000, Reduces damage taken from Neutral property attacks by 50%.
 #
 20788#
 ^808080A manteau embroidered in a pattern favored by the Doram.^000000
@@ -82237,6 +82427,26 @@ Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
+20863#
+Short coat made in imitation of Menblatt's feathers.
+Class: ^808080Garment^000000
+Defense: ^80808040^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Atk + 30
+
+If upgrade level is +5 or higher,
+For every 60 base Dex, Increases long-ranged damage on targets by 1%.
+
+If upgrade level is +7 or higher,
+For every 10 base Dex, Increases long-ranged damage on targets by 1%.
+
+^800080Set Malus^000000
+^008080Menblatt Card^000000
+^008080Menblatt Wing Manteau [1]^000000
+For every 10 base Dex, Reduces long-ranged damage on targets by 1%.
+#
 20922#
 Muffler made with the scales of the strongest sea monsters.
 Class: ^808080Garment^000000
@@ -82318,6 +82528,24 @@ Reduces damage taken from Fire property attacks by 50%.
 Reduces damage taken from Shadow property attacks by 100%.
 Immune to ^800000Curse^000000.
 #
+20942#
+A garment adorned with beautiful gemstones. Unlike other garments, it seems to be made of solid material.
+Class: ^808080Garment^000000
+Defense: ^80808015^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 5%
+Max SP + 5%
+Mdef + 15
+
+Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Player race enemies by 5%.
+
+For every 3 upgrade levels of ^008080Manteau Of Guardsman [1]^000000,
+Additional Max HP + 3%
+Additional Max SP + 3%
+#
 20949#
 A brown dragon's shell with 100 heads guarding a golden apple.
 
@@ -82341,6 +82569,39 @@ Atk + 15
 Hit + 5
 If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a physical or a long-ranged attack.
+#
+20952#
+An enchanted muffler once worn by a mysterious assassin during missions. It is made to move faster than anyone else.
+Class: ^808080Garment^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 3%
+Max SP + 3%
+Mdef + 5
+
+Reduces damage taken from Player race enemies by 5%.
+
+If upgrade level is +7 or higher,
+Additional Max HP + 7%
+Additional Max SP + 7%
+Aspd + 1
+Restores 5 SP to the user when a monster is killed by a physical attack.
+Restores 5 SP to the user when a monster is killed by a long-ranged attack.
+
+If upgrade level is +8 or higher,
+Increased Movement Speed.
+
+If upgrade level is +9 or higher,
+Additional Max HP + 10%
+Additional Max SP + 10%
+Additional Aspd + 1
+Restores an additional 5 SP to the user when a monster is killed by a physical attack.
+Restores an additional 5 SP to the user when a monster is killed by a long-ranged attack.
+
+If upgrade level is +10 or higher,
+Enables ^0000FFLevel 3 Cloaking^000000.
 #
 21001#
 *Stats during WoE & PVP
@@ -83164,15 +83425,12 @@ Reduces damage taken from Undead property enemies by 5%.
 Reduces damage taken from Undead property attacks by 2% per upgrade level of ^008080Lamor Shield^000000.
 #
 22052#
-^808080These shoes were worn by a man who made a living out of taking care of cemetery's. These shoes contains the man’s many years of experience.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Footgear
-Defense: 10
-Weight: 30
-Required Level: 30
-Required Jobs: All Jobs
-^FFFFFF_^000000
+These shoes were worn by a man who made a living out of taking care of cemetery's. These shoes contains the man's many years of experience.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 Increases the experience given from Undead race monsters by 5%.
 Increases the experience given from Undead race monsters by an additional 1% per upgrade level of the item.
 #
@@ -83940,6 +84198,43 @@ Adds a 5% chance of buffing the user for 5 seconds when performing a physical at
 ^008080YSF01 Manteau^000000
 ^008080YSF01 Plate^000000
 Reduces the cast delay of skills by 1% per upgrade level of ^008080YSF01 Manteau^000000.
+#
+22145#
+Light footwear worn by the Tengu. It empowers the wearer's stamina and speed. It is said hidden powers are locked within this footwear.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 3%
+Max SP + 3%
+Mdef + 10
+Enables ^0000FFLevel 1 Cast Cancel^000000.
+
+If upgrade level is +5 or higher,
+Additional Max HP + 7%
+Additional Max SP + 7%
+Reduces the SP cost of ^0000FFSnap^000000 by 5.
+
+If upgrade level is +7 or higher,
+Additional Max HP + 10%
+Additional Max SP + 10%
+Reduces the SP cost of ^0000FFSnap^000000 by an addtional 5.
+
+Max HP + 2% per level of ^0000FFGentle Touch-Cure^000000 known.
+
+For every level known of ^0000FFGentle Touch-Revitalize^000000,
+Def + 30
+Reduces damage taken from Demi-Human race enemies by 1%.
+
+For every level known of ^0000FFGentle Touch-Energy Gain^000000,
+Reduces the variable casting time of ^0000FFSummon Spirit Sphere^000000 by 10%.
+Reduces the variable casting time of ^0000FFMental Strength^000000 by 10%.
+Reduces the fixed casting time of ^0000FFZen^000000 by 10%.
+
+Aspd + 2% per level of ^0000FFGentle Touch-Convert^000000 known.
+
+Atk + 4 % per level of ^0000FFGentle Touch-Silence^000000 known.
 #
 22170#
 A pair of shoes that automatically protects its' owner.
@@ -87846,15 +88141,14 @@ Reduces damage taken from Fire property enemies by 10%.
 27028#
 Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
-Weight: ^8080800^000000
+Weight: ^8080801^000000
+Increases magical damage on Earth property targets by 3%.
 
-Increases Magic damage on Ground property targets by 3%.
-When Upgraded to + 7 or higher
-Increases Magic damage on Ground property targets by an additional 2%.
-When Upgraded to + 9 or higher
-Increases Magic damage on Ground property targets by an additional 2%.
+If compounded item upgrade level is +7 or higher,
+Increases magical damage on Earth property targets by 5%.
 
-
+If compounded item upgrade level is +9 or higher,
+Increases magical damage on Earth property targets by 7%.
 #
 27029#
 Class: ^808080Card^000000
@@ -88945,81 +89239,76 @@ Max SP + 20%
 Increases the damage of ^0000FFCatnip Meteor^000000 by 200%.
 #
 28386#
-^808080The beads of the rosary turned black during the endless fight with the monstrous monkey.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Defense: 0
-Weight: 10
-Required Level: 20
-Required Jobs: All Jobs
-^FFFFFF_^000000
-CRIT + 5
-ASPD + 5%
+The beads of the rosary turned black during the endless fight with a monstrous monkey.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
+Crit + 5
+Aspd + 5%
+
+Reduces the SP cost of ^0000FFZen^000000 by 5.
 Increases the damage of ^0000FFDragon Combo^000000 by 2% for every 15 base levels.
 Increases the damage of ^0000FFKnuckle Arrow^000000 by 2% for every 20 base levels.
 Increases the damage of ^0000FFSky Blow^000000 by 2% for every 30 base levels.
-Reduces the SP cost of ^0000FFZen^000000 by 5.
 #
 28394#
-^808080This ring contains the power of the Spirit King.^000000
-Class: Accessory
-Weight: 20
-Required Level: 50
-Required Jobs: All Jobs
+This ring contains the power of the Spirit King.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Vit + 5
+
+Reduces the global delay of skills by 5%.
+Reduces the cooldown of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000 by 2 seconds.
+
 Reduces the variable casting time of ^0000FFVaretyr Spear^000000 by 1.5 seconds.
+Reduces the cooldown of ^0000FFVaretyr Spear^000000 by 0.5 seconds.
+
 Reduces the variable casting time of ^0000FFWarmer^000000 by 50%.
 Reduces the fixed casting time of ^0000FFWarmer^000000 by 50%.
-Reduces the cast delay of skills by 5%.
-Reduces the cooldown of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000 by 2 seconds.
-Reduces the cooldown of ^0000FFVaretyr Spear^000000 by 0.5 seconds.
 Reduces the cooldown of ^0000FFWarmer^000000 by 15 seconds.
+
 Increases the damage of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000 by 1% for every 8 base levels.
 #
 28410#
-^808080A sapphire bracelet which was designed with the collective knowledge of the geneticist community.^000000
+A sapphire bracelet which was designed with the collective knowledge of the geneticist community.
 ^FF0000The acid bomb skill currently has no variable cast time to reduce.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Defense: 3
-Weight: 50
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Int + 5
-Additional Int + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
 Dex + 5
-Additional Dex + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
 Luk + 5
+
+^d3d3d3Reduces the variable casting time of Acid Bomb by 1% for every 4 base levels.^000000
+Increases the damage of ^0000FFSpore Explosion^000000 by 5% for every 20 base levels.
+
+Additional Int + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
+Additional Dex + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
 Additional Luk + 1 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
 Matk + 20 per 2 levels of ^0000FFAid Condensed Potion^000000 known.
-Reduces the variable casting time of ^0000FFAcid Bomb^000000 by 4% for every 4 base levels.
-Increases the damage of ^0000FFSpore Explosion^000000 by 5% for every 20 base levels.
 #
 28411#
-^808080A pair of earrings each crafted from large emeralds.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Defense: 3
-Weight: 50
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A pair of earrings each crafted from large emeralds.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Agi + 5
-Additional Agi + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
 Int + 5
-Additional Int + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
 Dex + 5
+
+Increases the damage of ^0000FFArrow Vulcan^000000, ^0000FFMelody Strike^000000 and ^0000FFSlinging Arrow^000000 by 1% for every base level.
+Increases the damage of ^0000FFMetallic Sound^000000 by 2% for every 5 base levels.
+Reduces the variable casting time of ^0000FFMetallic Sound^000000 by 1% for every 5 base levels.
+
+Additional Agi + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
+Additional Int + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
 Additional Dex + 1 per 2 levels of ^0000FFVoice Lessons^000000 known.
 Matk + 20 per 2 levels of ^0000FFVoice Lessons^000000 known.
-Reduces the variable casting time of ^0000FFMetallic Sound^000000 by 1% for every 5 base levels.
-Increases the damage of ^0000FFArrow Vulcan^000000 by 1% for every base level.
-Increases the damage of ^0000FFMelody Strike^000000 by 1% for every base level.
-Increases the damage of ^0000FFMetallic Sound^000000 by 2% for every 5 base levels.
-Increases the damage of ^0000FFSlinging Arrow^000000 by 1% for every base level.
 #
 28413#
 ^808080A charm that looks just like a real saurel.^000000
@@ -89516,14 +89805,11 @@ Increases the damage of ^0000FFFirst Wind^000000 by 10% per level of ^0000FFWind
 Increases the damage of ^0000FFSnow Flake Draft^000000 by 20% per level of ^0000FFFreezing Spear^000000 known.
 #
 28491#
-^808080A dagger with a wide variety of applications. Particularly useful for hunting in the mountains.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Weight: 40
-Required Level: 90
-Required Jobs: All Jobs
-^FFFFFF_^000000
+A dagger with a wide variety of applications. Particularly useful for hunting in the mountains.
+Class: ^808080Accessory^000000
+Weight: ^80808040^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Luk + 2
 Hit + 10
 Crit + 5 when performing a long-ranged attack.
@@ -89531,6 +89817,18 @@ Enables ^0000FFLevel 1 Hiding^000000.
 If the users base Luk is 100 or higher,
 Additional Hit + 5
 Additional Crit + 10 when performing a long-ranged attack.
+
+^800080Set Bonus^000000
+^008080Sharp 1^000000
+^008080Hunting Knife [1]^000000
+Hit + 15
+Crit + 10 when performing a long-ranged attack.
+
+^800080Set Bonus^000000
+^008080Sharp 2^000000
+^008080Hunting Knife [1]^000000
+Hit + 15
+Crit + 10 when performing a long-ranged attack.
 #
 28492#
 ^808080A written guide full of various techniques for thieves. It's contents are not recommended for the general public.^000000
@@ -89798,15 +90096,14 @@ Aspd + 5%
 Reduces damage taken from Demi-Human race enemies by 4%.
 #
 28507#
-^808080A pair of gloves once owned by a genius magician. They allow the wearer to use their magic more efficiently.^000000
-^FF0000This accessory can only be equipped in the right accessory slot.^000000
-Class: Accessory
-Weight: 50
-Required Level: 80
-Required Jobs: All Jobs
+A pair of gloves once owned by a genius magician. They allow the wearer to use their magic more efficiently.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+Increases the damage of Water, Earth, Fire, Wind and Ghost property magical attacks on targets by 5%.
 Reduces the variable casting time of skills by 10%.
-Increases the damage of Water, Earth, Fire, Wind and Ghost property magical attacks on targets by 5%
-Bypass 50% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack.
+Bypass 50% of hard magic defense of All Races when performing a magical attack.
 #
 28508#
 A weird ring adorned with a skull on which the words, 'Forever, until death...' are engraved.
@@ -89893,35 +90190,39 @@ Max SP + 250
 Matk + 5%
 Aspd + 1
 Reduces the variable casting time of skills by 10%.
+
 ^800080Set Bonus^000000
-^008080Celine's Brooch^000000
-^008080Celine's Ribbon^000000
-All Stats + 1 per upgrade level of ^008080Celine's Ribbon^000000 up to a maximum upgrade level of 10.
-Increases magical damage on boss monster targets by 10%.
+^008080Celine's Brooch [1]^000000
+^008080Celine's Ribbon [1]^000000
 Reduces the fixed casting time of skills by 50%.
+Increases magical damage on boss monsters by 10%*.
+^ff0000*Updated 4/4/2019^000000
+All Stats + 1 per upgrade level of ^008080Celine's Ribbon [1]^000000.
 If upgrade level is +7 or higher,
-Increases magical damage on boss monster targets by an additional 20%.
 Reduces damage taken from Demi-Human race enemies by 10%.
+Increases magical damage on boss monster by an additional 20%.
 If upgrade level is +9 or higher,
-Increases magical damage on boss monster targets by an additional 20%.
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
+Increases magical damage on boss monster by an additional 20%.
+
 ^800080Set Bonus^000000
-^008080Celine's Brooch^000000
-^008080Evil Spirit Glove^000000
+^008080Celine's Brooch [1]^000000
+^008080Lush Rose [1]^000000
+Reduces the fixed casting time of skills by 50%.
+All Stats + 1 per upgrade level of ^008080Lush Rose [1]^000000 up to a maximum upgrade level of 10.
+If upgrade level is +7 or higher,
+Increases magical damage on boss monster by 20%.
+
+^800080Set Bonus^000000
+^008080Celine's Brooch [1]^000000
+^008080Evil Spirit Glove [1]^000000
 Atk + 50
 Matk + 50
 Aspd + 2
-Adds a 2% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
 Adds a 2% chance of casting ^0000FFLevel 1 Varetyr Spear^000000 on the target when performing a physical attack.
+Adds a 2% chance of casting ^0000FFLevel 1 Earth Grave^000000 on the target when performing a physical attack.
 Adds a 1% chance of casting ^0000FFLevel 1 Recognized Spell^000000 on the user when performing a magical attack.
-Adds a 5% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the attacker when receiving a physical or magical attack.
-^800080Set Bonus^000000
-^008080Celine's Brooch^000000
-^008080Lush Rose^000000
-All Stats + 1 per upgrade level of ^008080Lush Rose^000000 up to a maximum upgrade level of 10.
-Reduces the fixed casting time of skills by 50%.
-If upgrade level is +7 or higher,
-Increases magical damage on boss monster targets by 20%.
+Adds a 5% chance of casting ^0000FFLevel 3 Quaqmire^000000 on the user when receiving a physical or magical attack.
 #
 28520#
 Egir, the God of Sea's Ring. It has the power to see all things.
@@ -89957,15 +90258,14 @@ Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by an additional 10%.
 Increases physical damage on boss monsters by an additional 10%.
 #
 28531#
-^808080A pair of gloves once owned by a legendary blacksmith. They allow the wearer to use their physical prowess more efficiently.^000000
-^FF0000This accessory can only be equipped in the right accessory slot.^000000
-Class: Accessory
-Weight: 50
-Required Level: 80
-Required Jobs: All Jobs
-Reduces the cast delay of skills by 10%.
+A pair of gloves once owned by a legendary blacksmith. They allow the wearer to use their physical prowess more efficiently.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
 Increases physical damage on boss monsters by 5%.
-Bypass 50% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
+Reduces the global delay of skills by 10%.
+Bypass 50% of hard defense of All Races when performing a physical attack.
 #
 28551#
 A strengthened glove engraved with the patterns of the Rune Midgard Kingdom.
@@ -89980,7 +90280,7 @@ The users casting cannot be interrupted outside of WoE.
 ^800080Set Bonus^000000
 ^008080Imperial Feather^000000
 ^008080Imperial Glove [1]^000000
-^d3d3d3Reduces the cooldown of ^0000FFOverbrand^000000 by 2 seconds.^000000
+^d3d3d3Reduces the cooldown of Overbrand by 2 seconds.^000000
 Increases long-ranged damage on targets by 2% per level of ^0000FFCannon Spear^000000 known.
 Increases long-ranged damage on targets by an additional 2% per level of ^0000FFOverbrand^000000 known.
 Increases the damage of ^0000FFCannon Spear^000000 by 30%.
@@ -90505,13 +90805,15 @@ If upgrade level is +7 or higher,
 Reduces damage taken from long-ranged attacks by an additional 10%.
 If upgrade level is +9 or higher,
 Reduces damage taken from long-ranged attacks by an additional 15%.
-^800080Set Bonus^000000
-^008080Enforcer Cape^000000
-^008080Imuke Upper Shield^000000
-Disables the following effects of ^008080Imuke Upper Shield^000000, Reduces damage taken from long-ranged attacks by 35%.
-^800080Set Bonus^000000
+
+^800080Set Malus^000000
+^008080Enforcer Cape [1]^000000
+^008080Imuke Upper Shield [1]^000000
+Disables the following effects of ^008080Imuke Upper Shield [1]^000000, Reduces damage taken from long-ranged attacks by 35%.
+
+^800080Set Malus^000000
 ^008080Horn Card^000000
-^008080Imuke Upper Shield^000000
+^008080Imuke Upper Shield [1]^000000
 Disables the following effects of ^008080Horn Card^000000, Reduces damage taken from long-ranged attacks by 35%.
 #
 28913#
@@ -90718,13 +91020,16 @@ Weight: ^808080120^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Mdef + 5
-Mdef + 5
-Max HP + 1%
-Additional Max HP + 1% per 3 upgrade levels of the item.
-Additional Max HP + 1%, if the users base level is 130 or higher.
-Max SP + 1%
-Additional Max SP+ 1% per 3 upgrade levels of the item.
-Additional Max SP + 1%, if the users base level is 130 or higher.
+Max HP + 5%
+Max SP + 5%
+
+If the user's base level is 130 or higher,
+Additional Max HP + 5%.
+Additional Max SP + 5%.
+
+For every 3 upgrade levels of the item,
+Atk + 30
+Matk + 30
 #
 28951#
 A shield that harnesses the power of water.
@@ -93101,12 +93406,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31571#
-Protect the owner
-A guardian never sleeps
-Always by your side
+A replica of a processing chip made to control the guardian unit that never sleeps.
 Class: ^808080Costume^000000
-Position: ^808080Middle^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31572#
 A pursuit system floating around. It emits cool lights like a laser beam.
@@ -93203,6 +93508,8 @@ Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Vit+ 5
+Mdef + 5
 Aspd + 5%
 Reduces damage taken from Demi-Human race enemies by 3%.
 Reduces damage taken from Fire, Water, Wind and Earth property attacks by 5%.
@@ -93227,10 +93534,11 @@ Increases physical damage on all race targets by 5%.
 ^F4AD42Mechanic Bonus^000000 & ^F4AD42Geneticist Bonus^000000
 Reduces the SP cost of skills by 10%.
 Increases physical damage on all race targets by 5%.
+
 ^800080Set Bonus^000000
 ^008080Brooch of Hero [1]^000000
 ^008080Hero Judgement Shawl [1]^000000
-Disables the following effects of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000 and ^0000FFLevel 1 Lex Aterna^000000.
+Disables the following effect of ^008080Hero Judgement Shawl [1]^000000, chance of casting ^0000FFLevel 10 Kyrie Eleison^000000.
 Increases the damage of ^0000FFJudex^000000 by 5% per upgrade level of the armor.
 Increases the damage of ^0000FFAdoramus^000000 by 5% per upgrade level of the armor.
 Increases the damage of ^0000FFSky Blow^000000 by 5% per upgrade level of the armor.
