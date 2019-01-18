@@ -1862,7 +1862,7 @@
 2926#Vit_Glove_#
 2927#Dex_Glove_#
 2928#Luk_Glove_#
-2935#Sprint_Gloves#
+2935#Sprint_Glove#
 2936#Recovery_Ring#
 2940#Ninja_Manual#
 2941#Gunslinger_Manual#
@@ -5053,6 +5053,7 @@
 9518#December_Robotic_Costume_Box#
 9524#Overseas_Care_Package_XXV#
 9543#January_Costume_Box#
+9544#Overseas_Care_Package_XXVI#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -5614,9 +5615,9 @@
 12514#Abrasive#
 12530#Mastela_Fruit_Box#
 12531#White_Potion_100_Box#
-12532#Royal_Jelly_Box#
-12533#Blue_Herb_Box#
-12534#Yggdrasil_Seed_Box#
+12532#Royal_Jelly_100_Box#
+12533#Blue_Herb_100_Box#
+12534#Yggdrasil_Seed_30_Box#
 12535#Iggdrasilberry_Box#
 12536#Tako_Rice_Cake_Soup#
 12537#Gift_Chocolate_Basket#
@@ -5625,7 +5626,7 @@
 12545#Fortune_EggⅤ#
 12548#Black_Market_Bulk_Buyer_Shop_License#
 12549#Condensed_White_Potion_200_Box#
-12550#Poison_Bottle_Box#
+12550#Poison_Bottle_30_Box#
 12553#Brisingamen_Keep_Box#
 12554#Asprika_Piece_Box#
 12555#Brynhild_Piece_Box#
@@ -5685,12 +5686,12 @@
 12673#Safe_to_7_Chance_Box#
 12674#God_Material_Box#
 12675#WoE_Weapon_Supply_Box#
-12676#WoE_Violet_Potion_Box#
+12676#WoE_Violet_Potion_50_Box#
 12677#WoE_Arrow_Quiver_S#
 12678#WoE_Arrow_Quiver_A#
-12679#WoE_White_Potion_Box#
-12680#WoE_Blue_Potion_Box#
-12683#WoE_Violet_Potion_Box200#
+12679#WoE_White_Potion_30_Box#
+12680#WoE_Blue_Potion_10_Box#
+12683#WoE_Violet_Potion_200_Box#
 12684#ASPD_Intensifying_Potion#
 12685#Gryphon_Egg_Scroll#
 12690#Headgear_Card_Album#
@@ -5902,7 +5903,7 @@
 12993#Party_Buff_Scroll_Pack#
 12994#HD_Elunium_10_Box#
 12995#White_Herb_Box#
-12996#Blue_Herb_Box#
+12996#Blue_Herb_15_Box#
 12997#Elunium_Box#
 12998#Oridecon_Box#
 12999#Dead_Branch_Box#
@@ -6205,8 +6206,8 @@
 13513#Moonlight_Dagger_Box#
 13514#Wrench_Box#
 13515#(null)#
-13516#Royal_Jelly_Box#
-13517#Yggdrasilberry_Box#
+13516#Royal_Jelly_5_Box#
+13517#Yggdrasilberry_3_Box#
 13518#(null)#
 13519#(null)#
 13520#(null)#
@@ -6559,7 +6560,7 @@
 13970#Iron_Box#
 13971#Steel_Box#
 13972#Coal_Box#
-13973#Poison_Bottle_Box(30)#
+13973#Poison_Bottle_30_Box#
 13974#RWC_Gear_Set#
 13987#Rough_Oridecon_Box(5)#
 13988#Rough_Oridecon_Box(50)#
@@ -6578,8 +6579,8 @@
 14001#Recruit_Siege_Supply_Box#
 14002#Advanced_WoE_Supply_Box#
 14003#Elite_Siege_Supply_Box#
-14004#Poison_Bottle_Box(10)#
-14005#Poison_Bottle_Box(5)#
+14004#Poison_Bottle_10_Box#
+14005#Poison_Bottle_5_Box#
 14017#All_In_One_Ring_Box#
 14024#Robo_Eye_Box#
 14039#Hockey_Mask_Box#
@@ -6680,7 +6681,7 @@
 14220#Enriched_Oridecon_5_Box#
 14223#Mystical_Amplification_50_Box#
 14229#Cherry_Blossom_Scroll#
-14232#Yggdrasilberry10_Box#
+14232#Yggdrasilberry_10_Box#
 14234#Dead_Branch25_Box#
 14236#Steamed_Tongue_60_Box#
 14237#Steamed_Scorpion_60_Box#
@@ -6786,8 +6787,8 @@
 14509#Light_Concentration_Potion#
 14510#Light_Awakening_Potion#
 14511#Light_Berserk_Potion#
-14512#Meteor_Storm_Scroll#
-14513#Storm_Gust_Scroll#
+14512#Level_10_Meteor_Storm#
+14513#Level_10_Storm_Gust#
 14514#Level_10_Lord_of_Vermilion#
 14515#Lex_Aeterna_Scroll#
 14516#Magnificat_Scroll#
@@ -7000,6 +7001,7 @@
 15119#PRO_10th_Robe#
 15120#PRO_10th_Shoes#
 15121#Sarah's_Battle_Robe#
+15122#Botany_Mail#
 15124#Holy_Father_Mail#
 15125#Female_Diver's_Suit#
 15126#Doram_Suit#
@@ -7395,8 +7397,8 @@
 17048#Cobra's_Saturday_Morning_Box#
 17049#Silly_Sunday_Sale_Sack#
 17053#Butterflywing_Color_Box#
-17066#Poison_Bottle_Box50#
-17067#Poison_Bottle_Box100#
+17066#Poison_Bottle_50_Box#
+17067#Poison_Bottle_100_Box#
 17068#Acid_Bomb_50_Pack#
 17069#Acidbomb_Box100#
 17070#Acidbomb_Box500#
@@ -8715,7 +8717,7 @@
 20302#Costume:_Beelzebub's_Crown#
 20306#Costume_Artist's_Hat#
 20311#Costume_Magical_Booster#
-20312#Costume:_Baron's_Evil_Eye#
+20312#Costume_Baron's_Evil_Eye#
 20313#Costume_Disk_In_Mouth#
 20314#Costume_New_Wave_Sunglasses#
 20315#Costume_Analyzing_Eye#
@@ -8782,7 +8784,7 @@
 20393#Costume_Dip_Schmidt_Helm#
 20397#Costume_Jakk#
 20398#Costume_Niflheim_Bunny_Hat#
-20399#Costume:_Crow_Tengu_Mask#
+20399#Costume_Crow_Tengu_Mask#
 20405#Costume_Eremes'_Scarf#
 20407#Costume_Test_Subject_Aura_(Red)#
 20430#Costume_Loyal_Servant_of_Morroc#
@@ -8851,7 +8853,7 @@
 20763#Costume_Amistr_Bag#
 20773#Excelion_Wing#
 20778#Red_Lotus_Stole#
-20783#Hero_Cape#
+20783#Hero_Manteau#
 20788#Doram_Manteau#
 20789#Luxurious_Doram_Manteau#
 20790#Elegant_Doram_Manteau#
@@ -8887,10 +8889,13 @@
 20859#Phreeoni_Wings#
 20860#Battle_Surcoat#
 20861#Sword_Wing_J#
+20863#Menblatt_Wing_Manteau#
 20922#Leviathan_Muffler#
 20931#Prism_Rangers_Scarf#
 20932#Old_Morroc_Shawl#
+20942#Manteau_Of_Guardsman#
 20949#Skin_Of_Ladon#
+20952#Mysterious_Muffler#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
@@ -8974,6 +8979,7 @@
 22134#Enforcer_Shoes#
 22138#Devil_Worshipper_Shoes#
 22141#YSF01_Greaves#
+22145#Tengu_Shoes#
 22170#Survivor's_Shoes#
 22172#Gray_Wing_Boots#
 22189#Pilgrim_Shoes#

@@ -71969,3 +71969,31 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20073#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Pair of Red Ribbon!
+200 Fabric
+100 Powder of Butterfly
+50 Burning Hair
+1 Scarlet Dyestuffs
+1 Evolved Pair of Red Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20074#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Capricon Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+25 Garnet
+1 Capricon Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
