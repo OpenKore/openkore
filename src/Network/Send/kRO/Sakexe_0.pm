@@ -249,7 +249,8 @@ sub new {
 		'0AE8' => ['change_dress'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
-		'0B14' => ['inventory_expansion_request'],
+		'0B14' => ['inventory_expansion_request'], #2
+		'0B19' => ['inventory_expansion_rejected'], #2
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -758,4 +759,13 @@ sub sendPartyOrganize {
 # 0x0206,11
 # 0x0207,34
 
+sub Send_Inventory_Expansion_Request {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+sub Send_Inventory_Expansion_Rejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
 1;
