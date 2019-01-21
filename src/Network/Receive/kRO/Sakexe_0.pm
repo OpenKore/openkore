@@ -632,6 +632,7 @@ sub new {
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # new wight [sctnightcore]
 		};
 
 	# Item RECORD Struct's
@@ -3638,5 +3639,9 @@ sub progress_bar_unit {
 	debug "Displays progress bar (GID: $args-{GID} time: $args-{time})\n";	
 }
 
-
+sub inventory_expansion_info {
+	my($self, $args) = @_;
+	#sd->inventorySize - FIXED_INVENTORY_SIZE; 
+	#hardcode inventorysize ? [sctnightcore]
+}
 1;
