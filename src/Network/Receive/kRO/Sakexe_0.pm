@@ -3653,7 +3653,7 @@ use constant {
 	EXPAND_INVENTORY_RESULT_OTHER_WORK = 0x2,
 	EXPAND_INVENTORY_RESULT_MISSING_ITEM = 0x3,
 	EXPAND_INVENTORY_RESULT_MAX_SIZE = 0x4	
-}
+};
 
 sub inventory_expansion_result {
 #msgstringtable	
