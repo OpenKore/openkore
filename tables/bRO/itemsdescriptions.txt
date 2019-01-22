@@ -12402,26 +12402,31 @@ Nível necessário: ^77777794^000000
 Classes que utilizam: ^777777Todas^000000
 #
 2384#
-^000088Item de Aluguel^000000
+^000088Item de aluguel^000000
 Uma túnica mágica que carrega a energia dos espíritos da natureza e é resistente à vários elementos.
-+800 HP máximo
-Imune a congelamento
-Reduz em 20% o dano de todas as propriedades, exceto Neutro e Água.
-DEFM +5
-Validade: 7 dias após a abertura da caixa.
+^0000ffDEFM +5^000000
+^0000ffHP máx. +800.^000000
+^0000ffTolerância a Congelamento +100%.^000000
+^0000ffResistência as propriedades Neutro e Água +20%.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777738^000000
 Peso: ^7777770^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2385#
+^000088Item de aluguel^000000
 Uma armadura que regenera a vida de seu usuário ao se alimentar da energia de seus inimigos.
-Desativa a recuperação automática de HP e SP quando equipada. O usuário perde 100 SP ao desequipá-la.
-Recupera 60 HP e 6 SP ao derrotar um monstro usando um ataque físico ou mágico corpo-a-corpo.
+^0000ffRegeneração natural de HP e SP^000000 ^ff0000-100%.^000000
+Ao derrotar monstros:
+^0000ffRecupera 60 de HP e 6 de SP.^000000
+Ao desequipar:
+^0000ffDrena 100 de SP.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777767^000000
 Peso: ^7777770^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2386#
 Uma armadura milagrosa que pode alterar sua capacidade de acordo com habilidade do usuário.
@@ -12883,14 +12888,17 @@ Peso: ^77777730^000000
 Class: ^777777All classes^000000
 #
 2439#
+^000088Item de aluguel^000000
 Sapatos confortáveis feitos de couro macio e que são imunes a chulé.
-+17% de HP máximo
-+8% de SP máximo
-20 HP e 2SP recuperados a cada 10 segundos.
+^0000ffHP máx. +17%.^000000
+^0000ffSP máx. +8%.^000000
+A cada 10 segundos:
+^0000ffRegenera 20 de HP e 2 de SP.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777720^000000
 Peso: ^7777770^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2440#
 Muito úteis para correr. Amarre bem os cadarços e saia em disparada!
@@ -15222,15 +15230,17 @@ Nível necessário: ^77777775^000000
 Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 #
 2741#
-^000088Item de Aluguel^000000
-Um anel mágico chamado de “Zero” por razões óbvias. Sempre que você o coloca no dedo, terá uma estranha vontade de acariciá-lo e chamá-lo de Precioso. Ele foi imbuído com vários poderes e, por isso mesmo, é instável. É melhor aproveitar enquanto ele não explode!
-+1 em todos os atributos.
-Permite o uso das magias Cura e Teleporte em nível 1.
-A conjuração não pode ser interrompida. Tempo de conjuração variável aumentado em 10%.
+^000088Item de aluguel^000000
+Um anel mágico chamado de "Zero" por razões óbvias. Sempre que você o coloca no dedo, terá uma estranha vontade de acariciá-lo e chamá-lo de Precioso. Ele foi imbuído com vários poderes e, por isso mesmo, é instável. É melhor aproveitar enquanto ele não explode!
+^0000ffTodos os atributos +1.^000000
+^0000ffConjuração variável^000000 ^ff0000+10%.^000000
+^0000ffHabilita [Teleporte] e [Curar] nv. 1.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2743#
 Um anel que guarda o poder de um espírito sagrado que responde a certas habilidades e fortalece seu poder.
@@ -16390,13 +16400,12 @@ Um belo anel feito pelos Manuks usando minérios extraídos da Yggdrasil, o Frei
 ^0000ffVIT +1.^000000
 ^0000ffHP máx. +10%.^000000
 ^0000ffHP máx. +250.^000000
-^0000ffEfetividade de cura recebida +5%.^000000
-^0000ffRecuperação de HP por itens +5%.^000000
-Tipo : ^777777Acessório^000000
+^0000ffEfetividade de cura +5%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777775^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777710^000000
-Classes que utilizam: ^777777Todas^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 2944#
 ^ff0000Não pode ser negociado.^000000
@@ -19707,11 +19716,12 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4366#
-^0000ffTempo de conjuração variável -1% por refino.^000000
-Se refinado em +9 ou mais:
-^0000ffATQM +2%.^000000
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+A cada refino:
+^0000ffConjuração variável -1%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico +2%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4367#
@@ -24851,13 +24861,15 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz ^000000
 #
 5270#
 Um punhado de folhas amareladas, lembrando o outono. Muitos vão dizer que você dormiu debaixo de uma árvore e se esqueceu de limpar a cabeça. É melhor confirmar, já que contar sobre sua falha feia no treinamento ninja para se esquivar de folhas seria muito vergonhoso.
-^0000FFAGI +1 e Esquiva Perfeita + 5.^000000
-^0000FFAumenta o dano mágico e físico causado em monstros do tipo Bruto.^000000
+^0000ffAGI +1.^000000
+^0000ffEsquiva perfeita +5.^000000
+^0000ffDano físico e mágico contra a raça Bruto +10%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777710^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5271#
 Coroa pesada, decorada com jóias azuis e prateadas. Perfeita para aquele jantar de gala!
@@ -25790,13 +25802,13 @@ Classes que utilizam: ^777777Todas^000000
 #
 5388#
 Quem anda por Prontera já viu um dos folhetins escritos pelo grupo de bardos comediantes infames. Adotando a jibóia como mascote, o grupo se tornou um sucesso nacional, motivando as Organizações Kafrajara a lançar esse chapéu. Diante da fama do novo chapéu, os comediantes comentaram: “Só não usa a Jibóia quem for goiaba!”.
-Permite o uso da habilidade "Ataque Duplo" Nv. 5. Diferentemente da versão dos Gatunos, esta pode ser usada com qualquer arma.
+^0000ffHabilita [Ataque Duplo] nv. 5.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777772^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5389#
 Uma máscara dourada que muitas pessoas acreditam ter sido usada pela Deusa da Vitória.
@@ -25865,16 +25877,16 @@ Peso: ^77777770^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5397#
-Máscara para mergulhadores.
-Também pode ser usada em terra firme se você não se importar em parecer
-um peixe fora d’água. Ideal para chamar a atenção por ser bem mais leve
-que amarrar uma melancia no pescoço.
+Máscara para mergulhadores que também pode ser usada em terra firme se você não se importar em parecer um peixe fora d’água. Ideal para chamar a atenção por ser bem mais leve que amarrar uma melancia no pescoço.
 Exploradores de Byalan, aqui está seu equipamento!
-Recebe 10% a menos de dano de ataques da propriedade Água.
-Peso: ^77777710^000000
+^0000ffResistência a propriedade Água +10%.^000000
+^0000ffEXP ao derrotar monstros da raça Peixe +10%.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
-Equipado em: ^777777Meio^000000
-Classes que Utlizam: ^777777Todas^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5398#
 Capacete feito com um crânio de dragão. Tão duro que não pode ser quebrado facilmente.
@@ -25918,12 +25930,15 @@ Nível necessário: ^77777770^000000
 #
 5403#
 Tudo começou com um aventureiro maluco com Chapéu de Lontra que pôs um peixe na boca e começou a bater palmas em plena Praça de Prontera. As pessoas acharam graça e jogaram mais peixes no coitado. Hoje, até mesmo monstros atiram peixes em sinal de aprovação. Apenas lembre-se de tirar isso quando for namorar...
-Pequena chance de derrubar o item Peixe Fresco quando um monstro for derrotado. O índice de recuperação fornecida pelo Peixe Fresco aumenta em 25%.
-Peso: ^77777720^000000
+^0000ffRegeneração de HP do Peixe Fresco +25%.^000000
+Ao derrotar monstros:
+^0000ff5% de chance de derrubar Peixe Fresco.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
-Equipado em: ^777777Baixo^000000
-Classes que utilizam: ^777777Todas^000000
+Peso: ^77777720^000000
 Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
 #
 5404#
 Lacinhos usados para se prender os cabelos. Muito usado por crianças em Juno para não deixar suas madeixas as distraírem e ajudá-las a se concentrar nos estudos.
@@ -27005,15 +27020,17 @@ Classes que utilizam: ^777777Todas^000000
 #
 5547#
 Uma bela tiara com um pequeno ramo de flores que emana um perfume muito agradável. Sua fragrância é tão encantadora que você corre o risco de ser confundido com uma Lif ou atrair a atenção indesejada da Abelha Rainha. Sorte sua que a tiara também contém um pouco da força terrena da mãe-natureza!
-Aumenta em 15% o dano causado pelas habilidades Coluna de Pedra e Fúria da Terra.
-Reduz o tempo de conjuração variável em 25% para as habilidades Coluna de Pedra e Fúria da Terra.
-A cada nível de refinamento, aumenta em 1% o dano causado por essas habilidades.
+^0000ffDano de [Fúria da Terra] e [Coluna de Pedra] +15%.^000000
+^0000ffConjuração variável de [Fúria da Terra] e [Coluna de Pedra] -25%.^000000
+A cada refino:
+^0000ffDano de [Fúria da Terra] e [Coluna de Pedra] +1%.^000000
+^0000ffConjuração variável de [Fúria da Terra] e [Coluna de Pedra] -1%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777771^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777771^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5548#
 Uma bela e rara rosa vermelha, que outrora florescia apenas no interior da Ilha das Tartarugas. Diz a lenda que as Rosas Eternas são produzidas das pétalas que se desprendem desta flor. Ao mesmo tempo, dizem também que a Rosa Escarlate é como um vampiro, e se alimenta do sangue de seus inimigos naturais para repor suas pétalas.
@@ -28571,45 +28588,54 @@ Classes que utilizam: ^777777Todas^000000
 #
 5873#
 Um elmo que foi usado por um lendário matador de dragões. Este elmo é feito de asas e pedaços de pele de dragão. Usá-lo faz você se sentir épico e lendário.
-Aumenta a resistência contra ataques do tipo Neutro em 5%.
-Aumenta a resistência contra ataques de monstros da raça Dragão em 5%.
-Chance de conjurar a habilidade Assumptio em nível 5 quando atacado fisicamente.
-Todos os atributos +5. Perda de 600 de HP a cada segundo.
-Indestrutível em batalha.
-Tipo : ^777777Equipamento para Cabeça^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffTodos os atributos +5.^000000
+^0000ffResistência a raça Dragão +5%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+A cada 4 segundos:
+^0000ffConsome 600 de HP.^000000
+Ao receber danos físicos:
+^0000ff0,5% de chance de autoconjurar [Assumptio] nv. 5.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777777^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777760^000000
-Nível necessário : ^77777760^000000
-Classes: ^777777Transclasses de Espadachins e Mercadores^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Tranclasses de Espadachns e Mercadores^000000
 #
 5874#
 O falcão dourado é um sinal do destino e irá proteger seu dono contra as forças do mal. Ele foi utilizado por uma mulher corajosa, e seu poder faz você se sentir muito corajoso.
-Aumenta a resistência contra ataques neutros em 5%.
-Resistência contra raça Dragão +5%.
-Chance de conjurar Kyrie Eleison em nível 9 quando receber dano físico.
-Todos os atributos +5. Perda de 400 HP a cada 5 segundos.
-Indestrutível em batalha.
-Tipo : ^777777Equipamento para cabeça^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffTodos os atributos +5.^000000
+^0000ffResistência a raça Dragão +5%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+A cada 4 segundos:
+^0000ffConsome 400 de HP.^000000
+Ao receber danos físicos:
+^0000ff0,5% de chance de autoconjurar [Kyrie Eleison] nv. 9.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777760^000000
-Nível Necessário : ^77777760^000000
-Classes : ^777777Transclasses de Arqueiros e Gatunos^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Tranclasses de Arqueiros e Gatunos^000000
 #
 5875#
 Ao utilizar esta diadema que um dia foi de uma heroína com poderes supernaturais, você sente um poder mágico surpreendente correndo em suas veias.
-+5% de resistência contra ataques da propriedade Neutra.
-+5% de resistência contra monstros do tipo Dragão.
-Chance de conjurar Vigor em nível 8 ao receber dano físico.
-Todos os atributos +5. Consume 300 de HP a cada 4 segundos.
-Indestrutível em batalha.
-Tipo : ^777777Equipamento para Cabeça^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffTodos os atributos +5.^000000
+^0000ffResistência a raça Dragão +5%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+A cada 4 segundos:
+^0000ffConsome 300 de HP.^000000
+Ao receber danos físicos:
+^0000ff0,5% de chance de autoconjurar [Vigor] nv. 8.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777776^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777760^000000
-Nível Necessário : ^77777760^000000
-Classes : ^777777Transclasses de Magos/Noviços^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777760^000000
+Classes: ^777777Tranclasses de Magos e Noviços^000000
 #
 5878#
 Uma bela e rara rosa, cujo cultivo só se tornou possível graças à sabedoria de bioquímicos. Sua coloração azul é resultado de manipulações genéticas envolvendo materiais químicos.
@@ -43081,25 +43107,59 @@ HIT+ 20, Cri+ 50, ?? ?? ?? ??? 40% ??.
 ??: ^7777771^000000
 #
 13953#
-Esta caixa contém 1 O Zero Anel [A]. Abra apenas quando for usar.
-^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
-Validade: 7 dias
-^ffffff_^000000
+Esta caixa contém 1 O Zero Anel.
+Este é um item de Aluguel, quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
+Validade: ^7777777 dias^000000
 Peso: ^7777771^000000
+--------------------------
+Detalhes do item
+--------------------------
+^0000ffTodos os atributos +1.^000000
+^0000ffConjuração variável^000000 ^ff0000+10%.^000000
+^0000ffHabilita [Teleporte] e [Curar] nv. 1.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 13954#
-Esta caixa contém 1 Túnica Espiritual [A]. Abra apenas quando for usar.Quando aberto, o item não poderá ser transferido.
-^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
-Validade: 7 dias
-^ffffff_^000000
+Esta caixa contém 1 Túnica Espiritual.
+Este é um item de Aluguel, quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
+Validade: ^7777777 dias^000000
 Peso: ^7777771^000000
+--------------------------
+Detalhes do item
+--------------------------
+^0000ffDEFM +5^000000
+^0000ffHP máx. +800.^000000
+^0000ffTolerância a Congelamento +100%.^000000
+^0000ffResistência as propriedades Neutro e Água +20%.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777738^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 13955#
-Esta caixa contém 1 Armadura Vampira [A]. Abra apenas quando for usar.
-^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
-Validade: 7 dias
-^ffffff_^000000
+Esta caixa contém 1 Armadura Vampira.
+Este é um item de Aluguel, quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
+Validade: ^7777777 dias^000000
 Peso: ^7777771^000000
+--------------------------
+Detalhes do item
+--------------------------
+^0000ffRegeneração natural de HP e SP^000000 ^ff0000-100%.^000000
+Ao derrotar monstros:
+^0000ffRecupera 60 de HP e 6 de SP.^000000
+Ao desequipar:
+^0000ffDrena 100 de SP.^000000
+Tipo: ^777777Armadura^000000
+Defesa: ^77777767^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 13956#
 Esta caixa contém 1 Escudo de Força [A]. Abra apenas quando for usar.
@@ -43116,11 +43176,22 @@ Validade: 1 semana
 Peso: ^7777771^000000
 #
 13958#
-Esta caixa contém 1 Sapatos Refrescantes [A]. Abra apenas quando for usar.
-^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
-Validade: 1 semana
-^ffffff_^000000
+Esta caixa contém 1 Sapatos Refrescantes.
+Este é um item de Aluguel, quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
+Validade: ^7777777 dias^000000
 Peso: ^7777771^000000
+--------------------------
+Detalhes do item
+--------------------------
+^0000ffHP máx. +17%.^000000
+^0000ffSP máx. +8%.^000000
+A cada 10 segundos:
+^0000ffRegenera 20 de HP e 2 de SP.^000000
+Tipo: ^777777Calçado^000000
+Defesa: ^77777720^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 13960#
 Uma caixa com um Cupom de Mudança de Nome.
@@ -48231,27 +48302,32 @@ Classes que utilizam: ^777777Todas^000000
 18549#
 Uma bela presilha com grandes asas coloridas de borboleta.
 Combina muito bem com a primavera e com toda a flora de Midgard.
-INT + 1, AGI + 1 e DefM + 3
-Aumenta em 5% o dano de Ataques Físicos e Ataques Mágicos realizados contra monstros do tipo Planta.
-Aumenta a resistência em 5% contra monstros do tipo Planta.
-Chance muito baixa de dropar 'Izidor' ao derrotar monstros do tipo Planta.
-Tipo : ^777777Equipamento para cabeça^000000
+^0000ffDEFM +3.^000000
+^0000ffINT +1. AGI +1.^000000
+^0000ffResistência a raça Planta +5%.^000000
+^0000ffDano físico e mágico contra a raça Planta +5%.^000000
+Ao derrotar monstros da raça Planta:
+^0000ff0,3% de chance de derrubar Izidor.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777773^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777720^000000
-Nível necessário : ^77777720^000000
-Classe : ^777777Todas as classes^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777720^000000
+Classes: ^777777Todas^000000
 #
 18550#
 Quando a Guardiã de Midgard, Luthien Silvermoon, foi convocada pelos deuses para ascender à Asgard, um belo par de asas feitas de energia celestial surgiu fazendo as vezes de uma auréola na cabeça da elfa. Agora, Luthien ainda é capaz de abençoar seus protegidos, conferindo asas semelhantes para aventureiros que, como você, homenageiam a sumo sacerdotisa guardando para sempre seus feitos na memória.
-^CD3278Todos os atributos +2. Aumenta em 5% a resistência contra todas as propriedades.
-Recupera 2% de HP a cada 10 segundos e 1% de SP a cada 10 segundos.^000000
+^0000ffTodos os atributos +2.^000000
+^0000ffResistência a todas as propriedade +5%.^000000
+A cada 10 segundos:
+^0000ffRegenera 2% de HP.^000000
+^0000ffRegenera 1% de SP.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777730^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 18551#
 Esta é a lendária coroa que carrega as Joias do Infinito e que foi usada pelo vilão intergaláctico Thanotos para tentar dominar o universo. Felizmente, o valente Róqueti Fumacento e seus companheiros Protetores da Galáxia a tomaram do vilão e, mais uma vez, salvaram o dia!
@@ -48452,17 +48528,20 @@ Classes: ^777777Todas^000000
 #
 18573#
 Uma boina decorada com uma incrível Pena Branca.
-^0000ffPrecisão +20. HP Máx. -10%.^000000
-Se refinado em +5:
-^0000ffPrecisão -10 e HP Máx. +10%.^000000
-Cada 2 refinos acima do +7:
-^0000ffPrecisão -3 e HP Máx. +3%.^000000
-Tipo : ^777777Equipamento para cabeça^000000
+^0000ffPrecisão +20.^000000
+^0000ffHP máx.^000000 ^ff0000-10%.^000000
+Refino +5 ou mais:
+^0000ffPrecisão^000000 ^ff0000-10.^000000
+^0000ffHP máx. +10%.^000000
+A cada 2 refinos a partir do +7:
+^0000ffPrecisão^000000 ^ff0000-3.^000000
+^0000ffHP máx. +3%.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777750^000000
-Nível Necessário : ^77777730^000000
-Classe : ^777777Todas^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
 #
 18574#
 Um elmo feito com a semelhança do utilizado pelo Senhor dos Mortos.
@@ -50623,38 +50702,39 @@ Classe : ^777777Todas^000000
 #
 18908#
 Dizem que a Yggdrasil leva a vários mundos, um deles habitados por humanoides com orelhas de coelho da raça Fiera. Agora você é um deles!
-FOR +5.
-HP Máximo +5%.
-Dano recebido por monstros do tipo fogo -10%.
-Quando refinado em +9 aumenta a Velocidade de Ataque em +1.
-Adiciona +1 de Velocidade de Ataque a cada 2 Refinamentos acima do +9.
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffHP máx. +5%.^000000
+^0000ffResistência a propriedade Fogo +10%.^000000
+A cada 2 refinos a partir do +9:
+^0000ffVelocidade de ataque +1.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777778^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível necessário : ^7777771^000000
-Classes: ^777777Todas as Classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18909#
 Dizem que a Yggdrasil leva a vários mundos, um deles habitados por humanoides com orelhas de coelho da raça Fiera. Agora você é um deles!
-HP máximo + 10%
-Reduz o dano de monstros do tipo humanoide em 5%
-A cada nível de refinamento ATQM +2.
-Tipo : ^777777Equipamento para Cabeça^000000
+^0000ffHP máx. +10%.^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+A cada refino:
+^0000ffATQM +2.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777778^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível necessário : ^7777771^000000
-Classes: ^777777Todas as Classes^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18910#
 Dizem que a Yggdrasil leva a vários mundos, um deles habitados por humanoides com orelhas de coelho da raça Fiera. Agora você é um deles!
-Reduz o dano recebido de humanoide em 5%.
-Dano contra monstros de tamanho médio +10%.
-Se refinado em +12 ou mais, reflete 5% do dano físico recebido.
-Tipo: ^777777Equipamento para cabeça^000000
-Defesa: ^7777778^000000
+^0000ffResistência a raça Humanoide +5%.^000000
+^0000ffDano físico contra oponentes de tamanho Médio +10%.^000000
+Refino +12 ou mais:
+^0000ffReflete 5% do dano físico recebido.^000000
+Tipo: ^777777Equipamento para a cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777778^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -59974,6 +60054,7 @@ Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 28940#
+O toque divino encantou este escudo, e aquele que o utilizar será um indivíduo intocável por muitos males.
 ^0000ffEfetividade de cura +10%.^000000
 A cada refino:
 ^0000ffEfetividade de cura +1%.^000000
@@ -60136,6 +60217,75 @@ Botas com refino +12:
 Tipo: ^777777Encantamento Especial^000000
 Equipa em: ^777777Calçado^000000
 Peso: ^7777770^000000
+#
+31016#
+^0000ffEsquiva^000000 ^ff0000-25.^000000
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +150.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+31017#
+^0000ffHP máx.^000000 ^ff0000-2%.^000000
+^0000ffDano mágico +1%.^000000
+^0000ffATQ da arma +1%.^000000
+A cada 2 refinos do Calçado:
+^0000ffHP máx.^000000 ^ff0000-2%.^000000
+^0000ffDano mágico +1%.^000000
+^0000ffATQ da arma +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+31018#
+^0000ffHP máx.^000000 ^ff0000-1.225.^000000
+Ao realizar ataques mágicos:
+^0000ff50% de chance de infligir Maldição no oponente.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+31019#
+^0000ffHP máx.^000000 ^ff0000-13%.^000000
+Ao receber danos mágicos:
+^0000ff40% de chance de infligir Maldição no oponente.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+31020#
+^0000ffHP máx.^000000 ^ff0000-13%.^000000
+Ao receber danos físicos:
+^0000ff40% de chance de infligir Maldição no oponente.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+31021#
+^0000ffATQ da arma^000000 ^ff0000-3%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+31022#
+^0000ffSP máx. +20%^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff0,2% de chance de infligir Maldição no usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+31023#
+^0000ffDano mágico +10%.^000000
+Ao realizar ataques mágicos:
+^0000ff0,5% de chance de autoconjurar [Ferida Mortal] nv. 3.^000000
+A cada 3 refinos:
+^0000ffChance de autoconjurar [Ferida Mortal] +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 31027#
 Parece até que estas adoráveis orelhinhas de urso vieram direto do estoque esquecido de uma loja de produtos natalinos, não? Bom, e vieram mesmo, mas os laços são tão bonitos que você nem deveria se preocupar com a época em que vai usar. E se perguntarem, é só responder: ‘Natal? Nunca nem vi’.
@@ -60953,6 +61103,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+31449#
+Uma bela rosa brilhante azul pode chamar mais atenção do que os olhos mais belos. Tapa metade da sua visão, mas te dá o dobro de estilo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31450#
 O famoso cabeleireiro de Amatsu, Delso Kamyura, lança mais uma peruca da sua coleção. Desta vez, ela segue o estilo “ombré hair”, indo do loiro ao rosado. Com mechas onduladas e sedosas, essa peruca é um verdadeiro escândalo e arrasa no charme.
 Tipo: ^777777Visual^000000
@@ -61150,6 +61308,14 @@ Apesar do espírito de Eremes ser cheio de frustração e angústia, esse cachec
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31561#
+Um par de asas para a cabeça que ardem eternamente em chamas negras. Contraindicado para pessoas de cabeça esquentada.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
