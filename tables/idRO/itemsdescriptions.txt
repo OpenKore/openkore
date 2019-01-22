@@ -38250,7 +38250,7 @@ Berat: ^ 7777771 ^ 000000
 #
 
 5663#
-Sebuah mahkota megah diciptakan untuk persembahan kepada tanda ke-7 zodiak, Libra sang Keseimbangan, Yang melekat pada mahkota adalah batu permata Opal yang indah, yang merupakan batu kelahiran bagi mereka yang lahir di bawah zodiak ini. ATK 7. [Refine Rate 7~10] Kemungkinan kecil melakukan auto casting Warm Wind Level 2 ketika melakukan serangan fisik. [Refine Rate 9~10] FLEE 5, ATK 3%.
+Sebuah mahkota megah diciptakan untuk persembahan kepada tanda ke-7 zodiak, Libra sang Keseimbangan, Yang melekat pada mahkota adalah batu permata Opal yang indah, yang merupakan batu kelahiran bagi mereka yang lahir di bawah zodiak ini. ATK +7. [Refine Rate 7~10] Kemungkinan kecil melakukan auto casting Warm Wind Level 2 ketika melakukan serangan fisik. [Refine Rate 9~10] FLEE 5, ATK 3%.
 Jenis : ^777777Pelindung Kepala^000000 Def : ^7777773^000000
 Digunakan di : ^777777Atas ^000000 Berat : ^77777730^000000
 Digunakan Lv.  : ^7777771^000000
@@ -50613,6 +50613,7 @@ Jobs : ^777777All^000000
 #
 20932#
 Benda yang digunakan oleh pemuka keyakinan Morocc kuno. Ini sangat enteng dan sejuk.
+Flee +10, Max HP +5%.
 Jika tingkat tempa +7 atau lebih, tambahan Flee +20
 Jika tingkat tempa +10 atau lebih, tambahan Flee +30 dan memulihkan 100% HP dan SP ketika dibangkitkan kembali.
 Jika tingkat tempa +11 atau lebih, tambahan Flee + 40.
@@ -50841,4 +50842,179 @@ Class : ^777777Costume^000000 Def : ^7777770^000000
 Location : ^777777Upper^000000 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
+#
+
+//====================update 22012019=================
+31331#
+Kostum Spesial Perayaan 15 Tahun Ragnarok Online 
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31332#
+Costume: Dark Snake Lord Stall
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31333#
+Costume: Large Sorcerer Crown
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31334#
+Costume: Fox
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31335#
+Costume: Forest Guide
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31336#
+Costume: Medium Wave
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31337#
+Costume: Kishu Inu
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31338#
+Costume: Giant Cat Bag
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31339#
+Costume: Princess Ribbon Crown
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31340#
+Costume: Variant Veil
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31341#
+Costume: Protect Cloth
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31342#
+Godly Material Box
+Kotak yang berisi berbagai macam bahan Godly Item
+Berat :^7777770^000000
+#
+31343#
+Invincible Shield Box
+Box yang berisi perisai terkuat di Rune-Midgard
+Jika dibuka akan memberikan Perisai (Permanen) secara Acak,
+antara lain sbb :
+
+Imuke Upper Shield [1]
+Scutum [1]
+Ancient Shield of Aeon [1]
+Immuned Shield [1]
+
+Berat :^7777770^000000
+#
+31344#
+Blessed Refinement Box
+Box yang berisi bahan tempa, konon kotak ini hanya sebuah legenda.
+Kotak ini berisi :
+
+1 Buah Safe to +6 Armor Refine Ticket
+1 Buah Safe to +6 Weapon Refine Ticket
+4 Buah Blessed Armor Ore
+4 Buah Blessed Weapon Ore
+
+Berat :^7777770^000000
+#
+31345#
+Extreme Refinement Box
+Box yang berisi bahan tempa, konon kotak ini hanya sebuah legenda.
+Kotak ini berisi :
+
+1 Buah Safe to +6 Armor Refine Ticket
+1 Buah Safe to +6 Weapon Refine Ticket
+10 Buah Blessed Armor Ore
+10 Buah Blessed Weapon Ore
+
+Berat :^7777770^000000
+#
+31346#
+Mythical Costume Pack
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C Dark Snake Lord Stall
+C Large Sorcerer Crown
+C Fox
+
+Berat :^7777770^000000
+#
+31347#
+Autumn Party Costume Pack
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C. Forest Guide Upper
+C. Medium Wave 
+C. Kishu Inu
+
+Berat :^7777770^000000
+#
+31348#
+Holy Dark Costume Scroll
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C. Giant Cat Bag
+C. Princess Ribbon Crown
+C. Variant Veil
+
+Berat :^7777770^000000
+#
+31349#
+Garment Costume Box
+Jika dibuka, kamu bisa mendapatkan salah satu dari kostum sayap berikut ini :
+
+1. Costume Swordwing
+2. Costume Gold Archangel Wing
+3. Costume Great Devil Wing
+4. Costume Uriel Wing
+5. Costume Michael Wing
+6. Costume Gabriel Wing
+
+Berat :^7777770^000000
+#
+
+31350#
+Costume: Gabriel Wing
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Garment ^000000 Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
 #

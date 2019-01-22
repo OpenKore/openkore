@@ -8501,3 +8501,25 @@
 31326#Costume: False Ears#
 31327#Costume: Make US Great Again#
 31328#Costume: Dark Elves Ears#
+
+//====================update 22012019=================
+31331#15th_Anniversary_Wing#
+31332#Costume: Dark_Snake_Lord_Stall#
+31333#Costume: Large_Sorcerer_Crown#
+31334#Costume: Fox#
+31335#Costume: Forest_Guide#
+31336#Costume: Medium_Wave#
+31337#Costume: Kishu_Inu#
+31338#Costume: Giant Cat Bag#
+31339#Costume: Princess_Ribbon_Crown#
+31340#Costume: Variant_Veil#
+31341#Costume: Protect_Cloth#
+31342#Godly_Material_Box#
+31343#Invincible_Shield_Box#
+31344#Blessed_Refinement_Box#
+31345#Extreme_Refinement_Box#
+31346#Mythical_Costume Pack#
+31347#Autumn_Party_Costume Pack#
+31348#Holy_Dark_Costume Scroll#
+31349#Garment_Costume Box#
+31350#Costume: Gabriel Wing#
