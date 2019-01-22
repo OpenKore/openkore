@@ -6973,6 +6973,14 @@
 29151#Gema de Aquário#
 29152#Gema de Escorpião#
 29153#Gema de Touro#
+31016#Carta Árvore Maldita Decorada#
+31017#Carta Cookie Aterrorizante#
+31018#Carta Presente das Trevas#
+31019#Carta Lude Grotesco#
+31020#Carta Poltergeist Sangrento#
+31021#Carta Marionete Demoníaca#
+31022#Carta Ursinho Abominável#
+31023#Carta Celine Kimi#
 31027#Orelhas de Urso Enfeitadas#
 31028#Sobrepeliz de Gatinho#
 31038#Bandana Xadrez#
@@ -7066,6 +7074,7 @@
 31435#Gorro de Tricô Hipster#
 31437#Pequeno Pinguim#
 31438#Capa Angelical#
+31449#Tapa-Olho Floreado#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
 31452#Gata Branca#
@@ -7090,6 +7099,7 @@
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
+31561#Asas de Dragão Sombrio#
 31564#Véu do Submundo#
 31565#Laço com Coroa#
 31568#Espíritos Taiji#
