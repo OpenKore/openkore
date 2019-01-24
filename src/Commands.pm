@@ -3684,19 +3684,17 @@ sub cmdParty {
 				}
 			}
 		} elsif ($arg1 eq "leader") {
+			my $found;
 			if ($arg2 eq "") {
 				error T("Syntax Error in function 'party leader' (Change Party Leader)\n" .
 					"Usage: party leader <party member>\n");
 			} elsif ($arg2 =~ /\D/ || $args =~ /".*"/) {
-				my $found;
 				foreach (@partyUsersID) {
 					if ($char->{'party'}{'users'}{$_}{'name'} eq $arg2) {
-						$messageSender->sendPartyLeader($_);
-						$found = 1;
+						$found = $_;
 						last;
 					}
 				}
-				
 				if (!$found) {
 					error TF("Error in function 'party leader' (Change Party Leader)\n" .
 						"Can't change party leader - member %s doesn't exist.\n", $arg2);
@@ -3706,8 +3704,13 @@ sub cmdParty {
 					error TF("Error in function 'party leader' (Change Party Leader)\n" .
 						"Can't change party leader - member %s doesn't exist.\n", $arg2);
 				} else {
-					$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+					$found = $partyUsersID[$arg2];
 				}
+			}
+			if ($found && $found eq $accountID) {
+				warning T("Can't change party leader - you are already a party leader.\n");
+			} else {
+				$messageSender->sendPartyLeader($found);
 			}
 		}
 	} else {

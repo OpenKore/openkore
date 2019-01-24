@@ -5895,12 +5895,12 @@ sub party_exp {
 sub party_leader {
 	my ($self, $args) = @_;
 	for (my $i = 0; $i < @partyUsersID; $i++) {
+		if (unpack("V",$partyUsersID[$i]) eq $args->{old}) {
+			$char->{party}{users}{$partyUsersID[$i]}{admin} = '';
+		}
 		if (unpack("V",$partyUsersID[$i]) eq $args->{new}) {
 			$char->{party}{users}{$partyUsersID[$i]}{admin} = 1;
 			message TF("New party leader: %s\n", $char->{party}{users}{$partyUsersID[$i]}{name}), "party", 1;
-		}
-		if (unpack("V",$partyUsersID[$i]) eq $args->{old}) {
-			$char->{party}{users}{$partyUsersID[$i]}{admin} = '';
 		}
 	}
 }
