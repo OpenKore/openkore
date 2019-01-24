@@ -22417,3 +22417,38 @@ You can sleigh back to yesterday in 8 hours.#
 Stop Antonio from changing the future!#
 
 Stop Antonio from changing the future!#
+
+
+62141#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Poring : 10#
+
+62142#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Thief Bug : 20#
+
+62143#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Zombie : 30#
+
+62144#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Boa : 30#
+
+62145#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Thara Frog : 40#
+
+62146#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Archer Skeleton : 60#
+
+62147#Janeway's Request#SG_FEEL#QUE_NOIMAGE#
+Hunt the Following#
+Gargoyle : 70#
+
+63239#Token Hammer Cool Down#SG_FEEL#QUE_NOIMAGE#
+
+Let token hammer rest.#
+
+Let token hammer rest.#
