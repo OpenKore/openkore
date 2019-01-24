@@ -607,6 +607,7 @@ sub initConnectVars {
 	undef @skillsID;
 	undef @partyUsersID;
 	undef %cashShop;
+	%pet = ();
 }
 
 # Initialize variables when you change map (after a teleport or after you walked into a portal)
