@@ -1105,7 +1105,9 @@ sub buy_result {
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
-	if (AI::is("buyAuto")) {
+	if ($args->{fail} == 2){
+		AI::args->{recv_buy_packet_owg} = 1;
+	} elsif (AI::is("buyAuto")) {
 		AI::args->{recv_buy_packet} = 1;
 	}
 }
