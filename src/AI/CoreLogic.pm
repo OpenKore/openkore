@@ -1808,6 +1808,7 @@ sub processAutoBuy {
 			AI::dequeue;
 			AI::queue("sellAuto", {forcedByBuy => 1});
 			return;
+		}
 		if (exists AI::args->{'error'}) {
 			error AI::args->{'error'}.".\n";
 		}
