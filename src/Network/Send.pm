@@ -1412,7 +1412,7 @@ sub rodex_open_write_mail {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_open_write_mail',
-		name => stringToBytes($name),
+		name => $name,
 	}));
 }
 
@@ -1420,7 +1420,7 @@ sub rodex_checkname {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_checkname',
-		name => stringToBytes($name),
+		name => $name,
 	}));
 }
 
@@ -1434,7 +1434,7 @@ sub rodex_send_mail {
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{target}{name},
-		sender => stringToBytes($char->{name}),
+		sender => $char->{name},
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
 		title_len => length $title,
