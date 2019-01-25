@@ -1801,7 +1801,13 @@ sub processAutoBuy {
 	}
 
 	if (AI::action eq "buyAuto" && AI::args->{'done'}) {
-		
+		my $args = AI::args;
+		if (exists $args->{recv_buy_packet_owg}){
+			delete $args->{recv_buy_packet_owg};
+			delete $args->{recv_buy_packet};
+			AI::dequeue;
+			AI::queue("sellAuto", {forcedByBuy => 1});
+			return;
 		if (exists AI::args->{'error'}) {
 			error AI::args->{'error'}.".\n";
 		}
