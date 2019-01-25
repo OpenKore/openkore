@@ -7000,3 +7000,4 @@
 20072#Evolved_Big_Golden_Bell_Certificate#
 20073#Evolved_Pair_of_Red_Ribbon_Certificate#
 20074#Capricon_Crown_Certificate#
+20075#Gryphon_Hat_Certificate#

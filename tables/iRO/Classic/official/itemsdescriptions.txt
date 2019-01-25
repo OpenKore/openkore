@@ -71997,3 +71997,17 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20075#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gryphon Hat!
+300 Feathers
+200 Feather of Birds
+100 Powder of Butterfly
+2 Spiritual Crystals (Rhyncho)
+1 Gryphon Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
