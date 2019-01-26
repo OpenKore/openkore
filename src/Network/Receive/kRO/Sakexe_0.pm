@@ -312,7 +312,10 @@ sub new {
 		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
-		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
+		'01C8' => ($rpackets{'01C8'} == 13 )# or 15 PACKETVER_RE_NUM >= 20180704
+			? ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]] # 13
+			: ['item_used', 'a2 V a4 v C', [qw(ID itemID actorID remaining success)]] 
+		,
 		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
