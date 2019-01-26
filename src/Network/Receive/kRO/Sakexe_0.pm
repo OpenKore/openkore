@@ -545,7 +545,10 @@ sub new {
 		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
-		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]], #6
+		'0824' => ($rpackets{'0824'} == 6 )# or 8 PACKETVER_RE_NUM >= 20180704
+			? ['buying_store_fail', 'v2', [qw(result itemID)]] #6
+			? ['buying_store_fail', 'v V', [qw(result itemID)]] 
+		,
 		'0828' => ['char_delete2_result', 'a4 V2', [qw(charID result deleteDate)]], # 14
 		'082C' => ['char_delete2_cancel_result', 'a4 V', [qw(charID result)]], # 14
 		'082D' => ['received_characters_info', 'v C5 x20', [qw(len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
