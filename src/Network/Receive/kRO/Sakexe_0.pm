@@ -177,7 +177,9 @@ sub new {
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
+		'0110' => ($rpackets{'0110'} == 10 )# or 12 PACKETVER_RE_NUM >= 20180704
+			: ['skill_use_failed', 'v V2 C2', [qw(skillID btype itemID fail type)]] # 14
+		,
 		'010A' => ($rpackets{'010A'} == 4 )# or 6 PACKETVER_RE_NUM >= 20180704
 			? ['mvp_item', 'v', [qw(itemID)]] # 4
 			? ['mvp_item', 'v', [qw(itemID)]] # 6
