@@ -128,7 +128,10 @@ sub new {
 		'017E' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0187' => ['ban_check', 'a4', [qw(accountID)]],
 		'018A' => ['quit_request', 'v', [qw(type)]],
-		'018E' => ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]], # Forge Item / Create Potion
+		'018E' => ($rpackets{'018E'} == 10 )# or 18 PACKETVER_RE_NUM >= 20180704
+			? ['make_item_request', 'v4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]] # Forge Item / Create Potion
+			: ['make_item_request', 'V4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]] # Forge Item / Create Potion
+		,
 		'0190' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0193' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0197' => ['gm_reset_state_skill', 'v', [qw(type)]],
