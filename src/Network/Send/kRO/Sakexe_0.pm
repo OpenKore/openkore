@@ -217,14 +217,18 @@ sub new {
 		'0835' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0838' => ['search_store_request_next_page'],
 		'083B' => ['search_store_close'],
-		'083C' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
+		'083C' => ($rpackets{'083C'} == 12 )# or 14 PACKETVER_RE_NUM >= 20180704
+			? ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]]
+			: ['search_store_select', 'a4 a4 V', [qw(accountID storeID nameID)]]
+		,
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
 		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],	
-		'0848' => (exists $rpackets{'0848'}{minLength} && $rpackets{'0848'}{minLength} == 6) ? 
-			['cash_shop_buy', 'v v a*', [qw(len count buy_info)]] :
-			['cash_shop_buy', 'v v V a*', [qw(len count kafra_points buy_info)]],
+		'0848' => (exists $rpackets{'0848'}{minLength} && $rpackets{'0848'}{minLength} == 6) 
+			? ['cash_shop_buy', 'v v a*', [qw(len count buy_info)]] 
+			: ['cash_shop_buy', 'v v V a*', [qw(len count kafra_points buy_info)]]
+		,
 		'084A' => ['cash_shop_close'],#2
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C1' => ['macro_start'],#2
