@@ -20,6 +20,15 @@ use base qw(Network::Receive::kRO::RagexeRE_2014_10_22b);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	my %packets = (
+		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 body name)]],
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
+
+	my %handlers = qw(
+		actor_exists 09FF
+	);	
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
 
