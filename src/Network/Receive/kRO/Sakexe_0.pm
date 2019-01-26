@@ -178,7 +178,10 @@ sub new {
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
 		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
-		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
+		'010A' => ($rpackets{'010A'} == 4 )# or 6 PACKETVER_RE_NUM >= 20180704
+			? ['mvp_item', 'v', [qw(itemID)]] # 4
+			? ['mvp_item', 'v', [qw(itemID)]] # 6
+		,
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
 		'010C' => ['mvp_other', 'a4', [qw(ID)]], # 6
 		'010D' => ['mvp_item_trow'], # 2
