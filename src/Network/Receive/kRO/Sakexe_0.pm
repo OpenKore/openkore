@@ -429,7 +429,10 @@ sub new {
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
-		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
+		'0298' => ($rpackets{'0298'} == 8 )# or 10 PACKETVER_RE_NUM >= 20180704
+			? ['rental_time', 'v V', [qw(nameID seconds)]] # 8
+			: ['rental_time', 'V2', [qw(nameID seconds)]]
+		,
 		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
 		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
 		'029B' => ($rpackets{'029B'} == 72) # or 80
