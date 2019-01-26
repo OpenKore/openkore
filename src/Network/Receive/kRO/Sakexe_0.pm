@@ -456,7 +456,10 @@ sub new {
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
-		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
+		'02B8' => ($rpackets{'02B8'} == 22 )# or 24 PACKETVER_RE_NUM >= 20180704
+			? ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]] # 22
+			: ['party_show_picker', 'a4 V C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]]
+		,	
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
