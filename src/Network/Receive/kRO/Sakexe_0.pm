@@ -106,7 +106,10 @@ sub new {
 		'0098' => ['private_message_sent', 'C', [qw(type)]], # 3
 		'009A' => ['system_chat', 'v a*', [qw(len message)]], # -1
 		'009C' => ['actor_look_at', 'a4 v C', [qw(ID head body)]], # 9
-		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]], # 17
+		'009D' => ($rpackets{'009D'} == 17 )# or 19 PACKETVER_RE_NUM >= 20180704
+			? ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]] # 17
+			: ['item_exists', 'a4 V C v3 C2', [qw(ID nameID identified x y amount subx suby)]] # 19
+		,
 		'009E' => ['item_appeared', 'a4 v C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]], # 17
 		'00A0' => ['inventory_item_added', 'a2 v2 C3 a8 v C2', [qw(ID amount nameID identified broken upgrade cards type_equip type fail)]], # 23
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]], # 6
