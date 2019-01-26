@@ -143,7 +143,10 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
-		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
+		'01AE' => ($rpackets{'01AE'} == 4 )# or 6 PACKETVER_RE_NUM >= 20180704
+			? ['make_arrow', 'v', [qw(nameID)]]
+			: ['make_arrow', 'V', [qw(nameID)]]
+		,
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
 		'01BB' => ['gm_shift', 'a24', [qw(playerName)]],
