@@ -287,7 +287,10 @@ sub new {
 			? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
 			: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
 		,
-		'01A3' => ['pet_food', 'C v', [qw(success foodID)]], # 5
+		'01A3' => ($rpackets{'01A3'} == 5 )# or 7 PACKETVER_RE_NUM >= 20180704
+			? ['pet_food', 'C v', [qw(success foodID)]] # 5
+			: ['pet_food', 'C V', [qw(success foodID)]] # 5
+		,	
 		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]], # 11
 		'01A6' => ['egg_list'], # -1
 		'01AA' => ['pet_emotion', 'a4 V', [qw(ID type)]], # 10
