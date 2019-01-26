@@ -629,7 +629,10 @@ sub new {
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
- 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+ 		'0ADD' => ($rpackets{'0ADD'} == 20 )# or 22 PACKETVER_RE_NUM >= 20180704
+			? ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]]
+			: ['item_exists', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]]
+		,
 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
