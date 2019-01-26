@@ -717,6 +717,11 @@ sub new {
 				types => 'a2 v C V2 C a8 l v2 C a25 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
+			type8 => { #PACKETVER_RE_NUM >= 20180704
+				len => 67,
+				types => 'a2 V C V2 C a16 l v2 C a25 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},			
 		},
 		items_stackable => {
 			type1 => {
@@ -744,6 +749,11 @@ sub new {
 				types => 'a2 v C v V a8 l C',
 				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
+			type7 => { #PACKETVER_RE_NUM >= 20180704
+				len => 34,
+				types => 'a2 V C v V a16 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
+			},			
 		},
 	};
 
