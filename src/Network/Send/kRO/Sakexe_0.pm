@@ -759,12 +759,12 @@ sub sendPartyOrganize {
 # 0x0206,11
 # 0x0207,34
 
-sub Send_Inventory_Expansion_Request {
+sub sendInventoryExpansionRequest {
 	my ($self, $args) = @_;
 	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
 }
 
-sub Send_Inventory_Expansion_Rejected {
+sub sendInventoryExpansionRejected {
 	my ($self, $args) = @_;
 	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
 }
