@@ -6673,6 +6673,7 @@
 20514#Espada de Thanatos#
 20516#Asas de Miguel#
 20517#Miau-chila de Bichano#
+20521#Miau-chila de Bichano Preto#
 20528#Asas Douradas da Borboleta#
 20535#Holograma Futurista#
 20700#Manteau de Aegir#
@@ -6900,6 +6901,12 @@
 27124#Carta Espírito da Terra#
 27125#Carta Mula Sem Cabeça#
 27126#Carta Boitatá#
+27157#Carta Leshij#
+27158#Carta Les#
+27159#Carta Kikimora#
+27160#Carta Baba-Yaga#
+27161#Carta Mavka#
+27162#Carta Gorynych#
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
 28025#Katares do Monarca#
@@ -7067,6 +7074,7 @@
 31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
 31396#Capuz Trevoso#
+31397#Boneca da Papisa#
 31399#Véu da Madrugada#
 31406#Peruca Platinada da Nidhogg#
 31407#Peruca Rosa de Alice#
