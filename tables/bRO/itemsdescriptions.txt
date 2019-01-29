@@ -10312,13 +10312,14 @@ Classes: ^777777Sacerdotes, Monges e evoluções^000000
 #
 2130#
 Grande escudo no formato de uma cruz.
-FOR + 1.
-Aumenta o dano causado pelas habilidades 'Choque Rápido' e 'Escudo Bumerange' em 30%. Entretanto, o consumo de SP para todas as habilidades é aumentado em 10%.
+^0000ffFOR +1.^000000
+^0000ffDano de [Choque Rápido] e [Escudo Bumerangue] +30%.^000000
+^0000ffCusto de SP de habilidades^000000 ^ff0000+10%.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^777777130^000000
 Peso: ^777777200^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Templário e evoluções^000000
+Classes: ^777777Templários e evoluções^000000
 #
 2131#
 Livro pesado com mensagens obscuras.
@@ -10506,17 +10507,23 @@ Classe: ^777777Cavaleiro Rúnico / Guardião Real^000000
 #
 2161#
 O continente esquecido de Geffenia guarda um tesouro secreto. Poucos são os que podem usar a magia desta arma.
-^0000ffDEFM +2. INT +1.^000000
+--------------------------
+^0000ffINT +1. DEFM +2.^000000
+--------------------------
 INT base 120 ou mais:
 ^0000ffATQM +10.^000000
 ^0000ffHP máx. +800.^000000
-^FF6347Conjunto [Bastão de Lágrimas]^000000
-^0000ffTempo de conjuração variável de [Nevasca] [Zero Absoluto] e [Esquife de Gelo] -4% por refino do Escudo.^000000
+--------------------------
+^FF6347Conjunto^000000
+^FF6347[Bastão de Lágrimas]^000000
+A cada refino do escudo:
+^0000ffConjuração variável de [Nevasca], [Zero Absoluto] e [Esquife de Gelo] -4%.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
 Defesa: ^77777730^000000
 Peso: ^777777100^000000
-Nível Necessário : ^777777100^000000
-Classe: ^777777Arcanos^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcanos^000000
 #
 2162#
 Um livro antigo de músicas sacras cantadas na catedral.
@@ -10652,15 +10659,15 @@ Classes: ^777777Ninjas e evoluções^000000
 2176#
 Um assustador livro gigantesco encontrado em uma busca feita em Nifflheim.
 De tão grande, pode ser utilizado como escudo. Só de toca-lo você já se sente enfraquecido.
-^0000ffDEFM +5.^000000
+^0000ffDEFM +5^000000
 Ao receber danos físicos:
-^0000ffPequena chance de autoconjurar [Terror Draconiano] nv. 1.^000000
+^0000ff1% de chance de autoconjurar [Terror Draconiano] nv. 1.^000000
 Refino +7 ou mais:
-^0000ffChance de autoconjuração aumenta.^000000
-^0000ffAutoconjura [Terror Draconiano] nv. 2, ao invés do nível 1.^000000
+^0000ffNível autoconjurado de [Terror Draconiano] +1.^000000
+^0000ffChance de autoconjurar [Terror Draconiano] +1% adicional.^000000
 Refino +9 ou mais:
-^0000ffChance de autoconjuração aumenta.^000000
-^0000ffAutoconjura [Terror Draconiano] nv. 3, ao invés do nível 2.^000000
+^0000ffNível autoconjurado de [Terror Draconiano] +1 adicional.^000000
+^0000ffChance de autoconjurar [Terror Draconiano] +1% adicional.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777750^000000
@@ -14979,12 +14986,13 @@ Classes: ^777777Transclasses, exceto Aprendizes^000000
 2703#
 Seres com o maior dos poderes encontraram uma maneira de maximizar suas habilidades através de um maior autoconhecimento.
 Mas lembre-se que há sempre os prós e contras.
-Atraso de conjuração reduzido em 5%, consumo de SP aumentado em 5%
-Tipo de Item: ^777777Acessório^000000
+^0000ffPós-conjuração -5%.^000000
+^0000ffCusto de SP das habilidades^000000 ^ff0000+5%.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777715^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam: ^777777Todas as classes transcendentais, exceto aprendizes^000000
+Classes: ^777777Transclasses^000000
 #
 2707#
 Este instrumento musical pertencia a um homem idoso. Seu som é maravilhoso.
@@ -15847,27 +15855,33 @@ Classe : ^777777Todas as classes^000000
 Um anel que possui misteriosos poderes no interior de seu orbe.
 ^0000ffINT +1. DEFM +1.^000000
 ^0000ffSP máx. +30.^000000
-^0000ffDano de [Impacto Espiritual] e [Onda Psíquica] +10%.^000000
-^0000ffCusto de SP de [Impacto Espiritual] e [Onda Psíquica] +50.^000000
-Tipo : ^777777Acessório^000000
+[Impacto Espiritual]:
+^0000ffDano +10%.^000000
+^0000ffCusto de SP^000000 ^ff0000+50.^000000
+[Onda Psíquica]:
+^0000ffDano +10%.^000000
+^0000ffCusto de SP^000000 ^ff0000+50.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777772^000000
-Peso : ^77777720^000000
-Nível Necessário : ^777777110^000000
-Classe : ^777777Terceiras Classes^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Classes 3^000000
 #
 2854#
 Um par de luvas brancas criadas pelo Alquimista Federal, Roy Ford, especialmente para magias de fogo. Dizem que com elas você será capaz de lançar bolas de fogo com um simples estalar de dedos!
 ^0000ffINT +1. DEFM +2.^000000
 ^0000ffDano mágico de propriedade Fogo +10%.^000000
-^0000ffDano mágico de propriedade Água -20%.^000000
-^0000ffResistência a propriedade Água -30%.^000000
-^0000ffChance de autoconjurar [Bolas de Fogo] nv. 5 ao realizar ataques físicos.^000000
-^0000ffChance de autoconjurar [Lanças de Fogo] nv. 5 ao realizar ataques mágicos.^000000
-Tipo : ^777777Acessório^000000
+^0000ffDano mágico de propriedade Água^000000 ^ff0000-20%.^000000
+^0000ffResistência a propriedade Água^000000 ^ff0000-30%.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de autoconjurar [Bolas de Fogo] nv. 5.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de autoconjurar [Lanças de Fogo] nv. 5.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777125^000000
-Classe : ^777777Terceiras Classes^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777125^000000
+Classes: ^777777Classes 3^000000
 #
 2855#
 Uma longa cauda felina, toda preta. Com um belo laço vermelho.
@@ -16093,20 +16107,23 @@ Classe : ^777777Sentinela^000000
 #
 2892#
 Uma luva com placas de aço nos dedos e nos braços. Feita para se defender e atacar ao mesmo tempo.
-^0000ffCRIT +3. SP máx. +20.^000000
-^FF6347Conjunto [Krishna].^000000
+^0000ffCRIT +3.^000000
+^0000ffSP máx. +20.^000000
+^FF6347Conjunto^000000
+^FF6347[Krishna]^000000
 ^0000ffATQ +50.^000000
-^0000ffEsquiva -30.^000000
+^0000ffEsquiva^000000 ^ff0000-30.^000000
 ^0000ffDano de [Lâminas Destruidoras] +50%.^000000
-^FF6347Conjunto [Chakram].^000000
+^FF6347Conjunto^000000
+^FF6347[Chakram]^000000
 ^0000ffCRIT +4 adicional.^000000
-^0000ffHP máx. -10%.^000000
 ^0000ffDano crítico +40%.^000000
+^0000ffHP máx.^000000 ^ff0000-10%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777773^000000
 Peso: ^77777740^000000
-Nível Necessário : ^777777100^000000
-Classe: ^777777Sicário^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Sicários^000000
 #
 2894#
 Uma luva feita à imagem de Shiva, feita em metal.
@@ -16235,135 +16252,171 @@ Classe : ^777777Todas^000000
 #
 2917#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-ATQ + 1 para cada 10 pontos em FOR.
-ATQ + 1% quando a FOR do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de FOR base:
+^0000ffATQ +1.^000000
+FOR base 110 ou mais:
+^0000ffDano físico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2918#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-ATQM + 1 para cada 10 pontos de INT.
-ATQM + 1% quando a INT do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de INT base:
+^0000ffATQM +1.^000000
+INT base 110 ou mais:
+^0000ffDano mágico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2919#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-Esquiva + 1 a cada 10 pontos de AGI.
-Esquiva Perfeita + 1 quando a AGI do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de AGI base:
+^0000ffEsquiva +1.^000000
+AGI base 110 ou mais:
+^0000ffEsquiva perfeita +1.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2920#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-HP Máximo + 50 a cada 10 pontos de VIT.
-HP Máximo + 1% quando a VIT do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de VIT base:
+^0000ffHP máx. +50.^000000
+VIT base 110 ou mais:
+^0000ffHP máx. +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2921#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-Precisão + 1 a cada 10 pontos de DES.
-Ataque a Distância + 1% quando a DES do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de DES base:
+^0000ffPrecisão +1.^000000
+DES base 110 ou mais:
+^0000ffDano físico a distância +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2922#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-CRIT + 1 a cada 10 pontos de SOR.
-Dano crítico 1% quando a SOR do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de SOR base:
+^0000ffCRIT +1.^000000
+SOR base 110 ou mais:
+^0000ffDano crítico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2923#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-ATQ + 1 para cada 10 pontos em FOR.
-ATQ + 1% quando a FOR do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de FOR base:
+^0000ffATQ +1.^000000
+FOR base 110 ou mais:
+^0000ffDano físico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2924#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-ATQM + 1 para cada 10 pontos de INT.
-ATQM + 1% quando a INT do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de INT base:
+^0000ffATQM +1.^000000
+INT base 110 ou mais:
+^0000ffDano mágico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2925#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-Esquiva + 1 a cada 10 pontos de AGI.
-Esquiva Perfeita + 1 quando a AGI do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de AGI base:
+^0000ffEsquiva +1.^000000
+AGI base 110 ou mais:
+^0000ffEsquiva perfeita +1.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2926#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-HP Máximo + 50 a cada 10 pontos de VIT.
-HP Máximo + 1% quando a VIT do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de VIT base:
+^0000ffHP máx. +50.^000000
+VIT base 110 ou mais:
+^0000ffHP máx. +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2927#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-Precisão + 1 a cada 10 pontos de DES.
-Ataque a Distância + 1% quando a DES do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de DES base:
+^0000ffPrecisão +1.^000000
+DES base 110 ou mais:
+^0000ffDano físico a distância +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2928#
 Uma luva que melhora de acordo com os atributos do usuário.
-HP Máximo + 100, SP Máximo + 20
-CRIT + 1 a cada 10 pontos de SOR.
-Dano crítico 1% quando a SOR do usuário for maior ou igual a 110.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^777777100^000000
-Classe : ^777777Todas^000000
+^0000ffHP máx. +100.^000000
+^0000ffSP máx. +20.^000000
+A cada 10 de SOR base:
+^0000ffCRIT +1.^000000
+SOR base 110 ou mais:
+^0000ffDano crítico +1%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2935#
 Essas luvas são ideais pra se segurar o arreio bem firme durante uma corrida de peco-pecos, quando se está indo a toda velocidade.
@@ -18320,11 +18373,10 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4193#
-^0000ffAdiciona 20% de chance de conjurar automaticamente a habilidade Vigor em nível 1 em Aprendiz ou Superaprendiz ao receber Dano Físico.
-Se o usuário estiver equipado com um item que tenha a carta Quve, adiciona-se +300 ao HP máximo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+Aprendizes e Superaprendizes:
+^0000ffAo receber danos físicos, 20% de chance de autoconjurar [Vigor] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4194#
@@ -18737,16 +18789,24 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4246#
-^0000ffInflige 10% a mais de dano com Ataque Crítico.
-Crítico +7 em monstros do tipo Humanoide.
-Se o usuário estiver equipado com itens que tenham as cartas Batedor, Soldado, Congelador e Aquecedor ao mesmo tempo, adiciona-se a chance de conjurar automaticamente a habilidade Manejo Perfeito (nível 1), no usuário, ao realizar um Ataque Físico.
-Aumenta a Recuperação de HP em 50%.
-Adiciona a chance de ganhar o item ‘Poção Vermelha’ cada vez que um monstro for derrotado.
-Máximo HP +20%, FOR +10.
-Se personagens da Classe Espadachim e suas evoluções estiverem equipados com itens que tenham essas cartas listadas acima, poções Vermelha, Amarela e Branca recuperam 50% a mais de HP.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Arma^000000
+^0000ffDano crítico +10%.^000000
+^0000ffCRIT +7 em oponentes da raça Humanoide.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Soldado]^000000
+^FF6347[Carta Batedor]^000000
+^FF6347[Carta Aquecedor]^000000
+^FF6347[Carta Congelador]^000000
+^0000ffFOR +10.^000000
+^0000ffHP máx. +20%.^000000
+^0000ffRegeneração natural de HP +50%.^000000
+Ao realizar ataques físicos:
+^0000ff0,3% de chance de autoconjurar [Manejo Perfeito] nv. 1.^000000
+Ao derrotar monstros:
+^0000ff5% de chance de derrubar Poção Vermelha.^000000
+Espadachins e evoluções:
+^0000ffRecuperação de HP de Poção Vermelha, Amarela e Branca +50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4247#
@@ -19123,11 +19183,14 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4294#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Aumentar Agilidade (nível 1), no Aprendiz ou Superaprendiz, ao receber Dano Físico.
-Se o usuário estiver equipado com um item que tenha a carta Lude, adiciona-se +60 ao SP máximo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+Aprendizes e Superaprendizes:
+^0000ffAo receber danos físicos, 20% de chance de autoconjurar [Aumentar Agilidade] nv. 1.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Lude]^000000
+^0000ffHP máx. +300.^000000
+^0000ffSP máx. +60.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4295#
@@ -19339,14 +19402,22 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4321#
-^0000ffAdiciona-se uma chance de transmutar um monstro ao lutar.
-Se o usuário estiver equipado com itens que tenham as cartas Raggler, Zipper, Presente e Leopardo Filhote ao mesmo tempo, recuperam-se 2 pontos de SP a cada ataque.
-Inflige 20% a mais de dano com a habilidade Mamonita.
-SOR +10.
-Se personagens da Classe Mercador e suas evoluções estiverem equipados com itens que tenham essas cartas listadas acima, adiciona-se uma chance de ganhar o item ‘Velha Caixa Azul’ toda vez em que um monstro for derrotado e adiciona 20% de chance de refletir ataques mágicos.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+Ao atacar monstros normais:
+^0000ff1% de chance de transformar o alvo em outro monstro.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Zipper]^000000
+^FF6347[Carta Raggler]^000000
+^FF6347[Carta Presente]^000000
+^FF6347[Carta Leopardo Filhote]^000000
+^0000ffSOR +10.^000000
+^0000ffDano de [Mammonita] +20%.^000000
+A cada ataque físico:
+^0000ffRecupera 2 de SP.^000000
+Mercadores e evoluções:
+^0000ffAo receber dano mágico de alvo único, 20% de chance de refletir a magia.^000000
+^0000ffAo derrotar monstros, 0,5% de chance de derrubar Velha Caixa Azul.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4322#
@@ -19518,23 +19589,22 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4343#
-Carta Holden.
-SOR +2
-^6A5ACDConjunto de Cartas do Alquimista^000000
-^3CB371 Carta Zipper^000000
-^3CB371 Carta Leopardo Filhote^000000
-^3CB371 Carta Raggler^000000
-^3CB371 Carta Muka^000000
-^3CB371 Carta Holden^000000
-FOR +4
-+20% de dano com Mammonita
-+1 SP por ataque.
-+7% de HP/SP máximos
-Bônus para Classe Alquimista:
-Chance de conjurar automaticamente Adrenalina Pura nível 1 ao atacar fisicamente.
-Pequena chance de obter Frasco de Revestimento e/ou Caule ao derrotar monstros.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+^0000ffSOR +2.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Muka]^000000
+^FF6347[Carta Zipper]^000000
+^FF6347[Carta Raggler]^000000
+^FF6347[Carta Leopardo Filhote]^000000
+^0000ffFOR +4.^000000
+^0000ffHP e SP máx. +7%.^000000
+^0000ffDano de [Mammonita] +20%.^000000
+A cada ataque físico:
+^0000ffRecupera 1 de SP.^000000
+Alquimistas e evoluções:
+^0000ffAo realizar ataques físicos, 1% de chance de autoconjurar [Adrenalina Pura] nv. 1.^000000
+^0000ffAo derrotar monstros, chance de derrubar Frasco de Revestimento e Caule.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4344#
@@ -19756,21 +19826,20 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4371#
-Carta Archdam.
-ATQ +10. Aumenta o tempo de conjuração variável em 20%.
-^6A5ACDConjunto de Cartas do Templário^000000
-^3CB371 Carta Archdam^000000
-^3CB371 Carta Batedor^000000
-^3CB371 Carta Congelador^000000
-^3CB371 Carta Aquecedor^000000
-Os bônus do conjunto de cartas do Templário são:
-INT +1, FOR +1, DEF +2, Recuperação de SP +10%.
-+10% de dano com Choque Rápido e Sacrifício do Mártir.
-Velocidade de Conjuração variável +10%.
-Bônus somente para Templário ou Paladino:
-A armadura ganha a propriedade Sagrada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffATQ +10.^000000
+^0000ffConjuração variável^000000 ^ff0000+20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Batedor]^000000
+^FF6347[Carta Aquecedor]^000000
+^FF6347[Carta Congelador]^000000
+^0000ffINT +1. FOR +1. DEF +2.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffRegeneração natural de SP +10%.^000000
+^0000ffDano de [Choque Rápido] e [Sacrifício do Mártir] +10%.^000000
+Templários e evoluções:
+^0000ffAltera a armadura para a propriedade Sagrado.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4372#
@@ -19846,25 +19915,20 @@ Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4381#
-Carta Ferus Verde.
-VIT +1, HP máximo +10%.
-^6A5ACDConjunto de Cartas do Bardo e da Odalisca^000000
-^3CB371 Carta Soldadinho de Chumbo^000000
-^3CB371 Carta Anolian^000000
-^3CB371 Carta Crocodilo^000000
-^3CB371 Carta Lavadeira^000000
-^3CB371 Carta Ferus Verde^000000
-DES +5
-+5% de dano com Vulcão de Flechas
-+10% de dano com Flecha Melódica
-+10% de dano com Estilingue
-Bônus para Bardo ou Odalisca:
-Pequena chance de
-lançar automaticamente
-Destino nas Cartas nv. 2
-quando atingido por ataque corporal.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Calçado^000000
+^0000ffVIT +1.^000000
+^0000ffHP máx. +10%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Anolian]^000000
+^FF6347[Carta Crocodilo]^000000
+^FF6347[Carta Lavadeira]^000000
+^FF6347[Carta Soldadinho de Chumbo]^000000
+^0000ffDES +5.^000000
+^0000ffDano de [Vulcão de Flechas] +5%.^000000
+^0000ffDano de [Estilingue] e [Flecha Melódica] +10%.^000000
+Bardos, Odaliscas e evoluções:
+^0000ffAo receber danos físicos, 5% de chance de autoconjurar [Destino nas Cartas] nv. 2.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4382#
@@ -39785,13 +39849,14 @@ Uma adaga para realizar rituais com poderes desconhecidos.
 ^0000ffATQM +120.^000000
 ^0000ffSP máx. +100.^000000
 ^0000ffRegeneração natural de SP +5%.^000000
-^0000ffChance de receber [Maldição] ao realizar ataques físicos.^000000
-Tipo : ^777777Adaga^000000
-Força de Ataque : ^777777107^000000
-Peso : ^77777760^000000
-Nível da Arma : ^7777774^000000
-Nível Necessário : ^777777120^000000
-Classe : ^7777773ª Classes de Espadachim, Mercador, Gatuno, Arqueiro e Mago.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff0,2% de chance de infligir [Maldição] no usuário.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777107^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777120^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos, Arqueiros e Magos^000000
 #
 13066#
 Uma adaga prática feita pelo Grupo Éden.
@@ -39836,30 +39901,34 @@ Classes: ^777777Espadachins, Magos, Arqueiros, Gatunos, Mercadores, Ninjas, Espi
 13069#
 Adaga azul imbuída com magia de ataque.
 ^0000ffATQM +80.^000000
-^0000ffChance de infligir [Congelamento] ao realizar ataques físicos.^000000
-^0000ffChances aumentam a cada refino.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de infligir [Congelamento] no alvo.^000000
+A cada refino:
+^0000ffChance de infligir [Congelamento] +1%.^000000
 Tipo: ^777777Adaga^000000
 Ataque: ^777777160^000000
+Propriedade: ^777777Vento^000000
 Peso: ^77777750^000000
-Elemento: ^777777Vento^000000
-Nível da Arma : ^7777774^000000
-Nível Necessário : ^777777110^000000
-Classe: ^777777Aprendiz T., Espadachim T., Mercador T., Gatuno T. e suas respectivas evoluções^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores e Gatunos^000000
 #
 13070#
 Uma garra de Basilisko esculpida em forma de adaga e carregada de energia mágica.
 Ela ainda pinga constantemente o veneno de Basilisko, e por isso é capaz de transformar em pedra aqueles que forem infectados por seu corte.
 Sua energia arcana é tão forte que apenas pessoas poderosas podem segurá-la sem que elas mesmas virem estátuas.
 ^0000ffATQM +80.^000000
-^0000ffChance de infligir [Petrificação] ao realizar ataques físicos.^000000
-^0000ffChances aumentam a cada refino.^000000
-Tipo : ^777777Adaga^000000
-Força de ataque : ^777777160^000000
-Peso : ^77777750^000000
-Propriedade : ^777777Fogo^000000
-Nível da arma : ^7777774^000000
-Nível Necessário : ^777777110^000000
-Classe: ^777777Aprendiz T., Espadachim T., Mercador T., Gatuno T. e suas respectivas evoluções^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de infligir [Petrificação] no alvo.^000000
+A cada refino:
+^0000ffChance de infligir [Petrificação] +1%.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777160^000000
+Propriedade: ^777777Fogo^000000
+Peso: ^77777750^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores e Gatunos^000000
 #
 13071#
 Uma Adaga perfeita refinada em Ouro com sua lâmina em Oridecon.
@@ -55908,6 +55977,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20521#
+Se você é mesmo obcecado pelos felinos, então não vai perder a oportunidade de ser a mãe ou pai de mais um bichano. Prometemos que este aqui não vai te acordar às 3 da manhã fazendo um show pela casa.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20528#
 Assim que você equipar essas reluzentes asas, todos os invejosos vão querer pôr as mãos nelas. Pra afastá-los, basta contar aquela história que você ouviu na infância, sobre borboletas soltarem um pó que causa cegueira.
 Tipo: ^777777Visual^000000
@@ -58659,6 +58737,50 @@ Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
+27157#
+^0000ffDano físico contra oponentes da propriedade Terra e Água +5%.^000000
+^0000ffResistência a oponentes da propriedade Terra e Água^000000 ^ff0000-5%.^000000
+Refino +9 ou mais:
+^0000ffDano físico contra oponentes da propriedade Terra e Água +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+27158#
+^0000ffResistência a oponentes de propriedade Vento +30%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
+Peso: ^7777771^000000
+#
+27159#
+^0000ffDano mágico contra oponentes da raça Demônio +10%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico contra oponentes da raça Demônio +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para cabeça^000000
+Peso: ^7777771^000000
+#
+27160#
+A cada refino:
+^0000ffEsquiva +2.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27161#
+^0000ffDano mágico de propriedade Fogo e Terra +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27162#
+^0000ffCusto de SP das habilidades^000000 ^ff0000+50%.^000000
+A cada ataque:
+^0000ffRecupera 5 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para cabeça^000000
+Peso: ^7777771^000000
+#
 28000#
 Armamento esculpido do Fragmento de Cinzas para contra-atacar a Espada Talefing.
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
@@ -61040,6 +61162,14 @@ Classes: ^777777Todas^000000
 #
 31396#
 Vestir esse capuz é a prova incontestável de que você faz parte do seleto Clube dos Trevosos. Uma joia brilhante adorna a ponta dele, pois por mais que você ame a escuridão, uma luz há de guiar o seu caminho nos passeios góticos à meia-noite.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31397#
+Uma bonequinha feita à imagem de um dos símbolos de fé de Rune-Midgard. Agora você não precisa mais ir até o Santuário de Rachel pra pedir a bênção dela. Ainda bem – era o maior rolê, né?
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
