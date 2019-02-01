@@ -7001,3 +7001,4 @@
 20073#Evolved_Pair_of_Red_Ribbon_Certificate#
 20074#Capricon_Crown_Certificate#
 20075#Gryphon_Hat_Certificate#
+20076#Lif_Doll_Hat_Certificate#
