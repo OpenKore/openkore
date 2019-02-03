@@ -12263,13 +12263,16 @@ Jobs : ^7777772nd Transcendent Class^000000
 #
 2135#
 A small-sized black shield you can wear on your arm.
-Gives a chance of getting FLEE +20 for 10 sec. when attacked.
-When equipped with Shadow Walk, has a chance of casting Blind on enemies while attacking.
-Class : ^777777Shield^000000
-Defense : ^77777752^000000
-Weight : ^77777780^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Stalker^000000
+Class: ^808080Shield^000000
+Defense: ^80808052^000000
+Weight: ^80808080^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Stalker Jobs^000000
+^800080Set Bonus^000000
+^008080Shadow Guard [1]^000000
+^008080Shadow Walk^000000
+Adds a chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
+Flee + 20 for 10 seconds when receiving a physical attack.
 #
 2136#
 A cracked shield used for the Spooky Machine Upgrading Event. Equip and let 'Spooky Machine' upgrade it to give you prizes.
@@ -15064,15 +15067,14 @@ Weight: ^80808060^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs, Taekwon, Taekwon Master, Gunslinger Jobs^000000
 #
 2407#
-A pair of feminine high heeled shoes made of
-fine crystal. Usually,
-these are worn only
-on special occasions.
-Luk + 5 , MDEF + 10
-Class : ^777777Footwear^000000
-Defense : ^7777775^000000
-Weight : ^77777710^000000
-Jobs: ^777777All except Novice Job^000000
+A pair of feminine high heeled shoes made of fine crystal. Usually, these are worn only on special occasions.
+Class: ^808080Shoes^000000
+Defense: ^8080805^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Luk + 5
+Mdef + 10
 #
 2408#
 These steel shackles were clamped on the ankles to prevent some prisoner from escaping.
@@ -15083,16 +15085,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 2409#
-Striped high heeled
-shoes said to have been worn by a wicked witch
-since they enhanced
-her magical powers.
-MDEF + 5
-Class : ^777777Footwear^000000
-Defense : ^77777710^000000
-Weight : ^77777760^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Striped high heeled shoes said to have been worn by a wicked witch since they enhanced her magical powers.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef + 5
 #
 2410#
 Named after Odin's trusty steed, these shoes also
@@ -15112,68 +15111,57 @@ Required Level : ^77777794^000000
 Jobs: ^777777All^000000
 #
 2411#
-Steel boots which
-offer dependable
-foot protection.
-Class : ^777777Footwear^000000
-Defense : ^77777727^000000
-Weight : ^77777775^000000
-Required Level : ^77777765^000000
-Jobs: ^777777Knight and
-Crusader Jobs^000000
+Steel boots which offer dependable foot protection.
+Class: ^808080Shoes^000000
+Defense: ^80808027^000000
+Weight: ^80808075^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Knight Jobs, Crusader Jobs^000000
 #
 2412#
-Steel boots which
-offer dependable
-foot protection.
-Class : ^777777Footwear^000000
-Defense : ^77777727^000000
-Weight : ^77777775^000000
-Required Level : ^77777765^000000
-Jobs: ^777777Knight and
-Crusader Jobs^000000
+Steel boots which offer dependable foot protection.
+Class: ^808080Shoes^000000
+Defense: ^80808027^000000
+Weight: ^80808075^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Knight Jobs, Crusader Jobs^000000
 #
 2413#
-Light, sturdy shoes with steel covers to protect
-its wearer's feet from
-harm. Impossible to
-refine this item.
-Class : ^777777Footwear^000000
-Defense : ^77777722^000000
-Weight : ^77777735^000000
-Required Level : ^77777730^000000
-Jobs : ^777777Swordman^000000
+Light, sturdy shoes with steel covers to protect its wearer's feet from\ harm.
+Class: ^808080Shoes^000000
+Defense: ^80808022^000000
+Weight: ^80808035^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080Swordman Jobs^000000
+This item cannot be upgraded.
 #
 2414#
-Exclusive shoe for new adventurers
-Impossible to refine this item.
-Class : ^777777Footwear^000000
-Defense : ^7777775^000000
-Weight : ^7777770.1^000000
-Required Level : ^777777NA^000000
-Jobs : ^777777Novice^000000
+Exclusive shoe for new adventurers.
+Class: ^808080Shoes^000000
+Defense: ^8080805^000000
+Weight: ^8080800.1^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs^000000
+This item cannot be upgraded.
 #
 2415#
 A pair of slippers which enhances a girl's cuteness. Secretly worn by pretty boys.
-Luk +3
-Female Only
-Class : ^777777Footwear^000000
-Defense: ^7777779^000000
-Weight : ^77777730^000000
-Required Level : ^77777730^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Class: ^808080Shoes^000000
+Defense: ^8080809^000000
+Weight: ^80808030^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Luk + 3
+Mdef + 3
 #
 2416#
-A pair of shoes made
-exclusively for brand
-new adventurers.
-MAX HP +5%.
-Class : ^777777Footwear^000000
-Defense: ^7777778^000000
-Weight : ^77777750^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Novice Class^000000
+A pair of shoes made exclusively for brand new adventurers.
+Class: ^808080Shoes^000000
+Defense: ^8080808^000000
+Weight: ^80808050^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Novice Jobs^000000
+Max HP + 5%
 #
 2417#
 A pair of shoes that were blessed by Freyr, the god of earth and the son of Njord. His blessing would release its owner from pain.
@@ -15274,17 +15262,13 @@ This item is indestructible in battle.
 All Stats + 1
 #
 2422#
-Jeweled, golden
-strapped sandals
-that offer a casual, yet^FFFFFF  ^000000 fashionable, comfort.
-MDEF +10
-Class : ^777777Footwear^000000
-Defense: ^7777777^000000
-Weight : ^77777720^000000
-Required Level : ^77777740^000000
-Jobs: ^777777Mage and
-Acolyte Classes;
-Soul Linker Job^000000
+Jeweled, golden strapped sandals that offer a casual, yet fashionable comfort.
+Class: ^808080Shoes^000000
+Defense: ^8080807^000000
+Weight: ^80808020^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Mdef + 10
 #
 2423#
 Although it seems
@@ -15307,68 +15291,52 @@ Jobs: ^777777All Transcendent
 Jobs except Novice^000000
 #
 2424#
-This pair of shoes
-was designed with
-a waterproof coating
-that prevents slippage
-in wet areas. Adds 5%
-tolerance to Water
-property attacks,
-+ 5% HP Recovery.
-Adds +10% Max HP
-when worn with
-Wool Scarf.
-Class : ^777777Footwear^000000
-Defense : ^77777713^000000
-Weight : ^77777730^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+This pair of shoes was designed with a waterproof coating that prevents slippage in wet areas.
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808030^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Reduces damage taken from Water property attacks by 5%.
+
+^800080Set Bonus^000000
+^008080Tidal Shoes [1]^000000
+^008080Wool Scarf [1]^000000
+Max HP + 10%
+HP Recovery + 5%
 #
 2425#
-A pair of boots
-made of light,
-resilient leather
-that makes you want
-to run when you wear
-them. Agi +1.
-Additional Agi +2
-when Upgrade Level
-is 9 or greater.
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^77777750^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A pair of boots made of light, resilient leather that makes you want to run when you wear them.
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^80808050^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 1
+If upgrade level is +9 or higher,
+Additional Agi + 2
+
+^800080Set Bonus^000000
+^008080Black Leather Boots^000000
+^008080Rider Insignia^000000 or ^008080Rider Insignia [1]^000000
+Flee + 10
 #
 2426#
-Shadowy shoes made
-using dark forces,
-and enchanted with
-a spell to protect
-their wearer when
-danger approaches.
-MDEF +10.
-Has a certain chance
-of auto casting Lv.3
-Cloaking when hit by
-magic attacks. If the
-wearer has learned
-a higher level of
-Cloaking, those
-levels of Cloaking
-will be auto cast
-instead. If the
-wearer has not
-learned Lv. 3 Cloak
-the wearer cannot move away from walls.
-Class : ^777777Footwear^000000
-Defense : ^7777770^000000
-Weight : ^777777200^000000
-Required Level : ^77777775^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+Shadowy shoes made using dark forces, and enchanted with a spell to protect their wearer when danger approaches.
+Class: ^808080Shoes^000000
+Defense: ^8080800^000000
+Weight: ^808080200^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 10
+
+Adds a chance of casting ^0000FFLevel 3 Cloaking^000000 on the user when receiving a magical attack.
+If a higher level of this skill is known, it will be cast instead.
+^800080Set Bonus^000000
+^008080Shadow Guard [1]^000000
+^008080Shadow Walk^000000
+Adds a chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
+Flee + 20 for 10 seconds when receiving a physical attack.
 #
 2427#
 #
@@ -15406,29 +15374,33 @@ except Novice^000000
 #
 2433#
 Mysterious boots that automatically adjust their size to the wearer's size. They seem alive.
-Increases MaxHP by 10 times your Base Level.
-When worn with Diabolus Manteau, MaxHP +6%.
-Class : ^777777Footwear^000000
-Defense : ^77777715^000000
-Weight : ^77777725^000000
-Jobs: ^777777Transcendent 2nd Class or higher^000000
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^80808025^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Max HP + 10 for every base level.
+
+^800080Set Bonus^000000
+^008080Diabolus Boots [1]^000000
+^008080Diabolus Manteau [1]^000000
+Max HP + 6%
 #
 2434#
-A pair of boots
-made of light,
-resilient leather
-that makes you want
-to run when you wear
-them. Agi +1.
-Additional Agi +2
-when Upgrade Level
-is 9 or greater.
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^77777750^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A pair of boots made of light, resilient leather that makes you want to run when you wear them.
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^80808050^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 1
+If upgrade level is +9 or higher,
+Additional Agi + 2
+
+^800080Set Bonus^000000
+^008080Black Leather Boots [1]^000000
+^008080Rider Insignia^000000 or ^008080Rider Insignia [1]^000000
+Flee + 10
 #
 2435#
 A Greave that optimizes the quality of one's ability for battle.
@@ -16516,50 +16488,47 @@ Jobs: ^777777All Transcendent
 Jobs except Novice^000000
 #
 2528#
-A scarf made from
-the highest quality
-wool that feels so
-comforting and cozy
-when you're exhausted.
-MDEF +4.
-Class : ^777777Garment^000000
-Defense : ^77777711^000000
-Weight : ^77777750^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A scarf made from the highest quality wool that feels so comforting and cozy when you're exhausted.
+Class: ^808080Garment^000000
+Defense: ^80808011^000000
+Weight: ^80808050^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Mdef + 4
+
+^800080Set Bonus^000000
+^008080Tidal Shoes [1]^000000
+^008080Wool Scarf [1]^000000
+Max HP + 10%
+HP Recovery + 5%
 #
 2529#
-A symbol worn by
-runners that just
-makes you want to
-sprint when you
-wear it. Agi +2.
-Flee +10 when worn
-with Black Leather
-Boots.
-Class : ^777777Garment^000000
-Defense : ^77777713^000000
-Weight : ^77777750^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A symbol worn by runners that just makes you want to sprint when you wear it.
+Class: ^808080Garment^000000
+Defense: ^80808013^000000
+Weight: ^80808050^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 2
+
+^800080Set Bonus^000000
+^008080Black Leather Boots^000000 or ^008080Black Leather Boots [1]^000000
+^008080Rider Insignia^000000
+Flee + 10
 #
 2530#
-A symbol worn by
-runners that just
-makes you want to
-sprint when you
-wear it. Agi +2.
-Flee +10 when worn
-with Black Leather
-Boots.
-Class : ^777777Garment^000000
-Defense : ^77777713^000000
-Weight : ^77777750^000000
-Required Level : ^77777755^000000
-Jobs: ^777777All Transcendent
-Jobs except Novice^000000
+A symbol worn by runners that just makes you want to sprint when you wear it.
+Class: ^808080Garment^000000
+Defense: ^80808013^000000
+Weight: ^80808050^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 2
+
+^800080Set Bonus^000000
+^008080Black Leather Boots^000000 or ^008080Black Leather Boots [1]^000000
+^008080Rider Insignia [1]^000000
+Flee + 10
 #
 2531#
 A mysterious cape
@@ -16626,15 +16595,18 @@ Jobs: ^777777All Jobs except Novice^000000
 #
 2537#
 A manteau with an endless dark shape waving near it. Only those who overcome fear can wear this manteau.
-Decreases Neutral property damage by 5%.
-MaxHP + 100
-Increases Physical Damage to Satan Morocc by 10%.
-^FFFFFF000000^000000
-When equipped with Diabolus Boots, MaxHP +6%.
-Class : ^777777Garment^000000
-Defense : ^77777715^000000
-Weight : ^77777725^000000
-Jobs: ^777777Above Transcendent 2-1 Classes^000000
+Class: ^808080Garment^000000
+Defense: ^80808015^000000
+Weight: ^80808025^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Max HP + 100
+Reduces damage taken from Neutral property attacks by 5%.
+Increases physical damage on Satan Morocc and Wounded Morocc by 10%.
+
+^800080Set Bonus^000000
+^008080Diabolus Boots [1]^000000
+^008080Diabolus Manteau [1]^000000
+Max HP + 6%
 #
 2538#
 A dignified, splendid Manteau that is provided to any warrior who brings great honor from the battlefield.
@@ -61695,7 +61667,6 @@ Bypass an additional 20% of hard defense of normal monsters, boss monsters and p
 #
 15352#
 A dress empowered with nature's essence. Wearing this will prove that you are a member of Nature's Children.
-^FF0000Disabled during WoE TE.^000000
 Class: ^808080Armor^000000
 Defense: ^808080120^000000
 Property: ^808080Earth^000000
@@ -81636,7 +81607,7 @@ If upgrade level is +10 or higher,
 Additional Flee + 20
 Reduces damage taken from Neutral property attacks by an additional 20%.
 
-^800080Set Bonus^000000
+^800080Set Malus^000000
 ^008080Deviling Card^000000
 ^008080Hero Manteau [1]^000000
 Disables the following effects of ^008080Deviling Card^000000, Reduces damage taken from Neutral property attacks by 50%.
@@ -82758,6 +82729,13 @@ Required Jobs: Rune Knight, Royal Guard
 Atk + 1% per 2 upgrade levels of the item.
 Aspd + 1% per upgrade level of the item.
 This item is indestructible in battle.
+#
+21202#
+Octo-pig is known to bring luck with money from long time ago. It is said that Octo-pig's legs were used to make ornaments to collect coins.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
 #
 22000#
 These boots are obviously old but they show no signs of wear and tear.
@@ -88386,6 +88364,374 @@ Agi + 1 per 2 upgrade levels of the compounded item.
 Max HP + 10%
 Aspd + 1% per 2 upgrade levels of the compounded item.
 #
+27163#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Agi - 1
+Dex - 1
+Aspd + 3%
+^800080Set Bonus^000000
+^008080Faceworm Card^000000
+^008080Faceworm Dark Card^000000
+Agi + 2
+Dex + 2
+Vit + 2
+Int + 2
+Reduces the global delay of skills by 3%
+#
+27164#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Max HP - 10%
+Crit + 15
+For every upgrade level, Crit + 1 and Increases critical damage on targets by an additional 1%.
+#
+27165#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Vit - 1
+Int - 1
+Reduces the global delay of skills by 3%
+^800080Set Bonus^000000
+^008080Faceworm Card^000000
+^008080Faceworm Dark Card^000000
+Agi + 2
+Dex + 2
+Vit + 2
+Int + 2
+Reduces the global delay of skills by 3%
+#
+27166#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Reduces damage taken from Fire property attacks by 2%.
+Reduces damage taken from Fire property magical attacks by 2%.
+If upgrade level is +7 or higher, reduces damage taken from Fire property attacks and magical attacks by an additional 1%.
+If upgrade level is +9 or higher, reduces damage taken from Fire property attacks and magical attacks by an additional 2%.
+^800080Set Bonus^000000
+^008080Faceworm Egg Card^000000
+^008080Faceworm Larva Card^000000
+Reduces damage taken from Neutral property attacks by 5%.
+Increases magic damage on Fire property targets by 10%.
+#
+27167#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Reduces damage taken from Neutral property attacks by 15%.
+For every upgrade level of the compounded item, Water property magic damage is increased by 3%.
+^800080Set Bonus^000000
+^008080Faceworm Egg Card^000000
+^008080Faceworm Larva Card^000000
+Reduces damage taken from Neutral property attacks by 5%.
+Increases magic damage on Fire property targets by 10%.
+#
+27168#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Hit + 10
+For every 3 upgrade levels of compounded item, additional Hit + 5.
+^800080Set Bonus^000000
+^008080Irene Elder Card^000000
+^008080Sarah Card^000000
+ATK + 100
+Adds a high chance of transforming into Sarah Irene for 60 seconds when performing a physical attack.
+#
+27169#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 5
+MAtk + 5
+If compounded to a Spear type weapon and compounded item upgrade level is +10 or higher, gain an additional Atk + 20 and MAtk + 20.
+If compounded to a Spear type weapon and compounded item upgrade level is +14 or higher, gain an additional Atk + 20 and MAtk + 20.
+#
+27170#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Agi + 7
+Hit + 7
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Cowraiders Class 2 Card^000000
+Str + 3
+Atk + 3%
+
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Cowraiders Class 3 Card^000000
+Increases physical damage on small size targets by an additional 15%.
+Increases magical damage on small size targets by an additional 15%.
+
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Mine Cowraiders Class 1 Card^000000
+Increases the damage of ^0000FFSpread Attack^000000 by 50%.
+#
+27171#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Str + 4
+Atk% + 4
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Cowraiders Class 2 Card^000000
+Str + 3
+Atk + 3%
+
+^800080Set Bonus^000000
+^008080Cowraiders Class 2 Card^000000
+^008080Mine Cowraiders Class 2 Card^000000
+Increases the damage of ^0000FFRapid Shower^000000 by 50%.
+#
+27172#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 5
+MAtk + 5
+If compounded on a One-Handed Sword and upgrade level is +10 or higher, additional Atk + 20 and MAtk + 20.
+If compounded on a One-Handed Sword and upgrade level is +14 or higher, additional Atk + 20 and MAtk + 20.
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Cowraiders Class 3 Card^000000
+Increases physical damage on small size targets by an additional 15%.
+Increases magical damage on small size targets by an additional 15%.
+
+^800080Set Bonus^000000
+^008080Cowraiders Class 3 Card^000000
+^008080Mine Cowraiders Class 3 Card^000000
+Increases physical damage on small size targets by an additional 10%.
+Increases magical damage on small size targets by an additional 10%.
+#
+27173#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases the damage of ^0000FFSpread Attack^000000 by 10%.
+If upgrade level is +10 or higher, increases the damage of ^0000FFSpread Attack^000000 by an additional 20%.
+If upgrade level is +14 or higher, increases the damage of ^0000FFSpread Attack^000000 by an additional 20%.
+^800080Set Bonus^000000
+^008080Cowraiders Class 1 Card^000000
+^008080Mine Cowraiders Class 1 Card^000000
+Increases the damage of ^0000FFSpread Attack^000000 by 50%.
+#
+27174#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases the damage of ^0000FFRapid Shower^000000 by 10%.
+If upgrade level is +10 or higher, increases the damage of ^0000FFRapid Shower^000000 by an additional 20%.
+If upgrade level is +14 or higher, increases the damage of ^0000FFRapid Shower^000000 by an additional 20%.
+^800080Set Bonus^000000
+^008080Cowraiders Class 2 Card^000000
+^008080Mine Cowraiders Class 2 Card^000000
+Increases the damage of ^0000FFRapid Shower^000000 by 50%.
+#
+27175#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases physical damage on small size targets by an additional 10%.
+Increases magical damage on small size targets by an additional 10%.
+^800080Set Bonus^000000
+^008080Cowraiders Class 3 Card^000000
+^008080Mine Cowraiders Class 3 Card^000000
+Increases physical damage on small size targets by an additional 10%.
+Increases magical damage on small size targets by an additional 10%.
+#
+27176#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 3 for every 10 base Str.
+Aspd + 1% for every 10 base Str.
+Atk + 40 if users base Str is 120 or higher.
+#
+27177#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+MAtk + 3 for every 10 base Int.
+Aspd + 1% for every 10 base Int.
+MAtk + 40 if users base Int is 120 or higher.
+#
+27178#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Reduce damage on normal monsters by 25%.
+Increase damage on boss monsters by 50%.
+#
+27179#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+The users casting cannot be interrupted outside of WoE.
+Max HP - 12%
+Max SP - 6%
+If upgrade level is +10 or higher, additional Max HP + 6% and Max SP + 3%.
+#
+27180#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Adds a 10% chance of damaging the targets weapon when performing a physical attack.
+Adds a 10% chance of damaging the targets armor when performing a physical attack.
+#
+27181#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases ranged damage on targets by 1%.
+Increases ranged damage on targets by 1% per upgrade level of the compounded item.
+Increases Crit by 10 per 2 upgrade levels of the compounded item.
+#
+27182#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 30
+Increases the damage of ^0000FFAnti-Material Blast^000000 by 30%.
+Increases the damage of ^0000FFGod's Hammer^000000 by 30%.
+If compounded item upgrade level is +10 or higher, increases the damage of ^0000FFAnti-Material Blast^000000 and ^0000FFGod's Hammer^000000 by an additional 30%.
+#
+27183#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 20
+Additional Atk + 20 and Aspd + 3% if the users base Str is 120 or higher.
+#
+27184#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 20
+Increases physical damage on Demon race targets by 30%.
+Increases physical damage on Undead race targets by 30%.
+#
+27249#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 15
+MAtk + 15
+Max HP + 500
+Hit + 15
+Flee + 15
+#
+27250#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+MAtk + 3%
+Increases magic damage on Earth property targets by 5%.
+Increases magic damage on Neutral property targets by 5%.
+#
+27251#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Aspd + 5%
+Increases critical damage on targets by 3%.
+#
+27252#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Aspd + 3%
+Increases critical damage on targets by 5%.
+#
+27253#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+MAtk + 3%
+Increases magic damage on Fire property targets by 5%.
+Increases magic damage on Holy property targets by 5%.
+#
+27254#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+SP Recovery + 10%
+Adds a 10% chance of casting ^0000FFDangerous Soul Collect^000000 on the the user when performing a physical attack.
+#
+27255#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+MAtk + 3%
+Increases magic damage on Wind property targets by 5%.
+Increases magic damage on Water property targets by 5%.
+#
+27256#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 3%
+Increases ranged physical damage on targets by 5%.
+#
+27257#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Reduces the variable casting time of skills by 3%.
+Increases ranged physical damage on targets by 5%.
+Increases the damage of ^0000FFFlaming Petals^000000 by 5%.
+Increases the damage of ^0000FFFreezing Spear^000000 by 5%.
+Increases the damage of ^0000FFWind Blade^000000 by 5%.
+#
+27258#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Atk + 3%
+Aspd + 5%
+#
+27259#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+#
+27260#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Aspd + 3%
+Increases ranged physical damage on targets by 5%.
+#
+27261#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000, and ^0000FFLightning Bolt^000000 by 10%.
+If equipped with a Book type weapon, increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000, and ^0000FFLightning Bolt^000000 by an additional 20%.
+If upgrade level is +14 or higher, increases the damage of ^0000FFCold Bolt^000000, ^0000FFFire Bolt^000000, and ^0000FFLightning Bolt^000000 by an additional 20%.
+#
+27262#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases magic damage on Shadow property targets by/by an additional 20%.
+Increases magic damage on Neutral property targets by/by an additional 20%.
+#
+27263#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Adds a 20% chance of transforming the user into a Golem for 10 seconds when performing a physical attack.
+DEF + 300 for the duration of the transformation.
+#
+27264#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases physical damage on Holy property targets by 30%.
+Increases physical damage on Fire property targets by 30%.
+Reduces physical damage on Undead property targets by 30%.
+Reduces physical damage on Shadow property targets by 30%.
+^800080Set Bonus^000000
+^008080Evil Shadow Card^000000
+^008080Evil Fanatics Card^000000
+Increases physical damage on Undead property targets by 15%.
+Increases physical damage on Shadow property targets by 15%.
+Increases magic damage on Undead property targets by 15%.
+Increases magic damage on Shadow property targets by 15%.
+Reduces physical damage on Undead property targets by 15%.
+Reduces physical damage on Shadow property targets by 15%.
+#
+27265#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+Increases physical damage on Undead property targets by 30%.
+Increases physical damage on Shadow property targets by 30%.
+Increases magic damage on Undead property targets by 30%.
+Increases magic damage on Shadow property targets by 30%.
+Reduces physical damage on Holy property targets by 30%.
+Reduces physical damage on Fire property targets by 30%.
+Reduces magic damage on Holy property targets by 30%.
+Reduces magic damage on Fire property targets by 30%.
+^800080Set Bonus^000000
+^008080Evil Shadow Card^000000
+^008080Evil Fanatics Card^000000
+Increases physical damage on Undead property targets by 15%.
+Increases physical damage on Shadow property targets by 15%.
+Increases magic damage on Undead property targets by 15%.
+Increases magic damage on Shadow property targets by 15%.
+Reduces physical damage on Undead property targets by 15%.
+Reduces physical damage on Shadow property targets by 15%.
+#
 28000#
 This katar, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
 It offers incredible power and mana at a great cost.
@@ -89274,7 +89620,6 @@ Increases the damage of ^0000FFDiamond Dust^000000 and ^0000FFEarth Grave^000000
 #
 28410#
 A sapphire bracelet which was designed with the collective knowledge of the geneticist community.
-^FF0000The acid bomb skill currently has no variable cast time to reduce.^000000
 Class: ^808080Accessory^000000
 Weight: ^80808050^000000
 Requires Level: ^80808050^000000
