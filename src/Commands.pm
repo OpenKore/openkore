@@ -3754,14 +3754,14 @@ sub cmdPet {
 		# todo: maybe make a match function for monsters?
 		if ($args[1] =~ /^\d+$/) {
 			if ($monstersID[$args[1]] eq "") {
-				error TF("Error in function 'pet capture|c' (Capture Pet)\n" .
+				error TF("Error in function 'pet [capture|c]' (Capture Pet)\n" .
 					"Monster %s does not exist.\n", $args[1]);
 			} else {
 				$messageSender->sendPetCapture($monstersID[$args[1]]);
 			}
 		} else {
 			error TF("Error in function 'pet [capture|c]' (Capture Pet)\n" .
-				"%s must be a monster index.\n", $args[1]);
+				"'%s' must be a monster index.\n", $args[1]);
 		}
 
 	} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
@@ -3803,8 +3803,16 @@ sub cmdPet {
 	} elsif (($args[0] eq "n" || $args[0] eq "name") && $args[1]) {
 		$messageSender->sendPetName($args[1]);
 
+	} elsif (($args[0] eq "e" || $args[0] eq "emotion") && $args[1]) {
+		if ($args[1] =~ /^\d+$/) {
+		$messageSender->sendPetEmotion($args[1]);
+		} else {
+			error TF("Error in function 'pet [emotion|e] <number>' (Emotion Pet)\n" .
+				"'%s' must be an integer.\n", $args[1]);
+		}
+
 	} else {
-		message T("Usage: pet [capture|hatch|status|info|feed|performance|return|unequip|name <name>]\n"), "info";
+		message T("Usage: pet [capture <monster #> | hatch <item #> | status | info | feed | performance | return | unequip | name <name>] | emotion <number>\n"), "info";
 	}
 }
 
