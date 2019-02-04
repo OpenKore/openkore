@@ -6491,6 +6491,32 @@ sub change_title {
 	message TF("You changed Title_ID :  %s.\n", $args->{title_id}), "info";
 }
 
+# 019E
+# TODO
+# note: this is probably the trigger for the client's slotmachine effect or so.
+sub pet_capture_process {
+	my ($self, $args) = @_;
+	message T("Attempting to capture pet (slot machine).\n"), "info";
+}
+
+sub pet_capture_result {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message T("Pet capture success\n"), "info";
+	} else {
+		message T("Pet capture failed\n"), "info";
+	}
+}
+
+sub pet_emotion {
+	my ($self, $args) = @_;
+	my ($ID, $type) = ($args->{ID}, $args->{type});
+	my $emote = $emotions_lut{$type}{display} || "/e$type";
+	if ($pets{$ID}) {
+		message $pets{$ID}->name . " : $emote\n", "emotion";
+	}
+}
+
 sub pet_evolution_result {
 	my ($self, $args) = @_;
 	if ($args->{result} == 0x0) {
@@ -6505,6 +6531,81 @@ sub pet_evolution_result {
 		error TF("Loyal Intimacy is required to evolve.\n");
 	} elsif ($args->{result} == 0x6) {
 		message TF("Pet evolution success.\n"), "success";
+	}
+}
+
+sub pet_food {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message TF("Fed pet with %s\n", itemNameSimple($args->{foodID})), "pet";
+	} else {
+		error TF("Failed to feed pet with %s: no food in inventory.\n", itemNameSimple($args->{foodID}));
+	}
+}
+
+sub pet_info {
+	my ($self, $args) = @_;
+	$pet{name} = bytesToString($args->{name});
+	$pet{renameflag} = $args->{renameflag};
+	$pet{level} = $args->{level};
+	$pet{hungry} = $args->{hungry};
+	$pet{friendly} = $args->{friendly};
+	$pet{accessory} = $args->{accessory};
+	$pet{type} = $args->{type} if (exists $args->{type});
+	debug "Pet status: name=$pet{name} name_set=". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".($pet{type}||"N/A")."\n", "pet";
+}
+
+sub pet_info2 {
+	my ($self, $args) = @_;
+	my ($type, $ID, $value) = @{$args}{qw(type ID value)};
+
+	# receive information about your pet
+
+	# related freya functions: clif_pet_equip clif_pet_performance clif_send_petdata
+
+	# these should never happen, pets should spawn like normal actors (at least on Freya)
+	# this isn't even very useful, do we want random pets with no location info?
+	#if (!$pets{$ID} || !%{$pets{$ID}}) {
+	#	binAdd(\@petsID, $ID);
+	#	$pets{$ID} = {};
+	#	%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
+	#	$pets{$ID}{'name_given'} = "Unknown";
+	#	$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
+	#	debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+	#}
+	#if ($monsters{$ID}) {
+	#	if (%{$monsters{$ID}}) {
+	#		objectRemoved('monster', $ID, $monsters{$ID});
+	#	}
+	#	# always clear these in case
+	#	binRemove(\@monstersID, $ID);
+	#	delete $monsters{$ID};
+	#}
+
+	if ($type == 0) {
+		# You own no pet.
+		undef $pet{ID};
+
+	} elsif ($type == 1) {
+		$pet{friendly} = $value;
+		debug "Pet friendly: $value\n";
+
+	} elsif ($type == 2) {
+		$pet{hungry} = $value;
+		debug "Pet hungry: $value\n";
+
+	} elsif ($type == 3) {
+		# accessory info for any pet in range
+		$pet{accessory} = $value;
+		debug "Pet accessory info: $value\n";
+
+	} elsif ($type == 4) {
+		# performance info for any pet in range
+		#debug "Pet performance info: $value\n";
+
+	} elsif ($type == 5) {
+		# You own pet with this ID
+		$pet{ID} = $ID;
 	}
 }
 
