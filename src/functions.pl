@@ -546,7 +546,7 @@ sub finalInitialization {
 	StdHttpReader::init();
 	initStatVars();
 	initRandomRestart();
-	initUserSeed();
+#	initUserSeed();
 	initConfChange();
 	Log::initLogFiles();
 	$timeout{'injectSync'}{'time'} = time;
