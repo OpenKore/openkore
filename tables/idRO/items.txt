@@ -162,7 +162,7 @@
 5332#5332#
 5336#5336#
 5337#5337#
-5338#5338#
+5338#Boyfriend Wanted Hat#
 5339#5339#
 5340#5340#
 5341#5341#
@@ -170,7 +170,7 @@
 5343#5343#
 5344#5344#
 5345#5345#
-5346#5346#
+5346#Girlfriend Wanted Hat#
 5352#5352#
 5358#5358#
 5372#5372#
@@ -8501,3 +8501,66 @@
 31326#Costume: False Ears#
 31327#Costume: Make US Great Again#
 31328#Costume: Dark Elves Ears#
+
+//====================update 22012019=================
+31331#15th_Anniversary_Wing#
+31332#Costume: Dark_Snake_Lord_Stall#
+31333#Costume: Large_Sorcerer_Crown#
+31334#Costume: Fox#
+31335#Costume: Forest_Guide#
+31336#Costume: Medium_Wave#
+31337#Costume: Kishu_Inu#
+31338#Costume: Giant Cat Bag#
+31339#Costume: Princess_Ribbon_Crown#
+31340#Costume: Variant_Veil#
+31341#Costume: Protect_Cloth#
+31342#Godly_Material_Box#
+31343#Invincible_Shield_Box#
+31344#Blessed_Refinement_Box#
+31345#Extreme_Refinement_Box#
+31346#Mythical_Costume Pack#
+31347#Autumn_Party_Costume Pack#
+31348#Holy_Dark_Costume Scroll#
+31349#Garment_Costume Box#
+31350#Costume: Gabriel Wing#
+
+//====================update 31012019=================
+19269#Happy_Flapping_Wing#
+20846#Temporal_Manteau#
+20800#Enforcer_Cape#
+22134#Enforcer_Shoes#
+31351#Costume: Overprotector#
+31352#Costume: Chung E Shinyon Cap#
+31353#Costume: Copper Dragonhelm#
+31354#Costume: Protect_Feathers#
+31355#Costume: Sailor_Collar#
+31356#Costume: Golden_Savage_Hat#
+31357#Costume: Blessing_Sky_Lantern#
+31358#Costume: Pink_Butterfly_Wing#
+31359#Lunar_Festive_Box#
+31360#Fabulous_Lunar_Costume_Box#
+31361#Enriched Oridecon Pack 1#
+31362#Enriched Elunium Pack 1#
+31363#HD Bradium Pack 1#
+31364#HD Carnium Pack 1#
+31365#Enriched Oridecon Pack 2#
+31366#Enriched Elunium Pack 2#
+31367#HD Bradium Pack 2#
+31368#HD Carnium Pack 2#
+31369#Enriched Oridecon Pack 50#
+31370#Enriched Elunium Pack 50#
+31371#HD Bradium Pack 50#
+31372#HD Carnium Pack 50#
+31373#Costume: Super Cute Doge#
+
+//====================update 07022019=================
+31374#Lovey Dovey Costume Box#
+31375#Costume: Memory Of Lover#
+31376#Costume: Alice Wig Pink#
+31377#Costume: Love Feeling#
+31378#Costume: Angel Mini Silk Hat#
+31379#Costume: Large Ribbon Scarf Red#
+20463#Costume: Two Tone Beret#
+31380#Costume: Piamette Roll Hair#
+31381#Costume: Lolita Two Side#
+31382#Costume: Shrine Maiden Hat#
