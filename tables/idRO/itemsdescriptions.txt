@@ -9901,7 +9901,7 @@ Berat : ^77777780^000000
 #
 561#
 Coklat putih batangan yang sangat enak dan sering dicampur dengan kue biskuit.
-Berat : ^77777780^000000
+Berat : ^7777778^000000
 #
 // ------2005?????? Chinese event ------ 
 570#
@@ -49935,13 +49935,14 @@ Mad Bunny Scroll.
 Jika dibuka, dapat memberikan kamu salah satu dari list berikut ini :
 1 [Mad Bunny Special]
 1 [Magic Card Album]
-1 [Blessed Armor Ore]
-1 [Blessed Weapon Ore]
-1 [Premium Reset Stone Box]
-1 [Safe to 7 Weapon Certificate]
-1 [Safe to 7 Armor Certificate]
-3 [Job Manual]
-2 [Battle Manual X3]
+500 [Marvelous Medal]
+1 [Certificate +5 Armor]
+1 [Certificate +5 Weapon]
+1 [Enriched Elunium Box 25]
+1 [Enriched Oridecon Box 25]
+2 [Will of Warrior]
+3 [Fruit of Life]
+5 [Battle Manual X3]
 
 Berat : ^7777770^000000.
 #
@@ -51347,6 +51348,103 @@ Costume: Super Cute Doge
 Wow. Such fluff, much cute. Wow.
 Class : ^777777Costume^000000 Def : ^7777770^000000
 Location : ^777777Middle,Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 07022019=================
+31374#
+Lovey Dovey Costume Box
+Kotak yang berisi kostum spesial untuk menyambut Hari Kasih Sayang.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Memory of Lovers
+Costume: Large Ribbon Scarf Red
+Costume: Two Tone Beret
+Costume: Angel Mini Silk Hat
+Costume: Alice Wig Pink
+Costume: Shrine Maiden Hat
+Costume: Lolita Two Side
+Costume: Magical Feather
+Costume: Piamette Roll Hair
+Costume: Love Feeling
+^000000
+Berat : ^7777770^000000
+#
+31375#
+Costume: Memory Of Lover
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31376#
+Costume: Alice Wig Pink
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31377#
+Costume: Love Feeling
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31378#
+Costume: Angel Mini Silk Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31379#
+Costume: Large Ribbon Scarf Red
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+20463#
+Costume: Two Tone Beret
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31380#
+Costume: Piamette Roll Hair
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31381#
+Costume: Lolita Two Side
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31382#
+Costume: Shrine Maiden Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5338#
+Penutup kepala dengan iklan pencarian pasangan pria. Tidak perlu ke website pencari jodoh. Pakai ini saja dasar jomblo.
+Class : ^777777Heaggear^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5346#
+Penutup kepala dengan iklan pencarian pasangan wanita. Tidak perlu ke website pencari jodoh. Pakai ini saja dasar jomblo.
+Class : ^777777Heaggear^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #

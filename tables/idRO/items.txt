@@ -162,7 +162,7 @@
 5332#5332#
 5336#5336#
 5337#5337#
-5338#5338#
+5338#Boyfriend Wanted Hat#
 5339#5339#
 5340#5340#
 5341#5341#
@@ -170,7 +170,7 @@
 5343#5343#
 5344#5344#
 5345#5345#
-5346#5346#
+5346#Girlfriend Wanted Hat#
 5352#5352#
 5358#5358#
 5372#5372#
@@ -8552,3 +8552,15 @@
 31371#HD Bradium Pack 50#
 31372#HD Carnium Pack 50#
 31373#Costume: Super Cute Doge#
+
+//====================update 07022019=================
+31374#Lovey Dovey Costume Box#
+31375#Costume: Memory Of Lover#
+31376#Costume: Alice Wig Pink#
+31377#Costume: Love Feeling#
+31378#Costume: Angel Mini Silk Hat#
+31379#Costume: Large Ribbon Scarf Red#
+20463#Costume: Two Tone Beret#
+31380#Costume: Piamette Roll Hair#
+31381#Costume: Lolita Two Side#
+31382#Costume: Shrine Maiden Hat#
