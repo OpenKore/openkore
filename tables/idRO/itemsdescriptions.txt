@@ -49935,14 +49935,13 @@ Mad Bunny Scroll.
 Jika dibuka, dapat memberikan kamu salah satu dari list berikut ini :
 1 [Mad Bunny Special]
 1 [Magic Card Album]
-500 [Marvelous Medal]
-1 [Certificate +5 Armor]
-1 [Certificate +5 Weapon]
-1 [Enriched Elunium Box 25]
-1 [Enriched Oridecon Box 25]
-2 [Will of Warrior]
-3 [Fruit of Life]
-5 [Battle Manual X3]
+1 [Blessed Armor Ore]
+1 [Blessed Weapon Ore]
+1 [Premium Reset Stone Box]
+1 [Safe to 7 Weapon Certificate]
+1 [Safe to 7 Armor Certificate]
+3 [Job Manual]
+2 [Battle Manual X3]
 
 Berat : ^7777770^000000.
 #
@@ -51017,4 +51016,337 @@ Class : ^777777Costume^000000 Defense : ^7777770^000000
 Location : ^777777Garment ^000000 Weight : ^7777770^000000
 Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
+#
+
+//====================update 31012019=================
+19269#
+Happy Flapping Angel Wing
+Penutup kepala yang menyerupai sayap dari bidadari kebahagiaan. Membuat kamu terasa lebih ringan ketika memakainya.
+Meningkatkan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
+Mengurangi serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
+Memberikan kemungkinan untuk menjatuhkan Witched Starsand ketika monster Clock Tower or Nightmare Clock Tower dikalahkan.
+Jika tingkat tempa +5 atau lebih, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
+Jika tingkat tempa +5 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
+Jika tingkat tempa +7 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+Jika tingkat tempa +7 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+Jika tingkat tempa +8 or higher, anti Stone Curse.
+Jika tingkat tempa +9 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 20%.
+Jika tingkat tempa +9 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 20%
+
+Class : ^777777Headgear^000000 Def : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000#
+
+20846#
+Temporal Manteau
+Sebuah mantel yang dibuat sudah sangat lama tetapi masih terlihat baru.
+
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Agi Boots
+Max HP + 15%
+Mdef + 10
+Aspd + 5%
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Dex Boots
+Max HP + 15%
+Mdef + 10
+Meningkatkan serangan jarak jauh sebesar 5%.
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Int Boots
+Max HP + 15%
+Matk + 30
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Luk Boots
+Max HP + 15%
+Mdef + 10
+Meningkatkan serangan kritikal sebesar 5%.
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Str Boots
+Max HP + 15%
+Atk + 30
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Vit Boots
+Max HP + 15%
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+Meningkatkan efektivitas item healing sebesar 10%
+
+Class : ^777777Garment^000000 Def : ^77777738^000000
+Weight : ^77777740^000000
+Required Level : ^77777730^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+20800#
+Enforcer Cape
+Mantel yang sudah bersimbah darah ini mengeluarkan aura yang sangat buruk.
+Mengurangi delay skill sebesar 5%.
+Jika [Grimtooth] mencapai level maksimum,
+Meningkatkan serangan skill [Grimtooth] sebesar 50%.
+Jika tingkat tempa +7 atau lebih, tambahan pengurangan delay skill sebesar 3%.
+Tambahan peningkatan serangan skill [Grimtooth] sebesar 1% untuk setiap level.
+Jika tingkat tempa +9 atau lebih, Max SP + 5%, tambahan pengurangan delay skill sebesar 3%.
+^777777Guillotine Cross Bonus^000000
+Max HP + 15%
+Mengurangi serangan jarak jauh yang diterima sebesar 20%.
+Jika tingkat tempa +7 atau lebih, tambahan Max HP + 5%
+Tambahan pengurangan serangan jarak jauh yang diterima sebesar 15%.
+^777777Set Bonus^000000
+Enforcer Cape
+Horn Card
+Menghilangkan efek dari Horn Card, Mengurangi serangan jarak jauh yang diterima sebesar 35%.
+^777777Set Bonus^000000
+Enforcer Cape
+Imuke Upper Shield
+Menghilangkan efek dari Imuke Upper Shield, Mengurangi serangan jarak jauh yang diterima sebesar 35%.
+
+Class : ^777777Garment^000000 Def : ^77777718^000000
+Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+22134#
+Enforcer Shoes
+Sepatu yang sudah bersimbah darah ini mengeluarkan aura yang sangat buruk.
+Max HP + 3%, Max SP + 3%.
+Dapat menggunakan [Power Maximize] Lv 1
+Mengurangi penggunaan SP dari [Meteor Assault] sebesar 8
+Jika tingkat tempa +7 atau lebih:
+Tambahan Max HP + 7%
+Tambahan Max SP + 7%
+Meningkatkan serangan [Meteor Assault] sebesar 1% untuk setiap level.
+Jika tingkat tempa +9 atau lebih:
+Tambahan Max HP + 10%
+Tambahan Max SP + 10%
+Atk + 4% untuk setiap level skill [Weapon Crush].
+Mengurangi variabel cast time dari [Meteor Assault] sebesar 7% untuk setiap level [Counter Slash], [Weapon Blocking] dan [Weapon Crush].
+Mengurangi cooldown [Hallucination Walk] sebesar 5 detik untuk setiap level [Weapon Blocking].
+Mengabailam 4% hard defense dari monster biasa, boss dan pemain ketika menyerang secara fisik untuk setiap level [Counter Slash].
+Tambahan peningkatan serangan dari [Meteor Assault] sebesar 30% untuk setiap level [Poison React].
+
+Class : ^777777Shoes^000000 Def : ^77777712^000000
+Weight : ^77777740^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+31351#
+Costume: Overprotector
+Topi yang dirancang melindungi kepala dengan rapat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31352#
+Costume: Chung E Shinyon Cap
+Sebuah penata rambut yang di design khusus untuk anak-anak di tiongkok
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31353#
+Costume: Copper Dragonhelm
+Sebuah Headgear simbol dari tahun baru tiongkok 2013 jika digunakan kamu akan menyerupai seperti naga legendaris.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31354#
+Costume: Protect_Feathers
+Sebuah penutup kepala yang dihias dengan bulu dan dirancang untuk melindungi bagian belakang kepala.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31355#
+Costume: Sailor_Collar
+Sebuah kerah pelaut yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31356#
+Costume: Golden_Savage_Hat
+Sebuah penutup kepala berbentuk babi yang diwarnai emas. Rumornya bisa membawa keberuntungan.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31357#
+Costume: Blessing_Sky_Lantern
+Lampion ini jika dilepaskan dapat membawa keberuntungan dan umur panjang.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31358#
+Costume: Pink_Butterfly_Wing
+Kostum sayap kupu-kupu yang cantik.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31359#
+Lunar_Festive_Box
+Kotak spesial untuk menyambut Lunar New Year 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Kardui Ears
+Hero Mask
+Happy Flapping Angel Wing [1]
+Drake Coat [1]
+Evil Dragon Armor [1]
+Kirin Armor [1]
+Bravery Bag [1]
+Temporal Manteau [1]
+Enforcer Cape [1]
+Enforcer Shoes [1]
+Fairy Leaf Powder [1]
+King Spirit's Ring [1]
+25 Enriched Oridecon Box
+25 Enriched Elunium Box
+5 Battle Manual X3
+8 Job Battle Manual^000000
+Berat : 0 #
+31360#
+Fabulous_Lunar_Costume_Box
+Kotak yang berisi kostum spesial untuk menyambut Lunar New Year 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Pink Butterfly Wing
+Costume: Super Cute Doge
+Costume: Overprotector
+Costume: Chung E Shinyon Cap
+Costume: Copper Dragonhelm
+Costume: Protect_Feathers
+Costume: Sailor_Collar
+Costume: Golden_Savage_Hat
+Costume: Blessing_Sky_Lantern
+Costume: Shine Santa Poring
+^000000
+Berat : ^7777770^000000
+
+#
+31361#
+Enriched Oridecon Pack 1
+Kotak yang berisi :
+100 Enriched Oridecon
+10 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31362#
+Enriched Elunium Pack 1
+Kotak yang berisi :
+100 Enriched Elunium
+10 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31363#
+HD Bradium Pack 1
+Kotak yang berisi :
+100 HD Bradium
+8 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31364#
+HD Carnium Pack 1
+Kotak yang berisi :
+100 HD Carnium
+8 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31365#
+Enriched Oridecon Pack 2
+Kotak yang berisi :
+100 Enriched Oridecon
+5 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31366#
+Enriched Elunium Pack 2
+Kotak yang berisi :
+100 Enriched Elunium
+5 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31367#
+HD Bradium Pack 2
+Kotak yang berisi :
+100 HD Bradium
+3 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31368#
+HD Carnium Pack 2
+Kotak yang berisi :
+100 HD Carnium
+3 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31369#
+Enriched Oridecon Pack 50
+Kotak yang berisi :
+50 Enriched Oridecon
+1 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31370#
+Enriched Elunium Pack 50
+Kotak yang berisi :
+50 Enriched Elunium
+1 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31371#
+HD Bradium Pack 20
+Kotak yang berisi :
+20 HD Bradium Pack
+2 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31372#
+HD Carnium Pack 20
+Kotak yang berisi :
+20 HD Carnium
+2 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31373#
+Costume: Super Cute Doge
+Wow. Such fluff, much cute. Wow.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle,Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #
