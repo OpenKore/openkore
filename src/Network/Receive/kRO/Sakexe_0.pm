@@ -2799,33 +2799,6 @@ sub skills_list {
 	}
 }
 
-sub skill_add {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
-
-	$char->{skills}{$handle}{ID} = $args->{skillID};
-	$char->{skills}{$handle}{sp} = $args->{sp};
-	$char->{skills}{$handle}{range} = $args->{range};
-	$char->{skills}{$handle}{up} = $args->{upgradable};
-	$char->{skills}{$handle}{targetType} = $args->{target};
-	$char->{skills}{$handle}{lv} = $args->{lv};
-	$char->{skills}{$handle}{new} = 1;
-
-	#Fix bug , receive status "Night" 2 time
-	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
-
-	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $args->{skillID},
-		handle => $handle,
-		level => $args->{lv},
-		upgradable => $args->{upgradable},
-	});
-}
-
 sub storage_password_request {
 	my ($self, $args) = @_;
 
