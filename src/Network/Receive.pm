@@ -5452,6 +5452,12 @@ sub npc_store_info {
 	}
 }
 
+sub npc_clear_dialog {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg";
+}
+
 sub deal_add_you {
 	my ($self, $args) = @_;
 
