@@ -7298,6 +7298,24 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
+sub vender_buy_fail {
+	my ($self, $args) = @_;
+
+	if ($args->{fail} == 1) {
+		error TF("Failed to buy %s of item #%s from vender (insufficient zeny) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 2) {
+		error TF("Failed to buy %s of item #%s from vender (overweight) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 4) {
+		error TF("Failed to buy %s of item #%s from vender (requested to purchase more than vender had in stock) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 6) {
+		error TF("Failed to buy %s of item #%s from vender (vender refreshed shop before purchase request) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 8) {
+		error TF("Failed to buy %s of item #%s from vender (vender would go over max zeny with the purchase) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} else {
+		error TF("Failed to buy %s of item #%s from vender (unknown error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	}
+}
+
 # Receive list of items from cash shop NPC
 #
 # ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]]
