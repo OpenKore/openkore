@@ -406,7 +406,7 @@ sub new {
 		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
-		'0299' => ['rental_expired', 'v2', [qw(ID nameID)]], # 6
+		'0299' => ['rental_expired', 'a2 v', [qw(ID nameID)]], # 6
 		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
 		'029B' => ($rpackets{'029B'} == 72) # or 80
 			? ['mercenary_init', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]] # 72
