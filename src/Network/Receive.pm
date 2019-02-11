@@ -6975,7 +6975,7 @@ sub guild_storage_log {
 
 sub skill_delete {
 	my ( $self, $args ) = @_;
-	my $skill = new Skill( idn => $args->{ID} );
+	my $skill = new Skill( idn => $args->{skillID} );
 	return if !$skill;
 	return if !$char->{skills}->{ $skill->getHandle };
 
@@ -7392,6 +7392,33 @@ sub merge_item_result {
 sub parse_merge_item_result {
 	my ($self, $args) = @_;
 	$args->{index} = (unpack "(a2)", $args->{itemIndex})-2;
+}
+
+sub skill_add {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
+
+	$char->{skills}{$handle}{ID} = $args->{skillID};
+	$char->{skills}{$handle}{sp} = $args->{sp};
+	$char->{skills}{$handle}{range} = $args->{range};
+	$char->{skills}{$handle}{up} = $args->{upgradable};
+	$char->{skills}{$handle}{targetType} = $args->{target};
+	$char->{skills}{$handle}{lv} = $args->{lv};
+	$char->{skills}{$handle}{new} = 1;
+
+	#Fix bug , receive status "Night" 2 time
+	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
+
+	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
+
+	Plugins::callHook('packet_charSkills', {
+		ID => $args->{skillID},
+		handle => $handle,
+		level => $args->{lv},
+		upgradable => $args->{upgradable},
+	});
 }
 
 1;

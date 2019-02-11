@@ -174,7 +174,7 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
-		'0111' => ['skill_add', 'v2 x2 v3 Z24', [qw(skillID target lv sp range name)]],
+		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]],
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]],
 		'0119' => ['character_status', 'a4 v3 C', [qw(ID opt1 opt2 option stance)]],
@@ -457,7 +457,7 @@ sub new {
 		'043E' => ['skill_post_delaylist'],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]],
-		'0441' => ['skill_delete', 'v', [qw(ID)]],
+		'0441' => ['skill_delete', 'v', [qw(skillID)]],
 		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]],
 		'0444' => ['cash_item_list', 'v V3 c v', [qw(len cash_point price discount_price type item_id)]], #TODO: PACKET_ZC_SIMPLE_CASH_POINT_ITEMLIST
 		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]],
@@ -2830,33 +2830,6 @@ sub skills_list {
 			upgradable => $up,
 		});
 	}
-}
-
-sub skill_add {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
-
-	$char->{skills}{$handle}{ID} = $args->{skillID};
-	$char->{skills}{$handle}{sp} = $args->{sp};
-	$char->{skills}{$handle}{range} = $args->{range};
-	$char->{skills}{$handle}{up} = 0;
-	$char->{skills}{$handle}{targetType} = $args->{target};
-	$char->{skills}{$handle}{lv} = $args->{lv};
-	$char->{skills}{$handle}{new} = 1;
-
-	#Fix bug , receive status "Night" 2 time
-	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
-
-	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $args->{skillID},
-		handle => $handle,
-		level => $args->{lv},
-		upgradable => 0,
-	});
 }
 
 sub character_equip {
