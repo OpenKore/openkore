@@ -2350,19 +2350,6 @@ sub vender_lost {
 	delete $venderLists{$ID};
 }
 
-# Buy from a vending shop -- failed for one of 2+ reasons
-sub vender_buy_fail {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{ID});
-	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{ID});
-	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
-	}
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
