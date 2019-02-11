@@ -194,7 +194,7 @@ sub new {
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]],
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]],
-		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]],
+		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]],
 		'0136' => ['vending_start'],
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]],
@@ -3143,19 +3143,6 @@ sub vender_lost {
 	my $ID = $args->{ID};
 	binRemove(\@venderListsID, $ID);
 	delete $venderLists{$ID};
-}
-
-# Buy from a vending shop -- failed for one of 2+ reasons
-sub vender_buy_fail {
-	my ($self, $args) = @_;
-
-	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{ID});
-	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{ID});
-	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
-	}
 }
 
 sub mail_refreshinbox {
