@@ -7833,12 +7833,6 @@ sub rental_time {
 	message TF("The '%s' item will disappear in %d minutes.\n", itemNameSimple($args->{nameID}), $args->{seconds}/60), "info";
 }
 
-# TODO can we use itemName($actor)? -> tech: don't think so because the item might be removed from inventory before this packet is sent -> untested
-sub rental_expired {
-	my ($self, $args) = @_;
-	message TF("Rental item '%s' has expired!\n", itemNameSimple($args->{nameID})), "info";
-}
-
 # 0289
 # TODO
 sub cash_buy_fail {
