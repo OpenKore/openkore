@@ -698,7 +698,12 @@ sub cmdAutoSell {
 
 sub cmdAutoStorage {
 	message T("Initiating auto-storage.\n");
-	AI::queue("storageAuto");
+	if (ai_canOpenStorage()) {
+		AI::queue("storageAuto");
+	} else {
+		error T("Error in function 'autostorage' (Automatic storage of items)\n" .
+		"You cannot use the Storage Service. Very low level of basic skills or not enough zeny.\n");
+	}
 }
 
 sub cmdBangBang {
