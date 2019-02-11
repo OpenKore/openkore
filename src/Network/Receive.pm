@@ -2877,6 +2877,21 @@ sub inventory_item_removed {
 	}
 }
 
+# 0299
+sub rental_expired {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByID($args->{ID});
+	message TF("Rental item '%s' has expired!\n", itemNameSimple($args->{nameID})), "info";
+
+	if ($item) {
+		inventoryItemRemoved($item->{binID}, 1);
+		Plugins::callHook('rental_expired', {
+			index => $item->{binID},
+			nameID => $item->{nameID},
+		});
+	}
+}
+
 # 012B
 sub cart_off {
 	$char->cart->close;
