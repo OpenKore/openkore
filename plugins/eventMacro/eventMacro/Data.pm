@@ -71,7 +71,9 @@ our $macroKeywords = join '|', qw(
 	nick
 	push pop unshift shift
 	exists delete
-	defined
+	keys values
+	defined 
+	split
 	questStatus questInactiveCount questIncompleteCount questCompleteCount
 );
 
