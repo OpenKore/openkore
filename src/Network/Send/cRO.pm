@@ -36,7 +36,7 @@ sub new {
 		actor_name_request 0369
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_create 0970
+		char_create 0A39
 		storage_password 023B
 		send_equip 0998
 		sell_buy_complete 09D4
