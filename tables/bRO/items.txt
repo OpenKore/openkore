@@ -1432,7 +1432,7 @@
 2515#Asa de Águia#
 2516#Sobrepeliz do Falcão#
 2517#Manteau de Vali#
-2518#Véu de Morpheu#
+2518#Véu de Morpheus#
 2519#Manteau de Morrigane#
 2520#Ombreiras de Goibne#
 2521#Cardigã Angelical#
@@ -1842,7 +1842,7 @@
 4088#Carta Frilldora#
 4089#Carta Peixe-Espada#
 4090#Carta Munak#
-4091#Carta Cobold#
+4091#Carta Kobold#
 4092#Carta Esqueleto Operário#
 4093#Carta Obeaune#
 4094#Carta Esqueleto Arqueiro#
@@ -2042,8 +2042,8 @@
 4288#Carta Carat#
 4289#Carta Lagarta#
 4290#Carta Gato de Nove Caudas#
-4291#Carta Líder Cobold#
-4292#Carta Cobold Arqueiro#
+4291#Carta Líder Kobold#
+4292#Carta Kobold Arqueiro#
 4293#Carta Cookie#
 4294#Carta Quve#
 4295#Carta Kraben#
@@ -6120,6 +6120,7 @@
 18741#Fogo Esmeralda#
 18742#Luar de Cristal#
 18744#Gotas da Via Láctea#
+18746#Sopro de Skadi#
 18752#Livro Amaldiçoado#
 18754#Presas Vampíricas#
 18755#Boina Alada#
