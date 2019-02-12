@@ -82,18 +82,15 @@ sub encrypt_password {
 }
 
 sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-	
-	my $msg = $self->reconstruct({
-		switch => 'char_create',
-		name => stringToBytes($name),
-		slot => $slot,
-		hair_style => $hair_style,
-		hair_color => $hair_color,
-	});
-	
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
+	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
+
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+	$job_id     ||= 0;    # novice
+	$sex        ||= 0;    # female
+
+	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
+	$self->sendToServer( $msg );
 }
 
 sub sendSellBuyComplete {
