@@ -1009,7 +1009,6 @@ sub next {
 			}
 		
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
-			warning("nipo:defining values to an array or hash\n");
 			if ($value =~ /^=\s*(.*)/i) {
 				my $value = $1;
 				
@@ -1040,10 +1039,10 @@ sub next {
 					
 				} elsif ($value =~ /\w+\s*\(.*\)$/) {
 					my $real_value = $self->parse_command($value);
-					warning("nipo: found this: $value\n, has tured into this: $real_value\n");
 					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
+						
+						#if is a array ref, have to convert into a hash ref
 						if (ref($real_value) eq 'ARRAY') {
-							#if is a array ref, have to convert into a hash ref
 							my %hash = @{$real_value};
 							$real_value = \%hash;
 						}
@@ -2075,7 +2074,6 @@ sub parse_command {
 		# first parse _then_ substitute. slower but safer
 		if ($keyword ne qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
-			warning("nipo: inside_brackets: '$inside_brackets', parsed:'$parsed'\n");
 		}
 		my $only_replace_once = 0;
 
@@ -2169,16 +2167,13 @@ sub parse_command {
 		} elsif ($keyword eq 'split') {
 			my ($pattern, $string) = getPattern($inside_brackets);
 			my @values = split($pattern, $self->substitue_variables($string));
-			
-			return \@values;
+			$result = join (',', @values);
 			
 		} elsif ($keyword eq 'keys') {
-			my @array = find_hash_and_get_keys($inside_brackets);
-			return \@array;
+			$result = join ',', find_hash_and_get_keys($inside_brackets);;
 			
 		} elsif ($keyword eq 'values') {
-			my @array =find_hash_and_get_values($inside_brackets);
-			return \@array;
+			$result = join ',', find_hash_and_get_values($inside_brackets);
 			
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
