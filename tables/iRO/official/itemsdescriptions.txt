@@ -489,6 +489,10 @@ Class: ^808080Recovery^000000
 Weight: ^8080806^000000
 Restores ^00800040^000000 to ^00800070^000000 HP.
 #
+585#
+#
+586#
+#
 587#
 A freshly scented, thorny fruit from a tree.
 Class: ^808080Recovery^000000
@@ -505,6 +509,8 @@ A delicious snack food that is a favorite of teenagers everywhere.
 Class: ^808080Recovery^000000
 Weight: ^80808015^000000
 Restores ^008000375^000000 to ^008000445^000000 HP.
+#
+590#
 #
 591#
 A pancake topped with caviar. Average people have trouble telling the difference between fine caviar and common frog spawn eggs.
@@ -4561,6 +4567,8 @@ Atk + 20, if the users base Luk is 90 or higher.
 Crit + 5, if the users base Dex is 90 or higher.
 Increases the damage of ^0000FFMammonite^000000 by an additional 15%, if the users base Dex and Luk is 90 or higher.
 This item is indestructible in battle.
+#
+1313#
 #
 1314#
 A light axe imbued with the Wind property which can be hurled at enemies.
@@ -13298,6 +13306,10 @@ Usable By: ^808080All Jobs^000000
 Luk + 1
 Mdef + 1
 #
+2237#
+#
+2238#
+#
 2239#
 An aristocratically stylish lens that is worn for only one eye.
 Class: ^808080Headgear^000000
@@ -13313,6 +13325,8 @@ Usable By: ^808080All Jobs^000000
 Matk + 7%
 HP Recovery + 15%
 SP Recovery + 15%
+#
+2240#
 #
 2241#
 A white colored mustache, symbol of experience and well aged sophistication.
@@ -14541,6 +14555,12 @@ Usable By: ^808080Wizard Jobs, Sage Jobs, Soul Linker^000000
 Mdef + 4
 Reduces the variable casting time of skills by 3%.
 #
+2361#
+#
+2362#
+#
+2363#
+#
 2364#
 This plate armor was forged using mysterious materials from a meteor.
 Class: ^808080Armor^000000
@@ -14590,6 +14610,8 @@ Defense : ^77777742^000000
 Weight : ^77777775^000000
 Required Level : ^77777750^000000
 Jobs: ^777777Sniper Job^000000
+#
+2368#
 #
 2369#
 placeholder
@@ -15315,6 +15337,8 @@ If a higher level of this skill is known, it will be cast instead.
 ^008080Shadow Walk^000000
 Adds a chance of inflicting ^800000Blind^000000 on the target when performing a physical attack.
 Flee + 20 for 10 seconds when receiving a physical attack.
+#
+2427#
 #
 2428#
 placeholder
@@ -16441,6 +16465,8 @@ Defense: ^7777779^000000
 Weight : ^77777760^000000
 Required Level : ^77777740^000000
 Jobs : ^777777All except Novice^000000
+#
+2526#
 #
 2527#
 A garment that's
@@ -17883,6 +17909,12 @@ Required Level : ^77777760^000000
 Jobs: ^777777Every Job
 except Novice^000000
 #
+2668#
+#
+2669#
+#
+2670#
+#
 2671#
 A thimble for archers
 that enhances their
@@ -17895,6 +17927,16 @@ Defense: ^7777770^000000
 Weight : ^77777710^000000
 Required Level : ^77777765^000000
 Jobs: ^777777Archer Class^000000
+#
+2672#
+#
+2673#
+#
+2674#
+#
+2675#
+#
+2676#
 #
 2677#
 A beautiful ring
@@ -17959,6 +18001,8 @@ Class : ^777777Accessory^000000
 Defense: ^7777770^000000
 Weight : ^77777710^000000
 Jobs: ^777777All^000000
+#
+2681#
 #
 2682#
 A mysterious ring that is blessed by the Spirit of Water.
@@ -18235,6 +18279,12 @@ Weight : ^77777715^000000
 Required Level : ^77777750^000000
 Jobs: ^777777All Transcendent
 Jobs except Novice^000000
+#
+2704#
+#
+2705#
+#
+2706#
 #
 2707#
 This musical instrument that came from a myterious aged man. It sounds very beautiful.
@@ -19916,6 +19966,14 @@ Weight : ^77777710^000000
 Required Level : ^77777790^000000
 Jobs : ^777777Hunter / Bard / Dancer^0000007770^000000
 #
+2900#
+#
+2901#
+#
+2902#
+#
+2903#
+#
 2904#
 ABCDEFG!!
 #
@@ -20803,6 +20861,8 @@ Weight : ^7777770^000000
 3737#
 These points can be exchanged for various goods and services with ^ff0000Grandma Boxter^000000 at the second floor of the Eden Group Headquarters
 Weight : ^7777770^000000
+#
+3770#
 #
 4001#
 Luk +2
@@ -30697,6 +30757,8 @@ Weight : ^77777750^000000
 Required Level : ^77777740^000000
 Jobs: ^777777All Jobs^000000
 #
+5178#
+#
 5179#
 A tiara that has shimmering gold color. A big star in the middle of tiara is impressive
 INT + 2.
@@ -30813,6 +30875,8 @@ Head Position: ^777777 Upper ^000000
 Weight: ^77777710^000000
 Jobs : ^777777All^000000
 #
+5190#
+#
 5191#
 A long piece of black satin tied together into a neat little ribbon that wards off harmful magic.
 Mdef +3
@@ -30890,11 +30954,17 @@ Weight : ^77777710^000000
 Required Level : ^777777None^000000
 Jobs : ^777777Every job^000000
 #
+5198#
+#
+5199#
+#
 5200#
 Marco's favorite Hat. There's handwriting written inner side of the hat. It says 'delicating his memories to you..'
 Item Class : ^777777Headgear^000000    Defense : ^7777770^000000
 Location : ^777777Upper^000000    Weight : ^77777730^000000
 Available Job : ^777777All^000000
+#
+5201#
 #
 5202#
 A special pumpkin
@@ -31787,6 +31857,8 @@ Head Position : ^777777Upper^000000    Weight : ^77777710^000000
 Required Level. : ^77777720^000000
 Jobs : ^777777All Jobs except Novice^000000
 #
+5279#
+#
 5280#
 ^000088Rental Item^000000
 A headgear made from the horns of Baphomet.
@@ -31796,6 +31868,10 @@ This item cannot be Dropped or Traded.
 Class : ^777777Headgear^000000    Defense : ^77777710^000000
 Location : ^777777Upper^000000    Weight : ^77777780^000000
 Jobs : ^777777All^000000
+#
+5281#
+#
+5282#
 #
 5283#
 A hat adorned with a
@@ -32008,6 +32084,16 @@ Weight : ^77777710^000000
 Required Level: ^77777710^000000
 Jobs : ^777777All^000000
 #
+5295#
+#
+5296#
+#
+5297#
+#
+5298#
+#
+5299#
+#
 5300#
 Champion's Helm
 Defense : ^7777774^000000
@@ -32015,6 +32101,8 @@ Location : ^777777Upper ^000000
 Weight : ^77777780^000000
 Required Level : ^77777745^000000
 Job : ^777777All jobs^000000
+#
+5301#
 #
 5302#
 A hat made from a Brasilis Water Lily flower.
@@ -33333,6 +33421,8 @@ Jobs : ^777777All Jobs^000000
 5466#
 placeholder
 #
+5467#
+#
 5468#
 placeholder
 #
@@ -34311,6 +34401,10 @@ Location: ^777777Upper & Middle ^000000
 Weight : ^77777740^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All Jobs^000000
+#
+5586#
+#
+5587#
 #
 5588#
 A magnificent crown created to pay tribute to the 5th sign of the zodiac, Leo the Lion. Attached to the crown is a Peridot gemstone, the birthstone for those born under this sign.
@@ -35336,6 +35430,8 @@ Weight : ^77777730^000000
 Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
+5672#
+#
 5673#
 placeholder
 #
@@ -35814,6 +35910,12 @@ placeholder
 5768#
 placeholder
 #
+5770#
+#
+5772#
+#
+5773#
+#
 5774#
 Aaarrrgghhhh, this hat be made out of bona fide unidentified dead animal leather. With time, aging and weathering, most of the hat formed into it's current shape and dyed a bright red.
 Str +1
@@ -35835,6 +35937,8 @@ Weight : ^7777775^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+5776#
+#
 5777#
 placeholder
 #
@@ -35852,8 +35956,16 @@ Adds a chance of gaining ^008080Egg^000000 when a monster is killed.
 Max HP +1 % and Max SP + 1% per upgrade level of the item.
 Adds a chance of casting ^0000FFIncrease Agi^000000 on the user when performing or receiving a physical attack, where the level of the skill is equal to item upgrade level to a maximum upgrade level of 10.
 #
+5781#
+#
 5782#
 placeholder
+#
+5783#
+#
+5784#
+#
+5785#
 #
 5788#
 Mysterious glasses which are said to show objects stereoscopically.
@@ -35882,6 +35994,8 @@ Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+5793#
+#
 5795#
 A bright and beautiful miniature hat worn mostly for special occasions.
 Mdef+7
@@ -35892,6 +36006,14 @@ Location : ^777777Upper^000000
 Weight : ^77777710^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
+#
+5800#
+#
+5801#
+#
+5802#
+#
+5803#
 #
 5804#
 An eye bandage worn by
@@ -35939,6 +36061,8 @@ Job : ^777777All^000000
 5812#
 placeholder
 #
+5814#
+#
 5815#
 placeholder
 #
@@ -35955,6 +36079,10 @@ Class : ^777777Accessory^000000    Defense : ^7777773^000000
 Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
 #
+5819#
+#
+5822#
+#
 5827#
 A stylish stack of geology text books.
 Int +1
@@ -35966,6 +36094,30 @@ Location : ^777777Upper^000000
 Weight : ^77777710^000000
 Required Level : ^77777710^000000
 Jobs: ^777777All^000000
+#
+5829#
+#
+5830#
+#
+5831#
+#
+5832#
+#
+5833#
+#
+5834#
+#
+5835#
+#
+5836#
+#
+5837#
+#
+5838#
+#
+5839#
+#
+5840#
 #
 5848#
 A simple mask that you can use to disguise yourself with. Well, at least your eyes won't look the same.
@@ -35983,6 +36135,8 @@ Defense : ^7777770^000000
 Location :  ^777777Upper^000000
 Weight : ^7777770^000000
 Jobs : ^777777All Jobs^000000
+#
+5851#
 #
 5852#
 A colorful egg shell that seems fragile but has mysterious healing power within.
@@ -36002,6 +36156,14 @@ A real master never blames his tools. Though it is a normal fishing rod, it feel
 ^FF0000Account Bound^000000
 Class: ^808080Accessory^000000
 Weight: ^8080800^000000
+#
+5856#
+#
+5857#
+#
+5858#
+#
+5859#
 #
 5860#
 Enhanced version of Army Cap from the Midgard Crowd Control event.
@@ -37021,6 +37183,12 @@ A cloud of edible smoke.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+6101#
+#
+6102#
+#
+6103#
+#
 6104#
 A shell of an animal that's surprisingly edible.
 Class : ^777777Pet Food^000000
@@ -37089,6 +37257,12 @@ A type of dough that is filled with ground meat, usually served hot.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+6116#
+#
+6117#
+#
+6118#
+#
 6120#
 A paint that is safe for skin. It's used for body painting.
 ^179AECUsed for Shadow Chaser skills.^000000
@@ -37143,11 +37317,43 @@ Juno 179 187
 Weight : ^7777771^000000
 ^FF0000This item can only be opened until Aug. 25, 2009^000000
 #
+6127#
+#
 6128#
 An antidote to cure special kind of new poisons.
 ^179AECUsed for Guillotine Cross skills.^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+6129#
+#
+6130#
+#
+6131#
+#
+6132#
+#
+6133#
+#
+6134#
+#
+6135#
+#
+6136#
+#
+6137#
+#
+6138#
+#
+6139#
+#
+6140#
+#
+6141#
+#
+6142#
+#
+6143#
 #
 6144#
 A heartbreaking tear for others. Sometimes a miracle happens by this tear.
@@ -37446,12 +37652,22 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 Take this to Mighty Hammer in Eden Group or Payon next to the Kafra Shop Ladies to help you upgrade weapons at +10 and higher. This Bradium's density guarantees that your weapon will NOT break when attempting to upgrade and if the upgrade attempt fails, it will only downgrade 1 level instead of 3 like a normal Bradium.
 #
+6228#
+#
+6229#
+#
 6230#
 A certificate that enhances weapon refinement.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 Take this certificate, 1 ^008080Oridecon^000000 and an upgradable Weapon to Mighty Hammer in Eden Group or Payon. If he fails on the upgrade when the item is +4, +5, or +6 the item will not break and it will stay at its current upgrade level.
 ^FF0000This item will be consumed regardless fail or success.^000000
+#
+6231#
+#
+6232#
+#
+6233#
 #
 6234#
 A certificate that enhances armor refinement.
@@ -37472,6 +37688,10 @@ The most famous fruit from Brasilis. This fruit has natural properties that boos
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+6238#
+#
+6239#
 #
 6240#
 High Density Oridecon that has been buried deep underground. Used as a material to strengthen weapons currently from refine levels 7 through 9.
@@ -37981,6 +38201,8 @@ This item consumed on use.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+6379#
+#
 6380#
 A small coin with a polished surface. It is used for many purposes in the Village of Mora.
 ^FF0000Account Bound^000000
@@ -38104,6 +38326,8 @@ It's a feather used when the 1st Jaty Crown was made. Shows beautiful light.
 Class: ^808080Generic^000000
 Weight: ^80808010^000000
 #
+6413#
+#
 6415#
 Your precious Homunculus rebuilt into this Strange Embryo.
 Class: ^808080Generic^000000
@@ -38223,6 +38447,10 @@ A perfume made to make one smell like a Scaraba. Spraying this will help you avo
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
+6438#
+#
+6439#
+#
 6440#
 A lubricant which helps removing cards which are already stuck in a slot of an equipment. However, this will only help the card removal. The equipment and its refine level may have a problem after trying.
 ^FF0000Account Bound^000000
@@ -38247,6 +38475,8 @@ The legendary agent which is said to melt the surface of an object so anything c
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+6444#
 #
 6446#
 A suspicious Green Paper.
@@ -38298,6 +38528,8 @@ Weight: ^8080801^000000
 One of Santa's Gift Bags that he uses when he delivers gifts to the children of the world.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+6456#
 #
 6457#
 A special certificate that enhances equipment refinement.
@@ -39311,6 +39543,8 @@ A coin engraved with Angeling, made for the 10th anniversary. There will be some
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
+6802#
+#
 6803#
 Piece of Ancient Gigantes type monster. Maybe a researcher of some kind would see value in it.
 ^A730FBCan be exchanged for Sarah Earrings and their enchantments at Dimensional Gap.^000000
@@ -39368,6 +39602,8 @@ A token proves to become a member of solo. I was born solo and I'll live with so
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
+6824#
+#
 6825#
 An air purifier created by shelter engineers. As a final product, it is tremendous in size and weight.
 ^FF0000Character Bound^000000
@@ -39379,6 +39615,12 @@ A cluster of freshly harvested grapes.
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+6827#
+#
+6828#
+#
+6832#
 #
 6834#
 A fur from the legendary Blue Unicorn! It has a very soft and warm texture to it.
@@ -41651,6 +41893,8 @@ A small bronze key.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7330#
+#
 7331#
 An extremely rare flower that only blooms in heaven. It is believed to bring incredibly good luck to its owner.
 Class: ^808080Generic^000000
@@ -42009,6 +42253,40 @@ Lotto Ball.
 ^ffffff ^000000
 Weight : ^7777771^000000
 #
+7399#
+#
+7400#
+#
+7401#
+#
+7402#
+#
+7403#
+#
+7404#
+#
+7405#
+#
+7406#
+#
+7407#
+#
+7408#
+#
+7409#
+#
+7410#
+#
+7411#
+#
+7412#
+#
+7413#
+#
+7414#
+#
+7415#
+#
 7416#
 A well written letter of recommendation that is recognized by the Assassin Guild.
 ^FF0000Account Bound^000000
@@ -42270,6 +42548,10 @@ Weight: ^8080801^000000
 Healthy cooking oil that is used for stir frying or deep frying.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7458#
+#
+7459#
 #
 7460#
 An express ticket to Niflheim, the realm of the dead that is forbidden to the living.
@@ -42806,6 +43088,10 @@ Each bond is worth 10,000 zeny.
 ^ff0000This item is character bound^000000
 Weight : ^7777770^000000
 #
+7485#
+#
+7486#
+#
 7487#
 A bottle of fine, sweet scented culinary wine obtained from the Juno Pub.
 ^FF0000Character Bound^000000
@@ -42987,6 +43273,12 @@ A gold coin forged by the leprechauns. Leprechauns value gold over any other met
 Class: ^808080Generic^000000
 Weight: ^80808010^000000
 #
+7518#
+#
+7519#
+#
+7520#
+#
 7521#
 A bead, imbued with the power of Fire. It serves as a catalyst for the ways of the Ninja.
 ^179AECUsed for Ninja skills.^000000
@@ -43011,10 +43303,18 @@ An orb that is used as a catalyst to enable a Ninja to realize his latent abilit
 Class: ^808080Generic^000000
 Weight: ^8080802^000000
 #
+7525#
+#
 7526#
 A part of Joshua's missing manuscript. It's full of meaningful content that really touches the soul.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7527#
+#
+7528#
+#
+7529#
 #
 7530#
 'Amatsu the Land of Destiny'
@@ -43063,6 +43363,8 @@ Weight: ^8080800^000000
 Upon seeing all the sites and sights in Ayothaya the Rune Midgard Tour Agency has stamped this  photo album with their official seal.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7538#
 #
 7539#
 A small coin with a monster Poring engraved in it.
@@ -43119,11 +43421,21 @@ Lotto Ball.
 ^ffffff ^000000
 Weight : ^7777771^000000
 #
+7547#
+#
 7548#
 When you are running with these bumpy soles, you'll never be slippery.
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7549#
+#
+7550#
+#
+7551#
+#
+7552#
 #
 7553#
 A delicate flower found in the depths of Brasilis.
@@ -43142,6 +43454,16 @@ A green aromatic stick.
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7556#
+#
+7557#
+#
+7558#
+#
+7559#
+#
+7560#
 #
 7561#
 A frozen heart that will give you chills if you touch it.
@@ -43238,10 +43560,46 @@ A shiny yellow jewel.
 Class: ^808080Generic^000000
 Weight: ^8080805^000000
 #
+7578#
+#
+7579#
+#
+7581#
+#
+7582#
+#
+7583#
+#
+7584#
+#
+7585#
+#
+7586#
+#
+7587#
+#
+7588#
+#
+7589#
+#
+7590#
+#
+7591#
+#
+7592#
+#
+7593#
+#
 7594#
 Sonia's letter to grandma Emma.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7595#
+#
+7596#
+#
+7597#
 #
 7598#
 A card marked with the letter I which is used for special events.
@@ -43273,6 +43631,8 @@ A card marked with the letter R which is used for special events.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7603#
+#
 7604#
 A bag of finely milled and ground wheat flour that can be used in a variety of different foods.
 Class: ^808080Generic^000000
@@ -43288,15 +43648,35 @@ This Token of the Ox is a symbol of the vigor and power of the Year of the Ox.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7607#
+#
+7608#
+#
 7609#
 Halloween Jack's true essence, a form of glowing mind and soul that can only be described as 'mojo.' Halloween Jack wants it back desperately.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7610#
+#
+7611#
+#
+7612#
+#
 7613#
 A still warm and small lump of rice dough.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7614#
+#
+7615#
+#
+7616#
+#
+7617#
+#
+7618#
 #
 7619#
 ^ff0000Speak to Mighty Hammer at Eden Group to exchange these for the new Enriched version^000000
@@ -43342,6 +43722,8 @@ Weight : ^7777771^000000
 This coupon can be exchanged, along with the required materials, to a hair dresser to change your hairstyle.
 ^ffffff_^000000
 Weight : ^7777770^000000
+#
+7623#
 #
 7629#
 A pretty looking box, it may contain things of value.
@@ -43468,6 +43850,12 @@ A bag provided for emergencies that looks small but has 7 days worth of food ins
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
+7701#
+#
+7702#
+#
+7703#
+#
 7704#
 A device that can measure the ground's temperature. However, its readings don't seem very reliable.
 ^FF0000Character Bound^000000
@@ -43479,6 +43867,14 @@ A note written by a Geologist. 1WN 2ES 2EC.
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7711#
+#
+7712#
+#
+7713#
+#
+7714#
 #
 7715#
 A magic copy of the
@@ -43564,6 +43960,10 @@ Weight: ^8080800^000000
 The perfectly crafted, intricate, and official royal seal of the King of the Rune-Midgarts Kingdom.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7727#
+#
+7728#
 #
 7729#
 It's a symbol of respect and admiration that's given only to those that truly deserve it.
@@ -43761,6 +44161,12 @@ A book whose contents are locked behind a tight seal.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7757#
+#
+7758#
+#
+7759#
+#
 7760#
 Baba Yaga's magic book which tells the reader how to practice the strongest dark arts.
 ^ffffff_^000000
@@ -43879,6 +44285,10 @@ Weight: ^8080801^000000
 A dark crystal which is hiding heavy shadows inside of it. You might feel a strong dangerous power from this crystal. When you are close to it, you could realize something is sucking all the power from the near atmosphere.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7803#
+#
+7819#
 #
 7820#
 It seems like a piece of Morocc skin. There is a burned mark on the edge of it.
@@ -43999,15 +44409,57 @@ Fragrant wooden log that can be used for bonfire.
 Class: ^808080Generic^000000
 Weight: ^80808010^000000
 #
+7851#
+#
+7852#
+#
+7853#
+#
+7854#
+#
+7855#
+#
+7857#
+#
+7858#
+#
+7859#
+#
+7860#
+#
+7861#
+#
+7862#
+#
+7863#
+#
 7864#
 Cacao stolen from Pinkamenia in Moscovia while she was baking. Return them to her and she will give you some rewards.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
+7865#
+#
+7866#
+#
+7867#
+#
+7868#
+#
 7869#
 A sack that contains rice.
 Class: ^808080Generic^000000
 Weight: ^80808010^000000
+#
+7870#
+#
+7871#
+#
+7872#
+#
+7873#
+#
+7874#
 #
 7875#
 A recovered Treasure box that was Lost by Pirate Captain Wesley many years ago. Perhaps with his help you can open it.
@@ -44067,6 +44519,8 @@ A cute looking mug.
 Class: ^808080Generic^000000
 Weight: ^80808010^000000
 #
+7905#
+#
 7906#
 A poppy wreath placed at a location of strong personal meaning to commemorate the memories of events and people that have shaped your life.
 ^FF0000Character Bound^000000
@@ -44118,11 +44572,17 @@ A silver coin forged by the leprechauns. Leprechauns use these coins to fill the
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7918#
+#
 7919#
 Evidence that you really enjoyed the festival!
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+7921#
+#
+7922#
 #
 7923#
 A tribute to luck and fortune throughout the year.
@@ -44203,6 +44663,14 @@ An ordinary paper box. It looks so flat, it definitely needs some ornaments.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+7955#
+#
+7956#
+#
+7957#
+#
+7958#
+#
 7959#
 The UP Coin is a Gift from O'Riley the Leprechaun.
 You can acquire more by purchasing them at PlaySpan.com. Use them to purchase kafra points and packages to improve your Ragnarok Adventure!
@@ -44212,6 +44680,8 @@ An ancient silver coin, it may be of value to someone.
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7961#
 #
 7974#
 A piece that Misty's illusion left behind.
@@ -44224,6 +44694,10 @@ A chocolate received from Cupid's Fairy to commemorate Valentine's Day. Remember
 ^FF0000Character Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
+#
+7976#
+#
+7977#
 #
 9001#
 An egg in which a cute Poring pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -44856,6 +45330,21 @@ Party Hard Pack
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9563#
+When Opened gives one of the following at random
+Costume Falling Red Foliage
+Costume Red Pencil in Mouth
+Costume Book of Soyga
+Costume Spider Seduction
+Costume Golden Fish Hat
+Costume Forest Guide
+Costume Medium Wave
+Costume Kishu Dog
+Costume Under Rimmed Glasses (Blue)
+Costume Big White Cat
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -45017,6 +45506,8 @@ Class: ^808080Pet Accessory^000000
 Weight: ^8080800^000000
 Equips on Mao Guai pets.
 #
+10023#
+#
 10024#
 Red and blue fashionable glasses that aren't suited for everyone.
 Class: ^808080Pet Accessory^000000
@@ -45041,11 +45532,15 @@ Class: ^808080Pet Accessory^000000
 Weight: ^8080800^000000
 Equips on Whisper pets.
 #
+10028#
+#
 10029#
 An oriental ornament made from mysterious green threads.
 Class: ^808080Pet Accessory^000000
 Weight: ^8080800^000000
 Equips on Evil Nymph pets.
+#
+10030#
 #
 10031#
 A ring that symbolizes one who has surpassed death.
@@ -45057,6 +45552,8 @@ A symbol of authority for woman with a high rank.
 Class: ^808080Pet Accessory^000000
 Weight: ^8080800^000000
 Equips on Medusa pets.
+#
+10033#
 #
 10034#
 A gorgeously decorated mask used to conceal the identity of its wearer.
@@ -45087,6 +45584,8 @@ A protective barrier for an Imp's horn
 Class: ^808080Pet Accessory^000000
 Weight: ^8080800^000000
 Equips on Imp pets.
+#
+10039#
 #
 10040#
 ^808080A red necklace with a pretty bell. It will go well with a small animal.^000000
@@ -45568,6 +46067,10 @@ Recover 45 HP.
 Transforms into Quve for 10 minutes.  HIT + 10, FLEE + 20 while shapeshifting.
 Weight : ^7777773^000000
 #
+11596#
+#
+11597#
+#
 11598#
 A raw cacao bean. This tastes rather bitter.
 Weight : ^7777770^000000
@@ -45661,6 +46164,8 @@ Class: ^808080Recovery^000000
 Weight: ^8080805^000000
 Restores ^008000500^000000 HP.
 Restores ^00800025^000000 SP.
+#
+11701#
 #
 11706#
 ^808080A juicy, tender steak.^000000
@@ -46455,6 +46960,10 @@ luck on those fortunate enough to eat it. Luk +10
 ^FFFFFF ^000000
 Weight : ^77777750^000000
 #
+12101#
+#
+12102#
+#
 12103#
 An ancient, gnarled
 branch with a contract
@@ -46696,6 +47205,8 @@ Weight: ^80808020^000000
 Changes the user's clothes to Santa Suit for 10 minutes.
 This item forbids the user from attacking or using skills while used.
 #
+12133#
+#
 12134#
 A Red envelope filled with good fortune, given by married couples to friends and family to celebrate new beginnings.
 Weight : ^7777771^000000
@@ -46715,6 +47226,22 @@ effect on its user.
 This can be consumed 3 seconds after each use.
 ^ffffff_^000000
 Weight : ^7777773^000000
+#
+12136#
+#
+12137#
+#
+12138#
+#
+12139#
+#
+12140#
+#
+12141#
+#
+12142#
+#
+12143#
 #
 12144#
 A bullet cartridge
@@ -46771,6 +47298,8 @@ that contains 500
 Silver Bullets.
 ^ffffff_^000000
 Weight : ^77777725^000000
+#
+12152#
 #
 12153#
 Summon a 1st
@@ -46989,10 +47518,24 @@ targeted Mercenary.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
+12186#
+#
+12187#
+#
+12188#
+#
+12189#
+#
+12190#
+#
+12191#
+#
 12192#
 A tasty pumpkin flavored treat, usually enjoyed during the fall season.
 ^000088Slight Recovers HP & SP^000000
 Weight : ^7777771^000000
+#
+12193#
 #
 12194#
 A small bundle that reminds you of your hometown, you will feel warmth when hold it in your hand.
@@ -47040,6 +47583,8 @@ Luk +21.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
+12199#
+#
 12200#
 A Christmas cake
 that is only available
@@ -47053,6 +47598,8 @@ Christmas limited cake.
 When you use it, recover small HP, Start 3 level Magnificat  skill.
 (This item will be deleted with Christmas event closing.)
 Weight : ^7777775^000000
+#
+12201#
 #
 12202#
 A very pricey
@@ -47300,6 +47847,10 @@ seem to be fond of it.
 Class : ^777777Taming item^000000
 Weight : ^7777775^000000
 #
+12232#
+#
+12233#
+#
 12234#
 A chocolate bar
 whose content is
@@ -47331,6 +47882,12 @@ too long, and its burnt^FFFFFF   ^000000 stench can be smelled
 from a distance.
 Weight : ^77777710^000000
 #
+12238#
+#
+12239#
+#
+12240#
+#
 12241#
 A Concentration Potion
 for Mercenaries that
@@ -47353,6 +47910,8 @@ Attack Speed.
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
+12244#
+#
 12245#
 A frothy green ale
 brewed by O'Riley
@@ -47373,6 +47932,26 @@ What will happen
 if the seal is undone?
 ^ffffff_^000000
 Weight : ^7777775^000000
+#
+12247#
+#
+12248#
+#
+12250#
+#
+12251#
+#
+12252#
+#
+12253#
+#
+12254#
+#
+12255#
+#
+12256#
+#
+12257#
 #
 12258#
 A box with a bomb capsule. When you use a bomb poring is summoned. Flammable!.
@@ -47396,6 +47975,8 @@ Cannot be Dropped or Traded.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
+12261#
+#
 12262#
 In one of the East countires, they gave a round-shaped copper to the government works in old days.
 For 9mins, ^000088increase the movement speed^000000.
@@ -47413,6 +47994,8 @@ A High Efficiency bubble gum that packs double the punch.
 ^000088Item drop rate increases by 200% for^0000000^ff0000 30 minutes.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+12265#
 #
 12269#
 Foodstuffs prepared for urgent situations. Don't eat too fast, you might choke on it.
@@ -47443,6 +48026,12 @@ Meal Ready to Eat. Improved Ration C, which is convenient for a busy life. Don't
 ^000088Flee +33 for 10 minutes.^000000
 ^ffffff_^000000
 Weight : ^7777777^000000
+#
+12274#
+#
+12276#
+#
+12277#
 #
 12278#
 A mercenary contract with Alice to assist you in your battles.
@@ -47617,6 +48206,10 @@ Weight : ^7777770^000000
 A firecracker that shoots up into the sky when lit.
 Weight : ^7777772^000000
 #
+12327#
+#
+12328#
+#
 12329#
 Summon supporting Male Game Master to Fight at your side for 30 minutes.
 ^ff0000This item can be stored, traded and vended.^000000
@@ -47633,6 +48226,14 @@ Weight : ^7777770^000000
 A crystal that is shining with mysterious color. When used, you recover 15% of MaxSP.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+12335#
+#
+12336#
+#
+12337#
+#
+12338#
 #
 12340#
 A chewy rice powder that has a mysterious shine. It can be used harden Hot Rice Cake dough.
@@ -47700,6 +48301,8 @@ Weight : ^7777775^000000
 12350#
 A potion that casts Level 5 Bless and Angelus
 Weight : ^77777710^000000
+#
+12351#
 #
 12353#
 A tiny bottle with water in it that's almost freezing.
@@ -47812,6 +48415,8 @@ Weight: ^8080805^000000
 Imps are drawn to its flame.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
+#
+12375#
 #
 12376#
 ^808080The second new item of Mysterious Can. Fresh mackerel flavor. Best nutrition for children in the growing period.^000000
@@ -47963,6 +48568,12 @@ And randomly give you one of the following item sets.
 ^FFFFFF_^000000
 Weight : ^7777771^000000
 #
+12404#
+#
+12405#
+#
+12406#
+#
 12408#
 A strange ball that can capture Strange Hydra.
 Weight : ^7777770^000000
@@ -47999,6 +48610,8 @@ Weight : ^7777771^000000
 A candy made of guarana berries. Don't eat too much at once beacuse it increases concentration.
 Slightly increases agility.
 Weight : ^7777771^000000
+#
+12415#
 #
 12416#
 Opening it will certainly give you:
@@ -48718,6 +49331,8 @@ Level : ^77777740^000000
 Job : ^777777All^000000
 Box Weight : ^7777771^000000
 #
+12578#
+#
 12580#
 Trial product which has been researched from the Geffen Magic Academy.
 A magical scroll which is able to 'search what items are on sale and what items are being purchased'.
@@ -48764,6 +49379,8 @@ Unknown Item, can be identified by [Magnifier].
 Juice made of a deliciously grinded watermelon.
 recovers 5% of HP and SP.
 Weight : ^77777710^000000
+#
+12607#
 #
 12608#
 Opening this will give you a random weapon or armor
@@ -48997,6 +49614,10 @@ Class: ^808080Item Giver^000000
 Weight: ^80808020^000000
 Produces ^0000FF200^000000 ^008080WoE Violet Potion^000000.
 #
+12684#
+#
+12685#
+#
 12690#
 This album seems to contain the cards for headgears. It is pretty shabby which shows an old, unknown power.
 Weight : ^7777775^000000
@@ -49050,6 +49671,8 @@ Can warp back to the 'Port Malaya' village when used directly.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+12701#
+#
 12702#
 A mysterious blue box
 whose appearance resembles
@@ -49060,11 +49683,27 @@ open it to find out.
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
+12703#
+#
+12706#
+#
+12707#
+#
+12708#
+#
+12709#
+#
 12710#
 A sweet and sour desert made by Guyak. It would be great when it's cool.
 Gives double movement Speed for 5 minutes.
 ^ffffff_^000000
 Weight : ^77777720^000000
+#
+12711#
+#
+12712#
+#
+12713#
 #
 12715#
 [This item will be removed
@@ -49251,6 +49890,42 @@ A notation that a Carol is memorized.
 But nobody knows which song was memorized.
 Weight : ^7777770^000000
 #
+12746#
+#
+12747#
+#
+12748#
+#
+12749#
+#
+12750#
+#
+12751#
+#
+12752#
+#
+12753#
+#
+12765#
+#
+12766#
+#
+12767#
+#
+12768#
+#
+12769#
+#
+12770#
+#
+12771#
+#
+12772#
+#
+12773#
+#
+12774#
+#
 12775#
 Totem with powerful abilities to aggressively fight against demons. Emits powerful, holy energy.
 10% increase of physical and magic damage to demon monsters for 20 min.
@@ -49262,12 +49937,16 @@ Summon a Baphomet Jr to Fight at your side for 30 minutes.
 Tradable
 Weight : ^7777771^000000
 #
+12779#
+#
 12786#
 Use this item to change your character's slot position on the Character Select menu.
 After using this item you must logout to the Character Select menu and Right-Click on the character and choose '^ff0000Move Slot^000000'
 You can then choose a new slot by right-clicking that slot and choosing '^ff0000Move to this Slot^ff0000' and confirming.
 ^0000ffYou can use this item once and it is account bound^000000
 Weight : ^7777770^000000
+#
+12787#
 #
 12790#
 Use this item to change your character's name on the Character Select menu.
@@ -49276,6 +49955,10 @@ You can then enter a new name as long as it is not already taken.
 ^ff0000You must leave your current guild and/or party before changing your name.^000000
 ^0000ffYou can use this item once and it is account bound^000000
 Weight : ^7777770^000000
+#
+12796#
+#
+12801#
 #
 12806#
 A rolled up piece of parchment, now brittle with age, on which faded pictograms of Scarabas can scarcely be read. If you're able to read the faded text, an Antler Scaraba Mercenary will come to your aid.
@@ -49313,6 +49996,16 @@ Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 Requires Level: ^80808080^000000
 #
+12822#
+#
+12826#
+#
+12827#
+#
+12828#
+#
+12829#
+#
 12845#
 ^ff0000Cannot trade to other user^000000
 Custom made butterfly wing for poor newbie ninjas.
@@ -49340,6 +50033,12 @@ Weight : ^7777770^000000
 A kit that combines various items. It even has cooking tools inside.
 ^ff0000Caution : You must have all Ingredients ready before combining or the Combination Kit will be wasted.^000000
 Weight : ^7777771^000000
+#
+12850#
+#
+12851#
+#
+12852#
 #
 12853#
 Have chance to obtain various precious item, including Mistress Card, Sealed Berzebub Card, Sealed Eddga Card, Hankie In Mouth, Snowman Hat,  Cat Ears Beret, Immuned Shield and etc.
@@ -49377,6 +50076,10 @@ Weight : ^7777771^000000
 Thanks to the mother of selfless giving, present it to your mother.
 Recover 50% HP&SP, and grant Assumptio Lv3 after used.
 Weight : ^77777720^000000
+#
+12871#
+#
+12872#
 #
 12873#
 ^ff0000Cannot be traded.^000000
@@ -49437,6 +50140,10 @@ The first-class pharmacist Vincent has created this potion.
 Endows superhuman strength, though it's only temporary.
 Instantly consumes 3,000 of your HP and in return, immunizes you against Blind for 10 seconds.
 Weight : ^7777771^000000
+#
+12883#
+#
+12887#
 #
 12888#
 ^ff0000Cannot be traded.^000000
@@ -49762,6 +50469,10 @@ Description:
 ^CC0000A Pack of 5 Lucky Boxes is also being offered.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+12927#
+#
+12928#
 #
 12929#
 A box that contains
@@ -50263,6 +50974,42 @@ A box that contains
 Handle with care.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+12965#
+#
+12966#
+#
+12967#
+#
+12968#
+#
+12969#
+#
+12970#
+#
+12971#
+#
+12972#
+#
+12973#
+#
+12974#
+#
+12975#
+#
+12976#
+#
+12977#
+#
+12978#
+#
+12979#
+#
+12980#
+#
+12981#
+#
+12982#
 #
 12983#
 A crate that contains ^0000CC5 Christmas Holiday Boxes^000000 This item and the box inside is account bound.
@@ -50854,6 +51601,8 @@ Required Level : ^77777770^000000
 Jobs: ^777777All except
 Acolyte Class^000000
 #
+13020#
+#
 13021#
 ^000088Rental Item^000000
 A military combat
@@ -50904,6 +51653,10 @@ Weight : ^7777770^000000
 Weapon Level: ^7777771^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Ninja^000000
+#
+13024#
+#
+13025#
 #
 13026#
 ^000088Rental Item^000000
@@ -51188,6 +51941,8 @@ Weapon Level : ^7777772^000000
 Required Level : ^77777740^000000
 Jobs : ^777777Novice/SwordmanClass/Magician Class/Archer Class/Merchant Class/Thief Class^000000
 #
+13052#
+#
 13053#
 ^000088Rental Item^000000
 A dagger imbued with
@@ -51373,6 +52128,8 @@ Weapon lvl : ^7777773^000000
 Required level : ^777777110^000000
 Applicable Job : ^777777Ninja Class^000000
 #
+13077#
+#
 13078#
 Reduces SP consumption of skills by 5%
 Reduces casting time of skills by 5%
@@ -51383,6 +52140,8 @@ Weight : ^7777770^000000
 Weapon lvl : ^7777774^000000
 Required Level : ^777777100^000000
 Applicable Job : ^777777Ninja Class^000000
+#
+13080#
 #
 13083#
 ^ff0000Cannot be traded.^000000
@@ -53019,6 +53778,10 @@ Attack : ^7777770^000000
 Weight :: ^7777775^000000
 Property : ^777777Neutral^000000
 #
+13273#
+#
+13274#
+#
 13275#
 Slightly remodeled HP increase potion(S) enabled for throwing. MaxHP slightly increased for 500 sec, HP recovery +1%.
 Class : ^777777Projectile^000000
@@ -53535,6 +54298,8 @@ Jobs: ^777777Transcendent
 Swordman, Merchant,
 and Thief Classes^000000
 #
+13407#
+#
 13410#
 A sword favored by gladiators, it is especially designed for battles against Demihumans.
 Str + 1, Dex + 1
@@ -53651,6 +54416,8 @@ Weapon Level : ^7777774^000000
 Required Level : ^77777780^000000
 Job : ^777777Swordman Class / Merchant Class^000000
 #
+13420#
+#
 13421#
 This short sword has been heavily improved for easy-use. It looks better with its Ruby decoration in the grip.
 When attacking in close-range, the attack power of 'Bowling Bash' and 'Bash' increases by 20% for 15 seconds with low probability.
@@ -53680,6 +54447,8 @@ Weight : ^7777770^000000
 Weapon Level : ^7777772^000000
 Required Level : ^77777740^000000
 Jobs : ^777777SwordmanClass/Merchant Class/Thief Class^000000
+#
+13425#
 #
 13426#
 ^000088Rental Item^000000
@@ -53806,6 +54575,8 @@ Weapon Lev : ^7777773^000000
 Required Level : ^7777771^000000
 Job : ^777777Swordman/Merchant/Thief^000000
 #
+13449#
+#
 13451#
 Attack: 0
 Property: N/A
@@ -53907,6 +54678,12 @@ Max HP + 500
 Atk + 45
 Aspd + 1
 #
+13500#
+#
+13501#
+#
+13502#
+#
 13503#
 A box that contains:
 ^000088Rental Item^000000
@@ -53919,6 +54696,8 @@ This item cannot be Dropped or Traded.
 Class : ^777777Headgear^000000    Defense : ^7777775^000000
 Location : ^777777Upper^000000    Weight : ^77777780^000000
 Jobs : ^777777All^000000
+#
+13504#
 #
 13505#
 A box that contains:
@@ -53939,6 +54718,8 @@ Property: ^777777Shadow^000000
 Weapon Level: ^7777774^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Swordman Class^000000
+#
+13506#
 #
 13507#
 A box that contains:
@@ -54022,6 +54803,10 @@ Jobs: ^777777Swordman,
 Merchant, and
 Thief Classes^000000
 #
+13511#
+#
+13512#
+#
 13513#
 A box that contains:
 ^000088Rental Item^000000
@@ -54059,6 +54844,8 @@ Weapon Level: ^7777773^000000
 Required Level : ^7777771^000000
 Jobs: ^777777Acolyte Class^000000
 #
+13515#
+#
 13516#
 A box that contains a stack of Royal Jelly.
 Class: ^808080Item Giver^000000
@@ -54070,6 +54857,22 @@ A box that contains a stack of Yggdrasilberry.
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 Produces ^0000FF3^000000 ^008080Yggdrasilberry^000000.
+#
+13518#
+#
+13519#
+#
+13520#
+#
+13521#
+#
+13522#
+#
+13523#
+#
+13524#
+#
+13525#
 #
 13526#
 A box containing 10 High Efficiency Bubble Gums.
@@ -54086,6 +54889,12 @@ High Efficiency Battle Manual - This well written, detailed manual explains High
 ^000088EXP rate increases to 200% for 15 minutes.^000000
 ^ff0000Duration is 30 minutes until October 2, 2013^000000
 Weight : ^7777771^000000
+#
+13528#
+#
+13529#
+#
+13530#
 #
 13531#
 A box containing
@@ -54139,6 +54948,36 @@ its contents.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13538#
+#
+13539#
+#
+13540#
+#
+13541#
+#
+13542#
+#
+13543#
+#
+13544#
+#
+13545#
+#
+13546#
+#
+13547#
+#
+13548#
+#
+13549#
+#
+13550#
+#
+13551#
+#
+13552#
+#
 13553#
 A box containing a
 special scroll that
@@ -54169,6 +55008,42 @@ Warning - After using it, unless you choose the destination in 1 minute,
 it will be useless.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13554#
+#
+13555#
+#
+13556#
+#
+13557#
+#
+13558#
+#
+13559#
+#
+13560#
+#
+13561#
+#
+13562#
+#
+13563#
+#
+13564#
+#
+13565#
+#
+13566#
+#
+13567#
+#
+13568#
+#
+13569#
+#
+13570#
+#
+13571#
 #
 13572#
 A box containing 30 Hwergelmir's Tonic
@@ -54216,6 +55091,10 @@ enough to eat it. Luk +10, 30 minute duration.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13576#
+#
+13577#
+#
 13578#
 A box containing 30 Stew of Immortality
 ^ffffff_^000000
@@ -54257,6 +55136,10 @@ Weight : ^7777771^000000
 13581#
 Old pRO Item. Opens in to 50 Insurance Items
 #
+13582#
+#
+13583#
+#
 13584#
 A box that contains 30 LV10 Blessing Scrolls.
 ^ff0000Can be traded, stored, and vended^000000
@@ -54274,6 +55157,20 @@ a spell or skill.
 Weight : ^7777771^000000
 ^ffffff_^000000
 Box Weight : ^7777771^000000
+#
+13585#
+#
+13586#
+#
+13587#
+#
+13588#
+#
+13589#
+#
+13590#
+#
+13591#
 #
 13592#
 A box containing 30 Steamed Scorpion
@@ -54303,6 +55200,10 @@ cuisine. Agi +10,
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13594#
+#
+13595#
+#
 13596#
 A box containing 30 Dragon Breath Cocktail
 ^ffffff_^000000
@@ -54327,6 +55228,12 @@ duration.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13598#
+#
+13599#
+#
+13600#
+#
 13601#
 A box containing
 20 Tokens of Siegfried.
@@ -54343,6 +55250,10 @@ character.
 Weight : ^7777771^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13602#
+#
+13603#
 #
 13604#
 A box containing 30 Steamed Tongue
@@ -54365,6 +55276,14 @@ superb. Str +10,
 30 minute duration.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13606#
+#
+13607#
+#
+13608#
+#
+13609#
 #
 13610#
 A box that contains 10 Enriched Elunium
@@ -54402,11 +55321,53 @@ Weight : ^7777771^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13612#
+#
+13613#
+#
+13614#
+#
+13615#
+#
+13616#
+#
+13617#
+#
+13618#
+#
+13619#
+#
+13620#
+#
 13621#
 A box containing 30 Greed Scrolls, which each enable a single cast of Greed.
 This scroll has the same restrictions as the normal casting of Greed; some maps do not allow Greed to be used.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13622#
+#
+13623#
+#
+13624#
+#
+13625#
+#
+13626#
+#
+13627#
+#
+13628#
+#
+13629#
+#
+13630#
+#
+13631#
+#
+13632#
+#
+13633#
 #
 13634#
 Open the box and receive one of the 24 Zodiac Diadem headgears.
@@ -54425,6 +55386,20 @@ Aquarius Diadem / Crown
 Pisces Diadem / Crown
 Weight : ^7777771^000000
 #
+13635#
+#
+13636#
+#
+13637#
+#
+13638#
+#
+13639#
+#
+13640#
+#
+13641#
+#
 13642#
 The Start your Journey Pack contains several items that will allow you move around Rune Midgard kingdom's cities so you can complete your job change quest quickly, get more exp for 30 minutes, and keep yourself heal during early adventure battles.
 Also 20 Red Envelopes are given to help you get that last little bit of experience needed for that next level.
@@ -54435,6 +55410,80 @@ Contains:
 3 Rune Midgard Butterfly Wings
 Can only be stored.
 Weight : ^7777771^000000
+#
+13643#
+#
+13644#
+#
+13645#
+#
+13646#
+#
+13647#
+#
+13648#
+#
+13649#
+#
+13650#
+#
+13651#
+#
+13652#
+#
+13653#
+#
+13654#
+#
+13655#
+#
+13656#
+#
+13657#
+#
+13658#
+#
+13659#
+#
+13660#
+#
+13661#
+#
+13662#
+#
+13663#
+#
+13664#
+#
+13665#
+#
+13666#
+#
+13667#
+#
+13668#
+#
+13669#
+#
+13670#
+#
+13671#
+#
+13672#
+#
+13673#
+#
+13674#
+#
+13675#
+#
+13676#
+#
+13677#
+#
+13678#
+#
+13679#
 #
 13680#
 The Famous Holden dropped this box when he ran back into his hole.
@@ -54493,6 +55542,8 @@ and randomly gives:
 1 Poring Letter
 1 Heart Eyepatch
 #
+13684#
+#
 13685#
 A box that contains 5 Tricky Halloween Treat Box
 As a special treat this purchase also gives you 1 Class Set Card Album
@@ -54547,6 +55598,14 @@ A box that contains one of the following:
 10x - HE Battle Manual
 400x - KVM Badge
 #
+13688#
+#
+13694#
+#
+13695#
+#
+13696#
+#
 13701#
 A box that contains 10 HD Oridecons
 Description:
@@ -54576,6 +55635,14 @@ up to Level 10.
 ^ffffff_^000000
 Weight : ^7777771^000000
 Box Weight : ^7777771^000000
+#
+13704#
+#
+13705#
+#
+13706#
+#
+13707#
 #
 13710#
 A box that contains a
@@ -55060,6 +56127,20 @@ the item effect will disappear.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13758#
+#
+13764#
+#
+13766#
+#
+13771#
+#
+13779#
+#
+13782#
+#
+13783#
+#
 13790#
 Fall into the Groove with this Groove Pack!
 Always contains 1 Bloody Branch.
@@ -55182,6 +56263,26 @@ A box that contains^FFFFFF       ^000000 6 kinds of Lv.3 Dishes.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13815#
+#
+13816#
+#
+13817#
+#
+13818#
+#
+13819#
+#
+13820#
+#
+13821#
+#
+13822#
+#
+13823#
+#
+13824#
+#
 13826#
 This item cannot be traded, but can be saved and opened at your leisure!
 ^ff0000This box is account bound.^000000
@@ -55213,6 +56314,14 @@ Randomly gives one of the following Costumes:
 ^0000ffCostume:_Magician's_Night_Cap^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13845#
+#
+13846#
+#
+13847#
+#
+13848#
 #
 13849#
 A box containing 5 scrolls on which the towns of Run Midgartz are written. You may be moving to the town when using it.
@@ -55270,6 +56379,10 @@ Locations: "Ayothaya", "Amatsu", "Luoyang", "Kunlun", "Moscovia
 Warning: If no town is selected, the item will disappear.
 Weight : ^7777771^000000
 #
+13857#
+#
+13858#
+#
 13859#
 A sealed paper envelope. It seems to contain an important message in it.
 ^ffffff_^000000
@@ -55279,6 +56392,8 @@ Weight : ^7777771^000000
 A sealed paper envelope. It seems to contain an important message in it.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13861#
 #
 13862#
 A welcoming Package for new visitors to Rune Midgard.
@@ -55349,6 +56464,8 @@ Jobs : ^777777All^000000
 ^777777_^000000
 Weight : ^7777771^000000
 #
+13870#
+#
 13871#
 This box will give you all of the Mage Set cards:
 Bloody Butterfly Card
@@ -55402,6 +56519,54 @@ Zipper Bear Card
 Raggler Card
 Baby Leopard Card
 Hylozoist Card
+#
+13877#
+#
+13878#
+#
+13879#
+#
+13880#
+#
+13881#
+#
+13882#
+#
+13883#
+#
+13884#
+#
+13885#
+#
+13886#
+#
+13887#
+#
+13888#
+#
+13889#
+#
+13890#
+#
+13891#
+#
+13892#
+#
+13893#
+#
+13894#
+#
+13896#
+#
+13897#
+#
+13898#
+#
+13899#
+#
+13900#
+#
+13901#
 #
 13902#
 A box that contains
@@ -55459,6 +56624,12 @@ Jobs: ^777777All^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13905#
+#
+13906#
+#
+13907#
+#
 13908#
 Opening this Album will yield a card from any of the Class Card sets!
 Weight : ^7777771^000000
@@ -55472,6 +56643,10 @@ Contains:
 The Box can be traded, the Contents cannot.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13910#
+#
+13911#
 #
 13912#
 A box containing
@@ -55613,6 +56788,30 @@ Jobs : ^777777All^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13925#
+#
+13926#
+#
+13927#
+#
+13928#
+#
+13929#
+#
+13930#
+#
+13931#
+#
+13932#
+#
+13933#
+#
+13934#
+#
+13935#
+#
+13936#
+#
 13937#
 A box containing 1 Robo Eye
 ^ff0000This box and it's contents are account bound^000000
@@ -55639,6 +56838,8 @@ Nidhoggur
 Cannot be sold.
 Weight : ^7777771^000000
 #
+13941#
+#
 13945#
 Contains both items for the Shiba Inu Set
 1 Black Shiba Inu Hat and 1 Fidelity Necklace
@@ -55646,6 +56847,16 @@ Set bonus
 When Black Shiba Inu Hat is equipped with Fidelity Necklace, while attacking has a low chance to increase Attack by an additional 30 for 5 seconds.
 Refine rate of the headgear increases the chance that the additional attack power is activated.
 Box Weight : ^7777771^000000
+#
+13946#
+#
+13947#
+#
+13948#
+#
+13949#
+#
+13950#
 #
 13953#
 A box that contains:
@@ -55665,6 +56876,8 @@ Class : ^777777Accessory^000000
 Defense: ^7777770^000000
 Weight : ^7777771^000000
 Required Level : ^7777771^000000^FFFFFF         ^000000 Jobs: ^777777All^000000
+#
+13960#
 #
 13962#
 Contains 1 Defolty Doll Hat, which is non-tradeable.
@@ -55719,6 +56932,12 @@ Chewing Gum is a lower headgear that by chance upon being hit gives the user a 7
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13970#
+#
+13971#
+#
+13972#
+#
 13973#
 A box that contains a stack of Poison Bottles.
 ^FF0000Account Bound^000000
@@ -55729,6 +56948,12 @@ Produces ^0000FF30^000000 ^008080Poison Bottle^000000.
 13974#
 Contains 1 RWC Rally Box and 1 RWC Arms Box
 Box Weight : ^7777771^000000
+#
+13987#
+#
+13988#
+#
+13989#
 #
 13990#
 A box that contains
@@ -55819,12 +57044,22 @@ A box containing 10 Speed Potions.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+13996#
+#
+13997#
+#
 13998#
 A box containing 500 Giant Fly Wings.
 ^ffffff_^000000
 An enchanted, giant wing from an ancient creatures. Enables instant teleportation of many people when used by a Party Master.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+13999#
+#
+14000#
+#
+14001#
 #
 14002#
 A supply box containing WoE potions.
@@ -55838,6 +57073,8 @@ Weight : ^77777710^000000
 ^FFFFFF_^000000
 This box and it's contents are storage only.
 Box Weight : ^7777771^000000
+#
+14003#
 #
 14004#
 A box that contains a stack of Poison Bottles.
@@ -57138,6 +58375,8 @@ It can be traded or put in storage. It cannot be dropped.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+14229#
+#
 14232#
 A box that contains a stack of Yggdrasilberry.
 ^FF0000Account Bound^000000
@@ -57145,10 +58384,74 @@ Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 Produces ^0000FF10^000000 ^008080Yggdrasilberry^000000.
 #
+14234#
+#
+14236#
+#
+14237#
+#
+14238#
+#
+14239#
+#
+14240#
+#
+14241#
+#
+14242#
+#
+14243#
+#
+14244#
+#
+14245#
+#
+14246#
+#
+14247#
+#
+14248#
+#
+14249#
+#
+14250#
+#
+14251#
+#
+14252#
+#
+14253#
+#
+14254#
+#
+14255#
+#
+14256#
+#
+14257#
+#
+14258#
+#
+14259#
+#
+14260#
+#
+14261#
+#
 14283#
 A box that contains 1 Written Oath of Marriage, to be used on your wedding day.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+14284#
+#
+14285#
+#
+14286#
+#
+14287#
+#
+14288#
 #
 14289#
 A box that contains 1 coupon to dye your clothes to a new color.
@@ -57159,6 +58462,12 @@ Weight : ^7777771^000000
 A box that contains 1 coupon to dye your clothes to the original color.
 This item is not refundable and also not transferable.
 Weight : ^7777771^000000
+#
+14296#
+#
+14297#
+#
+14298#
 #
 14300#
 A box that contains 1 'Ifrit Mask' in it.
@@ -57202,6 +58511,84 @@ Jobs : ^777777Every Job except Novice Class^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+14302#
+#
+14303#
+#
+14304#
+#
+14305#
+#
+14306#
+#
+14307#
+#
+14308#
+#
+14314#
+#
+14315#
+#
+14316#
+#
+14317#
+#
+14343#
+#
+14344#
+#
+14345#
+#
+14359#
+#
+14360#
+#
+14361#
+#
+14362#
+#
+14363#
+#
+14375#
+#
+14376#
+#
+14377#
+#
+14379#
+#
+14380#
+#
+14394#
+#
+14395#
+#
+14407#
+#
+14408#
+#
+14422#
+#
+14423#
+#
+14424#
+#
+14425#
+#
+14438#
+#
+14439#
+#
+14440#
+#
+14441#
+#
+14442#
+#
+14443#
+#
+14444#
+#
 14447#
 A box that contains 1 Scallywag's Hat
 Description:
@@ -57239,10 +58626,28 @@ Night Sparrow Hat (Wanderer)
 Drooping Kiel (All Jobs)
 Drooping Aliot (All Jobs)
 #
+14460#
+#
+14461#
+#
 14466#
 A prize that is given to the hottest character who is the winner of the Valentine's Hottest Contest.
 ^ffffff_^000000
 Weight : ^7777770^000000
+#
+14469#
+#
+14485#
+#
+14486#
+#
+14487#
+#
+14490#
+#
+14493#
+#
+14494#
 #
 14495#
 A box that contains an Aquarius Diadem Headgear.
@@ -57259,6 +58664,10 @@ Weight : ^7777771^000000
 14498#
 A box that contains a Pisces Crown Headgear.
 Weight : ^7777771^000000
+#
+14499#
+#
+14500#
 #
 14501#
 ^ff0000Account Bound^000000
@@ -57299,6 +58708,8 @@ Weight: 0
 Type: Consumable
 Class: General
 Weight: 0
+#
+14508#
 #
 14509#
 A potent medicine that
@@ -57342,6 +58753,10 @@ Class: ^808080Scroll^000000
 Weight: ^8080801^000000
 Casts ^0000FFLevel 10 Lord of Vermilion^000000.
 #
+14515#
+#
+14516#
+#
 14517#
  A scroll which enables using LV 5 Chemical Protection Helm skill. It has some mysterious letters written on the scroll.
 ^ffffff_^000000
@@ -57361,6 +58776,18 @@ Weight : ^7777771^000000
  A scroll which enables using LV 5 Chemical Protection Weapon skill. It has some mysterious letters written on the scroll.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+14521#
+#
+14522#
+#
+14523#
+#
+14524#
+#
+14525#
+#
+14526#
 #
 14527#
 A scroll on which
@@ -57391,10 +58818,20 @@ it will be useless.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+14528#
+#
 14529#
 Enables a single cast of ^880000Greed^000000.
 Cannot be traded or dropped.
 Weight : ^7777771^000000
+#
+14530#
+#
+14531#
+#
+14532#
+#
+14533#
 #
 14534#
 A small bottle of
@@ -57754,6 +59191,10 @@ Locations: "Ayothaya", "Amatsu", "Luoyang", "Kunlun"
 Warning: If no town is selected, the item will disappear.
 Weight : ^7777771^000000
 #
+14586#
+#
+14587#
+#
 14588#
 A scroll in which
 a single use of Level 10
@@ -57842,9 +59283,27 @@ A box full of something heavy.
 ^ffffff_^000000
 Weight : ^77777710^000000
 #
+14597#
+#
+14598#
+#
 14600#
 A potion that increases Maximum SP by 10% and decreases SP consumption by 10% for 30 minutes.
 Weight: ^7777771^000000
+#
+14601#
+#
+14602#
+#
+14603#
+#
+14604#
+#
+14605#
+#
+14611#
+#
+14612#
 #
 14613#
 A box that contains 1 of the following:
@@ -57854,6 +59313,24 @@ A box that contains 1 of the following:
 1 RWC CommemorativePin
 ^ff0000This box is tradeable the contents inside are account bound.^000000
 Weight : ^7777771^000000
+#
+14616#
+#
+14617#
+#
+14618#
+#
+14619#
+#
+14620#
+#
+14621#
+#
+14624#
+#
+14625#
+#
+14626#
 #
 14645#
 ^808080Pulled from the demon fly himself. They grew back. The wings will slowly fade away over time.^000000
@@ -57873,6 +59350,16 @@ Weight: 1
 All Stat + 10 for 30 minutes.
 Atk + 30 for 30 minutes.
 Matk + 30 for 30 minutes.
+#
+14649#
+#
+14664#
+#
+14665#
+#
+14666#
+#
+14667#
 #
 14683#
 Available for a limited time, this box is filled to the brim with goods and items for everyone.
@@ -58165,6 +59652,16 @@ Weight : ^7777770^000000
 Required Level : ^77777799^000000
 Jobs : ^777777Swordman Class^000000
 #
+15003#
+#
+15004#
+#
+15005#
+#
+15006#
+#
+15008#
+#
 15009#
 A suit that is only provided for members of the Eden Group.
 There are various sizes so tall people don't have to worry about it.
@@ -58227,12 +59724,28 @@ Weight :: ^777777450^000000
 Required Level : ^777777100^000000
 Jobs : ^777777All third class jobs^000000
 #
+15015#
+#
+15016#
+#
+15017#
+#
+15018#
+#
+15019#
+#
+15020#
+#
 15021#
 MaxHP+3%
 Class : ^777777Armor^000000
 Defense : ^77777745^000000
 Weight : ^77777715^000000
 Jobs: ^777777Every Job except Novice^000000
+#
+15022#
+#
+15023#
 #
 15024#
 A jacket worn inside an overcoat. Mora Villagers call it 'Army Padding.'
@@ -60284,6 +61797,8 @@ Weapon Level : ^7777772^000000
 Required Level : ^77777740^000000
 Jobs : ^777777Swordman Class/Acolyte Class/Merchant Class^000000
 #
+16006#
+#
 16007#
 A facsimile of the
 mighty hammer wielded
@@ -60700,6 +62215,18 @@ Increases the recovery rate of recovery skills by an additional 15%.
 If the combined upgrade levels of ^008080Illusion Long Mace^000000 and ^008080Illusion Puente Robe^000000 are +22 or higher,
 Reduces the global delay of skills by 15%.
 #
+16131#
+#
+16132#
+#
+16133#
+#
+16134#
+#
+16135#
+#
+16185#
+#
 16186#
 A box containing 1 Baby Dragon Hat.
 This can be purchased Playspan store at ^0000FFstore.playspan.com^000000
@@ -60767,6 +62294,56 @@ Jobs : ^777777All Jobs^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+16195#
+#
+16196#
+#
+16197#
+#
+16198#
+#
+16199#
+#
+16200#
+#
+16201#
+#
+16202#
+#
+16203#
+#
+16204#
+#
+16205#
+#
+16206#
+#
+16207#
+#
+16208#
+#
+16209#
+#
+16210#
+#
+16211#
+#
+16212#
+#
+16213#
+#
+16214#
+#
+16215#
+#
+16216#
+#
+16217#
+#
+16218#
+#
+16219#
+#
 16226#
 A box that contains an Aries Diadem Headgear.
 Weight : ^7777771^000000
@@ -60775,6 +62352,10 @@ Weight : ^7777771^000000
 A box that contains an Aries Crown Headgear.
 Weight : ^7777771^000000
 #
+16228#
+#
+16229#
+#
 16230#
 A box that contains a Taurus Diadem Headgear.
 Weight : ^7777771^000000
@@ -60782,6 +62363,26 @@ Weight : ^7777771^000000
 16231#
 A box that contains a Taurus Crown Headgear.
 Weight : ^7777771^000000
+#
+16232#
+#
+16233#
+#
+16234#
+#
+16235#
+#
+16236#
+#
+16237#
+#
+16238#
+#
+16239#
+#
+16240#
+#
+16244#
 #
 16246#
 A box containing one Crown of Deceit
@@ -60794,6 +62395,14 @@ Weight : ^7777771^000000
 16252#
 A box that contains a Gemini Crown Headgear.
 Weight : ^7777771^000000
+#
+16253#
+#
+16254#
+#
+16256#
+#
+16257#
 #
 16258#
 A box which contains 5 high density bradiums.
@@ -60859,6 +62468,8 @@ Weight : ^7777771^000000
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 Weight : ^7777771^000000
 #
+16266#
+#
 16267#
 A box containing 10 High Efficiency Battle Manuals.
 ^ffffff_^000000
@@ -60881,8 +62492,50 @@ Weight : ^7777771^000000
 A box that contains a Cancer Crown Headgear.
 Weight : ^7777771^000000
 #
+16273#
+#
+16274#
+#
+16304#
+#
+16305#
+#
+16307#
+#
+16309#
+#
+16311#
+#
+16313#
+#
+16315#
+#
+16317#
+#
+16319#
+#
+16321#
+#
+16323#
+#
 16325#
 Rune Hairband Box
+#
+16327#
+#
+16329#
+#
+16331#
+#
+16333#
+#
+16335#
+#
+16337#
+#
+16339#
+#
+16341#
 #
 16343#
 A box that contains a Leo Crown Headgear.
@@ -60900,10 +62553,16 @@ Weight : ^7777771^000000
 A box that contains a Leo Diadem Headgear.
 Weight : ^7777771^000000
 #
+16360#
+#
+16362#
+#
 16368#
 A box that contains a Virgo Crown Headgear.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+16371#
 #
 16372#
 A box containing 1 Four Leaf Clover
@@ -60920,6 +62579,18 @@ Weight : ^7777775^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 Box Weight : ^7777771^000000
+#
+16374#
+#
+16376#
+#
+16377#
+#
+16378#
+#
+16379#
+#
+16380#
 #
 16381#
 A box containing 100 teleport scrolls that warp you to the Siege Areas.
@@ -60993,6 +62664,8 @@ This well written, detailed manual explains Extremely Efficient battle methods.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+16386#
+#
 16388#
 Contains an Four Leaf Clover in Mouth, a rental copy of the item which last for a total of 4 hours.
 ^FF0000Account Bound^000000
@@ -61000,12 +62673,22 @@ Contains an Four Leaf Clover in Mouth, a rental copy of the item which last for 
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 #
+16389#
+#
 16390#
 Contains an Bubble Gum in Mouth, a rental copy of the item which last for a total of 4 hours.
 ^FF0000Account Bound^000000
 ^FF0000Once this box is opened, the rental period begins.^000000
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
+#
+16393#
+#
+16394#
+#
+16395#
+#
+16396#
 #
 16397#
 A box that contains a Virgo Diadem Headgear.
@@ -61021,6 +62704,14 @@ Weight : ^7777771^000000
 A box that contains a Virgo Diadem Headgear.
 ^ffffff_^000000
 Weight : ^7777771^000000
+#
+16405#
+#
+16409#
+#
+16410#
+#
+16412#
 #
 16414#
 A Box that contains 1 Turtle Hat.
@@ -61364,6 +63055,8 @@ Job : ^777777All^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+16446#
+#
 16447#
 A box that contains 1 Scorpio Crown.
 A magnificent crown created to pay tribute to the 8th sign of the zodiac, Scorpio the Scorpion.  Attached to the crown is a Topaz gemstone, the birthstone for those born under this sign.
@@ -61428,6 +63121,8 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 Weight : ^7777771^000000
 #
+16457#
+#
 16461#
 A box that contains 1 Red Wing Hat
 ^FFFFFF_^000000
@@ -61463,6 +63158,12 @@ Jobs : ^777777All^000000
 ^FFFFFF_^000000
 ^ff0000Cancellation of purchase or refund is not allowed for this item.^000000
 Weight : ^7777771^000000
+#
+16463#
+#
+16464#
+#
+16465#
 #
 16483#
 ^808080A box that contains 10 Abrasives.
@@ -61613,6 +63314,8 @@ Base Lvl ^0000FF111 ~ 125 ^006400[5 Magical Stone]^000000
 Base Lvl ^0000FF126 ~ 140 ^006400[6 Magical Stone]^000000
 Base Lvl ^0000FF141 ~ 150 ^006400[7 Magical Stone]^000000
 #
+16564#
+#
 16565#
 A box that cotains 1 Capricorn Crown
 Dex +2, Vit +2
@@ -61673,6 +63376,22 @@ Jobs : ^777777All^000000
 ^FFFFFF_^000000
 Weight : ^7777771^000000
 #
+16569#
+#
+16575#
+#
+16576#
+#
+16578#
+#
+16579#
+#
+16582#
+#
+16584#
+#
+16586#
+#
 16588#
 A box that contains 6 headgears. Open the box and receive one of 6 thought bubble headgears.
 Contains one of the following:
@@ -61705,6 +63424,8 @@ Bf Recruiter Hat
 Gf Recruiter Hat
 AFK Hat
 Weight : ^7777771^000000
+#
+16601#
 #
 16615#
 A box that contains 1 Charming Ribbon
@@ -61748,9 +63469,33 @@ Jobs: ^777777All^000000
 ^777777_^000000
 Weight : ^7777771^000000
 #
+16619#
+#
+16621#
+#
+16623#
+#
+16625#
+#
+16626#
+#
+16627#
+#
+16628#
+#
+16631#
+#
+16638#
+#
+16639#
+#
+16640#
+#
 16652#
 2010 winter collection, Flame Scroll. Limited edition only!
 Weight : ^7777771^000000
+#
+16655#
 #
 16659#
 Open the box and receive one of the 12 Zodiac Diadem headgears.
@@ -61768,6 +63513,10 @@ Capricorn Diadem
 Aquarius Diadem
 Pisces Diadem
 Weight : ^7777771^000000
+#
+16666#
+#
+16674#
 #
 16676#
 Open the box and receive one of the 12 Zodiac Crown headgears.
@@ -61807,6 +63556,8 @@ A magical scroll which is able to 'search what items are on sale and what items 
 Weight : ^7777771^000000
 ^ff0000For this item, the cancellation of purchase or refund is not allowed.^000000
 Weight : ^7777771^000000
+#
+16681#
 #
 16682#
 A box that contains 1 Halter Lead. Once opened, the item inside expires after 1 week.
@@ -62942,6 +64693,16 @@ Jobs : ^777777Hunter/Bard/Dancer^000000
 ^ff0000Non refundable once opened^000000
 Weight : ^7777771^000000
 #
+16753#
+#
+16754#
+#
+16755#
+#
+16756#
+#
+16757#
+#
 16758#
 Umbala Spirit Box
 #
@@ -63057,6 +64818,12 @@ Weight : ^7777770^000000
 ^ff0000Box is trade/store/vend, once opened the item becomes account bound^000000
 Weight : ^7777771^000000
 #
+16774#
+#
+16854#
+#
+16855#
+#
 16972#
 A box that contains 4 costume headgears that convey different patterns of the weather.
 ^ff0000This box can be stored and traded, the items inside are account bound.^000000
@@ -63131,6 +64898,10 @@ Weight : ^7777770^000000
 ^ff0000Box is trade/store/vend, once opened the item becomes account bound^000000
 Weight : ^7777771^000000
 #
+16993#
+#
+16998#
+#
 16999#
 A box that contains 1 Heroic Backpack
 Description:
@@ -63190,6 +64961,10 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 Box Weight : ^7777771^000000
 #
+17024#
+#
+17026#
+#
 17030#
 ^ff0000Green Ale's effects will decrease in recovery percentage to 10% on April 9, 2013.^000000
 A box containing 1 St Patrick's Hat.
@@ -63208,6 +64983,24 @@ Weight : ^77777730^000000
 Required Level : ^77777740^000000
 Job : ^777777All^000000
 Box Weight : ^77777710^000000
+#
+17035#
+#
+17036#
+#
+17037#
+#
+17038#
+#
+17039#
+#
+17040#
+#
+17041#
+#
+17042#
+#
+17043#
 #
 17047#
 when opened always randomly gives:
@@ -63304,6 +65097,22 @@ Contains 50 each of the following:
 ^ff0000unable to trade with other account.^000000
 ^ff0000Cannot be refunded once opened.^000000
 Weight: ^7777771^000000
+#
+17069#
+#
+17070#
+#
+17071#
+#
+17072#
+#
+17073#
+#
+17074#
+#
+17075#
+#
+17076#
 #
 17080#
 ^ff0000Available for sale until March 26, 2012.
@@ -63482,6 +65291,8 @@ Mercury_Helm_Box
 A scroll with the Aries sign fixed upon it.
 Weight : ^7777771^000000
 #
+17118#
+#
 17119#
 Inside are some old favorites as well as some fresh outta the factory items like Headgears created by our very own Adventurers.
 ^0000FFS Class: 1 Black Frame Glasses [1]^000000
@@ -63568,6 +65379,8 @@ Job : ^777777All^000000
 ^ff0000Once you open the box, it cannot be refunded.^000000
 Weight : ^7777771^000000
 #
+17126#
+#
 17127#
 This Special Crate not only contains 5 March Groove Packs, it also contains a special Safe to 10 Certificate, which allows Mighty Hammer to not degrade equipment on a failure, increasing your ability to +10 equipment.
 ^ff0000Available until March 27.^000000
@@ -63592,6 +65405,8 @@ Weight : ^7777771^000000
 17143#
 A scroll with the Scorpio sign fixed upon it.
 Weight : ^7777771^000000
+#
+17153#
 #
 17155#
 ^ff0000Cannot trade this item with other players.^000000
@@ -63619,6 +65434,10 @@ You can then enter a new name as long as it is not already taken.
 ^ff0000You must leave your current guild and/or party before changing your name.^000000
 ^0000ffYou can use this item once and it is account bound^000000
 Weight : ^7777770^000000
+#
+17162#
+#
+17176#
 #
 17181#
 The Getting Lucky Box contains many items of pure win.  It is advised to use with caution.
@@ -63675,6 +65494,18 @@ Opening this randomly give you one of the following item sets
 ^FF0000This item cannot be traded, but may be stored.^000000
 ^FFFFFF_^000000
 Weight : ^7777771^000000
+#
+17202#
+#
+17206#
+#
+17209#
+#
+17210#
+#
+17211#
+#
+17212#
 #
 17221#
 This pack is filled with all sorts of extravagant goodies.
@@ -63751,10 +65582,32 @@ Costume Angry Mouth
 Fully Tradable, but once opened the costume inside is account bound.
 Weight: 1
 #
+17224#
+#
+17233#
+#
+17234#
+#
+17235#
+#
+17236#
+#
+17237#
+#
+17238#
+#
+17239#
+#
+17240#
+#
+17245#
+#
 17248#
 A crate that contains 5 August Lucky Boxes.
 ^ff0000This item is account bound^000000
 Weight : ^7777771^000000
+#
+17251#
 #
 17252#
 This box contains the following:
@@ -63773,6 +65626,28 @@ A tradeable box that contains 5 RWC Initializer Tickets
 Take this ticket to the RWC Enchanter so that you can change the enchantment of your RWC 2012 Ring or RWC 2012 Pendant.
 Weight : ^7777771^000000
 #
+17256#
+#
+17257#
+#
+17262#
+#
+17269#
+#
+17270#
+#
+17271#
+#
+17272#
+#
+17273#
+#
+17274#
+#
+17275#
+#
+17280#
+#
 17289#
 A box that contains a Beelzebub Wing. An un-consumable version of a fly wing which fades over time.
 ^FF0000Account Bound^000000
@@ -63788,6 +65663,8 @@ When opened it gives the following:
 ^FF0000Is this box account bound in any way?^000000
 Class: Item Giver
 Weight: 1
+#
+17291#
 #
 17292#
 A box that gives you a random shadow item equipment.
@@ -63834,6 +65711,8 @@ It's contents can be freely traded once opened.
 ^ff0000Cannot be refunded after opening^000000
 Weight : ^7777771^000000
 #
+17295#
+#
 17296#
 A box that contains 1 Character Position Change Coupon
 ^ff0000This box can be traded, stored and vended. Once opened the item inside is account bound.^000000
@@ -63843,6 +65722,12 @@ After using this item you must logout to the Character Select menu and Right-Cli
 You can then choose a new slot by right-clicking that slot and choosing 'Move to this Slot' and confirming.
 ^0000ffYou can use this item once and it is account bound^000000
 Weight : ^7777770^000000
+#
+17300#
+#
+17301#
+#
+17305#
 #
 17307#
 Lady Lucy presents this fine lucky box for your pleasure!
@@ -63862,6 +65747,14 @@ Deviling Hat
 Whikibain Ears - Animated
 Weight : ^7777770^000000
 #
+17308#
+#
+17309#
+#
+17310#
+#
+17311#
+#
 17317#
 Lady Lucy presents this fine lucky box for your pleasure!
 When opened this crate gives 5 October Spooky boxes.
@@ -63880,6 +65773,12 @@ Costume: Witches Mask
 Deviling Hat
 Whikibain Ears - Animated
 Weight : ^7777770^000000
+#
+17323#
+#
+17324#
+#
+17325#
 #
 17333#
 A box that contains 1 Star-Spangled Bandana
@@ -64314,6 +66213,8 @@ Malicious Shadow Shield
 HE Bubble Gum x 2
 KVM Badge x 100
 #
+17368#
+#
 17369#
 For our 13th Anniversary Celebration, the Kafra corporation has devised a extra-special Lucky Box with some never-before seen items!
 Contains one of the following by chance
@@ -64459,6 +66360,8 @@ Costume Hair Buns (White)
 Costume Wings of Happiness
 Costume Rabbit Ribbon
 #
+17380#
+#
 17381#
 ^808080^000000
 ^FF0000Account Bound^000000
@@ -64541,6 +66444,8 @@ Valkyrie Knife
 Anemos Shield
 Celine's Brooch
 Luminous Blue Stone
+#
+17386#
 #
 17387#
 When opened gives one of the following at random
@@ -64653,6 +66558,8 @@ Blacksmith's Gloves [1]
 ^FF0000Account Bound^000000
 Weight: ^8080800^000000
 #
+17428#
+#
 17434#
 This box has a slight smell of spiced pumpkin.
 Opening it will give you one of the following:
@@ -64671,6 +66578,8 @@ Costume Fancy Phantom Mask x 1
 Costume Secret Hood x 1
 Costume Ghost x 1
 Weight : ^7777771^000000
+#
+17436#
 #
 17450#
 Gary presents this fine groove pack for your pleasure!
@@ -67200,6 +69109,8 @@ Weapon Level: ^7777774^000000
 Required Level: ^777777130^000000
 Equip To: ^7777773rd Archer Classes^000000
 #
+18125#
+#
 18126#
 Attack: 0
 Property: N/A
@@ -67329,6 +69240,14 @@ Location : ^777777Upper^000000 Weight : ^77777710^000000
 Required lv : ^77777715^000000
 Jobs : ^777777 All jobs except Novices^000000
 #
+18510#
+#
+18511#
+#
+18512#
+#
+18513#
+#
 18514#
 A hat that is provided only for members of the Eden Group.
 It's designed to go well with a suit.
@@ -67340,6 +69259,12 @@ Weight : ^7777770^000000
 Required Level : ^77777760^000000
 Jobs : ^777777All Jobs^000000
 #
+18515#
+#
+18516#
+#
+18517#
+#
 18518#
 An ear accessory that looks just like white, beautiful angel wings.
 Class: ^808080Costume^000000
@@ -67347,6 +69272,8 @@ Position: ^808080Middle^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+18519#
 #
 18520#
 A crown that only the person who receives the tribal honor of the Jaty Tribe can wear.
@@ -67379,6 +69306,10 @@ Defense: ^77777710^000000
 Weight : ^77777750^000000
 Required Level : ^7777771^000000
 Jobs: ^777777All^000000
+#
+18523#
+#
+18524#
 #
 18525#
 A hat made from a carved out watermelon. When you wear this, your heart and mind will be in Summer-mode!
@@ -67417,6 +69348,14 @@ Weight : ^77777750^000000
 Required level : ^77777745^000000
 Jobs : ^777777All^000000
 #
+18528#
+#
+18529#
+#
+18530#
+#
+18531#
+#
 18532#
 A cute hairband with an outstanding blue-laced ribbon.
 Int +2
@@ -67426,6 +69365,10 @@ Location: ^777777Upper ^000000
 Weight : ^77777710^000000
 Required level : ^77777710^000000
 Jobs : ^777777All^000000
+#
+18533#
+#
+18534#
 #
 18536#
 A Wanderer style item
@@ -67565,6 +69508,10 @@ Weight : ^77777730^000000
 Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 #
+18549#
+#
+18550#
+#
 18551#
 A circlet which has the austere and beauty of the stars.
 Mdef +5
@@ -67591,6 +69538,10 @@ Location : ^777777Upper^000000
 Weight : ^77777750^000000
 Required Level: ^77777730^000000
 Jobs : ^777777All^000000
+#
+18554#
+#
+18555#
 #
 18556#
 Glasses which proves you are a member of the Angel side.
@@ -67620,6 +69571,10 @@ Location : ^777777Upper ^000000
 Weight : ^777777100^000000
 Required Level : ^77777710^000000
 Job : ^777777All jobs^000000
+#
+18561#
+#
+18562#
 #
 18563#
 The hairband of girls that decorated with love feather and lace.
@@ -67665,6 +69620,10 @@ Weight : ^77777730^000000
 Required Level : ^77777740^000000
 Job : ^777777All^000000
 #
+18566#
+#
+18569#
+#
 18570#
 A Beautiful Golden accessory with ancient magic. It changes its power depending on the owner's class.
 If base Lv. 150, All Stats +2.
@@ -67688,6 +69647,8 @@ Location : ^777777Upper ^000000
 Weight : ^777777100^000000
 Req Level : ^7777771^000000
 Jobs : ^777777All^000000
+#
+18573#
 #
 18574#
 The Helm of the Lord of Death
@@ -67927,6 +69888,8 @@ Additional Crit + 2 and Aspd + 2%.
 If upgrade level is +9 or higher,
 Additional Crit + 2 and Aspd + 2%.
 ^67CDC9Concept by areitus.^000000
+#
+18598#
 #
 18599#
 A grotesque headgear which covers a half of a person's face. But don't you worry. The part of eyes are open so you can see well.
@@ -68198,6 +70161,8 @@ Weight : ^77777750^000000
 Required Level : ^77777770^000000
 Jobs: ^777777All except novice^000000
 #
+18631#
+#
 18632#
 A cute hair pin designed with a yellow poring. Bring this to the Big Hairpin RX75 machine in Prontera to give it extra stat enchantments.
 Class : ^777777Headgear^000000
@@ -68229,6 +70194,8 @@ Defense : ^7777773^000000
 Location : ^777777Upper^000000
 Weight : ^77777710^000000
 Job : ^777777All jobs^000000
+#
+18636#
 #
 18637#
 Helmet generals of the kingdom was the cry of the ancient continent was using. Weather in general that the word of command many soldiers outpouring from all over the body Using this pitch.
@@ -68362,6 +70329,8 @@ Location : ^777777low ^000000Weight : ^7777775^000000
 Req Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+18651#
+#
 18652#
 Vanargand is a another name of Fenrir: the God Biter, which inspired the design of this helmit.
 Under the +5 refine level, the effect is, absorb 1% of damage dealt to enemy into HP, and 1% into SP with certain rate.
@@ -68385,6 +70354,8 @@ Class : ^777777Headgear^000000    Defense : ^7777778^000000
 Location : ^777777Upper^000000    Weight : ^77777720^000000
 Req Level : ^77777730^000000
 Jobs : ^777777All^000000
+#
+18654#
 #
 18655#
 Yet decadent in single-lens glasses with wings, I blow out the charm of secret. I do not know why, but it is said Goe-Do we use habitually.
@@ -68594,6 +70565,8 @@ Location : ^777777Upper ^000000
 Weight : ^77777720^000000
 Required Level : ^77777730^000000
 Jobs : ^777777All^000000
+#
+18672#
 #
 18673#
 The Chibi Pope wishes to escape her duties in Rachel so she's taking a sightseeing vacation with the assistance of helpful Adventurers!
@@ -68890,6 +70863,8 @@ Location : ^777777Lower^000000    Weight : ^7777775^000000
 Required Level : ^77777710^000000
 Job : ^777777All Jobs^000000
 #
+18703#
+#
 18704#
 A hairpin from a plant that eat insects.
 MDef +4, MaxSP +64.
@@ -68931,6 +70906,8 @@ MaxSP + 100.
 Series : ^777777Headgear^000000    Defense : ^7777773^000000
 Location : ^777777Upper^000000    Weight : ^77777720^000000
 Job : ^777777All Job except Novice^000000
+#
+18710#
 #
 18711#
 Do you want be trendy and fashion? Wear it now!
@@ -70350,6 +72327,8 @@ Enables ^0000FFLevel 5 Earth Spike^000000.
 Reduces damage taken from Earth property attacks by 15%.
 If upgrade level is 8 or higher,
 Reduces damage taken from Earth property attacks by an additional 5%.
+#
+18865#
 #
 18866#
 A silk hat of Owlduke. It can boost magic attack powers.
@@ -73859,6 +75838,10 @@ Increases the skill damage bonus of ^0000FFEarth Grave^000000 and ^0000FFDiamond
 If upgrade level is +10 or higher,
 Bypass 100% of hard magic defense of All race targets when performing a magical attack.
 #
+19500#
+#
+19501#
+#
 19502#
 A pair of goggles designed for pilots in order to reduce vision impairment when traveling at very high speeds.
 Class: ^808080Costume^000000
@@ -73868,6 +75851,14 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Increases the experience given from monsters by 30%.
 #
+19503#
+#
+19504#
+#
+19505#
+#
+19506#
+#
 19507#
 A brightly shining sun that floats above your head.
 Class: ^808080Costume^000000
@@ -73875,6 +75866,8 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+19508#
 #
 19509#
 Have the appearance of wearing the wings of a butterfly as your ears with this accessory.
@@ -74020,6 +76013,12 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+19532#
+#
+19533#
+#
+19534#
 #
 19535#
 Though its face and its origin is a mystery, it still looks adorable perched atop your head.
@@ -74555,6 +76554,8 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+19650#
 #
 19651#
 a mouth would have been advocated as unknowingly 'RWC! Fighting!
@@ -75539,6 +77540,8 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+19820#
+#
 19821#
 A hat of monster Hyegun. It was worn out, but very powerful.
 Class: ^808080Costume^000000
@@ -75871,6 +77874,12 @@ Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+19897#
+#
+19898#
+#
+19899#
 #
 19900#
 Red Cool Pirate's eye patch. 3 times cooler than before.
@@ -78937,7 +80946,20 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20534#
+Enjoy having a really, REALLY big cat on your back!
+It's very comfortable.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20535#
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20537#
+Autumn leaves drift gently around you, painting your surroundings with the colorful landscape of the changing of the seasons.
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
@@ -82663,6 +84685,10 @@ Recovers little Hp and SP.
 EXP from Fish type monster increases by 25%.
 Weight : ^77777725^000000
 #
+22648#
+#
+22649#
+#
 22650#
 Lady Lucy presents this fine lucky box for your pleasure!
 When opened the opener receives from the box one of the following.
@@ -82746,6 +84772,18 @@ Weight : ^7777775^000000
 Class: Generic
 Weight: 0.1
 Required Level: 100
+#
+22691#
+#
+22692#
+#
+22693#
+#
+22694#
+#
+22695#
+#
+22699#
 #
 22702#
 Take 1 STR point back to Status Point.
@@ -82961,6 +84999,8 @@ All Stat + 10, ATK + 30, MATK + 30 for 60 minutes
 Increase movement speed for 10 minutes.
 ^ff0000Caution! Existing Food-item buff not stack!.^000000
 Weight : ^7777771^000000
+#
+22825#
 #
 22826#
 A box that contains enchantment stones for costume equipment.
@@ -86597,8 +88637,8 @@ Flee + 15
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Earth property targets by 5%.
-Increases magic damage on Neutral property targets by 5%.
+Increases the damage of Earth property magical attacks on targets by 5%.
+Increases the damage of Neutral property magical attacks on targets by 5%.
 #
 27251#
 Class: ^808080Card^000000
@@ -86616,8 +88656,8 @@ Increases critical damage on targets by 5%.
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Fire property targets by 5%.
-Increases magic damage on Holy property targets by 5%.
+Increases the damage of Fire property magical attacks on targets by 5%.
+Increases the damage of Holy property magical attacks on targets by 5%.
 #
 27254#
 Class: ^808080Card^000000
@@ -86629,8 +88669,8 @@ Adds a 10% chance of casting ^0000FFDangerous Soul Collect^000000 on the the use
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Wind property targets by 5%.
-Increases magic damage on Water property targets by 5%.
+Increases the damage of Wind property magical attacks on targets by 5%.
+Increases the damage of Water property magical attacks on targets by 5%.
 #
 27256#
 Class: ^808080Card^000000
@@ -86656,6 +88696,9 @@ Aspd + 5%
 27259#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
+MAtk + 3%
+Increases the damage of Holy property magical attacks on targets by 5%.
+Increases the recovery rate of recovery skills by 5%.
 #
 27260#
 Class: ^808080Card^000000
@@ -86673,8 +88716,8 @@ If upgrade level is +14 or higher, increases the damage of ^0000FFCold Bolt^0000
 27262#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
-Increases magic damage on Shadow property targets by/by an additional 20%.
-Increases magic damage on Neutral property targets by/by an additional 20%.
+Increases the damage of Neutral property magical attacks on targets by 20%.
+Increases the damage of Shadow property magical attacks on targets by 20%.
 #
 27263#
 Class: ^808080Card^000000
@@ -86685,19 +88728,19 @@ DEF + 300 for the duration of the transformation.
 27264#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
-Increases physical damage on Holy property targets by 30%.
-Increases physical damage on Fire property targets by 30%.
-Reduces physical damage on Undead property targets by 30%.
-Reduces physical damage on Shadow property targets by 30%.
+Increases damage taken from Holy property enemies by 30%.
+Increases damage taken from Fire property enemies by 30%.
+Reduces damage taken from Undead property enemies by 30%.
+Reduces damage taken from Shadow property enemies by 30%.
 ^800080Set Bonus^000000
 ^008080Evil Shadow Card^000000
 ^008080Evil Fanatics Card^000000
+Reduces damage taken from Undead property enemies by 15%.
+Reduces damage taken from Shadow property enemies by 15%.
 Increases physical damage on Undead property targets by 15%.
 Increases physical damage on Shadow property targets by 15%.
 Increases magic damage on Undead property targets by 15%.
 Increases magic damage on Shadow property targets by 15%.
-Reduces physical damage on Undead property targets by 15%.
-Reduces physical damage on Shadow property targets by 15%.
 #
 27265#
 Class: ^808080Card^000000
@@ -86713,12 +88756,12 @@ Reduces magic damage on Fire property targets by 30%.
 ^800080Set Bonus^000000
 ^008080Evil Shadow Card^000000
 ^008080Evil Fanatics Card^000000
+Reduces damage taken from Undead property attacks by 15%.
+Reduces damage taken from Shadow property attacks by 15%.
 Increases physical damage on Undead property targets by 15%.
 Increases physical damage on Shadow property targets by 15%.
 Increases magic damage on Undead property targets by 15%.
 Increases magic damage on Shadow property targets by 15%.
-Reduces physical damage on Undead property targets by 15%.
-Reduces physical damage on Shadow property targets by 15%.
 #
 28000#
 This katar, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -89041,7 +91084,7 @@ Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jo
 Max SP + 10%
 Restores 3 SP to the user when performing a physical attack.
 If upgrade level is +10 or higher,
-Restores an additional 7 SP to the user when performing a physical attack.
+Restores an additional 4 SP to the user when performing a physical attack.
 
 ^800080Set Bonus^000000
 ^008080Illusion Ancient Cape [1]^000000
@@ -91784,6 +93827,69 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
+31593#
+Wear a scarf in a cheery color to brighten up your look!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31594#
+They say that chewing on a pencil helps you think better.
+Keep going, you've almost got that bright idea!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31595#
+Absorb the wisdom of the ages through osmosis
+by wearing the books on your head.
+Trust me, it works!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31596#
+Beautiful, elegant, and a little bit spooky, this hat is decorated with only the finest flowers and spiders.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31597#
+The best thing about this hat, aside from the fact that it's literally a giant fish on your head, is that it doesn't even smell! You can take the real fish off your head now and use this instead.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31598#
+This hat has everything you need to navigate the forest -
+Insect lights to light your way,
+a bell to ward off beasts,
+and mysterious knowledge of the unknown.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31599#
+Enjoy these fluffy, luscious locks
+in the color of milk tea.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31600#
+This adorable kishu inu has decided to claim you as its own!
+Aren't you so lucky?
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31601#
+Only the bottom of the glasses have a frame.
+It makes you super cool.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.
 Class: ^808080Accessory^000000
@@ -91970,7 +94076,4 @@ Equip To : ^777777All Classes^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
-#
-99999#
-
 #
