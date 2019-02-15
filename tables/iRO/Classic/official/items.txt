@@ -7002,3 +7002,5 @@
 20074#Capricon_Crown_Certificate#
 20075#Gryphon_Hat_Certificate#
 20076#Lif_Doll_Hat_Certificate#
+20077#Bf_Recruiter_Hat_Certificate#
+20078#Gf_Recruiter_Hat_Certificate#
