@@ -53,28 +53,30 @@ our %parameters = (
 );
 
 our $macroKeywords = join '|', qw(
-	npc
-	store
-	player
-	monster
-	vender venderitem venderprice venderamount
-	random rand
-	invamount inventory Inventory InventoryType
-	cartamount cart Cart
-	storamount storage Storage
-	shopamount
-	config
-	eval
 	arg
-	listitem
-	strip
+	cartamount cart Cart
+	config
+	defined
+	eval
+	exists
+	delete
+	invamount inventory Inventory InventoryType
+	keys
+	listitem listlenght
+	monster
 	nick
+	npc
+	player
 	push pop unshift shift
-	exists delete
-	keys values
-	defined 
+	random rand
+	shopamount
 	split
+	store storamount
+	storage Storage
+	strip
 	questStatus questInactiveCount questIncompleteCount questCompleteCount
+	values
+	vender venderitem venderprice venderamount
 );
 
 1;
