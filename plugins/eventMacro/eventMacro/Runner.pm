@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght getPattern find_variable get_key_or_index getQuestStatus
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght get_pattern find_variable get_key_or_index getQuestStatus
 	find_hash_and_get_keys find_hash_and_get_values);
 use eventMacro::Automacro;
 
@@ -2165,7 +2165,7 @@ sub parse_command {
 			$result = $parsed;
 			
 		} elsif ($keyword eq 'split') {
-			my ($pattern, $string) = getPattern($inside_brackets);
+			my ($pattern, $string) = get_pattern($inside_brackets);
 			my @values = split($pattern, $self->substitue_variables($string));
 			$result = join (',', @values);
 			
