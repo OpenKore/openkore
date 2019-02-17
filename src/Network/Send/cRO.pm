@@ -36,7 +36,7 @@ sub new {
 		actor_name_request 0369
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_create 0970
+		char_create 0A39
 		storage_password 023B
 		send_equip 0998
 		sell_buy_complete 09D4
@@ -44,6 +44,8 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	$self->{char_create_version} = 0x0A39;
 
 	return $self;
 }
@@ -82,18 +84,15 @@ sub encrypt_password {
 }
 
 sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-	
-	my $msg = $self->reconstruct({
-		switch => 'char_create',
-		name => stringToBytes($name),
-		slot => $slot,
-		hair_style => $hair_style,
-		hair_color => $hair_color,
-	});
-	
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
+	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
+
+	$hair_color ||= 1;
+	$hair_style ||= 0;
+	$job_id     ||= 0;    # novice
+	$sex        ||= 0;    # female
+
+	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
+	$self->sendToServer( $msg );
 }
 
 sub sendSellBuyComplete {
