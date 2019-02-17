@@ -1119,12 +1119,14 @@ our %stat_info_handlers = (
 				$actor->verb(T("%s have been muted for %d minutes\n"), T("%s has been muted for %d minutes\n")),
 				$actor, $duration
 			), "parseMsg_statuslook", $actor->isa('Actor::You') ? 1 : 2;
+			$actor->setStatus('EFST_MUTED', 1, $actor->{mute_period} * 1000);
 		} else {
 			delete $actor->{muted};
 			delete $actor->{mute_period};
 			message sprintf(
 				$actor->verb(T("%s are no longer muted."), T("%s is no longer muted.")), $actor
 			), "parseMsg_statuslook", $actor->isa('Actor::You') ? 1 : 2;
+			$actor->setStatus('EFST_MUTED', 0);
 		}
 
 		return unless $actor->isa('Actor::You');
