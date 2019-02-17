@@ -2071,8 +2071,8 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		
-		# first parse _then_ substitute. slower but safer
-		if ($keyword ne qw(nick push unshift pop shift delete exists defined split keys values)) {
+		#if $keyword is different of every key inside qw(), then we will substitue variables
+		unless (grep{$_ eq $keyword} qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
 		}
 		my $only_replace_once = 0;
