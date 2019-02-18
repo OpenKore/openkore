@@ -2877,6 +2877,21 @@ sub inventory_item_removed {
 	}
 }
 
+# 0299
+sub rental_expired {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByID($args->{ID});
+	message TF("Rental item '%s' has expired!\n", itemNameSimple($args->{nameID})), "info";
+
+	if ($item) {
+		inventoryItemRemoved($item->{binID}, 1);
+		Plugins::callHook('rental_expired', {
+			index => $item->{binID},
+			nameID => $item->{nameID},
+		});
+	}
+}
+
 # 012B
 sub cart_off {
 	$char->cart->close;
@@ -7082,7 +7097,7 @@ sub guild_storage_log {
 
 sub skill_delete {
 	my ( $self, $args ) = @_;
-	my $skill = new Skill( idn => $args->{ID} );
+	my $skill = new Skill( idn => $args->{skillID} );
 	return if !$skill;
 	return if !$char->{skills}->{ $skill->getHandle };
 
@@ -7405,6 +7420,24 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
+sub vender_buy_fail {
+	my ($self, $args) = @_;
+
+	if ($args->{fail} == 1) {
+		error TF("Failed to buy %s of item #%s from vender (insufficient zeny) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 2) {
+		error TF("Failed to buy %s of item #%s from vender (overweight) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 4) {
+		error TF("Failed to buy %s of item #%s from vender (requested to purchase more than vender had in stock) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 6) {
+		error TF("Failed to buy %s of item #%s from vender (vender refreshed shop before purchase request) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} elsif ($args->{fail} == 8) {
+		error TF("Failed to buy %s of item #%s from vender (vender would go over max zeny with the purchase) (error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	} else {
+		error TF("Failed to buy %s of item #%s from vender (unknown error code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
+	}
+}
+
 # Receive list of items from cash shop NPC
 #
 # ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]]
@@ -7499,6 +7532,33 @@ sub merge_item_result {
 sub parse_merge_item_result {
 	my ($self, $args) = @_;
 	$args->{index} = (unpack "(a2)", $args->{itemIndex})-2;
+}
+
+sub skill_add {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
+
+	$char->{skills}{$handle}{ID} = $args->{skillID};
+	$char->{skills}{$handle}{sp} = $args->{sp};
+	$char->{skills}{$handle}{range} = $args->{range};
+	$char->{skills}{$handle}{up} = $args->{upgradable};
+	$char->{skills}{$handle}{targetType} = $args->{target};
+	$char->{skills}{$handle}{lv} = $args->{lv};
+	$char->{skills}{$handle}{new} = 1;
+
+	#Fix bug , receive status "Night" 2 time
+	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
+
+	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
+
+	Plugins::callHook('packet_charSkills', {
+		ID => $args->{skillID},
+		handle => $handle,
+		level => $args->{lv},
+		upgradable => $args->{upgradable},
+	});
 }
 
 1;

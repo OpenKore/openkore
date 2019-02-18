@@ -202,7 +202,7 @@ sub new {
 		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
-		'0135' => ['vender_buy_fail', 'a2 v C', [qw(ID amount fail)]], # 7
+		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]], # 7
 		'0136' => ['vending_start'], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
@@ -406,7 +406,7 @@ sub new {
 		'0296' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0297' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'0298' => ['rental_time', 'v V', [qw(nameID seconds)]], # 8
-		'0299' => ['rental_expired', 'v2', [qw(unknown nameID)]], # 6
+		'0299' => ['rental_expired', 'a2 v', [qw(ID nameID)]], # 6
 		'029A' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4', [qw(ID amount nameID identified broken upgrade cards type_equip type fail cards_ext)]], # 27
 		'029B' => ($rpackets{'029B'} == 72) # or 80
 			? ['mercenary_init', 'a4 v8 Z24 v5 V v2', [qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons)]] # 72
@@ -2704,33 +2704,6 @@ sub skills_list {
 	}
 }
 
-sub skill_add {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $handle = ($args->{name}) ? $args->{name} : Skill->new(idn => $args->{skillID})->getHandle();
-
-	$char->{skills}{$handle}{ID} = $args->{skillID};
-	$char->{skills}{$handle}{sp} = $args->{sp};
-	$char->{skills}{$handle}{range} = $args->{range};
-	$char->{skills}{$handle}{up} = $args->{upgradable};
-	$char->{skills}{$handle}{targetType} = $args->{target};
-	$char->{skills}{$handle}{lv} = $args->{lv};
-	$char->{skills}{$handle}{new} = 1;
-
-	#Fix bug , receive status "Night" 2 time
-	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
-
-	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
-
-	Plugins::callHook('packet_charSkills', {
-		ID => $args->{skillID},
-		handle => $handle,
-		level => $args->{lv},
-		upgradable => $args->{upgradable},
-	});
-}
-
 sub storage_password_request {
 	my ($self, $args) = @_;
 
@@ -2988,19 +2961,6 @@ sub vender_lost {
 	my $ID = $args->{ID};
 	binRemove(\@venderListsID, $ID);
 	delete $venderLists{$ID};
-}
-
-sub vender_buy_fail {
-	my ($self, $args) = @_;
-
-	my $reason;
-	if ($args->{fail} == 1) {
-		error TF("Failed to buy %s of item #%s from vender (insufficient zeny).\n", $args->{amount}, $args->{ID});
-	} elsif ($args->{fail} == 2) {
-		error TF("Failed to buy %s of item #%s from vender (overweight).\n", $args->{amount}, $args->{ID});
-	} else {
-		error TF("Failed to buy %s of item #%s from vender (unknown code %s).\n", $args->{amount}, $args->{ID}, $args->{fail});
-	}
 }
 
 sub mail_refreshinbox {
@@ -3474,12 +3434,6 @@ sub book_read {
 sub rental_time {
 	my ($self, $args) = @_;
 	message TF("The '%s' item will disappear in %d minutes.\n", itemNameSimple($args->{nameID}), $args->{seconds}/60), "info";
-}
-
-# TODO can we use itemName($actor)? -> tech: don't think so because the item might be removed from inventory before this packet is sent -> untested
-sub rental_expired {
-	my ($self, $args) = @_;
-	message TF("Rental item '%s' has expired!\n", itemNameSimple($args->{nameID})), "info";
 }
 
 # 0289
