@@ -45330,6 +45330,21 @@ Party Hard Pack
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9563#
+When Opened gives one of the following at random
+Costume Falling Red Foliage
+Costume Red Pencil in Mouth
+Costume Book of Soyga
+Costume Spider Seduction
+Costume Golden Fish Hat
+Costume Forest Guide
+Costume Medium Wave
+Costume Kishu Dog
+Costume Under Rimmed Glasses (Blue)
+Costume Big White Cat
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -80931,7 +80946,20 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20534#
+Enjoy having a really, REALLY big cat on your back!
+It's very comfortable.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20535#
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20537#
+Autumn leaves drift gently around you, painting your surroundings with the colorful landscape of the changing of the seasons.
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
@@ -88609,8 +88637,8 @@ Flee + 15
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Earth property targets by 5%.
-Increases magic damage on Neutral property targets by 5%.
+Increases the damage of Earth property magical attacks on targets by 5%.
+Increases the damage of Neutral property magical attacks on targets by 5%.
 #
 27251#
 Class: ^808080Card^000000
@@ -88628,8 +88656,8 @@ Increases critical damage on targets by 5%.
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Fire property targets by 5%.
-Increases magic damage on Holy property targets by 5%.
+Increases the damage of Fire property magical attacks on targets by 5%.
+Increases the damage of Holy property magical attacks on targets by 5%.
 #
 27254#
 Class: ^808080Card^000000
@@ -88641,8 +88669,8 @@ Adds a 10% chance of casting ^0000FFDangerous Soul Collect^000000 on the the use
 Class: ^808080Card^000000
 Weight: ^8080800^000000
 MAtk + 3%
-Increases magic damage on Wind property targets by 5%.
-Increases magic damage on Water property targets by 5%.
+Increases the damage of Wind property magical attacks on targets by 5%.
+Increases the damage of Water property magical attacks on targets by 5%.
 #
 27256#
 Class: ^808080Card^000000
@@ -88668,6 +88696,9 @@ Aspd + 5%
 27259#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
+MAtk + 3%
+Increases the damage of Holy property magical attacks on targets by 5%.
+Increases the recovery rate of recovery skills by 5%.
 #
 27260#
 Class: ^808080Card^000000
@@ -88685,8 +88716,8 @@ If upgrade level is +14 or higher, increases the damage of ^0000FFCold Bolt^0000
 27262#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
-Increases magic damage on Shadow property targets by/by an additional 20%.
-Increases magic damage on Neutral property targets by/by an additional 20%.
+Increases the damage of Neutral property magical attacks on targets by 20%.
+Increases the damage of Shadow property magical attacks on targets by 20%.
 #
 27263#
 Class: ^808080Card^000000
@@ -88697,19 +88728,19 @@ DEF + 300 for the duration of the transformation.
 27264#
 Class: ^808080Card^000000
 Weight: ^8080800^000000
-Increases physical damage on Holy property targets by 30%.
-Increases physical damage on Fire property targets by 30%.
-Reduces physical damage on Undead property targets by 30%.
-Reduces physical damage on Shadow property targets by 30%.
+Increases damage taken from Holy property enemies by 30%.
+Increases damage taken from Fire property enemies by 30%.
+Reduces damage taken from Undead property enemies by 30%.
+Reduces damage taken from Shadow property enemies by 30%.
 ^800080Set Bonus^000000
 ^008080Evil Shadow Card^000000
 ^008080Evil Fanatics Card^000000
+Reduces damage taken from Undead property enemies by 15%.
+Reduces damage taken from Shadow property enemies by 15%.
 Increases physical damage on Undead property targets by 15%.
 Increases physical damage on Shadow property targets by 15%.
 Increases magic damage on Undead property targets by 15%.
 Increases magic damage on Shadow property targets by 15%.
-Reduces physical damage on Undead property targets by 15%.
-Reduces physical damage on Shadow property targets by 15%.
 #
 27265#
 Class: ^808080Card^000000
@@ -88725,12 +88756,12 @@ Reduces magic damage on Fire property targets by 30%.
 ^800080Set Bonus^000000
 ^008080Evil Shadow Card^000000
 ^008080Evil Fanatics Card^000000
+Reduces damage taken from Undead property attacks by 15%.
+Reduces damage taken from Shadow property attacks by 15%.
 Increases physical damage on Undead property targets by 15%.
 Increases physical damage on Shadow property targets by 15%.
 Increases magic damage on Undead property targets by 15%.
 Increases magic damage on Shadow property targets by 15%.
-Reduces physical damage on Undead property targets by 15%.
-Reduces physical damage on Shadow property targets by 15%.
 #
 28000#
 This katar, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -91053,7 +91084,7 @@ Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jo
 Max SP + 10%
 Restores 3 SP to the user when performing a physical attack.
 If upgrade level is +10 or higher,
-Restores an additional 7 SP to the user when performing a physical attack.
+Restores an additional 4 SP to the user when performing a physical attack.
 
 ^800080Set Bonus^000000
 ^008080Illusion Ancient Cape [1]^000000
@@ -93794,6 +93825,69 @@ Usable By: ^808080All Jobs^000000
 Like snowflakes on your hair. It twinkles like the stars
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31593#
+Wear a scarf in a cheery color to brighten up your look!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31594#
+They say that chewing on a pencil helps you think better.
+Keep going, you've almost got that bright idea!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31595#
+Absorb the wisdom of the ages through osmosis
+by wearing the books on your head.
+Trust me, it works!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31596#
+Beautiful, elegant, and a little bit spooky, this hat is decorated with only the finest flowers and spiders.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31597#
+The best thing about this hat, aside from the fact that it's literally a giant fish on your head, is that it doesn't even smell! You can take the real fish off your head now and use this instead.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31598#
+This hat has everything you need to navigate the forest -
+Insect lights to light your way,
+a bell to ward off beasts,
+and mysterious knowledge of the unknown.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31599#
+Enjoy these fluffy, luscious locks
+in the color of milk tea.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31600#
+This adorable kishu inu has decided to claim you as its own!
+Aren't you so lucky?
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31601#
+Only the bottom of the glasses have a frame.
+It makes you super cool.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
 32203#
