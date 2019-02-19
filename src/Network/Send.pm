@@ -2444,7 +2444,7 @@ sub sendPetEmotion {
 		ID => $ID,
 	}));
 	
-	warning "Sent Pet Emotion: $ID\n", "sendPacket", 2;
+	debug "Sent Pet Emotion: $ID\n", "sendPacket", 2;
 }
 
 
