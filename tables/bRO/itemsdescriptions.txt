@@ -12414,7 +12414,7 @@ Uma túnica mágica que carrega a energia dos espíritos da natureza e é resist
 ^0000ffDEFM +5^000000
 ^0000ffHP máx. +800.^000000
 ^0000ffTolerância a Congelamento +100%.^000000
-^0000ffResistência as propriedades Neutro e Água +20%.^000000
+^0000ffResistência a todas as propriedades +20%, exceto Neutro e Água.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777738^000000
 Peso: ^7777770^000000
@@ -13788,13 +13788,15 @@ Classes que utilizam: ^777777Todas^000000
 #
 2542#
 Manteau criado das chamas e usado por Naght Sieger.
-HP Máx + 5%, DEFM + 2, ATQM + 1%
-Causa 2% mais dano a monstros da propriedade Fogo.
+^0000ffDEFM +2.^000000
+^0000ffHP máx. +5%.^000000
+^0000ffDano mágico +1%.^000000
+^0000ffDano físico contra oponentes da propriedade Fogo +2%.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777716^000000
 Peso: ^77777770^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Todas as classes T. e suas evoluções exceto Aprendizes^000000
+Classes: ^777777Transclasses^000000
 #
 2543#
 Um manteau imbuído com o espírito do vento capaz de proteger seu usuário do perigo.
@@ -14749,23 +14751,32 @@ Classes: ^777777Todas^000000
 #
 2678#
 Um anel imbuído do poder do espírito-rei do fogo, que pode ser usado para fortalecer a arma do usuário.
-Este anel forma conjunto com o Anel da Ressonância.
-FOR +2, VIT +1, ATQ +15.^FFFFFF   ^000000 Aumenta a resistência a
-ataques com propriedade Fogo em 10%. Acrescenta uma chance de lançar automaticamente várias habilidades a cada ataque físico.
-Quando usado com o Anel da Ressonância, este anel aumenta a chance da invocação automática das habilidades.
-Tipo de Item: ^777777Acessório^000000
+^0000ffATQ +15.^000000
+^0000ffFOR +2. VIT +1.^000000
+^0000ffResistência a propriedade Fogo +10%.^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Zen] nv. 1, [Fúria Interior] nv. 1, [Gloria Domini] nv. 2, [Bolas de Fogo] nv. 1 e [Impacto de Tyr] nv. 5.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Classes que utilizam: ^777777Transclasses 2-X^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Classes 2 T. e evoluções^000000
 #
 2679#
 Um anel que ressoa com o Anel do Senhor das Chamas: juntos, eles formam um par.
-AGI +2, VIT +1. DEFM +2.^FFFFFF  ^000000 Chance de lançar
-automaticamente várias habilidades a cada ataque físico.
-Tipo de Item: ^777777Acessório^000000
+^0000ffDEFM +2.^000000
+^0000ffAGI +2. VIT +1.^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Pântano dos Mortos] nv. 1, [Explosão Tóxica] nv. 10, [Curar] nv. 10, [Assumptio] nv. 3 e [Destino nas Cartas] nv. 5.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel do Senhor das Chamas]^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Punho Supremo de Asura] nv. 1, [Lex Aeterna] nv. 1, [Lâminas Destruidoras] nv. 5, [Impacto Psíquico] nv. 5 e [Impacto Meteoro] nv. 2.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777772^000000
 Peso: ^77777710^000000
-Classes que utilizam: ^777777Transclasses 2-X^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Classes 2 T. e evoluções^000000
 #
 2680#
 Um anel que detém o poder de espíritos elementais menores,
@@ -15320,13 +15331,16 @@ Classes que utilizam:  ^777777Transcendentais de Arqueiro^000000
 2749#
 Uma luva feita com um material nunca visto antes.
 Incrivelmente leve, ajusta-se perfeitamente à mão.
-AGI + 2, DES + 1, DEFM + 1
-Quando equipado com Malha Aprimorada, dá +5 à Esquiva Perfeita.
+^0000ffDEFM +1.^000000
+^0000ffAGI +2. DES +1.^000000
+^FF6347Conjunto^000000
+^FF6347[Malha Aprimorada]^000000
+^0000ffEsquiva perfeita +5.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^77777712^000000
 Nível necessário: ^77777790^000000
-Classes que utilizam:  ^7777772a. Classe Transcendental^000000
+Classes: ^777777Classes 2 T. e evoluções^000000
 #
 2751#
 Um emblema recebido ao concluir sua vida acadêmica na Universidade de Juno. É especialmente apreciado entre as classes mais eruditas, usuárias de magia.
@@ -16566,31 +16580,32 @@ Classe : ^777777Todas exceto Aprendiz.^000000
 #
 2957#
 O poderoso anel do Rei do Vulcão. Quando equipado, sua arma será dominada pelo fervor do espirito.
-Um bom par para o ^777777Anel da Vibração^000000.
-FOR + 3
-VIT + 2
-ATQ + 20
-Aumenta em 10% a resistência contra o elemento Fogo.
-Chance de conjurar algumas habilidades automaticamente quando o usuário estiver atacando fisicamente.
-Adiciona novas habilidades a serem auto-conjuradas quando equipado com o Anel da Vibração.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777770^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777785^000000
-Classe : ^777777Segundas classe/Mestre Taekwon/Espiritualista/Kagerou/Oboro^000000
+^0000ffATQ +20.^000000
+^0000ffFOR +3. VIT +2.^000000
+^0000ffResistência a propriedade Fogo +10%.^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Zen] nv. 1, [Fúria Interior] nv. 1, [Gloria Domini] nv. 2, [Bolas de Fogo] nv. 1 e [Impacto de Tyr] nv. 5.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777785^000000
+Classes: ^777777Classes 2 T., Mestres Taekwon, Espiritualistas e evoluções, Kagerou e Oboro ^000000
 #
 2958#
-O par perdido do ^777777Anel do Vulcão^000000. Equipa-los juntos trará novos efeitos para ambos.
-AGI + 3
-VIT + 1
-DEFM + 2
-ATQM + 10
-Chance de auto-conjurar algumas habilidades quando o usuário receber ataques físicos.
-Tipo : ^777777Acessório^000000
-Defesa : ^7777772^000000
-Peso : ^77777710^000000
-Nível Necessário : ^77777785^000000
-Classe : ^777777Segundas Classes/Mestre Taekwon/Espiritualista/Kagerou/Oboro^000000
+O par perdido do Anel do Vulcão. Equipa-los juntos trará novos efeitos para ambos.
+^0000ffAGI +3. VIT +1.^000000
+^0000ffDEFM +2. ATQM +10.^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Pântano dos Mortos] nv. 1, [Explosão Tóxica] nv. 10, [Curar] nv. 10, [Assumptio] nv. 3 e [Destino nas Cartas] nv. 5.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel do Vulcão]^000000
+Ao realizar ataques físicos:
+^0000ffChances de autoconjurar [Lex Aeterna] nv. 1, [Impacto Psíquico] nv. 5 e [Impacto Meteoro] nv. 2.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777785^000000
+Classes: ^777777Classes 2 T., Mestres Taekwon, Espiritualistas e evoluções, Kagerou e Oboro ^000000
 #
 2959#
 Você pode ler o nome Hachiko nesta coleira. De acordo com as lendas, essa coleira foi usada por um cão da raça Shiba Inu que pertenceu ao Atroce, antes dele se tornar um licantropo amaldiçoado, quando ainda era um guerreiro humano. Dizem que ainda existe um laço profundo ligando este item ao MVP. Será verdade? Você sente apenas uma forte sensação de lealdade ao segurar esta coleira. O que acontecerá se você usá-la?
@@ -16646,43 +16661,51 @@ Classes: ^777777Todas^000000
 #
 2966#
 Um anel dourado, com o símbolo do RWC gravado em sua superfície. Emana grande poder.
-ATK + 1%.
-Quando equipado em conjunto com o Colar do RWC, ATQ + 4%.
-Tipo : ^777777Acessório^000000
+^0000ffDano físico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Colar Memorável RWC]^000000
+^0000ffDano físico +4% adicional.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777720^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2967#
 Um anel dourado, com o símbolo do RWC gravado em sua superfície. Emana grande poder.
-ATQ + 1%.
-Quando equipado em conjunto com o Colar do RWC, ATQ + 4%.
-Tipo : ^777777Acessório^000000
+^0000ffDano físico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Colar Memorável RWC]^000000
+^0000ffDano físico +4% adicional.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777720^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2968#
 Um colar dourado, com o símbolo do RWC gravado em sua superfície. Emana grande poder.
-ATQM+ 1%.
-Quando equipado em conjunto com o Anel do RWC, ATQM+ 4%.
-Tipo : ^777777Acessório^000000
+^0000ffDano mágico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel Memorável RWC]^000000
+^0000ffDano mágico +4% adicional.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777720^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2969#
 Um colar dourado, com o símbolo do RWC gravado em sua superfície. Emana grande poder.
-ATQM+ 1%.
-Quando equipado em conjunto com o Anel do RWC, ATQM+ 4%.
-Tipo : ^777777Acessório^000000
+^0000ffDano mágico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel Memorável RWC]^000000
+^0000ffDano mágico +4% adicional.^000000
+Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso : ^77777720^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 2971#
 Um relógico prateado com uma longa corrente.
@@ -16970,7 +16993,6 @@ Classes: ^777777Mecânicos^000000
 2998#
 Um bracelete misterioso capaz de despertar efeitos desconhecidos quando usado junto de certos equipamentos elementais.
 ^0000ffResistência a propriedade Sagrado +10%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
@@ -18096,11 +18118,13 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4161#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Glória (nível 1) quando o usuário receber Dano Físico.
-Se o usuário estiver equipado com um item que tenha a carta Peco Peco, receberá DEF +3 e VIT +3. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+Ao receber danos físicos:
+^0000ff5% de chance de autoconjurar [Glória] nv. 1.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Peco Peco]^000000
+^0000ffDEF +3. VIT +3.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4162#
@@ -18355,13 +18379,22 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4191#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Cura em nível 3 no usuário ao receber dano físico.
-Se o usuário estiver equipado com itens que tenham as cartas Boneco de Miyabi, Ninfa Perversa, Parasita, Harpia e Borboleta Sanguinária ao mesmo tempo, adiciona-se +500 ao HP máximo, +5 de DEF e DEFM.
-Inflige 10% a mais de dano com as habilidades Lanças de Fogo, de Gelo e Relâmpago.
-Se personagens da Classe Mago e suas evoluções estiverem equipados com itens que tenham as cartas acima listadas, reduz-se o tempo de conjuração variável em 15% e adiciona-se +3% ao ATQM.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Armadura^000000
+Ao receber danos físicos:
+^0000ff5% de chance de autoconjurar [Curar] nv. 3.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Harpia]^000000
+^fa4e09[Carta Parasita]^000000
+^fa4e09[Carta Ninfa Perversa]^000000
+^fa4e09[Carta Boneco de Miyabi]^000000
+^fa4e09[Carta Borboleta Sanguinária]^000000
+^0000ffDEF e DEFM +5.^000000
+^0000ffHP máx. +500.^000000
+^0000ffDano de [Lanças de Gelo] [Relâmpago] e [Lanças de Fogo] +10%.^000000
+Magos e evoluções:
+^0000ffDano mágico +3%.^000000
+^0000ffConjuração variável -15%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4192#
@@ -18564,11 +18597,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4217#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Cura em nível 1 no usuário, ao realizar um Ataque Físico.
-Se o usuário tiver dominado o nível 10 da habilidade, será conjurada Cura no nível 10.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Escudo^000000
+Ao receber danos físicos:
+^0000ff2% de chance de autoconjurar [Curar] nv. 1.^000000
+Ao aprender [Curar] nv. 10:
+^0000ffAutoconjura [Curar] nv. 10.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4218#
@@ -18722,18 +18756,21 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4237#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Impositio Manus (nível 3), no usuário, ao realizar um Ataque Físico.
-Se o usuário estiver equipado com um item que tenha a carta Barão Coruja, adiciona-se a chance de conjurar automaticamente a habilidade Relâmpago (nível 5), no inimigo, quando realizar um Ataque Físico.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+Ao realizar ataques físicos:
+^0000ff0,3% de chance de autoconjurar [Impositio Manus] nv. 3 em si.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Barão Coruja]^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Relâmpago] nv. 5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4238#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Lex Aeterna em nível 1 no inimigo, ao realizar um Ataque Físico.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Acessório^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Lex Aeterna] nv. 1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4239#
@@ -18751,11 +18788,11 @@ Utilização: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4241#
-^0000ffMáximo HP +300.
-Aumenta a recuperação de HP e SP em 100% se o usuário tiver 77 ou mais pontos de SOR.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+^0000ffHP máx. +300.^000000
+SOR base 77 ou mais:
+^0000ffRegeneração natural de HP e SP +100%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4242#
@@ -18856,11 +18893,10 @@ Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4253#
-^0000ffRecebe 40% a menos de dano de monstros do Tipo Chefe.
-Recebe 40% a mais de dano de monstros normais.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Escudo^000000
+^0000ffResistência a monstros chefes +40%.^000000
+^0000ffResistência a monstros normais^000000 ^ff0000-40%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4254#
@@ -19071,13 +19107,23 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4280#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Bênção (nível 2) no usuário quando este receber Dano Físico. Se o usuário tiver aprendido Bênção Nv. 10, o nível conjurado da habilidade será 10.
-Se o usuário estiver equipado com itens que tenham as cartas Rideword, Pessegueira Encantada, Cookie e Foca ao mesmo tempo, reduz-se o tempo de conjuração variável em 10% e o consumo de SP em 10%.
-VIT +10.
-Se personagens da Classe Noviço e suas evoluções estiverem equipados com itens que tenham essas cartas listadas acima, eles recebem 30% a menos de dano e 5% a mais de Pontos de Experiência de monstros do tipo Demônio e Morto-Vivo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Armadura^000000
+Ao receber danos físicos:
+^0000ff3% de chance de autoconjurar [Bênção] nv. 2.^000000
+Ao aprender [Bênção] nv. 10:
+^0000ffAutoconjura [Bênção] nv. 10.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Foca]^000000
+^fa4e09[Carta Cookie]^000000
+^fa4e09[Carta Rideword]^000000
+^fa4e09[Carta Pessegueira Encantada]^000000
+^0000ffVIT +10.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffCusto de SP de habilidades -10%.^000000
+Noviços e evoluções:
+^0000ffResistência a raça Demônio e Morto-Vivo +30%.^000000
+^0000ffEXP adquirida ao derrotar monstros da raça Demônio e Morto-Vivo +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4281#
@@ -19499,21 +19545,22 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4332#
-Carta Fornalha Velha.
-ATQ +5, INT +1
-^6A5ACDConjunto de Cartas do Monge^000000
-^3CB371 Carta Rideword^000000
-^3CB371 Carta Cookie^000000
-^3CB371 Carta Foca^000000
-^3CB371 Carta Fornalha Velha^000000
-FOR +3, SP +80, ATQ +25
-Chance de conjurar Signum Crusis nível 5 a cada ataque físico.
-+10% de dano com Punho Supremo de Asura
-Bônus para Classe Monge:
-Conjuração sem interrupção
--10% no consumo de SP.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffINT +1. ATQ +5.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Foca]^000000
+^fa4e09[Carta Cookie]^000000
+^fa4e09[Carta Rideword]^000000
+^0000ffFOR +3.^000000
+^0000ffSP máx. +80.^000000
+^0000ffATQ +25 adicional.^000000
+^0000ffDano de [Punho Supremo de Asura] +10%.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de autoconjurar [Signum Crucis] nv. 5.^000000
+Monges e evoluções:
+^0000ffCusto de SP de habilidades -10%.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4333#
@@ -19531,11 +19578,11 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4335#
-Carta Minérios.
-Aumenta o dano da Coluna de Pedra e Fúria da Terra em 5%.
-Drena 50 SP quando a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Coluna de Pedra] e [Fúria da Terra] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4336#
@@ -19615,11 +19662,11 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4345#
-Carta Vento da Colina.
-Aumenta o dano de Tempestade de Raios, Trovão de Júpiter e Ira de Thor em 5%.
-Drena 50 SP quando a arma equipada é retirada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Tempestade de Raios], [Trovão de Júpiter] e [Ira de Thor] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4346#
@@ -19637,21 +19684,22 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4348#
-Carta Wickebine Tres.
-Acrescenta a chance de lançar automaticamente Remover Armadura nv. 1 a cada vez que o usuário atacar fisicamente.
-^6A5ACDConjunto de Cartas do Arruaceiro^000000
-^3CB371 Carta Andarilho^000000
-^3CB371 Carta Rosa Selvagem^000000
-^3CB371 Carta Shinobi^000000
-^3CB371 Carta Percevejo^000000
-^3CB371 Carta Wickebine Tres^000000
-FOR +6, AGI +4, +10% de dano com Apunhalar.
-Chance de conjurar automaticamente Remover Armadura nível 5, se esse nível tiver sido aprendido.
-Bônus para Classe Arruaceiro:
--20% de consumo de SP
-Desabilita a habilidade Rapto da Carta Andarilho.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Acessório^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Remover Armadura] nv. 1.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Shinobi]^000000
+^fa4e09[Carta Andarilho]^000000
+^fa4e09[Carta Percevejo]^000000
+^fa4e09[Carta Rosa Selvagem]^000000
+^0000ffFOR +6. AGI +4.^000000
+^0000ffDano de [Apunhalar] +10%.^000000
+Ao aprender [Remover Armadura] nv. 5:
+^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Remover Armadura] nv. 5.^000000
+Arruaceiros e evoluções:
+^0000ffCusto de SP por habilidades -20%.^000000
+^0000ffDesativa a autoconjuração de [Rapto].^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4349#
@@ -19662,11 +19710,11 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4350#
-Carta Laurell Weinder.
-Aumenta o dano das habilidades Congelar e Nevasca em 3%.
-Drena 50 SP quando a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Congelar] e [Nevasca] +3%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4351#
@@ -19893,25 +19941,31 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4378#
-Carta Acidus Dourado.
-Aumenta o HP máximo e o SP máximo em 4%. Se o nível de aprimoramento dos sapatos não for maior que 4,
-esses bônus serão aumentados para +8% nos SP e HP máximos, e +5% na recuperação de SP e HP.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Calçado^000000
+^0000ffHP e SP máx. +8%.^000000
+^0000ffRegeneração natural de HP e SP +5%.^000000
+Refino +5 ou mais:
+^0000ffHP e SP máx.^000000 ^ff0000-4%.^000000
+^0000ffRegeneração natural de HP e SP^000000 ^ff0000-5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4379#
-Carta Acidus Azul.
-SP +40. Se o nível de aprimoramento do capacete equipado não for maior que 4, o bônus aumentará para SP +80 e Recuperação de SP +5%.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Equipamento para a cabeça^000000
+^0000ff SP máx. +80.^000000
+^0000ffRegeneração natural de SP +5%.^000000
+Refino +5 ou mais:
+^0000ffSP máx.^000000 ^ff0000-40.^000000
+^0000ffRegeneração natural de SP^000000 ^ff0000-5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4380#
-Carta Ferus Escarlate.
-Aumenta o dano de Coluna de Fogo e Chuva de Meteoros em 5%. Drena 50 SP se a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Coluna de Fogo] e [Chuva de Meteoros] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4381#
@@ -19932,23 +19986,21 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4382#
-Carta Novus Dourado.
-HP +500. Aumenta a recuperação de HP em 10%.
-^6A5ACDConjunto de Cartas do Sábio^000000
-^00FF001 Carta Novus Dourado^000000
-^00FF001 Carta Ninfa Perversa^000000
-^00FF001 Carta Boneco de Miyabi^000000
-^00FF001 Carta Borboleta Sanguinária^000000
-^00FF001 Carta Harpia^000000
-INT +3
-+10% de dano com Tempestade de Raios
-+10% de dano com Fúria da Terra
-^00FF00Bônus somente para Sábios^000000
-+20% de chance de refletir magia.
-Tempo de conjuração variável 20% mais rápido. Cria uma pequena chance de obter Gemas Vermelhas ou
-Amarelas ao derrotar monstros.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffHP máx. +500.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Harpia]^000000
+^fa4e09[Carta Ninfa Perversa]^000000
+^fa4e09[Carta Boneco de Miyabi]^000000
+^fa4e09[Carta Borboleta Sanguinária]^000000
+^0000ffINT +3.^000000
+^0000ffDano de [Fúria da Terra] e [Tempestade de Raios] +10%.^000000
+Sábios e evoluções:
+^0000ffConjuração variável -20%.^000000
+^0000ff20% de chance de refletir magias de alvo único.^000000
+^0000ffAo derrotar monstros, 10% de chance de derrubar Gema Vermelha ou Gema Amarela.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4383#
@@ -19988,10 +20040,11 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4388#
-Carta Palavra Morta.
-Aumenta o dano de Ataque Espiritual, Espíritos Anciões e Vulcão Napalm em 5%. Drena 50 SP se a arma equipada é retirada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Ataque Espiritual], [Espíritos Ancições] e [Vulcão Napalm] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4389#
@@ -20095,11 +20148,12 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4402#
-Carta Aliot.
-Quando equipada por Espadachins, Mercadores, Gatunos e suas evoluções, esta carta oferece os bônus: FOR +2 e HP máximo +5%.
-Quando equipada por Magos, Noviços, Arqueiros e suas evoluções, esta carta oferece INT +2 e SP máximo +5%.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Capa^000000
+Espadachins, Mercadores, Gatunos e evoluções:
+^0000ffFOR +2. HP máx. +5%.^000000
+Magos, Noviços, Arqueiros e evoluções:
+^0000ffINT +2. SP máx. +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4403#
@@ -20200,10 +20254,10 @@ Classe: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4416#
-Concede 25% de redução no tempo de conjuração variável somente para a habilidade Lanças de Gelo.
-Concede 25% de dano adicional somente para a habilidade Lanças de Gelo.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Acessório^000000
+^0000ffDano de [Lanças de Gelo] +25%.^000000
+^0000ffConjuração variável de [Lanças de Gelo] -25%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4417#
@@ -20318,10 +20372,10 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4433#
-Concede 25% de redução no tempo de conjuração somente para a habilidade Lanças de Fogo.
-Concede 25% de dano adicional somente para a habilidade Lanças de Fogo.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Acessório^000000
+^0000ffDano de [Lanças de Fogo] +25%.^000000
+^0000ffConjuração variável de [Lanças de Fogo] -25%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4434#
@@ -20352,10 +20406,12 @@ Classe: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4438#
-SP + 100, HP - 100 se o usuário for Mago.
-20% de dano adicional para Espíritos Anciões, Ataque Espiritual e Vulcão Napalm.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Equipamento para a cabeça^000000
+Magos e evoluções:
+^0000ffHP máx.^000000 ^ff0000-100.^00000
+^0000ffSP máx. +100.^000000
+^0000ffDano de [Espíritos Anciões], [Ataque Espiritual] e [Vulcão Napalm] +20%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4439#
@@ -20484,12 +20540,14 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4458#
-ATQ + 10.
-Adiciona a chance de aumentar a Esquiva Perfeita em +10 por 4 segundos quando atacar fisicamente.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
-Peso : ^7777771^000000
+^0000ffATQ +10.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffEsquiva perfeita +10.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso: ^7777771^000000
 #
 4459#
 ^0000ffATQM +10.^000000
@@ -20509,12 +20567,14 @@ Utilização: ^777777Equipamento para a cabeça^000000
 Peso : ^7777771^000000
 #
 4461#
-DES + 1, AGI + 1.
-Adiciona a chance de aumentar o Crítico em +20 por 4 segundos quando atacar fisicamente.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
-Peso : ^7777771^000000
+^0000ffDES +1. AGI +1.^000000
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar um [efeito] por 4 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffCRIT +20.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso: ^7777771^000000
 #
 4462#
 DEF + 5.
@@ -20525,12 +20585,14 @@ Utilização: ^777777Armadura^000000
 Peso : ^7777771^000000
 #
 4463#
-Crítico + 5.
-Se o refinamento do item for +12 ou maior, ATQ +35. Se o refinamento for +14 ou maior, Critico +10.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Arma^000000
-Peso : ^7777771^000000
+^0000ffCRIT +5.^000000
+Refino +12 ou mais:
+^0000ffATQ +35.^000000
+Refino +14 ou mais:
+^0000ffCRIT +10 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 4464#
 ^0000ffDano crítico +20%.^000000
@@ -20568,12 +20630,12 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4468#
-ATQ + 10.
-Pequena chance de derrubar o Ervas Venenosas quando um monstro for derrotado.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
-Peso : ^7777771^000000
+^0000ffATQ +10.^000000
+Ao derrotar monstros:
+^0000ff0,1% de chance de derrubar Nerium, Lantana, Makulrata, Celatom, Scoforia e Amoena.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
+Peso: ^7777771^000000
 #
 4469#
 Dano mágico contra a raça Peixe +10%.
@@ -23636,25 +23698,40 @@ Classes que utilizam: ^777777Aprendiz^000000
 #
 5126#
 Um capuz que é uma das das quatro chaves para o selo que prende Morpheus.
-^0000ffINT +2.
-Se o usuário estiver equipado com o Conjunto de Armadura de Morpheus completo, este capuz adicionará INT +5, DEFM +11, Máx. SP +20% e feitiços mágicos não poderão ser anulados, mas o tempo de invocação variável aumentará em 25%.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+^0000ffINT +2.^000000
+^FF6347Conjunto^000000
+^FF6347[Véu de Morpheus]^000000
+^FF6347[Anel de Morpheus]^000000
+^FF6347[Bracelete de Morpheus]^000000
+^0000ffDEFM +11.^000000
+^0000ffSP máx. +20%.^000000
+^0000ffINT +5 adicional.^000000
+^0000ffConjuração variável^000000 ^ff0000-25%.^00000
+^0000ffA conjuração não pode ser interrompida.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777773^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777733^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 5127#
 Um elmo que um dia pertenceu a Morrigane, a deusa da guerra.
-^0000ffSOR +2, ATQ +3.
-Se o usuário está equipado com o Conjunto Morrigane completo, esse elmo adiciona FOR +2, SOR +9, ATQ +18, Ataque Crítico +13 e Esquiva Perfeita +13.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777778^000000
+^0000ffSOR +2. ATQ +3.^000000
+^FF6347Conjunto^000000
+^FF6347[Cinto de Morrigane]^000000
+^FF6347[Pingente de Morrigane]^000000
+^FF6347[Manteau de Morrigane]^000000
+^0000ffFOR +2. CRIT +13.^000000
+^0000ffSOR +9 adicional.^000000
+^0000ffATQ +18 adicional.^000000
+^0000ffEsquiva perfeita +13.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777778^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777761^000000
-Classes que utilizam: ^777777Todas exceto Aprendiz e Evolução^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
 #
 5128#
 Uma das poucas armaduras forjadas por Goibe, o ferreiro. Dizem que os deuses gostaram mais das armaduras do que das armas que ele forjou.
@@ -34057,8 +34134,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000028.01.2019.^000000
-Este item será removido no dia ^ff000029.01.2019.^000000
+Promoção limitada até o dia ^ff000025.02.2019.^000000
+Este item será removido no dia ^ff000026.02.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -34106,6 +34183,7 @@ Negociação: ^777777O item não pode ser derrubado mas pode ser negociado, colo
 7622#
 Este é um Cupom para Corte de Cabelo que você pode trocar na Estilista em Alberta por um dos mais novos cortes de cabelo.
 Este ticket só funciona para os novos cortes e apenas na estilista Kaniki.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 Peso: ^7777771^000000
 #
 7623#
@@ -39584,13 +39662,13 @@ Classes que utilizam: ^777777Ninja^000000
 #
 13027#
 Lâmina pequena, leve e afiada. Otimizada para ataques ágeis.
-Há chance causar o status "Sangramento" no inimigo.
-Tipo de Item: ^777777Adaga^000000
-Força de ataque: ^777777120^000000
+^0000ffAo realizar ataques físicos, 5% de chance de infligir Sangramento no alvo.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777120^000000
 Peso: ^77777750^000000
-Nível da Arma: ^7777774^000000
+Nível da arma: ^7777774^000000
 Nível necessário: ^77777755^000000
-Classes que utilizam: ^777777Transcendentais de Espadachim/Mago/Arqueiro/Mercador/Gatuno^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos, Arqueiros, Magos e evoluções^000000
 #
 13028#
 Bisturi de dentista usado para ajudar a arrancar dentes.
@@ -39727,14 +39805,17 @@ Classes: ^777777Desordeiros e evoluções^000000
 #
 13039#
 Uma adaga feita com o marfim do Mamute. É muito difícil de fabricar, por causa da solidez do marfim. A ponta afiada a torna mais eficiente para perfurar do que para cortar.
-AGI + 2, VelATQ + 3%
-Ao atacar, há 3% de chance de lançar Golpe Fatal nv. 1 ou causar Sangramento no inimigo.
+^0000ffAGI +2.^000000
+^0000ffVelocidade de ataque +3%.^000000
+Ao realizar ataques físicos:
+^0000ff3% de infligir Sangramento no alvo.^000000
+^0000ff3% de autoconjurar [Ferimento Mortal] nv. 1.^000000
 Tipo: ^777777Adaga^000000
 Ataque: ^777777130^000000
 Peso: ^77777770^000000
-Nível da Arma: ^7777773^000000
+Nível da arma: ^7777773^000000
 Nível necessário: ^77777750^000000
-Classes que utilizam:  ^777777Transcendentais de Espadachim / Mercador / Gatuno / Arqueiro / Bruxo^000000
+Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos, Arqueiros, Magos e evoluções^000000
 #
 13040#
 Uma adaga projetada especialmente para cortar.
@@ -40136,17 +40217,27 @@ Classes: ^777777Superaprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatu
 #
 13092#
 Uma adaga dourada criada para saudar os Guerreiros do Ragnarök World Championship. O Logo do RWC foi entalhado em sua lâmina.
-ATQ, ATQM + 20, aumentado a cada 3 refinamentos.
-Quando o refinamento for acima de +6, aumento de dano para todos os monstros em 5%.
-Quando o nível de refinamento for acima de +9, aumento de dano para todos os monstros em 5%. Quando atacar com Ataques Físicos, há uma baixa chance de auto-conjurar Manejo Perfeito nv.1.
-Quando equipado em conjunto com o Anel Memorável RWC, ATQ +10 para cada refinamento da arma.
-Quando equipado em conjunto com o Colar Memorável RWC, será aumentado ATQM +10 a cada refinamento da arma.
-Tipo : ^777777Adaga^000000
-Ataque : ^77777750^000000
-Peso : ^77777765^000000
-Nível da Arma : ^7777773^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Aprendiz/Espadachim e evoluções/Magos e evoluções/Arqueiros e evoluções/Mercadores e evoluções/Gatunos e evoluções/Espiritualistas/Ninjas^000000
+^0000ffA cada 3 refinos:^000000
+^0000ffATQ e ATQM +20.^000000
+Refino +6 ou mais:
+^0000ffDano físico e mágico contra todas as raças +5%.^000000
+Refino +9 ou mais:
+^0000ffDano físico e mágico contra todas as raças +5% adicional.^000000
+^0000ffAo realizar ataques físicos, 0,1% de chance de autoconjurar [Manejo Perfeito] nv. 1.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel Memorável RWC]^000000
+A cada refino da adaga:
+^0000ffATQ +10.^000000
+^FF6347Conjunto^000000
+^FF6347[Colar Memorável RWC]^000000
+A cada refino da adaga:
+^0000ffATQM +10.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777750^000000
+Peso: ^77777765^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Espiritualistas, Ninjas e evoluções^000000
 #
 13093#
 Armamento esculpido do Fragmento de Cinzas para contra-atacar a Espada Talefing.
@@ -42064,15 +42155,16 @@ Classes que utilizam:  ^777777Espadachim / Mercador e evoluções^000000
 #
 13420#
 Espada usada no ritual de adoração aos deuses.
-FOR + 2, INT + 2.
-Pequena chance de conjurar a habilidade Chuva de Meteoros em nível 1 ao atacar fisicamente.
-Propriedade: Fogo
-Tipo: ^777777Espada de Uma Mão^000000
-Força de Ataque: ^777777160^000000
+^0000ffFOR +2. INT +2.^000000
+Ao realizar ataques físicos:
+^0000ff0,5% de chance de autoconjurar [Chuva de Meteoros] nv. 1.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^777777160^000000
+Propriedade: ^777777Fogo^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Espadachim e evoluções, Mercador e evoluções, Gatuno e evoluções^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 13421#
 Esta espada curta é aprimorada para ser fácil de usar. Ela fica mais bonita com o rubi decorando a empunhadura.
@@ -43204,7 +43296,7 @@ Detalhes do item
 ^0000ffDEFM +5^000000
 ^0000ffHP máx. +800.^000000
 ^0000ffTolerância a Congelamento +100%.^000000
-^0000ffResistência as propriedades Neutro e Água +20%.^000000
+^0000ffResistência a todas as propriedades +20%, exceto Neutro e Água.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777738^000000
 Peso: ^7777770^000000
@@ -48387,7 +48479,7 @@ Classes: ^777777Todas^000000
 18550#
 Quando a Guardiã de Midgard, Luthien Silvermoon, foi convocada pelos deuses para ascender à Asgard, um belo par de asas feitas de energia celestial surgiu fazendo as vezes de uma auréola na cabeça da elfa. Agora, Luthien ainda é capaz de abençoar seus protegidos, conferindo asas semelhantes para aventureiros que, como você, homenageiam a sumo sacerdotisa guardando para sempre seus feitos na memória.
 ^0000ffTodos os atributos +2.^000000
-^0000ffResistência a todas as propriedade +5%.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
 A cada 10 segundos:
 ^0000ffRegenera 2% de HP.^000000
 ^0000ffRegenera 1% de SP.^000000
@@ -48565,24 +48657,28 @@ Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
 18570#
-Belo acessório dourado imbuído com uma magia antiga. Seu poder se altera de acordo com a classe do dono.
-^FF6347Nível de base 150 ou mais^000000
-^0000ffTodos os atributos +2.^000000
-^FF6347Espadachins, Mercadores, Gatunos e evoluções^000000
-^0000ffATQ +8%.^000000
-^FF6347Magos, Noviços e evoluções^000000
-^0000ffATQM +8%.^000000
+Belo acessório dourado imbuído com uma magia antiga.
+--------------------------
+Espadachins, Mercadores, Gatunos e evoluções:
+^0000ffDano físico +8%.^000000
+--------------------------
+Magos, Noviços e evoluções:
+^0000ffDano mágico +8%.^000000
 ^0000ffEfetividade de cura +7%.^000000
-^FF6347Arqueiros e evoluções^000000
+--------------------------
+Arqueiros e evoluções:
 ^0000ffDES +3.^000000
-^0000ffDano a distância +10%.^000000
-Tipo: ^777777Equipamento para a Cabeça^000000
-Defesa: ^7777777^000000
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Nv. base 150 ou mais:
+^0000ffTodos os atributos +2.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777777^000000
 Peso: ^77777740^000000
-Nível Necessário : ^777777100^000000
-Classe: ^777777Somente para 3ª classe^000000
--------------------------
+Nível necessário: ^777777100^000000
+Classes: ^777777Classes 3^000000
 #
 18571#
 Decorado com brilhantes flores brancas encontradas apenas na floresta de Amatsu. Dizem que o perfume dessas flores ajuda a clarear a mente para tornar as pessoas mais experientes em suas tarefas.
@@ -49768,6 +49864,20 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+18746#
+Agora, sua respiração sempre vai se condensar em um sopro branco como a neve. Mantenha um ar refrescante até mesmo nos quintos mais profundos do vulcão de Thor!
+^0000ffTolerância a Congelamento +5%.^000000
+Ao receber danos físicos de curta distância:
+^0000ff1% de chance de infligir Congelamento no oponente.^000000
+A cada 3 níveis base:
+^0000ffChance de infligir Congelamento +0,3%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
 18752#
 Um livro vermelho de tanto absorver o sangue de seus oponentes.
 ^0000ff4% de chance de converter 4% do dano físico causado em HP.^000000
@@ -50204,16 +50314,23 @@ Classes: ^777777Terceiras classes^000000
 #
 18821#
 Um chapéu com penas coloridas, feito em ouro e jóias raras. Criado para comemorar o RWC.
-ATQ + 1%, ATQM + 1%.
-ATQ e ATQM aumentado em 1% a cada 3 refinamentos.
-Quando equipado em conjunto com o Anel Memorável RWC, ATQ +1% para cada 2 refinamentos do chapéu.
-Quando equipado em conjunto com o Colar Memorável RWC, será aumentado ATQM +1% a cada 2 refinamentos do chapéu.
-Tipo : ^777777Equipamento para a Cabeça^000000
+^0000ffDano físico e mágico +1%.^000000
+A cada 3 refinos:
+^0000ffDano físico e mágico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Anel Memorável RWC]^000000
+A cada 2 refinos do Chapéu:
+^0000ffDano físico +1%.^000000
+^FF6347Conjunto^000000
+^FF6347[Colar Memorável RWC]^000000
+A cada 2 refinos do Chapéu:
+^0000ffDano mágico +1%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777730^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18823#
 Esse diadema foi feito em homenagem aos Guardiões Reais de Prontera. Ele representa as costas dos grifos usados como montaria por estes valorosos cavaleiros, com direito a joias para representar a armadura e até a sela usada por estas imponentes e majestosas criaturas. Procure apenas evitar a presença dos bardos, pra evitar piadas infames sobre seus “piolhos reais”... ¬_¬
@@ -50931,7 +51048,6 @@ Ao sofrer danos físicos ou mágicos:
 ^0000ffResistência a raça Humanoide +5%.^000000
 Refino +7 ou mais:
 ^0000ffResistência a raça Humanoide +5% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -50954,7 +51070,6 @@ Ao sofrer danos físicos ou mágicos:
 ^0000ffResistência a raça Humanoide +5%.^000000
 Refino +7 ou mais:
 ^0000ffResistência a raça Humanoide +5% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -50976,7 +51091,6 @@ Ao sofrer danos físicos ou mágicos:
 ^0000ffResistência a raça Humanoide +5%.^000000
 Refino +7 ou mais:
 ^0000ffResistência a raça Humanoide +5% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -50999,7 +51113,6 @@ Ao sofrer danos físicos ou mágicos:
 ^0000ffResistência a raça Humanoide +5%.^000000
 Refino +7 ou mais:
 ^0000ffResistência a raça Humanoide +5% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -55942,6 +56055,7 @@ Classes: ^777777Todas^000000
 #
 20511#
 Quem diria que na verdade você descende de uma linhagem de nobres de Alfheim? Será que você herdou suas asas de Oberon e Titânia, ou seria do próprio Kardui? Talvez tenha sido do Rei Arlequim, o esplêndido mais conhecido como o Pecado da Preguiça do Pé Grande. Seja como for, o recente contato dos humanos com os Esplêndidos em Ash Vacuum fez suas asas de fada despertarem. Pena que você ainda pesa demais pra voar.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Capa^000000
@@ -55961,6 +56075,7 @@ Classes: ^777777Todas^000000
 #
 20516#
 Asas brancas que representam o Arcanjo Miguel, o baluarte do céu. Asas como essas são extremamente raras de se replicar, até mesmo por mãos experientes. Dizem que existem asas de outros Arcanjos espalhadas por aí.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -55970,6 +56085,7 @@ Classes: ^777777Todas^000000
 #
 20517#
 Uma mochila indispensável pra você, que é conhecido como o “louco dos gatos” e não vê a hora de adotar seu quadragésimo sexto felino. Ao menos este aqui não vai encher sua roupa de pelos ou tentar destruir seu sofá!
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -55979,6 +56095,7 @@ Classes: ^777777Todas^000000
 #
 20521#
 Se você é mesmo obcecado pelos felinos, então não vai perder a oportunidade de ser a mãe ou pai de mais um bichano. Prometemos que este aqui não vai te acordar às 3 da manhã fazendo um show pela casa.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual ^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -55988,6 +56105,7 @@ Classes: ^777777Todas^000000
 #
 20528#
 Assim que você equipar essas reluzentes asas, todos os invejosos vão querer pôr as mãos nelas. Pra afastá-los, basta contar aquela história que você ouviu na infância, sobre borboletas soltarem um pó que causa cegueira.
+^008080Exibe o visual nas costas do personagem.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -57138,7 +57256,6 @@ Refino +5 ou mais:
 ^0000ffDano físico e mágico contra oponentes de propriedade Neutro, Fogo, Água, Vento e Terra +5%.^000000
 Refino +7 ou mais:
 ^0000ffDano físico e mágico contra oponentes de propriedade Neutro, Fogo, Água, Vento e Terra +10% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777712^000000
 Peso: ^77777750^000000
@@ -59761,7 +59878,7 @@ A cada 2 níveis de base:
 ^0000ffDano de [Golpe Fulminante] +1%.^000000
 A cada 5 níveis de base:
 ^0000ffDano de [Impacto de Tyr] +3%.^000000
-A cada 2 níveis de [Perícia com Espada]:
+A cada 2 níveis de [Perícia com Espada] ou [Perícia em Esgrima]:
 ^0000ffATQ +10.^000000
 ^0000ffFOR, AGI e VIT +1 adicional.^000000
 ^FF6347Conjunto^000000
@@ -60013,7 +60130,6 @@ Refino +7 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Bracelete Suntuoso]^000000
 ^0000ffDano físico a distância +20%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777750^000000
@@ -60031,7 +60147,6 @@ Refino +7 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Bracelete Suntuoso]^000000
 ^0000ffAumenta a velocidade de movimento.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777750^000000
@@ -60049,7 +60164,6 @@ Refino +7 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Bracelete Suntuoso]^000000
 ^0000ffPós-conjuração -20%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777750^000000
@@ -60068,7 +60182,6 @@ Refino +7 ou mais:
 ^FF6347[Bracelete Suntuoso]^000000
 ^0000ffSP máx. +20%.^000000
 ^0000ffCusto de SP das habilidades -20%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho nem vendido em NPC, mas pode ser colocado na Kafra.^000000
 Tipo: ^777777Escudo^000000
 Defesa: ^77777780^000000
 Peso: ^77777750^000000
@@ -61169,7 +61282,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31397#
-Uma bonequinha feita à imagem de um dos símbolos de fé de Rune-Midgard. Agora você não precisa mais ir até o Santuário de Rachel pra pedir a bênção dela. Ainda bem – era o maior rolê, né?
+Uma bonequinha feita à imagem de um dos símbolos de fé de Arunafeltz. Agora você não precisa mais ir até o Santuário de Rachel pra pedir a bênção dela. Ainda bem – era o maior rolê, né?
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000

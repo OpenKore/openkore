@@ -1,6 +1,6 @@
 # Packet Extractor by lututui
-# Generated in Jan 29, 2019, 2:14:28 PM
-# Encryption Keys : 0x644F6A00 0x008C088C 0x4E6C5D8C
+# Generated in Feb 19, 2019, 11:01:45 AM
+# Encryption Keys : 0x32BB32BB 0x32BB32BB 0x32BB32BB
 0187 6 6 0
 0081 3 3 0
 01C6 4 4 0
@@ -1257,7 +1257,7 @@
 0B0F -1 4 1
 0B10 10 10 1
 0B11 4 4 1
-0B12 2 2 0
+0B12 2 2 -1
 0B13 40 40 0
 0B14 2 2 0
 0B15 7 7 0
@@ -1266,6 +1266,7 @@
 0B18 4 4 0
 0B19 2 2 0
 0B1A 29 29 1
+0B1B 2 2 1
 0369 7 7 0	# actor_action
 083C 10 10 0	# skill_use
 0437 5 5 0	# character_move
@@ -1294,7 +1295,7 @@
 0436 4 4 0	# unknown/unused
 023B 26 26 0	# friend_request
 0361 5 5 0	# homunculus_command
-08AC 36 36 0	# storage_password
+0932 36 36 0	# storage_password
 0367 2 2 0	# sync_ex_reply
 085A 2 2 0	# sync_ex_reply
 085B 2 2 0	# sync_ex_reply
@@ -1364,8 +1365,8 @@
 092E 2 2 0	# sync_ex_reply
 092F 2 2 0	# sync_ex_reply
 0930 2 2 0	# sync_ex_reply
+0940 2 2 0	# sync_ex_reply
 0931 2 2 0	# sync_ex_reply
-0932 2 2 0	# sync_ex_reply
 0933 2 2 0	# sync_ex_reply
 0934 2 2 0	# sync_ex_reply
 0935 2 2 0	# sync_ex_reply
@@ -1419,8 +1420,8 @@
 08A8 2 2 0	# sync_request_ex
 08A9 2 2 0	# sync_request_ex
 08AA 2 2 0	# sync_request_ex
-0940 2 2 0	# sync_request_ex
 08AB 2 2 0	# sync_request_ex
+08AC 2 2 0	# sync_request_ex
 08AD 2 2 0	# sync_request_ex
 0941 2 2 0	# sync_request_ex
 0942 2 2 0	# sync_request_ex
