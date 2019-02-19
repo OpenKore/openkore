@@ -2149,7 +2149,7 @@ sub skill_used_no_damage {
 sub skills_list {
 	my ($self, $args) = @_;
 
-	return unless changeToInGameState;
+	return unless changeToInGameState();
 
 	my $msg = $args->{RAW_MSG};
 
