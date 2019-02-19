@@ -18118,11 +18118,13 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4161#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Glória (nível 1) quando o usuário receber Dano Físico.
-Se o usuário estiver equipado com um item que tenha a carta Peco Peco, receberá DEF +3 e VIT +3. ^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Equipamento para a cabeça^000000
+Ao receber danos físicos:
+^0000ff5% de chance de autoconjurar [Glória] nv. 1.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Peco Peco]^000000
+^0000ffDEF +3. VIT +3.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4162#
@@ -18377,13 +18379,22 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4191#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Cura em nível 3 no usuário ao receber dano físico.
-Se o usuário estiver equipado com itens que tenham as cartas Boneco de Miyabi, Ninfa Perversa, Parasita, Harpia e Borboleta Sanguinária ao mesmo tempo, adiciona-se +500 ao HP máximo, +5 de DEF e DEFM.
-Inflige 10% a mais de dano com as habilidades Lanças de Fogo, de Gelo e Relâmpago.
-Se personagens da Classe Mago e suas evoluções estiverem equipados com itens que tenham as cartas acima listadas, reduz-se o tempo de conjuração variável em 15% e adiciona-se +3% ao ATQM.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Armadura^000000
+Ao receber danos físicos:
+^0000ff5% de chance de autoconjurar [Curar] nv. 3.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Harpia]^000000
+^fa4e09[Carta Parasita]^000000
+^fa4e09[Carta Ninfa Perversa]^000000
+^fa4e09[Carta Boneco de Miyabi]^000000
+^fa4e09[Carta Borboleta Sanguinária]^000000
+^0000ffDEF e DEFM +5.^000000
+^0000ffHP máx. +500.^000000
+^0000ffDano de [Lanças de Gelo] [Relâmpago] e [Lanças de Fogo] +10%.^000000
+Magos e evoluções:
+^0000ffDano mágico +3%.^000000
+^0000ffConjuração variável -15%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4192#
@@ -18586,11 +18597,12 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4217#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Cura em nível 1 no usuário, ao realizar um Ataque Físico.
-Se o usuário tiver dominado o nível 10 da habilidade, será conjurada Cura no nível 10.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Escudo^000000
+Ao receber danos físicos:
+^0000ff2% de chance de autoconjurar [Curar] nv. 1.^000000
+Ao aprender [Curar] nv. 10:
+^0000ffAutoconjura [Curar] nv. 10.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4218#
@@ -18882,7 +18894,7 @@ Peso: ^7777771^000000
 #
 4253#
 ^0000ffResistência a monstros chefes +40%.^000000
-^0000ffResistência a monstros normais^000000 ^ff0000-40%.^00000
+^0000ffResistência a monstros normais^000000 ^ff0000-40%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
@@ -19095,13 +19107,23 @@ Utilização: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4280#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Bênção (nível 2) no usuário quando este receber Dano Físico. Se o usuário tiver aprendido Bênção Nv. 10, o nível conjurado da habilidade será 10.
-Se o usuário estiver equipado com itens que tenham as cartas Rideword, Pessegueira Encantada, Cookie e Foca ao mesmo tempo, reduz-se o tempo de conjuração variável em 10% e o consumo de SP em 10%.
-VIT +10.
-Se personagens da Classe Noviço e suas evoluções estiverem equipados com itens que tenham essas cartas listadas acima, eles recebem 30% a menos de dano e 5% a mais de Pontos de Experiência de monstros do tipo Demônio e Morto-Vivo.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Armadura^000000
+Ao receber danos físicos:
+^0000ff3% de chance de autoconjurar [Bênção] nv. 2.^000000
+Ao aprender [Bênção] nv. 10:
+^0000ffAutoconjura [Bênção] nv. 10.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Foca]^000000
+^fa4e09[Carta Cookie]^000000
+^fa4e09[Carta Rideword]^000000
+^fa4e09[Carta Pessegueira Encantada]^000000
+^0000ffVIT +10.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffCusto de SP de habilidades -10%.^000000
+Noviços e evoluções:
+^0000ffResistência a raça Demônio e Morto-Vivo +30%.^000000
+^0000ffEXP adquirida ao derrotar monstros da raça Demônio e Morto-Vivo +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4281#
@@ -19523,21 +19545,22 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4332#
-Carta Fornalha Velha.
-ATQ +5, INT +1
-^6A5ACDConjunto de Cartas do Monge^000000
-^3CB371 Carta Rideword^000000
-^3CB371 Carta Cookie^000000
-^3CB371 Carta Foca^000000
-^3CB371 Carta Fornalha Velha^000000
-FOR +3, SP +80, ATQ +25
-Chance de conjurar Signum Crusis nível 5 a cada ataque físico.
-+10% de dano com Punho Supremo de Asura
-Bônus para Classe Monge:
-Conjuração sem interrupção
--10% no consumo de SP.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffINT +1. ATQ +5.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Foca]^000000
+^fa4e09[Carta Cookie]^000000
+^fa4e09[Carta Rideword]^000000
+^0000ffFOR +3.^000000
+^0000ffSP máx. +80.^000000
+^0000ffATQ +25 adicional.^000000
+^0000ffDano de [Punho Supremo de Asura] +10%.^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de autoconjurar [Signum Crucis] nv. 5.^000000
+Monges e evoluções:
+^0000ffCusto de SP de habilidades -10%.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4333#
@@ -19555,11 +19578,11 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4335#
-Carta Minérios.
-Aumenta o dano da Coluna de Pedra e Fúria da Terra em 5%.
-Drena 50 SP quando a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Coluna de Pedra] e [Fúria da Terra] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4336#
@@ -19639,11 +19662,11 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4345#
-Carta Vento da Colina.
-Aumenta o dano de Tempestade de Raios, Trovão de Júpiter e Ira de Thor em 5%.
-Drena 50 SP quando a arma equipada é retirada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Tempestade de Raios], [Trovão de Júpiter] e [Ira de Thor] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4346#
@@ -19661,21 +19684,22 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4348#
-Carta Wickebine Tres.
-Acrescenta a chance de lançar automaticamente Remover Armadura nv. 1 a cada vez que o usuário atacar fisicamente.
-^6A5ACDConjunto de Cartas do Arruaceiro^000000
-^3CB371 Carta Andarilho^000000
-^3CB371 Carta Rosa Selvagem^000000
-^3CB371 Carta Shinobi^000000
-^3CB371 Carta Percevejo^000000
-^3CB371 Carta Wickebine Tres^000000
-FOR +6, AGI +4, +10% de dano com Apunhalar.
-Chance de conjurar automaticamente Remover Armadura nível 5, se esse nível tiver sido aprendido.
-Bônus para Classe Arruaceiro:
--20% de consumo de SP
-Desabilita a habilidade Rapto da Carta Andarilho.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Acessório^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de autoconjurar [Remover Armadura] nv. 1.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Shinobi]^000000
+^fa4e09[Carta Andarilho]^000000
+^fa4e09[Carta Percevejo]^000000
+^fa4e09[Carta Rosa Selvagem]^000000
+^0000ffFOR +6. AGI +4.^000000
+^0000ffDano de [Apunhalar] +10%.^000000
+Ao aprender [Remover Armadura] nv. 5:
+^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Remover Armadura] nv. 5.^000000
+Arruaceiros e evoluções:
+^0000ffCusto de SP por habilidades -20%.^000000
+^0000ffDesativa a autoconjuração de [Rapto].^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4349#
@@ -19686,11 +19710,11 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4350#
-Carta Laurell Weinder.
-Aumenta o dano das habilidades Congelar e Nevasca em 3%.
-Drena 50 SP quando a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Congelar] e [Nevasca] +3%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4351#
@@ -19933,14 +19957,15 @@ Refino +5 ou mais:
 ^0000ffSP máx.^000000 ^ff0000-40.^000000
 ^0000ffRegeneração natural de SP^000000 ^ff0000-5%.^000000
 Tipo: ^777777Carta^000000
-Equipa em: ^777777Calçado^000000
+Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4380#
-Carta Ferus Escarlate.
-Aumenta o dano de Coluna de Fogo e Chuva de Meteoros em 5%. Drena 50 SP se a arma é desequipada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Coluna de Fogo] e [Chuva de Meteoros] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4381#
@@ -19961,23 +19986,21 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4382#
-Carta Novus Dourado.
-HP +500. Aumenta a recuperação de HP em 10%.
-^6A5ACDConjunto de Cartas do Sábio^000000
-^00FF001 Carta Novus Dourado^000000
-^00FF001 Carta Ninfa Perversa^000000
-^00FF001 Carta Boneco de Miyabi^000000
-^00FF001 Carta Borboleta Sanguinária^000000
-^00FF001 Carta Harpia^000000
-INT +3
-+10% de dano com Tempestade de Raios
-+10% de dano com Fúria da Terra
-^00FF00Bônus somente para Sábios^000000
-+20% de chance de refletir magia.
-Tempo de conjuração variável 20% mais rápido. Cria uma pequena chance de obter Gemas Vermelhas ou
-Amarelas ao derrotar monstros.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffHP máx. +500.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Harpia]^000000
+^fa4e09[Carta Ninfa Perversa]^000000
+^fa4e09[Carta Boneco de Miyabi]^000000
+^fa4e09[Carta Borboleta Sanguinária]^000000
+^0000ffINT +3.^000000
+^0000ffDano de [Fúria da Terra] e [Tempestade de Raios] +10%.^000000
+Sábios e evoluções:
+^0000ffConjuração variável -20%.^000000
+^0000ff20% de chance de refletir magias de alvo único.^000000
+^0000ffAo derrotar monstros, 10% de chance de derrubar Gema Vermelha ou Gema Amarela.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4383#
@@ -20017,10 +20040,11 @@ Equipado em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4388#
-Carta Palavra Morta.
-Aumenta o dano de Ataque Espiritual, Espíritos Anciões e Vulcão Napalm em 5%. Drena 50 SP se a arma equipada é retirada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffDano de [Ataque Espiritual], [Espíritos Ancições] e [Vulcão Napalm] +5%.^000000
+Ao desequipar a arma:
+^0000ffDrena 50 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4389#
@@ -20561,12 +20585,14 @@ Utilização: ^777777Armadura^000000
 Peso : ^7777771^000000
 #
 4463#
-Crítico + 5.
-Se o refinamento do item for +12 ou maior, ATQ +35. Se o refinamento for +14 ou maior, Critico +10.
-Combine com um item para utilizar sua propriedade.
-Tipo : ^777777Carta^000000
-Utilização: ^777777Arma^000000
-Peso : ^7777771^000000
+^0000ffCRIT +5.^000000
+Refino +12 ou mais:
+^0000ffATQ +35.^000000
+Refino +14 ou mais:
+^0000ffCRIT +10 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
 #
 4464#
 ^0000ffDano crítico +20%.^000000
@@ -48631,24 +48657,28 @@ Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
 18570#
-Belo acessório dourado imbuído com uma magia antiga. Seu poder se altera de acordo com a classe do dono.
-^FF6347Nível de base 150 ou mais^000000
-^0000ffTodos os atributos +2.^000000
-^FF6347Espadachins, Mercadores, Gatunos e evoluções^000000
-^0000ffATQ +8%.^000000
-^FF6347Magos, Noviços e evoluções^000000
-^0000ffATQM +8%.^000000
+Belo acessório dourado imbuído com uma magia antiga.
+--------------------------
+Espadachins, Mercadores, Gatunos e evoluções:
+^0000ffDano físico +8%.^000000
+--------------------------
+Magos, Noviços e evoluções:
+^0000ffDano mágico +8%.^000000
 ^0000ffEfetividade de cura +7%.^000000
-^FF6347Arqueiros e evoluções^000000
+--------------------------
+Arqueiros e evoluções:
 ^0000ffDES +3.^000000
-^0000ffDano a distância +10%.^000000
-Tipo: ^777777Equipamento para a Cabeça^000000
-Defesa: ^7777777^000000
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Nv. base 150 ou mais:
+^0000ffTodos os atributos +2.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777777^000000
 Peso: ^77777740^000000
-Nível Necessário : ^777777100^000000
-Classe: ^777777Somente para 3ª classe^000000
--------------------------
+Nível necessário: ^777777100^000000
+Classes: ^777777Classes 3^000000
 #
 18571#
 Decorado com brilhantes flores brancas encontradas apenas na floresta de Amatsu. Dizem que o perfume dessas flores ajuda a clarear a mente para tornar as pessoas mais experientes em suas tarefas.
