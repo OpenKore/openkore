@@ -22452,3 +22452,9 @@ Gargoyle : 70#
 Let token hammer rest.#
 
 Let token hammer rest.#
+
+63242#Ragnarok Of Love#SG_FEEL#QUE_NOIMAGE#
+
+Find Carl.#
+
+Find Carl.#
