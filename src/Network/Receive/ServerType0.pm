@@ -110,7 +110,7 @@ sub new {
 		'00A4' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'00A5' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'00A6' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
-		'00A8' => ['use_item', 'a2 x2 C', [qw(ID amount)]],
+		'00A8' => ['use_item', 'a2 v C', [qw(ID amount success)]], # 7
 		'00AA' => ($rpackets{'00AA'}{length} == 7) # or 9
 			? ['equip_item', 'a2 v C', [qw(ID type success)]]
 			: ['equip_item', 'a2 v2 C', [qw(ID type viewid success)]],
@@ -1732,60 +1732,6 @@ sub npc_talk {
 	message "$name: $msg\n", "npc";
 }
 
-sub pet_info2 {
-	my ($self, $args) = @_;
-	my ($type, $ID, $value) = @{$args}{qw(type ID value)};
-
-	# receive information about your pet
-
-	# related freya functions: clif_pet_equip clif_pet_performance clif_send_petdata
-
-	# these should never happen, pets should spawn like normal actors (at least on Freya)
-	# this isn't even very useful, do we want random pets with no location info?
-	#if (!$pets{$ID} || !%{$pets{$ID}}) {
-	#	binAdd(\@petsID, $ID);
-	#	$pets{$ID} = {};
-	#	%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
-	#	$pets{$ID}{'name_given'} = "Unknown";
-	#	$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
-	#	debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
-	#}
-	#if ($monsters{$ID}) {
-	#	if (%{$monsters{$ID}}) {
-	#		objectRemoved('monster', $ID, $monsters{$ID});
-	#	}
-	#	# always clear these in case
-	#	binRemove(\@monstersID, $ID);
-	#	delete $monsters{$ID};
-	#}
-
-	if ($type == 0) {
-		# You own no pet.
-		undef $pet{ID};
-
-	} elsif ($type == 1) {
-		$pet{friendly} = $value;
-		debug "Pet friendly: $value\n";
-
-	} elsif ($type == 2) {
-		$pet{hungry} = $value;
-		debug "Pet hungry: $value\n";
-
-	} elsif ($type == 3) {
-		# accessory info for any pet in range
-		$pet{accessory} = $value;
-		debug "Pet accessory info: $value\n";
-
-	} elsif ($type == 4) {
-		# performance info for any pet in range
-		#debug "Pet performance info: $value\n";
-
-	} elsif ($type == 5) {
-		# You own pet with this ID
-		$pet{ID} = $ID;
-	}
-}
-
 sub public_chat {
 	my ($self, $args) = @_;
 	# Type: String
@@ -2309,45 +2255,6 @@ sub unit_levelup {
 	} else {
 		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
 	}
-}
-
-sub use_item {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-	my $item = $char->inventory->getByID($args->{ID});
-	if ($item) {
-		message TF("You used Item: %s (%d) x %s\n", $item->{name}, $item->{binID}, $args->{amount}), "useItem";
-		inventoryItemRemoved($item->{binID}, $args->{amount});
-	}
-}
-
-sub users_online {
-	my ($self, $args) = @_;
-
-	message TF("There are currently %s users online\n", $args->{users}), "info";
-}
-
-
-# You see a vender!  Add them to the visible venders list.
-sub vender_found {
-	my ($self, $args) = @_;
-	my $ID = $args->{ID};
-
-	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
-		binAdd(\@venderListsID, $ID);
-		Plugins::callHook('packet_vender', {ID => $ID, title => bytesToString($args->{title})});
-	}
-	$venderLists{$ID}{title} = bytesToString($args->{title});
-	$venderLists{$ID}{id} = $ID;
-}
-
-sub vender_lost {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	binRemove(\@venderListsID, $ID);
-	delete $venderLists{$ID};
 }
 
 sub mail_refreshinbox {
