@@ -2330,5 +2330,6 @@ sub party_dead {
 	}	
 }
 
+*changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;

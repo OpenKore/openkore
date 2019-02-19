@@ -2656,5 +2656,6 @@ sub move_interrupt {
 	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
 }
 
+*changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;
