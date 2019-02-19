@@ -2436,6 +2436,18 @@ sub sendPetName {
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
+sub sendPetEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_emotion',
+		ID => $ID,
+	}));
+	
+	warning "Sent Pet Emotion: $ID\n", "sendPacket", 2;
+}
+
+
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
 	
