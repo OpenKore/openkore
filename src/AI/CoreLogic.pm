@@ -297,6 +297,10 @@ sub processMisc {
 	if (timeOut($char->{muted}, $char->{mute_period})) {
 		delete $char->{muted};
 		delete $char->{mute_period};
+		
+		if ($char->statusActive('EFST_MUTED')) {
+			$char->setStatus('EFST_MUTED', 0);
+		}
 	}
 }
 
