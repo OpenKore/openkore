@@ -70,7 +70,7 @@ our %EXPORT_TAGS = (
 						REFUSE_SSO_NOTHING_USER REFUSE_SSO_OTHER_2 REFUSE_SSO_WRONG_RATETYPE_1 REFUSE_SSO_EXTENSION_PCBANG_TIME
 						REFUSE_SSO_WRONG_RATETYPE_2 REFUSE_UNKNOWN REFUSE_INVALID_ID2 REFUSE_BLOCKED_ID REFUSE_BLOCKED_COUNTRY REFUSE_INVALID_PASSWD2
 						REFUSE_EMAIL_NOT_CONFIRMED2 REFUSE_BILLING REFUSE_BILLING2 REFUSE_WEB REFUSE_CHANGE_PASSWD_FORCE2 REFUSE_SERVER_ERROR
-						REFUSE_SERVER_ERROR2 REFUSE_SERVER_ERROR3 changeToInGameState)],
+						REFUSE_SERVER_ERROR2 REFUSE_SERVER_ERROR3)],
 	stat_info => [qw(VAR_SPEED VAR_EXP VAR_JOBEXP VAR_VIRTUE VAR_HONOR VAR_HP VAR_MAXHP VAR_SP VAR_MAXSP VAR_POINT VAR_HAIRCOLOR VAR_CLEVEL VAR_SPPOINT
 						VAR_STR VAR_AGI VAR_VIT VAR_INT VAR_DEX VAR_LUK VAR_JOB VAR_MONEY VAR_SEX VAR_MAXEXP VAR_MAXJOBEXP VAR_WEIGHT VAR_MAXWEIGHT VAR_POISON
 						VAR_STONE VAR_CURSE VAR_FREEZING VAR_SILENCE VAR_CONFUSION VAR_STANDARD_STR VAR_STANDARD_AGI VAR_STANDARD_VIT VAR_STANDARD_INT
@@ -7921,12 +7921,6 @@ sub combo_delay {
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
-}# 019E
-# TODO
-# note: this is probably the trigger for the client's slotmachine effect or so.
-sub pet_capture_process {
-	my ($self, $args) = @_;
-	message T("Attempting to capture pet (slot machine).\n"), "info";
 }
 
 # 0294
@@ -8332,102 +8326,6 @@ sub no_teleport {
 		error T("Unavailable Area To Memo\n");
 	} else {
 		error TF("Unavailable Area To Teleport (fail code %s)\n", $fail);
-	}
-}
-
-sub pet_capture_result {
-	my ($self, $args) = @_;
-
-	if ($args->{success}) {
-		message T("Pet capture success\n"), "info";
-	} else {
-		message T("Pet capture failed\n"), "info";
-	}
-}
-
-sub pet_emotion {
-	my ($self, $args) = @_;
-
-	my ($ID, $type) = ($args->{ID}, $args->{type});
-
-	my $emote = $emotions_lut{$type}{display} || "/e$type";
-	if ($pets{$ID}) {
-		message $pets{$ID}->name . " : $emote\n", "emotion";
-	}
-}
-
-sub pet_food {
-	my ($self, $args) = @_;
-	if ($args->{success}) {
-		message TF("Fed pet with %s\n", itemNameSimple($args->{foodID})), "pet";
-	} else {
-		error TF("Failed to feed pet with %s: no food in inventory.\n", itemNameSimple($args->{foodID}));
-	}
-}
-
-sub pet_info {
-	my ($self, $args) = @_;
-	$pet{name} = bytesToString($args->{name});
-	$pet{renameflag} = $args->{renameflag};
-	$pet{level} = $args->{level};
-	$pet{hungry} = $args->{hungry};
-	$pet{friendly} = $args->{friendly};
-	$pet{accessory} = $args->{accessory};
-	$pet{type} = $args->{type} if (exists $args->{type});
-	debug "Pet status: name=$pet{name} name_set=". ($pet{renameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})." type=".($pet{type}||"N/A")."\n", "pet";
-}
-
-sub pet_info2 {
-	my ($self, $args) = @_;
-	my ($type, $ID, $value) = @{$args}{qw(type ID value)};
-
-	# receive information about your pet
-
-	# related freya functions: clif_pet_equip clif_pet_performance clif_send_petdata
-
-	# these should never happen, pets should spawn like normal actors (at least on Freya)
-	# this isn't even very useful, do we want random pets with no location info?
-	#if (!$pets{$ID} || !%{$pets{$ID}}) {
-	#	binAdd(\@petsID, $ID);
-	#	$pets{$ID} = {};
-	#	%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
-	#	$pets{$ID}{'name_given'} = "Unknown";
-	#	$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
-	#	debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
-	#}
-	#if ($monsters{$ID}) {
-	#	if (%{$monsters{$ID}}) {
-	#		objectRemoved('monster', $ID, $monsters{$ID});
-	#	}
-	#	# always clear these in case
-	#	binRemove(\@monstersID, $ID);
-	#	delete $monsters{$ID};
-	#}
-
-	if ($type == 0) {
-		# You own no pet.
-		undef $pet{ID};
-
-	} elsif ($type == 1) {
-		$pet{friendly} = $value;
-		debug "Pet friendly: $value\n";
-
-	} elsif ($type == 2) {
-		$pet{hungry} = $value;
-		debug "Pet hungry: $value\n";
-
-	} elsif ($type == 3) {
-		# accessory info for any pet in range
-		$pet{accessory} = $value;
-		debug "Pet accessory info: $value\n";
-
-	} elsif ($type == 4) {
-		# performance info for any pet in range
-		#debug "Pet performance info: $value\n";
-
-	} elsif ($type == 5) {
-		# You own pet with this ID
-		$pet{ID} = $ID;
 	}
 }
 
