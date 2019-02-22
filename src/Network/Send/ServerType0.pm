@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -260,7 +261,9 @@ sub new {
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
+		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
+		'0974' => ['merge_item_cancel'], #2
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
@@ -295,6 +298,8 @@ sub new {
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

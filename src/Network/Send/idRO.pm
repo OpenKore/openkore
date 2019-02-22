@@ -36,6 +36,7 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
+		char_delete2_accept 098F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	

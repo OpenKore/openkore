@@ -331,6 +331,235 @@ bat_b02 189 14 bat_room 154 150 0 c
 # The New World (Episode 13)
 mid_camp 213 286 moc_fild20 342 179 0 c c r0
 
+#Midgard Camp
+mid_camp 214 249 mid_campin 89 102
+mid_campin 89 99 mid_camp 215 247
+mid_campin 111 120 mid_campin 162 126 c n
+mid_campin 162 126 mid_campin 110 120
+mid_campin 111 128 mid_campin 165 170
+mid_campin 162 170 mid_campin 108 128
+mid_campin 113 114 mid_campin 165 82
+mid_campin 162 82 mid_campin 110 114
+mid_campin 117 178 mid_campin 94 138
+mid_campin 68 128 mid_campin 22 168
+mid_campin 66 120 mid_campin 22 124
+mid_campin 66 114 mid_campin 22 80
+mid_campin 86 141 mid_campin 66 181
+mid_campin 65 178 mid_campin 86 138
+mid_campin 25 168 mid_campin 71 128
+mid_campin 25 124 mid_campin 70 120
+mid_campin 25 80 mid_campin 70 114
+mid_camp 266 260 mid_campin 286 124
+mid_campin 283 124 mid_camp 263 260
+mid_camp 205 211 mid_campin 229 123
+mid_campin 232 123 mid_camp 208 211
+mid_campin 223 109 mid_camp 198 205
+mid_camp 196 204 mid_campin 220 109
+mid_campin 376 136 mid_camp 163 234
+mid_camp 163 231 mid_campin 376 133
+
+#Dimensional Gap
+moc_fild22b 222 200 dali 119 56 c r0 n
+dali 122 48 moc_fild22b 227 200 
+dali 115 94 moc_para01 31 14 c r0 c n
+mid_camp 210 292 dali 141 82 c r0 n
+dali 149 82 mid_camp 210 289
+bif_fild01 318 159 dali 43 92 c r0 n
+dali 39 87 bif_fild01 318 155
+dic_fild02 241 31 dali 41 134 c r0 n
+dali 35 139 dic_fild02 237 32
+dali 93 68 moro_vol 136 135 c r0 n
+moro_vol 137 dali 91 63 136 c r0 n
+dali 64 129 dali02 66 101
+dali02 66 97 dali 64 125
+dali02 45 96 moc_fild22 36 196 c r0 c n
+
+#Cat Hand Agent Warper
+#moc_para01 17 33 moc_fild20 342 198 c r0 n
+#moc_fild20 368 197 moc_fild22b c r1 n
+moc_fild22b 182 179 mid_camp 210 291 c c c c r0 c c n
+mid_camp 207 234 spl_fild02 51 240 10000 c c r2
+mid_camp 207 234 man_fild02 133 47 10000 c c r4
+spl_fild02 53 242 mid_camp 180 247 10000 c c r4
+spl_fild02 53 242 bif_fild02 291 232 55000 c c r2
+bif_fild02 293 325 spl_fild02 51 240 55000 c c r4
+bif_fild02 293 325 ecl_fild01 116 309 15000 c c r2
+ecl_fild01 117 311 bif_fild02 291 323 15000 c c r2
+man_fild02 135 49 mid_camp 180 247 10000 c c r2
+man_fild02 135 49 dic_fild01 159 264 20000 c c r4
+dic_fild01 161 266 man_fild02 135 49 20000 c c r2
+
+#Splendide
+mid_camp 13 138 spl_fild02 379 143 c r0 n
+spl_fild02 382 143 mid_camp 16 143
+mid_camp 9 213 spl_fild02 380 217 c r0 n
+spl_fild02 383 216 mid_camp 12 215
+spl_fild02 310 10 spl_fild03 306 376
+spl_fild03 306 379 spl_fild02 311 12
+spl_fild02 103 30 spl_fild03 99 370
+spl_fild03 99 373 spl_fild02 102 32
+spl_fild02 289 374 spl_fild01 291 36
+spl_fild01 291 28 spl_fild02 286 369
+spl_fild02 6 243 splendide 383 251
+splendide 388 251 spl_fild02 11 243
+splendide 170 168 spl_in01 190 301
+spl_in01 190 299 splendide 170 166
+spl_in01 191 320 spl_in01 276 334
+spl_in01 276 336 spl_in01 190 322
+splendide 228 164 spl_in01 30 301
+spl_in01 30 299 splendide 228 162
+splendide 197 193 spl_in01 110 19
+spl_in01 110 17 splendide 197 191
+spl_in01 95 38 spl_in01 199 36
+spl_in01 197 36 spl_in01 93 38
+spl_in01 238 36 spl_in01 126 38
+spl_in01 124 38 spl_in01 236 36
+spl_in01 218 22 spl_in01 310 19
+spl_in01 310 17 spl_in01 218 20
+splendide 156 210 spl_in01 171 189
+spl_in01 171 187 splendide 156 208
+splendide 198 240 spl_in01 110 301
+spl_in01 110 299 splendide 198 238
+splendide 238 212 spl_in01 30 215
+spl_in01 30 213 splendide 237 210
+splendide 299 251 spl_in02 140 93
+spl_in02 139 91 splendide 297 250
+splendide 286 229 spl_in02 137 66
+spl_in02 135 66 splendide 284 228
+splendide 259 112 spl_in02 189 41
+spl_in02 187 42 splendide 259 114
+splendide 286 128 spl_in02 236 63
+spl_in02 234 64 splendide 284 129
+splendide 230 299 spl_in02 207 195
+spl_in02 207 193 splendide 228 299
+splendide 214 310 spl_in02 180 223
+spl_in02 180 221 splendide 214 308
+splendide 240 317 spl_in02 224 232
+spl_in02 222 232 splendide 238 317
+splendide 275 390 bif_fild01 316 50
+bif_fild01 318 48 splendide 271 386
+splendide 157 316 spl_in02 108 213
+spl_in02 108 211 splendide 157 314
+splendide 119 324 spl_in02 61 229
+spl_in02 62 227 splendide 119 322
+splendide 132 68 spl_in02 45 52
+spl_in02 44 54 splendide 133 70
+
+#Manuk
+mid_camp 336 171 man_fild01 36 235 c r0 n
+man_fild01 35 232 mid_camp 341 176
+man_fild01 103 55 man_fild03 84 366
+man_fild03 84 369 man_fild01 103 58
+man_fild01 373 238 man_fild02 37 262
+man_fild03 32 226 man_fild01 367 328
+man_fild02 138 40 manuk 112 352
+manuk 112 357 man_fild02 138 45
+man_in01 61 173 man_in01 20 173
+man_in01 20 175 man_in01 61 175
+man_in01 61 190 man_in01 63 238
+man_in01 61 238 man_in01 61 188
+man_in01 11 19 man_in01 182 32
+man_in01 182 34 man_in01 11 21
+man_in01 318 17 man_in01 388 16
+man_in01 390 16 man_in01 316 17
+man_in01 275 41 manuk 309 142
+manuk 311 142 man_in01 277 41
+manuk 255 110 man_in01 7 61
+man_in01 5 61 manuk 253 110
+manuk 235 124 man_in01 70 171
+man_in01 70 169 manuk 235 122
+manuk 253 195 man_in01 24 284
+man_in01 26 284 manuk 255 195
+man_in01 22 275 man_in01 76 279
+man_in01 74 279 man_in01 20 275
+man_in01 5 275 man_in01 7 221
+man_in01 7 219 man_in01 7 276
+manuk 311 234 man_in01 380 267
+man_in01 380 265 manuk 309 232
+manuk 288 249 man_in01 280 267
+man_in01 280 265 manuk 289 247
+manuk 276 247 man_in01 230 267
+man_in01 230 265 manuk 276 245
+manuk 265 237 man_in01 180 267
+man_in01 180 265 manuk 267 235
+manuk 257 228 man_in01 130 267
+man_in01 130 265 manuk 258 226
+manuk 310 201 man_in01 358 121
+man_in01 328 141 man_in01 324 220
+man_in01 324 222 man_in01 328 139
+man_in01 358 119 manuk 310 199
+manuk 279 115 man_in01 123 224
+man_in01 123 226 manuk 278 117
+manuk 321 182 dic_dun01 33 212 c r0 n
+
+#El-Dicastes
+dicastes01 199 34 dic_fild01 149 279
+dic_fild01 146 281 dicastes01 199 41 c r0 n
+dic_fild01 153 281 dicastes01 199 41 c r0 n
+dic_fild01 24 79 dic_dun01 366 45
+dic_fild02 71 375 dic_fild01 69 25
+dic_fild01 69 23 dic_fild02 70 373
+dic_dun01 30 216 manuk 326 180 c r0 n
+dic_dun01 286 104 dic_dun02 101 142 c r0 n
+dic_dun02 102 148 dic_dun01 290 99
+dic_dun01 87 212 dic_dun01 169 227
+dic_dun01 371 228 dic_dun01 32 156
+dic_dun01 28 156 dic_dun01 367 228
+dic_dun01 165 227 dic_dun01 83 212
+dic_dun01 371 172 dic_dun01 32 100
+dic_dun01 28 100 dic_dun01 367 172
+dic_dun01 371 100 dic_dun01 33 43
+dic_dun01 29 43 dic_dun01 367 100
+dic_dun01 371 44 dic_fild01 28 79
+dic_dun01 286 104 dic_dun02 101 142 c r0 n
+dic_dun02 102 148 dic_dun01 290 99
+dicastes01 255 175 dic_in01 344 272
+dic_in01 342 271 dicastes01 255 173
+dicastes01 136 103 dic_in01 26 98
+dic_in01 44 116 dic_in01 42 115 r0
+dic_in01 44 116 dic_in01 110 108 r1
+dic_in01 44 116 dic_in01 178 108 r2
+dic_in01 44 116 dic_in01 260 115 r3
+dic_in01 180 108 dic_in01 42 115 r0
+dic_in01 180 108 dic_in01 110 108 r1
+dic_in01 180 108 dic_in01 178 108 r2
+dic_in01 180 108 dic_in01 260 115 r3
+dic_in01 112 108 dic_in01 42 115 r0
+dic_in01 112 108 dic_in01 110 108 r1
+dic_in01 112 108 dic_in01 178 108 r2
+dic_in01 112 108 dic_in01 260 115 r3
+dic_in01 261 115 dic_in01 42 115 r0
+dic_in01 261 115 dic_in01 110 108 r1
+dic_in01 261 115 dic_in01 178 108 r2
+dic_in01 261 115 dic_in01 260 115 r3
+dic_in01 26 96 dicastes01 137 106
+dicastes01 94 259 dic_in01 390 53
+dic_in01 390 55 dicastes01 95 257
+dicastes01 163 297 dic_in01 371 101
+dic_in01 372 99 dicastes01 163 295
+dicastes01 283 285 dic_in01 45 30
+dic_in01 45 28 dicastes01 281 284
+dicastes01 198 353 dicastes02 120 80
+dicastes02 120 77 dicastes01 197 351
+dicastes02 120 237 dic_in01 45 246
+dic_in01 45 244 dicastes02 119 235
+dic_in01 46 288 dic_in01 45 286 r0
+dic_in01 46 288 dic_in01 36 212 r1
+dic_in01 46 288 dic_in01 122 282 r2
+dic_in01 46 288 dic_in01 121 201 r3
+dic_in01 35 214 dic_in01 45 286 r0
+dic_in01 35 214 dic_in01 36 212 r1
+dic_in01 35 214 dic_in01 122 282 r2
+dic_in01 35 214 dic_in01 121 201 r3
+dic_in01 122 284 dic_in01 45 286 r0
+dic_in01 122 284 dic_in01 36 212 r1
+dic_in01 122 284 dic_in01 122 282 r2
+dic_in01 122 284 dic_in01 121 201 r3
+dic_in01 121 203 dic_in01 45 286 r0
+dic_in01 121 203 dic_in01 36 212 r1
+dic_in01 121 203 dic_in01 122 282 r2
+dic_in01 121 203 dic_in01 121 201 r3
+
 # Battlegrounds (Episode 13)
 # KVM Blue
 bat_room 164 178 bat_room 169 223 0 c r0 c
@@ -2937,7 +3166,9 @@ izlude_in 68 162 moc_para01 31 14 c c r0
 dicastes01 186 206 moc_para01 31 14 c r0 n
 mora 41 133 moc_para01 31 14 c r0 n
 mora 108 117 moc_para01 31 14 c r0 n
+eclage 116 40 moc_para01 31 14 c r0 n
 harboro1 90 221 moc_para01 31 14 c r0 n
+verus04 116 243 moc_para01 31 14 c r0 n
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
@@ -2956,6 +3187,10 @@ moc_paraup 47 161 moc_para01 47 18
 moc_paraup 41 187 moc_paraup 179 93
 #moc_para01 179 90 moc_para01 41 185
 moc_paraup 179 90 moc_paraup 41 185
+moc_paraup 29 187 moc_para01 180 159
+moc_para01 180 156 moc_paraup 29 185
+moc_paraup 17 187 moc_para01 132 159
+moc_para01 132 156 moc_paraup 17 185
 
 # Port Malaya
 alberta 237 71 malaya 271 55 10000 c r1 n
@@ -3041,11 +3276,33 @@ xmas 139 307 evt_xmas 129 129 0 c r1
 #EP-14.2
 # mora <-> bif_fild02
 mora 182 74 bif_fild02 286 327
-bif_fild02 285 332 mora 179 74 0 c r0 n 
+mora 56 25 bif_fild02 176 162
+mora 20 158 bif_fild02 99 308
+bif_fild02 285 332 mora 179 74 0 c r0 n
+bif_fild02 173 162 mora 58 27 0 c r0 n
+bif_fild02 95 310 mora 25 158 0 c r0 n
 
 #  bif_fild02 <-> ecl_fild01
 bif_fild02 292 351 ecl_fild01 205 76
 ecl_fild01 207 72 bif_fild02 294 350
+
+#Eclage
+ecl_in01 8 67 ecl_hub01 38 94
+ecl_hub01 40 95 ecl_in01 11 67
+ecl_in01 84 68 ecl_hub01 107 107
+ecl_hub01 107 110 ecl_in01 82 68
+ecl_hub01 127 95 ecl_hub01 18 32
+ecl_hub01 18 34 ecl_hub01 125 94
+ecl_hub01 22 109 ecl_in02 99 7
+ecl_in02 98 4 ecl_hub01 23 107
+ecl_hub01 40 14 ecl_in03 144 17
+ecl_in03 144 14 ecl_hub01 40 11
+ecl_in02 80 18 ecl_in02 157 66
+ecl_in02 157 68 ecl_in02 83 18
+
+# eclage <-> ecl_fild01
+eclage 98 26 ecl_fild01 99 317
+ecl_fild01 97 322 eclage 100 28
 
 # ecl_fild01 <-> ecl_tdun0.*
 ecl_fild01 182 82 ecl_tdun01 60 13
@@ -3059,13 +3316,13 @@ ecl_tdun04 26 26 ecl_tdun03 50 44
 ecl_tdun04 34 17 ecl_fild01 183 73
 ecl_fild01 183 70 ecl_tdun04 33 19
 
-# eclage <-> ecl_fild01
-eclage 98 26 ecl_fild01 99 317
-ecl_fild01 97 322 eclage 100 28
-
 # eclage <-> ecl_in01
 eclage 299 309 ecl_in01 47 11
 ecl_in01 47 8 eclage 297 307
+
+#Flame Basin
+moro_vol 91 105 ecl_in01 38 96 c c r0 n
+ecl_in01 38 98 moro_vol 91 102 c r0 n
 
 aethra 71 132 aethra_in 127 126
 aethra 90 168 aethra_in 199 176
@@ -3204,3 +3461,95 @@ har_in01 34 28 har_in01 99 27
 rockrdg1 33 246 harboro1 362 206
 rockrdg1 371 206 rockrdg2 31 207
 rockrdg2 27 207 rockrdg1 371 206
+
+#Verus
+yuno_fild07 216 157 verus04 122 217 c r0 c c r1 c c n
+verus04 122 218 yuno_fild07 230 156 c r0 c r1 n
+verus04 204 163 ver_tunn 13 35
+ver_tunn 10 36 verus04 202 165
+ver_eju 107 36 ver_tunn 84 82
+ver_tunn 84 86 ver_eju 113 38
+ver_eju 10 148 juperos_01 242 84
+juperos_01 245 87 ver_eju 13 148
+verus04 121 267 verus03 121 20
+verus03 122 17 verus04 121 264
+verus04 44 267 verus03 44 20
+verus03 44 17 verus04 44 264
+verus02 72 16 verus03 169 255
+verus03 169 259 verus02 72 19
+verus03 52 254 verus01 243 62
+verus01 247 58 verus03 55 251
+verus01 123 181 un_bunker 98 91 c r0 c n
+un_bunker 98 85 verus01 115 190
+un_bunker 97 124 un_bunker 100 144
+un_bunker 97 141 un_bunker 98 121
+un_bunker 75 128 un_bunker 276 196
+un_bunker 275 191 un_bunker 76 121
+un_bunker 69 118 un_bunker 53 117
+un_bunker 57 118 un_bunker 72 117
+un_bunker 47 135 un_bunker 37 134
+un_bunker 40 135 un_bunker 50 134
+un_bunker 60 169 un_bunker 72 168
+un_bunker 69 167 un_bunker 57 168
+un_bunker 60 183 un_bunker 75 235
+un_bunker 71 236 un_bunker 57 182
+un_bunker 51 196 un_bunker 68 378
+un_bunker 67 375 un_bunker 52 193
+un_bunker 31 196 un_bunker 22 378
+un_bunker 21 375 un_bunker 32 193
+un_bunker 23 190 un_bunker 21 256
+un_bunker 24 256 un_bunker 26 190
+un_bunker 24 276 un_bunker 45 275
+un_bunker 41 275 un_bunker 21 276
+un_bunker 124 236 un_bunker 140 184
+un_bunker 137 185 un_bunker 120 235
+un_bunker 147 196 un_bunker 106 378
+un_bunker 105 375 un_bunker 148 193
+un_bunker 167 196 un_bunker 152 378
+un_bunker 151 375 un_bunker 168 193
+un_bunker 174 190 un_bunker 172 229
+un_bunker 169 230 un_bunker 171 189
+un_bunker 137 168 un_bunker 122 167
+un_bunker 126 168 un_bunker 140 167
+un_bunker 140 118 un_bunker 125 117
+un_bunker 128 118 un_bunker 144 117
+un_bunker 119 128 un_bunker 319 196
+un_bunker 320 191 un_bunker 120 121
+un_bunker 324 200 un_bunker 344 199
+un_bunker 339 200 un_bunker 321 199
+un_bunker 350 214 un_bunker 368 213
+un_bunker 365 214 un_bunker 347 213
+un_bunker 337 236 un_bunker 323 235
+un_bunker 326 236 un_bunker 340 235
+un_bunker 337 262 un_bunker 321 289
+un_bunker 324 290 un_bunker 340 261
+un_bunker 343 270 un_bunker 382 328
+un_bunker 381 325 un_bunker 344 267
+un_bunker 370 264 un_bunker 388 263
+un_bunker 385 264 un_bunker 367 263
+un_bunker 271 290 un_bunker 255 261
+un_bunker 258 262 un_bunker 274 289
+un_bunker 281 279 un_bunker 282 263
+un_bunker 281 266 un_bunker 282 282
+un_bunker 313 266 un_bunker 314 282
+un_bunker 313 279 un_bunker 314 262
+un_bunker 297 206 un_bunker 298 224
+un_bunker 297 221 un_bunker 298 203
+un_bunker 271 200 un_bunker 258 199
+un_bunker 245 214 un_bunker 226 213
+un_bunker 230 214 un_bunker 248 213
+un_bunker 258 236 un_bunker 272 235
+un_bunker 269 236 un_bunker 255 235
+un_bunker 249 268 un_bunker 390 380
+un_bunker 389 377 un_bunker 250 265
+un_bunker 217 262 un_bunker 213 279
+un_bunker 216 300 un_bunker 216 345
+un_bunker 213 346 un_bunker 213 299
+un_bunker 216 280 un_bunker 220 261
+un_bunker 262 200 un_bunker 274 199
+un_bunker 297 192 un_bunker 298 181
+un_bunker 297 186 un_bunker 298 196
+un_bunker 229 163 un_bunker 159 52
+un_bunker 164 51 un_bunker 233 164
+un_bunker 366 164 un_bunker 31 51
+un_bunker 27 52 un_bunker 361 163

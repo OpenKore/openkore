@@ -548,7 +548,7 @@ sub finalInitialization {
 	StdHttpReader::init();
 	initStatVars();
 	initRandomRestart();
-	initUserSeed();
+#	initUserSeed();
 	initConfChange();
 	Log::initLogFiles();
 	$timeout{'injectSync'}{'time'} = time;
@@ -681,6 +681,7 @@ sub initMapChangeVars {
 	undef $skillExchangeItem;
 	undef $refineUI;
 	undef $currentCookingType;
+	undef $mergeItemList;
 	$captcha_state = 0;
 	$universalCatalog{open} = 0;
 	$universalCatalog{has_next} = 0;

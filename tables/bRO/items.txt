@@ -1432,7 +1432,7 @@
 2515#Asa de Águia#
 2516#Sobrepeliz do Falcão#
 2517#Manteau de Vali#
-2518#Véu de Morpheu#
+2518#Véu de Morpheus#
 2519#Manteau de Morrigane#
 2520#Ombreiras de Goibne#
 2521#Cardigã Angelical#
@@ -1842,7 +1842,7 @@
 4088#Carta Frilldora#
 4089#Carta Peixe-Espada#
 4090#Carta Munak#
-4091#Carta Cobold#
+4091#Carta Kobold#
 4092#Carta Esqueleto Operário#
 4093#Carta Obeaune#
 4094#Carta Esqueleto Arqueiro#
@@ -2042,8 +2042,8 @@
 4288#Carta Carat#
 4289#Carta Lagarta#
 4290#Carta Gato de Nove Caudas#
-4291#Carta Líder Cobold#
-4292#Carta Cobold Arqueiro#
+4291#Carta Líder Kobold#
+4292#Carta Kobold Arqueiro#
 4293#Carta Cookie#
 4294#Carta Quve#
 4295#Carta Kraben#
@@ -6120,6 +6120,7 @@
 18741#Fogo Esmeralda#
 18742#Luar de Cristal#
 18744#Gotas da Via Láctea#
+18746#Sopro de Skadi#
 18752#Livro Amaldiçoado#
 18754#Presas Vampíricas#
 18755#Boina Alada#
@@ -6275,6 +6276,7 @@
 19300#Quepe do Cão-mandante#
 19305#Lampião das Fadas#
 19306#Carta de Comodo#
+19308#Quepe de Amistr#
 19314#Sobrepeliz Real#
 19315#Chapéu do Éden#
 19316#Capuz de Esquilo#
@@ -6672,6 +6674,7 @@
 20514#Espada de Thanatos#
 20516#Asas de Miguel#
 20517#Miau-chila de Bichano#
+20521#Miau-chila de Bichano Preto#
 20528#Asas Douradas da Borboleta#
 20535#Holograma Futurista#
 20700#Manteau de Aegir#
@@ -6899,6 +6902,12 @@
 27124#Carta Espírito da Terra#
 27125#Carta Mula Sem Cabeça#
 27126#Carta Boitatá#
+27157#Carta Leshij#
+27158#Carta Les#
+27159#Carta Kikimora#
+27160#Carta Baba-Yaga#
+27161#Carta Mavka#
+27162#Carta Gorynych#
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
 28025#Katares do Monarca#
@@ -6931,16 +6940,20 @@
 28492#Diário do Renegado#
 28501#Chifres de Kirin#
 28502#Lenço Infame#
+28503#Keraunos#
 28505#Anel do Capiroto#
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
 28521#Proteção do Gigante#
+28531#Luvas do Vigor#
 28534#Amuleto da Coragem#
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
 28538#Luvas de H. Motto#
+28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
 28572#Broche da Celine#
+28596#Anel de Brinquedo#
 28598#Fragmento de Chip #
 28617#Bíblia Sagrada#
 28630#Tomo Ancestral#
@@ -6959,6 +6972,7 @@
 28921#Escudo de Anemos#
 28927#Égide da Nobreza#
 28933#Escudo de Ferro#
+28940#Escudo das Divindades#
 28944#Escudo de Sleiporing#
 28947#Escudo de Gaia#
 29148#Gema de Leão#
@@ -6967,6 +6981,14 @@
 29151#Gema de Aquário#
 29152#Gema de Escorpião#
 29153#Gema de Touro#
+31016#Carta Árvore Maldita Decorada#
+31017#Carta Cookie Aterrorizante#
+31018#Carta Presente das Trevas#
+31019#Carta Lude Grotesco#
+31020#Carta Poltergeist Sangrento#
+31021#Carta Marionete Demoníaca#
+31022#Carta Ursinho Abominável#
+31023#Carta Celine Kimi#
 31027#Orelhas de Urso Enfeitadas#
 31028#Sobrepeliz de Gatinho#
 31038#Bandana Xadrez#
@@ -7048,10 +7070,12 @@
 31382#Touca de Patinhas#
 31383#Peruca Azul de Waifu#
 31387#Jakk Aventureiro#
+31388#Chapéu Dupliponta#
 31390#Chapéu da Nevasca#
 31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
 31396#Capuz Trevoso#
+31397#Boneca da Papisa#
 31399#Véu da Madrugada#
 31406#Peruca Platinada da Nidhogg#
 31407#Peruca Rosa de Alice#
@@ -7059,6 +7083,7 @@
 31435#Gorro de Tricô Hipster#
 31437#Pequeno Pinguim#
 31438#Capa Angelical#
+31449#Tapa-Olho Floreado#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
 31452#Gata Branca#
@@ -7077,13 +7102,19 @@
 31511#Peruca Longa de Gatinho#
 31513#Orelhas do Coelho Minguante#
 31528#Tiara Cósmica#
+31530#Elmo de Áries#
 31531#Chapéu Mágico Duas-Pontas#
 31542#Vaso do Poring Saltitante#
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
 31545#Cachecol Azul do Eremes#
+31561#Asas de Dragão Sombrio#
+31564#Véu do Submundo#
+31565#Laço com Coroa#
+31568#Espíritos Taiji#
 31569#Fones de Última Geração#
 31572#Auréolas Digitais#
+31575#Peruca Turquesa de Waifu#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#

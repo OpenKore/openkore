@@ -131,7 +131,6 @@ our @EXPORT = (
 	getResponse
 	getSpellName
 	headgearName
-	initUserSeed
 	itemLog_clear
 	look
 	lookAtPosition
@@ -2181,6 +2180,7 @@ sub headgearName {
 #
 # Generate a unique seed for the current user and save it to
 # a file, or load the seed from that file if it exists.
+=pod
 sub initUserSeed {
 	my $seedFile = "$Settings::logs_folder/seed.txt";
 	my $f;
@@ -2207,6 +2207,7 @@ sub initUserSeed {
 		}
 	}
 }
+=cut
 
 sub itemLog_clear {
 	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); }
@@ -4352,6 +4353,14 @@ sub checkSelfCondition {
 		}
 
 		return 0 unless inRange($amountInRange, $config{$prefix."_whenPartyMembersNear"});
+	}
+	
+	if ($config{$prefix . "_inParty"}) {
+		return 0 unless $char->{party}{joined};
+	}
+	
+	if ($config{$prefix . "_notInParty"}) {
+		return 0 if $char->{party}{joined};
 	}
 
 	my %hookArgs;

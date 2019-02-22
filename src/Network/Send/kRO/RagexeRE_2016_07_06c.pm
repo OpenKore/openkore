@@ -14,6 +14,8 @@ package Network::Send::kRO::RagexeRE_2016_07_06c;
 
 use strict;
 use base qw(Network::Send::kRO::RagexeRE_2016_04_14b);
+use Globals qw($char $rodexWrite);
+use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
@@ -45,6 +47,7 @@ sub new {
 		'0889' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0927' => ['search_store_request_next_page'],
 		'0957' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
+		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   #if PACKETVER > 20160600
 	);
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -75,6 +78,7 @@ sub new {
 		search_store_info 0889
 		search_store_request_next_page 0927
 		search_store_select 0957
+		rodex_send_mail 0A6E 
 	);
 	
 	
@@ -87,6 +91,27 @@ sub new {
 
 
 	return $self;
+}
+
+sub rodex_send_mail {
+	my ($self) = @_;
+
+	my $title = stringToBytes($rodexWrite->{title});
+	my $body = stringToBytes($rodexWrite->{body});
+	my $pack = $self->reconstruct({
+		switch => 'rodex_send_mail',
+		receiver => $rodexWrite->{target}{name},
+		sender => $char->{name},
+		zeny1 => $rodexWrite->{zeny},
+		zeny2 => 0,
+		title_len => length $title,
+		body_len => length $body,
+		char_id => $rodexWrite->{target}{char_id},
+		title => $title,
+		body => $body,
+	});
+
+	$self->sendToServer($pack);
 }
 
 1;
