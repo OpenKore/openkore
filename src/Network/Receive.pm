@@ -2500,7 +2500,7 @@ sub local_broadcast {
 	my $message = bytesToString($args->{message});
 	my $color = uc(sprintf("%06x", $args->{color})); # hex code
 	stripLanguageCode(\$message);
-	chatLog("lb", "$message\n");# if ($config{logLocalBroadcast});
+	chatLog("lb", "$message\n") if ($config{logLocalBroadcast});
 	message "$message\n", "schat";
 	Plugins::callHook('packet_localBroadcast', {
 		Msg => $message,
@@ -2669,15 +2669,15 @@ sub system_chat {
 	my $color;
 	if ($message =~ s/^ssss//g) {  # forces color yellow, or WoE indicator?
 		$prefix = T('[WoE]');
-	} elsif ($message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/) { #appears in twRO   ## [micc][name][\x00\x00][unknown][\x00\x00][color][name][blablabla][message]
+	} elsif ($message =~ /^micc.*\0\0([0-9a-fA-F]{6})(.*)/s) { #appears in twRO   ## [micc][name][\x00\x00][unknown][\x00\x00][color][name][blablabla][message]
 		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
-	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/) {
+	} elsif ($message =~ /^micc.{12,24}([0-9a-fA-F]{6})(.*)/s) {
 		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
 	} elsif ($message =~ s/^blue//g) {  # forces color blue
 		$prefix = T('[S]');
-	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/) {
+	} elsif ($message =~ /^tool([0-9a-fA-F]{6})(.*)/s) {
 		($color, $message) = ($1, $2);
 		$prefix = T('[S]');
 	} else {
