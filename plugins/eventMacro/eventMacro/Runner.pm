@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght getPattern find_variable get_key_or_index getQuestStatus
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght get_pattern find_variable get_key_or_index getQuestStatus
 	find_hash_and_get_keys find_hash_and_get_values);
 use eventMacro::Automacro;
 
@@ -2071,8 +2071,8 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		
-		# first parse _then_ substitute. slower but safer
-		if ($keyword ne qw(nick push unshift pop shift delete exists defined split keys values)) {
+		#if $keyword is different of every key inside qw(), then we will substitue variables
+		unless (grep{$_ eq $keyword} qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
 		}
 		my $only_replace_once = 0;
@@ -2165,7 +2165,7 @@ sub parse_command {
 			$result = $parsed;
 			
 		} elsif ($keyword eq 'split') {
-			my ($pattern, $string) = getPattern($inside_brackets);
+			my ($pattern, $string) = get_pattern($inside_brackets);
 			my @values = split($pattern, $self->substitue_variables($string));
 			$result = join (',', @values);
 			
