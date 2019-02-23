@@ -7004,3 +7004,4 @@
 20076#Lif_Doll_Hat_Certificate#
 20077#Bf_Recruiter_Hat_Certificate#
 20078#Gf_Recruiter_Hat_Certificate#
+20079#Scorpio_Crown_Certificate#
