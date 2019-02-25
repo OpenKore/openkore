@@ -6255,27 +6255,27 @@ sub cmdRodex {
 
 	if ($arg1 eq 'open') {
 		if (defined $rodexList) {
-			error "Your rodex mail box is already opened.\n";
+			error T("Your rodex mail box is already opened.\n");
 			return;
 		}
-		message "Sending request to open rodex mailbox.\n";
+		message T("Sending request to open rodex mailbox.\n");
 		$messageSender->rodex_open_mailbox(0,0,0);
 	
 	} elsif ($arg1 eq 'close') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed.\n";
+			error T("Your rodex mail box is closed.\n");
 			return;
 		}
-		message "Your rodex mail box has been closed.\n";
+		message T("Your rodex mail box has been closed.\n");
 		$messageSender->rodex_close_mailbox();
 		
 	} elsif ($arg1 eq 'list') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!$rodexList) {
-			message "Your rodex mail box is empty.\n";
+			message T("Your rodex mail box is empty.\n");
 			return;
 		}
 		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
@@ -6290,7 +6290,7 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'refresh') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 		}
 		
@@ -6298,16 +6298,16 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'read') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex read' (Read rodex mail)\n" .
-				"Usage: rodex read <mail id>\n");
+				"Usage: rodex read <mail_id>\n");
 			return;
 			
 		} elsif (!exists $rodexList->{mails}{$arg2}) {
-			error "Mail of id $arg2 doesn't exist.\n";
+			error TF("Mail of id %d doesn't exist.\n", $arg2);
 			return;
 		}
 		
@@ -6315,64 +6315,64 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'write') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (defined $rodexWrite) {
-			error "You are already writing a rodex mail.\n";
+			error T("You are already writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player name>\n");
+				"Usage: rodex write <player_name>\n");
 			return;
 		}
 		
-		message "Opening rodex mail write box.\n";
+		message T("Opening rodex mail write box.\n");
 		$messageSender->rodex_open_write_mail($arg2);
 		
 	} elsif ($arg1 eq 'cancel') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 		}
 		
-		message "Closing rodex mail write box.\n";
+		message T("Closing rodex mail write box.\n");
 		$messageSender->rodex_cancel_write_mail();
 		
 	} elsif ($arg1 eq 'settarget') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif (exists $rodexWrite->{target}) {
-			error "You have already set the mail target.\n";
+			error T("You have already set the mail target.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n" .
-				"Usage: rodex settarget <player name>\n");
+				"Usage: rodex settarget <player_name>\n");
 			return;
 		}
 		
-		message "Setting target of rodex mail to '".$arg2."'.\n";
+		message TF("Setting target of rodex mail to '%s'.\n", $arg2);
 		$messageSender->rodex_checkname($arg2);
 		
 	} elsif ($arg1 eq 'itemslist') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		}
@@ -6431,15 +6431,16 @@ sub cmdRodex {
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 				[$index, $display]);
 		}
+		$msg .= sprintf("%s\n", ('-'x50));
 		message $msg, "list";
 		
 	} elsif ($arg1 eq 'settitle') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
@@ -6449,20 +6450,20 @@ sub cmdRodex {
 		}
 		
 		if (exists $rodexWrite->{title}) {
-			message "Changed the rodex mail message title to '".$arg2."'.\n";
+			message TF("Changed the rodex mail message title to '%s'.\n", $arg2);
 		} else {
-			message "Set the rodex mail message title to '".$arg2."'.\n";
+			message TF("Set the rodex mail message title to '%s'.\n", $arg2);
 		}
 		
 		$rodexWrite->{title} = $arg2;
 		
 	} elsif ($arg1 eq 'setbody') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
@@ -6472,57 +6473,57 @@ sub cmdRodex {
 		}
 		
 		if (exists $rodexWrite->{body}) {
-			message "Changed the rodex mail message body to '".$arg2."'.\n";
+			message TF("Changed the rodex mail message body to '%s'.\n", $arg2);
 		} else {
-			message "Set the rodex mail message body to '".$arg2."'.\n";
+			message TF("Set the rodex mail message body to '%s'.\n", $arg2);
 		}
 		
 		$rodexWrite->{body} = $arg2;
 		
 	} elsif ($arg1 eq 'setzeny') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
 			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
-				"Usage: rodex setzeny <zeny amount>\n");
+				"Usage: rodex setzeny <zeny_amount>\n");
 			return;
 		} elsif ($arg2 > $char->{zeny}) {
-			error "You can't add more zeny than you have to the rodex mail.\n";
+			error T("You can't add more zeny than you have to the rodex mail.\n");
 			return;
 		}
 		
 		if (exists $rodexWrite->{zeny}) {
-			message "Changed the rodex mail message zeny to '".$arg2."'.\n";
+			message TF("Changed the rodex mail message zeny to '%d'.\n", $arg2);
 		} else {
-			message "Set the rodex mail message zeny to '".$arg2."'.\n";
+			message TF("Set the rodex mail message zeny to '%d'.\n", $arg2);
 		}
 		
 		$rodexWrite->{zeny} = $arg2;
 		
 	} elsif ($arg1 eq 'add') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Usage: rodex add <item>\n");
+				"Usage: rodex add <item #>\n");
 			return;
 		}
 		
 		my $max_items = $config{rodexMaxItems} || 5;
 		if ($rodexWrite->{items}->size >= $max_items) {
-			error T("You can't add any more items to the rodex mail\n");
+			error T("You can't add any more items to the rodex mail.\n");
 			return;
 		}
 		
@@ -6552,21 +6553,21 @@ sub cmdRodex {
 			}
 		}
 		
-		message "Adding amount ".$amount." of item ".$item." to rodex mail.\n";
+		message TF("Adding amount %d of item %s to rodex mail.\n", $amount, $item);
 		$messageSender->rodex_add_item($item->{ID}, $amount);
 		
 	} elsif ($arg1 eq 'remove') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex remove' (Remove item from rodex mail)\n" .
-				"Usage: rodex remove <item>\n");
+				"Usage: rodex remove <item #>\n");
 			return;
 		}
 		
@@ -6583,16 +6584,16 @@ sub cmdRodex {
 			$amount = $item->{amount};
 		}
 		
-		message "Removing amount ".$amount." of item ".$item." from rodex mail.\n";
+		message TF("Removing amount %d of item %s from rodex mail.\n", $amount, $item);
 		$messageSender->rodex_remove_item($item->{ID}, $amount);
 		
 	} elsif ($arg1 eq 'send') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
-			error "You are not writing a rodex mail.\n";
+			error T("You are not writing a rodex mail.\n");
 			return;
 			
 		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
@@ -6607,75 +6608,75 @@ sub cmdRodex {
 		my $tax = ($zeny_tax + $items_tax);
 		
 		if (($rodexWrite->{zeny} + $tax) > $char->{zeny}) {
-			error "The current tax for this rodex mail is $tax, you don't have enough zeny to pay for it.\n";
+			error TF("The current tax for this rodex mail is %dz, you don't have enough zeny to pay for it.\n", $tax);
 			return;
 		}
 		
-		message "Sending rodex mail.\n";
+		message T("Sending rodex mail.\n");
 		$messageSender->rodex_send_mail();
 		
 	} elsif ($arg1 eq 'getitems') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (defined $rodexWrite) {
-			error "You are writing a rodex mail.\n";
+			error T("You are writing a rodex mail.\n");
 			return;
 			
 		} elsif (!exists $rodexList->{current_read}) {
-			error "You are not reading a rodex mail.\n";
+			error T("You are not reading a rodex mail.\n");
 			return;
 			
 		} elsif (scalar @{$rodexList->{mails}{$rodexList->{current_read}}{items}} == 0) {
-			error "The current rodex mail has no items.\n";
+			error T("The current rodex mail has no items.\n");
 			return;
 		}
 		
-		message "Requesting items of current rodex mail.\n";
+		message T("Requesting items of current rodex mail.\n");
 		$messageSender->rodex_request_items($rodexList->{current_read}, 0, 0);
 		
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed\n");
 			return;
 			
 		} elsif (defined $rodexWrite) {
-			error "You are writing a rodex mail.\n";
+			error T("You are writing a rodex mail.\n");
 			return;
 			
 		} elsif (!exists $rodexList->{current_read}) {
-			error "You are not reading a rodex mail.\n";
+			error T("You are not reading a rodex mail.\n");
 			return;
 			
 		} elsif ($rodexList->{mails}{$rodexList->{current_read}}{zeny1} == 0) {
-			error "The current rodex mail has no zeny.\n";
+			error T("The current rodex mail has no zeny.\n");
 			return;
 		}
 		
-		message "Requesting zeny of current rodex mail.\n";
+		message T("Requesting zeny of current rodex mail.\n");
 		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
 		
 	} elsif ($arg1 eq 'nextpage') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (defined $rodexWrite) {
-			error "You are writing a rodex mail.\n";
+			error T("You are writing a rodex mail.\n");
 			return;
 			
 		} elsif (exists $rodexList->{last_page}) {
-			error "You have already reached the last rodex mail page.\n";
+			error T("You have already reached the last rodex mail page.\n");
 			return;
 		}
 		
-		message "Requesting the next page of rodex mail.\n";
+		message T("Requesting the next page of rodex mail.\n");
 		$messageSender->rodex_next_maillist(0, $rodexList->{current_page_last_mailID}, 0);
 		
 	} elsif ($arg1 eq 'maillist') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 		}
 		
@@ -6704,16 +6705,16 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'delete') {
 		if (!defined $rodexList) {
-			error "Your rodex mail box is closed";
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex delete' (Delete rodex mail)\n" .
-				"Usage: rodex delete <mail id>\n");
+				"Usage: rodex delete <mail_id>\n");
 			return;
 			
 		} elsif (!exists $rodexList->{mails}{$arg2}) {
-			error "Mail of id $arg2 doesn't exist.\n";
+			error TF("Mail of id %d doesn't exist.\n", $arg2);
 			return;
 		}
 		
