@@ -1263,11 +1263,10 @@ sub charSelectScreen {
 	}
 
 	if (@charNames) {
-		message(TF("------------- Character List -------------\n" .
-		           "%s\n" .
-		           "------------------------------------------\n",
-		           join("\n", @charNames)),
-		           "connection");
+		my $msg =  center(T(" Character List "), 79, '-') ."\n";
+		$msg .= join("\n", @charNames) ."\n";
+		$msg .= ('-'x79) . "\n";
+		message $msg, "connection";
 	}
 	return 1 if ($net->clientAlive && $net->version);
 
@@ -2458,10 +2457,11 @@ sub printItemDesc {
 	my $item = shift;
 		
 	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
-	message T("===============Item Description===============\n");
-	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
-	message($description, "info");
-	message("==============================================\n", "info");
+	my $msg =  center(T(" Item Description "), 79, '-') ."\n";
+	$msg .= TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
+	$msg .=  $description;
+	$msg .= ('-'x79) . "\n";
+	message $msg, "info";
 }
 
 sub processNameRequestQueue {
@@ -4918,22 +4918,22 @@ sub CharacterLogin {
 sub searchStoreInfo {
 	my ($page) = @_;
 	
-	message T("============================================== Search Store Result ==============================================\n");
-	message TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
-	message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
-		["#", T("Shop Name"), T("Item"), T("Price"), T("Amount")]));
+	my $msg =  center(T(" Search Store Result "), 79, '-') ."\n";
+	$msg .= TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
+	$msg .= swrite("@<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @>>>>>>>>>>",
+			["#", T("Shop Name"), T("Item"), T("Amount"), T("Price")]);
 	
 	for (my $i = 0; $i < scalar(@{${$universalCatalog{list}}[$page]}); ++$i) {
-		message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+		$msg .= swrite("@<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @>>>>>>>>>>",
 				[$i, ${$universalCatalog{list}}[$page][$i]{shopName},
 				itemName({
 					nameID => ${$universalCatalog{list}}[$page][$i]{nameID},
 					cards => ${$universalCatalog{list}}[$page][$i]{cards_nameID},
 					upgrade => ${$universalCatalog{list}}[$page][$i]{refine}
-				}), formatNumber(${$universalCatalog{list}}[$page][$i]{price}), ${$universalCatalog{list}}[$page][$i]{amount}]), "list");
+				}), ${$universalCatalog{list}}[$page][$i]{amount}, formatNumber(${$universalCatalog{list}}[$page][$i]{price})]);
 	}
-	
-	message T("=================================================================================================================\n");
+	$msg .= ('-'x79) . "\n";
+	message $msg, "list";
 }
 
 return 1;
