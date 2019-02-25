@@ -967,7 +967,7 @@ sub account_server_info {
 		T("Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
 		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"            \@<<<<<<<<< \@<<<<<<<<<<\n"),
+		"SessionID2: \@<<<<<<<<< \@<<<<<<<<<<\n"),
 		[unpack('V',$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack('V',$sessionID), getHex($sessionID),
 		unpack('V',$sessionID2), getHex($sessionID2)]) .
 		('-'x34) . "\n", 'connection';
@@ -5692,7 +5692,7 @@ sub hotkeys {
 	my $j = 0;
 	for (my $i = 0; $i < length($args->{hotkeys}); $i += 7) {
 		@{$hotkeyList->[$j]}{qw(type ID lv)} = unpack('C V v', substr($args->{hotkeys}, $i, 7));
-		$msg .= swrite(TF("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
+		$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
 			$hotkeyList->[$j]->{type} ? T("skill") : T("item"),
 			$hotkeyList->[$j]->{lv}]);
@@ -6223,14 +6223,14 @@ sub rodex_read_mail {
 
 sub unread_rodex {
 	my ( $self, $args ) = @_;
-	message "You have new unread rodex mails.\n";
+	message T("You have new unread rodex mails.\n");
 }
 
 sub rodex_remove_item {
 	my ( $self, $args ) = @_;
 
 	if (!$args->{result}) {
-		error "You failed to remove an item from rodex mail.\n";
+		error T("You failed to remove an item from rodex mail.\n");
 		return;
 	}
 
@@ -6250,7 +6250,7 @@ sub rodex_add_item {
 	my ( $self, $args ) = @_;
 
 	if ($args->{fail}) {
-		error "You failed to add an item to rodex mail.\n";
+		error T("You failed to add an item to rodex mail.\n");
 		return;
 	}
 
@@ -6324,11 +6324,11 @@ sub rodex_write_result {
 	my ( $self, $args ) = @_;
 
 	if ($args->{fail}) {
-		error "You failed to send the rodex mail.\n";
+		error T("You failed to send the rodex mail.\n");
 		return;
 	}
 
-	message "Your rodex mail was sent with success.\n";
+	message T("Your rodex mail was sent with success.\n");
 	undef $rodexWrite;
 }
 
@@ -6336,11 +6336,11 @@ sub rodex_get_zeny {
 	my ( $self, $args ) = @_;
 
 	if ($args->{fail}) {
-		error "You failed to get the zeny of the rodex mail.\n";
+		error T("You failed to get the zeny of the rodex mail.\n");
 		return;
 	}
 
-	message "The zeny of the rodex mail was requested with success.\n";
+	message T("The zeny of the rodex mail was requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
 }
@@ -6349,11 +6349,11 @@ sub rodex_get_item {
 	my ( $self, $args ) = @_;
 
 	if ($args->{fail}) {
-		error "You failed to get the items of the rodex mail.\n";
+		error T("You failed to get the items of the rodex mail.\n");
 		return;
 	}
 
-	message "The items of the rodex mail were requested with success.\n";
+	message T("The items of the rodex mail were requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{items} = [];
 }
@@ -6363,7 +6363,7 @@ sub rodex_delete {
 
 	return unless (exists $rodexList->{mails}{$args->{mailID1}});
 
-	message "You have deleted the mail of ID ".$args->{mailID1}.".\n";
+	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
 
 	delete $rodexList->{mails}{$args->{mailID1}};
 }
