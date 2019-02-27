@@ -2038,14 +2038,12 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
+    my $total_options = 0;
+
 	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
 	foreach ( @options ) {
-		if ( $_->{type} == 175 ) {
-			# Neutral element.
-		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
-			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
-		} else {
-			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		if ( $_->{type} ) {
+			$total_options++;
 		}
 	}
 
@@ -2058,6 +2056,7 @@ sub itemName {
 	$display .= $name;
 	$display .= " [$suffix]" if $suffix;
 	$display .= " [$numSlots]" if $numSlots;
+	$display .= " [$total_options Option]" if $total_options;
 
 	return $display;
 }
@@ -2456,10 +2455,21 @@ sub positionNearPortal {
 # Print the description for $item.
 sub printItemDesc {
 	my $item = shift;
-		
+
 	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
 	message T("===============Item Description===============\n");
 	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	my $option_index = 1;
+	foreach ( @options ) {
+		if ( $itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}} ) {
+			message("OPTION $option_index: " . sprintf($itemOption_lut{$itemOptionHandle{$_->{type}}}, $_->{value}) . "\n", "info");
+		} else {
+			message("OPTION $option_index: Option($_->{type},$_->{value},$_->{param})\n", "info");
+		}
+		$option_index++;
+	}
+	message("\n", "info");
 	message($description, "info");
 	message("==============================================\n", "info");
 }
