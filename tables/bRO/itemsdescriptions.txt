@@ -649,20 +649,29 @@ Peso: ^77777720^000000
 #
 645#
 Poção medicinal que aumenta a concentração de quem a ingere.
-^0000ffAumenta um pouco a velocidade de ataque.^000000 Pode ser usada por todas as profissões.
-Peso: ^77777710^000000
+^0000ffVelocidade de ataque +10%.^000000
+Duração: ^77777730 minutos^000000
+Peso: ^7777775^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 656#
 Poção medicinal que acelera o metabolismo de quem a ingere.
-^0000ffAumenta a velocidade de ataque.^000000 Requer nível 40 para ser usada.
-Não pode ser usada por Noviço/Sacerdote, Bardos e Odaliscas.
+^0000ffVelocidade de ataque +15%.^000000
+^008080O bônus substitui o efeito da Poção da Concentração.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^77777715^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Todas, exceto Bardos, Odaliscas, Sacerdotes e evoluções, Noviços^000000
 #
 657#
 Fórmula química extremamente potente que estimula a circulação, criando uma reação em cadeia.
-^0000ffAumenta muito a velocidade de ataque.^000000
-Requer nível 85 para ser usada e não pode ser usada por Noviço (Sacerdote/Monge)/Gatuno (Mercenário)/Arqueiro (Caçador/Bardo/Odalisca)/Magos (Sábios)/Aprendiz Superaprendiz)/ Ninjas(Kagerou/Oboro).
+^0000ffVelocidade de ataque +20%.^000000
+^008080O bônus substitui o efeito da Poção da Concentração e do Despertar.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^77777720^000000
+Nível necessário: ^77777785^000000
+Classes: ^777777Todas, exceto Noviços, Arqueiros, Mercenários, Sábios, Aprendizes, Ninjas e evoluções, Gatunos^000000
 #
 658#
 Estatueta simbolizando a solidariedade. Diz-se que apenas a presença de uma dessas inspira harmonia.
@@ -5250,6 +5259,33 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777120^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
+1443#
+Uma vez que a estocada é feita, poucas superfícies podem evitar a ponta dessa lança.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Lança^000000
+Ataque: ^77777790^000000
+Peso: ^77777790^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
 1449#
 Uma lança especialmente encantada com os poderes da floresta.
 ^0000ffHP máx. +800.^000000
@@ -5767,6 +5803,33 @@ Ataque: ^777777250^000000
 Peso: ^777777375^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777120^000000
+Classes: ^777777Espadachins e evoluções^000000
+#
+1498#
+Com uma lança desse porte, você sente que consegue perfurar os céus em apenas uma estocada.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777175^000000
+Peso: ^777777175^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
 1501#
@@ -7641,6 +7704,35 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Magos, Noviços e evoluções^000000
 #
+1680#
+Apesar de aparentar frágil, essa varinha pode ser usada para manipular e lançar feitiços extremamente poderosos.
+^a400cdIndestrutível em batalha.^000000
+^0000ffINT +4. ATQM +70.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQM +5.^000000
+Bônus de ATQM de acordo com o refino:
++1:^0000ffATQM +1.^000000
++2: ^0000ffATQM +4.^000000
++3: ^0000ffATQM +9.^000000
++4: ^0000ffATQM +16.^000000
++5: ^0000ffATQM +25.^000000
++6: ^0000ffATQM +36.^000000
++7: ^0000ffATQM +49.^000000
++8: ^0000ffATQM +64.^000000
++9: ^0000ffATQM +81.^000000
++10: ^0000ffATQM +100.^000000
++11: ^0000ffATQM +121.^000000
++12: ^0000ffATQM +144.^000000
++13: ^0000ffATQM +169.^000000
++14: ^0000ffATQM +196.^000000
++15: ^0000ffATQM +225.^000000
+Tipo: ^777777Cajado^000000
+Ataque: ^77777760^000000
+Peso: ^77777760^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Magos, Noviços, Espiritualistas e evoluções^000000
+#
 1682#
 O grande poder escondido nesse cajado faz dele um artefato ideal para lançar poderosos (e perigosos) feitiços.
 ^a400cdIndestrutível em batalha.^000000
@@ -8757,6 +8849,33 @@ Nível da arma: ^7777773^000000
 Nível Necessário: ^77777750^000000
 Classes: ^777777Monges, Sacerdotes e evoluções^000000
 #
+1839#
+Garras que são finas como agulhas, tornando ataques perfurantes uma verdadeira ameaça.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Soqueira^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Sacerdotes, Monges e evoluções^000000
+#
 1841#
 Garras feitas de cristal encantado. Com elas, você ficará tão rápido que fará a luz refratar durante os seus golpes. Ao menos seus inimigos morrerão diante de um belo show de cores e efeitos visuais.
 ^0000ffVelociade de ataque +1.^000000
@@ -9160,6 +9279,33 @@ Peso: ^777777100^000000
 Nível da Arma: ^7777774^000000
 Nível Necessário: ^777777130^000000
 Classes: ^777777Trovador^000000
+#
+1939#
+Madeira dos arredores de Geffen e cordas de fibra de rubi fazem deste violino um instrumento duradouro que poderá ser usado por uma vida inteira.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^77777780^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Bardos e evoluções^000000
 #
 1950#
 Corda grossa e forte feita de fibras de cânhamo trançadas.
@@ -9613,6 +9759,33 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777105^000000
 Classes: ^777777Musas e evoluções^000000
 #
+1995#
+Corte o vento com golpes poderosos desse chicote reforçado.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Chicote^000000
+Ataque: ^77777780^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Odaliscas e evoluções^000000
+#
 2000#
 Cajado de duas mãos que parece possuir um poder tremendo. O dono do cajado deve ter uma grande força espiritual para usar este cajado corretamente.
 ^a400cdIndestrutível em batalha.^000000
@@ -10002,6 +10175,35 @@ Peso: ^777777140^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777120^000000
 Classes: ^777777Noviços, Magos e evoluções^000000
+#
+2025#
+Um poder de proporção imensurável se esconde nesse cetro, mas só pode ser controlado por verdadeiros mestres na arte da magia.
+^a400cdIndestrutível em batalha.^000000
+^0000ffINT +5. ATQM +150.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQM +5.^000000
+Bônus de ATQM de acordo com o refino:
++1:^0000ffATQM +1.^000000
++2: ^0000ffATQM +4.^000000
++3: ^0000ffATQM +9.^000000
++4: ^0000ffATQM +16.^000000
++5: ^0000ffATQM +25.^000000
++6: ^0000ffATQM +36.^000000
++7: ^0000ffATQM +49.^000000
++8: ^0000ffATQM +64.^000000
++9: ^0000ffATQM +81.^000000
++10: ^0000ffATQM +100.^000000
++11: ^0000ffATQM +121.^000000
++12: ^0000ffATQM +144.^000000
++13: ^0000ffATQM +169.^000000
++14: ^0000ffATQM +196.^000000
++15: ^0000ffATQM +225.^000000
+Tipo: ^777777Cajado de Duas Mãos^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Magos, Espiritualistas e evoluções^000000
 #
 2047#
 Um cajado raríssimo usado pela Bruxa Jiranto, uma criatura que utiliza os elementos de Fogo e Vento para envolver seus inimigos nos mais tenebrosos feitiços e maldições. Uma serpente mantém-se enrolada no corpo do cajado, ampliando os poderes dele.
@@ -14009,9 +14211,13 @@ Classe : ^777777Cavaleiro Rúnico^000000
 #
 2576#
 Uma pequena e simpática mochila cheia de acessórios e compartimentos especiais. Você não vê a hora de sair por Rune-Midgard catando tudo o que vê pelo chão para deixá-la bem cheia! Ela possui encantamentos especiais para cada um de seus atributos. Nove entre dez exploradores recomendam: 'nunca saia de casa sem ela'!
+--------------------------
 ^008080Exibe o visual nas costas do personagem.^000000
-^0000ffHabilita [Ganância] nv. 1.^000000
-^FF6347Refino +7 ou mais:^000000
+--------------------------
+^0000ffHabilita [Ganância] nv.1.^000000
+--------------------------
+Refino +7 ou mais:
+-
 FOR base 90 ou mais:
 ^0000ffATQ +20.^000000
 AGI base 90 ou mais:
@@ -14024,7 +14230,9 @@ DES base 90 ou mais:
 ^0000ffDano físico a distância +5%.^000000
 SOR base 90 ou mais:
 ^0000ffDano crítico +10%.^000000
-^FF6347Refino +9 ou mais:^000000
+--------------------------
+Refino +9 ou mais:
+-
 FOR base 90 ou mais:
 ^0000ffATQ +10 adicional.^000000
 AGI base 90 ou mais:
@@ -14037,7 +14245,8 @@ DES base 90 ou mais:
 ^0000ffDano físico a distância +5% adicional.^000000
 SOR base 90 ou mais:
 ^0000ffDano crítico +5% adicional.^000000
-Tipo: ^777777Capa ^000000
+--------------------------
+Tipo: ^777777Capa^000000
 Defesa: ^77777720^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
@@ -20386,23 +20595,33 @@ Classe: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4435#
-Recupera 50 de HP quando um monstro é derrotado através de ataque físico de perto. Adiciona 1% de dano físico e mágico contra monstros Humanoides.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Calçado^000000
+^0000ffDano físico e mágico contra oponentes da raça Humanoide +1%.^000000
+Ao derrotar monstros com ataques físicos corpo a corpo:
+^0000ffRecupera 50 de HP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4436#
-Crítico + 5 contra Humanoides, 1% de dano adicional físico e mágico.
-Há uma pequena chance causar Sangramento no próprio usuário.
-Se usada em conjunto com a Carta Massacre, há uma pequena chance de recuperar 2 SP quando um monstro é morto.
-Classe: ^777777Acessório^000000
+^0000ffCRIT +5 em oponentes da raça Humanoide.^000000
+^0000ffDano físico e mágico contra oponentes da raça Humanoide +1%.^000000
+Ao receber danos físicos:
+^0000ff0,1% de chance de infligir Sangramento no usuário.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Massacre]^000000
+Ao derrotar oponentes da raça Humanoide:
+^0000ffRecupera 2 de SP.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4437#
-A taxa de recuperação do item Carne aumenta em 100%.
-Precisão + 1. Pequena chance de causar sangramento no inimigo ao executar ataque físico de curto alcance.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Acessório^000000
+^0000ffPrecisão +1.^000000
+^0000ffRegeneração de HP da Carne +100%.^000000
+Ao realizar ataques físicos corpo a corpo:
+^0000ff0,5% de chance de infligir Sangramento no alvo.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4438#
@@ -20423,9 +20642,11 @@ Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4440#
-Quando equipado com um cajado, INT + 1 e ignora 2% da DEFM do inimigo.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Arma^000000
+Em Cajados de uma ou duas mãos:
+^0000ffINT +1.^000000
+^0000ffIgnora 2% da DEFM de monstros normais e chefes.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4441#
@@ -21437,11 +21658,30 @@ Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
+4602#
+^0000ffDano físico +20%.^000000
+^0000ffDano mágico +20%.^000000
+A cada 6 segundos:
+^0000ffDrena 666 de HP e 66 de SP do usuário.^000000
+Ao desequipar:
+^0000ffDrena 6.666 de HP e 666 de SP.^000000
+Tipo :  ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
 4603#
 ^0000ffATQ +20.^000000
 Ao realizar ataques físicos:
 ^0000ffAlta chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
 Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4604#
+^0000ffATQ +30.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
+Tipo :  ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
@@ -21486,6 +21726,26 @@ Livro com refino +14 ou mais:
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso ^7777771^000000
+#
+4608#
+^0000ffATQ + 15.^000000
+^0000ffDano físico contra oponentes de tamanho Médio e Grande +20%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cavaleira Khalitzburg]^000000
+^0000ffDano físico contra oponentes de tamanho Médio e Grande +15% adicional.^000000
+Tipo :  ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4609#
+^0000ffDEF + 20.^000000
+^0000ffResistência a oponentes de tamanho Médio e Grande +25%.^000000
+^FF6347Conjunto^000000
+^FF6347[Carta Cavaleiro Branco]^000000
+^0000ffResistência a oponentes de tamanho Médio e Grande +5% adicional.^000000
+Tipo :  ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
+Peso: ^7777771^000000
 #
 4624#
 HP Máximo + 50%, DEF -50%, DEFM - 50%.
@@ -25042,7 +25302,7 @@ Classes que utilizam: ^777777Todas^000000
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores amarelo, laranja e dourado para ficar radiante no sambódromo!
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
-Equipa em: ^777777Topo, Meio e Baixo^000000
+Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777710^000000
 Classes que utilizam: ^777777Todas^000000
 #
@@ -31312,6 +31572,10 @@ Peso: ^7777770^000000
 Uma erva com propriedades curativas.
 Peso: ^7777770^000000
 #
+6755#
+Uma mana concentrada muito difícil de manipular.
+Peso: ^7777771^000000
+#
 6756#
 ^ff0000Intransferível.^000000
 Energia especial encontrada nas partes mecânicas que sobraram dos restos dos robôs. Isso pode ser uma pista da fonte de energia da cidade de Verus?
@@ -36566,23 +36830,31 @@ Um coquetel de cor escarlate, favorito das mulheres, que dá a quem bebe a impre
 Peso: ^77777710^000000
 #
 12114#
-Encanta temporariamente a arma do usuário com a propriedade ^FF0000Fogo^000000.
-^FFFFFF ^000000
+Pergaminho mágico de conversão elemental.
+^0000ffEncanta a arma do usuário com a propriedade Fogo.^000000
+^008080Perde o efeito ao trocar de arma.^000000
+Duração: ^7777773 minutos^000000
 Peso: ^7777771^000000
 #
 12115#
-Encanta temporariamente a arma do usuário com a propriedade ^6996ADÁgua^000000.
-^FFFFFF ^000000
+Pergaminho mágico de conversão elemental.
+^0000ffEncanta a arma do usuário com a propriedade Água.^000000
+^008080Perde o efeito ao trocar de arma.^000000
+Duração: ^7777773 minutos^000000
 Peso: ^7777771^000000
 #
 12116#
-Encanta temporariamente a arma do usuário com a propriedade ^A68064Terra^000000.
-^FFFFFF ^000000
+Pergaminho mágico de conversão elemental.
+^0000ffEncanta a arma do usuário com a propriedade Terra.^000000
+^008080Perde o efeito ao trocar de arma.^000000
+Duração: ^7777773 minutos^000000
 Peso: ^7777771^000000
 #
 12117#
-Encanta temporariamente a arma do usuário com a propriedade ^7BCC70Vento^000000.
-^FFFFFF ^000000
+Pergaminho mágico de conversão elemental.
+^0000ffEncanta a arma do usuário com a propriedade Vento.^000000
+^008080Perde o efeito ao trocar de arma.^000000
+Duração: ^7777773 minutos^000000
 Peso: ^7777771^000000
 #
 12118#
@@ -37731,53 +38003,70 @@ Peso: ^7777771^000000
 #
 12414#
 Uma deliciosa bala típica feita de Guaraná. Carrega consigo as propriedades energéticas da fruta.
-^000088Aumenta um pouco a velocidade de ataque e de movimento.^000000
+^0000ffAtiva [Aumentar Agilidade] nv. 5. e o efeito da Poção da Concentração.^000000
 Peso: ^7777771^000000
 #
 12418#
+Poção que aquece os músculos e prepara o usuário para a guerra.
 ^0000ffATQ +50.^000000
-^008080Perde o efeito ao morrer.^000000
+^008080Perde o efeito ao morrer.000000
 Duração: ^777777500 segundos^000000
 Peso: ^7777775^000000
 #
 12419#
+Poção que aquece os músculos e prepara o usuário para a magia.
 ^0000ffATQM +50.^000000
-^008080Perde o efeito ao morrer.^000000
+^008080Perde o efeito ao morrer.000000
 Duração: ^777777500 segundos^000000
 Peso: ^7777775^000000
 #
 12422#
-Poção pequena que aumenta o HP Máx.
-Aumenta um pouco HP Máx por 500 segundos, e recupera 1% do HP.
+Poção de vida dentro um frasco pequeno.
+^0000ffRecupera 1% de HP.^000000
+^0000ffHP máx. +500 por 500 segundos.^000000
+^008080HP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777772^000000
 #
 12423#
-Poção média que aumenta o HP Máx.
-Aumenta moderadamente o HP Máx por 500 segundos, e recupera 2% do HP.
+Poção de vida dentro um frasco médio.
+^0000ffRecupera 2% de HP.^000000
+^0000ffHP máx. +1.500 por 500 segundos.^000000
+^008080HP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777774^000000
 #
 12424#
-Poção grande que aumenta o HP Máx.
-Aumenta bastante o HP Máx por 500 segundos, e recupera 5% do HP.
+Poção de vida dentro um frasco grande.
+^0000ffRecupera 5% de HP.^000000
+^0000ffHP máx. +2.500 por 500 segundos.^000000
+^008080HP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777778^000000
 #
 12425#
-Poção pequena que aumenta o SP Máx.
-Aumenta um pouco SP Máx por 500 segundos, e recupera 2% do SP.
+Poção de mana dentro um frasco pequeno.
+^0000ffRecupera 2% de SP.^000000
+^0000ffAumenta o SP máx. por 500 segundos.^000000
+^008080SP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777772^000000
 #
 12426#
-Poção média que aumenta o SP Máx.
-Aumenta moderadamente o SP Máx por 500 segundos, e recupera 4% do SP.
+Poção de mana dentro um frasco médio.
+^0000ffRecupera 4% de SP.^000000
+^0000ffAumenta o SP máx. por 500 segundos.^000000
+^008080SP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777774^000000
 #
 12427#
-Poção grande que aumenta o SP Máx.
-Aumenta bastante o SP Máx por 500 segundos, e recupera 8% do SP.
+Poção de mana dentro um frasco grande.
+^0000ffRecupera 8% de SP.^000000
+^0000ffAumenta o SP máx. por 500 segundos.^000000
+^008080SP máx. aumenta de acordo com seu nível.000000
 Peso: ^7777778^000000
 #
 12428#
-Recupera uma grande quantidade de HP e aumenta a recuperação natural de HP em 20%. Duração: 500 segundos.
+Poção com nutrientes essenciais para a energia vital.
+^0000ffRecupera 1.000 de HP.^000000
+^0000ffRegeneração natural de HP +20%.^000000
+Duração: ^777777500 segundos^000000
 Peso: ^7777777^000000
 #
 12429#
@@ -37831,15 +38120,23 @@ Duração: 5 min.
 Peso: ^7777775^000000
 #
 12436#
-Poção que recupera SP e aumenta a recuperação natural de SP em 20%. SP Máx +5%. Duração: 500 segundos.
+Poção com nutrientes essenciais para estimular o esforço mental.
+^0000ffSP máx. +5%.^000000
+^0000ffRegeneração natural de SP +20%.^000000
+Duração: ^777777500 segundos^000000
 Peso: ^7777775^000000
 #
 12437#
-Poção que aumenta um pouco a Vel. de ATQ. Duração: 500 segundos.
+Poção com nutrientes essenciais para estimular o reflexo corporal.
+^0000ffVelocidade de ataque +10%.^000000
+^008080Acumulativo com poções de velocidade de ataque.000000
+Duração: ^777777500 segundos^000000
 Peso: ^7777775^000000
 #
 12475#
-Poção que remove os seguintes status negativos - silêncio, sangramento, envenenamento, veneno mortal, maldição, transformação orc, morto-vivo, cegueira e caos. Recupera um pouco de HP.
+Poção com nutrientes essenciais para a cura de doenças.
+^0000ffRecupera 500 de HP.^000000
+^0000ffRemove Silêncio, Sangramento, Envenenamento, Veneno Mortal, Maldição, Transformação Orc, Zumbificação, Cegueira e Caos.^000000
 Peso: ^7777771^000000
 #
 12490#
@@ -38246,8 +38543,8 @@ Peso: ^77777720^000000
 #
 12684#
 Uma poção que aprimora os cinco sentidos e vai além, fazendo com que alguns de seus golpes sejam na velocidade da luz.
-^0000ffAumenta a velocidade de ataque.^000000
-Pode acumular com outros itens de efeito semelhante.
+^0000ffVelocidade de ataque +3%.^000000
+^008080Acumulativo com poções de velocidade de ataque.000000
 Duração: ^77777715 minutos^000000
 Peso: ^7777771^000000
 #
@@ -40530,6 +40827,33 @@ Nível da arma: ^7777773^000000
 Nível mínimo: ^777777140^000000
 Classes: ^777777Insurgentes^000000
 #
+13127#
+A aura avermelhada dessa arma denuncia o seu perigo. Espere por saques rápidos e disparos mais rápidos ainda!
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Pistola^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Justiceiros e evoluções^000000
+#
 13150#
 Uma arma de fogo equipada com um cano longo que aumenta seu alcance e a precisão de seus disparos.
 Tipo: ^777777Rifle^000000
@@ -41946,6 +42270,34 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^77777740^000000
 Classes: ^777777Ninjas e evoluções^000000
 #
+13327#
+Shuriken Huuma de lâminas afiadas que emitem uma aura vermelha.
+^a400cdIndestrutível em batalha.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQ +5.^000000
+Bônus de ATQ e ATQM de acordo com o refino:
++1:^0000ffATQ +1. ATQM +0.^000000
++2: ^0000ffATQ +4. ATQM +2.^000000
++3: ^0000ffATQ +9. ATQM +4.^000000
++4: ^0000ffATQ +16. ATQM +8.^000000
++5: ^0000ffATQ +25. ATQM +12.^000000
++6: ^0000ffATQ +36. ATQM +18.^000000
++7: ^0000ffATQ +49. ATQM +24.^000000
++8: ^0000ffATQ +64. ATQM +32.^000000
++9: ^0000ffATQ +81. ATQM +40.^000000
++10: ^0000ffATQ +100. ATQM +50.^000000
++11: ^0000ffATQ +121. ATQM +60.^000000
++12: ^0000ffATQ +144. ATQM +72.^000000
++13: ^0000ffATQ +169. ATQM +84.^000000
++14: ^0000ffATQ +196. ATQM +98.^000000
++15: ^0000ffATQ +225. ATQM +112.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777100^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Ninjas e evoluções^000000
+#
 13400#
 Espada de uma mão, geralmente usada por marujos. Permite usar a habilidade
 [Golpe Fulminante nv 5].  FOR +2, DEF +1.
@@ -42330,6 +42682,33 @@ Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Espadachins, Gatunos, Mercadores e evoluções^000000
+#
+13454#
+Se seus inimigos sobreviverem, tudo que eles se lembrarão será do violento golpe desta espada escarlate.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Espada^000000
+Ataque: ^77777785^000000
+Peso: ^77777785^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Aprendizes, Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 13463#
 Espada de uma mão pertencente ao Rei Artur das lendas arturianas. Ela mesma escolhe seu dono pela própria vontade. Contém em seu interior um poder sagrado.
@@ -43867,14 +44246,23 @@ Peso: ^7777771^000000
 Negociação: ^777777Pode ser colocado na Kafra mas não pode ser negociado, nem derrubado no chão e nem colocado no carrinho^000000
 #
 14509#
-Esta poção é muito mais leve que a sua versão normal. Poção medicinal que aumenta a concentração de quem a ingere.
-Aumenta um pouco a velocidade de ataque. Pode ser usada por Todas.
+Poção medicinal que aumenta a concentração de quem a ingere.
+Esta poção é muito mais leve que a sua versão normal.
+^0000ffVelocidade de ataque +10%.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777772^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 14511#
-Esta poção é muito mais leve que a sua versão normal. Fórmula química extremamente potente que estimula a circulação,criando uma reação em cadeia que aumenta muito a velocidade de ataque de quem a ingere.
-Requer nível 85 para ser usada e não pode ser usada por Noviço (Sacerdote/ Monge)/ Gatuno (Mercenário)/ Arqueiro (Caçador / Bardo / Odalisca)/ Magos (Sábios) / Aprendiz (Superaprendiz).
+Fórmula química extremamente potente que estimula a circulação, criando uma reação em cadeia.
+Esta poção é muito mais leve que a sua versão normal.
+^0000ffVelocidade de ataque +20%.^000000
+^008080O bônus substitui o efeito da Poção da Concentração e do Despertar.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777772^000000
+Nível necessário: ^77777785^000000
+Classes: ^777777Todas, exceto Noviços, Arqueiros, Mercenários, Sábios, Aprendizes, Ninjas e evoluções, Gatunos^000000
 #
 14512#
 Um pergaminho mágico com a habilidade Chuva de Meteoros em nível 10.
@@ -43953,15 +44341,19 @@ Se o personagem estiver em cidades quando utilizar o pergaminho, este será gast
 Peso: ^7777771^000000
 #
 14530#
-Pergaminho de Esquiva - Aumenta a Esquiva em 30 durante 30 minutos. Se o personagem for nocauteado, o efeito é perdido.
+Um pergaminho encantado magicamente.
+^0000ffEsquiva +30.^000000
+^008080Perde o efeito ao morrer.000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
 #
 14531#
-^ff0000Este item não pode ser negociado^000000
-Um pergaminho encantado magicamente para apurar a mira do usuário. Aumenta em +30 a Precisão por 30 minutos.
-Se o usuário for nocauteado, o efeito se dissipará.
-^ffffff_^000000
-Peso : ^7777771^000000
+Um pergaminho encantado magicamente para apurar a mira do usuário.
+^0000ffPrecisão +30.^000000
+^008080Perde o efeito ao morrer.000000
+Negociação: ^777777Não pode ser trocado entre contas.^000000
+Duração: ^77777730 minutos^000000
+Peso: ^7777771^000000
 #
 14532#
 Um manual detalhado sobre batalhas.
@@ -43982,9 +44374,9 @@ Peso: ^7777771^000000
 #
 14535#
 Um pequeno frasco que contém a essência da árvore de Yggdrasil. Pode ser amargo mas é bom para a saúde.
-Recupera 7% do HP Máximo a cada 4 segundos por 10 minutos.
-Se o personagem estiver incapaz de realizar ações, o efeito desaparecerá.
-^ffffff_^000000
+^0000ffRegenera 7% de HP a cada 4 segundos.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777710 minutos^000000
 Peso: ^7777771^000000
 #
 14536#
@@ -44166,9 +44558,10 @@ Negociação: ^777777Pode ser negociado, derrubado no chão, colocado no carrinh
 #
 14600#
 Uma poção que abrirá sua mente. Você estará mais concentrado e com um desempenho superior.
-Máximo SP aumenta de 8 a 10% e o consumo de SP diminui de 8 a 10% por 30 minutos.
-O efeito da poção é desabilitado quando o usuário é derrotado.
-^ffffff_^000000
+^0000ffSP máx. +10%.^000000
+^0000ffCusto de SP -10%.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
 #
 14601#
@@ -46229,6 +46622,34 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Espadachins, Mercadores, Noviços e evoluções^000000
 #
+16040#
+De lâminas forjadas à base do ódio, tudo que essa clava precisa é de alguém que a use para dar um golpe bem dado na cabeça dos inimigos.
+^a400cdIndestrutível em batalha.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Maça^000000
+Ataque: ^77777780^000000
+Peso: ^77777780^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Aprendizes, Noviços, Mercadores, Espadachins e evoluções^000000
+#
 16051#
 Uma maça dada à Marina, uma das três Guerreiras Mágicas de Rune-Midgard. As lendas dizem que Marina utilizou esta maça para salvar a princesa Esmeralda, sequestrada por seu próprio Sumo-Sacerdote, Zagarto. Esta maça foi encantada pela Valquíria Ceres, e possui o poder da resistência.
 ^a400cdIndestrutível em batalha.^000000
@@ -48033,6 +48454,33 @@ Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Arqueiros, Arruaceiros e evoluções^000000
+#
+18130#
+As hastes reforçadas e a corda resistente fornecem a experiência de tiro ideal até para os arqueiros mais exigentes de Rune-Midgard.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Arco^000000
+Ataque: ^777777120^000000
+Peso: ^777777120^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Arqueiros, Arruaceiros e evoluções, Gatunos^000000
 #
 18164#
 Um antigo arco que já era conhecido por seu poder e leveza. Ele foi recuperado e melhorado com novas tecnologias, o que o tornou um instrumento ainda mais mortal.
@@ -53465,6 +53913,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas ^000000
 #
+19750#
+Algumas perguntas jamais terão respostas: de onde viemos? Pra onde vamos? Este visual é um laço com fita, ou uma fita com laço? Seja como for, aprecie todos os frufrus, babados e o estilo rococó que compõem esse laço (ou fita).
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
+#
 19751#
 Essa coroa é um símbolo de quando os Sábios Luminosos viviam em equilíbrio com as Bruxas Umbrais, antes do início da guerra entre Niflheinus e Asgardius.
 Tipo: ^777777Visual^000000
@@ -54061,6 +54518,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19907#
+Uma máscara toda adornada pra você pular marchinhas de Carnaval nos blocos mais badalados. Corra pra Brasilis e mostre que você tem samba no pé! Só tome cuidado com o glitter – você vai ficar tirando isso do seu corpo até o Carnaval do próximo ano.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo e Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
+#
 19910#
 Criado pela pequena bruxa Marilda, o chapéu recebeu um pequeno aprimoramento. Ele possui uma abóbora brilhante que pode servir como lanterna na noite de Halloween.
 Tipo: ^777777Visual^000000
@@ -54566,6 +55032,15 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+20101#
+Pelo que se dizia, Bragi usava essas asinhas quando se sentia inspirado para compor seus sonetos, canções e poesias. Ele foi a mente por trás das letras de músicas como “Lanterna dos Afobados”, “Eddgardo e Mônica” e outros clássicos do MPB.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
 #
 20108#
 Inspirado nos óculos de quartzo rubi original, essa versão não tem a pretensão de conter habilidades especiais, apenas ser superestiloso! Se o seu estilo é você, ele é perfeito pra sua tendência.
@@ -55790,6 +56265,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20410#
+Sabe aquela pessoa sem noção e teimosa, que continua tentando enfrentar monstros de nível muito mais alto que ela? Que você vai lá, diz “não” mil vezes, e ela faz mesmo assim? Então, esse crânio é AINDA MAIS DURO que a cabeça desse tipo de gente.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
+#
 20430#
 Crânios etéreos que imitam a aura de proteção do Jovem Morroc. O fogo púrpura dos crânios não queima de verdade. É tudo uma ilusão visual.
 Tipo : ^777777Visual^000000
@@ -56759,6 +57243,33 @@ Peso: ^777777220^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777110^000000
 Classes: ^777777Cavaleiros Rúnicos^000000
+#
+21015#
+Uma sensação de imponência e coragem inunda o coração daqueles que empunham essa espada monumental.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ e ATQM de acordo com o refino:
++1:^0000ffATQ +1. ATQM +0.^000000
++2: ^0000ffATQ +4. ATQM +2.^000000
++3: ^0000ffATQ +9. ATQM +4.^000000
++4: ^0000ffATQ +16. ATQM +8.^000000
++5: ^0000ffATQ +25. ATQM +12.^000000
++6: ^0000ffATQ +36. ATQM +18.^000000
++7: ^0000ffATQ +49. ATQM +24.^000000
++8: ^0000ffATQ +64. ATQM +32.^000000
++9: ^0000ffATQ +81. ATQM +40.^000000
++10: ^0000ffATQ +100. ATQM +50.^000000
++11: ^0000ffATQ +121. ATQM +60.^000000
++12: ^0000ffATQ +144. ATQM +72.^000000
++13: ^0000ffATQ +169. ATQM +84.^000000
++14: ^0000ffATQ +196. ATQM +98.^000000
++15: ^0000ffATQ +225. ATQM +112.^000000
+Tipo: ^777777Espada de Duas Mãos^000000
+Ataque: ^777777170^000000
+Peso: ^777777170^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 21024#
 Uma espada que apenas um mestre espadachim pode usar.
@@ -58005,6 +58516,18 @@ Um envelope facilmente encontrado no sítio arqueológico.
 Duração: ^77777730 segundos^000000
 Peso: ^7777771^000000
 #
+22612#
+Um tubo de ensaio com um componente contaminado. Feito de substâncias muito questionáveis.
+^0000ffTransforma o usuário em Zumbi.^000000
+Duração: ^77777760 segundos^000000
+Peso: ^7777775^000000
+#
+22613#
+Uma solução feita de componentes apodrecidos. Cheira muito, mas muito mal.
+^0000ffTransforma o usuário em Carniçal.^000000
+Duração: ^77777760 segundos^000000
+Peso: ^7777775^000000
+#
 22652#
 ^ff0000Não pode ser negociado.^000000
 Uma caixa com um chapéu dentro. Não há como saber qual chapéu é até abrir.
@@ -58928,6 +59451,34 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Sicários^000000
 #
+28007#
+Tudo que suas vítimas verão será apenas um vislumbre escarlate do brilho deste instrumento mortal.
+^CD3278Duplica a chance de causar um ataque crítico.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Katar^000000
+Ataque: ^777777130^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Mercenários e evoluções^000000
+#
 28025#
 Uma dupla de katares usados por dois sicários gêmeos, Tande e Virgílio, após derrotarem o demoníaco Monarca Lich. De acordo com as lendas, Tande e Virgílio na verdade eram frutos do amor de uma valquíria com um demônio, por isso estavam divididos entre os mundos da luz e das trevas. Apesar de possuírem personalidades opostas, ambos se dedicaram à caça e extermínio de demônios que chegavam a chorar só de ouvir o nome deles.
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
@@ -59004,6 +59555,34 @@ Peso: ^777777400^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Mercadores, Espadachins e evoluções^000000
+#
+28105#
+Use essas duas lâminas grossas para cortar impiedosamente tudo o que estiver no seu caminho, bem como aqueles que tentarem impedir sua onda de destruição absoluta.
+^a400cdIndestrutível em batalha.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Machado de Duas Mãos^000000
+Ataque: ^777777200^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
 28114#
 Machado feito do metal dado aos humanos pelo Deus Antigo dos Ferreiros.
@@ -59908,6 +60487,33 @@ Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+28604#
+Guarda ensinamentos e histórias sobre o meteorismo: uma esquecida religião que profetizava a chegada de um meteoro de proporções monumentais ao mundo.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ e ATQM de acordo com o refino:
++1:^0000ffATQ +1. ATQM +0.^000000
++2: ^0000ffATQ +4. ATQM +2.^000000
++3: ^0000ffATQ +9. ATQM +4.^000000
++4: ^0000ffATQ +16. ATQM +8.^000000
++5: ^0000ffATQ +25. ATQM +12.^000000
++6: ^0000ffATQ +36. ATQM +18.^000000
++7: ^0000ffATQ +49. ATQM +24.^000000
++8: ^0000ffATQ +64. ATQM +32.^000000
++9: ^0000ffATQ +81. ATQM +40.^000000
++10: ^0000ffATQ +100. ATQM +50.^000000
++11: ^0000ffATQ +121. ATQM +60.^000000
++12: ^0000ffATQ +144. ATQM +72.^000000
++13: ^0000ffATQ +169. ATQM +84.^000000
++14: ^0000ffATQ +196. ATQM +98.^000000
++15: ^0000ffATQ +225. ATQM +112.^000000
+Tipo: ^777777Livro^000000
+Ataque: ^77777745^000000
+Peso: ^77777745^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Sacerdotes, Sábios, Mestres Taekwons e evoluções^000000
+#
 28617#
 Essencial para Arcebispos, essa Bíblia foi usada séculos atrás pelos irmãos Linchester, os consagrados caçadores de demônios. Mas não se preocupe, você não precisa saber latim para usá-la, basta ter sabedoria e fé para que as bênçãos caiam sobre você. Com elas, as criaturas sombrias se afastarão e uma poderosa proteção divina te envolverá.
 ^0000ffATQM +170.^000000
@@ -59958,62 +60564,94 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Arcebispos^000000
 #
+28705#
+Pequena e discreta, essa adaga de lâmina peculiar facilita ataques ágeis e precisos.
+^0000ffA cada 10 níveis de base a partir do 70:^000000
+^0000ffATQ +5.^000000
+Bônus de ATQ e ATQM de acordo com o refino:
++1:^0000ffATQ +1. ATQM +0.^000000
++2: ^0000ffATQ +4. ATQM +2.^000000
++3: ^0000ffATQ +9. ATQM +4.^000000
++4: ^0000ffATQ +16. ATQM +8.^000000
++5: ^0000ffATQ +25. ATQM +12.^000000
++6: ^0000ffATQ +36. ATQM +18.^000000
++7: ^0000ffATQ +49. ATQM +24.^000000
++8: ^0000ffATQ +64. ATQM +32.^000000
++9: ^0000ffATQ +81. ATQM +40.^000000
++10: ^0000ffATQ +100. ATQM +50.^000000
++11: ^0000ffATQ +121. ATQM +60.^000000
++12: ^0000ffATQ +144. ATQM +72.^000000
++13: ^0000ffATQ +169. ATQM +84.^000000
++14: ^0000ffATQ +196. ATQM +98.^000000
++15: ^0000ffATQ +225. ATQM +112.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^77777755^000000
+Peso: ^77777755^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Aprendizes, Espadachins, Mercadores, Gatunos, Magos, Arqueiros, Espiritualistas, Ninjas e evoluções^000000
+#
 28728#
 Uma adaga dada de presente pelo próprio Odin para suas guerreiras de elite.
+--------------------------
 ^0000ffATQM +50.^000000
-^FF6347Aprendizes e Superaprendizes:^000000
-^0000ffTorna a arma indestrutível em batalha.^000000
+--------------------------
+Aprendizes e evoluções:
 ^0000ffATQ +100.^000000
 ^0000ffATQM +150 adicional.^000000
 ^0000ffHP e SP máx. +300.^000000
 ^0000ffCusto de SP das habilidades -5%.^000000
+^0000ffTorna a arma indestrutível em batalha.^000000
+-
+A cada 10 de DES base:
+^ff0000DES -1^000000 ^0000ffa cada 2 refinos.^000000
+-
 Refino +7 ou mais:
-^0000ffResistência a raça Humanoide +10%.^000000
-A cada 2 refinos acima do +7:
-^0000ffINT +2. DES +2.^000000
+^0000ffResistência a monstros da raça Humanoide +10%.^000000
+A cada 2 refinos a partir do +7:
+^0000ffINT e DES +2.^000000
+^0000ffATQM +15. CRIT +7.^000000
 ^0000ffHP máx. +200.^000000
 ^0000ffSP máx. +20.^000000
 ^0000ffDano crítico +1%.^000000
-^0000ffATQM +15. CRIT +7.^000000
 ^0000ffVelocidade de ataque +10%.^000000
-A cada 10 de DES base:
-^0000ffDES -1 a cada 2 refinos.^000000
-^FF6347Gatunos e evoluções:^000000
-^0000ffATQM +150 adicional.^000000
+--------------------------
+Gatunos e evoluções:
 ^0000ffSP máx. +100.^000000
+^0000ffATQM +150 adicional.^000000
 A cada 2 refinos:
 ^0000ffDano crítico +1%.^000000
-^FF6347Magos e evoluções:^000000
+--------------------------
+Magos e evoluções:
+-
 Refino +7 ou mais:
-^0000ffResistência a raça Humanoide +10%.^000000
-A cada 2 refinos acima do +7:
+^0000ffResistência a monstros da raça Humanoide +10%.^000000
+A cada 2 refinos a partir do +7:
 ^0000ffHP máx. +200.^000000
 ^0000ffSP máx. +20.^000000
-^FF6347Caçadores e evoluções:^000000
+--------------------------
+Caçadores e evoluções:
 ^0000ffHP máx. +200.^000000
 ^0000ffCusto de SP das habilidades -5%.^000000
 A cada 2 refinos:
-^0000ffINT +2. DES +2.^000000
-^FF6347Bardos e evoluções:^000000
+^0000ffINT e DES +2.^000000
+--------------------------
+Bardos, Odaliscas e evoluções:
 ^0000ffATQ +100.^000000
 ^0000ffTorna a arma indestrutível em batalha.^000000
+-
 A cada 10 de DES base:
-^0000ffDES -1 a cada 2 refinos.^000000
+^ff0000DES -1^000000 ^0000ffa cada 2 refinos.^000000
+-
 A cada 2 refinos:
 ^0000ffVelocidade de ataque +10%.^000000
-^FF6347Odaliscas e evoluções:^000000
-^0000ffATQ +100.^000000
-^0000ffTorna a arma indestrutível em batalha.^000000
-A cada 10 de DES base:
-^0000ffDES -1 a cada 2 refinos.^000000
-A cada 2 refinos:
-^0000ffVelocidade de ataque +10%.^000000
+--------------------------
 Tipo: ^777777Adaga^000000
 Ataque: ^77777750^000000
 Peso: ^77777710^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes: ^777777Aprendizes, Superaprendizes, Ninjas, Espiritualistas, Gatunos, Magos, Espadachins, Arqueiros, Mercadores e evoluções^000000
+Classes: ^777777Aprendizes, Ninjas, Espiritualistas, Gatunos, Magos, Espadachins, Arqueiros, Mercadores e evoluções^000000
 #
 28737#
 Forjada há muitos séculos, essa bela adaga foi uma arma letal nas mãos dos mais habilidosos ninjas. Sua aparência faz jus ao poder da sua lâmina, capaz de retalhar os inimigos com graça e rapidez.
@@ -60237,18 +60875,19 @@ Refino +8 ou mais:
 ^0000ffDano físico e mágico contra oponentes de propriedade Vento +10% adicional.^000000
 --------------------------
 Refino +10 ou mais:
-^6A5ACDFOR base 90 ou mais:^000000
+-
+FOR base 90 ou mais:
 ^0000ffATQ +50.^000000
-^6A5ACDAGI base 90 ou mais:^000000
+AGI base 90 ou mais:
 ^0000ffVelocidade de ataque +5%.^000000
-^6A5ACDVIT base 90 ou mais:^000000
+VIT base 90 ou mais:
 ^0000ffEfetividade de cura recebida +10%.^000000
 ^0000ffRecuperação de HP por itens +10%.^000000
-^6A5ACDINT base 90 ou mais:^000000
+INT base 90 ou mais:
 ^0000ffATQM +30.^000000
-^6A5ACDDES base 90 ou mais:^000000
+DES base 90 ou mais:
 ^0000ffConjuração variável -5%.^000000
-^6A5ACDSOR base 90 ou mais:^000000
+SOR base 90 ou mais:
 ^0000ffDano crítico +5%.^000000
 --------------------------
 Tipo: ^777777Escudo^000000
@@ -60331,18 +60970,19 @@ Refino +8 ou mais:
 ^0000ffDano físico e mágico contra oponentes de propriedade Terra +10% adicional.^000000
 --------------------------
 Refino +10 ou mais:
-^008080FOR base 90 ou mais:^000000
+-
+FOR base 90 ou mais:
 ^0000ffATQ +50.^000000
-^008080AGI base 90 ou mais:^000000
+AGI base 90 ou mais:
 ^0000ffVelocidade de ataque +5%.^000000
-^008080VIT base 90 ou mais:^000000
+VIT base 90 ou mais:
 ^0000ffEfetividade de cura recebida +10%.^000000
 ^0000ffRecuperação de HP por itens +10%.^000000
-^008080INT base 90 ou mais:^000000
+INT base 90 ou mais:
 ^0000ffATQM +30.^000000
-^008080DES base 90 ou mais:^000000
+DES base 90 ou mais:
 ^0000ffConjuração variável -5%.^000000
-^008080SOR base 90 ou mais:^000000
+SOR base 90 ou mais:
 ^0000ffDano crítico +5%.^000000
 --------------------------
 Tipo: ^777777Escudo^000000
