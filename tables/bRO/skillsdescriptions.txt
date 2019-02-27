@@ -14137,3 +14137,22 @@ Conteúdo: ^777777Quando se desenvolve, esta habilidade acrescenta uma chance de
 #
 GD_ITEMEMERGENCYCALL#
 #
+GD_GUILD_STORAGE#
+Armazém do Clã ^777777(Warehouse)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Coração Frio 1, Olhar Apurado 1
+Chamado Urgente 1, Expandir Clã 10^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite que todos os membros do clã
+possam acessar o armazém da guilda.
+Para restringir membros, o líder poderá
+definir o acesso pela aba [Posição].^000000
+Nível l Limite de itens
+[Nv 1] : ^777777até 100 itens^000000
+[Nv 2] : ^777777até 200 itens^000000
+[Nv 3] : ^777777até 300 itens^000000
+[Nv 4] : ^777777até 400 itens^000000
+[Nv 5] : ^777777até 500 itens^000000
+#

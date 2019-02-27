@@ -691,6 +691,7 @@
 1436#Lança de Vellum#
 1437#Pique TE#
 1438#Lança de Cinzas#
+1443#Pique Rubi#
 1449#Gelerdria#
 1451#Guisarme#
 1452#Guisarme#
@@ -735,6 +736,7 @@
 1494#Lança das Ondas#
 1495#Lança TE#
 1496#Lança Dupla de Cinzas#
+1498#Lança Rubi#
 1501#Clava#
 1502#Clava#
 1503#Clava#
@@ -874,6 +876,7 @@
 1675#Cajado do Cavalheiro#
 1676#Cajado Demoníaco#
 1679#Cajado dos Esplêndidos#
+1680#Varinha Rubi#
 1682#Cajado da Magia Oculta#
 1701#Arco#
 1702#Arco#
@@ -979,6 +982,7 @@
 1834#Punho TE#
 1836#Punho de Cinzas#
 1837#Garra de Ferro#
+1839#Garra Rubi#
 1841#Garra Prismática#
 1847#Garra Ancestral#
 1901#Violino#
@@ -1013,6 +1017,7 @@
 1933#Violino de Cinzas#
 1934#Contrabaixo#
 1935#Ukulele do Novo Oz#
+1939#Violino Rubi#
 1950#Cordel#
 1951#Cordel#
 1952#Cordame#
@@ -1052,6 +1057,7 @@
 1989#Fita Rítmica#
 1990#Microfone Floral de Igu#
 1993#Concertina de Arame#
+1995#Chicote Rubi#
 2000#Bastão da Destruição#
 2001#Cruz Divina#
 2002#Cajado Glorioso da Destruição#
@@ -1072,6 +1078,7 @@
 2021#Ganbantein#
 2022#Cajado de Geffen#
 2023#Cajado Duplo de Cinzas#
+2025#Cetro Rubi#
 2047#Cajado da Bruxa#
 2048#Cetro Ancestral#
 2101#Vembrassa#
@@ -2324,10 +2331,14 @@
 4599#Carta Lichtern Kenaz#
 4600#Carta Lichtern Inguz#
 4601#Carta Amdarais#
+4602#Carta Amdarais Sombrio#
 4603#Carta Origem da Maldição#
+4604#Carta Origem da Escuridão#
 4605#Carta Cavaleiro Desmorto#
 4606#Carta Cavaleira Desmorta#
 4607#Carta Gerente de Bifröst#
+4608#Carta Cavaleiro Branco#
+4609#Carta Cavaleira Khalitzburg#
 4624#Carta Tao Gunka Selada#
 4625#Carta Vigia do Tempo#
 4626#Carta Marca-Tempo#
@@ -3618,6 +3629,7 @@
 6752#Componente de Charleston#
 6753#Amuleto do Infortúnio#
 6754#Erva Colhida#
+6755#Mana Sombria#
 6756#Energia Condensada#
 6757#Registro de Memórias do Instituto#
 6770#Tubarão#
@@ -5199,6 +5211,7 @@
 13120#Pistolas Céu-Inferno#
 13122#Pistola Altair-Ares#
 13124#Pistola Altair-Ares#
+13127#Revólver Rubi#
 13150#Branch#
 13151#Ciclone#
 13152#Ciclone#
@@ -5337,6 +5350,7 @@
 13315#Shuriken do Trovão#
 13316#Shuriken Huuma Aprimorado#
 13317#Shuriken Huuma TE#
+13327#Shuriken Rubi#
 13400#Cutelo#
 13401#Excalibur [A]#
 13404#Foice de Platina#
@@ -5365,6 +5379,7 @@
 13442#Guarda-Chuva Antiquado#
 13447#Byeollungum#
 13449#Espada Demoníaca#
+13454#Sabre Rubi#
 13463#Excalibur#
 13464#Garra Mágica de Brinquedo#
 13465#Gládio da Nobreza#
@@ -5785,6 +5800,7 @@
 16031#Bate-Estacas P#
 16032#Bate-Estacas T#
 16033#Braço Robótico#
+16040#Clava Rubi#
 16051#Maça da Valquíria Mágica#
 16056#Martelo Veterano#
 16074#Martelo Cósmico#
@@ -5973,6 +5989,7 @@
 18122#Arco Gigante#
 18123#Arco das Tempestades#
 18125#Arco Demoníaco#
+18130#Arco Rubi#
 18164#Balista Ancestral#
 18170#Arco Ancestral#
 18504#Elmo de Anúbis da Petrificação#
@@ -6239,7 +6256,7 @@
 19117#Super Óculos Poring#
 19118#Super Óculos Poring#
 19136#Espírito da Donzela Verde#
-19137#Morango Delicioso#
+19137#Morango Suculento#
 19138#Diadema do Serafim#
 19139#Orbes Arcanos#
 19143#Balão de Poring#
@@ -6382,6 +6399,7 @@
 19738#Chapéu do Xerloque#
 19742#Milagre de Asgard#
 19746#Capuz do Coração Gelado#
+19750#Lacinho Frufru#
 19751#Coroa da Luz e Trevas#
 19752#Asinhas Elegantes#
 19756#Chapéu do Amor Materno#
@@ -6450,6 +6468,7 @@
 19903#Chapéu de Bruxa Maligna#
 19904#Boina da Caveira#
 19905#Gorro do Bicho Papão#
+19907#Máscara do Folião#
 19910#Chapéu de Bruxa Brilhante#
 19911#Telhado#
 19912#Olhos Felinos#
@@ -6507,6 +6526,7 @@
 20080#Visual de Plumas e Paetês#
 20098#Adorno Vampiresco#
 20099#Esplêndido Brilhante#
+20101#Asas de Bragi#
 20108#Óculos Julieta de Quartzo Rubi#
 20109#Chapéu Jolly Roger#
 20112#Chapéu de Praia Azul#
@@ -6642,6 +6662,7 @@
 20405#Cachecol do Eremes#
 20406#Chapéu de Andrômeda#
 20407#Aura da Fúria#
+20410#Crânio Dracônico#
 20430#Crânios Etéreos de Morroc#
 20431#Fita Mágica de Cetim#
 20432#Elmo da Khalitzburg#
@@ -6718,6 +6739,7 @@
 21010#Espada Esconjurante#
 21011#Lâmina Gigante#
 21012#Espada Mágica Celestial#
+21015#Claymore Rubi#
 21024#Espada Veterana#
 21038#Espada Ancestral#
 21042#Espada Onimaru#
@@ -6794,6 +6816,8 @@
 22567#Prêmio de Esquadrão#
 22568#Pergaminho de Invocação de Nidhogg#
 22611#Envelope Surpresa#
+22612#Poção Contaminada#
+22613#Poção Pútrida#
 22652#Caixa de Chapéu#
 22669#Caixa do Halloween#
 22670#Convite Sombrio#
@@ -6910,10 +6934,12 @@
 27162#Carta Gorynych#
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
+28007#Katar Rubi#
 28025#Katares do Monarca#
 28039#Katar Ancestral#
 28100#Machado de Cinzas#
 28101#Tufão#
+28105#Machado Rubi#
 28114#Machado Veterano#
 28130#Cutelo Ancestral#
 28200#Lança-Granadas Caos Total#
@@ -6955,8 +6981,10 @@
 28572#Broche da Celine#
 28596#Anel de Brinquedo#
 28598#Fragmento de Chip #
+28604#Bíblia Rubi#
 28617#Bíblia Sagrada#
 28630#Tomo Ancestral#
+28705#Adaga Rubi#
 28728#Adaga das Valquírias#
 28737#Adaga Mística#
 28739#Lacma#
