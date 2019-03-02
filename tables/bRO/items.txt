@@ -6940,6 +6940,7 @@
 28100#Machado de Cinzas#
 28101#Tufão#
 28105#Machado Rubi#
+28106#Machado Rubi#
 28114#Machado Veterano#
 28130#Cutelo Ancestral#
 28200#Lança-Granadas Caos Total#

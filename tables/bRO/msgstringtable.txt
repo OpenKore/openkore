@@ -2497,7 +2497,7 @@ ITEM#
 Você não pode utilizar o Armazém do Clã.#
 Você não faz parte de um Clã. Tente novamente após se juntar a um Clã.#
 Outro membro do Clã está usando o sistema. Tente novamente mais tarde.#
-Autorização#
+Armazém#
 Armazém do Clã#
 Você não possuí autorização para usar o Armazém do Clã.#
 Limited item sales registration window#
@@ -2536,17 +2536,17 @@ It has failed to purchase due to some item's out of stock.#
 The warp spot cannot be memorized in current position.#
 Item cannot be purchased due to the bag's overweight.#
 No.#
-item#
-Quant#
+Item#
+Qtd#
 Jogador#
 Data#
-Remoção#
+Ação#
 Não existe log nesse período.#
 Completo#
 Adição#
 Remoção#
 Lista do Armazém do Clã#
-A lista só monstra os 100 itens mais recentes.#
+Log dos últimos 100 itens#
 O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
 %s [%doption] : %d #

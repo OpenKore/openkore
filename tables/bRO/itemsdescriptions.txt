@@ -59584,6 +59584,34 @@ Nível da arma: ^7777773^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Espadachins, Mercadores e evoluções^000000
 #
+28106#
+Use essas duas lâminas grossas para cortar impiedosamente tudo o que estiver no seu caminho, bem como aqueles que tentarem impedir sua onda de destruição absoluta.
+^a400cdIndestrutível em batalha.^000000
+A cada 10 níveis de base a partir do 70:
+^0000ffATQ +5.^000000
+Bônus de ATQ de acordo com o refino:
++1:^0000ffATQ +1.^000000
++2: ^0000ffATQ +4.^000000
++3: ^0000ffATQ +9.^000000
++4: ^0000ffATQ +16.^000000
++5: ^0000ffATQ +25.^000000
++6: ^0000ffATQ +36.^000000
++7: ^0000ffATQ +49.^000000
++8: ^0000ffATQ +64.^000000
++9: ^0000ffATQ +81.^000000
++10: ^0000ffATQ +100.^000000
++11: ^0000ffATQ +121.^000000
++12: ^0000ffATQ +144.^000000
++13: ^0000ffATQ +169.^000000
++14: ^0000ffATQ +196.^000000
++15: ^0000ffATQ +225.^000000
+Tipo: ^777777Machado de Duas Mãos^000000
+Ataque: ^777777200^000000
+Peso: ^777777200^000000
+Nível da arma: ^7777773^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Espadachins, Mercadores e evoluções^000000
+#
 28114#
 Machado feito do metal dado aos humanos pelo Deus Antigo dos Ferreiros.
 Se alguém habilidoso com o manejo do metal usar este machado, ele terá um poder incrível.
