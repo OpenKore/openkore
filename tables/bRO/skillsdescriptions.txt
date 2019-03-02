@@ -422,7 +422,7 @@ propriedade Sagrado neles.^000000
 AL_PNEUMA#
 Escudo Sagrado ^777777(Pneuma)^000000
 Nível máximo: ^7777771^000000
-Pré requisitos (^008080Valhala^000000):
+Pré requisitos (^008080Valhalla^000000):
 ^777777Portal 4^000000
 Pré requisitos (^008080Thor^000000):
 ^777777Revelação 1^000000
@@ -875,7 +875,7 @@ Nível l Chance
 [Nv 7]: ^77777746%^000000
 [Nv 8]: ^77777752%^000000
 [Nv 9]: ^77777758%^000000
-[Nv 10]: ^77777764%o^000000
+[Nv 10]: ^77777764%^000000
 #
 TF_HIDING#
 Esconderijo ^777777(Hiding)^000000
@@ -909,7 +909,7 @@ Nível máximo: ^77777710^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
 ^777777Causa dano físico de curta distância
-da propriedade Veneno, com chances de
+de propriedade Veneno, com chances de
 infligir [Envenenamento] no alvo.^000000
 Nível l Dano l Chance
 [Nv 1]: ^777777+15%^000000 l ^77777714%^000000
@@ -2759,14 +2759,23 @@ Nível l ATQ
 [Nv 10]: ^777777+30^000000
 #
 AM_LEARNINGPOTION#
-Pesquisa de Poções
-Nv máximo: 10
-Tipo: ^000099Passiva^000000
-Resultado: ^777777Cada nível dessa habilidade
-eleva em +5% (num máximo de 50%) na chance de
-sucesso da produção de Poções. Além disso, poções
-passam a recuperar 5% + HP ou SP por nível da
-habilidade, excluindo-se os bônus por VIT.^000000
+Pesquisa de Poções ^777777(Learning Potion)^000000
+Nv máximo: ^77777710^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Aumenta as chances de produzir poções e
+melhora a efetividade de cura das poções.^000000
+Nível l Chance l Efetividade
+[Nv 1]: ^777777+1%^000000 l ^777777+5%^000000
+[Nv 2]: ^777777+2%^000000 l ^777777+10%^000000
+[Nv 3]: ^777777+3%^000000 l ^777777+15%^000000
+[Nv 4]: ^777777+4%^000000 l ^777777+20%^000000
+[Nv 5]: ^777777+5%^000000 l ^777777+25%^000000
+[Nv 6]: ^777777+6%^000000 l ^777777+30%^000000
+[Nv 7]: ^777777+7%^000000 l ^777777+35%^000000
+[Nv 8]: ^777777+8%^000000 l ^777777+40%^000000
+[Nv 9]: ^777777+9%^000000 l ^777777+45%^000000
+[Nv 10]: ^777777+10%^000000 l ^777777+50%^000000
 #
 AM_PHARMACY#
 Preparar Poção
@@ -4591,7 +4600,7 @@ Pré requisitos: ^777777Fé 8, Flagelo do Mal 5,
 Proteção Divina 3^000000
 Tipo: ^777777Suporte^000000
 Descrição:
-^7777777Mantém-se imóvel para entoar uma canção.
+^777777Mantém-se imóvel para entoar uma canção.
 Membros do grupo e oponentes na área ao
 redor do usuário terão a chance de receber
 efeitos aleatórios a cada 10 segundos.
@@ -4774,7 +4783,7 @@ Adestrar Falcão 1^000000
 Tipo: ^777777Suporte^000000
 Descrição:
 ^777777Por 30 segundos, aumenta o ATQ, CRIT,
-e Precisão e +5 em todos os atributos.^000000
+Precisão e +5 em todos os atributos.^000000
 Nível l Precisão l ATQ l CRIT
 [Nv 1]: ^777777 +3%^000000 l ^777777 +2%^000000 l ^777777+1^000000
 [Nv 2]: ^777777 +6%^000000 l ^777777 +4%^000000 l ^777777+2^000000
@@ -4847,7 +4856,7 @@ Criar_Pepita
 WS_CARTBOOST#
 Impulso no Carrinho ^777777(Cart Boost)^000000
 Nível máximo: ^7777771^000000
-Pré requisitos: Punho Firme 1,
+Pré requisitos: ^777777Punho Firme 1,
 Cavalo de Pau 1, Usar Carrinho 5,
 Personalizar Carrinho 1^000000
 Tipo: ^777777Suporte^000000
@@ -6317,7 +6326,7 @@ Nível l Duração l Dano fixo
 [Nv 2]: ^7777776 segundos^000000 l ^777777700^000000
 [Nv 3]: ^7777777 segundos^000000 l ^777777800^000000
 [Nv 4]: ^7777778 segundos^000000 l ^777777900^000000
-[Nv 5]: ^7777779 segundos^000000 l ^7777771.000000000
+[Nv 5]: ^7777779 segundos^000000 l ^7777771.000^000000
 #
 WS_CARTTERMINATION#
 Choque do Carrinho ^777777(Cart Termination)^000000
@@ -6366,7 +6375,7 @@ Grito de Liberdade ^777777(Longing for Freedom)^000000
 Nível máximo: ^7777775^000000
 Pré requisitos: ^777777Controle de Marionete 1,
 Dança do Ventre 3, Lições de Dança 10^000000 ou
-Dissonância 3, Lições de Música 10^000000
+^777777Dissonância 3, Lições de Música 10^000000
 Tipo: ^777777Ativa^000000
 Descrição:
 ^008080Apenas Chicotes ou Instrumentos.^000000
@@ -8277,8 +8286,7 @@ Descrição:
 ^777777Revive personagens na área de 5x5
 células, aumenta o HP máx. e regenera o
 HP e SP dos alvos a cada 3 segundos.^000000
-^000088Consome 1 Gema Azul e
-1 Água Benta.^000000
+^000088Consome 1 Ancilla e 1 Água Benta.^000000
 Nível l Duração l HP máx. l Regen.
 [Nv 1]: ^77777718 segundos^000000 l ^777777+5%^000000
             ^7777773% de HP^000000 / ^7777772% de SP^000000
@@ -9135,7 +9143,8 @@ Nível l Dreno de SP l Movimento
 RA_RESEARCHTRAP#
 Perícia com Armadilha ^777777(Research Trap)^000000
 Nível máximo: ^7777775^000000
-Pré requisitos: ^777777Armadilha Explosiva 1, Remover Armadilha 1^000000
+Pré requisitos: ^777777Armadilha Explosiva 1,
+Remover Armadilha 1^000000
 Tipo: ^777777Passiva^000000
 Descrição:
 ^777777Aumenta a INT, o SP máx., o dano das
@@ -10462,249 +10471,335 @@ Nível l Duração
 [Nv 5]: ^77777790 segundos^000000
 #
 SR_DRAGONCOMBO#
-Punho do Dragão
-Nível Máximo: 10
-^777777Pré requisitos: Combo Triplo 5^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Desfere dois golpes rápidos a um alvo único. Ruína pode ser usada logo após Punho do Dragão. ^000000
-[Nv 1]: ^777777 ATQ 140% / Chance de Atordor 2% ^000000
-[Nv 2]: ^777777 ATQ 180% / Chance de Atordoar 3% ^000000
-[Nv 3]: ^777777 ATQ 220% / Chance de Atordoar 4%^000000
-[Nv 4]: ^777777 ATQ 260% / Chance de Atordoar 5%^000000
-[Nv 5]: ^777777 ATQ 300% / Chance de Atordoar 6%^000000
-[Nv 6]: ^777777 ATQ 340% / Chance de Atordoar 7% ^000000
-[Nv 7]: ^777777 ATQ 380% / Chance de Atordoar 8%^000000
-[Nv 8]: ^777777 ATQ 420% / Chance de Atordoar 9%^000000
-[Nv 9]: ^777777 ATQ 460% / Chance de Atordoar 10%^000000
-[Nv 10]: ^777777 ATQ 500% / Chance de Atordoar 11% ^000000
-#
-SR_SKYNETBLOW#
-Soco Furacão
-Nível Máximo: 5
-^777777Pré requisitos: Punho do Dragão 3^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Golpe giratório que atinge os inimigos ao redor, empurrando-os 3 células para trás.
-[Nv 1]: ^777777 ATQ 80%   ^000000
-[Nv 2]: ^777777 ATQ 160%  ^000000
-[Nv 3]: ^777777 ATQ 240%  ^000000
-[Nv 4]: ^777777 ATQ 320%  ^000000
-[Nv 5]: ^777777 ATQ 400%  ^000000
-#
-SR_EARTHSHAKER#
-Impacto Sísmico
-Nível Máximo: 5
-^777777Pré requisitos: Punho do Dragão 1 / Campo Amaldiçoado 1^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777 Atinge o solo para causar dano e Atordoar inimigos em área de 11 x 11 ao redor do usuário. Revela e causa dano extra em inimigos escondidos. Consome 1 Esfera Espiritual.^000000
-[Nv 1]: ^777777 Alcance 3 x 3  células / ATQ 100%  / ATQ 300% em alvos escondidos^000000
-[Nv 2]: ^777777 Alcance 5 x 5  células /ATQ 150%  / ATQ 450% em alvos escondidos^000000
-[Nv 3]: ^777777 Alcance 7 x 7  células /ATQ 200%  / ATQ 600% em alvos escondidos^000000
-[Nv 4]: ^777777 Alcance 9 x 9  células /ATQ 250%  / ATQ 750% em alvos escondidos^000000
-[Nv 5]: ^777777 Alcance 11 x 11  células /ATQ 300%  / ATQ 900% em alvos escondidos^000000
-#
-SR_FALLENEMPIRE#
-Ruína
-Nível Máximo: ^7777775^000000
-Pré requisitos:
-^777777Punho do Dragão 1^000000
+Punho do Dragão ^777777(Dragon Combo)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Combo Triplo 5^000000
 Tipo: ^777777Ofensiva^000000
 Descrição:
-^777777Após Punho do Dragão, apoia o alvo no ombro para causar dano físico corpo a corpo, imobilizando-o temporariamente.
-Haverá um bônus de dano de acordo com o tamanho e peso do oponente.
-Após Ruína, Garra de Tigre e Portões do Inferno podem ser usadas em seguida.
-Consome 2 Esferas Espirituais.^000000
+^777777Causa dano físico corpo a corpo
+com chance de infligir Atordoamento no alvo.
+Pode ser usada após [Combo Triplo].^000000
+Nível l Dano l Chance de atordoar
+[Nv 1]: ^777777140%^000000 l ^7777772%^000000
+[Nv 2]: ^777777180%^000000 l ^7777773%^000000
+[Nv 3]: ^777777220%^000000 l ^7777774%^000000
+[Nv 4]: ^777777260%^000000 l ^7777775%^000000
+[Nv 5]: ^777777300%^000000 l ^7777776%^000000
+[Nv 6]: ^777777340%^000000 l ^7777777%^000000
+[Nv 7]: ^777777380%^000000 l ^7777778%^000000
+[Nv 8]: ^777777420%^000000 l ^7777779%^000000
+[Nv 9]: ^777777460%^000000 l ^77777710%^000000
+[Nv 10]: ^777777500%^000000 l ^77777711%^000000
+#
+SR_SKYNETBLOW#
+Soco Furacão ^777777(Sky Net Blow)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Punho do Dragão 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico corpo a corpo na área
+de 5x5 células, empurrando alvos para trás.
+Pode ser usada após [Punho do Dragão],
+causando dano ainda maior.^000000
+Nível l Dano
+[Nv 1]: ^77777780%^000000
+[Nv 2]: ^777777160%^000000
+[Nv 3]: ^777777240%^000000
+[Nv 4]: ^777777320%^000000
+[Nv 5]: ^777777400%^000000
+#
+SR_EARTHSHAKER#
+Impacto Sísmico ^777777(Earth Shaker)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Punho do Dragão 1, Campo Amaldiçoado 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico corpo a corpo na área,
+com chance de infligir Atordoamento.
+Alvos escondidos receberão mais dano.^000000
+^000088Consome 1 Esfera Espiritual.^000000
+Nível l Dano l Dano (escondido) l Área
+[Nv 1]: ^777777100%^000000 l ^777777300%^000000 l ^7777773x3 células^000000
+[Nv 2]: ^777777150%^000000 l ^777777450%^000000 l ^7777775x5 células^000000
+[Nv 3]: ^777777200%^000000 l ^777777600%^000000 l ^7777777x7 células^000000
+[Nv 4]: ^777777250%^000000 l ^777777750%^000000 l ^7777779x9 células^000000
+[Nv 5]: ^777777300%^000000 l ^777777900%^000000 l ^77777711x11 células^000000
+#
+SR_FALLENEMPIRE#
+Ruína ^777777(Fallen Empire)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Punho do Dragão 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Após [Punho do Dragão].^000000
+^777777Causa dano físico corpo a corpo com chance
+de imobilizar o alvo temporariamente.
+O tamanho e peso do alvo afeta o dano.^000000
+^000088Consome 2 Esferas Espirituais.^000000
 Nível l Dano l Duração da imobilização
-[Nv 1]: ^777777250%^000000 l ^7777770.5 segundos^000000
-[Nv 2]: ^777777400%^000000 l ^7777771.0 segundos^000000
-[Nv 3]: ^777777550%^000000 l ^7777771.5 segundos^000000
-[Nv 4]: ^777777700%^000000 l ^7777772.0 segundos^000000
-[Nv 5]: ^777777850%^000000 l ^7777772.5 segundos^000000
+[Nv 1]: ^777777250%^000000 l ^7777770,5 segundos^000000
+[Nv 2]: ^777777400%^000000 l ^7777771,0 segundos^000000
+[Nv 3]: ^777777550%^000000 l ^7777771,5 segundos^000000
+[Nv 4]: ^777777700%^000000 l ^7777772,0 segundos^000000
+[Nv 5]: ^777777850%^000000 l ^7777772,5 segundos^000000
 #
 SR_TIGERCANNON#
-Garra de Tigre
-Nível Máximo: 10
-^777777Pré requisitos: Ruína 3^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Causa dano ao HP e SP de um alvo único consumindo o próprio HP e SP. o dano dependerá do HP e SP consumido. Consome 2 Esferas Espirituais.
-Só pode ser ativada em estado de Fúria. Dano adicional é dado se a habilidade for usada após Ruína.^000000
-[Nv 1]: ^777777 Alcance 3 x 3  células / Consome 12% do HP / 6% do SP^000000
-[Nv 2]: ^777777 Alcance 3 x 3  células / Consome 14% do HP/ 7% do SP^000000
-[Nv 3]: ^777777 Alcance 3 x 3  células / Consome 16% do HP/ 8% do SP^000000
-[Nv 4]: ^777777 Alcance 3 x 3  células / Consome 18% do HP/ 9% do SP^000000
-[Nv 5]: ^777777 Alcance 3 x 3  células / Consome 20% do HP/ 10% do SP^000000
-[Nv 6]: ^777777 Alcance 5 x 5  células / Consome 22% do HP/ 11% do SP^000000
-[Nv 7]: ^777777 Alcance 5 x 5  células / Consome 24% do HP/ 12% do SP^000000
-[Nv 8]: ^777777 Alcance 5 x 5  células / Consome 26% do HP/ 13% do SP^000000
-[Nv 9]: ^777777 Alcance 5 x 5  células / Consome 28% do HP/ 14% do SP^000000
-[Nv 10]: ^777777 Alcance 5 x 5  células / Consome 30% do HP/ 15% do SP^000000
+Garra de Tigre ^777777(Tiger Cannon)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos: ^777777Ruína 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^008080Apenas em [Fúria Interior].^000000
+^777777Causa dano físico corpo a corpo na área.
+Drena um pouco de SP do alvo selecionado.
+Consome HP e SP do usuário.
+Pode ser usada após [Ruína],
+causando dano ainda maior.^000000
+^000088Consome 2 Esferas Espirituais.^000000
+Nível l Área l HP l SP
+[Nv 1]: ^7777773x3 células^000000 l ^77777712%^000000 l ^7777776%^000000
+[Nv 2]: ^7777773x3 células^000000 l ^77777714%^000000 l ^7777777%^000000
+[Nv 3]: ^7777773x3 células^000000 l ^77777716%^000000 l ^7777778%^000000
+[Nv 4]: ^7777773x3 células^000000 l ^77777718%^000000 l ^7777779%^000000
+[Nv 5]: ^7777773x3 células^000000 l ^77777720%^000000 l ^77777710%^000000
+[Nv 6]: ^7777775x5 células^000000 l ^77777722%^000000 l ^77777711%^000000
+[Nv 7]: ^7777775x5 células^000000 l ^77777724%^000000 l ^77777712%^000000
+[Nv 8]: ^7777775x5 células^000000 l ^77777726%^000000 l ^77777713%^000000
+[Nv 9]: ^7777775x5 células^000000 l ^77777728%^000000 l ^77777714%^000000
+[Nv 10]: ^7777775x5 células^000000 l ^77777730%^000000 l ^77777715%^000000
 #
 SR_RAMPAGEBLASTER#
-Explosão Espiritual
-Nível Máximo: 5
-^777777Pré requisitos: Impacto Sísmico 2 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777 Consome todas as Esferas Espirituais para causar dano em área de 7 x 7 ao redor do usuário. O dano depende do número de Esferas Espirituais utilizadas. O dano aumenta se o usuário estiver em estado de Fúria. ^000000
+Explosão Espiritual ^777777(Rampage Blaster)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Impacto Sísmico 2 ^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico na área de 7x7 células.
+O dano aumenta conforme o número de
+Esferas Espirituais e com Fúria Interior ativo.^000000
+^000088Consome todas as Esferas Espirituais.^000000
 #
 SR_CRESCENTELBOW#
-Cotovelada Ascendente
-Nível Máximo: 5
-^777777Pré requisitos: Soco Furacão 1  ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Revida o ataque de oponentes empurrando-os para trás. Este ataque causa dano no usuário. O dano é aumentado para HPs maiores do oponente. Consome 2 Esferas Espirituais. Não funciona contra monstros tipo Chefe. ^000000
-[Nv 1]: ^777777 Chance de ativar a habilidade 55% ^000000
-[Nv 2]: ^777777 Chance de ativar a habilidade 60%^000000
-[Nv 3]: ^777777 Chance de ativar a habilidade 65% ^000000
-[Nv 4]: ^777777 Chance de ativar a habilidade 70% ^000000
-[Nv 5]: ^777777 Chance de ativar a habilidade 75% ^000000
+Cotovelada Ascendente ^777777(Crescent Elbow)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Soco Furacão 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Dá a chance de refletir ataques de curta
+distância, causando dano maior de volta
+ao atacante e empurrando-o para trás.
+O usuário receberá 10% do dano refletido.
+O dano refletido será amplificado se
+o alvo bater em um obstáculo.
+Não funciona contra monstros Chefes.^000000
+^000088Consome 2 Esferas Espirituais.^000000
 #
 SR_CURSEDCIRCLE#
-Campo Amaldiçoado
-Nível Máximo: 5
-^777777Pré requisitos: Meditação 2 / Chakra do Silêncio 2 ^000000
-Tipo: ^777777 Especial ^000000
-Descrição: ^777777  Cria um campo que imobiliza todos os oponentes ao redor do usuário. Causa Silêncio nos alvos imobilizados.
-O usuário pode utilizar habilidades com Campo Amaldiçoado ativado, mas isso cancelará o efeito da habilidade. Consome 1 Esfera Espiritual por cada alvo imobilizado.^000000
-[Nv 1]: ^777777 Alcance 3 x 3 células / 3 seg de duração ^000000
-[Nv 2]: ^777777 Alcance 3 x 3 células / 4 seg de duração ^000000
-[Nv 3]: ^777777 Alcance 5 x 5 células / 5 seg de duração ^000000
-[Nv 4]: ^777777 Alcance 5 x 5 células / 6 seg de duração ^000000
-[Nv 5]: ^777777 Alcance 7 x 7 células / 7 seg de duração ^000000
+Campo Amaldiçoado ^777777(Cursed Circle)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Dilema 2, Chakra do Silêncio 2^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Produz um campo que afeta o usuário e
+oponentes ao redor, impedindo-os de andar,
+atacar e usar habilidades temporariamente.^000000
+^000088Consome 1 Esfera Espiritual por alvo.^000000
+Nível l Área l Duração
+[Nv 1]: ^7777773x3 células^000000 l ^7777773 segundos^000000
+[Nv 2]: ^7777773x3 células^000000 l ^7777774 segundos^000000
+[Nv 3]: ^7777775x5 células^000000 l ^7777775 segundos^000000
+[Nv 4]: ^7777775x5 células^000000 l ^7777776 segundos^000000
+[Nv 5]: ^7777777x7 células^000000 l ^7777777 segundos^000000
 #
 SR_LIGHTNINGWALK#
-Salto Relâmpago
-Nível Máximo: 5
-^777777Pré requisitos: Rasteira 1^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777  Anula 1 ataque físico de longa distância ou mágico cujo alvo é o usuário. Adiciona a chance de pular em direção ao oponente quando este efeito for ativado.
-O SP é consumido continuamente enquanto a habilidade estiver ativa. O efeito é cancelado quando o ataque do oponente for anulado.^000000
-[Nv 1]: ^777777 Duração de 5 segundos / Chance de ativação 45% ^000000
-[Nv 2]: ^777777 Duração de 6 segundos / Chance de ativação 50% ^000000
-[Nv 3]: ^777777 Duração de 7 segundos / Chance de ativação 55% ^000000
-[Nv 4]: ^777777 Duração de 8 segundos / Chance de ativação 60% ^000000
-[Nv 5]: ^777777 Duração de 9 segundos / Chance de ativação 65% ^000000
+Salto Relâmpago ^777777(Lightning Walk)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Rasteira 1^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Dá a chance de anular um ataque físico a
+distância, saltando em direção ao atacante.
+A habilidade termina quando a duração
+acabar ou quando a chance for ativada.^000000
 #
 SR_KNUCKLEARROW#
-Investida de Shura
-Nível Máximo: 5
-^777777Pré requisitos: Salto Relâmpago 3 / Explosão Espiritual 3 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777 Pula em direção ao alvo para causar dano e empurrar o oponente.
-Causa mais dano se o oponente empurrado atingir um obstáculo. Consome 2 Esferas Espirituais. ^000000
-[Nv 1]: ^777777 ATQ 600% / Dano ao empurrar oponente 150% ^000000
-[Nv 2]: ^777777 ATQ 700% / Dano ao empurrar oponente 300% ^000000
-[Nv 3]: ^777777 ATQ 800% / Dano ao empurrar oponente 450% ^000000
-[Nv 4]: ^777777 ATQ 900% / Dano ao empurrar oponente 600% ^000000
-[Nv 5]: ^777777 ATQ 1000% / Dano ao empurrar oponente 750% ^000000
+Investida de Shura ^777777(Knuckle Arrow)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Salto Relâmpago 3, Explosão Espiritual 3 ^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Pula instantaneamente em direção ao alvo,
+causando dano físico corpo a corpo e
+empurrando-o para trás.
+Se o oponente bater em um obstáculo,
+o dano causado será aumentado.^000000
+^000088Consome 1 Esfera Espiritual.^000000
+Nível l Dano l Dano (Empurrão)
+[Nv 1]: ^777777600%^000000 l ^777777150%^000000
+[Nv 2]: ^777777700%^000000 l ^777777300%^000000
+[Nv 3]: ^777777800%^000000 l ^777777450%^000000
+[Nv 4]: ^777777900%^000000 l ^777777600%^000000
+[Nv 5]: ^7777771.000%^000000 l ^777777750%^000000
 #
 SR_WINDMILL#
-Rasteira
-Nível Máximo: 1
-^777777Pré requisitos: Campo Amaldiçoado 1 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777 Causa dano em área de 5 x 5 células ao redor do usuário, e força-os a se sentar. Em monstros, causa o estado Atordoamento por 1~4 segundos. Não funciona contra monstros tipo Chefe.^000000
+Rasteira ^777777(Windmill)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Campo Amaldiçoado 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico na área de 5x5 células.
+Personagens serão forçados a se sentar e
+monstros normais sofrerão Atordoamento.^000000
 #
 SR_RAISINGDRAGON#
-Dragão Ascendente
-Nível Máximo: 10
-^777777Pré requisitos: Explosão Espiritual 3 / Chakra da Energia 3 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Fortalece mente e corpo para possibilitar um maior acúmulo de Esferas Espirirituais, aumentando HP e SP.
-O estado de Fúria será mantido enquanto Dragão Ascendente estiver ativo. O usuário perde HP continuamente. A habilidade é cancelada se o HP diminuir até um certo nível. ^000000
-[Nv 1]: ^777777 Máx Esferas Espirituais 6 / Aumenta HP e SP máx em 3% / 30 seg de duração ^000000
-[Nv 2]: ^777777 Máx Esferas Espirituais 7 / Aumenta HP e SP máx em 4% / 45 seg de duração ^000000
-[Nv 3]: ^777777 Máx Esferas Espirituais 8 / Aumenta HP e SP máx em 5% / 60 seg de duração ^000000
-[Nv 4]: ^777777 Máx Esferas Espirituais 9 / Aumenta HP e SP máx em 6% / 75 seg de duração ^000000
-[Nv 5]: ^777777 Máx Esferas Espirituais 10 / Aumenta HP e SP máx em 7% / 90 seg de duração ^000000
-[Nv 6]: ^777777 Máx Esferas Espirituais 11 / Aumenta HP e SP máx em 8% / 105 seg de duração ^000000
-[Nv 7]: ^777777 Máx Esferas Espirituais 12 / Aumenta HP e SP máx em 9% / 120 seg de duração ^000000
-[Nv 8]: ^777777 Máx Esferas Espirituais 13 / Aumenta HP e SP máx em 10% / 135 seg de duração ^000000
-[Nv 9]: ^777777 Máx Esferas Espirituais 14 / Aumenta HP e SP máx em 11% / 150 seg  de duração ^000000
-[Nv 10]: ^777777 Máx Esferas Espirituais 15 / Aumenta HP e SP máx em 12% / 165 seg de duração ^000000
+Dragão Ascendente ^777777(Raising Dragon)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Explosão Espiritual 3, Chakra da Energia 3^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o HP e SP máx., ativa Fúria Interior
+e amplia o número de Esferas Espirituais.
+Drena HP continuamente enquanto ativa.^000000
+Nível l Limite de esferas l HP/SP l Duração
+[Nv 1]: ^7777776^000000 l ^777777+3%^000000 l ^77777730 segundos^000000
+[Nv 2]: ^7777777^000000 l ^777777+4%^000000 l ^77777745 segundos^000000
+[Nv 3]: ^7777778^000000 l ^777777+5%^000000 l ^77777760 segundos^000000
+[Nv 4]: ^7777779^000000 l ^777777+6%^000000 l ^77777775 segundos^000000
+[Nv 5]: ^77777710^000000 l ^777777+7%^000000 l ^77777790 segundos^000000
+[Nv 6]: ^77777711^000000 l ^777777+8%^000000 l ^777777105 segundos^000000
+[Nv 7]: ^77777712^000000 l ^777777+9%^000000 l ^777777120 segundos^000000
+[Nv 8]: ^77777713^000000 l ^777777+10%^000000 l ^777777135 segundos^000000
+[Nv 9]: ^77777714^000000 l ^777777+11%^000000 l ^777777150 segundos^000000
+[Nv 10]: ^77777715^000000 l ^777777+12%^000000 l ^777777165 segundos^000000
 #
 SR_ASSIMILATEPOWER#
-Absorção Espiritual
-Nível Máximo: 1
-^777777Pré requisitos: Absorção de Esferas Espirituais 1, Renúncia Espiritual 1 ^000000
-Tipo: ^777777  Especial ^000000
-Descrição: ^777777  Recupera o SP do usuário absorvendo as Esferas Espirituais em área de 5 x 5, incluindo as próprias. ^000000
+Absorção Espiritual ^777777(Power Absorb)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Renúncia Espiritual 1,
+Absorver Esferas Espirituais 1 ^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Absorve todas as esferas espirituais do
+usuário e alvos da área de 5x5 células.
+Cada esfera recupera SP do usuário.^000000
 #
 SR_POWERVELOCITY#
-Renúncia Espiritual
-Nível Máximo: 1
-^777777Pré requisitos: Invocar Esferas Espirituais 5^000000
-Tipo: ^777777  Especial^000000
-Descrição: ^777777  Entrega todas as Esferas Espirituais para outro alvo. ^000000
+Renúncia Espiritual ^777777(Power Velocity)^000000
+Nível máximo: ^7777771^000000
+Pré requisitos: ^777777Invocar Esferas Espirituais 5^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Transfere todas as esferas espirituais
+ativas para um personagem.^000000
 #
 SR_GATEOFHELL#
-Portões do Inferno
-Nível Máximo: 10
-^777777Pré requisitos: Dragão Ascendente 5 / Garra de Tigre 5 ^000000
-Tipo: ^777777  Ofensiva^000000
-Descrição: ^777777  Ataca o alvo repetidamente. Quanto menor o HP do personagem, maior será o dano causado. Consome 30% do SP máx e 5 Esferas Espirituais. A habilidade pode ser conjurada após Ruína, o que aumenta o dano. ^000000
+Portões do Inferno ^777777(Gates of Hell)^000000
+Nível máximo: ^77777710^000000
+Pré requisitos:
+^777777Dragão Ascendente 5, Garra de Tigre 5^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico de propriedade Neutro
+que ignora a Esquiva do oponente.
+O dano é influenciado pelo HP do usuário.
+Pode ser usada após [Ruína],
+causando dano ainda maior.^000000
+^000088Consome 5 Esferas Espirituais.^000000
 #
 SR_GENTLETOUCH_QUIET#
-Chakra do Silêncio
-Nível Máximo: 5
-^777777Pré requisitos: Renúncia Espiritual 1^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Causa dano e o estado Silêncio para 1 alvo único. Aumenta o dano de acordo com o DES do usuário. ^000000
-[Nv 1]: ^777777 Alcance 2 células / ATQ 100% ^000000
-[Nv 2]: ^777777 Alcance 2 células / ATQ 200% ^000000
-[Nv 3]: ^777777 Alcance 2 células / ATQ 300% ^000000
-[Nv 4]: ^777777 Alcance 2 células / ATQ 400% ^000000
-[Nv 5]: ^777777 Alcance 2 células / ATQ 500% ^000000
+Chakra do Silêncio ^777777(Quiet)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Renúncia Espiritual 1^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Dá a chance de causar dano físico
+com chance de infligir Silêncio no alvo.
+A chance e o dano são influenciados
+pela DES e nível de classe do usuário.^000000
+Nível l Dano l Chance
+[Nv 1]: ^777777100%^000000 l ^7777775%^000000
+[Nv 2]: ^777777200%^000000 l ^77777710%^000000
+[Nv 3]: ^777777300%^000000 l ^77777715%^000000
+[Nv 4]: ^777777400%^000000 l ^77777720%^000000
+[Nv 5]: ^777777500%^000000 l ^77777725%^000000
 #
 SR_GENTLETOUCH_CURE#
-Chakra da Cura
-Nível Máximo: 5
-^777777Pré requisitos: Renúncia Espiritual 1^000000
-Tipo: ^777777  Efeito positivo^000000
-Descrição: ^777777  Recupera o HP de um alvo ou do usuário e remove alguns efeitos negativos. A chance de sucesso aumenta de acordo com o nível da habilidade.
-Efeitos negativos que podem ser removidos de outros personagens: Petrificação, Congelamento, Atordoamento, Envenenamento, Silêncio, Cegueira, Confusão, Incêndio, Hipotermia. Cura alguns venenos de Sicário.
-Efeitos negativos que podem ser removidos do usuário: Petrificação, Congelamento, Atordoamento. Consome Esferas Espirituais conforme o nível da habilidade.^000000
-[Nv 1]: ^777777 1 Esfera Espiritual ^000000
-[Nv 2]: ^777777 2 Esferas Espirituais ^000000
-[Nv 3]: ^777777 3 Esferas Espirituais ^000000
-[Nv 4]: ^777777 4 Esferas Espirituais ^000000
-[Nv 5]: ^777777 5 Esferas Espirituais ^000000
+Chakra da Cura ^777777(Cure)^000000
+Nível máximo: ^7777775^0000005
+Pré requisitos: ^777777Renúncia Espiritual 1^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Recupera um pouco de HP com chance de
+remover alguns efeitos negativos do alvo.^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Esferas l Chance
+[Nv 1]: ^7777771^000000 l ^7777775%^000000
+[Nv 2]: ^7777772^000000 l ^77777710%^000000
+[Nv 3]: ^7777773^000000 l ^77777715%^000000
+[Nv 4]: ^7777774^000000 l ^77777720%^000000
+[Nv 5]: ^7777775^000000 l ^77777725%^000000
 #
 SR_GENTLETOUCH_ENERGYGAIN#
-Chakra da Energia
-Nível Máximo: 5
-^777777Pré requisitos: Chakra do Silêncio 3 ^000000
-Tipo: ^777777 Efeito positivo ^000000
-Descrição: ^777777  Chance de criar uma Esfera Espiritual ao realizar ataques físicos de curto alcance ou se receber dano. Consome parte do HP para ativar a habilidade. Não pode ser usada em conjunto com Chakra da Fúria e Chakra do Vigor. ^000000
-[Nv 1]: ^777777 Consome 1% do HP / Chance de criar Esferas Espirituais 15% ^000000
-[Nv 2]: ^777777 Consome 2% do HP / Chance de criar Esferas Espirituais 20% ^000000
-[Nv 3]: ^777777 Consome 3% do HP / Chance de criar Esferas Espirituais 25%^000000
-[Nv 4]: ^777777 Consome 4% do HP / Chance de criar Esferas Espirituais 30% ^000000
-[Nv 5]: ^777777 Consome 5% do HP / Chance de criar Esferas Espirituais 35% ^000000
+Chakra da Energia ^777777(Energy Gain)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Chakra do Silêncio 3^000000
+Tipo: ^777777Ativa^000000
+Descrição:
+^777777Dá a chance de adquirir 1 Esfera Espiritual
+ao realizar ataques físicos ou ao receber
+danos físicos de curta distância.
+Consome HP para ativar a habilidade.
+Não pode ser usada simultaneamente com
+[Chakra do Vigor] e [Chakra da Fúria].^000000
+Nível l Consumo de HP l Chance
+[Nv 1]: ^7777771%^000000 l ^77777715%^000000
+[Nv 2]: ^7777772%^000000 l ^77777720%^000000
+[Nv 3]: ^7777773%^000000 l ^77777725%^000000
+[Nv 4]: ^7777774%^000000 l ^77777730%^000000
+[Nv 5]: ^7777775%^000000 l ^77777735%^000000
 #
 SR_GENTLETOUCH_CHANGE#
-Chakra da Fúria
-Nível Máximo: 5
-^777777Pré requisitos: Chakra da Cura 4 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Diminui a DEF e MDEF do usuário, porém aumenta o ATQ e a vel. de ATQ. Consome 2 Esferas Espirituais e parte do HP do usuário. Reduz um pouco o HP Máx.
-Não pode ser usada em conjunto com Chakra da Energia e Chakra do Vigor ^000000
-[Nv 1]: ^777777 Consome 1% do HP ^000000
-[Nv 2]: ^777777 Consome 2% do HP ^000000
-[Nv 3]: ^777777 Consome 3% do HP ^000000
-[Nv 4]: ^777777 Consome 4% do HP ^000000
-[Nv 5]: ^777777 Consome 5% do HP ^000000
+Chakra da Fúria ^777777(Change)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Chakra da Cura 4^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Reduz a DEFM e o HP máx.
+Aumenta o ATQ e a velocidade de ataque.
+Consome HP para ativar a habilidade.
+Não pode ser usada simultaneamente com
+[Chakra do Vigor] e [Chakra da Energia].^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Consumo de HP l Esferas
+[Nv 1]: ^7777771%^000000 l ^7777771^000000
+[Nv 2]: ^7777772%^000000 l ^7777772^000000
+[Nv 3]: ^7777773%^000000 l ^7777773^000000
+[Nv 4]: ^7777774%^000000 l ^7777774^000000
+[Nv 5]: ^7777775%^000000 l ^7777775^000000
 #
 SR_GENTLETOUCH_REVITALIZE#
-Chakra do Vigor
-Nível Máximo: 5
-^777777Pré requisitos: Chakra da Fúria 5 ^000000
-Tipo: ^777777  Efeito positivo ^000000
-Descrição: ^777777  Aumenta o HP máx, VIT, recuperação de HP, e DEF do usuário. A recuperação de HP é contínua, mesmo com o usuário em movimento ou atacando.
-Consome 2 Esferas Espirituais. Não pode ser usada em conjunto com Chakra da Energia e Chakra da Fúria.  ^000000
-[Nv 1]: ^777777 Aumento do HP máx. 2% / Recuperação natural de HP 80%^000000
-[Nv 2]: ^777777 Aumento do HP máx. 4% / Recuperação natural de HP 110%^000000
-[Nv 3]: ^777777 Aumento do HP máx. 6% / Recuperação natural de HP 140% ^000000
-[Nv 4]: ^777777 Aumento do HP máx. 8% / Recuperação natural de HP 170% ^000000
-[Nv 5]: ^777777 Aumento do HP máx. 10% / Recuperação natural de HP 200% ^000000
+Chakra do Vigor ^777777(Revitalize)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos: ^777777Chakra da Fúria 5^000000
+Tipo: ^777777Suporte^000000
+Descrição:
+^777777Aumenta o HP máx. e acelera a
+regeneração natural de HP.
+Enquanto estiver ativa, danos físicos
+recebidos serão reduzidos em um valor fixo.
+Não pode ser usada simultaneamente com
+[Chakra da Fúria] e [Chakra da Energia].^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Esferas l HP máx. l Regen. de HP
+[Nv 1]: ^7777771^000000 l ^777777+2%^000000 l ^777777+80%^000000
+[Nv 2]: ^7777772^000000 l ^777777+4%^000000 l ^777777+110%^000000
+[Nv 3]: ^7777773^000000 l ^777777+6%^000000 l ^777777+140%^000000
+[Nv 4]: ^7777774^000000 l ^777777+8%^000000 l ^777777+170%^000000
+[Nv 5]: ^7777775^000000 l ^777777+10%^000000 l ^777777+200%^000000
 #
 WA_SWING_DANCE#
 Ritmo Contagiante ^777777(Swing Dance)^000000
@@ -11862,15 +11957,15 @@ Descrição:
 ativa, alterando o efeito da habilidade.^000000
 ^000088Consome 1 item.^000000
 Nível l Item l Efeito
-[Nv. 1]: ^777777Garrafa com Óleo^000000
+[Nv 1]: ^777777Garrafa com Óleo^000000
              ^777777Aumenta o dano mágico causado.^000000
-[Nv. 2]: ^777777Pó Explosivo^000000
+[Nv 2]: ^777777Pó Explosivo^000000
              ^777777Causa dano mágico maior.^000000
-[Nv. 3]: ^777777Gás de Fumaça^000000
+[Nv 3]: ^777777Gás de Fumaça^000000
              ^777777Reduz o dano a distância.^000000
-[Nv. 4]: ^777777Gás Lacrimejante^000000
+[Nv 4]: ^777777Gás Lacrimejante^000000
              ^777777Drena HP continuamente.^000000
-[Nv. 5]: ^777777Frasco de Ácido^000000
+[Nv 5]: ^777777Frasco de Ácido^000000
              ^777777Altera para [Bomba Ácida] em área.^000000
 #
 GN_HELLS_PLANT#
@@ -11976,16 +12071,16 @@ O número de poções criadas de uma só vez
 aumenta com o nível da habilidade.^000000
 ^000088Precisa de 1 Manual.^000000
 Nível l Quantidade
-[Nv.1]: ^777777Até 7 poções^000000
-[Nv.2]: ^777777Até 8 poções^000000
-[Nv.3]: ^777777Até 8 poções^000000
-[Nv.4]: ^777777Até 9 poções^000000
-[Nv.5]: ^777777Até 9 poções^000000
-[Nv.6]: ^777777Até 10 poções^000000
-[Nv.7]: ^777777Até 10 poções^000000
-[Nv.8]: ^777777Até 11 poções^000000
-[Nv.9]: ^777777Até 11 poções^000000
-[Nv.10]: ^777777Até 12 poções^000000
+[Nv 1]: ^777777Até 7 poções^000000
+[Nv 2]: ^777777Até 8 poções^000000
+[Nv 3]: ^777777Até 8 poções^000000
+[Nv 4]: ^777777Até 9 poções^000000
+[Nv 5]: ^777777Até 9 poções^000000
+[Nv 6]: ^777777Até 10 poções^000000
+[Nv 7]: ^777777Até 10 poções^000000
+[Nv 8]: ^777777Até 11 poções^000000
+[Nv 9]: ^777777Até 11 poções^000000
+[Nv 10]: ^777777Até 12 poções^000000
 #
 AB_SECRAMENT#
 Sacramentum
@@ -12006,29 +12101,42 @@ Nível l Conjuração fixa l Duração
 [Nv 5]: ^777777-50%^000000 l ^777777180 segundos^000000
 #
 SR_HOWLINGOFLION#
-Rugido do Leão
-Nível Máximo: 5
-^777777Pré requisitos:  Absorção Espiritual 1 / Tempestade Espiritual 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Grita com força total para causar dano aos oponentes ao redor do usuário. Adiciona a chance de Aterrorizar o alvo.
-A habilidade é cancelada se o alvo for atingido por canções e duetos de Musa / Trovador. O número de Esferas Espirituais consumidas é igual ao nível da habilidade.^000000
-[Nv 1]: ^777777 Alcance 7 x 7  células / ATQ 300% / Chance de Aterrorizar 10% ^000000
-[Nv 2]: ^777777 Alcance 9 x 9  células / ATQ 600% / Chance de Aterrorizar 15%^000000
-[Nv 3]: ^777777 Alcance 11 x 11 células / ATQ 900% / Chance de Aterrorizar 20%^000000
-[Nv 4]: ^777777 Alcance 13 x 13 células / ATQ 1200% / Chance de Aterrorizar 25%^000000
-[Nv 5]: ^777777 Alcance 15 x 15 células / ATQ 1500% / Chance de Aterrorizar 30%^000000
+Rugido do Leão ^777777(Howling of Lion)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:  ^777777Absorção Espiritual 1,
+Tempestade Espiritual 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Causa dano físico corpo a corpo nos
+oponentes ao redor do usuário.
+Possui uma chance de infligir Medo.^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Esferas l Chance l Dano l Área
+[Nv 1]: ^7777771^000000 l ^77777710%^000000 l ^777777300%^000000 l ^7777777x7 células^000000
+[Nv 2]: ^7777772^000000 l ^77777715%^000000 l ^777777600%^000000 l ^7777779x9 células^000000
+[Nv 3]: ^7777773^000000 l ^77777720%^000000 l ^777777900%^000000 l ^77777711x11 células^000000
+[Nv 4]: ^7777774^000000 l ^77777725%^000000 l ^7777771.200%^000000 l ^77777713x13 células^000000
+[Nv 5]: ^7777775^000000 l ^77777730%^000000 l ^7777771.500%^000000 l ^77777715x15 células^000000
 #
 SR_RIDEINLIGHTNING#
-Tempestade Espiritual
-Nível Máximo: 5
-^777777Pré requisitos:  Arremessar Esfera Espiritual 3 ^000000
-Tipo: ^777777  Ofensiva ^000000
-Descrição: ^777777  Atira Esferas Espirituais de modo a explodirem e causarem dano em um oponente. A quantidade de esferas consumidas depende do nível da habilidade. O dano aumenta de acordo com o número de Esferas Espirituais usadas. Causa dano adicional se o usuário usa uma arma de propriedade Vento.^000000
-[Nv 1]: ^777777 Alcance 5 x 5  / Consome 1 Esfera Espiritual ^000000
-[Nv 2]: ^777777 Alcance 5 x 5  / Consome 2 Esferas Espirituais ^000000
-[Nv 3]: ^777777 Alcance 7 x 7  / Consome 3 Esferas Espirituais ^000000
-[Nv 4]: ^777777 Alcance 7 x 7  / Consome 4 Esferas Espirituais ^000000
-[Nv 5]: ^777777 Alcance 9 x 9  / Consome 5 Esferas Espirituais ^000000
+Tempestade Espiritual ^777777(Lightning Ride)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+ ^777777Disparo de Esferas Espirituais 3^000000
+Tipo: ^777777Ofensiva^000000
+Descrição:
+^777777Explode as esferas espirituais ativas,
+causando dano físico na área ao redor.
+O dano é aumentado com o número de
+esferas ativas e com uma arma encantada
+com a propriedade Vento.^000000
+^000088Consome Esferas Espirituais.^000000
+Nível l Área l Esferas
+[Nv 1]: ^7777775x5 células^000000 l ^7777771^000000
+[Nv 2]: ^7777775x5 células^000000 l ^7777772^000000
+[Nv 3]: ^7777777x7 células^000000 l ^7777773^000000
+[Nv 4]: ^7777777x7 células^000000 l ^7777774^000000
+[Nv 5]: ^7777779x9 células^000000 l ^7777775^000000
 #
 ALL_ODINS_RECALL#
 #
@@ -14028,4 +14136,23 @@ Conteúdo: ^777777Quando se desenvolve, esta habilidade acrescenta uma chance de
 ^777777Isso quer dizer que esta habilidade pode acrescentar 1 ou 2 pontos em um desenvolvimento.^000000
 #
 GD_ITEMEMERGENCYCALL#
+#
+GD_GUILD_STORAGE#
+Armazém do Clã ^777777(Warehouse)^000000
+Nível máximo: ^7777775^000000
+Pré requisitos:
+^777777Coração Frio 1, Olhar Apurado 1
+Chamado Urgente 1, Expandir Clã 10^000000
+Tipo: ^777777Passiva^000000
+Descrição:
+^777777Permite que todos os membros do clã
+possam acessar o armazém da guilda.
+Para restringir membros, o líder poderá
+definir o acesso pela aba [Posição].^000000
+Nível l Limite de itens
+[Nv 1] : ^777777até 100 itens^000000
+[Nv 2] : ^777777até 200 itens^000000
+[Nv 3] : ^777777até 300 itens^000000
+[Nv 4] : ^777777até 400 itens^000000
+[Nv 5] : ^777777até 500 itens^000000
 #

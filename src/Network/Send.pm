@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -1412,7 +1412,7 @@ sub rodex_open_write_mail {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_open_write_mail',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
@@ -1420,7 +1420,7 @@ sub rodex_checkname {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_checkname',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
@@ -1434,7 +1434,7 @@ sub rodex_send_mail {
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{target}{name},
-		sender => $char->{name},
+		sender => stringToBytes($char->{name}),
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
 		title_len => length $title,
@@ -2436,6 +2436,18 @@ sub sendPetName {
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
+sub sendPetEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_emotion',
+		ID => $ID,
+	}));
+	
+	debug "Sent Pet Emotion: $ID\n", "sendPacket", 2;
+}
+
+
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
 	
@@ -3064,5 +3076,54 @@ sub sendCashShopBuy {
 		}
 	}
 }
+
+sub sendStartSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'start_skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
+	debug "Start Skill Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendStopSkillUse {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
+	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
+}
+
+##
+# Request to merge item
+# 096E <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub sendMergeItemRequest {
+	my ($self, $num, $items) = @_;
+	#my $len = ($num * 4) + 12;
+	$self->sendToServer($self->reconstruct({
+		switch => 'merge_item_request',
+		#len => $len,
+		items => $items,
+	}));
+	debug "Sent merge item request: ".(join ', ', map { $_->{info}->{binID}." x ".$_->{info}->{amount} } @$items)."\n", "sendPacket";
+}
+
+sub reconstruct_merge_item_request {
+	my ($self, $args) = @_;
+	$args->{itemList} = pack '(a2)*', map { $_->{ID} } @{$args->{items}};
+}
+
+##
+# Request to cancel merge item
+# 0974
+# @author [Cydh]
+##
+sub sendMergeItemCancel {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'merge_item_cancel' }));
+	debug "Cancel Merge item\n", "sendPacket";
+	$mergeItemList = {};
+}
+
+#sub reconstruct_merge_item_cancel {
+#	my ($self, $args) = @_;
+#}
 
 1;

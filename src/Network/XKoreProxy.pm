@@ -621,7 +621,7 @@ sub modifyPacketIn {
 			$mapInfo->{ip} =~ s/^\s+|\s+$//g;
 			$mapInfo->{port} =~ tr/0-9//cd;
 		} else {
-			$mapInfo->{ip} = inet_ntoa($mapInfo->{ip});
+			$mapInfo->{ip} = inet_ntoa($mapInfo->{'IP'});
 		}
 
 		if($masterServer->{'private'}) {

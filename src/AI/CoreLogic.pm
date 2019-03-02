@@ -297,6 +297,10 @@ sub processMisc {
 	if (timeOut($char->{muted}, $char->{mute_period})) {
 		delete $char->{muted};
 		delete $char->{mute_period};
+		
+		if ($char->statusActive('EFST_MUTED')) {
+			$char->setStatus('EFST_MUTED', 0);
+		}
 	}
 }
 
@@ -1028,18 +1032,16 @@ sub processTransferItems {
 		foreach ( [ $row->{source}, $source ], [ $row->{target}, $target ] ) {
 			my ( $name, $list ) = @$_;
 			next if $list->isReady;
-			error T( "Your inventory is not available. Unable to transfer item '%s'.\n", $row->{item} ) if $name eq 'inventory';
-			error T( "Your storage is not available. Unable to transfer item '%s'.\n",   $row->{item} ) if $name eq 'storage';
-			error T( "Your cart is not available. Unable to transfer item '%s'.\n",      $row->{item} ) if $name eq 'cart';
+			#name can be storage, inventory or cart
+			error TF( "Your %s is not available. Unable to transfer item '%s'.\n", $name, $row->{item} );
 			redo;
 		}
 
 		# Verify that the item is still in the source list and has not changed.
 		my $item = $source->get( $row->{item}->{binID} );
+		
 		if ( !$item || $item->nameString ne $row->{item}->nameString ) {
-			error TF( "Inventory item '%s' disappeared!\n", $row->{item} ) if $row->{source} eq 'inventory';
-			error TF( "Storage item '%s' disappeared!\n",   $row->{item} ) if $row->{source} eq 'storage';
-			error TF( "Cart item '%s' disappeared!\n",      $row->{item} ) if $row->{source} eq 'cart';
+			error TF( "%s item '%s' disappeared!\n", $row->{source}, $row->{item} );
 			redo;
 		}
 
@@ -1059,16 +1061,31 @@ sub processTransferItems {
 				#need to low down the amount
 				$row->{amount} = $freeWeight / ( $item->weight()/10 );
 				warning TF("Amount of %s is more than you can carry, getting the maximum possible (%d)\n", $row->{item}, $row->{amount});
-			}		
+			}
 		}
 
 		if ( $row->{source} eq 'inventory' && $item->{equipped} ) {
 			error TF( "Inventory item '%s' is equipped.\n", $item->{name} );
 			redo;
 		}
-
+		
+		my $target_item = $target->getByName( $row->{item}->{name} );
+		my $stack_limit = $target->item_max_stack( $row->{item}->{nameID} );
+		
+		my $amount = min($stack_limit, min( $item->{amount}, $row->{amount} || $item->{amount} ));
+		if ( $stack_limit - $amount < 0 || $target_item->{amount} - $stack_limit == 0) {
+			error TF("Unable to add %s to %s. You can't stack over %s of this item\n", $item->name, $row->{target}, $stack_limit);
+			redo;
+			
+		} elsif ( $target_item->{amount} + $amount > $stack_limit ) {
+			warning TF("Amount of %s will surpass the maximum %s capacity (%d), transfering maximum possible (%d)\n",
+			$row->{item}->name, $row->{target}, $stack_limit, $stack_limit - $target_item->{amount} );
+			
+			$amount = $stack_limit - $target_item->{amount};
+			
+		}
 		# Transfer the item!
-		$messageSender->$method( $item->{ID}, min( $item->{amount}, $row->{amount} || $item->{amount} ) );
+		$messageSender->$method( $item->{ID}, $amount );
 	}
 
 	AI::args->{time} = time;
@@ -1228,7 +1245,7 @@ sub processAutoStorage {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1 || AI::isIdle) && $needitem ne "" &&
-			$char->inventory->isReady()){
+			$char->inventory->isReady() && ai_canOpenStorage()){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
 		}
@@ -1335,6 +1352,12 @@ sub processAutoStorage {
 						$timeout{ai_storageAuto_useItem}{time} = time;
 					}
 				} else {
+					if (!ai_canOpenStorage()) {
+						warning TF("Cannot open storage, giving up\n");
+						AI::args->{done} = 1;
+						return;
+					}
+					
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
 						$config{'storageAuto_npc_steps'} = "c r1";

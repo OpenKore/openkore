@@ -318,6 +318,7 @@ logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
+logLocalBroadcast 1
 logShop 1
 logEmoticons
 logConsole 1
@@ -754,3 +755,4 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+gameGuard 0

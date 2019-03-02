@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],#6
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -220,6 +221,8 @@ sub new {
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
+		'08C9' => ['request_cashitems'],#2
+		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
@@ -245,6 +248,8 @@ sub new {
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],		
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -620,15 +625,7 @@ sub sendGuildPositionInfo {
 # 0x01a4,11
 # 0x01a6,-1
 # 0x01a8,4
-
 # 0x01a9,6,sendemotion,2
-sub sendPetEmotion{
-	my ($self, $emoticon) = @_;
-	my $msg = pack('v V', 0x01A9, $emoticon);
-	$self->sendToServer($msg);
-	debug "Sent Pet Emotion.\n", "sendPacket", 2;
-}
-
 # 0x01aa,10
 # 0x01ab,12
 # 0x01ac,6

@@ -248,6 +248,7 @@ sub initHandlers {
 	captcha			   => \&cmdAnswerCaptcha,
 	refineui			=> \&cmdRefineUI,
 	clan				=> \&cmdClan,
+	merge				=> \&cmdMergeItem,
 
 	# Skill Exchange Item
 	cm					=> \&cmdExchangeItem,
@@ -697,7 +698,12 @@ sub cmdAutoSell {
 
 sub cmdAutoStorage {
 	message T("Initiating auto-storage.\n");
-	AI::queue("storageAuto");
+	if (ai_canOpenStorage()) {
+		AI::queue("storageAuto");
+	} else {
+		error T("Error in function 'autostorage' (Automatic storage of items)\n" .
+		"You cannot use the Storage Service. Very low level of basic skills or not enough zeny.\n");
+	}
 }
 
 sub cmdBangBang {
@@ -3683,19 +3689,17 @@ sub cmdParty {
 				}
 			}
 		} elsif ($arg1 eq "leader") {
+			my $found;
 			if ($arg2 eq "") {
 				error T("Syntax Error in function 'party leader' (Change Party Leader)\n" .
 					"Usage: party leader <party member>\n");
 			} elsif ($arg2 =~ /\D/ || $args =~ /".*"/) {
-				my $found;
 				foreach (@partyUsersID) {
 					if ($char->{'party'}{'users'}{$_}{'name'} eq $arg2) {
-						$messageSender->sendPartyLeader($_);
-						$found = 1;
+						$found = $_;
 						last;
 					}
 				}
-				
 				if (!$found) {
 					error TF("Error in function 'party leader' (Change Party Leader)\n" .
 						"Can't change party leader - member %s doesn't exist.\n", $arg2);
@@ -3705,8 +3709,13 @@ sub cmdParty {
 					error TF("Error in function 'party leader' (Change Party Leader)\n" .
 						"Can't change party leader - member %s doesn't exist.\n", $arg2);
 				} else {
-					$messageSender->sendPartyLeader($partyUsersID[$arg2]);
+					$found = $partyUsersID[$arg2];
 				}
+			}
+			if ($found && $found eq $accountID) {
+				warning T("Can't change party leader - you are already a party leader.\n");
+			} else {
+				$messageSender->sendPartyLeader($found);
 			}
 		}
 	} else {
@@ -3750,14 +3759,14 @@ sub cmdPet {
 		# todo: maybe make a match function for monsters?
 		if ($args[1] =~ /^\d+$/) {
 			if ($monstersID[$args[1]] eq "") {
-				error TF("Error in function 'pet capture|c' (Capture Pet)\n" .
+				error TF("Error in function 'pet [capture|c]' (Capture Pet)\n" .
 					"Monster %s does not exist.\n", $args[1]);
 			} else {
 				$messageSender->sendPetCapture($monstersID[$args[1]]);
 			}
 		} else {
 			error TF("Error in function 'pet [capture|c]' (Capture Pet)\n" .
-				"%s must be a monster index.\n", $args[1]);
+				"'%s' must be a monster index.\n", $args[1]);
 		}
 
 	} elsif ($args[0] eq "h" || $args[0] eq "hatch") {
@@ -3799,8 +3808,16 @@ sub cmdPet {
 	} elsif (($args[0] eq "n" || $args[0] eq "name") && $args[1]) {
 		$messageSender->sendPetName($args[1]);
 
+	} elsif (($args[0] eq "e" || $args[0] eq "emotion") && $args[1]) {
+		if ($args[1] =~ /^\d+$/) {
+		$messageSender->sendPetEmotion($args[1]);
+		} else {
+			error TF("Error in function 'pet [emotion|e] <number>' (Emotion Pet)\n" .
+				"'%s' must be an integer.\n", $args[1]);
+		}
+
 	} else {
-		message T("Usage: pet [capture|hatch|status|info|feed|performance|return|unequip|name <name>]\n"), "info";
+		message T("Usage: pet [capture <monster #> | hatch <item #> | status | info | feed | performance | return | unequip | name <name>] | emotion <number>\n"), "info";
 	}
 }
 
@@ -4731,14 +4748,21 @@ sub cmdStorage {
 			cmdStorage_desc($items);
 		} elsif (($switch =~ /^(add|addfromcart|get|gettocart)$/ && ($items || $args =~ /$switch 0/)) || $switch eq 'close') {
 			if ($char->storage->isReady()) {
+				my ( $name, $amount );
+				if ( $items =~ /^[^"'].* .+$/ ) {
+					# Backwards compatibility: "storage add Empty Bottle 1" still works.
+					( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
+				} else {
+					( $name, $amount ) = parseArgs( $items );
+				}
 				if ($switch eq 'add') {
-					cmdStorage_add($items);
+					cmdStorage_add($name, $amount);
 				} elsif ($switch eq 'addfromcart') {
-					cmdStorage_addfromcart($items);
+					cmdStorage_addfromcart($name, $amount);
 				} elsif ($switch eq 'get') {
-					cmdStorage_get($items);
+					cmdStorage_get($name, $amount);
 				} elsif ($switch eq 'gettocart') {
-					cmdStorage_gettocart($items);
+					cmdStorage_gettocart($name, $amount);
 				} elsif ($switch eq 'close') {
 					cmdStorage_close();
 				}
@@ -4762,15 +4786,8 @@ sub cmdStorage {
 }
 
 sub cmdStorage_add {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage add Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
 	my @items = $char->inventory->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Inventory item '%s' does not exist.\n", $name );
@@ -4781,20 +4798,13 @@ sub cmdStorage_add {
 }
 
 sub cmdStorage_addfromcart {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
 	if (!$char->cart->isReady) {
 		error T("Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n");
 		return;
 	}
-
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage addfromcart Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
+	
 	my @items = $char->cart->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Cart item '%s' does not exist.\n", $name );
@@ -4805,15 +4815,8 @@ sub cmdStorage_addfromcart {
 }
 
 sub cmdStorage_get {
-	my $items = shift;
-
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage get Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
+	my ($name, $amount) = @_;
+	
 	my @items = $char->storage->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Storage item '%s' does not exist.\n", $name );
@@ -4824,20 +4827,13 @@ sub cmdStorage_get {
 }
 
 sub cmdStorage_gettocart {
-	my $items = shift;
+	my ($name, $amount) = @_;
 
 	if ( !$char->cart->isReady ) {
 		error T( "Error in function 'storage_gettocart' (Cart Management)\nYou do not have a cart.\n" );
 		return;
 	}
 
-	my ( $name, $amount );
-	if ( $items =~ /^[^"'].* .+$/ ) {
-		# Backwards compatibility: "storage get Empty Bottle 1" still works.
-		( $name, $amount ) = $items =~ /^(.*?)(?: (\d+))?$/;
-	} else {
-		( $name, $amount ) = parseArgs( $items );
-	}
 	my @items = $char->storage->getMultiple( $name );
 	if ( !@items ) {
 		error TF( "Storage item '%s' does not exist.\n", $name );
@@ -7363,6 +7359,103 @@ sub cmdCashShopBuy {
 	message TF("Attempt to buy %d items from cash dealer\n", (scalar @buylist)), "info";
 	debug "Buying cash ".(scalar @buylist)." items: ".(join ', ', map {"".$_->{amount}."x ".$_->{itemID}.""} @buylist)."\n", "sendPacket";
 	$messageSender->sendCashShopBuy($points, \@buylist);
+}
+
+
+##
+# 'merge' Merge Item
+# @author [Cydh]
+##
+sub cmdMergeItem {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if (not defined $mergeItemList) {
+		error T("You cannot use this command yet. Only available after talking with Mergician-like NPC!\n");
+		return;
+	}
+
+	my ($switch, $args) = @_;
+	my ($mode) = $args =~ /^(\w+)/;
+
+	if ($mode eq "" || $mode eq "list") {
+		my $title = TF("Available Items to merge");
+		my $msg = center(' '. $title . ' ', 50, '-') ."\n".
+					T ("#     Item Name\n");
+		foreach my $itemid (keys %{$mergeItemList}) {
+			$msg .= "-- ".$mergeItemList->{$itemid}->{name}." (".$itemid.") x ".scalar(@{$mergeItemList->{$itemid}->{list}})."\n";
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				my $display = $item->{info}->{name}." x ".$item->{info}->{amount};
+				$msg .= swrite(
+					"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$item->{info}->{binID}, $display]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+		message T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
+		return;
+
+	} elsif ($mode eq "cancel") {
+		$messageSender->sendMergeItemCancel();
+		message TF("Merge Item is canceled.\n"), "info";
+		return;
+	}
+
+	# Merging process
+	my @list = split(/,/, $args);
+	my @items = ();
+	my $merge_itemid = 0;
+
+	@list = grep(!/^$/, @list); # Remove empty entries
+	foreach (@list) {
+		my ($id) = $_ =~ /^(\d+)/;
+		# Merge by item ID
+		if ((scalar @list) == 1 && $char->inventory->getByNameID($id)) {
+			debug "Merge item by item ID $id\n";
+			foreach my $item (@{$mergeItemList->{$id}->{list}}) {
+				push @items, $item;
+			}
+			last;
+		}
+
+		# User defined, however must be same item id
+		my $found = 0;
+		foreach my $itemid (keys %{$mergeItemList}) {
+			foreach my $item (@{$mergeItemList->{$itemid}->{list}}) {
+				if ($item->{info}->{binID} == $id) {
+					if ($merge_itemid > 0 && $merge_itemid != $item->{info}->{nameID}) {
+						error TF("Selected item is not same. Index:'%d' nameID:'%d' first selected:'%d'\n", $id, $item->{info}->{nameID}, $merge_itemid);
+						return;
+					} elsif ($merge_itemid == 0) {
+						$merge_itemid = $item->{info}->{nameID};
+					}
+					push @items, $item;
+					$found = 1;
+					last;
+				}
+			}
+			last if ($found == 1);
+		}
+		if ($found != 1) {
+			warning TF("Cannot find item with id '%d'.\n", $id);
+		}
+	}
+
+	if (@items > 1) {
+		my $num = scalar @items;
+		message T("======== Merge Item List ========\n");
+		map { message unpack("v2", $_->{ID})." ".$_->{info}->{name}." (".$_->{info}->{binID}.") x ".$_->{info}->{amount}."\n" } @items;
+		message "==============================\n";
+		$mergeItemList = {};
+		$messageSender->sendMergeItemRequest($num, \@items);
+		return;
+	}
+
+	error T("No item was selected or at least need 2 same items.\n");
+	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
 }
 
 1;

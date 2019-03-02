@@ -51,6 +51,7 @@ our @EXPORT = (
 	ai_skillUse
 	ai_skillUse2
 	ai_storageAutoCheck
+	ai_canOpenStorage
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -570,10 +571,8 @@ sub ai_skillUse2 {
 # Returns 1 if it is time to perform storageAuto sequence.
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
-	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6  && ($char->{jobID} == 0 || $char->{jobID} == 161)); # Check NV_BASIC skill only for Novice and High Novice
-	if ($config{minStorageZeny}) {
-		return 0 if ($char->{zeny} < $config{minStorageZeny});
-	}
+	return 0 unless ai_canOpenStorage();
+	
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped});
 		my $control = Misc::items_control($item->{name}, $item->{nameID});
@@ -583,6 +582,18 @@ sub ai_storageAutoCheck {
 	}
 	# TODO: check getAuto
 	return 0;
+}
+
+sub ai_canOpenStorage {
+	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
+	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
+	
+	# Check if we have enough zeny to open storage (and if it matters)
+	# Also check for a Free Ticket for Kafra Storage (7059)
+	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 && 
+					$char->{zeny} < $config{minStorageZeny} && !$char->inventory->getByNameID(7059));
+	
+	return 1;
 }
 
 

@@ -9,12 +9,13 @@ our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
 	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
-	getStorageAmountbyID getCartAmountbyID getQuestStatus);
+	getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values);
 
 use Utils;
 use Globals;
 use AI;
 use Log qw(message error warning debug);
+use Utils qw(parseArgs);
 
 use eventMacro::Core;
 use eventMacro::Data;
@@ -487,6 +488,13 @@ sub getRandomRange {
 	return int(rand($high-$low+1))+$low if (defined $high && defined $low)
 }
 
+sub get_pattern {
+	my ($inside_brackets) = @_;
+	my ($pattern, $var_str) = parseArgs($inside_brackets, undef, ',');
+	$var_str =~ s/^\s+|\s+$//gos;
+	return $pattern, $var_str;
+}
+
 sub find_variable {
 	my ($text) = @_;
 	
@@ -591,6 +599,16 @@ sub get_key_or_index {
 		$key_index .= $current;
 	}
 	return undef;
+}
+
+sub find_hash_and_get_keys {
+	my ($var) = find_variable(@_);
+	return @{$eventMacro->get_hash_keys($var->{real_name})};
+}
+
+sub find_hash_and_get_values {
+	my ($var) = find_variable(@_);
+	return @{$eventMacro->get_hash_values($var->{real_name})};
 }
 
 1;

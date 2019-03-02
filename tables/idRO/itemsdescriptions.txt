@@ -9901,7 +9901,7 @@ Berat : ^77777780^000000
 #
 561#
 Coklat putih batangan yang sangat enak dan sering dicampur dengan kue biskuit.
-Berat : ^77777780^000000
+Berat : ^7777778^000000
 #
 // ------2005?????? Chinese event ------ 
 570#
@@ -34075,12 +34075,24 @@ Profesi : ^777777Semua Job Kecuali Novice^000000
 2589#
 Sayap raksasa hitam dari malaikat yang jatuh ke rune midgard.
 LUK +2, MDEF +18
-Meningkatkan Pertahanan terhadap Element Darkness Attack + 30%,Mengurangi Pertahanan terhadap Element Holy attack
-Meningkatkan pertahanan terhadap Demi-Human class sebesar +10%
+All stats +1.
+[Setiap 20 base STR]
+Meningkatkan ATK +1
+[Setiap 20 base INT]
+Meningkatkan MATK +1
+[Setiap 20 base VIT]
+Meningkatkan pertahanan terhadap serangan Netral sebesar 1%
+[Setiap 20 base AGI]
+Meningkatkan ASPD sebesar 1%
+[Setiap 20 base DEX]
+Meningkatkan serangan jarak jauh sebesar 1%
+[Setiap 20 base LUK]
+Meningkatkan serangan kritikal sebesar 1%
 Jenis : ^777777Garment^000000  Def : ^77777718^000000
 Berat : ^77777720^000000
 Level Persyaratan : ^7777771^000000
 Profesi : ^777777Semua Job^000000
+#
 4502#
 Menambahkan kesempatan 5% menghancurkan senjata musuh dan kesempatan 4% menghancurkan armor nya setiap kali melakukan serangan fisik.
 Jika senjata di tempa hingga  +15 atau lebih,  Menambahkan kesempatan 8% menghancurkan senjata musuh dan kesempatan 6% menghancurkan armor nya setiap kali melakukan serangan fisik.
@@ -38238,7 +38250,7 @@ Berat: ^ 7777771 ^ 000000
 #
 
 5663#
-Sebuah mahkota megah diciptakan untuk persembahan kepada tanda ke-7 zodiak, Libra sang Keseimbangan, Yang melekat pada mahkota adalah batu permata Opal yang indah, yang merupakan batu kelahiran bagi mereka yang lahir di bawah zodiak ini. ATK 7. [Refine Rate 7~10] Kemungkinan kecil melakukan auto casting Warm Wind Level 2 ketika melakukan serangan fisik. [Refine Rate 9~10] FLEE 5, ATK 3%.
+Sebuah mahkota megah diciptakan untuk persembahan kepada tanda ke-7 zodiak, Libra sang Keseimbangan, Yang melekat pada mahkota adalah batu permata Opal yang indah, yang merupakan batu kelahiran bagi mereka yang lahir di bawah zodiak ini. ATK +7. [Refine Rate 7~10] Kemungkinan kecil melakukan auto casting Warm Wind Level 2 ketika melakukan serangan fisik. [Refine Rate 9~10] FLEE 5, ATK 3%.
 Jenis : ^777777Pelindung Kepala^000000 Def : ^7777773^000000
 Digunakan di : ^777777Atas ^000000 Berat : ^77777730^000000
 Digunakan Lv.  : ^7777771^000000
@@ -50235,4 +50247,1204 @@ Jenis : ^777777Headgear^000000    Defense : ^7777775^000000
 Location : ^777777Upper^000000    Berat : ^7777775^000000
 Minimum Lvl : ^77777771^000000
 Job : ^777777Semua^000000
+#
+
+//====================update 11122018=================
+31302#
+Seekor kelinci putih yang bulunya sangat halus. Mirip seperti bola salju !
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31303#
+Sebuah topi yang lucu yang bisa melindungi kamu dari udara dingin dan memberikanmu penampilan yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31304#
+Sebuah anting yang dibuat dari bulu dari sayap malaikat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31305#
+Kesucian Dewa Air disegel didalam topi ini.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31306#
+Penutup kepala yang menyerupai kuping kelinci yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31307#
+Topi yang dipakai oleh kapten pesawat udara. Menyerupai tanduk Rudolph.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+31308#
+Kotak yang berisi kostum-kostum untuk menyambut natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+31309#
+Kotak yang berisi equipment untuk menyambut datangnya natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+19125#
+Penutup kepala yang dibuat untuk memegang bahan kimia ketika memeriksa Cart.
+Silinder nya dibuat dari bahan yang bagus tetapi kamu harus menggunakannya dengan hati-hati.
+STR +5
+INT +5
+Mengurangi Variable Casting dari skill [Cart Cannon] sebesar 100%.
+Mengurangi penggunaan SP dari skill [Cart Cannon] sebesar 30.
+Mengurangi penggunaan SP dari skill [Cart Tornado] sebesar 5.
+Meningkatkan serangan dari skill [Cart Cannon] sebesar 10%.
+Meningkatkan serangan dari skill [Cart Tornado] sebesar 5%.
+Jika ditempa +5 atau lebih,
+Tambahan peningkatan serangan dari skill [Cart Cannon] sebesar 20%.
+Tambahan peningkatan serangan dari skill [Cart Tornado] sebesar 10%.
+Jika ditempa +8 atau lebih,
+Tambahan peningkatan serangan dari skill [Cart Cannon] sebesar 30%.
+Tambahan peningkatan serangan dari skill [Cart Tornado] sebesar 20%.
+
+Jenis : ^777777Headgear^000000    Defense : ^77777712^000000
+Location : ^777777Upper^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777790^000000
+Job : ^777777Semua^000000
+#
+
+19246#
+Sebuah kalung yang dibuat secara spesifik untuk Royal Guard. Kalung ini memiliki arti melindungi orang lain.
+ASPD +1
+
+^800080Set Bonus^000000
+^008080Imperial Feather^000000
+^008080Royal Guard Necklace^000000
+Atk +40
+Tambahan Atk +60 jika base AGI user 108 atau lebih.
+Tambahan Atk +80 jika base AGI user 120 atau lebih.
+ASPD +3%
+Tambahan ASPD +5% jika base AGI user 108 atau lebih.
+Tambahan ASPD +7% jika base AGI user 120 atau lebih.
+Mengurangi serangan dari Race Player sebesar 2%.
+Tambahan pengurangan serangan dari Race Player sebesar 2% jika base AGI user 108 atau lebih.
+Tambahan pengurangan serangan dari Race Player sebesar 4% jika base AGI user 120 atau lebih.
+Imun terhadap status [Blind] dan [Silence].
+
+Jenis : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777780^000000
+Job : ^777777Semua^000000
+#
+
+15166#
+Sebuah rosario suci yang mendapat kekuatan dari titisan Dewa. Kalung ini berisi kekuatan misterius.
+Perfect Dodge +2.
+Meningkatkan recovery rate dari skill recovery sebesar 3%.
+
+^800080Set Bonus^000000
+^008080Croce Staff [1]^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge +2 untuk setiap tingkat tempa dari [Croce Staff [1]]
+
+^800080Set Bonus^000000
+^008080Clergy Nurse Cap[1]^000000
+^008080Rosary's Necklace^000000
+Perfect Dodge +1 untuk setiap tingkat tempa dari [Clergy Nurse Cap [1]]
+Meningkatkan recovery rate dari skill recovery sebesar 2% untuk setiap tingkat tempa [Clergy Nurse Cap [1]].
+
+Jenis : ^777777Headgear^000000    Defense : ^7777770^000000
+Location : ^777777Lower^000000    Berat : ^77777730^000000
+Minimum Lvl : ^777777760^000000
+Job : ^777777Semua^000000
+#
+
+//====================update merger 18122018=================
+31500#
+Dahulu digunakan oleh Dewa Petir Thor, sabuk ini akan merasuk ke tubuhmu dan mengeluarkan kekuatan super.
+STR +40, MDEF +7
+Tambahan bonus STR berdasarkan level kamu.
+Serangan Fisik  +10% pada monster Bos ketika STR kamu diatas 120 atau lebih.
+Job: ^777777Aksesoris^000000
+Pertahanan : ^7777772^000000      Berat : ^777777800^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31501#
+Dahulu digunakan oleh Dewi Freyja, kalung ini meningkatkan penampilan dan kemampuan penggunanya dengan hebat sekaligus.
+STR/AGI/DEX/VIT +6. LUK/INT +10.
+MDEF +5
+Jumlah Pemulihan +6% untuk skill Heal dan Sanctuary.
+Job : ^777777Aksesoris^000000
+Pertahanan : ^7777771^000000      Berat : ^777777150^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31502#
+Sepatu ini yang dinamakan seperti kuda perang Odin memiliki efek yang didambakan oleh semua pejuang.
+MHP/MSP +20%
+SP Recovery Speed +25%
+INT + 25, MDEF + 10
+Meningkatkan Kecepatan Gerak.
+Tidak dapat dihancurkan.
+Job : ^777777Sepatu^000000    Pertahanan : ^77777740^000000
+Berat : ^777777350^000000
+Level Dibutuhkan : ^77777794^000000
+Job : ^777777Semua^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31503#
+Palu yang katanya digunakan oleh Thor, dewa petir yang katanya bisa kembali ke pemiliknya setelah dilempar kemanapun.
+Menghancurkan musuh dengan petir.
+DEX +50
+STR +20
+Melee Physical attacks have a high chance of auto-casting Level 10 Thunderstorm.
+Melee Physical attacks have a high chance of inflicting Splashed damage for 10 seconds.
+Indefinitely accelerates Attack Speed.
+Tidak dapat dihancurkan.
+Jenis: ^777777Blunt Weapon^000000 Serangan : ^777777350^000000
+Berat : ^777777600^000000
+Weapon Level: ^7777774^000000
+Level Dibutuhkan : ^77777795^000000
+Job: ^777777Merchant Job/Swordsman Job^000000
+
+^ff0000Item ini dapat ditransaksikan.^000000
+#
+
+31310#
+White Christmas Costume Box
+Kotak yang berisi kostum-kostum untuk menyambut natal. Berisi aneka macam barang-barang menarik yang sangat digemari oleh banyak masyarakat di Rune-Midgard.!
+Weight : ^7777771^000000
+#
+31311#
+Costume: Baby Penguin
+Seekor bayi penguin yang akan berjalan menuju ke hatimu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31312#
+Costume: White Eremes Scarf
+Syal berwarna putih ini menyerupai salju yang segar.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31313#
+Costume: Christmas Cat Beanie
+Penutup kepala yang hangat untuk musim dingin, lengkap dengan kuping dan buntut seperti kucing.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31314#
+Costume: White Fox Ear
+Sebuah kostum yang menyerupai kuping dari rubah putih.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31317#
+Costume: Piamette Red Hood
+Penutup kepala dari Piamette berwarna merah dengan motif yang menyeramkan.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31316#
+Costume: Parfaille Vigilante Hat
+Sebuah topi yang kamu dapatkan ketika menjadi anggota dari Parfaille Vigilante.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 26122018=================
+32301#
+Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32302#
+[PREMIUM] Kartu tanda Login Akhir Tahun 2018 Ragnarok Gravindo.
+Kamu bisa menukarkan kartu ini dengan berbagai macam hadiah menarik.
+Weight : ^7777770^000000
+#
+
+32303#
+Kembang api yang digunakan untuk merayakan tahun baru 2019 !
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 03012019=================
+32304#
+Kupon ini digunakan untuk klaim hadiah Daily Login di NPC Ossas setiap hari.
+Weight : ^7777770^000000
+#
+
+5744#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Vit +2
+Jika ditempa +7 atau lebih, ketika melakukan serangan jarak dekat, ada kemungkinan auto-cast Lv 1 Mild Wind (Earth).
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+5745#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Mdef +5.
+Meningkatkan ketahanan terhadap serangan elemen Tanah sebesar 5%
+Jika ditempa +7 atau lebih, Int +2.
+Jika ditempa +8 atau lebih, mengurangi casting time sebesar 3%.
+Jika ditempa +9 atau lebih, meningkatkan efektivitas Skill Heal dan Sanctuary sebesar 4%.
+Jika ditempa +10 atau lebih, ketika diserang, ada kemungkinan kecil untuk auto-cast Lv 5 [Hammer Fall].
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 03012019=================
+32304#
+Kupon ini digunakan untuk klaim hadiah Daily Login di NPC Ossas setiap hari.
+Weight : ^7777770^000000
+#
+
+5744#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Vit +2
+Jika ditempa +7 atau lebih, ketika melakukan serangan jarak dekat, ada kemungkinan auto-cast Lv 1 Mild Wind (Earth).
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+5745#
+Sebuah mahkota yang sangat bagus yang dibuat untuk memperingati tanda Zodiak ke 10, Capricorn sang Kambing. Ditempel batu permata Garnet, lambang dari orang yang lahir di tanda Zodiak ini.
+Dex +2, Mdef +5.
+Meningkatkan ketahanan terhadap serangan elemen Tanah sebesar 5%
+Jika ditempa +7 atau lebih, Int +2.
+Jika ditempa +8 atau lebih, mengurangi casting time sebesar 3%.
+Jika ditempa +9 atau lebih, meningkatkan efektivitas Skill Heal dan Sanctuary sebesar 4%.
+Jika ditempa +10 atau lebih, ketika diserang, ada kemungkinan kecil untuk auto-cast Lv 5 [Hammer Fall].
+Class : ^777777Headgear^000000 Defense : ^7777773^000000
+Location: ^777777Upper ^000000 Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 15012019=================
+20860#
+Sebuah replika jubah yang dipakai oleh Raja Amatsu. Ketika dipakai, kamu akan bisa bergerak secara cepat.
+Flee +10, Aspd +3%.
+Dapat menggunakan Level 3 [Double Attack]
+Dapat menggunakan Level 3 [Triple Attack]
+Jika ditempa sampai +9 atau lebih :
+Tambahan Aspd + 3%
+Tambahan Flee + 10
+Dapat menggunakan Level 5 [Double Attack]
+Dapat menggunakan Level 5 [Triple Attack]
+Jika ditempa sampai +12 atau lebih :
+Tambahan Aspd + 3%
+Tambahan Flee + 10
+Dapat menggunakan Level 10 [Double Attack]
+Dapat menggunakan Level 10 [Triple Attack]
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^77777730^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+15135#
+Sebuah jubah ritual yang nampaknya membuat naga ketakutan.
+Mdef +5.
+Tambahan Mdef +1 untuk setiap tingkat tempa.
+Mengurangi serangan dari monster jenis [Dragon] sebesar 5%
+Tambahan pengurangan serangan dari monster jenis [Dragon] sebesar 1% untuk setiap tingkat tempa.
+Class : ^777777Armor^000000 Def : ^77777730^000000
+Weight : ^777777120^000000
+Required Level : ^77777770^000000
+Jobs : ^777777All^000000
+#
+15130#
+Baju zirah yang dipakai petarung untuk melindungi mereka dari naga yang sangat besar.
+Menambahkan serangan fisik kepada monster jenis [Dragon] sebesar 3%
+Tambahan serangan fisik kepada monster jenis [Dragon] sebesar 1% untuk setiap tingkat tempa diatas +5.
+Class : ^777777Armor^000000 Def : ^77777730^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Jobs : ^777777All^000000
+#
+20932#
+Benda yang digunakan oleh pemuka keyakinan Morocc kuno. Ini sangat enteng dan sejuk.
+Flee +10, Max HP +5%.
+Jika tingkat tempa +7 atau lebih, tambahan Flee +20
+Jika tingkat tempa +10 atau lebih, tambahan Flee +30 dan memulihkan 100% HP dan SP ketika dibangkitkan kembali.
+Jika tingkat tempa +11 atau lebih, tambahan Flee + 40.
+Jika tingkat tempa +12 atau lebih, tambahan Dodge + 25.
+
+^777777[Set bonus dengan Osiris Card]:^000000
+Tambahan Max HP + 15%
+Mengurangi serangan yang diterima dari elemen [Fire] sebesar 30%
+Mengurangi serangan yang diterima dari elemen [Shadow] sebesar 50%
+Anti terhadap status [Curse].
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Jobs : ^777777All 3rd Job^000000
+#
+2598#
+Sebuah jubah yang berisi kekuatan dari orang mati.
+Mengurangi serangan yang diterima dari properti [Undead] sebesar 5%
+Meningkatkan serangan yang diterima dari [Demi-Human] sebesar 5%
+Class : ^777777Garment^000000 Def : ^7777770^000000
+Weight : ^77777770^000000
+Required Level : ^77777765^000000
+Jobs : ^777777All^000000
+#
+22051#
+Meningkatkan Drop Rate sebesar 10% jika dalam masa Premium Service.
+Max HP + 1% setiap tingkat tempa.
+Max SP + 1% setiap tingkat tempa.
+Mengurangi serangan dari monster jenis [Undead] sebesar 5%
+Class : ^777777Sepatu^000000 Def : ^77777712^000000
+Weight : ^77777725^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+28929#
+Sebuah tameng yang membuat penggunanya merasa sangat senang.
+Mdef +10.
+^777777Set bonus dengan Arnoldi Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Plant] sebesar 5%.
+
+^777777Set bonus dengan Anubis Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Angel] sebesar 5%.
+
+^777777Set bonus dengan Bigfoot Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Insect] sebesar 5%.
+
+^777777Set bonus dengan Khalitzburg Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demon] sebesar 5%.
+
+^777777Set bonus dengan Orc Warrior Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Brute] sebesar 5%.
+
+^777777Set bonus dengan Penomena Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Formless] sebesar 5%.
+
+^777777Set bonus dengan Rafflesia Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Fish] sebesar 5%.
+
+^777777Set bonus dengan Sky Petite Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Dragon] sebesar 5%.
+
+^777777Set bonus dengan Teddy Bear Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Undead] sebesar 5%.
+
+^777777Set bonus dengan Thara Frog Card:^000000
+Meningkatkan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Jika tingkat tempa Happy Shield +6 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Jika tingkat tempa Happy Shield +8 atau lebih:
+Tambahan peningkatan Experience yang didapatkan dari monster jenis [Demi-Human] sebesar 5%.
+Class : ^777777Shield^000000 Def : ^777777150^000000
+Weight : ^777777350^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+
+#
+31318#
+Sarung tangan yang disediakan dari Prontera. Penggunanya akan tidak terkalahkan.
+Aspd +5%.
+Mengurangi serangan yang diterima dari jenis [Demi-Human] sebesar 3%.
+Mengurangi serangan yang diterima yang berlemen [Fire], [Water], [Wind], [Earth] sebesar 5%.
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^777777350^000000
+Required Level : ^77777790^000000
+Jobs : ^777777All^000000
+#
+
+31319#
+Kotak spesial untuk Awal Tahun 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Heart Wing Hairband [1]
+Love Piece
+Toy Syringe
+Battle Surcoat [1]
+Dragon Cloth [1]
+Dragon Mail [1]
+Old Morroc Shawl [1]
+Etran Shirt [1]
+Lamor Manteau [1]
+Lamor Shoes [1]
+Lamor Shield [1]
+Happy Shield [1]
+Prontera Militia Glove [1]
+Gyges Ring [1]
+25 Enriched Oridecon Box
+25 Enriched Elunium Box
+5 Battle Manual X3
+8 Job Battle Manual
+^000000
+Berat : ^7777771^000000
+#
+
+31320#
+Kotak yang berisi kostum spesial untuk Awal Tahun 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Cloud Burst
+Costume: Fluffy Angel Cape
+Costume: Dark Blinker
+Costume: Rosary Necklace
+Costume: Poring Muffler
+Costume: Valkyrie Circlet
+Costume: False Ears
+Costume: Make US Great Again
+Costume: Dark Elves Ears
+Costume: Under Rim Glasses
+^000000
+Berat : ^7777771^000000
+#
+
+31321#
+Costume: Fluffy Angel Cape
+Sebuah penutup bahu yang sangat nyaman dipakai. Kamu akan terlihat seperti malaikat jika memakai ini.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31322#
+Costume: Dark Blinker
+Sebuah penutup mata yang mempunyai kekuatan sihir.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31323#
+Costume: Rosary Necklace
+Sebuah rosario suci yang mendapat kekuatan dari titisan Dewa. Kalung ini berisi kekuatan misterius.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31324#
+Costume: Poring Muffler
+Sebuah syal penghangat yang berbentuk poring lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31325#
+Costume: Valkyrie Circlet
+Sebuah circlet suci  yang melambangkan murid Valkyrie yang menghukum orang-orang jahat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31326#
+Costume: False Ears
+Kostum yang menyerupai kuping manusia yang sesungguhnya.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31327#
+Costume: Make US Great Again
+Topi yang melambangkan semangat persatuan di Negeri Paman Sam!
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31328#
+Costume: Dark Elves Ears
+Kostum yang menyerupai kuping dark elf.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 22012019=================
+31331#
+Kostum Spesial Perayaan 15 Tahun Ragnarok Online 
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31332#
+Costume: Dark Snake Lord Stall
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31333#
+Costume: Large Sorcerer Crown
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31334#
+Costume: Fox
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31335#
+Costume: Forest Guide
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31336#
+Costume: Medium Wave
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31337#
+Costume: Kishu Inu
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31338#
+Costume: Giant Cat Bag
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31339#
+Costume: Princess Ribbon Crown
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31340#
+Costume: Variant Veil
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31341#
+Costume: Protect Cloth
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31342#
+Godly Material Box
+Kotak yang berisi berbagai macam bahan Godly Item
+Berat :^7777770^000000
+#
+31343#
+Invincible Shield Box
+Box yang berisi perisai terkuat di Rune-Midgard
+Jika dibuka akan memberikan Perisai (Permanen) secara Acak,
+antara lain sbb :
+
+Imuke Upper Shield [1]
+Scutum [1]
+Ancient Shield of Aeon [1]
+Immuned Shield [1]
+
+Berat :^7777770^000000
+#
+31344#
+Blessed Refinement Box
+Box yang berisi bahan tempa, konon kotak ini hanya sebuah legenda.
+Kotak ini berisi :
+
+1 Buah Safe to +6 Armor Refine Ticket
+1 Buah Safe to +6 Weapon Refine Ticket
+4 Buah Blessed Armor Ore
+4 Buah Blessed Weapon Ore
+
+Berat :^7777770^000000
+#
+31345#
+Extreme Refinement Box
+Box yang berisi bahan tempa, konon kotak ini hanya sebuah legenda.
+Kotak ini berisi :
+
+1 Buah Safe to +6 Armor Refine Ticket
+1 Buah Safe to +6 Weapon Refine Ticket
+10 Buah Blessed Armor Ore
+10 Buah Blessed Weapon Ore
+
+Berat :^7777770^000000
+#
+31346#
+Mythical Costume Pack
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C Dark Snake Lord Stall
+C Large Sorcerer Crown
+C Fox
+
+Berat :^7777770^000000
+#
+31347#
+Autumn Party Costume Pack
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C. Forest Guide Upper
+C. Medium Wave 
+C. Kishu Inu
+
+Berat :^7777770^000000
+#
+31348#
+Holy Dark Costume Scroll
+Box yang berisi Costume Headgear Limited (Permanen) secara Acak,
+antara lain sbb :
+
+C. Giant Cat Bag
+C. Princess Ribbon Crown
+C. Variant Veil
+
+Berat :^7777770^000000
+#
+31349#
+Garment Costume Box
+Jika dibuka, kamu bisa mendapatkan salah satu dari kostum sayap berikut ini :
+
+1. Costume Swordwing
+2. Costume Gold Archangel Wing
+3. Costume Great Devil Wing
+4. Costume Uriel Wing
+5. Costume Michael Wing
+6. Costume Gabriel Wing
+
+Berat :^7777770^000000
+#
+
+31350#
+Costume: Gabriel Wing
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Garment ^000000 Weight : ^7777770^000000
+Required Lv. : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+
+//====================update 31012019=================
+19269#
+Happy Flapping Angel Wing
+Penutup kepala yang menyerupai sayap dari bidadari kebahagiaan. Membuat kamu terasa lebih ringan ketika memakainya.
+Meningkatkan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
+Mengurangi serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
+Memberikan kemungkinan untuk menjatuhkan Witched Starsand ketika monster Clock Tower or Nightmare Clock Tower dikalahkan.
+Jika tingkat tempa +5 atau lebih, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
+Jika tingkat tempa +5 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
+Jika tingkat tempa +7 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+Jika tingkat tempa +7 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+Jika tingkat tempa +8 or higher, anti Stone Curse.
+Jika tingkat tempa +9 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 20%.
+Jika tingkat tempa +9 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 20%
+
+Class : ^777777Headgear^000000 Def : ^7777772^000000
+Location : ^777777Upper^000000 Weight : ^77777750^000000
+Required Level : ^77777730^000000
+Jobs : ^777777All^000000#
+
+20846#
+Temporal Manteau
+Sebuah mantel yang dibuat sudah sangat lama tetapi masih terlihat baru.
+
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Agi Boots
+Max HP + 15%
+Mdef + 10
+Aspd + 5%
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Dex Boots
+Max HP + 15%
+Mdef + 10
+Meningkatkan serangan jarak jauh sebesar 5%.
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Int Boots
+Max HP + 15%
+Matk + 30
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Luk Boots
+Max HP + 15%
+Mdef + 10
+Meningkatkan serangan kritikal sebesar 5%.
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Str Boots
+Max HP + 15%
+Atk + 30
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+^777777Set Bonus^000000
+Temporal Manteau
+Temporal Vit Boots
+Max HP + 15%
+Mdef + 10
+Mengurangi serangan yang diterima dari Demi-Human sebesar 5%
+Meningkatkan efektivitas item healing sebesar 10%
+
+Class : ^777777Garment^000000 Def : ^77777738^000000
+Weight : ^77777740^000000
+Required Level : ^77777730^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+20800#
+Enforcer Cape
+Mantel yang sudah bersimbah darah ini mengeluarkan aura yang sangat buruk.
+Mengurangi delay skill sebesar 5%.
+Jika [Grimtooth] mencapai level maksimum,
+Meningkatkan serangan skill [Grimtooth] sebesar 50%.
+Jika tingkat tempa +7 atau lebih, tambahan pengurangan delay skill sebesar 3%.
+Tambahan peningkatan serangan skill [Grimtooth] sebesar 1% untuk setiap level.
+Jika tingkat tempa +9 atau lebih, Max SP + 5%, tambahan pengurangan delay skill sebesar 3%.
+^777777Guillotine Cross Bonus^000000
+Max HP + 15%
+Mengurangi serangan jarak jauh yang diterima sebesar 20%.
+Jika tingkat tempa +7 atau lebih, tambahan Max HP + 5%
+Tambahan pengurangan serangan jarak jauh yang diterima sebesar 15%.
+^777777Set Bonus^000000
+Enforcer Cape
+Horn Card
+Menghilangkan efek dari Horn Card, Mengurangi serangan jarak jauh yang diterima sebesar 35%.
+^777777Set Bonus^000000
+Enforcer Cape
+Imuke Upper Shield
+Menghilangkan efek dari Imuke Upper Shield, Mengurangi serangan jarak jauh yang diterima sebesar 35%.
+
+Class : ^777777Garment^000000 Def : ^77777718^000000
+Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+22134#
+Enforcer Shoes
+Sepatu yang sudah bersimbah darah ini mengeluarkan aura yang sangat buruk.
+Max HP + 3%, Max SP + 3%.
+Dapat menggunakan [Power Maximize] Lv 1
+Mengurangi penggunaan SP dari [Meteor Assault] sebesar 8
+Jika tingkat tempa +7 atau lebih:
+Tambahan Max HP + 7%
+Tambahan Max SP + 7%
+Meningkatkan serangan [Meteor Assault] sebesar 1% untuk setiap level.
+Jika tingkat tempa +9 atau lebih:
+Tambahan Max HP + 10%
+Tambahan Max SP + 10%
+Atk + 4% untuk setiap level skill [Weapon Crush].
+Mengurangi variabel cast time dari [Meteor Assault] sebesar 7% untuk setiap level [Counter Slash], [Weapon Blocking] dan [Weapon Crush].
+Mengurangi cooldown [Hallucination Walk] sebesar 5 detik untuk setiap level [Weapon Blocking].
+Mengabailam 4% hard defense dari monster biasa, boss dan pemain ketika menyerang secara fisik untuk setiap level [Counter Slash].
+Tambahan peningkatan serangan dari [Meteor Assault] sebesar 30% untuk setiap level [Poison React].
+
+Class : ^777777Shoes^000000 Def : ^77777712^000000
+Weight : ^77777740^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Jobs^000000#
+
+31351#
+Costume: Overprotector
+Topi yang dirancang melindungi kepala dengan rapat.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31352#
+Costume: Chung E Shinyon Cap
+Sebuah penata rambut yang di design khusus untuk anak-anak di tiongkok
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31353#
+Costume: Copper Dragonhelm
+Sebuah Headgear simbol dari tahun baru tiongkok 2013 jika digunakan kamu akan menyerupai seperti naga legendaris.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31354#
+Costume: Protect_Feathers
+Sebuah penutup kepala yang dihias dengan bulu dan dirancang untuk melindungi bagian belakang kepala.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31355#
+Costume: Sailor_Collar
+Sebuah kerah pelaut yang sangat lucu.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31356#
+Costume: Golden_Savage_Hat
+Sebuah penutup kepala berbentuk babi yang diwarnai emas. Rumornya bisa membawa keberuntungan.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31357#
+Costume: Blessing_Sky_Lantern
+Lampion ini jika dilepaskan dapat membawa keberuntungan dan umur panjang.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31358#
+Costume: Pink_Butterfly_Wing
+Kostum sayap kupu-kupu yang cantik.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31359#
+Lunar_Festive_Box
+Kotak spesial untuk menyambut Lunar New Year 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Kardui Ears
+Hero Mask
+Happy Flapping Angel Wing [1]
+Drake Coat [1]
+Evil Dragon Armor [1]
+Kirin Armor [1]
+Bravery Bag [1]
+Temporal Manteau [1]
+Enforcer Cape [1]
+Enforcer Shoes [1]
+Fairy Leaf Powder [1]
+King Spirit's Ring [1]
+25 Enriched Oridecon Box
+25 Enriched Elunium Box
+5 Battle Manual X3
+8 Job Battle Manual^000000
+Berat : 0 #
+31360#
+Fabulous_Lunar_Costume_Box
+Kotak yang berisi kostum spesial untuk menyambut Lunar New Year 2019.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Pink Butterfly Wing
+Costume: Super Cute Doge
+Costume: Overprotector
+Costume: Chung E Shinyon Cap
+Costume: Copper Dragonhelm
+Costume: Protect_Feathers
+Costume: Sailor_Collar
+Costume: Golden_Savage_Hat
+Costume: Blessing_Sky_Lantern
+Costume: Shine Santa Poring
+^000000
+Berat : ^7777770^000000
+
+#
+31361#
+Enriched Oridecon Pack 1
+Kotak yang berisi :
+100 Enriched Oridecon
+10 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31362#
+Enriched Elunium Pack 1
+Kotak yang berisi :
+100 Enriched Elunium
+10 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31363#
+HD Bradium Pack 1
+Kotak yang berisi :
+100 HD Bradium
+8 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31364#
+HD Carnium Pack 1
+Kotak yang berisi :
+100 HD Carnium
+8 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31365#
+Enriched Oridecon Pack 2
+Kotak yang berisi :
+100 Enriched Oridecon
+5 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31366#
+Enriched Elunium Pack 2
+Kotak yang berisi :
+100 Enriched Elunium
+5 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31367#
+HD Bradium Pack 2
+Kotak yang berisi :
+100 HD Bradium
+3 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31368#
+HD Carnium Pack 2
+Kotak yang berisi :
+100 HD Carnium
+3 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31369#
+Enriched Oridecon Pack 50
+Kotak yang berisi :
+50 Enriched Oridecon
+1 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31370#
+Enriched Elunium Pack 50
+Kotak yang berisi :
+50 Enriched Elunium
+1 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31371#
+HD Bradium Pack 20
+Kotak yang berisi :
+20 HD Bradium Pack
+2 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31372#
+HD Carnium Pack 20
+Kotak yang berisi :
+20 HD Carnium
+2 Mad Bunny Scroll
+Berat : ^7777771^000000
+#
+
+31373#
+Costume: Super Cute Doge
+Wow. Such fluff, much cute. Wow.
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle,Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+
+//====================update 07022019=================
+31374#
+Lovey Dovey Costume Box
+Kotak yang berisi kostum spesial untuk menyambut Hari Kasih Sayang.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Memory of Lovers
+Costume: Large Ribbon Scarf Red
+Costume: Two Tone Beret
+Costume: Angel Mini Silk Hat
+Costume: Alice Wig Pink
+Costume: Shrine Maiden Hat
+Costume: Lolita Two Side
+Costume: Magical Feather
+Costume: Piamette Roll Hair
+Costume: Love Feeling
+^000000
+Berat : ^7777770^000000
+#
+31375#
+Costume: Memory Of Lover
+
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31376#
+Costume: Alice Wig Pink
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31377#
+Costume: Love Feeling
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31378#
+Costume: Angel Mini Silk Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31379#
+Costume: Large Ribbon Scarf Red
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+20463#
+Costume: Two Tone Beret
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31380#
+Costume: Piamette Roll Hair
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31381#
+Costume: Lolita Two Side
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31382#
+Costume: Shrine Maiden Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5338#
+Penutup kepala dengan iklan pencarian pasangan pria. Tidak perlu ke website pencari jodoh. Pakai ini saja dasar jomblo.
+Class : ^777777Heaggear^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+5346#
+Penutup kepala dengan iklan pencarian pasangan wanita. Tidak perlu ke website pencari jodoh. Pakai ini saja dasar jomblo.
+Class : ^777777Heaggear^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #

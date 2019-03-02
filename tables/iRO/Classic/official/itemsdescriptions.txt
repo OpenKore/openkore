@@ -71927,3 +71927,160 @@ It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20070#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pink Beanie!
+300 Fabric
+150 Burning Hair
+2 Scarlet Dyestuffs
+2 White Dyestuffs
+1 Pink Beanie Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20071#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Rudolph Santa Hat!
+200 Fabric
+100 Skel-Bones
+50 Sea-Otter Fur
+2 Scarlet Dyestuffs
+1 Rudolph Santa Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20072#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Big Golden Bell!
+200 Mould Powder
+100 Fabric
+50 Iron
+2 Gold
+1 Evolved Big Golden Bell Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20073#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Pair of Red Ribbon!
+200 Fabric
+100 Powder of Butterfly
+50 Burning Hair
+1 Scarlet Dyestuffs
+1 Evolved Pair of Red Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20074#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Capricon Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+25 Garnet
+1 Capricon Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20075#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gryphon Hat!
+300 Feathers
+200 Feather of Birds
+100 Powder of Butterfly
+2 Spiritual Crystals (Rhyncho)
+1 Gryphon Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20076#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Lif Doll Hat!
+200 Fabric
+100 Golden Hair
+50 Powder of Butterfly
+1 Hung Doll
+1 Darkgreen Dyestuffs
+1 Lif Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20077#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Bf Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Bf Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20078#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gf Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Gf Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20079#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Scorpio Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+1 Gemstone
+100 Topaz
+1 Scorpio Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20080#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Vintage Orc Helm!
+200 Feathers
+100 Animal Skins
+50 Dust Pollutant
+50 Sticky Mucus
+5 Gold
+1 Vintage Orc Helm Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#

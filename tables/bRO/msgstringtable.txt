@@ -2494,12 +2494,12 @@ Esta Arma não é adequada para o tipo de Projétil equipado.#
 Este Projétil não é adequado para o tipo de Arma equipada.#
 the item is not register to sell. Please register the item you want to sell#
 ITEM#
-You cannot use the Guild storage.#
-You are not join in any guild. Please try again after joining guilds.#
-Other guild member is using it. Please try later.#
-Storage autority#
-Guild Storage#
-You have no right to use the Guild Storage.#
+Você não pode utilizar o Armazém do Clã.#
+Você não faz parte de um Clã. Tente novamente após se juntar a um Clã.#
+Outro membro do Clã está usando o sistema. Tente novamente mais tarde.#
+Autorização#
+Armazém do Clã#
+Você não possuí autorização para usar o Armazém do Clã.#
 Limited item sales registration window#
 Item DB name#
 item DB no.#
@@ -2537,17 +2537,17 @@ The warp spot cannot be memorized in current position.#
 Item cannot be purchased due to the bag's overweight.#
 No.#
 item#
-count#
-Name#
-Time#
-Withdraw#
-the log is not exist.#
-Entire#
-Put#
-Out#
-Guild storage list#
-List only shows recent 100 items.#
-Guild Storage is closing after 2 min of usage.#
+Quant#
+Jogador#
+Data#
+Remoção#
+Não existe log nesse período.#
+Completo#
+Adição#
+Remoção#
+Lista do Armazém do Clã#
+A lista só monstra os 100 itens mais recentes.#
+O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
 %s [%doption] : %d #
 Moedas são necessárias.#
@@ -2562,7 +2562,7 @@ Histórico da Compra#
 Um lança granada deve estar equipado.#
 Não pode ser usada junto com [Furor], [Proteção Platina] e [Pânico do Justiceiro].#
 This skill cannot be used in this map.#
-When you are using the guild storage, all the items in the storage will be disappeared.#
+Todos os itens contido no Armazém de Clã serão excluídos e não podem ser recuperados.#
 http://ragnarok.gamesamba.com/#
 Enter your password to log in#
 Pet evolution#
@@ -2585,32 +2585,32 @@ Renewed#
 %d days ago#
 %d%% ( Premium %d%% + %s Server )#
 Enviando carta#
-Mail sent#
+Carta Enviada#
 O item foi movido para o seu inventário.#
-Item claim has been failed.#
-Please clear the inventory.#
+Falha o tentar receber o item.#
+Por Favor, limpe o inventário.#
 Zeny adquirido.#
-Zeny claim has been failed.#
-Zeny maximum exceeded#
-Item attachment success#
-Addressee is required.#
+Falha ao retirar os Zenys.#
+Limite máximo de Zeny excedido#
+Item anexado com sucesso.#
+É necessário digitar um destinatário.#
 Title should be 4 to 24 chracters long.#
-Mail deilvery has been failed.#
-Delivery failed due to the improper item.#
-Inexistent addressee#
+Falha no envio da Carta.#
+Envio falhou devido a item impróprio.#
+Personagem não existe#
 %s [%d options]#
 Please fill out 1 to %d numerical value for level.#
 Inventory clearance needed#
 Sistema em Desenvolvimento --EM BREVE-- #
-You cannot open the mail#
+Você não pode abrir essa carta#
 Você já pertence a um Clã.#
 Gold PC cafe point information#
 Taking off the pet accessory allows you to evolve the pet.#
-In %d minutes#
-In %d hours#
-In %d days#
-Press CHECK NAME button to check the C-CODE.#
-You can delete it after claiming all the attachments.#
+In %d minutos#
+In %d horas#
+In %d dias#
+Clique no botão Conferir antes de Enviar a Carta.#
+Você poderá deletá-la após retirar todos os anexos.#
 You cannot attach more Zeny than that you have#
 Charge: %s Zeny#
 Inexistent addressee#
@@ -2627,8 +2627,8 @@ You cannot use Vending function.#
 Summonee is short of SP#
 %s/%s#
 Length of mail should be less than 1K#
-Item attachment has been failed.#
-Maximum item weights for mail has been exceeded.#
+Falha na anexação do item.#
+Limite de Peso para Itens foi excedido.#
 "Under service. Please try again in a moment.#
 You cannot open Lucky Roulette window.#
 You cannot close Lucky Roulette window.#
@@ -2695,13 +2695,13 @@ Please make more than 5 item slots in the inventory.#
 E X P: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
-Maximum number of item attachments has been exceeded.#
+Limite de Itens anexados foi excedido.#
 Alarms when purchasing items#
 This item is banned to attach#
 Drawing the blank in the previous roulette, you cannot play the higher roulette.#
-Write reply#
-Read mail#
-Delete mail#
+Escrever Resposta#
+Carta Lida#
+Deletar Carta#
 Xianbei: %d#
 %s %s Xianbei#
 Xianbei#
@@ -2728,13 +2728,13 @@ Limited price: %s Xianbei#
 RODEX#
 ENVIAR#
 RECEBER#
-Please close the mail writing window.#
+Feche a janela do Rodex, Por Favor.#
 Server access denied(A)#
 Server access denied(B)#
 You should disarm the equipped arrows/bullets.#
 An item has been consumed in the inventory. RODEX writing window will be closed.#
 You don't have Magnifier.#
-To drop items, please close the mail writing window first.#
+Para dropar itens, por favor feche a janela do Rodex.#
 The opponent has already requested you to be a friend.#
 SCRIPT ERROR AID#
 \nErrorfile : %s\nErrorLine : %d lines\nErrorContent: \n*Previous line: %s \n*Errorline : %s \n*Next line:\n %s#
@@ -2848,11 +2848,11 @@ Message#
 Notice#
 Returned#
 Refresh#
-%dMinute(s)#
-%dHour(s)#
-%dDay(s)#
+%dMinuto(s)#
+%dHora(s)#
+%dDia(s)#
 Return#
-Do you want to delete the selected mails?#
+Você deseja deletar as Cartas selecionadas?#
 Show Location#
 Zoom In#
 Zoom Out#
@@ -2893,7 +2893,7 @@ Please use Enter key to set the range.#
 E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
-Sent to the re-named character. Changed character name : %s #
+Destinatário da Carta teve o nome alterado. A carta foi enviada para : %s #
 Necessary materials to combine#
 Not enough materials to combine.#
 %d number of materials required.#
@@ -3543,7 +3543,7 @@ Você não possui o Item de Acesso ao Valhalla#
 Deletar#
 Responder#
 Enviar#
-Conferir#
+Verificar#
 Notícias#
 Entrada#
 Enviados#

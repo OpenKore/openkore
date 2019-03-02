@@ -18,7 +18,8 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index getQuestStatus);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght get_pattern find_variable get_key_or_index getQuestStatus
+	find_hash_and_get_keys find_hash_and_get_values);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -931,14 +932,18 @@ sub next {
 		
 	##########################################
 	# set variable: variable = value
-	if ($self->{current_line} =~ /^($general_variable_qr)/i) {
+	if ($self->{current_line} =~ /^$general_variable_qr/i) {
 		my $line = $self->{current_line};
 		
 		my $variable;
 		my $value;
-		if ($line =~ /^(\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)\s*([+-]{2}|=\s*(.*))/) {
+		if ($line =~ /^($general_wider_variable_qr)\s*([+-]{2}|=\s*.*)/) {
 			$variable = $1;
 			$value = $2;
+			if ($variable =~ /^[\$\@\%]\./) {
+				$self->error("You can't change the value of read-only variables");
+				return;
+			}
 		} else {
 			$self->error("Could not separate variable name from value");
 			return;
@@ -1004,7 +1009,6 @@ sub next {
 			}
 		
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
-			
 			if ($value =~ /^=\s*(.*)/i) {
 				my $value = $1;
 				
@@ -1033,54 +1037,12 @@ sub next {
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
 					
-				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(([^\)]+)\)$/) {
-					my ($pattern, $var_str) = parseArgs("$1", undef, ',');
-					$var_str =~ s/^\s+|\s+$//gos;
-					my $split_var;
-					
-					my $var_hash = $self->find_and_define_key_index($var_str);
-					return if (defined $self->error);
-					
-					if ($var_hash) {
-						$split_var = $var_hash->{var};
-					} else {
-						$split_var = find_variable($var_str);
-						
-						return if (defined $self->error);
-						
-						if (!defined $split_var) {
-							$self->error("Could not define variable type");
-							return;
-						}
-					}
-					
-					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
-    
-				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
-					my $type = $1;
-					my $var2 = find_variable($2);
-					if (defined $self->error) {
-						return;
-					} elsif (!defined $var2) {
-						$self->error("Could not define variable type in keys/values array setting");
-						return;
-					}
-					
-					my @new_array;
-					if ($type eq 'keys') {
-						@new_array = @{$eventMacro->get_hash_keys($var2->{real_name})};
-						
-					} elsif ($type eq 'values') {
-						@new_array = @{$eventMacro->get_hash_values($var2->{real_name})};
-					}
-					
-					$eventMacro->set_full_array($var->{real_name}, \@new_array);
 				} elsif ($value =~ /\w+\s*\(.*\)$/) {
 					my $real_value = $self->parse_command($value);
-					
 					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
+						
+						#if is a array ref, have to convert into a hash ref
 						if (ref($real_value) eq 'ARRAY') {
-							#if is a array ref, have to convert into a hash ref
 							my %hash = @{$real_value};
 							$real_value = \%hash;
 						}
@@ -1814,6 +1776,10 @@ sub resolve_statement {
 	$first =~ s/^"(.+)"$/\1/;
 	$last  =~ s/^"(.+)"$/\1/;
 	
+	#remove backslashes
+	$first =~ s/\\([\/\"\'])/\1/;
+	$last  =~ s/\\([\/\"\'])/\1/;
+	
 	my ($parsed_first, $parsed_last);
 	
 	
@@ -2105,8 +2071,8 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		
-		# first parse _then_ substitute. slower but safer
-		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift' && $keyword ne 'exists' && $keyword ne 'delete' && $keyword ne 'defined') {
+		#if $keyword is different of every key inside qw(), then we will substitue variables
+		unless (grep{$_ eq $keyword} qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
 		}
 		my $only_replace_once = 0;
@@ -2197,6 +2163,17 @@ sub parse_command {
 		} elsif ($keyword eq 'strip') {
 			$parsed =~ s/\(|\)//g;
 			$result = $parsed;
+			
+		} elsif ($keyword eq 'split') {
+			my ($pattern, $string) = get_pattern($inside_brackets);
+			my @values = split($pattern, $self->substitue_variables($string));
+			$result = join (',', @values);
+			
+		} elsif ($keyword eq 'keys') {
+			$result = join ',', find_hash_and_get_keys($inside_brackets);;
+			
+		} elsif ($keyword eq 'values') {
+			$result = join ',', find_hash_and_get_values($inside_brackets);
 			
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
