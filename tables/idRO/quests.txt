@@ -11785,6 +11785,7 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19268#Tatacho Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Tatacho ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
 // -- DAILY QUEST 24 : 21 November 2018 --
 19269#Stem Worm Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Rookie Turn-in : Kalahkan ^ff0000400 Monster Stem Worm ^000000 #
@@ -11805,6 +11806,7 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19273#Agav Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Agav ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
 
 // -- Thanksgiving 2018 : 21 November 2018 --
 19276#Thanksgiving Quest Cooldown#LG_RAGEBURST#QUE_NOIMAGE#
@@ -11847,6 +11849,7 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Rake Scaraba ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 
+
 // -- DAILY QUEST 27 : 11 Desember 2018 --
 
 19285#Goat Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
@@ -11869,3 +11872,47 @@ Kembali lah lagi setelah tengah malam#
 19289#New Year Login Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
 New Year Login Cooldown - Kamis#
 Kembali lah lagi setelah tengah malam#
+
+// -- DAILY QUEST 28 : 12 Februari 2019 --
+
+19290#Kapha Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Kapha ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19291#Aliza Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Aliza ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19292#Engkanto Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Engkanto ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19293#Incarnation Morocc (Golem) Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Incarnation Morocc (Golem) ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19294#Pom Spider Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Pom Spider ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 29 : 19 Februari 2019 --
+
+19295#Grand Peco Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Grand Peco ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19296#Zombie Prisoner Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Zombie Prisoner ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19297#Dullahan Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Dullahan ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19298#Ragged Zombie Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Ragged Zombie ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19299#Little Fatum Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Little Fatum ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
