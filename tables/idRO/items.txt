@@ -8564,3 +8564,16 @@
 31380#Costume: Piamette Roll Hair#
 31381#Costume: Lolita Two Side#
 31382#Costume: Shrine Maiden Hat#
+
+//====================update 25022019=================
+31383#Costume: Kururinpa Hair#
+31384#Costume: Fluffy_Semi_Long#
+31385#Costume: Alchemist_Square_Bag#
+31386#Costume: Maiden_Twin_Ribbon#
+31387#Costume: Heart_Wing_Band#
+31388#Costume: Shoulder_Riding_Poring#
+31389#Costume: Night_Protector#
+31390#Costume: Poring_Soap_Pipe#
+31391#Costume: Charming_Ribbon#
+31392#Costume: Monochrome_Ribbon#
+31393#Girls Love Selection Egg#

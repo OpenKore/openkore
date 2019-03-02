@@ -51448,3 +51448,92 @@ Location : ^777777Upper^000000 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+
+//====================update 25022019=================
+31383#
+Costume: Kururinpa Hair
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31384#
+Costume: Fluffy_Semi_Long
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31385#
+Costume: Alchemist_Square_Bag
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31386#
+Costume: Maiden_Twin_Ribbon
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31387#
+Costume: Heart_Wing_Band
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31388#
+Costume: Shoulder_Riding_Poring
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31389#
+Costume: Night_Protector
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31390#
+Costume: Poring_Soap_Pipe
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31391#
+Costume: Charming_Ribbon
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31392#
+Costume: Monochrome_Ribbon
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31393#
+Girls Love Selection Egg
+Kotak yang berisi kostum spesial untuk menampilkan sisi cute dari seorang gadis.
+Jika dibuka, kamu bisa mendapatkan salah satu dari item dibawah ini :
+^777777Costume: Kururinpa Hair
+Costume: Fluffy_Semi_Long
+Costume: Alchemist_Square_Bag
+Costume: Maiden_Twin_Ribbon
+Costume: Heart_Wing_Band
+Costume: Shoulder_Riding_Poring
+Costume: Night_Protector
+Costume: Poring_Soap_Pipe
+Costume: Charming_Ribbon
+Costume: Monochrome_Ribbon
+Girls Love Selection Egg^000000
+Berat : ^7777770^000000
+#
