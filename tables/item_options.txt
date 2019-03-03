@@ -1,0 +1,204 @@
+# see kRO client: data.grf\luafiles514\lua files\Datainfo\addrandomoptionnametable.lub
+# example: https://github.com/zackdreaver/ROenglishRE/blob/master/data/luafiles514/lua%20files/datainfo/addrandomoptionnametable.lub
+VAR_MAXHPAMOUNT#MaxHP +%d#
+VAR_MAXSPAMOUNT#MaxSP +%d#
+VAR_STRAMOUNT#STR +%d#
+VAR_AGIAMOUNT#AGI +%d#
+VAR_VITAMOUNT#VIT +%d#
+VAR_INTAMOUNT#INT +%d#
+VAR_DEXAMOUNT#DEX +%d#
+VAR_LUKAMOUNT#LUK +%d#
+VAR_MAXHPPERCENT#MaxHP +%d%%#
+VAR_MAXSPPERCENT#MaxSP +%d%%#
+VAR_HPACCELERATION#HP regen +%d%%#
+VAR_SPACCELERATION#SP regen +%d%%#
+VAR_ATKPERCENT#ATK +%d%%#
+VAR_MAGICATKPERCENT#MATK +%d%%#
+VAR_PLUSASPD#ASPD +%d#
+VAR_PLUSASPDPERCENT#Delay after attack -%d%%#
+VAR_ATTPOWER#ATK +%d#
+VAR_HITSUCCESSVALUE#HIT +%d#
+VAR_ATTMPOWER#MATK +%d#
+VAR_ITEMDEFPOWER#DEF +%d#
+VAR_MDEFPOWER#MDEF +%d#
+VAR_AVOIDSUCCESSVALUE#FLEE +%d#
+VAR_PLUSAVOIDSUCCESSVALUE#Perfect dodge +%d#
+VAR_CRITICALSUCCESSVALUE#CRIT +%d#
+ATTR_TOLERACE_NOTHING#Neutral elemental resistance +%d%%#
+ATTR_TOLERACE_WATER#Water elemental resistance +%d%%#
+ATTR_TOLERACE_GROUND#Earth elemental resistance +%d%%#
+ATTR_TOLERACE_FIRE#Fire elemental resistance +%d%%#
+ATTR_TOLERACE_WIND#Wind elemental resistance +%d%%#
+ATTR_TOLERACE_POISON#Poison elemental resistance +%d%%#
+ATTR_TOLERACE_SAINT#Holy elemental resistance +%d%%#
+ATTR_TOLERACE_DARKNESS#Shadow elemental resistance +%d%%#
+ATTR_TOLERACE_TELEKINESIS#Ghost elemental resistance +%d%%#
+ATTR_TOLERACE_UNDEAD#Undead elemental resistance +%d%%#
+ATTR_TOLERACE_ALLBUTNOTHING#All elementals resistance +%d%%#
+DAMAGE_PROPERTY_NOTHING_USER#Neutral monster resistance +%d%%#
+DAMAGE_PROPERTY_NOTHING_TARGET#ATK +%d%% against Neutral monster#
+DAMAGE_PROPERTY_WATER_USER#Water monster resistance +%d%%#
+DAMAGE_PROPERTY_WATER_TARGET#ATK +%d%% against Water monster#
+DAMAGE_PROPERTY_GROUND_USER#Earth monster resistance +%d%%#
+DAMAGE_PROPERTY_GROUND_TARGET#ATK +%d%% against Earth monster#
+DAMAGE_PROPERTY_FIRE_USER#Fire monster resistance +%d%%#
+DAMAGE_PROPERTY_FIRE_TARGET#ATK +%d%% against Fire monster#
+DAMAGE_PROPERTY_WIND_USER#Wind monster resistance +%d%%#
+DAMAGE_PROPERTY_WIND_TARGET#ATK +%d%% against Wind monster#
+DAMAGE_PROPERTY_POISON_USER#Poison monster resistance +%d%%#
+DAMAGE_PROPERTY_POISON_TARGET#ATK +%d%% against Poison monster#
+DAMAGE_PROPERTY_SAINT_USER#Holy monster resistance +%d%%#
+DAMAGE_PROPERTY_SAINT_TARGET#ATK +%d%% against Holy monster#
+DAMAGE_PROPERTY_DARKNESS_USER#Shadow monster resistance +%d%%#
+DAMAGE_PROPERTY_DARKNESS_TARGET#ATK +%d%% against Shadow monster#
+DAMAGE_PROPERTY_TELEKINESIS_USER#Ghost monster resistance +%d%%#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#ATK +%d%% against Ghost monster#
+DAMAGE_PROPERTY_UNDEAD_USER#Undead monster resistance +%d%%#
+DAMAGE_PROPERTY_UNDEAD_TARGET#ATK +%d%% against Undead monster#
+MDAMAGE_PROPERTY_NOTHING_USER#Neutral monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_NOTHING_TARGET#MATK +%d%% against Neutral monster#
+MDAMAGE_PROPERTY_WATER_USER#Water monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_WATER_TARGET#MATK +%d%% against Water monster#
+MDAMAGE_PROPERTY_GROUND_USER#Earth monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_GROUND_TARGET#MATK +%d%% against  Earth monster#
+MDAMAGE_PROPERTY_FIRE_USER#Fire monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_FIRE_TARGET#MATK +%d%% against Fire monster#
+MDAMAGE_PROPERTY_WIND_USER#Wind monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_WIND_TARGET#MATK +%d%% against Wind monster#
+MDAMAGE_PROPERTY_POISON_USER#Poison monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_POISON_TARGET#MATK +%d%% against Poison monster#
+MDAMAGE_PROPERTY_SAINT_USER#Holy monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_SAINT_TARGET#MATK +%d%% against Holy monster#
+MDAMAGE_PROPERTY_DARKNESS_USER#Shadow monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#MATK +%d%% against Shadow monster#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#Ghost monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#MATK +%d%% against Ghost monster#
+MDAMAGE_PROPERTY_UNDEAD_USER#Undead monster magic resistance +%d%%#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#MATK +%d%% against Undead monster#
+BODY_ATTR_NOTHING#Armor element: Neutral#
+BODY_ATTR_WATER#Armor element: Water#
+BODY_ATTR_GROUND#Armor element: Earth#
+BODY_ATTR_FIRE#Armor element: Fire#
+BODY_ATTR_WIND#Armor element: Wind#
+BODY_ATTR_POISON#Armor element: Poison#
+BODY_ATTR_SAINT#Armor element: Holy#
+BODY_ATTR_DARKNESS#Armor element: Shadow#
+BODY_ATTR_TELEKINESIS#Armor element: Ghost#
+BODY_ATTR_UNDEAD#Armor element: Undead#
+RACE_TOLERACE_NOTHING#Formless monster resistance +%d%%#
+RACE_TOLERACE_UNDEAD#Undead monster resistance +%d%%#
+RACE_TOLERACE_ANIMAL#Brute monster resistance +%d%%#
+RACE_TOLERACE_PLANT#Plant monster resistance +%d%%#
+RACE_TOLERACE_INSECT#Insect monster resistance +%d%%#
+RACE_TOLERACE_FISHS#Fish monster resistance +%d%%#
+RACE_TOLERACE_DEVIL#Demon monster resistance +%d%%#
+RACE_TOLERACE_HUMAN#Demihuman monster resistance +%d%%#
+RACE_TOLERACE_ANGEL#Angel monster resistance +%d%%#
+RACE_TOLERACE_DRAGON#Dragon monster resistance +%d%%#
+RACE_DAMAGE_NOTHING#ATK +%d%% against Formless monster#
+RACE_DAMAGE_UNDEAD#ATK +%d%% against Undead monster#
+RACE_DAMAGE_ANIMAL#ATK +%d%% against Brute monster#
+RACE_DAMAGE_PLANT#ATK +%d%% against Plant monster#
+RACE_DAMAGE_INSECT#ATK +%d%% against Insect monster#
+RACE_DAMAGE_FISHS#ATK +%d%% against Fish monster#
+RACE_DAMAGE_DEVIL#ATK +%d%% against Demon monster#
+RACE_DAMAGE_HUMAN#ATK +%d%% against Demihuman monster#
+RACE_DAMAGE_ANGEL#ATK +%d%% against Angel monster#
+RACE_DAMAGE_DRAGON#ATK +%d%% against Dragon monster#
+RACE_MDAMAGE_NOTHING#MATK +%d%% against Formless monster#
+RACE_MDAMAGE_UNDEAD#MATK +%d%% against Undead monster#
+RACE_MDAMAGE_ANIMAL#MATK +%d%% against Brute monster#
+RACE_MDAMAGE_PLANT#MATK +%d%% against Plant monster#
+RACE_MDAMAGE_INSECT#MATK +%d%% against Insect monster#
+RACE_MDAMAGE_FISHS#MATK +%d%% against Fish monster#
+RACE_MDAMAGE_DEVIL#MATK +%d%% against Devil monster#
+RACE_MDAMAGE_HUMAN#MATK +%d%% against Demihuman monster#
+RACE_MDAMAGE_ANGEL#MATK +%d%% against Angel monster#
+RACE_MDAMAGE_DRAGON#MATK +%d%% against Dragon monster#
+RACE_CRI_PERCENT_NOTHING#CRIT +%d against Formless monster#
+RACE_CRI_PERCENT_UNDEAD#CRIT +%d against Undead monster#
+RACE_CRI_PERCENT_ANIMAL#CRIT +%d against Brute monster#
+RACE_CRI_PERCENT_PLANT#CRIT +%d against Plant monster#
+RACE_CRI_PERCENT_INSECT#CRIT +%d against Insect monster#
+RACE_CRI_PERCENT_FISHS#CRIT +%d against Fish monster#
+RACE_CRI_PERCENT_DEVIL#CRIT +%d against Demon monster#
+RACE_CRI_PERCENT_HUMAN#CRIT +%d against Demihuman monster#
+RACE_CRI_PERCENT_ANGEL#CRIT +%d against Angel monster#
+RACE_CRI_PERCENT_DRAGON#CRIT +%d against Dragon monster#
+RACE_IGNORE_DEF_PERCENT_NOTHING#Pierces %d%% DEF of Formless monster#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Pierces %d%% DEF of Undead monster#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#Pierces %d%% DEF of Brute monster#
+RACE_IGNORE_DEF_PERCENT_PLANT#Pierces %d%% DEF of Plant monster#
+RACE_IGNORE_DEF_PERCENT_INSECT#Pierces %d%% DEF of Insect monster#
+RACE_IGNORE_DEF_PERCENT_FISHS#Pierces %d%% DEF of Fish monster#
+RACE_IGNORE_DEF_PERCENT_DEVIL#Pierces %d%% DEF of Demon monster#
+RACE_IGNORE_DEF_PERCENT_HUMAN#Pierces %d%% DEF of Demihuman monster#
+RACE_IGNORE_DEF_PERCENT_ANGEL#Pierces %d%% DEF of Angel monster#
+RACE_IGNORE_DEF_PERCENT_DRAGON#Pierces %d%% DEF of Dragon monster#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#Pierces %d%% MDEF of Formless monster#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Pierces %d%% MDEF of Undead monster#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#Pierces %d%% MDEF of Brute monster#
+RACE_IGNORE_MDEF_PERCENT_PLANT#Pierces %d%% MDEF of Plant monster#
+RACE_IGNORE_MDEF_PERCENT_INSECT#Pierces %d%% MDEF of Insect monster#
+RACE_IGNORE_MDEF_PERCENT_FISHS#Pierces %d%% MDEF of Fish monster#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#Pierces %d%% MDEF of Demon monster#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#Pierces %d%% MDEF of Demihuman monster#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#Pierces %d%% MDEF of Angel monster#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#Pierces %d%% MDEF of Dragon monster#
+CLASS_DAMAGE_NORMAL_TARGET#ATK +%d%% against Normal monster#
+CLASS_DAMAGE_BOSS_TARGET#ATK +%d%% against Boss monster#
+CLASS_DAMAGE_NORMAL_USER#Normal monster resistance +%d%%#
+CLASS_DAMAGE_BOSS_USER#Boss monster resistance +%d%%#
+CLASS_MDAMAGE_NORMAL#MATK +%d%% against Normal monster#
+CLASS_MDAMAGE_BOSS#MATK +%d%% against Boss monster#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#Pierces %d%% DEF of Normal monster#
+CLASS_IGNORE_DEF_PERCENT_BOSS#Pierces %d%% DEF of Boss monster#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#Pierces %d%% MDEF of Normal monster#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#Pierces %d%% MDEF of Boss monster#
+DAMAGE_SIZE_SMALL_TARGET#ATK +%d%% against Small size monster#
+DAMAGE_SIZE_MIDIUM_TARGET#ATK +%d%% against Medium size monster#
+DAMAGE_SIZE_LARGE_TARGET#ATK +%d%% against Large size monster#
+DAMAGE_SIZE_SMALL_USER#Small monster resistance +%d%%#
+DAMAGE_SIZE_MIDIUM_USER#Medium monster resistance +%d%%#
+DAMAGE_SIZE_LARGE_USER#Large monster resistance +%d%%#
+DAMAGE_SIZE_PERFECT#Nullify weapon's damage size penalty#
+DAMAGE_CRI_TARGET#Critical attack +%d%%#
+DAMAGE_CRI_USER#Critical damage -%d%%#
+RANGE_ATTACK_DAMAGE_TARGET#Long range physical attack +%d%%#
+RANGE_ATTACK_DAMAGE_USER#Long range physical damage -%d%%#
+HEAL_VALUE#Healing skills +%d%%#
+HEAL_MODIFY_PERCENT#Restoration gained from Healing skills +%d%%#
+DEC_SPELL_CAST_TIME#Variable cast time -%d%%#
+DEC_SPELL_DELAY_TIME#After cast delay -%d%%#
+DEC_SP_CONSUMPTION#Reduces SP cost by %d%%#
+WEAPON_ATTR_NOTHING#Weapon element: Neutral#
+WEAPON_ATTR_WATER#Weapon element: Water#
+WEAPON_ATTR_GROUND#Weapon element: Earth#
+WEAPON_ATTR_FIRE#Weapon element: Fire#
+WEAPON_ATTR_WIND#Weapon element: Wind#
+WEAPON_ATTR_POISON#Weapon element: Poison#
+WEAPON_ATTR_SAINT#Weapon element: Holy#
+WEAPON_ATTR_DARKNESS#Weapon element: Shadow#
+WEAPON_ATTR_TELEKINESIS#Weapon element: Ghost#
+WEAPON_ATTR_UNDEAD#Weapon element: Undead#
+WEAPON_INDESTRUCTIBLE#Indestructible in battle#
+BODY_INDESTRUCTIBLE#Indestructible in battle#
+MDAMAGE_SIZE_SMALL_TARGET#MATK against Small size monster +%d%%#
+MDAMAGE_SIZE_MIDIUM_TARGET#MATK against Medium size monster +%d%%#
+MDAMAGE_SIZE_LARGE_TARGET#MATK against Large size monster +%d%%#
+MDAMAGE_SIZE_SMALL_USER#Small monster magic resistance +%d%%#
+MDAMAGE_SIZE_MIDIUM_USER#Medium monster magic resistance +%d%%#
+MDAMAGE_SIZE_LARGE_USER#Large monster magic resistance +%d%%#
+ATTR_TOLERACE_ALL#Elemental attacks resistance +%d%%#
+RACE_WEAPON_TOLERACE_NOTHING#Formless monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_UNDEAD#Undead monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_ANIMAL#Brute monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_PLANT#Plant monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_INSECT#Insect monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_FISHS#Fish monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_DEVIL#Demon monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_HUMAN#Demihuman monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_ANGEL#Angel monster resistance +%d%%#
+RACE_WEAPON_TOLERACE_DRAGON#Dragon monster resistance +%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Long range physical attack +%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#Long range physical damage -%d%%#

@@ -8715,4 +8715,18 @@ sub skill_add {
 	});
 }
 
+sub open_store_status {
+	my ($self, $args) = @_;
+	
+	if ($args->{flag} == 0) {
+		message T("Store set up succesfully\n"), 'success';
+		
+		Plugins::callHook('open_store_success');
+	} else {
+		error TF("Failed setting up shop with error code %d\n", $args->{flag});
+		
+		Plugins::callHook('open_store_fail', { flag => $args->{flag} });
+	}
+}
+
 1;

@@ -1523,3 +1523,15 @@ enif_in.gnd#nif_in.gnd#
 enif_in.gat#nif_in.gat#
 enif_in.rsw#nif_in.rsw#
 유저인터페이스\map\enif_in.bmp#유저인터페이스\map\nif_in.bmp#
+
+
+//옛글래스트헤임 메모리얼 맵복사
+1@gl_kh.gnd#1@gl_k.gnd#
+1@gl_kh.gat#1@gl_k.gat#
+1@gl_kh.rsw#1@gl_k.rsw#
+유저인터페이스\map\1@gl_kh.bmp#유저인터페이스\map\1@gl_k.bmp#
+
+2@gl_kh.gnd#2@gl_k.gnd#
+2@gl_kh.gat#2@gl_k.gat#
+2@gl_kh.rsw#2@gl_k.rsw#
+유저인터페이스\map\2@gl_kh.bmp#유저인터페이스\map\2@gl_k.bmp#

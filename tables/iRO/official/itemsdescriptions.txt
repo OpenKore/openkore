@@ -66505,6 +66505,23 @@ Celine's Brooch
 Luminous Blue Stone
 #
 17386#
+When opened gives one of the following at random:
+Cylinder Hairband
+Giant's Protection
+Battle Surcoat
+Experimental Goat Cap
+Immortal's Dog Tag
+Magcian's Knithat
+Temporal Ring
+Imperial Boots
+Book of Soyga
+Prize Medals 2000 cnt
+Bloody Dead Branch 5-8 cnt
+HE Bubblegum 6-9 cnt
+Blacksmith Blessing 8 cnt
+^FF0000Account Bound^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17387#
 When opened gives one of the following at random

@@ -7552,7 +7552,7 @@
 17383#Blast_from_the_Past_Box#
 17384#Amistr_Bag_Box#
 17385#OCP_Remix_IV#
-17386#Chemical_Shoes_Shadow_Box#
+17386#OCP_Remix_XII#
 17387#Overseas_Care_Package_Remix_XI#
 17388#OCP_Remix_X#
 17389#Overseas_Care_Package_Remix_IX#
