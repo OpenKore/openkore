@@ -5901,7 +5901,6 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
-	message "share:".$args->{type}." itemPickup:".$args->{itemPickup}." itemDivision:".$args->{itemDivision}."\n";
 	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
 		$char->{party}{itemPickup} = $args->{itemPickup};
 		$char->{party}{itemDivision} = $args->{itemDivision};
