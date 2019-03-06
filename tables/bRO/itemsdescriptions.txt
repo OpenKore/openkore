@@ -61399,6 +61399,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31124#
+Também conhecido como “toque blanche”, esse chapéu de cozinheiro é só pra quem consegue fazer uma maravilha da culinária runemidgardiana só com um ovo e três jellopies em quinze minutinhos. Já dá até pra participar do RagnaChef!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31125#
 Alguns dizem que este chapéu era usado pelo lendário Rei dos Piratas, Golaço D. Rogério. Outros, que era o chapéu da capitã Malvida, a Pirata Mais Linda do Mundo. Seja como for, é inegável que este é um dos chapéus piratas mais imponentes dos sete mares!
 Tipo: ^777777Visual^000000
@@ -62190,6 +62198,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31538#
+Se você adora ficar afogando seus amigos com “Amei” nas publicações deles, agora é a oportunidade perfeita de levar esse comportamento para além das redes sociais.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Meio^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31542#
 Você acha Porings tão fofos que tem vontade de guardá-los em um potinho? Bom, com esse vaso, você vai chegar bem próximo de tornar isso realidade!
 Tipo: ^777777Visual^000000
@@ -62277,6 +62293,14 @@ Classes: ^777777Todas^000000
 #
 31575#
 Uma belíssima peruca com um tom bem suave de turquesa, mas muito lindo. Se você quer entrar em termos técnicos mesmo, essa cor tem vários nomes chiques: Tiffany Blue. Sereia. Brisa de Verão. Use-os pra impressionar seus amigos e mostrar como você entende de moda.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
+31586#
+Tem todas as vantagens de um Cachecol de Poring: quentinho e forrado por dentro, gelatinoso por fora... Exceto que é verde! Quem é que não prefere verde do que rosa?
 Tipo : ^777777Visual^000000
 Equipa em : ^777777Baixo^000000
 Peso : ^7777770^000000
