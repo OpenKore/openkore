@@ -7042,6 +7042,7 @@
 31117#Gálea Dourada#
 31120#Orelhas de Vampiro#
 31121#Estola do Demônio#
+31124#Chapéu do RagnaChef#
 31125#Chapéu da Realeza Pirata#
 31132#Guirlanda Natalina#
 31134#Maritaca Faladeira#
@@ -7133,6 +7134,7 @@
 31528#Tiara Cósmica#
 31530#Elmo de Áries#
 31531#Chapéu Mágico Duas-Pontas#
+31538#Aura do Amor#
 31542#Vaso do Poring Saltitante#
 31543#Chapéu de Urso#
 31544#Peruca da Piamette#
@@ -7144,6 +7146,7 @@
 31569#Fones de Última Geração#
 31572#Auréolas Digitais#
 31575#Peruca Turquesa de Waifu#
+31586#Cachecol de Poporing#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
