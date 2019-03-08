@@ -5055,7 +5055,6 @@
 9543#January_Costume_Box#
 9544#Overseas_Care_Package_XXVI#
 9563#2019_February_Costume_Box#
-9565#Overseas_Care_Package_XXVII#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -5096,6 +5095,7 @@
 10039#placeholder#
 10040#Red_Bell_Necklace#
 10042#Dark_Mane#
+10517#2019_March_Costume_Box#
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
 11002#Chef_King_Orleans_Vol.1#
@@ -7552,7 +7552,7 @@
 17383#Blast_from_the_Past_Box#
 17384#Amistr_Bag_Box#
 17385#OCP_Remix_IV#
-17386#OCP_Remix_XII#
+17386#Chemical_Shoes_Shadow_Box#
 17387#Overseas_Care_Package_Remix_XI#
 17388#OCP_Remix_X#
 17389#Overseas_Care_Package_Remix_IX#
@@ -8193,8 +8193,6 @@
 19327#Seraphim_Feather#
 19329#Devil's_Hand#
 19337#Safety_Glasses#
-19342#Bull_Hat#
-19343#Circlet_Of_Phoenix#
 19377#Shiny_Marinade_Beef#
 19378#Chile_Shrimp_Gratin#
 19379#Red_Mushroom_Wine#
@@ -8234,7 +8232,6 @@
 19413#Snow_Flower#
 19414#Classic_Evolved_Pipe_Box#
 19426#King_Of_Spirit_Circlet#
-19453#Jejecap_JP#
 19500#(null)#
 19501#(null)#
 19502#Costume_Goggles#
@@ -8820,6 +8817,7 @@
 20534#Costume_Big_White_Cat#
 20535#Costume_Digital_Space#
 20537#Costume_Falling_Red_Foliage#
+20538#Costume_Magic_Circle_Rainbow#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -8900,18 +8898,16 @@
 20922#Leviathan_Muffler#
 20931#Prism_Rangers_Scarf#
 20932#Old_Morroc_Shawl#
-20941#Phoenix_Muffler#
 20942#Manteau_Of_Guardsman#
 20949#Skin_Of_Ladon#
 20952#Mysterious_Muffler#
-20962#Skin_Of_Typhon#
 21001#Bellum_Claymore#
 21002#Bellum_Katzbalger#
 21003#Muramasa#
 21006#TE_WoE_TwoHand_Sword#
 21007#Heavy_Sword#
 21009#Thanatos_Great_Sword#
-21010#Evil_Slayer_Sword#
+21010#Evil_Slayer_Slaher_Sword#
 21011#Gigant_Blade#
 21015#Crimson_Twohand_Sword#
 21016#Vicious_Mind_Two-Handed_Sword#
@@ -8935,7 +8931,7 @@
 22016#Assassin's_Shoes#
 22017#Fisherman's_Shoes#
 22032#Exorcist's_Shoes#
-22033#Boots_of_Gray#
+22033#Boots_Of_Gray#
 22035#Hero_Nependess_Shoes#
 22036#Hero_Silverleather_Boots#
 22037#Hero_Ungoliant_Boots#
@@ -9207,7 +9203,7 @@
 24063#Liberation_Shadow_Shoes#
 24064#Chemical_Shadow_Shoes#
 24065#Clamorous_Shadow_Shoes#
-24066#Insecticide_Shadow_Shoes#
+24066#Insecticide_Shoes_(Shadow)#
 24067#Fisher_Shadow_Shoes#
 24068#Seraphim_Shadow_Shoes#
 24069#Beholder_Shadow_Shoes#
@@ -9469,7 +9465,7 @@
 28324#Steam_Starter_Ring#
 28326#Broken_Chip_01#
 28327#Broken_Chip_02#
-28332#Jewelry_Ring#
+28332#Jewerly_Ring#
 28342#Critical_Anklet#
 28353#Vesper_Gear_02#
 28354#City_Map#
@@ -9559,7 +9555,6 @@
 28910#Imuke_Upper_Shield#
 28913#Ultralight_Magic_Shield#
 28916#Gaia_Shield#
-28918#Shield_Of_Chaos#
 28921#Anemos_Shield#
 28929#Happy_Shield#
 28930#Mad_Bunny_Guard#
@@ -9812,6 +9807,7 @@
 31383#Costume_Volume_Low_Twin#
 31384#Costume_Fake_Ears#
 31385#Costume_Gothic_Pumpkin_Handicraft#
+31386#Costume_Survive_Orb#
 31389#Costume_White_Bird_Rose#
 31390#Costume_Let_It_Snow#
 31391#Costume_Floating_Sage_Stone#
@@ -9912,9 +9908,16 @@
 31599#Costume_Medium_Wave#
 31600#Costume_Kishu_Dog#
 31601#Costume_Under_Rimmed_Glasses_(Blue)#
+31608#Costume_Magicstone_of_Grace#
+31609#Costume_Noble_Mask#
+31610#Costume_Yellow_Wizardry_Hat#
+31611#Costume_Dark_Snake_Lord_Stall#
+31612#Costume_Large_Sorcerer_Crown#
+31614#Costume_Fox#
+31615#Costume_Geisha_Make#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#
 32222#Brooch_of_Hero#
 32234#Unrivaled_Ring#
-32242#Old_Detachments_Ring#
+32242#Old_DetachmentsRing#
