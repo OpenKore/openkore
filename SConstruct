@@ -82,6 +82,7 @@ def CheckPerl(context):
 	print F "typemap=" . search(\\@INC, "ExtUtils/typemap") . "\\n";
 	print F "xsubpp=" . search(\\@INC, "ExtUtils/xsubpp" || search([File::Spec->path()], "xsubpp")) . "\\n";
 	print F "coredir=$coredir\\n";
+	print F "perlversion=" . $^V . "\\n";
 	close F;
 	'''
 
@@ -297,13 +298,12 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 # Environment for Perl libraries
 perlenv = libenv.Clone()
 if win32:
+	rawversion = "perl" + ''.join(perlconfig['perlversion'][1:].split('.')[:2])
+	
 	# Windows
 	perlenv['CCFLAGS'] += Split('-s -Wno-comments -fwrapv -fno-strict-aliasing -mms-bitfields')
 	perlenv['CPPDEFINES'] += Split('__USE_MINGW_ANSI_STDIO PERL_TEXTMODE_SCRIPTS PERL_IMPLICIT_CONTEXT PERL_IMPLICIT_SYS USE_PERLIO')
-	#perlenv['LIBS'] += ['perl58']
-	#perlenv['LIBS'] += ['perl510']
-	#perlenv['LIBS'] += ['perl512']
-	perlenv['LIBS'] += ['perl528']
+	perlenv['LIBS'] += [rawversion]
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)
