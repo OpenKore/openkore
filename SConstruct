@@ -202,6 +202,13 @@ conf.Finish()
 
 # Standard environment for programs
 env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
+
+if win32:
+	import platform
+	
+	if "64" in platform.machine():
+		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
+
 env['LINKFLAGS'] = []
 env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
