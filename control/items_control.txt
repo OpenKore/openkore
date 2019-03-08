@@ -148,7 +148,7 @@ Battle Axe 0 0 1 # 1353
 "Battle Axe [3]" 0 0 1 # 1351
 "Battle Axe [4]" 0 0 1 # 1352
 "Belt [1]" 0 0 1 # 2627
-"#Bible [2]" 0 0 1
+#"Bible [2]" 0 0 1
 Bill Guisarme 0 0 1 # 1467
 Blade 0 0 1 # 1109
 "Blade [3]" 0 0 1 # 1107
@@ -191,7 +191,7 @@ Fist 0 0 1 # 1808
 "Flail [3]" 0 0 1 # 1511
 Flamberge 0 0 1 # 1149
 "Gakkung Bow [1]" 0 0 1 # 1714
-"#Girl's Diary [1]" 0 0 1
+#"Girl's Diary [1]" 0 0 1
 Gladius 0 0 1 # 1221
 "Gladius [2]" 0 0 1 # 1219
 Glaive 0 0 1 # 1456
@@ -234,7 +234,7 @@ Lance 0 0 1 # 1412
 "Lute [3]" 0 0 1 # 1906
 Mace 0 0 1 # 1506
 "Mace [3]" 0 0 1 # 1504
-"#Mace [4]" 0 0 1
+#"Mace [4]" 0 0 1
 Main Gauche 0 0 1 # 1209
 "Main Gauche [3]" 0 0 1 # 1207
 "Mandolin [2]" 0 0 1 # 1903
@@ -259,9 +259,9 @@ Rapier 0 0 1 # 1112
 "Ring Pommel Saber [2]" 0 0 1 # 1122
 Rod 0 0 1 # 1603
 "Rod [3]" 0 0 1 # 1601
-"#Rod [4]" 0 0 1
+#"Rod [4]" 0 0 1
 "Rope [3]" 0 0 1 # 1950
-"#Rope [4]" 0 0 1
+#"Rope [4]" 0 0 1
 "Saber [2]" 0 0 1 # 1126
 "Scimiter [2]" 0 0 1
 "Scimiter [3]" 0 0 1
@@ -296,13 +296,13 @@ Two-handed Axe 0 0 1 # 1362
 Two-handed Sword 0 0 1 # 1159
 "Two-handed Sword [1]" 0 0 1
 "Violin [3]" 0 0 1 # 1901
-"#Violin [4]" 0 0 1
+#"Violin [4]" 0 0 1
 "Waghnak [3]" 0 0 1 # 1801
 "Waghnak [4]" 0 0 1 # 1802
 Wand 0 0 1 # 1606
 "Wand [2]" 0 0 1 # 1604
 "Wand [3]" 0 0 1 # 1605
-"#War Axe [1]" 0 0 1
+#"War Axe [1]" 0 0 1
 "Whip [1]" 0 0 1 # 1960
 "Whip [2]" 0 0 1 # 1961
 "Whip [3]" 0 0 1 # 1953
