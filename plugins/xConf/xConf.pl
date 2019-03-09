@@ -29,7 +29,7 @@ use Misc qw(parseReload);
 
 Plugins::register('xConf', 'commands for change items_control, mon_control, pickupitems, priority', \&Unload, \&Unload);
 
-my $chooks = Commands::register(
+my $plugin_commands = Commands::register(
 	['iconf', 'edit items_control.txt', \&xConf],
 	['mconf', 'edit mon_control.txt', \&xConf],
 	['pconf', 'edit pickupitems.txt', \&xConf],
@@ -38,68 +38,81 @@ my $chooks = Commands::register(
 );
 
 sub Unload {
-	Commands::unregister($chooks);
+	Commands::unregister($plugin_commands);
 	message "xConf plugin reloading or unloading\n", 'success'
 }
 
 sub xConf {
-my ($cmd, $args) = @_;
-	my ($file,$file2,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash);
+	my ($cmd, $args) = @_;
+	my ($file,$tables_file,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash, $had_quotes);
+	
+	($key, $value) = $args =~ /([\s\S]+?)\s([\-\d\.]+[\s\S]*)/ if !$shopname;
+	
 	if ($cmd eq 'sconf') {
-		($key, $value) = $args =~ /(name)(?:\s)(.*)/;
+		($key, $value) = $args =~ /(name)\s(.*)/;
 		$shopname = 1 if $key eq 'name';
+		$inf_hash = \%items_lut;
+		$ctrl_hash = \%shop;
+		$file = 'shop.txt';
+		$tables_file = 'tables\..\items.txt';
+		$type = 'Item';
+		
+	} elsif ($cmd eq 'iconf') {
+		
+		$inf_hash  = \%items_lut;
+		$ctrl_hash = \%items_control;
+		$file = 'items_control.txt';
+		$tables_file = 'tables\..\items.txt';
+		$type = 'Item';
+		
+		#syntax checking for items without braces
+		if ($key =~ /[a-zA-Z][0-9]/ && $key !~ /"/) {
+			warning ("$key has number in name, we recommend surround it with quotes");
+		}
+		
+	} elsif ($cmd eq 'pconf') {
+		$inf_hash  = \%items_lut;
+		$ctrl_hash = \%pickupitems;
+		$file = 'pickupitems.txt';
+		$tables_file = 'tables\..\items.txt';
+		$type = 'Item';
+		
+	} elsif ($cmd eq 'mconf') {
+		$inf_hash  = \%monsters_lut;
+		$ctrl_hash = \%mon_control;
+		$file = 'mon_control.txt';
+		$tables_file = 'tables\..\monsters.txt';
+		$type = 'Monster';
+		
 	}
-	($key, $value) = $args =~ /([\s\S]+?)(?:\s)([\-\d\.]+[\s\S]*)/ if !$shopname;
+	
 	$key = $args if !$key;
 	$key =~ s/^\s+|\s+$//g;
+	$key =~ s/"(.+)"/\1/; #remove quotes
 	debug "extracted from args: KEY: $key, VALUE: $value\n";
 	if (!$key) {
 		error "Syntax Error in function '$cmd'. Not found <key>\n".
 				"Usage: $cmd <key> [<value>]\n";
 		return;
 	}
-	if ($cmd eq 'iconf') {
-		$inf_hash  = \%items_lut;
-		$ctrl_hash = \%items_control;
-		$file = 'items_control.txt';
-		$file2 = 'tables\..\items.txt';
-		$type = 'Item';
-	} elsif ($cmd eq 'mconf') {
-		$inf_hash  = \%monsters_lut;
-		$ctrl_hash = \%mon_control;
-		$file = 'mon_control.txt';
-		$file2 = 'tables\..\monsters.txt';
-		$type = 'Monster';
-	} elsif ($cmd eq 'pconf') {
-		$inf_hash  = \%items_lut;
-		$ctrl_hash = \%pickupitems;
-		$file = 'pickupitems.txt';
-		$file2 = 'tables\..\items.txt';
-		$type = 'Item';
-	} elsif ($cmd eq 'sconf') {
-		$inf_hash = \%items_lut;
-		$ctrl_hash = \%shop;
-		$file = 'shop.txt';
-		$file2 = 'tables\..\items.txt';
-		$type = 'Item';
-	}
+	
 	## Command "sconf" don't have setall & clearall feature
-	if( (($key eq "clearall") || ($key eq "setall")) && ($cmd eq 'sconf')) {
+	if ( ($key eq "clearall" || $key eq "setall") && $cmd eq 'sconf') {
 		error "Syntax Error in function '$cmd'. Keys 'setall' and 'clearall' is not suported.\n";
 		return;
-	} elsif($key eq "clearall")	{ ## If $key is "clear" clear file content and exit
+	} elsif ($key eq "clearall") { ## If $key is "clear" clear file content and exit
 		fileclear($file);
 		return;
-	} elsif (($key eq "setall")) { ## If $key is "setall" setting all keys in file to $key
+	} elsif ($key eq "setall") { ## If $key is "setall" setting all keys in file to $key
 		filesetall($file, $value);
 		return;
 	}
-	## Check $key in tables\monsters.txt & tables\items.txt
+	## Check $key in tables\monsters.txt or tables\items.txt
 	if ($key ne "all") {
 
 		#key is an ID, have to find the name of the item/monster
 		if ($inf_hash->{$key}) {
-			debug "key is an ID, $type '$inf_hash->{$key}' ID: $key is found in file '$file2'.\n";
+			debug "key is an ID, $type '$inf_hash->{$key}' ID: $key is found in file '$tables_file'.\n";
 			$found = 1;
 			if ($cmd eq 'iconf' && $itemSlotCount_lut{$key}) {
 				$name = $inf_hash->{$key}." [".$itemSlotCount_lut{$key}."]";
@@ -110,13 +123,13 @@ my ($cmd, $args) = @_;
 		#key is a name, have to find ID of the item/monster
 		} else {
 			foreach (values %{$inf_hash}) {
-				if ((lc($key) eq lc($_))) {
+				if (lc($key) eq lc($_)) {
 					$name = $_;
 					foreach my $ID (keys %{$inf_hash}) {
 						if ($inf_hash->{$ID} eq $name) {
 							$key = $ID;
 							$found = 1;
-							debug "$type '$name' found in file '$file2'.\n";
+							debug "$type '$name' found in file '$tables_file'.\n";
 							last;
 						}
 					}
@@ -131,9 +144,9 @@ my ($cmd, $args) = @_;
 		debug "Id: '$key', name: '$name', value: $value\n";
 		if (!$found and !$shopname) {
 			if ($cmd eq 'mconf') {
-				warning "WARNING: $type '$key' not found in file '$file2'!\n";
+				warning "WARNING: Monster '$key' not found in file '$tables_file'!\n";
 			} else {
-				error "$type '$key' not found in file '$file2'!\n";
+				error "Item '$key' not found in file '$tables_file'!\n";
 				return;
 			}
 		}
@@ -151,7 +164,7 @@ my ($cmd, $args) = @_;
 		$oldval = sprintf("%s %s %s %s %s", $ctrl_hash->{$realKey}{keep}, $ctrl_hash->{$realKey}{storage}, $ctrl_hash->{$realKey}{sell},
 			$ctrl_hash->{$realKey}{cart_add}, $ctrl_hash->{$realKey}{cart_get});
 	} elsif ($cmd eq 'mconf') {
-		$oldval = sprintf("%s %s %s %s %s", $ctrl_hash->{$realKey}{attack_auto}, $ctrl_hash->{$realKey}{teleport_auto},
+		$oldval = sprintf("%s %s %s %s %s %s %s %s %s", $ctrl_hash->{$realKey}{attack_auto}, $ctrl_hash->{$realKey}{teleport_auto},
 			$ctrl_hash->{$realKey}{teleport_search}, $ctrl_hash->{$realKey}{skillcancel_auto}, $ctrl_hash->{$realKey}{attack_lvl},
 			$ctrl_hash->{$realKey}{attack_jlvl}, $ctrl_hash->{$realKey}{attack_hp}, $ctrl_hash->{$realKey}{attack_sp},
 			$ctrl_hash->{$realKey}{weight});
