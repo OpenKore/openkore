@@ -518,6 +518,8 @@ sub parseItemsControl {
 		if (($key, $args_text) = extract_delimited($line) and $key) {
 			$key =~ s/^.|.$//g;
 			$args_text =~ s/^\s+//;
+		} elsif ($line =~ /^[\s0-9]+$/) {
+			($key, $args_text) = $line =~ /^(\d+)\s(.*)$/;
 		} else {
 			my @reverseString = reverse(split(//, $line));
 			my $separator = length $line;
