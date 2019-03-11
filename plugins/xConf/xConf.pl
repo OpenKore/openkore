@@ -44,13 +44,13 @@ sub Unload {
 
 sub xConf {
 	my ($cmd, $args) = @_;
-	my ($file,$tables_file,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash, $had_quotes);
+	my ($file,$tables_file,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash, $id, $needQuotes);
 	
 	($key, $value) = $args =~ /([\s\S]+?)\s([\-\d\.]+[\s\S]*)/ if !$shopname;
 	
 	if ($cmd eq 'sconf') {
 		($key, $value) = $args =~ /(name)\s(.*)/;
-		$shopname = 1 if $key eq 'name';
+		$shopname = $value if $key eq 'name';
 		$inf_hash = \%items_lut;
 		$ctrl_hash = \%shop;
 		$file = 'shop.txt';
@@ -65,9 +65,13 @@ sub xConf {
 		$tables_file = 'tables\..\items.txt';
 		$type = 'Item';
 		
-		#syntax checking for items without braces
+		#syntax checking for items with number in name buy whithout quotes to surrond it
 		if ($key =~ /[a-zA-Z][0-9]/ && $key !~ /"/) {
 			warning ("$key has number in name, we recommend surround it with quotes");
+		}
+		
+		if ($key =~ /"/) {
+			$needQuotes = 1; #first remove quotes to do all check and after in the end put it back
 		}
 		
 	} elsif ($cmd eq 'pconf') {
@@ -119,34 +123,36 @@ sub xConf {
 			} else {
 				$name = $inf_hash->{$key};
 			}
+			$id = $key;
 
 		#key is a name, have to find ID of the item/monster
 		} else {
-			foreach (values %{$inf_hash}) {
-				if (lc($key) eq lc($_)) {
-					$name = $_;
-					foreach my $ID (keys %{$inf_hash}) {
-						if ($inf_hash->{$ID} eq $name) {
-							$key = $ID;
-							$found = 1;
-							debug "$type '$name' found in file '$tables_file'.\n";
-							last;
-						}
-					}
+			my $options;
+			if ($key =~/\[\d*\]/) { #testing if item has slot
+				($key,$options) = $key =~ /(.*?)(\[.+\])/;
+				$key =~ s/^\s+|\s+$//g;
+				$needQuotes = 1;
+			}
+			my $key_with_underscore = $key;
+			$key_with_underscore =~ s/ /_/;
+			for (my $i; $i < values %{$inf_hash}; $i++) {
+				if (lc($key) eq lc($inf_hash->{$i}) || lc($key_with_underscore) eq lc($inf_hash->{$i})) {
+					$key = (defined $options ? $key . ' ' . $options : $key);
+					$name = $key;
+					$id = $i;
+					$found = 1;
+					debug "$type '$name' found in file '$tables_file'.\n";
 					last;
 				}
 			}
 		}
 
-		#at this point, $key is always the ID of the item/monster
-		#and the name is stored on $name
-
-		debug "Id: '$key', name: '$name', value: $value\n";
+		debug "Id: '$id', name: '$name', value: $value\n";
 		if (!$found and !$shopname) {
 			if ($cmd eq 'mconf') {
-				warning "WARNING: Monster '$key' not found in file '$tables_file'!\n";
+				warning "WARNING: Monster '$name' not found in file '$tables_file'!\n";
 			} else {
-				error "Item '$key' not found in file '$tables_file'!\n";
+				error "Item '$name'(id: $id) not found in file '$tables_file'!\n";
 				return;
 			}
 		}
@@ -176,7 +182,7 @@ sub xConf {
 			$oldval =~ s/;;/,,/g;
 		} else {
 			for my $sale (@{$shop{items}}) {
-				if (lc($sale->{name}) eq lc($key)) {
+				if (lc($sale->{name}) eq lc($realKey)) {
 					$oldval = $sale->{price};
 					$oldval .= "..$sale->{priceMax}" if ($sale->{priceMax});
 					$oldval .= " $sale->{amount}";
@@ -189,11 +195,13 @@ sub xConf {
 	$value =~ s/\s+$//g;
 	debug "VALUE: '$value', OLDVALUE: '$oldval'\n";
 	if (not defined $value and $oldval eq '') {
-		error "$type '$key' is not found in file '$file'!\n";
-	} elsif (not defined $value or $value eq $oldval) {
-		message "$file: '$key' is $oldval\n", "info";
+		error "$type '$realKey' is not found in file '$file'!\n";
+	} elsif (not defined $value) {
+		message "$file: '$name' is $oldval\n", "info";
+	} elsif ($value eq $oldval) {
+		message "$file: '$name' is already '$value'\n", 'info';
 	} else {
-		filewrite($file, $key, $value, $oldval, $shopname, $name, $realKey);
+		filewrite($file, $realKey, $value, $oldval, $shopname, $name, $id, $needQuotes);
 	}
 }
 
@@ -250,10 +258,18 @@ sub filesetall {
 
 ## write FILE
 sub filewrite {
-	my ($file, $key, $value, $oldval, $shopname, $name, $realKey) = @_;
+	my ($file, $realKey, $value, $oldval, $shopname, $name, $id, $needQuotes) = @_;
 	my @value;
 	my $controlfile = Settings::getControlFilename($file);
-	debug "sub WRITE = FILE: $file\nKEY: $key\nVALUE: $value\nNAME: $name\nOLDVALUE: $oldval\nREALKEY: $realKey";
+	debug "sub filewrite =\n".
+	"FILE: '$file'\n".
+	"REALKEY: '$realKey'\n".
+	"VALUE: '$value'\n".
+	"OLDVALUE: '$oldval'\n".
+	"SHOPNAME: '$shopname'\n".
+	"NAME: '$name'\n".
+	"ID: '$id'\n".
+	"NEEDQUOTES: '$needQuotes'\n";
 
 	open(FILE, "<:encoding(UTF-8)", $controlfile);
 	my @lines = <FILE>;
@@ -262,7 +278,7 @@ sub filewrite {
 
 	my $used = 0;
 	if ($shopname) {
-		@value = split(/,,/, $value);
+		@value = split(/,,/, $shopname);
 		foreach my $line (@lines) {
 			next if $line =~ /^$/ || $line =~ /^#/;
 			if ($line eq $shop{title_line}) {
@@ -276,16 +292,21 @@ sub filewrite {
 		foreach my $line (@lines) {
 			my ($what) = $line =~ /([\s\S]+?)\s[\-\d\.]+[\s\S]*/;
 			$what =~ s/\s+$//g;
+			$what =~ s/"(.+)"/\1/; #remove quotes
 			my $tmp;
-			if (lc($what) eq $realKey) {
+			if ($what eq $id ||lc($what) eq lc($name)) {
 				debug "Change old record: ";
 				if ($file eq 'shop.txt') {
 					$tmp = join ('	', $name, @value);
 				} else {
-					if ($realKey eq lc($name)) {
-						$tmp = join (' ', $name, @value, "#", $key);
+					if (lc($realKey) eq lc($name)) {
+						if ($needQuotes) {
+							$tmp = join (' ', "\"$name\"", @value, "#", $id);
+						} else {
+							$tmp = join (' ', $name, @value, "#", $id);
+						}
 					} else {
-						$tmp = join (' ', $key, @value, "#", $name);
+						$tmp = join (' ', $id, @value, "#", $name);
 					}
 				}
 				$line = $tmp;
@@ -298,7 +319,15 @@ sub filewrite {
 			if ($file eq 'shop.txt') {
 				push (@lines, $name.'	'.$price.'	'.$amount)
 			} else {
-				push (@lines, $key.' '.$value. " #". $name)
+				if (lc($realKey) eq lc($name)) {
+					if ($needQuotes) {
+						push (@lines, '"'. $name. '"'. ' '.$value. " #ID: ". $id)
+					} else {
+						push (@lines, $name.' '.$value. " #ID: ". $id)
+					}
+				} else {
+					push (@lines, $id.' '.$value. " #". $name)
+				}
 			}
 		}
 	}
