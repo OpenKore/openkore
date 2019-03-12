@@ -137,14 +137,14 @@ sub xConf {
 			$key_with_underscore =~ s/ /_/;
 			for (my $i; $i < values %{$inf_hash}; $i++) {
 				if (lc($key) eq lc($inf_hash->{$i}) || lc($key_with_underscore) eq lc($inf_hash->{$i})) {
-					$key = (defined $options ? $key . ' ' . $options : $key);
-					$name = $key;
 					$id = $i;
 					$found = 1;
 					debug "$type '$name' found in file '$tables_file'.\n";
 					last;
 				}
 			}
+			$key = (defined $options ? $key . ' ' . $options : $key);
+			$name = $key;
 		}
 
 		debug "Id: '$id', name: '$name', value: $value\n";
