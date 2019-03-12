@@ -2190,3 +2190,24 @@ hal_in18.rsw#prt_in.rsw#
 1@xlab.gat#1@lab.gat#
 1@xlab.rsw#1@lab.rsw#
 삯샺샎엍웤샌붺\map\1@xlab.bmp#삯샺샎엍웤샌붺\map\1@lab.bmp#
+
+//VDAY 2019 Backstage
+vday19bs.gnd#prt_in.gnd#
+vday19bs.gat#prt_in.gat#
+vday19bs.rsw#prt_in.rsw#
+삯샺샎엍웤샌붺\map\vday19bs.bmp#삯샺샎엍웤샌붺\map\prt_in.bmp#
+
+//VDAY 2019 Main Stage
+vday19ms.gat#job_duncer.gat#
+vday19ms.rsw#job_duncer.rsw#
+삯샺샎엍웤샌붺\map\vday19ms.bmp#삯샺샎엍웤샌붺\map\job_duncer.bmp#
+
+//VDAY 2019 Main Stage - Female Playthrough
+vday19ms_f.gat#job_duncer.gat#
+vday19ms_f.rsw#job_duncer.rsw#
+삯샺샎엍웤샌붺\map\vday19ms_f.bmp#삯샺샎엍웤샌붺\map\job_duncer.bmp#
+
+//VDAY 2019 Date Dungeon
+vday19dd.gat#airplane.gat#
+vday19dd.rsw#airplane.rsw#
+삯샺샎엍웤샌붺\map\vday19dd.bmp#삯샺샎엍웤샌붺\map\airplane.bmp#

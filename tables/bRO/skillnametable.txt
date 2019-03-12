@@ -1104,3 +1104,4 @@ GD_RESTORE#Restauração#
 GD_EMERGENCYCALL#Chamado Urgente#
 GD_DEVELOPMENT#Desenvolvimento Permanente#
 GD_ITEMEMERGENCYCALL#Chamado Urgente#
+GD_GUILD_STORAGE#Armazém do Clã#

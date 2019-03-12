@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],#6
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -626,15 +627,7 @@ sub sendGuildPositionInfo {
 # 0x01a4,11
 # 0x01a6,-1
 # 0x01a8,4
-
 # 0x01a9,6,sendemotion,2
-sub sendPetEmotion{
-	my ($self, $emoticon) = @_;
-	my $msg = pack('v V', 0x01A9, $emoticon);
-	$self->sendToServer($msg);
-	debug "Sent Pet Emotion.\n", "sendPacket", 2;
-}
-
 # 0x01aa,10
 # 0x01ab,12
 # 0x01ac,6

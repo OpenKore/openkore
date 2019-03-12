@@ -1412,7 +1412,7 @@ sub rodex_open_write_mail {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_open_write_mail',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
@@ -1420,7 +1420,7 @@ sub rodex_checkname {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_checkname',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
@@ -1434,7 +1434,7 @@ sub rodex_send_mail {
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{target}{name},
-		sender => $char->{name},
+		sender => stringToBytes($char->{name}),
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
 		title_len => length $title,
@@ -2435,6 +2435,18 @@ sub sendPetName {
 	
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
+
+sub sendPetEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_emotion',
+		ID => $ID,
+	}));
+	
+	debug "Sent Pet Emotion: $ID\n", "sendPacket", 2;
+}
+
 
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
