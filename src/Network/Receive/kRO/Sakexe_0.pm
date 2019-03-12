@@ -2269,7 +2269,7 @@ sub party_dead {
 
 sub progress_bar_unit {
 	my($self, $args) = @_;
-	debug "Displays progress bar (GID: $args-{GID} time: $args-{time})\n";	
+	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";	
 }
 
 sub inventory_expansion_info {
