@@ -6298,6 +6298,7 @@
 19315#Chapéu do Éden#
 19316#Capuz de Esquilo#
 19318#Rosário da Guarda Real#
+19321#Pombinho Branco#
 19326#Livros da Sabedoria #
 19507#Sol Risonho#
 19509#Asas de Borboleta#
@@ -6571,6 +6572,7 @@
 20219#Chapéu da Banda Sagrada#
 20220#Véu da Meia-Noite#
 20222#Gorro Natalino Azul#
+20231#Sr. Neves#
 20232#Fita Macabra da Celine#
 20234#Máscara de Bafomé#
 20236#Gorro de ArchAngeling#
@@ -6783,8 +6785,10 @@
 22117#Botas Modificadas DES#
 22118#Botas Modificadas SOR#
 22129#Botas Veteranas#
+22134#Botas do Conjurador#
 22138#Botas do Ocultista#
 22149#Botas com Espigões#
+22170#Sapatos do Sobrevivente#
 22171#Botas Ancestrais#
 22172#Botas Aladas#
 22182#Sapatos da Penitência#
@@ -7004,6 +7008,7 @@
 28940#Escudo das Divindades#
 28944#Escudo de Sleiporing#
 28947#Escudo de Gaia#
+28951#Escudo de Nero#
 29148#Gema de Leão#
 29149#Gema de Peixes#
 29150#Gema de Capricórnio#
@@ -7147,6 +7152,7 @@
 31572#Auréolas Digitais#
 31575#Peruca Turquesa de Waifu#
 31586#Cachecol de Poporing#
+31587#Super Capacete de Kunlun#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
