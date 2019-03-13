@@ -11916,3 +11916,17 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 19299#Little Fatum Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Little Fatum ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+// -- DAILY QUEST 30 : 5 Maret 2019 --
+
+19300#Argiope Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Rookie Turn-in : Kalahkan ^ff0000400 Monster Argiope ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19301#Hodremlin Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Advanced Turn-in : Kalahkan ^ff0000400 Monster Hodremlin ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
+
+19302#Angra Mantis Hunting Quest#LG_RAGEBURST#QUE_NOIMAGE#
+Expert Turn-in : Kalahkan ^ff0000400 Monster Angra Mantis ^000000 #
+Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
