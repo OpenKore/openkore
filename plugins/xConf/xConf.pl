@@ -46,7 +46,7 @@ sub xConf {
 	my ($cmd, $args) = @_;
 	my ($file,$tables_file,$found,$key,$oldval,$shopname,$type,$value, $name, $inf_hash, $ctrl_hash, $id, $needQuotes);
 	
-	($key, $value) = $args =~ /([\s\S]+?)\s([\-\d\.]+[\s\S]*)/ if !$shopname;
+	($key, $value) = $args =~ /([\s\S]+?)\s([\-\d\.]+[\s\S]*)/;
 	
 	if ($cmd eq 'sconf') {
 		($key, $value) = $args =~ /(name)\s(.*)/;
@@ -64,11 +64,6 @@ sub xConf {
 		$file = 'items_control.txt';
 		$tables_file = 'tables\..\items.txt';
 		$type = 'Item';
-		
-		#syntax checking for items with number in name buy whithout quotes to surrond it
-		if ($key =~ /[a-zA-Z][0-9]/ && $key !~ /"/) {
-			warning ("$key has number in name, we recommend surround it with quotes");
-		}
 		
 		if ($key =~ /"/) {
 			$needQuotes = 1; #first remove quotes to do all check and after in the end put it back
@@ -92,6 +87,10 @@ sub xConf {
 	
 	$key = $args if !$key;
 	$key =~ s/^\s+|\s+$//g;
+	#syntax checking for items with number in name buy whithout quotes to surrond it
+	if ($key !~ /^\d+$/ && $key =~ /\d/ && $key !~/^".+"$/) {
+		warning ("$key has number in name, so it's recommend to surround it with quotes\n");
+	}
 	$key =~ s/"(.+)"/\1/; #remove quotes
 	debug "extracted from args: KEY: $key, VALUE: $value\n";
 	if (!$key) {
