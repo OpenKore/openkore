@@ -4987,38 +4987,30 @@ sub fromBase62 {
 
 # Solve each <ITEML>.*</ITEML> to kore-style item name
 sub solveItemLink {
-	my ($itemstr) = @_;
-	my ($id, $class_num, $cardstr) = map { $_ } $itemstr =~ /([\d\w%]*)&([\d\w]+)(.*)/;
-	my $refine = 0;
+	my ($itemlstr) = @_;
 
-	if ($id =~ /([\d\w]*)%([\d\w]+)/) { # get refine
-		$id = $1;
-		$refine = $2;
-	}
-	if ($id =~ /([\d\w]{5})(\d)([\d\w]+)/) {
-		$id = $3;
+	# Item ID as minimum requirement
+	if (!($itemlstr =~ /^([\d\w]+)(.*)/)) {
+		return $itemlstr;
 	}
 
+	my ($itemstr, $infostr) = ($1, $2);
+	my ($loc, $showslots, $id) = $itemstr =~ /([\d\w]{5})(\d)([\d\w]+)/;
+	my ($refine) = $infostr =~ /%([\d\w]+)/;
+	my ($itemtype) = $infostr =~ /&([\d\w]+)/;
 	my $item_info = {
 		nameID => fromBase62($id),
 		upgrade => fromBase62($refine),
 	};
 
-	if ($cardstr ne "") {
-		my @cards = undef;
-		if ($cardstr =~ /\(([a-zA-Z0-9\(]*)\*(.*)/) { # (c0(c1(c2(c3*o0+p0,v0*o1+p1,v1*o2+p2,v2*o3+p3,v3*o4+p4,v4
-			my @str = ($1, $2);
-			(@cards) = split(/\(/, @str[0]);
-			foreach my $opt (split(/\*/, @str[1])) {
-				my ($type, $param, $value) = $opt =~ /([a-zA-Z0-9]+)\+([a-zA-Z0-9]+),([a-zA-Z0-9]+)/; # the order from client is type-param-value
-				$item_info->{options} .= pack 'vvC', ( fromBase62($type), fromBase62($value), fromBase62($param) ); # the itemName need packed string as type-value-param
-			}
-		} else {
-			(@cards) = map { $_ } $cardstr =~ /\(([\d\w]+)/g;
-		}
-		if (scalar(@cards) > 0) {
-			$item_info->{cards} = join '', map { pack('v',fromBase62($_)); } @cards;
-		}
+	foreach my $card (map { $_ } $infostr =~ /\(([\d\w]+)/g) {
+		$item_info->{cards} .= pack('v', fromBase62($card));
+	}
+
+	foreach my $opt (map { $_ } $infostr =~ /\*([\d\w\+,]+)/g) {
+		# The Random Option's order from client is type-param-value, itemName needs type-value-param
+		my ($type, $param, $value) = $opt =~ /([a-zA-Z0-9]+)\+([a-zA-Z0-9]+),([a-zA-Z0-9]+)/;
+		$item_info->{options} .= pack 'vvC', ( fromBase62($_[0]), fromBase62($_[2]), fromBase62($_[1]) );
 	}
 
 	return "<".itemName($item_info).">";
