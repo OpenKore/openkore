@@ -637,6 +637,8 @@ sub new {
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
+		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		};
 
 	# Item RECORD Struct's
@@ -2262,6 +2264,41 @@ sub party_dead {
 	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
 	if ($args->{isDead} == 1) {
 		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
+
+sub progress_bar_unit {
+	my($self, $args) = @_;
+	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";	
+}
+
+sub inventory_expansion_info {
+	my($self, $args) = @_;
+	#sd->inventorySize - FIXED_INVENTORY_SIZE; 
+	#hardcode inventorysize ? [sctnightcore]
+}
+
+#expand_inventory_result 
+use constant {
+	EXPAND_INVENTORY_RESULT_SUCCESS = 0x0,
+	EXPAND_INVENTORY_RESULT_FAILED = 0x1,
+	EXPAND_INVENTORY_RESULT_OTHER_WORK = 0x2,
+	EXPAND_INVENTORY_RESULT_MISSING_ITEM = 0x3,
+	EXPAND_INVENTORY_RESULT_MAX_SIZE = 0x4	
+};
+
+sub inventory_expansion_result {
+#msgstringtable	
+	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
+		message TF("You have successfully expanded the possession limit"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
+		message TF("Failed to expand the maximum possession limit."),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
+		message TF("To expand the possession limit, please close other windows"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {	
+		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {	
+		message TF("You can no longer expand the maximum possession limit."),"info";
 	}	
 }
 
