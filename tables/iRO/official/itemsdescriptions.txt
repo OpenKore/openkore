@@ -2449,6 +2449,7 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
 Increases physical damage on Demi-Human race targets by 5%.
+Increases physical damage on Human player race targets by 5%.
 Enables ^0000FFLevel 5 Double Attack^000000.
 #
 1131#
@@ -2910,6 +2911,9 @@ Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 20%.
 Increases physical damage taken from Demi-Human race enemies by 10%.
 Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 20%.
+Increases physical damage taken from Human Player race enemies by 10%.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1170#
 A sword that symbolizes fighting. It has a uniquely shaped hilt.
@@ -2978,6 +2982,9 @@ Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 20%.
 Increases physical damage taken from Demi-Human race enemies by 10%.
 Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 20%.
+Increases physical damage taken from Human Playerrace enemies by 10%.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1175#
 A massive sword wielded by Atroce that is much too large to be handled by ordinary warriors.
@@ -3017,20 +3024,21 @@ Def + 1
 Adds a 10% chance of casting ^0000FFLevel 3 Lightning Bolt^000000 on the target when performing a physical attack.
 #
 1179#
-^808080A gruesome sword used to behead criminals judged with the death penalty.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Two-Handed Sword
-Attack: 155
-Weight: 220
-Property: Shadow
-Weapon Level: 4
-Required Level: 48
-Required Job: Swordman Jobs
-^FFFFFF_^000000
+A gruesome sword used to behead criminals judged with the death penalty.
+Class: ^808080Two-Handed Sword^000000
+Attack: ^808080155^000000
+Property: ^808080Shadow^000000
+Weight: ^808080220^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808048^000000
+Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 20%.
-Pierces 100% of DEF on Demi-Human race targets when performing a physical attack.
-Increases physical damage taken from Demi-Human targets by 10%.
+Increases physical damage taken from Demi-Human race enemies by 10%.
+Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+
+Increases physical damage on Human Player race targets by 20%.
+Increases physical damage taken from Human Player race enemies by 10%.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1180#
 ^808080A giant sword, rumored to be made from a dragon's tooth, that can easily cut through dragon scales.^000000
@@ -3088,6 +3096,8 @@ Usable By: ^808080Swordman Jobs^000000
 Str + 2
 Increases physical damage on Demi-Human race targets by 55%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1184#
@@ -3102,6 +3112,7 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs^000000
 Crit + 20
 Increases physical damage on Demi-Human race targets by 55%.
+Increases physical damage on Human Player race targets by 55%.
 Increases critical damage on targets by 20%.
 This item is indestructible in battle.
 #
@@ -3147,9 +3158,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 75%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 2 Slaughter^000000.
 If upgrade level is +9 or higher,
 Adds a 3% chance of casting ^0000FFLevel 1 Aura Blade^000000 on the user when performing a physical attack, if a higher level of this skill is known, it will be cast instead.
@@ -3236,6 +3250,9 @@ Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 20%.
 Increases damage taken from Demi-Human race enemies by 10%.
 Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 20%.
+Increases damage taken from Human Player race enemies by 10%.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1196#
 A cold etched sword made with refined bradium, a mineral from the another world.
@@ -3569,8 +3586,11 @@ Requires Level: ^80808036^000000
 Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
 Increases physical damage on Demi-Human race targets by 10%.
 Reduces damage taken from Demi-Human race enemies by 10%.
+Increases physical damage on Human Player race targets by 10%.
+Reduces damage taken from Human Player race enemies by 10%.
 Increases damage taken from Demon race enemies by 10%.
 Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1229#
 A very simple and easy to use knife that is unmatched when cutting meat.
@@ -3631,6 +3651,7 @@ Requires Level: ^80808036^000000
 Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
 Reduces damage taken from Demon race enemies by 5%.
 Increases damage taken from Demi-Human race enemies by 10%.
+Increases damage taken from Human Player race enemies by 10%.
 Bypass 100% of Def of Demon race targets when performing a physical attack.
 #
 1234#
@@ -3937,6 +3958,7 @@ Def + 3
 Flee + 5
 Perfect Dodge + 2
 Increases physical damage on Demi-Human race targets by 50%.
+Increases physical damage on Human Player race targets by 50%.
 #
 1262#
 A double-bladed katar that inflicts incurable wounds.
@@ -3986,6 +4008,7 @@ HP Recovery - 100%
 SP Recovery - 100%
 Flee - (Agi + Base Level)
 Bypass 100% of Def of Demi-Human race targets when performing a physical attack.
+Bypass 100% of Def of Human Player race targets when performing a physical attack.
 #
 1266#
 A lethal katar that has been perfectly designed to carry out quick assassinations.
@@ -4000,6 +4023,7 @@ Def + 3
 Flee + 5
 Perfect Dodge + 2
 Increases physical damage on Demi-Human race targets by 50%.
+Increases physical damage on Human Player race targets by 50%.
 #
 1267#
 A lethal katar that has been perfectly designed to carry out quick assassinations.
@@ -4193,6 +4217,8 @@ Dex + 1
 Luk + 1
 Increases physical damage on Demi-Human race targets by 70%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 70%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1280#
@@ -4210,6 +4236,7 @@ Dex + 1
 Luk + 1
 Aspd + 5%
 Increases physical damage on Demi-Human race targets by 70%.
+Increases physical damage on Human Player race targets by 70%.
 Increases critical damage on targets by 20%.
 This item is indestructible in battle.
 #
@@ -4225,9 +4252,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Assassin Jobs^000000
 Increases physical damage on Demi-Human race targets by 70%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 70%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000
 If upgrade level is +9 or higher,
 Adds a 7% chance of buffing the user for 5 seconds when performing a physical attack; Aspd + 100%.
@@ -4243,6 +4273,7 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080Assassin Jobs^000000
 Increases physical damage on Demi-Human race targets by 70%.
+Increases physical damage on Human Player race targets by 70%.
 Increases critical damage on targets by 20%.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
@@ -4333,18 +4364,19 @@ Usable By: ^808080Guillotine Cross^000000
 Hit + 1 for every 2 base Luk.
 #
 1291#
-Type: Weapon
-Class: Katar
-Attack: 200
-Property: Neutral
-Weight: 150
-Weapon Level: 4
-Required Level: 140
-Required Job: Guillotine Cross Jobs
-^FFFFFF_^000000
-FLEE - 30
+In the distant past, a guillotine cross known as Qatar used this to punish a traitor within the guild.
+Class: ^808080Katar^000000
+Attack: ^808080200^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080140^000000
+Usable By: ^808080Guillotine Cross^000000
+Dex + 2
+Flee - 30
 Increases physical damage on Demi-Human race targets by 50%.
-Increases the damage of ^0000FFCross Impact^000000 by 30%
+Increases physical damage on Human Player race targets by 50%.
+Increases the damage of ^0000FFCross Impact^000000 by 30%.
 #
 1293#
 Type: Weapon
@@ -4469,18 +4501,16 @@ Required Job: Novice Jobs, Swordman Jobs, Merchant Jobs, Assassin Jobs
 This item is indestructible in battle.
 #
 1305#
-^808080A heavy, broad bladed hatchet used by butchers.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Axe
-Attack: 140
-Property: Neutral
-Weight: 120
-Weapon Level: 4
-Required Level: 44
-Required Job: Swordman Jobs, Merchant Jobs
-^FFFFFF_^000000
+A heavy, broad-bladed hatchet used by butchers.
+Class: ^808080One-Handed Axe^000000
+Attack: ^808080140^000000
+Property: ^808080Neutral^000000
+Weight: ^808080120^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808044^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Increases physical damage on Demi-Human race targets by 5%.
+Increases physical damage on Human Player race targets by 5%.
 Adds a 30% chance of gaining ^008080Meat^000000 when a Brute race targets is killed.
 This item is indestructible in battle.
 #
@@ -4545,10 +4575,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Increases physical damage on Demi-Human race targets by 70%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 70%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Aspd + 5%
-Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Additional Aspd + 5%
@@ -4883,6 +4915,8 @@ Requires Level: ^80808044^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Bypass 100% of hard defense of Brute race targets when performing a physical attack.
 Adds a 0.4% chance of inflicting ^800000Coma^000000 on Brute race targets when performing a physical attack.
+Bypass 100% of hard defense of Doram race targets when performing a physical attack.
+Adds a 0.4% chance of inflicting ^800000Coma^000000 on Doram race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1368#
@@ -4909,6 +4943,9 @@ Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Restores 2 SP to the user when performing a physical attack on Demi-Human race targets.
 Restores 20 SP to the user when a Demi-Human race monster is killed by a physical attack.
 Adds a 0.3% chance of inflicting ^800000Coma^000000 on Demi-Human race target when performing a physical attack.
+Restores 2 SP to the user when performing a physical attack on Human Player race targets.
+Restores 20 SP to the user when a Human Player race monster is killed by a physical attack.
+Adds a 0.3% chance of inflicting ^800000Coma^000000 on Human Player race target when performing a physical attack.
 This item is indestructible in battle.
 #
 1370#
@@ -5036,6 +5073,8 @@ Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Str + 3
 Increases physical damage on Demi-Human race targets by 55%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1380#
@@ -5050,6 +5089,7 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Str + 3
 Increases physical damage on Demi-Human race targets by 55%.
+Increases physical damage on Human Player race targets by 55%.
 Adds a 2% chance of damaging the targets armor when performing a physical attack.
 This item is indestructible in battle.
 #
@@ -5078,9 +5118,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
 Increases physical damage on Demi-Human race targets by 70%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 70%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 2 Slaughter^000000.
 Adds a 5% chance of casting ^0000FFLevel 1 Fatal Wound^000000 on the target when performing a physical attack.
 If upgrade level is +9 or higher,
@@ -5505,14 +5548,16 @@ Weight: ^80808090^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808065^000000
 Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
-Increases physical damage on Demi-Human race targets by 20%.\
+Increases physical damage on Demi-Human race targets by 20%.
+Increases physical damage on Human Player race targets by 20%.
 Enables ^0000FFLevel 3 Pierce^000000.
 Adds a 5% chance of inflicting ^800000Stun^000000 on the target when performing a physical attack.
-^F4AD42Knight Bonus^000000
+^F4AD42Lord Knight Bonus^000000
 Aspd - 5%
+
 ^800080Set Bonus^000000
-^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000 or ^008080Long Horn [1]^000000
 ^008080Tournament Shield [1]^000000
+^008080Long Horn [1]^000000 or ^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000
 Atk + 4%
 Def + 2
 #
@@ -5526,13 +5571,13 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808060^000000
 Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
 Bypass 100% of hard defense of Brute race targets when performing a physical attack.
+Bypass 100% of hard defense of Doram race targets when performing a physical attack.
 Adds a 10% chance of casting ^0000FFLevel 3 Vital Strike^000000 on the target when performing a physical attack.
 Adds a 10% chance of gaining ^008080Meat^000000 when a Brute race monster is killed.
-^F4AD42Knight Bonus^000000
-Aspd - 5%
+
 ^800080Set Bonus^000000
-^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000 or ^008080Long Horn [1]^000000
 ^008080Tournament Shield [1]^000000
+^008080Long Horn [1]^000000 or ^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000
 Atk + 4%
 Def + 2
 #
@@ -5549,6 +5594,8 @@ Usable By: ^808080Swordman Jobs^000000
 Str + 2
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 ^F4AD42Crusader Bonus^000000
 Aspd + 20%
@@ -5565,10 +5612,13 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Aspd + 10%
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 ^F4AD42Crusader Bonus^000000
 If upgrade level is +9 or higher,
@@ -6010,6 +6060,8 @@ Requires Level: ^80808048^000000
 Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Brute race targets by 10%.
 Increases physical damage on Demi-Human race targets by 5%.
+Increases physical damage on Doram race targets by 10%.
+Increases physical damage on Human Player race targets by 5%.
 #
 1468#
 A spear imbued with the Wind property.
@@ -6032,7 +6084,7 @@ Weight: ^808080250^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808048^000000
 Usable By: ^808080Swordman Jobs^000000
-Increases physical damage on Demi-Human and Angel race targets by 10%.
+Increases physical damage on Demi-Human, Human Player, and Angel race targets by 10%.
 #
 1470#
 A spear that radiates with the warm, glowing light of pure holiness.
@@ -6161,6 +6213,7 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808065^000000
 Usable By: ^808080Knight Jobs, Crusader Jobs^000000
 Increases physical damage on Demi-Human race targets by 10%.
+Increases physical damage on Human Player race targets by 10%.
 Bypass 100% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 Adds a 3% chance of casting ^0000FFLevel 5 Pierce^000000 on the target when performing a physical attack.
 #
@@ -6221,6 +6274,8 @@ Usable By: ^808080Swordman Jobs^000000
 Str + 2
 Increases physical damage on Demi-Human race targets by 25%.
 Bypass 100% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 25%.
+Bypass 100% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1483#
@@ -6271,9 +6326,11 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Swordman Jobs^000000
 Increases physical damage on Demi-Human race targets by 70%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 70%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
-Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 ^F4AD42Crusader Bonus^000000
 If upgrade level is +9 or higher,
@@ -6690,6 +6747,7 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080Acolyte Jobs^000000
 Increases physical damage on Demi-Human race targets by 10%.
+Increases physical damage on Human Player race targets by 10%.
 Increases physical  damage on Earth and Undead property targets by 10%.
 #
 1528#
@@ -6718,23 +6776,23 @@ Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Attack Range + 2
 #
 1530#
-^808080A facsimile of the mighty hammer wielded by Thor, god of thunder.^000000
+A facsimile of the mighty hammer wielded by Thor, god of thunder.
 ^FF0000Account Bound^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Mace
-Property: Wind
-Attack: 350
-Weight: 600
-Weapon Level: 4
-Required Level: 95
-Required Job: Swordman Jobs, Merchant Jobs
-^FFFFFF_^000000
-STR + 20
-DEX + 50
-ASPD + 10%
-Adds a 5% chance for auto attacks to deal splash damage of 3x3 cells around the target for 10 seconds when performing a physical attack.
-Adds 10% chance of casting ^0000FFLevel 10 Thunderstorm^000000 on the target when performing a physical attack.
+^FF0000This can be made 30 day version that is tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
+Class: ^808080Mace^000000
+Attack: ^808080350^000000
+Property: ^808080Wind^000000
+Weight: ^808080600^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+Str + 20
+Dex + 50
+Aspd + 10%
+Adds a 10% chance of casting ^0000FFLevel 10 Thunder Storm^000000 on the target when performing a physical attack.
+Adds a 5% chance of buffing the user for 10 seconds when performing a physical attack; Enables Splash Damage.
+This item cannot be upgraded.
+This item is indestructible in battle.
 #
 1531#
 A heavy tool with many practical applications.
@@ -6861,6 +6919,8 @@ Str + 1
 Dex + 1
 Increases physical damage on Demi-Human race targets by 75%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1543#
@@ -6876,6 +6936,7 @@ Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
 Str + 1
 Dex + 1
 Increases physical damage on Demi-Human race targets by 75%.
+Increases physical damage on Human Player race targets by 75%.
 Adds a 1% chance of buffing the user for 6 seconds when performing a physical attack; Adds a 50% chance of inflicting ^800000Stun^000000 on the target when performing a short-ranged attack.
 This item is indestructible in battle.
 #
@@ -6916,10 +6977,13 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
 Increases physical damage on Demi-Human race targets by 75%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Aspd + 5%
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Additional Aspd + 5%
@@ -7157,6 +7221,7 @@ Luk - 20
 
 Aspd + 1% per upgrade level of ^008080Ledger of Death [2]^000000.
 Adds a 0.1% chance of inflicting ^800000Coma^000000 on Demi-Human race targets when performing a physical attack.
+Adds a 0.1% chance of inflicting ^800000Coma^000000 on Human Player race targets when performing a physical attack.
 
 ^F4AD42Sage Bonus^000000
 Adds a 2% chance of casting ^0000FFLevel 5 Hell's Judgment^000000 on the target when performing a physical attack.
@@ -7261,6 +7326,8 @@ Str + 2
 Int + 1
 Increases physical damage on Demi-Human race targets by 75%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1575#
@@ -7277,6 +7344,7 @@ Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
 Str + 1
 Int + 2
 Bypass 20% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass 20% of hard magic defense of Human Player race targets when performing a magical attack.
 This item is indestructible in battle.
 #
 1576#
@@ -7292,9 +7360,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
 Increases physical damage on Demi-Human race targets by 80%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 80%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Adds a 3% chance of buffing the user for 3 seconds when performing a physical attack; Atk + 200.
@@ -7312,10 +7383,13 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
 Increases physical damage on Demi-Human race targets by 80%.
 Bypass 25% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Increases physical damage on Human Player race targets by 80%.
+Bypass 25% of hard magic defense of Human Player race targets when performing a magical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Aspd + 10%
 Bypass an additional 5% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass an additional 5% of hard magic defense of Human Player race targets when performing a magical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Matk + 5%
@@ -8075,6 +8149,7 @@ Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Int + 4
 Dex + 3
 Bypass 25% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass 25% of hard magic defense of Human Player race targets when performing a magical attack.
 Adds a 5% chance of inflicting ^800000Stun^000000 on the target when performing a magical attack.
 This item is indestructible in battle.
 #
@@ -8092,6 +8167,7 @@ Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Int + 4
 Dex + 3
 Increases magical damage on Demi-Human race targets by 15%.
+Increases magical damage on Human Player race targets by 15%.
 Adds a 5% chance of inflicting ^800000Stun^000000 on the target when performing a magical attack.
 This item is indestructible in battle.
 #
@@ -8191,9 +8267,11 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Increases magical damage on Demi-Human race targets by 15%.
 Bypass 25% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Increases magical damage on Human Player race targets by 15%.
+Bypass 25% of hard magic defense of Human Player race targets when performing a magical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
-Bypass an additional 5% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass an additional 5% of hard magic defense of Human Player race targets when performing a magical attack.
 If upgrade level is +9 or higher,
 Matk + 5%
 Reduces the variable casting time of skills by 5%.
@@ -8215,6 +8293,7 @@ Increases the recovery rate of recovery skills by 14%.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass 5% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass 5% of hard magic defense of Human Player race targets when performing a magical attack.
 Enables ^0000FFLevel 1 Bless^000000.
 Increases the recovery rate of recovery skills by an additional 5%.
 If upgrade level is +9 or higher,
@@ -8667,8 +8746,11 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808036^000000
 Usable By: ^808080Acolyte Jobs^000000
 Int + 2
+
 Reduces damage taken from Demi-Human race enemies by 5%.
-Reduces damage taken from Demi-Human race enemies by an additional 1% per upgrade level of the item past the upgrade level of 6.
+Reduces damage taken from Demi-Human race enemies by an additional 1% per upgrade level of the item past the upgrade level of 5.
+Reduces damage taken from Human Player race enemies by 5%.
+Reduces damage taken from Human Player race enemies by an additional 1% per upgrade level of the item past the upgrade level of 5.
 Adds a 2% chance of casting ^0000FFLevel 1 Heal^000000 on the user when receiving a physical attack, if a higher level of this skill is known, it will be cast instead.
 #
 1676#
@@ -9494,6 +9576,8 @@ Usable By: ^808080Thief, Archer Jobs, Rogue Jobs^000000
 Dex + 2
 Increases physical damage on Demi-Human race targets by 55%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1739#
@@ -9509,6 +9593,7 @@ Usable By: ^808080Thief, Archer Jobs, Rogue Jobs^000000
 Int + 10
 Dex + 2
 Increases physical damage on Demi-Human race targets by 55%.
+Increases physical damage on Human Player race targets by 55%.
 This item is indestructible in battle.
 #
 1740#
@@ -9562,11 +9647,15 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080Thief, Archer Jobs, Rogue Jobs^000000
 Increases physical damage on Demi-Human race targets by 55%.
+Increases physical damage on Human Player race targets by 55%.
 Increases critical damage on targets by 2% per upgrade level of the item.
+
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Increases the damage of ^0000FFDouble Strafe^000000 by 20%.
@@ -10182,6 +10271,8 @@ Str + 2
 Agi + 1
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 Adds a 2% chance of casting ^0000FFLevel 1 Zen^000000 on the user when performing a physical attack.
 This item is indestructible in battle.
 #
@@ -10199,6 +10290,7 @@ Str + 1
 Int + 2
 Reduces the variable casting time of ^0000FFGuillotine Fist^000000 by 25%.
 Increases physical damage on Demi-Human race targets by 95%.
+Increases physical damage on Human Player race targets by 95%.
 Adds a 5% chance of buffing the user for 6 seconds when performing a physical attack; Reduces the variable casting time of ^0000FFGuillotine Fist^000000 by 100%.
 This item is indestructible in battle.
 #
@@ -10227,9 +10319,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 25% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 25% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Adds a chance of casting ^0000FFLevel 1 Decrease AGI^000000 on the target when performing a physical attack, where the chance to cast is equal to 1% per upgrade level of the item past the upgrade level of 5.
@@ -10247,9 +10342,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Priest Jobs, Monk Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
-Enables ^0000FFLevel 1 Slaughter^000000: Increases physical damage on Demi-Human race targets by (Refine-4) * (Refine-4) to a maximum upgrade level of +14.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000: Increases physical damage on Demi-Human/Human Player race targets by (Refine-4) * (Refine-4) to a maximum upgrade level of +14.
 If upgrade level is +9 or higher,
 Reduces the fixed casting time of skills by 50%.
 Adds a 100% chance of casting ^0000FFLevel 1 Zen^000000 on the user when using ^0000FFFury^000000.
@@ -10642,6 +10740,8 @@ Usable By: ^808080Bard Jobs^000000
 Dex + 2
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1924#
@@ -10656,6 +10756,7 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Bard Jobs^000000
 Dex + 2
 Increases physical damage on Demi-Human race targets by 95%.
+Increases physical damage on Human Player race targets by 95%.
 Increases the damage of ^0000FFArrow Vulcan^000000 by 20%.
 This item is indestructible in battle.
 #
@@ -10704,9 +10805,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Bard Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Adds a 10% chance of casting ^0000FFLevel 5 Tarot Card of Fate^000000 on the target when using ^0000FFArrow Vulcan^000000.
@@ -11196,6 +11300,8 @@ Usable By: ^808080Dancer Jobs^000000
 Dex + 2
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human race targets by 95%.
+Bypass 20% of hard defense of Human race targets when performing a physical attack.
 This item is indestructible in battle.
 #
 1978#
@@ -11210,6 +11316,7 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Dancer Jobs^000000
 Dex + 2
 Increases physical damage on Demi-Human race targets by 95%.
+Increases physical damage on Human Player race targets by 95%.
 Increases the damage of ^0000FFArrow Vulcan^000000 by 20%.
 This item is indestructible in battle.
 #
@@ -11255,9 +11362,12 @@ Requires Level: ^80808080^000000
 Usable By: ^808080Dancer Jobs^000000
 Increases physical damage on Demi-Human race targets by 95%.
 Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
 Enables ^0000FFLevel 1 Slaughter^000000.
 If upgrade level is +9 or higher,
 Adds a 10% chance of casting ^0000FFLevel 5 Tarot Card of Fate^000000 on the target when using ^0000FFArrow Vulcan^000000.
@@ -11510,11 +11620,15 @@ Weight: ^8080800^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Matk + 1% per upgrade level of the item.
 Increases magical damage on Demi-Human race targets by 15%.
 Bypass 25% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Increases magical damage on Human Player race targets by 15%.
+Bypass 25% of hard magic defense of Human Player race targets when performing a magical attack.
 This item is indestructible in battle.
 If upgrade level is +6 or higher,
 Bypass an additional 5% of hard magic defense of Demi-Human race targets when performing a magical attack.
+Bypass an additional 5% of hard magic defense of Human Player race targets when performing a magical attack.
 Enables ^0000FFLevel 1 Destruction^000000.
 If upgrade level is +9 or higher,
 Adds a 20% chance of casting ^0000FFLevel 10 Safety Wall^000000 on the user when using ^0000FFLord of Vermillion^000000, ^0000FFMeteor Storm^000000 or ^0000FFStorm Gust^000000.
@@ -13838,6 +13952,7 @@ Weight: ^80808070^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Reduces damage taken from Demi-Human race enemies by 10%.
+Reduces damage taken from Human Player race enemies by 10%.
 #
 2290#
 Traditional Korean headdress worn during funeral ceremonies by the bereaved family and close friends.
@@ -13857,6 +13972,7 @@ Weight: ^80808010^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Increases physical damage on Demi-Human race targets by 3%.
+Increases physical damage on Human Player race targets by 3%.
 #
 2292#
 A durable mask made from a fat metal plate that is usually worn by welders and Blacksmiths.
@@ -14721,118 +14837,176 @@ Matk + 3%
 #
 2376#
 Designed for brave warriors who face enemies at the forefront. It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MaxHP +150, MDEF +2.
-^ffffff000000^000000
-When equipped with Battle Greaves and Captain's Manteau,
-Increases damage received from all non-Demihuman monsters times 3.
-Vit +3, MaxHP +12%.
-^FF0000Heal^000000 skill and recovery item effect increase by 10%.
-When the wearer receives physical damage, has a chance of restoring 6,000 HP for 10 seconds.
-Class : ^777777Armor^000000
-Defense : ^77777757^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Swordman, Merchant, Taekwon Boy/Girl, Taekwon Master^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808057^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Taekwon, Taekwon Master^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+
+^800080Set Bonus^000000
+^008080Assaulter Plate [1]^000000
+^008080Battle Greave [1]^000000
+^008080Captain's Manteau [1]^000000
+Vit + 3
+Max HP + 12%
+
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Increases the recovery rate of recovery skills and recovery items by 10%.
+Restores 6000 HP to the user every X second for 10 seconds when receiving a physical attack.
 #
 2377#
 Designed to be used by outstanding warriors who have remarkable attack skills. It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MHP +150, MDEF +2,
-^fffffff000000^000000
-When equipped with Combat Greaves and Captain's Manteau,
-Str +3, MaxHP 12%
-Increases Mammonite Damage by 20%.
-Increases HP Restoration of ^FF0000Heal^000000 and ^FF0000Potion Pitcher^000000 by 10%.
-Increases damage from non-Demihuman monsters times 3.
-Indestructible.
-Class : ^777777Armor^000000
-Defense : ^77777750^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Merchant^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808050^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Merchant Jobs^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+^800080Set Bonus^000000
+^008080Elite Engineer Armor [1]^000000
+^008080Battle Greave [1]^000000
+^008080Captain's Manteau [1]^000000
+Str + 3
+Max HP + 12%
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Increases the damage of ^0000FFMammonite^000000 by 20%.
+Increases the recovery rate of recovery skills and recovery items by 10%.
+This item is indestructible in battle.
 #
 2378#
 If you desire to move more quickly, this might help. It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MaxHP +150, MDEF +2,
-^ffffff000000^000000
-When equipped with Battle Greaves and Captain's Manteau,
-Agi +3. MaxHP +12%,
-Increase in attack speed(delay after attacking reduces by 5%), Critical Rate +5%,
-ASPD +5%
-Increases damage from non-Demihuman monsters times 3.
-When attacking physically has a chance of restoring 3,000 HP per second for 10 seconds.
-Class : ^777777Armor^000000
-Defense : ^77777741^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Thief Classes and Ninja^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808041^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Thief Jobs, Ninja Jobs^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+^800080Set Bonus^000000
+^008080Assassin Robe [1]^000000
+^008080Battle Greave [1]^000000
+^008080Captain's Manteau [1]^000000
+Agi + 3
+Max HP + 12%
+Crit + 5%
+Aspd + 5%
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Restores 3000 HP to the user every X second for 10 seconds when receiving a physical attack.
 #
 2379#
 A Battle Robe that helps increase the possibility of survival. It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MaxHP +150, MDEF +2,
-^FFFFFF000000^000000
-When equipped with Combat Boots and Commander's Manteau,
-Int +3. MaxHP +12%.
-Adds 20% resistance to ^FF0000Stun^000000.
-Increases damage from all non-Demihuman monsters times 3.
-When receiving physical damage, has a chance of enchanting Armor with the Ghost property for 10 seconds.
-Class : ^777777Armor^000000
-Defense : ^77777736^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Mage/Soul Linker^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808036^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+^800080Set Bonus^000000
+^008080Warlock's Battle Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Increases resistance to ^800000Stun^000000 by/by an additional 20%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
 #
 2380#
-Designed to be used by responsible warriors who take charge of the survival of the guild or party.
-It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MaxHP +150, MDEF +2.
-^FFFFFF000000^000000
-When equipped with Combat Boots and Commander's Manteau,
-Int +3. MaxHP +12%.
-Reduces ^FF0000Holy Light^000000 Variable Casting Time by 50%.
-Increases damage from all non-Demihuman monsters times 3.
-Increases HP Restoration of ^FF0000Heal^000000 and ^FF0000Sanctuary^000000 by 6% when they are cast by the wearer.
-When receiving physical damage, has a chance of enchanting Armor with the Ghost property for 10 seconds.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Acolyte^000000
+Designed to be used by responsible warriors who take charge of the survival of the guild or party. It gives off multiple effects when compounded as a set.
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Acolyte Jobs^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+
+^800080Set Bonus^000000
+^008080Medic's Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Reduces the variable casting time of ^0000FFHoly Light^000000 by 50%.
+Increases the recovery rate of recovery skills by 6%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
 #
 2381#
-If you desire to become an accurate and efficient warrior in battle, this might help.
-It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MaxHP +150, MDEF +2.
-^ffffff000000^000000
-When equipped with Combat Boots and Commander's Manteau,
-Dex +3, MaxHP +12%.
-Reduces long ranged Damage by 10% and cast delay by 25%.
-Increases damage from all non-Demihuman monsters times 3.
-Class : ^777777Armor^000000
-Defense : ^77777735^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Archer^000000
+If you desire to become an accurate and efficient warrior in battle, this might help. It gives off multiple effects when compounded as a set.
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808035^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Archer Jobs^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+
+^800080Set Bonus^000000
+^008080Elite Archer Suit [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Dex + 3
+Max HP + 12%
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces the global delay of skills by 25%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
 #
 2382#
 If you are a true Gunslinger, you might want this suit! It gives off multiple effects when compounded as a set.
-Reduces damage from Demihuman monsters by 2%.
-MHP +150, MDEF +2.
-^ffffff000000^000000
-When equipped with Battle Boots and Sheriff's Manteau,
-Dex +3, MaxHP +12%.
-Reduces long ranged Damage by 10% and cast delay by 25%.
-Increases damage from all non-Demihuman monsters times 3.
-Class : ^777777Armor^000000
-Defense : ^77777725^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Max HP + 150
+Mdef + 2
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player race enemies by 2%.
+^800080Set Bonus^000000
+^008080Elite Shooter Suit [1]^000000
+^008080Battle Boots [1]^000000
+^008080Sheriff's Manteau [1]^000000
+Dex + 3
+Max HP + 12%
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces the global delay of skills by 25%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
 #
 2383#
 Brynhild is one of the valiant valkyries, meaning 'the warrior's armor'.
@@ -14982,6 +15156,7 @@ Requires Level: ^80808081^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Max HP + 20%
 Reduces damage taken from Demi-Human race enemies by 7%.
+Reduces damage taken from Human Player race enemies by 7%.
 ^800080Set Bonus^000000
 ^008080Glorious Muffler^000000
 ^008080Glorious Shoes^000000
@@ -15111,21 +15286,21 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Mdef + 5
 #
 2410#
-Named after Odin's trusty steed, these shoes also
-mimic Sleipnir's powers. Increase Movement Speed.
-SP Recovery +15%
-Max HP/SP +20%
-INT + 25
-MDEF +10
-^FFFFFF_^000000
-^FF0000This can be made 30 Day version, and tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
-Not Tradable
-^FFFFFF_^000000
-Class : ^777777Footwear^000000
-Defense : ^7777775^000000
-Weight : ^777777350^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+Named after Odin's trusty steed, these shoes also mimic Sleipnir's powers.
+^FF0000Account Bound^000000
+^FF0000This can be made 30 day version that is tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
+Class: ^808080Shoes^000000
+Defense: ^80808040^000000
+Weight: ^808080350^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Int + 25
+Max HP + 20%
+Max SP + 20%
+SP Recovery + 25%
+Mdef + 10
+Increased Movement Speed.
+This item cannot be upgraded.
 #
 2411#
 Steel boots which offer dependable foot protection.
@@ -15421,33 +15596,76 @@ Flee + 10
 #
 2435#
 A Greave that optimizes the quality of one's ability for battle.
-Reduces damage from Demihuman monsters by 1%.
-MaxHP + 100. MDEF + 1.
-Class : ^777777Footwear^000000
-Defense : ^77777715^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Swordman, Merchant, Thief Classes, Ninja, Taekwon Boy/Girl and Taekwon Master^000000
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Swordman, Merchant, Thief, Taekwon, Taekwon Master, Ninja^000000
+Reduces damage from Demihuman monsters by 1%
+Reduces damage from Human Player monsters by 1%
+MaxHP + 100.
+MDEF + 1
 #
 2436#
 Shoes that are comfortable and solidly made for battle.
-Reduces damage from Demihuman monsters by 1%.
-MaxHP + 100. MDEF + 1.
-Class : ^777777Footwear^000000
-Defense : ^7777779^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Mage, Acolyte, Archer, Soul Linker^000000
+^FF0000Account Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^8080809^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Archer Jobs, Soul Linker^000000
+Max HP + 100
+Mdef + 1
+Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces damage taken from Human Player race enemies by 1%.
+
+^800080Set Bonus^000000
+^008080Elite Archer Suit [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Dex + 3
+Max HP + 12%
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces the global delay of skills by 25%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+
+^800080Set Bonus^000000
+^008080Medic's Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Reduces the variable casting time of ^0000FFHoly Light^000000 by 50%.
+Increases the recovery rate of recovery skills by 6%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
+
+^800080Set Bonus^000000
+^008080Warlock's Battle Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Increases resistance to ^800000Stun^000000 by/by an additional 20%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Increases damage taken from All Race enemies except Human Player by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
 #
 2437#
 They don't look any different than other boots, but they are designed exclusively for Gunslingers.
+^FF0000Account Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^8080809^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger^000000
 Reduces damage from Demihuman monsters by 1%.
-MaxHP + 100. MDEF + 1.
-Class : ^777777Footwear^000000
-Defense : ^7777779^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+Reduces damage from Human Player monsters by 1%.
+MaxHP + 100.
+MDEF + 1.
+
 #
 2438#
 placeholder
@@ -15525,6 +15743,7 @@ Requires Level: ^80808081^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Max HP + 10%
 Reduces damage taken from Demi-Human race enemies by 4%.
+Reduces damage taken from Human Player race enemies by 4%.
 Adds a 1% chance of casting ^0000FFLevel 1 Increase AGI^000000 on the user when receiving a physical attack.
 ^800080Set Bonus^000000
 ^008080Glorious Muffler^000000
@@ -15664,19 +15883,20 @@ Required Level: ^77777765^000000
 Jobs: ^777777Knight, Crusader^000000
 #
 2462#
-Named after Odin's trusty steed, these shoes also
-mimic Sleipnir's powers. Increase Movement Speed.
-SP Recovery +15%
-Max HP/SP +10%
-MDEF +10
-^FFFFFF_^000000
-^FF0000This is a 30 Day version, and is tradable, it will disappear when it expires.^000000
-^FFFFFF_^000000
-Class : ^777777Footwear^000000
-Defense : ^7777775^000000
-Weight : ^777777350^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+Named after Odin's trusty steed, these shoes also mimic Sleipnir's powers.
+^FF0000Rental Item^000000
+Class: ^808080Shoes^000000
+Defense: ^80808040^000000
+Weight: ^808080350^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Int + 25
+Max HP + 20%
+Max SP + 20%
+SP Recovery + 25%
+Mdef + 10
+Increased Movement Speed.
+This item cannot be upgraded.
 #
 2463#
 ^ff0000This item cannot be traded with others.^000000
@@ -15835,6 +16055,7 @@ Usable By: ^808080Arch Bishop^000000
 Max HP + 500
 Increases damage taken from All race enemies by 10%.
 Reduces damage taken from Demi-Human race enemies by 10%.
+Reduces damage taken from Human Player race enemies by 10%.
 
 ^800080Set Bonus^000000
 ^008080Wand of Affection [2]^000000
@@ -16627,33 +16848,74 @@ Max HP + 6%
 #
 2538#
 A dignified, splendid Manteau that is provided to any warrior who brings great honor from the battlefield.
+
+^FF0000Account Bound^000000
+Class: ^808080Garment^000000
+Defense: ^80808028^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Swordman, Merchant, Thief, Taekwon, Taekwon Master, Ninja^000000
 Reduces damage from Demihuman monsters by 1%.
-MaxHP + 50. MDEF + 1.
-Class : ^777777Garment^000000
-Defense : ^77777728^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Swordman, Merchant, Thief Classes, Ninja, Taekwon Boy/Girl and Taekwon Master^000000
+Reduces damage from Human Player monsters by 1%.
+MaxHP + 50
+MDEF + 1
 #
 2539#
 A Manteau that is provided to any superior commander who has the outstanding ability to support their base.
-Reduces damage from Demihuman monsters by 1%.
-MaxHP + 50. MDEF + 1.
-Class : ^777777Garment^000000
-Defense : ^77777720^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Mage, Acolyte, Archer, Soul Linker^000000
+^FF0000Account Bound^000000
+Class: ^808080Garment^000000
+Defense: ^80808020^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Archer Jobs, Soul Linker^000000
+Max HP + 50
+Mdef + 1
+Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces damage taken from Human Player race enemies by 1%.
+
+^800080Set Bonus^000000
+^008080Elite Archer Suit [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Dex + 3
+Max HP + 12%
+Reduces damage taken from long-ranged attacks by 10%.
+Reduces the global delay of skills by 25%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+
+^800080Set Bonus^000000
+^008080Medic's Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Reduces the variable casting time of ^0000FFHoly Light^000000 by 50%.
+Increases the recovery rate of recovery skills by 6%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
+
+^800080Set Bonus^000000
+^008080Warlock's Battle Robe [1]^000000
+^008080Combat Boots [1]^000000
+^008080Commander's Manteau [1]^000000
+Int + 3
+Max HP + 12%
+Increases resistance to ^800000Stun^000000 by/by an additional 20%.
+Increases damage taken from All Race enemies except Demi-Human by 300%.
+Adds a chance for the user's property to become Level X Ghost for 10 seconds when receiving a physical attack.
 #
 2540#
 A Manteau imbued with tension and the mysterious spirit of desolate wilderness.
+^FF0000Account Bound^000000
+Class: ^808080Garment^000000
+Defense: ^80808020^000000
+Weight: ^8080800^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger^000000
 Reduces damage from Demihuman monsters by 1%.
-MaxHP + 50. MDEF + 1.
-Class : ^777777Garment^000000
-Defense : ^77777720^000000
-Weight : ^7777770^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+Reduces damage from Human Player monsters by 1%.
+MaxHP + 50.
+MDEF + 1.
 #
 2541#
 A wing made of all lights that exist in the world. It's name means 'Light of the gods'.
@@ -16696,12 +16958,13 @@ Jobs: ^777777All Except Novice^000000
 #
 2544#
 Leather of a Tendrilion with plant stems sticking out of it.
+Class: ^808080Garment^000000
+Defense: ^80808014^000000
+Weight: ^80808050^000000
+Usable By: ^808080Lord Knight, Master Smith, Assassin Cross, High Priest, High Wizard, Sniper, Paladin, Biochemist, Stalker, Champion, Scholar, Minstrel, Gypsy^000000
 Resistance to Earth and Water property +5%
 Resistance to animal or plant monsters +5%
-Class : ^777777Garment^000000
-Defense : ^77777714^000000
-Weight : ^77777750^000000
-Jobs : ^7777772nd Transcendent Class^000000
+Resistance to Doram monsters +5%
 #
 2545#
 An outfit for priests in order to protect the exorcists at Prontera Church.
@@ -16745,6 +17008,7 @@ Requires Level: ^80808081^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Max HP + 5%
 Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Human Player race enemies by 5%.
 ^800080Set Bonus^000000
 ^008080Glorious Muffler^000000
 ^008080Glorious Shoes^000000
@@ -17479,36 +17743,34 @@ Weight : ^77777720^000000
 Jobs : ^777777Novice^000000
 #
 2629#
-A reproduction of the
-girdle of might that
-Thor wore to enhance
-his prodigious strength. Str +40, MDEF +7
-If user has 120 base STR, Increases damage on Boss monsters by 10%.
-^FFFFFF_^000000
-^FF0000This can be made 30 Day version, and tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
-Not Tradable
-^FFFFFF_^000000
-Class : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^777777800^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+A reproduction of the girdle of might that Thor wore to enhance his prodigious strength.
+^FF0000Account Bound^000000
+^FF0000This can be made 30 day version that is tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
+Class: ^808080Accessory^000000
+Weight: ^808080800^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Str + 40
+Mdef + 7
+Additional Str + 1 for every 5 base levels.
+If the user's base Str is 120 or higher, increases physical damage on boss monsters by 10%.
 #
 2630#
-An imitation of the
-necklace worn by the
-beautiful goddess Freya. Str +6, Agi +6, Int +10
-Vit +6, Dex + 6, Luk +10
-Increases Heal effectiveness by 6%
-^FFFFFF_^000000
-^FF0000This can be made 30 Day version, and tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
-Not Tradable
-^FFFFFF_^000000
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^777777150^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+An imitation of the necklace worn by the beautiful goddess Freyja.
+^FF0000Account Bound^000000
+^FF0000This can be made 30 day version that is tradable by talking with the Godly Item Confiscator in Prontera Castle.^000000
+Class: ^808080Accessory^000000
+Weight: ^808080150^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Str + 6
+Agi + 6
+Vit + 6
+Int + 10
+Dex + 6
+Luk + 10
+Mdef + 5
+Increases the recovery rate of recovery skills by 6%.
 #
 2631#
 A ring that is given to a baby that becomes a year old.
@@ -19451,32 +19713,32 @@ Required Level: ^77777710^000000
 Jobs: ^777777All Jobs except Novice^000000
 #
 2830#
-A reproduction of the
-girdle of might that
-Thor wore to enhance
-his prodigious strength. Str +40, MDEF +7
-^FFFFFF_^000000
-^FF0000This is a 30 Day version, and is tradable, it will disappear when it expires.^000000
-^FFFFFF_^000000
-Class : ^777777Accessory^000000
-Defense : ^7777772^000000
-Weight : ^777777800^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+A reproduction of the girdle of might that Thor wore to enhance his prodigious strength.
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^808080800^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Str + 40
+Mdef + 7
+Additional Str + 1 for every 5 base levels.
+If the user's base Str is 120 or higher, increases physical damage on boss monsters by 10%.
 #
 2831#
-An imitation of the
-necklace worn by the
-beautiful goddess Freya. Str +6, Agi +6, Int +6
-Vit +6, Luk +10
-^FFFFFF_^000000
-^FF0000This is a 30 Day version, and is tradable, it will disappear when it expires.^000000
-^FFFFFF_^000000
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^777777150^000000
-Required Level : ^77777794^000000
-Jobs: ^777777All^000000
+An imitation of the necklace worn by the beautiful goddess Freyja.
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^808080150^000000
+Requires Level: ^80808094^000000
+Usable By: ^808080All Jobs^000000
+Str + 6
+Agi + 6
+Vit + 6
+Int + 10
+Dex + 6
+Luk + 10
+Mdef + 5
+Increases the recovery rate of recovery skills by 6%.
 #
 2833#
 ^000088Rental Item^000000
@@ -20414,21 +20676,15 @@ Job : ^7777772nd Job and over/Taekwon Master/Soul Linker/Kakero/Oboro^000000
 #
 2959#
 A collar symbolizing a close relationship.
+
+Class: ^808080Accessory^000000
+Weight: ^80808030^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 AGI + 2.
 Decrease 3% of damage received from animal monster.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Job : ^777777All jobs^000000
-A collar symbolizing a close relationship.
-AGI + 2.
-Decrease 3% of damage received from animal monster.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777730^000000
-Required Level : ^77777750^000000
-Job : ^777777All jobs^000000
+Decrease 3% of damage received from Doram monster.
+
 #
 2963#
 This magic ring, developed in Geffen, enhances its wearer's physical abilities.
@@ -21124,6 +21380,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Increases physical damage on Demi-Human race targets by 20%.
+Increases physical damage on Human Player race targets by 20%.
 #
 4036#
 HP Recovery +10%
@@ -21315,6 +21572,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Shield^000000
 Weight: ^8080801^000000
 Reduces damage taken from Demi-Human race enemies by 30%.
+Reduces damage taken from Human Player race enemies by 30%.
 #
 4059#
 Class: ^808080Card^000000
@@ -21327,6 +21585,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Increases physical damage on Brute race targets by 20%.
+Increases physical damage on Doram race targets by 20%.
 #
 4061#
 Class: ^808080Card^000000
@@ -21364,6 +21623,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Shield^000000
 Weight: ^8080801^000000
 Reduces damage taken from Brute race enemies by 30%.
+Reduces damage taken from Doram race enemies by 30%.
 #
 4067#
 Class: ^808080Card^000000
@@ -21767,6 +22027,8 @@ Increases physical damage on Demi-Human race targets by 7%.
 Increases physical damage on Brute race targets by 7%.
 Increases physical damage on Plant race targets by 7%.
 Increases physical damage on Insect race targets by 7%.
+Increases physical damage on Human Player race targets by 7%.
+Increases physical damage on Doram race targets by 7%.
 #
 4126#
 Class: ^808080Card^000000
@@ -22089,6 +22351,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Restores 5 SP to the user when a Brute race monster is killed by a short-ranged attack.
+Restores 5 SP to the user when a Doram race monster is killed by a short-ranged attack.
 Drains 5 SP from the user when the compounded item is unequipped.
 #
 4168#
@@ -22531,6 +22794,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Shoes^000000
 Weight: ^8080801^000000
 Increases damage taken from Brute race enemies by 20%.
+Increases damage taken from Doram race enemies by 20%.
 Increases the experience given from Brute race monsters by 10%.
 #
 4205#
@@ -23113,41 +23377,35 @@ Compound on: ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4245#
-Am Mut Card.
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
 Receive 10% more Experience Points from Demi Human monsters.
 Receive 20% more damage from Demi Human monsters.
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+Receive 20% more damage from Human Player monsters.
 #
 4246#
-Assaulter Card.
-Inflict 10% more damage
-with Critical Attack.
-Critical +7 on
-Demi Human monsters.
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Inflict 10% more damage with Critical Attack.
+Critical +7 on Demi Human monsters.
+Critical +7 on Human Player monsters.
+
+
 ^6A5ACDSwordman Card Set^000000
 ^3CB371Assaulter Card^000000
 ^3CB371Permeter Card^000000
 ^3CB371Solider Card^000000
 ^3CB371Freezer Card^000000
 ^3CB371Heater Card^000000
-Set Bonus: A chance to cast
-level 1 Weapon Perfection
-when attacking.
+Set Bonus:
+A chance to cast level 1 Weapon Perfection when attacking.
 HP Regen +50%
-A chance of gaining
-'Red Potion'
-each time a monster is killed.
+A chance of gaining 'Red Potion' each time a monster is killed.
 Max HP +20%
 Str +10
-Swordman Class :
-+50% HP Restoration
-when using Red, Yellow,
-and White Potions.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Swordman Class :+50% HP Restoration when using Red, Yellow, and White Potions.
 #
 4247#
 Aster Card.
@@ -23775,11 +24033,12 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4297#
-Cruiser Card.
-Inflict 10% more damage
-with Critical Attack.
-Critical +7 on
-Brute monsters.
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Inflict 10% more damage \with Critical Attack.
+Critical +7 on Brute monsters.
+Critical +7 on Doram monsters.
 ^6A5ACDHunter Card Set^000000
 ^3CB371Cruiser Card^000000
 ^3CB371Anolian Card^000000
@@ -23790,14 +24049,10 @@ Brute monsters.
 Agi +5
 Dex +3
 +20% Seeking Attack
-(which never miss its target)
-Archer Class Bonus:
-A low chance of
-auto casting Coma on
-Brute class monsters
-when attacking.
-+5% EXP from
-Brute class monsters.
+Archer Class Bonus:A low chance of auto casting Coma on Brute class monsters when attacking.
+Archer Class Bonus:A low chance of auto casting Coma on Doram class monsters when attacking.
++5% EXP from Brute class monsters.
+
 ^6A5ACDBard/Dancer Card Set^000000
 ^3CB371Cruiser Card^000000
 ^3CB371Anolian Card^000000
@@ -23808,14 +24063,7 @@ Dex +5
 +5% Arrow Vulcan Damage
 +10% Melody Strike Damage
 +10% Slinging Arrow Damage
-Bard or Dancer Class Bonus:
-A low chance of
-auto casting
-level 2 Tarot Card of Fate
-when hit by a melee attack.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Bard or Dancer Class Bonus:A low chance of auto casting level 2 Tarot Card of Fate when hit by a melee attack
 #
 4298#
 Creamy Fear Card.
@@ -24289,12 +24537,13 @@ Compound on: ^777777Garment^000000
 Weight : ^7777771^000000
 #
 4329#
-Phendark Card.
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
 Gain 5 SP each time a Demi Human monster is killed by Physical Melee Attack.
+Gain 5 SP each time a Human Player monster is killed by Physical Melee Attack.
 Drain 5 SP as the weapon is unequipped.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+
 #
 4330#
 Evil Snake Lord Card.
@@ -24650,11 +24899,11 @@ Compound on: ^777777Garment^000000
 Weight : ^7777771^000000
 #
 4360#
-Critical +10 against
-Demihuman enemies.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Critical +10 against Demihuman enemies.
+Critical +10 against Human Player enemies.
 #
 4361#
 Adds a 10% chance of
@@ -25343,13 +25592,12 @@ Weight: ^8080801^000000
 Adds a chance of casting ^0000FFLevel 5 Fire Ball^000000 or ^0000FFLevel 5 Fire Bolt^000000 on the target when performing a physical attack.
 #
 4432#
-ATK +5.
-Increases damage to Earth monsters by 5%,
-CRI +15 bonus against Plant monsters.
-CRI +15 bonus against Brute monsters.
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Atk + 5
+Increases physical damage on Earth property targets by 10%.
+Crit + 15 on Brute, Doram, and Plant race targets.
 #
 4433#
 Class: ^808080Card^000000
@@ -25370,11 +25618,13 @@ Class: ^808080Card^000000
 Compounds On: ^808080Shoes^000000
 Weight: ^8080801^000000
 Increases physical and magical damage on Demi-Human race targets by 1%.
+Increases physical and magical damage on Human Player race targets by 1%.
 Restores 50 HP to the user when a monster is killed by a physical attack.
 ^800080Set Bonus^000000
 ^008080Zombie Slaughter Card^000000
 ^008080Ragged Zombie Card^000000
 Restores 2 SP to the user when a Demi-Human Race monster is killed by a physical attack.
+Restores 2 SP to the user when a Human Player Race monster is killed by a physical attack.
 #
 4436#
 Class: ^808080Card^000000
@@ -25382,11 +25632,14 @@ Compounds On: ^808080Accessory^000000
 Weight: ^8080801^000000
 Crit + 5 on Demi-Human race targets.
 Increases physical and magical damage on Demi-Human race targets by 1%.
+Crit + 5 on Human Player race targets.
+Increases physical and magical damage on Human Player race targets by 1%.
 Adds a chance of inflicting ^800000Bleed^000000 on the user when performing a physical attack.
 ^800080Set Bonus^000000
 ^008080Ragged Zombie Card^000000
 ^008080Zombie Slaughter Card^000000
 Restores 2 SP to the user when a Demi-Human Race monster is killed by a physical attack.
+Restores 2 SP to the user when a Human Player Race monster is killed by a physical attack.
 #
 4437#
 Class: ^808080Card^000000
@@ -25428,7 +25681,7 @@ Compounds On: ^808080Shoes^000000
 Weight: ^8080801^000000
 Matk + 10%
 Max SP - 50%
-Increases magical damage on Demi-Human and Angel race targets by 50%.
+Increases magical damage on Demi-Human, Human Player, and Angel race targets by 50%.
 #
 4442#
 Class: ^808080Card^000000
@@ -25649,7 +25902,7 @@ Increases magical damage on Dragon race targets by 10%.
 Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
-Increases magical damage on Brute race targets by 10%.
+Increases magical damage on Brute, Doram race targets by 10%.
 #
 4473#
 Class: ^808080Card^000000
@@ -25662,6 +25915,7 @@ Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
 Increases magical damage on Demi-Human race targets by 10%.
+Increases magical damage on Human Player race targets by 10%.
 #
 4475#
 Class: ^808080Card^000000
@@ -26772,7 +27026,7 @@ Weight: ^7777771^000000
 Class: ^808080Card^000000
 Compounds On: ^808080Accessory^000000
 Weight: ^8080801^000000
-Crit + 12 on Demi-Human, Brute and Fish race targets.
+Crit + 12 on Demi-Human, Brute, Doram, Human Player, and Fish race targets.
 #
 4588#
 Class: ^808080Card^000000
@@ -27133,7 +27387,7 @@ Weight : ^7777771^000000
 Class: ^808080Card^000000
 Compounds On: ^808080Shield^000000
 Weight: ^8080801^000000
-Reduces damage taken from Brute and Undead race enemies by 20%.
+Reduces damage taken from Brute, Doram, and Undead race enemies by 20%.
 ^800080Set Bonus^000000
 ^008080Nightmare Arclouse Card^000000
 ^008080Nightmare Mimic Card^000000
@@ -27150,23 +27404,23 @@ Bypass 50% of hard defense of Brute and Undead race targets when performing a ph
 Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
-Increases magical damage on Brute and Undead race targets 5%.
+Increases magical damage on Brute, Doram, and Undead race targets 5%.
 ^800080Set Bonus^000000
 ^008080Nightmare Arclouse Card^000000
 ^008080Nightmare Mimic Card^000000
-Reduces damage taken from Brute and Undead race enemies by an additional 5%.
-Bypass 50% of hard magic defense of Brute and Undead race targets when performing a magical attack.
+Reduces damage taken from Brute, Doram, and Undead race enemies by an additional 5%.
+Bypass 50% of hard magic defense of Brute, Doram, and Undead race targets when performing a magical attack.
 #
 4655#
 Class: ^808080Card^000000
 Compounds On: ^808080Weapon^000000
 Weight: ^8080801^000000
-Increases physical damage on Brute and Undead race targets by 10%.
+Increases physical damage on Brute, Doram, and Undead race targets by 10%.
 ^800080Set Bonus^000000
 ^008080Nightmare Arclouse Card^000000
 ^008080Nightmare Minorous Card^000000
-Reduces damage taken from Brute and Undead race enemies by an additional 5%.
-Bypass 50% of hard defense of Brute and Undead race targets when performing a physical attack.
+Reduces damage taken from Brute, Doram, and Undead race enemies by an additional 5%.
+Bypass 50% of hard defense of Brute, Doram, and Undead race targets when performing a physical attack.
 #
 4656#
 Class: ^808080Card^000000
@@ -28173,6 +28427,7 @@ Increases tolerance to Neutral Property monsters by 5%
 #
 4849#
 Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Human Player race enemies by 5%.
 #
 4850#
 Increases the recovery rate of recovery skills by 6%.
@@ -29729,16 +29984,17 @@ Required Level : ^77777750^000000
 Jobs: ^777777All^000000
 #
 5099#
-A cute cat-looking hat which enhances its wearer's look.
-Has a cat tail which emphasises the appearance.
-Luk +2, MDEF +10
-Reduce 5% of damage taken from Brute monsters.
-Class : ^777777Headgear^000000
-Defense: ^7777772^000000
-Location: ^777777Upper^000000
-Weight : ^77777730^000000
-Requirement: ^777777None^000000
-Jobs: ^777777All^000000
+A cute cat-looking hat which enhances its wearer's look.Has a cat tail which emphasizes the appearance
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Luk +2
+MDEF +10
+Reduce 5% of damage taken from Brute race enemies.
+Reduce 5% of damage taken from Doram race enemies.
+
 #
 5100#
 A banner which has a word 'Sale' written on the surface.
@@ -29993,21 +30249,16 @@ Required Level : ^777777N/A^000000
 Jobs: ^777777All^000000
 #
 5121#
-This mask, which is
-symbolic of Zealotus,
-mistress of the Glast
-Heim Underground Prison, makes its wearer feel like
-looking down on normal human peons. Increases
-damage against Demihuman monsters by 5% and reduces
-damage from Demihuman
-monsters by 5%.
-Class : ^777777Headgear^000000
-Defense: ^7777773^000000
-Location: ^777777Upper, Mid^000000
-Weight : ^77777740^000000
-Required Level : ^77777770^000000
-Jobs: ^777777All except
-Novice Class^000000
+This mask, which issymbolic of Zealotus,mistress of the Glast Heim Underground Prison, makes its wearer feel like looking down on normal human peons.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808040^000000
+Usable By: ^808080All Jobs except Novice^000000
+Increases damage against Demi-Human monsters by 5%
+Reduces damage from Demi-Human monsters by 5%.
+Increases damage against Human Player monsters by 5%
+Reduces damage from Human Player monsters by 5%.
 #
 5122#
 Once owned by Magni, son of Thor, the wearer of this cap is supposedly granted a measure of Magni's awesome might.
@@ -30162,14 +30413,16 @@ Reduces damage taken from Water, Earth, Fire, and Wind property attacks by 10%.
 #
 5129#
 A mysterious bird's nest that makes the wearer feel like flying.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808040^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080All Jobs^000000
 Agi +2
-Adds10% tolerance to the Animal monsters.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777755^000000
-Jobs : ^777777All^000000
+Adds 10% tolerance to the Animal monsters
+Adds 10% tolerance to the Doram monsters
 #
 5130#
 A mask  which looks like scary monster. If you ever see the monster you can't even scream by fear.
@@ -30191,11 +30444,15 @@ Jobs : ^777777Swordman Class^000000
 #
 5132#
 A hat which is patterned after Angeling, the mother of Porings. It has spirit to protect their species from Human.
-Reduce 10% damage taken from DemiHuman Monsters.
-Item Class: ^777777Headgear^000000    Defense : ^7777772^000000
-Equipped On : ^777777Upper^000000    Weight: ^77777770^000000
-Required Level: ^77777738^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808070^000000
+Requires Level: ^80808038^000000
+Usable By: ^808080All Jobs^000000
+Reduce 10% damage taken from DemiHuman Monsters
+Reduce 10% damage taken from Human Player Monsters
 #
 5133#
 A hat that looks like
@@ -30255,29 +30512,18 @@ Weight : ^77777710^000000
 Job : ^777777All^000000
 #
 5137#
-A hat adorned with an
-Alice doll. When worn,
-it seems like Alice is
-cheering you on from
-the top of your head.
-''Be strong, master!''
-+10% damage against
-Demihuman monsters,
-and has low chance of
-casting Sleep on
-its wearer.
+A hat adorned with an Alice doll. When worn, it seems like Alice is cheering you on from the top of your head. ''Be strong, master!''
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs except Novice^000000
++10% damage against Demihuman monsters,
++10% damage against Human Player monsters,
+Has low chance of casting Sleep on its wearer.
 Str +1.
 Cannot be upgraded.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location: ^777777Upper^000000
-Weight : ^77777750^000000
-Level Requirement: ^77777730^000000
-Jobs: ^777777Every
-Job except Novice^000000
 #
 5138#
 A hat that looks like the eyes of a dark mage, which are rumored to blink sometimes.
@@ -30340,22 +30586,16 @@ Jobs: ^777777Every
 Job except Novice^000000
 #
 5142#
-A sturdy, decorative
-hat worn by military
-generals in a far
-east country. Vit +1.
-Reduce Demihuman
-monster damage by 5%.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense :^7777778^000000
-Location: ^777777Upper, Mid^000000
-Weight : ^777777300^000000
-Level Requirement: ^77777750^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+A sturdy, decorative hat worn by military generals in a far east country.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080808^000000
+Weight: ^808080300^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Swordman, Merchant^000000
+Vit +1.
+Reduce Demihuman monster damage by 5%
+Reduce Human Player monster damage by 5%
 #
 5143#
 A traditional hat
@@ -30695,17 +30935,14 @@ Mdef + 5
 All Stats + 1
 #
 5172#
-A bright green,
-flattened cap that
-represents bravery.
-Reduces damage from
-Demihuman enemies by
-10%. Cannot be upgraded.^FFFFFF  ^000000
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777770^000000
-Jobs: ^777777All Jobs^000000
+A bright green, flattened cap that represents bravery.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808070^000000
+Reduces damage from Demihuman enemies by 10%.
+Reduces damage from Human Player enemies by 10%.
+Cannot be upgraded.
 #
 5173#
 A hat that was once
@@ -31213,23 +31450,17 @@ Required Level : ^777777None^000000
 Jobs: ^777777All except Novice^000000   ^FFFFFF_^000000
 #
 5220#
-Just say no.
-Especially if
-you're underage.
-Vit +1. Reduce
-damage from Brute
-class monsters by 5%.
-Cannot be traded or
-dropped, but can be
-placed in Kafra Storage.
+Just say no. Especially if you're underage.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Usable By: ^808080All Jobs except Novice^000000
+Vit +1.
+Reduce damage from Brute class monsters by 5%
+Reduce damage from Doram class monsters by 5%
 Impossible to Upgrade
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777Novices
-can't smoke, but as
-for everyone else...^000000
+
 #
 5221#
 A pair of small
@@ -31742,21 +31973,16 @@ Required Level : ^7777771^000000
 Jobs: ^777777All Except Novice^000000
 #
 5266#
-^000088Rental Item^000000
-A hairband that gives
-one the appearance of
-having rabbit ears,
-a lasting symbol of
-extremely good luck.
-Reduces damage from
-Demihuman monsters
-by 10%. MDEF +5
-This item cannot be Dropped or Traded.
-Class : ^777777Headgear^000000
-Defense: ^77777713^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+A hairband that gives one the appearance of having rabbit ears, a lasting symbol of extremely good luck.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808013^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage from Demihuman monsters by 10%.
+Reduces damage from Human Player monsters by 10%.
+MDEF +5
 #
 5267#
 The stylish Hat of the Eastern warrior.
@@ -31891,23 +32117,20 @@ Jobs : ^777777All^000000
 5282#
 #
 5283#
-A hat adorned with a
-cute chick that brings
-feelings of joy to those^FFFFFF  ^000000 that see it hopping.
-Adds 3% resistance to
-Demihuman and Animal
-Class monsters. Cannot
-be upgraded. Enables
-Lv. 2 Double Attack.
+A hat adorned with a cute chick that brings feelings of joy to those that see it hopping.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^8080800^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Adds 3% resistance to Demihuman Class monsters.
+Adds 3% resistance to Animal Class monsters.
+Adds 3% resistance to Human Player Class monsters.
+Adds 3% resistance to Doram Class monsters.
+Cannot be upgraded.
+Enables Lv. 2 Double Attack.
 Max HP and SP +50
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000    Defense: ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level: ^77777710^000000
-Jobs : ^777777All^000000
 #
 5284#
 A training cap that
@@ -32189,14 +32412,16 @@ placeholder
 #
 5314#
 This mask calls the urge to hold a weapon in one's hand and hurt people on the 13th of every month.
+
+
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs except Novice^000000
 Increases damage on Demihuman monsters by 5%.
-Can be placed in Kafra Storage, Cart and traded.
-Class : ^777777Headgear^000000
-Location : ^777777Middle & Lower^000000
-Defense : ^7777771^000000
-Weight : ^77777710^000000
-Required Level : ^77777750^000000
-Jobs : ^777777All except Novice^000000
+Increases damage on Human Player monsters by 5%.
 #
 5315#
 A device that can measure opponent's power. Commoners have power level 5. Heroes have a power level over 9,000!
@@ -32379,69 +32604,81 @@ Jobs : ^777777All^000000
 #
 5340#
 So hot! A headgear with the figure of Kafra Defolty! Numerous users are using Kafra storage more than 20 times a day, fascinated by her smiling face.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Autocasts Lv 10 Angelus when physically attacked within short range.
-Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
+Cannot be upgraded
 #
 5341#
 So hot! A headgear with the figure of Kafra Glaris! Fascinated by her mature appearance, her advocates call her a teacher.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Recovers HP 50 when a monster is killed by magical attack.
 Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
 #
 5342#
 So hot! A headgear with the figure of Kafra Sorin! Her cute appearance made the price of this hat rise at the auction place.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Increases ATK + 50 for 10 seconds with low chance when physically attacked.
 Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
 #
 5343#
 So hot! A headgear with the figure of Kafra Telling! She is such an active and hard-working lady. So she became the most favorite Kafra among users.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Increases 10% HP recovery rate when White Potion or White Slim Potion is used.
-Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
+Cannot be upgraded
 #
 5344#
 So hot! A headgear with the figure of Kafra Bennit! She has a boyish look, but her hobby is knitting and reading romance novels. She is fully supported by male users who like the short-cut style.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Increases attack speed 5% for 30 seconds with low chance when physically attacked.
-Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
+Cannot be upgraded
 #
 5345#
 So hot! A headgear with the figure of Kafra W! There is a rumor that an assassin association wants to scout her, because there are so many guys who become frightened and faint when she calls them.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
 Decreases 5% damage from Demihuman monsters.
+Decreases 5% damage from Human Player monsters.
 Additional 5% damage to Undead monsters when dealing physical and magical attacks.
-Cannot be upgraded.
-Class : ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All^000000
+Cannot be upgraded
 #
 5346#
 A helm with a girlfriend wanted ad on it. Don't let those dating services fool you. This method is fullproof.
@@ -32610,13 +32847,13 @@ Jobs : ^777777All^000000
 #
 5363#
 A helm worn by the Abysmal Knight.
-Increase tolerance to demi-human and Boss monsters by 10%.
-Class : ^777777Headgear^000000
-Defense : ^77777712^000000
-Head Location : ^777777Upper^000000
-Weight : ^777777100^000000
-Required Level : ^77777770^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Increase tolerance to demi-human, human player and Boss monsters by 10%.
+
 #
 5364#
 A perfectly balanced hat worn by the Evil Snake Lord.
@@ -32699,14 +32936,16 @@ Location : ^777777Upper-Mid^000000    Weight : ^77777730^000000
 Jobs : ^777777All^000000
 #
 5374#
-A headgear forged from the horns of the Unsealed Baphomet.
+A headgear forged from the horns of the Unsealed Baphomet
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808080^000000
+Usable By: ^808080All Jobs^000000
 Increases Physical Damage to Demihuman monsters by 12%.
+Increases Physical Damage to Human Player monsters by 12%.
 Increases ATK depending on the wearer's job level.
-Class : ^777777Headgear^000000
-Defense : ^77777710^000000
-Location : ^777777Upper^000000
-Weight : ^77777780^000000
-Jobs: ^777777All Jobs^000000
 #
 5375#
 A true Orc Hero's headgear. It's so big and heavy that it might hurt your neck.
@@ -32729,10 +32968,13 @@ Jobs : ^777777All^000000
 #
 5377#
 A long smoking pipe used by gentlemen and nobility.
-Reduce Damage from Demi-Humans by 2%.
-Class : ^777777Headgear^000000    Defense : ^7777770^000000
-Location : ^777777Lower^000000    Weight : ^77777710^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Reduce Damage from Demi-Humans by 2%
+Reduce Damage from Human Player by 2%
 #
 5378#
 A cute Red Top hat with Bunny Ears!
@@ -32813,6 +33055,8 @@ Usable By: ^808080All Jobs^000000
 Luk + 1
 Increases physical damage on Brute race targets by 10%.
 Increases magical damage on Brute race targets by 5%.
+Increases physical damage on Doram race targets by 10%.
+Increases magical damage on Doram race targets by 5%.
 #
 5384#
 A Santa Hat with two pom-poms instead of one for double the Christmas fun!
@@ -33035,6 +33279,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 100.
 Reduces damage taken from Demi-Human race enemies by 4%.
+Reduces damage taken from Human Player race enemies by 4%.
 Increases resistance to ^800000Stun^000000 by 4%.
 #
 5411#
@@ -33488,15 +33733,14 @@ Job : ^777777All^000000
 #
 5476#
 An elaborate multi-colored headdress made from the feathers of a Grand Peco.
-Increases attack against Demihuman and Brute type monsters 7%
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080805^000000
+Weight: ^80808080^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases attack against Demihuman, Human Player, Doram, and Brute type monsters 7%
 Has a low chance of adding the curse status to your target while physically melee attacking.
-^ff0000Can be traded, stored, and vended^000000
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper & Middle^000000
-Weight : ^77777780^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
 #
 5478#
 A Classic hat.
@@ -33572,6 +33816,7 @@ Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs except Novice^000000
 Hit - 10
 Increases physical damage on Demi-Human race targets by 6%.
+Increases physical damage on Human Player race targets by 6%.
 #
 5485#
 placeholder
@@ -33959,14 +34204,18 @@ Jobs : ^777777All Jobs^000000
 #
 5535#
 This cap's design is best appreciated when worn slightly off to the side.
-Increases damage inflicted on Demihuman monsters by 3% and reduces damage received by Demihuman monsters by 5%.
-Vit +1, Dex +1
-Class : ^777777Headgear^000000
-Defense: ^7777776^000000
-Location : ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level: ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases damage inflicted on Demihuman monsters by 3%
+Reduces damage received from Demihuman monsters by 5%.
+Increases damage inflicted on Human Player monsters by 3%
+Reduces damage received from Human Player monsters by 5%.
+Vit +1
+Dex +1
 #
 5536#
 This monster card has been rejected and deemed defective. Only the highest quality cards are allowed to possess a monster's abilities. Instead of letting it go to waste, the Kafra Staff has offered it as a decorative headgear.
@@ -34478,16 +34727,17 @@ Job : ^777777All^000000
 #
 5593#
 A bonnet made to resemble a rabbit. Despite it's cute appearance this hat gives it's wearer attack strength.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Attack and Magic Attack power increase by 10.
 Adds 3% tolerance to Demihuman monsters.
+Adds 3% tolerance to Human Player monsters.
 After cast delay reduced by 3%.
 If refined to +7 or higher, reduces damage from all elemental properties by 5%.
-Class : ^777777Headgear^000000
-Defense: ^77777710^000000
-Location : ^777777Upper & Middle^000000
-Weight : ^77777720^000000
-Required Level: ^7777771^000000
-Jobs : ^777777All^000000
 #
 5594#
 Chewing on this deliciously glazed ring-shaped fried cake will make you happy.
@@ -34747,18 +34997,18 @@ Level Requirement: ^77777710^000000
 Jobs: ^777777All^000000
 #
 5618#
-A cute cat-looking hat which enhances its wearer's look.
-Has a cat tail which emphasises the appearance.
-Luk +2
+A cute cat-looking hat which enhances its wearer's look.Has a cat tail which emphasizes the appearance
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+.Luk +2
 MDEF +10
-Reduce 5% of damage taken from Brute monsters.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000    Defense: ^7777771^000000
-Location: ^777777Upper^000000    Weight : ^77777730^000000
-Requirement: ^777777None^000000
-Jobs: ^777777All^000000
+Reduce 5% of damage taken from Brute monsters
+Reduce 5% of damage taken from Doram monsters
+
+
 #
 5619#
 A hare accessory
@@ -34836,27 +35086,16 @@ Weight : ^77777720^000000
 Jobs: ^777777All^000000
 #
 5623#
-A hat adorned with an
-Alice doll. When worn,
-it seems like Alice is
-cheering you on from
-the top of your head.
-''Be strong, master!''
-+10% damage against
-Demihuman monsters,
-and has low chance of
-casting Sleep on
-its wearer.
+A hat adorned with an Alice doll. When worn, it seems like Alice is cheering you on from the top of your head. ''Be strong, master!''
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Usable By: ^808080All Jobs except Novice^000000
++10% damage against Demihuman monsters
++10% damage against Human Player monsters
+Low chance of casting Sleep on its wearer.
 Str +1.
-Cannot be upgraded.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000    Defense : ^7777770^000000
-Location: ^777777Upper^000000    Weight : ^77777750^000000
-Level Requirement: ^77777730^000000
-Jobs: ^777777Every
-Job except Novice^000000
 #
 5624#
 A must-have item for
@@ -34877,23 +35116,17 @@ Required Level: ^77777710^000000
 Jobs : ^777777All^000000
 #
 5625#
-A hat adorned with a
-cute chick that brings
-feelings of joy to those^FFFFFF  ^000000 that see it hopping.
-Adds 3% resistance to
-Demihuman and Animal
-Class monsters. Cannot
-be upgraded. Enables
-Lv. 2 Double Attack.
+A hat adorned with a cute chick that brings feelings of joy to those that see it hopping.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Adds 3% resistance to Demihuman, Human Player, Doram, and Animal Class monsters.
+Cannot be upgraded.
+Enables Lv. 2 Double Attack.
 Max HP and SP +50
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000    Defense: ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level: ^77777710^000000
-Jobs : ^777777All^000000
 #
 5626#
 A cute hat shaped
@@ -35156,20 +35389,16 @@ Jobs: ^777777Mage Classes,
 and Soul Linker Job^000000
 #
 5643#
-A sturdy, decorative
-hat worn by military
-generals in a far
-east country. Vit +1.
-Reduce Demihuman
-monster damage by 5%.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000    Defense :^7777778^000000
-Location: ^777777Upper, Mid^000000    Weight : ^777777300^000000
-Level Requirement: ^77777750^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+A sturdy, decorative hat worn by military generals in a far east country.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^808080300^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+Vit +1.
+Reduce Demihuman monster damage by 5%.
+Reduce Human Player monster damage by 5%.
 #
 5644#
 A mask rumored to make its wearer ferociously aggressive.
@@ -35213,21 +35442,16 @@ Required Level: ^77777710^000000
 Jobs : ^777777All^000000
 #
 5647#
-^000088Rental Item^000000
-A hairband that gives
-one the appearance of
-having rabbit ears,
-a lasting symbol of
-extremely good luck.
-Reduces damage from
-Demihuman monsters
-by 10%. MDEF +5
-This item cannot be Dropped or Traded.
-Class : ^777777Headgear^000000
-Defense: ^7777779^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Jobs: ^777777All^000000
+A hairband that gives\r\none the appearance of having rabbit ears, a lasting symbol of extremely good luck.
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage from Demihuman monsters by 10%.
+Reduces damage from Human Player monsters by 10%.
+MDEF +5
 #
 5648#
 ^000088Rental Item^000000
@@ -35668,24 +35892,26 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 5742#
-Rudolf the red-nosed reindeer had a very shiny Hat!
+Rudolf the red-nosed reindeer had a very shiny Hat!\
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
 Increase 100% of the recuperative powers of Piece of Cake and Well-baked Cookie items.
-^ff0000Rudolf Set
+^ff0000Rudolf Set^000000
 Rudolf Santa Hat
 Clown Nose
-Increases attack against demi-humans by 5%.^000000
-^ff0000Rudolf Set
+Increases attack against demi-humans by 5%.
+Increases attack against Human Player-humans by 5%.
+^ff0000Rudolf Set^000000
 Rudolf Santa Hat
 Rudolf's Nose
-Increases attack against beasts by 2%.^000000
+Increases attack against beasts by 2%.
+Increases attack against Doram by 2%.
 If refined to +5 adds a further 5%
-If refined to +7 adds a further 3% for a total of 10% Damage versus beasts!
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location: ^777777Upper ^000000
-Weight : ^77777740^000000
-Required Level : ^77777710^000000
-Jobs : ^777777All^000000
+If refined to +7 adds a further 3% for a total of 10% Damage versus beasts/Doram!
 #
 5744#
 A magnificent crown created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat.  Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
@@ -44981,24 +45207,23 @@ Vit + 1, Resistance to Stun + 1%
 Class : ^777777Monster Egg^000000
 #
 9026#
-An egg that
-holds a Zealotus.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-increases Atk and Matk against demi human monsters by 2%.
-Type: ^777777Pet Egg^000000
+An egg in which a cute Zealotus pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Immortal Heart
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Increases physical and magical damage on Demi-Human race targets by 2%.
+Increases physical and magical damage on Human Player race targets by 2%.
 #
 9027#
-An egg in which
-an Alice rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-MDEF + 1, Increases damages from demi human monsters by 1%.
-Type: ^777777Pet Egg^000000
+An egg in which a cute Alice pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: White Potion
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Mdef + 1
+Increases damage taken from Demi-Human race enemies by 1%.
+Increases damage taken from Human Player race enemies by 1%.
 #
 9028#
 A hardened rice cake. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45028,6 +45253,7 @@ Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Def + 1
 Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces damage taken from Human Player race enemies by 1%.
 #
 9031#
 An egg in which a cute Eclipse pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45097,13 +45323,13 @@ Weight: ^8080800^000000
 Max SP + 10
 #
 9041#
-An egg in which a
-Leaf Cat Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Increases tolerance to Brute monsters by 3%.
+An egg in which a cute Leaf Cat pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Fish With Blue Back
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Reduces damage taken from Brute race enemies by 3%.
+Reduces damage taken from Doram race enemies by 3%.
 #
 9042#
 An egg in which a cute Loli Ruri pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45140,13 +45366,13 @@ Flee + 7
 Enables ^0000FFLevel 1 Hide^000000.
 #
 9046#
-An egg in which a
-Goblin Leader Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Increases damage to Demi human monsters by 3%.
+An egg in which a cute Goblin Leader pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Big Scell
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Increases physical and magical damage on Demi-Human race targets by 3%.
+Increases physical and magical damage on Human Player race targets by 3%.
 #
 9047#
 An egg in which a cute Evil Nymph pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45643,13 +45869,23 @@ Weight: 0
 Weapon Level: 0
 #
 10516#
-When you open the box, you can get one item with a certain probability.
-^ff0000Cannot trade to other user^000000
-Weight: ^7777771^000000
+When Opened gives one of the following at random
+Nero Shield
+Exorcist's Shoes
+Happy Balloon
+Catherina Von Blood
+Zealotus Doll
+Armor of Purple Thread
+Black Veil
+Rainbow Muffler
+Ring of Jupiter
+Party Hard Pack
+Blacksmith Blessing 8cnt
+Battle Manual X3 6cnt
+Bloody Dead Branch 5cnt
 
-Attack: ^8080800^000000
+Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #
 10517#
 When opened gives one of the following at random
@@ -51521,38 +51757,28 @@ Required Level : ^77777712^000000
 Jobs :^777777Ninja^000000
 #
 13012#
-A famous sword that
-is said to be sharp
-enough to divide
-oceans or cut
-through the air to
-make it bleed water.
-Add Critical +10 against^FFFFFF ^000000 Demihuman monsters
-when inflicting short^FFFFFF    ^000000 range physical attacks.
-Class : ^777777Dagger^000000
-Attack : ^77777795^000000
-Weight : ^77777770^000000
-Property:^777777Water^000000
-Weapon Level: ^7777772^000000
-Required Level : ^77777724^000000
-Jobs :^777777Ninja^000000
+A famous sword that is said to be sharp enough to divide oceans or cut through the air to make it bleed water.
+Class: ^808080Dagger^000000
+Attack: ^80808095^000000
+Property: ^808080Water^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Ninja^000000
+Add Critical +10 against^FFFFFF ^000000 Demihuman monsters when inflicting short^FFFFFF ^000000 range physical attacks.
+Add Critical +10 against^FFFFFF ^000000 Human Player monsters when inflicting short^FFFFFF ^000000 range physical attacks.
 #
 13013#
-A famous sword that
-is said to be sharp
-enough to divide
-oceans or cut
-through the air to
-make it bleed water.
-Add Critical +10 against^FFFFFF ^000000 Demihuman monsters
-when inflicting short^FFFFFF    ^000000 range physical attacks.
-Class : ^777777Dagger^000000
-Attack : ^77777795^000000
-Weight : ^77777770^000000
-Property:^777777Water000000
-Weapon Level: ^7777772^000000
-Required Level : ^77777724^000000
-Jobs :^777777Ninja^000000
+A famous sword that is said to be sharp enough to divide oceans or cut through the air to make it bleed water.
+Class: ^808080Dagger^000000
+Attack: ^80808095^000000
+Property: ^808080Water^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080802^000000
+Requires Level: ^80808024^000000
+Usable By: ^808080Ninja^000000
+Add Critical +10 against^FFFFFF ^000000 Demihuman monsters when inflicting short^FFFFFF ^000000 range physical attacks.
+Add Critical +10 against^FFFFFF ^000000 Human Player monsters when inflicting short^FFFFFF ^000000 range physical attacks.
 #
 13014#
 A dagger that has a
@@ -51664,25 +51890,19 @@ Acolyte Class^000000
 13020#
 #
 13021#
-^000088Rental Item^000000
-A military combat
-knife designed for
-killing humanoids.
-Reduces damage from and increases tolerance to
-Demihuman monsters
-by 10%, but increases
-damage inflicted by
-Devil monsters by 10%.
-Restores 3 SP when
-hitting a monster.
+A military combat knife designed for killing humanoids.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080129^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Soul Linker, Ninja Jobs^000000
+Reduces damage from and increases tolerance to Demihuman monsters by 10%
+Reduces damage from and increases tolerance to Human Player monsters by 10%
+Increases damage inflicted by Devil monsters by 10%.
+Restores 3 SP when hitting a monster.
 Max SP +10%.
-Class : ^777777Dagger^000000
-Attack Strength: ^777777129^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777774^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Merchant, Thief Classes; Soul
-Linker and Ninja Jobs^000000
 #
 13022#
 ^000088Rental Item^000000
@@ -51869,32 +52089,43 @@ Required Level : ^77777770^000000
 Jobs : ^777777Assassin Cross^000000
 #
 13036#
-A dagger especially used for assassinations such as killing Demihumans.
-Str + 1, Agi + 1
-Increases Physical Attack Strength towards Demihuman monsters by 75%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-If worn by Ninja, Rogue, or Stalker Class characters, it adds MATK + 90.
-Indestructible.
-Class : ^777777Dagger^000000
-Attack Strength: ^777777120^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Novice, Swordman, Mage, Archer, Merchant, Thief Classes, Soul Linker, and Ninja^000000
+A dagger that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs except Acolyte Jobs, Taekwon, Taekwon Master, Gunslinger Jobs, Doram^000000
+Str + 1
+Agi + 1
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+This item is indestructible in battle.
+^F4AD42Rogue and Ninja Bonus^000000
+Matk + 90
 #
 13037#
-A dagger especially used for assassinations such as killing Demihumans.
-Str + 1, Agi + 1
-Increases Physical Attack Strength towards Demihuman monsters by 75%.
-Has a chance of enchanting compounded weapons with the Occult Impaction skill effect for 6 sec. when attacking.
-If worn by Ninja, Rogue, Stalker Class characters, it adds MATK + 90.
-Indestructible.
-Class : ^777777Dagger^000000
-Attack Strength: ^777777120^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Novice, Swordman, Mage, Archer, Merchant, Thief Classes, Soul Linker, and Ninja^000000
+A dagger that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080120^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+Usable By: ^808080All Jobs except Acolyte Jobs, Taekwon, Taekwon Master, Gunslinger Jobs, Doram^000000
+Str + 1
+Agi + 1
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Adds a 2% chance of buffing the user for 6 seconds when performing a physical attack; Adds a permanent ^0000FFLevel 1 Occult Impaction^000000 effect to the item.
+This item is indestructible in battle.
+^F4AD42Rogue and Ninja Bonus^000000
+Matk + 90
 #
 13038#
 Specialized in back-stabbing.  This dagger is customized for stalkers.
@@ -51943,18 +52174,27 @@ Jobs: ^777777Novice, Swordman, Mage, Archer, Merchant,
 Thief Classes, Soul Linker, and Ninja^000000
 #
 13042#
-Physical Attack against Demihuman monsters +75%.
-Ignore 20% of Physical Defense of Demihuman monsters.
-When physically attacking, has a chance of autocasting [Lex Divina] Lv 1.
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore Demihuman physical defense +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Upgrade : When using [Sightless Mind], has a chance of inflicting [Bleed] in a 5x5 area
-Class : ^777777Dagger^000000
-Attack : ^777777120^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Novice Class / Swordman Class / Mage Class / Archer Class / Merchant Class / Thief Class /Soul Linker/ Ninja Class^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer, Hunter Jobs, Bard Jobs, Dancer, Gypsy, Soul Linker, Ninja Jobs^000000
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Adds a 2% chance of casting ^0000FFLevel 1 Lex Divina^000000 on the target when performing a physical attack.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Adds a 25% chance of casting ^0000FFLevel 1 Bloody Party^000000 on the target when using ^0000FFSightless Mind^000000.
 #
 13046#
 This dagger is intended to give more pain, rather than killing the target, with its thorny shape.
@@ -52020,25 +52260,19 @@ Jobs: ^777777Swordman, Mage, Archer, Merchant,
 Thief Classes, Soul Linker, and Ninja^000000
 #
 13054#
-^000088Rental Item^000000
-A military combat
-knife designed for
-killing humanoids.
-Reduces damage from and increases tolerance to
-Demihuman monsters
-by 10%, but increases
-damage inflicted by
-Devil monsters by 10%.
-Restores 3 SP when
-hitting a monster.
+A military combat knife designed for killing humanoids.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080129^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Soul Linker, Ninja Jobs^000000
+Reduces damage from and increases tolerance to Demihuman monsters by 10%,
+Reduces damage from and increases tolerance to Human Player monsters by 10%,
+Increases damage inflicted by Devil monsters by 10%.
+Restores 3 SP when hitting a monster.
 Max SP +10%.
-Class : ^777777Dagger^000000
-Attack Strength: ^777777129^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777774^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman, Merchant, Thief Classes; Soul
-Linker and Ninja Jobs^000000
 #
 13055#
 ^000088Rental Item^000000
@@ -52462,33 +52696,46 @@ Required Level : ^77777770^000000
 Jobs: ^777777Gunslinger only^000000
 #
 13108#
-A Pistol made for short and medium ranged battles against Demihumans.
-It seems to be capable of doing damage even through a bulletproof vest.
-Dex +2, Accuracy -10
-Increases Physical Attack Strength towards Demihuman monsters by 55%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-When attacking, and weapon awakening in consistent probability, Has a chance of Increasing Attack Speed by 100% for 3 seconds.
-Indestructible.
-Class : ^777777Pistol^000000
-Attack Strength: ^77777770^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+A pistol that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Pistol^000000
+Attack: ^80808070^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Dex + 2
+Hit - 10
+Increases physical damage on Demi-Human race targets by 55%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Adds a 1% chance of buffing the user for 3 seconds when performing a physical attack; Aspd + 100%.
+This item is indestructible in battle.
 #
 13110#
-Physical Attack Strength to Demihuman monsters +55%.
-Ignore 20% of Physical Defense of Demihuman monsters.
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore physical defense of Demihuman monsters +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Upgrade : When using [Trigger Happy Shot], auto-casts Lv.1 [Coin Flip].
-    [Trigger Happy Shot] attack strength increases based on refine level.
-Class : ^777777Revolver^000000
-Attack : ^77777780^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Gunslinger^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Pistol^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Increases physical damage on Demi-Human race targets by 55%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Playerrace targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Adds a 10% chance of casting ^0000FFLevel 1 Coin Flip^000000 on the target when using ^0000FFTrigger Happy Shot^000000.
+Increases the damage of ^0000FFTrigger Happy Shot^000000 by 2% per upgrade level of the item.
 #
 13112#
 A revolver that is made by the Eden Group. This is easy for beginning Gunslingers to weild.
@@ -52786,14 +53033,15 @@ Required Level : ^77777755^000000
 Jobs :^777777Gunslinger^000000
 #
 13158#
-A Gatling Gun imbued^FFFFFF     ^000000 with enormous destructive
-power. Adds +10 Critical^FFFFFF ^000000 against Brute monsters.
-Class : ^777777Gatling Gun^000000
-Attack : ^77777775^000000
-Weight : ^777777250^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777768^000000
-Jobs :^777777Gunslinger^000000
+A Gatling Gun imbued with enormous destructive power.
+Class: ^808080Gatling Gun^000000
+Attack: ^80808075^000000
+Weight: ^808080250^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808068^000000
+Usable By: ^808080Gunslinger^000000
+Adds +10 Critical^FFFFFF ^000000 against Brute monsters.
+Adds +10 Critical^FFFFFF ^000000 against Doram monsters.
 #
 13159#
 A Gatling Gun imbued^FFFFFF     ^000000 with enormous destructive
@@ -52981,127 +53229,172 @@ Required Level : ^77777770^000000
 Jobs: ^777777Gunslinger Job^000000
 #
 13171#
-A Rifle made for short and medium ranged battles against Demihumans, that enables a reduction to the targeting delay;
-as it is designed to limit the trembling of the shooter's hands.
-Dex +2, Hit +10, Critical +10
-Increases Physical Attack Strength towards Demihuman monsters by 75%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-Reduce Tracking skill Variable Casting Time by 25%.
-Indestructible.
-Class : ^777777Rifle^000000
-Attack Strength: ^77777750^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+A rifle that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Rifle^000000
+Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Dex + 2
+Hit + 10
+Crit + 10
+Reduces the variable casting time of ^0000FFTracking^000000 by 25%.
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+This item is indestructible in battle.
 #
 13172#
-A specialized Gatling Gun made for battles against Demihumans; occasionally, it shoots high-powered bullets.
+A gatling gun that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Gatling Gun^000000
+Attack: ^80808080^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
 Dex + 2
-Increases Physical Attack Strength towards Demihuman monsters by 35%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-Has a chance of adding 80 ATK for 6 seconds,
-but due to the recoil will drain 120 HP every second.
-Indestructible.
-Class : ^777777Gatling Gun^000000
-Attack Strength: ^77777780^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+Increases physical damage on Demi-Human race targets by 35%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 35%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Adds a 1% chance of buffing the user for 6 seconds when performing a physical attack; Atk + 80; Drains 120 HP from the user every second.
+This item is indestructible in battle.
 #
 13173#
-A Shotgun that has a great attack in short ranged battles against Demihumans.
-It shows a wide variety of strength between each attack.
-Dex + 2, Inflicts splash attack.
-Increases Physical Attack Strength towards Demihuman monsters by 55%.
-Ignores Physical Defense from Demihuman monster by 20%.
-Has a chance of adding 80 ATK for 6 seconds,
-but drains 100 HP every second.
-Indestructible.
-Class : ^777777Shotgun^000000
-Attack Strength: ^777777100^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+A shotgun that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Shotgun^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Dex + 2
+Increases physical damage on Demi-Human race targets by 55%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Enables Splash Attacks.
+Adds a 3% chance of buffing the user for 6 seconds when performing a physical attack; Atk + 80; Drains 100 HP from the user every second.
+This item is indestructible in battle.
 #
 13174#
-A Grenade Launcher that shows great fire-power in battles against Demihumans.
+A grenade launcher that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Grenade Launcher^000000
+Attack: ^808080300^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
 Dex + 2
-Increases Physical Attack Strength towards Demihuman monsters by 35%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-Has a chance of adding 300 ATK for 9 seconds,
-but drains 120 HP every second.
-Indestructible.
-Class : ^777777Grenade Launcher^000000
-Attack Strength: ^777777300^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Gunslinger^000000
+Increases physical damage on Demi-Human race targets by 35%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 35%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Adds a 3% chance of buffing the user for 9 seconds when performing a physical attack; Atk + 300; Drains 120 HP from the user every second.
+This item is indestructible in battle.
 #
 13176#
-Physical Attack against Demihuman monsters +75%.
-Ignore 20% of Physical Defense of Demihuman monsters.
-30% increase in damage of [Triple Action].
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore physical defense of Demi-human monsters +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Upgrade : 25% increase in Variable Casting Time of [Tracking] skill,
-    [Tracking] attack strength increases based on refine level.
-Class : ^777777Rifle^000000
-Attack : ^77777790^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Gunslinger^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Rifle^000000
+Attack: ^80808090^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Increases the damage of ^0000FFTriple Action^000000 by 30%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Increases the variable casting time of ^0000FFTracking^000000 by 25%.
+Increases the damage of ^0000FFTracking^000000 by 3% per upgrade level of the item.
 #
 13177#
-Physical Attack Strength to Demihuman monsters +35%.
-Ignore 20% of Physical Defense of Demihuman monsters.
-30% increase in damage of [Triple Action].
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore Defense of Demihuman monsters +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Upgrade : Attack strength increases based on refine level.
-Class : ^777777Gatling Gun^000000
-Attack : ^77777790^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Gunslinger^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Gatling Gun^000000
+Attack: ^80808090^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Increases physical damage on Demi-Human race targets by 35%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 35%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Increases the damage of ^0000FFTriple Action^000000 by 30%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Atk + 1% per upgrade level of the item.
 #
 13178#
-Increases Physical Attack Strength to Demihuman monster by 55%..
-Ignores physical defense from Demihuman monster by 20%.
-Splash Attack
-30% increase in Damage of [Triple Action]
-Indestructible.
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore Defense of Demihuman monsters +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Refining
-[Spread Attack] skill's attack strength increases with each refine level.
-Has a chance of stunning while using [Spread Attack] skill.
-Class : ^777777Shotgun^000000
-Attack : ^777777110^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Jobs : ^777777Gunslinger Jobs^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Shotgun^000000
+Attack: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Increases physical damage on Demi-Human race targets by 55%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 55%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Increases the damage of ^0000FFTriple Action^000000 by 30%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFSpread Shot^000000 by 3% per upgrade level of the item.
+Adds a 20% chance of inflicting ^800000Stun^000000 on the target when using ^0000FFSpread Shot^000000.
 #
 13179#
-Physical Attack Strength to Demihuman monster +35%.
-Ignore 20% of Physical Defense of Demihuman monsters.
-30% increase in damage of [Triple Action].
-***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore Defense of Demihuman monsters +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+9 Upgrade : [Gunslinger Mine] attack strength increase based on refine level.
-    Under normal attack, and when weapon awakens in cosistent chance, increase in attack speed for 20 seconds(delay after attacking reduces by 20%)
-Class : ^777777Grenade Launcher^000000
-Attack : ^777777330^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Gunslinger^000000
+A weapon that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Grenade Launcher^000000
+Attack: ^808080330^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Gunslinger Jobs^000000
+Increases physical damage on Demi-Human race targets by 35%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 35%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+Increases the damage of ^0000FFTriple Action^000000 by 30%.
+This item is indestructible in battle.
+If upgrade level is +6 or higher,
+Bypass an additional 5% of hard defense of Demi-Human race targets when performing a physical attack.
+Bypass an additional 5% of hard defense of Human Player race targets when performing a physical attack.
+Enables ^0000FFLevel 1 Slaughter^000000.
+If upgrade level is +9 or higher,
+Increases the damage of ^0000FFGunslinger Mine^000000 by 3% per upgrade level of the item.
+Adds a 20% chance of buffing the user for 20 seconds when performing a physical attack; Aspd + 20%.
 #
 13180#
 Small fire arm adjusted for range and accuracy. Actually easy to handle than a pistol.
@@ -54071,50 +54364,61 @@ Required Level : ^77777770^000000
 Jobs: ^777777Ninja^000000
 #
 13305#
-Huuma Shuriken that holds great strength and brings extraordinary power in battles against Demihumans.
-Str + 2, Dex + 1
-Increases Physical Attack Strength towards Demihuman monsters by 95%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-Indestructible.
-Class : ^777777Huuma^000000
-Attack Strength: ^77777755^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Ninja^000000
+A huuma shuriken that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Huuma Shuriken^000000
+Attack: ^80808055^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Ninja Jobs^000000
+Str + 2
+Dex + 1
+Increases physical damage on Demi-Human race targets by 95%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 95%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+This item is indestructible in battle.
 #
 13306#
-Huuma Shuriken that holds great strength and brings extraordinary power in battles against Demihumans.
-Str + 2, Dex + 1
-Increases Physical Attack Strength towards Demihuman monsters by 95%.
-Has a chance of increasing Attack Strength to ^FF0000Throw Huuma Shuriken^000000 and ^FF0000Killing Stroke^000000 by 100% for 10 seconds.
-Indestructible.
-Class : ^777777Huuma^000000
-Attack Strength: ^77777755^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Ninja^000000
+A huuma shuriken that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Huuma Shuriken^000000
+Attack: ^80808055^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Ninja Jobs^000000
+Str + 2
+Dex + 1
+Increases physical damage on Demi-Human race targets by 95%.
+Increases physical damage on Human Player race targets by 95%.
+Adds a 5% chance of buffing the user for 10 seconds when performing a physical attack; Increases the damage of ^0000FFKilling Stroke^000000 and ^0000FFThrow Huuma Shuriken^000000 by 100%.
+This item is indestructible in battle.
 #
 13307#
+^FF0000Account Bound^000000
+Class: ^808080Huuma Shuriken^000000
+Attack: ^80808055^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Ninja Jobs^000000
 Increases Physical Attack Strength to Demihuman monster by 95%.
 Ignores physical defense from Demihuman monster by 20%.
+Increases Physical Attack Strength to Human Player monster by 95%.
+Ignores physical defense from Human Player monster by 20%.
 MATK + 90
 Increase damage by 100% of [Throw Huuma Shuriken] and [Killing Strike] for 10 sec. when attacking and synchronizing the weapon by 5%
 Indestructible.
 ***Additional Weapon Refining Level Option***
-+6 Refining
-Ignore Defense of Demihuman monsters +5%
++6 Refining Ignore Defense of Demihuman monsters +5%
++6 Refining Ignore Defense of Human Player monsters +5%
 ^ff0000[Slaughter]^000000 Lv 2(Damage bonus of Destruction increases up to the upgrade level 14.)
-+9 Refining
-When using [Killing Strike], auto-spell Lv. 10 [Heal].
-When using [Throw Huuma Shuriken], has a chance of inflicting consistent
-Class : ^777777Huuma^000000
-Attack : ^77777755^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Jobs : ^777777Ninja Jobs^000000
++9 Refining When using [Killing Strike], auto-spell Lv. 10 [Heal].
++9 Refining When using [Throw Huuma Shuriken], has a chance of inflicting consistent
 #
 13310#
 A Huuma Shuriken that is made by the Eden Group.
@@ -54361,30 +54665,39 @@ and Thief Classes^000000
 13407#
 #
 13410#
-A sword favored by gladiators, it is especially designed for battles against Demihumans.
-Str + 1, Dex + 1
-Increases Physical Attack Strength towards Demihuman monsters by 75%.
-Ignores Physical Defense from Demihuman monsters by 20%.
-Indestructible.
-Class : ^777777One Handed Sword^000000
-Attack Strength: ^777777115^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Novice, Swordman, Merchant, Thief Classes^000000
+A one-handed sword that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080115^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Str + 1
+Dex + 1
+Increases physical damage on Demi-Human race targets by 75%.
+Bypass 20% of hard defense of Demi-Human race targets when performing a physical attack.
+Increases physical damage on Human Player race targets by 75%.
+Bypass 20% of hard defense of Human Player race targets when performing a physical attack.
+This item is indestructible in battle.
 #
 13411#
-A sword favored by gladiators, it is especially designed for battles against Demihumans.
-Str + 1, Dex + 1
-MATK + 74
-Increases Physical Attack Strength towards Demihuman monsters by 75%.
-Indestructible.
-Class : ^777777One Handed Sword^000000
-Attack Strength: ^777777115^000000
-Weight : ^7777770^000000
-Weapon Level: ^7777773^000000
-Required Level : ^77777780^000000
-Jobs: ^777777Novice, Swordman, Merchant, Thief Classes^000000
+A one-handed sword that has been designed specifically for battles against humans.
+^FF0000Account Bound^000000
+Class: ^808080Dagger^000000
+Attack: ^808080115^000000
+Magic Attack: ^80808074^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Str + 1
+Dex + 1
+Increases physical damage on Demi-Human race targets by 75%.
+Increases physical damage on Human Player race targets by 75%.
+This item is indestructible in battle.
 #
 13412#
 One of the twin swords of Naght Sieger. The blue blade shows the sharpness of this sword.
@@ -54437,19 +54750,24 @@ Swordman, Merchant
 and Thief Classes^000000
 #
 13416#
+^FF0000Account Bound^000000
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080130^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Novice, Swordman, Merchant, Thief^000000
 Physical Attack against Demihuman monsters +75%.
 Ignore 20% of Physical Defense of Demihuman monsters.
+Physical Attack against Human Player monsters +75%.
+Ignore 20% of Physical Defense of Human Player  monsters.
 ***Additional Weapon Refining Level Option***
-+6 Upgrade : Ignore Demihuman physical defense +5%, ^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
-+7 Upgrade :
-Increase in attack speed(Delay after attacking reduces by 10%)
++6 Upgrade : Ignore Demihuman physical defense +5%,
++6 Upgrade : Ignore Human Player physical defense +5%,
+^ff0000[Slaughter]^000000 Lv 1 (Damage bonus of Slaughter increases up to the upgrade level 14.)
++7Upgrade :Increase in attack speed(Delay after attacking reduces by 10%)
 +9 Upgrade : When using [Bash], has a chance of activating Lv. 2 [Fatal Wound].
-Class : ^777777Onehand Sword^000000
-Attack : ^777777130^000000
-Weight : ^7777770^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777780^000000
-Job : ^777777Novice Class / Swordman Class / Merchant Class / Thief Class^000000
+
 #
 13417#
 Int +6, Matk +80, Increases Int based on refine level.
@@ -59695,14 +60013,16 @@ Beelzebub Wing Box
 #
 15000#
 Dark Plated Armor covered with sharp bones.
-When being physically attacked has a 1% chance of autocasting 'Bleeding' around 5x5 cells of the player.
-Ignore 10% of the Def from Demi-human & Animal type monsters.
-Str +1, Mdef +3
-Class : ^777777Armor^000000
-Defense : ^77777760^000000
-Weight : ^777777100^000000
-Required Level : ^77777785^000000
-Job : ^777777Transcendent Thief / Merchant / Swordman Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Property: ^808080Neutral^000000
+Weight: ^808080100^000000
+Requires Level: ^80808085^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
+Str + 1
+Mdef + 3
+Bypass 10% of hard defense of Demi-Human, Human Player, Doram, and Brute race targets when performing a physical attack.
+Adds a 1% chance of inflicting ^800000Bleed^000000 on any target within 5-5 cells of the user when receiving a physical attack.
 #
 15002#
 An armor with solid plate material adorned with gorgeous runes and jewels. It's actually very light and solid and it feels as if magic is winding around your whole body.
@@ -60025,17 +60345,18 @@ Jobs : ^777777None^000000
 #
 15036#
 Armor created by purifying Ur runestones.
+Class: ^808080Armor^000000
+Defense: ^808080110^000000
+Weight: ^808080300^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
 MDEF + 10.
-Increases MaxHP per refine level and tolerance to Demi-human and Neutral property damage by 5%.
+Increases MaxHP per refine level and tolerance to Demi-human, human Player and Neutral property damage by 5%.
+
 ^99FF66Ur's armor set^000000
 If worn with Ur's Greave, Manteau, and Seal,
 MaxHP +14%, Increases SP consumption of all skills by 10% and tolerance to Neutral property by 10%.
 Increases damage of Hundred Spears by 50%, enables Crusader skill Guard Level 1
-Class : ^777777Armor^000000
-Defense : ^777777110^000000
-Weight : ^777777300^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
 #
 15037#
 Armor created by purifying Peuz runestones.
@@ -60794,15 +61115,15 @@ Reduces damage taken from Small, Medium size attackers by 5%.
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 15112#
-^808080Battle-ready armor made for military personal.^000000
-Class: Armor
-Defense: 30
-Property: Neutral
-Weight: 50
-Required Level: 50
-Required Jobs: All Jobs
-Increases physical and magical damage on Demi-Human race targets by 3%.
-Increases physical and magical damage on Demi-Human race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
+Battle-ready armor made for military personal.
+Class: ^808080Armor^000000
+Defense: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Increases physical and magical damage on Demi-Human, Human Player race targets by 3%.
+Increases physical and magical damage on Demi-Human, Human Player race targets by an additional 1% per upgrade level of the item past the upgrade level of 5.
 #
 15113#
 Angel's armor to fight against devils.
@@ -61414,14 +61735,18 @@ Usable By: ^808080All Jobs^000000
 Matk + 10
 Mdef + 5
 Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces damage taken from Human Player race enemies by 1%.
 
 If upgrade level is +7 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
+Reduces damage taken from Human Player race enemies by an additional 2%.
 If upgrade level is +8 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
+Reduces damage taken from Human Player race enemies by an additional 2%.
 This item is indestructible in battle.
 If upgrade level is +9 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
+Reduces damage taken from Human Player race enemies by an additional 2%.
 
 ^800080Set Bonus^000000
 ^008080Angeling Card^000000
@@ -61825,31 +62150,28 @@ Increases the recovery rate of recovery skills by an additional 10%.
 Immune to ^800000Freeze^000000.
 #
 15417#
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Weight: ^80808080^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Atk + 10
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-guided attack + 5
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-[Armor of Purple Thread]'s
-Refine is 7 or higher, additionally
-Atk + 20
-guided attack + 5
-[Armor of Purple Thread]'s
-Refine is 8 or higher, additionally
-Atk + 20
-guided attack + 10
-It is never destroyed.
-[Armor of Purple Thread]'s
-Refine is 9 or higher, additionally
-Atk + 30
-guided attack + 10
-Class: ^777777Amor^000000 Defense: ^77777760^000000
-Weight: ^77777780^000000
-Required Level: ^777777100^000000
-Usable By: ^777777All Classes^000000
+Perfect Hit +5
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+If refined to + 7 or higher
+Atk + 20
+Perfect Hit + 5
+
+If refined to + 8 or higher
+Atk + 20
+Perfect Hit + 10
+Indestructible
+
+If refined to + 9 or higher
+Atk + 30
+Perfect Hit + 10
+
+
 #
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
@@ -61908,21 +62230,21 @@ Jobs : ^777777Swordman Class/Acolyte Class/Merchant Class^000000
 16006#
 #
 16007#
-A facsimile of the
-mighty hammer wielded
-by Thor, god of thunder. Increases Attack Speed.
-Dex +50 , Str +20
-^FFFFFF_^000000
-^FF0000This is a 30 Day version, and is tradable, it will disappear when it expires.^000000
-^FFFFFF_^000000
-Class : ^777777Mace^000000
-Property:^777777Wind^000000
-Attack Strength: ^777777350^000000
-Weight : ^777777600^000000
-Weapon Level: ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Swordman and
-Merchant Classes^000000
+A facsimile of the mighty hammer wielded by Thor, god of thunder.
+^FF0000Rental Item^000000
+Class: ^808080Mace^000000
+Attack: ^808080350^000000
+Property: ^808080Wind^000000
+Weight: ^808080600^000000
+Weapon Level: ^80808095^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+Str + 20
+Dex + 50
+Aspd + 10%
+Adds a 10% chance of casting ^0000FFLevel 10 Thunder Storm^000000 on the target when performing a physical attack.
+Adds a 5% chance of buffing the user for 10 seconds when performing a physical attack; Enables Splash Damage.
+This item cannot be upgraded.
+This item is indestructible in battle.
 #
 16008#
 ^000088Rental Item^000000
@@ -61975,13 +62297,14 @@ Jobs : ^777777Swordman / Acolyte / Merchant Class^000000
 #
 16015#
 A cat hand shaped club which doesn't seem hurt.
+Class: ^808080Mace^000000
+Attack: ^80808088^000000
+Weight: ^80808070^000000
+Weapon Level: ^8080801^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
 Increase 15% damages for Animal enemies.
+Increase 15% damages for Doram enemies.
 When melee Attacking, gives "seduce" status to enemies with low chance.
-Class : ^777777Club^000000 Attack : ^77777788^000000
-Weight : ^77777770^000000
-Weapon Level : ^7777771^000000
-Required Level : ^7777771^000000
-Job : ^777777Novice/Sword Man Class/Acolyte Class/Merchant Class^000000
 #
 16016#
 ^000088Rental Item^000000
@@ -69402,13 +69725,15 @@ Usable By: ^808080All Jobs^000000
 #
 18520#
 A crown that only the person who receives the tribal honor of the Jaty Tribe can wear.
-Decrease 5% of damage from animal and plant type monsters. Increases 5% of damage to animal and plant type monsters.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location: ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Brute, Doram, and Plant race enemies by 5%.
+Increases physical damage on Brute, Doram, and Plant race targets by 5%.
 #
 18521#
 The luck of the a potato loving people is infused into this item.
@@ -70036,17 +70361,22 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Increases physical damage on Demi-Human race targets by 2% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 12.
 Reduces damage taken from Demi-Human race enemies by 2%  per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 12.
+Increases physical damage on Human Player race targets by 2% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 12.
+Reduces damage taken from Human Player race enemies by 2%  per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 12.
 #
 18601#
 A lovely red hat with a white pom pom.
-MDEF + 5.
-If upgraded to +5 or higher, increases Magical damage to and reduces damage from [Demi-Human] monsters by 2% per refine level and it caps at +12
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 5
+Increases magical damage on Demi-Human race targets by 2% per upgrade level of the item past the upgrade level of 5 to a maximum upgrade level of 12.
+Reduces damage taken from Demi-Human race enemies by 2%  per upgrade level of the item past the upgrade level of 5 to a maximum upgrade level of 12.
+Increases magical damage on Human Player race targets by 2% per upgrade level of the item past the upgrade level of 5 to a maximum upgrade level of 12.
+Reduces damage taken from Human Player race enemies by 2%  per upgrade level of the item past the upgrade level of 5 to a maximum upgrade level of 12.
 #
 18602#
 Fresh watermelon sliced well to be eaten in one bite.
@@ -70275,16 +70605,16 @@ Jobs : ^777777All^000000
 #
 18630#
 A cute doll of a drooping Alicel from the Robot Factory.
-Increases damage to Demihuman and Demon monsters by 10%.
-If refined to +7 or higher, has a low chance of adding 100% Aspd for 7 seconds.
-^FF0000Created by Allysia^000000
-^FFFFFF_^000000
-Class : ^777777Headgear^000000
-Location: ^777777Upper^000000
-Defense: ^7777776^000000
-Weight : ^77777750^000000
-Required Level : ^77777770^000000
-Jobs: ^777777All except novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808050^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Increases Physical damage on Demi-Human, Human Player, and Demon race targets by 10%.
+If upgrade level is +7 or higher,
+Adds a X% chance of buffing the user for 7 seconds when performing a Physical attack; Aspd + 100%
+^67CDC9Concept by Allysia.^000000
 #
 18631#
 #
@@ -70400,13 +70730,14 @@ Location : ^777777All except Novice^000000
 #
 18645#
 A hat for a real sailor who is not afraid of the water.
-INT + 1.
-gives 5% more damage to Human type monsters
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Location : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^80808010^000000
+Int + 1
+Increases physical damage on Demi-Human race targets by 5%.
+Increases physical damage on Human Player race targets by 5%.
 #
 18646#
 A hat which is modeled on a cow. There is rumor that If you put this on while you are sleeping, you could meet a benevolant godly cow
@@ -70672,13 +71003,14 @@ Max HP + 1%
 #
 18670#
 Nibbling on this handkerchief makes people feel compassion for you.
-3% reduced damage from human type monsters.
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Required Level : ^77777712^000000
-Jobs : ^777777All Class^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^80808012^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi-Human race enemies by 3%
+Reduces damage taken from Human Player race enemies by 3%
 #
 18671#
 A Christmas hairband. Sporting the face Christmas' most famous reindeer Rudolf.
@@ -71364,16 +71696,16 @@ Job: ^777777All except Novice Classes^000000
 #
 18756#
 A hat designed after a black Amatsu hound.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808040^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 ATK +30.
 Increase damage to Brute monsters by 10%.
+Increase damage to Doram monsters by 10%.
 When equipped with Fidelity Necklace, while attacking has a low chance to increase Attack by an additional 30 for 5 seconds.
-Refine rate of the headgear increases the chance that the additional attack power is activated.
-Class : ^777777Headgear^000000
-Defense : ^7777776^000000
-Location : ^777777Upper ^000000
-Weight : ^77777740^000000
-Required Level : ^77777750^000000
-Job : ^777777All jobs^000000
 #
 18759#
 The nose of a wood goblin fashioned into a noseguard. Though comic in nature, it helps to track the scent of certain plants.
@@ -72341,16 +72673,17 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 18856#
-^808080A hat inspired by Eddga. It has been dyed white to give it an edgier appearance.^000000
-Class: Headgear
-Position: Upper
-Defense: 10
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat inspired by Eddga. It has been dyed white to give it an edgier appearance.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 Str + 2
 Dex + 2
 Increases physical damage on Brute race targets by 10%.
+Increases physical damage on Doram race targets by 10%.
 Adds a 0.3% chance of buffing the user for 3 seconds when performing a physical attack per upgrade level if the item.; Atk + 25 per upgrade level of the item, Drains 5 SP from the user every second.
 Adds a 0.1% chance of buffing the user for 3 seconds when receiving a physical attack per upgrade level if the item.; Atk + 25 per upgrade level of the item, Drains 5 SP from the user every second.
 #
@@ -72799,6 +73132,7 @@ Weight: ^80808020^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Human Player race enemies by 5%.
 Increases physical damage on medium size targets by 10%.
 #
 18908#
@@ -72825,6 +73159,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 10%
 Reduces damage taken from Demi-Human race enemies by 5%.
+Reduces damage taken from Human Player race enemies by 5%.
 Matk + 2 per upgrade level of the item.
 #
 18910#
@@ -74014,19 +74349,19 @@ Location : ^777777Lower^000000
 Weight : ^7777770^000000^FFFFFF                 ^000000 Jobs: ^777777All Except Novice^000000
 #
 19024#
-^808080An iron band decorated with beautiful feathers designed to protect the back of the head.^000000
-Class: Headgear
-Position: Middle
-Defense: 0
-Weight: 50
-Required Level: 70
-Required Jobs: All Jobs
+An iron band decorated with beautiful feathers designed to protect the back of the head.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808050^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 2
 Aspd + 5%
-Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Human Player and Doram race enemies by 2%.
 If the users base Vit is 108 or higher,
 Additional Aspd + 5%
-Reduces damage taken from Demi-Human race enemies by an additional 3%.
+Reduces damage taken from Human Player and Doram race enemies by an additional 3%.
 If the users base Vit is 120 or higher,
 Max HP + 3%
 Additional MDef + 3
@@ -76069,36 +76404,25 @@ Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
 19460#
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808050^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080All Jobs^000000
 Hit + 20
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-When Physical?Magical attack, +15% DMG to
-monsters appearing from [250 pages].
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-Take 15% less DMG from
-the monsters appearing from [250 page].
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-If [Black Veil]'s refine is 7 or higher
-Physical?Magical attack to
-monsters appearing from [250 page]
-deals +15%
-Take 15% less DMG from
-the monsters appearing from [250 page].
-If [Black Veil]'s refine is 8 or higher
-Hit + 30
-If [Black Veil]'s refine is 9 or higher
-Physical?Magical attack to
-monsters appearing from [250 page]
-deals +20%
-Take 20% less DMG from
-the monsters appearing from [250 page].
-Class: ^777777Helm^000000Defense: ^7777772^000000
-Location: ^777777Upper ^000000Weight: ^77777750^000000
-Required Level: ^777777130^000000
-Usable By: ^777777All Classes^000000
+Increases Physical and Magical Damage on Illusion of Vampire Monsters by 15%
+Reduces Damage taken from Illusion of Vampire Monsters by 15%
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+If refined to +7 or higher
+Increases Physical and Magical Damage on Illusion of Vampire Monsters by an additional 15%
+Reduces Damage taken from Illusion of Vampire Monsters by an additional 15%
+
+If refined to +9 or higher
+Increases Physical and Magical Damage on Illusion of Vampire Monsters by an additional 20%
+Reduces Damage taken from Illusion of Vampire Monsters by an additional 20%
+
+
 #
 19500#
 #
@@ -82454,17 +82778,17 @@ If upgrade level is +9 or higher,
 Reduces damage taken from Neutral property attacks by an additional 5%.
 #
 20836#
-^808080The skin of a dragon whose scales were as strong as steel, but light as a feather.^000000
-Class: Garment
-Defense: 15
-Weight: 60
-Required Level: 100
-Required Jobs: All Jobs
+The skin of a dragon whose scales were as strong as steel, but light as a feather.
+Class: ^808080Garment^000000
+Defense: ^80808015^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Agi + 5
 Vit + 5
 Mdef + 10
 Reduces damage taken from Water and Fire property attacks by 5%.
-Reduces damage taken from Demi-Human and Dragon race enemies by 5%.
+Reduces damage taken from Demi-Human, Human Player, and Dragon race enemies by 5%.
 If upgrade level is +7 or higher,
 Enables ^0000FFLevel 1 Hiding^000000.
 If upgrade level is +8 or higher,
@@ -82944,63 +83268,57 @@ If refined to + 9 or higher
 Restores an additional 10 SP to the user when a monster is killed by a magical attack
 #
 20969#
-MaxHP?+?2%?,?MaxSP?+?2%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-DMG from players?-?5%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-Magical attack DMG + 2%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Class: ^808080Garment^000000
+Defense: ^80808012^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+MaxHP?+?2%
+MaxSP?+?2%
+Reduces damage taken from Human Players and Doram race enemies by 5%.
+mAtk + 2%
+
 If [FRIGG'S SONG] Lv5 is reached
-Attack speed + 10% is added
-[METALICSOUND] cool down time - 0.2sec
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-Every upgrade of [GLOOMYDAY]
-additionally
-add magical DMG of  + 4% and
-DMG of [METALICSOUND] + 1%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-If [LULLABY DEEPSLEEP]Lv5 is reached
-[Heal]Lv10 is available
-If magical attack
-kills the monsters,
-HP?+?200?,?SP?+?20
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-If [Rainbow Muffler]'s
-refine is 5 or higher, additionally
-MaxHP?+?3%?,?MaxSP?+?3%
-Magical attack DMG?+?3%
-If [Rainbow Muffler]'s
-refine is 7 or higher, additionally
-MaxHP?+?5%?,?MaxSP?+?5%
-Magical attack DMG?+?5%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+ASPD+ 10%
+Reduces the cooldown of ^0000FFMetallic Sound ^000000 by 0.2 seconds.
+
+For each level of Gloomy Day Known
+mAtk + 4%
+ncreases the skill damage bonus of ^0000FFMetallic Sound ^000000 by 1%.
+
+If Lullaby Deepsleep lvl 5 is known
+Enables Heal Lv 10
+Restores 200 HP/ 20SP to the user when a monster is killed by a magical attack
+
+if refined to +5 or higher
+MaxHP?+?3%?
+MaxSP?+?3%
+
+if refined to +7 or higher
+
+MaxHP?+?5%
+MaxSP?+?5%
+
+?????????????
 If equip with [Fire Arrow]
 DMG received by
 Fire element attack
 reduced by?-?75%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+?????????????
 If equip with [Crystal Arrow]
 DMG received by
 Water element attack
 reduced by?-?75%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+?????????????
 If equip with [Arrow Of Wind]
 DMG received by
 Wind element attack
 reduced by?-?75%
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+?????????????
 If equip with [Stone Arrow]
 DMG received by
 Stone element attack
 reduced by?-?75%
-Class: ^777777Garment^000000 Defense: ^77777712^000000
-Weight: ^77777730^000000
-Required Level: ^777777100^000000
-Usable By: ^777777All Classes^000000
-
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #
 21001#
 *Stats during WoE & PVP
@@ -86799,10 +87117,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 10 per upgrade level of the item.
 Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces damage taken from Human Player race enemies by 1%.
 If upgrade level is +7 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 1%.
+Reduces damage taken from Human Player race enemies by an additional 1%.
 If upgrade level is +9 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 1%.
+Reduces damage taken from Human Player race enemies by an additional 1%.
 ^800080Set Bonus^000000
 ^008080Bloody Shadow Shoes^000000
 ^008080Cranial Shadow Shield^000000
@@ -86969,10 +87290,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 10 per upgrade level of the item.
 Increases physical and magical damage on Demi-Human race targets by 2%.
+Increases physical and magical damage on Human Player race targets by 2%.
 If upgrade level is +7 or higher,
 Increases physical and magical damage on Demi-Human race targets by an additional 1%.
+Increases physical and magical damage on Human Player race targets by an additional 1%.
 If upgrade level is +9 or higher,
 Increases physical and magical damage on Demi-Human race targets by an additional 2%.
+Increases physical and magical damage on Human Player race targets by an additional 2%.
 ^800080Set Bonus^000000
 ^008080Bloody Shadow Shoes^000000
 ^008080Cranial Shadow Shield^000000
@@ -94619,27 +94943,22 @@ Cri DMG + 70%
 ^d3d3d3Reduces the fixed casting time of Storm Blast by 100%.^000000
 #
 32258#
-[Blessing]Lv5 is available
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-When equipping Accessory (1),
-Every increase of 10 pure Luk gives
-Atk + 15 , Matk + 15
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Enables Blessing Lv 5
+
+When equipped to Accessory (1),
+Atk/mAtk + 15 for every 10 pure Luk
 If pure Luk is 125 or higher
-Physical?Magical attack
-gives +15% DMG to boss monsters
-¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
-When equipping Accessory (2),
-Every increase of 10 pure Vit gives
-MaxHP + 2% , MaxSP + 2%
+Increases Physical and Magical damage on boss monsters by 15%.
+
+
+When equipped to Accessory (2),
+HP/SP + 2% for every 10 pure Vit
 If pure Vit is 125 or higher
 Def + 300 , Mdef + 50
-and take 3% less DMG from players.
-Class: ^777777Accessory^000000 Defense: ^7777772^000000
-Weight: ^77777750^000000
-Required Level: ^777777100^000000
-Usable By: ^777777All Classes^000000
+Reduces damage taken from Human Player and Doram race enemies by 3%.
 
-Attack: ^8080800^000000
-Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
 #

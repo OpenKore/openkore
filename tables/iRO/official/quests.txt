@@ -22458,3 +22458,7 @@ Let token hammer rest.#
 Find Carl.#
 
 Find Carl.#
+
+14651#Decision on divorce should be made cautiously#SG_FEEL#QUE_NOIMAGE#
+You have 4 days before the divorce process go through. Please make sure that you have enough talk with your spouse during this period. You can always withdraw your divorce application during the processing period or you can just complete the divorce process. - Prontera office: Divorce officer Norton #
+I will see you in 4 days.#
