@@ -827,10 +827,10 @@
 1571#Book_of_Gust_of_Wind#
 1572#Principles_of_Magic#
 1573#Ancient_Magic#
-1574#Brave_Bible#
-1575#Valorous_Bible#
+1574#Brave_Strategy_Book#
+1575#Valorous_Strategy_Book#
 1576#Glorious_Tablet#
-1577#Glorious_Book_of_the_Apocalypse#
+1577#Glorious_Apocalypse#
 1581#Diary_Of_Great_Sage#
 1583#Eden_Group_Dictionary_I#
 1584#Chilly_Spell_Book#
@@ -1056,7 +1056,7 @@
 1924#Brave_Guitar#
 1925#Cello#
 1926#Harp_of_Nepenthes#
-1927#Glorious_Base_Guitar#
+1927#Glorious_Guitar#
 1930#Green_Whistle#
 1931#Eden_Group_Guitar_I#
 1932#WoE_TE_Guitar#
@@ -1097,7 +1097,7 @@
 1978#Brave_Lariat#
 1979#Stem_of_Nepenthes#
 1980#Whip_of_Balance#
-1981#Glorious_Lariat_Whip#
+1981#Glorious_Lariat#
 1984#Stem_Whip#
 1985#Rosevine#
 1986#Eden_Group_Whip_I#
@@ -1111,7 +1111,7 @@
 1996#Vicious_Mind_Wire#
 2000#Staff_of_Destruction#
 2001#Divine_Cross#
-2002#Glorious_Staff_of_Destruction#
+2002#Glorious_Destruction_Staff#
 2004#Kronos#
 2005#Dea_Staff#
 2006#Sunshine_Staff#
@@ -5096,7 +5096,7 @@
 10039#placeholder#
 10040#Red_Bell_Necklace#
 10042#Dark_Mane#
-10516#2019_Mar_Special_Box#
+10516#Overseas_Care_Package_XXVIII#
 10517#2019_March_Costume_Box#
 11000#History_book_of_Prontera#
 11001#Adventure_Story_Vol.1#
@@ -5946,8 +5946,8 @@
 13033#Assassin_Dagger#
 13034#Desert_Twilight#
 13035#Sandstorm#
-13036#Brave_Assassin's_Damascus#
-13037#Valorous_Assassin's_Damascus#
+13036#Brave_Damascus#
+13037#Valorous_Damascus#
 13038#Dagger_of_Hunter#
 13039#Ivory_Knife#
 13040#Novice_Cutter#
@@ -5995,7 +5995,7 @@
 13105#Garrison#
 13106#Gold_Lux#
 13107#Wasteland's_Outlaw#
-13108#Soldier_Revolver#
+13108#Brave_Revolver#
 13110#Glorious_Pistol#
 13112#Eden_Revolver_I#
 13113#Eden_Revolver_II#
@@ -6032,12 +6032,12 @@
 13168#Thunder_P#
 13169#Thunder_P#
 13170#Lever_Action_Rifle#
-13171#Soldier_Rifle#
-13172#Soldier_GatlingGun#
-13173#Soldier_Shotgun#
-13174#Soldier_Grenade_Launcher#
+13171#Valorous_Rifle#
+13172#Brave_Gatling_Gun#
+13173#Valorous_Shotgun#
+13174#Valorous_Grenade_Launcher#
 13176#Glorious_Rifle#
-13177#Glorious_Gatling_gun#
+13177#Glorious_Gatling_Gun#
 13178#Glorious_Shotgun#
 13179#Glorious_Grenade_Launcher#
 13180#Novice_Rifle#
