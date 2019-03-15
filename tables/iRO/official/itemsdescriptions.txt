@@ -39427,7 +39427,7 @@ This shard is sustained with Sakray's old, abandoned memories that have the abil
 ^A730FBCan be exchanged for Thanatos Weapons and Gray Equipment in Ghost Palace Instance.^000000
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
-Weight: ^8080801^000000
+Weight: ^808080.1^000000
 #
 6681#
 The key ingredient to build the cookie house for Raccoon Hooray team for Christmas.
@@ -75821,16 +75821,16 @@ Reduces damage taken from Wind property attacks by 10%.
 Increases physical and magical damage on [Rock Ridge] monsters by 15%.
 Decreases damage taken from [Rock Ridge] monsters by 15%.
 
-If refined to +7 or higher
+If upgrade level is +7 or higher,
 Increases physical and magical damage on [Rock Ridge] monsters by an additional 15%.
-Decreases damage taken from [Rock Ridge] monsters by  an additional 15%.
+Decreases damage taken from [Rock Ridge] monsters by an additional 15%.
 
-If refined to +8 or higher
+If upgrade level is +8 or higher,
 Reduces damage taken from Wind property attacks by an additional 15%.
 
-If refined to +9 or higher
+If upgrade level is +9 or higher,
 Increases physical and magical damage on [Rock Ridge] monsters by an additional 20%.
-Decreases damage taken from [Rock Ridge] monsters by  an additional 20%.
+Decreases damage taken from [Rock Ridge] monsters by an additional 20%.
 #
 19343#
 A crown that looks like a bird that is said to revive multiple times. If you wear, you will be blessed.
@@ -75842,33 +75842,34 @@ Weight: ^808080100^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 10%
-Reduces the fixed casting time of ^0000FFOverbrand^000000 by 100%.
+Mdef + 15
 Reduces the variable casting time of skills by 10%.
 Increases the damage of ^0000FFOverbrand^000000 by 10%.
+Reduces the fixed casting time of ^0000FFOverbrand^000000 by 100%.
 
-If refined to +7 or higher
-Reduces the variable casting time of skills by an additional 5%.
-Increases the damage of ^0000FFOverbrand^000000 by 15%.
-
-If refined to +9 or higher
-Reduces the variable casting time of skills by an additional 5%.
-Increases the damage of ^0000FFOverbrand^000000 by 25%.
-
-If refined to +10 or higher
-Bypass 100% of hard defense of targets when performing a physical attack.
-
-If King's Grace is known at level 5 or higher
-Reduces the cooldown of ^0000FFInspiration^000000 by 15 seconds.
+If ^0000FFKing's Grace^000000 is at level 5 or higher,
 Reduces the variable casting time of ^0000FFInspiration^000000 by 2 seconds.
+Reduces the cooldown of ^0000FFInspiration^000000 by 10 seconds.
 
-If Moonslasher is known at level 5 or higher
+If ^0000FFMoonslasher^000000 is at level 5 or higher,
 Reduces the variable casting time of ^0000FFOverbrand^000000 by 1 seconds.
 
-If Force of Vanguard is known at level 5 or higher
+If ^0000FFForce of Vanguard^000000 is at level 5 or higher,
 Max HP + 10%
 Max SP + 10%
 Def + 150
 Mdef + 15
+
+If upgrade level is +7 or higher,
+Reduces the variable casting time of skills by an additional 5%.
+Increases the damage of ^0000FFOverbrand^000000 by 15%.
+
+If upgrade level is +9 or higher,
+Reduces the variable casting time of skills by an additional 5%.
+Increases the damage of ^0000FFOverbrand^000000 by 25%.
+
+If upgrade level is +10 or higher,
+Bypass 100% of hard defense of All Race targets when performing a physical attack.
 #
 19377#
 A marinated beef dish whose splendorous flavor can only be described as...shiny.
@@ -83268,57 +83269,58 @@ If refined to + 9 or higher
 Restores an additional 10 SP to the user when a monster is killed by a magical attack
 #
 20969#
+A beautiful scarf with special powers, it seems to emit a shimmering glow.
 Class: ^808080Garment^000000
 Defense: ^80808012^000000
 Weight: ^80808030^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-MaxHP?+?2%
-MaxSP?+?2%
+Max HP?+?2%
+Max SP?+?2%
+Matk + 2%
 Reduces damage taken from Human Players and Doram race enemies by 5%.
-mAtk + 2%
 
-If [FRIGG'S SONG] Lv5 is reached
-ASPD+ 10%
+If ^0000FFFrigg's Song^000000 is at level 5 or higher,
+Aspd + 10%
 Reduces the cooldown of ^0000FFMetallic Sound ^000000 by 0.2 seconds.
 
-For each level of Gloomy Day Known
-mAtk + 4%
-ncreases the skill damage bonus of ^0000FFMetallic Sound ^000000 by 1%.
+For every level of ^0000FFGloomy Shyness^000000 known,
+Matk + 4%
+Increases the skill damage bonus of ^0000FFMetallic Sound^000000 by 4%.
 
-If Lullaby Deepsleep lvl 5 is known
-Enables Heal Lv 10
-Restores 200 HP/ 20SP to the user when a monster is killed by a magical attack
+If ^0000FFDeep Sleep Lullaby^000000 is at level 5 or higher,
+Enables ^0000FFLevel 10 Heal^000000.
+Restores 200 HP and 20 SP to the user when a monster is killed by a magical attack.
 
-if refined to +5 or higher
-MaxHP?+?3%?
-MaxSP?+?3%
+If upgrade level is +5 or higher,
+Additional Max HP?+?3%?
+Additional Max SP?+?3%
+Additional Matk + 3%
 
-if refined to +7 or higher
+If upgrade level is +7 or higher,
+Additional Max HP + 5%
+Additional Max SP + 5%
+Additional Matk + 5%
 
-MaxHP?+?5%
-MaxSP?+?5%
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Fire Arrow^000000
+Reduces damage taken from Fire property attacks by 75%.
 
-?????????????
-If equip with [Fire Arrow]
-DMG received by
-Fire element attack
-reduced by?-?75%
-?????????????
-If equip with [Crystal Arrow]
-DMG received by
-Water element attack
-reduced by?-?75%
-?????????????
-If equip with [Arrow Of Wind]
-DMG received by
-Wind element attack
-reduced by?-?75%
-?????????????
-If equip with [Stone Arrow]
-DMG received by
-Stone element attack
-reduced by?-?75%
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Crystal Arrow^000000
+Reduces damage taken from Water property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Arrow of Wind^000000
+Reduces damage taken from Wind property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Stone Arrow^000000
+Reduces damage taken from Earth property attacks by 75%.
 #
 21001#
 *Stats during WoE & PVP
@@ -91510,23 +91512,34 @@ Increases the damage of ^0000FFMagnus Exorcismus^000000 by 3% for every 2 base l
 #
 28565#
 A demon mask found nearby a Buddha statue in Payon. Some say it has been used for some kind of ritual.
-^FF0000This accessory can only be equipped in the right accessory slot.^000000
+^FF0000This accessory can only be equipped in the left accessory slot. ^000000
 Class: ^808080Accessory^000000
 Weight: ^80808060^000000
 Requires Level: ^80808080^000000
 Usable By: ^808080All Jobs^000000
-Str + 3 for every 18 base Int.
-Agi + 3 for every 18 base Luk.
-Vit + 3 for every 18 base Dex.
-Int + 3 for every 18 base Str.
-Dex + 3 for every 18 base Vit.
-Luk + 3 for every 18 base Agi.
-Max HP + 1% for every 18 base Dex.
-Perfect Dodge + 1 for every 18 base Agi.
-Reduces the variable casting time of skills by 1% for every 18 base Vit.
-Reduces the cast delay of skills by 1% for every 18 base Int.
-Bypass 15% of hard defense of normal monsters, boss monsters and players when performing a physical attack for every 18 base Luk.
-Bypass 15% of hard magic defense of normal monsters, boss monsters and players when performing a magical attack for every 18 base Str.
+For every 18 base Str,
+Int + 3
+Bypass 15% of hard magic defense of All Races when performing a magical attack.
+
+For every 18 base Agi,
+Luk + 3
+Perfect Dodge + 1
+
+For every 18 base Vit,
+Dex + 3
+Reduces the variable casting time of skills by 1%.
+
+For every 18 base Int,
+Str + 3
+Reduces the global delay of skills by 1%.
+
+For every 18 base Dex,
+Vit + 3
+Max HP + 1%
+
+For every 18 base Luk,
+Agi + 3
+Bypass 15% of hard defense of All Races when performing a physical attack.
 #
 28573#
 A beautiful ring with a big shiny emerald inserted into it.
@@ -92023,13 +92036,15 @@ Defense: ^80808080^000000
 Weight: ^80808050^000000
 Requires Level: ^80808090^000000
 Usable By: ^808080All Jobs^000000
-mDef + 5
+Mdef + 5
 Reduces damage taken from Shadow property enemies by 25%.
 
-If refined to + 5 or higher
-ASPD + 1
-If refined to + 7 or higher
-ASPD increased by an additional + 1
+If upgrade level is +5 or higher,
+Aspd + 1
+
+If upgrade level is +7 or higher,
+Additional Aspd + 1.
+
 Has no Effect in WoE TE
 #
 28921#
@@ -94943,22 +94958,26 @@ Cri DMG + 70%
 ^d3d3d3Reduces the fixed casting time of Storm Blast by 100%.^000000
 #
 32258#
+A ring with a celestial amber like stone. It is said wearing this ring will grant you powers.
 Class: ^808080Accessory^000000
 Weight: ^80808050^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
-Enables Blessing Lv 5
+Enables ^0000FFLevel 5 Blessing^000000.
 
-When equipped to Accessory (1),
-Atk/mAtk + 15 for every 10 pure Luk
-If pure Luk is 125 or higher
+When equipped to Right Accessory (1),
+For every 10 base Luk,
+Atk + 15
+Matk + 15
+If the user's base Luk is 125 or higher,
 Increases Physical and Magical damage on boss monsters by 15%.
 
-
-When equipped to Accessory (2),
-HP/SP + 2% for every 10 pure Vit
-If pure Vit is 125 or higher
-Def + 300 , Mdef + 50
+When equipped to Left Accessory (2),
+For every 10 base Vit,
+Max HP + 2%
+Max SP + 2%
+If the user's base Vit is 125 or higher,
+Def + 300
+Mdef + 50
 Reduces damage taken from Human Player and Doram race enemies by 3%.
-
 #
