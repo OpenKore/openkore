@@ -9539,7 +9539,7 @@
 28551#Imperial_Glove#
 28560#Yin_Yang_Talisman#
 28564#Valkyrie_Drop#
-28565#Perverse_Demon_Mask#
+28565#Perverse_Demon_Mask_#
 28573#Emerald_Ring#
 28575#Verus_Core#
 28594#Temporal_Ring#
