@@ -22462,3 +22462,48 @@ Find Carl.#
 14651#Decision on divorce should be made cautiously#SG_FEEL#QUE_NOIMAGE#
 You have 4 days before the divorce process go through. Please make sure that you have enough talk with your spouse during this period. You can always withdraw your divorce application during the processing period or you can just complete the divorce process. - Prontera office: Divorce officer Norton #
 I will see you in 4 days.#
+
+
+
+63040#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+You have introduced yourself to the first Prontera Brewmaster.#
+#
+
+63041#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+You have introduced yourself to the second Prontera Brewmaster.#
+#
+
+63042#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+You have introduced yourself to the Geffen Brewmaster.#
+#
+
+63043#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+You have introduced yourself to the Aldebaran Brewmaster.#
+#
+
+63044#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+You have received the Pub Crawl Prize#
+#
+
+63045#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+The first Prontera Brewmaster can't accept more supplies until the timer is finished.#
+#
+
+63046#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+The second Prontera Brewmaster can't accept more supplies until the timer is finished.#
+#
+
+63047#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+The Geffen Brewmaster can't accept more supplies until the timer is finished.#
+#
+
+63048#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+The Aldebaran Brewmaster can't accept more supplies until the timer is finished.#
+#
+
+63049#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+Explore Duffy's Pub Crawl#
+#
+63039#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+Explore Duffy's Pub Crawl.#
+#
