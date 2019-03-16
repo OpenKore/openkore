@@ -2288,7 +2288,8 @@ use constant {
 };
 
 sub inventory_expansion_result {
-#msgstringtable	
+	my($self, $args) = @_;
+#msgstringtable
 	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
 		message TF("You have successfully expanded the possession limit"),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
