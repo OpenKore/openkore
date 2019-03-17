@@ -5010,7 +5010,7 @@ sub solveItemLink {
 	foreach my $opt (map { $_ } $infostr =~ /\*([\d\w\+,]+)/g) {
 		# The Random Option's order from client is type-param-value, itemName needs type-value-param
 		my ($type, $param, $value) = $opt =~ /([a-zA-Z0-9]+)\+([a-zA-Z0-9]+),([a-zA-Z0-9]+)/;
-		$item_info->{options} .= pack 'vvC', ( fromBase62($_[0]), fromBase62($_[2]), fromBase62($_[1]) );
+		$item_info->{options} .= pack 'vvC', ( fromBase62($type), fromBase62($value), fromBase62($param) );
 	}
 
 	return "<".itemName($item_info).">";
