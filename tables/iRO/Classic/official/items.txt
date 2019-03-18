@@ -7001,3 +7001,10 @@
 20073#Evolved_Pair_of_Red_Ribbon_Certificate#
 20074#Capricon_Crown_Certificate#
 20075#Gryphon_Hat_Certificate#
+20076#Lif_Doll_Hat_Certificate#
+20077#Bf_Recruiter_Hat_Certificate#
+20078#Gf_Recruiter_Hat_Certificate#
+20079#Scorpio_Crown_Certificate#
+20080#Vintage_Orc_Helm_Certificate#
+20081#Pink_Drooping_Cat_Certificate#
+20082#Mini_Glasses_Certificate#

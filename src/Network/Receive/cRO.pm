@@ -42,6 +42,8 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
+
 	return $self;
 }
 

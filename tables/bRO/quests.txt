@@ -12409,3 +12409,28 @@ Volte após 3 horas.#
 2421#Votação#SG_FEEL#QUE_NOIMAGE#
 Em um ato de cidadania, você votou! Aguarde os resultados e boa sorte!#
 Voto comfirmado.#
+
+//advanced glast heim
+12334#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+Aventurar-se no tempo pode provocar náuseas se você não aguardar um tempo entre uma viagem e outra.#
+Retorne após 70 horas.#
+
+12335#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+O tempo e espaço foi distorcido por Hugin! Agora você poderá conferir o que se passa no castelo de Glast Heim!#
+Entre na instância Glast Heim Sombria.#
+
+12336#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+No primeiro andar do Castelo de Glast Heim, Himmelmez iniciou o seu ritual de destruição.#
+Elimine a Origem da Escuridão.#
+
+12337#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+Himmelmez está quase conquistando o seu objetivo!#
+Elimine o Amdarais Sombrio.#
+
+12338#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+A viagem temporal para a Glast Heim Sombria foi parcialmente concluída.#
+Reporte o caso a Hugin.#
+
+12339#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+A viagem temporal para Glast Heim Sombria foi totalmente concluída.#
+Reporte o caso a Hugin.#

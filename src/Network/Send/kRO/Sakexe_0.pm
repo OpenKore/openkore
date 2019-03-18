@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],#6
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -248,7 +249,9 @@ sub new {
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
-		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
+		'0B14' => ['inventory_expansion_request'], #2
+		'0B19' => ['inventory_expansion_rejected'], #2
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -624,15 +627,7 @@ sub sendGuildPositionInfo {
 # 0x01a4,11
 # 0x01a6,-1
 # 0x01a8,4
-
 # 0x01a9,6,sendemotion,2
-sub sendPetEmotion{
-	my ($self, $emoticon) = @_;
-	my $msg = pack('v V', 0x01A9, $emoticon);
-	$self->sendToServer($msg);
-	debug "Sent Pet Emotion.\n", "sendPacket", 2;
-}
-
 # 0x01aa,10
 # 0x01ab,12
 # 0x01ac,6
@@ -757,4 +752,13 @@ sub sendPartyOrganize {
 # 0x0206,11
 # 0x0207,34
 
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
 1;

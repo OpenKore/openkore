@@ -131,7 +131,6 @@ our @EXPORT = (
 	getResponse
 	getSpellName
 	headgearName
-	initUserSeed
 	itemLog_clear
 	look
 	lookAtPosition
@@ -1264,11 +1263,10 @@ sub charSelectScreen {
 	}
 
 	if (@charNames) {
-		message(TF("------------- Character List -------------\n" .
-		           "%s\n" .
-		           "------------------------------------------\n",
-		           join("\n", @charNames)),
-		           "connection");
+		my $msg =  center(T(" Character List "), 79, '-') ."\n";
+		$msg .= join("\n", @charNames) ."\n";
+		$msg .= ('-'x79) . "\n";
+		message $msg, "connection";
 	}
 	return 1 if ($net->clientAlive && $net->version);
 
@@ -2039,14 +2037,12 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
+    my $total_options = 0;
+
 	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
 	foreach ( @options ) {
-		if ( $_->{type} == 175 ) {
-			# Neutral element.
-		} elsif ( $_->{type} >= 176 && $_->{type} <= 184 ) {
-			$suffix = join ':', sort $elements_lut{ $_->{type} - 175 }, split ':', $suffix;
-		} else {
-			$suffix = join ':', sort "Option($_->{type},$_->{value},$_->{param})", split ':', $suffix;
+		if ( $_->{type} ) {
+			$total_options++;
 		}
 	}
 
@@ -2059,6 +2055,7 @@ sub itemName {
 	$display .= $name;
 	$display .= " [$suffix]" if $suffix;
 	$display .= " [$numSlots]" if $numSlots;
+	$display .= " [$total_options Option]" if $total_options;
 
 	return $display;
 }
@@ -2182,6 +2179,7 @@ sub headgearName {
 #
 # Generate a unique seed for the current user and save it to
 # a file, or load the seed from that file if it exists.
+=pod
 sub initUserSeed {
 	my $seedFile = "$Settings::logs_folder/seed.txt";
 	my $f;
@@ -2208,6 +2206,7 @@ sub initUserSeed {
 		}
 	}
 }
+=cut
 
 sub itemLog_clear {
 	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); }
@@ -2455,12 +2454,23 @@ sub positionNearPortal {
 # Print the description for $item.
 sub printItemDesc {
 	my $item = shift;
-		
+
 	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
-	message T("===============Item Description===============\n");
-	message TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
-	message($description, "info");
-	message("==============================================\n", "info");
+	my $msg =  center(T(" Item Description "), 79, '-') ."\n";
+	$msg .= TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
+	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	my $option_index = 1;
+	foreach ( @options ) {
+		if ( $itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}} ) {
+			$msg .= TF("OPTION %s: ", $option_index) . sprintf($itemOption_lut{$itemOptionHandle{$_->{type}}}, $_->{value}) . "\n";
+		} else {
+			$msg .= TF("OPTION %s: Option (%d, %d, %d)\n", $option_index, $_->{type}, $_->{value},$_->{param});
+		}
+		$option_index++;
+	}
+	$msg .=  $description;
+	$msg .= ('-'x79) . "\n";
+	message $msg, "info";
 }
 
 sub processNameRequestQueue {
@@ -4917,22 +4927,22 @@ sub CharacterLogin {
 sub searchStoreInfo {
 	my ($page) = @_;
 	
-	message T("============================================== Search Store Result ==============================================\n");
-	message TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
-	message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
-		["#", T("Shop Name"), T("Item"), T("Price"), T("Amount")]));
+	my $msg =  center(T(" Search Store Result "), 79, '-') ."\n";
+	$msg .= TF("Page: %d/%d\n", $page + 1, scalar(@{$universalCatalog{list}}));
+	$msg .= swrite("@<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @>>>>>>>>>>",
+			["#", T("Shop Name"), T("Item"), T("Amount"), T("Price")]);
 	
 	for (my $i = 0; $i < scalar(@{${$universalCatalog{list}}[$page]}); ++$i) {
-		message(swrite("@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @<<<<<<<",
+		$msg .= swrite("@<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @>>>>>>>>>>",
 				[$i, ${$universalCatalog{list}}[$page][$i]{shopName},
 				itemName({
 					nameID => ${$universalCatalog{list}}[$page][$i]{nameID},
 					cards => ${$universalCatalog{list}}[$page][$i]{cards_nameID},
 					upgrade => ${$universalCatalog{list}}[$page][$i]{refine}
-				}), formatNumber(${$universalCatalog{list}}[$page][$i]{price}), ${$universalCatalog{list}}[$page][$i]{amount}]), "list");
+				}), ${$universalCatalog{list}}[$page][$i]{amount}, formatNumber(${$universalCatalog{list}}[$page][$i]{price})]);
 	}
-	
-	message T("=================================================================================================================\n");
+	$msg .= ('-'x79) . "\n";
+	message $msg, "list";
 }
 
 return 1;

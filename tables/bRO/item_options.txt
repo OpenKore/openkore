@@ -1,0 +1,180 @@
+VAR_MAXHPAMOUNT#HP máx. +%d.#
+VAR_MAXSPAMOUNT#SP máx. +%d.#
+VAR_STRAMOUNT#FOR +%d.#
+VAR_AGIAMOUNT#AGI +%d.#
+VAR_VITAMOUNT#VIT +%d.#
+VAR_INTAMOUNT#INT +%d.#
+VAR_DEXAMOUNT#DES +%d.#
+VAR_LUKAMOUNT#SOR +%d.#
+VAR_MAXHPPERCENT#HP máx. +%d%%.#
+VAR_MAXSPPERCENT#SP máx. +%d%%.#
+VAR_HPACCELERATION#Regen. natural de HP +%d%%.#
+VAR_SPACCELERATION#Regen. natural de SP +%d%%.#
+VAR_ATKPERCENT#ATQ da arma +%d%%.#
+VAR_MAGICATKPERCENT#Dano mágico +%d%%.#
+VAR_PLUSASPD#Velocidade de ataque +%d.#
+VAR_PLUSASPDPERCENT#Velocidade de ataque +%d%%.#
+VAR_ATTPOWER#ATQ +%d.#
+VAR_HITSUCCESSVALUE#Precisão +%d.#
+VAR_ATTMPOWER#ATQM +%d.#
+VAR_ITEMDEFPOWER#DEF +%d.#
+VAR_MDEFPOWER#DEFM +%d.#
+VAR_AVOIDSUCCESSVALUE#Esquiva +%d.#
+VAR_PLUSAVOIDSUCCESSVALUE#Esquiva perfeita +%d.#
+VAR_CRITICALSUCCESSVALUE#CRIT +%d.#
+ATTR_TOLERACE_NOTHING#Resistência a propriedade Neutro +%d%%.#
+ATTR_TOLERACE_WATER#Resistência a propriedade Água +%d%%.#
+ATTR_TOLERACE_GROUND#Resistência a propriedade Terra +%d%%.#
+ATTR_TOLERACE_FIRE#Resistência a propriedade Fogo +%d%%.#
+ATTR_TOLERACE_WIND#Resistência a propriedade Vento +%d%%.#
+ATTR_TOLERACE_POISON#Resistência a propriedade Veneno +%d%%.#
+ATTR_TOLERACE_SAINT#Resistência a propriedade Sagrado +%d%%.#
+ATTR_TOLERACE_DARKNESS#Resistência a propriedade Sombrio +%d%%.#
+ATTR_TOLERACE_TELEKINESIS#Resistência a propriedade Fantasma +%d%%.#
+ATTR_TOLERACE_UNDEAD#Resistência a propriedade Maldito +%d%%.#
+ATTR_TOLERACE_ALL#+%d%% de resistência a todas as propriedades, exceto Neutro.#
+DAMAGE_PROPERTY_NOTHING_USER#Resistência a danos físicos de monstros da propriedade Neutro +%d%%.#
+DAMAGE_PROPERTY_NOTHING_TARGET#Dano físico contra monstros de propriedade Neutro +%d%%.#
+DAMAGE_PROPERTY_WATER_USER#Resistência a danos físicos de monstros da propriedade Água +%d%%.#
+DAMAGE_PROPERTY_WATER_TARGET#Dano físico contra monstros de propriedade Água +%d%%.#
+DAMAGE_PROPERTY_GROUND_USER#Resistência a danos físicos de monstros da propriedade Terra +%d%%.#
+DAMAGE_PROPERTY_GROUND_TARGET#Dano físico contra monstros de propriedade Terra +%d%%.#
+DAMAGE_PROPERTY_FIRE_USER#Resistência a danos físicos de monstros da propriedade Fogo +%d%%.#
+DAMAGE_PROPERTY_FIRE_TARGET#Dano físico contra monstros de propriedade Fogo.#
+DAMAGE_PROPERTY_WIND_USER#Resistência a danos físicos de monstros da propriedade Vento +%d%%.#
+DAMAGE_PROPERTY_WIND_TARGET#Dano físico contra monstros de propriedade Vento.#
+DAMAGE_PROPERTY_POISON_USER#Resistência a danos físicos de monstros da propriedade Veneno +%d%%.#
+DAMAGE_PROPERTY_POISON_TARGET#Dano físico contra monstros de propriedade Veneno.#
+DAMAGE_PROPERTY_SAINT_USER#Resistência a danos físicos de monstros da propriedade Sagrado +%d%%.#
+DAMAGE_PROPERTY_SAINT_TARGET#Dano físico contra monstros de propriedade Sagrado.#
+DAMAGE_PROPERTY_DARKNESS_USER#Resistência a danos físicos de monstros da propriedade Sombrio +%d%%.#
+DAMAGE_PROPERTY_DARKNESS_TARGET#Dano físico contra monstros de propriedade Sombrio.#
+DAMAGE_PROPERTY_TELEKINESIS_USER#Resistência a danos físicos de monstros da propriedade Fantasma +%d%%.#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#Dano físico contra monstros de propriedade Fantasma.#
+DAMAGE_PROPERTY_UNDEAD_USER#Resistência a danos físicos de monstros da propriedade Maldito +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Dano físico contra monstros de propriedade Maldito.#
+MDAMAGE_PROPERTY_NOTHING_USER#Resistência a danos mágicos de monstros da propriedade Neutro +%d%%.#
+MDAMAGE_PROPERTY_NOTHING_TARGET#Dano mágico contra monstros de propriedade Neutro.#
+MDAMAGE_PROPERTY_WATER_USER#Resistência a danos mágicos de monstros da propriedade Água +%d%%.#
+MDAMAGE_PROPERTY_WATER_TARGET#Dano mágico contra monstros de propriedade Água.#
+MDAMAGE_PROPERTY_GROUND_USER#Resistência a danos mágicos de monstros da propriedade Terra +%d%%.#
+MDAMAGE_PROPERTY_GROUND_TARGET#Dano mágico contra monstros de propriedade Terra.#
+MDAMAGE_PROPERTY_FIRE_USER#Resistência a danos mágicos de monstros da propriedade Fogo +%d%%.#
+MDAMAGE_PROPERTY_FIRE_TARGET#Dano mágico contra monstros de propriedade Fogo.#
+MDAMAGE_PROPERTY_WIND_USER#Resistência a danos mágicos de monstros da propriedade Vento +%d%%.#
+MDAMAGE_PROPERTY_WIND_TARGET#Dano mágico contra monstros de propriedade Vento.#
+MDAMAGE_PROPERTY_POISON_USER#Resistência a danos mágicos de monstros da propriedade Veneno +%d%%.#
+MDAMAGE_PROPERTY_POISON_TARGET#Dano mágico contra monstros de propriedade Veneno.#
+MDAMAGE_PROPERTY_SAINT_USER#Resistência a danos mágicos de monstros da propriedade Sagrado +%d%%.#
+MDAMAGE_PROPERTY_SAINT_TARGET#Dano mágico contra monstros de propriedade Sagrado.#
+MDAMAGE_PROPERTY_DARKNESS_USER#Resistência a danos mágicos de monstros da propriedade Sombrio +%d%%.#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#Dano mágico contra monstros de propriedade Sombrio.#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#Resistência a danos mágicos de monstros da propriedade Fantasma +%d%%.#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Dano mágico contra monstros de propriedade Fantasma.#
+MDAMAGE_PROPERTY_UNDEAD_USER#Resistência a danos mágicos de monstros da propriedade Maldito +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Dano mágico contra monstros de propriedade Maldito.#
+BODY_ATTR_WATER#Propriedade Água.#
+BODY_ATTR_GROUND#Propriedade Terra.#
+BODY_ATTR_FIRE#Propriedade Fogo.#
+BODY_ATTR_WIND#Propriedade Vento.#
+BODY_ATTR_POISON#Propriedade Veneno.#
+BODY_ATTR_SAINT#Propriedade Sagrado.#
+BODY_ATTR_DARKNESS#Propriedade Sombrio.#
+BODY_ATTR_TELEKINESIS#Propriedade Fantasma.#
+BODY_ATTR_UNDEAD#Propriedade Maldito.#
+RACE_TOLERACE_NOTHING#Resistência a monstros da raça Amorfo +%d%%.#
+RACE_TOLERACE_UNDEAD#Resistência a monstros da raça Morto-Vivo +%d%%.#
+RACE_TOLERACE_ANIMAL#Resistência a monstros da raça Bruto +%d%%.#
+RACE_TOLERACE_PLANT#Resistência a monstros da raça Planta +%d%%.#
+RACE_TOLERACE_INSECT#Resistência a monstros da raça Inseto +%d%%.#
+RACE_TOLERACE_FISHS#Resistência a monstros da raça Peixe +%d%%.#
+RACE_TOLERACE_DEVIL#Resistência a monstros da raça Demônio +%d%%.#
+RACE_TOLERACE_HUMAN#Resistência a monstros da raça Humanoide +%d%%.#
+RACE_TOLERACE_ANGEL#Resistência a monstros da raça Anjo +%d%%.#
+RACE_TOLERACE_DRAGON#Resistência a monstros da raça Dragão +%d%%.#
+RACE_DAMAGE_NOTHING#Dano físico contra monstros da raça Amorfo +%d%%.#
+RACE_DAMAGE_UNDEAD#Dano físico contra monstros da raça Morto-Vivo +%d%%.#
+RACE_DAMAGE_ANIMAL#Dano físico contra monstros da raça Bruto +%d%%.#
+RACE_DAMAGE_PLANT#Dano físico contra monstros da raça Planta +%d%%.#
+RACE_DAMAGE_INSECT#Dano físico contra monstros da raça Inseto +%d%%.#
+RACE_DAMAGE_FISHS#Dano físico contra monstros da raça Peixe +%d%%.#
+RACE_DAMAGE_DEVIL#Dano físico contra monstros da raça Demônio +%d%%.#
+RACE_DAMAGE_HUMAN#Dano físico contra monstros da raça Humanoide +%d%%.#
+RACE_DAMAGE_ANGEL#Dano físico contra monstros da raça Anjo +%d%%.#
+RACE_DAMAGE_DRAGON#Dano físico contra monstros da raça Dragão +%d%%.#
+RACE_MDAMAGE_NOTHING#Dano mágico contra monstros da raça Amorfo +%d%%.#
+RACE_MDAMAGE_UNDEAD#Dano mágico contra monstros da raça Morto-Vivo +%d%%.#
+RACE_MDAMAGE_ANIMAL#Dano mágico contra monstros da raça Bruto +%d%%.#
+RACE_MDAMAGE_PLANT#Dano mágico contra monstros da raça Planta +%d%%.#
+RACE_MDAMAGE_INSECT#Dano mágico contra monstros da raça Inseto +%d%%.#
+RACE_MDAMAGE_FISHS#Dano mágico contra monstros da raça Peixe +%d%%.#
+RACE_MDAMAGE_DEVIL#Dano mágico contra monstros da raça Demônio +%d%%.#
+RACE_MDAMAGE_HUMAN#Dano mágico contra monstros da raça Humanoide +%d%%.#
+RACE_MDAMAGE_ANGEL#Dano mágico contra monstros da raça Anjo +%d%%.#
+RACE_MDAMAGE_DRAGON#Dano mágico contra monstros da raça Dragão +%d%%.#
+RACE_CRI_PERCENT_NOTHING#CRIT +%d em monstros da raça Amorfo.#
+RACE_CRI_PERCENT_UNDEAD#CRIT +%d em monstros da raça Morto-Vivo.#
+RACE_CRI_PERCENT_ANIMAL#CRIT +%d em monstros da raça Bruto.#
+RACE_CRI_PERCENT_PLANT#CRIT +%d em monstros da raça Planta.#
+RACE_CRI_PERCENT_INSECT#CRIT +%d em monstros da raça Inseto.#
+RACE_CRI_PERCENT_FISHS#CRIT +%d em monstros da raça Peixe.#
+RACE_CRI_PERCENT_DEVIL#CRIT +%d em monstros da raça Demônio.#
+RACE_CRI_PERCENT_HUMAN#CRIT +%d em monstros da raça Humanoide.#
+RACE_CRI_PERCENT_ANGEL#CRIT +%d em monstros da raça Anjo.#
+RACE_CRI_PERCENT_DRAGON#CRIT +%d em monstros da raça Dragão.#
+RACE_IGNORE_DEF_PERCENT_NOTHING#Ignora %d% de DEF de monstros da raça Amorfo.#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Ignora %d% de DEF de monstros da raça Morto-Vivo.#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#Ignora %d% de DEF de monstros da raça Bruto.#
+RACE_IGNORE_DEF_PERCENT_PLANT#Ignora %d% de DEF de monstros da raça Planta.#
+RACE_IGNORE_DEF_PERCENT_INSECT#Ignora %d% de DEF de monstros da raça Inseto.#
+RACE_IGNORE_DEF_PERCENT_FISHS#Ignora %d% de DEF de monstros da raça Peixe.#
+RACE_IGNORE_DEF_PERCENT_DEVIL#Ignora %d% de DEF de monstros da raça Demônio.#
+RACE_IGNORE_DEF_PERCENT_HUMAN#Ignora %d% de DEF de monstros da raça Humanoide.#
+RACE_IGNORE_DEF_PERCENT_ANGEL#Ignora %d% de DEF de monstros da raça Anjo.#
+RACE_IGNORE_DEF_PERCENT_DRAGON#Ignora %d% de DEF de monstros da raça Dragão.#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#Ignora %d% de DEFM de monstros da raça Amorfo.#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Ignora %d% de DEFM de monstros da raça Morto-Vivo.#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#Ignora %d% de DEFM de monstros da raça Bruto.#
+RACE_IGNORE_MDEF_PERCENT_PLANT#Ignora %d% de DEFM de monstros da raça Planta.#
+RACE_IGNORE_MDEF_PERCENT_INSECT#Ignora %d% de DEFM de monstros da raça Inseto.#
+RACE_IGNORE_MDEF_PERCENT_FISHS#Ignora %d% de DEFM de monstros da raça Peixe.#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#Ignora %d% de DEFM de monstros da raça Demônio.#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#Ignora %d% de DEFM de monstros da raça Humanoide.#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#Ignora %d% de DEFM de monstros da raça Anjo.#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#Ignora %d% de DEFM de monstros da raca Dragão.#
+CLASS_DAMAGE_NORMAL_TARGET#Dano físico contra monstros normais +%d%%.#
+CLASS_DAMAGE_BOSS_TARGET#Dano físico contra monstros chefes +%d%%.#
+CLASS_DAMAGE_NORMAL_USER#Resistência a monstros normais +%d%%.#
+CLASS_DAMAGE_BOSS_USER#Resistência a monstros chefes +%d%%.#
+CLASS_MDAMAGE_NORMAL#Dano mágico contra monstros normais +%d%%.#
+CLASS_MDAMAGE_BOSS#Dano mágico contra monstros chefes +%d%%.#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#Ignora %d% de DEF de monstros normais.#
+CLASS_IGNORE_DEF_PERCENT_BOSS#Ignora %d% de DEF de monstros chefes.#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#Ignora %d% de DEFM de monstros normais.#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#Ignora %d% de DEFM de monstros chefes.#
+DAMAGE_SIZE_SMALL_TARGET#Dano físico contra alvos de tamanho Pequeno +%d%%.#
+DAMAGE_SIZE_MIDIUM_TARGET#Dano físico contra alvos de tamanho Médio +%d%%.#
+DAMAGE_SIZE_LARGE_TARGET#Dano físico contra alvos de tamanho Grande +%d%%.#
+DAMAGE_SIZE_SMALL_USER#Resistência a danos físicos de alvos Pequenos +%d%%.#
+DAMAGE_SIZE_MIDIUM_USER#Resistência a danos físicos de alvos Médios +%d%%.#
+DAMAGE_SIZE_LARGE_USER#Resistência a danos físicos de alvos Grandes +%d%%.#
+DAMAGE_SIZE_PERFECT#Anula a penalidade de tamanho da arma.#
+DAMAGE_CRI_TARGET#Dano crítico %d%%#
+DAMAGE_CRI_USER#Resistência a danos críticos +%d%%.#
+RANGE_ATTACK_DAMAGE_TARGET#Dano físico a distância +%d%%#
+RANGE_ATTACK_DAMAGE_USER#Resistência a danos físicos a distância +%d%%.#
+HEAL_VALUE#Efetividade de cura +%d%%.#
+HEAL_MODIFY_PERCENT#Regen. de HP por itens +%d%%.#
+DEC_SPELL_CAST_TIME#Conjuração variável -%d%%#
+DEC_SPELL_DELAY_TIME#Pos-conjuração -%d%%#
+DEC_SP_CONSUMPTION#Custo de SP das habilidades -%d%%.#
+WEAPON_ATTR_NOTHING#Propriedade Neutro.#
+WEAPON_ATTR_WATER#Propriedade Água.#
+WEAPON_ATTR_GROUND#Propriedade Terra.#
+WEAPON_ATTR_FIRE#Propriedade Fogo.#
+WEAPON_ATTR_WIND#Propriedade Vento.#
+WEAPON_ATTR_POISON#Propriedade Veneno.#
+WEAPON_ATTR_SAINT#Propriedade Sagrado.#
+WEAPON_ATTR_DARKNESS#Propriedade Sombrio.#
+WEAPON_ATTR_TELEKINESIS#Propriedade Fantasma.#
+WEAPON_ATTR_UNDEAD#Propriedade Maldito.#
