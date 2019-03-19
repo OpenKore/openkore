@@ -292,6 +292,9 @@ sub new {
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
+		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
+		'0A99' => ['equipswitch_remove', 'v', [qw(index)]], # remove item in equipswitch
+		'0A9C' => ['equipswitch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
@@ -479,6 +482,29 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
+}
+
+sub sendEquipswitchAdd {
+	my ($index,$position) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_add',
+		index => $index,
+		position => $position
+	}));
+}
+
+sub sendEquipswitchRemove {
+	my ($index,$position) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_remove',
+		index => $index
+	}));
+}
+sub sendEquipswitchRun { #noidea T.T
+	my ($index,$position) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_run'
+	}));
 }
 
 1;
