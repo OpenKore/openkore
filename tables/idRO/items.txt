@@ -8577,3 +8577,28 @@
 31391#Costume: Charming_Ribbon#
 31392#Costume: Monochrome_Ribbon#
 31393#Girls Love Selection Egg#
+
+//====================update 09032019=================
+15175#Fire_Dragon_Armor#
+15205#Medical_Scrubs#
+19112#Tengu_Scroll#
+19299#Tree_Sprout#
+20859#Phreeoni_Wings#
+20863#Menblatt_Wing_Manteau#
+22145#Tengu_Shoes#
+22189#Pilgrim_Shoes#
+28502#Mob_Scarf#
+28520#Egir_Ring#
+28551#Imperial_Glove#
+28565#Perverse_Demon_Mask#
+31400#March Madness Lucky Box#
+31401#Costume: Short Hair Cat#
+31402#Costume: Eleanor Wig Yellow#
+31403#Costume: Lunatic_Muffler#
+31404#Costume: Blinking Thin_Eyes#
+31405#Costume: Secret Zipper#
+31406#Costume: Anniversary Star_Hat#
+31407#Costume: Smokie Transform#
+31408#Costume: Little Angel#
+31409#Costume: Pope Hat#
+31410#March Costume Box#
