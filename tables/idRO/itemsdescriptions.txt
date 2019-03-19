@@ -48204,7 +48204,6 @@ Atk +5%
 Aspd +5%
 Meningkatkan serangan dari skill [Lightning Ride] sebesar 5%.
 Mengurangi variable cast-time dari skill [Lightning Ride] sebesar 5% untuk setiap 15 base level.
-Mengurangi variable cast-time dari skill [Hell Gate] sebesar 3% untuk setiap 20 base level.
 Mengurangi cooldown dari skill [Power Absorb] sebesar 3 detik.
 Jenis : ^777777Aksesoris^000000
 Tk Def : ^7777770^000000      Berat : ^77777710^000000
@@ -51535,5 +51534,416 @@ Costume: Poring_Soap_Pipe
 Costume: Charming_Ribbon
 Costume: Monochrome_Ribbon
 Girls Love Selection Egg^000000
+Berat : ^7777770^000000
+#
+
+//====================update 19032019=================
+15175#
+Fire_Dragon_Armor
+Sebuah baju zirah yang dibuat dari kulit naga yang sangat ditakuti di seluruh dunia. Baju ini memiliki kekuatan untuk meningkatkan kemampuan.
+Hit +10
+Jika tingkat tempa +7 atau lebih,
+Tambahan Hit +10.
+Meningkatkan serangan fisik kepada Boss monster sebesar 10%.
+Jika tingkat tempa +9 atau lebih,
+Tambahan ekstra Hit +10.
+Tambahan peningkatan serangan fisik kepada Boss monster sebesar 10%.
+
+Class : ^777777Armor^000000 Def : ^777777100^000000
+Weight : ^77777740^000000
+Required Level : ^77777790^000000
+Jobs : ^777777Semua Job^000000
+#
+15205#
+Medical_Scrubs
+Sebuah jaket yang dipakai oleh paramedis yang bekerja di medan pertempuran.
+Mengurangi cast delay ketika menggunakan skill sebesar 10%.
+Meningkatkan tingkat recovery dari skill penyembuhan sebesar 2%.
+Meningkatkan tingkat recovery dari skill penyembuhan yang diterima sebesar 1%.
+Jika tingkat tempa +7 atau lebih,
+Def +50
+Tambahan peningkatan tingkat recovery dari skill penyembuhan sebesar 4%.
+Tambahan peningkatan tingkat recovery dari skill penyembuhan yang diterima sebesar 2%.
+Jika tingkat tempa +8 atau lebih,
+Tambahan Def +100
+Meningkatkan serangan fisik kepada Demi Human sebesar 7%
+Tambahan peningkatan tingkat recovery dari skill penyembuhan sebesar 6%.
+Tambahan peningkatan tingkat recovery dari skill penyembuhan yang diterima sebesar 3%.
+Jika tingkat tempa +9 atau lebih,
+Tambahan Def +150
+Tambahan peningkatan tingkat recovery dari skill penyembuhan yang diterima sebesar 3%.
+Meningkatkan ketahanan terhadap Stone Curse sebesar 50%.
+
+^800080Set Bonus^000000"
+^800080Medical Scrubs [1]^000000
+^800080Argiope Card^000000
+
+Jika tingkat tempa +9 atau lebih :
+Anti terhadap status Frozen.
+
+Class : ^777777Armor^000000 Def : ^77777750^000000
+Weight : ^777777100^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+19112#
+Tengu_Scroll
+Sebuah gulungan yang bersinar berwarna hijau dengan bentuk sihir kuno.
+Memulihkan HP dari 5% serangan fisik yang ditimbulkan pada musuh dengan kemungkinan sebesar 3%.
+
+^800080Set Bonus^000000"
+^800080Crow Tengu Mask^000000
+^800080Tengu Scroll^000000
+
+Meningkatkan serangan terhadap monster size Small, Medium dan Large sebesar 1%.
+Meningkatkan serangan jarak jauh sebesar 1%.
+Tambahan peningkatkan serangan terhadap monster size Small, Medium dan Large sebesar 2% dan serangan jarak jauh sebesar 1% jika STR pengguna 108 atau lebih.
+Tambahan peningkatkan serangan terhadap monster size Small, Medium dan Large sebesar 3% dan serangan jarak jauh sebesar 1% jika STR pengguna 120 atau lebih.
+Meningkatkan serangan jarak jauh sebesar 1%.
+
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080Semua Job^00000
+#
+19299#
+Tree Sprout
+Tangkai Pohon yang berasal dari Eclage.
+Mengurangi varible cast time sebesar 5%.
+
+^800080Set Bonus^000000"
+^800080Tree Sprout^000000
+^800080Tendrilion Card^000000
+
+Meningkatkan serangan magic kepada Player sebesar 2% untuk setiap tingkat tempa senjata, jika pengguna menggunakan Book atau One-Handed Staff.
+
+^800080Set Bonus^000000"
+^800080Tree Sprout^000000
+^800080Kardui Ears^000000
+
+Matk +10
+Mengurangi varible cast time sebesar 2%.
+Mengurangi serangan yang diterima dari Demi Human sebesar 2%.
+Jika Base Dex pengguna 108 atau lebih :
+Tambahan Matk +20
+Tambahan pengurangan varible cast time sebesar 3%.
+Tambahan pengurangan serangan yang diterima dari Demi Human sebesar 2%.
+
+Jika Base Dex pengguna 120 atau lebih :
+Tambahan Matk +30
+Tambahan pengurangan varible cast time sebesar 5%.
+Tambahan pengurangan serangan yang diterima dari Demi Human sebesar 4%.
+
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080Semua Job^00000
+#
+20859#
+Phreeoni Wings
+Sebuah baju yang terinspirasi dari Phreeoni. Kamu merasa kamu bisa terbang !
+Hit +10
+Max HP +10%
+Jika tingkat tempa +7 atau lebih :
+Tambahan Hit +20
+Jika tingkat tempa +8 atau lebih :
+Tambahan Hit +30
+Jika tingkat tempa +9 atau lebih :
+Tambahan Hit +40
+Jika tingkat tempa +10 atau lebih :
+Tambahan Hit +100
+
+^800080Set Bonus^000000"
+^800080Phreeoni Wings^000000
+^800080Phreeoni Card^000000
+Perfect Hit +50
+Anti terhadap Stone Curse
+
+Class : ^777777Garment^000000 Def : ^77777710^000000
+Weight : ^77777730^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+20863#
+Menblatt Wing Manteau
+Sebuah jaket pendek yang dibuat dari imitasi bulu Menblatt.
+Atk +30
+Jika tingkat tempa +5 atau lebih :
+Untuk setiap 60 Base Dex, meningkatkan serangan jarak jauh sebesar 1%.
+Jika tingkat tempa +7 atau lebih :
+Untuk setiap 10 Base Dex, meningkatkan serangan jarak jauh sebesar 1%.
+
+^800080Set Bonus^000000"
+^800080Menblatt Card^000000
+^800080Menblatt Wing Manteau^000000
+Untuk setiap 10 Base Dex, mengurangi serangan jarak jauh kepada musuh sebesar 1%.
+
+Class : ^777777Garment^000000 Def : ^77777740^000000
+Weight : ^77777740^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+22145#
+Tengu Shoes
+Sebuah alas kaki yang dipakai oleh Tengu. Sendal ini menambah kekuatan pemakainya.
+Max HP + 3%
+Max SP + 3%
+Mdef + 10
+Dapat menggunakan Level 1 Cast Cancel.
+Jika tingkat tempa +7 atau lebih,
+Tambahan Max HP + 7%
+Tambahan Max SP + 7%
+Mengurangi penggunaan SP dari [Body Relocation] sebesar 5.
+Jika tingkat tempa +9 atau lebih,
+Tambahan Max HP + 10%
+Tambahan Max SP + 10%
+Tambahan pengurangan penggunaan SP dari [Body Relocation] sebesar 5.
+
+Untuk setiap level Gentle Touch-Cure yang dipelajari :
+Max HP +2%
+
+Untuk setiap level Gentle Touch-Revitalize yang dipelajari :
+Def +30
+Mengurangi serangan yang diterima dari Demi Human sebesar 1% 
+
+Untuk setiap level Gentle Touch-Energy Gain yang dipelajari :
+Mengurangi variable cast time dari Summon Spirit Sphere sebesar 10%
+Mengurangi variable cast time dari Mental Strength sebesar 10%
+Mengurangi fixed cast time dari Zen sebesar 10%.
+
+Untuk setiap level Gentle Touch-Change yang dipelajari :
+Aspd +2%
+
+Untuk setiap level Gentle Touch-Silence yang dipelajari :
+Atk +4%
+
+Class : ^777777Shoes^000000 Def : ^77777712^000000
+Weight : ^77777740^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+22189#
+Pilgrim Shoes
+Sepatu yang dipakai oleh pemuja dewa yang setia selama perjalanannya. Kamu bisa mendapat ilham dari Dewa jika memakainya.
+
+Mdef +15
+Max HP +3%
+Max SP +3%
+Def+50 untuk setiap level Sacrament.
+Aspd +4% untuk setiap level Cantocandidus.
+Mengurangi cooldown dari Praefatio sebesar 1 detik.
+Mengurangi global delay dari skill sebesar 6% setiap level Praefatio.
+Mengurangi serangan dari Demi Human sebesar 2% setiap level Sacrament.
+Meningkatkan tingkat recovery dari skill penyembuhan sebesar 5% setiap Highness Heal.
+
+Jika tingkat tempa +5 atau lebih :
+Tambahan Max HP +7%
+Tambahan Max SP +7%
+Mengurangi SP penggunaan skill sebesar 3%.
+
+Jika tingkat tempa +7 atau lebih :
+Tambahan Max HP +10%
+Tambahan Max SP +10%
+Tambahan pengurangan SP penggunaan skill sebesar 5%.
+
+Class : ^777777Shoes^000000 Def : ^77777715^000000
+Weight : ^77777750^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+28502#
+Mob Scarf
+Sebuah penutup muka yang dipakai ketika pemberontakan.
+Dapat menggunakan Spell Breaker Lv 2.
+
+^800080Set Bonus^000000"
+^800080Mob Scarf^000000
+^800080Sunglasses / Sunglasses [1] / Glasses / Glasses [1]^000000
+
+Mengurangi serangan dari Demi Human sebesar 2%.
+Untuk setiap jumlah kombinasi INT dan DEX sebesar 80 :
+Matk +120
+Mengurangi variable cast time sebesar 3%
+Meningkatkan tingkat recovery dari skill penyembuhan sebesar 10%
+
+Untuk setiap jumlah kombinasi STR dan LUK sebesar 80 :
+Atk +6%
+Crit +5
+Meningkatkan serangan kritikal sebesar 10%.
+
+Untuk setiap jumlah kombinasi AGI dan VIT sebesar 80 :
+Max HP +5%
+Aspd +5%
+Tambahan pengurangan serangan dari Demi Human sebesar 2%.
+
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Semua Job^00000
+#
+28520#
+Egir Ring
+Egir, Cincin dari Dewa Lautan.
+Atk +5%, Matk +5%.
+Mengurangi serangan berelemen Air yang diterima sebesar 10%.
+All Stats +1.
+
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777750^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+28551#
+Imperial_Glove
+Sebuah sarung tangan yang sudah ditempa dengan ukiran Kerajaan Rune Midgard.
+Atk +5%.
+Mengurangi variable cast time sebesar 10%.
+Casting tidak bisa dibatalkan diluar WoE.
+
+^800080Set Bonus^000000
+^800080Imperial Glove^000000
+^800080Imperial Feather^000000
+Meningkatkan serangan dari Cannon Spear sebesar 30%
+Meningkatkan serangan dari Overbrand sebesar 20%
+Meningkatkan serangan jarak jauh sebesar 2% untuk setiap level Cannon Spear.
+Meningkatkan serangan jarak jauh sebesar 2% untuk setiap level Overbrand.
+
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777740^000000
+Required Level : ^777777100^000000
+Jobs : ^777777Semua 3rd Job^000000
+#
+28565#
+Perverse Demon Mask
+Sebuah topeng iblis yang berada di dekat patung Buddha di Payon.
+^ff0000Aksesoris ini hanya bisa digunakan di slot kanan^000000
+
+Str +3 untuk setiap 18 base Int.
+Agi +3 untuk setiap 18 base Luk.
+Vit +3 untuk setiap 18 base Dex.
+Int +3 untuk setiap 18 base Str.
+Dex +3 untuk setiap 18 base Vit.
+Luk +3 untuk setiap 18 base Agi.
+Max HP +1% untuk setiap 18 base Dex.
+Perfect Dodge +1 untuk setiap 18 base Agi.
+Mengurangi variable cast time sebesar 1% untuk setiap 18 base Vit.
+Mengurangi cast delay dari skill sebesar 1% untuk setiap 18 base Int.
+Bypass 15% hard defense dari semua musuh ketika melakukan serangan fisik untuk setiap 18 base Luk.
+Bypass 15% magic defense dari semua musuh ketika melakukan serangan magic untuk setiap 18 base Str.
+
+Class : ^777777Accessory^000000 Def : ^7777770^000000
+Weight : ^77777760^000000
+Required Level : ^77777780^000000
+Jobs : ^777777Semua Job^000000
+#
+31400#
+March Madness Lucky Box
+Jika dibuka, kamu bisa mendapatkan :
+^777777Perverse Demon Mask [1]
+Mob Scarf
+Pilgrim Shoes
+Tengu Shoes
+Menblatt Wing Manteau [1]
+Phreeoni Wings [1]
+Tree Sprout
+Fallen Angel Wing [1]
+Tengu Scroll
+Medical_Scrubs [1]
+Fire_Dragon_Armor [1]
+Imperial_Glove [1]
+Egir_Ring [1]
+Weapon Certificate +9
+Armor Certificate +9
+Weapon Certificate +8
+Armor Certificate +8
+Blessed Armor Ore
+Blessed Weapon Ore
+Enriched_Elunium_Box 25
+Enriched_Oridecon_Box 25
+Mana Plus
+Full Swing K^000000
+Berat : ^7777770^000000
+#
+31401#
+Costume: Short Hair Cat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31402#
+Costume: Eleanor Wig Yellow
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000#
+31403#
+Costume: Lunatic_Muffler
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Lower^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31404#
+Costume: Blinking Thin_Eyes
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Middle^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31405#
+Costume: Secret Zipper
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31406#
+Costume: Anniversary Star_Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31407#
+Costume: Smokie Transform
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31408#
+Costume: Little Angel
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Garment^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31409#
+Costume: Pope Hat
+Class : ^777777Costume^000000 Def : ^7777770^000000
+Location : ^777777Upper^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31410#
+March Costume Box
+Jika dibuka, kamu bisa mendapatkan :
+^777777Costume: Giant Cat Bag
+Costume: Pope Hat
+Costume: Little Angel
+Costume: Smokie Transform
+Costume: Anniversary Star_Hat
+Costume: Secret Zipper
+Costume: Blinking Thin_Eyes
+Costume: Lunatic_Muffler
+Costume: Eleanor Wig Yellow
+Costume: Short Hair Cat^000000
 Berat : ^7777770^000000
 #
