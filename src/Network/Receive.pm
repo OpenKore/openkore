@@ -8033,8 +8033,11 @@ sub equip_item {
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
-			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		if ($args->{switch} == '0A98') {
+			message TF("[Equip Switch] You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		} else {
+			message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		}
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
@@ -8717,9 +8720,11 @@ sub unequip_item {
 		}
 	}
 	if ($item) {
-		message TF("You unequip %s (%d) - %s\n",
-			$item->{name}, $item->{binID},
-			$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		if ($args->{switch} == '0A9A') {
+			message TF("[Equip Switch] You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		} else {
+			message TF("You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		}
 	}
 }
 # TODO: only used to report failure? $args->{success}

@@ -485,7 +485,7 @@ sub sendCaptchaInitiate {
 }
 
 sub sendEquipswitchAdd {
-	my ($index,$position) = @_;
+	my ($self,$index,$position) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_add',
 		index => $index,
@@ -494,14 +494,14 @@ sub sendEquipswitchAdd {
 }
 
 sub sendEquipswitchRemove {
-	my ($index,$position) = @_;
+	my ($self,$index,$position) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_remove',
 		index => $index
 	}));
 }
 sub sendEquipswitchRun { #noidea T.T
-	my ($index,$position) = @_;
+	my ($self,$index,$position) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_run'
 	}));
