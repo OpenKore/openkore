@@ -3395,16 +3395,15 @@ Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as r
 #
 1228#
 Adaga portátil para lutas corpo-a-corpo no campo de batalha.
-^0000ffIgnora a defesa de monstros da raça Humanoide.^000000
-^0000ffAumenta em 10% o dano inflingido em monstros da raça Humanoide.^000000
-^0000ffReduz em 10% o dano recebido de monstro tipo Humanoide.^000000
-^0000ffAumenta em 10% o dano recebido de monstros tipo Demônio.^000000
+^0000ffResistência a oponentes raça Humanoide +10%.^000000
+^0000ffResistência a monstros da raça Demônio^000000 ^ff0000-10%.^000000
+^0000ffIgnora 100% a DEF de oponentes da raça Humanoide.^000000
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^77777780^000000
+Ataque: ^77777780^000000
 Peso: ^77777740^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777736^000000
-Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções, Espiritualista e Ninja^000000
+Classes: ^777777Espadachins, Magos, Arqueiros, Mercadores, Gatunos, Espiritualistas, Ninjas e evoluções^000000
 #
 1229#
 Faca usada pelas mães, para cozinhar.
@@ -5264,7 +5263,7 @@ Uma vez que a estocada é feita, poucas superfícies podem evitar a ponta dessa 
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -5810,7 +5809,7 @@ Com uma lança desse porte, você sente que consegue perfurar os céus em apenas
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -7711,7 +7710,7 @@ Apesar de aparentar frágil, essa varinha pode ser usada para manipular e lança
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQM +5.^000000
 Bônus de ATQM de acordo com o refino:
-+1:^0000ffATQM +1.^000000
++1: ^0000ffATQM +1.^000000
 +2: ^0000ffATQM +4.^000000
 +3: ^0000ffATQM +9.^000000
 +4: ^0000ffATQM +16.^000000
@@ -8854,7 +8853,7 @@ Garras que são finas como agulhas, tornando ataques perfurantes uma verdadeira 
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -9285,7 +9284,7 @@ Madeira dos arredores de Geffen e cordas de fibra de rubi fazem deste violino um
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -9764,7 +9763,7 @@ Corte o vento com golpes poderosos desse chicote reforçado.
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -10183,7 +10182,7 @@ Um poder de proporção imensurável se esconde nesse cetro, mas só pode ser co
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQM +5.^000000
 Bônus de ATQM de acordo com o refino:
-+1:^0000ffATQM +1.^000000
++1: ^0000ffATQM +1.^000000
 +2: ^0000ffATQM +4.^000000
 +3: ^0000ffATQM +9.^000000
 +4: ^0000ffATQM +16.^000000
@@ -24405,15 +24404,15 @@ Nível necessário: ^77777740^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5170#
-Um chapéu vistoso e
-emplumado, feito com um macio material azul-celeste.
-Reduz os danos causados por inimigos Humanoides em 10%.
-DEFM +1
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777771^000000
+Um chapéu vistoso e emplumado, feito com um macio material azul-celeste.
+^0000ffDEFM +1.^000000
+^0000ffResistência a oponentes da raça Humanoide +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777771^000000
 Peso: ^77777760^000000
-Classe: ^777777Todas, exceto Aprendiz^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5171#
 Um elmo belamente adornado com asas, usado pelas donzelas guerreiras que servem ao deus Odin.
@@ -24431,17 +24430,15 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Classes 3 e Transclasses, exceto Aprendizes^000000
 #
 5172#
-Um chapéu reto
-verde-brilhante que
-representa a bravura de seu dono.
-Reduz os danos causados por
-inimigos Humanoides em 10%.
- Não pode ser aprimorado.^FFFFFF  ^000000
-Tipo: ^777777Equipamento para a cabeça^000000
+Um chapéu reto verde-brilhante que representa a bravura de seu dono.
+^a400cdNão pode ser refinado.^000000
+^0000ffResistência a oponentes da raça Humanoide +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
-Equipa em: ^777777Superior^000000
 Peso: ^77777770^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5173#
 Um chapéu que já foi usado por Satto, o alto oficial de um antigo reino do Oriente.
@@ -29914,51 +29911,111 @@ Um antídoto que pode ser usado apenas por Sicários.
 Peso: ^7777770^000000
 #
 6129#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Pesadelo Sombrio!! Venha retirar seu prêmio em Prontera, coordenadas 221, 209!".
+Um ticket que pode ser trocado por um Ovo de Pesadelo Sombrio.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6130#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Loli Ruri! Venha retirar seu prêmio em Prontera, nas coordenadas 221, 209".
-Peso: ^7777771^000000
+Um ticket que pode ser trocado por um Ovo de Loli Ruri.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 6131#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Líder Goblin!! Venha retirar seu prêmio em Prontera, coordenadas 221 209!".
-Peso: ^7777771^000000
+Um ticket que pode ser trocado por um Ovo de Líder Globin.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 6133#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Miyabi Ningyo! Venha retirar seu prêmio em Prontera, nas coordenadas 221, 209".
-Peso: ^7777771^000000
+Um ticket que pode ser trocado por um Ovo de Miyabi Ningyo.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
+Peso: ^7777770^000000
 #
 6135#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Ninfa Perversa!! Venha retirar seu prêmio em Prontera, coordenadas 221, 209!".
+Um ticket que pode ser trocado por um Ovo de Ninfa Perversa.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6136#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Medusa!! Venha retirar seu prêmio em Prontera, coordenadas 221, 209!".
+Um ticket que pode ser trocado por um Ovo de Medusa.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6137#
-Um cupom com os dizeres: 'Você ganhou um ovo de Atirador de Pedras!! Venha retirar seu prêmio em Prontera, coordenadas 221 209!'.
+Um ticket que pode ser trocado por um Ovo de Atirador de Pedras.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6139#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Gato de Folha! Venha retirar seu prêmio em Prontera, nas coordenadas 221, 209".
+Um ticket que pode ser trocado por um Ovo de Gato de Folha.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6140#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Dullahan!! Venha retirar seu prêmio em Prontera, coordenadas 221 209!".
+Um ticket que pode ser trocado por um Ovo de Dullahan.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777771^000000
 #
 6141#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Shinobi!! Venha retirar seu prêmio em Prontera, coordenadas 221, 209!".
+Um ticket que pode ser trocado por um Ovo de Shinobi.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6142#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Golem!! Venha retirar seu prêmio em Prontera, coordenadas 221, 209!".
+Um ticket que pode ser trocado por um Ovo de Golem.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6143#
-Um ticket com os dizeres: "Você ganhou um ovo do bichinho de estimação Mao Guai! Venha retirar seu prêmio em Prontera, nas coordenadas 221, 209".
+Um ticket que pode ser trocado por um Ovo de Mao Guai.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777770^000000
 #
 6144#
@@ -34818,7 +34875,12 @@ Um emblema indicando que o usuário participa atualmente da guerra. Retirado dos
 ^ffffff_^000000
 #
 7774#
-Um ticket com os dizeres: 'Você ganhou um ovo do bichinho de estimação Donzela Verde!! Venha retirar seu prêmio em Prontera, coordenadas 221 209!'.
+Um ticket que pode ser trocado por um Ovo de Donzela Verde.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777771^000000
 #
 7775#
@@ -37646,8 +37708,8 @@ Peso: ^7777775^000000
 #
 12311#
 Um grande conjunto de ramos de Cerejeira, todo florido e perfumado. Suas belas flores brilham com um belo tom rosado.
-Aumenta a taxa de esquiva dos membros do grupo em 10, durante 5 minutos. Se o usuário não estiver em um grupo, o item não surtirá efeito.
-^ffffff_^000000
+^0000ffSe estiver em um grupo, Esquiva +10 para todos os membros.^000000
+Duração: ^7777775 minutos^000000
 Peso: ^77777710^000000
 #
 12312#
@@ -38475,46 +38537,57 @@ Você precisa destruí-la para saber o que há dentro.
 Peso : ^7777773^000000
 #
 12658#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Deviruchi' por 20 minutos.
-Vel. Ataque +1, Precisão + 5 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Deviruchi, garantindo efeitos especiais durante a transformação.
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +1.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12659#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Raydric Arqueiro' por 20 minutos.
-Aumenta o Ataques com arcos em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Raydric Arqueiro, garantindo efeitos especiais durante a transformação.
+^0000ffApenas com arcos:^000000
+^0000ffDano físico a distância +25%.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12660#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Mavka' por 20 minutos.
-Aumenta o Ataques com arcos em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Mavka, garantindo efeitos especiais durante a transformação.
+^0000ffApenas com arcos:^000000
+^0000ffDano físico a distância +25%.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12661#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Marduk' por 20 minutos.
-Aumenta o dano de Ataques Mágicos em 25 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Marduk, garantindo efeitos especiais durante a transformação.
+^0000ffATQM +25.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12662#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Banshee' por 20 minutos.
-Aumenta o dano de Ataques Mágicos em 25 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Banshee, garantindo efeitos especiais durante a transformação.
+^0000ffATQM +25.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12663#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Poring' por 20 minutos.
-Aumenta o dano critico em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Poring, garantindo efeitos especiais durante a transformação.
+^0000ffDano crítico +5%.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12664#
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Golem' por 20 minutos.
-Aumenta a resistência de ataques Neutros em 2% e tem chance de ativar 'Vigor nv.5' sempre que receber um ataque físico
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Um misterioso pergaminho mágico que permite se transformar em Golem, garantindo efeitos especiais durante a transformação.
+^0000ffResistência a propriedade Neutro +2%.^000000
+^0000ffAo receber danos físicos, 0,5% de chance de autoconjurar [Vigor] nv. 5.^000000
+^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
+Duração: ^77777720 minutos^000000
+Peso: ^7777771^000000
 #
 12673#
 Ovo especial confeccionado com a aparência de um coelho fofinho. Ao abrir essa belezinha, você poderá receber incríveis itens.
@@ -40851,7 +40924,7 @@ A aura avermelhada dessa arma denuncia o seu perigo. Espere por saques rápidos 
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -42295,7 +42368,7 @@ Shuriken Huuma de lâminas afiadas que emitem uma aura vermelha.
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQ +5.^000000
 Bônus de ATQ e ATQM de acordo com o refino:
-+1:^0000ffATQ +1. ATQM +0.^000000
++1: ^0000ffATQ +1. ATQM +0.^000000
 +2: ^0000ffATQ +4. ATQM +2.^000000
 +3: ^0000ffATQ +9. ATQM +4.^000000
 +4: ^0000ffATQ +16. ATQM +8.^000000
@@ -42707,7 +42780,7 @@ Se seus inimigos sobreviverem, tudo que eles se lembrarão será do violento gol
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -46659,7 +46732,7 @@ De lâminas forjadas à base do ódio, tudo que essa clava precisa é de alguém
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -47383,51 +47456,54 @@ Peso: ^7777771^000000
 #
 17037#
 Uma caixa contendo 10 pergaminhos de Transformação - Deviruchi e 1 pergaminho de Transformação - Poring adicional.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Deviruchi' por 20 minutos.
-Vel. Ataque +1, Precisão + 5 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffPrecisão +5.^000000
+^0000ffVelocidade de ataque +1.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17038#
 Uma caixa contendo 10 pergaminhos de Transformação - Raydric Arqueiro e 1 pergaminho de Transformação - Poring adicional.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Raydric Arqueiro' por 20 minutos.
-Aumenta o Ataques com arcos em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffApenas com arcos:^000000
+^0000ffDano físico a distância +25%.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17039#
 Uma caixa contendo 10 pergaminhos de Transformação - Mavka e 1 pergaminho de Transformação - Poring adicional.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Mavka' por 20 minutos.
-Aumenta o Ataques com arcos em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffApenas com arcos:^000000
+^0000ffDano físico a distância +25%.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17040#
-Uma caixa contendo 10 pergaminhos de Transformação - Marduk e 1 pergaminho de Transformação - Poring adicional.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Marduk' por 20 minutos.
-Aumenta o dano de Ataques Mágicos em 25 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+Uma caixa contendo 10 pergaminhos de Transformação - Mavka e 1 pergaminho de Transformação - Poring adicional.
+--------------------------
+^0000ffATQM +25.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17041#
 Uma caixa contendo 10 pergaminhos de Transformação - Banshee e 1 pergaminho de Transformação - Poring adicional.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Banshee' por 20 minutos.
-Aumenta o dano de Ataques Mágicos em 25 durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffATQM +25.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17042#
 Uma caixa contendo 10 pergaminhos de Transformação - Poring.
-_
-Um misterioso pergaminho mágico que permite a quem o utiliza, transformar-se em 'Poring' por 20 minutos.
-Aumenta o dano critico em 25% durante a transformação.
-^ff0000Atenção: A transformação é cancelada caso você seja derrotado, monte/desmonte de uma montaria ou ative/desative o M.E.C.H.A.^000000
-Peso : ^7777771^000000
+--------------------------
+^0000ffDano crítico +5%.^000000
+Duração: ^77777720 minutos^000000
+--------------------------
+Peso: ^7777771^000000
 #
 17043#
 Uma caixa contendo 10 pergaminhos de Transformação - Golem e 1 pergaminho de Transformação - Poring adicional.
@@ -48491,7 +48567,7 @@ As hastes reforçadas e a corda resistente fornecem a experiência de tiro ideal
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -49716,20 +49792,21 @@ Classe : ^777777Todas^000000
 #
 18652#
 Um elmo feito para simbolizar o lobo Fenrir, também conhecido pelo nome de Vanargandr. Dizem que ele é feito do mesmo metal das correntes que prendem Fenrir, feitas para evitar dano físico enquanto houver uma fonte mágica da qual elas possam sugar energia. Apesar da importância épica, o elmo acabou ficando popular porque muitos aventureiros acham suas orelhinhas bonitinhas.
-^0000ffPequena chance de converter 1% do dano físico causado em HP ou SP.^000000
-Refino +5 ou mais:
-^0000ffConversão de HP +2% adicional.^000000
-Refino +7 ou mais:
-^0000ffConversão de HP +2% adicional.^000000
-^0000ffConversão de SP +1% adicional.^000000
-^0000ffAumenta a chance de conversão em HP.^000000
-Refino +8 ou mais:
-^0000ffAumenta a chance de conversão em HP.^000000
-Refino +9 ou mais:
-^0000ffConversão de HP +3% adicional.^000000
-^0000ffConversão de SP +2% adicional.^000000
-^0000ffAumenta a chance de conversão em HP e SP.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ff1% de chance de converter 1% do dano físico causado em HP.^000000
+^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
+Nos refinos +5 e 6:
+^0000ff1% de chance de converter 3% do dano físico causado em HP.^000000
+^0000ff1% de chance de converter 1% do dano físico causado em SP.^000000
+No refino +7:
+^0000ff3% de chance de converter 5% do dano físico causado em HP.^000000
+^0000ff1% de chance de converter 2% do dano físico causado em SP.^000000
+No refino +8:
+^0000ff5% de chance de converter 5% do dano físico causado em HP.^000000
+^0000ff1% de chance de converter 2% do dano físico causado em SP.^000000
+Refino +9 em diante:
+^0000ff6% de chance de converter 8% do dano físico causado em HP.^000000
+^0000ff2% de chance de converter 4% do dano físico causado em SP.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
 Peso: ^777777150^000000
@@ -50391,11 +50468,15 @@ Nível Necessário : ^77777740^000000
 Classes : ^777777Todas^000000
 #
 18755#
-Um chapéu elegante que garante um caimento perfeito. A pena decorativa complementa belamente o tom de azul.
-DEFM +1. Reduz o dano recebido de monstros Humanoides em 10%.
-Tipo : ^777777Equipamento para Cabeça^000000    Def : ^7777771^000000
-Equipa em : ^777777Topo^000000    Peso : ^77777760^000000
-Classes: ^777777Todas exceto Aprendiz^000000
+Um chapéu vistoso e emplumado, feito com um macio material azul-celeste.
+^0000ffDEFM +1.^000000
+^0000ffResistência a oponentes da raça Humanoide +10%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777771^000000
+Peso: ^77777760^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 18756#
 Um chapéu feito em homenagem a uma das raças mais raras e antigas de cachorros, que ainda é muito popular em Amatsu. Os Shiba Inus são ancestrais dos mais conhecidos Akitas, e o seu nome, no dialeto de Amatsu significa 'pequeno cão'. Apesar do tamanho, os Shiba Inus são bastante independentes e ótimos cães de caça, usados para encontrar pequenos animais. Dizem as lendas que o um cão desta raça é a única coisa que pode deter a fúria do Atroce, já que quando ainda era humano, este guerreiro amaldiçoado tinha uma paixão especial por essa raça.
@@ -54402,7 +54483,7 @@ Classes que Utilizam: ^777777Todas^000000
 #
 19848#
 E um chapéu feito com a aparência de um Angeling, mãe de todos os Porings, cujo objetivo era progeteger todos dos seres humanos.
-Classe: ^808080Chapéu^000000
+Tipo: ^777777Visual^000000
 Equipa em: ^808080Topo^000000
 Peso: ^8080800^000000
 Nivel necessário: ^8080801^000000
@@ -55174,7 +55255,7 @@ Classes: ^777777Todas^000000
 #
 20129#
 Esse chapéu foi criado pra ser uma réplica de um Poporing que você possa usar na cabeça, mas não se preocupe: ele não é pegajoso e nenhum Poporing foi ferido durante sua confecção.
-Classe: ^808080Chapéu^000000
+Tipo : ^777777Visual^000000
 Equipa em: ^808080Topo^000000
 Peso: ^8080800^000000
 Nivel necessário: ^8080801^000000
@@ -55783,7 +55864,7 @@ Classes: ^777777Todas ^000000
 #
 20294#
 Um chapéu comemorativo da nomeação do 29o líder da família Maximilian. Um bebe selvagem como nunca se viu. Ele simboliza a coragem dos pequenos sobre os grandes.
-Classe: ^808080Chapéu^000000
+Tipo: ^777777Visual^000000
 Equipa em: ^808080Topo^000000
 Peso: ^8080800^000000
 Nivel necessário: ^8080801^000000
@@ -55843,7 +55924,7 @@ Classes: ^777777Todas ^000000
 #
 20312#
 Um tapa-olho modelado pra parecer com o olho maligno do Barão Demoníaco.
-Classe: ^808080Chapéu^000000
+Tipo: ^777777Visual^000000
 Equipa em: ^808080Meio^000000
 Peso: ^8080800^000000
 Nivel necessário: ^8080801^000000
@@ -57336,7 +57417,7 @@ Uma sensação de imponência e coragem inunda o coração daqueles que empunham
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ e ATQM de acordo com o refino:
-+1:^0000ffATQ +1. ATQM +0.^000000
++1: ^0000ffATQ +1. ATQM +0.^000000
 +2: ^0000ffATQ +4. ATQM +2.^000000
 +3: ^0000ffATQ +9. ATQM +4.^000000
 +4: ^0000ffATQ +16. ATQM +8.^000000
@@ -58336,7 +58417,7 @@ Refino +7 ou mais:
 ^0000ffDano mágico +10% adicional.^000000
 Capa com refino +7 ou mais:
 ^0000ffResistência as propriedades Terra e Vento +15% adicional.^000000
-Capa com refino +9 ou mais:
+Capa com refino +10 ou mais:
 ^0000ffResistência as propriedades Terra e Vento +15% adicional.^000000
 --------------------------
 ^FA4E09Conjunto^000000
@@ -58344,7 +58425,7 @@ Capa com refino +9 ou mais:
 ^0000ffDano mágico +10% adicional.^000000
 Tiara com refino +7 ou mais:
 ^0000ffDano mágico de propriedade Terra e Vento +10% adicional.^000000
-Tiara com refino +9 ou mais:
+Tiara com refino +10 ou mais:
 ^0000ffDano mágico de propriedade Terra e Vento +10% adicional.^000000
 --------------------------
 ^FA4E09Conjunto^000000
@@ -59284,9 +59365,12 @@ Esse item será removido após o término do Evento de Natal 2016.
 Peso: ^7777770^000000
 #
 25275#
-Um trecho na linguagem das fadas pode ser facilmente traduzido para o nosso idioma. Nele, é possível ler que você pode conseguir um ^CD3278Ovo de Unicórnio^000000!
-^FF6347Pode ser trocado pela Negociadora de Ovos (prontera 221, 209)^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
+Um ticket que pode ser trocado por um Ovo de Unicórnio.
+--------------------------
+^CD3278NPC:^000000 Negociadora de Ovos
+^CD3278Local:^000000 prontera 221, 209
+<NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
 Peso: ^7777771^000000
 #
 25401#
@@ -59630,7 +59714,7 @@ Tudo que suas vítimas verão será apenas um vislumbre escarlate do brilho dest
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -59763,7 +59847,7 @@ Use essas duas lâminas grossas para cortar impiedosamente tudo o que estiver no
 A cada 10 níveis de base a partir do 70:
 ^0000ffATQ +5.^000000
 Bônus de ATQ de acordo com o refino:
-+1:^0000ffATQ +1.^000000
++1: ^0000ffATQ +1.^000000
 +2: ^0000ffATQ +4.^000000
 +3: ^0000ffATQ +9.^000000
 +4: ^0000ffATQ +16.^000000
@@ -60693,7 +60777,7 @@ Guarda ensinamentos e histórias sobre o meteorismo: uma esquecida religião que
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ e ATQM de acordo com o refino:
-+1:^0000ffATQ +1. ATQM +0.^000000
++1: ^0000ffATQ +1. ATQM +0.^000000
 +2: ^0000ffATQ +4. ATQM +2.^000000
 +3: ^0000ffATQ +9. ATQM +4.^000000
 +4: ^0000ffATQ +16. ATQM +8.^000000
@@ -60770,7 +60854,7 @@ Pequena e discreta, essa adaga de lâmina peculiar facilita ataques ágeis e pre
 ^0000ffA cada 10 níveis de base a partir do 70:^000000
 ^0000ffATQ +5.^000000
 Bônus de ATQ e ATQM de acordo com o refino:
-+1:^0000ffATQ +1. ATQM +0.^000000
++1: ^0000ffATQ +1. ATQM +0.^000000
 +2: ^0000ffATQ +4. ATQM +2.^000000
 +3: ^0000ffATQ +9. ATQM +4.^000000
 +4: ^0000ffATQ +16. ATQM +8.^000000
@@ -61472,7 +61556,7 @@ Classes: ^777777Todas^000000
 #
 31054#
 Um chapéu feito na forma de um Sting celebrando sua vitória sobre mais um aventureiro.
-Classe: ^808080Chapéu^000000
+Tipo: ^777777Visual^000000
 Equipa em: ^808080Topo^000000
 Peso: ^8080800^000000
 Nivel necessário: ^8080801^000000
