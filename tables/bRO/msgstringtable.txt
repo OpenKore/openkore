@@ -2497,7 +2497,7 @@ ITEM#
 Você não pode utilizar o Armazém do Clã.#
 Você não faz parte de um Clã. Tente novamente após se juntar a um Clã.#
 Outro membro do Clã está usando o sistema. Tente novamente mais tarde.#
-Armazém#
+Autorização do Armazém#
 Armazém do Clã#
 Você não possuí autorização para usar o Armazém do Clã.#
 Limited item sales registration window#
@@ -2536,17 +2536,17 @@ It has failed to purchase due to some item's out of stock.#
 The warp spot cannot be memorized in current position.#
 Item cannot be purchased due to the bag's overweight.#
 No.#
-Item#
-Qtd#
-Jogador#
-Data#
-Ação#
-Não existe log nesse período.#
-Completo#
-Adição#
-Remoção#
+item#
+count#
+Name#
+Time#
+Withdraw#
+the log is not exist.#
+Entire#
+Put#
+Out#
 Lista do Armazém do Clã#
-Log dos últimos 100 itens#
+A lista só monstra os 100 itens mais recentes.#
 O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
 %s [%doption] : %d #
@@ -2562,7 +2562,7 @@ Histórico da Compra#
 Um lança granada deve estar equipado.#
 Não pode ser usada junto com [Furor], [Proteção Platina] e [Pânico do Justiceiro].#
 This skill cannot be used in this map.#
-Todos os itens contido no Armazém de Clã serão excluídos e não podem ser recuperados.#
+When you are using the guild storage, all the items in the storage will be disappeared.#
 http://ragnarok.gamesamba.com/#
 Enter your password to log in#
 Pet evolution#

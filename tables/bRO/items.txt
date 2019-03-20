@@ -6447,7 +6447,7 @@
 19839#Bonequinho de Vanilmirth#
 19840#Elmo Solar Dourado#
 19841#Elmo do Espírito do Dragão#
-19848#Chapéu de Angeling#
+19848#Gorro de Angeling#
 19852#Boné de Pingu#
 19862#Chifres de Succubus#
 19865#Coroa de Bufão#
@@ -6534,7 +6534,7 @@
 20113#Chapéu do Oráculo#
 20115#Óculos do Sabe-Tudo#
 20116#Fones de Sereia#
-20129#Chapéu de Poporing#
+20129#Gorro de Poporing#
 20130#Cartola Sussurrante#
 20131#Fone dos Vocalroks#
 20132#Aura Fantasmagórica#
