@@ -146,6 +146,7 @@ charDeleteDateType 1
 charBlockSize 147
 sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B #it use same iRO:RE  ?
 rankingSystemType 1
+blockingPlayerCancel 1
 
 # Pre-renewal
 # http://playragnarok.com
