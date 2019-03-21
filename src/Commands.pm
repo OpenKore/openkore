@@ -1802,6 +1802,7 @@ sub cmdEquip {
 
 	if ($arg1 eq "") {
 		cmdEquip_list();
+		cmdEquipsw_list();
 		return;
 	}
 
@@ -1854,6 +1855,23 @@ sub cmdEquip_list {
 			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
 }
+
+sub cmdEquipsw_list {
+	if (!$char) {
+		error T("Character equipment not yet ready\n");
+		return;
+	}
+	message TF("=====[Equip Switch]=====\n"), "info";
+	for my $slot (@Actor::Item::slots) {
+		my $item = $char->{eqswitch}{$slot};
+		my $name = $item ? $item->{name} : '-';
+		($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) 
+			? message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" 
+			: message sprintf("%-15s: %s\n", $slot, $name), "list";
+	}
+	message TF("=======================\n"), "info";
+}
+
 
 sub cmdEval {
 	if (!$Settings::lockdown) {

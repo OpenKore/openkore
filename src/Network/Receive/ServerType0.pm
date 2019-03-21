@@ -639,6 +639,7 @@ sub new {
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
 		'0A98' => ['equip_item_switch', 'a2 V2', [qw(ID type success)]],
 		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
+		'0A9B' => ['eqsw_log', 'v a*', [qw(len log)]], # -1
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
@@ -2599,6 +2600,15 @@ sub equipswitch_run_res {
 	}
 }
 
+sub eqsw_log {
+    my ($self, $args) = @_;
+    my $c = 0;
+    for (my $i = 0; $i < length($args->{log}); $i+= 6) {
+    	my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
+    	my $item = $char->inventory->getByID($index);
+    	$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
+    }
+}
 *changeToInGameState = *Network::Receive::changeToInGameState;
 *equip_item_switch = *Network::Receive::equip_item;
 *unequip_item_switch = *Network::Receive::unequip_item;
