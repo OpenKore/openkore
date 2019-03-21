@@ -637,9 +637,9 @@ sub new {
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
-		'0A98' => ['equip_item_switch', 'a2 V2', [qw(ID type success)]],
+		'0A98' => ['equip_item_switch', 'a2 V v', [qw(ID type success)]],
 		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
-		'0A9B' => ['eqsw_log', 'v a*', [qw(len log)]], # -1
+		'0A9B' => ['equipswitch_log', 'v a*', [qw(len log)]], # -1
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
@@ -653,6 +653,7 @@ sub new {
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
+		'0ACE' => ['equipswitch_single', 'v', [qw(index)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
@@ -2600,15 +2601,20 @@ sub equipswitch_run_res {
 	}
 }
 
-sub eqsw_log {
+sub equipswitch_log {
     my ($self, $args) = @_;
-    my $c = 0;
     for (my $i = 0; $i < length($args->{log}); $i+= 6) {
     	my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
     	my $item = $char->inventory->getByID($index);
     	$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
     }
 }
+
+sub equipswitch_single {
+    my ($self, $args) = @_;
+	$char->{eqswitch}{$equipSlot_lut{$args->{index}}};
+}
+
 *changeToInGameState = *Network::Receive::changeToInGameState;
 *equip_item_switch = *Network::Receive::equip_item;
 *unequip_item_switch = *Network::Receive::unequip_item;

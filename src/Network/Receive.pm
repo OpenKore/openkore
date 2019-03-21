@@ -8017,7 +8017,7 @@ sub cash_buy_fail {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (!$args->{success} && $args->{switch} eq "0A98")) {
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (($args->{success} == 1 || $args->{success} == 2 ) && $args->{switch} eq "0A98")) {
 		if ($args->{switch} == '0A98') {
 			message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 		} else {	
