@@ -636,8 +636,11 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
-		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],		
-		'0A98' => ['equip_item_switch', 'a2 V v', [qw(ID type success)]],
+		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],	
+		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
+			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]] 
+			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
+		,
 		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
 		'0A9B' => ['equipswitch_log', 'v a*', [qw(len log)]], # -1
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
@@ -2612,7 +2615,8 @@ sub equipswitch_log {
 
 sub equipswitch_single {
     my ($self, $args) = @_;
-	$char->{eqswitch}{$equipSlot_lut{$args->{index}}};
+    my $item = $char->inventory->getByID($args->{index});
+	$char->{eqswitch}{$equipSlot_lut{$args->{index}}} = $item;
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;
