@@ -135,18 +135,18 @@ pauseCharLogin 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
-ip 128.241.92.162
+ip 128.241.92.195
 port 6800
 master_version 14
 version 18
-serverType iRO
+serverType iRO_Renewal #it use same iRO:RE  ? / made new servertype for it 
 serverEncoding Western
-paddedPackets 0
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
-addTableFolders iRO
-charBlockSize 145
+addTableFolders iRO/Renewal;iRO #it use same iRO:RE  ?
+charDeleteDateType 1
+charBlockSize 147
+sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B #it use same iRO:RE  ?
 rankingSystemType 1
+blockingPlayerCancel 1
 
 # Pre-renewal
 # http://playragnarok.com
