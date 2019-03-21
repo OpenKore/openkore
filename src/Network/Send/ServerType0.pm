@@ -299,6 +299,7 @@ sub new {
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
+		'0ACE' => ['equipswitch_single', 'a2', [qw(index)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
@@ -494,16 +495,23 @@ sub sendEquipswitchAdd {
 }
 
 sub sendEquipswitchRemove {
-	my ($self,$index,$position) = @_;
+	my ($self,$index) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_remove',
 		index => $index
 	}));
 }
 sub sendEquipswitchRun { #noidea T.T
-	my ($self,$index,$position) = @_;
+	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_run'
+	}));
+}
+sub sendEquipswitchSingle { #noidea T.T
+	my ($self,$index) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_single',
+		index => $index
 	}));
 }
 
