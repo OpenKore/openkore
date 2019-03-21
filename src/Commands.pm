@@ -1847,6 +1847,7 @@ sub cmdEquip_list {
 		error T("Character equipment not yet ready\n");
 		return;
 	}
+	message TF("=====[Character Equip List]=====\n"), "info";
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->{name} : '-';
@@ -1854,6 +1855,7 @@ sub cmdEquip_list {
 			message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" :
 			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
+	message TF("================================\n"), "info";
 }
 
 sub cmdEquipsw_list {
@@ -1861,7 +1863,7 @@ sub cmdEquipsw_list {
 		error T("Character equipment not yet ready\n");
 		return;
 	}
-	message TF("=====[Equip Switch]=====\n"), "info";
+	message TF("=====[Equip Switch List]=====\n"), "info";
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{eqswitch}{$slot};
 		my $name = $item ? $item->{name} : '-';
@@ -1869,7 +1871,7 @@ sub cmdEquipsw_list {
 			? message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" 
 			: message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
-	message TF("=======================\n"), "info";
+	message TF("=============================\n"), "info";
 }
 
 

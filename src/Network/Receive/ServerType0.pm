@@ -656,7 +656,6 @@ sub new {
 		'0ACB' => ['stat_info', 'v Z8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 Z8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
-		'0ACE' => ['equipswitch_single', 'v', [qw(index)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
@@ -2595,6 +2594,7 @@ sub move_interrupt {
 	my ($self, $args) = @_;
 	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
 }
+
 sub equipswitch_run_res {
 	my ($self, $args) = @_;
 	if ($args->{success}) {
@@ -2611,12 +2611,6 @@ sub equipswitch_log {
     	my $item = $char->inventory->getByID($index);
     	$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
     }
-}
-
-sub equipswitch_single {
-    my ($self, $args) = @_;
-    my $item = $char->inventory->getByID($args->{index});
-	$char->{eqswitch}{$equipSlot_lut{$args->{index}}} = $item;
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;
