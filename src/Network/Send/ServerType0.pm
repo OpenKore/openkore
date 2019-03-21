@@ -261,6 +261,10 @@ sub new {
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
+		'08D7' => ['bg_queue_request', 'v Z24', [qw(type bg_name)]],
+		'08DA' => ['bg_queue_cancel_request', 'Z24', [qw(bg_name)]],
+		'090A' => ['bg_queue_enter_rank', 'Z24', [qw(bg_name)]],
+		'090E' => ['bg_queue_exit'],
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'0974' => ['merge_item_cancel'], #2
@@ -479,6 +483,39 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
+}
+
+sub sendBattlegroundRequest {
+	my ($self, $type, $bg_name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'bg_queue_request',
+		type => $type,
+		#Queue types: 1 solo queue, 2 party queue, 4 guild queue.
+		bg_name => bytesToString($bg_name)
+	}));
+}
+
+sub sendBattlegroundCancelRequest {
+	my ($self, $bg_name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'bg_queue_cancel_request',
+		bg_name => bytesToString($bg_name)
+	}));
+}
+
+sub sendBattlegroundEnterRank {
+	my ($self, $bg_name) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'bg_queue_enter_rank',
+		bg_name => bytesToString($bg_name)
+	}));
+}
+
+sub sendBattlegroundExit {
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'bg_queue_exit'
+	}));
 }
 
 1;
