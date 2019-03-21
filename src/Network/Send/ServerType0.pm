@@ -507,7 +507,7 @@ sub sendEquipswitchRun { #noidea T.T
 		switch => 'equipswitch_run'
 	}));
 }
-sub sendEquipswitchSingle { #noidea T.T
+sub sendEquipswitchSingle {
 	my ($self,$index) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'equipswitch_single',

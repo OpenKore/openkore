@@ -2600,7 +2600,7 @@ sub equipswitch_run_res {
 	if ($args->{success}) {
 		message TF("[Equip Switch] Fail !\n"), "info";
 	} else {
-		message TF("[Equip Switch] success !\n"), "info";
+		message TF("[Equip Switch] Success !\n"), "info";
 	}
 }
 
